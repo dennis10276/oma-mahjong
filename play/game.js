@@ -270,13 +270,13 @@
   // ---------- the game ----------
   const SLOTS = Layouts.SLOTS;
   let G = null;
-  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 2 ? c : null; } catch (e) { return null; } };
+  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 3 ? c : null; } catch (e) { return null; } };
   const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
   function saveCur() {
     if (!G || G.done) return;
     syncClock();
     try {
-      localStorage.setItem(CUR, JSON.stringify({ v: 2, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+      localStorage.setItem(CUR, JSON.stringify({ v: 3, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
     } catch (e) { }
   }
   function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -348,9 +348,9 @@
     let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, maxZ = 0;
     for (const t of G.tiles) { minX = Math.min(minX, t.x); maxX = Math.max(maxX, t.x); minY = Math.min(minY, t.y); maxY = Math.max(maxY, t.y); maxZ = Math.max(maxZ, t.z); }
     const cols = (maxX - minX) / 2 + 1, rows = (maxY - minY) / 2 + 1;
-    const ratio = 1.3, dF = 0.12;
+    const ratio = 1.24, dF = 0.12;
     let tw = Math.min((W - 14) / (cols + maxZ * dF + 0.15), (H - 14) / (rows * ratio + maxZ * dF + 0.2));
-    tw = Math.min(tw, 112);
+    tw = Math.min(tw, 150);
     const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * 0.085);
     const bw = cols * tw + maxZ * dz + d, bh = rows * th + maxZ * dz + d * 1.4;
     const ox = (W - bw) / 2 + maxZ * dz, oy = (H - bh) / 2 + maxZ * dz;

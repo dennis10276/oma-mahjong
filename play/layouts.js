@@ -44,7 +44,7 @@ const Layouts = (() => {
     BASES = [];
     for (const name of NAMES)
       for (let W = 3; W <= 7; W++)
-        for (let H = 3; H <= 9; H++) {
+        for (let H = 3; H <= 7; H++) {
           if (H < W - 1) continue;
           let n = 0;
           for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) if (SHAPES[name](c, r, W, H)) n++;
@@ -272,7 +272,7 @@ const Layouts = (() => {
   }
 
   /* Try several deals for a level and keep the one whose difficulty is closest to the level's target. */
-  function makeDeal(spec, tries = 16) {
+  function makeDeal(spec, tries = 28) {
     const tiles = spec.tiles, nb = neighbors(tiles);
     let best = null;
     for (let k = 0; k < tries; k++) {
