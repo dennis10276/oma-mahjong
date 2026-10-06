@@ -70,6 +70,7 @@ const Sound = (() => {
       noise(t, 0.06, 0.5, 2400, 1400, 3);
       tone(880, t, 0.09, 0.08, 'triangle');
     },
+    flip() { if (!ok()) return; const t = now(); noise(t, 0.08, 0.35, 900, 2600, 2); tone(660, t + 0.04, 0.1, 0.05, 'triangle'); },
     deselect() { if (!ok()) return; const t = now(); noise(t, 0.05, 0.3, 1500, 900, 3); },
     blocked() {
       if (!ok()) return; const t = now();

@@ -6,7 +6,7 @@ const Tiles = (() => {
 
   const svg = inner => `<svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
   const corner = (n, col = '#a08a5c') =>
-    `<text x="4" y="12" font-size="11" font-weight="900" fill="${col}" font-family="Nunito,Arial,sans-serif">${n}</text>`;
+    `<text class="cn" x="4" y="12" font-size="11" font-weight="900" fill="${col}" font-family="Nunito,Arial,sans-serif">${n}</text>`;
   const dot = (x, y, r, c) =>
     `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="${c}" stroke-width="${(r * 0.42).toFixed(1)}"/>` +
     `<circle cx="${x}" cy="${y}" r="${(r * 0.36).toFixed(1)}" fill="${c}"/>`;
@@ -80,7 +80,7 @@ const Tiles = (() => {
   }
 
   function wind(ch, letter) {
-    return svg(`<text x="5" y="13" font-size="11" font-weight="900" fill="${B}" font-family="Nunito,Arial,sans-serif">${letter}</text>` +
+    return svg(`<text class="cn" x="5" y="13" font-size="11" font-weight="900" fill="${B}" font-family="Nunito,Arial,sans-serif">${letter}</text>` +
       `<text x="30" y="55" text-anchor="middle" font-size="40" font-weight="700" fill="#1d1d1d" font-family="${CJK}">${ch}</text>`);
   }
 

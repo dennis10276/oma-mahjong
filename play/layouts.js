@@ -26,15 +26,12 @@ const Layouts = (() => {
     oval: (c, r, W, H) => { const a = (c - (W - 1) / 2) / (W / 2), b = (r - (H - 1) / 2) / (H / 2); return a * a + b * b <= 1.08; },
     cross: (c, r, W, H) => Math.abs(c - (W - 1) / 2) <= Math.max(0.5, W * 0.18) || Math.abs(r - (H - 1) / 2) <= Math.max(0.5, H * 0.18),
     hourglass: (c, r, W, H) => Math.abs(c - (W - 1) / 2) <= Math.abs(r - (H - 1) / 2) / (H / 2) * (W / 2) + 0.6,
-    frame: (c, r, W, H) => c < 2 || c > W - 3 || r < 2 || r > H - 3,
-    arch: (c, r, W, H) => r < 2 || c < 2 || c > W - 3,
     heart: (c, r, W, H) => {
       const x = (c - (W - 1) / 2) / (W / 2) * 1.25, y = -(r - (H - 1) / 2) / (H / 2) * 1.25 + 0.2;
       const q = x * x + y * y - 1; return q * q * q - x * x * y * y * y <= 0.02;
     },
     stairs: (c, r, W, H) => c <= r * (W / H) + 1.5,
     zigzag: (c, r, W, H) => (Math.floor(r / 2) % 2 === 0 ? c < W - 1 : c > 0),
-    islands: (c, r, W, H) => (c % 3 !== 2 || W < 5) && (r % 4 !== 3),
   };
   const NAMES = Object.keys(SHAPES);
 
@@ -75,8 +72,23 @@ const Layouts = (() => {
     let prev = tiles.slice();
     const minX = Math.min(...tiles.map(t => t.x)), maxX = Math.max(...tiles.map(t => t.x));
     const minY = Math.min(...tiles.map(t => t.y)), maxY = Math.max(...tiles.map(t => t.y));
+    // usually one big hill; now and then two or three
+    const nh = r() < 0.72 ? 1 : r() < 0.65 ? 2 : 3;
+    const cx = tiles.reduce((a, t) => a + t.x, 0) / tiles.length, cy = tiles.reduce((a, t) => a + t.y, 0) / tiles.length;
+    const centers = [];
+    if (nh === 1) centers.push({ x: cx + (r() - 0.5) * 2, y: cy + (r() - 0.5) * 2 });
+    else {
+      const pool = shuffleArr(r, tiles.slice());
+      centers.push(pool[0]);
+      while (centers.length < nh) {
+        let best = null, bd = -1;
+        for (const t of pool) { const d = Math.min(...centers.map(c => Math.hypot(c.x - t.x, c.y - t.y))); if (d > bd) { bd = d; best = t; } }
+        centers.push(best);
+      }
+    }
+    const hillDist = p => Math.min(...centers.map(c => Math.hypot(c.x - p.x, c.y - p.y))) / 2; // in tiles
     for (let z = 1; z < layers && remaining > 0; z++) {
-      const want = z === layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (0.5 + r() * 0.25))));
+      const want = z === layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (0.55 + r() * 0.2))));
       const cand = [];
       for (let y = minY - 1; y <= maxY + 1; y++)
         for (let x = minX - 1; x <= maxX + 1; x++) {
@@ -84,9 +96,9 @@ const Layouts = (() => {
           let support = 0;
           for (const q of prev) if (overlaps(p, q)) support++;
           if (support === 0) continue;
-          // prefer resting on 2+ tiles (looks like a real pile); exact stacks are allowed but rarer
           const exact = prev.some(q => q.x === x && q.y === y);
-          cand.push({ x, y, w: support + (exact ? 0.3 : 0) + r() * 2.2 });
+          // prefer resting on 2+ tiles, close to the top of the hill
+          cand.push({ x, y, w: support + (exact ? 0.3 : 0) + r() * 1.6 - hillDist(p) * 1.4 });
         }
       cand.sort((a, b) => b.w - a.w);
       const placed = [];
@@ -131,6 +143,8 @@ const Layouts = (() => {
       open: 0.15 + 0.75 * t,
       // share of pictures that appear only twice instead of four times (rarer = harder)
       rare: Math.min(0.9, Math.max(0, (level - 4) / 16)),
+      // share of tiles lying face down
+      down: level < 5 ? 0 : Math.min(0.4, 0.08 + (level - 5) * 0.013),
       // how often a sensible player should clear the board first try
       target: level <= 3 ? 1 : level <= 6 ? 0.95 : level < 10 ? 0.85 : level < 20 ? 0.75 - (level - 10) * 0.015 : Math.max(0.42, 0.6 - (level - 20) * 0.01),
     };
@@ -151,7 +165,7 @@ const Layouts = (() => {
     const r0 = rng(ymd);
     const target = 60 + Math.floor(r0() * 11) * 2; // 60..80
     const res = buildPiles(ymd * 13 + 5, target, 4);
-    const diff = { ...difficultyFor(14), target: 0.65 };
+    const diff = { ...difficultyFor(14), target: 0.65, down: 0.2 };
     return { ...res, kinds: kindsFor(res.tiles.length / 2, 14, diff), seed: ymd * 7 + 3, diff };
   }
 
@@ -284,6 +298,9 @@ const Layouts = (() => {
       if (!best || score < best.score) best = { faces, w, score };
       if (score < 0.04) break;
     }
+    const r2 = rng(spec.seed + 777);
+    const nDown = Math.round(tiles.length * (spec.diff.down || 0));
+    best.down = shuffleArr(r2, tiles.map((t, i) => i)).slice(0, nDown);
     return best;
   }
 

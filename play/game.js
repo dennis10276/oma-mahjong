@@ -16,7 +16,7 @@
     { id: 'rainbow', name: 'Regenboog', need: 250, css: 'linear-gradient(165deg, #ff9a9e 0%, #fad0c4 20%, #fbc2eb 40%, #a6c1ee 60%, #84fab0 80%, #8fd3f4 100%)' },
   ];
 
-  const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0 });
+  const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0, nums: true });
   let S;
   try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
@@ -240,7 +240,7 @@
   $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' && modalClosable) closeModal(); });
 
   function openSettings() {
-    const rows = [['sfx', '🔊 Geluidjes'], ['music', '🎵 Muziek'], ['vibrate', '📳 Trillen'], ['highlight', '✨ Vastzittende stenen donker']];
+    const rows = [['sfx', '🔊 Geluidjes'], ['music', '🎵 Muziek'], ['vibrate', '📳 Trillen'], ['highlight', '✨ Vastzittende stenen donker'], ['nums', '🔢 Cijfers in de hoek']];
     openModal(`<h2>Instellingen</h2>${rows.map(([k, l]) => `<div class="set-row">${l}<button class="tog ${S[k] ? 'on' : ''}" data-k="${k}"></button></div>`).join('')}
       <button class="big-btn gold" id="mHow"><span class="bb-text"><b>Hoe speel je?</b></span></button>
       <button class="link-btn" id="mClose">Sluiten</button>`);
@@ -250,6 +250,7 @@
       if (k === 'music') Sound.setMusic(S.music);
       if (k === 'vibrate' && S.vibrate) buzz(40);
       if (k === 'highlight') $('#board').classList.toggle('hl', S.highlight);
+      if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
     });
     $('#mHow').onclick = () => showIntro();
     $('#mClose').onclick = closeModal;
@@ -270,13 +271,13 @@
   // ---------- the game ----------
   const SLOTS = Layouts.SLOTS;
   let G = null;
-  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 3 ? c : null; } catch (e) { return null; } };
+  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 4 ? c : null; } catch (e) { return null; } };
   const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
   function saveCur() {
     if (!G || G.done) return;
     syncClock();
     try {
-      localStorage.setItem(CUR, JSON.stringify({ v: 3, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+      localStorage.setItem(CUR, JSON.stringify({ v: 4, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
     } catch (e) { }
   }
   function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -296,16 +297,19 @@
     const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
     const nb = Layouts.neighbors(tiles);
     const n = tiles.length;
-    G = { o, ...o, tiles, nb, alive: new Uint8Array(n).fill(1), tray: [], score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
+    G = { o, ...o, tiles, nb, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
     const cur = restart ? null : loadCur();
     if (cur && cur.key === o.key && cur.n === n) {
       cur.faces.forEach((f, i) => tiles[i].face = f);
       cur.alive.forEach((a, i) => G.alive[i] = a);
+      (cur.down || []).forEach((a, i) => G.down[i] = a);
+      G.peek = cur.peek ?? -1;
       Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle });
       G.half = aliveCount() <= n / 2;
     } else {
-      if (!o.faces) o.faces = Layouts.makeDeal(spec).faces; // same deal again on "Opnieuw"
+      if (!o.faces) { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; } // same deal again on "Opnieuw"
       o.faces.forEach((f, i) => tiles[i].face = f);
+      (o.down || []).forEach(i => G.down[i] = 1);
       clearCur();
     }
     $('#gameTitle').textContent = o.title;
@@ -316,6 +320,7 @@
     G.tStart = performance.now();
     setTimeout(() => praise(restart ? 'Nog een keer! 💪' : o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
+    else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
     else setTimeout(checkStuck, 500);
   }
   const restart = () => { if (G) begin(G.o, true); };
@@ -331,7 +336,7 @@
     order.forEach((i, k) => {
       const t = G.tiles[i];
       const el = document.createElement('div');
-      el.className = 'tile' + (G.alive[i] ? '' : ' hidden');
+      el.className = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '');
       el.dataset.i = i;
       el.innerHTML = `<div class="face">${Tiles.faceHTML(S.theme, t.face)}</div>`;
       if (enter && G.alive[i]) { el.classList.add('enter'); el.style.animationDelay = Math.min(900, k * 8 + t.z * 70) + 'ms'; setTimeout(() => el.classList.remove('enter'), 1700); }
@@ -432,6 +437,14 @@
       return;
     }
     blockedTaps = 0;
+    if (G.down[i] && G.peek !== i) {
+      // face-down tile: first tap turns it over (only one at a time), second tap takes it
+      if (G.peek >= 0 && G.alive[G.peek]) turn(G.peek, true);
+      G.peek = i; turn(i, false);
+      Sound.flip(); buzz(8); clearHint(); saveCur();
+      return;
+    }
+    if (G.peek === i) { G.down[i] = 0; G.peek = -1; }
     const face = G.tiles[i].face;
     const mi = G.tray.findIndex(t => G.tiles[t].face === face);
     if (mi < 0 && G.tray.length >= SLOTS) {
@@ -467,6 +480,22 @@
         G.busy = false; afterMove();
       }
     }, MS);
+  }
+
+  function turn(i, faceDown) {
+    const el = G.tiles[i].el;
+    el.classList.remove('turning'); void el.offsetWidth; el.classList.add('turning');
+    setTimeout(() => el.classList.toggle('back', faceDown), 140);
+    setTimeout(() => el.classList.remove('turning'), 300);
+  }
+  function showDownTip() {
+    openModal(`<h2>Omgedraaide stenen</h2>
+      <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
+      <p>Sommige stenen liggen <b>omgedraaid</b>. Tik er één keer op om te kijken wat het is, en nog een keer om hem te pakken.</p>
+      <p>Er kan maar <b>één steen tegelijk</b> open liggen: draai je een andere om, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
+      <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true);
+    $('#mGo').onclick = closeModal;
+    S.seenDown = true; save();
   }
 
   function onMatch(c) {
@@ -539,6 +568,7 @@
     if (G.usedShuffle) { toast('Je hebt in dit level al geschud'); Sound.blocked(); return; }
     G.usedShuffle = true; updateTools();
     G.busy = true;
+    if (G.peek >= 0) { if (G.alive[G.peek]) turn(G.peek, true); G.peek = -1; }
     const trayFaces = G.tray.map(t => G.tiles[t].face);
     const count = {};
     G.tiles.forEach((t, i) => { if (G.alive[i]) count[t.face] = (count[t.face] || 0) + 1; });
@@ -663,6 +693,7 @@
 
   Sound.setSfx(S.sfx); Sound.setMusic(S.music);
   applyBg();
+  document.body.classList.toggle('nonum', !S.nums);
   show('home');
   // test hook
   window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart };
