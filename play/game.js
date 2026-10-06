@@ -256,26 +256,27 @@
   }
 
   function showIntro(after) {
-    const f = Tiles.faceHTML('classic', 31);
+    const f = Tiles.faceHTML('classic', 31), g = Tiles.faceHTML('classic', 4);
     openModal(`<h2>Zo speel je 🀄</h2>
-      <p>Zoek <b>twee dezelfde stenen</b> en tik ze allebei aan. Dan verdwijnen ze!</p>
-      <div class="how"><div class="mini glow">${f}</div><div class="mini dim">${Tiles.faceHTML('classic', 4)}</div><div class="mini glow">${f}</div></div>
-      <p>Je mag alleen een steen pakken die <b>vrij</b> ligt: er ligt niets bovenop, en de linker- óf rechterkant is open. Vastzittende stenen zijn wat donkerder.</p>
-      <p>Kom je er niet uit? Tik op <b>💡 Hint</b>. Haal alle stenen weg en verdien ⭐!</p>
+      <p>Tik op een <b>vrije steen</b>: hij schuift naar een <b>vakje onderaan</b>.</p>
+      <div class="how-tray"><div class="hm">${g}</div><div class="hm">${f}</div><div class="hm glow">${f}</div><div class="hm empty"></div></div>
+      <p>Komen er <b>twee dezelfde</b> in de vakjes, dan verdwijnen ze! Er zijn maar <b>4 vakjes</b>. Zijn ze allemaal vol, dan zit je vast.</p>
+      <p>Vrij = niets erbovenop, en links óf rechts open. Elk level mag je één keer <b>💡 Hint</b> en één keer <b>🔀 Schudden</b>.</p>
       <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true, after);
     $('#mGo').onclick = closeModal;
-    S.seenIntro = true; save();
+    S.seenTray = true; S.seenIntro = true; save();
   }
 
   // ---------- the game ----------
+  const SLOTS = Layouts.SLOTS;
   let G = null;
-  const loadCur = () => { try { return JSON.parse(localStorage.getItem(CUR) || 'null'); } catch (e) { return null; } };
+  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 2 ? c : null; } catch (e) { return null; } };
   const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
   function saveCur() {
     if (!G || G.done) return;
     syncClock();
     try {
-      localStorage.setItem(CUR, JSON.stringify({ key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), score: G.score, elapsed: G.elapsed, hints: G.hints, shuffles: G.shuffles, history: G.history }));
+      localStorage.setItem(CUR, JSON.stringify({ v: 2, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
     } catch (e) { }
   }
   function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -288,35 +289,36 @@
     begin({ mode: 'daily', date: k, key: 'D' + k, title: `Dagpuzzel ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`, spec: Layouts.forDate(dnum(k)) });
   }
 
-  function begin(o) {
+  function begin(o, restart = false) {
     $('#modal').classList.add('hidden'); modalOnClose = null;
     $('#comboTag').classList.remove('on'); $('#praise').classList.remove('show'); FX.clear();
     const spec = o.spec;
     const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
     const nb = Layouts.neighbors(tiles);
     const n = tiles.length;
-    G = { ...o, tiles, nb, alive: new Uint8Array(n).fill(1), sel: -1, score: 0, combo: 0, lastMatch: 0, history: [], hints: 0, shuffles: 0, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
-    const cur = loadCur();
+    G = { o, ...o, tiles, nb, alive: new Uint8Array(n).fill(1), tray: [], score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
+    const cur = restart ? null : loadCur();
     if (cur && cur.key === o.key && cur.n === n) {
       cur.faces.forEach((f, i) => tiles[i].face = f);
       cur.alive.forEach((a, i) => G.alive[i] = a);
-      Object.assign(G, { score: cur.score, elapsed: cur.elapsed, hints: cur.hints, shuffles: cur.shuffles, history: cur.history || [] });
+      Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle });
       G.half = aliveCount() <= n / 2;
     } else {
-      const r = Layouts.rng(spec.seed);
-      const pf = Layouts.pairFacesFor(n / 2, spec.kinds, r);
-      Layouts.deal(n, nb, pf, r).forEach((f, i) => tiles[i].face = f);
+      if (!o.faces) o.faces = Layouts.makeDeal(spec).faces; // same deal again on "Opnieuw"
+      o.faces.forEach((f, i) => tiles[i].face = f);
       clearCur();
     }
     $('#gameTitle').textContent = o.title;
     show('game');
-    renderBoard(true);
+    renderBoard(!restart);
+    renderTray(); updateTools();
     updateScore(false); updateProgress();
     G.tStart = performance.now();
-    setTimeout(() => praise(o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
-    if (!S.seenIntro) setTimeout(() => showIntro(), 700);
-    else if (!hasMove()) setTimeout(() => autoShuffle(), 900);
+    setTimeout(() => praise(restart ? 'Nog een keer! 💪' : o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
+    if (!S.seenTray) setTimeout(() => showIntro(), 700);
+    else setTimeout(checkStuck, 500);
   }
+  const restart = () => { if (G) begin(G.o, true); };
 
   const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);
   const free = i => Layouts.isFree(i, G.alive, G.nb);
@@ -332,7 +334,7 @@
       el.className = 'tile' + (G.alive[i] ? '' : ' hidden');
       el.dataset.i = i;
       el.innerHTML = `<div class="face">${Tiles.faceHTML(S.theme, t.face)}</div>`;
-      if (enter && G.alive[i]) { el.classList.add('enter'); el.style.animationDelay = Math.min(900, k * 9 + t.z * 60) + 'ms'; setTimeout(() => el.classList.remove('enter'), 1600); }
+      if (enter && G.alive[i]) { el.classList.add('enter'); el.style.animationDelay = Math.min(900, k * 8 + t.z * 70) + 'ms'; setTimeout(() => el.classList.remove('enter'), 1700); }
       t.el = el; board.appendChild(el);
     });
     layoutBoard(); updateBlocked();
@@ -346,9 +348,9 @@
     let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, maxZ = 0;
     for (const t of G.tiles) { minX = Math.min(minX, t.x); maxX = Math.max(maxX, t.x); minY = Math.min(minY, t.y); maxY = Math.max(maxY, t.y); maxZ = Math.max(maxZ, t.z); }
     const cols = (maxX - minX) / 2 + 1, rows = (maxY - minY) / 2 + 1;
-    const ratio = 1.3, dF = 0.14;
+    const ratio = 1.3, dF = 0.12;
     let tw = Math.min((W - 14) / (cols + maxZ * dF + 0.15), (H - 14) / (rows * ratio + maxZ * dF + 0.2));
-    tw = Math.min(tw, 120);
+    tw = Math.min(tw, 112);
     const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * 0.085);
     const bw = cols * tw + maxZ * dz + d, bh = rows * th + maxZ * dz + d * 1.4;
     const ox = (W - bw) / 2 + maxZ * dz, oy = (H - bh) / 2 + maxZ * dz;
@@ -364,6 +366,9 @@
       s.height = (th - 1.5).toFixed(1) + 'px';
       s.zIndex = t.z * 10000 + t.y * 100 + t.x;
     }
+    // tray slots scale with the screen but stay big
+    const slot = $('#tray .slot');
+    if (slot) $('#tray').style.setProperty('--sfs', (slot.clientWidth * 0.62).toFixed(1) + 'px');
   }
 
   function updateBlocked() {
@@ -371,169 +376,204 @@
   }
   function updateProgress() {
     const n = G.tiles.length;
-    $('#progressBar').style.width = ((n - aliveCount()) / n * 100) + '%';
+    $('#progressBar').style.width = ((n - aliveCount() - G.tray.length) / n * 100) + '%';
   }
   function updateScore(bump = true) {
     const el = $('#score'); el.textContent = G.score;
     if (bump) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
   }
+  function updateTools() {
+    $('#btnHint').classList.toggle('used', G.usedHint);
+    $('#btnShuffle').classList.toggle('used', G.usedShuffle);
+    $('#btnHint .badge').textContent = G.usedHint ? '0' : '1';
+    $('#btnShuffle .badge').textContent = G.usedShuffle ? '0' : '1';
+  }
+  function renderTray() {
+    const slots = $('#tray').children;
+    for (let k = 0; k < SLOTS; k++) {
+      const t = G.tray[k];
+      slots[k].innerHTML = t === undefined ? '' : `<div class="tmini">${Tiles.faceHTML(S.theme, G.tiles[t].face)}</div>`;
+    }
+    const tr = $('#tray');
+    tr.classList.toggle('warn', G.tray.length === SLOTS - 1);
+    tr.classList.toggle('full', G.tray.length >= SLOTS);
+    $('#tray').style.setProperty('--sfs', (slots[0].clientWidth * 0.62).toFixed(1) + 'px');
+  }
   function centerOf(el) { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+  function clearHint() { G.tiles.forEach(t => t.el.classList.remove('hint')); }
 
-  function clearHint() { G.tiles.forEach(t => t.el.classList.remove('hint')); $('#btnHint').classList.remove('attn'); }
-  function select(i) { G.sel = i; G.tiles[i].el.classList.add('sel'); }
-  function deselect() { if (G.sel >= 0) G.tiles[G.sel].el.classList.remove('sel'); G.sel = -1; }
+  // a copy of the tile that glides from the board into its tray slot
+  function flyTile(face, from, to, ms) {
+    const f = document.createElement('div');
+    f.className = 'tile flying';
+    f.innerHTML = `<div class="face">${Tiles.faceHTML(S.theme, face)}</div>`;
+    Object.assign(f.style, { left: from.left + 'px', top: from.top + 'px', width: from.width + 'px', height: from.height + 'px' });
+    f.style.setProperty('--d', '3px');
+    f.style.setProperty('--fs', (from.width * 0.66) + 'px');
+    document.body.appendChild(f);
+    const sx = to.width / from.width, sy = to.height / from.height;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      f.style.transition = `transform ${ms}ms cubic-bezier(.35,.1,.25,1)`;
+      f.style.transform = `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${sx}, ${sy})`;
+    }));
+    return f;
+  }
 
-  let blockedTaps = 0;
+  let blockedTaps = 0, comboTimer;
+  const PRAISE = ['Mooi!', 'Goed zo!', 'Prima!', 'Geweldig!', 'Fantastisch!', 'Super!', 'Knap hoor!', 'Prachtig!'];
   function onTap(i) {
     if (!G || G.done || G.busy || !G.alive[i]) return;
     Sound.init();
+    const el = G.tiles[i].el;
     if (!free(i)) {
-      const el = G.tiles[i].el;
       el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
       Sound.blocked(); buzz(30);
-      if (++blockedTaps === 3) toast('Deze steen zit nog vast — zoek een steen met een open zijkant');
+      if (++blockedTaps === 3) toast('Deze steen zit nog vast. Kies een steen met niets erbovenop en een open zijkant.');
       return;
     }
     blockedTaps = 0;
-    if (G.sel === -1) { select(i); Sound.select(); buzz(8); return; }
-    if (G.sel === i) { deselect(); Sound.deselect(); return; }
-    const a = G.sel;
-    if (G.tiles[a].face === G.tiles[i].face) { clearHint(); match(a, i); }
-    else { deselect(); select(i); Sound.select(); buzz(8); }
+    const face = G.tiles[i].face;
+    const mi = G.tray.findIndex(t => G.tiles[t].face === face);
+    if (mi < 0 && G.tray.length >= SLOTS) {
+      el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+      Sound.blocked(); toast('Alle vakjes zijn vol. Kies een steen die past!');
+      return;
+    }
+    clearHint();
+    G.busy = true;
+    const slotIdx = mi >= 0 ? mi : G.tray.length;
+    const slotEl = $('#tray').children[slotIdx];
+    const from = el.getBoundingClientRect(), to = slotEl.getBoundingClientRect();
+    G.alive[i] = 0;
+    el.classList.add('hidden');
+    updateBlocked();
+    Sound.select(); buzz(8);
+    const MS = 270;
+    const fly = flyTile(face, from, to, MS);
+    setTimeout(() => {
+      if (mi >= 0) {
+        const partner = G.tray[mi];
+        G.tray.splice(mi, 1);
+        const mini = slotEl.firstElementChild;
+        if (mini) mini.classList.add('popout');
+        fly.classList.add('popout');
+        onMatch(centerOf(slotEl));
+        setTimeout(() => { fly.remove(); renderTray(); G.busy = false; afterMove(); }, 230);
+      } else {
+        G.tray.push(i);
+        fly.remove();
+        renderTray();
+        const m = slotEl.firstElementChild; if (m) m.classList.add('land');
+        G.busy = false; afterMove();
+      }
+    }, MS);
   }
 
-  let comboTimer;
-  const PRAISE = ['Mooi!', 'Goed zo!', 'Prima!', 'Geweldig!', 'Fantastisch!', 'Super!', 'Knap hoor!', 'Prachtig!'];
-  function match(a, b) {
-    G.alive[a] = G.alive[b] = 0;
-    G.sel = -1;
+  function onMatch(c) {
     const now = performance.now();
-    G.combo = now - G.lastMatch < 5000 ? G.combo + 1 : 1;
+    G.combo = now - G.lastMatch < 6000 ? G.combo + 1 : 1;
     G.lastMatch = now;
     const pts = 10 * Math.min(G.combo, 5);
     G.score += pts;
-    G.history.push({ a, b, pts });
     S.matches++;
-    const ea = G.tiles[a].el, eb = G.tiles[b].el;
-    const ca = centerOf(ea), cb = centerOf(eb);
-    const mx = (ca.x + cb.x) / 2, my = (ca.y + cb.y) / 2;
-    ea.classList.remove('sel'); eb.classList.remove('sel');
-    [[ea, ca], [eb, cb]].forEach(([el, c]) => {
-      el.classList.add('gone');
-      el.style.transform = `translate(${(mx - c.x) * 0.55}px, ${(my - c.y) * 0.55 - 14}px) scale(1.12)`;
-      el.style.opacity = '0';
-      setTimeout(() => { if (!G.alive[+el.dataset.i]) el.classList.add('hidden'); }, 420);
-    });
-    setTimeout(() => FX.burst(mx, my, G.combo >= 3 ? 30 : 20, G.combo >= 3), 170);
-    floatText(mx, my - 20, '+' + pts);
+    FX.burst(c.x, c.y - 10, G.combo >= 3 ? 30 : 20, G.combo >= 3);
+    floatText(c.x, c.y - 50, '+' + pts);
     Sound.match(G.combo); buzz(G.combo >= 3 ? [15, 40, 25] : 18);
-    updateScore(); updateBlocked(); updateProgress();
+    updateScore();
     const tag = $('#comboTag');
     if (G.combo >= 2) { tag.textContent = `Combo x${Math.min(G.combo, 5)} 🔥`; tag.classList.add('on'); }
-    clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), 5000);
+    clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), 6000);
     const left = aliveCount();
     if (G.combo >= 3 && G.combo % 2 === 1) praise(PRAISE[Math.min(PRAISE.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]);
     else if (!G.half && left <= G.tiles.length / 2 && left > 0) { G.half = true; praise('Halverwege! 💪'); }
     else if (left === 4) praise('Bijna klaar!');
-    if (left === 0) { G.done = true; setTimeout(win, 650); return; }
-    saveCur();
-    if (!hasMove()) { G.busy = true; setTimeout(autoShuffle, 750); }
   }
 
-  function findPair() {
-    const byFace = {};
-    const pairs = [];
-    G.tiles.forEach((t, i) => { if (G.alive[i] && free(i)) { if (byFace[t.face] !== undefined) pairs.push([byFace[t.face], i]); else byFace[t.face] = i; } });
-    return pairs.length ? pairs[Math.floor(Math.random() * pairs.length)] : null;
+  function afterMove() {
+    updateProgress();
+    if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; setTimeout(win, 500); return; }
+    saveCur();
+    checkStuck();
   }
-  const hasMove = () => !!findPair();
+
+  function trayMatchFree() {
+    const tf = new Set(G.tray.map(t => G.tiles[t].face));
+    for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && tf.has(G.tiles[i].face) && free(i)) return i;
+    return -1;
+  }
+  function checkStuck() {
+    if (!G || G.done || G.tray.length < SLOTS || trayMatchFree() >= 0) return;
+    G.busy = true;
+    syncClock();
+    setTimeout(() => {
+      Sound.stuck(); buzz([40, 80, 40]);
+      openModal(`<h2>Oei, alle vakjes zijn vol!</h2>
+        <p>Er ligt geen passende steen meer vrij. Geen nood, probeer het gewoon nog eens.</p>
+        ${!G.usedShuffle ? `<button class="big-btn gold" id="sShuf"><span class="bb-text"><b>🔀 Schud de stenen</b><small>Je mag 1x per level schudden</small></span></button>` : ''}
+        <button class="big-btn play" id="sRetry"><span class="bb-text"><b>↻ Opnieuw proberen</b></span></button>
+        <button class="link-btn" id="sMenu">Menu</button>`, false);
+      if ($('#sShuf')) $('#sShuf').onclick = () => { closeModal(); G.busy = false; shuffle(); };
+      $('#sRetry').onclick = () => { closeModal(); restart(); };
+      $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
+    }, 450);
+  }
 
   function hint() {
     if (!G || G.done || G.busy) return;
     Sound.init();
-    clearHint();
-    const p = findPair();
-    if (!p) { autoShuffle(); return; }
-    G.hints++;
-    deselect();
-    p.forEach(i => G.tiles[i].el.classList.add('hint'));
+    if (G.usedHint) { toast('Je hint voor dit level is al gebruikt'); Sound.blocked(); return; }
+    const faces = G.tiles.map(t => t.face);
+    const path = Layouts.solve(G.tiles, G.nb, faces, G.alive, G.tray, 30000);
+    if (!path || !path.length) { toast('Zo gaat het niet meer lukken… probeer 🔀 Schudden'); Sound.blocked(); return; }
+    G.usedHint = true; updateTools(); saveCur();
+    // show the next one or two safe taps
+    const show2 = [path[0]];
+    if (path[1] !== undefined && G.tiles[path[1]].face === G.tiles[path[0]].face) show2.push(path[1]);
+    show2.forEach(i => G.tiles[i].el.classList.add('hint'));
     Sound.hint(); buzz(15);
-    setTimeout(clearHint, 4000);
   }
 
-  function reshuffle() {
-    const idx = [];
-    const pf = [];
+  function shuffle() {
+    if (!G || G.done || G.busy) return;
+    Sound.init();
+    if (G.usedShuffle) { toast('Je hebt in dit level al geschud'); Sound.blocked(); return; }
+    G.usedShuffle = true; updateTools();
+    G.busy = true;
+    const trayFaces = G.tray.map(t => G.tiles[t].face);
     const count = {};
-    G.tiles.forEach((t, i) => { if (G.alive[i]) { idx.push(i); count[t.face] = (count[t.face] || 0) + 1; } });
+    G.tiles.forEach((t, i) => { if (G.alive[i]) count[t.face] = (count[t.face] || 0) + 1; });
+    trayFaces.forEach(f => count[f]--);
+    const pf = [];
     for (const f in count) for (let k = 0; k < count[f] / 2; k++) pf.push(+f);
     const r = Layouts.rng((Math.random() * 1e9) | 0);
-    const faces = Layouts.deal(G.tiles.length, G.nb, pf, r, G.alive);
-    deselect(); clearHint();
+    // a generous re-deal: the tray pictures come free quickly
+    const faces = Layouts.deal(G.tiles, G.nb, pf, r, { alive: G.alive, openFaces: trayFaces, cap: Math.max(2, trayFaces.length), open: 0.2 });
+    clearHint();
     Sound.shuffle(); buzz([10, 30, 10]);
-    idx.forEach((i, k) => {
-      const t = G.tiles[i];
+    let k = 0;
+    G.tiles.forEach((t, i) => {
+      if (!G.alive[i]) return;
       t.face = faces[i];
-      const el = t.el;
+      const el = t.el, kk = k++;
       el.classList.remove('flip'); void el.offsetWidth;
-      el.style.animationDelay = (k % 12) * 15 + 'ms';
+      el.style.animationDelay = (kk % 12) * 15 + 'ms';
       el.classList.add('flip');
-      setTimeout(() => { el.querySelector('.face').innerHTML = Tiles.faceHTML(S.theme, t.face); }, 200 + (k % 12) * 15);
+      setTimeout(() => { el.querySelector('.face').innerHTML = Tiles.faceHTML(S.theme, t.face); }, 200 + (kk % 12) * 15);
       setTimeout(() => { el.classList.remove('flip'); el.style.animationDelay = ''; }, 700);
     });
-    G.history = []; // undo across a shuffle would be confusing
-    setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); }, 450);
-  }
-  function autoShuffle() {
-    if (!G || G.done) return;
-    G.busy = true;
-    toast('Geen paren meer vrij — ik schud de stenen voor je! 🔀', 2600);
-    setTimeout(reshuffle, 500);
-  }
-  function manualShuffle() {
-    if (!G || G.done || G.busy) return;
-    Sound.init();
-    G.shuffles++; G.busy = true;
-    reshuffle();
-  }
-
-  function undo() {
-    if (!G || G.done || G.busy) return;
-    Sound.init();
-    const h = G.history.pop();
-    if (!h) { toast('Er is nog niets om terug te zetten'); return; }
-    deselect(); clearHint();
-    G.alive[h.a] = G.alive[h.b] = 1;
-    G.score = Math.max(0, G.score - h.pts); G.combo = 0;
-    [h.a, h.b].forEach(i => {
-      const el = G.tiles[i].el;
-      el.classList.remove('hidden');
-      void el.offsetWidth;
-      el.style.opacity = ''; el.style.transform = '';
-      setTimeout(() => el.classList.remove('gone'), 320);
-    });
-    Sound.undo();
-    updateScore(false); updateBlocked(); updateProgress(); saveCur();
+    setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); checkStuck(); }, 520);
   }
 
   // ---------- winning ----------
   function win() {
     syncClock(); G.tStart = 0;
     clearCur();
-    const n = G.tiles.length;
-    const par = 25 + n * 3.5;
-    let pen = 0;
-    if (G.hints > 1) pen++;
-    if (G.shuffles > 0) pen++;
-    if (G.elapsed > par) pen++;
-    const stars = Math.max(1, 3 - pen);
-    const bonus = stars * 50 + Math.max(0, Math.round(par - G.elapsed)) * 2;
-    G.score += bonus;
+    const stars = 3 - (G.usedHint ? 1 : 0) - (G.usedShuffle ? 1 : 0);
+    G.score += stars * 50;
     const before = totalStars();
-    let isNew = false;
     if (G.mode === 'level') {
       S.stars[G.level] = Math.max(S.stars[G.level] || 0, stars);
-      if (G.level === S.level) { S.level++; isNew = true; }
+      if (G.level === S.level) S.level++;
     } else {
       S.daily[G.date] = Math.max(S.daily[G.date] || 0, stars);
       const s = streak(); if (s > S.bestStreak) S.bestStreak = s;
@@ -545,7 +585,7 @@
     Sound.win(); FX.confetti(); buzz([30, 60, 30, 60, 60]);
     const titles = ['Prachtig gedaan!', 'Geweldig, oma!', 'Wat knap!', 'Fantastisch!', 'Heel goed gedaan!'];
     const title = G.mode === 'daily' ? 'Dagpuzzel gehaald! 👑' : titles[Math.floor(Math.random() * titles.length)];
-    const extra = G.mode === 'daily' ? `<p>🔥 ${streak()} ${streak() === 1 ? 'dag' : 'dagen'} op rij!</p>` : '';
+    const extra = G.mode === 'daily' ? `<p>🔥 ${streak()} ${streak() === 1 ? 'dag' : 'dagen'} op rij!</p>` : stars < 3 ? `<p style="font-size:17px;color:#8a7448">Zonder hint en schudden verdien je ⭐⭐⭐</p>` : '';
     const nextLbl = G.mode === 'daily' ? 'Naar de kalender' : `Volgende: level ${G.level + 1} ▶`;
     setTimeout(() => {
       openModal(`<h2>${title}</h2>
@@ -561,7 +601,6 @@
         sts[i].classList.add('on'); Sound.star(i); buzz(20);
         const c = centerOf(sts[i]); FX.burst(c.x, c.y, 26, true);
       }, 450 + i * 420);
-      // count-up score
       const el = $('#wScore'), target = G.score, t0 = performance.now();
       (function tick() { const p = Math.min(1, (performance.now() - t0) / 1100); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); })();
       const go = (dest) => {
@@ -595,8 +634,7 @@
     if (el) { e.preventDefault(); onTap(+el.dataset.i); }
   });
   $('#btnHint').onclick = hint;
-  $('#btnShuffle').onclick = manualShuffle;
-  $('#btnUndo').onclick = undo;
+  $('#btnShuffle').onclick = shuffle;
   $('#btnHome').onclick = () => { saveCur(); show('home'); };
   $('#btnPlay').onclick = () => startLevel(S.level);
   $('#btnDaily').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
@@ -627,5 +665,5 @@
   applyBg();
   show('home');
   // test hook
-  window.__mj = { get G() { return G; }, S, startLevel, startDaily, findPair, onTap, Layouts };
+  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart };
 })();

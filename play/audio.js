@@ -103,6 +103,10 @@ const Sound = (() => {
       seq.forEach((n, i) => bell(PENTA[n + 2], t + i * 0.09, 0.15, 0.9));
       [PENTA[0], PENTA[2], PENTA[3], PENTA[5]].forEach(f => tone(f, t + 0.6, 1.8, 0.07, 'triangle'));
     },
+    stuck() {
+      if (!ok()) return; const t = now();
+      [7, 5, 4, 2].forEach((n, i) => tone(PENTA[n], t + i * 0.16, 0.5, 0.09, 'triangle'));
+    },
     unlock() {
       if (!ok()) return; const t = now();
       [5, 7, 9, 12, 13].forEach((n, i) => bell(PENTA[n], t + i * 0.08, 0.12, 1.2));
