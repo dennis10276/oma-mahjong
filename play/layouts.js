@@ -156,17 +156,24 @@ const Layouts = (() => {
     return Math.max(3, Math.min(36, k));
   }
 
+  /* Gentler curve: after level 6 the difficulty climbs at half speed
+     (level 26 now plays like the old level 16). */
+  const effLevel = level => level <= 6 ? level : 6 + (level - 6) / 2;
   function forLevel(level) {
-    const res = buildPiles(level * 7919 + 13, targetFor(level), layersFor(level));
-    const diff = difficultyFor(level);
-    return { ...res, kinds: kindsFor(res.tiles.length / 2, level, diff), seed: level * 104729 + 1, diff };
+    const e = effLevel(level);
+    let target = targetFor(Math.round(e));
+    if (e > 26) target = targetFor(level);           // keep variety in the endless levels
+    target -= target % 2;
+    const res = buildPiles(level * 7919 + 13, target, layersFor(e));
+    const diff = difficultyFor(e);
+    return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1, diff };
   }
   function forDate(ymd) {
     const r0 = rng(ymd);
     const target = 60 + Math.floor(r0() * 11) * 2; // 60..80
     const res = buildPiles(ymd * 13 + 5, target, 4);
-    const diff = { ...difficultyFor(14), target: 0.65, down: 0.2 };
-    return { ...res, kinds: kindsFor(res.tiles.length / 2, 14, diff), seed: ymd * 7 + 3, diff };
+    const diff = { ...difficultyFor(10), target: 0.75, down: 0.15 };
+    return { ...res, kinds: kindsFor(res.tiles.length / 2, 10, diff), seed: ymd * 7 + 3, diff };
   }
 
   // ---------- rules ----------
@@ -354,6 +361,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, rng, makeDeal, botWinRate, forLevel, forDate, neighbors, isFree, deal, pairFacesFor, shuffleArr, solve, difficultyFor, targetFor };
+  return { SLOTS, effLevel, rng, makeDeal, botWinRate, forLevel, forDate, neighbors, isFree, deal, pairFacesFor, shuffleArr, solve, difficultyFor, targetFor };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

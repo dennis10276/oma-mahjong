@@ -665,6 +665,15 @@
   });
   $('#btnHint').onclick = hint;
   $('#btnShuffle').onclick = shuffle;
+  $('#btnRestart').onclick = () => {
+    if (!G || G.done || G.busy) return;
+    openModal(`<h2>Opnieuw beginnen?</h2>
+      <p>Het level begint dan weer vanaf het begin, met dezelfde stenen. Je krijgt je hint en schudden terug.</p>
+      <button class="big-btn play" id="rYes"><span class="bb-text"><b>↻ Ja, opnieuw</b></span></button>
+      <button class="link-btn" id="rNo">Nee, verder spelen</button>`);
+    $('#rYes').onclick = () => { closeModal(); restart(); };
+    $('#rNo').onclick = closeModal;
+  };
   $('#btnHome').onclick = () => { saveCur(); show('home'); };
   $('#btnPlay').onclick = () => startLevel(S.level);
   $('#btnDaily').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };

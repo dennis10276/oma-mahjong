@@ -259,3 +259,6 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
     repeating-linear-gradient(45deg, rgba(255,255,255,.13) 0 2px, transparent 2px 8px),
     linear-gradient(160deg, #3dbb90, #1b8063) !important; }
 body.nonum .cn { display: none; }
+
+#btnRestart { font-size: 30px; font-weight: 900; }
+.topbar .chip.score { min-width: 60px; }
