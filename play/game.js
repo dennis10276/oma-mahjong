@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.6';
+  const APP_VERSION = '0.7';
 
   // ---------- backgrounds (unlocked with stars) ----------
   const BGS = [
@@ -183,6 +183,7 @@
     if (id === 'daily') renderDaily();
     if (id === 'themes') renderThemes();
     if (id === 'trophies') renderTrophies();
+    if (id === 'ranking') renderRanking();
   }
 
   function renderHome() {
@@ -202,6 +203,7 @@
     lt.forEach((el, i) => el.innerHTML = Tiles.faceHTML(S.theme === 'classic' ? 'classic' : S.theme, faces[i]).replace('class="emo"', 'class="emo" style="font-size:46px;display:grid;place-items:center;height:100%"'));
     renderGoal($('#nextUnlock'));
     $('#trophyCount').textContent = `${trophyCount()}/${TROPHIES.length}`;
+    $('#rankBadge').textContent = '#' + myRank();
     if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (screen === 'home' && $('#modal').classList.contains('hidden')) showSunflowerUnlock(() => renderHome()); }, 500);
   }
   function renderGoal(el) {
@@ -365,11 +367,11 @@
       <button class="reset-btn" id="rsYes">Ja, alles wissen</button>`);
     $('#rsNo').onclick = closeModal;
     $('#rsYes').onclick = () => {
-      const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown };
+      const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, pid: S.pid, name: S.name, avatar: S.avatar, since: S.since };
       const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
       Object.keys(S).forEach(k => delete S[k]);
       Object.assign(S, defaults(), keep, { theme });
-      save(); clearCur(); G = null;
+      save(); clearCur(); G = null; pushScore();
       applyTheme(); applyBg();
       closeModal(); show('home');
       toast('Je voortgang is gewist. Veel plezier vanaf level 1!');
@@ -783,6 +785,161 @@
     setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); checkStuck(); }, 520);
   }
 
+  // ---------- ranking (family online + friendly computer players) ----------
+  // Firebase Realtime Database address; empty = only the computer players
+  const DB_URL = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
+  const LB_CACHE = 'omamj.lb';
+  const BOTS = [
+    ['Ria', '🧁', 0.6], ['Joke', '🚲', 1.5], ['Henk', '🧀', 2.6], ['Tante Riet', '🌷', 3.8], ['Opa Kees', '🎣', 5.2], ['Buurvrouw Ans', '🐈', 6.8],
+    ['Mien', '🧶', 8.5], ['Gerrit', '🌳', 10.5], ['Truus', '☕', 12.8], ['Wim', '🎺', 15.5], ['Corrie', '🌸', 18.5],
+    ['Bep', '🍰', 22], ['Jan', '⛵', 26], ['Greet', '🐦', 31], ['Klaas', '🚜', 37], ['Lies', '💐', 45], ['Juffrouw Bos', '📚', 58], ['Meester Dekker', '🎩', 80],
+  ];
+  // rough points for playing level l (pairs × average combo points + star bonus)
+  const levelPts = l => Math.round(Layouts.targetFor(Math.max(1, Math.round(Layouts.effLevel(l)))) / 2 * 24 + 120);
+  const cumPts = L => { let p = 0; for (let l = 1; l <= Math.floor(L); l++) p += levelPts(l); return Math.round(p + (L % 1) * levelPts(Math.floor(L) + 1)); };
+  function botEntries() {
+    if (!S.since) { S.since = todayKey(); save(); }
+    const days = Math.max(0, Math.round((parseKey(todayKey()) - parseKey(S.since)) / 864e5));
+    return BOTS.map(([name, avatar, at], k) => {
+      const r = Layouts.rng(k * 977 + 3);
+      const pts = Math.round(cumPts(at) * (0.94 + r() * 0.12) + days * (15 + k * 3));
+      return { id: 'bot' + k, name, avatar, points: pts, level: Math.max(1, Math.floor(at) + 1), bot: true };
+    });
+  }
+  const myPoints = () => Object.values(S.lvlPts || {}).reduce((a, b) => a + b, 0) + Object.values(S.dayPts || {}).reduce((a, b) => a + b, 0);
+  function myEntry(points = myPoints()) { return { id: S.pid, name: S.name || 'Jij', avatar: S.avatar || '😊', points, level: S.level, me: true }; }
+  function onlineEntries() {
+    try { return (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid); } catch (e) { return []; }
+  }
+  function ranking(points) {
+    const list = [...botEntries(), ...onlineEntries(), myEntry(points)];
+    // on a tie you are placed above the other player
+    list.sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
+    return list;
+  }
+  const myRank = points => ranking(points).findIndex(e => e.me) + 1;
+  function ensureId() { if (!S.pid) { S.pid = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); save(); } }
+  async function fetchOnline() {
+    if (!DB_URL) return false;
+    try {
+      const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 6000);
+      const res = await fetch(DB_URL + '/scores.json', { signal: ctl.signal, cache: 'no-store' });
+      clearTimeout(to);
+      if (!res.ok) return false;
+      const data = await res.json() || {};
+      const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-')).map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), points: v.points, level: v.level || 1 }));
+      localStorage.setItem(LB_CACHE, JSON.stringify(list));
+      S.lbOnlineAt = Date.now(); save();
+      return true;
+    } catch (e) { return false; }
+  }
+  async function pushScore() {
+    if (!DB_URL || !S.name) return;
+    ensureId();
+    try {
+      await fetch(`${DB_URL}/scores/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t: Date.now() }) });
+    } catch (e) { }
+  }
+
+  const AVATARS = ['👵', '👴', '😊', '🌻', '🐱', '🐶', '🌷', '⭐', '🦋', '🍀', '🎩', '🚀'];
+  function askName(then) {
+    const cur = S.name || '';
+    openModal(`<h2>Hoe heet je?</h2>
+      <p>Zo zien de anderen je op de ranglijst.</p>
+      <input id="nmIn" class="name-in" maxlength="20" value="${cur.replace(/"/g, '')}" placeholder="Bijvoorbeeld: Oma Riet" autocomplete="off">
+      <div class="quick-names">${['Oma', 'Opa', 'Mama', 'Papa'].map(n => `<button class="qn">${n}</button>`).join('')}</div>
+      <div class="avatars">${AVATARS.map(a => `<button class="av${(S.avatar || '👵') === a ? ' on' : ''}">${a}</button>`).join('')}</div>
+      <button class="big-btn play" id="nmOk"><span class="bb-text"><b>Opslaan</b></span></button>`, false);
+    let av = S.avatar || '👵';
+    document.querySelectorAll('.qn').forEach(b => b.onclick = () => { $('#nmIn').value = b.textContent; });
+    document.querySelectorAll('.av').forEach(b => b.onclick = () => { av = b.textContent; document.querySelectorAll('.av').forEach(x => x.classList.toggle('on', x === b)); });
+    $('#nmOk').onclick = () => {
+      const v = $('#nmIn').value.trim().replace(/[<>]/g, '').slice(0, 20);
+      if (!v) { $('#nmIn').focus(); toast('Vul eerst een naam in'); return; }
+      S.name = v; S.avatar = av; ensureId(); save(); closeModal(); pushScore(); if (then) then();
+    };
+  }
+
+  function rowHTML(e, rank) {
+    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
+    return `<span class="rk">${medal}</span><span class="ra">${e.avatar}</span><span class="rn">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${e.bot ? ' <i class="bot" title="computerspeler">🤖</i>' : ''}<small>level ${e.level}</small></span><span class="rp">${e.points.toLocaleString('nl-NL')}</span>`;
+  }
+  function renderRanking() {
+    ensureId();
+    const list = ranking();
+    const me = list.findIndex(e => e.me);
+    $('#rkMine').textContent = '🏆 #' + (me + 1);
+    $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}">${rowHTML(e, i + 1)}</div>`).join('');
+    const online = !!DB_URL;
+    $('#rankNote').innerHTML = online ? `🌐 Familie online · 🤖 = computerspeler` : `🤖 = computerspeler · familie-ranglijst nog niet gekoppeld`;
+    $('#rankName').textContent = `${S.avatar || '😊'} ${S.name || 'Naam kiezen'} ✏️`;
+    setTimeout(() => { const m = document.querySelector('.rrow.me'); if (m) m.scrollIntoView({ block: 'center' }); }, 30);
+    if (online && (!S.lbOnlineAt || Date.now() - S.lbOnlineAt > 20000)) fetchOnline().then(ok => { if (ok && screen === 'ranking') renderRanking(); });
+  }
+
+  /* The dopamine moment: your row climbs past the people you just overtook. */
+  function showClimb(oldPts, newPts, then) {
+    const before = ranking(oldPts), after = ranking(newPts);
+    const oldRank = before.findIndex(e => e.me) + 1, newRank = after.findIndex(e => e.me) + 1;
+    const passed = after.slice(newRank, oldRank);          // the people you overtook (closest last)
+    const above = after[newRank - 2];                       // the next target
+    const show = passed.slice(-5);                          // animate at most 5 overtakes
+    const rows = [...(above ? [above] : []), ...show];
+    const RH = 58;
+    const startIdx = (above ? 1 : 0) + show.length;         // where your row starts (below the others)
+    const offset = passed.length - show.length;             // overtakes too far up to animate
+    // rank shown on a row: before being overtaken it is one place higher than at the end
+    const rankOf = (k, done) => {
+      if (above && k === 0) return newRank - 1;
+      const j = k - (above ? 1 : 0);
+      const finalRank = newRank + offset + j + 1;
+      return done ? finalRank : finalRank - 1;
+    };
+    const medalOf = r => r <= 3 ? ['🥇', '🥈', '🥉'][r - 1] : '#' + r;
+    openModal(`<h2>Je klimt op de ranglijst! 🏆</h2>
+      <div class="climb" style="height:${(rows.length + 1) * RH}px">
+        ${rows.map((e, k) => `<div class="rrow crow" data-k="${k}" style="transform:translateY(${k * RH}px)">${rowHTML(e, rankOf(k, false))}</div>`).join('')}
+        <div class="rrow me crow" id="meRow" style="transform:translateY(${startIdx * RH}px)">${rowHTML(myEntry(oldPts), oldRank)}</div>
+      </div>
+      <div class="climb-msg" id="climbMsg">&nbsp;</div>
+      <button class="big-btn play" id="clOk"><span class="bb-text"><b>Verder</b></span></button>`, false);
+    $('#clOk').onclick = () => { closeModal(); then(); };
+    const me = $('#meRow');
+    const rowsEls = [...document.querySelectorAll('.crow[data-k]')];
+    // relabel the passed rows with their final rank numbers once they move down
+    let pos = startIdx, k = 0;
+    const steps = show.length;
+    const stepTime = Math.max(380, Math.min(650, 2400 / Math.max(1, steps)));
+    function step() {
+      if (k >= steps) return finish();
+      const victimIdx = startIdx - 1 - k;                  // the row right above you
+      const victim = rowsEls[victimIdx];
+      pos--; k++;
+      me.style.transform = `translateY(${pos * RH}px) scale(1.04)`;
+      victim.style.transform = `translateY(${(victimIdx + 1) * RH}px)`;
+      victim.querySelector('.rk').textContent = medalOf(rankOf(victimIdx, true));
+      const rank = oldRank - (passed.length - show.length) - k;
+      me.querySelector('.rk').textContent = rank <= 3 ? ['🥇', '🥈', '🥉'][rank - 1] : '#' + rank;
+      const pts = Math.round(oldPts + (newPts - oldPts) * k / steps);
+      me.querySelector('.rp').textContent = pts.toLocaleString('nl-NL');
+      Sound.pass(k); buzz(15);
+      const r = me.getBoundingClientRect(); FX.burst(r.left + r.width * 0.15, r.top + r.height / 2, 10);
+      setTimeout(step, stepTime);
+    }
+    function finish() {
+      me.style.transform = `translateY(${pos * RH}px)`;
+      me.querySelector('.rp').textContent = newPts.toLocaleString('nl-NL');
+      me.querySelector('.rk').textContent = newRank <= 3 ? ['🥇', '🥈', '🥉'][newRank - 1] : '#' + newRank;
+      me.classList.add('glow');
+      Sound.rankUp(); FX.confetti(); buzz([30, 50, 30, 50, 60]);
+      const n = passed.length;
+      const who = n === 1 ? `Je bent <b>${passed[0].name}</b> voorbij! 🎉` : `Je bent <b>${n} spelers</b> voorbij! 🎉`;
+      const nxt = above ? `<br><small>Nog ${(above.points - newPts + 1).toLocaleString('nl-NL')} punten tot ${above.avatar} ${above.name}</small>` : `<br><small>Je staat bovenaan! 👑</small>`;
+      $('#climbMsg').innerHTML = `<span class="climb-up">#${oldRank} → #${newRank} ⬆</span><br>${who}${nxt}`;
+    }
+    setTimeout(step, 650);
+  }
+
   // ---------- winning ----------
   function win() {
     syncClock(); G.tStart = 0;
@@ -790,6 +947,11 @@
     const stars = 3 - (G.usedHint ? 1 : 0) - (G.usedShuffle ? 1 : 0);
     G.score += stars * 50;
     const before = totalStars();
+    const ptsBefore = myPoints();
+    S.lvlPts = S.lvlPts || {}; S.dayPts = S.dayPts || {};
+    if (G.mode === 'level') S.lvlPts[G.level] = Math.max(S.lvlPts[G.level] || 0, G.score);
+    else S.dayPts[G.date] = Math.max(S.dayPts[G.date] || 0, G.score);
+    const ptsAfter = myPoints();
     if (G.mode === 'level') {
       S.stars[G.level] = Math.max(S.stars[G.level] || 0, stars);
       if (G.level === S.level) S.level++;
@@ -802,6 +964,12 @@
     const after = totalStars();
     const unlocked = numBgs.filter(b => b.need > before && b.need <= after);
     const rewards = [];
+    ensureId();
+    const rankBefore = myRank(ptsBefore), rankAfter = myRank(ptsAfter);
+    if (rankAfter < rankBefore) rewards.push({ type: 'rank', from: ptsBefore, to: ptsAfter });
+    pushScore();
+    const nextUp = ranking(ptsAfter)[rankAfter - 2];
+    const chase = nextUp && rankAfter >= rankBefore ? `<p class="chase">🏆 Plek #${rankAfter} · nog <b>${(nextUp.points - ptsAfter + 1).toLocaleString('nl-NL')}</b> punten tot ${nextUp.avatar} ${nextUp.name}</p>` : '';
     if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
     const tr = newTrophies();
     if (tr.length) rewards.push({ type: 'trophies', list: tr });
@@ -817,7 +985,7 @@
         <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
         <div class="win-stats"><div>Punten<b id="wScore">0</b></div><div>Tijd<b>${mins}:${pad(secs)}</b></div></div>
         <div class="perfect" id="wPerfect">${stars === 3 ? 'PERFECT! ✨' : ''}</div>
-        ${extra}
+        ${extra}${chase}
         <div class="goal" id="wGoal" style="background:#efe2c0;color:#5c4520;margin:12px 0 4px"></div>
         <button class="big-btn play pulse" id="wNext"><span class="bb-text"><b>${nextLbl}</b></span></button>
         <button class="link-btn" id="wMenu">Menu</button>`, false);
@@ -848,7 +1016,8 @@
     const r = queue.shift();
     if (!r) return then();
     const next = () => runRewards(queue, then);
-    if (r.type === 'sun') showSunflowerUnlock(next);
+    if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next)); else showClimb(r.from, r.to, next); }
+    else if (r.type === 'sun') showSunflowerUnlock(next);
     else if (r.type === 'trophies') showTrophies(r.list, next);
     else showUnlock(r.list.slice(), next);
   }
@@ -925,6 +1094,8 @@
   $('#btnLevels').onclick = () => show('levels');
   $('#btnThemes').onclick = () => show('themes');
   $('#btnTrophies').onclick = () => show('trophies');
+  $('#btnRanking').onclick = () => { if (!S.name) askName(() => show('ranking')); else show('ranking'); };
+  $('#rankName').onclick = () => askName(() => renderRanking());
   $('#btnSettings').onclick = openSettings;
   $('#btnPlayDaily').onclick = () => startDaily(selDate);
   $('#calPrev').onclick = () => { calM--; if (calM < 0) { calM = 11; calY--; } renderDaily(); };
@@ -949,8 +1120,10 @@
   Sound.setSfx(S.sfx); Sound.setMusic(S.music);
   applyTheme();
   applyBg();
+  ensureId();
+  fetchOnline().then(ok => { if (ok && screen === 'home') renderHome(); });
   document.body.classList.toggle('nonum', !S.nums);
   show('home');
   // test hook
-  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show };
+  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb };
 })();

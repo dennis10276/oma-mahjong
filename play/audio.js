@@ -143,6 +143,17 @@ const Sound = (() => {
       [PENTA[0], PENTA[2], PENTA[4], PENTA[7]].forEach(f => tone(f, t + 1.0, 2.2, 0.06, 'triangle'));
       chirp(t + 0.4, 0.06); chirp(t + 1.1, 0.06); chirp(t + 1.5, 0.05);
     },
+    // overtaking someone in the ranking: a rising "whoosh-ding", higher with every pass
+    pass(k = 0) {
+      if (!ok()) return; const t = now();
+      noise(t, 0.18, 0.3, 600, 2600, 1);
+      bell(PENTA[Math.min(5 + k, 13)], t + 0.1, 0.14, 0.9);
+    },
+    rankUp() {
+      if (!ok()) return; const t = now();
+      [4, 7, 9, 12].forEach((n, i) => bell(PENTA[n], t + i * 0.09, 0.14, 1.2));
+      [PENTA[0], PENTA[4], PENTA[7]].forEach(f => tone(f, t + 0.4, 1.4, 0.06, 'triangle'));
+    },
     hint() {
       if (!ok()) return; const t = now();
       [0, 1, 2, 3, 4].forEach(i => tone(PENTA[7 + i], t + i * 0.06, 0.4, 0.07, 'sine'));

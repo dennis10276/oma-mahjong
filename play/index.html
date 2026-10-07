@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0b4d3c">
 <title>Oma's Mahjong</title>
-<link rel="stylesheet" href="style.css?v=0.6">
+<link rel="stylesheet" href="style.css?v=0.7">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -46,6 +46,7 @@
         <button class="mid-btn" id="btnLevels"><span>🗺️</span>Levels</button>
         <button class="mid-btn" id="btnThemes"><span>🎨</span>Thema's</button>
         <button class="mid-btn" id="btnTrophies"><span>🏅</span>Prijzen<i class="mid-badge" id="trophyCount">0</i></button>
+        <button class="mid-btn" id="btnRanking"><span>🏆</span>Ranglijst<i class="mid-badge" id="rankBadge">#1</i></button>
       </div>
     </div>
     <div class="goal" id="nextUnlock"></div>
@@ -103,6 +104,15 @@
   </section>
 
   <!-- THEMES -->
+  <section id="ranking" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2>Ranglijst</h2><div class="chip" id="rkMine">🏆 #1</div></div>
+    <div class="scroll">
+      <button class="name-chip" id="rankName">😊 Naam kiezen ✏️</button>
+      <div class="rank-list" id="rankList"></div>
+      <p class="rank-note" id="rankNote"></p>
+    </div>
+  </section>
+
   <section id="trophies" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2>Prijzenkast</h2><div class="chip" id="trCount">🏅 0</div></div>
     <div class="scroll"><div class="trophy-grid" id="trophyGrid"></div></div>
@@ -125,9 +135,9 @@
 <div id="toast"></div>
 <div id="modal" class="hidden"><div class="modal-box" id="modalBox"></div></div>
 
-<script src="tiles.js?v=0.6"></script>
-<script src="audio.js?v=0.6"></script>
-<script src="layouts.js?v=0.6"></script>
-<script src="game.js?v=0.6"></script>
+<script src="tiles.js?v=0.7"></script>
+<script src="audio.js?v=0.7"></script>
+<script src="layouts.js?v=0.7"></script>
+<script src="game.js?v=0.7"></script>
 </body>
 </html>
