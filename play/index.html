@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0b4d3c">
 <title>Oma's Mahjong</title>
-<link rel="stylesheet" href="style.css?v=0.9.4">
+<link rel="stylesheet" href="style.css?v=1.0">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -25,6 +25,7 @@
   <section id="home" class="screen active">
     <div class="home-top">
       <div class="chip big-chip" id="homeStars">⭐ 0</div>
+      <button class="chip task-chip" id="btnTasks">📋 <span id="taskDots">○○○</span></button>
       <button class="icon-btn" id="btnSettings" aria-label="Instellingen">⚙️</button>
     </div>
     <div class="logo">
@@ -110,6 +111,8 @@
     <div class="header"><button class="icon-btn back">←</button><h2>Ranglijst</h2><div class="chip" id="rkMine">🏆 #1</div></div>
     <div class="scroll">
       <button class="name-chip" id="rankName">😊 Naam kiezen ✏️</button>
+      <div class="rk-tabs"><button id="rkWeek" class="on">📅 Deze week</button><button id="rkAll">🏆 Altijd</button></div>
+      <p class="wk-info" id="wkInfo"></p>
       <div class="rank-list" id="rankList"></div>
       <p class="rank-note" id="rankNote"></p>
     </div>
@@ -117,7 +120,7 @@
 
   <section id="trophies" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2>Prijzenkast</h2><div class="chip" id="trCount">🏅 0</div></div>
-    <div class="scroll"><div class="trophy-grid" id="trophyGrid"></div></div>
+    <div class="scroll"><div id="statsBox"></div><div class="trophy-grid" id="trophyGrid"></div></div>
   </section>
 
   <section id="themes" class="screen">
@@ -137,9 +140,9 @@
 <div id="toast"></div>
 <div id="modal" class="hidden"><div class="modal-box" id="modalBox"></div></div>
 
-<script src="tiles.js?v=0.9.4"></script>
-<script src="audio.js?v=0.9.4"></script>
-<script src="layouts.js?v=0.9.4"></script>
-<script src="game.js?v=0.9.4"></script>
+<script src="tiles.js?v=1.0"></script>
+<script src="audio.js?v=1.0"></script>
+<script src="layouts.js?v=1.0"></script>
+<script src="game.js?v=1.0"></script>
 </body>
 </html>

@@ -163,18 +163,19 @@ const Layouts = (() => {
   /* Gentler curve: after level 6 the difficulty climbs at half speed
      (level 26 now plays like the old level 16). */
   const effLevel = level => level <= 6 ? level : 6 + (level - 6) / 2;
-  function forLevel(level, aspect) {
+  function forLevel(level, aspect, scale = 1) {
     const e = effLevel(level);
     let target = targetFor(Math.round(e));
     if (e > 26) target = targetFor(level);           // keep variety in the endless levels
+    target = Math.max(8, Math.round(target * scale));
     target -= target % 2;
     const res = buildPiles(level * 7919 + 13, target, layersFor(e), aspect);
     const diff = difficultyFor(e);
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1, diff };
   }
-  function forDate(ymd, aspect) {
+  function forDate(ymd, aspect, scale = 1) {
     const r0 = rng(ymd);
-    const target = 60 + Math.floor(r0() * 11) * 2; // 60..80
+    let target = Math.round((60 + Math.floor(r0() * 11) * 2) * scale); target -= target % 2; // 60..80
     const res = buildPiles(ymd * 13 + 5, target, 4, aspect);
     const diff = { ...difficultyFor(10), target: 0.75, down: 0.15 };
     return { ...res, kinds: kindsFor(res.tiles.length / 2, 10, diff), seed: ymd * 7 + 3, diff };

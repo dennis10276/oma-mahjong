@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.9.4';
+  const APP_VERSION = '1.0';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -28,7 +28,7 @@
   ];
   const numBgs = BGS.filter(b => typeof b.need === 'number');
 
-  const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0, nums: true, trophies: {}, bestCombo: 0, sunSeen: false });
+  const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0, nums: true, trophies: {}, bestCombo: 0, sunSeen: false, bonusStars: 0, bonusPts: 0, stats: {}, heartsSent: {}, heartsSeen: {}, frame: 'none', weekWins: 0, bigTiles: false, contrast: false });
   let S;
   try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
@@ -41,7 +41,7 @@
   const MONTHS = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
   const todayKey = () => dkey(new Date());
 
-  const totalStars = () => Object.values(S.stars).reduce((a, b) => a + b, 0) + Object.values(S.daily).reduce((a, b) => a + b, 0);
+  const totalStars = () => Object.values(S.stars).reduce((a, b) => a + b, 0) + Object.values(S.daily).reduce((a, b) => a + b, 0) + (S.bonusStars || 0);
   function streak() {
     const d = new Date();
     if (!S.daily[dkey(d)]) d.setDate(d.getDate() - 1);
@@ -113,6 +113,9 @@
     { id: 'm100', ico: '🀄', name: '100 paren', desc: 'Maak 100 paren', prog: () => [S.matches, 100] },
     { id: 'm500', ico: '💎', name: '500 paren', desc: 'Maak 500 paren', prog: () => [S.matches, 500] },
     { id: 'c5', ico: '🌈', name: 'Supercombo', desc: 'Maak 5 paren vlak na elkaar', prog: () => [S.bestCombo, 5] },
+    { id: 'k5', ico: '🎁', name: 'Schatzoeker', desc: 'Open 5 schatkisten', prog: () => [(S.stats || {}).chests || 0, 5] },
+    { id: 'h3', ico: '💛', name: 'Geliefd', desc: 'Krijg 3 hartjes van familie', prog: () => [(S.stats || {}).hearts || 0, 3] },
+    { id: 'w1', ico: '👑', name: 'Weekwinnaar', desc: 'Word 1e in de weekstrijd', prog: () => [S.weekWins || 0, 1] },
   ];
   function newTrophies() {
     const out = [];
@@ -220,7 +223,10 @@
     lt.forEach((el, i) => el.innerHTML = Tiles.faceHTML(S.theme === 'classic' ? 'classic' : S.theme, faces[i]).replace('class="emo"', 'class="emo" style="font-size:46px;display:grid;place-items:center;height:100%"'));
     renderGoal($('#nextUnlock'));
     $('#trophyCount').textContent = `${trophyCount()}/${TROPHIES.length}`;
-    $('#rankBadge').textContent = '#' + myRank();
+    $('#rankBadge').textContent = '#' + myRank(undefined, 'week');
+    renderTaskChip();
+    if (S.lastWeek) setTimeout(() => { if (screen === 'home') checkLastWeek(); }, 400);
+    else if (S.pendingHearts && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); setTimeout(() => { if (screen === 'home' && $('#modal').classList.contains('hidden')) showHearts(h, () => renderHome()); }, 400); }
     if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (screen === 'home' && $('#modal').classList.contains('hidden')) showSunflowerUnlock(() => renderHome()); }, 500);
   }
   function renderGoal(el) {
@@ -335,6 +341,7 @@
   }
 
   function renderTrophies() {
+    $('#statsBox').innerHTML = statsHTML();
     $('#trCount').textContent = `🏅 ${trophyCount()}/${TROPHIES.length}`;
     $('#trophyGrid').innerHTML = TROPHIES.map(t => {
       const got = S.trophies[t.id];
@@ -356,7 +363,7 @@
   $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' && modalClosable) closeModal(); });
 
   function openSettings() {
-    const rows = [['sfx', '🔊 Geluidjes'], ['music', '🎵 Muziek'], ['vibrate', '📳 Trillen'], ['highlight', '✨ Vastzittende stenen donker'], ['nums', '🔢 Cijfers in de hoek']];
+    const rows = [['sfx', '🔊 Geluidjes'], ['music', '🎵 Muziek'], ['vibrate', '📳 Trillen'], ['highlight', '✨ Vastzittende stenen donker'], ['nums', '🔢 Cijfers in de hoek'], ['bigTiles', '🔍 Extra grote stenen'], ['contrast', '🌓 Extra duidelijk (hoog contrast)']];
     openModal(`<h2>Instellingen</h2>${rows.map(([k, l]) => `<div class="set-row">${l}<button class="tog ${S[k] ? 'on' : ''}" data-k="${k}"></button></div>`).join('')}
       <button class="big-btn gold" id="mHow"><span class="bb-text"><b>Hoe speel je?</b></span></button>
       <button class="link-btn" id="mClose">Sluiten</button>
@@ -369,6 +376,8 @@
       if (k === 'vibrate' && S.vibrate) buzz(40);
       if (k === 'highlight') $('#board').classList.toggle('hl', S.highlight);
       if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
+      if (k === 'contrast') document.body.classList.toggle('contrast', S.contrast);
+      if (k === 'bigTiles') toast(S.bigTiles ? 'Vanaf het volgende level: minder en grotere stenen 🔍' : 'Vanaf het volgende level weer gewone stenen');
     });
     $('#mHow').onclick = () => showIntro();
     $('#mReset').onclick = confirmReset;
@@ -384,7 +393,7 @@
       <button class="reset-btn" id="rsYes">Ja, alles wissen</button>`);
     $('#rsNo').onclick = closeModal;
     $('#rsYes').onclick = () => {
-      const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, pid: S.pid, name: S.name, avatar: S.avatar, since: S.since };
+      const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp || {}, pid: S.pid, name: S.name, avatar: S.avatar, since: S.since, heartsSeen: S.heartsSeen || {}, bigTiles: !!S.bigTiles, contrast: !!S.contrast };
       const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
       Object.keys(S).forEach(k => delete S[k]);
       Object.assign(S, defaults(), keep, { theme });
@@ -416,17 +425,17 @@
     if (!G || G.done) return;
     syncClock();
     try {
-      localStorage.setItem(CUR, JSON.stringify({ v: 5, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+      localStorage.setItem(CUR, JSON.stringify({ v: 5, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
     } catch (e) { }
   }
   function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
   function pauseClock() { syncClock(); if (G) G.tStart = 0; saveCur(); }
   function resumeClock() { if (G && !G.done && screen === 'game') G.tStart = performance.now(); }
 
-  function startLevel(level) { begin({ mode: 'level', level, key: 'L' + level, title: 'Level ' + level, makeSpec: a => Layouts.forLevel(level, a) }); }
+  function startLevel(level) { begin({ mode: 'level', level, key: 'L' + level, title: 'Level ' + level, makeSpec: a => Layouts.forLevel(level, a, S.bigTiles ? 0.7 : 1) }); }
   function startDaily(k) {
     const d = parseKey(k);
-    begin({ mode: 'daily', date: k, key: 'D' + k, title: `Dagpuzzel ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`, makeSpec: a => Layouts.forDate(dnum(k), a) });
+    begin({ mode: 'daily', date: k, key: 'D' + k, title: `Dagpuzzel ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`, makeSpec: a => Layouts.forDate(dnum(k), a, S.bigTiles ? 0.7 : 1) });
   }
 
   function begin(o, restart = false) {
@@ -441,18 +450,21 @@
     const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
     const nb = Layouts.neighbors(tiles);
     const n = tiles.length;
-    G = { o, ...o, tiles, nb, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
+    G = { o, ...o, tiles, nb, gold: new Set(), lucky: null, luckyDone: false, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
     const cur = restart ? null : loadCur();
     if (cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect) {
       cur.faces.forEach((f, i) => tiles[i].face = f);
       cur.alive.forEach((a, i) => G.alive[i] = a);
       (cur.down || []).forEach((a, i) => G.down[i] = a);
       G.peek = cur.peek ?? -1;
+      G.gold = new Set(cur.gold || []);
       Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle });
       G.half = aliveCount() <= n / 2;
     } else {
       if (!o.faces) { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; } // same deal again on "Opnieuw"
+      addSpecials(o, spec);
       o.faces.forEach((f, i) => tiles[i].face = f);
+      G.gold = new Set(o.gold || []);
       (o.down || []).forEach(i => G.down[i] = 1);
       clearCur();
     }
@@ -465,11 +477,28 @@
     setTimeout(() => praise(restart ? 'Nog een keer! 💪' : o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
     else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
-    else setTimeout(checkStuck, 500);
+    else { setTimeout(checkStuck, 500); setTimeout(specialTip, 1200); }
+  }
+  // explain a new kind of special tile the first time it shows up
+  function specialTip() {
+    if (!G || G.done) return;
+    S.seenSp = S.seenSp || {};
+    const has = { gold: G.gold.size > 0, gift: G.tiles.some(t => t.face === GIFT), joker: G.tiles.some(t => t.face === JOKER) };
+    const tips = { gold: '✨ Nieuw: gouden stenen! Een gouden paar geeft dubbele punten.', gift: '🎁 Nieuw: cadeautjes! Maak het paar voor een verrassing.', joker: '🃏 Nieuw: jokers! Een joker-paar ruimt ook een steen uit je vakjes op.' };
+    const k = ['gold', 'gift', 'joker'].find(k => has[k] && !S.seenSp[k]);
+    if (!k) return;
+    S.seenSp[k] = true; save();
+    toast(tips[k], 4200);
   }
   const restart = () => { if (G) begin(G.o, true); };
 
   const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);
+  function decorate(i) {
+    const t = G.tiles[i], el = t.el; if (!el) return;
+    el.classList.toggle('gold', G.gold.has(i));
+    el.classList.toggle('sp-gift', t.face === GIFT);
+    el.classList.toggle('sp-joker', t.face === JOKER);
+  }
   const free = i => Layouts.isFree(i, G.alive, G.nb);
 
   function renderBoard(enter) {
@@ -483,6 +512,7 @@
       el.className = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '');
       el.dataset.i = i;
       el.innerHTML = `<div class="face">${Tiles.faceHTML(S.theme, t.face)}</div>`;
+      t.el = el; decorate(i);
       if (enter && G.alive[i]) { el.classList.add('enter'); el.style.animationDelay = Math.min(900, k * 8 + t.z * 70) + 'ms'; setTimeout(() => el.classList.remove('enter'), 1700); }
       t.el = el; board.appendChild(el);
     });
@@ -600,6 +630,7 @@
         if (pk0 >= 0 && G.alive[pk0]) turn(pk0, true);
         G.peek = i; turn(i, false);
         Sound.flip(); buzz(8); clearHint(); saveCur();
+        taskProgress('flips'); bumpStat('flips');
         return;
       }
       // its twin is already in the tray, or is the open tile (which counts as picked): match at once
@@ -616,6 +647,7 @@
       return;
     }
     clearHint();
+    luckyTaken(i);
     const from = el.getBoundingClientRect();
     G.alive[i] = 0;
     el.classList.add('hidden');
@@ -629,10 +661,12 @@
       const pel = G.tiles[pk].el, pfrom = pel.getBoundingClientRect();
       G.alive[pk] = 0; G.down[pk] = 0; G.peek = -1;
       pel.classList.add('hidden');
+      const goldP = G.gold.has(i) || G.gold.has(pk);
+      if (face === JOKER) jokerEffect();
       const mid = { left: (from.left + pfrom.left) / 2, top: (from.top + pfrom.top) / 2 - from.height * 0.3, width: from.width, height: from.height };
       const f1 = flyTile(face, from, mid, MS), f2 = flyTile(face, pfrom, mid, MS);
       afterLogic();
-      land(() => { f1.classList.add('popout'); f2.classList.add('popout'); onMatch({ x: mid.left + mid.width / 2, y: mid.top + mid.height / 2 }); setTimeout(() => { f1.remove(); f2.remove(); }, 230); afterLand(); });
+      land(() => { f1.classList.add('popout'); f2.classList.add('popout'); onMatch({ x: mid.left + mid.width / 2, y: mid.top + mid.height / 2 }, face, goldP); setTimeout(() => { f1.remove(); f2.remove(); }, 230); afterLand(); });
       return;
     }
     if (mi >= 0) {
@@ -644,12 +678,14 @@
       if (ghost) { ghost.classList.add('ghost'); Object.assign(ghost.style, { left: to.left + 'px', top: to.top + 'px', width: to.width + 'px', height: to.height + 'px' }); ghost.style.setProperty('--sfs', $('#tray').style.getPropertyValue('--sfs')); document.body.appendChild(ghost); }
       G.tray.splice(mi, 1);
       G.arriving.delete(partner);
+      const goldT = G.gold.has(i) || G.gold.has(partner);
+      if (face === JOKER) jokerEffect();
       renderTray();
       const fly = flyTile(face, from, to, MS);
       afterLogic();
       land(() => {
         fly.classList.add('popout'); if (ghost) ghost.classList.add('popout');
-        onMatch({ x: to.left + to.width / 2, y: to.top + to.height / 2 });
+        onMatch({ x: to.left + to.width / 2, y: to.top + to.height / 2 }, face, goldT);
         setTimeout(() => { fly.remove(); if (ghost) ghost.remove(); }, 230);
         afterLand();
       });
@@ -682,7 +718,7 @@
   }
   function afterLand() {
     if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
-    if (G.flights === 0) checkStuck();
+    if (G.flights === 0) { checkStuck(); maybeLucky(); }
   }
 
   function turn(i, faceDown) {
@@ -701,13 +737,15 @@
     S.seenDown = true; save();
   }
 
-  function onMatch(c) {
+  function onMatch(c, face, gold) {
     const now = performance.now();
     G.combo = now - G.lastMatch < 6000 ? G.combo + 1 : 1;
     G.lastMatch = now;
-    const pts = 10 * Math.min(G.combo, 5);
+    const mult = specialMatch(face, gold, c);
+    const pts = 10 * Math.min(G.combo, 5) * mult;
     G.score += pts;
     S.matches++;
+    taskProgress('pairs'); taskProgress('combo', G.combo, true);
     if (G.combo > (S.bestCombo || 0)) S.bestCombo = G.combo;
     const sunny = S.theme === 'sunflower';
     FX.burst(c.x, c.y - 10, sunny ? 12 : G.combo >= 3 ? 30 : 20, G.combo >= 3);
@@ -722,7 +760,7 @@
     if (G.combo >= 2) { tag.textContent = `Combo x${Math.min(G.combo, 5)} 🔥`; tag.classList.add('on'); }
     clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), 6000);
     const left = aliveCount();
-    if (G.combo % 5 === 0) { /* supercombo already celebrates */ }
+    if (G.combo % 5 === 0 || gold || face === GIFT || face === JOKER) { /* already celebrated */ }
     else if (left === 0 && G.tray.length === 0) { praise('Laatste paar! 🎉'); FX.burst(c.x, c.y, 40, true); }
     else if (G.combo >= 3 && G.combo % 2 === 1) praise(PRAISE[Math.min(PRAISE.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]);
     else if (!G.half && left <= G.tiles.length / 2 && left > 0) { G.half = true; praise('Halverwege! 💪'); }
@@ -749,6 +787,7 @@
   function checkStuck() {
     if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
     G.busy = true; G.overShown = true;
+    bumpStat('losses'); save();
     syncClock();
     setTimeout(() => {
       Sound.stuck(); buzz([40, 80, 40]);
@@ -804,10 +843,177 @@
       el.classList.remove('flip'); void el.offsetWidth;
       el.style.animationDelay = (kk % 12) * 15 + 'ms';
       el.classList.add('flip');
-      setTimeout(() => { el.querySelector('.face').innerHTML = Tiles.faceHTML(S.theme, t.face); }, 200 + (kk % 12) * 15);
+      setTimeout(() => { el.querySelector('.face').innerHTML = Tiles.faceHTML(S.theme, t.face); decorate(i); }, 200 + (kk % 12) * 15);
       setTimeout(() => { el.classList.remove('flip'); el.style.animationDelay = ''; }, 700);
     });
     setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); checkStuck(); }, 520);
+  }
+
+  // ---------- statistics ----------
+  function bumpStat(k, n = 1) { S.stats = S.stats || {}; S.stats[k] = (S.stats[k] || 0) + n; }
+  function fmtTime(sec) { const h = Math.floor(sec / 3600), m = Math.round(sec % 3600 / 60); return h ? `${h} u ${m} min` : `${m} min`; }
+  function statsHTML() {
+    const st = S.stats || {};
+    const items = [
+      ['🧩', 'Levels uitgespeeld', S.level - 1], ['⭐', 'Sterren', totalStars()], ['🀄', 'Paren gemaakt', S.matches || 0],
+      ['💰', 'Punten', myPoints().toLocaleString('nl-NL')], ['📅', 'Dagpuzzels', Object.keys(S.daily).length], ['🔥', 'Langste reeks', `${S.bestStreak || 0} ${S.bestStreak === 1 ? 'dag' : 'dagen'}`],
+      ['🌈', 'Beste combo', S.bestCombo || 0], ['⏱️', 'Speeltijd', fmtTime(st.playSec || 0)], ['🎁', 'Schatkisten', st.chests || 0],
+      ['💛', 'Hartjes gekregen', st.hearts || 0], ['🍀', 'Geluksmomenten', st.lucky || 0], ['🥇', 'Weken gewonnen', S.weekWins || 0],
+    ];
+    return `<div class="stats-card"><h3>📊 Mijn prestaties</h3><div class="stats-grid">${items.map(([i, l, v]) => `<div class="stat"><span>${i}</span><b>${v}</b><small>${l}</small></div>`).join('')}</div></div>`;
+  }
+
+  // ---------- daily tasks ----------
+  const TASK_TYPES = [
+    { id: 'pairs', ico: '🀄', make: r => 20 + Math.floor(r() * 3) * 10, text: g => `Maak ${g} paren` },
+    { id: 'levels', ico: '🧩', make: r => 2 + Math.floor(r() * 2), text: g => `Speel ${g} levels uit` },
+    { id: 'daily', ico: '📅', make: () => 1, text: () => 'Speel de dagpuzzel' },
+    { id: 'combo', ico: '🔥', make: r => 3 + Math.floor(r() * 2), text: g => `Maak ${g} paren vlak na elkaar` },
+    { id: 'stars3', ico: '⭐', make: () => 1, text: () => 'Haal 3 sterren in een level' },
+    { id: 'flips', ico: '🔄', make: r => 5 + Math.floor(r() * 2) * 5, text: g => `Draai ${g} stenen om`, minLevel: 6 },
+    { id: 'points', ico: '💰', make: r => (10 + Math.floor(r() * 6)) * 100, text: g => `Verdien ${g.toLocaleString('nl-NL')} punten` },
+    { id: 'nohelp', ico: '💪', make: () => 1, text: () => 'Speel een level uit zonder hint of schudden', minLevel: 16 },
+  ];
+  function ensureTasks() {
+    const tk = todayKey();
+    if (S.tasks && S.tasks.date === tk) return S.tasks;
+    const r = Layouts.rng(dnum(tk) * 3 + (S.level % 7));
+    const pool = TASK_TYPES.filter(t => !t.minLevel || S.level >= t.minLevel);
+    const list = Layouts.shuffleArr(r, pool.slice()).slice(0, 3).map(t => ({ id: t.id, goal: t.make(r), prog: 0, done: false }));
+    S.tasks = { date: tk, list, chest: false };
+    save();
+    return S.tasks;
+  }
+  const taskType = id => TASK_TYPES.find(t => t.id === id);
+  const tasksDone = () => ensureTasks().list.filter(t => t.done).length;
+  // amount: add to progress; or with max=true keep the highest value (e.g. a combo)
+  function taskProgress(id, amount = 1, max = false) {
+    const T = ensureTasks();
+    T.list.forEach(t => {
+      if (t.id !== id || t.done) return;
+      t.prog = max ? Math.max(t.prog, amount) : t.prog + amount;
+      if (t.prog >= t.goal) {
+        t.prog = t.goal; t.done = true;
+        S.bonusStars = (S.bonusStars || 0) + 1;
+        bumpStat('tasks');
+        setTimeout(() => { toast(`✅ Taak klaar: ${taskType(t.id).text(t.goal)} (+1 ⭐)`, 2800); Sound.star(2); }, 600);
+        if (T.list.every(x => x.done)) setTimeout(() => { if (!ensureTasks().chest) toast('🎁 Alle taken klaar! Open je schatkist in het menu', 3200); }, 3600);
+      }
+    });
+    save();
+  }
+  function renderTaskChip() {
+    const T = ensureTasks(), n = tasksDone(), ready = n === 3 && !T.chest;
+    $('#taskDots').textContent = T.chest ? '✅' : ready ? '🎁' : T.list.map(t => t.done ? '●' : '○').join('');
+    $('#btnTasks').classList.toggle('ready', ready);
+  }
+  function openTasks() {
+    const T = ensureTasks(), n = tasksDone(), ready = n === 3 && !T.chest;
+    openModal(`<h2>📋 Taken van vandaag</h2>
+      <div class="task-list">${T.list.map(t => { const ty = taskType(t.id); return `<div class="task${t.done ? ' done' : ''}"><span class="t-ico">${t.done ? '✅' : ty.ico}</span><div><b>${ty.text(t.goal)}</b><span class="bar"><i style="width:${Math.round(t.prog / t.goal * 100)}%"></i></span><small>${t.done ? 'Klaar! +1 ⭐' : `${t.prog.toLocaleString('nl-NL')} / ${t.goal.toLocaleString('nl-NL')}`}</small></div></div>`; }).join('')}</div>
+      <button class="chest-btn${ready ? ' ready' : ''}${T.chest ? ' opened' : ''}" id="chestBtn"><span class="chest-ico">${T.chest ? '📭' : '🎁'}</span><span>${T.chest ? 'Schatkist van vandaag is open. Morgen nieuwe taken!' : ready ? 'Tik om je schatkist te openen!' : `Maak alle 3 taken af voor de schatkist (${n}/3)`}</span></button>
+      <button class="link-btn" id="tkClose">Sluiten</button>`);
+    $('#tkClose').onclick = closeModal;
+    $('#chestBtn').onclick = () => { if (ready) openChest(); else if (!T.chest) { Sound.blocked(); toast('Eerst alle 3 taken afmaken 😊'); } };
+  }
+  function openChest() {
+    const T = ensureTasks();
+    if (T.chest) return;
+    T.chest = true;
+    const pts = 300 + Math.min(4, Math.floor((S.level - 1) / 10)) * 100;
+    S.bonusPts = (S.bonusPts || 0) + pts; S.bonusStars = (S.bonusStars || 0) + 2; ensureWeek().pts += pts;
+    bumpStat('chests'); save(); pushScore();
+    Sound.trophy(); FX.confetti(); buzz([30, 60, 30, 60, 80]);
+    openModal(`<div class="chest-open"><span class="lid">🎁</span></div><h2>Schatkist!</h2>
+      <div class="chest-loot"><div>💰<b>+${pts}</b><small>punten</small></div><div>⭐<b>+2</b><small>sterren</small></div></div>
+      <p style="font-size:17px;color:#8a7448">Morgen staan er weer nieuwe taken klaar.</p>
+      <button class="big-btn play" id="chOk"><span class="bb-text"><b>Hoera!</b></span></button>`, false);
+    setTimeout(() => FX.emoji(innerWidth / 2, innerHeight * 0.35, ['⭐', '💰', '✨', '🎉'], 16), 250);
+    $('#chOk').onclick = () => { closeModal(); renderHome(); };
+  }
+
+  // ---------- special tiles (higher levels) ----------
+  const GIFT = 100, JOKER = 101;
+  // turn one pair with a picture that appears exactly twice into a special pair (keeps the level solvable)
+  function addSpecials(o, spec) {
+    if (o.specials) return;
+    const lvl = o.mode === 'level' ? o.level : Math.max(20, S.level);
+    const r = Layouts.rng(spec.seed + 555);
+    const cnt = {};
+    o.faces.forEach(f => cnt[f] = (cnt[f] || 0) + 1);
+    const twos = Object.keys(cnt).filter(f => cnt[f] === 2 && +f < 100).map(Number);
+    const relabel = (to) => { if (!twos.length) return; const f = twos.splice(Math.floor(r() * twos.length), 1)[0]; o.faces = o.faces.map(x => x === f ? to : x); };
+    o.gold = [];
+    if (lvl >= 20) {
+      // a golden pair: double points
+      const anyF = o.faces.filter(f => f < 100);
+      const f = anyF[Math.floor(r() * anyF.length)];
+      o.gold = o.faces.map((x, i) => x === f ? i : -1).filter(i => i >= 0).slice(0, 2);
+    }
+    if (o.mode === 'level' && lvl >= 25 && r() < 0.6) relabel(GIFT);
+    if (o.mode === 'level' && lvl >= 30 && r() < 0.6) relabel(JOKER);
+    o.specials = true;
+  }
+  function specialMatch(face, gold, c) {
+    let mult = 1;
+    if (gold) {
+      mult = 2;
+      praise('✨ Gouden paar! x2'); Sound.perfect(); FX.emoji(c.x, c.y, ['✨', '🌟', '💛'], 10); bumpStat('gold');
+    }
+    if (face === GIFT) {
+      const star = Math.random() < 0.5;
+      if (star) { S.bonusStars = (S.bonusStars || 0) + 1; praise('🎁 Cadeautje: +1 ⭐'); }
+      else { S.bonusPts = (S.bonusPts || 0) + 150; ensureWeek().pts += 150; praise('🎁 Cadeautje: +150'); }
+      Sound.unlock(); FX.emoji(c.x, c.y, ['🎁', '⭐', '✨'], 10); bumpStat('gifts'); save();
+    }
+    return mult;
+  }
+  // joker pair: also clears one picture from the tray together with its twin on the board
+  function jokerEffect() {
+    const k = G.tray.findIndex(t => !G.arriving.has(t));
+    if (k < 0) { G.score += 100; praise('🃏 Joker! +100'); return; }
+    const t = G.tray[k], face = G.tiles[t].face;
+    G.tray.splice(k, 1);
+    let twin = -1;
+    for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && G.tiles[i].face === face && (twin < 0 || free(i))) twin = i;
+    if (twin >= 0) {
+      G.alive[twin] = 0; G.down[twin] = 0; if (G.peek === twin) G.peek = -1;
+      const el = G.tiles[twin].el, c = centerOf(el);
+      el.classList.add('popout'); setTimeout(() => el.classList.add('hidden'), 230);
+      FX.emoji(c.x, c.y, ['🃏', '✨'], 8);
+    }
+    renderTray();
+    praise('🃏 Joker! Vakje vrij'); Sound.supercombo(); bumpStat('jokers');
+  }
+
+  // ---------- lucky moment ----------
+  function maybeLucky() {
+    if (!G || G.done || G.lucky || G.luckyDone) return;
+    const lvl = G.mode === 'level' ? G.level : S.level;
+    if (lvl < 10) return;
+    const n = G.tiles.length, left = G.alive.reduce((a, b) => a + b, 0);
+    if (left > n * 0.8 || left < 6 || Math.random() > 0.3) return;
+    const tf = new Set(G.tray.map(t => G.tiles[t].face));
+    const freeUp = [];
+    for (let i = 0; i < n; i++) if (G.alive[i] && !G.down[i] && free(i) && G.tiles[i].face < 100) freeUp.push(i);
+    const cand = freeUp.filter(i => tf.has(G.tiles[i].face) || freeUp.some(j => j !== i && G.tiles[j].face === G.tiles[i].face));
+    if (!cand.length) return;
+    const i = cand[Math.floor(Math.random() * cand.length)];
+    G.lucky = { i, until: Date.now() + 15000 };
+    G.tiles[i].el.classList.add('lucky');
+    toast('🍀 Geluksmoment! Pak de glinsterende steen binnen 15 tellen', 3000);
+    Sound.hint();
+    setTimeout(() => { if (G && G.lucky && G.lucky.i === i) { G.tiles[i].el.classList.remove('lucky'); G.lucky = null; G.luckyDone = true; } }, 15000);
+  }
+  function luckyTaken(i) {
+    if (!G.lucky || G.lucky.i !== i) return;
+    const ok = Date.now() <= G.lucky.until;
+    G.tiles[i].el.classList.remove('lucky');
+    G.lucky = null; G.luckyDone = true;
+    if (!ok) return;
+    G.score += 150; updateScore(); bumpStat('lucky');
+    const c = centerOf(G.tiles[i].el);
+    setTimeout(() => { praise('🍀 Geluk! +150'); Sound.perfect(); FX.emoji(c.x || innerWidth / 2, c.y || innerHeight / 2, ['🍀', '✨', '🌟'], 12); }, 300);
   }
 
   // ---------- ranking (family online + friendly computer players) ----------
@@ -819,30 +1025,68 @@
     ['Mien', '🧶', 8.5], ['Gerrit', '🌳', 10.5], ['Truus', '☕', 12.8], ['Wim', '🎺', 15.5], ['Corrie', '🌸', 18.5],
     ['Bep', '🍰', 22], ['Jan', '⛵', 26], ['Greet', '🐦', 31], ['Klaas', '🚜', 37], ['Lies', '💐', 45], ['Juffrouw Bos', '📚', 58], ['Meester Dekker', '🎩', 80],
   ];
+  const BOT_FRAMES = ['none', 'none', 'bronze', 'none', 'bronze', 'none', 'silver', 'none', 'bronze', 'silver', 'none', 'gold', 'silver', 'none', 'gold', 'sun', 'gold', 'crown'];
+  // what a computer player collects in a full week (Monday to Sunday)
+  const BOT_WEEK = [700, 1300, 2000, 2800, 3700, 4700, 5900, 7200, 8700, 10300, 12200, 14300, 16800, 19600, 23000, 27000, 32000, 40000];
   // rough points for playing level l (pairs × average combo points + star bonus)
   const levelPts = l => Math.round(Layouts.targetFor(Math.max(1, Math.round(Layouts.effLevel(l)))) / 2 * 24 + 120);
   const cumPts = L => { let p = 0; for (let l = 1; l <= Math.floor(L); l++) p += levelPts(l); return Math.round(p + (L % 1) * levelPts(Math.floor(L) + 1)); };
-  function botEntries() {
+
+  // ---- the week (Monday 00:00 to Sunday 23:59) ----
+  function weekInfo(d = new Date()) {
+    const mon = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7));
+    const next = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 7);
+    return { id: dkey(mon), frac: Math.min(1, Math.max(0, (d - mon) / (next - mon))), msLeft: next - d };
+  }
+  function ensureWeek() {
+    const w = weekInfo();
+    if (!S.wk || S.wk.id !== w.id) {
+      if (S.wk && S.wk.pts > 0) S.lastWeek = { id: S.wk.id, pts: S.wk.pts };
+      S.wk = { id: w.id, pts: 0 };
+      save();
+    }
+    return S.wk;
+  }
+  function weekLeftText() {
+    const ms = weekInfo().msLeft, d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
+    return d >= 1 ? `nog ${d} ${d === 1 ? 'dag' : 'dagen'}${h ? ` en ${h} uur` : ''}` : `nog ${Math.max(1, h)} uur`;
+  }
+
+  function botEntries(mode = 'all', weekId, frac) {
     if (!S.since) { S.since = todayKey(); save(); }
     const days = Math.max(0, Math.round((parseKey(todayKey()) - parseKey(S.since)) / 864e5));
+    if (mode === 'week') {
+      const w = weekInfo();
+      weekId = weekId || w.id; frac = frac ?? w.frac;
+      const wr = Layouts.rng(dnum(weekId) % 100000 + 17);
+      return BOTS.map(([name, avatar, at], k) => {
+        const r = Layouts.rng(k * 977 + 3);
+        const pts = Math.round(BOT_WEEK[k] * Math.pow(frac, 0.95) * (0.82 + wr() * 0.36));
+        return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: Math.max(1, Math.floor(at) + 1 + Math.floor(days / 3)), bot: true };
+      });
+    }
     return BOTS.map(([name, avatar, at], k) => {
       const r = Layouts.rng(k * 977 + 3);
       const pts = Math.round(cumPts(at) * (0.94 + r() * 0.12) + days * (15 + k * 3));
-      return { id: 'bot' + k, name, avatar, points: pts, level: Math.max(1, Math.floor(at) + 1), bot: true };
+      return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: Math.max(1, Math.floor(at) + 1), bot: true };
     });
   }
-  const myPoints = () => Object.values(S.lvlPts || {}).reduce((a, b) => a + b, 0) + Object.values(S.dayPts || {}).reduce((a, b) => a + b, 0);
-  function myEntry(points = myPoints()) { return { id: S.pid, name: S.name || 'Jij', avatar: S.avatar || '😊', points, level: S.level, me: true }; }
-  function onlineEntries() {
-    try { return (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid); } catch (e) { return []; }
+  const myPoints = () => Object.values(S.lvlPts || {}).reduce((a, b) => a + b, 0) + Object.values(S.dayPts || {}).reduce((a, b) => a + b, 0) + (S.bonusPts || 0);
+  const myWeekPts = () => ensureWeek().pts;
+  function myEntry(points, mode = 'all') { return { id: S.pid, name: S.name || 'Jij', avatar: S.avatar || '😊', frame: S.frame || 'none', points: points ?? (mode === 'week' ? myWeekPts() : myPoints()), level: S.level, me: true }; }
+  function onlineEntries(mode = 'all', weekId) {
+    let list = [];
+    try { list = (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid); } catch (e) { }
+    if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id ? (e.wkPts || 0) : 0 })); }
+    return list;
   }
-  function ranking(points) {
-    const list = [...botEntries(), ...onlineEntries(), myEntry(points)];
+  function ranking(points, mode = 'all') {
+    const list = [...botEntries(mode), ...onlineEntries(mode), myEntry(points, mode)];
     // on a tie you are placed above the other player
     list.sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
     return list;
   }
-  const myRank = points => ranking(points).findIndex(e => e.me) + 1;
+  const myRank = (points, mode = 'all') => ranking(points, mode).findIndex(e => e.me) + 1;
   function ensureId() { if (!S.pid) { S.pid = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); save(); } }
   async function fetchOnline() {
     if (!DB_URL) return false;
@@ -852,7 +1096,8 @@
       clearTimeout(to);
       if (!res.ok) return false;
       const data = await res.json() || {};
-      const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-')).map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), points: v.points, level: v.level || 1 }));
+      const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-'))
+        .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0 }));
       localStorage.setItem(LB_CACHE, JSON.stringify(list));
       S.lbOnlineAt = Date.now(); save();
       return true;
@@ -861,50 +1106,147 @@
   async function pushScore() {
     if (!DB_URL || !S.name) return;
     ensureId();
+    const base = { name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t: Date.now() };
+    const full = { ...base, frame: (S.frame || 'none').slice(0, 12), wk: ensureWeek().id, wkPts: S.wk.pts };
     try {
-      await fetch(`${DB_URL}/scores/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t: Date.now() }) });
+      const r = await fetch(`${DB_URL}/scores/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(full) });
+      // older database rules only know the basic fields: fall back to those
+      if (!r.ok) await fetch(`${DB_URL}/scores/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(base) });
     } catch (e) { }
   }
+
+  // ---- hearts between family members ----
+  async function sendHeart(pid, name, btn) {
+    if (!S.name) return askName(() => sendHeart(pid, name, btn));
+    S.heartsSent = S.heartsSent || {};
+    if (S.heartsSent[pid] === todayKey()) { toast(`Je hebt ${name} vandaag al een hartje gestuurd 💛`); return; }
+    ensureId();
+    try {
+      const r = await fetch(`${DB_URL}/hearts/${pid}/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: S.name.slice(0, 24), t: Date.now() }) });
+      if (!r.ok) throw 0;
+      S.heartsSent[pid] = todayKey(); bumpStat('heartsSent'); save();
+      Sound.unlock(); buzz(20);
+      if (btn) { btn.classList.add('sent'); btn.textContent = '💛✓'; const c = btn.getBoundingClientRect(); FX.emoji(c.left + c.width / 2, c.top, ['💛', '💛', '✨'], 8); }
+      toast(`Hartje gestuurd naar ${name}! 💛`);
+    } catch (e) { toast('Hartje versturen lukte niet. Is er internet?'); }
+  }
+  async function fetchHearts() {
+    if (!DB_URL || !S.pid) return [];
+    try {
+      const res = await fetch(`${DB_URL}/hearts/${S.pid}.json`, { cache: 'no-store' });
+      if (!res.ok) return [];
+      const data = await res.json() || {};
+      S.heartsSeen = S.heartsSeen || {};
+      const fresh = Object.entries(data).filter(([from, v]) => v && v.t > (S.heartsSeen[from] || 0) && !from.startsWith('test-'))
+        .map(([from, v]) => ({ from, name: String(v.name || 'Iemand').slice(0, 24), t: v.t }));
+      fresh.forEach(h => { S.heartsSeen[h.from] = h.t; });
+      if (fresh.length) { S.stats = S.stats || {}; S.stats.hearts = (S.stats.hearts || 0) + fresh.length; save(); }
+      return fresh;
+    } catch (e) { return []; }
+  }
+  function showHearts(list, then) {
+    Sound.trophy(); buzz([20, 40, 20, 40, 40]);
+    heartRain();
+    const names = [...new Set(list.map(h => h.name))];
+    const who = names.length === 1 ? `<b>${names[0]}</b> stuurde je een hartje!` : `<b>${names.slice(0, -1).join(', ')}</b> en <b>${names.slice(-1)}</b> stuurden je een hartje!`;
+    openModal(`<div class="sun-big">💛</div><h2>Een hartje voor jou!</h2><p>${who}</p>
+      <button class="big-btn play" id="hOk"><span class="bb-text"><b>Wat lief! 😊</b></span></button>`, false);
+    $('#hOk').onclick = () => { closeModal(); if (then) then(); };
+  }
+  function heartRain() { FX.emoji(innerWidth / 2, innerHeight * 0.55, ['💛', '💛', '💖', '✨'], 18); setTimeout(() => FX.emoji(innerWidth / 3, innerHeight * 0.5, ['💛', '💖'], 10), 300); setTimeout(() => FX.emoji(innerWidth * 0.66, innerHeight * 0.5, ['💛', '💖'], 10), 550); }
+  async function checkHearts() {
+    const fresh = await fetchHearts();
+    if (fresh.length && screen === 'home' && $('#modal').classList.contains('hidden')) showHearts(fresh, () => renderHome());
+    else if (fresh.length) S.pendingHearts = (S.pendingHearts || []).concat(fresh), save();
+  }
+
+  // ---- avatar frames, earned through prizes ----
+  const FRAMES = [
+    { id: 'none', name: 'Geen', ok: () => true, how: '' },
+    { id: 'bronze', name: 'Brons', ok: () => trophyCount() >= 4, how: '4 prijzen' },
+    { id: 'silver', name: 'Zilver', ok: () => trophyCount() >= 8, how: '8 prijzen' },
+    { id: 'gold', name: 'Goud', ok: () => trophyCount() >= 12, how: '12 prijzen' },
+    { id: 'sun', name: 'Zonnebloem', ok: () => sunUnlocked(), how: 'level 20' },
+    { id: 'heart', name: 'Hartjes', ok: () => (S.stats && S.stats.hearts || 0) >= 3, how: '3 hartjes krijgen' },
+    { id: 'rainbow', name: 'Regenboog', ok: () => !!S.trophies.c5, how: 'Supercombo' },
+    { id: 'crown', name: 'Kroon', ok: () => (S.weekWins || 0) >= 1, how: 'win een week' },
+  ];
+  const frameOk = id => (FRAMES.find(f => f.id === id) || FRAMES[0]).ok();
+  const avatarHTML = (e, cls = 'ra') => `<span class="${cls} fr-${e.frame && e.frame !== 'none' ? e.frame : 'none'}">${e.avatar}</span>`;
 
   const AVATARS = ['👵', '👴', '😊', '🌻', '🐱', '🐶', '🌷', '⭐', '🦋', '🍀', '🎩', '🚀'];
   function askName(then) {
     const cur = S.name || '';
-    openModal(`<h2>Hoe heet je?</h2>
+    let av = S.avatar || '👵', fr = frameOk(S.frame || 'none') ? (S.frame || 'none') : 'none';
+    openModal(`<h2>${cur ? 'Mijn profiel' : 'Hoe heet je?'}</h2>
       <p>Zo zien de anderen je op de ranglijst.</p>
       <input id="nmIn" class="name-in" maxlength="20" value="${cur.replace(/"/g, '')}" placeholder="Bijvoorbeeld: Oma Riet" autocomplete="off">
       <div class="quick-names">${['Oma', 'Opa', 'Mama', 'Papa'].map(n => `<button class="qn">${n}</button>`).join('')}</div>
-      <div class="avatars">${AVATARS.map(a => `<button class="av${(S.avatar || '👵') === a ? ' on' : ''}">${a}</button>`).join('')}</div>
+      <div class="avatars">${AVATARS.map(a => `<button class="av${av === a ? ' on' : ''}">${a}</button>`).join('')}</div>
+      <h3 class="fr-title">Lijstje om je plaatje</h3>
+      <div class="frames">${FRAMES.map(f => `<button class="frm${fr === f.id ? ' on' : ''}${f.ok() ? '' : ' locked'}" data-f="${f.id}"><span class="ra fr-${f.id}">${av}</span><small>${f.ok() ? f.name : '🔒 ' + f.how}</small></button>`).join('')}</div>
       <button class="big-btn play" id="nmOk"><span class="bb-text"><b>Opslaan</b></span></button>`, false);
-    let av = S.avatar || '👵';
     document.querySelectorAll('.qn').forEach(b => b.onclick = () => { $('#nmIn').value = b.textContent; });
-    document.querySelectorAll('.av').forEach(b => b.onclick = () => { av = b.textContent; document.querySelectorAll('.av').forEach(x => x.classList.toggle('on', x === b)); });
+    document.querySelectorAll('.av').forEach(b => b.onclick = () => { av = b.textContent; document.querySelectorAll('.av').forEach(x => x.classList.toggle('on', x === b)); document.querySelectorAll('.frm .ra').forEach(x => x.textContent = av); });
+    document.querySelectorAll('.frm').forEach(b => b.onclick = () => {
+      const f = FRAMES.find(x => x.id === b.dataset.f);
+      if (!f.ok()) { toast(`Dit lijstje krijg je met: ${f.how}`); Sound.blocked(); return; }
+      fr = f.id; document.querySelectorAll('.frm').forEach(x => x.classList.toggle('on', x === b));
+    });
     $('#nmOk').onclick = () => {
       const v = $('#nmIn').value.trim().replace(/[<>]/g, '').slice(0, 20);
       if (!v) { $('#nmIn').focus(); toast('Vul eerst een naam in'); return; }
-      S.name = v; S.avatar = av; ensureId(); save(); closeModal(); pushScore(); if (then) then();
+      S.name = v; S.avatar = av; S.frame = fr; ensureId(); save(); closeModal(); pushScore(); if (then) then();
     };
   }
 
-  function rowHTML(e, rank) {
+  function rowHTML(e, rank, withHeart = false) {
     const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
-    return `<span class="rk">${medal}</span><span class="ra">${e.avatar}</span><span class="rn">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${e.bot ? ' <i class="bot" title="computerspeler">🤖</i>' : ''}<small>level ${e.level}</small></span><span class="rp">${e.points.toLocaleString('nl-NL')}</span>`;
+    const heart = withHeart && !e.me && !e.bot ? `<button class="heart-btn${(S.heartsSent || {})[e.id] === todayKey() ? ' sent' : ''}" data-pid="${e.id}" data-name="${e.name.replace(/"/g, '')}" aria-label="Stuur een hartje">${(S.heartsSent || {})[e.id] === todayKey() ? '💛✓' : '💛'}</button>` : '';
+    return `<span class="rk">${medal}</span>${avatarHTML(e)}<span class="rn">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${e.bot ? ' <i class="bot" title="computerspeler">🤖</i>' : ''}<small>level ${e.level}</small></span><span class="rp">${e.points.toLocaleString('nl-NL')}${heart}</span>`;
   }
+  let rankMode = 'week';
   function renderRanking() {
-    ensureId();
-    const list = ranking();
+    ensureId(); ensureWeek();
+    const list = ranking(undefined, rankMode);
     const me = list.findIndex(e => e.me);
-    $('#rkMine').textContent = '🏆 #' + (me + 1);
-    $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}">${rowHTML(e, i + 1)}</div>`).join('');
+    $('#rkMine').textContent = (rankMode === 'week' ? '📅 #' : '🏆 #') + (me + 1);
+    $('#rkWeek').classList.toggle('on', rankMode === 'week');
+    $('#rkAll').classList.toggle('on', rankMode === 'all');
+    $('#wkInfo').innerHTML = rankMode === 'week'
+      ? `⏳ De weekstrijd eindigt ${weekLeftText()}. Elke maandag begint iedereen weer bij 0!`
+      : `Alle punten die je ooit verdiend hebt.`;
+    $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}">${rowHTML(e, i + 1, true)}</div>`).join('');
+    document.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast('Vandaag al een hartje gestuurd 💛'); });
     const online = !!DB_URL;
-    $('#rankNote').innerHTML = online ? `🌐 Familie online · 🤖 = computerspeler` : `🤖 = computerspeler · familie-ranglijst nog niet gekoppeld`;
-    $('#rankName').textContent = `${S.avatar || '😊'} ${S.name || 'Naam kiezen'} ✏️`;
+    $('#rankNote').innerHTML = online ? `🌐 Familie online · 💛 = stuur een hartje · 🤖 = computerspeler` : `🤖 = computerspeler`;
+    $('#rankName').innerHTML = `${avatarHTML(myEntry(0), 'ra small')} ${S.name || 'Naam kiezen'} ✏️`;
     setTimeout(() => { const m = document.querySelector('.rrow.me'); if (m) m.scrollIntoView({ block: 'center' }); }, 30);
     if (online && (!S.lbOnlineAt || Date.now() - S.lbOnlineAt > 20000)) fetchOnline().then(ok => { if (ok && screen === 'ranking') renderRanking(); });
   }
 
+  // result of last week, shown once on the home screen
+  function checkLastWeek() {
+    if (!S.lastWeek || $('#modal').classList.contains('hidden') === false) return;
+    const lw = S.lastWeek; S.lastWeek = null;
+    const list = [...botEntries('week', lw.id, 1), ...onlineEntries('week', lw.id), { ...myEntry(lw.pts, 'week'), points: lw.pts }]
+      .sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
+    const rank = list.findIndex(e => e.me) + 1;
+    S.stats = S.stats || {}; S.stats.weeks = (S.stats.weeks || 0) + 1;
+    if (rank === 1) S.weekWins = (S.weekWins || 0) + 1;
+    save();
+    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '🏅';
+    if (rank <= 3) { Sound.trophy(); FX.confetti(); } else Sound.unlock();
+    openModal(`<div class="sun-big">${medal}</div><h2>Vorige week werd je #${rank}!</h2>
+      <p>Je haalde <b>${lw.pts.toLocaleString('nl-NL')} punten</b> in de weekstrijd.${rank === 1 ? ' Je bent de <b>weekwinnaar</b>! 👑' : rank <= 3 ? ' Wat een mooie plek!' : ''}</p>
+      <p style="font-size:17px;color:#8a7448">Er is een nieuwe week begonnen: iedereen staat weer op 0. Zet hem op!</p>
+      <button class="big-btn play" id="lwOk"><span class="bb-text"><b>Nieuwe week!</b></span></button>`, false);
+    $('#lwOk').onclick = () => { closeModal(); renderHome(); };
+  }
+
   /* The dopamine moment: your row climbs past the people you just overtook. */
-  function showClimb(oldPts, newPts, then) {
-    const before = ranking(oldPts), after = ranking(newPts);
+  function showClimb(oldPts, newPts, then, mode = 'all') {
+    const before = ranking(oldPts, mode), after = ranking(newPts, mode);
     const oldRank = before.findIndex(e => e.me) + 1, newRank = after.findIndex(e => e.me) + 1;
     const passed = after.slice(newRank, oldRank);          // the people you overtook (closest last)
     const above = after[newRank - 2];                       // the next target
@@ -921,10 +1263,10 @@
       return done ? finalRank : finalRank - 1;
     };
     const medalOf = r => r <= 3 ? ['🥇', '🥈', '🥉'][r - 1] : '#' + r;
-    openModal(`<h2>Je klimt op de ranglijst! 🏆</h2>
+    openModal(`<h2>${mode === 'week' ? 'Je klimt in de weekstrijd! 📅' : 'Je klimt op de ranglijst! 🏆'}</h2>
       <div class="climb" style="height:${(rows.length + 1) * RH}px">
         ${rows.map((e, k) => `<div class="rrow crow" data-k="${k}" style="transform:translateY(${k * RH}px)">${rowHTML(e, rankOf(k, false))}</div>`).join('')}
-        <div class="rrow me crow" id="meRow" style="transform:translateY(${startIdx * RH}px)">${rowHTML(myEntry(oldPts), oldRank)}</div>
+        <div class="rrow me crow" id="meRow" style="transform:translateY(${startIdx * RH}px)">${rowHTML(myEntry(oldPts, mode), oldRank)}</div>
       </div>
       <div class="climb-msg" id="climbMsg">&nbsp;</div>
       <button class="big-btn play" id="clOk"><span class="bb-text"><b>Verder</b></span></button>`, false);
@@ -932,7 +1274,6 @@
     $('#clOk').onclick = () => { stopped = true; closeModal(); then(); };
     const me = $('#meRow');
     const rowsEls = [...document.querySelectorAll('.crow[data-k]')];
-    // relabel the passed rows with their final rank numbers once they move down
     let pos = startIdx, k = 0;
     const steps = show.length;
     const stepTime = Math.max(380, Math.min(650, 2400 / Math.max(1, steps)));
@@ -946,7 +1287,7 @@
       victim.style.transform = `translateY(${(victimIdx + 1) * RH}px)`;
       victim.querySelector('.rk').textContent = medalOf(rankOf(victimIdx, true));
       const rank = oldRank - (passed.length - show.length) - k;
-      me.querySelector('.rk').textContent = rank <= 3 ? ['🥇', '🥈', '🥉'][rank - 1] : '#' + rank;
+      me.querySelector('.rk').textContent = medalOf(rank);
       const pts = Math.round(oldPts + (newPts - oldPts) * k / steps);
       me.querySelector('.rp').textContent = pts.toLocaleString('nl-NL');
       Sound.pass(k); buzz(15);
@@ -957,13 +1298,14 @@
       if (stopped || !$('#climbMsg')) return;
       me.style.transform = `translateY(${pos * RH}px)`;
       me.querySelector('.rp').textContent = newPts.toLocaleString('nl-NL');
-      me.querySelector('.rk').textContent = newRank <= 3 ? ['🥇', '🥈', '🥉'][newRank - 1] : '#' + newRank;
+      me.querySelector('.rk').textContent = medalOf(newRank);
       me.classList.add('glow');
       Sound.rankUp(); FX.confetti(); buzz([30, 50, 30, 50, 60]);
       const n = passed.length;
       const who = n === 1 ? `Je bent <b>${passed[0].name}</b> voorbij! 🎉` : `Je bent <b>${n} spelers</b> voorbij! 🎉`;
       const nxt = above ? `<br><small>Nog ${(above.points - newPts + 1).toLocaleString('nl-NL')} punten tot ${above.avatar} ${above.name}</small>` : `<br><small>Je staat bovenaan! 👑</small>`;
-      $('#climbMsg').innerHTML = `<span class="climb-up">#${oldRank} → #${newRank} ⬆</span><br>${who}${nxt}`;
+      const wk = mode === 'week' ? `<br><small>⏳ De week eindigt ${weekLeftText()}</small>` : '';
+      $('#climbMsg').innerHTML = `<span class="climb-up">#${oldRank} → #${newRank} ⬆</span><br>${who}${nxt}${wk}`;
     }
     setTimeout(() => { if (!stopped) step(); }, 650);
   }
@@ -976,6 +1318,16 @@
     G.score += stars * 50;
     const before = totalStars();
     const ptsBefore = myPoints();
+    ensureWeek();
+    const wkBefore = S.wk.pts;
+    S.wk.pts += G.score;               // every finished level counts for the weekly challenge
+    const wkAfter = S.wk.pts;
+    // daily tasks + statistics
+    if (G.mode === 'level') taskProgress('levels'); else taskProgress('daily');
+    if (stars === 3) taskProgress('stars3');
+    if (!G.usedHint && !G.usedShuffle && toolsOpen()) taskProgress('nohelp');
+    taskProgress('points', G.score);
+    bumpStat('wins'); bumpStat('playSec', Math.round(G.elapsed));
     S.lvlPts = S.lvlPts || {}; S.dayPts = S.dayPts || {};
     if (G.mode === 'level') S.lvlPts[G.level] = Math.max(S.lvlPts[G.level] || 0, G.score);
     else S.dayPts[G.date] = Math.max(S.dayPts[G.date] || 0, G.score);
@@ -993,11 +1345,14 @@
     const unlocked = numBgs.filter(b => b.need > before && b.need <= after);
     const rewards = [];
     ensureId();
+    // the weekly challenge moves most, so its climb comes first; otherwise the all-time list
+    const wkRankBefore = myRank(wkBefore, 'week'), wkRankAfter = myRank(wkAfter, 'week');
     const rankBefore = myRank(ptsBefore), rankAfter = myRank(ptsAfter);
-    if (rankAfter < rankBefore) rewards.push({ type: 'rank', from: ptsBefore, to: ptsAfter });
+    if (wkRankAfter < wkRankBefore) rewards.push({ type: 'rank', mode: 'week', from: wkBefore, to: wkAfter });
+    else if (rankAfter < rankBefore) rewards.push({ type: 'rank', mode: 'all', from: ptsBefore, to: ptsAfter });
     pushScore();
-    const nextUp = ranking(ptsAfter)[rankAfter - 2];
-    const chase = nextUp && rankAfter >= rankBefore ? `<p class="chase">🏆 Plek #${rankAfter} · nog <b>${(nextUp.points - ptsAfter + 1).toLocaleString('nl-NL')}</b> punten tot ${nextUp.avatar} ${nextUp.name}</p>` : '';
+    const nextUp = ranking(wkAfter, 'week')[wkRankAfter - 2];
+    const chase = nextUp && wkRankAfter >= wkRankBefore ? `<p class="chase">📅 Weekstrijd plek #${wkRankAfter} · nog <b>${(nextUp.points - wkAfter + 1).toLocaleString('nl-NL')}</b> punten tot ${nextUp.avatar} ${nextUp.name}</p>` : '';
     if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
     if (S.level >= TOOLS_LEVEL && !S.toolsSeen) rewards.push({ type: 'tools' });
     const tr = newTrophies();
@@ -1045,7 +1400,7 @@
     const r = queue.shift();
     if (!r) return then();
     const next = () => runRewards(queue, then);
-    if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next)); else showClimb(r.from, r.to, next); }
+    if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next, r.mode)); else showClimb(r.from, r.to, next, r.mode); }
     else if (r.type === 'sun') showSunflowerUnlock(next);
     else if (r.type === 'tools') showToolsUnlock(next);
     else if (r.type === 'trophies') showTrophies(r.list, next);
@@ -1145,6 +1500,9 @@
   $('#btnTrophies').onclick = () => show('trophies');
   $('#btnRanking').onclick = () => { if (!S.name) askName(() => show('ranking')); else show('ranking'); };
   $('#rankName').onclick = () => askName(() => renderRanking());
+  $('#rkWeek').onclick = () => { rankMode = 'week'; renderRanking(); };
+  $('#rkAll').onclick = () => { rankMode = 'all'; renderRanking(); };
+  $('#btnTasks').onclick = () => { renderTaskChip(); if (tasksDone() === 3 && !S.tasks.chest) openChest(); else openTasks(); };
   $('#btnSettings').onclick = openSettings;
   $('#btnPlayDaily').onclick = () => startDaily(selDate);
   $('#calPrev').onclick = () => { calM--; if (calM < 0) { calM = 11; calY--; } renderDaily(); };
@@ -1155,7 +1513,7 @@
   addEventListener('resize', () => { if (screen === 'game') layoutBoard(); });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { Sound.suspend(); if (screen === 'game') pauseClock(); }
-    else { Sound.resume(); resumeClock(); if (screen === 'home') renderHome(); }
+    else { Sound.resume(); resumeClock(); if (screen === 'home') { renderHome(); checkHearts(); } }
   });
 
   // Android back button (called from the native wrapper). Return true when handled.
@@ -1170,10 +1528,11 @@
   applyTheme();
   applyBg();
   ensureId();
-  fetchOnline().then(ok => { if (ok && screen === 'home') renderHome(); });
+  fetchOnline().then(ok => { if (ok && screen === 'home') renderHome(); checkHearts(); });
   document.body.classList.toggle('nonum', !S.nums);
+  document.body.classList.toggle('contrast', !!S.contrast);
   show('home');
   // test hook
   window.__mjReady = true;
-  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb };
+  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb, ensureTasks, taskProgress, openChest, openTasks, weekInfo, checkLastWeek, fetchHearts, maybeLucky, renderHome };
 })();

@@ -124,6 +124,8 @@ const Tiles = (() => {
   };
 
   function faceHTML(theme, kind) {
+    if (kind === 100) return '<span class="emo sp">🎁</span>';
+    if (kind === 101) return '<span class="emo sp">🃏</span>';
     const t = THEMES[theme] || THEMES.classic;
     return t.svg ? t.faces[kind] : `<span class="emo">${t.faces[kind]}</span>`;
   }
