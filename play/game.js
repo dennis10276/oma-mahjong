@@ -542,11 +542,17 @@
     }
     blockedTaps = 0;
     if (G.down[i] && G.peek !== i) {
-      // face-down tile: first tap turns it over (only one at a time), second tap takes it
-      if (G.peek >= 0 && G.alive[G.peek]) turn(G.peek, true);
-      G.peek = i; turn(i, false);
-      Sound.flip(); buzz(8); clearHint(); saveCur();
-      return;
+      const pk0 = G.peek;
+      const twin = pk0 >= 0 && G.alive[pk0] && free(pk0) && G.tiles[pk0].face === G.tiles[i].face;
+      if (!twin) {
+        // face-down tile: first tap turns it over (only one at a time), second tap takes it
+        if (pk0 >= 0 && G.alive[pk0]) turn(pk0, true);
+        G.peek = i; turn(i, false);
+        Sound.flip(); buzz(8); clearHint(); saveCur();
+        return;
+      }
+      // the open tile counts as already picked: turning over its twin matches them at once
+      G.down[i] = 0;
     }
     if (G.peek === i) { G.down[i] = 0; G.peek = -1; }
     const face = G.tiles[i].face;
@@ -637,7 +643,7 @@
     openModal(`<h2>Omgedraaide stenen</h2>
       <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
       <p>Sommige stenen liggen <b>omgedraaid</b>. Tik er één keer op om te kijken wat het is, en nog een keer om hem te pakken.</p>
-      <p>Er kan maar <b>één steen tegelijk</b> open liggen: draai je een andere om, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
+      <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
       <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true);
     $('#mGo').onclick = closeModal;
     S.seenDown = true; save();
@@ -677,10 +683,15 @@
     return -1;
   }
   // a free face-down tile + a free face-up tile with the same picture can still be matched without a slot
+  // two free tiles with the same picture, at least one of them face down (or open), can match without a slot
   function peekPairFree() {
-    const up = new Set(), down = new Set();
-    for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && free(i)) (G.down[i] && G.peek !== i ? down : up).add(G.tiles[i].face);
-    for (const f of down) if (up.has(f)) return true;
+    const cnt = {}, hasDown = {};
+    for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && free(i)) {
+      const f = G.tiles[i].face;
+      cnt[f] = (cnt[f] || 0) + 1;
+      if (G.down[i] || G.peek === i) hasDown[f] = true;
+    }
+    for (const f in cnt) if (cnt[f] >= 2 && hasDown[f]) return true;
     return false;
   }
   function checkStuck() {
