@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Release a new version of Oma's Mahjong.
 
-  python3 release.py 1.6            game update only: phones with the app pick it up by themselves
-  python3 release.py 1.6 --apk      also build a new APK (only needed when android/ changed)
-  add --deploy to copy everything to the GitHub Pages repo and push it.
+  python3 release.py 1.6 --deploy    the usual way: new game files (phones update themselves)
+                                     AND a fresh APK on the download page, so new installs
+                                     always get the newest version too
+  --no-apk                           skip the APK (only for quick tests)
 
 What it does:
   - sets the version in www/game.js (APP_VERSION) and www/index.html (the boot loader)
   - writes site/play/ (the game in the browser) + site/play/bundle.json (what the app downloads)
-  - with --apk: bumps versionCode/versionName, builds the APK, puts it on the download page
+  - bumps versionCode/versionName, builds the APK, puts it on the download page (unless --no-apk)
 """
 import json, os, re, shutil, subprocess, sys
 
@@ -30,7 +31,7 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     if len(args) != 1 or not re.fullmatch(r'\d+(\.\d+)*', args[0]):
         sys.exit(__doc__)
-    v, apk, deploy = args[0], '--apk' in sys.argv, '--deploy' in sys.argv
+    v, apk, deploy = args[0], '--no-apk' not in sys.argv, '--deploy' in sys.argv
 
     sub(os.path.join(WWW, 'game.js'), r"const APP_VERSION = '[^']*'", f"const APP_VERSION = '{v}'")
     sub(os.path.join(WWW, 'index.html'), r"var BUILT = '[^']*'", f"var BUILT = '{v}'")
@@ -57,6 +58,8 @@ def main():
     }
     json.dump(bundle, open(os.path.join(play, 'bundle.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     print(f'bundle.json {os.path.getsize(os.path.join(play, "bundle.json")) // 1024} KB, version {v}')
+    # the tiny file the app checks every minute
+    json.dump({'v': v}, open(os.path.join(play, 'version.json'), 'w'))
 
     if apk:
         man = os.path.join(ROOT, 'android', 'AndroidManifest.xml')
@@ -74,7 +77,7 @@ def main():
         shutil.rmtree(os.path.join(REPO, 'play'), ignore_errors=True)
         shutil.copytree(play, os.path.join(REPO, 'play'))
         shutil.copy(os.path.join(ROOT, 'android', 'AndroidManifest.xml'), os.path.join(REPO, 'source', 'android', 'AndroidManifest.xml'))
-        msg = f'Version {v}' + (' (new APK)' if apk else ' (game update, installed apps update themselves)')
+        msg = f'Version {v}' + (' (game update + fresh APK on the download page)' if apk else ' (game update only)')
         subprocess.run(['git', '-C', REPO, 'add', '-A'], check=True)
         subprocess.run(['git', '-C', REPO, 'commit', '-q', '-m', msg + os.environ.get('COMMIT_TRAILER', '')], check=True)
         subprocess.run(['git', '-C', REPO, 'push', '-q', 'origin', 'HEAD'], check=True)
