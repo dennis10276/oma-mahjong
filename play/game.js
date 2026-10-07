@@ -297,7 +297,7 @@
     const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
     const nb = Layouts.neighbors(tiles);
     const n = tiles.length;
-    G = { o, ...o, tiles, nb, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
+    G = { o, ...o, tiles, nb, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
     const cur = restart ? null : loadCur();
     if (cur && cur.key === o.key && cur.n === n) {
       cur.faces.forEach((f, i) => tiles[i].face = f);
@@ -353,8 +353,8 @@
     let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, maxZ = 0;
     for (const t of G.tiles) { minX = Math.min(minX, t.x); maxX = Math.max(maxX, t.x); minY = Math.min(minY, t.y); maxY = Math.max(maxY, t.y); maxZ = Math.max(maxZ, t.z); }
     const cols = (maxX - minX) / 2 + 1, rows = (maxY - minY) / 2 + 1;
-    const ratio = 1.24, dF = 0.12;
-    let tw = Math.min((W - 14) / (cols + maxZ * dF + 0.15), (H - 14) / (rows * ratio + maxZ * dF + 0.2));
+    const ratio = 1.24, dF = 0.09;
+    let tw = Math.min((W - 8) / (cols + maxZ * dF + 0.12), (H - 8) / (rows * ratio + maxZ * dF + 0.15));
     tw = Math.min(tw, 150);
     const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * 0.085);
     const bw = cols * tw + maxZ * dz + d, bh = rows * th + maxZ * dz + d * 1.4;
@@ -397,7 +397,7 @@
     const slots = $('#tray').children;
     for (let k = 0; k < SLOTS; k++) {
       const t = G.tray[k];
-      slots[k].innerHTML = t === undefined ? '' : `<div class="tmini">${Tiles.faceHTML(S.theme, G.tiles[t].face)}</div>`;
+      slots[k].innerHTML = t === undefined ? '' : `<div class="tmini${G.arriving.has(t) ? ' arriving' : ''}">${Tiles.faceHTML(S.theme, G.tiles[t].face)}</div>`;
     }
     const tr = $('#tray');
     tr.classList.toggle('warn', G.tray.length === SLOTS - 1);
@@ -426,6 +426,8 @@
 
   let blockedTaps = 0, comboTimer;
   const PRAISE = ['Mooi!', 'Goed zo!', 'Prima!', 'Geweldig!', 'Fantastisch!', 'Super!', 'Knap hoor!', 'Prachtig!'];
+  /* Taps never wait for animations: the game state changes instantly,
+     the flying tiles just catch up visually. */
   function onTap(i) {
     if (!G || G.done || G.busy || !G.alive[i]) return;
     Sound.init();
@@ -447,39 +449,79 @@
     if (G.peek === i) { G.down[i] = 0; G.peek = -1; }
     const face = G.tiles[i].face;
     const mi = G.tray.findIndex(t => G.tiles[t].face === face);
-    if (mi < 0 && G.tray.length >= SLOTS) {
+    const pk = G.peek;
+    const peekPair = mi < 0 && pk >= 0 && pk !== i && G.alive[pk] && G.tiles[pk].face === face && free(pk);
+    if (mi < 0 && !peekPair && G.tray.length >= SLOTS) {
       el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
       Sound.blocked(); toast('Alle vakjes zijn vol. Kies een steen die past!');
       return;
     }
     clearHint();
-    G.busy = true;
-    const slotIdx = mi >= 0 ? mi : G.tray.length;
-    const slotEl = $('#tray').children[slotIdx];
-    const from = el.getBoundingClientRect(), to = slotEl.getBoundingClientRect();
+    const from = el.getBoundingClientRect();
     G.alive[i] = 0;
     el.classList.add('hidden');
-    updateBlocked();
     Sound.select(); buzz(8);
-    const MS = 270;
+    const MS = 230;
+    G.flights++;
+    const land = (fn) => setTimeout(() => { G.flights--; fn(); }, MS);
+
+    if (peekPair) {
+      // the open face-down tile and this one match straight away, no slot needed
+      const pel = G.tiles[pk].el, pfrom = pel.getBoundingClientRect();
+      G.alive[pk] = 0; G.down[pk] = 0; G.peek = -1;
+      pel.classList.add('hidden');
+      const mid = { left: (from.left + pfrom.left) / 2, top: (from.top + pfrom.top) / 2 - from.height * 0.3, width: from.width, height: from.height };
+      const f1 = flyTile(face, from, mid, MS), f2 = flyTile(face, pfrom, mid, MS);
+      afterLogic();
+      land(() => { f1.classList.add('popout'); f2.classList.add('popout'); onMatch({ x: mid.left + mid.width / 2, y: mid.top + mid.height / 2 }); setTimeout(() => { f1.remove(); f2.remove(); }, 230); afterLand(); });
+      return;
+    }
+    if (mi >= 0) {
+      const partner = G.tray[mi];
+      const slotEl = $('#tray').children[mi];
+      const to = slotEl.getBoundingClientRect();
+      // keep a copy of the partner where it sat, then close the gap in the tray right away
+      const ghost = slotEl.firstElementChild && !G.arriving.has(partner) ? slotEl.firstElementChild.cloneNode(true) : null;
+      if (ghost) { ghost.classList.add('ghost'); Object.assign(ghost.style, { left: to.left + 'px', top: to.top + 'px', width: to.width + 'px', height: to.height + 'px' }); ghost.style.setProperty('--sfs', $('#tray').style.getPropertyValue('--sfs')); document.body.appendChild(ghost); }
+      G.tray.splice(mi, 1);
+      G.arriving.delete(partner);
+      renderTray();
+      const fly = flyTile(face, from, to, MS);
+      afterLogic();
+      land(() => {
+        fly.classList.add('popout'); if (ghost) ghost.classList.add('popout');
+        onMatch({ x: to.left + to.width / 2, y: to.top + to.height / 2 });
+        setTimeout(() => { fly.remove(); if (ghost) ghost.remove(); }, 230);
+        afterLand();
+      });
+      return;
+    }
+    const slotIdx = G.tray.length;
+    G.tray.push(i);
+    G.arriving.add(i);
+    renderTray();
+    const to = $('#tray').children[slotIdx].getBoundingClientRect();
     const fly = flyTile(face, from, to, MS);
-    setTimeout(() => {
-      if (mi >= 0) {
-        const partner = G.tray[mi];
-        G.tray.splice(mi, 1);
-        const mini = slotEl.firstElementChild;
-        if (mini) mini.classList.add('popout');
-        fly.classList.add('popout');
-        onMatch(centerOf(slotEl));
-        setTimeout(() => { fly.remove(); renderTray(); G.busy = false; afterMove(); }, 230);
-      } else {
-        G.tray.push(i);
-        fly.remove();
+    afterLogic();
+    land(() => {
+      fly.remove();
+      G.arriving.delete(i);
+      if (G.tray.includes(i)) {
         renderTray();
-        const m = slotEl.firstElementChild; if (m) m.classList.add('land');
-        G.busy = false; afterMove();
+        const k = G.tray.indexOf(i), m = $('#tray').children[k].firstElementChild;
+        if (m) m.classList.add('land');
       }
-    }, MS);
+      afterLand();
+    });
+  }
+  function afterLogic() {
+    updateBlocked(); updateProgress();
+    if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
+    saveCur();
+  }
+  function afterLand() {
+    if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
+    if (G.flights === 0) checkStuck();
   }
 
   function turn(i, faceDown) {
@@ -518,20 +560,20 @@
     else if (left === 4) praise('Bijna klaar!');
   }
 
-  function afterMove() {
-    updateProgress();
-    if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; setTimeout(win, 500); return; }
-    saveCur();
-    checkStuck();
-  }
-
   function trayMatchFree() {
     const tf = new Set(G.tray.map(t => G.tiles[t].face));
     for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && tf.has(G.tiles[i].face) && free(i)) return i;
     return -1;
   }
+  // a free face-down tile + a free face-up tile with the same picture can still be matched without a slot
+  function peekPairFree() {
+    const up = new Set(), down = new Set();
+    for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && free(i)) (G.down[i] && G.peek !== i ? down : up).add(G.tiles[i].face);
+    for (const f of down) if (up.has(f)) return true;
+    return false;
+  }
   function checkStuck() {
-    if (!G || G.done || G.tray.length < SLOTS || trayMatchFree() >= 0) return;
+    if (!G || G.done || G.busy || G.tray.length < SLOTS || trayMatchFree() >= 0 || peekPairFree()) return;
     G.busy = true;
     syncClock();
     setTimeout(() => {

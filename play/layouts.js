@@ -40,7 +40,7 @@ const Layouts = (() => {
     if (BASES) return BASES;
     BASES = [];
     for (const name of NAMES)
-      for (let W = 3; W <= 7; W++)
+      for (let W = 3; W <= 6; W++)
         for (let H = 3; H <= 7; H++) {
           if (H < W - 1) continue;
           let n = 0;

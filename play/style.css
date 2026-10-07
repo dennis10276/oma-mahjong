@@ -217,13 +217,13 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
 @media (max-height: 620px) { .logo-tiles { display: none; } .logo { margin: 6px 0; } }
 
 /* ---------- 4-slot tray (on top, like Vita) ---------- */
-.traybar { display: flex; justify-content: center; padding: 2px 12px 6px; }
-.toolbar { display: flex; justify-content: center; gap: 16px; padding: 6px 14px 14px; }
-.toolbar .tool { flex: 0 1 170px; flex-direction: row; justify-content: center; gap: 8px; padding: 10px 12px; font-size: 19px; }
-.toolbar .tool span { font-size: 28px; line-height: 1; }
+.traybar { display: flex; justify-content: center; padding: 0 12px 4px; }
+.toolbar { display: flex; justify-content: center; gap: 14px; padding: 4px 14px 10px; }
+.toolbar .tool { flex: 0 1 140px; flex-direction: row; justify-content: center; gap: 6px; padding: 6px 10px; font-size: 16px; border-radius: 16px; box-shadow: 0 4px 0 var(--cream2), 0 6px 10px rgba(0,0,0,.22); }
+.toolbar .tool span { font-size: 22px; line-height: 1; }
 .tool .badge { position: absolute; top: -8px; right: -6px; min-width: 26px; height: 26px; border-radius: 13px; background: var(--pink); color: #fff; font-style: normal; font-size: 16px; display: grid; place-items: center; box-shadow: 0 2px 0 var(--pink-d); }
 .tool.used { opacity: .45; filter: grayscale(1); }
-#tray { --slotw: min(17.5vw, 76px, 9.5vh); display: grid; grid-template-columns: repeat(4, var(--slotw)); gap: 8px; padding: 8px; border-radius: 20px;
+#tray { --slotw: min(12.5vw, 60px, 7vh); display: grid; grid-template-columns: repeat(4, var(--slotw)); gap: 6px; padding: 6px; border-radius: 16px;
   background: linear-gradient(#8a5a33, #6b4224); box-shadow: inset 0 3px 6px rgba(0,0,0,.45), 0 4px 0 #4a2d17, 0 8px 14px rgba(0,0,0,.3); transition: box-shadow .3s; --sfs: 30px; }
 #tray .slot { aspect-ratio: 1 / 1.24; border-radius: 12px; background: rgba(0,0,0,.28); box-shadow: inset 0 3px 5px rgba(0,0,0,.45); position: relative; }
 #tray.warn { box-shadow: inset 0 3px 6px rgba(0,0,0,.45), 0 4px 0 #4a2d17, 0 0 0 4px #ffb300, 0 8px 18px rgba(255,170,0,.55); }
@@ -262,3 +262,16 @@ body.nonum .cn { display: none; }
 
 #btnRestart { font-size: 30px; font-weight: 900; }
 .topbar .chip.score { min-width: 60px; }
+
+/* game screen: keep the chrome compact so the pile gets the room */
+#game .topbar { padding: 6px 10px 4px; gap: 8px; }
+#game .icon-btn { width: 44px; height: 44px; font-size: 22px; border-radius: 14px; box-shadow: 0 4px 0 var(--cream2), 0 6px 8px rgba(0,0,0,.22); }
+#game #btnRestart { font-size: 26px; }
+#game #gameTitle { font-size: 19px; }
+#game .chip.score { font-size: 17px; padding: 4px 10px; }
+.toolbar .tool .badge { top: -7px; right: -5px; min-width: 22px; height: 22px; font-size: 14px; }
+#tray .slot { border-radius: 10px; }
+.tmini { border-radius: 10px; padding: 3px; box-shadow: 2px 2px 0 #d9caa0, 2px 4px 0 #27906d; }
+.tmini.arriving { visibility: hidden; }
+.tmini.ghost { position: fixed; inset: auto; z-index: 89; pointer-events: none; }
+#comboTag { bottom: 62px; }
