@@ -403,3 +403,9 @@ body.sunny #progressBar { background: linear-gradient(90deg, #fff27a, #ffb300); 
 .avatars { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 4px 0 6px; }
 .av { font-size: 28px; border-radius: 12px; padding: 4px 0; background: #fff; }
 .av.on { background: #ffe58a; box-shadow: 0 0 0 3px var(--gold); }
+.tool.locked { opacity: .55; filter: grayscale(.8); }
+.tool.locked .badge { background: #8a7448; box-shadow: 0 2px 0 #5c4520; font-size: 12px; }
+.tools-new { display: flex; justify-content: center; gap: 18px; font-size: 64px; margin: 6px 0; }
+.tools-new span { animation: sunPop 1s cubic-bezier(.3,1.6,.5,1) backwards; }
+.tools-new span:nth-child(2) { animation-delay: .2s; }
+#toast { width: max-content; max-width: min(88vw, 420px); }

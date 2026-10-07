@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.9';
+  const APP_VERSION = '0.9.1';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -392,7 +392,7 @@
       <p>Tik op een <b>vrije steen</b>: hij schuift naar een van de <b>4 vakjes bovenaan</b>.</p>
       <div class="how-tray"><div class="hm">${g}</div><div class="hm">${f}</div><div class="hm glow">${f}</div><div class="hm empty"></div></div>
       <p>Komen er <b>twee dezelfde</b> in de vakjes, dan verdwijnen ze! Er zijn maar <b>4 vakjes</b>. Zijn ze allemaal vol, dan zit je vast.</p>
-      <p>Vrij = niets erbovenop, en links óf rechts open. Elk level mag je één keer <b>💡 Hint</b> en één keer <b>🔀 Schudden</b>.</p>
+      <p>Vrij = niets erbovenop, en links óf rechts open. Vanaf level ${TOOLS_LEVEL} mag je per level één keer <b>💡 Hint</b> en één keer <b>🔀 Schudden</b>.</p>
       <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true, after);
     $('#mGo').onclick = closeModal;
     S.seenTray = true; S.seenIntro = true; save();
@@ -523,12 +523,19 @@
     const el = $('#score'); el.textContent = G.score;
     if (bump) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
   }
+  // Hint and Schudden unlock at level 15 (daily puzzles: once you have reached level 15)
+  const TOOLS_LEVEL = 15;
+  const toolsOpen = () => !!G && (G.mode === 'level' ? G.level >= TOOLS_LEVEL : S.level >= TOOLS_LEVEL);
   function updateTools() {
-    $('#btnHint').classList.toggle('used', G.usedHint);
-    $('#btnShuffle').classList.toggle('used', G.usedShuffle);
-    $('#btnHint .badge').textContent = G.usedHint ? '0' : '1';
-    $('#btnShuffle .badge').textContent = G.usedShuffle ? '0' : '1';
+    const open = toolsOpen();
+    $('#btnHint').classList.toggle('used', open && G.usedHint);
+    $('#btnShuffle').classList.toggle('used', open && G.usedShuffle);
+    $('#btnHint').classList.toggle('locked', !open);
+    $('#btnShuffle').classList.toggle('locked', !open);
+    $('#btnHint .badge').textContent = !open ? '🔒' : G.usedHint ? '0' : '1';
+    $('#btnShuffle .badge').textContent = !open ? '🔒' : G.usedShuffle ? '0' : '1';
   }
+  function toolsLockedMsg() { toast(`Hint en Schudden komen vrij vanaf level ${TOOLS_LEVEL} 🔒`); Sound.blocked(); }
   function renderTray() {
     const slots = $('#tray').children;
     for (let k = 0; k < SLOTS; k++) {
@@ -737,7 +744,7 @@
       Sound.stuck(); buzz([40, 80, 40]);
       openModal(`<h2>Oei, alle vakjes zijn vol!</h2>
         <p>Er ligt geen passende steen meer vrij. Geen nood, probeer het gewoon nog eens.</p>
-        ${!G.usedShuffle ? `<button class="big-btn gold" id="sShuf"><span class="bb-text"><b>🔀 Schud de stenen</b><small>Je mag 1x per level schudden</small></span></button>` : ''}
+        ${!G.usedShuffle && toolsOpen() ? `<button class="big-btn gold" id="sShuf"><span class="bb-text"><b>🔀 Schud de stenen</b><small>Je mag 1x per level schudden</small></span></button>` : ''}
         <button class="big-btn play" id="sRetry"><span class="bb-text"><b>↻ Opnieuw proberen</b></span></button>
         <button class="link-btn" id="sMenu">Menu</button>`, false);
       if ($('#sShuf')) $('#sShuf').onclick = () => { closeModal(); G.busy = false; shuffle(); };
@@ -749,6 +756,7 @@
   function hint() {
     if (!G || G.done || G.busy) return;
     Sound.init();
+    if (!toolsOpen()) return toolsLockedMsg();
     if (G.usedHint) { toast('Je hint voor dit level is al gebruikt'); Sound.blocked(); return; }
     const faces = G.tiles.map(t => t.face);
     const path = Layouts.solve(G.tiles, G.nb, faces, G.alive, G.tray, 30000);
@@ -764,6 +772,7 @@
   function shuffle() {
     if (!G || G.done || G.busy) return;
     Sound.init();
+    if (!toolsOpen()) return toolsLockedMsg();
     if (G.usedShuffle) { toast('Je hebt in dit level al geschud'); Sound.blocked(); return; }
     G.usedShuffle = true; updateTools();
     G.busy = true;
@@ -982,6 +991,7 @@
     const nextUp = ranking(ptsAfter)[rankAfter - 2];
     const chase = nextUp && rankAfter >= rankBefore ? `<p class="chase">🏆 Plek #${rankAfter} · nog <b>${(nextUp.points - ptsAfter + 1).toLocaleString('nl-NL')}</b> punten tot ${nextUp.avatar} ${nextUp.name}</p>` : '';
     if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
+    if (S.level >= TOOLS_LEVEL && !S.toolsSeen) rewards.push({ type: 'tools' });
     const tr = newTrophies();
     if (tr.length) rewards.push({ type: 'trophies', list: tr });
     if (unlocked.length) rewards.push({ type: 'bgs', list: unlocked });
@@ -1029,8 +1039,19 @@
     const next = () => runRewards(queue, then);
     if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next)); else showClimb(r.from, r.to, next); }
     else if (r.type === 'sun') showSunflowerUnlock(next);
+    else if (r.type === 'tools') showToolsUnlock(next);
     else if (r.type === 'trophies') showTrophies(r.list, next);
     else showUnlock(r.list.slice(), next);
+  }
+  function showToolsUnlock(then) {
+    S.toolsSeen = true; save();
+    Sound.unlock(); FX.confetti(); buzz([20, 40, 20, 40, 40]);
+    openModal(`<h2>Nieuw vrijgespeeld! 🎉</h2>
+      <div class="tools-new"><span>💡</span><span>🔀</span></div>
+      <p>Vanaf nu heb je in elk level <b>één Hint</b> en <b>één keer Schudden</b>.</p>
+      <p style="font-size:17px;color:#8a7448">💡 Hint wijst een slimme zet aan. 🔀 Schudden husselt de stenen, handig als je vastzit. Zonder ze te gebruiken verdien je ⭐⭐⭐.</p>
+      <button class="big-btn play" id="tlOk"><span class="bb-text"><b>Top!</b></span></button>`, false);
+    $('#tlOk').onclick = () => { closeModal(); then(); };
   }
   function showSunflowerUnlock(then) {
     S.sunSeen = true; save();
