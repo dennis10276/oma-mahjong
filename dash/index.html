@@ -114,6 +114,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script>
 const DB = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
+const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
+let wantDone = false;
 const $ = s => document.querySelector(s);
 const pad = n => String(n).padStart(2, '0');
 const dkey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -130,18 +132,18 @@ const lvlKey = e => e.m === 'd' ? 'D' + e.d : 'L' + e.lv;
 function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e.t).sort((a, b) => a.t - b.t); }
 function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
 function players() {
-  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !id.startsWith('test-')));
+  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !id.startsWith('test-') || id === want));
   return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 })).sort((a, b) => b.last - a.last);
 }
 function fillPicker() {
   const ps = players(), cur = sel;
+  if (want && !wantDone && ps.some(p => p.id === want)) { sel = want; wantDone = true; }
   if (!sel || !ps.some(p => p.id === sel)) { const oma = ps.find(p => /oma/i.test(p.name)) || ps[0]; sel = oma ? oma.id : null; }
   const html = ps.map(p => `<option value="${p.id}"${p.id === sel ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
   if ($('#who').innerHTML !== html) $('#who').innerHTML = html;
   if (cur !== sel) render();
 }
 $('#who').onchange = e => { sel = e.target.value; history.replaceState(null, '', '#' + sel); render(); };
-if (location.hash.length > 2) sel = location.hash.slice(1);
 
 // ---------- analysis ----------
 function analyse(ev) {
