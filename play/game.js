@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.9';
+  const APP_VERSION = '1.10';
   /* Updates come from the website: newer game files are downloaded in the background,
      kept on the phone, and used from the next start (or right away on the home screen). */
   const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
@@ -523,6 +523,13 @@
     renderTray(); updateTools();
     updateScore(false); updateProgress();
     G.tStart = performance.now();
+    // dashboard: how many tries this level took, and what happens in it
+    G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };
+    S.att = S.att || {};
+    const resumed = !!(cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
+    if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
+    G.attempt = S.att[o.key];
+    logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined });
     setTimeout(() => praise(restart ? 'Nog een keer! 💪' : o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
     else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
@@ -539,7 +546,7 @@
     S.seenSp[k] = true; save();
     toast(tips[k], 4200);
   }
-  const restart = () => { if (G) begin(G.o, true); };
+  const restart = () => { if (G) { if (!G.done) endLevel('restart'); begin(G.o, true); } };
 
   const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);
   function decorate(i) {
@@ -706,7 +713,9 @@
     if (!G || G.done || G.busy || !G.alive[i]) return;
     Sound.init();
     const el = G.tiles[i].el;
+    if (G.st) G.st.tp++;
     if (!free(i)) {
+      if (G.st) G.st.bt++;
       el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
       showBlockers(i);
       Sound.blocked(); buzz(30);
@@ -723,7 +732,7 @@
         if (pk0 >= 0 && G.alive[pk0]) turn(pk0, true);
         G.peek = i; turn(i, false);
         Sound.flip(); buzz(8); clearHint(); saveCur();
-        taskProgress('flips'); bumpStat('flips');
+        taskProgress('flips'); bumpStat('flips'); if (G.st) G.st.fl++;
         return;
       }
       // its twin is already in the tray, or is the open tile (which counts as picked): match at once
@@ -786,6 +795,7 @@
     }
     const slotIdx = G.tray.length;
     G.tray.push(i);
+    if (G.st) G.st.tm = Math.max(G.st.tm, G.tray.length);
     G.arriving.add(i);
     if (G.tray.length >= SLOTS) G.busy = true;   // 4th tile without a match: level over, no more taps
     renderTray();
@@ -840,6 +850,7 @@
     S.matches++;
     taskProgress('pairs'); taskProgress('combo', G.combo, true);
     if (G.combo > (S.bestCombo || 0)) S.bestCombo = G.combo;
+    if (G.st) G.st.mc = Math.max(G.st.mc, G.combo);
     const sunny = S.theme === 'sunflower';
     FX.burst(c.x, c.y - 10, sunny ? 12 : G.combo >= 3 ? 30 : 20, G.combo >= 3);
     if (sunny) { FX.emoji(c.x, c.y - 10, G.combo >= 3 ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], G.combo >= 3 ? 8 : 5); if (G.combo >= 3 && G.combo % 2 === 1) bee(); }
@@ -881,6 +892,7 @@
     if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
     G.busy = true; G.overShown = true;
     bumpStat('losses'); save();
+    endLevel('stuck');
     syncClock();
     setTimeout(() => {
       Sound.stuck(); buzz([40, 80, 40]);
@@ -902,6 +914,7 @@
     const path = Layouts.solve(G.tiles, G.nb, faces, G.alive, G.tray, 30000);
     if (!path || !path.length) { toast('Zo gaat het niet meer lukken… probeer 🔀 Schudden'); Sound.blocked(); return; }
     G.usedHint = true; updateTools(); saveCur();
+    syncClock(); logEvt('hint', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount() });
     // show the next one or two safe taps
     const show2 = [path[0]];
     if (path[1] !== undefined && G.tiles[path[1]].face === G.tiles[path[0]].face) show2.push(path[1]);
@@ -915,6 +928,7 @@
     if (!toolsOpen()) return toolsLockedMsg();
     if (G.usedShuffle) { toast('Je hebt in dit level al geschud'); Sound.blocked(); return; }
     G.usedShuffle = true; updateTools();
+    syncClock(); logEvt('shuf', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), tray: G.tray.length });
     G.busy = true;
     if (G.peek >= 0) { if (G.alive[G.peek]) turn(G.peek, true); G.peek = -1; }
     const trayFaces = G.tray.map(t => G.tiles[t].face);
@@ -1016,6 +1030,7 @@
     const pts = 300 + Math.min(4, Math.floor((S.level - 1) / 10)) * 100;
     S.bonusPts = (S.bonusPts || 0) + pts; S.bonusStars = (S.bonusStars || 0) + 2; ensureWeek().pts += pts;
     bumpStat('chests'); save(); pushScore();
+    logEvt('chest', { pts });
     Sound.trophy(); FX.confetti(); buzz([30, 60, 30, 60, 80]);
     openModal(`<div class="chest-open"><span class="lid">🎁</span></div><h2>Schatkist!</h2>
       <div class="chest-loot"><div>💰<b>+${pts}</b><small>punten</small></div><div>⭐<b>+2</b><small>sterren</small></div></div>
@@ -1107,6 +1122,48 @@
     G.score += 150; updateScore(); bumpStat('lucky');
     const c = centerOf(G.tiles[i].el);
     setTimeout(() => { praise('🍀 Geluk! +150'); Sound.perfect(); FX.emoji(c.x || innerWidth / 2, c.y || innerHeight / 2, ['🍀', '✨', '🌟'], 12); }, 300);
+  }
+
+  // ---------- play log for the family dashboard ----------
+  /* Every start, finish, retry, hint and shuffle is sent to the database (plays/<player>),
+     so the family can follow along on the dashboard. Without internet the events wait in a
+     queue on the phone and are sent later. */
+  const LOGQ = 'omamj.logq';
+  const DEV = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'ios' : location.protocol === 'file:' ? 'android' : 'web';
+  const SES = Date.now().toString(36);
+  const readQ = () => { try { return JSON.parse(localStorage.getItem(LOGQ) || '[]') || []; } catch (e) { return []; } };
+  function logEvt(k, data = {}) {
+    try {
+      const q = readQ();
+      const e = { k, t: Date.now(), v: String(window.__mjCode || APP_VERSION), dev: DEV, ses: SES };
+      for (const [key, val] of Object.entries(data)) if (val !== undefined && val !== null && val !== '') e[key] = typeof val === 'string' ? val.slice(0, 40) : val;
+      q.push(e);
+      while (q.length > 500) q.shift();
+      localStorage.setItem(LOGQ, JSON.stringify(q));
+    } catch (e) { }
+    flushLog();
+  }
+  let flushing = false;
+  async function flushLog() {
+    if (flushing || !DB_URL) return;
+    ensureId(); flushing = true;
+    try {
+      for (let n = 0; n < 60; n++) {
+        const q = readQ(); if (!q.length) break;
+        const e = q[0];
+        const r = await fetch(`${DB_URL}/plays/${S.pid}.json`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(e) });
+        if (!r.ok) break;                         // try again later (no internet, or not allowed yet)
+        const q2 = readQ();                       // new events may have been added meanwhile
+        if (q2.length && q2[0].t === e.t && q2[0].k === e.k) { q2.shift(); localStorage.setItem(LOGQ, JSON.stringify(q2)); }
+      }
+    } catch (e) { } finally { flushing = false; }
+  }
+  const lvInfo = () => G ? (G.mode === 'level' ? { lv: G.level } : { m: 'd', d: G.date, lv: S.level }) : { lv: S.level };
+  function endLevel(r, extra = {}) {
+    if (!G || G.logged) return;
+    G.logged = true; syncClock();
+    const st = G.st || {};
+    logEvt('end', { ...lvInfo(), r, at: G.attempt || 1, dur: Math.round(G.elapsed), sc: G.score, n: G.tiles.length, left: aliveCount(), h: !!G.usedHint, sh: !!G.usedShuffle, mc: st.mc || 0, tm: st.tm || 0, bt: st.bt || 0, fl: st.fl || 0, tp: st.tp || 0, ...extra });
   }
 
   // ---------- ranking (family online + friendly computer players) ----------
@@ -1261,6 +1318,7 @@
       const r = await fetch(`${DB_URL}/hearts/${pid}/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: S.name.slice(0, 24), t: Date.now() }) });
       if (!r.ok) throw 0;
       S.heartsSent[pid] = todayKey(); bumpStat('heartsSent'); save();
+      logEvt('heart_out', { to: name });
       Sound.unlock(); buzz(20);
       if (btn) { btn.classList.add('sent'); btn.textContent = '💛✓'; }
       S.heartsOut = S.heartsOut || {}; S.heartsOut[pid] = { t: Date.now(), seen: 0, name }; save();
@@ -1331,6 +1389,7 @@
       <button class="big-btn play" id="hOk"><span class="bb-text"><b>Wat lief! 😊</b></span></button>`, false);
     setTimeout(heartRain, 900); setTimeout(heartRain, 1900);
     markHeartsSeen(list);
+    logEvt('heart_in', { from: names.join(', '), where: 'popup' });
     $('#hOk').onclick = () => { closeModal(); if (then) then(); };
   }
   // hearts fountain up from the bottom of the screen, so the words stay readable
@@ -1354,6 +1413,7 @@
     el.className = 'on';
     Sound.trophy(); buzz([20, 40, 20, 40, 60]); heartRain(); setTimeout(heartRain, 900);
     markHeartsSeen(list);
+    logEvt('heart_in', { from: names.join(', '), where: 'level' });
     const close = () => { el.className = ''; clearTimeout(el._t); };
     el.onclick = close; clearTimeout(el._t); el._t = setTimeout(close, 6500);
   }
@@ -1533,6 +1593,7 @@
     clearCur();
     const stars = 3 - (G.usedHint ? 1 : 0) - (G.usedShuffle ? 1 : 0);
     G.score += stars * 50;
+    endLevel('win', { st: stars });
     const before = totalStars();
     const ptsBefore = myPoints(), lvlBefore = S.level;
     ensureWeek();
@@ -1713,7 +1774,7 @@
     $('#rYes').onclick = () => { closeModal(); restart(); };
     $('#rNo').onclick = closeModal;
   };
-  $('#btnHome').onclick = () => { saveCur(); show('home'); };
+  $('#btnHome').onclick = () => { saveCur(); if (G && !G.done) { syncClock(); logEvt('pause', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount() }); } show('home'); };
   $('#btnPlay').onclick = () => startLevel(S.level);
   $('#btnDaily').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
   $('#btnLevels').onclick = () => show('levels');
@@ -1758,6 +1819,14 @@
   show('home');
   // test hook
   window.__mjReady = true;
+  // dashboard: app opened, and how long it stays on screen
+  let fgStart = Date.now();
+  logEvt('open', { lv: S.level, name: S.name || '', vw: innerWidth, vh: innerHeight });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { logEvt('hide', { fg: Math.round((Date.now() - fgStart) / 1000), scr: screen, ...(screen === 'game' && G && !G.done ? lvInfo() : {}) }); }
+    else { fgStart = Date.now(); logEvt('show', { scr: screen }); }
+  });
+  setInterval(flushLog, 60 * 1000);
   // web / iPhone version: works offline once loaded, and can be put on the home screen
   if (location.protocol === 'https:' && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Oma's Mahjong · Volgen</title>
+<link rel="icon" href="../favicon.png">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f3ef; --surface: #fcfcfb; --surface-2: #f0efec; --line: #e2e0da;
+  --ink: #0b0b0b; --ink-2: #52514e; --ink-3: #7c7a74;
+  --accent: #2a78d6; --accent-soft: #cde2fb;
+  --good: #0ca30c; --good-ink: #006300; --bad: #d03b3b; --warn: #b07600;
+  --seq-0: #f0efec; --seq-1: #cde2fb; --seq-2: #9ec5f4; --seq-3: #6da7ec; --seq-4: #3987e5; --seq-5: #256abf; --seq-6: #104281;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121211; --surface: #1a1a19; --surface-2: #242422; --line: #33332f;
+    --ink: #ffffff; --ink-2: #c3c2b7; --ink-3: #9a988f;
+    --accent: #3987e5; --accent-soft: #1c3a5e;
+    --good: #0ca30c; --good-ink: #5fd35f; --bad: #e66767; --warn: #fab219;
+    --seq-0: #242422; --seq-1: #173257; --seq-2: #184f95; --seq-3: #256abf; --seq-4: #3987e5; --seq-5: #6da7ec; --seq-6: #b7d3f6;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211; --surface: #1a1a19; --surface-2: #242422; --line: #33332f;
+  --ink: #ffffff; --ink-2: #c3c2b7; --ink-3: #9a988f;
+  --accent: #3987e5; --accent-soft: #1c3a5e;
+  --good: #0ca30c; --good-ink: #5fd35f; --bad: #e66767; --warn: #fab219;
+  --seq-0: #242422; --seq-1: #173257; --seq-2: #184f95; --seq-3: #256abf; --seq-4: #3987e5; --seq-5: #6da7ec; --seq-6: #b7d3f6;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+main { max-width: 1080px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 0; }
+h2 { font-size: 16px; margin: 0 0 10px; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 14px; }
+.top .who { display: flex; align-items: center; gap: 10px; flex: 1 1 260px; min-width: 0; }
+.avatar { font-size: 34px; line-height: 1; }
+.sub { color: var(--ink-2); font-size: 13.5px; }
+select { font: inherit; padding: 6px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.live { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
+.live .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-3); }
+.live.on { color: var(--good-ink); } .live.on .dot { background: var(--good); animation: pulse 1.4s infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+.grid { display: grid; gap: 12px; }
+.kpis { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); margin-bottom: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; min-width: 0; }
+.kpi .lbl { font-size: 12.5px; color: var(--ink-2); font-weight: 600; }
+.kpi .val { font-size: 26px; font-weight: 800; letter-spacing: -.5px; margin-top: 2px; }
+.kpi .note { font-size: 12px; color: var(--ink-3); }
+.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 12px; }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { fill: var(--ink-2); font-size: 12px; }
+.axis line { stroke: var(--line); }
+.bar { fill: var(--accent); }
+.bar:hover, .bar.hl { fill: var(--seq-5); }
+.hm-cell { stroke: var(--surface); stroke-width: 2; }
+.legend { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); margin-top: 6px; }
+.legend i { width: 16px; height: 10px; border-radius: 2px; display: inline-block; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-size: 12px; color: var(--ink-2); font-weight: 700; position: sticky; top: 0; background: var(--surface); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tbl-wrap { overflow: auto; max-height: 460px; }
+.res { font-weight: 700; letter-spacing: 1px; }
+.res .w { color: var(--good-ink); } .res .l { color: var(--bad); } .res .r { color: var(--ink-3); }
+.feed { list-style: none; margin: 0; padding: 0; max-height: 460px; overflow: auto; }
+.feed li { display: grid; grid-template-columns: 54px 22px 1fr; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.feed .t { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.feed li.day { display: block; font-weight: 800; color: var(--ink-2); padding-top: 12px; border: 0; }
+#tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 600; opacity: 0; transition: opacity .1s; z-index: 10; white-space: nowrap; }
+.empty { color: var(--ink-3); padding: 18px 0; text-align: center; }
+.warnbox { background: var(--surface-2); border-left: 4px solid var(--warn); padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
+.foot { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div class="who">
+      <span class="avatar" id="av">👵</span>
+      <div style="min-width:0">
+        <h1 id="name">Laden…</h1>
+        <div class="sub" id="meta">&nbsp;</div>
+      </div>
+    </div>
+    <span class="live" id="live"><span class="dot"></span><span id="liveTxt">verbinden…</span></span>
+    <select id="who" aria-label="Kies speler"></select>
+  </div>
+  <div id="notice"></div>
+
+  <div class="grid kpis" id="kpis"></div>
+
+  <div class="grid two">
+    <section class="card"><h2>Speeltijd per dag (minuten)</h2><div id="chTime"></div></section>
+    <section class="card"><h2>Levels gehaald per dag</h2><div id="chWins"></div></section>
+  </div>
+  <div class="grid two">
+    <section class="card"><h2>Pogingen per level</h2><div id="chTries"></div></section>
+    <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
+  </div>
+  <div class="grid two">
+    <section class="card"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
+    <section class="card"><h2>Live verloop</h2><ul class="feed" id="feed"></ul></section>
+  </div>
+  <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.</p>
+</main>
+<div id="tip"></div>
+<script>
+const DB = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
+let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
+const $ = s => document.querySelector(s);
+const pad = n => String(n).padStart(2, '0');
+const dkey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const hm = t => { const d = new Date(t); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+const mmss = s => s >= 3600 ? `${Math.floor(s / 3600)}u ${pad(Math.floor(s % 3600 / 60))}m` : `${Math.floor(s / 60)}:${pad(Math.round(s % 60))}`;
+const mins = s => Math.round(s / 60);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const DAYN = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+const ago = t => { const s = (Date.now() - t) / 1000; return s < 90 ? 'net nu' : s < 3600 ? `${Math.round(s / 60)} min geleden` : s < 86400 ? `${Math.round(s / 3600)} uur geleden` : `${Math.round(s / 86400)} dagen geleden`; };
+const lvlName = e => e.m === 'd' ? `Dagpuzzel ${e.d ? e.d.slice(5).split('-').reverse().join('-') : ''}` : `Level ${e.lv}`;
+const lvlKey = e => e.m === 'd' ? 'D' + e.d : 'L' + e.lv;
+
+// ---------- data in ----------
+function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e.t).sort((a, b) => a.t - b.t); }
+function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
+function players() {
+  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !id.startsWith('test-')));
+  return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 })).sort((a, b) => b.last - a.last);
+}
+function fillPicker() {
+  const ps = players(), cur = sel;
+  if (!sel || !ps.some(p => p.id === sel)) { const oma = ps.find(p => /oma/i.test(p.name)) || ps[0]; sel = oma ? oma.id : null; }
+  const html = ps.map(p => `<option value="${p.id}"${p.id === sel ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
+  if ($('#who').innerHTML !== html) $('#who').innerHTML = html;
+  if (cur !== sel) render();
+}
+$('#who').onchange = e => { sel = e.target.value; history.replaceState(null, '', '#' + sel); render(); };
+if (location.hash.length > 2) sel = location.hash.slice(1);
+
+// ---------- analysis ----------
+function analyse(ev) {
+  const levels = new Map(), days = new Map();
+  const day = t => { const k = dkey(new Date(t)); if (!days.has(k)) days.set(k, { k, sec: 0, fg: 0, wins: 0, losses: 0, restarts: 0, hints: 0, shuf: 0, starts: 0 }); return days.get(k); };
+  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, first: e.t, won: null, sec: 0, best: null, stars: 0 }); return levels.get(k); };
+  for (const e of ev) {
+    if (e.k === 'end') {
+      const l = L(e); l.ends.push(e); l.sec += e.dur || 0;
+      const d = day(e.t); d.sec += e.dur || 0;
+      if (e.r === 'win') { d.wins++; if (!l.won) { l.won = e.t; l.winAt = e.at; l.winDur = e.dur; } l.stars = Math.max(l.stars, e.st || 0); l.best = Math.min(l.best ?? 1e9, e.dur || 0); }
+      else if (e.r === 'stuck') d.losses++; else d.restarts++;
+    } else if (e.k === 'pause') { const d = day(e.t); }
+    else if (e.k === 'hint') { L(e).hints++; day(e.t).hints++; }
+    else if (e.k === 'shuf') { L(e).shuf++; day(e.t).shuf++; }
+    else if (e.k === 'start') { L(e); day(e.t).starts++; }
+    else if (e.k === 'hide' && e.fg) day(e.t).fg += Math.min(e.fg, 4 * 3600);
+  }
+  return { levels: [...levels.values()], days };
+}
+
+// ---------- charts (plain SVG) ----------
+const tip = $('#tip');
+function bindTips(root) {
+  root.querySelectorAll('[data-tip]').forEach(el => {
+    const showTip = ev => { tip.textContent = el.dataset.tip; tip.style.opacity = 1; const p = ev.touches ? ev.touches[0] : ev; tip.style.left = Math.min(innerWidth - tip.offsetWidth - 8, p.clientX + 12) + 'px'; tip.style.top = (p.clientY - 36) + 'px'; el.classList.add('hl'); };
+    el.addEventListener('pointermove', showTip); el.addEventListener('pointerdown', showTip);
+    el.addEventListener('pointerleave', () => { tip.style.opacity = 0; el.classList.remove('hl'); });
+  });
+}
+function niceMax(v) { if (v <= 5) return 5; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= v) return m * p; return v; }
+function barChart(el, items, unit) {
+  if (!items.some(i => i.v > 0)) { el.innerHTML = '<div class="empty">Nog geen gegevens</div>'; return; }
+  const W = Math.max(280, el.clientWidth || 520), H = 200, padL = 32, padB = 24, padT = 8, n = items.length, gw = (W - padL) / n, bw = Math.max(4, Math.min(28, gw - 2));
+  const top = Math.max(...items.map(i => i.v)), max = top <= 4 ? Math.max(1, top) : niceMax(top), ticks = top <= 4 ? max : 4;
+  const y = v => padT + (H - padT - padB) * (1 - v / max);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img"><g class="axis">`;
+  for (let k = 0; k <= ticks; k++) { const v = max * k / ticks, yy = y(v); s += `<line x1="${padL}" x2="${W}" y1="${yy}" y2="${yy}"/><text x="${padL - 6}" y="${yy + 4}" text-anchor="end">${+v.toFixed(1)}</text>`; }
+  s += '</g>';
+  items.forEach((it, i) => {
+    const x = padL + gw * i + (gw - bw) / 2, yy = y(it.v), h = Math.max(0, H - padB - yy);
+    if (it.v > 0) s += `<path class="bar" d="M${x},${H - padB} V${yy + Math.min(4, h)} q0,-4 4,-4 h${bw - 8} q4,0 4,4 V${H - padB} Z" data-tip="${esc(it.tip || `${it.label}: ${it.v} ${unit}`)}"/>`;
+    s += `<rect x="${padL + gw * i}" y="${padT}" width="${gw}" height="${H - padT - padB}" fill="transparent" data-tip="${esc(it.tip || `${it.label}: ${it.v} ${unit}`)}"/>`;
+    if (i % Math.max(1, Math.ceil(n / Math.floor(W / 44))) === 0) s += `<text x="${padL + gw * i + gw / 2}" y="${H - 6}" text-anchor="middle">${esc(it.short)}</text>`;
+  });
+  el.innerHTML = s + '</svg>';
+  bindTips(el);
+}
+function heatmap(el, ev) {
+  const cells = Array.from({ length: 7 }, () => new Array(24).fill(0)), since = Date.now() - 28 * 864e5;
+  for (const e of ev) if (e.k === 'end' && e.t > since && e.dur) { const d = new Date(e.t - e.dur * 500); cells[d.getDay()][d.getHours()] += e.dur / 60; }
+  const max = Math.max(...cells.flat());
+  if (!max) { el.innerHTML = '<div class="empty">Nog geen gegevens</div>'; return; }
+  const W = Math.max(280, el.clientWidth || 520), cw = (W - 28) / 24, ch = W < 420 ? 16 : 20, order = [1, 2, 3, 4, 5, 6, 0];
+  const step = v => v <= 0 ? 0 : Math.min(6, 1 + Math.floor(v / max * 5.999));
+  let s = `<svg viewBox="0 0 ${W} ${ch * 7 + 22}" role="img">`;
+  order.forEach((dw, r) => {
+    s += `<text x="0" y="${r * ch + 14}">${DAYN[dw]}</text>`;
+    for (let h = 0; h < 24; h++) { const v = cells[dw][h]; s += `<rect class="hm-cell" x="${28 + h * cw}" y="${r * ch}" width="${cw}" height="${ch}" rx="3" fill="var(--seq-${step(v)})" data-tip="${DAYN[dw]} ${pad(h)}:00–${pad(h + 1)}:00 · ${Math.round(v)} min"/>`; }
+  });
+  for (let h = 0; h < 24; h += W < 420 ? 6 : 3) s += `<text x="${28 + h * cw}" y="${ch * 7 + 16}">${pad(h)}u</text>`;
+  el.innerHTML = s + '</svg><div class="legend">minder <i style="background:var(--seq-1)"></i><i style="background:var(--seq-3)"></i><i style="background:var(--seq-5)"></i><i style="background:var(--seq-6)"></i> meer</div>';
+  bindTips(el);
+}
+
+// ---------- render ----------
+function render() {
+  if (!sel) return;
+  const ev = events(sel), sc = SCORES[sel] || {}, last = ev[ev.length - 1];
+  const { levels, days } = analyse(ev);
+  const lastOpen = [...ev].reverse().find(e => e.k === 'open' || e.k === 'start' || e.k === 'show');
+  const lastHide = [...ev].reverse().find(e => e.k === 'hide');
+  const active = last && Date.now() - last.t < 6 * 60 * 1000 && (!lastHide || (lastOpen && lastOpen.t > lastHide.t));
+  const ver = [...ev].reverse().find(e => e.v);
+  const curLv = Math.max(sc.level || 0, ...ev.filter(e => e.m !== 'd' && e.lv).map(e => e.k === 'end' && e.r === 'win' ? e.lv + 1 : e.lv));
+  $('#av').textContent = sc.avatar || '🙂';
+  $('#name').textContent = nameOf(sel);
+  const dev = ver ? { android: 'Android-app', ios: 'iPhone/iPad', web: 'browser' }[ver.dev] || ver.dev : '';
+  $('#meta').innerHTML = [`Nu bij <b>level ${curLv || '?'}</b>`, ver ? `versie <b>${esc(ver.v)}</b>${dev ? ' · ' + dev : ''}` : 'versie onbekend', last ? `laatst actief ${ago(last.t)}` : 'nog geen activiteit'].join(' · ');
+  $('#live').classList.toggle('on', !!active);
+  $('#liveTxt').textContent = active ? (last.k === 'start' || last.k === 'hint' || last.k === 'shuf' ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
+  $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
+
+  // KPIs
+  const today = days.get(dkey(new Date())) || { sec: 0, wins: 0, losses: 0, restarts: 0, starts: 0, hints: 0, shuf: 0 };
+  const won = levels.filter(l => l.won && !l.daily);
+  const ends = ev.filter(e => e.k === 'end');
+  const avgTries = won.length ? (won.reduce((a, l) => a + (l.winAt || 1), 0) / won.length) : 0;
+  const winEnds = ends.filter(e => e.r === 'win');
+  const helped = winEnds.filter(e => e.h || e.sh).length;
+  const week = [...days.values()].filter(d => d.k >= dkey(new Date(Date.now() - 6 * 864e5)));
+  const k = (lbl, val, note = '') => `<div class="card kpi"><div class="lbl">${lbl}</div><div class="val">${val}</div><div class="note">${note}</div></div>`;
+  $('#kpis').innerHTML =
+    k('Vandaag gespeeld', mmss(today.sec), `${today.wins} gehaald · ${today.losses} vastgelopen`) +
+    k('Deze week', mmss(week.reduce((a, d) => a + d.sec, 0)), `${week.reduce((a, d) => a + d.wins, 0)} levels gehaald`) +
+    k('Levels gehaald', won.length, `${levels.filter(l => l.daily && l.won).length} dagpuzzels`) +
+    k('Pogingen per level', avgTries ? avgTries.toFixed(1).replace('.', ',') : '–', 'gemiddeld tot het lukt') +
+    k('Kans per poging', ends.length ? Math.round(winEnds.length / ends.length * 100) + '%' : '–', `${winEnds.length} van ${ends.length} pogingen`) +
+    k('Hint/schudden', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden`) +
+    k('Tijd per level', winEnds.length ? mmss(winEnds.reduce((a, e) => a + (e.dur || 0), 0) / winEnds.length) : '–', 'gemiddeld bij gehaald') +
+    k('App geopend', ev.filter(e => e.k === 'open').length + '×', last ? `sinds ${new Date(ev[0].t).toLocaleDateString('nl-NL')}` : '');
+
+  // charts: last 14 days
+  const dayItems = [];
+  for (let i = 13; i >= 0; i--) { const d = new Date(Date.now() - i * 864e5), kk = dkey(d), v = days.get(kk) || { sec: 0, wins: 0, losses: 0 }; dayItems.push({ d, kk, v }); }
+  barChart($('#chTime'), dayItems.map(({ d, v }) => ({ v: mins(v.sec), short: DAYN[d.getDay()] + ' ' + d.getDate(), tip: `${DAYN[d.getDay()]} ${d.getDate()}-${d.getMonth() + 1}: ${mins(v.sec)} min in levels` })), 'min');
+  barChart($('#chWins'), dayItems.map(({ d, v }) => ({ v: v.wins, short: DAYN[d.getDay()] + ' ' + d.getDate(), tip: `${DAYN[d.getDay()]} ${d.getDate()}-${d.getMonth() + 1}: ${v.wins} gehaald, ${v.losses} vastgelopen` })), 'levels');
+  const lv = levels.filter(l => !l.daily).sort((a, b) => a.lv - b.lv).slice(-30);
+  barChart($('#chTries'), lv.map(l => ({ v: l.ends.filter(e => e.r !== 'restart' || true).length + (l.won ? 0 : 0), short: String(l.lv), tip: `Level ${l.lv}: ${l.ends.length} ${l.ends.length === 1 ? 'poging' : 'pogingen'}${l.won ? ' · gehaald' : ' · nog niet gehaald'}${l.hints || l.shuf ? ` · ${l.hints}× hint, ${l.shuf}× schudden` : ''}` })), 'pogingen');
+  heatmap($('#chHeat'), ev);
+
+  // table
+  const lastT = l => Math.max(l.first, ...l.ends.map(e => e.t));
+  const rows = levels.sort((a, b) => lastT(b) - lastT(a));
+  const res = l => l.ends.map(e => e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : '<span class="r">↻</span>').join('');
+  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? mmss(l.winDur || 0) : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${!l.hints && !l.shuf ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.first).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
+
+  // live feed
+  const txt = e => {
+    switch (e.k) {
+      case 'open': return ['📱', `App geopend (versie ${esc(e.v)})`];
+      case 'show': return ['👀', 'Terug in de app'];
+      case 'hide': return ['💤', `App weggelegd${e.fg ? ` na ${mmss(e.fg)}` : ''}${e.lv && e.scr === 'game' ? ` (midden in ${lvlName(e).toLowerCase()})` : ''}`];
+      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}`];
+      case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''} · ${e.sc} punten`]
+        : e.r === 'stuck' ? ['❌', `${lvlName(e)}: vastgelopen na ${mmss(e.dur || 0)} (${e.left} stenen over)`]
+        : ['↻', `${lvlName(e)}: opnieuw begonnen na ${mmss(e.dur || 0)}`];
+      case 'hint': return ['💡', `Hint gebruikt in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)})`];
+      case 'shuf': return ['🔀', `Geschud in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)})`];
+      case 'pause': return ['⏸', `${lvlName(e)}: naar het menu na ${mmss(e.s || 0)}`];
+      case 'heart_in': return ['💛', `Hartje gezien van ${esc(e.from)}${e.where === 'level' ? ' (tijdens een level)' : ''}`];
+      case 'heart_out': return ['💌', `Hartje gestuurd naar ${esc(e.to)}`];
+      case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
+      default: return ['•', esc(e.k)];
+    }
+  };
+  let lastDay = '', html = '';
+  for (const e of [...ev].reverse().slice(0, 150)) {
+    const dk = new Date(e.t).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
+    if (dk !== lastDay) { html += `<li class="day">${dk}</li>`; lastDay = dk; }
+    const [ico, t] = txt(e);
+    html += `<li><span class="t">${hm(e.t)}</span><span>${ico}</span><span>${t}</span></li>`;
+  }
+  $('#feed').innerHTML = html || '<li class="empty">Nog niets gebeurd</li>';
+}
+
+// ---------- live connection ----------
+async function loadScores() { try { SCORES = await (await fetch(DB + '/scores.json', { cache: 'no-store' })).json() || {}; } catch (e) { } }
+function stream() {
+  const es = new EventSource(DB + '/plays.json');
+  const apply = (type, msg) => {
+    const { path, data } = JSON.parse(msg.data);
+    const parts = path.split('/').filter(Boolean);
+    if (!parts.length) { PLAYS = type === 'put' ? (data || {}) : Object.assign(PLAYS, data || {}); }
+    else if (parts.length === 1) { if (type === 'put') PLAYS[parts[0]] = data || {}; else PLAYS[parts[0]] = Object.assign(PLAYS[parts[0]] || {}, data || {}); }
+    else { const p = PLAYS[parts[0]] = PLAYS[parts[0]] || {}; if (data === null) delete p[parts[1]]; else p[parts[1]] = type === 'put' ? data : Object.assign(p[parts[1]] || {}, data); }
+    liveOK = true; fillPicker(); render();
+  };
+  es.addEventListener('put', m => apply('put', m));
+  es.addEventListener('patch', m => apply('patch', m));
+  es.onerror = () => { liveOK = false; $('#liveTxt').textContent = 'verbinding kwijt, opnieuw…'; };
+  es.addEventListener('cancel', () => { $('#notice').innerHTML = '<div class="warnbox">De database staat het lezen van speelgegevens nog niet toe. Publiceer de nieuwe Firebase-regels.</div>'; });
+}
+loadScores().then(() => { fillPicker(); render(); stream(); });
+setInterval(() => loadScores().then(render), 60000);
+setInterval(render, 30000);   // "x min geleden" stays fresh
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(render, 200); });
+</script>
+</body>
+</html>
