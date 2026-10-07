@@ -40,29 +40,33 @@ const Layouts = (() => {
     if (BASES) return BASES;
     BASES = [];
     for (const name of NAMES)
-      for (let W = 3; W <= 6; W++)
-        for (let H = 3; H <= 7; H++) {
-          if (H < W - 1) continue;
-          let n = 0;
-          for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) if (SHAPES[name](c, r, W, H)) n++;
-          if (n >= 4) BASES.push({ name, W, H, n });
+      for (let W = 3; W <= 10; W++)
+        for (let H = 3; H <= 10; H++) {
+          let n = 0, c0 = 99, c1 = -1, r0 = 99, r1 = -1;
+          for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) if (SHAPES[name](c, r, W, H)) { n++; c0 = Math.min(c0, c); c1 = Math.max(c1, c); r0 = Math.min(r0, r); r1 = Math.max(r1, r); }
+          // real occupied size (some shapes leave empty rows/columns)
+          if (n >= 4) BASES.push({ name, W, H, n, w: c1 - c0 + 1, h: r1 - r0 + 1 });
         }
     return BASES;
   }
 
   /* A base layer, then messy piles on top: each upper tile lands at a random half-tile
      offset, resting on one or more tiles below (never overlapping its own layer). */
-  function buildPiles(seed, target, maxLayers) {
+  /* aspect = height / width of the free screen area: the pile takes the same shape,
+     so its tiles can grow until it fills the space. */
+  function buildPiles(seed, target, maxLayers, aspect = 1.55) {
     const r = rng(seed);
     const layers = Math.max(1, maxLayers);
     const baseFrac = layers === 1 ? 1 : layers === 2 ? 0.62 : layers === 3 ? 0.5 : 0.44;
     const baseTarget = Math.round(target * baseFrac);
-    let cands = bases().filter(b => Math.abs(b.n - baseTarget) <= 2);
-    if (!cands.length) cands = bases().slice().sort((a, b) => Math.abs(a.n - baseTarget) - Math.abs(b.n - baseTarget)).slice(0, 6);
+    const brick = layers > 1 && r() < 0.45; // shift every other row by half a tile
+    const want = aspect / 1.24; // rows per column that fill the area exactly
+    const scored = bases().map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 6 * Math.abs(Math.log((b.h + 0.25) / (b.w + (brick ? 0.5 : 0) + 0.35) / want)) }));
+    const bestSc = Math.min(...scored.map(x => x.sc));
+    const cands = scored.filter(x => x.sc <= bestSc + 0.6).map(x => x.b);
     const names = [...new Set(cands.map(c => c.name))];
     const nm = pick(r, names);
     const b = pick(r, cands.filter(c => c.name === nm));
-    const brick = layers > 1 && r() < 0.45; // shift every other row by half a tile
     const tiles = [];
     for (let row = 0; row < b.H; row++)
       for (let c = 0; c < b.W; c++)
@@ -90,8 +94,8 @@ const Layouts = (() => {
     for (let z = 1; z < layers && remaining > 0; z++) {
       const want = z === layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (0.55 + r() * 0.2))));
       const cand = [];
-      for (let y = minY - 1; y <= maxY + 1; y++)
-        for (let x = minX - 1; x <= maxX + 1; x++) {
+      for (let y = minY; y <= maxY; y++)
+        for (let x = minX; x <= maxX; x++) {
           const p = { x, y };
           let support = 0;
           for (const q of prev) if (overlaps(p, q)) support++;
@@ -159,19 +163,19 @@ const Layouts = (() => {
   /* Gentler curve: after level 6 the difficulty climbs at half speed
      (level 26 now plays like the old level 16). */
   const effLevel = level => level <= 6 ? level : 6 + (level - 6) / 2;
-  function forLevel(level) {
+  function forLevel(level, aspect) {
     const e = effLevel(level);
     let target = targetFor(Math.round(e));
     if (e > 26) target = targetFor(level);           // keep variety in the endless levels
     target -= target % 2;
-    const res = buildPiles(level * 7919 + 13, target, layersFor(e));
+    const res = buildPiles(level * 7919 + 13, target, layersFor(e), aspect);
     const diff = difficultyFor(e);
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1, diff };
   }
-  function forDate(ymd) {
+  function forDate(ymd, aspect) {
     const r0 = rng(ymd);
     const target = 60 + Math.floor(r0() * 11) * 2; // 60..80
-    const res = buildPiles(ymd * 13 + 5, target, 4);
+    const res = buildPiles(ymd * 13 + 5, target, 4, aspect);
     const diff = { ...difficultyFor(10), target: 0.75, down: 0.15 };
     return { ...res, kinds: kindsFor(res.tiles.length / 2, 10, diff), seed: ymd * 7 + 3, diff };
   }

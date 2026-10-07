@@ -259,7 +259,7 @@
   function showIntro(after) {
     const f = Tiles.faceHTML('classic', 31), g = Tiles.faceHTML('classic', 4);
     openModal(`<h2>Zo speel je 🀄</h2>
-      <p>Tik op een <b>vrije steen</b>: hij schuift naar een <b>vakje onderaan</b>.</p>
+      <p>Tik op een <b>vrije steen</b>: hij schuift naar een van de <b>4 vakjes bovenaan</b>.</p>
       <div class="how-tray"><div class="hm">${g}</div><div class="hm">${f}</div><div class="hm glow">${f}</div><div class="hm empty"></div></div>
       <p>Komen er <b>twee dezelfde</b> in de vakjes, dan verdwijnen ze! Er zijn maar <b>4 vakjes</b>. Zijn ze allemaal vol, dan zit je vast.</p>
       <p>Vrij = niets erbovenop, en links óf rechts open. Elk level mag je één keer <b>💡 Hint</b> en één keer <b>🔀 Schudden</b>.</p>
@@ -271,35 +271,40 @@
   // ---------- the game ----------
   const SLOTS = Layouts.SLOTS;
   let G = null;
-  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 4 ? c : null; } catch (e) { return null; } };
+  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 5 ? c : null; } catch (e) { return null; } };
   const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
   function saveCur() {
     if (!G || G.done) return;
     syncClock();
     try {
-      localStorage.setItem(CUR, JSON.stringify({ v: 4, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+      localStorage.setItem(CUR, JSON.stringify({ v: 5, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
     } catch (e) { }
   }
   function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
   function pauseClock() { syncClock(); if (G) G.tStart = 0; saveCur(); }
   function resumeClock() { if (G && !G.done && screen === 'game') G.tStart = performance.now(); }
 
-  function startLevel(level) { begin({ mode: 'level', level, key: 'L' + level, title: 'Level ' + level, spec: Layouts.forLevel(level) }); }
+  function startLevel(level) { begin({ mode: 'level', level, key: 'L' + level, title: 'Level ' + level, makeSpec: a => Layouts.forLevel(level, a) }); }
   function startDaily(k) {
     const d = parseKey(k);
-    begin({ mode: 'daily', date: k, key: 'D' + k, title: `Dagpuzzel ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`, spec: Layouts.forDate(dnum(k)) });
+    begin({ mode: 'daily', date: k, key: 'D' + k, title: `Dagpuzzel ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`, makeSpec: a => Layouts.forDate(dnum(k), a) });
   }
 
   function begin(o, restart = false) {
     $('#modal').classList.add('hidden'); modalOnClose = null;
     $('#comboTag').classList.remove('on'); $('#praise').classList.remove('show'); FX.clear();
+    // shape the pile after the free space on this screen
+    show('game');
+    const wrap = $('#boardWrap');
+    const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
+    if (!o.spec) { o.spec = o.makeSpec(aspect); o.aspect = aspect; }
     const spec = o.spec;
     const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
     const nb = Layouts.neighbors(tiles);
     const n = tiles.length;
     G = { o, ...o, tiles, nb, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
     const cur = restart ? null : loadCur();
-    if (cur && cur.key === o.key && cur.n === n) {
+    if (cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect) {
       cur.faces.forEach((f, i) => tiles[i].face = f);
       cur.alive.forEach((a, i) => G.alive[i] = a);
       (cur.down || []).forEach((a, i) => G.down[i] = a);
