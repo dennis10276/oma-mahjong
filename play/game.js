@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.9.2';
+  const APP_VERSION = '0.9.3';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -1085,11 +1085,20 @@
   function showUnlock(list, then) {
     const bg = list.shift();
     Sound.unlock(); FX.confetti();
+    const next = () => { closeModal(); if (list.length) showUnlock(list, then); else then(); };
+    if (sunUnlocked()) {
+      // after the Zonnebloem prize: just tell, don't switch away from the theme
+      openModal(`<h2>Nieuwe achtergrond! 🎉</h2><p>Je hebt <b>“${bg.name}”</b> vrijgespeeld.</p>
+        <div class="unlock-pv" style="background:${bg.css}"></div>
+        <p style="font-size:18px">Je kunt hem kiezen bij <b>🎨 Thema's</b> in het menu.</p>
+        <button class="big-btn play" id="uOk"><span class="bb-text"><b>Leuk!</b></span></button>`, false);
+      $('#uOk').onclick = next;
+      return;
+    }
     openModal(`<h2>Nieuwe achtergrond! 🎉</h2><p>Je hebt <b>“${bg.name}”</b> vrijgespeeld.</p>
       <div class="unlock-pv" style="background:${bg.css}"></div>
       <button class="big-btn play" id="uUse"><span class="bb-text"><b>Gebruik nu</b></span></button>
       <button class="link-btn" id="uLater">Later</button>`, false);
-    const next = () => { closeModal(); if (list.length) showUnlock(list, then); else then(); };
     $('#uUse').onclick = () => { S.bg = bg.id; save(); applyBg(); next(); };
     $('#uLater').onclick = next;
   }
