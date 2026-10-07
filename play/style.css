@@ -550,3 +550,8 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 #heartPop small { font-size: 15px; color: #8a7448; margin-top: 6px; }
 @keyframes fadeIn { from { opacity: 0; } }
 .fam-row .fr-sub { display: block; font-size: 13.5px; font-weight: 800; color: #8a5a6e; }
+
+/* ---------- 1.9: the combo sign sits in the top bar, never over the tiles ---------- */
+.title-wrap { position: relative; }
+#comboTag, #game #comboTag { position: absolute; top: -3px; bottom: auto; left: 50%; right: auto; transform: translateX(-50%) scale(.5); pointer-events: none; white-space: nowrap; font-size: 17px; padding: 2px 12px; z-index: 5; }
+#comboTag.on { transform: translateX(-50%) scale(1); }

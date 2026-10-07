@@ -1,0 +1,16 @@
+{
+  "name": "Oma's Mahjong",
+  "short_name": "Mahjong",
+  "description": "Rustig Mahjong puzzelen, zonder reclame.",
+  "lang": "nl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b4d3c",
+  "theme_color": "#0b4d3c",
+  "icons": [
+    { "src": "icons/icon192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0b4d3c">
 <title>Oma's Mahjong</title>
-<link rel="stylesheet" href="style.css?v=1.8" id="css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mahjong">
+<link rel="stylesheet" href="style.css?v=1.9" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -61,6 +67,7 @@
       <button class="icon-btn" id="btnHome" aria-label="Menu">🏠</button>
       <div class="title-wrap">
         <div id="gameTitle">Level 1</div>
+        <div id="comboTag"></div>
         <div class="progress"><div id="progressBar"></div></div>
       </div>
       <div class="chip score" id="score">0</div>
@@ -75,7 +82,6 @@
       <button class="tool" id="btnShuffle"><span>🔀</span>Schudden<i class="badge">1</i></button>
     </div>
     <div id="praise"></div>
-    <div id="comboTag"></div>
   </section>
 
   <!-- LEVELS -->
@@ -146,7 +152,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.8', KEY = 'omamj.code', FILES = ['tiles.js?v=1.8', 'audio.js?v=1.8', 'layouts.js?v=1.8', 'game.js?v=1.8'];
+  var BUILT = '1.9', KEY = 'omamj.code', FILES = ['tiles.js?v=1.9', 'audio.js?v=1.9', 'layouts.js?v=1.9', 'game.js?v=1.9'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

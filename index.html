@@ -42,6 +42,8 @@ a { color: inherit; }
 .dl .ico { width: 54px; height: 54px; flex: none; border-radius: 16px; background: rgba(255,255,255,.25); display: grid; place-items: center; }
 .dl b { display: block; font-size: 26px; font-weight: 900; line-height: 1.1; text-shadow: 0 2px 0 rgba(0,0,0,.15); }
 .dl small { font-size: 16px; opacity: .95; }
+.dl.ios { background: linear-gradient(#5a8dee, #3a6bd1); box-shadow: 0 7px 0 #2a4f9e, 0 12px 22px rgba(0,0,0,.25); }
+.dl.alt { transform: scale(.9); opacity: .85; margin-top: 6px; }
 .meta { font-size: 15px; opacity: .8; margin: 4px 0 0; }
 
 .shots { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 4px 14px; margin: 0 -16px; padding-inline: 16px; scrollbar-width: none; }
@@ -87,6 +89,10 @@ footer { text-align: center; font-size: 15px; opacity: .75; padding-top: 6px; }
       <span class="ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M6 10l6 6 6-6M4 20h16"/></svg></span>
       <span><b>Download de app</b><small>Voor Android-telefoons en tablets</small></span>
     </a>
+    <a class="dl ios" href="play/" id="dlIos">
+      <span class="ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
+      <span><b>Speel op iPhone of iPad</b><small>Opent het spel; zet het daarna op je beginscherm</small></span>
+    </a>
     <p class="meta">Versie 1.5 · 0,2 MB · speelt ook zonder internet</p>
   </header>
 
@@ -131,6 +137,17 @@ footer { text-align: center; font-size: 15px; opacity: .75; padding-top: 6px; }
     <p class="note">De app komt niet uit de Play Store, daarom vraagt Android één keer om toestemming. Waarschuwt Play Protect? Kies dan <b>Toch installeren</b>.</p>
   </section>
 
+  <section class="card" id="iphone">
+    <h2>Op een iPhone of iPad</h2>
+    <ol class="steps">
+      <li><div>Open deze pagina in <b>Safari</b> en tik op <b>Speel op iPhone of iPad</b>.</div></li>
+      <li><div>Tik onderaan op <b>Deel</b> (het vierkantje met het pijltje omhoog).</div></li>
+      <li><div>Kies <b>Zet op beginscherm</b> en tik op <b>Voeg toe</b>.</div></li>
+      <li><div>Klaar! Oma's Mahjong staat nu als app op het beginscherm, werkt ook zonder internet en is altijd de nieuwste versie.</div></li>
+    </ol>
+    <p class="note">Er is (nog) geen versie in de App Store. Deze manier werkt net als een gewone app, met dezelfde ranglijst en hartjes.</p>
+  </section>
+
   <section class="card qr">
     <img src="img/qr.svg" alt="QR-code naar deze pagina" width="150" height="150">
     <div>
@@ -146,5 +163,13 @@ footer { text-align: center; font-size: 15px; opacity: .75; padding-top: 6px; }
 
   <footer>Met liefde gemaakt voor oma 💚</footer>
 </main>
+<script>
+  (function () {
+    var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var and = /Android/.test(navigator.userAgent);
+    if (ios) { var d = document.getElementById('dl'); d.parentNode.insertBefore(document.getElementById('dlIos'), d); d.classList.add('alt'); }
+    else if (and) document.getElementById('dlIos').classList.add('alt');
+  })();
+</script>
 </body>
 </html>

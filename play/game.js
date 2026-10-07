@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.8';
+  const APP_VERSION = '1.9';
   /* Updates come from the website: newer game files are downloaded in the background,
      kept on the phone, and used from the next start (or right away on the home screen). */
   const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
@@ -11,7 +11,8 @@
   let updateReady = false, lastUpdateCheck = 0, updating = false;
   const VERSION_URL = UPDATE_URL.replace('bundle.json', 'version.json');
   async function checkUpdate() {
-    if (location.protocol !== 'file:' || updateReady || updating) return;   // only inside the app
+    if (location.protocol === 'https:') return checkWebUpdate();          // the web / iPhone version
+    if (location.protocol !== 'file:' || updateReady || updating) return;   // the Android app
     if (Date.now() - lastUpdateCheck < 30 * 1000) return;
     lastUpdateCheck = Date.now();
     updating = true;
@@ -28,6 +29,16 @@
       localStorage.setItem(CODE_KEY, JSON.stringify({ v: b.v, css: b.css, body: b.body, js: b.js, fail: 0 }));
       updateReady = true;
       applyUpdate();
+    } catch (e) { } finally { updating = false; }
+  }
+  // web / iPhone: the newest files are on the website, a reload is enough
+  async function checkWebUpdate() {
+    if (updateReady || updating || Date.now() - lastUpdateCheck < 30 * 1000) return;
+    lastUpdateCheck = Date.now(); updating = true;
+    try {
+      const r = await fetch('version.json?t=' + Date.now(), { cache: 'no-store' });
+      const vv = r.ok ? await r.json() : null;
+      if (vv && verNewer(vv.v, APP_VERSION)) { updateReady = true; applyUpdate(); }
     } catch (e) { } finally { updating = false; }
   }
   // switch to the new version, but never in the middle of a level or a pop-up
@@ -1747,6 +1758,19 @@
   show('home');
   // test hook
   window.__mjReady = true;
+  // web / iPhone version: works offline once loaded, and can be put on the home screen
+  if (location.protocol === 'https:' && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const standalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  if (isIOS && !standalone && location.protocol === 'https:' && !S.iosTip) setTimeout(() => {
+    if (screen !== 'home' || !$('#modal').classList.contains('hidden')) return;
+    S.iosTip = true; save();
+    openModal(`<div class="sun-big">📱</div><h2>Zet het spel op je beginscherm</h2>
+      <p style="text-align:left;font-size:19px">1. Tik onderaan op <b>Deel</b> <span style="font-size:24px">⬆️</span> (het vierkantje met de pijl).<br>2. Kies <b>Zet op beginscherm</b> ➕.<br>3. Tik op <b>Voeg toe</b>.</p>
+      <p style="font-size:16px;color:#8a7448">Dan staat Oma's Mahjong als app tussen je andere apps, zonder Safari eromheen.</p>
+      <button class="big-btn play" id="iosOk"><span class="bb-text"><b>Begrepen!</b></span></button>`, false);
+    $('#iosOk').onclick = closeModal;
+  }, 1500);
   // ---------- self-update (see the boot script in index.html) ----------
   // this version started fine: forget earlier failed starts
   try { const c = JSON.parse(localStorage.getItem(CODE_KEY) || 'null'); if (c && c.v === window.__mjCode && c.fail) { c.fail = 0; localStorage.setItem(CODE_KEY, JSON.stringify(c)); } } catch (e) { }
