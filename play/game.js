@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.9.3';
+  const APP_VERSION = '0.9.4';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -400,7 +400,7 @@
     openModal(`<h2>Zo speel je 🀄</h2>
       <p>Tik op een <b>vrije steen</b>: hij schuift naar een van de <b>4 vakjes bovenaan</b>.</p>
       <div class="how-tray"><div class="hm">${g}</div><div class="hm">${f}</div><div class="hm glow">${f}</div><div class="hm empty"></div></div>
-      <p>Komen er <b>twee dezelfde</b> in de vakjes, dan verdwijnen ze! Er zijn maar <b>4 vakjes</b>. Zijn ze allemaal vol, dan zit je vast.</p>
+      <p>Komen er <b>twee dezelfde</b> in de vakjes, dan verdwijnen ze! Er zijn maar <b>4 vakjes</b>: komt er een 4e steen zonder paar bij, dan is het level voorbij.</p>
       <p>Vrij = niets erbovenop, en links óf rechts open. Vanaf level ${TOOLS_LEVEL} mag je per level één keer <b>💡 Hint</b> en één keer <b>🔀 Schudden</b>.</p>
       <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true, after);
     $('#mGo').onclick = closeModal;
@@ -552,8 +552,8 @@
       slots[k].innerHTML = t === undefined ? '' : `<div class="tmini${G.arriving.has(t) ? ' arriving' : ''}">${Tiles.faceHTML(S.theme, G.tiles[t].face)}</div>`;
     }
     const tr = $('#tray');
-    tr.classList.toggle('warn', G.tray.length === SLOTS - 1);
-    tr.classList.toggle('full', G.tray.length >= SLOTS);
+    tr.classList.toggle('warn', G.tray.length === SLOTS - 2);   // 2 waiting: careful
+    tr.classList.toggle('full', G.tray.length >= SLOTS - 1);    // 3 waiting: the next miss ends the level
     $('#tray').style.setProperty('--sfs', (slots[0].clientWidth * 0.62).toFixed(1) + 'px');
   }
   function centerOf(el) { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
@@ -658,6 +658,7 @@
     const slotIdx = G.tray.length;
     G.tray.push(i);
     G.arriving.add(i);
+    if (G.tray.length >= SLOTS) G.busy = true;   // 4th tile without a match: level over, no more taps
     renderTray();
     const to = $('#tray').children[slotIdx].getBoundingClientRect();
     const fly = flyTile(face, from, to, MS);
@@ -746,17 +747,15 @@
     return false;
   }
   function checkStuck() {
-    if (!G || G.done || G.busy || G.tray.length < SLOTS || trayMatchFree() >= 0 || peekPairFree()) return;
-    G.busy = true;
+    if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
+    G.busy = true; G.overShown = true;
     syncClock();
     setTimeout(() => {
       Sound.stuck(); buzz([40, 80, 40]);
       openModal(`<h2>Oei, alle vakjes zijn vol!</h2>
-        <p>Er ligt geen passende steen meer vrij. Geen nood, probeer het gewoon nog eens.</p>
-        ${!G.usedShuffle && toolsOpen() ? `<button class="big-btn gold" id="sShuf"><span class="bb-text"><b>🔀 Schud de stenen</b><small>Je mag 1x per level schudden</small></span></button>` : ''}
+        <p>Alle 4 vakjes zitten vol zonder paar. Geen nood, probeer het gewoon nog eens!</p>
         <button class="big-btn play" id="sRetry"><span class="bb-text"><b>↻ Opnieuw proberen</b></span></button>
         <button class="link-btn" id="sMenu">Menu</button>`, false);
-      if ($('#sShuf')) $('#sShuf').onclick = () => { closeModal(); G.busy = false; shuffle(); };
       $('#sRetry').onclick = () => { closeModal(); restart(); };
       $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
     }, 450);

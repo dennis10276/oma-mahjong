@@ -143,7 +143,7 @@ const Layouts = (() => {
   function difficultyFor(level) {
     const t = Math.min(1, Math.max(0, (level - 3) / 17));   // 0 up to level 3, 1 from level 20
     return {
-      cap: level < 4 ? 2 : level < 12 ? 3 : 4,
+      cap: level < 4 ? 2 : 3,   // never needs more than 3 waiting tiles (the 4th slot ends the level)
       open: 0.15 + 0.75 * t,
       // share of pictures that appear only twice instead of four times (rarer = harder)
       rare: Math.min(0.9, Math.max(0, (level - 4) / 16)),
@@ -276,7 +276,7 @@ const Layouts = (() => {
         for (let i = 0; i < n; i++) if (isFree(i, alive, nb)) fr.push(i);
         let m = fr.find(i => tray.includes(faces[i]));
         if (m === undefined) {
-          if (tray.length >= SLOTS) { ok = false; break; }
+          if (tray.length >= SLOTS - 1) { ok = false; break; }  // a 4th unmatched tile ends the level
           const cnt = {};
           fr.forEach(i => cnt[faces[i]] = (cnt[faces[i]] || 0) + 1);
           const pr = fr.filter(i => cnt[faces[i]] >= 2);
@@ -341,7 +341,7 @@ const Layouts = (() => {
       const pair = fr.filter(i => !tf.has(faces[i]) && cnt[faces[i]] >= 2);
       const rest = fr.filter(i => !tf.has(faces[i]) && cnt[faces[i]] < 2);
       if (match.length) return [match[0]];           // taking a match is always safe
-      if (tray.length >= SLOTS) return [];
+      if (tray.length >= SLOTS - 1) return [];  // only 3 unmatched tiles may wait in the tray
       return [...pair.slice(0, 2), ...rest];
     }
     function rec(tray, left) {
