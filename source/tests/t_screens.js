@@ -1,7 +1,7 @@
 /* Screens: everything opens without errors, and fits on small phones. */
 'use strict';
 const FAM = { pfam1: { name: 'Dennis', avatar: '😊', frame: 'rainbow', level: 18, points: 28080, t: 1, wk: '2026-10-05', wkPts: 15000 }, pfam2: { name: 'Rashmi', avatar: '🌷', frame: 'none', level: 7, points: 8140, t: 1, wk: '2026-10-05', wkPts: 8000 } };
-const PLAYER = { level: 12, name: 'Oma', pid: 'test-shot', avatar: '👵', stars: { 1: 3, 2: 3, 3: 2 }, lvlPts: { 1: 900, 2: 1000 }, wk: { id: '2026-10-05', pts: 5000 }, lvlHist: { '2026-10-05': 6, '2026-10-06': 9, '2026-10-07': 12 } };
+const PLAYER = { winStreak: 4, level: 12, name: 'Oma', pid: 'test-shot', avatar: '👵', stars: { 1: 3, 2: 3, 3: 2 }, lvlPts: { 1: 900, 2: 1000 }, wk: { id: '2026-10-05', pts: 5000 }, lvlHist: { '2026-10-05': 6, '2026-10-06': 9, '2026-10-07': 12 } };
 
 module.exports = [
   {

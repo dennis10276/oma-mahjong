@@ -73,10 +73,11 @@ module.exports = [
     async run(t, { startLevel, fillTray, click, solve, sleep }) {
       const p = await t.phone({ state: OMA });
       await startLevel(p, 12);
+      t.eq(await p.evaluate(() => __mj.G.ez), 1, 'grandma always gets the gentle deal');
       const k0 = await kinds(p), n0 = await p.evaluate(() => __mj.G.tiles.length);
       for (let k = 0; k < 2; k++) { await fillTray(p); await click(p, '#rsRetry'); await sleep(900); }
       t.eq(await p.evaluate(() => __mj.S.fails.L12), 2, 'two failed tries');
-      t.eq(await p.evaluate(() => __mj.G.ez), 1, 'third try is easier');
+      t.eq(await p.evaluate(() => __mj.G.ez), 2, 'third try is easier');
       t.eq(await p.evaluate(() => __mj.G.tiles.length), n0, 'same pile size');
       const k1 = await kinds(p);
       t.ok(k1 < k0, 'fewer different pictures', { before: k0, after: k1 });
@@ -86,14 +87,14 @@ module.exports = [
       await sleep(500);
       await p.reload(); await p.waitForFunction(() => window.__mjReady); await sleep(300);
       await p.evaluate(() => __mj.startLevel(12)); await sleep(800);
-      t.eq(await p.evaluate(() => [__mj.G.ez, __mj.G.tiles.map(t => t.face).join()]), [1, faces1], 'resumed with the same easy deal');
+      t.eq(await p.evaluate(() => [__mj.G.ez, __mj.G.tiles.map(t => t.face).join()]), [2, faces1], 'resumed with the same easy deal');
       t.ok(await solve(p), 'easy deal is solvable');
       t.eq(await p.evaluate(() => (__mj.S.fails || {}).L12), undefined, 'winning clears the failed tries');
       const ev = p.db.plays('test-oma');
-      t.ok(ev.some(e => e.k === 'start' && e.lv === 12 && e.ez === 1), 'easier start logged');
+      t.ok(ev.some(e => e.k === 'start' && e.lv === 12 && e.ez === 2), 'easier start logged');
       // the next level starts normal again
       await startLevel(p, 13);
-      t.eq(await p.evaluate(() => __mj.G.ez), 0, 'next level is normal');
+      t.eq(await p.evaluate(() => __mj.G.ez), 1, 'next level: back to her gentle normal');
     },
   },
   {
@@ -101,7 +102,7 @@ module.exports = [
     async run(t, { startLevel }) {
       const p = await t.phone({ state: { ...OMA, level: 30, fails: { L30: 4 } } });
       await startLevel(p, 30);
-      t.eq(await p.evaluate(() => __mj.G.ez), 2, 'ease level 2');
+      t.eq(await p.evaluate(() => __mj.G.ez), 3, 'ease level 3');
       t.eq(await p.evaluate(() => __mj.G.down.reduce((a, b) => a + b, 0)), 0, 'no face-down tiles');
       const q = await t.phone({ state: { ...DENNIS, level: 30, fails: { L30: 4 } } });
       await startLevel(q, 30);

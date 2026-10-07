@@ -17,6 +17,7 @@ function show(id) {
 
 function renderHome() {
   if (applyUpdate()) return;
+  setTimeout(maybeDailyGift, 900);
   const h = new Date().getHours();
   const greet = h < 6 ? 'Goedenacht, oma! 🌙' : h < 12 ? 'Goedemorgen, oma! ☀️' : h < 18 ? 'Goedemiddag, oma! 🌼' : 'Goedenavond, oma! 🌙';
   $('#greet').textContent = greet;

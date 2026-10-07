@@ -34,11 +34,11 @@ module.exports = [
     async run(t) {
       for (const L of [8, 12, 20, 30, 45]) {
         const base = Layouts.forLevel(L, 1.5);
-        const r0 = solvable(base), r1 = solvable(Layouts.ease(base, 1)), r2 = solvable(Layouts.ease(base, 2));
-        t.ok(r1.ok && r2.ok, `level ${L} easy deals solvable`, { r1, r2 });
-        t.eq([r1.n, r2.n], [r0.n, r0.n], `level ${L} same pile size`);
-        t.ok(r1.kinds <= r0.kinds && r2.kinds < r0.kinds, `level ${L} fewer different pictures`, { normal: r0.kinds, ez1: r1.kinds, ez2: r2.kinds });
-        t.ok(r1.down <= r0.down && r2.down === 0, `level ${L} fewer face-down tiles`, { normal: r0.down, ez1: r1.down, ez2: r2.down });
+        const [r0, r1, r2, r3] = [0, 1, 2, 3].map(ez => solvable(Layouts.ease(base, ez)));
+        t.ok(r1.ok && r2.ok && r3.ok, `level ${L} gentle deals solvable`, { r1, r2, r3 });
+        t.eq([r1.n, r2.n, r3.n], [r0.n, r0.n, r0.n], `level ${L} same pile size`);
+        t.ok(r1.kinds <= r0.kinds && r2.kinds <= r1.kinds && r3.kinds < r0.kinds, `level ${L} fewer different pictures`, { normal: r0.kinds, ez1: r1.kinds, ez2: r2.kinds, ez3: r3.kinds });
+        t.ok(r1.down <= r0.down && r2.down <= r0.down && r3.down === 0, `level ${L} fewer face-down tiles`, { normal: r0.down, ez1: r1.down, ez2: r2.down, ez3: r3.down });
       }
       const b = Layouts.forLevel(10, 1.5);
       t.ok(Layouts.ease(b, 0) === b, 'ease 0 changes nothing');

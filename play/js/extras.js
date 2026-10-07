@@ -141,20 +141,22 @@ function jokerEffect() {
 
 // ---------- lucky moment ----------
 function maybeLucky() {
-  if (!G || G.done || G.lucky || G.luckyDone) return;
+  // grandma: lucky moments from level 1 on, more often, and up to twice per level
+  const care = careMode();
+  if (!G || G.done || G.lucky || (G.luckyN || 0) >= (care ? 2 : 1)) return;
   const lvl = G.mode === 'level' ? G.level : S.level;
-  if (lvl < 10) return;
+  if (lvl < (care ? 1 : 10)) return;
   const n = G.tiles.length, left = G.alive.reduce((a, b) => a + b, 0);
-  if (left > n * 0.8 || left < 6 || Math.random() > 0.3) return;
+  if (left > n * 0.8 || left < 6 || Math.random() > (care ? 0.5 : 0.3)) return;
   const tf = new Set(G.tray.map(t => G.tiles[t].face));
   const freeUp = [];
   for (let i = 0; i < n; i++) if (G.alive[i] && !G.down[i] && free(i) && G.tiles[i].face < 100) freeUp.push(i);
   const cand = freeUp.filter(i => tf.has(G.tiles[i].face) || freeUp.some(j => j !== i && G.tiles[j].face === G.tiles[i].face));
   if (!cand.length) return;
   const i = cand[Math.floor(Math.random() * cand.length)];
-  G.lucky = { i, until: Date.now() + 15000 };
+  G.lucky = { i, until: Date.now() + 15000 }; G.luckyN = (G.luckyN || 0) + 1;
   G.tiles[i].el.classList.add('lucky');
-  toast('🍀 Geluksmoment! Pak de glinsterende steen binnen 15 tellen', 3000);
+  toast('🍀 Geluksmoment! Pak snel de glinsterende steen', 4000);
   Sound.hint();
   setTimeout(() => { if (G && G.lucky && G.lucky.i === i) { G.tiles[i].el.classList.remove('lucky'); G.lucky = null; G.luckyDone = true; } }, 15000);
 }
@@ -167,4 +169,29 @@ function luckyTaken(i) {
   G.score += 150; updateScore(); bumpStat('lucky');
   const c = centerOf(G.tiles[i].el);
   setTimeout(() => { praise('🍀 Geluk! +150'); Sound.perfect(); FX.emoji(c.x || innerWidth / 2, c.y || innerHeight / 2, ['🍀', '✨', '🌟'], 12); }, 300);
+}
+
+// ---------- the daily gift: the first visit of the day starts with a present ----------
+function maybeDailyGift() {
+  if (S.giftDay === todayKey() || !S.seenIntro || curScreen !== 'home' || !$('#modal').classList.contains('hidden')) return;
+  if ($('#heartPop') && $('#heartPop').classList.contains('on')) return;
+  S.giftDay = todayKey(); save();
+  const stars = Math.random() < 0.25 ? 2 : 1;
+  openModal(`<div class="gift-box" id="gBox">🎁</div>
+    <h2 id="gTitle">Je dagcadeau!</h2>
+    <p id="gText">Fijn dat je er weer bent${S.name ? ', ' + S.name : ''}! Tik op het cadeau.</p>
+    <button class="big-btn play" id="gOpen"><span class="bb-text"><b>Openmaken! 🎉</b></span></button>`, false);
+  let opened = false;
+  const open = () => {
+    if (opened) { closeModal(); renderHome(); return; }
+    opened = true;
+    S.bonusStars = (S.bonusStars || 0) + stars; bumpStat('gifts'); save();
+    logEvt('gift', { stars });
+    Sound.trophy(); FX.confetti(); buzz([20, 40, 20, 40, 60]);
+    const b = $('#gBox'); b.textContent = '⭐'.repeat(stars); b.classList.add('open');
+    $('#gTitle').textContent = `+${stars} ${stars > 1 ? 'sterren' : 'ster'}! 🎉`;
+    $('#gText').textContent = 'Veel speelplezier vandaag! 😊';
+    $('#gOpen').innerHTML = '<span class="bb-text"><b>Fijn! 😊</b></span>';
+  };
+  $('#gOpen').onclick = open; $('#gBox').onclick = () => { if (!opened) open(); };
 }

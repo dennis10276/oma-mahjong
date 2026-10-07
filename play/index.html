@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="style.css?v=1.14" id="css">
+<link rel="stylesheet" href="style.css?v=1.15" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -76,12 +76,12 @@
     <div class="traybar">
       <div id="tray"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
     </div>
+    <div id="gameMsg" aria-live="polite"></div>
     <div id="boardWrap"><div id="board"></div></div>
     <div class="toolbar">
       <button class="tool" id="btnHint"><span>💡</span>Hint<i class="badge">1</i></button>
       <button class="tool" id="btnShuffle"><span>🔀</span>Schudden<i class="badge">1</i></button>
     </div>
-    <div id="praise"></div>
   </section>
 
   <!-- LEVELS -->
@@ -152,7 +152,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.14', KEY = 'omamj.code', FILES = ['tiles.js?v=1.14', 'audio.js?v=1.14', 'layouts.js?v=1.14', 'js/core.js?v=1.14', 'js/fx.js?v=1.14', 'js/update.js?v=1.14', 'js/screens.js?v=1.14', 'js/board.js?v=1.14', 'js/extras.js?v=1.14', 'js/telemetry.js?v=1.14', 'js/social.js?v=1.14', 'js/win.js?v=1.14', 'js/main.js?v=1.14'];
+  var BUILT = '1.15', KEY = 'omamj.code', FILES = ['tiles.js?v=1.15', 'audio.js?v=1.15', 'layouts.js?v=1.15', 'js/core.js?v=1.15', 'js/fx.js?v=1.15', 'js/update.js?v=1.15', 'js/screens.js?v=1.15', 'js/board.js?v=1.15', 'js/extras.js?v=1.15', 'js/telemetry.js?v=1.15', 'js/social.js?v=1.15', 'js/win.js?v=1.15', 'js/main.js?v=1.15'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

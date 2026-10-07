@@ -19,6 +19,13 @@ function win() {
   if (stars === 3) taskProgress('stars3');
   if (!G.usedHint && !G.usedShuffle && !G.rescued && toolsOpen()) taskProgress('nohelp');
   if (S.fails) delete S.fails[G.key];   // won: the next level starts without easier retries
+  // levels won in a row (a failed try breaks the streak): a bonus star at 3 and every 5
+  let streakBonus = false;
+  if (G.mode === 'level') {
+    S.winStreak = (S.winStreak || 0) + 1;
+    if (S.winStreak === 3 || S.winStreak % 5 === 0) { S.bonusStars = (S.bonusStars || 0) + 1; streakBonus = true; bumpStat('streakStars'); }
+    if (S.winStreak > (S.bestWinStreak || 0)) S.bestWinStreak = S.winStreak;
+  }
   taskProgress('points', G.score);
   bumpStat('wins'); bumpStat('playSec', Math.round(G.elapsed));
   S.lvlPts = S.lvlPts || {}; S.dayPts = S.dayPts || {};
@@ -63,7 +70,7 @@ function win() {
   setTimeout(() => {
     openModal(`<h2>${title}</h2>
       <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
-      <div class="win-stats"><div>Punten<b id="wScore">0</b></div><div>Tijd<b>${mins}:${pad(secs)}</b></div></div>
+      <div class="win-stats"><div>Punten<b id="wScore">0</b></div><div>Tijd<b>${mins}:${pad(secs)}</b></div>${G.mode === 'level' && S.winStreak >= 2 ? `<div class="ws-streak${streakBonus ? ' bonus' : ''}">🔥<b>${S.winStreak} op rij${streakBonus ? ' +⭐' : ''}</b></div>` : ''}</div>
       <div class="perfect" id="wPerfect">${stars === 3 ? 'PERFECT! ✨' : ''}</div>
       ${extra}${chase}${famNow}
       <div class="goal" id="wGoal"></div>

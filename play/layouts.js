@@ -237,16 +237,17 @@ const Layouts = (() => {
     return { ...res, kinds: kindsFor(res.tiles.length / 2, 10, diff), seed: ymd * 7 + 3, diff };
   }
 
-  /* Easier retry (grandma only, see careMode): the same pile, but a new deal with more
-     matching pictures. ez 1 = every picture 4 times, fewer face-down tiles;
-     ez 2 = every picture about 6 times, no face-down tiles. */
+  /* Gentler deals for grandma (see careMode): the same pile, but more matching pictures.
+     ez 1 = always for her: fewer rare pictures and face-down tiles, an easier deal;
+     ez 2 = after 2 failed tries: every picture 4 times, half the face-down tiles;
+     ez 3 = after 4 failed tries: every picture about 6 times, no face-down tiles. */
   function ease(spec, ez) {
     if (!ez) return spec;
     const pairs = spec.tiles.length / 2, d = spec.diff;
-    const kinds = ez >= 2 ? Math.max(4, Math.round(pairs / 3)) : Math.max(4, Math.ceil(pairs / 2));
-    const diff = ez >= 2
-      ? { ...d, rare: 0, down: 0, open: 0.15, cap: 2, target: 1 }
-      : { ...d, rare: 0, down: d.down / 2, open: d.open * 0.5, target: Math.max(d.target, 0.95) };
+    let kinds, diff;
+    if (ez >= 3) { kinds = Math.max(4, Math.round(pairs / 3)); diff = { ...d, rare: 0, down: 0, open: 0.15, cap: 2, target: 1 }; }
+    else if (ez === 2) { kinds = Math.max(4, Math.ceil(pairs / 2)); diff = { ...d, rare: 0, down: d.down / 2, open: d.open * 0.5, target: Math.max(d.target, 0.95) }; }
+    else { const rare = d.rare / 2; kinds = Math.round(pairs / 2 + pairs / 2 * rare); diff = { ...d, rare, down: d.down * 0.6, open: d.open * 0.75, target: Math.max(d.target, 0.9) }; }
     return { ...spec, kinds: Math.min(kinds, spec.kinds), diff, seed: spec.seed + ez * 7777 };
   }
 

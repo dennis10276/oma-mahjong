@@ -25,7 +25,7 @@ function startDaily(k) {
 
 function begin(o, restart = false) {
   $('#modal').classList.add('hidden'); modalOnClose = null;
-  $('#comboTag').classList.remove('on'); $('#praise').classList.remove('show'); FX.clear();
+  $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear();
   // shape the pile after the free space on this curScreen
   show('game');
   const wrap = $('#boardWrap');
@@ -51,7 +51,7 @@ function begin(o, restart = false) {
     G.peek = cur.peek ?? -1;
     G.gold = new Set(cur.gold || []);
     Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, rescued: !!cur.rescued });
-    G.half = aliveCount() <= n / 2;
+    G.mile = mileOf();
   } else {
     if (!o.faces) { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; } // same deal again on "Opnieuw"
     addSpecials(o, spec);
@@ -62,7 +62,7 @@ function begin(o, restart = false) {
   }
   // the clock and the play log come first, so they are right even if drawing the board goes wrong
   // (in 1.10 a level could be played without them: logged as won in 0 seconds with 0 taps)
-  G.tStart = performance.now();
+  G.tStart = performance.now(); G.lastMove = performance.now(); G.nudge = null; if (G.mile === undefined) G.mile = 0;
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };
   S.att = S.att || {};
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
@@ -85,7 +85,7 @@ function specialTip() {
   if (!G || G.done) return;
   S.seenSp = S.seenSp || {};
   const has = { gold: G.gold.size > 0, gift: G.tiles.some(t => t.face === GIFT), joker: G.tiles.some(t => t.face === JOKER) };
-  const tips = { gold: '✨ Nieuw: gouden stenen! Een gouden paar geeft dubbele punten.', gift: '🎁 Nieuw: cadeautjes! Maak het paar voor een verrassing.', joker: '🃏 Nieuw: jokers! Een joker-paar ruimt ook een steen uit je vakjes op.' };
+  const tips = { gold: '✨ Nieuw: een gouden paar geeft dubbele punten!', gift: '🎁 Nieuw: maak het cadeautjes-paar voor een verrassing!', joker: '🃏 Nieuw: een joker-paar maakt een vakje leeg!' };
   const k = ['gold', 'gift', 'joker'].find(k => has[k] && !S.seenSp[k]);
   if (!k) return;
   S.seenSp[k] = true; save();
@@ -93,11 +93,11 @@ function specialTip() {
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won): grandma's retries get easier after two
-function noteFail() { if (!G) return; S.fails = S.fails || {}; S.fails[G.key] = (S.fails[G.key] || 0) + 1; save(); }
+function noteFail() { if (!G) return; S.fails = S.fails || {}; S.fails[G.key] = (S.fails[G.key] || 0) + 1; S.winStreak = 0; save(); }
 function easeFor(key) {
   if (!careMode()) return 0;
   const f = (S.fails || {})[key] || 0;
-  return f >= 4 ? 2 : f >= 2 ? 1 : 0;
+  return f >= 4 ? 3 : f >= 2 ? 2 : 1;    // grandma always gets the gentle deal, more after failed tries
 }
 
 const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);
@@ -271,10 +271,11 @@ function onTap(i) {
     el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
     showBlockers(i);
     Sound.blocked(); buzz(30);
-    if (++blockedTaps === 3) toast('Deze steen zit nog vast. Kies een steen met niets erbovenop en een open zijkant.');
+    if (++blockedTaps === 3) toast('Die zit nog vast: kies een steen met een open zijkant', 3000);
     return;
   }
   blockedTaps = 0;
+  G.lastMove = performance.now();   // the board moved: grandma's helper waits again
   if (G.down[i] && G.peek !== i) {
     const pk0 = G.peek;
     const twin = pk0 >= 0 && G.alive[pk0] && free(pk0) && G.tiles[pk0].face === G.tiles[i].face;
@@ -367,7 +368,7 @@ function onTap(i) {
   });
 }
 function afterLogic() {
-  updateBlocked(); updateProgress();
+  updateBlocked(); updateProgress(); updateNudge();
   if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
 }
@@ -394,7 +395,8 @@ function showDownTip() {
 
 function onMatch(c, face, gold) {
   const now = performance.now();
-  G.combo = now - G.lastMatch < 6000 ? G.combo + 1 : 1;
+  const comboWin = careMode() ? 10000 : 6000;   // grandma has more time to keep a combo going
+  G.combo = now - G.lastMatch < comboWin ? G.combo + 1 : 1;
   G.lastMatch = now;
   const mult = specialMatch(face, gold, c);
   const pts = 10 * Math.min(G.combo, 5) * mult;
@@ -409,18 +411,27 @@ function onMatch(c, face, gold) {
   if (G.combo > 0 && G.combo % 5 === 0) {
     setTimeout(() => { Sound.supercombo(); flash(); praise('Supercombo! 🌈'); FX.burst(innerWidth / 2, innerHeight / 2.4, 46, true); if (sunny) bee(); buzz([20, 40, 20, 40, 40]); }, 120);
   }
-  floatText(c.x, c.y - 50, '+' + pts);
+  floatScore('+' + pts);
   Sound.match(G.combo); buzz(G.combo >= 3 ? [15, 40, 25] : 18);
   updateScore();
   const tag = $('#comboTag');
   if (G.combo >= 2) { tag.textContent = `Combo x${Math.min(G.combo, 5)} 🔥`; tag.classList.add('on'); }
-  clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), 6000);
+  clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), comboWin);
   const left = aliveCount();
   if (G.combo % 5 === 0 || gold || face === GIFT || face === JOKER) { /* already celebrated */ }
   else if (left === 0 && G.tray.length === 0) { praise('Laatste paar! 🎉'); FX.burst(c.x, c.y, 40, true); }
+  else if (left > 0 && mileOf() > (G.mile || 0)) milestone(mileOf());
   else if (G.combo >= 3 && G.combo % 2 === 1) praise(PRAISE[Math.min(PRAISE.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]);
-  else if (!G.half && left <= G.tiles.length / 2 && left > 0) { G.half = true; praise('Halverwege! 💪'); }
   else if (left === 4) praise('Bijna klaar!');
+}
+/* a quarter, half and three quarters of the pile cleared: a little party on the progress bar */
+function mileOf() { const n = G.tiles.length, gone = n - aliveCount() - G.tray.length; return Math.min(3, Math.floor(gone / n * 4)); }
+function milestone(m) {
+  G.mile = m;
+  praise(['', 'Al een kwart! 🌟', 'Halverwege! 💪', 'Nog maar een kwart! 🚀'][m]);
+  Sound.star(m - 1); buzz(15);
+  const bar = $('#progressBar'); bar.classList.remove('shine'); void bar.offsetWidth; bar.classList.add('shine');
+  const r = bar.getBoundingClientRect(); FX.burst(r.right, r.top + r.height / 2, 18, true);
 }
 
 function checkStuck() {
@@ -459,7 +470,7 @@ function offerRescue() {
 function rescueTray() {
   if (!G || G.done) return;
   closeModal();
-  G.rescued = true; G.overShown = false; G.combo = 0;
+  G.rescued = true; G.overShown = false; G.combo = 0; clearNudge();
   syncClock();
   logEvt('rescue', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ez: G.ez || undefined });
   bumpStat('rescues');
@@ -475,7 +486,7 @@ function rescueTray() {
   });
   renderTray(); updateBlocked(); updateProgress(); saveCur();
   Sound.shuffle(); buzz([10, 30, 10]);
-  setTimeout(() => { if (G) G.busy = false; toast('De stenen liggen weer op het bord. Zet hem op! 💪', 2600); }, MS);
+  setTimeout(() => { if (G) G.busy = false; toast('De stenen liggen weer op het bord 💪', 2600); }, MS);
 }
 
 function hint() {
@@ -500,7 +511,7 @@ function shuffle() {
   Sound.init();
   if (!toolsOpen()) return toolsLockedMsg();
   if (G.usedShuffle) { toast('Je hebt in dit level al geschud'); Sound.blocked(); return; }
-  G.usedShuffle = true; updateTools();
+  G.usedShuffle = true; updateTools(); clearNudge();
   syncClock(); logEvt('shuf', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), tray: G.tray.length });
   G.busy = true;
   if (G.peek >= 0) { if (G.alive[G.peek]) turn(G.peek, true); G.peek = -1; }
@@ -528,3 +539,63 @@ function shuffle() {
   });
   setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); checkStuck(); }, 520);
 }
+
+/* ---------- grandma's helper (careMode only) ----------
+   When nothing has moved for a while and a pair can be matched, the pair starts to glow and keeps
+   glowing until it is matched. A face-down tile in such a pair is turned face up for her
+   (after 6 seconds); a pair she can already see glows after 14 seconds. Free, no star lost. */
+const NUDGE_DOWN_S = 6, NUDGE_UP_S = 14;
+function findNudge(downOnly) {
+  const fr = [];
+  for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && free(i)) fr.push(i);
+  const hidden = i => G.down[i] && G.peek !== i;
+  const cands = [];
+  // a free tile whose twin waits in the tray, then two free twins on the board
+  const inTray = new Set(G.tray.map(t => G.tiles[t].face));
+  for (const i of fr) if (inTray.has(G.tiles[i].face)) cands.push([i]);
+  const byFace = new Map();
+  for (const i of fr) { const f = G.tiles[i].face; if (!byFace.has(f)) byFace.set(f, []); byFace.get(f).push(i); }
+  for (const l of byFace.values()) if (l.length >= 2) cands.push(l.some(hidden) ? [l.find(hidden), l.find(i => i !== l.find(hidden))] : [l[0], l[1]]);
+  return cands.find(c => c.some(hidden)) || (downOnly ? null : cands[0]) || null;
+}
+function nudgeTick() {
+  if (!G || G.done || G.busy || G.flights || !careMode() || !inPlay() || document.hidden || !G.tStart) return;
+  if (G.nudge && G.nudge.length) return;                 // already glowing: until it is matched
+  const idle = (performance.now() - (G.lastMove || 0)) / 1000;
+  if (idle < NUDGE_DOWN_S) return;
+  const pair = findNudge(idle < NUDGE_UP_S);
+  if (pair) startNudge(pair);
+}
+function startNudge(pair) {
+  G.nudge = pair.slice();
+  let turned = 0;
+  for (const i of pair) {
+    if (G.down[i]) { G.down[i] = 0; if (G.peek === i) G.peek = -1; else turn(i, false); turned++; }
+    G.tiles[i].el.classList.add('nudge');
+  }
+  markTrayNudge();
+  Sound.hint(); buzz(12);
+  saveCur();
+  logEvt('nudge', { ...lvInfo(), at: G.attempt, down: turned || undefined, left: aliveCount() });
+}
+function updateNudge() {
+  if (!G || !G.nudge) return;
+  const all = G.nudge;
+  G.nudge = G.nudge.filter(i => G.alive[i]);
+  all.filter(i => !G.alive[i]).forEach(i => G.tiles[i].el.classList.remove('nudge'));
+  const face = G.nudge.length ? G.tiles[G.nudge[0]].face : null;
+  // done when the pair is matched (nothing left, or nothing left to match it with)
+  if (!G.nudge.length || !(G.tray.some(t => G.tiles[t].face === face) || G.nudge.length > 1)) clearNudge();
+  else markTrayNudge();
+}
+function markTrayNudge() {
+  const face = G.nudge && G.nudge.length ? G.tiles[G.nudge[0]].face : null;
+  [...$('#tray').children].forEach((s, k) => s.classList.toggle('nudge', face !== null && G.tray[k] !== undefined && G.tiles[G.tray[k]].face === face));
+}
+function clearNudge() {
+  if (!G) return;
+  (G.nudge || []).forEach(i => G.tiles[i].el && G.tiles[i].el.classList.remove('nudge'));
+  G.nudge = null; G.lastMove = performance.now();
+  [...$('#tray').children].forEach(s => s.classList.remove('nudge'));
+}
+setInterval(nudgeTick, 1000);

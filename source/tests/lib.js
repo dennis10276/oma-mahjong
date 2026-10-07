@@ -91,7 +91,7 @@ async function phone(opts = {}) {
     // write the saved progress from an empty page of the same site first: if the game itself
     // were open, it could save its own state over ours while reloading
     await page.goto(url.startsWith('file:') ? 'file://' + BLANK : new URL('__blank__', url).href);
-    const st = Object.assign({ seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, seenSp: { gold: 1, gift: 1, joker: 1 } }, opts.state || {});
+    const st = Object.assign({ seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, giftDay: TODAY, seenSp: { gold: 1, gift: 1, joker: 1 } }, opts.state || {});
     await page.evaluate(([st, lb, today]) => {
       localStorage.clear(); localStorage.setItem('omamj.reset', today);
       localStorage.setItem('omamj.v1', JSON.stringify(st));

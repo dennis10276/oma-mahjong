@@ -4,7 +4,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.14';
+const APP_VERSION = '1.15';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -69,18 +69,34 @@ function buzz(ms) {
 }
 let toastT;
 function toast(msg, ms = 2400) {
+  if (inPlay()) return gameMsg(msg, ms);   // while playing: in the strip under the tray, never over the tiles
   const t = $('#toast'); t.textContent = msg;
   t.classList.toggle('top', !$('#modal').classList.contains('hidden'));   // above a pop-up, so it never hides its buttons
   t.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms);
 }
-function praise(text) {
-  const p = $('#praise'); p.textContent = text;
-  p.classList.remove('show'); void p.offsetWidth; p.classList.add('show');
+/* While playing, every message goes to one strip between the tray and the pile (#gameMsg):
+   nothing ever covers the tiles. A new message waits until the current one was readable. */
+const inPlay = () => typeof curScreen !== 'undefined' && curScreen === 'game' && $('#modal').classList.contains('hidden');
+let msgT, msgPend, msgShown = 0, msgBig = false;
+function gameMsg(text, ms = 2400, big = false) {
+  const m = $('#gameMsg'); if (!m) return;
+  const wait = msgShown && !msgBig ? msgShown + 1100 - performance.now() : 0;   // a normal message stays at least 1.1 s
+  clearTimeout(msgPend);
+  if (wait > 0) { msgPend = setTimeout(() => gameMsg(text, ms, big), wait); return; }
+  const s = document.createElement('span');
+  s.className = big ? 'big' : 'msg'; s.textContent = text;
+  m.replaceChildren(s); msgShown = performance.now(); msgBig = big;
+  clearTimeout(msgT); msgT = setTimeout(() => { s.classList.add('out'); msgShown = 0; }, ms);
 }
-function floatText(x, y, text) {
-  const f = document.createElement('div'); f.className = 'float'; f.textContent = text;
-  f.style.left = x + 'px'; f.style.top = y + 'px';
+function clearGameMsg() { clearTimeout(msgT); clearTimeout(msgPend); msgShown = 0; const m = $('#gameMsg'); if (m) m.replaceChildren(); }
+function praise(text) { gameMsg(text, 1500, true); }
+// points float out of the score counter (top right), not over the pile
+function floatScore(text) {
+  const sc = $('#score'); if (!sc) return;
+  const r = sc.getBoundingClientRect();
+  const f = document.createElement('div'); f.className = 'float sc'; f.textContent = text;
+  f.style.left = (r.left + r.width / 2) + 'px'; f.style.top = (r.bottom + 4) + 'px';
   document.body.appendChild(f); setTimeout(() => f.remove(), 950);
 }
 const sunUnlocked = () => S.level > 20;
