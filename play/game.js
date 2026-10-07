@@ -2,18 +2,23 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.6';
+  const APP_VERSION = '1.7';
   /* Updates come from the website: newer game files are downloaded in the background,
      kept on the phone, and used from the next start (or right away on the home screen). */
   const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
   const CODE_KEY = 'omamj.code';
   const verNewer = (a, b) => { a = String(a).split('.'); b = String(b).split('.'); for (let i = 0; i < Math.max(a.length, b.length); i++) { const x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; };
-  let updateReady = false, lastUpdateCheck = 0;
+  let updateReady = false, lastUpdateCheck = 0, updating = false;
+  const VERSION_URL = UPDATE_URL.replace('bundle.json', 'version.json');
   async function checkUpdate() {
-    if (location.protocol !== 'file:' || updateReady) return;        // only inside the app
-    if (Date.now() - lastUpdateCheck < 10 * 60 * 1000) return;          // at most every 10 minutes
+    if (location.protocol !== 'file:' || updateReady || updating) return;   // only inside the app
+    if (Date.now() - lastUpdateCheck < 30 * 1000) return;
     lastUpdateCheck = Date.now();
+    updating = true;
     try {
+      // first a tiny file with just the newest version number, the big download only when needed
+      const rv = await fetch(VERSION_URL + '?t=' + Date.now(), { cache: 'no-store' });
+      if (rv.ok) { const vv = await rv.json(); if (!vv || !verNewer(vv.v, window.__mjCode || APP_VERSION) || localStorage.getItem('omamj.badv') === vv.v) return; }
       const r = await fetch(UPDATE_URL + '?t=' + Date.now(), { cache: 'no-store' });
       if (!r.ok) return;
       const b = await r.json();
@@ -23,7 +28,7 @@
       localStorage.setItem(CODE_KEY, JSON.stringify({ v: b.v, css: b.css, body: b.body, js: b.js, fail: 0 }));
       updateReady = true;
       applyUpdate();
-    } catch (e) { }
+    } catch (e) { } finally { updating = false; }
   }
   // switch to the new version, but never in the middle of a level or a pop-up
   function applyUpdate() {
@@ -1263,8 +1268,13 @@
     ensureId();
     list.forEach(h => fetch(`${DB_URL}/hearts/${S.pid}/${h.from}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: h.name.slice(0, 24), t: -Math.abs(h.t) }) }).catch(() => { }));
   }
+  let heartsBusy = false;
   async function fetchHearts() {
-    if (!DB_URL || !S.pid) return [];
+    if (!DB_URL || !S.pid || heartsBusy) return [];
+    heartsBusy = true;
+    try { return await fetchHearts2(); } finally { heartsBusy = false; }
+  }
+  async function fetchHearts2() {
     try {
       const res = await fetch(`${DB_URL}/hearts/${S.pid}.json`, { cache: 'no-store' });
       if (!res.ok) return [];
@@ -1292,8 +1302,37 @@
   function heartRain() { [0.08, 0.3, 0.7, 0.92].forEach((f, i) => setTimeout(() => FX.emoji(innerWidth * f, innerHeight - 20, ['💛', '💖', '💛', '✨'], 12), i * 120)); }
   async function checkHearts() {
     const fresh = await fetchHearts();
-    if (fresh.length && screen === 'home' && $('#modal').classList.contains('hidden')) showHearts(fresh, () => renderHome());
-    else if (fresh.length) S.pendingHearts = (S.pendingHearts || []).concat(fresh), save();
+    if (fresh.length) deliverHearts(fresh);
+  }
+  // show new hearts right away: a big pop-up at home, a short heart moment during a level
+  function deliverHearts(fresh) {
+    const free = $('#modal').classList.contains('hidden');
+    if (free && screen === 'home') showHearts(fresh, () => renderHome());
+    else if (free) heartPop(fresh);
+    else { S.pendingHearts = (S.pendingHearts || []).concat(fresh); save(); }
+  }
+  function heartPop(list) {
+    const names = [...new Set(list.map(h => h.name))];
+    let el = $('#heartPop');
+    if (!el) { el = document.createElement('div'); el.id = 'heartPop'; document.body.appendChild(el); }
+    el.innerHTML = `<div class="hp-card"><div class="hp-heart">💛</div><b>${names.join(' en ')}</b><span>${names.length > 1 ? 'sturen' : 'stuurt'} je een hartje!</span><small>Tik om verder te spelen</small></div>`;
+    el.className = 'on';
+    Sound.trophy(); buzz([20, 40, 20, 40, 60]); heartRain(); setTimeout(heartRain, 900);
+    markHeartsSeen(list);
+    const close = () => { el.className = ''; clearTimeout(el._t); };
+    el.onclick = close; clearTimeout(el._t); el._t = setTimeout(close, 6500);
+  }
+  // live: the database tells us the moment someone sends a heart
+  let heartStream = null;
+  function startHeartStream() {
+    if (heartStream || !DB_URL || !S.pid || typeof EventSource === 'undefined') return;
+    try {
+      heartStream = new EventSource(`${DB_URL}/hearts/${S.pid}.json`);
+      let t = 0;
+      const ping = () => { clearTimeout(t); t = setTimeout(checkHearts, 400); };
+      heartStream.addEventListener('put', ping);
+      heartStream.addEventListener('patch', ping);
+    } catch (e) { heartStream = null; }
   }
 
   // ---- avatar frames, earned through prizes ----
@@ -1332,7 +1371,7 @@
     $('#nmOk').onclick = () => {
       const v = $('#nmIn').value.trim().replace(/[<>]/g, '').slice(0, 20);
       if (!v) { $('#nmIn').focus(); toast('Vul eerst een naam in'); return; }
-      S.name = v; S.avatar = av; S.frame = fr; ensureId(); save(); closeModal(); pushScore(); if (then) then();
+      S.name = v; S.avatar = av; S.frame = fr; ensureId(); save(); closeModal(); pushScore(); startHeartStream(); if (then) then();
     };
   }
 
@@ -1532,10 +1571,19 @@
       const go = (dest) => {
         closeModal();
         const finish = () => {
+          if (updateReady) {   // a new version is waiting: switch now, then carry on where we were going
+            S.afterUpdate = dest === 'next' ? (G.mode === 'daily' ? { show: 'daily' } : { level: G.level + 1 }) : { show: 'home' };
+            save(); updateReady = false; toast('✨ Nieuwe versie! Even geduld…', 1500);
+            return setTimeout(() => location.reload(), 900);
+          }
           if (dest === 'next') { if (G.mode === 'daily') show('daily'); else startLevel(G.level + 1); }
           else show('home');
         };
-        heartsP.then(fresh => { if (fresh && fresh.length) rewards.unshift({ type: 'hearts', list: fresh }); runRewards(rewards, finish); });
+        heartsP.then(fresh => {
+          const all = [...(S.pendingHearts || []), ...(fresh || [])];
+          if (all.length) { S.pendingHearts = []; save(); rewards.unshift({ type: 'hearts', list: all }); }
+          runRewards(rewards, finish);
+        });
       };
       $('#wNext').onclick = () => go('next');
       $('#wMenu').onclick = () => go('menu');
@@ -1667,8 +1715,9 @@
   applyBg();
   ensureId();
   fetchOnline().then(ok => { if (ok && screen === 'home') renderHome(); checkHearts(); checkSentHearts(); });
+  startHeartStream();
   // a heart can arrive any moment: look again every minute and a half while the home screen is open
-  setInterval(() => { if (!document.hidden && screen === 'home' && $('#modal').classList.contains('hidden')) { checkHearts(); checkSentHearts(); } }, 90000);
+  setInterval(() => { if (!document.hidden) { checkHearts(); if (screen === 'home') checkSentHearts(); } }, 30000);
   document.body.classList.toggle('nonum', !S.nums);
   document.body.classList.toggle('contrast', !!S.contrast);
   show('home');
@@ -1677,6 +1726,9 @@
   // ---------- self-update (see the boot script in index.html) ----------
   // this version started fine: forget earlier failed starts
   try { const c = JSON.parse(localStorage.getItem(CODE_KEY) || 'null'); if (c && c.v === window.__mjCode && c.fail) { c.fail = 0; localStorage.setItem(CODE_KEY, JSON.stringify(c)); } } catch (e) { }
-  setTimeout(checkUpdate, 4000);
+  setTimeout(checkUpdate, 2500);
+  setInterval(checkUpdate, 60 * 1000);          // every minute while the app is open
+  // just updated between two levels: continue with the next level
+  if (S.afterUpdate) { const a = S.afterUpdate; S.afterUpdate = null; save(); setTimeout(() => { if (a.level) startLevel(a.level); else if (a.show && a.show !== 'home') show(a.show); toast(`✨ Bijgewerkt naar versie ${APP_VERSION}`, 2200); }, 300); }
   window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb, ensureTasks, taskProgress, openChest, openTasks, weekInfo, checkLastWeek, fetchHearts, maybeLucky, renderHome, sendHeart, pushScore };
 })();
