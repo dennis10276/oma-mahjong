@@ -2,7 +2,15 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.7';
+  const APP_VERSION = '0.8';
+  // one-time clean start for every device (all progress from the test period is wiped once)
+  const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
+  try {
+    if (localStorage.getItem(RESET_MARK) !== RESET_ID) {
+      Object.keys(localStorage).filter(k => k.startsWith('omamj.')).forEach(k => localStorage.removeItem(k));
+      localStorage.setItem(RESET_MARK, RESET_ID);
+    }
+  } catch (e) { }
 
   // ---------- backgrounds (unlocked with stars) ----------
   const BGS = [
