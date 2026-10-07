@@ -7,7 +7,7 @@
   --no-apk                           skip the APK (only for quick tests)
 
 What it does:
-  - sets the version in www/game.js (APP_VERSION) and www/index.html (the boot loader)
+  - sets the version in www/js/core.js (APP_VERSION) and www/index.html (the boot loader)
   - writes site/play/ (the game in the browser) + site/play/bundle.json (what the app downloads)
   - bumps versionCode/versionName, builds the APK, puts it on the download page (unless --no-apk)
 """
@@ -16,7 +16,13 @@ import json, os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WWW, SITE = os.path.join(ROOT, 'www'), os.path.join(ROOT, 'site')
 REPO = os.environ.get('PAGES_REPO', '/home/claude/repo-oma')
-FILES = ['tiles.js', 'audio.js', 'layouts.js', 'game.js']
+
+
+def game_files():
+    """The game scripts in load order, as listed in the boot loader of www/index.html."""
+    html = open(os.path.join(WWW, 'index.html'), encoding='utf-8').read()
+    m = re.search(r"FILES = \[([^\]]*)\]", html)
+    return re.findall(r"'([^'?]+)'", m.group(1))
 
 
 def sub(path, pattern, repl, count=1):
@@ -33,7 +39,8 @@ def main():
         sys.exit(__doc__)
     v, apk, deploy = args[0], '--no-apk' not in sys.argv, '--deploy' in sys.argv
 
-    sub(os.path.join(WWW, 'game.js'), r"const APP_VERSION = '[^']*'", f"const APP_VERSION = '{v}'")
+    sub(os.path.join(WWW, 'js', 'core.js'), r"const APP_VERSION = '[^']*'", f"const APP_VERSION = '{v}'")
+    FILES = game_files()
     sub(os.path.join(WWW, 'index.html'), r"var BUILT = '[^']*'", f"var BUILT = '{v}'")
 
     # the browser version, with cache-busting
@@ -43,8 +50,7 @@ def main():
     idx = os.path.join(play, 'index.html')
     s = open(idx, encoding='utf-8').read()
     s = re.sub(r'href="style\.css"', f'href="style.css?v={v}"', s)
-    s = re.sub(r"FILES = \['tiles\.js', 'audio\.js', 'layouts\.js', 'game\.js'\]",
-               "FILES = [" + ", ".join(f"'{f}?v={v}'" for f in FILES) + "]", s)
+    s = re.sub(r"FILES = \[[^\]]*\]", "FILES = [" + ", ".join(f"'{f}?v={v}'" for f in FILES) + "]", s, count=1)
     open(idx, 'w', encoding='utf-8').write(s)
 
     # what installed apps download

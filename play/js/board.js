@@ -1,0 +1,476 @@
+/* Oma's Mahjong — one level: the pile, the 4 tray slots, tapping, matching, hint and shuffle. */
+'use strict';
+
+// ---------- the game ----------
+const SLOTS = Layouts.SLOTS;
+let G = null;
+const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 7 ? c : null; } catch (e) { return null; } };
+const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
+function saveCur() {
+  if (!G || G.done) return;
+  syncClock();
+  try {
+    localStorage.setItem(CUR, JSON.stringify({ v: 7, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+  } catch (e) { }
+}
+function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
+function pauseClock() { syncClock(); if (G) G.tStart = 0; saveCur(); }
+function resumeClock() { if (G && !G.done && curScreen === 'game') G.tStart = performance.now(); }
+
+function startLevel(level) { begin({ mode: 'level', level, key: 'L' + level, title: 'Level ' + level, makeSpec: a => Layouts.forLevel(level, a, S.bigTiles ? 0.7 : 1) }); }
+function startDaily(k) {
+  const d = parseKey(k);
+  begin({ mode: 'daily', date: k, key: 'D' + k, title: `Dagpuzzel ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`, makeSpec: a => Layouts.forDate(dnum(k), a, S.bigTiles ? 0.7 : 1) });
+}
+
+function begin(o, restart = false) {
+  $('#modal').classList.add('hidden'); modalOnClose = null;
+  $('#comboTag').classList.remove('on'); $('#praise').classList.remove('show'); FX.clear();
+  // shape the pile after the free space on this curScreen
+  show('game');
+  const wrap = $('#boardWrap');
+  const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
+  if (!o.spec) { o.spec = o.makeSpec(aspect); o.aspect = aspect; }
+  const spec = o.spec;
+  const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
+  const nb = Layouts.neighbors(tiles);
+  const n = tiles.length;
+  G = { o, ...o, tiles, nb, gold: new Set(), lucky: null, luckyDone: false, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
+  const cur = restart ? null : loadCur();
+  if (cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect) {
+    cur.faces.forEach((f, i) => tiles[i].face = f);
+    cur.alive.forEach((a, i) => G.alive[i] = a);
+    (cur.down || []).forEach((a, i) => G.down[i] = a);
+    G.peek = cur.peek ?? -1;
+    G.gold = new Set(cur.gold || []);
+    Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle });
+    G.half = aliveCount() <= n / 2;
+  } else {
+    if (!o.faces) { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; } // same deal again on "Opnieuw"
+    addSpecials(o, spec);
+    o.faces.forEach((f, i) => tiles[i].face = f);
+    G.gold = new Set(o.gold || []);
+    (o.down || []).forEach(i => G.down[i] = 1);
+    clearCur();
+  }
+  $('#gameTitle').textContent = o.title;
+  show('game');
+  renderBoard(!restart);
+  renderTray(); updateTools();
+  updateScore(false); updateProgress();
+  G.tStart = performance.now();
+  // dashboard: how many tries this level took, and what happens in it
+  G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };
+  S.att = S.att || {};
+  const resumed = !!(cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
+  if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
+  G.attempt = S.att[o.key];
+  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined });
+  setTimeout(() => praise(restart ? 'Nog een keer! 💪' : o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
+  if (!S.seenTray) setTimeout(() => showIntro(), 700);
+  else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
+  else { setTimeout(checkStuck, 500); setTimeout(specialTip, 1200); }
+}
+// explain a new kind of special tile the first time it shows up
+function specialTip() {
+  if (!G || G.done) return;
+  S.seenSp = S.seenSp || {};
+  const has = { gold: G.gold.size > 0, gift: G.tiles.some(t => t.face === GIFT), joker: G.tiles.some(t => t.face === JOKER) };
+  const tips = { gold: '✨ Nieuw: gouden stenen! Een gouden paar geeft dubbele punten.', gift: '🎁 Nieuw: cadeautjes! Maak het paar voor een verrassing.', joker: '🃏 Nieuw: jokers! Een joker-paar ruimt ook een steen uit je vakjes op.' };
+  const k = ['gold', 'gift', 'joker'].find(k => has[k] && !S.seenSp[k]);
+  if (!k) return;
+  S.seenSp[k] = true; save();
+  toast(tips[k], 4200);
+}
+const restart = () => { if (G) { if (!G.done) endLevel('restart'); begin(G.o, true); } };
+
+const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);
+function decorate(i) {
+  const t = G.tiles[i], el = t.el; if (!el) return;
+  el.classList.toggle('gold', G.gold.has(i));
+  el.classList.toggle('sp-gift', t.face === GIFT);
+  el.classList.toggle('sp-joker', t.face === JOKER);
+}
+const free = i => Layouts.isFree(i, G.alive, G.nb);
+
+function renderBoard(enter) {
+  const board = $('#board');
+  board.innerHTML = '';
+  board.classList.toggle('hl', S.highlight);
+  const order = G.tiles.map((t, i) => i).sort((a, b) => G.tiles[a].z - G.tiles[b].z || G.tiles[a].y - G.tiles[b].y || G.tiles[a].x - G.tiles[b].x);
+  order.forEach((i, k) => {
+    const t = G.tiles[i];
+    const el = document.createElement('div');
+    el.className = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '');
+    el.dataset.i = i;
+    el.innerHTML = `<div class="face">${Tiles.faceHTML(S.theme, t.face)}</div>`;
+    t.el = el; decorate(i);
+    if (enter && G.alive[i]) { el.classList.add('enter'); el.style.animationDelay = Math.min(900, k * 8 + t.z * 70) + 'ms'; setTimeout(() => el.classList.remove('enter'), 1700); }
+    t.el = el; board.appendChild(el);
+  });
+  layoutBoard(); updateBlocked();
+}
+
+function layoutBoard() {
+  if (!G) return;
+  const wrap = $('#boardWrap');
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  if (!W || !H) return;
+  let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, maxZ = 0;
+  for (const t of G.tiles) { minX = Math.min(minX, t.x); maxX = Math.max(maxX, t.x); minY = Math.min(minY, t.y); maxY = Math.max(maxY, t.y); maxZ = Math.max(maxZ, t.z); }
+  const cols = (maxX - minX) / 2 + 1, rows = (maxY - minY) / 2 + 1;
+  const ratio = 1.24, dF = 0.09;
+  let tw = Math.min((W - 8) / (cols + maxZ * dF + 0.12), (H - 8) / (rows * ratio + maxZ * dF + 0.15));
+  tw = Math.min(tw, 150);
+  const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * 0.085);
+  const bw = cols * tw + maxZ * dz + d, bh = rows * th + maxZ * dz + d * 1.4;
+  const ox = (W - bw) / 2 + maxZ * dz, oy = (H - bh) / 2 + maxZ * dz;
+  const board = $('#board');
+  board.style.setProperty('--d', d.toFixed(1) + 'px');
+  board.style.setProperty('--fs', (tw * 0.66).toFixed(1) + 'px');
+  G.tw = tw;
+  for (const t of G.tiles) {
+    const s = t.el.style;
+    s.left = (ox + (t.x - minX) / 2 * tw - t.z * dz).toFixed(1) + 'px';
+    s.top = (oy + (t.y - minY) / 2 * th - t.z * dz).toFixed(1) + 'px';
+    s.width = (tw - 1.5).toFixed(1) + 'px';
+    s.height = (th - 1.5).toFixed(1) + 'px';
+    s.zIndex = t.z * 10000 + t.y * 100 + t.x;
+    t.r = { l: parseFloat(s.left), t: parseFloat(s.top), w: tw - 1.5, h: th - 1.5, zi: t.z * 10000 + t.y * 100 + t.x };
+  }
+  // tray slots scale with the curScreen but stay big
+  const slot = $('#tray .slot');
+  if (slot) $('#tray').style.setProperty('--sfs', (slot.clientWidth * 0.62).toFixed(1) + 'px');
+}
+
+function updateBlocked() {
+  G.tiles.forEach((t, i) => { if (G.alive[i]) t.el.classList.toggle('blocked', !free(i)); });
+}
+function updateProgress() {
+  const n = G.tiles.length;
+  $('#progressBar').style.width = ((n - aliveCount() - G.tray.length) / n * 100) + '%';
+}
+function updateScore(bump = true) {
+  const el = $('#score'); el.textContent = G.score;
+  if (bump) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+}
+// Hint and Schudden unlock at level 15 (daily puzzles: once you have reached level 15)
+const TOOLS_LEVEL = 15;
+const toolsOpen = () => !!G && (G.mode === 'level' ? G.level >= TOOLS_LEVEL : S.level >= TOOLS_LEVEL);
+function updateTools() {
+  const open = toolsOpen();
+  $('#btnHint').classList.toggle('used', open && G.usedHint);
+  $('#btnShuffle').classList.toggle('used', open && G.usedShuffle);
+  $('#btnHint').classList.toggle('locked', !open);
+  $('#btnShuffle').classList.toggle('locked', !open);
+  $('#btnHint .badge').textContent = !open ? '🔒' : G.usedHint ? '0' : '1';
+  $('#btnShuffle .badge').textContent = !open ? '🔒' : G.usedShuffle ? '0' : '1';
+}
+function toolsLockedMsg() { toast(`Hint en Schudden komen vrij vanaf level ${TOOLS_LEVEL} 🔒`); Sound.blocked(); }
+function renderTray() {
+  const slots = $('#tray').children;
+  for (let k = 0; k < SLOTS; k++) {
+    const t = G.tray[k];
+    slots[k].innerHTML = t === undefined ? '' : `<div class="tmini${G.arriving.has(t) ? ' arriving' : ''}">${Tiles.faceHTML(S.theme, G.tiles[t].face)}</div>`;
+  }
+  const tr = $('#tray');
+  tr.classList.toggle('warn', G.tray.length === SLOTS - 2);   // 2 waiting: careful
+  tr.classList.toggle('full', G.tray.length >= SLOTS - 1);    // 3 waiting: the next miss ends the level
+  $('#tray').style.setProperty('--sfs', (slots[0].clientWidth * 0.62).toFixed(1) + 'px');
+}
+function centerOf(el) { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+function clearHint() { G.tiles.forEach(t => t.el.classList.remove('hint')); }
+
+// a copy of the tile that glides from the board into its tray slot
+function flyTile(face, from, to, ms) {
+  const f = document.createElement('div');
+  f.className = 'tile flying';
+  f.innerHTML = `<div class="face">${Tiles.faceHTML(S.theme, face)}</div>`;
+  Object.assign(f.style, { left: from.left + 'px', top: from.top + 'px', width: from.width + 'px', height: from.height + 'px' });
+  f.style.setProperty('--d', '3px');
+  f.style.setProperty('--fs', (from.width * 0.66) + 'px');
+  document.body.appendChild(f);
+  const sx = to.width / from.width, sy = to.height / from.height;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    f.style.transition = `transform ${ms}ms cubic-bezier(.35,.1,.25,1)`;
+    f.style.transform = `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${sx}, ${sy})`;
+  }));
+  return f;
+}
+
+let blockedTaps = 0, comboTimer;
+const PRAISE = ['Mooi!', 'Goed zo!', 'Prima!', 'Geweldig!', 'Fantastisch!', 'Super!', 'Knap hoor!', 'Prachtig!'];
+/* A stuck tile: arrows point at the tiles that are in the way
+   (the ones lying on top of it, or its neighbours on the left and the right). */
+function blockersOf(i) {
+  const nb = G.nb, alive = G.alive;
+  const up = nb.above[i].filter(j => alive[j]);
+  if (up.length) return up.map(j => ({ j, side: 'up' }));
+  const t = G.tiles[i];
+  // per side the neighbour that overlaps most in height
+  const best = list => list.filter(j => alive[j]).sort((a, b) => Math.abs(G.tiles[a].y - t.y) - Math.abs(G.tiles[b].y - t.y))[0];
+  return [best(nb.left[i]), best(nb.right[i])].filter(j => j !== undefined).map(j => ({ j, side: 'side' }));
+}
+function showBlockers(i) {
+  if (!G) return;
+  const board = $('#board');
+  board.querySelectorAll('.blk-arrow').forEach(a => a.remove());
+  const a = G.tiles[i].r;
+  if (!a) return;
+  const ac = { x: a.l + a.w / 2, y: a.t + a.h / 2 };
+  const size = Math.max(26, Math.min(56, G.tw * 0.62));
+  const seen = new Set();
+  for (const { j } of blockersOf(i)) {
+    const b = G.tiles[j].r; if (!b) continue;
+    const bc = { x: b.l + b.w / 2, y: b.t + b.h / 2 };
+    let dx = bc.x - ac.x, dy = bc.y - ac.y;
+    if (Math.hypot(dx, dy) < a.w * 0.2) { dx = -1; dy = -1; }   // lying right on top: point up-left onto it
+    const len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+    const ang = Math.round(Math.atan2(uy, ux) * 180 / Math.PI);
+    if (seen.has(ang)) continue; seen.add(ang);
+    // the arrow starts on the stuck tile and its tip touches the tile in the way
+    const reach = Math.min(len, a.w * 0.62);
+    const px = ac.x + ux * reach * 0.55, py = ac.y + uy * reach * 0.55;
+    const ar = document.createElement('div');
+    ar.className = 'blk-arrow';
+    ar.style.cssText = `left:${px.toFixed(1)}px;top:${py.toFixed(1)}px;width:${size.toFixed(0)}px;height:${(size * 0.62).toFixed(0)}px;--a:${ang}deg`;
+    ar.innerHTML = '<svg viewBox="0 0 50 31"><path d="M3 11h26V3l18 12.5L29 28v-8H3z" fill="#ff8a00" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>';
+    board.appendChild(ar);
+    const be = G.tiles[j].el;
+    be.classList.remove('blocker'); void be.offsetWidth; be.classList.add('blocker');
+    setTimeout(() => be.classList.remove('blocker'), 1300);
+    setTimeout(() => ar.remove(), 1300);
+  }
+}
+
+/* Taps never wait for animations: the game state changes instantly,
+   the flying tiles just catch up visually. */
+function onTap(i) {
+  if (!G || G.done || G.busy || !G.alive[i]) return;
+  Sound.init();
+  const el = G.tiles[i].el;
+  if (G.st) G.st.tp++;
+  if (!free(i)) {
+    if (G.st) G.st.bt++;
+    el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+    showBlockers(i);
+    Sound.blocked(); buzz(30);
+    if (++blockedTaps === 3) toast('Deze steen zit nog vast. Kies een steen met niets erbovenop en een open zijkant.');
+    return;
+  }
+  blockedTaps = 0;
+  if (G.down[i] && G.peek !== i) {
+    const pk0 = G.peek;
+    const twin = pk0 >= 0 && G.alive[pk0] && free(pk0) && G.tiles[pk0].face === G.tiles[i].face;
+    const inTray = G.tray.some(t => G.tiles[t].face === G.tiles[i].face);
+    if (!twin && !inTray) {
+      // face-down tile: first tap turns it over (only one at a time), second tap takes it
+      if (pk0 >= 0 && G.alive[pk0]) turn(pk0, true);
+      G.peek = i; turn(i, false);
+      Sound.flip(); buzz(8); clearHint(); saveCur();
+      taskProgress('flips'); bumpStat('flips'); if (G.st) G.st.fl++;
+      return;
+    }
+    // its twin is already in the tray, or is the open tile (which counts as picked): match at once
+    G.down[i] = 0;
+  }
+  if (G.peek === i) { G.down[i] = 0; G.peek = -1; }
+  const face = G.tiles[i].face;
+  const mi = G.tray.findIndex(t => G.tiles[t].face === face);
+  const pk = G.peek;
+  const peekPair = mi < 0 && pk >= 0 && pk !== i && G.alive[pk] && G.tiles[pk].face === face && free(pk);
+  if (mi < 0 && !peekPair && G.tray.length >= SLOTS) {
+    el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+    Sound.blocked(); toast('Alle vakjes zijn vol. Kies een steen die past!');
+    return;
+  }
+  clearHint();
+  luckyTaken(i);
+  const from = el.getBoundingClientRect();
+  G.alive[i] = 0;
+  el.classList.add('hidden');
+  Sound.select(); buzz(8);
+  const MS = 230;
+  G.flights++;
+  const land = (fn) => setTimeout(() => { G.flights--; fn(); }, MS);
+
+  if (peekPair) {
+    // the open face-down tile and this one match straight away, no slot needed
+    const pel = G.tiles[pk].el, pfrom = pel.getBoundingClientRect();
+    G.alive[pk] = 0; G.down[pk] = 0; G.peek = -1;
+    pel.classList.add('hidden');
+    const goldP = G.gold.has(i) || G.gold.has(pk);
+    if (face === JOKER) jokerEffect();
+    const mid = { left: (from.left + pfrom.left) / 2, top: (from.top + pfrom.top) / 2 - from.height * 0.3, width: from.width, height: from.height };
+    const f1 = flyTile(face, from, mid, MS), f2 = flyTile(face, pfrom, mid, MS);
+    afterLogic();
+    land(() => { f1.classList.add('popout'); f2.classList.add('popout'); onMatch({ x: mid.left + mid.width / 2, y: mid.top + mid.height / 2 }, face, goldP); setTimeout(() => { f1.remove(); f2.remove(); }, 230); afterLand(); });
+    return;
+  }
+  if (mi >= 0) {
+    const partner = G.tray[mi];
+    const slotEl = $('#tray').children[mi];
+    const to = slotEl.getBoundingClientRect();
+    // keep a copy of the partner where it sat, then close the gap in the tray right away
+    const ghost = slotEl.firstElementChild && !G.arriving.has(partner) ? slotEl.firstElementChild.cloneNode(true) : null;
+    if (ghost) { ghost.classList.add('ghost'); Object.assign(ghost.style, { left: to.left + 'px', top: to.top + 'px', width: to.width + 'px', height: to.height + 'px' }); ghost.style.setProperty('--sfs', $('#tray').style.getPropertyValue('--sfs')); document.body.appendChild(ghost); }
+    G.tray.splice(mi, 1);
+    G.arriving.delete(partner);
+    const goldT = G.gold.has(i) || G.gold.has(partner);
+    if (face === JOKER) jokerEffect();
+    renderTray();
+    const fly = flyTile(face, from, to, MS);
+    afterLogic();
+    land(() => {
+      fly.classList.add('popout'); if (ghost) ghost.classList.add('popout');
+      onMatch({ x: to.left + to.width / 2, y: to.top + to.height / 2 }, face, goldT);
+      setTimeout(() => { fly.remove(); if (ghost) ghost.remove(); }, 230);
+      afterLand();
+    });
+    return;
+  }
+  const slotIdx = G.tray.length;
+  G.tray.push(i);
+  if (G.st) G.st.tm = Math.max(G.st.tm, G.tray.length);
+  G.arriving.add(i);
+  if (G.tray.length >= SLOTS) G.busy = true;   // 4th tile without a match: level over, no more taps
+  renderTray();
+  const to = $('#tray').children[slotIdx].getBoundingClientRect();
+  const fly = flyTile(face, from, to, MS);
+  afterLogic();
+  land(() => {
+    fly.remove();
+    G.arriving.delete(i);
+    if (G.tray.includes(i)) {
+      renderTray();
+      const k = G.tray.indexOf(i), m = $('#tray').children[k].firstElementChild;
+      if (m) m.classList.add('land');
+      if (G.tray.length === SLOTS - 1) Sound.warn(); else Sound.land();
+    }
+    afterLand();
+  });
+}
+function afterLogic() {
+  updateBlocked(); updateProgress();
+  if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
+  saveCur();
+}
+function afterLand() {
+  if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
+  if (G.flights === 0) { checkStuck(); maybeLucky(); }
+}
+
+function turn(i, faceDown) {
+  const el = G.tiles[i].el;
+  el.classList.remove('turning'); void el.offsetWidth; el.classList.add('turning');
+  setTimeout(() => el.classList.toggle('back', faceDown), 140);
+  setTimeout(() => el.classList.remove('turning'), 300);
+}
+function showDownTip() {
+  openModal(`<h2>Omgedraaide stenen</h2>
+    <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
+    <p>Sommige stenen liggen <b>omgedraaid</b>. Tik er één keer op om te kijken wat het is, en nog een keer om hem te pakken.</p>
+    <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. Staat de tweeling al in een vakje? Dan verdwijnen ze ook meteen bij het omdraaien. Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
+    <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true);
+  $('#mGo').onclick = closeModal;
+  S.seenDown = true; save();
+}
+
+function onMatch(c, face, gold) {
+  const now = performance.now();
+  G.combo = now - G.lastMatch < 6000 ? G.combo + 1 : 1;
+  G.lastMatch = now;
+  const mult = specialMatch(face, gold, c);
+  const pts = 10 * Math.min(G.combo, 5) * mult;
+  G.score += pts;
+  S.matches++;
+  taskProgress('pairs'); taskProgress('combo', G.combo, true);
+  if (G.combo > (S.bestCombo || 0)) S.bestCombo = G.combo;
+  if (G.st) G.st.mc = Math.max(G.st.mc, G.combo);
+  const sunny = S.theme === 'sunflower';
+  FX.burst(c.x, c.y - 10, sunny ? 12 : G.combo >= 3 ? 30 : 20, G.combo >= 3);
+  if (sunny) { FX.emoji(c.x, c.y - 10, G.combo >= 3 ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], G.combo >= 3 ? 8 : 5); if (G.combo >= 3 && G.combo % 2 === 1) bee(); }
+  if (G.combo > 0 && G.combo % 5 === 0) {
+    setTimeout(() => { Sound.supercombo(); flash(); praise('Supercombo! 🌈'); FX.burst(innerWidth / 2, innerHeight / 2.4, 46, true); if (sunny) bee(); buzz([20, 40, 20, 40, 40]); }, 120);
+  }
+  floatText(c.x, c.y - 50, '+' + pts);
+  Sound.match(G.combo); buzz(G.combo >= 3 ? [15, 40, 25] : 18);
+  updateScore();
+  const tag = $('#comboTag');
+  if (G.combo >= 2) { tag.textContent = `Combo x${Math.min(G.combo, 5)} 🔥`; tag.classList.add('on'); }
+  clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), 6000);
+  const left = aliveCount();
+  if (G.combo % 5 === 0 || gold || face === GIFT || face === JOKER) { /* already celebrated */ }
+  else if (left === 0 && G.tray.length === 0) { praise('Laatste paar! 🎉'); FX.burst(c.x, c.y, 40, true); }
+  else if (G.combo >= 3 && G.combo % 2 === 1) praise(PRAISE[Math.min(PRAISE.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]);
+  else if (!G.half && left <= G.tiles.length / 2 && left > 0) { G.half = true; praise('Halverwege! 💪'); }
+  else if (left === 4) praise('Bijna klaar!');
+}
+
+function checkStuck() {
+  if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
+  G.busy = true; G.overShown = true;
+  bumpStat('losses'); save();
+  endLevel('stuck');
+  syncClock();
+  setTimeout(() => {
+    Sound.stuck(); buzz([40, 80, 40]);
+    openModal(`<h2>Oei, alle vakjes zijn vol!</h2>
+      <p>Alle 4 vakjes zitten vol zonder paar. Geen nood, probeer het gewoon nog eens!</p>
+      <button class="big-btn play" id="sRetry"><span class="bb-text"><b>↻ Opnieuw proberen</b></span></button>
+      <button class="link-btn" id="sMenu">Menu</button>`, false);
+    $('#sRetry').onclick = () => { closeModal(); restart(); };
+    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
+  }, 450);
+}
+
+function hint() {
+  if (!G || G.done || G.busy) return;
+  Sound.init();
+  if (!toolsOpen()) return toolsLockedMsg();
+  if (G.usedHint) { toast('Je hint voor dit level is al gebruikt'); Sound.blocked(); return; }
+  const faces = G.tiles.map(t => t.face);
+  const path = Layouts.solve(G.tiles, G.nb, faces, G.alive, G.tray, 30000);
+  if (!path || !path.length) { toast('Zo gaat het niet meer lukken… probeer 🔀 Schudden'); Sound.blocked(); return; }
+  G.usedHint = true; updateTools(); saveCur();
+  syncClock(); logEvt('hint', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount() });
+  // show the next one or two safe taps
+  const show2 = [path[0]];
+  if (path[1] !== undefined && G.tiles[path[1]].face === G.tiles[path[0]].face) show2.push(path[1]);
+  show2.forEach(i => G.tiles[i].el.classList.add('hint'));
+  Sound.hint(); buzz(15);
+}
+
+function shuffle() {
+  if (!G || G.done || G.busy) return;
+  Sound.init();
+  if (!toolsOpen()) return toolsLockedMsg();
+  if (G.usedShuffle) { toast('Je hebt in dit level al geschud'); Sound.blocked(); return; }
+  G.usedShuffle = true; updateTools();
+  syncClock(); logEvt('shuf', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), tray: G.tray.length });
+  G.busy = true;
+  if (G.peek >= 0) { if (G.alive[G.peek]) turn(G.peek, true); G.peek = -1; }
+  const trayFaces = G.tray.map(t => G.tiles[t].face);
+  const count = {};
+  G.tiles.forEach((t, i) => { if (G.alive[i]) count[t.face] = (count[t.face] || 0) + 1; });
+  trayFaces.forEach(f => count[f]--);
+  const pf = [];
+  for (const f in count) for (let k = 0; k < count[f] / 2; k++) pf.push(+f);
+  const r = Layouts.rng((Math.random() * 1e9) | 0);
+  // a generous re-deal: the tray pictures come free quickly
+  const faces = Layouts.deal(G.tiles, G.nb, pf, r, { alive: G.alive, openFaces: trayFaces, cap: Math.max(2, trayFaces.length), open: 0.2 });
+  clearHint();
+  Sound.shuffle(); buzz([10, 30, 10]);
+  let k = 0;
+  G.tiles.forEach((t, i) => {
+    if (!G.alive[i]) return;
+    t.face = faces[i];
+    const el = t.el, kk = k++;
+    el.classList.remove('flip'); void el.offsetWidth;
+    el.style.animationDelay = (kk % 12) * 15 + 'ms';
+    el.classList.add('flip');
+    setTimeout(() => { el.querySelector('.face').innerHTML = Tiles.faceHTML(S.theme, t.face); decorate(i); }, 200 + (kk % 12) * 15);
+    setTimeout(() => { el.classList.remove('flip'); el.style.animationDelay = ''; }, 700);
+  });
+  setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); checkStuck(); }, 520);
+}

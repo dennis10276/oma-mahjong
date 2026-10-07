@@ -137,7 +137,7 @@ const Tiles = (() => {
     fruit: { name: 'Lekkernijen', faces: [...'🍎🍐🍊🍋🍌🍉🍇🍓🍒🍑🍍🥥🥝🍅🍆🥑🥕🌽🥦🍄🥐🍞🧀🥚🍳🥨🍰🍦🧁🍪🍩🍫🍬🍭🍯☕'] },
     animals: { name: 'Dieren', faces: [...'🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐸🐵🐔🐧🐦🐤🦆🦉🐴🦄🐝🐛🦋🐌🐞🐢🐍🐙🦀🐠🐬🐳🦒'] },
     // the big prize theme, unlocked after level 20
-    sunflower: { name: 'Zonnebloem', prize: true, faces: [...'🌻🐝🌼🍯🦋🐞🌞🌈🍓🍉🍋🍑🍒🌽🥕🍅🌷🌹🌸🌺🍀🌿🌾🐌🐛🐤🦆🐸🐢🍄🌳🏡🚲🍦🎀👒'] },
+    sunflower: { name: 'Zonnebloem', prize: true, faces: [...'🌻🐝🐞🦋🍓🍉🍋🍇🥕🍄🐸🐢🐤🐌🌈🏡🚲🍦👒🐷⛵🐠🍩🌷🍀🦔🐘🦊🐳🍭🧺🐧🍯🧀🚜🦜'] },
     happy: { name: 'Vrolijk', faces: ['🌸', '🌺', '🌻', '🌹', '🌷', '🌼', '💐', '🍀', '🌿', '🌵', '🌴', '🌳', '🍁', '🍂', '🌾', '🐚', '🌙', '⭐', '🌞', '🌈', '❄️', '🔥', '💧', '⚡', '🎈', '🎀', '🎁', '💎', '👑', '🔔', '🎵', '🏠', '⚓', '🚲', '⛵', '🧶'] },
   };
 
