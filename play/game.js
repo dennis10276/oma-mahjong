@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.0';
+  const APP_VERSION = '1.1';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -31,6 +31,8 @@
   const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0, nums: true, trophies: {}, bestCombo: 0, sunSeen: false, bonusStars: 0, bonusPts: 0, stats: {}, heartsSent: {}, heartsSeen: {}, frame: 'none', weekWins: 0, bigTiles: false, contrast: false });
   let S;
   try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
+  // 1.1: the green Jade background is the standard again (the Zonnebloem field stays if chosen)
+  if (!S.bgJade) { if (S.bg !== 'sunfield') S.bg = 'jade'; S.bgJade = true; }
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
 
   // ---------- dates ----------
@@ -1436,25 +1438,16 @@
     $('#trSee').onclick = () => { closeModal(); show('trophies'); };
   }
 
+  // new backgrounds: only a message, picking one is done in Thema's (only the Zonnebloem prize gets a 'use now' button)
   function showUnlock(list, then) {
     const bg = list.shift();
     Sound.unlock(); FX.confetti();
     const next = () => { closeModal(); if (list.length) showUnlock(list, then); else then(); };
-    if (sunUnlocked()) {
-      // after the Zonnebloem prize: just tell, don't switch away from the theme
-      openModal(`<h2>Nieuwe achtergrond! 🎉</h2><p>Je hebt <b>“${bg.name}”</b> vrijgespeeld.</p>
-        <div class="unlock-pv" style="background:${bg.css}"></div>
-        <p style="font-size:18px">Je kunt hem kiezen bij <b>🎨 Thema's</b> in het menu.</p>
-        <button class="big-btn play" id="uOk"><span class="bb-text"><b>Leuk!</b></span></button>`, false);
-      $('#uOk').onclick = next;
-      return;
-    }
     openModal(`<h2>Nieuwe achtergrond! 🎉</h2><p>Je hebt <b>“${bg.name}”</b> vrijgespeeld.</p>
       <div class="unlock-pv" style="background:${bg.css}"></div>
-      <button class="big-btn play" id="uUse"><span class="bb-text"><b>Gebruik nu</b></span></button>
-      <button class="link-btn" id="uLater">Later</button>`, false);
-    $('#uUse').onclick = () => { S.bg = bg.id; save(); applyBg(); next(); };
-    $('#uLater').onclick = next;
+      <p style="font-size:18px">Je kunt hem kiezen bij <b>🎨 Thema's</b> in het menu.</p>
+      <button class="big-btn play" id="uOk"><span class="bb-text"><b>Leuk!</b></span></button>`, false);
+    $('#uOk').onclick = next;
   }
 
   // ---------- wiring ----------
