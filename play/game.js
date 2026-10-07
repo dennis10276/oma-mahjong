@@ -544,14 +544,15 @@
     if (G.down[i] && G.peek !== i) {
       const pk0 = G.peek;
       const twin = pk0 >= 0 && G.alive[pk0] && free(pk0) && G.tiles[pk0].face === G.tiles[i].face;
-      if (!twin) {
+      const inTray = G.tray.some(t => G.tiles[t].face === G.tiles[i].face);
+      if (!twin && !inTray) {
         // face-down tile: first tap turns it over (only one at a time), second tap takes it
         if (pk0 >= 0 && G.alive[pk0]) turn(pk0, true);
         G.peek = i; turn(i, false);
         Sound.flip(); buzz(8); clearHint(); saveCur();
         return;
       }
-      // the open tile counts as already picked: turning over its twin matches them at once
+      // its twin is already in the tray, or is the open tile (which counts as picked): match at once
       G.down[i] = 0;
     }
     if (G.peek === i) { G.down[i] = 0; G.peek = -1; }
@@ -643,7 +644,7 @@
     openModal(`<h2>Omgedraaide stenen</h2>
       <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
       <p>Sommige stenen liggen <b>omgedraaid</b>. Tik er één keer op om te kijken wat het is, en nog een keer om hem te pakken.</p>
-      <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
+      <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. Staat de tweeling al in een vakje? Dan verdwijnen ze ook meteen bij het omdraaien. Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
       <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true);
     $('#mGo').onclick = closeModal;
     S.seenDown = true; save();
