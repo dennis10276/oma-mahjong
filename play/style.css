@@ -363,3 +363,5 @@ body.sunny #progressBar { background: linear-gradient(90deg, #fff27a, #ffb300); 
 .trophy:not(.got) { background: rgba(20,30,25,.38); }
 .lv.locked { background: rgba(20,30,25,.3); }
 #boardWrap { isolation: isolate; }
+.reset-btn { display: block; margin: 14px auto 0; padding: 10px 16px; border-radius: 14px; font-size: 17px; color: #b3261e; background: #fbe3df; }
+.version { margin-top: 10px; font-size: 14px; color: #9b8758; }

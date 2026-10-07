@@ -2,6 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
+  const APP_VERSION = '0.6';
 
   // ---------- backgrounds (unlocked with stars) ----------
   const BGS = [
@@ -339,7 +340,9 @@
     const rows = [['sfx', '🔊 Geluidjes'], ['music', '🎵 Muziek'], ['vibrate', '📳 Trillen'], ['highlight', '✨ Vastzittende stenen donker'], ['nums', '🔢 Cijfers in de hoek']];
     openModal(`<h2>Instellingen</h2>${rows.map(([k, l]) => `<div class="set-row">${l}<button class="tog ${S[k] ? 'on' : ''}" data-k="${k}"></button></div>`).join('')}
       <button class="big-btn gold" id="mHow"><span class="bb-text"><b>Hoe speel je?</b></span></button>
-      <button class="link-btn" id="mClose">Sluiten</button>`);
+      <button class="link-btn" id="mClose">Sluiten</button>
+      <button class="reset-btn" id="mReset">🗑️ Voortgang wissen</button>
+      <div class="version">Versie ${APP_VERSION}</div>`);
     $('#modalBox').querySelectorAll('.tog').forEach(t => t.onclick = () => {
       const k = t.dataset.k; S[k] = !S[k]; t.classList.toggle('on', S[k]); save();
       if (k === 'sfx') Sound.setSfx(S.sfx);
@@ -349,7 +352,28 @@
       if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
     });
     $('#mHow').onclick = () => showIntro();
+    $('#mReset').onclick = confirmReset;
     $('#mClose').onclick = closeModal;
+  }
+
+  // wipe levels, stars, daily puzzles and prizes; keep the sound/vibration/display settings
+  function confirmReset() {
+    openModal(`<h2>Voortgang wissen?</h2>
+      <p>Alle levels, sterren, dagpuzzels, prijzen en het Zonnebloem-thema worden gewist. Je begint weer bij <b>level 1</b>.</p>
+      <p style="font-size:17px;color:#a33">Dit kan niet ongedaan worden gemaakt.</p>
+      <button class="big-btn play" id="rsNo"><span class="bb-text"><b>Nee, bewaren</b></span></button>
+      <button class="reset-btn" id="rsYes">Ja, alles wissen</button>`);
+    $('#rsNo').onclick = closeModal;
+    $('#rsYes').onclick = () => {
+      const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown };
+      const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
+      Object.keys(S).forEach(k => delete S[k]);
+      Object.assign(S, defaults(), keep, { theme });
+      save(); clearCur(); G = null;
+      applyTheme(); applyBg();
+      closeModal(); show('home');
+      toast('Je voortgang is gewist. Veel plezier vanaf level 1!');
+    };
   }
 
   function showIntro(after) {
