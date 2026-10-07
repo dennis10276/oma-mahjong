@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.1';
+  const APP_VERSION = '1.2';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -421,13 +421,13 @@
   // ---------- the game ----------
   const SLOTS = Layouts.SLOTS;
   let G = null;
-  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 5 ? c : null; } catch (e) { return null; } };
+  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 6 ? c : null; } catch (e) { return null; } };
   const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
   function saveCur() {
     if (!G || G.done) return;
     syncClock();
     try {
-      localStorage.setItem(CUR, JSON.stringify({ v: 5, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+      localStorage.setItem(CUR, JSON.stringify({ v: 6, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
     } catch (e) { }
   }
   function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -610,6 +610,49 @@
 
   let blockedTaps = 0, comboTimer;
   const PRAISE = ['Mooi!', 'Goed zo!', 'Prima!', 'Geweldig!', 'Fantastisch!', 'Super!', 'Knap hoor!', 'Prachtig!'];
+  /* A stuck tile: arrows point at the tiles that are in the way
+     (the ones lying on top of it, or its neighbours on the left and the right). */
+  function blockersOf(i) {
+    const nb = G.nb, alive = G.alive;
+    const up = nb.above[i].filter(j => alive[j]);
+    if (up.length) return up.map(j => ({ j, side: 'up' }));
+    const t = G.tiles[i];
+    // per side the neighbour that overlaps most in height
+    const best = list => list.filter(j => alive[j]).sort((a, b) => Math.abs(G.tiles[a].y - t.y) - Math.abs(G.tiles[b].y - t.y))[0];
+    return [best(nb.left[i]), best(nb.right[i])].filter(j => j !== undefined).map(j => ({ j, side: 'side' }));
+  }
+  function showBlockers(i) {
+    if (!G) return;
+    const board = $('#board');
+    board.querySelectorAll('.blk-arrow').forEach(a => a.remove());
+    const a = G.tiles[i].r;
+    if (!a) return;
+    const ac = { x: a.l + a.w / 2, y: a.t + a.h / 2 };
+    const size = Math.max(26, Math.min(56, G.tw * 0.62));
+    const seen = new Set();
+    for (const { j } of blockersOf(i)) {
+      const b = G.tiles[j].r; if (!b) continue;
+      const bc = { x: b.l + b.w / 2, y: b.t + b.h / 2 };
+      let dx = bc.x - ac.x, dy = bc.y - ac.y;
+      if (Math.hypot(dx, dy) < a.w * 0.2) { dx = -1; dy = -1; }   // lying right on top: point up-left onto it
+      const len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+      const ang = Math.round(Math.atan2(uy, ux) * 180 / Math.PI);
+      if (seen.has(ang)) continue; seen.add(ang);
+      // the arrow starts on the stuck tile and its tip touches the tile in the way
+      const reach = Math.min(len, a.w * 0.62);
+      const px = ac.x + ux * reach * 0.55, py = ac.y + uy * reach * 0.55;
+      const ar = document.createElement('div');
+      ar.className = 'blk-arrow';
+      ar.style.cssText = `left:${px.toFixed(1)}px;top:${py.toFixed(1)}px;width:${size.toFixed(0)}px;height:${(size * 0.62).toFixed(0)}px;--a:${ang}deg`;
+      ar.innerHTML = '<svg viewBox="0 0 50 31"><path d="M3 11h26V3l18 12.5L29 28v-8H3z" fill="#ff8a00" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>';
+      board.appendChild(ar);
+      const be = G.tiles[j].el;
+      be.classList.remove('blocker'); void be.offsetWidth; be.classList.add('blocker');
+      setTimeout(() => be.classList.remove('blocker'), 1300);
+      setTimeout(() => ar.remove(), 1300);
+    }
+  }
+
   /* Taps never wait for animations: the game state changes instantly,
      the flying tiles just catch up visually. */
   function onTap(i) {
@@ -618,6 +661,7 @@
     const el = G.tiles[i].el;
     if (!free(i)) {
       el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+      showBlockers(i);
       Sound.blocked(); buzz(30);
       if (++blockedTaps === 3) toast('Deze steen zit nog vast. Kies een steen met niets erbovenop en een open zijkant.');
       return;

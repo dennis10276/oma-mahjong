@@ -494,3 +494,23 @@ body.contrast #board.hl .tile.blocked::after { background: rgba(0,0,0,.42); }
 body.contrast .chip, body.contrast .rk-tabs button { background: rgba(0,0,0,.6); }
 body.contrast .modal-box, body.contrast .task, body.contrast .stat { color: #000; }
 body.contrast .tmini { border: 2px solid #222; background: #fff; }
+
+/* ---------- 1.2: stuck tile -> arrows to the tiles in the way ---------- */
+.blk-arrow { position: absolute; z-index: 999999; pointer-events: none; transform: translate(-50%, -50%) rotate(var(--a)); animation: blkNudge 1.3s ease-in-out forwards; filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
+.blk-arrow svg { width: 100%; height: 100%; display: block; }
+@keyframes blkNudge {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--a)) translateX(-40%) scale(.6); }
+  15% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--a)) translateX(0) scale(1); }
+  30% { transform: translate(-50%, -50%) rotate(var(--a)) translateX(22%); }
+  45% { transform: translate(-50%, -50%) rotate(var(--a)) translateX(0); }
+  60% { transform: translate(-50%, -50%) rotate(var(--a)) translateX(22%); }
+  80% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--a)) translateX(0); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--a)) translateX(0); }
+}
+#board .tile.blocker { animation: blockerPulse 1.3s ease-in-out; }
+#board .tile.blocker::after { opacity: 0 !important; }
+@keyframes blockerPulse {
+  0%, 100% { box-shadow: calc(var(--d) * .5) calc(var(--d) * .6) 0 0 #e1d2a8, var(--d) calc(var(--d) * 1.2) 0 0 #27906d; }
+  25%, 65% { box-shadow: 0 0 0 4px #ff8a00, 0 0 16px 5px rgba(255,140,0,.75); }
+  45% { box-shadow: 0 0 0 2px #ff8a00, 0 0 6px 2px rgba(255,140,0,.5); }
+}

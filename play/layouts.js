@@ -1,4 +1,4 @@
-/* Messy-pile layouts + deals that are always solvable with the 4-slot tray.
+/* Symmetric pile layouts + deals that are always solvable with the 4-slot tray.
    Coordinates are in half-tile units: a tile at (x,y,z) covers x..x+2, y..y+2 on layer z. */
 const Layouts = (() => {
   const SLOTS = 4;
@@ -20,96 +20,146 @@ const Layouts = (() => {
   const overlaps = (a, b) => Math.abs(a.x - b.x) < 2 && Math.abs(a.y - b.y) < 2;
 
   // ---------- base shapes ----------
+  /* Every shape is mirror-symmetric left/right, like the boards in Vita Mahjong.
+     u = -1..1 across, v = -1 (top) .. 1 (bottom); c may be fractional (brick rows). */
+  const UV = (c, r, W, H) => [(c - (W - 1) / 2) / (W / 2), (r - (H - 1) / 2) / (H / 2)];
   const SHAPES = {
-    rect: () => true,
-    diamond: (c, r, W, H) => Math.abs(c - (W - 1) / 2) / (W / 2) + Math.abs(r - (H - 1) / 2) / (H / 2) <= 1.01,
-    oval: (c, r, W, H) => { const a = (c - (W - 1) / 2) / (W / 2), b = (r - (H - 1) / 2) / (H / 2); return a * a + b * b <= 1.08; },
-    cross: (c, r, W, H) => Math.abs(c - (W - 1) / 2) <= Math.max(0.5, W * 0.18) || Math.abs(r - (H - 1) / 2) <= Math.max(0.5, H * 0.18),
-    hourglass: (c, r, W, H) => Math.abs(c - (W - 1) / 2) <= Math.abs(r - (H - 1) / 2) / (H / 2) * (W / 2) + 0.6,
-    heart: (c, r, W, H) => {
-      const x = (c - (W - 1) / 2) / (W / 2) * 1.25, y = -(r - (H - 1) / 2) / (H / 2) * 1.25 + 0.2;
-      const q = x * x + y * y - 1; return q * q * q - x * x * y * y * y <= 0.02;
-    },
-    stairs: (c, r, W, H) => c <= r * (W / H) + 1.5,
-    zigzag: (c, r, W, H) => (Math.floor(r / 2) % 2 === 0 ? c < W - 1 : c > 0),
+    block:     () => true,
+    diamond:   (u, v) => Math.abs(u) + Math.abs(v) <= 1.05,
+    oval:      (u, v) => u * u + v * v <= 1.1,
+    octagon:   (u, v) => Math.abs(u) + Math.abs(v) <= 1.42,
+    cross:     (u, v) => Math.abs(u) <= 0.38 || Math.abs(v) <= 0.3,
+    hourglass: (u, v) => Math.abs(u) <= Math.abs(v) + 0.3,
+    bowtie:    (u, v) => Math.abs(v) <= Math.abs(u) * 0.9 + 0.32,
+    heart:     (u, v) => { const x = u * 1.25, y = -v * 1.25 + 0.2, q = x * x + y * y - 1; return q * q * q - x * x * y * y * y <= 0.02; },
+    pyramid:   (u, v) => Math.abs(u) <= (v + 1) / 2 + 0.2,
+    tree:      (u, v) => v < 0.45 ? Math.abs(u) <= (v + 1.1) / 1.55 : Math.abs(u) <= 0.26,
+    house:     (u, v) => v >= -0.25 ? Math.abs(u) <= 0.85 : Math.abs(u) <= (v + 1) / 0.75 * 0.95 + 0.05,
+    arch:      (u, v) => !(Math.abs(u) < 0.36 && v > 0.15),
+    frame:     (u, v) => !(Math.abs(u) < 0.42 && Math.abs(v) < 0.42),
+    letterH:   (u, v) => Math.abs(u) >= 0.4 || Math.abs(v) <= 0.26,
+    crown:     (u, v) => v > -0.35 || Math.abs(u) > 0.7 || Math.abs(u) < 0.14,
+    butterfly: (u, v) => { const a = Math.abs(u); return a <= 0.18 || ((a - 0.15) ** 2 / 0.75 + (Math.abs(v + 0.15) - 0.05) ** 2 / 0.95 <= 0.85 && Math.abs(v) <= 0.95); },
+    vase:      (u, v) => Math.abs(u) <= (v < -0.5 ? 0.5 : v < 0 ? 0.35 + Math.abs(v + 0.5) * 0.5 : 0.95 - v * 0.35),
   };
+  // early levels get calm, simple shapes; the fancy ones come later
+  const EASY = ['block', 'oval', 'diamond', 'octagon', 'cross', 'pyramid'];
   const NAMES = Object.keys(SHAPES);
 
+  function shapeCells(name, W, H, brick) {
+    const f = SHAPES[name], cells = [];
+    for (let r = 0; r < H; r++) {
+      const odd = brick && r % 2 === 1;
+      for (let c = 0; c < (odd ? W - 1 : W); c++) {
+        const [u, v] = UV(odd ? c + 0.5 : c, r, W, H);
+        if (f(u, v)) cells.push({ x: c * 2 + (odd ? 1 : 0), y: r * 2 });
+      }
+    }
+    return cells;
+  }
   let BASES = null;
   function bases() {
     if (BASES) return BASES;
     BASES = [];
     for (const name of NAMES)
-      for (let W = 3; W <= 10; W++)
-        for (let H = 3; H <= 10; H++) {
-          let n = 0, c0 = 99, c1 = -1, r0 = 99, r1 = -1;
-          for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) if (SHAPES[name](c, r, W, H)) { n++; c0 = Math.min(c0, c); c1 = Math.max(c1, c); r0 = Math.min(r0, r); r1 = Math.max(r1, r); }
-          // real occupied size (some shapes leave empty rows/columns)
-          if (n >= 4) BASES.push({ name, W, H, n, w: c1 - c0 + 1, h: r1 - r0 + 1 });
-        }
+      for (const brick of [false, true])
+        for (let W = 3; W <= 11; W++)
+          for (let H = 3; H <= 11; H++) {
+            const cells = shapeCells(name, W, H, brick);
+            if (cells.length < 4) continue;
+            const xs = cells.map(t => t.x), ys = cells.map(t => t.y);
+            // real occupied size in tiles (some shapes leave empty rows or columns)
+            const w = (Math.max(...xs) - Math.min(...xs)) / 2 + 1, h = (Math.max(...ys) - Math.min(...ys)) / 2 + 1;
+            // skip shapes that fall apart into a thin mess at this size
+            const rowsUsed = new Set(ys).size;
+            if (rowsUsed < Math.min(H, 3)) continue;
+            BASES.push({ name, W, H, brick, n: cells.length, w, h });
+          }
     return BASES;
   }
 
-  /* A base layer, then messy piles on top: each upper tile lands at a random half-tile
-     offset, resting on one or more tiles below (never overlapping its own layer). */
-  /* aspect = height / width of the free screen area: the pile takes the same shape,
-     so its tiles can grow until it fills the space. */
-  function buildPiles(seed, target, maxLayers, aspect = 1.55) {
-    const r = rng(seed);
+  /* Neat, symmetric piles: a base shape, then each higher layer sits exactly on top,
+     or half a tile shifted so it bridges the tiles below (the "stepped" look).
+     Layers shrink towards one hill in the middle, or two mirrored hills.
+     aspect = height / width of the free screen area: the pile takes the same shape. */
+  function buildPiles(seed, target, maxLayers, aspect = 1.55, level = 99) {
     const layers = Math.max(1, maxLayers);
-    const baseFrac = layers === 1 ? 1 : layers === 2 ? 0.62 : layers === 3 ? 0.5 : 0.44;
-    const baseTarget = Math.round(target * baseFrac);
-    const brick = layers > 1 && r() < 0.45; // shift every other row by half a tile
+    const baseFrac = layers === 1 ? 1 : layers === 2 ? 0.6 : layers === 3 ? 0.47 : layers === 4 ? 0.4 : 0.36;
+    // upper layers can run out of room on some shapes: then try again with a bigger base
+    let bt = Math.round(target * baseFrac), best = null;
+    for (let k = 0; k < 7; k++) {
+      const res = buildOnce(rng(seed + k * 101), target, layers, aspect, level, bt);
+      const n = res.tiles.length;
+      if (!best || Math.abs(n - target) < Math.abs(best.tiles.length - target)) best = res;
+      if (Math.abs(n - target) <= 2) break;
+      bt = Math.max(4, Math.round(bt + (target - n) * (n < target ? 0.7 : 0.5)));
+    }
+    return best;
+  }
+  function buildOnce(r, target, layers, aspect, level, baseTarget) {
     const want = aspect / 1.24; // rows per column that fill the area exactly
-    const scored = bases().map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 6 * Math.abs(Math.log((b.h + 0.25) / (b.w + (brick ? 0.5 : 0) + 0.35) / want)) }));
+    const pool = level < 8 ? bases().filter(b => EASY.includes(b.name)) : bases();
+    const scored = pool.map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 6 * Math.abs(Math.log((b.h + 0.25) / (b.w + 0.35) / want)) }));
     const bestSc = Math.min(...scored.map(x => x.sc));
-    const cands = scored.filter(x => x.sc <= bestSc + 0.6).map(x => x.b);
+    const cands = scored.filter(x => x.sc <= bestSc + 1.2).map(x => x.b);
     const names = [...new Set(cands.map(c => c.name))];
     const nm = pick(r, names);
     const b = pick(r, cands.filter(c => c.name === nm));
-    const tiles = [];
-    for (let row = 0; row < b.H; row++)
-      for (let c = 0; c < b.W; c++)
-        if (SHAPES[b.name](c, row, b.W, b.H)) tiles.push({ x: c * 2 + (brick && row % 2 ? 1 : 0), y: row * 2, z: 0 });
+    const tiles = shapeCells(b.name, b.W, b.H, b.brick).map(t => ({ ...t, z: 0 }));
+
+    const S = Math.min(...tiles.map(t => t.x)) + Math.max(...tiles.map(t => t.x)); // mirror: x -> S - x
+    const key = (x, y) => x + ',' + y;
+    const cx = S / 2, cy = tiles.reduce((a, t) => a + t.y, 0) / tiles.length;
+    // the top of the pile: one hill in the middle, or two mirrored hills (now and then)
+    const spanX = (Math.max(...tiles.map(t => t.x)) - Math.min(...tiles.map(t => t.x))) / 2;
+    const twin = layers >= 3 && spanX >= 4 && r() < 0.3;
+    const hy = cy + Math.round((r() - 0.5) * 2) * 1;
+    const hd = twin ? Math.max(2, Math.round(spanX * 0.55)) : 0;
+    const dist = p => {
+      const dx = Math.abs(p.x - cx), d = twin ? Math.abs(dx - hd) : dx;
+      return Math.hypot(d * 1.0, (p.y - hy) * 0.9);
+    };
 
     let remaining = target - tiles.length;
     let prev = tiles.slice();
-    const minX = Math.min(...tiles.map(t => t.x)), maxX = Math.max(...tiles.map(t => t.x));
-    const minY = Math.min(...tiles.map(t => t.y)), maxY = Math.max(...tiles.map(t => t.y));
-    // usually one big hill; now and then two or three
-    const nh = r() < 0.72 ? 1 : r() < 0.65 ? 2 : 3;
-    const cx = tiles.reduce((a, t) => a + t.x, 0) / tiles.length, cy = tiles.reduce((a, t) => a + t.y, 0) / tiles.length;
-    const centers = [];
-    if (nh === 1) centers.push({ x: cx + (r() - 0.5) * 2, y: cy + (r() - 0.5) * 2 });
-    else {
-      const pool = shuffleArr(r, tiles.slice());
-      centers.push(pool[0]);
-      while (centers.length < nh) {
-        let best = null, bd = -1;
-        for (const t of pool) { const d = Math.min(...centers.map(c => Math.hypot(c.x - t.x, c.y - t.y))); if (d > bd) { bd = d; best = t; } }
-        centers.push(best);
+    let lastOp = '';
+    // the planned number of layers; if the top ran out of room, one extra small layer
+    const zMax = layers + (layers >= 3 ? 1 : 0);
+    for (let z = 1; z < zMax && remaining > 0; z++) {
+      const prevSet = new Set(prev.map(t => key(t.x, t.y)));
+      const has = (x, y) => prevSet.has(key(x, y));
+      const OPS = {
+        stack: () => prev.map(t => ({ x: t.x, y: t.y })),
+        shiftX: () => prev.filter(t => has(t.x + 2, t.y)).map(t => ({ x: t.x + 1, y: t.y })),
+        shiftY: () => prev.filter(t => has(t.x, t.y + 2)).map(t => ({ x: t.x, y: t.y + 1 })),
+        shiftXY: () => prev.filter(t => has(t.x + 2, t.y) && has(t.x, t.y + 2) && has(t.x + 2, t.y + 2)).map(t => ({ x: t.x + 1, y: t.y + 1 })),
+      };
+      const nWant = z >= layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (0.52 + r() * 0.2))));
+      // pick a way of stacking that has room for this layer; vary it from layer to layer
+      const order = shuffleArr(r, ['stack', 'shiftX', 'shiftXY', 'shiftY', 'shiftX']).filter((o, k, a) => a.indexOf(o) === k);
+      order.sort((a, c) => (a === lastOp) - (c === lastOp));
+      let cand = null, op = '';
+      for (const o of order) { const c = OPS[o](); if (c.length >= Math.min(nWant, 2)) { cand = c; op = o; break; } }
+      if (!cand || !cand.length) break;
+      lastOp = op;
+      // group mirror twins so the layer stays symmetric, then fill from the hilltop outwards
+      const seen = new Set(), groups = [];
+      const cset = new Map(cand.map(p => [key(p.x, p.y), p]));
+      for (const p of cand) {
+        const k = key(p.x, p.y); if (seen.has(k)) continue;
+        const mk = key(S - p.x, p.y);
+        const g = [p]; seen.add(k);
+        if (mk !== k && cset.has(mk)) { g.push(cset.get(mk)); seen.add(mk); }
+        else if (mk !== k) continue; // no mirror partner: leave it out
+        groups.push({ g, d: dist(p) + r() * 0.35 });
       }
-    }
-    const hillDist = p => Math.min(...centers.map(c => Math.hypot(c.x - p.x, c.y - p.y))) / 2; // in tiles
-    for (let z = 1; z < layers && remaining > 0; z++) {
-      const want = z === layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (0.55 + r() * 0.2))));
-      const cand = [];
-      for (let y = minY; y <= maxY; y++)
-        for (let x = minX; x <= maxX; x++) {
-          const p = { x, y };
-          let support = 0;
-          for (const q of prev) if (overlaps(p, q)) support++;
-          if (support === 0) continue;
-          const exact = prev.some(q => q.x === x && q.y === y);
-          // prefer resting on 2+ tiles, close to the top of the hill
-          cand.push({ x, y, w: support + (exact ? 0.3 : 0) + r() * 1.6 - hillDist(p) * 1.4 });
-        }
-      cand.sort((a, b) => b.w - a.w);
+      groups.sort((a, c) => a.d - c.d);
       const placed = [];
-      for (const c of cand) {
-        if (placed.length >= want) break;
-        if (placed.some(q => overlaps(q, c))) continue;
-        placed.push({ x: c.x, y: c.y, z });
+      for (const { g } of groups) {
+        if (placed.length >= nWant) break;
+        if (placed.length + g.length > nWant && placed.length >= nWant - 1 && nWant > 1) continue;
+        if (g.some(p => placed.some(q => overlaps(p, q)))) continue;
+        g.forEach(p => placed.push({ x: p.x, y: p.y, z }));
       }
       if (!placed.length) break;
       placed.forEach(t => tiles.push(t));
@@ -119,12 +169,14 @@ const Layouts = (() => {
     // normalise so coordinates start at 0
     const ox = Math.min(...tiles.map(t => t.x)), oy = Math.min(...tiles.map(t => t.y));
     tiles.forEach(t => { t.x -= ox; t.y -= oy; });
+    const S2 = S - 2 * ox;
     if (tiles.length % 2) {
+      // an odd count always has a tile on the middle line: take the highest uncovered one off
       const nb = neighbors(tiles);
-      const tops = tiles.map((t, i) => i).filter(i => nb.above[i].length === 0);
-      const maxZ = Math.max(...tops.map(i => tiles[i].z));
-      const victim = pick(r, tops.filter(i => tiles[i].z === maxZ));
-      tiles.splice(victim, 1);
+      const mids = tiles.map((t, i) => i).filter(i => tiles[i].x * 2 === S2 && nb.above[i].length === 0);
+      const pool2 = mids.length ? mids : tiles.map((t, i) => i).filter(i => nb.above[i].length === 0);
+      const maxZ = Math.max(...pool2.map(i => tiles[i].z));
+      tiles.splice(pick(r, pool2.filter(i => tiles[i].z === maxZ)), 1);
     }
     return { tiles, shape: b.name };
   }
@@ -169,7 +221,7 @@ const Layouts = (() => {
     if (e > 26) target = targetFor(level);           // keep variety in the endless levels
     target = Math.max(8, Math.round(target * scale));
     target -= target % 2;
-    const res = buildPiles(level * 7919 + 13, target, layersFor(e), aspect);
+    const res = buildPiles(level * 7919 + 13, target, layersFor(e), aspect, level);
     const diff = difficultyFor(e);
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1, diff };
   }
