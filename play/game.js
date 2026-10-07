@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.5';
+  const APP_VERSION = '1.6';
   /* Updates come from the website: newer game files are downloaded in the background,
      kept on the phone, and used from the next start (or right away on the home screen). */
   const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
@@ -259,7 +259,7 @@
     $('#rankBadge').textContent = '#' + myRank(undefined, 'week');
     renderTaskChip();
     if (S.lastWeek) setTimeout(() => { if (screen === 'home') checkLastWeek(); }, 400);
-    else if (S.pendingHearts && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); setTimeout(() => { if (screen === 'home' && $('#modal').classList.contains('hidden')) showHearts(h, () => renderHome()); }, 400); }
+    else if (S.pendingHearts && S.pendingHearts.length) setTimeout(() => { if (screen === 'home' && $('#modal').classList.contains('hidden') && S.pendingHearts && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
     if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (screen === 'home' && $('#modal').classList.contains('hidden')) showSunflowerUnlock(() => renderHome()); }, 500);
   }
   function renderGoal(el) {
@@ -1129,6 +1129,8 @@
     return d >= 1 ? `nog ${d} ${d === 1 ? 'dag' : 'dagen'}${h ? ` en ${h} uur` : ''}` : `nog ${Math.max(1, h)} uur`;
   }
 
+  // computer players keep playing too: a few levels a week, the stronger ones a bit faster
+  const botLevel = (k, at, days) => Math.max(1, Math.floor(at) + 1 + Math.floor(days * (0.3 + k * 0.03)));
   function botEntries(mode = 'all', weekId, frac) {
     if (!S.since) { S.since = todayKey(); save(); }
     const days = Math.max(0, Math.round((parseKey(todayKey()) - parseKey(S.since)) / 864e5));
@@ -1139,31 +1141,48 @@
       return BOTS.map(([name, avatar, at], k) => {
         const r = Layouts.rng(k * 977 + 3);
         const pts = Math.round(BOT_WEEK[k] * Math.pow(frac, 0.95) * (0.82 + wr() * 0.36));
-        return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: Math.max(1, Math.floor(at) + 1 + Math.floor(days / 3)), bot: true };
+        return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: botLevel(k, at, days), bot: true };
       });
     }
     return BOTS.map(([name, avatar, at], k) => {
       const r = Layouts.rng(k * 977 + 3);
       const pts = Math.round(cumPts(at) * (0.94 + r() * 0.12) + days * (15 + k * 3));
-      return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: Math.max(1, Math.floor(at) + 1), bot: true };
+      return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: botLevel(k, at, days), bot: true };
     });
   }
   const myPoints = () => Object.values(S.lvlPts || {}).reduce((a, b) => a + b, 0) + Object.values(S.dayPts || {}).reduce((a, b) => a + b, 0) + (S.bonusPts || 0);
   const myWeekPts = () => ensureWeek().pts;
-  function myEntry(points, mode = 'all') { return { id: S.pid, name: S.name || 'Jij', avatar: S.avatar || '😊', frame: S.frame || 'none', points: points ?? (mode === 'week' ? myWeekPts() : myPoints()), level: S.level, me: true }; }
+  // v = my weekly points (week) or my level (all-time); undefined = my current value
+  function myEntry(v, mode = 'all') {
+    const all = mode !== 'week';
+    return { id: S.pid, name: S.name || 'Jij', avatar: S.avatar || '😊', frame: S.frame || 'none', points: all ? myPoints() : (v ?? myWeekPts()), level: all ? (v ?? S.level) : S.level, me: true };
+  }
   function onlineEntries(mode = 'all', weekId) {
     let list = [];
     try { list = (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid); } catch (e) { }
     if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id ? (e.wkPts || 0) : 0 })); }
     return list;
   }
-  function ranking(points, mode = 'all') {
-    const list = [...botEntries(mode), ...onlineEntries(mode), myEntry(points, mode)];
+  /* week = points this week; all-time ("Altijd") = highest level, points only break a tie */
+  function ranking(v, mode = 'all') {
+    const list = [...botEntries(mode), ...onlineEntries(mode), myEntry(v, mode)];
     // on a tie you are placed above the other player
-    list.sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
+    if (mode === 'week') list.sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
+    else list.sort((a, b) => b.level - a.level || b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
     return list;
   }
-  const myRank = (points, mode = 'all') => ranking(points, mode).findIndex(e => e.me) + 1;
+  const myRank = (v, mode = 'all') => ranking(v, mode).findIndex(e => e.me) + 1;
+  const isFam = e => !e.bot && !e.me;
+  // value shown on the right of a row
+  const rowVal = (e, mode) => mode === 'week' ? e.points.toLocaleString('nl-NL') : `level ${e.level}`;
+  /* the family (real players) at a glance: everyone with their place */
+  function famHTML(mode, list, title = '👪 Familie', withHearts = false) {
+    list = list || ranking(undefined, mode);
+    const fam = list.map((e, i) => ({ e, r: i + 1 })).filter(x => !x.e.bot);
+    if (fam.length < 2) return '';
+    const medal = r => r <= 3 ? ['🥇', '🥈', '🥉'][r - 1] : '#' + r;
+    return `<div class="fam-box"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatarHTML(e)}<span class="fr-name">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${!e.me ? heartState(e.id) : ''}</span><span class="fr-val">${rowVal(e, mode)}${withHearts && !e.me ? heartBtn(e) : ''}</span></div>`).join('')}</div>`;
+  }
   function ensureId() { if (!S.pid) { S.pid = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); save(); } }
   async function fetchOnline() {
     if (!DB_URL) return false;
@@ -1203,9 +1222,46 @@
       if (!r.ok) throw 0;
       S.heartsSent[pid] = todayKey(); bumpStat('heartsSent'); save();
       Sound.unlock(); buzz(20);
-      if (btn) { btn.classList.add('sent'); btn.textContent = '💛✓'; const c = btn.getBoundingClientRect(); FX.emoji(c.left + c.width / 2, c.top, ['💛', '💛', '✨'], 8); }
-      toast(`Hartje gestuurd naar ${name}! 💛`);
+      if (btn) { btn.classList.add('sent'); btn.textContent = '💛✓'; }
+      S.heartsOut = S.heartsOut || {}; S.heartsOut[pid] = { t: Date.now(), seen: 0, name }; save();
+      showHeartSent(name);
     } catch (e) { toast('Hartje versturen lukte niet. Is er internet?'); }
+  }
+  // a big, clear "it is on its way" moment for the sender
+  function showHeartSent(name) {
+    Sound.trophy(); buzz([20, 40, 20, 40, 60]); heartRain();
+    openModal(`<div class="heart-big">💛</div><h2>Hartje verstuurd!</h2>
+      <p><b>${name}</b> krijgt je hartje te zien zodra ze de app opent.</p>
+      <p style="font-size:16px;color:#8a7448">Op de ranglijst zie je daarna "gezien 👀" staan.</p>
+      <button class="big-btn play" id="hsOk"><span class="bb-text"><b>Fijn! 😊</b></span></button>`, false);
+    setTimeout(heartRain, 700);
+    $('#hsOk').onclick = () => { closeModal(); if (screen === 'ranking') renderRanking(); };
+  }
+  // small status next to a family member: did they see my heart?
+  function heartState(pid) {
+    const o = (S.heartsOut || {})[pid];
+    if (!o || Date.now() - o.t > 7 * 864e5) return '';
+    return o.seen ? '<small class="hs seen">💛 hartje gezien 👀</small>' : '<small class="hs">💛 hartje onderweg…</small>';
+  }
+  // did the people I sent a heart to see it? (they mark it when they open it)
+  let sentCheckAt = 0;
+  async function checkSentHearts() {
+    const out = S.heartsOut || {}; let changed = false;
+    for (const [pid, o] of Object.entries(out)) {
+      if (o.seen || Date.now() - o.t > 7 * 864e5) continue;
+      try {
+        const r = await fetch(`${DB_URL}/hearts/${pid}/${S.pid}.json`, { cache: 'no-store' });
+        const v = r.ok ? await r.json() : null;
+        if (v && v.t < 0) { o.seen = Date.now(); changed = true; toast(`💛 ${o.name || 'Ze'} heeft je hartje gezien!`, 3200); }
+      } catch (e) { }
+    }
+    if (changed) save();
+    return changed;
+  }
+  // tell the sender we saw it: the heart is stored again with a negative time
+  function markHeartsSeen(list) {
+    ensureId();
+    list.forEach(h => fetch(`${DB_URL}/hearts/${S.pid}/${h.from}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: h.name.slice(0, 24), t: -Math.abs(h.t) }) }).catch(() => { }));
   }
   async function fetchHearts() {
     if (!DB_URL || !S.pid) return [];
@@ -1226,11 +1282,14 @@
     heartRain();
     const names = [...new Set(list.map(h => h.name))];
     const who = names.length === 1 ? `<b>${names[0]}</b> stuurde je een hartje!` : `<b>${names.slice(0, -1).join(', ')}</b> en <b>${names.slice(-1)}</b> stuurden je een hartje!`;
-    openModal(`<div class="sun-big">💛</div><h2>Een hartje voor jou!</h2><p>${who}</p>
+    openModal(`<div class="heart-big">💛</div><h2 class="heart-h">Een hartje voor jou!</h2><p class="heart-who">${who}</p>
       <button class="big-btn play" id="hOk"><span class="bb-text"><b>Wat lief! 😊</b></span></button>`, false);
+    setTimeout(heartRain, 900); setTimeout(heartRain, 1900);
+    markHeartsSeen(list);
     $('#hOk').onclick = () => { closeModal(); if (then) then(); };
   }
-  function heartRain() { FX.emoji(innerWidth / 2, innerHeight * 0.55, ['💛', '💛', '💖', '✨'], 18); setTimeout(() => FX.emoji(innerWidth / 3, innerHeight * 0.5, ['💛', '💖'], 10), 300); setTimeout(() => FX.emoji(innerWidth * 0.66, innerHeight * 0.5, ['💛', '💖'], 10), 550); }
+  // hearts fountain up from the bottom of the screen, so the words stay readable
+  function heartRain() { [0.08, 0.3, 0.7, 0.92].forEach((f, i) => setTimeout(() => FX.emoji(innerWidth * f, innerHeight - 20, ['💛', '💖', '💛', '✨'], 12), i * 120)); }
   async function checkHearts() {
     const fresh = await fetchHearts();
     if (fresh.length && screen === 'home' && $('#modal').classList.contains('hidden')) showHearts(fresh, () => renderHome());
@@ -1277,10 +1336,12 @@
     };
   }
 
-  function rowHTML(e, rank, withHeart = false) {
+  const heartBtn = e => `<button class="heart-btn${(S.heartsSent || {})[e.id] === todayKey() ? ' sent' : ''}" data-pid="${e.id}" data-name="${e.name.replace(/"/g, '')}" aria-label="Stuur een hartje">${(S.heartsSent || {})[e.id] === todayKey() ? '💛✓' : '💛'}</button>`;
+  function rowHTML(e, rank, withHeart = false, mode = 'week') {
     const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
-    const heart = withHeart && !e.me && !e.bot ? `<button class="heart-btn${(S.heartsSent || {})[e.id] === todayKey() ? ' sent' : ''}" data-pid="${e.id}" data-name="${e.name.replace(/"/g, '')}" aria-label="Stuur een hartje">${(S.heartsSent || {})[e.id] === todayKey() ? '💛✓' : '💛'}</button>` : '';
-    return `<span class="rk">${medal}</span>${avatarHTML(e)}<span class="rn">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${e.bot ? ' <i class="bot" title="computerspeler">🤖</i>' : ''}<small>level ${e.level}</small></span><span class="rp">${e.points.toLocaleString('nl-NL')}${heart}</span>`;
+    const heart = withHeart && !e.me && !e.bot ? heartBtn(e) : '';
+    const sub = mode === 'week' ? `level ${e.level}` : `${e.points.toLocaleString('nl-NL')} punten`;
+    return `<span class="rk">${medal}</span>${avatarHTML(e)}<span class="rn">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${e.bot ? ' <i class="bot" title="computerspeler">🤖</i>' : e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small></span><span class="rp">${rowVal(e, mode)}${heart}</span>`;
   }
   let rankMode = 'week';
   function renderRanking() {
@@ -1292,14 +1353,16 @@
     $('#rkAll').classList.toggle('on', rankMode === 'all');
     $('#wkInfo').innerHTML = rankMode === 'week'
       ? `⏳ De weekstrijd eindigt ${weekLeftText()}. Elke maandag begint iedereen weer bij 0!`
-      : `Alle punten die je ooit verdiend hebt.`;
-    $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}">${rowHTML(e, i + 1, true)}</div>`).join('');
+      : `Wie is het verst gekomen? Het hoogste level staat bovenaan.`;
+    $('#famBox').innerHTML = famHTML(rankMode, list, '👪 Familie', true);
+    $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, true, rankMode)}</div>`).join('');
     document.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast('Vandaag al een hartje gestuurd 💛'); });
     const online = !!DB_URL;
     $('#rankNote').innerHTML = online ? `🌐 Familie online · 💛 = stuur een hartje · 🤖 = computerspeler` : `🤖 = computerspeler`;
     $('#rankName').innerHTML = `${avatarHTML(myEntry(0), 'ra small')} ${S.name || 'Naam kiezen'} ✏️`;
     setTimeout(() => { const m = document.querySelector('.rrow.me'); if (m) m.scrollIntoView({ block: 'center' }); }, 30);
     if (online && (!S.lbOnlineAt || Date.now() - S.lbOnlineAt > 20000)) fetchOnline().then(ok => { if (ok && screen === 'ranking') renderRanking(); });
+    if (online && Date.now() - (sentCheckAt || 0) > 8000) { sentCheckAt = Date.now(); checkSentHearts().then(ch => { if (ch && screen === 'ranking') renderRanking(); }); }
   }
 
   // result of last week, shown once on the home screen
@@ -1342,10 +1405,11 @@
     const medalOf = r => r <= 3 ? ['🥇', '🥈', '🥉'][r - 1] : '#' + r;
     openModal(`<h2>${mode === 'week' ? 'Je klimt in de weekstrijd! 📅' : 'Je klimt op de ranglijst! 🏆'}</h2>
       <div class="climb" style="height:${(rows.length + 1) * RH}px">
-        ${rows.map((e, k) => `<div class="rrow crow" data-k="${k}" style="transform:translateY(${k * RH}px)">${rowHTML(e, rankOf(k, false))}</div>`).join('')}
-        <div class="rrow me crow" id="meRow" style="transform:translateY(${startIdx * RH}px)">${rowHTML(myEntry(oldPts, mode), oldRank)}</div>
+        ${rows.map((e, k) => `<div class="rrow crow${isFam(e) ? ' fam' : ''}" data-k="${k}" style="transform:translateY(${k * RH}px)">${rowHTML(e, rankOf(k, false), false, mode)}</div>`).join('')}
+        <div class="rrow me crow" id="meRow" style="transform:translateY(${startIdx * RH}px)">${rowHTML(myEntry(oldPts, mode), oldRank, false, mode)}</div>
       </div>
       <div class="climb-msg" id="climbMsg">&nbsp;</div>
+      <div id="climbFam"></div>
       <button class="big-btn play" id="clOk"><span class="bb-text"><b>Verder</b></span></button>`, false);
     let stopped = false;   // tapping "Verder" early stops the animation cleanly
     $('#clOk').onclick = () => { stopped = true; closeModal(); then(); };
@@ -1366,7 +1430,7 @@
       const rank = oldRank - (passed.length - show.length) - k;
       me.querySelector('.rk').textContent = medalOf(rank);
       const pts = Math.round(oldPts + (newPts - oldPts) * k / steps);
-      me.querySelector('.rp').textContent = pts.toLocaleString('nl-NL');
+      me.querySelector('.rp').textContent = mode === 'week' ? pts.toLocaleString('nl-NL') : `level ${pts}`;
       Sound.pass(k); buzz(15);
       const r = me.getBoundingClientRect(); FX.burst(r.left + r.width * 0.15, r.top + r.height / 2, 10);
       setTimeout(step, stepTime);
@@ -1374,15 +1438,17 @@
     function finish() {
       if (stopped || !$('#climbMsg')) return;
       me.style.transform = `translateY(${pos * RH}px)`;
-      me.querySelector('.rp').textContent = newPts.toLocaleString('nl-NL');
+      me.querySelector('.rp').textContent = mode === 'week' ? newPts.toLocaleString('nl-NL') : `level ${newPts}`;
       me.querySelector('.rk').textContent = medalOf(newRank);
       me.classList.add('glow');
       Sound.rankUp(); FX.confetti(); buzz([30, 50, 30, 50, 60]);
       const n = passed.length;
       const who = n === 1 ? `Je bent <b>${passed[0].name}</b> voorbij! 🎉` : `Je bent <b>${n} spelers</b> voorbij! 🎉`;
-      const nxt = above ? `<br><small>Nog ${(above.points - newPts + 1).toLocaleString('nl-NL')} punten tot ${above.avatar} ${above.name}</small>` : `<br><small>Je staat bovenaan! 👑</small>`;
+      const gap = mode === 'week' ? `${(above ? above.points - newPts + 1 : 0).toLocaleString('nl-NL')} punten` : (above ? `${above.level - newPts + 1} ${above.level - newPts + 1 === 1 ? 'level' : 'levels'}` : '');
+      const nxt = above ? `<br><small>Nog ${gap} tot ${above.avatar} ${above.name}</small>` : `<br><small>Je staat bovenaan! 👑</small>`;
       const wk = mode === 'week' ? `<br><small>⏳ De week eindigt ${weekLeftText()}</small>` : '';
       $('#climbMsg').innerHTML = `<span class="climb-up">#${oldRank} → #${newRank} ⬆</span><br>${who}${nxt}${wk}`;
+      $('#climbFam').innerHTML = famHTML(mode, after);
     }
     setTimeout(() => { if (!stopped) step(); }, 650);
   }
@@ -1394,7 +1460,7 @@
     const stars = 3 - (G.usedHint ? 1 : 0) - (G.usedShuffle ? 1 : 0);
     G.score += stars * 50;
     const before = totalStars();
-    const ptsBefore = myPoints();
+    const ptsBefore = myPoints(), lvlBefore = S.level;
     ensureWeek();
     const wkBefore = S.wk.pts;
     S.wk.pts += G.score;               // every finished level counts for the weekly challenge
@@ -1424,10 +1490,13 @@
     ensureId();
     // the weekly challenge moves most, so its climb comes first; otherwise the all-time list
     const wkRankBefore = myRank(wkBefore, 'week'), wkRankAfter = myRank(wkAfter, 'week');
-    const rankBefore = myRank(ptsBefore), rankAfter = myRank(ptsAfter);
+    const rankBefore = myRank(lvlBefore, 'all'), rankAfter = myRank(S.level, 'all');
     if (wkRankAfter < wkRankBefore) rewards.push({ type: 'rank', mode: 'week', from: wkBefore, to: wkAfter });
-    else if (rankAfter < rankBefore) rewards.push({ type: 'rank', mode: 'all', from: ptsBefore, to: ptsAfter });
+    else if (rankAfter < rankBefore) rewards.push({ type: 'rank', mode: 'all', from: lvlBefore, to: S.level });
+    // the family is always on the win screen, so you see where everyone stands
+    const famNow = famHTML('week', ranking(wkAfter, 'week'), '👪 Familie deze week');
     pushScore();
+    const heartsP = Promise.race([fetchHearts(), new Promise(r => setTimeout(() => r([]), 2500))]);
     const nextUp = ranking(wkAfter, 'week')[wkRankAfter - 2];
     const chase = nextUp && wkRankAfter >= wkRankBefore ? `<p class="chase">📅 Weekstrijd plek #${wkRankAfter} · nog <b>${(nextUp.points - wkAfter + 1).toLocaleString('nl-NL')}</b> punten tot ${nextUp.avatar} ${nextUp.name}</p>` : '';
     if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
@@ -1446,7 +1515,7 @@
         <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
         <div class="win-stats"><div>Punten<b id="wScore">0</b></div><div>Tijd<b>${mins}:${pad(secs)}</b></div></div>
         <div class="perfect" id="wPerfect">${stars === 3 ? 'PERFECT! ✨' : ''}</div>
-        ${extra}${chase}
+        ${extra}${chase}${famNow}
         <div class="goal" id="wGoal" style="background:#efe2c0;color:#5c4520;margin:12px 0 4px"></div>
         <button class="big-btn play pulse" id="wNext"><span class="bb-text"><b>${nextLbl}</b></span></button>
         <button class="link-btn" id="wMenu">Menu</button>`, false);
@@ -1466,7 +1535,7 @@
           if (dest === 'next') { if (G.mode === 'daily') show('daily'); else startLevel(G.level + 1); }
           else show('home');
         };
-        runRewards(rewards, finish);
+        heartsP.then(fresh => { if (fresh && fresh.length) rewards.unshift({ type: 'hearts', list: fresh }); runRewards(rewards, finish); });
       };
       $('#wNext').onclick = () => go('next');
       $('#wMenu').onclick = () => go('menu');
@@ -1477,7 +1546,8 @@
     const r = queue.shift();
     if (!r) return then();
     const next = () => runRewards(queue, then);
-    if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next, r.mode)); else showClimb(r.from, r.to, next, r.mode); }
+    if (r.type === 'hearts') showHearts(r.list, next);
+    else if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next, r.mode)); else showClimb(r.from, r.to, next, r.mode); }
     else if (r.type === 'sun') showSunflowerUnlock(next);
     else if (r.type === 'tools') showToolsUnlock(next);
     else if (r.type === 'trophies') showTrophies(r.list, next);
@@ -1596,7 +1666,9 @@
   applyTheme();
   applyBg();
   ensureId();
-  fetchOnline().then(ok => { if (ok && screen === 'home') renderHome(); checkHearts(); });
+  fetchOnline().then(ok => { if (ok && screen === 'home') renderHome(); checkHearts(); checkSentHearts(); });
+  // a heart can arrive any moment: look again every minute and a half while the home screen is open
+  setInterval(() => { if (!document.hidden && screen === 'home' && $('#modal').classList.contains('hidden')) { checkHearts(); checkSentHearts(); } }, 90000);
   document.body.classList.toggle('nonum', !S.nums);
   document.body.classList.toggle('contrast', !!S.contrast);
   show('home');

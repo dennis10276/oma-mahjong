@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0b4d3c">
 <title>Oma's Mahjong</title>
-<link rel="stylesheet" href="style.css?v=1.5" id="css">
+<link rel="stylesheet" href="style.css?v=1.6" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -109,6 +109,7 @@
   <!-- THEMES -->
   <section id="ranking" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2>Ranglijst</h2><div class="chip" id="rkMine">🏆 #1</div></div>
+    <div id="famBox" class="fam-fixed"></div>
     <div class="scroll">
       <button class="name-chip" id="rankName">😊 Naam kiezen ✏️</button>
       <div class="rk-tabs"><button id="rkWeek" class="on">📅 Deze week</button><button id="rkAll">🏆 Altijd</button></div>
@@ -145,7 +146,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.5', KEY = 'omamj.code', FILES = ['tiles.js?v=1.5', 'audio.js?v=1.5', 'layouts.js?v=1.5', 'game.js?v=1.5'];
+  var BUILT = '1.6', KEY = 'omamj.code', FILES = ['tiles.js?v=1.6', 'audio.js?v=1.6', 'layouts.js?v=1.6', 'game.js?v=1.6'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;
