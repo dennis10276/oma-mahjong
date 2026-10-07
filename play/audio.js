@@ -213,7 +213,7 @@ const Sound = (() => {
       if (pos === 0) tone(PENTA[bar[0]] / 2, t, 0.9, 0.05, 'triangle', music, 0.01);
       else { tone(PENTA[bar[1]], t, 0.25, 0.022, 'triangle', music); tone(PENTA[bar[2]], t, 0.25, 0.018, 'triangle', music); }
       const n = tune[beat % tune.length];
-      if (Math.random() < 0.8) marimba(PENTA[Math.min(n, 13)], t, 0.04, music);
+      if (Math.random() < 0.8) tone(PENTA[Math.min(n, 13)], t, 0.45, 0.045, 'sine', music);
       if (beat % 24 === 17 && Math.random() < 0.7) chirp(t + 0.1, 0.018, music);
       beat++;
     }, 330);

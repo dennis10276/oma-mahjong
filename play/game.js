@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.9.1';
+  const APP_VERSION = '0.9.2';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -142,6 +142,15 @@
       }
       go();
     }
+    const sprites = {};
+    function sprite(ch) {
+      if (sprites[ch]) return sprites[ch];
+      const S2 = 64, c2 = document.createElement('canvas'); c2.width = c2.height = S2;
+      const x2 = c2.getContext('2d');
+      x2.font = (S2 * 0.8) + "px 'Noto Color Emoji','Apple Color Emoji','Segoe UI Emoji',sans-serif";
+      x2.textAlign = 'center'; x2.textBaseline = 'middle'; x2.fillText(ch, S2 / 2, S2 / 2 + 3);
+      return (sprites[ch] = c2);
+    }
     function emoji(x, y, list, n = 9) {
       for (let i = 0; i < n; i++) {
         const a = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4, sp = 3 + Math.random() * 5;
@@ -150,7 +159,7 @@
       go();
     }
     function sunRain() {
-      for (let i = 0; i < 46; i++) parts.push({ x: Math.random() * innerWidth, y: -40 - Math.random() * innerHeight * 0.8, vx: (Math.random() - .5) * 1.5, vy: 2 + Math.random() * 2.5, g: 0.02, life: 0, max: 260, size: 26 + Math.random() * 22, kind: 'emo', ch: ['🌻', '🌼', '🐝', '🌻'][i % 4], rot: Math.random(), vr: (Math.random() - .5) * .06, sway: Math.random() * 6 });
+      for (let i = 0; i < 34; i++) parts.push({ x: Math.random() * innerWidth, y: -40 - Math.random() * innerHeight * 0.8, vx: (Math.random() - .5) * 1.5, vy: 2 + Math.random() * 2.5, g: 0.02, life: 0, max: 260, size: 26 + Math.random() * 22, kind: 'emo', ch: ['🌻', '🌼', '🐝', '🌻'][i % 4], rot: Math.random(), vr: (Math.random() - .5) * .06, sway: Math.random() * 6 });
       go();
     }
     function go() { if (!running) { running = true; requestAnimationFrame(loop); } }
@@ -170,7 +179,7 @@
         g.globalAlpha = Math.max(0, a); g.fillStyle = p.col;
         if (p.kind === 'spark') spark(p.x, p.y, p.size);
         else if (p.kind === 'dot') { g.beginPath(); g.arc(p.x, p.y, p.size * 0.45, 0, 7); g.fill(); }
-        else if (p.kind === 'emo') { g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.font = p.size + "px 'Noto Color Emoji','Apple Color Emoji','Segoe UI Emoji',sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(p.ch, 0, 0); g.restore(); }
+        else if (p.kind === 'emo') { g.setTransform(dpr * Math.cos(p.rot), dpr * Math.sin(p.rot), -dpr * Math.sin(p.rot), dpr * Math.cos(p.rot), p.x * dpr, p.y * dpr); g.drawImage(sprite(p.ch), -p.size / 2, -p.size / 2, p.size, p.size); g.setTransform(dpr, 0, 0, dpr, 0, 0); }
         else { g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2 * (0.4 + Math.abs(Math.sin(p.life / 6)))); g.restore(); }
       }
       g.globalAlpha = 1;
@@ -701,7 +710,7 @@
     if (G.combo > (S.bestCombo || 0)) S.bestCombo = G.combo;
     const sunny = S.theme === 'sunflower';
     FX.burst(c.x, c.y - 10, sunny ? 12 : G.combo >= 3 ? 30 : 20, G.combo >= 3);
-    if (sunny) { FX.emoji(c.x, c.y - 10, G.combo >= 3 ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], G.combo >= 3 ? 11 : 7); if (G.combo >= 3 && G.combo % 2 === 1) bee(); }
+    if (sunny) { FX.emoji(c.x, c.y - 10, G.combo >= 3 ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], G.combo >= 3 ? 8 : 5); if (G.combo >= 3 && G.combo % 2 === 1) bee(); }
     if (G.combo > 0 && G.combo % 5 === 0) {
       setTimeout(() => { Sound.supercombo(); flash(); praise('Supercombo! 🌈'); FX.burst(innerWidth / 2, innerHeight / 2.4, 46, true); if (sunny) bee(); buzz([20, 40, 20, 40, 40]); }, 120);
     }
