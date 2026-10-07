@@ -2,7 +2,37 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.4';
+  const APP_VERSION = '1.5';
+  /* Updates come from the website: newer game files are downloaded in the background,
+     kept on the phone, and used from the next start (or right away on the home screen). */
+  const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
+  const CODE_KEY = 'omamj.code';
+  const verNewer = (a, b) => { a = String(a).split('.'); b = String(b).split('.'); for (let i = 0; i < Math.max(a.length, b.length); i++) { const x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; };
+  let updateReady = false, lastUpdateCheck = 0;
+  async function checkUpdate() {
+    if (location.protocol !== 'file:' || updateReady) return;        // only inside the app
+    if (Date.now() - lastUpdateCheck < 10 * 60 * 1000) return;          // at most every 10 minutes
+    lastUpdateCheck = Date.now();
+    try {
+      const r = await fetch(UPDATE_URL + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) return;
+      const b = await r.json();
+      if (!b || !b.v || !Array.isArray(b.js) || !b.body || !b.css) return;
+      if (!verNewer(b.v, window.__mjCode || APP_VERSION)) return;
+      if (localStorage.getItem('omamj.badv') === b.v) return;   // this one did not start before: skip it
+      localStorage.setItem(CODE_KEY, JSON.stringify({ v: b.v, css: b.css, body: b.body, js: b.js, fail: 0 }));
+      updateReady = true;
+      applyUpdate();
+    } catch (e) { }
+  }
+  // switch to the new version, but never in the middle of a level or a pop-up
+  function applyUpdate() {
+    if (!updateReady || screen !== 'home' || !$('#modal').classList.contains('hidden')) return false;
+    updateReady = false;
+    toast('✨ Nieuwe versie! Even geduld…', 1500);
+    setTimeout(() => location.reload(), 1300);
+    return true;
+  }
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -209,6 +239,7 @@
   }
 
   function renderHome() {
+    if (applyUpdate()) return;
     const h = new Date().getHours();
     const greet = h < 6 ? 'Goedenacht, oma! 🌙' : h < 12 ? 'Goedemorgen, oma! ☀️' : h < 18 ? 'Goedemiddag, oma! 🌼' : 'Goedenavond, oma! 🌙';
     $('#greet').textContent = greet;
@@ -1550,7 +1581,7 @@
   addEventListener('resize', () => { if (screen === 'game') layoutBoard(); });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { Sound.suspend(); if (screen === 'game') pauseClock(); }
-    else { Sound.resume(); resumeClock(); if (screen === 'home') { renderHome(); checkHearts(); } }
+    else { Sound.resume(); resumeClock(); if (screen === 'home') { if (applyUpdate()) return; renderHome(); checkHearts(); } checkUpdate(); }
   });
 
   // Android back button (called from the native wrapper). Return true when handled.
@@ -1571,5 +1602,9 @@
   show('home');
   // test hook
   window.__mjReady = true;
+  // ---------- self-update (see the boot script in index.html) ----------
+  // this version started fine: forget earlier failed starts
+  try { const c = JSON.parse(localStorage.getItem(CODE_KEY) || 'null'); if (c && c.v === window.__mjCode && c.fail) { c.fail = 0; localStorage.setItem(CODE_KEY, JSON.stringify(c)); } } catch (e) { }
+  setTimeout(checkUpdate, 4000);
   window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb, ensureTasks, taskProgress, openChest, openTasks, weekInfo, checkLastWeek, fetchHearts, maybeLucky, renderHome, sendHeart, pushScore };
 })();

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0b4d3c">
 <title>Oma's Mahjong</title>
-<link rel="stylesheet" href="style.css?v=1.4">
+<link rel="stylesheet" href="style.css?v=1.5" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -140,9 +140,34 @@
 <div id="toast"></div>
 <div id="modal" class="hidden"><div class="modal-box" id="modalBox"></div></div>
 
-<script src="tiles.js?v=1.4"></script>
-<script src="audio.js?v=1.4"></script>
-<script src="layouts.js?v=1.4"></script>
-<script src="game.js?v=1.4"></script>
+<script id="boot">
+/* Self-update: the app downloads newer game files from the website (game.js checkUpdate)
+   and keeps them on the phone. On start we use that downloaded version when it is newer
+   than the one built into the app; if it does not start properly, we fall back at once. */
+(function () {
+  var BUILT = '1.5', KEY = 'omamj.code', FILES = ['tiles.js?v=1.5', 'audio.js?v=1.5', 'layouts.js?v=1.5', 'game.js?v=1.5'];
+  function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
+  function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
+  var c = null;
+  try { if (location.protocol === 'file:') c = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { c = null; }
+  if (c && (c.fail || 0) >= 2) { try { localStorage.setItem('omamj.badv', c.v); localStorage.removeItem(KEY); } catch (e) { } c = null; }
+  if (!c || !c.v || !newer(c.v, BUILT) || !c.js) {
+    if (c && !newer(c.v, BUILT)) { try { localStorage.removeItem(KEY); } catch (e) { } }   // the app itself is newer now
+    window.__mjCode = BUILT; builtIn(); return;
+  }
+  try {
+    c.fail = (c.fail || 0) + 1; localStorage.setItem(KEY, JSON.stringify(c));
+    window.__mjCode = c.v;
+    var st = document.createElement('style'); st.textContent = c.css;
+    var link = document.getElementById('css'); link.parentNode.replaceChild(st, link);
+    var boot = document.getElementById('boot');
+    document.body.innerHTML = c.body;
+    document.body.appendChild(boot);
+    c.js.forEach(function (code) { var s = document.createElement('script'); s.text = code; document.body.appendChild(s); });
+  } catch (e) { }
+  // safety net: if the downloaded version does not start, throw it away and use the built-in one
+  setTimeout(function () { if (!window.__mjReady) { try { localStorage.setItem('omamj.badv', c.v); localStorage.removeItem(KEY); } catch (e) { } location.reload(); } }, 5000);
+})();
+</script>
 </body>
 </html>
