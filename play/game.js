@@ -14,9 +14,12 @@
     { id: 'night', name: 'Sterrennacht', need: 130, css: 'radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent), radial-gradient(1.5px 1.5px at 70% 15%, #fff, transparent), radial-gradient(2px 2px at 85% 60%, #fff, transparent), radial-gradient(1.5px 1.5px at 35% 75%, #fff, transparent), radial-gradient(1px 1px at 55% 45%, #fff, transparent), radial-gradient(circle at 50% 0%, #3d4fa8 0%, #1d2260 55%, #0c0f30 100%)' },
     { id: 'gold', name: 'Goud', need: 180, css: 'linear-gradient(160deg, #fff1a8 0%, #f5c043 45%, #b87a0a 100%)' },
     { id: 'rainbow', name: 'Regenboog', need: 250, css: 'linear-gradient(165deg, #ff9a9e 0%, #fad0c4 20%, #fbc2eb 40%, #a6c1ee 60%, #84fab0 80%, #8fd3f4 100%)' },
+    // comes with the Zonnebloem prize theme
+    { id: 'sunfield', name: 'Zonnebloemveld', sun: true, css: 'radial-gradient(circle at 84% 9%, #fffbe0 0 5%, #ffe979 6% 9%, rgba(255,233,121,.35) 10% 16%, transparent 17%), linear-gradient(180deg, #74c3f2 0%, #b9e3fb 36%, #fff3b8 60%, #f7cd4f 78%, #d99320 100%)' },
   ];
+  const numBgs = BGS.filter(b => typeof b.need === 'number');
 
-  const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0, nums: true });
+  const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0, nums: true, trophies: {}, bestCombo: 0, sunSeen: false });
   let S;
   try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
@@ -60,7 +63,55 @@
     f.style.left = x + 'px'; f.style.top = y + 'px';
     document.body.appendChild(f); setTimeout(() => f.remove(), 950);
   }
-  function applyBg() { const b = BGS.find(b => b.id === S.bg) || BGS[0]; $('#bg').style.background = b.css; }
+  const sunUnlocked = () => S.level > 20;
+  const bgLocked = b => b.sun ? !sunUnlocked() : totalStars() < b.need;
+  function applyBg() {
+    let b = BGS.find(b => b.id === S.bg) || BGS[0];
+    if (bgLocked(b)) b = BGS[0];
+    $('#bg').style.background = b.css;
+    $('#bg').className = b.id === 'sunfield' ? 'sunfield' : '';
+  }
+  function applyTheme() {
+    if (S.theme === 'sunflower' && !sunUnlocked()) S.theme = 'classic';
+    const sunny = S.theme === 'sunflower';
+    document.body.classList.toggle('sunny', sunny);
+    Sound.setMood(sunny ? 'sunny' : 'calm');
+  }
+  function flash() { const f = $('#flash'); f.classList.remove('on'); void f.offsetWidth; f.classList.add('on'); }
+  function bee() {
+    const b = document.createElement('div'); b.className = 'bee'; b.textContent = '🐝';
+    b.style.top = (18 + Math.random() * 45) + '%';
+    document.body.appendChild(b); setTimeout(() => b.remove(), 2700);
+  }
+
+  // ---------- trophies ----------
+  const threeStars = () => Object.values(S.stars).filter(v => v >= 3).length;
+  const dailyCount = () => Object.keys(S.daily).length;
+  const TROPHIES = [
+    { id: 'l1', ico: '🎉', name: 'Eerste level', desc: 'Speel level 1 uit', prog: () => [S.level - 1, 1] },
+    { id: 'l5', ico: '🥉', name: 'Op weg', desc: 'Speel 5 levels uit', prog: () => [S.level - 1, 5] },
+    { id: 'l10', ico: '🥈', name: 'Doorzetter', desc: 'Speel 10 levels uit', prog: () => [S.level - 1, 10] },
+    { id: 'l20', ico: '🌻', name: 'Zonnebloem', desc: 'Speel 20 levels uit', prog: () => [S.level - 1, 20] },
+    { id: 'l30', ico: '🥇', name: 'Kampioen', desc: 'Speel 30 levels uit', prog: () => [S.level - 1, 30] },
+    { id: 'l50', ico: '👑', name: 'Mahjong-koningin', desc: 'Speel 50 levels uit', prog: () => [S.level - 1, 50] },
+    { id: 'p5', ico: '⭐', name: 'Perfect', desc: '5 levels met 3 sterren', prog: () => [threeStars(), 5] },
+    { id: 'p20', ico: '🌟', name: 'Sterrenregen', desc: '20 levels met 3 sterren', prog: () => [threeStars(), 20] },
+    { id: 's50', ico: '💫', name: 'Sterrenverzamelaar', desc: 'Verdien 50 sterren', prog: () => [totalStars(), 50] },
+    { id: 'd1', ico: '📅', name: 'Dagpuzzelaar', desc: 'Speel je eerste dagpuzzel', prog: () => [dailyCount(), 1] },
+    { id: 'd10', ico: '🗓️', name: 'Trouwe puzzelaar', desc: 'Speel 10 dagpuzzels', prog: () => [dailyCount(), 10] },
+    { id: 'r3', ico: '🔥', name: 'Op dreef', desc: '3 dagen op rij gepuzzeld', prog: () => [S.bestStreak, 3] },
+    { id: 'r7', ico: '🏆', name: 'Hele week!', desc: '7 dagen op rij gepuzzeld', prog: () => [S.bestStreak, 7] },
+    { id: 'm100', ico: '🀄', name: '100 paren', desc: 'Maak 100 paren', prog: () => [S.matches, 100] },
+    { id: 'm500', ico: '💎', name: '500 paren', desc: 'Maak 500 paren', prog: () => [S.matches, 500] },
+    { id: 'c5', ico: '🌈', name: 'Supercombo', desc: 'Maak 5 paren vlak na elkaar', prog: () => [S.bestCombo, 5] },
+  ];
+  function newTrophies() {
+    const out = [];
+    for (const t of TROPHIES) { const [v, n] = t.prog(); if (v >= n && !S.trophies[t.id]) { S.trophies[t.id] = todayKey(); out.push(t); } }
+    if (out.length) save();
+    return out;
+  }
+  const trophyCount = () => TROPHIES.filter(t => S.trophies[t.id]).length;
 
   // ---------- particles ----------
   const FX = (() => {
@@ -82,6 +133,17 @@
       }
       go();
     }
+    function emoji(x, y, list, n = 9) {
+      for (let i = 0; i < n; i++) {
+        const a = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4, sp = 3 + Math.random() * 5;
+        parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, g: 0.16, life: 0, max: 55 + Math.random() * 25, size: 20 + Math.random() * 16, kind: 'emo', ch: list[i % list.length], rot: (Math.random() - .5), vr: (Math.random() - .5) * .12 });
+      }
+      go();
+    }
+    function sunRain() {
+      for (let i = 0; i < 46; i++) parts.push({ x: Math.random() * innerWidth, y: -40 - Math.random() * innerHeight * 0.8, vx: (Math.random() - .5) * 1.5, vy: 2 + Math.random() * 2.5, g: 0.02, life: 0, max: 260, size: 26 + Math.random() * 22, kind: 'emo', ch: ['🌻', '🌼', '🐝', '🌻'][i % 4], rot: Math.random(), vr: (Math.random() - .5) * .06, sway: Math.random() * 6 });
+      go();
+    }
     function go() { if (!running) { running = true; requestAnimationFrame(loop); } }
     function spark(x, y, r) {
       g.beginPath();
@@ -93,19 +155,20 @@
       g.clearRect(0, 0, innerWidth, innerHeight);
       parts = parts.filter(p => p.life < p.max);
       for (const p of parts) {
-        p.life++; p.vy += p.g; p.x += p.vx + (p.kind === 'paper' ? Math.sin((p.life + p.sway * 10) / 12) * 1.2 : 0); p.y += p.vy; p.rot += p.vr;
-        if (p.kind !== 'paper') { p.vx *= 0.96; p.vy *= 0.96; }
+        p.life++; p.vy += p.g; p.x += p.vx + (p.sway !== undefined ? Math.sin((p.life + p.sway * 10) / 12) * 1.2 : 0); p.y += p.vy; p.rot += p.vr;
+        if (p.kind !== 'paper' && p.sway === undefined) { p.vx *= 0.97; p.vy *= 0.97; }
         const a = 1 - Math.max(0, (p.life - p.max * 0.6) / (p.max * 0.4));
         g.globalAlpha = Math.max(0, a); g.fillStyle = p.col;
         if (p.kind === 'spark') spark(p.x, p.y, p.size);
         else if (p.kind === 'dot') { g.beginPath(); g.arc(p.x, p.y, p.size * 0.45, 0, 7); g.fill(); }
+        else if (p.kind === 'emo') { g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.font = p.size + "px 'Noto Color Emoji','Apple Color Emoji','Segoe UI Emoji',sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(p.ch, 0, 0); g.restore(); }
         else { g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2 * (0.4 + Math.abs(Math.sin(p.life / 6)))); g.restore(); }
       }
       g.globalAlpha = 1;
       if (parts.length) requestAnimationFrame(loop); else { running = false; g.clearRect(0, 0, innerWidth, innerHeight); }
     }
     function clear() { parts = []; }
-    return { burst, confetti, clear };
+    return { burst, confetti, clear, emoji, sunRain };
   })();
 
   // ---------- screens ----------
@@ -118,6 +181,7 @@
     if (id === 'levels') renderLevels();
     if (id === 'daily') renderDaily();
     if (id === 'themes') renderThemes();
+    if (id === 'trophies') renderTrophies();
   }
 
   function renderHome() {
@@ -133,15 +197,25 @@
     $('#btnDaily').classList.toggle('pulse', !doneToday);
     $('#streakBadge').textContent = '🔥 ' + streak();
     const lt = document.querySelectorAll('.logo-tiles .lt');
-    const faces = S.theme === 'classic' ? [31, 34, 32] : [0, 4, 8];
+    const faces = S.theme === 'classic' ? [31, 34, 32] : S.theme === 'sunflower' ? [1, 0, 2] : [0, 4, 8];
     lt.forEach((el, i) => el.innerHTML = Tiles.faceHTML(S.theme === 'classic' ? 'classic' : S.theme, faces[i]).replace('class="emo"', 'class="emo" style="font-size:46px;display:grid;place-items:center;height:100%"'));
     renderGoal($('#nextUnlock'));
+    $('#trophyCount').textContent = `${trophyCount()}/${TROPHIES.length}`;
+    if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (screen === 'home' && $('#modal').classList.contains('hidden')) showSunflowerUnlock(() => renderHome()); }, 500);
   }
   function renderGoal(el) {
+    if (!sunUnlocked()) {
+      // the big prize comes first
+      const done = Math.min(20, S.level - 1), left = 20 - done;
+      el.classList.add('sun');
+      el.innerHTML = `<span class="g-ico">🌻</span><div>Nog <b>${left} ${left === 1 ? 'level' : 'levels'}</b> tot de hoofdprijs: het <b>Zonnebloem-thema</b>!<div class="bar"><i style="width:${Math.round(done / 20 * 100)}%"></i></div></div>`;
+      return;
+    }
+    el.classList.remove('sun');
     const ts = totalStars();
-    const next = BGS.find(b => b.need > ts);
+    const next = numBgs.find(b => b.need > ts);
     if (!next) { el.innerHTML = 'Alle achtergronden vrijgespeeld! 🏆'; return; }
-    const prev = [...BGS].reverse().find(b => b.need <= ts);
+    const prev = [...numBgs].reverse().find(b => b.need <= ts);
     const pct = Math.round((ts - prev.need) / (next.need - prev.need) * 100);
     el.innerHTML = `Nog <b>${next.need - ts} ⭐</b> tot achtergrond “${next.name}”<div class="bar"><i style="width:${pct}%"></i></div>`;
   }
@@ -156,6 +230,7 @@
       const st = S.stars[i] || 0;
       b.className = 'lv' + (i === S.level ? ' current' : '') + (i > S.level ? ' locked' : '');
       b.innerHTML = i > S.level ? `🔒<small style="color:rgba(255,255,255,.6)">${i}</small>` : `${i}<small>${i === S.level && !st ? '▶' : starsStr(st)}</small>`;
+      if (i === 20) { b.classList.add('prize'); b.insertAdjacentHTML('beforeend', '<span class="prize-ico">🌻</span>'); }
       if (i <= S.level) b.onclick = () => startLevel(i);
       grid.appendChild(b);
     }
@@ -202,29 +277,50 @@
 
   function renderThemes() {
     $('#thStars').textContent = '⭐ ' + totalStars();
+    const un = sunUnlocked(), sc = $('#sunCard');
+    const pct = Math.round(Math.min(20, S.level - 1) / 20 * 100);
+    sc.innerHTML = `<button class="suncard${un ? '' : ' locked'}${S.theme === 'sunflower' ? ' on' : ''}">
+      <span class="sun-ico">🌻</span>
+      <span class="sun-txt"><b>Zonnebloem</b><small>${un ? (S.theme === 'sunflower' ? 'In gebruik ✨' : 'Tik om te gebruiken') : `De hoofdprijs! Speel level 20 uit`}</small>
+      ${un ? '<small>Zonnige stenen, zomermuziek met vogeltjes en bloemen-effecten</small>' : `<span class="bar"><i style="width:${pct}%"></i></span><small>${Math.min(20, S.level - 1)} van de 20 levels uitgespeeld</small>`}</span>
+      <span class="sun-pv">${[0, 1, 2].map(k => `<span class="mini">${Tiles.faceHTML('sunflower', k)}</span>`).join('')}</span></button>`;
+    sc.firstElementChild.onclick = () => {
+      if (!un) { toast(`Speel nog ${21 - S.level} levels uit om de Zonnebloem te winnen 🌻`); Sound.blocked(); return; }
+      S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); renderThemes(); Sound.sunflower(); FX.emoji(innerWidth / 2, innerHeight / 3, ['🌻', '🌼', '🐝'], 12);
+    };
     const tl = $('#tileThemes'); tl.innerHTML = '';
     for (const [id, t] of Object.entries(Tiles.THEMES)) {
+      if (t.prize) continue;
       const b = document.createElement('button');
       b.className = 'th' + (S.theme === id ? ' on' : '');
       const sample = id === 'classic' ? [0, 31, 22] : [0, 5, 13];
       b.innerHTML = `<div class="pv">${sample.map(k => `<div class="mini">${Tiles.faceHTML(id, k)}</div>`).join('')}</div>${t.name}`;
-      b.onclick = () => { S.theme = id; save(); renderThemes(); Sound.select(); };
+      b.onclick = () => { S.theme = id; save(); applyTheme(); renderThemes(); Sound.select(); };
       tl.appendChild(b);
     }
     const bl = $('#bgThemes'); bl.innerHTML = '';
     const ts = totalStars();
     for (const bg of BGS) {
       const b = document.createElement('button');
-      const locked = ts < bg.need;
+      const locked = bgLocked(bg);
       b.className = 'bgc' + (locked ? ' locked' : '') + (S.bg === bg.id ? ' on' : '');
       b.style.background = bg.css;
-      b.innerHTML = locked ? `<div class="lock">🔒<br>${bg.need} ⭐</div>` : bg.name;
+      b.innerHTML = locked ? `<div class="lock">🔒<br>${bg.sun ? 'level 20' : bg.need + ' ⭐'}</div>` : bg.name;
       b.onclick = () => {
-        if (locked) { toast(`Verdien nog ${bg.need - ts} ⭐ om “${bg.name}” vrij te spelen`); Sound.blocked(); return; }
+        if (locked) { toast(bg.sun ? 'Dit veld hoort bij de Zonnebloem-prijs: speel level 20 uit 🌻' : `Verdien nog ${bg.need - ts} ⭐ om “${bg.name}” vrij te spelen`); Sound.blocked(); return; }
         S.bg = bg.id; save(); applyBg(); renderThemes(); Sound.select();
       };
       bl.appendChild(b);
     }
+  }
+
+  function renderTrophies() {
+    $('#trCount').textContent = `🏅 ${trophyCount()}/${TROPHIES.length}`;
+    $('#trophyGrid').innerHTML = TROPHIES.map(t => {
+      const got = S.trophies[t.id];
+      const [v, n] = t.prog();
+      return `<div class="trophy${got ? ' got' : ''}"><span class="t-ico">${t.ico}</span><b>${t.name}</b><small>${t.desc}</small>${got ? '<em>Gewonnen ✓</em>' : `<span class="bar"><i style="width:${Math.round(Math.min(1, v / n) * 100)}%"></i></span><em>${Math.min(v, n)} / ${n}</em>`}</div>`;
+    }).join('');
   }
 
   // ---------- modal ----------
@@ -375,6 +471,7 @@
       s.width = (tw - 1.5).toFixed(1) + 'px';
       s.height = (th - 1.5).toFixed(1) + 'px';
       s.zIndex = t.z * 10000 + t.y * 100 + t.x;
+      t.r = { l: parseFloat(s.left), t: parseFloat(s.top), w: tw - 1.5, h: th - 1.5, zi: t.z * 10000 + t.y * 100 + t.x };
     }
     // tray slots scale with the screen but stay big
     const slot = $('#tray .slot');
@@ -515,6 +612,7 @@
         renderTray();
         const k = G.tray.indexOf(i), m = $('#tray').children[k].firstElementChild;
         if (m) m.classList.add('land');
+        if (G.tray.length === SLOTS - 1) Sound.warn(); else Sound.land();
       }
       afterLand();
     });
@@ -552,7 +650,13 @@
     const pts = 10 * Math.min(G.combo, 5);
     G.score += pts;
     S.matches++;
-    FX.burst(c.x, c.y - 10, G.combo >= 3 ? 30 : 20, G.combo >= 3);
+    if (G.combo > (S.bestCombo || 0)) S.bestCombo = G.combo;
+    const sunny = S.theme === 'sunflower';
+    FX.burst(c.x, c.y - 10, sunny ? 12 : G.combo >= 3 ? 30 : 20, G.combo >= 3);
+    if (sunny) { FX.emoji(c.x, c.y - 10, G.combo >= 3 ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], G.combo >= 3 ? 11 : 7); if (G.combo >= 3 && G.combo % 2 === 1) bee(); }
+    if (G.combo > 0 && G.combo % 5 === 0) {
+      setTimeout(() => { Sound.supercombo(); flash(); praise('Supercombo! 🌈'); FX.burst(innerWidth / 2, innerHeight / 2.4, 46, true); if (sunny) bee(); buzz([20, 40, 20, 40, 40]); }, 120);
+    }
     floatText(c.x, c.y - 50, '+' + pts);
     Sound.match(G.combo); buzz(G.combo >= 3 ? [15, 40, 25] : 18);
     updateScore();
@@ -560,7 +664,9 @@
     if (G.combo >= 2) { tag.textContent = `Combo x${Math.min(G.combo, 5)} 🔥`; tag.classList.add('on'); }
     clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), 6000);
     const left = aliveCount();
-    if (G.combo >= 3 && G.combo % 2 === 1) praise(PRAISE[Math.min(PRAISE.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]);
+    if (G.combo % 5 === 0) { /* supercombo already celebrates */ }
+    else if (left === 0 && G.tray.length === 0) { praise('Laatste paar! 🎉'); FX.burst(c.x, c.y, 40, true); }
+    else if (G.combo >= 3 && G.combo % 2 === 1) praise(PRAISE[Math.min(PRAISE.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]);
     else if (!G.half && left <= G.tiles.length / 2 && left > 0) { G.half = true; praise('Halverwege! 💪'); }
     else if (left === 4) praise('Bijna klaar!');
   }
@@ -655,9 +761,15 @@
       S.daily[G.date] = Math.max(S.daily[G.date] || 0, stars);
       const s = streak(); if (s > S.bestStreak) S.bestStreak = s;
     }
+    const wasSun = S.sunSeen || false;
     save();
     const after = totalStars();
-    const unlocked = BGS.filter(b => b.need > before && b.need <= after);
+    const unlocked = numBgs.filter(b => b.need > before && b.need <= after);
+    const rewards = [];
+    if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
+    const tr = newTrophies();
+    if (tr.length) rewards.push({ type: 'trophies', list: tr });
+    if (unlocked.length) rewards.push({ type: 'bgs', list: unlocked });
     const mins = Math.floor(G.elapsed / 60), secs = Math.round(G.elapsed % 60);
     Sound.win(); FX.confetti(); buzz([30, 60, 30, 60, 60]);
     const titles = ['Prachtig gedaan!', 'Geweldig, oma!', 'Wat knap!', 'Fantastisch!', 'Heel goed gedaan!'];
@@ -668,6 +780,7 @@
       openModal(`<h2>${title}</h2>
         <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
         <div class="win-stats"><div>Punten<b id="wScore">0</b></div><div>Tijd<b>${mins}:${pad(secs)}</b></div></div>
+        <div class="perfect" id="wPerfect">${stars === 3 ? 'PERFECT! ✨' : ''}</div>
         ${extra}
         <div class="goal" id="wGoal" style="background:#efe2c0;color:#5c4520;margin:12px 0 4px"></div>
         <button class="big-btn play pulse" id="wNext"><span class="bb-text"><b>${nextLbl}</b></span></button>
@@ -677,7 +790,9 @@
       for (let i = 0; i < stars; i++) setTimeout(() => {
         sts[i].classList.add('on'); Sound.star(i); buzz(20);
         const c = centerOf(sts[i]); FX.burst(c.x, c.y, 26, true);
+        if (S.theme === 'sunflower') FX.emoji(c.x, c.y, ['🌻', '✨'], 5);
       }, 450 + i * 420);
+      if (stars === 3) setTimeout(() => { const p = $('#wPerfect'); if (p) { p.classList.add('on'); Sound.perfect(); } }, 450 + 3 * 420 + 150);
       const el = $('#wScore'), target = G.score, t0 = performance.now();
       (function tick() { const p = Math.min(1, (performance.now() - t0) / 1100); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); })();
       const go = (dest) => {
@@ -686,11 +801,39 @@
           if (dest === 'next') { if (G.mode === 'daily') show('daily'); else startLevel(G.level + 1); }
           else show('home');
         };
-        if (unlocked.length) showUnlock(unlocked, finish); else finish();
+        runRewards(rewards, finish);
       };
       $('#wNext').onclick = () => go('next');
       $('#wMenu').onclick = () => go('menu');
     }, 700);
+  }
+
+  function runRewards(queue, then) {
+    const r = queue.shift();
+    if (!r) return then();
+    const next = () => runRewards(queue, then);
+    if (r.type === 'sun') showSunflowerUnlock(next);
+    else if (r.type === 'trophies') showTrophies(r.list, next);
+    else showUnlock(r.list.slice(), next);
+  }
+  function showSunflowerUnlock(then) {
+    S.sunSeen = true; save();
+    Sound.sunflower(); FX.sunRain(); buzz([30, 60, 30, 60, 30, 60, 80]);
+    openModal(`<div class="sun-big">🌻</div><h2>De hoofdprijs is van jou!</h2>
+      <p>Je hebt het <b>Zonnebloem-thema</b> gewonnen: zonnige stenen, een zomers zonnebloemveld, vrolijke muziek met vogeltjes en bloemen die opspringen bij elk paar!</p>
+      <button class="big-btn gold" id="sunUse"><span class="bb-text"><b>🌻 Gebruik het nu</b></span></button>
+      <button class="link-btn" id="sunLater">Later (staat bij Thema's)</button>`, false);
+    $('#sunUse').onclick = () => { S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); closeModal(); FX.emoji(innerWidth / 2, innerHeight / 2, ['🌻', '🌼', '🐝', '✨'], 16); then(); };
+    $('#sunLater').onclick = () => { closeModal(); then(); };
+  }
+  function showTrophies(list, then) {
+    Sound.trophy(); FX.confetti(); buzz([20, 40, 20, 40, 60]);
+    openModal(`<h2>${list.length > 1 ? 'Nieuwe prijzen!' : 'Nieuwe prijs!'} 🏅</h2>
+      <div class="tr-new">${list.map(t => `<div class="trn"><span>${t.ico}</span><div><b>${t.name}</b><small>${t.desc}</small></div></div>`).join('')}</div>
+      <button class="big-btn play" id="trOk"><span class="bb-text"><b>Hoera!</b></span></button>
+      <button class="link-btn" id="trSee">Bekijk de prijzenkast</button>`, false);
+    $('#trOk').onclick = () => { closeModal(); then(); };
+    $('#trSee').onclick = () => { closeModal(); show('trophies'); };
   }
 
   function showUnlock(list, then) {
@@ -706,9 +849,28 @@
   }
 
   // ---------- wiring ----------
-  $('#board').addEventListener('pointerdown', e => {
-    const el = e.target.closest('.tile');
-    if (el) { e.preventDefault(); onTap(+el.dataset.i); }
+  /* Easy tapping: the tile under the finger wins; if that one is stuck (or the finger
+     lands just next to a tile) a free tile within a few pixels is taken instead.
+     Every finger is handled on its own, so two tiles can be tapped at the same time. */
+  function pickTile(cx, cy) {
+    if (!G) return -1;
+    const br = $('#board').getBoundingClientRect();
+    const x = cx - br.left, y = cy - br.top, pad = Math.max(6, (G.tw || 50) * 0.16);
+    let top = -1, topZ = -1, near = -1, nearZ = -1;
+    G.tiles.forEach((t, i) => {
+      if (!G.alive[i] || !t.r) return;
+      const r = t.r;
+      if (x >= r.l && x <= r.l + r.w && y >= r.t && y <= r.t + r.h) { if (r.zi > topZ) { topZ = r.zi; top = i; } }
+      else if (x >= r.l - pad && x <= r.l + r.w + pad && y >= r.t - pad && y <= r.t + r.h + pad && free(i)) { if (r.zi > nearZ) { nearZ = r.zi; near = i; } }
+    });
+    if (top >= 0 && free(top)) return top;
+    if (near >= 0) return near;
+    return top;
+  }
+  $('#boardWrap').addEventListener('pointerdown', e => {
+    if (e.button > 0) return;
+    const i = pickTile(e.clientX, e.clientY);
+    if (i >= 0) { e.preventDefault(); onTap(i); }
   });
   $('#btnHint').onclick = hint;
   $('#btnShuffle').onclick = shuffle;
@@ -726,6 +888,7 @@
   $('#btnDaily').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
   $('#btnLevels').onclick = () => show('levels');
   $('#btnThemes').onclick = () => show('themes');
+  $('#btnTrophies').onclick = () => show('trophies');
   $('#btnSettings').onclick = openSettings;
   $('#btnPlayDaily').onclick = () => startDaily(selDate);
   $('#calPrev').onclick = () => { calM--; if (calM < 0) { calM = 11; calY--; } renderDaily(); };
@@ -748,9 +911,10 @@
   };
 
   Sound.setSfx(S.sfx); Sound.setMusic(S.music);
+  applyTheme();
   applyBg();
   document.body.classList.toggle('nonum', !S.nums);
   show('home');
   // test hook
-  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart };
+  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show };
 })();

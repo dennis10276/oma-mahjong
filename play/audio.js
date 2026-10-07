@@ -1,7 +1,7 @@
 /* All sounds are synthesized with WebAudio: no files, instant, works offline. */
 const Sound = (() => {
   let ctx = null, master, sfx, music, verb, noiseBuf;
-  let sfxOn = true, musicOn = true, musicTimer = null, beat = 0;
+  let sfxOn = true, musicOn = true, musicTimer = null, beat = 0, mood = 'calm';
   // C-major pentatonic, warm "music box" register
   const PENTA = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.5, 1568.0];
 
@@ -55,12 +55,32 @@ const Sound = (() => {
     s.start(t); s.stop(t + dur + 0.02);
   }
   const now = () => ctx ? ctx.currentTime + 0.005 : 0;
+  // wooden marimba: sine + a quick bright partial
+  function marimba(f, t, vol = 0.15, dest = sfx) {
+    tone(f, t, 0.5, vol, 'sine', dest);
+    tone(f * 4, t, 0.06, vol * 0.25, 'sine', dest);
+    tone(f * 2, t, 0.18, vol * 0.2, 'triangle', dest);
+  }
+  // a little bird: two fast upward whistles
+  function chirp(t, vol = 0.05, dest = sfx) {
+    if (!ctx) return;
+    for (let k = 0; k < 2; k++) {
+      const o = ctx.createOscillator(), g = ctx.createGain(), s0 = t + k * 0.09;
+      o.type = 'sine';
+      o.frequency.setValueAtTime(2300 + Math.random() * 300, s0);
+      o.frequency.exponentialRampToValueAtTime(3600 + Math.random() * 500, s0 + 0.06);
+      g.gain.setValueAtTime(0.0001, s0); g.gain.exponentialRampToValueAtTime(vol, s0 + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, s0 + 0.08);
+      o.connect(g); g.connect(dest); o.start(s0); o.stop(s0 + 0.1);
+    }
+  }
   const ok = () => ctx && sfxOn;
 
   return {
     init,
     setSfx(v) { sfxOn = v; },
     setMusic(v) { musicOn = v; if (v) startMusic(); else stopMusic(); },
+    // 'calm' = music box, 'sunny' = the Zonnebloem theme's cheerful waltz with birds
+    setMood(m) { if (m === mood) return; mood = m; beat = 0; if (musicTimer) { stopMusic(); startMusic(); } },
     suspend() { if (ctx && ctx.state === 'running') ctx.suspend(); },
     resume() { if (ctx && ctx.state === 'suspended') ctx.resume(); },
 
@@ -79,12 +99,49 @@ const Sound = (() => {
     // the reward: a bright bell chord that climbs with every combo step
     match(combo = 1) {
       if (!ok()) return; const t = now();
+      if (mood === 'sunny') {
+        const b = Math.min(combo - 1, 6);
+        noise(t, 0.04, 0.4, 2800, 2000, 3);
+        [0, 2, 4].forEach((k, i) => marimba(PENTA[b + k + 2], t + 0.02 + i * 0.06, 0.16));
+        if (combo >= 2) marimba(PENTA[Math.min(b + 7, 13)], t + 0.2, 0.13);
+        chirp(t + 0.12, 0.05);
+        if (combo >= 3) chirp(t + 0.3, 0.05);
+        return;
+      }
       const base = Math.min(combo - 1, 7);
       noise(t, 0.05, 0.45, 2600, 1800, 3);
       bell(PENTA[base + 2], t + 0.02, 0.17);
       bell(PENTA[base + 4], t + 0.09, 0.15);
       if (combo >= 2) bell(PENTA[base + 6], t + 0.16, 0.13);
       if (combo >= 3) for (let i = 0; i < 4; i++) tone(PENTA[9 + (i % 5)] * 1.0, t + 0.22 + i * 0.045, 0.25, 0.05, 'sine');
+    },
+    // a tile settling into its tray slot
+    land() { if (!ok()) return; const t = now(); tone(520, t, 0.07, 0.07, 'sine'); noise(t, 0.03, 0.25, 1200, 800, 4); },
+    // tray has only one slot left: two gentle warning notes
+    warn() { if (!ok()) return; const t = now(); tone(587, t, 0.18, 0.07, 'triangle'); tone(740, t + 0.14, 0.22, 0.07, 'triangle'); },
+    // big moment: 5x combo or the last pair
+    supercombo() {
+      if (!ok()) return; const t = now();
+      for (let i = 0; i < 10; i++) tone(PENTA[3 + i] * (i > 9 ? 1 : 1), t + i * 0.035, 0.35, 0.06, 'sine');
+      bell(PENTA[12], t + 0.38, 0.14, 1.6); bell(PENTA[9], t + 0.38, 0.1, 1.6);
+    },
+    perfect() {
+      if (!ok()) return; const t = now();
+      [7, 9, 10, 12].forEach((n, i) => bell(PENTA[n], t + i * 0.1, 0.13, 1.4));
+      if (mood === 'sunny') chirp(t + 0.5, 0.06);
+    },
+    trophy() {
+      if (!ok()) return; const t = now();
+      [[0, 0], [2, 0.12], [4, 0.24], [7, 0.36]].forEach(([n, d]) => { tone(PENTA[n + 2], t + d, 0.35, 0.09, 'triangle'); bell(PENTA[n + 5], t + d, 0.08, 0.6); });
+      [PENTA[2], PENTA[4], PENTA[7]].forEach(f => tone(f, t + 0.5, 1.6, 0.06, 'triangle'));
+      bell(PENTA[12], t + 0.5, 0.12, 1.8);
+    },
+    sunflower() {
+      if (!ok()) return; const t = now();
+      const mel = [5, 7, 9, 7, 9, 10, 12, 13];
+      mel.forEach((n, i) => marimba(PENTA[n], t + i * 0.13, 0.15));
+      [PENTA[0], PENTA[2], PENTA[4], PENTA[7]].forEach(f => tone(f, t + 1.0, 2.2, 0.06, 'triangle'));
+      chirp(t + 0.4, 0.06); chirp(t + 1.1, 0.06); chirp(t + 1.5, 0.05);
     },
     hint() {
       if (!ok()) return; const t = now();
@@ -117,6 +174,7 @@ const Sound = (() => {
   // gentle generative music-box background
   function startMusic() {
     if (!ctx || musicTimer) return;
+    if (mood === 'sunny') return startSunny();
     const chords = [[0, 2, 4, 7], [4, 5, 7, 9], [3, 5, 7, 10], [1, 3, 6, 8]];
     musicTimer = setInterval(() => {
       if (!ctx || ctx.state !== 'running') return;
@@ -132,6 +190,22 @@ const Sound = (() => {
       }
       beat++;
     }, 420);
+  }
+  // cheerful summer waltz (3/4) with a marimba tune and birds now and then
+  function startSunny() {
+    const bars = [[0, 2, 4], [3, 5, 7], [4, 6, 8], [0, 2, 4], [1, 3, 5], [3, 5, 7], [4, 6, 9], [0, 4, 7]];
+    const tune = [7, 9, 10, 9, 7, 5, 7, 9, 12, 10, 9, 7, 5, 4, 5, 7, 9, 7, 5, 4, 2, 4, 5, 4];
+    musicTimer = setInterval(() => {
+      if (!ctx || ctx.state !== 'running') return;
+      const t = ctx.currentTime + 0.05;
+      const bar = bars[Math.floor(beat / 3) % bars.length], pos = beat % 3;
+      if (pos === 0) tone(PENTA[bar[0]] / 2, t, 0.9, 0.05, 'triangle', music, 0.01);
+      else { tone(PENTA[bar[1]], t, 0.25, 0.022, 'triangle', music); tone(PENTA[bar[2]], t, 0.25, 0.018, 'triangle', music); }
+      const n = tune[beat % tune.length];
+      if (Math.random() < 0.8) marimba(PENTA[Math.min(n, 13)], t, 0.04, music);
+      if (beat % 24 === 17 && Math.random() < 0.7) chirp(t + 0.1, 0.018, music);
+      beat++;
+    }, 330);
   }
   function stopMusic() { clearInterval(musicTimer); musicTimer = null; }
 })();
