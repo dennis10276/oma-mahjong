@@ -4,7 +4,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.13';
+const APP_VERSION = '1.14';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -36,6 +36,11 @@ try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{
 // 1.1: the green Jade background is the standard again (the Zonnebloem field stays if chosen)
 if (!S.bgJade) { if (S.bg !== 'sunfield') S.bg = 'jade'; S.bgJade = true; }
 const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
+/* Grandma gets a little extra help that the rest of the family does not get: a second chance
+   when the tray is full, and easier retries after failing a level twice. She is recognised by
+   her player id, or by a name starting with "Oma" (in case she ever reinstalls the app). */
+const CARE_PIDS = ['pmuy4wmdp17hbws'];
+const careMode = () => CARE_PIDS.includes(S.pid) || /^oma/i.test(S.name || '');
 
 // ---------- dates ----------
 const pad = n => String(n).padStart(2, '0');

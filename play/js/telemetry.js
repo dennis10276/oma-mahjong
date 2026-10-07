@@ -40,5 +40,13 @@ function endLevel(r, extra = {}) {
   if (!G || G.logged) return;
   G.logged = true; syncClock();
   const st = G.st || {};
-  logEvt('end', { ...lvInfo(), r, at: G.attempt || 1, dur: Math.round(G.elapsed), sc: G.score, n: G.tiles.length, left: aliveCount(), h: !!G.usedHint, sh: !!G.usedShuffle, mc: st.mc || 0, tm: st.tm || 0, bt: st.bt || 0, fl: st.fl || 0, tp: st.tp || 0, ...extra });
+  logEvt('end', { ...lvInfo(), r, at: G.attempt || 1, dur: Math.round(G.elapsed), sc: G.score, n: G.tiles.length, left: aliveCount(), h: !!G.usedHint, sh: !!G.usedShuffle, rb: G.rescued ? 1 : undefined, ez: G.ez || undefined, mc: st.mc || 0, tm: st.tm || 0, bt: st.bt || 0, fl: st.fl || 0, tp: st.tp || 0, ...extra });
 }
+/* Errors in the game also go to the dashboard (at most 5 per session), so a problem on
+   someone's phone shows up there instead of going unnoticed. */
+let errCount = 0;
+function logErr(e, where = '') {
+  if (errCount++ >= 5) return;
+  try { logEvt('err', { msg: String((e && e.message) || e), w: where, lv: G ? (G.level || S.level) : S.level, scr: typeof curScreen !== 'undefined' ? curScreen : '' }); } catch (x) { }
+}
+window.addEventListener('error', e => { if (e.error || e.message) logErr(e.error || e.message, (String(e.filename || '').split('/').pop().split('?')[0]) + ':' + (e.lineno || 0)); });

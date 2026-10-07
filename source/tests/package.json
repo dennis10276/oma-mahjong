@@ -1,0 +1,7 @@
+{
+  "name": "oma-mahjong-tests",
+  "private": true,
+  "description": "Tests for Oma's Mahjong (node run.js)",
+  "scripts": { "test": "node run.js", "test:online": "node run.js --online" },
+  "devDependencies": { "playwright": "1.63.0" }
+}

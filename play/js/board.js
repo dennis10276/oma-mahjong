@@ -10,7 +10,7 @@ function saveCur() {
   if (!G || G.done) return;
   syncClock();
   try {
-    localStorage.setItem(CUR, JSON.stringify({ v: 7, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+    localStorage.setItem(CUR, JSON.stringify({ v: 7, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -30,20 +30,27 @@ function begin(o, restart = false) {
   show('game');
   const wrap = $('#boardWrap');
   const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
-  if (!o.spec) { o.spec = o.makeSpec(aspect); o.aspect = aspect; }
+  const cur = restart ? null : loadCur();
+  // grandma: after failing a level twice the same pile comes with more matching pictures
+  const ez = cur && cur.key === o.key ? (cur.ez || 0) : easeFor(o.key);
+  if (!o.spec || (o.ez || 0) !== ez) {
+    if (!o.spec) o.aspect = aspect;
+    o.spec = Layouts.ease(o.makeSpec(o.aspect), ez);
+    o.ez = ez; o.faces = null; o.down = null; o.gold = null; o.specials = false;   // a new deal
+  }
   const spec = o.spec;
   const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
   const nb = Layouts.neighbors(tiles);
   const n = tiles.length;
-  G = { o, ...o, tiles, nb, gold: new Set(), lucky: null, luckyDone: false, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
-  const cur = restart ? null : loadCur();
-  if (cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect) {
+  G = { o, ...o, tiles, nb, gold: new Set(), lucky: null, luckyDone: false, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, rescued: false, ez, elapsed: 0, tStart: 0, done: false, busy: false, half: false };
+  const resumed = !!(cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
+  if (resumed) {
     cur.faces.forEach((f, i) => tiles[i].face = f);
     cur.alive.forEach((a, i) => G.alive[i] = a);
     (cur.down || []).forEach((a, i) => G.down[i] = a);
     G.peek = cur.peek ?? -1;
     G.gold = new Set(cur.gold || []);
-    Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle });
+    Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, rescued: !!cur.rescued });
     G.half = aliveCount() <= n / 2;
   } else {
     if (!o.faces) { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; } // same deal again on "Opnieuw"
@@ -53,19 +60,21 @@ function begin(o, restart = false) {
     (o.down || []).forEach(i => G.down[i] = 1);
     clearCur();
   }
-  $('#gameTitle').textContent = o.title;
-  show('game');
-  renderBoard(!restart);
-  renderTray(); updateTools();
-  updateScore(false); updateProgress();
+  // the clock and the play log come first, so they are right even if drawing the board goes wrong
+  // (in 1.10 a level could be played without them: logged as won in 0 seconds with 0 taps)
   G.tStart = performance.now();
-  // dashboard: how many tries this level took, and what happens in it
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };
   S.att = S.att || {};
-  const resumed = !!(cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
-  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined });
+  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined });
+  $('#gameTitle').textContent = o.title;
+  try {
+    show('game');
+    renderBoard(!restart);
+    renderTray(); updateTools();
+    updateScore(false); updateProgress();
+  } catch (e) { logErr(e, 'begin'); }
   setTimeout(() => praise(restart ? 'Nog een keer! 💪' : o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
   if (!S.seenTray) setTimeout(() => showIntro(), 700);
   else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
@@ -82,7 +91,14 @@ function specialTip() {
   S.seenSp[k] = true; save();
   toast(tips[k], 4200);
 }
-const restart = () => { if (G) { if (!G.done) endLevel('restart'); begin(G.o, true); } };
+const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
+// failed tries per level (cleared when it is won): grandma's retries get easier after two
+function noteFail() { if (!G) return; S.fails = S.fails || {}; S.fails[G.key] = (S.fails[G.key] || 0) + 1; save(); }
+function easeFor(key) {
+  if (!careMode()) return 0;
+  const f = (S.fails || {})[key] || 0;
+  return f >= 4 ? 2 : f >= 2 ? 1 : 0;
+}
 
 const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);
 function decorate(i) {
@@ -410,9 +426,13 @@ function onMatch(c, face, gold) {
 function checkStuck() {
   if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
   G.busy = true; G.overShown = true;
-  bumpStat('losses'); save();
-  endLevel('stuck');
   syncClock();
+  if (careMode() && !G.rescued) { setTimeout(offerRescue, 450); return; }
+  gameOver();
+}
+function gameOver() {
+  bumpStat('losses'); noteFail(); save();
+  endLevel('stuck');
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
     openModal(`<h2>Oei, alle vakjes zijn vol!</h2>
@@ -422,6 +442,40 @@ function checkStuck() {
     $('#sRetry').onclick = () => { closeModal(); restart(); };
     $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 450);
+}
+/* Grandma only: a full tray is not the end yet. Once per level she may put the tiles from the
+   tray back on the board and play on (it costs one star, like hint and shuffle). */
+function offerRescue() {
+  if (!G || G.done) return;
+  Sound.stuck(); buzz([40, 80, 40]);
+  openModal(`<h2>Oei, alle vakjes zijn vol!</h2>
+    <p>Geen nood! Je mag de stenen <b>één keer</b> terugleggen en gewoon verder spelen.</p>
+    <button class="big-btn play" id="rsBack"><span class="bb-text"><b>↩ Stenen terugleggen</b></span></button>
+    <p class="note small">Dit kost één ⭐</p>
+    <button class="link-btn" id="rsRetry">Opnieuw beginnen</button>`, false);
+  $('#rsBack').onclick = rescueTray;
+  $('#rsRetry').onclick = () => { closeModal(); bumpStat('losses'); noteFail(); endLevel('stuck'); restart(); };
+}
+function rescueTray() {
+  if (!G || G.done) return;
+  closeModal();
+  G.rescued = true; G.overShown = false; G.combo = 0;
+  syncClock();
+  logEvt('rescue', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ez: G.ez || undefined });
+  bumpStat('rescues');
+  const back = G.tray.slice(), slots = $('#tray').children, MS = 420;
+  const from = back.map((t, k) => slots[k].getBoundingClientRect());
+  G.tray = [];
+  back.forEach((t, k) => {
+    G.alive[t] = 1;
+    const el = G.tiles[t].el;
+    el.classList.remove('hidden'); el.classList.add('returning');
+    const f = flyTile(G.tiles[t].face, from[k], el.getBoundingClientRect(), MS);
+    setTimeout(() => { f.remove(); el.classList.remove('returning'); }, MS + 40);
+  });
+  renderTray(); updateBlocked(); updateProgress(); saveCur();
+  Sound.shuffle(); buzz([10, 30, 10]);
+  setTimeout(() => { if (G) G.busy = false; toast('De stenen liggen weer op het bord. Zet hem op! 💪', 2600); }, MS);
 }
 
 function hint() {

@@ -5,7 +5,7 @@
 function win() {
   syncClock(); G.tStart = 0;
   clearCur();
-  const stars = 3 - (G.usedHint ? 1 : 0) - (G.usedShuffle ? 1 : 0);
+  const stars = Math.max(1, 3 - (G.usedHint ? 1 : 0) - (G.usedShuffle ? 1 : 0) - (G.rescued ? 1 : 0));
   G.score += stars * 50;
   endLevel('win', { st: stars });
   const before = totalStars();
@@ -17,7 +17,8 @@ function win() {
   // daily tasks + statistics
   if (G.mode === 'level') taskProgress('levels'); else taskProgress('daily');
   if (stars === 3) taskProgress('stars3');
-  if (!G.usedHint && !G.usedShuffle && toolsOpen()) taskProgress('nohelp');
+  if (!G.usedHint && !G.usedShuffle && !G.rescued && toolsOpen()) taskProgress('nohelp');
+  if (S.fails) delete S.fails[G.key];   // won: the next level starts without easier retries
   taskProgress('points', G.score);
   bumpStat('wins'); bumpStat('playSec', Math.round(G.elapsed));
   S.lvlPts = S.lvlPts || {}; S.dayPts = S.dayPts || {};
@@ -57,7 +58,7 @@ function win() {
   Sound.win(); FX.confetti(); buzz([30, 60, 30, 60, 60]);
   const titles = ['Prachtig gedaan!', 'Geweldig, oma!', 'Wat knap!', 'Fantastisch!', 'Heel goed gedaan!'];
   const title = G.mode === 'daily' ? 'Dagpuzzel gehaald! 👑' : titles[Math.floor(Math.random() * titles.length)];
-  const extra = G.mode === 'daily' ? `<p>🔥 ${streak()} ${streak() === 1 ? 'dag' : 'dagen'} op rij!</p>` : stars < 3 ? `<p class="note">Zonder hint en schudden verdien je ⭐⭐⭐</p>` : '';
+  const extra = G.mode === 'daily' ? `<p>🔥 ${streak()} ${streak() === 1 ? 'dag' : 'dagen'} op rij!</p>` : stars < 3 ? `<p class="note">${G.rescued && !G.usedHint && !G.usedShuffle ? 'Zonder terugleggen' : 'Zonder hint en schudden'} verdien je ⭐⭐⭐</p>` : '';
   const nextLbl = G.mode === 'daily' ? 'Naar de kalender' : `Volgende: level ${G.level + 1} ▶`;
   setTimeout(() => {
     openModal(`<h2>${title}</h2>

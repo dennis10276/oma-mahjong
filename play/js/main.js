@@ -106,6 +106,8 @@ if (isIOS && !standalone && location.protocol === 'https:' && !S.iosTip) setTime
 try { const c = JSON.parse(localStorage.getItem(CODE_KEY) || 'null'); if (c && c.v === window.__mjCode && c.fail) { c.fail = 0; localStorage.setItem(CODE_KEY, JSON.stringify(c)); } } catch (e) { }
 setTimeout(checkUpdate, 2500);
 setInterval(checkUpdate, 60 * 1000);          // every minute while the app is open
+// 1.14: failed tries on the current level from before this version count too (easier retries for grandma)
+if (!S.fails) { const k = 'L' + S.level, a = (S.att || {})[k] || 0; S.fails = a > 1 ? { [k]: a - 1 } : {}; save(); }
 // just updated between two levels: continue with the next level
 if (S.afterUpdate) { const a = S.afterUpdate; S.afterUpdate = null; save(); setTimeout(() => { if (a.level) startLevel(a.level); else if (a.show && a.show !== 'home') show(a.show); toast(`✨ Bijgewerkt naar versie ${APP_VERSION}`, 2200); }, 300); }
 // for the automated tests

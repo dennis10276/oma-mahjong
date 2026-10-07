@@ -240,6 +240,7 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
 .tile.shake { animation: shake .3s; }
 @keyframes shake { 20%, 60% { translate: -5px 0; } 40%, 80% { translate: 5px 0; } }
 .tile.hidden { display: none; }
+.tile.returning { visibility: hidden; }   /* put back from the tray: shown when its flying copy lands */
 .tile.flip { animation: flip .45s ease; }
 @keyframes flip { 0% { transform: scale(1); } 45% { transform: scale(.2) rotate(15deg); opacity: .4; } 100% { transform: scale(1); } }
 .tile.enter { animation: enter .5s backwards cubic-bezier(.3,1.5,.6,1); }

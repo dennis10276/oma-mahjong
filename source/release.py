@@ -5,6 +5,7 @@
                                      AND a fresh APK on the download page, so new installs
                                      always get the newest version too
   --no-apk                           skip the APK (only for quick tests)
+  --no-tests                         skip the test suite (tests/run.js), which otherwise must pass first
 
 What it does:
   - sets the version in www/js/core.js (APP_VERSION) and www/index.html (the boot loader)
@@ -25,6 +26,18 @@ def game_files():
     return re.findall(r"'([^'?]+)'", m.group(1))
 
 
+def run_tests():
+    """Every release is checked the same way first: the whole offline test suite must pass."""
+    env = dict(os.environ)
+    nm = os.path.join(ROOT, 'tests', 'node_modules')
+    if os.path.isdir(nm):
+        env['NODE_PATH'] = nm
+    print('running the tests (tests/run.js)...')
+    r = subprocess.run(['node', os.path.join(ROOT, 'tests', 'run.js')], env=env)
+    if r.returncode != 0:
+        sys.exit('tests failed: nothing was released. Fix them, or use --no-tests if you really must.')
+
+
 def sub(path, pattern, repl, count=1):
     s = open(path, encoding='utf-8').read()
     s2, n = re.subn(pattern, repl, s, count=count)
@@ -38,6 +51,8 @@ def main():
     if len(args) != 1 or not re.fullmatch(r'\d+(\.\d+)*', args[0]):
         sys.exit(__doc__)
     v, apk, deploy = args[0], '--no-apk' not in sys.argv, '--deploy' in sys.argv
+    if '--no-tests' not in sys.argv:
+        run_tests()
 
     sub(os.path.join(WWW, 'js', 'core.js'), r"const APP_VERSION = '[^']*'", f"const APP_VERSION = '{v}'")
     FILES = game_files()
@@ -86,6 +101,10 @@ def main():
         shutil.rmtree(os.path.join(REPO, 'dash'), ignore_errors=True)
         shutil.copytree(os.path.join(SITE, 'dash'), os.path.join(REPO, 'dash'))
         shutil.copy(os.path.join(ROOT, 'android', 'AndroidManifest.xml'), os.path.join(REPO, 'source', 'android', 'AndroidManifest.xml'))
+        for f in ['README.md', 'release.py']:
+            shutil.copy(os.path.join(ROOT, f), os.path.join(REPO, 'source', f))
+        shutil.rmtree(os.path.join(REPO, 'source', 'tests'), ignore_errors=True)
+        shutil.copytree(os.path.join(ROOT, 'tests'), os.path.join(REPO, 'source', 'tests'), ignore=shutil.ignore_patterns('node_modules'))
         msg = f'Version {v}' + (' (game update + fresh APK on the download page)' if apk else ' (game update only)')
         subprocess.run(['git', '-C', REPO, 'add', '-A'], check=True)
         subprocess.run(['git', '-C', REPO, 'commit', '-q', '-m', msg + os.environ.get('COMMIT_TRAILER', '')], check=True)

@@ -237,19 +237,6 @@ const Layouts = (() => {
     return { ...res, kinds: kindsFor(res.tiles.length / 2, 10, diff), seed: ymd * 7 + 3, diff };
   }
 
-  /* Easier retry (grandma only, see careMode): the same pile, but a new deal with more
-     matching pictures. ez 1 = every picture 4 times, fewer face-down tiles;
-     ez 2 = every picture about 6 times, no face-down tiles. */
-  function ease(spec, ez) {
-    if (!ez) return spec;
-    const pairs = spec.tiles.length / 2, d = spec.diff;
-    const kinds = ez >= 2 ? Math.max(4, Math.round(pairs / 3)) : Math.max(4, Math.ceil(pairs / 2));
-    const diff = ez >= 2
-      ? { ...d, rare: 0, down: 0, open: 0.15, cap: 2, target: 1 }
-      : { ...d, rare: 0, down: d.down / 2, open: d.open * 0.5, target: Math.max(d.target, 0.95) };
-    return { ...spec, kinds: Math.min(kinds, spec.kinds), diff, seed: spec.seed + ez * 7777 };
-  }
-
   // ---------- rules ----------
   function neighbors(tiles) {
     const n = tiles.length;
@@ -435,6 +422,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, effLevel, rng, makeDeal, botWinRate, forLevel, forDate, ease, neighbors, isFree, deal, pairFacesFor, shuffleArr, solve, difficultyFor, targetFor };
+  return { SLOTS, effLevel, rng, makeDeal, botWinRate, forLevel, forDate, neighbors, isFree, deal, pairFacesFor, shuffleArr, solve, difficultyFor, targetFor };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

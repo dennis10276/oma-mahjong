@@ -75,6 +75,19 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .feed li.day { display: block; font-weight: 800; color: var(--ink-2); padding-top: 12px; border: 0; }
 #tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 600; opacity: 0; transition: opacity .1s; z-index: 10; white-space: nowrap; }
 .empty { color: var(--ink-3); padding: 18px 0; text-align: center; }
+.bar.bad { fill: var(--bad); }
+.bar.warn { fill: var(--warn); }
+.legend i.c-acc { background: var(--accent); } .legend i.c-bad { background: var(--bad); }
+.alert { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; background: var(--surface); border: 2px solid var(--bad); border-radius: 14px; padding: 12px 16px; margin-bottom: 12px; font-size: 15px; }
+.alert .msg { flex: 1 1 320px; }
+.alert .msg small { display: block; color: var(--ink-2); font-size: 13px; margin-top: 2px; }
+.heart-act { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink-2); }
+.btn { font: inherit; font-weight: 700; padding: 7px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); cursor: pointer; }
+.btn.heart { background: #ffd23f; border-color: #e0a800; color: #3a2a00; }
+.btn:disabled { opacity: .55; cursor: default; }
+.hs-state { font-weight: 700; }
+.hs-state.seen { color: var(--good-ink); }
+.wide { margin-bottom: 12px; }
 .warnbox { background: var(--surface-2); border-left: 4px solid var(--warn); padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
 .foot { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
 </style>
@@ -91,24 +104,28 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     </div>
     <span class="live" id="live"><span class="dot"></span><span id="liveTxt">verbinden…</span></span>
     <select id="who" aria-label="Kies speler"></select>
+    <button class="btn" id="notify" hidden>🔔 Meldingen aan</button>
   </div>
+  <div id="heartTop" class="wide"></div>
+  <div id="alerts"></div>
   <div id="notice"></div>
 
   <div class="grid kpis" id="kpis"></div>
 
   <div class="grid two">
     <section class="card"><h2>Speeltijd per dag (minuten)</h2><div id="chTime"></div></section>
-    <section class="card"><h2>Levels gehaald per dag</h2><div id="chWins"></div></section>
+    <section class="card"><h2>Gehaald en vastgelopen per dag</h2><div id="chWins"></div></section>
   </div>
   <div class="grid two">
     <section class="card"><h2>Pogingen per level</h2><div id="chTries"></div></section>
-    <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
+    <section class="card"><h2>Hoe ver kwam ze als het misging? (% van het level af)</h2><div id="chClose"></div></section>
   </div>
   <div class="grid two">
-    <section class="card"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
+    <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
     <section class="card"><h2>Live verloop</h2><ul class="feed" id="feed"></ul></section>
   </div>
-  <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.</p>
+  <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
+  <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.<br>Alleen voor oma: ↩ = stenen teruggelegd (één keer per level), 🌱 = makkelijker gemaakt na 2× niet gelukt.</p>
 </main>
 <div id="tip"></div>
 <script>
@@ -148,20 +165,39 @@ function fillPicker() {
 $('#who').onchange = e => { sel = e.target.value; history.replaceState(null, '', '#' + sel); render(); };
 
 // ---------- analysis ----------
+// a level logged without a clock (an old app bug in 1.10): its time is unknown, not 0 seconds
+const noTime = e => e.k === 'end' && !e.dur && !e.tp;
+// grandma gets extra help in the game (see careMode in the app)
+const isCare = pid => pid === 'pmuy4wmdp17hbws' || /^oma/i.test(nameOf(pid));
+/* "Stuck": the last tries on her current level all failed (2 or more), recently. */
+function stuckStreak(pid) {
+  const ends = events(pid).filter(e => e.k === 'end');
+  const last = ends[ends.length - 1];
+  if (!last || last.r === 'win' || Date.now() - last.t > 6 * 3600e3) return null;
+  const key = lvlKey(last);
+  let n = 0, closest = null;
+  for (let i = ends.length - 1; i >= 0; i--) {
+    const e = ends[i]; if (lvlKey(e) !== key) continue;
+    if (e.r === 'win') break;
+    n++; if (e.r === 'stuck' && typeof e.left === 'number') closest = Math.min(closest ?? 1e9, e.left);
+  }
+  return n >= 2 ? { pid, key, n, last, closest, title: lvlName(last) } : null;
+}
 function analyse(ev) {
   const levels = new Map(), days = new Map();
   const day = t => { const k = dkey(new Date(t)); if (!days.has(k)) days.set(k, { k, sec: 0, fg: 0, wins: 0, losses: 0, restarts: 0, hints: 0, shuf: 0, starts: 0 }); return days.get(k); };
-  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, first: e.t, won: null, sec: 0, best: null, stars: 0 }); return levels.get(k); };
+  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, rescues: 0, easy: 0, first: e.t, won: null, sec: 0, best: null, stars: 0, closest: null, n: 0 }); return levels.get(k); };
   for (const e of ev) {
     if (e.k === 'end') {
-      const l = L(e); l.ends.push(e); l.sec += e.dur || 0;
+      const l = L(e); l.ends.push(e); l.sec += e.dur || 0; l.n = e.n || l.n;
       const d = day(e.t); d.sec += e.dur || 0;
-      if (e.r === 'win') { d.wins++; if (!l.won) { l.won = e.t; l.winAt = e.at; l.winDur = e.dur; } l.stars = Math.max(l.stars, e.st || 0); l.best = Math.min(l.best ?? 1e9, e.dur || 0); }
-      else if (e.r === 'stuck') d.losses++; else d.restarts++;
+      if (e.r === 'win') { d.wins++; if (!l.won) { l.won = e.t; l.winAt = e.at; l.winDur = noTime(e) ? null : e.dur; } l.stars = Math.max(l.stars, e.st || 0); if (!noTime(e)) l.best = Math.min(l.best ?? 1e9, e.dur || 0); }
+      else if (e.r === 'stuck') { d.losses++; if (typeof e.left === 'number') l.closest = Math.min(l.closest ?? 1e9, e.left); } else d.restarts++;
     } else if (e.k === 'pause') { const d = day(e.t); }
+    else if (e.k === 'rescue') { L(e).rescues++; day(e.t).rescues = (day(e.t).rescues || 0) + 1; }
     else if (e.k === 'hint') { L(e).hints++; day(e.t).hints++; }
     else if (e.k === 'shuf') { L(e).shuf++; day(e.t).shuf++; }
-    else if (e.k === 'start') { L(e); day(e.t).starts++; }
+    else if (e.k === 'start') { const l = L(e); if (e.ez) l.easy = Math.max(l.easy, e.ez); day(e.t).starts++; }
     else if (e.k === 'hide' && e.fg) day(e.t).fg += Math.min(e.fg, 4 * 3600);
   }
   return { levels: [...levels.values()], days };
@@ -177,21 +213,27 @@ function bindTips(root) {
   });
 }
 function niceMax(v) { if (v <= 5) return 5; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= v) return m * p; return v; }
-function barChart(el, items, unit) {
-  if (!items.some(i => i.v > 0)) { el.innerHTML = '<div class="empty">Nog geen gegevens</div>'; return; }
+function barChart(el, items, unit, opts = {}) {
+  if (!items.some(i => i.v > 0 || i.v2 > 0)) { el.innerHTML = '<div class="empty">Nog geen gegevens</div>'; return; }
   const W = Math.max(280, el.clientWidth || 520), H = 200, padL = 32, padB = 24, padT = 8, n = items.length, gw = (W - padL) / n, bw = Math.max(4, Math.min(28, gw - 2));
-  const top = Math.max(...items.map(i => i.v)), max = top <= 4 ? Math.max(1, top) : niceMax(top), ticks = top <= 4 ? max : 4;
+  const top = opts.max || Math.max(...items.map(i => i.v + (i.v2 || 0))), max = top <= 4 ? Math.max(1, top) : niceMax(top), ticks = top <= 4 ? max : 4;
   const y = v => padT + (H - padT - padB) * (1 - v / max);
   let s = `<svg viewBox="0 0 ${W} ${H}" role="img"><g class="axis">`;
   for (let k = 0; k <= ticks; k++) { const v = max * k / ticks, yy = y(v); s += `<line x1="${padL}" x2="${W}" y1="${yy}" y2="${yy}"/><text x="${padL - 6}" y="${yy + 4}" text-anchor="end">${+v.toFixed(1)}</text>`; }
   s += '</g>';
   items.forEach((it, i) => {
     const x = padL + gw * i + (gw - bw) / 2, yy = y(it.v), h = Math.max(0, H - padB - yy);
-    if (it.v > 0) s += `<path class="bar" d="M${x},${H - padB} V${yy + Math.min(4, h)} q0,-4 4,-4 h${bw - 8} q4,0 4,4 V${H - padB} Z" data-tip="${esc(it.tip || `${it.label}: ${it.v} ${unit}`)}"/>`;
+    const tipT = esc(it.tip || `${it.label}: ${it.v} ${unit}`);
+    if (it.v2 > 0) {
+      // stacked: the second value on top, the rounded cap goes on the top segment
+      const y2 = y(it.v + it.v2), h2 = Math.max(0, yy - y2);
+      if (it.v > 0) s += `<rect class="bar ${it.cls || ''}" x="${x}" y="${yy}" width="${bw}" height="${h}" data-tip="${tipT}"/>`;
+      s += `<path class="bar bad" d="M${x},${yy} V${y2 + Math.min(4, h2)} q0,-4 4,-4 h${bw - 8} q4,0 4,4 V${yy} Z" data-tip="${tipT}"/>`;
+    } else if (it.v > 0) s += `<path class="bar ${it.cls || ''}" d="M${x},${H - padB} V${yy + Math.min(4, h)} q0,-4 4,-4 h${bw - 8} q4,0 4,4 V${H - padB} Z" data-tip="${tipT}"/>`;
     s += `<rect x="${padL + gw * i}" y="${padT}" width="${gw}" height="${H - padT - padB}" fill="transparent" data-tip="${esc(it.tip || `${it.label}: ${it.v} ${unit}`)}"/>`;
     if (i % Math.max(1, Math.ceil(n / Math.floor(W / 44))) === 0) s += `<text x="${padL + gw * i + gw / 2}" y="${H - 6}" text-anchor="middle">${esc(it.short)}</text>`;
   });
-  el.innerHTML = s + '</svg>';
+  el.innerHTML = s + '</svg>' + (opts.legend || '');
   bindTips(el);
 }
 function heatmap(el, ev) {
@@ -213,6 +255,7 @@ function heatmap(el, ev) {
 
 // ---------- render ----------
 function render() {
+  renderAlerts();
   if (!sel) return;
   const ev = events(sel), sc = SCORES[sel] || {}, last = ev[ev.length - 1];
   const { levels, days } = analyse(ev);
@@ -226,6 +269,7 @@ function render() {
   const dev = ver ? { android: 'Android-app', ios: 'iPhone/iPad', web: 'browser' }[ver.dev] || ver.dev : '';
   $('#meta').innerHTML = [`Nu bij <b>level ${curLv || '?'}</b>`, ver ? `versie <b>${esc(ver.v)}</b>${dev ? ' · ' + dev : ''}` : 'versie onbekend', last ? `laatst actief ${ago(last.t)}` : 'nog geen activiteit'].join(' · ');
   $('#live').classList.toggle('on', !!active);
+  if (!document.activeElement || !document.activeElement.closest('#heartTop')) renderHeartTop();
   $('#liveTxt').textContent = active ? (last.k === 'start' || last.k === 'hint' || last.k === 'shuf' ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
   $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
 
@@ -234,25 +278,31 @@ function render() {
   const won = levels.filter(l => l.won && !l.daily);
   const ends = ev.filter(e => e.k === 'end');
   const avgTries = won.length ? (won.reduce((a, l) => a + (l.winAt || 1), 0) / won.length) : 0;
-  const winEnds = ends.filter(e => e.r === 'win');
-  const helped = winEnds.filter(e => e.h || e.sh).length;
+  const winEnds = ends.filter(e => e.r === 'win'), timed = winEnds.filter(e => !noTime(e));
+  const stuckEnds = ends.filter(e => e.r === 'stuck');
+  const helped = winEnds.filter(e => e.h || e.sh || e.rb).length;
+  const nRescue = ev.filter(e => e.k === 'rescue').length, nEasy = ev.filter(e => e.k === 'start' && e.ez && !e.res).length;
   const week = [...days.values()].filter(d => d.k >= dkey(new Date(Date.now() - 6 * 864e5)));
   const k = (lbl, val, note = '') => `<div class="card kpi"><div class="lbl">${lbl}</div><div class="val">${val}</div><div class="note">${note}</div></div>`;
   $('#kpis').innerHTML =
     k('Vandaag gespeeld', mmss(today.sec), `${today.wins} gehaald · ${today.losses} vastgelopen`) +
     k('Deze week', mmss(week.reduce((a, d) => a + d.sec, 0)), `${week.reduce((a, d) => a + d.wins, 0)} levels gehaald`) +
     k('Levels gehaald', won.length, `${levels.filter(l => l.daily && l.won).length} dagpuzzels`) +
-    k('Pogingen per level', avgTries ? avgTries.toFixed(1).replace('.', ',') : '–', 'gemiddeld tot het lukt') +
+    k('Pogingen per level', avgTries ? avgTries.toFixed(1).replace('.', ',') : '–', 'gemiddeld tot het lukt' + (nEasy ? ` · ${nEasy}× 🌱 makkelijker` : '')) +
     k('Kans per poging', ends.length ? Math.round(winEnds.length / ends.length * 100) + '%' : '–', `${winEnds.length} van ${ends.length} pogingen`) +
-    k('Hint/schudden', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden`) +
-    k('Tijd per level', winEnds.length ? mmss(winEnds.reduce((a, e) => a + (e.dur || 0), 0) / winEnds.length) : '–', 'gemiddeld bij gehaald') +
+    k('Vastgelopen', ends.length ? Math.round(stuckEnds.length / ends.length * 100) + '%' : '–', `${stuckEnds.length}× van ${ends.length} pogingen` + (stuckEnds.length ? ` · gem. ${Math.round(stuckEnds.reduce((a, e) => a + (e.n ? (e.n - e.left) / e.n : 0), 0) / stuckEnds.length * 100)}% af` : '')) +
+    k('Hulp gebruikt', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden` + (nRescue || isCare(sel) ? ` · ${nRescue}× ↩` : '')) +
+    k('Tijd per level', timed.length ? mmss(timed.reduce((a, e) => a + (e.dur || 0), 0) / timed.length) : '–', 'gemiddeld bij gehaald') +
     k('App geopend', ev.filter(e => e.k === 'open').length + '×', last ? `sinds ${new Date(ev[0].t).toLocaleDateString('nl-NL')}` : '');
 
   // charts: last 14 days
   const dayItems = [];
   for (let i = 13; i >= 0; i--) { const d = new Date(Date.now() - i * 864e5), kk = dkey(d), v = days.get(kk) || { sec: 0, wins: 0, losses: 0 }; dayItems.push({ d, kk, v }); }
   barChart($('#chTime'), dayItems.map(({ d, v }) => ({ v: mins(v.sec), short: DAYN[d.getDay()] + ' ' + d.getDate(), tip: `${DAYN[d.getDay()]} ${d.getDate()}-${d.getMonth() + 1}: ${mins(v.sec)} min in levels` })), 'min');
-  barChart($('#chWins'), dayItems.map(({ d, v }) => ({ v: v.wins, short: DAYN[d.getDay()] + ' ' + d.getDate(), tip: `${DAYN[d.getDay()]} ${d.getDate()}-${d.getMonth() + 1}: ${v.wins} gehaald, ${v.losses} vastgelopen` })), 'levels');
+  barChart($('#chWins'), dayItems.map(({ d, v }) => ({ v: v.wins, v2: v.losses, short: DAYN[d.getDay()] + ' ' + d.getDate(), tip: `${DAYN[d.getDay()]} ${d.getDate()}-${d.getMonth() + 1}: ${v.wins} gehaald, ${v.losses} vastgelopen${v.rescues ? `, ${v.rescues}× teruggelegd` : ''}` })), 'levels', { legend: '<div class="legend"><i class="c-acc"></i> gehaald <i class="c-bad"></i> vastgelopen</div>' });
+  // every failed try: how much of the level was done (the higher, the closer she got)
+  const stuckList = ev.filter(e => e.k === 'end' && e.r === 'stuck' && e.n).slice(-30);
+  barChart($('#chClose'), stuckList.map(e => { const pct = Math.round((e.n - e.left) / e.n * 100); return { v: pct, cls: pct >= 85 ? 'warn' : '', short: e.m === 'd' ? 'dag' : 'L' + e.lv, tip: `${lvlName(e)} · poging ${e.at || 1} · ${DAYN[new Date(e.t).getDay()]} ${hm(e.t)}: ${e.left} van ${e.n} stenen over (${pct}% af)${e.rb ? ' · na terugleggen' : ''}${e.ez ? ' · 🌱 makkelijker' : ''}` }; }), '%', { max: 100, legend: stuckList.length ? '<div class="legend"><i class="c-acc"></i> vastgelopen <i style="background:var(--warn)"></i> bijna gehaald (85% of meer)</div>' : '' });
   const lv = levels.filter(l => !l.daily).sort((a, b) => a.lv - b.lv).slice(-30);
   barChart($('#chTries'), lv.map(l => ({ v: l.ends.filter(e => e.r !== 'restart' || true).length + (l.won ? 0 : 0), short: String(l.lv), tip: `Level ${l.lv}: ${l.ends.length} ${l.ends.length === 1 ? 'poging' : 'pogingen'}${l.won ? ' · gehaald' : ' · nog niet gehaald'}${l.hints || l.shuf ? ` · ${l.hints}× hint, ${l.shuf}× schudden` : ''}` })), 'pogingen');
   heatmap($('#chHeat'), ev);
@@ -260,8 +310,8 @@ function render() {
   // table
   const lastT = l => Math.max(l.first, ...l.ends.map(e => e.t));
   const rows = levels.sort((a, b) => lastT(b) - lastT(a));
-  const res = l => l.ends.map(e => e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : '<span class="r">↻</span>').join('');
-  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? mmss(l.winDur || 0) : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${!l.hints && !l.shuf ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.first).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
+  const res = l => l.ends.map(e => (e.ez ? '<small title="makkelijker gemaakt">🌱</small>' : '') + (e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : '<span class="r">↻</span>') + (e.rb ? '<small title="stenen teruggelegd">↩</small>' : '')).join('');
+  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.first).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
 
   // live feed
   const txt = e => {
@@ -269,9 +319,9 @@ function render() {
       case 'open': return ['📱', `App geopend (versie ${esc(e.v)})`];
       case 'show': return ['👀', 'Terug in de app'];
       case 'hide': return ['💤', `App weggelegd${e.fg ? ` na ${mmss(e.fg)}` : ''}${e.lv && e.scr === 'game' ? ` (midden in ${lvlName(e).toLowerCase()})` : ''}`];
-      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}`];
-      case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''} · ${e.sc} punten`]
-        : e.r === 'stuck' ? ['❌', `${lvlName(e)}: vastgelopen na ${mmss(e.dur || 0)} (${e.left} stenen over)`]
+      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}`];
+      case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${noTime(e) ? '? (tijd onbekend)' : mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''} · ${e.sc} punten${e.rb ? ' · met ↩ terugleggen' : ''}`]
+        : e.r === 'stuck' ? ['❌', `${lvlName(e)}: vastgelopen na ${mmss(e.dur || 0)} (${e.left} stenen over${e.rb ? ', al teruggelegd' : ''})`]
         : ['↻', `${lvlName(e)}: opnieuw begonnen na ${mmss(e.dur || 0)}`];
       case 'hint': return ['💡', `Hint gebruikt in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)})`];
       case 'shuf': return ['🔀', `Geschud in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)})`];
@@ -279,6 +329,8 @@ function render() {
       case 'heart_in': return ['💛', `Hartje gezien van ${esc(e.from)}${e.where === 'level' ? ' (tijdens een level)' : ''}`];
       case 'heart_out': return ['💌', `Hartje gestuurd naar ${esc(e.to)}`];
       case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
+      case 'rescue': return ['↩', `Stenen teruggelegd in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)}, ${e.left} stenen op het bord)`];
+      case 'err': return ['⚠️', `Foutje in de app: ${esc(e.msg)}${e.w ? ` <small>(${esc(e.w)})</small>` : ''}`];
       default: return ['•', esc(e.k)];
     }
   };
@@ -291,6 +343,71 @@ function render() {
   }
   $('#feed').innerHTML = html || '<li class="empty">Nog niets gebeurd</li>';
 }
+
+// ---------- "she is stuck": alert, notification and a heart from here ----------
+const lsGet = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch (e) { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } };
+let alertsBaseline = null;          // alerts already there when the page opened: no notification for those
+function senders(to) { return players().filter(p => p.id !== to && !p.id.startsWith('test-')); }
+function heartBox(to) {
+  const from = senders(to);
+  if (!from.length) return '';
+  const me = lsGet('dash.me', null), pick = from.some(p => p.id === me) ? me : (from.find(p => !isCare(p.id)) || from[0]).id;
+  const st = (lsGet('dash.hearts', {}))[to];
+  const state = st ? (st.seen ? `<span class="hs-state seen">💛 gezien 👀 ${hm(st.seen)}</span>` : `<span class="hs-state">💛 verstuurd ${hm(st.t)}, nog niet gezien</span>`) : '';
+  return `<span class="heart-act">als <select data-from="${esc(to)}">${from.map(p => `<option value="${esc(p.id)}"${p.id === pick ? ' selected' : ''}>${esc(p.name)}</option>`).join('')}</select>
+    <button class="btn heart" data-heart="${esc(to)}">💛 Stuur een hartje</button>${state}</span>`;
+}
+function renderAlerts() {
+  const list = players().map(p => stuckStreak(p.id)).filter(Boolean);
+  const keyOf = a => `${a.pid}|${a.key}|${a.n}`;
+  if (alertsBaseline === null && liveOK) alertsBaseline = new Set(list.map(keyOf));
+  const html = list.map(a => {
+    const nm = esc(nameOf(a.pid)), pct = a.closest != null && a.last.n ? Math.round((a.last.n - a.closest) / a.last.n * 100) : null;
+    return `<div class="alert"><div class="msg">😟 <b>${nm}</b> zit vast op <b>${esc(a.title.toLowerCase())}</b>: ${a.n}× niet gelukt, laatste keer ${ago(a.last.t)}.
+      <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${isCare(a.pid) ? 'Haar volgende poging wordt vanzelf makkelijker 🌱. ' : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
+  }).join('');
+  if ($('#alerts').dataset.html !== html) { $('#alerts').innerHTML = html; $('#alerts').dataset.html = html; }
+  document.title = (list.length ? '😟 ' : '') + "Oma's Mahjong · Volgen";
+  // a desktop notification for a new alert (only when allowed, once per alert)
+  if (alertsBaseline && 'Notification' in window && Notification.permission === 'granted') {
+    const done = new Set(lsGet('dash.notified', []));
+    for (const a of list) {
+      const k = keyOf(a);
+      if (alertsBaseline.has(k) || done.has(k)) continue;
+      done.add(k);
+      try { const n = new Notification(`${nameOf(a.pid)} zit vast op ${a.title.toLowerCase()}`, { body: `${a.n}× niet gelukt. Stuur een hartje vanaf het dashboard 💛`, icon: '../favicon.png', tag: k }); n.onclick = () => { window.focus(); n.close(); }; } catch (e) { }
+    }
+    lsSet('dash.notified', [...done].slice(-50));
+  }
+  const nb = $('#notify');
+  nb.hidden = !('Notification' in window) || Notification.permission !== 'default';
+}
+$('#notify').onclick = () => { Notification.requestPermission().then(() => renderAlerts()); };
+document.addEventListener('change', e => { if (e.target.dataset && e.target.dataset.from) lsSet('dash.me', e.target.value); });
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-heart]'); if (!b) return;
+  const to = b.dataset.heart, from = b.parentNode.querySelector('select').value;
+  b.disabled = true; b.textContent = 'versturen…';
+  try {
+    const t = Date.now();
+    const r = await fetch(`${DB}/hearts/${encodeURIComponent(to)}/${encodeURIComponent(from)}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: nameOf(from).slice(0, 24), t }) });
+    if (!r.ok) throw new Error(r.status);
+    const hs = lsGet('dash.hearts', {}); hs[to] = { from, t, seen: 0 }; lsSet('dash.hearts', hs); lsSet('dash.me', from);
+  } catch (err) { alert('Hartje versturen lukte niet: ' + err.message); }
+  $('#alerts').dataset.html = ''; renderAlerts(); renderHeartTop();
+});
+// has the heart been seen? (the app marks it by making its time negative)
+async function checkHeartsSeen() {
+  const hs = lsGet('dash.hearts', {}); let changed = false;
+  for (const [to, h] of Object.entries(hs)) {
+    if (h.seen || Date.now() - h.t > 3 * 864e5) continue;
+    try { const v = await (await fetch(`${DB}/hearts/${encodeURIComponent(to)}/${encodeURIComponent(h.from)}.json`, { cache: 'no-store' })).json(); if (v && v.t < 0) { h.seen = Date.now(); changed = true; } } catch (e) { }
+  }
+  if (changed) { lsSet('dash.hearts', hs); $('#alerts').dataset.html = ''; renderAlerts(); renderHeartTop(); }
+}
+// a heart can always be sent to the player on screen, not only when she is stuck
+function renderHeartTop() { const el = $('#heartTop'); if (el) el.innerHTML = sel && !stuckStreak(sel) ? heartBox(sel) : ''; }
 
 // ---------- live connection ----------
 async function loadScores() { try { SCORES = await (await fetch(DB + '/scores.json', { cache: 'no-store' })).json() || {}; } catch (e) { } }
@@ -312,6 +429,7 @@ function stream() {
 loadScores().then(() => { fillPicker(); render(); stream(); });
 setInterval(() => loadScores().then(render), 60000);
 setInterval(render, 30000);   // "x min geleden" stays fresh
+setInterval(checkHeartsSeen, 15000);
 let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(render, 200); });
 </script>
 </body>
