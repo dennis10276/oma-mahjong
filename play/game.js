@@ -1137,7 +1137,7 @@
       if (!res.ok) return [];
       const data = await res.json() || {};
       S.heartsSeen = S.heartsSeen || {};
-      const fresh = Object.entries(data).filter(([from, v]) => v && v.t > (S.heartsSeen[from] || 0) && !from.startsWith('test-'))
+      const fresh = Object.entries(data).filter(([from, v]) => v && v.t > (S.heartsSeen[from] || 0) && (S.pid.startsWith('test-') || !from.startsWith('test-')))
         .map(([from, v]) => ({ from, name: String(v.name || 'Iemand').slice(0, 24), t: v.t }));
       fresh.forEach(h => { S.heartsSeen[h.from] = h.t; });
       if (fresh.length) { S.stats = S.stats || {}; S.stats.hearts = (S.stats.hearts || 0) + fresh.length; save(); }
@@ -1534,5 +1534,5 @@
   show('home');
   // test hook
   window.__mjReady = true;
-  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb, ensureTasks, taskProgress, openChest, openTasks, weekInfo, checkLastWeek, fetchHearts, maybeLucky, renderHome };
+  window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb, ensureTasks, taskProgress, openChest, openTasks, weekInfo, checkLastWeek, fetchHearts, maybeLucky, renderHome, sendHeart, pushScore };
 })();
