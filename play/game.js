@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.11';
+  const APP_VERSION = '1.12';
   /* Updates come from the website: newer game files are downloaded in the background,
      kept on the phone, and used from the next start (or right away on the home screen). */
   const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
@@ -1145,7 +1145,7 @@
   }
   let flushing = false;
   async function flushLog() {
-    if (flushing || !DB_URL) return;
+    if (flushing || !DB_URL || !S.name) return;   // only players with a name: no anonymous visitors in the dashboard
     ensureId(); flushing = true;
     try {
       for (let n = 0; n < 60; n++) {

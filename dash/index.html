@@ -133,7 +133,9 @@ function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e
 function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
 function players() {
   const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !id.startsWith('test-') || id === want));
-  return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 })).sort((a, b) => b.last - a.last);
+  return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 }))
+    .filter(p => p.name !== p.id || p.id === want)   // visitors who never chose a name are left out
+    .sort((a, b) => b.last - a.last);
 }
 function fillPicker() {
   const ps = players(), cur = sel;
