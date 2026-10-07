@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '0.8';
+  const APP_VERSION = '0.9';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -835,7 +835,7 @@
       clearTimeout(to);
       if (!res.ok) return false;
       const data = await res.json() || {};
-      const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-')).map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), points: v.points, level: v.level || 1 }));
+      const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-')).map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), points: v.points, level: v.level || 1 }));
       localStorage.setItem(LB_CACHE, JSON.stringify(list));
       S.lbOnlineAt = Date.now(); save();
       return true;
@@ -911,7 +911,8 @@
       </div>
       <div class="climb-msg" id="climbMsg">&nbsp;</div>
       <button class="big-btn play" id="clOk"><span class="bb-text"><b>Verder</b></span></button>`, false);
-    $('#clOk').onclick = () => { closeModal(); then(); };
+    let stopped = false;   // tapping "Verder" early stops the animation cleanly
+    $('#clOk').onclick = () => { stopped = true; closeModal(); then(); };
     const me = $('#meRow');
     const rowsEls = [...document.querySelectorAll('.crow[data-k]')];
     // relabel the passed rows with their final rank numbers once they move down
@@ -919,6 +920,7 @@
     const steps = show.length;
     const stepTime = Math.max(380, Math.min(650, 2400 / Math.max(1, steps)));
     function step() {
+      if (stopped) return;
       if (k >= steps) return finish();
       const victimIdx = startIdx - 1 - k;                  // the row right above you
       const victim = rowsEls[victimIdx];
@@ -935,6 +937,7 @@
       setTimeout(step, stepTime);
     }
     function finish() {
+      if (stopped || !$('#climbMsg')) return;
       me.style.transform = `translateY(${pos * RH}px)`;
       me.querySelector('.rp').textContent = newPts.toLocaleString('nl-NL');
       me.querySelector('.rk').textContent = newRank <= 3 ? ['🥇', '🥈', '🥉'][newRank - 1] : '#' + newRank;
@@ -945,7 +948,7 @@
       const nxt = above ? `<br><small>Nog ${(above.points - newPts + 1).toLocaleString('nl-NL')} punten tot ${above.avatar} ${above.name}</small>` : `<br><small>Je staat bovenaan! 👑</small>`;
       $('#climbMsg').innerHTML = `<span class="climb-up">#${oldRank} → #${newRank} ⬆</span><br>${who}${nxt}`;
     }
-    setTimeout(step, 650);
+    setTimeout(() => { if (!stopped) step(); }, 650);
   }
 
   // ---------- winning ----------
@@ -1133,5 +1136,6 @@
   document.body.classList.toggle('nonum', !S.nums);
   show('home');
   // test hook
+  window.__mjReady = true;
   window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb };
 })();
