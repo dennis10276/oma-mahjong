@@ -182,14 +182,16 @@ const Layouts = (() => {
   }
 
   // ---------- difficulty ramp ----------
+  /* Like Vita Mahjong: even level 1 is a big, full board, it is just easy to match
+     (few different pictures, so almost every free tile has a free twin). */
   function targetFor(level) {
-    if (level <= 10) return 8 + level * 4;                                // 12 .. 48
-    if (level <= 26) return 48 + Math.round((level - 10) * 2.5 / 2) * 2;  // .. 88
+    if (level <= 10) return 56 + Math.round((level - 1) * 2 / 2) * 2;     // 56 .. 74
+    if (level <= 26) return 74 + Math.round((level - 10) / 2) * 2;        // .. 90
     if (level % 10 === 0) return 96;                                      // a big "party" board every 10 levels
     const r = rng(level * 31 + 7);
-    return 60 + Math.floor(r() * 16) * 2;                                 // 60 .. 90
+    return 72 + Math.floor(r() * 12) * 2;                                 // 72 .. 94
   }
-  function layersFor(level) { return level < 3 ? 1 : level < 6 ? 2 : level < 14 ? 3 : level < 25 ? 4 : 5; }
+  function layersFor(level) { return level < 2 ? 2 : level < 14 ? 3 : level < 25 ? 4 : 5; }
   /* cap  = how many slots the intended solution needs at its tightest moment
      open = how eagerly the deal "parks" tiles whose partner is still buried */
   function difficultyFor(level) {
@@ -206,7 +208,9 @@ const Layouts = (() => {
     };
   }
   function kindsFor(pairs, level, diff) {
-    if (level <= 3) return Math.max(3, Math.ceil(pairs / 2));
+    // first levels: every picture 6 times (level 1-3) or 4 times (level 4-6): lots of easy matches
+    if (level <= 3) return Math.max(4, Math.round(pairs / 3));
+    if (level <= 6) return Math.max(4, Math.ceil(pairs / 2));
     // pairs = 2*k4 + k2 ; kinds = k4 + k2 ; k2 share grows with level
     const k = Math.round(pairs / 2 + pairs / 2 * diff.rare);
     return Math.max(3, Math.min(36, k));

@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.2';
+  const APP_VERSION = '1.3';
   // one-time clean start for every device (all progress from the test period is wiped once)
   const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
   try {
@@ -421,13 +421,13 @@
   // ---------- the game ----------
   const SLOTS = Layouts.SLOTS;
   let G = null;
-  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 6 ? c : null; } catch (e) { return null; } };
+  const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === 7 ? c : null; } catch (e) { return null; } };
   const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
   function saveCur() {
     if (!G || G.done) return;
     syncClock();
     try {
-      localStorage.setItem(CUR, JSON.stringify({ v: 6, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
+      localStorage.setItem(CUR, JSON.stringify({ v: 7, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle }));
     } catch (e) { }
   }
   function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
