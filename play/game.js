@@ -2,7 +2,7 @@
   'use strict';
   const $ = s => document.querySelector(s);
   const STORE = 'omamj.v1', CUR = 'omamj.cur';
-  const APP_VERSION = '1.7';
+  const APP_VERSION = '1.8';
   /* Updates come from the website: newer game files are downloaded in the background,
      kept on the phone, and used from the next start (or right away on the home screen). */
   const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
@@ -1134,26 +1134,50 @@
     return d >= 1 ? `nog ${d} ${d === 1 ? 'dag' : 'dagen'}${h ? ` en ${h} uur` : ''}` : `nog ${Math.max(1, h)} uur`;
   }
 
-  // computer players keep playing too: a few levels a week, the stronger ones a bit faster
-  const botLevel = (k, at, days) => Math.max(1, Math.floor(at) + 1 + Math.floor(days * (0.3 + k * 0.03)));
-  function botEntries(mode = 'all', weekId, frac) {
-    if (!S.since) { S.since = todayKey(); save(); }
-    const days = Math.max(0, Math.round((parseKey(todayKey()) - parseKey(S.since)) / 864e5));
-    if (mode === 'week') {
-      const w = weekInfo();
-      weekId = weekId || w.id; frac = frac ?? w.frac;
-      const wr = Layouts.rng(dnum(weekId) % 100000 + 17);
-      return BOTS.map(([name, avatar, at], k) => {
-        const r = Layouts.rng(k * 977 + 3);
-        const pts = Math.round(BOT_WEEK[k] * Math.pow(frac, 0.95) * (0.82 + wr() * 0.36));
-        return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: botLevel(k, at, days), bot: true };
-      });
+  /* Believable computer players: they always play around YOUR level.
+     Every morning they line up around the level you start the day with (some a bit behind,
+     some a bit ahead) and during the day they play on at their own pace, which follows how
+     fast you usually go. Play more than usual and you pass them; take a break and they pull
+     ahead. Their points match their level, using what real players score per level. */
+  const BOT_OFF  = [-14, -11, -9, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 5, 7, 10, 14];
+  const BOT_PACE = [0.6, 1.3, 0.8, 1.1, 0.7, 1.25, 0.9, 1.0, 1.15, 0.75, 1.05, 0.95, 1.2, 0.85, 1.1, 0.8, 1.0, 0.9];
+  const BOT_SKILL = [0.92, 1.06, 0.97, 1.1, 0.9, 1.03, 0.95, 1.08, 0.99, 0.93, 1.04, 0.96, 1.07, 0.94, 1.02, 0.98, 1.09, 1.0];
+  function dayAnchor() {
+    const tk = todayKey();
+    S.lvlHist = S.lvlHist || {};
+    if (!S.lvlHist[tk]) {
+      S.lvlHist[tk] = S.level;
+      Object.keys(S.lvlHist).filter(k => k < dkey(new Date(Date.now() - 14 * 864e5))).forEach(k => delete S.lvlHist[k]);
+      save();
     }
-    return BOTS.map(([name, avatar, at], k) => {
-      const r = Layouts.rng(k * 977 + 3);
-      const pts = Math.round(cumPts(at) * (0.94 + r() * 0.12) + days * (15 + k * 3));
-      return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points: pts, level: botLevel(k, at, days), bot: true };
+    // how many levels a day you usually play (last week), 5 to start with
+    const past = Object.keys(S.lvlHist).filter(k => k < tk).sort();
+    let avg = 5;
+    if (past.length) { const k0 = past[Math.max(0, past.length - 7)]; const days = Math.max(1, Math.round((parseKey(tk) - parseKey(k0)) / 864e5)); avg = (S.lvlHist[tk] - S.lvlHist[k0]) / days; }
+    return { start: S.lvlHist[tk], avg: Math.max(2, Math.min(30, avg)) };
+  }
+  // part of today's playing time that has passed (8:00 to 22:00)
+  const dayFrac = () => { const d = new Date(); return Math.min(1, Math.max(0, (d.getHours() + d.getMinutes() / 60 - 8) / 14)); };
+  // what you score per level compared with the rough model (real players: combos, stars, chests)
+  const ptsCalib = () => S.level > 3 ? Math.max(0.6, Math.min(2.2, myPoints() / Math.max(1, cumPts(S.level - 1)))) : 1;
+  function botEntries(mode = 'all', weekId, frac) {
+    const { start, avg } = dayAnchor(), df = dayFrac(), cal = ptsCalib();
+    S.botLv = S.botLv || {};
+    let changed = false;
+    const list = BOTS.map(([name, avatar], k) => {
+      let lv = Math.max(1, start + BOT_OFF[k] + Math.floor(avg * BOT_PACE[k] * df));
+      if ((S.botLv[k] || 0) > lv) lv = S.botLv[k]; else if (S.botLv[k] !== lv) { S.botLv[k] = lv; changed = true; }   // never go back down
+      let points;
+      if (mode === 'week') {
+        const w = weekInfo();
+        const f = weekId && weekId !== w.id ? 1 : (frac ?? w.frac);
+        const levelsThisWeek = Math.min(lv - 1, avg * BOT_PACE[k] * 7 * f);   // can't have played more levels than it has
+        points = Math.round(levelsThisWeek * levelPts(lv) * cal * BOT_SKILL[k]);
+      } else points = Math.round(cumPts(lv - 1) * cal * BOT_SKILL[k]);
+      return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points, level: lv, bot: true };
     });
+    if (changed) save();
+    return list;
   }
   const myPoints = () => Object.values(S.lvlPts || {}).reduce((a, b) => a + b, 0) + Object.values(S.dayPts || {}).reduce((a, b) => a + b, 0) + (S.bonusPts || 0);
   const myWeekPts = () => ensureWeek().pts;
@@ -1186,7 +1210,7 @@
     const fam = list.map((e, i) => ({ e, r: i + 1 })).filter(x => !x.e.bot);
     if (fam.length < 2) return '';
     const medal = r => r <= 3 ? ['🥇', '🥈', '🥉'][r - 1] : '#' + r;
-    return `<div class="fam-box"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatarHTML(e)}<span class="fr-name">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${!e.me ? heartState(e.id) : ''}</span><span class="fr-val">${rowVal(e, mode)}${withHearts && !e.me ? heartBtn(e) : ''}</span></div>`).join('')}</div>`;
+    return `<div class="fam-box"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatarHTML(e)}<span class="fr-name">${e.name}${e.me ? ' <i>(jij)</i>' : ''}<small class="fr-sub">${mode === 'week' ? `🧩 level ${e.level}` : `${e.points.toLocaleString('nl-NL')} punten`}</small>${!e.me ? heartState(e.id) : ''}</span><span class="fr-val">${rowVal(e, mode)}${withHearts && !e.me ? heartBtn(e) : ''}</span></div>`).join('')}</div>`;
   }
   function ensureId() { if (!S.pid) { S.pid = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); save(); } }
   async function fetchOnline() {
