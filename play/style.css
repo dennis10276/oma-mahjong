@@ -555,3 +555,19 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 .title-wrap { position: relative; }
 #comboTag, #game #comboTag { position: absolute; top: -3px; bottom: auto; left: 50%; right: auto; transform: translateX(-50%) scale(.5); pointer-events: none; white-space: nowrap; font-size: 17px; padding: 2px 12px; z-index: 5; }
 #comboTag.on { transform: translateX(-50%) scale(1); }
+
+/* ---------- 1.11: the home screen always fits, and scrolls when the screen is short (Safari) ---------- */
+#home { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+#home > * { flex-shrink: 0; }
+#home .logo { flex: 1 0 auto; }
+@media (max-height: 740px) {
+  #home { padding-top: 10px; padding-bottom: 12px; }
+  .logo { margin: 16px 0 8px; }
+  .logo-tiles { height: 74px; }
+  .logo-tiles .lt { width: 54px; height: 70px; }
+  .logo h1 { font-size: clamp(32px, 9.5vw, 44px); margin-top: 4px; }
+  .home-buttons { gap: 12px; }
+  .home-buttons .big-btn { padding-top: 12px; padding-bottom: 12px; }
+  .row2 .mid-btn { padding: 10px 8px; }
+  #nextUnlock { margin-top: 10px; }
+}

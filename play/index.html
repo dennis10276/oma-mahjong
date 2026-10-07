@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="style.css?v=1.10" id="css">
+<link rel="stylesheet" href="style.css?v=1.11" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -152,7 +152,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.10', KEY = 'omamj.code', FILES = ['tiles.js?v=1.10', 'audio.js?v=1.10', 'layouts.js?v=1.10', 'game.js?v=1.10'];
+  var BUILT = '1.11', KEY = 'omamj.code', FILES = ['tiles.js?v=1.11', 'audio.js?v=1.11', 'layouts.js?v=1.11', 'game.js?v=1.11'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;
