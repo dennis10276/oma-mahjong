@@ -167,6 +167,34 @@ function jokerPlay(j, x) {
   }, MS);
 }
 
+// the joker as the very last tile: nothing left for it to take, so it finishes the level with a bonus
+const JOKER_FINALE = 200;
+function jokerFinale(i) {
+  clearHint(); luckyTaken(i);
+  const el = G.tiles[i].el, c = centerOf(el);
+  G.alive[i] = 0; G.down[i] = 0; if (G.peek === i) G.peek = -1;
+  el.classList.add('popout'); setTimeout(() => el.classList.add('hidden'), 230);
+  G.score += JOKER_FINALE; updateScore(); floatScore('+' + JOKER_FINALE);
+  praise(`🃏 Joker-finale! +${JOKER_FINALE}`); Sound.supercombo(); flash(); buzz([20, 40, 20, 40, 40]);
+  FX.burst(c.x, c.y, 46, true); FX.emoji(c.x, c.y, ['🃏', '✨', '🌟'], 14);
+  bumpStat('jokers'); bumpStat('jokerFinale');
+  G.flights++;
+  afterLogic();
+  setTimeout(() => { G.flights--; afterLand(); }, 350);
+}
+
+// a joker left waiting in the tray with nothing left on the board (could happen in 1.18): finish with the bonus
+function jokerLeftover() {
+  if (!G || G.done || G.flights || aliveCount() || !G.tray.length || !G.tray.every(t => G.tiles[t].face === JOKER)) return;
+  const slot = $('#tray').children[0], c = centerOf(slot);
+  G.tray = []; renderTray();
+  G.score += JOKER_FINALE; updateScore(); floatScore('+' + JOKER_FINALE);
+  praise(`🃏 Joker-finale! +${JOKER_FINALE}`); Sound.supercombo(); flash();
+  FX.burst(c.x, c.y, 46, true); FX.emoji(c.x, c.y, ['🃏', '✨', '🌟'], 14); bumpStat('jokerFinale');
+  G.flights++; afterLogic();
+  setTimeout(() => { G.flights--; afterLand(); }, 350);
+}
+
 /* ---------- ice (from level 35) and lock & key (from level 45) ----------
    G.ob = { need: {tile: hits}, left: {tile: hits still needed}, locks: Set, keys: [a, b], unlocked }.
    Ice melts when tiles around it leave the board; locks open when both key tiles are gone. */

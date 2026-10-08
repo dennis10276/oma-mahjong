@@ -80,7 +80,7 @@ function begin(o, restart = false) {
   setTimeout(() => praise(restart ? 'Nog een keer! 💪' : o.mode === 'daily' ? '📅 Dagpuzzel' : o.title), 150);
   if (!S.seenTray) setTimeout(() => showIntro(), 700);
   else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
-  else { setTimeout(checkStuck, 500); setTimeout(specialTip, 1200); }
+  else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
 }
 // explain a new kind of special tile the first time it shows up
 function specialTip() {
@@ -304,7 +304,8 @@ function onTap(i) {
   const mi = G.tray.findIndex(t => G.tiles[t].face === face);
   const pk = G.peek;
   const peekPair = mi < 0 && pk >= 0 && pk !== i && G.alive[pk] && G.tiles[pk].face === face && free(pk);
-  // the joker fits every picture (see jokerPlay)
+  // the joker fits every picture (see jokerPlay); as the very last tile it ends the level with a bonus
+  if (face === JOKER && !G.tray.length && !G.tiles.some((t, k) => k !== i && G.alive[k])) { jokerFinale(i); return; }
   if (mi < 0 && !peekPair) {
     if (face === JOKER) { const x = jokerTarget(); if (x !== null) { jokerPlay(i, x); return; } }
     else { const jt = G.tray.find(t => G.tiles[t].face === JOKER && !G.arriving.has(t)); if (jt !== undefined) { jokerPlay(jt, i); return; } }
@@ -385,7 +386,7 @@ function afterLogic() {
 }
 function afterLand() {
   if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
-  if (G.flights === 0) { checkStuck(); obRelief(); maybeLucky(); }
+  if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeLucky(); }
 }
 
 function turn(i, faceDown) {
