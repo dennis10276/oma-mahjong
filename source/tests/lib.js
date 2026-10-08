@@ -9,6 +9,7 @@ const WWW = path.join(ROOT, 'www');
 const CHROME = process.env.CHROME || ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome'].find(f => fs.existsSync(f));
 const TODAY = '2026-10-07';
 const IPHONE_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1';
+const realToday = () => { const d = new Date(), p = n => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const BLANK = path.join(require('os').tmpdir(), 'omamj-blank.html');
 fs.writeFileSync(BLANK, '<!doctype html><title>blank</title>');
@@ -91,7 +92,7 @@ async function phone(opts = {}) {
     // write the saved progress from an empty page of the same site first: if the game itself
     // were open, it could save its own state over ours while reloading
     await page.goto(url.startsWith('file:') ? 'file://' + BLANK : new URL('__blank__', url).href);
-    const st = Object.assign({ seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, giftDay: TODAY, seenSp: { gold: 1, gift: 1, joker: 1 } }, opts.state || {});
+    const st = Object.assign({ seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, giftDay: opts.clock === false ? realToday() : TODAY, seenSp: { gold: 1, gift: 1, joker: 1 } }, opts.state || {});
     await page.evaluate(([st, lb, today]) => {
       localStorage.clear(); localStorage.setItem('omamj.reset', today);
       localStorage.setItem('omamj.v1', JSON.stringify(st));

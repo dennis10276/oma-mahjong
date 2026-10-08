@@ -69,15 +69,18 @@ module.exports = [
     },
   },
   {
-    name: 'grandma: after two failed tries the level gets easier',
+    name: 'grandma: only after three failed tries the level gets easier',
     async run(t, { startLevel, fillTray, click, solve, sleep }) {
       const p = await t.phone({ state: OMA });
       await startLevel(p, 12);
       t.eq(await p.evaluate(() => __mj.G.ez), 1, 'grandma always gets the gentle deal');
       const k0 = await kinds(p), n0 = await p.evaluate(() => __mj.G.tiles.length);
-      for (let k = 0; k < 2; k++) { await fillTray(p); await click(p, '#rsRetry'); await sleep(900); }
-      t.eq(await p.evaluate(() => __mj.S.fails.L12), 2, 'two failed tries');
-      t.eq(await p.evaluate(() => __mj.G.ez), 2, 'third try is easier');
+      for (let k = 0; k < 3; k++) {
+        if (k === 2) t.eq(await p.evaluate(() => __mj.G.ez), 1, 'after two failed tries still her normal level');
+        await fillTray(p); await click(p, '#rsRetry'); await sleep(900);
+      }
+      t.eq(await p.evaluate(() => __mj.S.fails.L12), 3, 'three failed tries');
+      t.eq(await p.evaluate(() => __mj.G.ez), 2, 'fourth try is easier');
       t.eq(await p.evaluate(() => __mj.G.tiles.length), n0, 'same pile size');
       const k1 = await kinds(p);
       t.ok(k1 < k0, 'fewer different pictures', { before: k0, after: k1 });
@@ -98,12 +101,11 @@ module.exports = [
     },
   },
   {
-    name: 'grandma: after four failed tries even easier, no face-down tiles',
+    name: 'grandma: many failed tries do not make it easier than the one step',
     async run(t, { startLevel }) {
       const p = await t.phone({ state: { ...OMA, level: 30, fails: { L30: 4 } } });
       await startLevel(p, 30);
-      t.eq(await p.evaluate(() => __mj.G.ez), 3, 'ease level 3');
-      t.eq(await p.evaluate(() => __mj.G.down.reduce((a, b) => a + b, 0)), 0, 'no face-down tiles');
+      t.eq(await p.evaluate(() => __mj.G.ez), 2, 'one easier step, no more');
       const q = await t.phone({ state: { ...DENNIS, level: 30, fails: { L30: 4 } } });
       await startLevel(q, 30);
       t.eq(await q.evaluate(() => __mj.G.ez), 0, 'Dennis: still the normal level');

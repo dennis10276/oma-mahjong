@@ -92,12 +92,12 @@ function specialTip() {
   toast(tips[k], 4200);
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
-// failed tries per level (cleared when it is won): grandma's retries get easier after two
+// failed tries per level (cleared when it is won): grandma's retries get easier after three
 function noteFail() { if (!G) return; S.fails = S.fails || {}; S.fails[G.key] = (S.fails[G.key] || 0) + 1; S.winStreak = 0; save(); }
 function easeFor(key) {
   if (!careMode()) return 0;
   const f = (S.fails || {})[key] || 0;
-  return f >= 4 ? 3 : f >= 2 ? 2 : 1;    // grandma always gets the gentle deal, more after failed tries
+  return f >= 3 ? 2 : 1;    // grandma always gets the gentle deal; easier only after 3 failed tries on the same level
 }
 
 const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);

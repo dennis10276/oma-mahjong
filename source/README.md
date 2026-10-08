@@ -37,8 +37,8 @@ back to its built-in version and skips that update.
 Grandma (her player id, or any name starting with "Oma") gets help the others do not get
 (`careMode()` in `www/js/core.js`):
 - a full tray is not game over yet: once per level she can put the tiles back (costs one star)
-- every level is dealt a bit gentler for her (`Layouts.ease` level 1); after failing a level twice
-  the next try gets more matching pictures (level 2), after four even more, without face-down tiles (3)
+- every level is dealt a bit gentler for her (`Layouts.ease` level 1); only after failing the same
+  level 3 times the next try gets more matching pictures (level 2)
 - the helper: when nothing moved for 6 seconds and a free pair includes a face-down tile, that tile
   is turned over and the pair glows until it is matched; a visible pair glows after 14 seconds
 - more lucky moments (from level 1, up to twice per level) and 10 seconds to keep a combo going

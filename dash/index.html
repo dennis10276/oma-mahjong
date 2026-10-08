@@ -125,7 +125,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <section class="card"><h2>Live verloop</h2><ul class="feed" id="feed"></ul></section>
   </div>
   <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
-  <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.<br>Alleen voor oma: ↩ = stenen teruggelegd (één keer per level), 🌱 = makkelijker gemaakt na 2× niet gelukt, ✨ = hulpje liet een paar oplichten.</p>
+  <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.<br>Alleen voor oma: ↩ = stenen teruggelegd (één keer per level), 🌱 = makkelijker gemaakt na 3× niet gelukt, ✨ = hulpje liet een paar oplichten.</p>
 </main>
 <div id="tip"></div>
 <script>
@@ -367,7 +367,7 @@ function renderAlerts() {
   const html = list.map(a => {
     const nm = esc(nameOf(a.pid)), pct = a.closest != null && a.last.n ? Math.round((a.last.n - a.closest) / a.last.n * 100) : null;
     return `<div class="alert"><div class="msg">😟 <b>${nm}</b> zit vast op <b>${esc(a.title.toLowerCase())}</b>: ${a.n}× niet gelukt, laatste keer ${ago(a.last.t)}.
-      <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${isCare(a.pid) ? 'Haar volgende poging wordt vanzelf makkelijker 🌱. ' : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
+      <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${isCare(a.pid) ? (a.n >= 3 ? 'Haar volgende poging is makkelijker 🌱. ' : 'Lukt het nog een keer niet, dan wordt het level makkelijker 🌱. ') : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
   }).join('');
   if ($('#alerts').dataset.html !== html) { $('#alerts').innerHTML = html; $('#alerts').dataset.html = html; }
   document.title = (list.length ? '😟 ' : '') + "Oma's Mahjong · Volgen";
