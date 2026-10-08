@@ -281,6 +281,83 @@ const Layouts = (() => {
     return true;
   }
 
+  /* ---------- ice and locks (from level 35 / 45) ----------
+     Ice: a frozen tile can only be taken after `h` of the tiles around it (next to it, above or
+     below it) have left the board. Lock: a locked tile can only be taken once both tiles of the
+     key pair have left the board. rules = { iceNb, ice: {i: hits}, locks: Set|null, keys: [a, b] };
+     the ice count starts from alive0 (the board when the rules were made). */
+  function iceNeighbors(tiles) {
+    return tiles.map((a, i) => tiles.map((b, j) => j).filter(j => {
+      if (j === i) return false;
+      const b = tiles[j], dx = Math.abs(a.x - b.x), dy = Math.abs(a.y - b.y), dz = Math.abs(a.z - b.z);
+      if (dz === 0) return dx <= 2 && dy <= 2 && (dx < 2 || dy < 2);
+      return dz === 1 && dx < 2 && dy < 2;
+    }));
+  }
+  function frozenIn(i, alive, rules, alive0) {
+    const h = rules.ice && rules.ice[i];
+    if (!h) return false;
+    let gone = 0;
+    for (const j of rules.iceNb[i]) if (alive0[j] && !alive[j]) gone++;
+    return gone < h;
+  }
+  const lockedIn = (i, alive, rules) => !!(rules.locks && rules.locks.has(i) && rules.keys.some(k => alive[k]));
+  function takeable(i, alive, nb, rules, alive0) {
+    return isFree(i, alive, nb) && !frozenIn(i, alive, rules, alive0) && !lockedIn(i, alive, rules);
+  }
+  /* Place ice and locks so that a known solution still works: we solve the level first, then only
+     freeze tiles whose neighbours are taken earlier in that solution, and only lock tiles that are
+     taken after the key pair. */
+  function obstacles(tiles, faces, opt) {
+    const { level, seed, avoid = new Set() } = opt;
+    const wantIce = level >= 35, wantLock = level >= 45;
+    if (!wantIce) return null;
+    const n = tiles.length, nb = neighbors(tiles), all = new Uint8Array(n).fill(1);
+    const P = solve(tiles, nb, faces, all, [], 60000);
+    if (!P) return null;
+    const r = rng(seed + 4242);
+    const pos = new Array(n).fill(1e9); P.forEach((t, k) => pos[t] = k);
+    const ok = i => faces[i] < 100 && !avoid.has(i);
+    // tiles you can see from the start come first, so ice and locks are noticed right away
+    const visibleFirst = list => { const top = list.filter(i => !nb.above[i].length); return [...shuffleArr(r, top), ...shuffleArr(r, list.filter(i => nb.above[i].length))]; };
+    const res = { ice: {}, locks: [], keys: [] };
+    const used = new Set();
+    if (wantLock && (level <= 47 || r() < 0.65)) {
+      // the pairs as they are made in the solution, with the moment they are complete
+      const tray = [], pairs = [];
+      P.forEach((m, k) => { const q = tray.findIndex(t => faces[t] === faces[m]); if (q >= 0) { pairs.push([tray[q], m, k]); tray.splice(q, 1); } else tray.push(m); });
+      const cnt = {}; faces.forEach(f => cnt[f] = (cnt[f] || 0) + 1);
+      const early = pairs.filter(([a, b, k]) => k < P.length * 0.4 && k > 4 && ok(a) && ok(b));
+      const pool = early.filter(([a]) => cnt[faces[a]] === 2).length ? early.filter(([a]) => cnt[faces[a]] === 2) : early;
+      if (pool.length) {
+        const [a, b, k] = pool[Math.floor(r() * pool.length)];
+        const cand = visibleFirst(P.filter(i => pos[i] > k + 6 && ok(i) && i !== a && i !== b));
+        const nLock = level < 50 ? 2 : 3;
+        if (cand.length >= nLock) { res.keys = [a, b]; res.locks = cand.slice(0, nLock); [a, b, ...res.locks].forEach(i => used.add(i)); }
+      }
+    }
+    if (level <= 37 || r() < 0.75) {
+      const inb = iceNeighbors(tiles);
+      const nIce = level < 40 ? 2 : level < 50 ? 3 : 4;
+      const cand = visibleFirst(P.filter(i => ok(i) && !used.has(i) && pos[i] > 3));
+      for (const i of cand) {
+        if (Object.keys(res.ice).length >= nIce) break;
+        if (inb[i].some(j => res.ice[j])) continue;                 // not two frozen tiles side by side
+        const before = inb[i].filter(j => pos[j] < pos[i]).length;
+        const h = level >= 42 && !Object.values(res.ice).includes(2) && r() < 0.5 ? 2 : 1;
+        if (before >= h) res.ice[i] = h;
+      }
+    }
+    if (!res.keys.length && !Object.keys(res.ice).length) return null;
+    // double-check with the rules switched on
+    const rules = { iceNb: iceNeighbors(tiles), ice: res.ice, locks: res.locks.length ? new Set(res.locks) : null, keys: res.keys };
+    if (!solve(tiles, nb, faces, all, [], 80000, rules)) {
+      if (res.keys.length) { res.keys = []; res.locks = []; rules.locks = null; rules.keys = []; if (Object.keys(res.ice).length && solve(tiles, nb, faces, all, [], 80000, rules)) return res; }
+      return null;
+    }
+    return res;
+  }
+
   /* Deal pictures so that a solution exists with the 4-slot tray.
      We pick a random order in which tiles can be taken off the board, then walk that order:
      a tile either "parks" a new picture in the tray (its partner comes later) or closes a parked one.
@@ -396,15 +473,16 @@ const Layouts = (() => {
   }
 
   /* Small depth-first solver: finds a next move that still leads to a full clear (used by the hint). */
-  function solve(tiles, nb, faces, alive0, tray0, limit = 25000) {
+  function solve(tiles, nb, faces, alive0, tray0, limit = 25000, rules = null) {
     const n = tiles.length;
     const alive = Uint8Array.from(alive0);
+    const can = rules ? (i => takeable(i, alive, nb, rules, alive0)) : (i => isFree(i, alive, nb));
     let nodes = 0;
     const dead = new Set();
     const key = (tray) => { let s = ''; for (let i = 0; i < n; i++) s += alive[i]; return s + '|' + tray.map(t => faces[t]).sort((a, b) => a - b).join(','); };
     function moves(tray) {
       const fr = [];
-      for (let i = 0; i < n; i++) if (isFree(i, alive, nb)) fr.push(i);
+      for (let i = 0; i < n; i++) if (can(i)) fr.push(i);
       const tf = new Set(tray.map(t => faces[t]));
       const match = fr.filter(i => tf.has(faces[i]));
       const cnt = {};
@@ -436,6 +514,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, effLevel, rng, makeDeal, botWinRate, forLevel, forDate, ease, neighbors, isFree, deal, pairFacesFor, shuffleArr, solve, difficultyFor, targetFor };
+  return { SLOTS, effLevel, rng, makeDeal, botWinRate, forLevel, forDate, ease, neighbors, isFree, iceNeighbors, takeable, obstacles, deal, pairFacesFor, shuffleArr, solve, difficultyFor, targetFor };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

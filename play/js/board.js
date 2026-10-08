@@ -10,7 +10,7 @@ function saveCur() {
   if (!G || G.done) return;
   syncClock();
   try {
-    localStorage.setItem(CUR, JSON.stringify({ v: 7, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez }));
+    localStorage.setItem(CUR, JSON.stringify({ v: 7, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, ob: obState() }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -36,7 +36,7 @@ function begin(o, restart = false) {
   if (!o.spec || (o.ez || 0) !== ez) {
     if (!o.spec) o.aspect = aspect;
     o.spec = Layouts.ease(o.makeSpec(o.aspect), ez);
-    o.ez = ez; o.faces = null; o.down = null; o.gold = null; o.specials = false;   // a new deal
+    o.ez = ez; o.faces = null; o.down = null; o.gold = null; o.specials = false; o.obstDone = false;   // a new deal
   }
   const spec = o.spec;
   const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
@@ -51,6 +51,7 @@ function begin(o, restart = false) {
     G.peek = cur.peek ?? -1;
     G.gold = new Set(cur.gold || []);
     Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, rescued: !!cur.rescued });
+    setObstacles(cur.ob);
     G.mile = mileOf();
   } else {
     if (!o.faces) { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; } // same deal again on "Opnieuw"
@@ -58,6 +59,7 @@ function begin(o, restart = false) {
     o.faces.forEach((f, i) => tiles[i].face = f);
     G.gold = new Set(o.gold || []);
     (o.down || []).forEach(i => G.down[i] = 1);
+    addObstacles(o, spec); setObstacles(o.obst);
     clearCur();
   }
   // the clock and the play log come first, so they are right even if drawing the board goes wrong
@@ -83,13 +85,9 @@ function begin(o, restart = false) {
 // explain a new kind of special tile the first time it shows up
 function specialTip() {
   if (!G || G.done) return;
+  if (newTileIntro()) return;          // joker, ice, lock: a short explanation the first time
   S.seenSp = S.seenSp || {};
-  const has = { gold: G.gold.size > 0, gift: G.tiles.some(t => t.face === GIFT), joker: G.tiles.some(t => t.face === JOKER) };
-  const tips = { gold: '✨ Nieuw: een gouden paar geeft dubbele punten!', gift: '🎁 Nieuw: maak het cadeautjes-paar voor een verrassing!', joker: '🃏 Nieuw: een joker-paar maakt een vakje leeg!' };
-  const k = ['gold', 'gift', 'joker'].find(k => has[k] && !S.seenSp[k]);
-  if (!k) return;
-  S.seenSp[k] = true; save();
-  toast(tips[k], 4200);
+  if (G.gold.size > 0 && !S.seenSp.gold) { S.seenSp.gold = true; save(); toast('✨ Nieuw: een gouden paar geeft dubbele punten!', 4200); }
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won): grandma's retries get easier after three
@@ -106,6 +104,11 @@ function decorate(i) {
   el.classList.toggle('gold', G.gold.has(i));
   el.classList.toggle('sp-gift', t.face === GIFT);
   el.classList.toggle('sp-joker', t.face === JOKER);
+  // ice, lock or key: an overlay on the tile
+  const k = obKind(i);
+  let ov = el.querySelector('.ob');
+  if (!k) { if (ov) ov.remove(); }
+  else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
 }
 const free = i => Layouts.isFree(i, G.alive, G.nb);
 
@@ -276,6 +279,7 @@ function onTap(i) {
     if (++blockedTaps === 3) toast('Die zit nog vast: kies een steen met een open zijkant', 3000);
     return;
   }
+  if (frozen(i) || lockedT(i)) { if (G.st) G.st.bt++; obBlocked(i); return; }
   blockedTaps = 0;
   G.lastMove = performance.now();   // the board moved: grandma's helper waits again
   if (G.down[i] && G.peek !== i) {
@@ -300,6 +304,11 @@ function onTap(i) {
   const mi = G.tray.findIndex(t => G.tiles[t].face === face);
   const pk = G.peek;
   const peekPair = mi < 0 && pk >= 0 && pk !== i && G.alive[pk] && G.tiles[pk].face === face && free(pk);
+  // the joker fits every picture (see jokerPlay)
+  if (mi < 0 && !peekPair) {
+    if (face === JOKER) { const x = jokerTarget(); if (x !== null) { jokerPlay(i, x); return; } }
+    else { const jt = G.tray.find(t => G.tiles[t].face === JOKER && !G.arriving.has(t)); if (jt !== undefined) { jokerPlay(jt, i); return; } }
+  }
   if (mi < 0 && !peekPair && G.tray.length >= SLOTS) {
     el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
     Sound.blocked(); toast('Alle vakjes zijn vol. Kies een steen die past!');
@@ -321,7 +330,6 @@ function onTap(i) {
     G.alive[pk] = 0; G.down[pk] = 0; G.peek = -1;
     pel.classList.add('hidden');
     const goldP = G.gold.has(i) || G.gold.has(pk);
-    if (face === JOKER) jokerEffect();
     const mid = { left: (from.left + pfrom.left) / 2, top: (from.top + pfrom.top) / 2 - from.height * 0.3, width: from.width, height: from.height };
     const f1 = flyTile(face, from, mid, MS), f2 = flyTile(face, pfrom, mid, MS);
     afterLogic();
@@ -338,7 +346,6 @@ function onTap(i) {
     G.tray.splice(mi, 1);
     G.arriving.delete(partner);
     const goldT = G.gold.has(i) || G.gold.has(partner);
-    if (face === JOKER) jokerEffect();
     renderTray();
     const fly = flyTile(face, from, to, MS);
     afterLogic();
@@ -372,13 +379,13 @@ function onTap(i) {
   });
 }
 function afterLogic() {
-  updateBlocked(); updateProgress(); updateNudge();
+  updateBlocked(); updateObstacles(); updateProgress(); updateNudge();
   if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
 }
 function afterLand() {
   if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
-  if (G.flights === 0) { checkStuck(); maybeLucky(); }
+  if (G.flights === 0) { checkStuck(); obRelief(); maybeLucky(); }
 }
 
 function turn(i, faceDown) {
@@ -499,7 +506,7 @@ function hint() {
   if (!toolsOpen()) return toolsLockedMsg();
   if (G.usedHint) { toast('Je hint voor dit level is al gebruikt'); Sound.blocked(); return; }
   const faces = G.tiles.map(t => t.face);
-  const path = Layouts.solve(G.tiles, G.nb, faces, G.alive, G.tray, 30000);
+  const path = Layouts.solve(G.tiles, G.nb, faces, G.alive, G.tray, 30000, obRules());
   if (!path || !path.length) { toast('Zo gaat het niet meer lukken… probeer 🔀 Schudden'); Sound.blocked(); return; }
   G.usedHint = true; updateTools(); saveCur();
   syncClock(); logEvt('hint', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount() });
@@ -528,6 +535,15 @@ function shuffle() {
   const r = Layouts.rng((Math.random() * 1e9) | 0);
   // a generous re-deal: the tray pictures come free quickly
   const faces = Layouts.deal(G.tiles, G.nb, pf, r, { alive: G.alive, openFaces: trayFaces, cap: Math.max(2, trayFaces.length), open: 0.2 });
+  // the two key tiles must keep the same picture
+  if (G.ob && !G.ob.unlocked && G.ob.keys.length) {
+    const [a, b] = G.ob.keys;
+    if (G.alive[a] || G.alive[b]) {
+      const ref = G.alive[a] && G.alive[b] ? a : (G.alive[a] ? b : a), adj = ref === a ? b : a;
+      const fRef = G.alive[ref] ? faces[ref] : G.tiles[ref].face;
+      if (faces[adj] !== fRef) { const w = G.tiles.findIndex((t, k) => k !== adj && k !== ref && G.alive[k] && faces[k] === fRef); if (w >= 0) { faces[w] = faces[adj]; faces[adj] = fRef; } }
+    }
+  }
   clearHint();
   Sound.shuffle(); buzz([10, 30, 10]);
   let k = 0;
@@ -551,7 +567,7 @@ function shuffle() {
 const NUDGE_DOWN_S = 6, NUDGE_UP_S = 14;
 function findNudge(downOnly) {
   const fr = [];
-  for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && free(i)) fr.push(i);
+  for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
   const hidden = i => G.down[i] && G.peek !== i;
   const cands = [];
   // a free tile whose twin waits in the tray, then two free twins on the board
@@ -603,3 +619,6 @@ function clearNudge() {
   [...$('#tray').children].forEach(s => s.classList.remove('nudge'));
 }
 setInterval(nudgeTick, 1000);
+
+// the solver with the current ice and locks (hint, tests)
+function solveNow(limit = 30000) { return Layouts.solve(G.tiles, G.nb, G.tiles.map(t => t.face), G.alive, G.tray.slice(), limit, obRules()); }

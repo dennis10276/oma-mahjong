@@ -87,7 +87,8 @@ function openChest() {
 
 // ---------- special tiles (higher levels) ----------
 const GIFT = 100, JOKER = 101;
-// turn one pair with a picture that appears exactly twice into a special pair (keeps the level solvable)
+// turn one pair with a picture that appears exactly twice into a joker pair (keeps the level solvable).
+// GIFT is no longer dealt (1.18); it stays known only for games saved before.
 function addSpecials(o, spec) {
   if (o.specials) return;
   const lvl = o.mode === 'level' ? o.level : Math.max(20, S.level);
@@ -103,7 +104,6 @@ function addSpecials(o, spec) {
     const f = anyF[Math.floor(r() * anyF.length)];
     o.gold = o.faces.map((x, i) => x === f ? i : -1).filter(i => i >= 0).slice(0, 2);
   }
-  if (o.mode === 'level' && lvl >= 25 && r() < 0.6) relabel(GIFT);
   if (o.mode === 'level' && lvl >= 30 && r() < 0.6) relabel(JOKER);
   o.specials = true;
 }
@@ -113,6 +113,7 @@ function specialMatch(face, gold, c) {
     mult = 2;
     praise('✨ Gouden paar! x2'); Sound.perfect(); FX.emoji(c.x, c.y, ['✨', '🌟', '💛'], 10); bumpStat('gold');
   }
+  if (face === JOKER) { praise('🃏 Twee jokers!'); FX.emoji(c.x, c.y, ['🃏', '✨'], 8); bumpStat('jokers'); }
   if (face === GIFT) {
     const star = Math.random() < 0.5;
     if (star) { S.bonusStars = (S.bonusStars || 0) + 1; praise('🎁 Cadeautje: +1 ⭐'); }
@@ -121,22 +122,151 @@ function specialMatch(face, gold, c) {
   }
   return mult;
 }
-// joker pair: also clears one picture from the tray together with its twin on the board
-function jokerEffect() {
-  const k = G.tray.findIndex(t => !G.arriving.has(t));
-  if (k < 0) { G.score += 100; praise('🃏 Joker! +100'); return; }
-  const t = G.tray[k], face = G.tiles[t].face;
-  G.tray.splice(k, 1);
-  let twin = -1;
-  for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && G.tiles[i].face === face && (twin < 0 || free(i))) twin = i;
-  if (twin >= 0) {
-    G.alive[twin] = 0; G.down[twin] = 0; if (G.peek === twin) G.peek = -1;
-    const el = G.tiles[twin].el, c = centerOf(el);
-    el.classList.add('popout'); setTimeout(() => el.classList.add('hidden'), 230);
-    FX.emoji(c.x, c.y, ['🃏', '✨'], 8);
+/* ---------- the joker (from level 30): it fits every picture ----------
+   Tap a joker while tiles wait in the tray: it takes one of them (the one whose twin is hardest to
+   reach) away together with that twin, wherever it lies. With an empty tray the joker waits in a
+   slot and takes the next tile you tap, with its twin. Two jokers also match each other. */
+function jokerTarget() {
+  const cand = G.tray.filter(t => G.tiles[t].face !== JOKER && !G.arriving.has(t));
+  if (!cand.length) return null;
+  const easy = t => G.tiles.some((u, k) => k !== t && G.alive[k] && u.face === G.tiles[t].face && canTake(k));
+  return cand.find(t => !easy(t)) ?? cand[0];
+}
+function jokerPlay(j, x) {
+  clearHint();
+  const inTray = t => G.tray.includes(t);
+  const waiting = inTray(j) ? j : x, tapped = waiting === j ? x : j;
+  luckyTaken(tapped);
+  const face = G.tiles[x].face;
+  // its twin: a free one if there is one, otherwise the top-most
+  let y = -1, best = -1;
+  for (let k = 0; k < G.tiles.length; k++) if (k !== x && G.alive[k] && G.tiles[k].face === face) { const sc = (free(k) ? 1000 : 0) + G.tiles[k].z; if (sc > best) { best = sc; y = k; } }
+  const slotIdx = G.tray.indexOf(waiting), slotEl = $('#tray').children[slotIdx], to = slotEl.getBoundingClientRect();
+  const ghost = slotEl.firstElementChild ? slotEl.firstElementChild.cloneNode(true) : null;
+  if (ghost) { ghost.classList.add('ghost'); Object.assign(ghost.style, { left: to.left + 'px', top: to.top + 'px', width: to.width + 'px', height: to.height + 'px' }); ghost.style.setProperty('--sfs', $('#tray').style.getPropertyValue('--sfs')); document.body.appendChild(ghost); }
+  G.tray.splice(slotIdx, 1); G.arriving.delete(waiting);
+  const gold = [j, x, y].some(k => k >= 0 && G.gold.has(k));
+  const MS = 260;
+  const flies = [tapped, y].filter(k => k >= 0).map(k => {
+    const e = G.tiles[k].el, r = e.getBoundingClientRect();
+    G.alive[k] = 0; G.down[k] = 0; if (G.peek === k) G.peek = -1;
+    e.classList.add('hidden');
+    return flyTile(G.tiles[k].face, r, to, MS);
+  });
+  renderTray(); Sound.select(); buzz(10);
+  G.flights++;
+  afterLogic();
+  setTimeout(() => {
+    G.flights--;
+    flies.forEach(f => f.classList.add('popout')); if (ghost) ghost.classList.add('popout');
+    const c = { x: to.left + to.width / 2, y: to.top + to.height / 2 };
+    onMatch(c, face, gold);
+    praise('🃏 Joker!'); Sound.supercombo(); FX.emoji(c.x, c.y, ['🃏', '✨'], 8); bumpStat('jokers');
+    setTimeout(() => { flies.forEach(f => f.remove()); if (ghost) ghost.remove(); }, 230);
+    afterLand();
+  }, MS);
+}
+
+/* ---------- ice (from level 35) and lock & key (from level 45) ----------
+   G.ob = { need: {tile: hits}, left: {tile: hits still needed}, locks: Set, keys: [a, b], unlocked }.
+   Ice melts when tiles around it leave the board; locks open when both key tiles are gone. */
+function addObstacles(o, spec) {
+  if (o.obstDone) return;
+  o.obstDone = true; o.obst = null;
+  if (o.mode !== 'level' || o.level < 35) return;
+  const avoid = new Set([...(o.down || []), ...(o.gold || [])]);
+  o.obst = Layouts.obstacles(spec.tiles, o.faces, { level: o.level, seed: spec.seed, avoid });
+}
+function setObstacles(ob) {
+  G.ob = null; G.inb = null;
+  const need = ob && (ob.need || ob.ice);
+  if (!ob || (!Object.keys(need || {}).length && !(ob.keys || []).length)) return;
+  G.ob = { need: { ...need }, left: { ...(ob.left || need) }, locks: new Set(ob.locks || []), keys: ob.keys || [], unlocked: !!ob.unlocked || !(ob.keys || []).length };
+  G.inb = Layouts.iceNeighbors(G.tiles);
+}
+const obState = () => G.ob ? { need: G.ob.need, left: G.ob.left, locks: [...G.ob.locks], keys: G.ob.keys, unlocked: G.ob.unlocked } : null;
+const frozen = i => !!(G.ob && G.ob.left[i] > 0);
+const lockedT = i => !!(G.ob && !G.ob.unlocked && G.ob.locks.has(i));
+const canTake = i => free(i) && !frozen(i) && !lockedT(i);
+const obRules = () => G.ob ? { iceNb: G.inb, ice: G.ob.left, locks: G.ob.unlocked ? null : G.ob.locks, keys: G.ob.keys } : null;
+function obKind(i) {
+  if (!G.ob) return '';
+  if (frozen(i)) return G.ob.left[i] > 1 ? 'ice2' : 'ice';
+  if (lockedT(i)) return 'lock';
+  if (!G.ob.unlocked && G.ob.keys.includes(i)) return 'key';
+  return '';
+}
+function updateObstacles() {
+  if (!G || !G.ob) return;
+  const ob = G.ob;
+  for (const k of Object.keys(ob.need)) {
+    const i = +k;
+    if (!(ob.left[i] > 0)) continue;
+    if (!G.alive[i]) { ob.left[i] = 0; continue; }                     // taken away by a joker
+    let gone = 0; for (const j of G.inb[i]) if (!G.alive[j]) gone++;
+    const left = Math.max(0, ob.need[i] - gone);
+    if (left < ob.left[i]) {
+      ob.left[i] = left; decorate(i);
+      const c = centerOf(G.tiles[i].el);
+      FX.emoji(c.x, c.y, left ? ['❄️'] : ['❄️', '💧', '✨'], left ? 4 : 8); Sound.flip();
+      crackFx(i);
+      if (!left) praise('🧊 Ijs gesmolten!'); else toast('🧊 Krak! Nog één keer', 1600);
+    }
   }
-  renderTray();
-  praise('🃏 Joker! Vakje vrij'); Sound.supercombo(); bumpStat('jokers');
+  if (!ob.unlocked && ob.keys.length && ob.keys.every(k => !G.alive[k])) {
+    ob.unlocked = true;
+    ob.locks.forEach(i => { decorate(i); if (G.alive[i]) { const c = centerOf(G.tiles[i].el); FX.emoji(c.x, c.y, ['🔓', '✨'], 6); } });
+    ob.keys.forEach(decorate);
+    praise('🔓 Sloten open!'); Sound.unlock(); bumpStat('unlocks');
+  }
+}
+function crackFx(i) {
+  const el = G.tiles[i].el; if (!el) return;
+  const f = document.createElement('div'); f.className = 'ob-crack'; el.appendChild(f);
+  setTimeout(() => f.remove(), 600);
+}
+// a tap on a frozen or locked tile: say what to do, and show it
+function obBlocked(i) {
+  const el = G.tiles[i].el;
+  el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+  Sound.blocked(); buzz(30);
+  if (frozen(i)) {
+    toast(G.ob.left[i] > 1 ? '🧊 Dik ijs: haal 2 stenen ernaast weg' : '🧊 Bevroren: haal eerst een steen ernaast weg', 2600);
+    G.inb[i].filter(j => G.alive[j] && canTake(j)).forEach(j => { const e = G.tiles[j].el; e.classList.remove('obhint'); void e.offsetWidth; e.classList.add('obhint'); setTimeout(() => e.classList.remove('obhint'), 1300); });
+  } else {
+    toast('🔒 Op slot: speel eerst het 🔑-paar weg', 2600);
+    G.ob.keys.filter(k => G.alive[k]).forEach(k => { const e = G.tiles[k].el; e.classList.remove('obhint'); void e.offsetWidth; e.classList.add('obhint'); setTimeout(() => e.classList.remove('obhint'), 1300); });
+  }
+}
+// never stuck because of ice or locks alone: if nothing at all can be taken, they give way
+function obRelief() {
+  if (!G || !G.ob || G.done || G.overShown || G.flights || G.tray.length >= SLOTS) return;
+  let anyFree = false;
+  for (let i = 0; i < G.tiles.length; i++) if (free(i)) { anyFree = true; if (canTake(i)) return; }
+  if (!anyFree) return;
+  if (Object.keys(G.ob.left).some(k => G.ob.left[k] > 0)) {
+    Object.keys(G.ob.left).forEach(k => { if (G.ob.left[k] > 0) { G.ob.left[k] = 0; decorate(+k); crackFx(+k); } });
+    praise('☀️ Het ijs smelt vanzelf');
+  } else if (!G.ob.unlocked) { G.ob.unlocked = true; G.ob.locks.forEach(decorate); G.ob.keys.forEach(decorate); praise('🔓 Sloten open!'); }
+  Sound.unlock(); saveCur();
+}
+// the first time a new kind of tile shows up: a short explanation before playing
+const NEW_TILES = {
+  joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏', title: 'De joker', text: 'De joker past bij <b>elke</b> steen! Zitten er stenen in je vakjes? Tik de joker aan: hij haalt er een weg, <b>samen met zijn tweeling</b>, waar die ook ligt. Zijn je vakjes leeg? Dan wacht de joker en neemt hij de volgende steen mee.' },
+  ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊', title: 'Bevroren stenen', text: 'Sommige stenen zitten vast in het <b>ijs</b>. Haal een steen weg die ernaast, erop of eronder ligt: dan smelt het ijs. Bij dik ijs ❄️❄️ moet dat twee keer.' },
+  lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒', title: 'Slot en sleutel', text: 'Stenen met een <b>slotje</b> kun je pas pakken als je het paar met de <b>🔑 sleutel</b> hebt weggespeeld. Zoek dus eerst de sleutels!' },
+};
+function newTileIntro() {
+  if (!G || G.done) return false;
+  S.seenSp = S.seenSp || {};
+  const k = ['lock', 'ice', 'joker2'].find(k => !S.seenSp[k] && NEW_TILES[k].has());
+  if (!k) return false;
+  S.seenSp[k] = true; save();
+  const t = NEW_TILES[k];
+  openModal(`<div class="nt-ico">${t.ico}</div><h2>Nieuw: ${t.title}</h2><p>${t.text}</p>
+    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true);
+  $('#ntGo').onclick = closeModal;
+  return true;
 }
 
 // ---------- lucky moment ----------
@@ -150,7 +280,7 @@ function maybeLucky() {
   if (left > n * 0.8 || left < 6 || Math.random() > (care ? 0.5 : 0.3)) return;
   const tf = new Set(G.tray.map(t => G.tiles[t].face));
   const freeUp = [];
-  for (let i = 0; i < n; i++) if (G.alive[i] && !G.down[i] && free(i) && G.tiles[i].face < 100) freeUp.push(i);
+  for (let i = 0; i < n; i++) if (G.alive[i] && !G.down[i] && canTake(i) && G.tiles[i].face < 100) freeUp.push(i);
   const cand = freeUp.filter(i => tf.has(G.tiles[i].face) || freeUp.some(j => j !== i && G.tiles[j].face === G.tiles[i].face));
   if (!cand.length) return;
   const i = cand[Math.floor(Math.random() * cand.length)];

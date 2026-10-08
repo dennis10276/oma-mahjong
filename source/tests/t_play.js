@@ -29,18 +29,18 @@ module.exports = [
     },
   },
   {
-    name: 'play: levels with gold, gift and joker tiles can be finished',
+    name: 'play: levels with gold and joker tiles can be finished',
     async run(t, { startLevel, sleep, modal }) {
       const p = await t.phone({ state: { level: 60 } });
       let L = 30, found = null;
       for (; L <= 60 && !found; L++) {
         await startLevel(p, L);
-        const r = await p.evaluate(() => { const G = __mj.G; return { gift: G.tiles.some(t => t.face === 100), joker: G.tiles.some(t => t.face === 101), gold: G.gold.size }; });
-        if (r.gift && r.joker && r.gold) found = L;
+        const r = await p.evaluate(() => { const G = __mj.G; return { joker: G.tiles.some(t => t.face === 101), gold: G.gold.size }; });
+        if (r.joker && r.gold) found = L;
       }
-      if (!t.ok(found, 'a level with all three specials')) return;
+      if (!t.ok(found, 'a level with gold and jokers')) return;
       for (let k = 0; k < 400; k++) {
-        const r = await p.evaluate(() => { const G = __mj.G; if (G.done) return 'done'; const path = __mj.Layouts.solve(G.tiles, G.nb, G.tiles.map(t => t.face), G.alive, G.tray.slice(), 60000); if (!path || !path.length) return 'stuck'; const m = path[0]; __mj.onTap(m); if (G.alive[m] && G.peek === m) __mj.onTap(m); return 'ok'; });
+        const r = await p.evaluate(() => { const G = __mj.G; if (G.done) return 'done'; const path = __mj.solveNow(60000); if (!path || !path.length) return 'stuck'; const m = path[0]; __mj.onTap(m); if (G.alive[m] && G.peek === m) __mj.onTap(m); return 'ok'; });
         if (r !== 'ok') { t.eq(r, 'done', 'played to the end'); break; }
         await sleep(60);
       }

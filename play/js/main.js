@@ -111,4 +111,4 @@ if (!S.fails) { const k = 'L' + S.level, a = (S.att || {})[k] || 0; S.fails = a 
 // just updated between two levels: continue with the next level
 if (S.afterUpdate) { const a = S.afterUpdate; S.afterUpdate = null; save(); setTimeout(() => { if (a.level) startLevel(a.level); else if (a.show && a.show !== 'home') show(a.show); toast(`✨ Bijgewerkt naar versie ${APP_VERSION}`, 2200); }, 300); }
 // for the automated tests
-window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb, ensureTasks, taskProgress, openChest, openTasks, weekInfo, checkLastWeek, fetchHearts, maybeLucky, renderHome, sendHeart, pushScore };
+window.__mj = { get G() { return G; }, S, startLevel, startDaily, onTap, Layouts, restart, pickTile, show, ranking, myPoints, showClimb, ensureTasks, taskProgress, openChest, openTasks, weekInfo, checkLastWeek, fetchHearts, maybeLucky, renderHome, sendHeart, pushScore, solveNow, canTake };

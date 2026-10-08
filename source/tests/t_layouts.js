@@ -44,4 +44,22 @@ module.exports = [
       t.ok(Layouts.ease(b, 0) === b, 'ease 0 changes nothing');
     },
   },
+  {
+    name: 'levels: ice and locks are placed so every level 35-70 can still be cleared',
+    async run(t) {
+      let withIce = 0, withLock = 0;
+      for (let L = 35; L <= 70; L++) {
+        const spec = Layouts.forLevel(L, 1.5), d = Layouts.makeDeal(spec);
+        const ob = Layouts.obstacles(spec.tiles, d.faces, { level: L, seed: spec.seed, avoid: new Set(d.down) });
+        if (!ob) continue;
+        const ice = Object.keys(ob.ice).length; withIce += ice > 0; withLock += ob.keys.length > 0;
+        const nb = Layouts.neighbors(spec.tiles), all = new Uint8Array(spec.tiles.length).fill(1);
+        const rules = { iceNb: Layouts.iceNeighbors(spec.tiles), ice: ob.ice, locks: ob.locks.length ? new Set(ob.locks) : null, keys: ob.keys };
+        t.ok(Layouts.solve(spec.tiles, nb, d.faces, all, [], 120000, rules), `level ${L} solvable with ice/locks`, ob);
+        if (ob.keys.length) t.ok(L >= 45 && d.faces[ob.keys[0]] === d.faces[ob.keys[1]], `level ${L}: keys are a pair, only from 45`);
+        t.ok(!Object.keys(ob.ice).some(i => d.down.includes(+i)), `level ${L}: no ice on face-down tiles`);
+      }
+      t.ok(withIce >= 20 && withLock >= 12, 'most levels have them', { withIce, withLock });
+    },
+  },
 ];

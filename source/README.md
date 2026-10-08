@@ -43,6 +43,15 @@ Grandma (her player id, or any name starting with "Oma") gets help the others do
   is turned over and the pair glows until it is matched; a visible pair glows after 14 seconds
 - more lucky moments (from level 1, up to twice per level) and 10 seconds to keep a combo going
 
+Special tiles and mechanics (everyone):
+- level 20+: a gold pair (double points)
+- level 30+: the joker 🃏 fits every picture: it takes a tile from the tray away together with its
+  twin (with an empty tray it waits and takes the next tile). The gift tile is gone (1.18).
+- level 35+: ice 🧊: a frozen tile can only be taken after a tile next to / on / under it is gone
+  (thick ice ❄️❄️: two). Level 45+: lock 🔒 and key 🔑: locked tiles open once the key pair is played.
+  Placed from a known solution (`Layouts.obstacles`), so every level stays solvable; if nothing at all
+  can be taken the ice melts / the locks open by themselves.
+
 For everyone: messages while playing appear in a strip under the tray (never over the tiles),
 points float out of the score counter, a little party at a quarter / half / three quarters of the
 pile, a bonus star for 3 levels in a row (and every 5), and a daily gift on the first visit.

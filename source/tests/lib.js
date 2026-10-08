@@ -92,7 +92,7 @@ async function phone(opts = {}) {
     // write the saved progress from an empty page of the same site first: if the game itself
     // were open, it could save its own state over ours while reloading
     await page.goto(url.startsWith('file:') ? 'file://' + BLANK : new URL('__blank__', url).href);
-    const st = Object.assign({ seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, giftDay: opts.clock === false ? realToday() : TODAY, seenSp: { gold: 1, gift: 1, joker: 1 } }, opts.state || {});
+    const st = Object.assign({ seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, giftDay: opts.clock === false ? realToday() : TODAY, seenSp: { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 1, lock: 1 } }, opts.state || {});
     await page.evaluate(([st, lb, today]) => {
       localStorage.clear(); localStorage.setItem('omamj.reset', today);
       localStorage.setItem('omamj.v1', JSON.stringify(st));
@@ -116,7 +116,7 @@ async function startLevel(page, L, fresh = true) {
 async function closeModal(page) { await page.evaluate(() => { const m = document.querySelector('#modal'); if (m && !m.classList.contains('hidden') && document.querySelector('#mGo')) document.querySelector('#mGo').click(); }); }
 /* Solve the current level with the built-in solver, tapping as fast as possible. */
 async function solve(page, waitAfter = 3500) {
-  const p = await page.evaluate(() => { const G = __mj.G; return __mj.Layouts.solve(G.tiles, G.nb, G.tiles.map(t => t.face), G.alive, G.tray.slice(), 80000); });
+  const p = await page.evaluate(() => __mj.solveNow(80000));
   if (!p) return false;
   await page.evaluate(p => { for (const m of p) { const G = __mj.G; if (!G.alive[m]) continue; __mj.onTap(m); if (G.alive[m]) __mj.onTap(m); } }, p);
   await sleep(waitAfter);
