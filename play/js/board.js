@@ -135,7 +135,7 @@ function layoutBoard() {
   let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, maxZ = 0;
   for (const t of G.tiles) { minX = Math.min(minX, t.x); maxX = Math.max(maxX, t.x); minY = Math.min(minY, t.y); maxY = Math.max(maxY, t.y); maxZ = Math.max(maxZ, t.z); }
   const cols = (maxX - minX) / 2 + 1, rows = (maxY - minY) / 2 + 1;
-  const ratio = 1.24, dF = 0.09;
+  const ratio = 1.24, dF = 0.14;   // each layer shifts this much, so more of the tiles below shows
   let tw = Math.min((W - 8) / (cols + maxZ * dF + 0.12), (H - 8) / (rows * ratio + maxZ * dF + 0.15));
   tw = Math.min(tw, 150);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * 0.085);
@@ -236,6 +236,8 @@ function showBlockers(i) {
   const ac = { x: a.l + a.w / 2, y: a.t + a.h / 2 };
   const size = Math.max(26, Math.min(56, G.tw * 0.62));
   const seen = new Set();
+  // see through the tiles lying on top of it, so you can see what is underneath
+  for (const { j, side } of blockersOf(i)) if (side === 'up') { const be = G.tiles[j].el; be.classList.add('xray'); clearTimeout(be._xr); be._xr = setTimeout(() => be.classList.remove('xray'), 1800); }
   for (const { j } of blockersOf(i)) {
     const b = G.tiles[j].r; if (!b) continue;
     const bc = { x: b.l + b.w / 2, y: b.t + b.h / 2 };
@@ -280,7 +282,9 @@ function onTap(i) {
     const pk0 = G.peek;
     const twin = pk0 >= 0 && G.alive[pk0] && free(pk0) && G.tiles[pk0].face === G.tiles[i].face;
     const inTray = G.tray.some(t => G.tiles[t].face === G.tiles[i].face);
-    if (!twin && !inTray) {
+    // grandma: a face-down tile whose twin is open or in the tray matches straight away;
+    // everyone else first sees it turn over (unless its twin is the tile they just opened)
+    if ((!twin && !inTray) || (!careMode() && !twin)) {
       // face-down tile: first tap turns it over (only one at a time), second tap takes it
       if (pk0 >= 0 && G.alive[pk0]) turn(pk0, true);
       G.peek = i; turn(i, false);
@@ -387,7 +391,7 @@ function showDownTip() {
   openModal(`<h2>Omgedraaide stenen</h2>
     <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
     <p>Sommige stenen liggen <b>omgedraaid</b>. Tik er één keer op om te kijken wat het is, en nog een keer om hem te pakken.</p>
-    <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. Staat de tweeling al in een vakje? Dan verdwijnen ze ook meteen bij het omdraaien. Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
+    <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. ${careMode() ? 'Staat de tweeling al in een vakje? Dan verdwijnen ze ook meteen bij het omdraaien.' : 'Staat de tweeling al in een vakje? Tik dan nog een keer op de omgedraaide steen.'} Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true);
   $('#mGo').onclick = closeModal;
   S.seenDown = true; save();

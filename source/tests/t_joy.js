@@ -110,4 +110,38 @@ module.exports = [
       t.eq(await modal(p), null, 'only once a day');
     },
   },
+  {
+    name: 'face-down tiles: only grandma\'s match at once when the twin waits in the tray',
+    async run(t, { startLevel, sleep }) {
+      for (const [who, st, instant] of [['grandma', OMA, true], ['Dennis', DENNIS, false]]) {
+        const p = await t.phone({ state: { ...st, level: 30 } });
+        await startLevel(p, 30); await sleep(300);
+        const pair = await p.evaluate(makeHiddenPair);
+        if (!t.ok(pair, `${who}: set up a hidden pair`)) continue;
+        await p.evaluate(([, u]) => __mj.onTap(u), pair); await sleep(500);    // its twin goes into the tray
+        await p.evaluate(([d]) => __mj.onTap(d), pair); await sleep(600);      // tap the face-down tile
+        const r = await p.evaluate(([d]) => ({ gone: !__mj.G.alive[d], open: __mj.G.peek === d, tray: __mj.G.tray.length }), pair);
+        if (instant) t.eq(r, { gone: true, open: false, tray: 0 }, 'grandma: matched straight away');
+        else {
+          t.eq(r, { gone: false, open: true, tray: 1 }, 'Dennis: it only turns over');
+          await p.evaluate(([d]) => __mj.onTap(d), pair); await sleep(600);
+          t.eq(await p.evaluate(([d]) => [__mj.G.alive[d], __mj.G.tray.length], pair), [0, 0], 'Dennis: second tap matches');
+        }
+        await p.ctx.close();
+      }
+    },
+  },
+  {
+    name: 'see-through: tapping a covered tile makes the tiles on top see-through for a moment',
+    async run(t, { startLevel, sleep }) {
+      const p = await t.phone({ state: { ...DENNIS, level: 25 } });
+      await startLevel(p, 25); await sleep(1200);
+      const i = await p.evaluate(() => { const G = __mj.G; const i = G.tiles.findIndex((t, i) => G.alive[i] && G.nb.above[i].some(j => G.alive[j])); __mj.onTap(i); return i; });
+      await sleep(250);
+      const r = await p.evaluate(i => { const G = __mj.G; const up = G.nb.above[i].filter(j => G.alive[j]); return { up: up.length, xray: up.filter(j => G.tiles[j].el.classList.contains('xray')).length, op: getComputedStyle(G.tiles[up[0]].el).opacity }; }, i);
+      t.ok(r.up > 0 && r.xray === r.up && +r.op < 0.5, 'tiles on top see-through', r);
+      await sleep(1800);
+      t.eq(await p.evaluate(() => document.querySelectorAll('#board .xray').length), 0, 'back to normal after a moment');
+    },
+  },
 ];

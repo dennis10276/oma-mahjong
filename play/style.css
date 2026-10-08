@@ -541,9 +541,11 @@ body.nonum .cn { display: none; }
 .gift-box.open { animation: pop .5s cubic-bezier(.3,1.6,.5,1); font-size: 64px; text-shadow: 0 4px 0 var(--gold-d), 0 0 22px rgba(255,200,0,.8); }
 @keyframes giftWiggle { 0%, 60%, 100% { transform: rotate(0) scale(1); } 70% { transform: rotate(-10deg) scale(1.08); } 80% { transform: rotate(9deg) scale(1.08); } 90% { transform: rotate(-5deg); } }
 /* grandma's helper: a pair that glows until it is matched */
-#board .tile.nudge { animation: nudgeGlow .6s ease-in-out infinite alternate; z-index: 40 !important; }
-@keyframes nudgeGlow { from { box-shadow: 0 0 0 3px #ffd23f, 0 0 10px 4px rgba(255,200,40,.6); transform: translateY(0); } to { box-shadow: 0 0 0 5px #fff3a0, 0 0 26px 12px rgba(255,210,60,.95); transform: translateY(-4px); } }
-#tray .slot.nudge { animation: nudgeGlow .6s ease-in-out infinite alternate; }
+#board .tile.nudge { animation: nudgeShake 1.4s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd23f, 0 0 18px 7px rgba(255,205,50,.85); z-index: 40 !important; }
+@keyframes nudgeShake { 0%, 45%, 100% { transform: translate(0) rotate(0); } 5% { transform: translateX(-4px) rotate(-5deg); } 12% { transform: translateX(4px) rotate(5deg); } 19% { transform: translateX(-4px) rotate(-4deg); } 26% { transform: translateX(3px) rotate(3deg); } 33% { transform: translateX(-2px) rotate(-2deg); } 40% { transform: translateX(1px) rotate(1deg); } }
+#tray .slot.nudge { animation: nudgeShake 1.4s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd23f, 0 0 14px 5px rgba(255,205,50,.8); }
+/* see-through: the tiles on top of a stuck tile, briefly */
+#board .tile.xray { opacity: .22; }
 #board .tile.lucky { animation: luckyGlow .55s ease-in-out infinite alternate; z-index: 50 !important; }
 @keyframes luckyGlow { from { box-shadow: 0 0 0 3px #7ee36a, 0 0 10px 3px rgba(110,230,90,.6); } to { box-shadow: 0 0 0 5px #b7ff9e, 0 0 26px 10px rgba(140,255,110,.9); } }
 .tile.lucky .face::before { content: '🍀'; position: absolute; left: -10%; top: -10%; font-size: calc(var(--fs, 30px) * .45); line-height: 1; }
