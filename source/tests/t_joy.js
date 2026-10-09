@@ -48,9 +48,9 @@ module.exports = [
   {
     name: 'helper (grandma): a pair with a face-down tile is turned over and glows until matched',
     async run(t, { startLevel, sleep }) {
-      const p = await t.phone({ state: { ...OMA, level: 30 }, tune: QUICK });
-      await startLevel(p, 30); await sleep(500);
-      const pair = await p.evaluate(makeHiddenPair);
+      const p = await t.phone({ state: { ...OMA, level: 40 }, tune: QUICK });
+      let pair = null;
+      for (let L = 28; L <= 40 && !pair; L++) { await startLevel(p, L); await sleep(300); pair = await p.evaluate(makeHiddenPair); }
       if (!t.ok(pair, 'set up a hidden pair')) return;
       await p.evaluate(() => { __mj.G.lastMove = performance.now(); });
       await sleep(1000);
@@ -76,9 +76,10 @@ module.exports = [
       t.eq(await p.evaluate(() => __mj.G.nudge), null, 'not after the short wait');
       await sleep(3000);
       t.ok(await p.evaluate(() => (__mj.G.nudge || []).length >= 1 && document.querySelectorAll('#board .tile.nudge').length >= 1), 'glowing after the long wait');
-      const q = await t.phone({ state: { ...DENNIS, level: 30 }, tune: QUICK });
-      await startLevel(q, 30); await sleep(300);
-      await q.evaluate(makeHiddenPair);
+      const q = await t.phone({ state: { ...DENNIS, level: 40 }, tune: QUICK });
+      let qp = null;
+      for (let L = 28; L <= 40 && !qp; L++) { await startLevel(q, L); await sleep(300); qp = await q.evaluate(makeHiddenPair); }
+      await q.evaluate(() => { __mj.G.lastMove = performance.now(); });
       await sleep(7000);
       t.eq(await q.evaluate(() => [__mj.G.nudge, document.querySelectorAll('.nudge').length]), [null, 0], 'Dennis gets no helper');
     },
@@ -120,9 +121,9 @@ module.exports = [
   {
     name: 'face-down tiles: turned over with the twin in the tray, they match right then (everyone)',
     async run(t, { startLevel, sleep }) {
-      const p = await t.phone({ state: { ...DENNIS, level: 30 } });
-      await startLevel(p, 30); await sleep(300);
-      const pair = await p.evaluate(makeHiddenPair);
+      const p = await t.phone({ state: { ...DENNIS, level: 40 } });
+      let pair = null;
+      for (let L = 28; L <= 40 && !pair; L++) { await startLevel(p, L); await sleep(300); pair = await p.evaluate(makeHiddenPair); }
       if (!t.ok(pair, 'set up a hidden pair')) return;
       await p.evaluate(([, u]) => __mj.onTap(u), pair); await sleep(500);    // its twin goes into the tray
       await p.evaluate(([d]) => __mj.onTap(d), pair);                        // tap the face-down tile

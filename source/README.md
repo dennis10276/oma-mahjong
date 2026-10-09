@@ -87,13 +87,14 @@ back to its built-in version and skips that update. New files in `js/` only need
   can be taken the ice melts / the locks open by themselves.
 - a face-down tile whose twin waits in the tray matches as soon as it is tapped
 
-Piles (1.24): shapes that match the screen and fill their box are preferred, and the board is sized and
+Piles (1.24/1.25): shapes that match the screen, fill their box and have no dents or holes are
+preferred (`buildOnce` in layouts.js, `DENT_W`), a pile that comes out too flat is built again, and the board is sized and
 centred on where the tiles really are (so upper layers no longer leave an empty strip at the top).
 An upper tile never sits exactly on one tile. Each layer first tries to rest every tile
 on 4 tiles below (half a tile shifted both ways, the stepped pyramid look), otherwise on 2 (shifted
 sideways or down), so taking a tile always uncovers part of several.
 
-Level difficulty: each deal is judged on 24 computer games and checked with 96 more; if it is far
+Level difficulty: each deal is judged on 24 computer games and checked with 400 more; if it is far
 from the level's target the dealing is tuned (fewer/more "parked" tiles, fewer/more pictures), within a
 0.4 s limit. Schudden tries 8 new deals and keeps the one the computer clears most often.
 
