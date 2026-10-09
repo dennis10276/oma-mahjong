@@ -221,7 +221,7 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
 #toast.top.on { transform: translate(-50%, 0); }
 
 /* a stuck tile: arrows to the tiles in the way */
-.blk-arrow { position: absolute; z-index: 999999; pointer-events: none; transform: translate(-50%, -50%) rotate(var(--a)); animation: blkNudge 1.3s ease-in-out forwards; filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
+.blk-arrow { position: absolute; z-index: 2000000; pointer-events: none; transform: translate(-50%, -50%) rotate(var(--a)); animation: blkNudge 1.3s ease-in-out forwards; filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
 .blk-arrow svg { width: 100%; height: 100%; display: block; }
 @keyframes blkNudge {
   0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--a)) translateX(-40%) scale(.6); }
@@ -558,12 +558,13 @@ body.nonum .cn { display: none; }
 .gift-box.open { animation: pop .5s cubic-bezier(.3,1.6,.5,1); font-size: 64px; text-shadow: 0 4px 0 var(--gold-d), 0 0 22px rgba(255,200,0,.8); }
 @keyframes giftWiggle { 0%, 60%, 100% { transform: rotate(0) scale(1); } 70% { transform: rotate(-10deg) scale(1.08); } 80% { transform: rotate(9deg) scale(1.08); } 90% { transform: rotate(-5deg); } }
 /* grandma's helper: a pair that glows until it is matched */
-#board .tile.nudge { animation: nudgeShake 1.4s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd23f, 0 0 18px 7px rgba(255,205,50,.85); z-index: 40 !important; }
+/* a glowing tile is always free (nothing on top), so it is lifted above the whole pile (tiles use z-index layer*10000+...) */
+#board .tile.nudge { animation: nudgeShake 1.4s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd23f, 0 0 18px 7px rgba(255,205,50,.85); z-index: 1000000 !important; }
 @keyframes nudgeShake { 0%, 45%, 100% { transform: translate(0) rotate(0); } 5% { transform: translateX(-4px) rotate(-5deg); } 12% { transform: translateX(4px) rotate(5deg); } 19% { transform: translateX(-4px) rotate(-4deg); } 26% { transform: translateX(3px) rotate(3deg); } 33% { transform: translateX(-2px) rotate(-2deg); } 40% { transform: translateX(1px) rotate(1deg); } }
 #tray .slot.nudge { animation: nudgeShake 1.4s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd23f, 0 0 14px 5px rgba(255,205,50,.8); }
 /* see-through: the tiles on top of a stuck tile, briefly */
 #board .tile.xray { opacity: .22; }
-#board .tile.lucky { animation: luckyGlow .55s ease-in-out infinite alternate; z-index: 50 !important; }
+#board .tile.lucky { animation: luckyGlow .55s ease-in-out infinite alternate; z-index: 1000001 !important; }
 @keyframes luckyGlow { from { box-shadow: 0 0 0 3px #7ee36a, 0 0 10px 3px rgba(110,230,90,.6); } to { box-shadow: 0 0 0 5px #b7ff9e, 0 0 26px 10px rgba(140,255,110,.9); } }
 .tile.lucky .face::before { content: '🍀'; position: absolute; left: -10%; top: -10%; font-size: calc(var(--fs, 30px) * .45); line-height: 1; }
 

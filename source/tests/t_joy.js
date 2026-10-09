@@ -140,4 +140,25 @@ module.exports = [
       t.eq(await p.evaluate(() => document.querySelectorAll('#board .xray').length), 0, 'back to normal after a moment');
     },
   },
+  {
+    name: 'lucky moment and helper: the glowing tile stays visible on every layer (hidden under the pile before 1.23)',
+    async run(t, { startLevel, sleep }) {
+      const p = await t.phone({ state: { ...DENNIS, level: 25 } });
+      await startLevel(p, 25); await sleep(1500);
+      const r = await p.evaluate(() => {
+        const G = __mj.G, L = __mj.Layouts, out = [];
+        // the tile itself must be what you see at its centre (not a tile lying under it)
+        const seen = el => { const b = el.getBoundingClientRect(), hit = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return !!hit && hit.closest('.tile') === el; };
+        for (const z of [0, 1, 2, 3]) {
+          const i = G.tiles.findIndex((t, i) => t.z === z && G.alive[i] && L.isFree(i, G.alive, G.nb));
+          if (i < 0) continue;
+          const el = G.tiles[i].el;
+          for (const cls of ['lucky', 'nudge']) { el.classList.add(cls); out.push({ z, cls, seen: seen(el) }); el.classList.remove(cls); }
+        }
+        return out;
+      });
+      t.ok(r.some(x => x.z >= 1), 'free tiles on higher layers found', r);
+      t.ok(r.every(x => x.seen), 'always visible', r);
+    },
+  },
 ];
