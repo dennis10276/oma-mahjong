@@ -111,9 +111,9 @@ module.exports = [
     },
   },
   {
-    name: 'face-down tiles: only grandma\'s match at once when the twin waits in the tray',
+    name: 'face-down tiles: turned over with the twin in the tray, they match right then (everyone)',
     async run(t, { startLevel, sleep }) {
-      for (const [who, st, instant] of [['grandma', OMA, true], ['Dennis', DENNIS, false]]) {
+      for (const [who, st, instant] of [['grandma', OMA, true], ['Dennis', DENNIS, true]]) {
         const p = await t.phone({ state: { ...st, level: 30 } });
         await startLevel(p, 30); await sleep(300);
         const pair = await p.evaluate(makeHiddenPair);
@@ -121,7 +121,7 @@ module.exports = [
         await p.evaluate(([, u]) => __mj.onTap(u), pair); await sleep(500);    // its twin goes into the tray
         await p.evaluate(([d]) => __mj.onTap(d), pair); await sleep(600);      // tap the face-down tile
         const r = await p.evaluate(([d]) => ({ gone: !__mj.G.alive[d], open: __mj.G.peek === d, tray: __mj.G.tray.length }), pair);
-        if (instant) t.eq(r, { gone: true, open: false, tray: 0 }, 'grandma: matched straight away');
+        if (instant) t.eq(r, { gone: true, open: false, tray: 0 }, `${who}: turned over and matched`);
         else {
           t.eq(r, { gone: false, open: true, tray: 1 }, 'Dennis: it only turns over');
           await p.evaluate(([d]) => __mj.onTap(d), pair); await sleep(600);

@@ -45,6 +45,7 @@ module.exports = [
         await sleep(60);
       }
       await sleep(3000);
+      t.log(await p.evaluate(() => ({ done: __mj.G.done, win: __mj.G.winShown, fl: __mj.G.flights, alive: __mj.G.alive.reduce((a, b) => a + b, 0), tray: __mj.G.tray.length, modal: document.querySelector('#modalBox').innerText.slice(0, 80), hidden: document.querySelector('#modal').classList.contains('hidden') })));
       const s = await p.evaluate(() => __mj.S.stats);
       t.ok(s.gold >= 1, 'gold pair counted', s);
       t.ok((await modal(p) || {}).buttons.includes('wNext'), 'win screen');

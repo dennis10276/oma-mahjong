@@ -62,4 +62,20 @@ module.exports = [
       t.ok(withIce >= 20 && withLock >= 12, 'most levels have them', { withIce, withLock });
     },
   },
+  {
+    name: 'levels: neighbouring levels are about equally hard (deal lands near its target)',
+    async run(t) {
+      for (const ez of [0, 1]) {
+        const offs = [];
+        for (let lv = 8; lv <= 50; lv += 2) {
+          const spec = Layouts.ease(Layouts.forLevel(lv, 2.0), ez), d = Layouts.makeDeal(spec);
+          const w = Layouts.botWinRate(spec.tiles, Layouts.neighbors(spec.tiles), d.faces, 200, 4242);
+          offs.push({ lv, w: +w.toFixed(2), target: spec.diff.target, off: Math.abs(w - spec.diff.target) });
+        }
+        const mean = offs.reduce((a, b) => a + b.off, 0) / offs.length, worst = offs.reduce((a, b) => b.off > a.off ? b : a);
+        t.ok(mean < (ez ? 0.05 : 0.08), `ez${ez}: on average close to the target`, { mean: +mean.toFixed(3) });
+        t.ok(worst.off < (ez ? 0.15 : 0.22), `ez${ez}: no level far off`, worst);
+      }
+    },
+  },
 ];

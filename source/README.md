@@ -52,6 +52,12 @@ Special tiles and mechanics (everyone):
   Placed from a known solution (`Layouts.obstacles`), so every level stays solvable; if nothing at all
   can be taken the ice melts / the locks open by themselves.
 
+Level difficulty (1.20): each deal is judged on 24 computer games and checked with 96 more; if it is
+far from the level's target the dealing is tuned (fewer/more "parked" tiles, fewer/more pictures),
+within a 0.4 s limit. Schudden tries 8 new deals and keeps the one the computer clears most often;
+grandma can only shuffle after playing a few tiles (at the very start it would waste the good deal).
+A face-down tile whose twin waits in the tray matches as soon as it is tapped (everyone).
+
 For everyone: messages while playing appear in a strip under the tray (never over the tiles),
 points float out of the score counter, a little party at a quarter / half / three quarters of the
 pile, a bonus star for 3 levels in a row (and every 5), and a daily gift on the first visit.

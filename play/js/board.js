@@ -286,9 +286,7 @@ function onTap(i) {
     const pk0 = G.peek;
     const twin = pk0 >= 0 && G.alive[pk0] && free(pk0) && G.tiles[pk0].face === G.tiles[i].face;
     const inTray = G.tray.some(t => G.tiles[t].face === G.tiles[i].face);
-    // grandma: a face-down tile whose twin is open or in the tray matches straight away;
-    // everyone else first sees it turn over (unless its twin is the tile they just opened)
-    if ((!twin && !inTray) || (!careMode() && !twin)) {
+    if (!twin && !inTray) {
       // face-down tile: first tap turns it over (only one at a time), second tap takes it
       if (pk0 >= 0 && G.alive[pk0]) turn(pk0, true);
       G.peek = i; turn(i, false);
@@ -296,10 +294,12 @@ function onTap(i) {
       taskProgress('flips'); bumpStat('flips'); if (G.st) G.st.fl++;
       return;
     }
-    // its twin is already in the tray, or is the open tile (which counts as picked): match at once
-    G.down[i] = 0;
+    // its twin is already in the tray, or is the open tile (which counts as picked): it matches
+    // right away; the tile flips open while it flies, so you see what it was
+    G.down[i] = 0; G.reveal = i; Sound.flip();
   }
   if (G.peek === i) { G.down[i] = 0; G.peek = -1; }
+  const wasDown = G.reveal === i; G.reveal = -1;
   const face = G.tiles[i].face;
   const mi = G.tray.findIndex(t => G.tiles[t].face === face);
   const pk = G.peek;
@@ -333,6 +333,7 @@ function onTap(i) {
     const goldP = G.gold.has(i) || G.gold.has(pk);
     const mid = { left: (from.left + pfrom.left) / 2, top: (from.top + pfrom.top) / 2 - from.height * 0.3, width: from.width, height: from.height };
     const f1 = flyTile(face, from, mid, MS), f2 = flyTile(face, pfrom, mid, MS);
+    if (wasDown) f1.classList.add('reveal');
     afterLogic();
     land(() => { f1.classList.add('popout'); f2.classList.add('popout'); onMatch({ x: mid.left + mid.width / 2, y: mid.top + mid.height / 2 }, face, goldP); setTimeout(() => { f1.remove(); f2.remove(); }, 230); afterLand(); });
     return;
@@ -349,6 +350,7 @@ function onTap(i) {
     const goldT = G.gold.has(i) || G.gold.has(partner);
     renderTray();
     const fly = flyTile(face, from, to, MS);
+    if (wasDown) fly.classList.add('reveal');
     afterLogic();
     land(() => {
       fly.classList.add('popout'); if (ghost) ghost.classList.add('popout');
@@ -399,7 +401,7 @@ function showDownTip() {
   openModal(`<h2>Omgedraaide stenen</h2>
     <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
     <p>Sommige stenen liggen <b>omgedraaid</b>. Tik er één keer op om te kijken wat het is, en nog een keer om hem te pakken.</p>
-    <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. ${careMode() ? 'Staat de tweeling al in een vakje? Dan verdwijnen ze ook meteen bij het omdraaien.' : 'Staat de tweeling al in een vakje? Tik dan nog een keer op de omgedraaide steen.'} Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
+    <p>Er kan maar <b>één steen tegelijk</b> open liggen. Een open steen telt alsof hij al gepakt is: draai je daarna <b>dezelfde</b> om, of tik je er een aan, dan verdwijnen ze meteen. Staat de tweeling al in een vakje? Dan verdwijnen ze ook meteen bij het omdraaien. Is het een andere, dan gaat de vorige weer dicht. Goed onthouden dus! 🧠</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true);
   $('#mGo').onclick = closeModal;
   S.seenDown = true; save();
@@ -507,7 +509,7 @@ function hint() {
   if (!toolsOpen()) return toolsLockedMsg();
   if (G.usedHint) { toast('Je hint voor dit level is al gebruikt'); Sound.blocked(); return; }
   const faces = G.tiles.map(t => t.face);
-  const path = Layouts.solve(G.tiles, G.nb, faces, G.alive, G.tray, 30000, obRules());
+  const path = solveNow(30000);
   if (!path || !path.length) { toast('Zo gaat het niet meer lukken… probeer 🔀 Schudden'); Sound.blocked(); return; }
   G.usedHint = true; updateTools(); saveCur();
   syncClock(); logEvt('hint', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount() });
@@ -523,6 +525,12 @@ function shuffle() {
   Sound.init();
   if (!toolsOpen()) return toolsLockedMsg();
   if (G.usedShuffle) { toast('Je hebt in dit level al geschud'); Sound.blocked(); return; }
+  // grandma: shuffling before playing throws away a good deal and costs a star; keep it for later
+  if (careMode() && G.tiles.length - aliveCount() < 8 && G.tray.length < 2) {
+    toast('Bewaar schudden voor als je vastzit 😉', 2600); Sound.blocked();
+    logEvt('shufno', { ...lvInfo(), at: G.attempt, left: aliveCount() });
+    return;
+  }
   G.usedShuffle = true; updateTools(); clearNudge();
   syncClock(); logEvt('shuf', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), tray: G.tray.length });
   G.busy = true;
@@ -533,9 +541,15 @@ function shuffle() {
   trayFaces.forEach(f => count[f]--);
   const pf = [];
   for (const f in count) for (let k = 0; k < count[f] / 2; k++) pf.push(+f);
-  const r = Layouts.rng((Math.random() * 1e9) | 0);
-  // a generous re-deal: the tray pictures come free quickly
-  const faces = Layouts.deal(G.tiles, G.nb, pf, r, { alive: G.alive, openFaces: trayFaces, cap: Math.max(2, trayFaces.length), open: 0.2 });
+  // a generous re-deal: the tray pictures come free quickly. Several are tried and the one the
+  // computer player clears most often is kept, so shuffling never makes it harder.
+  let faces = null, bestW = -1;
+  for (let k = 0; k < 8 && bestW < 0.99; k++) {
+    const r = Layouts.rng((Math.random() * 1e9) | 0);
+    const f = Layouts.deal(G.tiles, G.nb, pf, r, { alive: G.alive, openFaces: trayFaces, cap: Math.max(2, trayFaces.length), open: 0.2 });
+    const w = Layouts.botWinRate(G.tiles, G.nb, f, 16, k + 1, { alive: G.alive, tray: trayFaces });
+    if (w > bestW) { bestW = w; faces = f; }
+  }
   // the two key tiles must keep the same picture
   if (G.ob && !G.ob.unlocked && G.ob.keys.length) {
     const [a, b] = G.ob.keys;
@@ -621,5 +635,16 @@ function clearNudge() {
 }
 setInterval(nudgeTick, 1000);
 
-// the solver with the current ice and locks (hint, tests)
-function solveNow(limit = 30000) { return Layouts.solve(G.tiles, G.nb, G.tiles.map(t => t.face), G.alive, G.tray.slice(), limit, obRules()); }
+/* The solver with the current ice and locks (hint, tests). A single joker left over (its partner was
+   used as a wildcard) can't be paired: for the solver it is a tile that clears itself (face -1),
+   which is what it does as the last tile (the joker finale) and never worse earlier on. */
+function solveNow(limit = 30000) {
+  const faces = G.tiles.map(t => t.face);
+  let tray = G.tray.slice();
+  const jb = G.tiles.map((t, i) => i).filter(i => G.alive[i] && faces[i] === JOKER), jt = tray.filter(t => faces[t] === JOKER);
+  if ((jb.length + jt.length) % 2) {
+    if (jt.length) tray = tray.filter(t => t !== jt[0]);
+    else faces[jb[jb.length - 1]] = -1;
+  }
+  return Layouts.solve(G.tiles, G.nb, faces, G.alive, tray, limit, obRules());
+}

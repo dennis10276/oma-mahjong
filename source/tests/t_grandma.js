@@ -111,4 +111,27 @@ module.exports = [
       t.eq(await q.evaluate(() => __mj.G.ez), 0, 'Dennis: still the normal level');
     },
   },
+  {
+    name: 'shuffle: grandma keeps it for later when she presses it right at the start; others can always',
+    async run(t, { startLevel, click, sleep }) {
+      const p = await t.phone({ state: { ...OMA, level: 16 } });
+      await startLevel(p, 16); await sleep(300);
+      await click(p, '#btnShuffle'); await sleep(400);
+      t.eq(await p.evaluate(() => __mj.G.usedShuffle), false, 'not used, star kept');
+      t.ok(/Bewaar schudden/.test(await p.evaluate(() => document.querySelector('#gameMsg').innerText)), 'tells her why');
+      // after playing a few pairs it works, and the pictures stay the same set
+      const path = await p.evaluate(() => __mj.solveNow(60000));
+      for (const m of path.slice(0, 10)) { await p.evaluate(m => { const G = __mj.G; if (!G.alive[m]) return; __mj.onTap(m); if (G.alive[m]) __mj.onTap(m); }, m); await sleep(280); }
+      const before = await p.evaluate(() => { const G = __mj.G, c = {}; G.tiles.forEach((t, i) => { if (G.alive[i]) c[t.face] = (c[t.face] || 0) + 1; }); return c; });
+      await click(p, '#btnShuffle'); await sleep(1300);
+      const after = await p.evaluate(() => { const G = __mj.G, c = {}; G.tiles.forEach((t, i) => { if (G.alive[i]) c[t.face] = (c[t.face] || 0) + 1; }); return c; });
+      t.eq(await p.evaluate(() => __mj.G.usedShuffle), true, 'shuffled after playing');
+      t.eq(after, before, 'same pictures, new places');
+      t.ok(await p.evaluate(() => !!__mj.solveNow(60000)), 'still solvable');
+      const q = await t.phone({ state: { ...DENNIS, level: 16 } });
+      await startLevel(q, 16); await sleep(300);
+      await click(q, '#btnShuffle'); await sleep(1200);
+      t.eq(await q.evaluate(() => __mj.G.usedShuffle), true, 'Dennis can shuffle at the start');
+    },
+  },
 ];

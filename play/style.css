@@ -536,6 +536,9 @@ body.nonum .cn { display: none; }
 #board .tile.sp-joker:not(.back) { background: linear-gradient(160deg, #f3ecff 0%, #dccbff 60%, #c2a8ff 100%); }
 .emo.sp { animation: spBob 1.6s ease-in-out infinite; display: inline-block; }
 @keyframes spBob { 50% { transform: scale(1.1) rotate(-4deg); } }
+/* a face-down tile that matches at once: it flips open while it flies */
+.tile.flying.reveal .face { animation: faceReveal .26s ease-out; }
+@keyframes faceReveal { from { transform: scaleX(0); } 60% { transform: scaleX(1.1); } }
 /* ice, lock and key */
 .tile .ob { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2; }
 .tile .ob::after { position: absolute; line-height: 1; font-size: calc(var(--fs, 30px) * .42); filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }

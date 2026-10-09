@@ -409,19 +409,21 @@ const Layouts = (() => {
 
   /* A sensible simulated player: takes a tray match, else a visible free pair,
      else digs where it uncovers the most. Returns the share of runs that clear the board. */
-  function botWinRate(tiles, nb, faces, runs = 8, seed = 1) {
+  // start (optional): { alive, tray: [faces] } to judge a game halfway (used by Schudden)
+  function botWinRate(tiles, nb, faces, runs = 8, seed = 1, start = null) {
     const n = tiles.length;
     const covers = new Array(n).fill(0);
     for (let j = 0; j < n; j++) for (const i of nb.above[j]) covers[i]++;
     let wins = 0;
     for (let k = 0; k < runs; k++) {
       const r = rng(seed * 991 + k * 7919);
-      const alive = new Uint8Array(n).fill(1);
-      const tray = [];
+      const alive = start ? Uint8Array.from(start.alive) : new Uint8Array(n).fill(1);
+      const tray = start ? start.tray.slice() : [];
       let ok = true;
       for (let step = 0; step < n; step++) {
         const fr = [];
         for (let i = 0; i < n; i++) if (isFree(i, alive, nb)) fr.push(i);
+        if (!fr.length) break;
         let m = fr.find(i => tray.includes(faces[i]));
         if (m === undefined) {
           if (tray.length >= SLOTS - 1) { ok = false; break; }  // a 4th unmatched tile ends the level
@@ -444,18 +446,36 @@ const Layouts = (() => {
     return wins / runs;
   }
 
-  /* Try several deals for a level and keep the one whose difficulty is closest to the level's target. */
-  function makeDeal(spec, tries = 28) {
-    const tiles = spec.tiles, nb = neighbors(tiles);
-    let best = null;
-    for (let k = 0; k < tries; k++) {
-      const r = rng(spec.seed + k * 31337);
-      const pf = pairFacesFor(tiles.length / 2, spec.kinds, r);
-      const faces = deal(tiles, nb, pf, r, spec.diff);
-      const w = botWinRate(tiles, nb, faces, 8, spec.seed + k);
-      const score = Math.abs(w - spec.diff.target);
-      if (!best || score < best.score) best = { faces, w, score };
-      if (score < 0.04) break;
+  /* Try several deals for a level and keep the one whose difficulty is closest to the level's target.
+     1.20: every deal is judged on 24 bot games instead of 8 (less luck), and when no deal comes close,
+     the dealing itself is tuned: too hard -> fewer tiles "parked" behind their partner, too easy -> more.
+     This keeps neighbouring levels about equally hard. */
+  function makeDeal(spec, tries = 24) {
+    const tiles = spec.tiles, nb = neighbors(tiles), target = spec.diff.target;
+    let best = null, open = spec.diff.open, cap = spec.diff.cap, kinds = spec.kinds;
+    const t0 = Date.now();   // a time limit, so a slow phone never waits long before a level starts
+    for (let round = 0; round < 7; round++) {
+      const diff = { ...spec.diff, open, cap };
+      let roundBest = null;
+      for (let k = 0; k < tries; k++) {
+        const r = rng(spec.seed + k * 31337 + round * 7777);
+        const pf = pairFacesFor(tiles.length / 2, kinds, r);
+        const faces = deal(tiles, nb, pf, r, diff);
+        const w = botWinRate(tiles, nb, faces, 24, spec.seed + k + round * 101);
+        const score = Math.abs(w - target);
+        if (!roundBest || score < roundBest.score) roundBest = { faces, w, score };
+        if (score < 0.04) break;
+      }
+      // the best of many noisy estimates is usually a lucky one: measure it properly before trusting it
+      roundBest.w = botWinRate(tiles, nb, roundBest.faces, 96, spec.seed + 5555 + round);
+      roundBest.score = Math.abs(roundBest.w - target);
+      if (!best || roundBest.score < best.score) best = roundBest;
+      if (best.score < 0.06 || Date.now() - t0 > 400) break;
+      // tune the dealing for the next round
+      // when the dealing is already at its limit: fewer different pictures (easier) or more (harder)
+      const pairs = tiles.length / 2;
+      if (roundBest.w < target) { if (open === 0) kinds = Math.max(4, Math.round(kinds * 0.85)); open = Math.max(0, open - 0.22); if (open === 0) cap = Math.max(2, cap - 1); }
+      else { if (open === 1) kinds = Math.min(36, pairs, Math.round(kinds * 1.15) + 1); open = Math.min(1, open + 0.22); }
     }
     const r2 = rng(spec.seed + 777);
     const nDown = Math.round(tiles.length * (spec.diff.down || 0));
@@ -484,7 +504,7 @@ const Layouts = (() => {
       const fr = [];
       for (let i = 0; i < n; i++) if (can(i)) fr.push(i);
       const tf = new Set(tray.map(t => faces[t]));
-      const match = fr.filter(i => tf.has(faces[i]));
+      const match = fr.filter(i => tf.has(faces[i]) || faces[i] === -1);   // -1: a tile that clears itself (a lone joker)
       const cnt = {};
       fr.forEach(i => cnt[faces[i]] = (cnt[faces[i]] || 0) + 1);
       const pair = fr.filter(i => !tf.has(faces[i]) && cnt[faces[i]] >= 2);
@@ -500,8 +520,8 @@ const Layouts = (() => {
       if (dead.has(k)) return false;
       for (const m of moves(tray)) {
         alive[m] = 0;
-        const mi = tray.findIndex(t => faces[t] === faces[m]);
-        const nt = mi >= 0 ? tray.filter((_, q) => q !== mi) : tray.concat([m]);
+        const mi = faces[m] === -1 ? -2 : tray.findIndex(t => faces[t] === faces[m]);
+        const nt = mi === -2 ? tray : mi >= 0 ? tray.filter((_, q) => q !== mi) : tray.concat([m]);
         if (rec(nt, left - 1)) { alive[m] = 1; path.unshift(m); return true; }
         alive[m] = 1;
       }
