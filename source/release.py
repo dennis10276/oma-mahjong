@@ -9,7 +9,8 @@
 
 What it does:
   - sets the version in www/js/core.js (APP_VERSION) and www/index.html (the boot loader)
-  - writes site/play/ (the game in the browser) + site/play/bundle.json (what the app downloads)
+  - writes site/play/ (the game in the browser, scripts in play/v/<version>/) + site/play/bundle.json
+    (what the app downloads)
   - bumps versionCode/versionName, builds the APK, puts it on the download page (unless --no-apk)
 """
 import json, os, re, shutil, subprocess, sys
@@ -17,6 +18,7 @@ import json, os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WWW, SITE = os.path.join(ROOT, 'www'), os.path.join(ROOT, 'site')
 REPO = os.environ.get('PAGES_REPO', '/home/claude/repo-oma')
+KEEP_VERSIONS = 5       # how many web versions (play/v/<version>/) stay online
 
 
 def game_files():
@@ -58,15 +60,38 @@ def main():
     FILES = game_files()
     sub(os.path.join(WWW, 'index.html'), r"var BUILT = '[^']*'", f"var BUILT = '{v}'")
 
-    # the browser version, with cache-busting
+    # the browser version. Every version gets its own folder play/v/<version>/ with the scripts, the
+    # style and the fonts, and index.html points there. A page that is still open (or an index.html
+    # the browser kept) then always loads the scripts of ITS OWN version, never a mix of old and new
+    # (a mix gave errors like "Can't find variable"). The last KEEP_VERSIONS folders stay online.
     play = os.path.join(SITE, 'play')
+    old_v = {}
+    for src in [os.path.join(REPO, 'play', 'v'), os.path.join(play, 'v')]:
+        if os.path.isdir(src):
+            for d in os.listdir(src):
+                if d != v and re.fullmatch(r'\d+(\.\d+)*', d):
+                    old_v.setdefault(d, os.path.join(src, d))
+    keep = sorted(old_v, key=lambda d: [int(x) for x in d.split('.')])[-(KEEP_VERSIONS - 1):]
+    tmp = os.path.join(ROOT, 'build', 'old-v')
+    shutil.rmtree(tmp, ignore_errors=True)
+    for d in keep:
+        shutil.copytree(old_v[d], os.path.join(tmp, d))
     shutil.rmtree(play, ignore_errors=True)
-    shutil.copytree(WWW, play)
+    shutil.copytree(WWW, play)          # the files in the root stay too, for pages from before 1.27
+    vdir = os.path.join(play, 'v', v)
+    for f in FILES + ['style.css']:
+        os.makedirs(os.path.dirname(os.path.join(vdir, f)), exist_ok=True)
+        shutil.copy(os.path.join(WWW, f), os.path.join(vdir, f))
+    shutil.copytree(os.path.join(WWW, 'fonts'), os.path.join(vdir, 'fonts'))
+    for d in keep:
+        shutil.copytree(os.path.join(tmp, d), os.path.join(play, 'v', d))
+    shutil.rmtree(tmp, ignore_errors=True)
     idx = os.path.join(play, 'index.html')
     s = open(idx, encoding='utf-8').read()
-    s = re.sub(r'href="style\.css"', f'href="style.css?v={v}"', s)
-    s = re.sub(r"FILES = \[[^\]]*\]", "FILES = [" + ", ".join(f"'{f}?v={v}'" for f in FILES) + "]", s, count=1)
+    s = re.sub(r'href="style\.css"', f'href="v/{v}/style.css"', s)
+    s = re.sub(r"FILES = \[[^\]]*\]", "FILES = [" + ", ".join(f"'v/{v}/{f}'" for f in FILES) + "]", s, count=1)
     open(idx, 'w', encoding='utf-8').write(s)
+    print(f'web version in play/v/{v}/ (kept: {", ".join(keep) or "none"})')
 
     # what installed apps download
     html = open(os.path.join(WWW, 'index.html'), encoding='utf-8').read()

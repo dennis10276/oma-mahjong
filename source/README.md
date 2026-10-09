@@ -1,6 +1,6 @@
 # Oma's Mahjong
 
-Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch.
+Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or English.
 
 - `OmasMahjong.apk`: the app, ready to install
 - `www/`: the game itself (HTML/JS, open `www/index.html` in a browser to play)
@@ -10,6 +10,7 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch.
     | file | what |
     |---|---|
     | `rules.js` | **every number you may want to tune** (see below); also used by the dashboard |
+    | `lang.js` | every text of the game in Dutch and English (`tx('key')`), the language switch |
     | `core.js` | saved progress (`S`), dates, small helpers, backgrounds, prizes |
     | `fx.js` | particles: confetti, sparkles, flying emoji |
     | `update.js` | self-update from the website |
@@ -41,12 +42,14 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
 
 - `RULES`: from which level the tools, the Zonnebloem prize, gold pairs and jokers come; points per
   pair, combo, stars, gold, lucky moment and joker finale; the win-streak bonus; the chest; the daily
-  gift; hearts (how long the pop-up stays, the ready-made messages).
+  gift; hearts (how long the pop-up stays; the ready-made messages are in `lang.js`, `quickMsgs`).
 - `HELP`: the help per kind of player, `care` (grandma) and `normal` (everyone else): combo time,
   lucky moments, a gentler deal, easier after N failed tries, putting the tray back, the helper and
   its timings, no shuffle at the start, and the adaptive difficulty. To give someone else a kind of
   help, change it under `normal` (e.g. `rescue: true`).
-- `CARE`: who grandma is (her player id, or a name starting with "Oma").
+- `CARE`: who gets grandma's help (player ids: grandma and Mama, or a name starting with "Oma").
+- `START_ENGLISH`: player ids that start in English (Mama). Anyone can switch in the settings
+  (🌐 Language); that choice is saved in `S.lang` and always wins.
 - When ice and locks start is in `layouts.js` (`MECH`), the tray size there too (`SLOTS`).
 - The tests can change these per test: `t.phone({ tune: { HELP: { normal: { rescue: true } } } })`.
 
@@ -57,6 +60,11 @@ The app updates itself: on start (and when it comes back to the foreground) it c
 the phone and used from the home screen on. If a downloaded version does not start, the app falls
 back to its built-in version and skips that update. New files in `js/` only need to be added to the
 `FILES` list in `index.html`.
+
+The web / iPhone version reloads when `play/version.json` is newer. Each version's scripts, style and
+fonts are in their own folder `play/v/<version>/` (`index.html` points there; the last 5 stay online),
+so a page or a kept `index.html` never mixes old and new scripts (that gave "Can't find variable"
+errors in 1.26). The reload goes to `?v=<version>` so the browser fetches the new page.
 
     python3 release.py 1.6 --deploy   # phones update themselves, and the download page
                                       # always gets a fresh APK of the same version
@@ -123,6 +131,7 @@ matched to the heart by sender and time.
 | `t_ranking`, `t_hearts` | computer players, climbing, hearts with messages |
 | `t_screens` | every screen opens, themes, nothing needs scrolling on small phones |
 | `t_log`, `t_dash` | the play log and the family dashboard |
+| `t_lang` | every text in both languages, the language switch, Mama: English with grandma's help |
 | `t_update` | self-update from an old 1.5 app and the current one; a broken update is thrown away |
 | `t_online` | (with `--online`) a heart and the play log through the real database |
 

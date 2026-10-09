@@ -7,8 +7,10 @@ self.addEventListener('fetch', e => {
   const req = e.request, url = new URL(req.url);
   if (req.method !== 'GET' || url.origin !== location.origin) return;     // the database etc. go straight to the network
   if (/\/(version|bundle)\.json$/.test(url.pathname)) return;           // update checks are never cached
+  // the page itself is always checked with the website (the scripts it loads are in a folder per version)
+  const get = req.mode === 'navigate' ? fetch(req.url, { cache: 'no-cache' }) : fetch(req);
   e.respondWith(
-    fetch(req).then(res => {
+    get.then(res => {
       if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
       return res;
     }).catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match('./index.html', { ignoreSearch: true })))
