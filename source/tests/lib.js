@@ -16,13 +16,15 @@ fs.writeFileSync(BLANK, '<!doctype html><title>blank</title>');
 
 // ---------- a static web server ----------
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.woff2': 'font/woff2', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml' };
-function serve(dir) {
+// mounts: { '/play/': WWW } serves that url prefix from another folder (the dashboard loads ../play/js/rules.js)
+function serve(dir, mounts = {}) {
   return new Promise(resolve => {
     const srv = http.createServer((req, res) => {
       let p = decodeURIComponent(req.url.split('?')[0]);
       if (p.endsWith('/')) p += 'index.html';
-      const f = path.join(dir, p);
-      if (!f.startsWith(dir) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end('not found'); }
+      const m = Object.keys(mounts).find(pre => p.startsWith(pre));
+      const base = m ? mounts[m] : dir, f = path.join(base, m ? p.slice(m.length) : p);
+      if (!f.startsWith(base) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end('not found'); }
       res.writeHead(200, { 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
       fs.createReadStream(f).pipe(res);
     });
@@ -76,7 +78,8 @@ async function teardown() { if (browser) await browser.close(); if (server) serv
 /* A phone-sized page with a fresh player.
    state: saved progress (merged over sensible test defaults), db: FakeDB (a new one if omitted),
    lb: cached leaderboard entries, size: [w, h], ios: iPhone user agent, url: other start page,
-   realDb: talk to the real database (online tests only, test- players only) */
+   realDb: talk to the real database (online tests only, test- players only),
+   tune: { RULES: {...}, HELP: {...} } changes the game's rules (js/rules.js) for this page */
 async function phone(opts = {}) {
   const [w, h] = opts.size || [390, 820];
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, hasTouch: true, isMobile: true, ...(opts.ios ? { userAgent: IPHONE_UA } : {}) });
@@ -101,9 +104,18 @@ async function phone(opts = {}) {
   }
   await page.goto(url);
   await page.waitForFunction(() => window.__mjReady === true, null, { timeout: 8000 });
+  if (opts.tune) await tune(page, opts.tune);
   await sleep(300);
   page.db = db; page.ctx = ctx;
   return page;
+}
+// change the rules of a running game, e.g. tune(p, { HELP: { care: { nudge: { downS: 1 } } } })
+function tune(page, changes) {
+  return page.evaluate(ch => {
+    const merge = (a, b) => { for (const k of Object.keys(b)) { if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) && a[k] && typeof a[k] === 'object') merge(a[k], b[k]); else a[k] = b[k]; } };
+    const roots = { RULES, HELP };
+    for (const [name, c] of Object.entries(ch)) merge(roots[name], c);
+  }, changes);
 }
 
 // ---------- playing ----------
@@ -158,4 +170,4 @@ function buildBundle(v) {
   return { v, css: fs.readFileSync(path.join(WWW, 'style.css'), 'utf8'), body, js };
 }
 
-module.exports = { ROOT, WWW, CHROME, TODAY, IPHONE_UA, sleep, serve, FakeDB, setup, teardown, phone, startLevel, closeModal, solve, fillTray, modal, click, buildBundle, get browser() { return browser; }, get server() { return server; } };
+module.exports = { ROOT, WWW, CHROME, TODAY, IPHONE_UA, sleep, serve, FakeDB, setup, teardown, phone, tune, startLevel, closeModal, solve, fillTray, modal, click, buildBundle, get browser() { return browser; }, get server() { return server; } };

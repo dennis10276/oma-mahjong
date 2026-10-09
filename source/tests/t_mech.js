@@ -25,13 +25,19 @@ const playOut = page => page.evaluate(async () => {
 
 module.exports = [
   {
-    name: 'mechanics: no more gift tiles; gold and joker still come',
+    name: 'mechanics: gold pairs from level 20, jokers (a pair) from level 30',
     async run(t, { startLevel }) {
       const p = await t.phone({ state: { ...DENNIS, level: 60 } });
-      let gifts = 0, jokers = 0, gold = 0;
-      for (let L = 25; L <= 44; L++) { await startLevel(p, L); const r = await p.evaluate(() => { const G = __mj.G; return [G.tiles.some(t => t.face === 100), G.tiles.some(t => t.face === 101), G.gold.size > 0]; }); gifts += r[0]; jokers += r[1]; gold += r[2]; }
-      t.eq(gifts, 0, 'no gift tiles');
-      t.ok(jokers >= 5 && gold >= 15, 'jokers and gold pairs still there', { jokers, gold });
+      const look = () => p.evaluate(() => { const G = __mj.G; return { jokers: G.tiles.filter(t => t.face === 101).length, gold: G.gold.size }; });
+      let withJoker = 0;
+      for (const L of [18, 19]) { await startLevel(p, L); t.eq(await look(), { jokers: 0, gold: 0 }, `level ${L}: nothing special yet`); }
+      for (const L of [22, 26]) { await startLevel(p, L); t.eq(await look(), { jokers: 0, gold: 2 }, `level ${L}: a gold pair, no joker`); }
+      for (let L = 30; L <= 37; L++) {
+        await startLevel(p, L); const r = await look();
+        t.ok(r.gold === 2 && (r.jokers === 0 || r.jokers === 2), `level ${L}: a gold pair, jokers come in pairs`, r);
+        withJoker += r.jokers > 0;
+      }
+      t.ok(withJoker >= 2, 'jokers in several levels', withJoker);
     },
   },
   {

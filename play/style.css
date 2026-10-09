@@ -532,7 +532,6 @@ body.nonum .cn { display: none; }
 
 #board .tile.gold:not(.back) { background: linear-gradient(160deg, #fff8d0 0%, #ffe680 55%, #f2c230 100%); box-shadow: inset 0 0 0 2px #e0a800, 0 0 10px 2px rgba(255,200,0,.55); }
 .tile.gold:not(.back) .face::after { content: '✨'; position: absolute; right: -6%; top: -8%; font-size: calc(var(--fs, 30px) * .32); line-height: 1; }
-#board .tile.sp-gift:not(.back) { background: linear-gradient(160deg, #fff0f4 0%, #ffd2df 60%, #ffb0c6 100%); }
 #board .tile.sp-joker:not(.back) { background: linear-gradient(160deg, #f3ecff 0%, #dccbff 60%, #c2a8ff 100%); }
 .emo.sp { animation: spBob 1.6s ease-in-out infinite; display: inline-block; }
 @keyframes spBob { 50% { transform: scale(1.1) rotate(-4deg); } }
@@ -579,7 +578,7 @@ body.sunny #progressBar { background: linear-gradient(90deg, #fff27a, #ffb300); 
 #bg.sunfield::before { content: '🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻'; position: absolute; left: -30px; right: -30px; bottom: -14px; font-size: 64px; letter-spacing: -14px; white-space: nowrap; overflow: hidden; opacity: .85; }
 #bg.sunfield::after { background: radial-gradient(circle at 50% 35%, transparent 55%, rgba(120,70,0,.18) 100%); }
 
-body.contrast #board .tile:not(.back):not(.gold):not(.sp-gift):not(.sp-joker) { background: #fff; }
+body.contrast #board .tile:not(.back):not(.gold):not(.sp-joker) { background: #fff; }
 body.contrast .tile { outline: 2px solid #222; outline-offset: -2px; }
 body.contrast .tile .face svg { filter: contrast(1.6) saturate(1.3); }
 body.contrast .tile .emo { filter: saturate(1.4) contrast(1.2); }

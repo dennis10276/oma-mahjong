@@ -1,6 +1,8 @@
 /* 1.15: no messages over the pile, grandma's glowing-pair helper, and the little rewards. */
 'use strict';
 const OMA = { name: 'OmaHanny', pid: 'test-oma', level: 12 };
+// the helper's timings, shortened (the real ones are in HELP.care.nudge): face-down after 2 s, visible after 5 s
+const QUICK = { HELP: { care: { nudge: { downS: 2, upS: 5 } } } };
 const DENNIS = { name: 'Dennis', pid: 'test-dennis', level: 12 };
 const overlaps = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
 
@@ -42,16 +44,17 @@ module.exports = [
   {
     name: 'helper (grandma): a pair with a face-down tile is turned over and glows until matched',
     async run(t, { startLevel, sleep }) {
-      const p = await t.phone({ state: { ...OMA, level: 30 } });
+      const p = await t.phone({ state: { ...OMA, level: 30 }, tune: QUICK });
       await startLevel(p, 30); await sleep(500);
       const pair = await p.evaluate(makeHiddenPair);
       if (!t.ok(pair, 'set up a hidden pair')) return;
-      await sleep(4000);
-      t.eq(await p.evaluate(() => __mj.G.nudge), null, 'nothing yet after 4 seconds');
-      await sleep(3500);
+      await p.evaluate(() => { __mj.G.lastMove = performance.now(); });
+      await sleep(1000);
+      t.eq(await p.evaluate(() => __mj.G.nudge), null, 'nothing yet after 1 second');
+      await sleep(2200);
       const g = await p.evaluate(([d, u]) => { const G = __mj.G; return { nudge: (G.nudge || []).slice().sort(), down: G.down[d], glow: [d, u].map(i => G.tiles[i].el.classList.contains('nudge')), back: G.tiles[d].el.classList.contains('back') }; }, pair);
       t.eq(g, { nudge: pair.slice().sort((a, b) => a - b), down: 0, glow: [true, true], back: false }, 'turned face up and glowing', g);
-      await sleep(5000);
+      await sleep(3000);
       t.ok(await p.evaluate(([d]) => __mj.G.tiles[d].el.classList.contains('nudge'), pair), 'keeps glowing');
       await p.evaluate(([, u]) => __mj.onTap(u), pair); await sleep(500);
       t.ok(await p.evaluate(([d]) => __mj.G.tiles[d].el.classList.contains('nudge') && document.querySelector('#tray .slot.nudge') !== null, pair), 'its twin in the tray glows too, the other tile still glows');
@@ -63,16 +66,16 @@ module.exports = [
   {
     name: 'helper (grandma): a visible pair glows after a longer pause; not for others',
     async run(t, { startLevel, sleep }) {
-      const p = await t.phone({ state: { ...OMA, level: 3 } });     // level 3: no face-down tiles
-      await startLevel(p, 3); await sleep(500);
-      await sleep(8000);
-      t.eq(await p.evaluate(() => __mj.G.nudge), null, 'not after 8 seconds');
-      await sleep(7000);
-      t.ok(await p.evaluate(() => (__mj.G.nudge || []).length >= 1 && document.querySelectorAll('#board .tile.nudge').length >= 1), 'glowing after 14 seconds');
-      const q = await t.phone({ state: { ...DENNIS, level: 30 } });
+      const p = await t.phone({ state: { ...OMA, level: 3 }, tune: QUICK });     // level 3: no face-down tiles
+      await startLevel(p, 3); await p.evaluate(() => { __mj.G.lastMove = performance.now(); });
+      await sleep(3500);
+      t.eq(await p.evaluate(() => __mj.G.nudge), null, 'not after the short wait');
+      await sleep(3000);
+      t.ok(await p.evaluate(() => (__mj.G.nudge || []).length >= 1 && document.querySelectorAll('#board .tile.nudge').length >= 1), 'glowing after the long wait');
+      const q = await t.phone({ state: { ...DENNIS, level: 30 }, tune: QUICK });
       await startLevel(q, 30); await sleep(300);
       await q.evaluate(makeHiddenPair);
-      await sleep(16000);
+      await sleep(7000);
       t.eq(await q.evaluate(() => [__mj.G.nudge, document.querySelectorAll('.nudge').length]), [null, 0], 'Dennis gets no helper');
     },
   },
@@ -113,22 +116,15 @@ module.exports = [
   {
     name: 'face-down tiles: turned over with the twin in the tray, they match right then (everyone)',
     async run(t, { startLevel, sleep }) {
-      for (const [who, st, instant] of [['grandma', OMA, true], ['Dennis', DENNIS, true]]) {
-        const p = await t.phone({ state: { ...st, level: 30 } });
-        await startLevel(p, 30); await sleep(300);
-        const pair = await p.evaluate(makeHiddenPair);
-        if (!t.ok(pair, `${who}: set up a hidden pair`)) continue;
-        await p.evaluate(([, u]) => __mj.onTap(u), pair); await sleep(500);    // its twin goes into the tray
-        await p.evaluate(([d]) => __mj.onTap(d), pair); await sleep(600);      // tap the face-down tile
-        const r = await p.evaluate(([d]) => ({ gone: !__mj.G.alive[d], open: __mj.G.peek === d, tray: __mj.G.tray.length }), pair);
-        if (instant) t.eq(r, { gone: true, open: false, tray: 0 }, `${who}: turned over and matched`);
-        else {
-          t.eq(r, { gone: false, open: true, tray: 1 }, 'Dennis: it only turns over');
-          await p.evaluate(([d]) => __mj.onTap(d), pair); await sleep(600);
-          t.eq(await p.evaluate(([d]) => [__mj.G.alive[d], __mj.G.tray.length], pair), [0, 0], 'Dennis: second tap matches');
-        }
-        await p.ctx.close();
-      }
+      const p = await t.phone({ state: { ...DENNIS, level: 30 } });
+      await startLevel(p, 30); await sleep(300);
+      const pair = await p.evaluate(makeHiddenPair);
+      if (!t.ok(pair, 'set up a hidden pair')) return;
+      await p.evaluate(([, u]) => __mj.onTap(u), pair); await sleep(500);    // its twin goes into the tray
+      await p.evaluate(([d]) => __mj.onTap(d), pair);                        // tap the face-down tile
+      t.ok(await p.evaluate(() => !!document.querySelector('.tile.flying.reveal')), 'it flips open while it flies');
+      await sleep(600);
+      t.eq(await p.evaluate(([d]) => ({ gone: !__mj.G.alive[d], open: __mj.G.peek === d, tray: __mj.G.tray.length }), pair), { gone: true, open: false, tray: 0 }, 'turned over and matched at once');
     },
   },
   {

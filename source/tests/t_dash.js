@@ -29,8 +29,8 @@ function fixture() {
 module.exports = [
   {
     name: 'dashboard: stuck alert, heart from the PC, closeness chart and new events',
-    async run(t, { serve, FakeDB, browser, sleep }) {
-      const site = await serve(path.join(__dirname, '..', 'site'));
+    async run(t, { serve, FakeDB, browser, sleep, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });   // the dashboard uses the game's rules.js
       const db = new FakeDB(fixture());
       const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 } });
       await ctx.addInitScript(() => {

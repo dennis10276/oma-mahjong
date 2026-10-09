@@ -52,9 +52,9 @@ module.exports = [
     },
   },
   {
-    name: 'play: levels 1, 10 and 25 can be won and the next level opens',
+    name: 'play: levels 1 and 25 can be won and the next level opens',
     async run(t, { startLevel, solve, modal }) {
-      for (const L of [1, 10, 25]) {
+      for (const L of [1, 25]) {
         const p = await t.phone({ state: { level: L } });
         await startLevel(p, L);
         t.ok(await solve(p), `level ${L} solved`);

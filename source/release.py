@@ -97,7 +97,7 @@ def main():
             shutil.copy(os.path.join(SITE, f), os.path.join(REPO, f))
         shutil.rmtree(os.path.join(REPO, 'play'), ignore_errors=True)
         shutil.copytree(play, os.path.join(REPO, 'play'))
-        # the family dashboard (live play data)
+        # the family dashboard (live play data); it loads play/js/rules.js, so it always matches the game
         shutil.rmtree(os.path.join(REPO, 'dash'), ignore_errors=True)
         shutil.copytree(os.path.join(SITE, 'dash'), os.path.join(REPO, 'dash'))
         shutil.copy(os.path.join(ROOT, 'android', 'AndroidManifest.xml'), os.path.join(REPO, 'source', 'android', 'AndroidManifest.xml'))
@@ -107,7 +107,8 @@ def main():
         shutil.copytree(os.path.join(ROOT, 'tests'), os.path.join(REPO, 'source', 'tests'), ignore=shutil.ignore_patterns('node_modules'))
         msg = f'Version {v}' + (' (game update + fresh APK on the download page)' if apk else ' (game update only)')
         subprocess.run(['git', '-C', REPO, 'add', '-A'], check=True)
-        subprocess.run(['git', '-C', REPO, 'commit', '-q', '-m', msg + os.environ.get('COMMIT_TRAILER', '')], check=True)
+        trailer = os.environ.get('COMMIT_TRAILER', '').strip()
+        subprocess.run(['git', '-C', REPO, 'commit', '-q', '-m', msg + ('\n\n' + trailer if trailer else '')], check=True)
         subprocess.run(['git', '-C', REPO, 'push', '-q', 'origin', 'HEAD'], check=True)
         print('deployed')
 

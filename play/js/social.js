@@ -1,9 +1,8 @@
-/* Oma's Mahjong — the leaderboard: family online, computer players, the weekly challenge, hearts and avatar frames. */
+/* Oma's Mahjong — the leaderboard: family online, computer players, the weekly challenge,
+   the profile with avatar frames, and climbing past others (hearts are in hearts.js). */
 'use strict';
 
 // ---------- ranking (family online + friendly computer players) ----------
-// Firebase Realtime Database address; empty = only the computer players
-const DB_URL = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
 const LB_CACHE = 'omamj.lb';
 // the friendly computer players (name, avatar), from the slowest to the strongest
 const BOTS = [
@@ -46,7 +45,6 @@ const BOT_PACE = [0.6, 1.3, 0.8, 1.1, 0.7, 1.25, 0.9, 1.0, 1.15, 0.75, 1.05, 0.9
 const BOT_SKILL = [0.92, 1.06, 0.97, 1.1, 0.9, 1.03, 0.95, 1.08, 0.99, 0.93, 1.04, 0.96, 1.07, 0.94, 1.02, 0.98, 1.09, 1.0];
 function dayAnchor() {
   const tk = todayKey();
-  S.lvlHist = S.lvlHist || {};
   if (!S.lvlHist[tk]) {
     S.lvlHist[tk] = S.level;
     Object.keys(S.lvlHist).filter(k => k < dkey(new Date(Date.now() - 14 * 864e5))).forEach(k => delete S.lvlHist[k]);
@@ -64,7 +62,6 @@ const dayFrac = () => { const d = new Date(); return Math.min(1, Math.max(0, (d.
 const ptsCalib = () => S.level > 3 ? Math.max(0.6, Math.min(2.2, myPoints() / Math.max(1, cumPts(S.level - 1)))) : 1;
 function botEntries(mode = 'all', weekId, frac) {
   const { start, avg } = dayAnchor(), df = dayFrac(), cal = ptsCalib();
-  S.botLv = S.botLv || {};
   let changed = false;
   const list = BOTS.map(([name, avatar], k) => {
     let lv = Math.max(1, start + BOT_OFF[k] + Math.floor(avg * BOT_PACE[k] * df));
@@ -81,7 +78,7 @@ function botEntries(mode = 'all', weekId, frac) {
   if (changed) save();
   return list;
 }
-const myPoints = () => Object.values(S.lvlPts || {}).reduce((a, b) => a + b, 0) + Object.values(S.dayPts || {}).reduce((a, b) => a + b, 0) + (S.bonusPts || 0);
+const myPoints = () => sum(S.lvlPts) + sum(S.dayPts) + S.bonusPts;
 const myWeekPts = () => ensureWeek().pts;
 // v = my weekly points (week) or my level (all-time); undefined = my current value
 function myEntry(v, mode = 'all') {
@@ -105,21 +102,20 @@ function ranking(v, mode = 'all') {
 const myRank = (v, mode = 'all') => ranking(v, mode).findIndex(e => e.me) + 1;
 const isFam = e => !e.bot && !e.me;
 // value shown on the right of a row
-const rowVal = (e, mode) => mode === 'week' ? e.points.toLocaleString('nl-NL') : `level ${e.level}`;
+const rowVal = (e, mode) => mode === 'week' ? fmtN(e.points) : `level ${e.level}`;
 /* the family (real players) at a glance: everyone with their place */
 function famHTML(mode, list, title = '👪 Familie', withHearts = false) {
   list = list || ranking(undefined, mode);
   const fam = list.map((e, i) => ({ e, r: i + 1 })).filter(x => !x.e.bot);
   if (fam.length < 2) return '';
-  const medal = r => r <= 3 ? ['🥇', '🥈', '🥉'][r - 1] : '#' + r;
-  return `<div class="fam-box"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatarHTML(e)}<span class="fr-name">${e.name}${e.me ? ' <i>(jij)</i>' : ''}<small class="fr-sub">${mode === 'week' ? `🧩 level ${e.level}` : `${e.points.toLocaleString('nl-NL')} punten`}</small>${!e.me ? heartState(e.id) : ''}</span><span class="fr-val">${rowVal(e, mode)}${withHearts && !e.me ? heartBtn(e) : ''}</span></div>`).join('')}</div>`;
+  return `<div class="fam-box"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatarHTML(e)}<span class="fr-name">${esc(e.name)}${e.me ? ' <i>(jij)</i>' : ''}<small class="fr-sub">${mode === 'week' ? `🧩 level ${e.level}` : `${fmtN(e.points)} punten`}</small>${!e.me ? heartState(e.id) : ''}</span><span class="fr-val">${rowVal(e, mode)}${withHearts && !e.me ? heartBtn(e) : ''}</span></div>`).join('')}</div>`;
 }
 function ensureId() { if (!S.pid) { S.pid = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); save(); } }
 async function fetchOnline() {
   if (!DB_URL) return false;
   try {
     const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 6000);
-    const res = await fetch(DB_URL + '/scores.json', { signal: ctl.signal, cache: 'no-store' });
+    const res = await fetch(dbUrl('scores'), { signal: ctl.signal, cache: 'no-store' });
     clearTimeout(to);
     if (!res.ok) return false;
     const data = await res.json() || {};
@@ -136,166 +132,10 @@ async function pushScore() {
   const base = { name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t: Date.now() };
   const full = { ...base, frame: (S.frame || 'none').slice(0, 12), wk: ensureWeek().id, wkPts: S.wk.pts };
   try {
-    const r = await fetch(`${DB_URL}/scores/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(full) });
+    const r = await dbSend(`scores/${S.pid}`, full);
     // older database rules only know the basic fields: fall back to those
-    if (!r.ok) await fetch(`${DB_URL}/scores/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(base) });
+    if (!r.ok) await dbSend(`scores/${S.pid}`, base);
   } catch (e) { }
-}
-
-// ---- hearts between family members ----
-/* A heart can carry a short message. The heart itself lives in hearts/<to>/<from> (as before);
-   the message is stored next to the play log, in plays/msg-<to> (the database only takes pieces
-   of up to 40 characters there, so a longer message is split over m0, m1, m2). */
-const escHTML = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const msgKey = pid => pid.startsWith('test-') ? 'test-msg-' + pid.slice(5) : 'msg-' + pid;
-function msgParts(txt) {
-  const out = {}; let k = 0, cur = '';
-  for (const ch of Array.from(String(txt).trim().slice(0, 140))) {
-    if ((cur + ch).length > 38) { out['m' + k++] = cur; cur = ''; if (k > 2) break; }
-    cur += ch;
-  }
-  if (cur && k <= 2) out['m' + k] = cur;
-  return out;
-}
-const msgText = m => [m.m0, m.m1, m.m2].filter(Boolean).join('');
-const HEART_MSGS = () => ['Goed bezig! 💪', 'Ik denk aan je 😘', 'Dank je wel! 😊', `Ik ben bij level ${S.level}! 🧩`];
-async function sendHeart(pid, name, btn) {
-  if (!S.name) return askName(() => sendHeart(pid, name, btn));
-  S.heartsSent = S.heartsSent || {};
-  if (S.heartsSent[pid] === todayKey()) { toast(`Je hebt ${name} vandaag al een hartje gestuurd 💛`); return; }
-  // pick a short message to go with it (or none): just tapping, no typing needed
-  openModal(`<div class="heart-big sm">💛</div><h2>Hartje voor ${escHTML(name)}</h2><p class="note small">Wil je er een berichtje bij doen?</p>
-    <div class="msg-pick">${HEART_MSGS().map((m, i) => `<button class="mp" data-i="${i}">${escHTML(m)}</button>`).join('')}</div>
-    <button class="big-btn play" id="hmNone"><span class="bb-text"><b>Alleen een hartje 💛</b></span></button>`, true);
-  document.querySelectorAll('.msg-pick .mp').forEach(b => b.onclick = () => { closeModal(); doSendHeart(pid, name, btn, HEART_MSGS()[+b.dataset.i]); });
-  $('#hmNone').onclick = () => { closeModal(); doSendHeart(pid, name, btn, ''); };
-}
-async function doSendHeart(pid, name, btn, msg) {
-  ensureId();
-  try {
-    const t = Date.now();
-    const r = await fetch(`${DB_URL}/hearts/${pid}/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: S.name.slice(0, 24), t }) });
-    if (!r.ok) throw 0;
-    if (msg) fetch(`${DB_URL}/plays/${msgKey(pid)}.json`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ k: 'msg', t, from: S.pid, name: S.name.slice(0, 24), ...msgParts(msg) }) }).catch(() => { });
-    S.heartsSent[pid] = todayKey(); bumpStat('heartsSent'); save();
-    logEvt('heart_out', { to: name, msg: msg ? 1 : undefined });
-    Sound.unlock(); buzz(20);
-    if (btn) { btn.classList.add('sent'); btn.textContent = '💛✓'; }
-    S.heartsOut = S.heartsOut || {}; S.heartsOut[pid] = { t, seen: 0, name }; save();
-    showHeartSent(name);
-  } catch (e) { toast('Hartje versturen lukte niet. Is er internet?'); }
-}
-// a big, clear "it is on its way" moment for the sender
-function showHeartSent(name) {
-  Sound.trophy(); buzz([20, 40, 20, 40, 60]); heartRain();
-  openModal(`<div class="heart-big">💛</div><h2>Hartje verstuurd!</h2>
-    <p><b>${name}</b> krijgt je hartje te zien zodra ze de app opent.</p>
-    <p class="note small">Op de ranglijst zie je daarna "gezien 👀" staan.</p>
-    <button class="big-btn play" id="hsOk"><span class="bb-text"><b>Fijn! 😊</b></span></button>`, false);
-  setTimeout(heartRain, 700);
-  $('#hsOk').onclick = () => { closeModal(); if (curScreen === 'ranking') renderRanking(); };
-}
-// small status next to a family member: did they see my heart?
-function heartState(pid) {
-  const o = (S.heartsOut || {})[pid];
-  if (!o || Date.now() - o.t > 7 * 864e5) return '';
-  return o.seen ? '<small class="hs seen">💛 hartje gezien 👀</small>' : '<small class="hs">💛 hartje onderweg…</small>';
-}
-// did the people I sent a heart to see it? (they mark it when they open it)
-let sentCheckAt = 0;
-async function checkSentHearts() {
-  const out = S.heartsOut || {}; let changed = false;
-  for (const [pid, o] of Object.entries(out)) {
-    if (o.seen || Date.now() - o.t > 7 * 864e5) continue;
-    try {
-      const r = await fetch(`${DB_URL}/hearts/${pid}/${S.pid}.json`, { cache: 'no-store' });
-      const v = r.ok ? await r.json() : null;
-      if (v && v.t < 0) { o.seen = Date.now(); changed = true; toast(`💛 ${o.name || 'Ze'} heeft je hartje gezien!`, 3200); }
-    } catch (e) { }
-  }
-  if (changed) save();
-  return changed;
-}
-// tell the sender we saw it: the heart is stored again with a negative time
-function markHeartsSeen(list) {
-  ensureId();
-  list.forEach(h => fetch(`${DB_URL}/hearts/${S.pid}/${h.from}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: h.name.slice(0, 24), t: -Math.abs(h.t) }) }).catch(() => { }));
-}
-// new hearts since last time (one request at a time, so a heart is never shown twice)
-let heartsBusy = false;
-async function fetchHearts() {
-  if (!DB_URL || !S.pid || heartsBusy) return [];
-  heartsBusy = true;
-  try {
-    const res = await fetch(`${DB_URL}/hearts/${S.pid}.json`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    const data = await res.json() || {};
-    S.heartsSeen = S.heartsSeen || {};
-    const fresh = Object.entries(data).filter(([from, v]) => v && v.t > (S.heartsSeen[from] || 0) && (S.pid.startsWith('test-') || !from.startsWith('test-')))
-      .map(([from, v]) => ({ from, name: String(v.name || 'Iemand').slice(0, 24), t: v.t }));
-    fresh.forEach(h => { S.heartsSeen[h.from] = h.t; });
-    if (fresh.length) await attachMsgs(fresh);
-    if (fresh.length) { S.stats = S.stats || {}; S.stats.hearts = (S.stats.hearts || 0) + fresh.length; save(); }
-    return fresh;
-  } catch (e) { return []; } finally { heartsBusy = false; }
-}
-// the message that came with a heart: same sender, sent at the same moment
-async function attachMsgs(list) {
-  try {
-    const r = await fetch(`${DB_URL}/plays/${msgKey(S.pid)}.json`, { cache: 'no-store' });
-    const ms = r.ok ? Object.values(await r.json() || {}) : [];
-    list.forEach(h => { const m = ms.filter(m => m && m.from === h.from && Math.abs(m.t - h.t) < 120000).pop(); if (m && msgText(m)) h.msg = msgText(m).slice(0, 140); });
-  } catch (e) { }
-}
-const msgHTML = list => list.filter(h => h.msg).map(h => `<p class="heart-msg">“${escHTML(h.msg)}”<small>${escHTML(h.name)}</small></p>`).join('');
-function showHearts(list, then) {
-  Sound.trophy(); buzz([20, 40, 20, 40, 40]);
-  heartRain();
-  const names = [...new Set(list.map(h => h.name))];
-  const who = names.length === 1 ? `<b>${names[0]}</b> stuurde je een hartje!` : `<b>${names.slice(0, -1).join(', ')}</b> en <b>${names.slice(-1)}</b> stuurden je een hartje!`;
-  openModal(`<div class="heart-big">💛</div><h2 class="heart-h">Een hartje voor jou!</h2><p class="heart-who">${who}</p>${msgHTML(list)}
-    <button class="big-btn play" id="hOk"><span class="bb-text"><b>Wat lief! 😊</b></span></button>`, false);
-  setTimeout(heartRain, 900); setTimeout(heartRain, 1900);
-  markHeartsSeen(list);
-  logEvt('heart_in', { from: names.join(', '), where: 'popup', msg: list.some(h => h.msg) ? 1 : undefined });
-  $('#hOk').onclick = () => { closeModal(); if (then) then(); };
-}
-// hearts fountain up from the bottom of the curScreen, so the words stay readable
-function heartRain() { [0.08, 0.3, 0.7, 0.92].forEach((f, i) => setTimeout(() => FX.emoji(innerWidth * f, innerHeight - 20, ['💛', '💖', '💛', '✨'], 12), i * 120)); }
-async function checkHearts() {
-  const fresh = await fetchHearts();
-  if (fresh.length) deliverHearts(fresh);
-}
-// show new hearts right away: a big pop-up at home, a short heart moment during a level
-function deliverHearts(fresh) {
-  const free = $('#modal').classList.contains('hidden');
-  if (free && curScreen === 'home') showHearts(fresh, () => renderHome());
-  else if (free) heartPop(fresh);
-  else { S.pendingHearts = (S.pendingHearts || []).concat(fresh); save(); }
-}
-function heartPop(list) {
-  const names = [...new Set(list.map(h => h.name))];
-  let el = $('#heartPop');
-  if (!el) { el = document.createElement('div'); el.id = 'heartPop'; document.body.appendChild(el); }
-  el.innerHTML = `<div class="hp-card"><div class="hp-heart">💛</div><b>${names.join(' en ')}</b><span>${names.length > 1 ? 'sturen' : 'stuurt'} je een hartje!</span>${msgHTML(list)}<small>Tik om verder te spelen</small></div>`;
-  el.className = 'on';
-  Sound.trophy(); buzz([20, 40, 20, 40, 60]); heartRain(); setTimeout(heartRain, 900);
-  markHeartsSeen(list);
-  logEvt('heart_in', { from: names.join(', '), where: 'level', msg: list.some(h => h.msg) ? 1 : undefined });
-  const close = () => { el.className = ''; clearTimeout(el._t); };
-  el.onclick = close; clearTimeout(el._t); el._t = setTimeout(close, list.some(h => h.msg) ? 11000 : 6500);
-}
-// live: the database tells us the moment someone sends a heart
-let heartStream = null;
-function startHeartStream() {
-  if (heartStream || !DB_URL || !S.pid || typeof EventSource === 'undefined') return;
-  try {
-    heartStream = new EventSource(`${DB_URL}/hearts/${S.pid}.json`);
-    let t = 0;
-    const ping = () => { clearTimeout(t); t = setTimeout(checkHearts, 400); };
-    heartStream.addEventListener('put', ping);
-    heartStream.addEventListener('patch', ping);
-  } catch (e) { heartStream = null; }
 }
 
 // ---- avatar frames, earned through prizes ----
@@ -304,10 +144,10 @@ const FRAMES = [
   { id: 'bronze', name: 'Brons', ok: () => trophyCount() >= 4, how: '4 prijzen' },
   { id: 'silver', name: 'Zilver', ok: () => trophyCount() >= 8, how: '8 prijzen' },
   { id: 'gold', name: 'Goud', ok: () => trophyCount() >= 12, how: '12 prijzen' },
-  { id: 'sun', name: 'Zonnebloem', ok: () => sunUnlocked(), how: 'level 20' },
-  { id: 'heart', name: 'Hartjes', ok: () => (S.stats && S.stats.hearts || 0) >= 3, how: '3 hartjes krijgen' },
+  { id: 'sun', name: 'Zonnebloem', ok: () => sunUnlocked(), how: 'level ' + RULES.sunflower.level },
+  { id: 'heart', name: 'Hartjes', ok: () => (S.stats.hearts || 0) >= 3, how: '3 hartjes krijgen' },
   { id: 'rainbow', name: 'Regenboog', ok: () => !!S.trophies.c5, how: 'Supercombo' },
-  { id: 'crown', name: 'Kroon', ok: () => (S.weekWins || 0) >= 1, how: 'win een week' },
+  { id: 'crown', name: 'Kroon', ok: () => S.weekWins >= 1, how: 'win een week' },
 ];
 const frameOk = id => (FRAMES.find(f => f.id === id) || FRAMES[0]).ok();
 const avatarHTML = (e, cls = 'ra') => `<span class="${cls} fr-${e.frame && e.frame !== 'none' ? e.frame : 'none'}">${e.avatar}</span>`;
@@ -338,12 +178,10 @@ function askName(then) {
   };
 }
 
-const heartBtn = e => `<button class="heart-btn${(S.heartsSent || {})[e.id] === todayKey() ? ' sent' : ''}" data-pid="${e.id}" data-name="${e.name.replace(/"/g, '')}" aria-label="Stuur een hartje">${(S.heartsSent || {})[e.id] === todayKey() ? '💛✓' : '💛'}</button>`;
 function rowHTML(e, rank, withHeart = false, mode = 'week') {
-  const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
   const heart = withHeart && !e.me && !e.bot ? heartBtn(e) : '';
-  const sub = mode === 'week' ? `level ${e.level}` : `${e.points.toLocaleString('nl-NL')} punten`;
-  return `<span class="rk">${medal}</span>${avatarHTML(e)}<span class="rn">${e.name}${e.me ? ' <i>(jij)</i>' : ''}${e.bot ? ' <i class="bot" title="computerspeler">🤖</i>' : e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small></span><span class="rp">${rowVal(e, mode)}${heart}</span>`;
+  const sub = mode === 'week' ? `level ${e.level}` : `${fmtN(e.points)} punten`;
+  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e)}<span class="rn">${esc(e.name)}${e.me ? ' <i>(jij)</i>' : ''}${e.bot ? ' <i class="bot" title="computerspeler">🤖</i>' : e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small></span><span class="rp">${rowVal(e, mode)}${heart}</span>`;
 }
 let rankMode = 'week';
 function renderRanking() {
@@ -367,20 +205,19 @@ function renderRanking() {
   if (online && Date.now() - (sentCheckAt || 0) > 8000) { sentCheckAt = Date.now(); checkSentHearts().then(ch => { if (ch && curScreen === 'ranking') renderRanking(); }); }
 }
 
-// result of last week, shown once on the home curScreen
+// result of last week, shown once on the home screen
 function checkLastWeek() {
-  if (!S.lastWeek || $('#modal').classList.contains('hidden') === false) return;
+  if (!S.lastWeek || !modalFree()) return;
   const lw = S.lastWeek; S.lastWeek = null;
   const list = [...botEntries('week', lw.id, 1), ...onlineEntries('week', lw.id), { ...myEntry(lw.pts, 'week'), points: lw.pts }]
     .sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
   const rank = list.findIndex(e => e.me) + 1;
-  S.stats = S.stats || {}; S.stats.weeks = (S.stats.weeks || 0) + 1;
-  if (rank === 1) S.weekWins = (S.weekWins || 0) + 1;
+  bumpStat('weeks');
+  if (rank === 1) S.weekWins++;
   save();
-  const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '🏅';
   if (rank <= 3) { Sound.trophy(); FX.confetti(); } else Sound.unlock();
-  openModal(`<div class="sun-big">${medal}</div><h2>Vorige week werd je #${rank}!</h2>
-    <p>Je haalde <b>${lw.pts.toLocaleString('nl-NL')} punten</b> in de weekstrijd.${rank === 1 ? ' Je bent de <b>weekwinnaar</b>! 👑' : rank <= 3 ? ' Wat een mooie plek!' : ''}</p>
+  openModal(`<div class="sun-big">${rank <= 3 ? medal(rank) : '🏅'}</div><h2>Vorige week werd je #${rank}!</h2>
+    <p>Je haalde <b>${fmtN(lw.pts)} punten</b> in de weekstrijd.${rank === 1 ? ' Je bent de <b>weekwinnaar</b>! 👑' : rank <= 3 ? ' Wat een mooie plek!' : ''}</p>
     <p class="note">Er is een nieuwe week begonnen: iedereen staat weer op 0. Zet hem op!</p>
     <button class="big-btn play" id="lwOk"><span class="bb-text"><b>Nieuwe week!</b></span></button>`, false);
   $('#lwOk').onclick = () => { closeModal(); renderHome(); };
@@ -404,7 +241,6 @@ function showClimb(oldPts, newPts, then, mode = 'all') {
     const finalRank = newRank + offset + j + 1;
     return done ? finalRank : finalRank - 1;
   };
-  const medalOf = r => r <= 3 ? ['🥇', '🥈', '🥉'][r - 1] : '#' + r;
   openModal(`<h2>${mode === 'week' ? 'Je klimt in de weekstrijd! 📅' : 'Je klimt op de ranglijst! 🏆'}</h2>
     <div class="climb" style="height:${(rows.length + 1) * RH}px">
       ${rows.map((e, k) => `<div class="rrow crow${isFam(e) ? ' fam' : ''}" data-k="${k}" style="transform:translateY(${k * RH}px)">${rowHTML(e, rankOf(k, false), false, mode)}</div>`).join('')}
@@ -427,11 +263,11 @@ function showClimb(oldPts, newPts, then, mode = 'all') {
     pos--; k++;
     me.style.transform = `translateY(${pos * RH}px) scale(1.04)`;
     victim.style.transform = `translateY(${(victimIdx + 1) * RH}px)`;
-    victim.querySelector('.rk').textContent = medalOf(rankOf(victimIdx, true));
+    victim.querySelector('.rk').textContent = medal(rankOf(victimIdx, true));
     const rank = oldRank - (passed.length - show.length) - k;
-    me.querySelector('.rk').textContent = medalOf(rank);
+    me.querySelector('.rk').textContent = medal(rank);
     const pts = Math.round(oldPts + (newPts - oldPts) * k / steps);
-    me.querySelector('.rp').textContent = mode === 'week' ? pts.toLocaleString('nl-NL') : `level ${pts}`;
+    me.querySelector('.rp').textContent = mode === 'week' ? fmtN(pts) : `level ${pts}`;
     Sound.pass(k); buzz(15);
     const r = me.getBoundingClientRect(); FX.burst(r.left + r.width * 0.15, r.top + r.height / 2, 10);
     setTimeout(step, stepTime);
@@ -439,14 +275,14 @@ function showClimb(oldPts, newPts, then, mode = 'all') {
   function finish() {
     if (stopped || !$('#climbMsg')) return;
     me.style.transform = `translateY(${pos * RH}px)`;
-    me.querySelector('.rp').textContent = mode === 'week' ? newPts.toLocaleString('nl-NL') : `level ${newPts}`;
-    me.querySelector('.rk').textContent = medalOf(newRank);
+    me.querySelector('.rp').textContent = mode === 'week' ? fmtN(newPts) : `level ${newPts}`;
+    me.querySelector('.rk').textContent = medal(newRank);
     me.classList.add('glow');
     Sound.rankUp(); FX.confetti(); buzz([30, 50, 30, 50, 60]);
     const n = passed.length;
-    const who = n === 1 ? `Je bent <b>${passed[0].name}</b> voorbij! 🎉` : `Je bent <b>${n} spelers</b> voorbij! 🎉`;
-    const gap = mode === 'week' ? `${(above ? above.points - newPts + 1 : 0).toLocaleString('nl-NL')} punten` : (above ? `${above.level - newPts + 1} ${above.level - newPts + 1 === 1 ? 'level' : 'levels'}` : '');
-    const nxt = above ? `<br><small>Nog ${gap} tot ${above.avatar} ${above.name}</small>` : `<br><small>Je staat bovenaan! 👑</small>`;
+    const who = n === 1 ? `Je bent <b>${esc(passed[0].name)}</b> voorbij! 🎉` : `Je bent <b>${n} spelers</b> voorbij! 🎉`;
+    const gap = mode === 'week' ? `${fmtN(above ? above.points - newPts + 1 : 0)} punten` : (above ? `${above.level - newPts + 1} ${above.level - newPts + 1 === 1 ? 'level' : 'levels'}` : '');
+    const nxt = above ? `<br><small>Nog ${gap} tot ${above.avatar} ${esc(above.name)}</small>` : `<br><small>Je staat bovenaan! 👑</small>`;
     const wk = mode === 'week' ? `<br><small>⏳ De week eindigt ${weekLeftText()}</small>` : '';
     $('#climbMsg').innerHTML = `<span class="climb-up">#${oldRank} → #${newRank} ⬆</span><br>${who}${nxt}${wk}`;
   }

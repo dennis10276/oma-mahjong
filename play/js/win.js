@@ -1,12 +1,13 @@
-/* Oma's Mahjong — finishing a level: the win curScreen and the rewards that follow it. */
+/* Oma's Mahjong — finishing a level: the win screen and the rewards that follow it. */
 'use strict';
 
 // ---------- winning ----------
 function win() {
   syncClock(); G.tStart = 0;
   clearCur();
-  const stars = Math.max(1, 3 - (G.usedHint ? 1 : 0) - (G.usedShuffle ? 1 : 0) - (G.rescued ? 1 : 0));
-  G.score += stars * 50;
+  // 3 stars, one less for each help used (hint, shuffle, putting the tray back)
+  const stars = Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].filter(Boolean).length);
+  G.score += stars * RULES.score.perStar;
   endLevel('win', { st: stars });
   const before = totalStars();
   const ptsBefore = myPoints(), lvlBefore = S.level;
@@ -18,17 +19,17 @@ function win() {
   if (G.mode === 'level') taskProgress('levels'); else taskProgress('daily');
   if (stars === 3) taskProgress('stars3');
   if (!G.usedHint && !G.usedShuffle && !G.rescued && toolsOpen()) taskProgress('nohelp');
-  if (S.fails) delete S.fails[G.key];   // won: the next level starts without easier retries
-  // levels won in a row (a failed try breaks the streak): a bonus star at 3 and every 5
+  delete S.fails[G.key];   // won: the next level starts without easier retries
+  // levels won in a row (a failed try breaks the streak): a bonus star now and then
   let streakBonus = false;
   if (G.mode === 'level') {
-    S.winStreak = (S.winStreak || 0) + 1;
-    if (S.winStreak === 3 || S.winStreak % 5 === 0) { S.bonusStars = (S.bonusStars || 0) + 1; streakBonus = true; bumpStat('streakStars'); }
+    const ws = RULES.winStreak;
+    S.winStreak++;
+    if (S.winStreak === ws.first || S.winStreak % ws.every === 0) { giveBonus(1); streakBonus = true; bumpStat('streakStars'); }
     if (S.winStreak > (S.bestWinStreak || 0)) S.bestWinStreak = S.winStreak;
   }
   taskProgress('points', G.score);
   bumpStat('wins'); bumpStat('playSec', Math.round(G.elapsed));
-  S.lvlPts = S.lvlPts || {}; S.dayPts = S.dayPts || {};
   if (G.mode === 'level') S.lvlPts[G.level] = Math.max(S.lvlPts[G.level] || 0, G.score);
   else S.dayPts[G.date] = Math.max(S.dayPts[G.date] || 0, G.score);
   const ptsAfter = myPoints();
@@ -39,7 +40,7 @@ function win() {
     S.daily[G.date] = Math.max(S.daily[G.date] || 0, stars);
     const s = streak(); if (s > S.bestStreak) S.bestStreak = s;
   }
-  const wasSun = S.sunSeen || false;
+  const wasSun = S.sunSeen;
   save();
   const after = totalStars();
   const unlocked = numBgs.filter(b => b.need > before && b.need <= after);
@@ -55,9 +56,9 @@ function win() {
   pushScore();
   const heartsP = Promise.race([fetchHearts(), new Promise(r => setTimeout(() => r([]), 2500))]);
   const nextUp = ranking(wkAfter, 'week')[wkRankAfter - 2];
-  const chase = nextUp && wkRankAfter >= wkRankBefore ? `<p class="chase">📅 Weekstrijd plek #${wkRankAfter} · nog <b>${(nextUp.points - wkAfter + 1).toLocaleString('nl-NL')}</b> punten tot ${nextUp.avatar} ${nextUp.name}</p>` : '';
+  const chase = nextUp && wkRankAfter >= wkRankBefore ? `<p class="chase">📅 Weekstrijd plek #${wkRankAfter} · nog <b>${fmtN(nextUp.points - wkAfter + 1)}</b> punten tot ${nextUp.avatar} ${esc(nextUp.name)}</p>` : '';
   if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
-  if (S.level >= TOOLS_LEVEL && !S.toolsSeen) rewards.push({ type: 'tools' });
+  if (S.level >= RULES.tools.fromLevel && !S.toolsSeen) rewards.push({ type: 'tools' });
   const tr = newTrophies();
   if (tr.length) rewards.push({ type: 'trophies', list: tr });
   if (unlocked.length) rewards.push({ type: 'bgs', list: unlocked });
@@ -65,7 +66,7 @@ function win() {
   Sound.win(); FX.confetti(); buzz([30, 60, 30, 60, 60]);
   const titles = ['Prachtig gedaan!', 'Geweldig, oma!', 'Wat knap!', 'Fantastisch!', 'Heel goed gedaan!'];
   const title = G.mode === 'daily' ? 'Dagpuzzel gehaald! 👑' : titles[Math.floor(Math.random() * titles.length)];
-  const extra = G.mode === 'daily' ? `<p>🔥 ${streak()} ${streak() === 1 ? 'dag' : 'dagen'} op rij!</p>` : stars < 3 ? `<p class="note">${G.rescued && !G.usedHint && !G.usedShuffle ? 'Zonder terugleggen' : 'Zonder hint en schudden'} verdien je ⭐⭐⭐</p>` : '';
+  const extra = G.mode === 'daily' ? `<p>🔥 ${daysText(streak())} op rij!</p>` : stars < 3 ? `<p class="note">${G.rescued && !G.usedHint && !G.usedShuffle ? 'Zonder terugleggen' : 'Zonder hint en schudden'} verdien je ⭐⭐⭐</p>` : '';
   const nextLbl = G.mode === 'daily' ? 'Naar de kalender' : `Volgende: level ${G.level + 1} ▶`;
   setTimeout(() => {
     openModal(`<h2>${title}</h2>
@@ -98,7 +99,7 @@ function win() {
         else show('home');
       };
       heartsP.then(fresh => {
-        const all = [...(S.pendingHearts || []), ...(fresh || [])];
+        const all = [...S.pendingHearts, ...(fresh || [])];
         if (all.length) { S.pendingHearts = []; save(); rewards.unshift({ type: 'hearts', list: all }); }
         runRewards(rewards, finish);
       });

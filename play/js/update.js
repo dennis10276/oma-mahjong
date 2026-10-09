@@ -2,7 +2,7 @@
 'use strict';
 
 /* Updates come from the website: newer game files are downloaded in the background,
-   kept on the phone, and used from the next start (or right away on the home curScreen). */
+   kept on the phone, and used from the next start (or right away on the home screen). */
 const UPDATE_URL = 'https://dennis10276.github.io/oma-mahjong/play/bundle.json';
 const CODE_KEY = 'omamj.code';
 const verNewer = (a, b) => { a = String(a).split('.'); b = String(b).split('.'); for (let i = 0; i < Math.max(a.length, b.length); i++) { const x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; };
@@ -41,7 +41,7 @@ async function checkWebUpdate() {
 }
 // switch to the new version, but never in the middle of a level or a pop-up
 function applyUpdate() {
-  if (!updateReady || curScreen !== 'home' || !$('#modal').classList.contains('hidden')) return false;
+  if (!updateReady || curScreen !== 'home' || !modalFree()) return false;
   updateReady = false;
   toast('✨ Nieuwe versie! Even geduld…', 1500);
   setTimeout(() => location.reload(), 1300);

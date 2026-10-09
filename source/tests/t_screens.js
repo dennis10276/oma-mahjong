@@ -50,20 +50,26 @@ module.exports = [
     },
   },
   {
-    name: 'screens: after a level nothing needs scrolling (win and climb)',
+    name: 'screens: after a level nothing needs scrolling (win and climb), on small and big phones',
     async run(t, { FakeDB, startLevel, solve, sleep }) {
-      for (const size of [[390, 664], [375, 560], [360, 740], [390, 820]]) {
-        const p = await t.phone({ state: PLAYER, db: new FakeDB({ scores: FAM }), size });
-        await startLevel(p, 12);
-        await p.evaluate(() => { __mj.G.usedHint = true; });   // 2 stars: the extra line on the win screen too
-        await solve(p, 3800);
-        const w = await p.evaluate(() => { const b = document.querySelector('#modalBox'), n = document.querySelector('#wNext').getBoundingClientRect(); return { sh: b.scrollHeight, ch: b.clientHeight, next: Math.round(n.bottom), vh: innerHeight }; });
-        t.ok(w.sh <= w.ch + 1 && w.next <= w.vh, `${size.join('x')}: win screen fits`, w);
-        await p.evaluate(() => document.querySelector('#modal').classList.add('hidden'));
-        await p.evaluate(() => __mj.showClimb(3000, 30000, () => {}, 'week')); await sleep(4500);
-        const c = await p.evaluate(() => { const b = document.querySelector('#modalBox'), n = document.querySelector('#clOk').getBoundingClientRect(); return { sh: b.scrollHeight, ch: b.clientHeight, ok: Math.round(n.bottom), vh: innerHeight }; });
-        t.ok(c.sh <= c.ch + 1 && c.ok <= c.vh, `${size.join('x')}: climb fits`, c);
-        await p.ctx.close();
+      const SIZES = [[390, 664], [375, 560], [360, 740], [390, 820]];
+      const fits = (p, btn) => p.evaluate(btn => { const b = document.querySelector('#modalBox'), n = document.querySelector(btn).getBoundingClientRect(); return { sh: b.scrollHeight, ch: b.clientHeight, btn: Math.round(n.bottom), vh: innerHeight }; }, btn);
+      const p = await t.phone({ state: PLAYER, db: new FakeDB({ scores: FAM }), size: SIZES[0] });
+      await startLevel(p, 12);
+      await p.evaluate(() => { __mj.G.usedHint = true; });   // 2 stars: the extra line on the win screen too
+      await solve(p, 3800);
+      // one win screen, looked at on every screen size
+      for (const [w, h] of SIZES) {
+        await p.setViewportSize({ width: w, height: h }); await sleep(250);
+        const r = await fits(p, '#wNext');
+        t.ok(r.sh <= r.ch + 1 && r.btn <= r.vh, `${w}x${h}: win screen fits`, r);
+      }
+      await p.evaluate(() => document.querySelector('#modal').classList.add('hidden'));
+      await p.evaluate(() => __mj.showClimb(3000, 30000, () => {}, 'week')); await sleep(4500);
+      for (const [w, h] of SIZES) {
+        await p.setViewportSize({ width: w, height: h }); await sleep(250);
+        const r = await fits(p, '#clOk');
+        t.ok(r.sh <= r.ch + 1 && r.btn <= r.vh, `${w}x${h}: climb fits`, r);
       }
     },
   },

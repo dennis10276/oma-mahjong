@@ -1,7 +1,9 @@
 /* Symmetric pile layouts + deals that are always solvable with the 4-slot tray.
    Coordinates are in half-tile units: a tile at (x,y,z) covers x..x+2, y..y+2 on layer z. */
 const Layouts = (() => {
-  const SLOTS = 4;
+  const SLOTS = 4;                                   // the tray: a 4th tile without a partner ends the level
+  // new mechanics: ice from level 35 (thick ice from 42), lock & key from 45
+  const MECH = { ice: 35, thickIce: 42, lock: 45 };
 
   function rng(seed) {
     let a = seed >>> 0;
@@ -237,11 +239,11 @@ const Layouts = (() => {
     return { ...res, kinds: kindsFor(res.tiles.length / 2, 10, diff), seed: ymd * 7 + 3, diff };
   }
 
-  /* Gentler deals for grandma (see careMode): the same pile, but more matching pictures.
-     ez 1 = always for her: fewer rare pictures and face-down tiles, an easier deal;
-     ez 2 = after 2 failed tries: every picture 4 times, half the face-down tiles;
-     ez 3 = after 4 failed tries: every picture about 6 times, no face-down tiles.
-     Half steps (0.5, 1.5, 2.5) lie in between: grandma's own results move her by half steps. */
+  /* Gentler deals (grandma, see HELP in js/rules.js): the same pile, but more matching pictures.
+     ez 1 = fewer rare pictures and face-down tiles, an easier deal;
+     ez 2 = every picture 4 times, half the face-down tiles;
+     ez 3 = every picture about 6 times, no face-down tiles.
+     Half steps (0.5, 1.5, 2.5) lie in between. */
   function easeStep(spec, ez) {
     const pairs = spec.tiles.length / 2, d = spec.diff;
     if (ez <= 0) return { kinds: spec.kinds, diff: d };
@@ -293,7 +295,7 @@ const Layouts = (() => {
     return true;
   }
 
-  /* ---------- ice and locks (from level 35 / 45) ----------
+  /* ---------- ice and locks (from MECH.ice / MECH.lock) ----------
      Ice: a frozen tile can only be taken after `h` of the tiles around it (next to it, above or
      below it) have left the board. Lock: a locked tile can only be taken once both tiles of the
      key pair have left the board. rules = { iceNb, ice: {i: hits}, locks: Set|null, keys: [a, b] };
@@ -322,8 +324,8 @@ const Layouts = (() => {
      taken after the key pair. */
   function obstacles(tiles, faces, opt) {
     const { level, seed, avoid = new Set(), ez = 0 } = opt;
-    const wantIce = level >= 35, wantLock = level >= 45;
-    const fewer = ez >= 2.5 ? 2 : ez >= 1.5 ? 1 : 0;     // grandma on an easier step: less ice and fewer locks
+    const wantIce = level >= MECH.ice, wantLock = level >= MECH.lock;
+    const fewer = ez >= 2.5 ? 2 : ez >= 1.5 ? 1 : 0;     // an easier deal: less ice and fewer locks
     if (!wantIce) return null;
     const n = tiles.length, nb = neighbors(tiles), all = new Uint8Array(n).fill(1);
     const P = solve(tiles, nb, faces, all, [], 60000);
@@ -335,7 +337,7 @@ const Layouts = (() => {
     const visibleFirst = list => { const top = list.filter(i => !nb.above[i].length); return [...shuffleArr(r, top), ...shuffleArr(r, list.filter(i => nb.above[i].length))]; };
     const res = { ice: {}, locks: [], keys: [] };
     const used = new Set();
-    if (wantLock && (level <= 47 || r() < 0.65)) {
+    if (wantLock && (level <= MECH.lock + 2 || r() < 0.65)) {
       // the pairs as they are made in the solution, with the moment they are complete
       const tray = [], pairs = [];
       P.forEach((m, k) => { const q = tray.findIndex(t => faces[t] === faces[m]); if (q >= 0) { pairs.push([tray[q], m, k]); tray.splice(q, 1); } else tray.push(m); });
@@ -349,7 +351,7 @@ const Layouts = (() => {
         if (cand.length >= nLock) { res.keys = [a, b]; res.locks = cand.slice(0, nLock); [a, b, ...res.locks].forEach(i => used.add(i)); }
       }
     }
-    if (level <= 37 || r() < 0.75) {
+    if (level <= MECH.ice + 2 || r() < 0.75) {
       const inb = iceNeighbors(tiles);
       const nIce = Math.max(1, (level < 40 ? 2 : level < 50 ? 3 : 4) - fewer);
       const cand = visibleFirst(P.filter(i => ok(i) && !used.has(i) && pos[i] > 3));
@@ -357,7 +359,7 @@ const Layouts = (() => {
         if (Object.keys(res.ice).length >= nIce) break;
         if (inb[i].some(j => res.ice[j])) continue;                 // not two frozen tiles side by side
         const before = inb[i].filter(j => pos[j] < pos[i]).length;
-        const h = level >= 42 && !fewer && !Object.values(res.ice).includes(2) && r() < 0.5 ? 2 : 1;
+        const h = level >= MECH.thickIce && !fewer && !Object.values(res.ice).includes(2) && r() < 0.5 ? 2 : 1;
         if (before >= h) res.ice[i] = h;
       }
     }
@@ -547,6 +549,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, effLevel, rng, makeDeal, botWinRate, forLevel, forDate, ease, neighbors, isFree, iceNeighbors, takeable, obstacles, deal, pairFacesFor, shuffleArr, solve, difficultyFor, targetFor };
+  return { SLOTS, MECH, effLevel, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, obstacles, solve };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

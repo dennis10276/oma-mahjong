@@ -36,7 +36,7 @@ $('#btnRestart').onclick = () => {
   $('#rYes').onclick = () => { closeModal(); restart(); };
   $('#rNo').onclick = closeModal;
 };
-$('#btnHome').onclick = () => { saveCur(); if (G && !G.done) { syncClock(); logEvt('pause', { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount() }); } show('home'); };
+$('#btnHome').onclick = () => { saveCur(); if (G && !G.done) logLvl('pause'); show('home'); };
 $('#btnPlay').onclick = () => startLevel(S.level);
 $('#btnDaily').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
 $('#btnLevels').onclick = () => show('levels');
@@ -46,7 +46,7 @@ $('#btnRanking').onclick = () => { if (!S.name) askName(() => show('ranking')); 
 $('#rankName').onclick = () => askName(() => renderRanking());
 $('#rkWeek').onclick = () => { rankMode = 'week'; renderRanking(); };
 $('#rkAll').onclick = () => { rankMode = 'all'; renderRanking(); };
-$('#btnTasks').onclick = () => { renderTaskChip(); if (tasksDone() === 3 && !S.tasks.chest) openChest(); else openTasks(); };
+$('#btnTasks').onclick = () => { renderTaskChip(); if (chestReady()) openChest(); else openTasks(); };
 $('#btnSettings').onclick = openSettings;
 $('#btnPlayDaily').onclick = () => startDaily(selDate);
 $('#calPrev').onclick = () => { calM--; if (calM < 0) { calM = 11; calY--; } renderDaily(); };
@@ -62,7 +62,7 @@ document.addEventListener('visibilitychange', () => {
 
 // Android back button (called from the native wrapper). Return true when handled.
 window.handleBack = () => {
-  if (!$('#modal').classList.contains('hidden')) { if (modalClosable) closeModal(); return true; }
+  if (!modalFree()) { if (modalClosable) closeModal(); return true; }
   if (curScreen === 'game') { saveCur(); show('home'); return true; }
   if (curScreen !== 'home') { show('home'); return true; }
   return false;
@@ -74,13 +74,13 @@ applyBg();
 ensureId();
 fetchOnline().then(ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); });
 startHeartStream();
-// a heart can arrive any moment: look again every minute and a half while the home curScreen is open
+// a heart can arrive any moment (the live stream can miss one): look again every half minute
 setInterval(() => { if (!document.hidden) { checkHearts(); if (curScreen === 'home') checkSentHearts(); } }, 30000);
 document.body.classList.toggle('nonum', !S.nums);
 document.body.classList.toggle('contrast', !!S.contrast);
 show('home');
 window.__mjReady = true;   // the boot script and the load-error banner look at this
-// dashboard: app opened, and how long it stays on curScreen
+// dashboard: app opened, and how long it stays on screen
 let fgStart = Date.now();
 logEvt('open', { lv: S.level, name: S.name || '', vw: innerWidth, vh: innerHeight });
 document.addEventListener('visibilitychange', () => {
@@ -88,12 +88,11 @@ document.addEventListener('visibilitychange', () => {
   else { fgStart = Date.now(); logEvt('show', { scr: curScreen }); }
 });
 setInterval(flushLog, 60 * 1000);
-// web / iPhone version: works offline once loaded, and can be put on the home curScreen
+// web / iPhone version: works offline once loaded, and can be put on the home screen
 if (location.protocol === 'https:' && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const standalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
-if (isIOS && !standalone && location.protocol === 'https:' && !S.iosTip) setTimeout(() => {
-  if (curScreen !== 'home' || !$('#modal').classList.contains('hidden')) return;
+if (IS_IOS && !standalone && location.protocol === 'https:' && !S.iosTip) setTimeout(() => {
+  if (curScreen !== 'home' || !modalFree()) return;
   S.iosTip = true; save();
   openModal(`<div class="sun-big">📱</div><h2>Zet het spel op je beginscherm</h2>
     <p style="text-align:left;font-size:19px">1. Tik onderaan op <b>Deel</b> <span style="font-size:24px">⬆️</span> (het vierkantje met de pijl).<br>2. Kies <b>Zet op beginscherm</b> ➕.<br>3. Tik op <b>Voeg toe</b>.</p>
@@ -106,8 +105,6 @@ if (isIOS && !standalone && location.protocol === 'https:' && !S.iosTip) setTime
 try { const c = JSON.parse(localStorage.getItem(CODE_KEY) || 'null'); if (c && c.v === window.__mjCode && c.fail) { c.fail = 0; localStorage.setItem(CODE_KEY, JSON.stringify(c)); } } catch (e) { }
 setTimeout(checkUpdate, 2500);
 setInterval(checkUpdate, 60 * 1000);          // every minute while the app is open
-// 1.14: failed tries on the current level from before this version count too (easier retries for grandma)
-if (!S.fails) { const k = 'L' + S.level, a = (S.att || {})[k] || 0; S.fails = a > 1 ? { [k]: a - 1 } : {}; save(); }
 // just updated between two levels: continue with the next level
 if (S.afterUpdate) { const a = S.afterUpdate; S.afterUpdate = null; save(); setTimeout(() => { if (a.level) startLevel(a.level); else if (a.show && a.show !== 'home') show(a.show); toast(`✨ Bijgewerkt naar versie ${APP_VERSION}`, 2200); }, 300); }
 // for the automated tests

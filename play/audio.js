@@ -91,7 +91,6 @@ const Sound = (() => {
       tone(880, t, 0.09, 0.08, 'triangle');
     },
     flip() { if (!ok()) return; const t = now(); noise(t, 0.08, 0.35, 900, 2600, 2); tone(660, t + 0.04, 0.1, 0.05, 'triangle'); },
-    deselect() { if (!ok()) return; const t = now(); noise(t, 0.05, 0.3, 1500, 900, 3); },
     blocked() {
       if (!ok()) return; const t = now();
       tone(180, t, 0.18, 0.18, 'sine'); tone(140, t + 0.07, 0.2, 0.14, 'sine');
@@ -113,7 +112,7 @@ const Sound = (() => {
       bell(PENTA[base + 2], t + 0.02, 0.17);
       bell(PENTA[base + 4], t + 0.09, 0.15);
       if (combo >= 2) bell(PENTA[base + 6], t + 0.16, 0.13);
-      if (combo >= 3) for (let i = 0; i < 4; i++) tone(PENTA[9 + (i % 5)] * 1.0, t + 0.22 + i * 0.045, 0.25, 0.05, 'sine');
+      if (combo >= 3) for (let i = 0; i < 4; i++) tone(PENTA[9 + (i % 5)], t + 0.22 + i * 0.045, 0.25, 0.05, 'sine');
     },
     // a tile settling into its tray slot
     land() { if (!ok()) return; const t = now(); tone(520, t, 0.07, 0.07, 'sine'); noise(t, 0.03, 0.25, 1200, 800, 4); },
@@ -122,7 +121,7 @@ const Sound = (() => {
     // big moment: 5x combo or the last pair
     supercombo() {
       if (!ok()) return; const t = now();
-      for (let i = 0; i < 10; i++) tone(PENTA[3 + i] * (i > 9 ? 1 : 1), t + i * 0.035, 0.35, 0.06, 'sine');
+      for (let i = 0; i < 10; i++) tone(PENTA[3 + i], t + i * 0.035, 0.35, 0.06, 'sine');
       bell(PENTA[12], t + 0.38, 0.14, 1.6); bell(PENTA[9], t + 0.38, 0.1, 1.6);
     },
     perfect() {
@@ -163,7 +162,6 @@ const Sound = (() => {
       noise(t, 0.5, 0.5, 400, 3000, 0.8);
       for (let i = 0; i < 6; i++) noise(t + 0.08 + i * 0.06, 0.05, 0.25, 2000, 1500, 4);
     },
-    undo() { if (!ok()) return; const t = now(); tone(660, t, 0.12, 0.08, 'triangle'); tone(523, t + 0.08, 0.16, 0.08, 'triangle'); },
     button() { if (!ok()) return; const t = now(); tone(740, t, 0.08, 0.06, 'triangle'); },
     star(i) { if (!ok()) return; const t = now(); bell(PENTA[5 + i * 2], t, 0.2, 1.4); tone(PENTA[10 + i], t + 0.05, 0.5, 0.06); },
     win() {

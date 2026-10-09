@@ -37,15 +37,17 @@ function renderHome() {
   $('#rankBadge').textContent = '#' + myRank(undefined, 'week');
   renderTaskChip();
   if (S.lastWeek) setTimeout(() => { if (curScreen === 'home') checkLastWeek(); }, 400);
-  else if (S.pendingHearts && S.pendingHearts.length) setTimeout(() => { if (curScreen === 'home' && $('#modal').classList.contains('hidden') && S.pendingHearts && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
-  if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && $('#modal').classList.contains('hidden')) showSunflowerUnlock(() => renderHome()); }, 500);
+  else if (S.pendingHearts.length) setTimeout(() => { if (curScreen === 'home' && modalFree() && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
+  if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && modalFree()) showSunflowerUnlock(() => renderHome()); }, 500);
 }
+// the Zonnebloem prize: levels played so far, out of the levels needed
+const sunProgress = () => { const need = RULES.sunflower.level, done = Math.min(need, S.level - 1); return { need, done, left: need - done, pct: Math.round(done / need * 100) }; };
 function renderGoal(el) {
   if (!sunUnlocked()) {
     // the big prize comes first
-    const done = Math.min(20, S.level - 1), left = 20 - done;
+    const { left, pct } = sunProgress();
     el.classList.add('sun');
-    el.innerHTML = `<span class="g-ico">🌻</span><div>Nog <b>${left} ${left === 1 ? 'level' : 'levels'}</b> tot de hoofdprijs: het <b>Zonnebloem-thema</b>!<div class="bar"><i style="width:${Math.round(done / 20 * 100)}%"></i></div></div>`;
+    el.innerHTML = `<span class="g-ico">🌻</span><div>Nog <b>${left} ${left === 1 ? 'level' : 'levels'}</b> tot de hoofdprijs: het <b>Zonnebloem-thema</b>!<div class="bar"><i style="width:${pct}%"></i></div></div>`;
     return;
   }
   el.classList.remove('sun');
@@ -67,7 +69,7 @@ function renderLevels() {
     const st = S.stars[i] || 0;
     b.className = 'lv' + (i === S.level ? ' current' : '') + (i > S.level ? ' locked' : '');
     b.innerHTML = i > S.level ? `🔒<small style="color:rgba(255,255,255,.6)">${i}</small>` : `${i}<small>${i === S.level && !st ? '▶' : starsStr(st)}</small>`;
-    if (i === 20) { b.classList.add('prize'); b.insertAdjacentHTML('beforeend', '<span class="prize-ico">🌻</span>'); }
+    if (i === RULES.sunflower.level) { b.classList.add('prize'); b.insertAdjacentHTML('beforeend', '<span class="prize-ico">🌻</span>'); }
     if (i <= S.level) b.onclick = () => startLevel(i);
     grid.appendChild(b);
   }
@@ -114,15 +116,14 @@ function renderDaily() {
 
 function renderThemes() {
   $('#thStars').textContent = '⭐ ' + totalStars();
-  const un = sunUnlocked(), sc = $('#sunCard');
-  const pct = Math.round(Math.min(20, S.level - 1) / 20 * 100);
+  const un = sunUnlocked(), sc = $('#sunCard'), sp = sunProgress();
   sc.innerHTML = `<button class="suncard${un ? '' : ' locked'}${S.theme === 'sunflower' ? ' on' : ''}">
     <span class="sun-ico">🌻</span>
-    <span class="sun-txt"><b>Zonnebloem</b><small>${un ? (S.theme === 'sunflower' ? 'In gebruik ✨' : 'Tik om te gebruiken') : `De hoofdprijs! Speel level 20 uit`}</small>
-    ${un ? '<small>Zonnige stenen, zomermuziek met vogeltjes en bloemen-effecten</small>' : `<span class="bar"><i style="width:${pct}%"></i></span><small>${Math.min(20, S.level - 1)} van de 20 levels uitgespeeld</small>`}</span>
+    <span class="sun-txt"><b>Zonnebloem</b><small>${un ? (S.theme === 'sunflower' ? 'In gebruik ✨' : 'Tik om te gebruiken') : `De hoofdprijs! Speel level ${sp.need} uit`}</small>
+    ${un ? '<small>Zonnige stenen, zomermuziek met vogeltjes en bloemen-effecten</small>' : `<span class="bar"><i style="width:${sp.pct}%"></i></span><small>${sp.done} van de ${sp.need} levels uitgespeeld</small>`}</span>
     <span class="sun-pv">${[0, 1, 2].map(k => `<span class="mini">${Tiles.faceHTML('sunflower', k)}</span>`).join('')}</span></button>`;
   sc.firstElementChild.onclick = () => {
-    if (!un) { toast(`Speel nog ${21 - S.level} levels uit om de Zonnebloem te winnen 🌻`); Sound.blocked(); return; }
+    if (!un) { toast(`Speel nog ${sp.left} levels uit om de Zonnebloem te winnen 🌻`); Sound.blocked(); return; }
     S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); renderThemes(); Sound.sunflower(); FX.emoji(innerWidth / 2, innerHeight / 3, ['🌻', '🌼', '🐝'], 12);
   };
   const tl = $('#tileThemes'); tl.innerHTML = '';
@@ -142,9 +143,9 @@ function renderThemes() {
     const locked = bgLocked(bg);
     b.className = 'bgc' + (locked ? ' locked' : '') + (S.bg === bg.id ? ' on' : '');
     b.style.background = bg.css;
-    b.innerHTML = locked ? `<div class="lock">🔒<br>${bg.sun ? 'level 20' : bg.need + ' ⭐'}</div>` : bg.name;
+    b.innerHTML = locked ? `<div class="lock">🔒<br>${bg.sun ? 'level ' + RULES.sunflower.level : bg.need + ' ⭐'}</div>` : bg.name;
     b.onclick = () => {
-      if (locked) { toast(bg.sun ? 'Dit veld hoort bij de Zonnebloem-prijs: speel level 20 uit 🌻' : `Verdien nog ${bg.need - ts} ⭐ om “${bg.name}” vrij te spelen`); Sound.blocked(); return; }
+      if (locked) { toast(bg.sun ? `Dit veld hoort bij de Zonnebloem-prijs: speel level ${RULES.sunflower.level} uit 🌻` : `Verdien nog ${bg.need - ts} ⭐ om “${bg.name}” vrij te spelen`); Sound.blocked(); return; }
       S.bg = bg.id; save(); applyBg(); renderThemes(); Sound.select();
     };
     bl.appendChild(b);
@@ -206,7 +207,7 @@ function confirmReset() {
     <button class="reset-btn" id="rsYes">Ja, alles wissen</button>`);
   $('#rsNo').onclick = closeModal;
   $('#rsYes').onclick = () => {
-    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp || {}, pid: S.pid, name: S.name, avatar: S.avatar, since: S.since, heartsSeen: S.heartsSeen || {}, bigTiles: !!S.bigTiles, contrast: !!S.contrast };
+    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, bigTiles: S.bigTiles, contrast: S.contrast };
     const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
     Object.keys(S).forEach(k => delete S[k]);
     Object.assign(S, defaults(), keep, { theme });
@@ -223,7 +224,7 @@ function showIntro(after) {
     <p>Tik op een <b>vrije steen</b>: hij schuift naar een van de <b>4 vakjes bovenaan</b>.</p>
     <div class="how-tray"><div class="hm">${g}</div><div class="hm">${f}</div><div class="hm glow">${f}</div><div class="hm empty"></div></div>
     <p>Komen er <b>twee dezelfde</b> in de vakjes, dan verdwijnen ze! Er zijn maar <b>4 vakjes</b>: komt er een 4e steen zonder paar bij, dan is het level voorbij.</p>
-    <p>Vrij = niets erbovenop, en links óf rechts open. Vanaf level ${TOOLS_LEVEL} mag je per level één keer <b>💡 Hint</b> en één keer <b>🔀 Schudden</b>.</p>
+    <p>Vrij = niets erbovenop, en links óf rechts open. Vanaf level ${RULES.tools.fromLevel} mag je per level één keer <b>💡 Hint</b> en één keer <b>🔀 Schudden</b>.</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>Begrepen!</b></span></button>`, true, after);
   $('#mGo').onclick = closeModal;
   S.seenTray = true; S.seenIntro = true; save();

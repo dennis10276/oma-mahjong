@@ -130,8 +130,9 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.<br>Alleen voor oma: ↩ = stenen teruggelegd (één keer per level), 🌱 = makkelijker gemaakt na 3× niet gelukt, ✨ = hulpje liet een paar oplichten.</p>
 </main>
 <div id="tip"></div>
+<!-- the game's rules: grandma's id, the database, message format, difficulty steps (shared with the app) -->
+<script src="../play/js/rules.js"></script>
 <script>
-const DB = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
 const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
 let wantDone = false;
@@ -141,7 +142,6 @@ const dkey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate()
 const hm = t => { const d = new Date(t); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
 const mmss = s => s >= 3600 ? `${Math.floor(s / 3600)}u ${pad(Math.floor(s % 3600 / 60))}m` : `${Math.floor(s / 60)}:${pad(Math.round(s % 60))}`;
 const mins = s => Math.round(s / 60);
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const DAYN = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
 const ago = t => { const s = (Date.now() - t) / 1000; return s < 90 ? 'net nu' : s < 3600 ? `${Math.round(s / 60)} min geleden` : s < 86400 ? `${Math.round(s / 3600)} uur geleden` : `${Math.round(s / 86400)} dagen geleden`; };
 const lvlName = e => e.m === 'd' ? `Dagpuzzel ${e.d ? e.d.slice(5).split('-').reverse().join('-') : ''}` : `Level ${e.lv}`;
@@ -150,18 +150,6 @@ const lvlKey = e => e.m === 'd' ? 'D' + e.d : 'L' + e.lv;
 // ---------- data in ----------
 function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e.t).sort((a, b) => a.t - b.t); }
 function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
-// messages that came with a heart are stored in plays/msg-<pid> (see the app's social.js)
-const msgKey = pid => pid.startsWith('test-') ? 'test-msg-' + pid.slice(5) : 'msg-' + pid;
-const isMsgKey = id => id.startsWith('msg-') || id.startsWith('test-msg-');
-function msgParts(txt) {
-  const out = {}; let k = 0, cur = '';
-  for (const ch of Array.from(String(txt).trim().slice(0, 140))) {
-    if ((cur + ch).length > 38) { out['m' + k++] = cur; cur = ''; if (k > 2) break; }
-    cur += ch;
-  }
-  if (cur && k <= 2) out['m' + k] = cur;
-  return out;
-}
 function players() {
   const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && (!id.startsWith('test-') || id === want)));
   return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 }))
@@ -181,16 +169,16 @@ $('#who').onchange = e => { sel = e.target.value; history.replaceState(null, '',
 // ---------- analysis ----------
 // a level logged without a clock (an old app bug in 1.10): its time is unknown, not 0 seconds
 const noTime = e => e.k === 'end' && !e.dur && !e.tp;
-// grandma gets extra help in the game (see careMode in the app)
-const isCare = pid => pid === 'pmuy4wmdp17hbws' || /^oma/i.test(nameOf(pid));
-// grandma's difficulty step (the app moves it by her own results, see adaptFor in the app)
-const STEP_NAME = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', '0': 'zacht (haar standaard)', '1': 'iets makkelijker', '2': 'makkelijker' };
-const stepName = s => STEP_NAME[String(s)] || String(s);
+// grandma gets extra help in the game (CARE / HELP in the app's rules.js)
+const isCare = pid => isCarePlayer(pid, nameOf(pid));
+// grandma's difficulty step (the app moves it by her own results, see help.js)
+const stepName = s => ADAPT_STEPS[s] || String(s);
 function adaptInfo(ev) {
   const last = [...ev].reverse().find(e => e.k === 'adapt' || (e.k === 'start' && e.ad != null));
   if (!last) return null;
   const step = last.k === 'adapt' ? last.to : last.ad;
-  const tries = ev.filter(e => e.k === 'end' && e.m !== 'd' && (e.r === 'win' || e.r === 'stuck' || (e.r === 'restart' && (e.dur || 0) >= 30))).slice(-10);
+  const A = HELP.care.adapt;
+  const tries = ev.filter(e => e.k === 'end' && e.m !== 'd' && (e.r === 'win' || e.r === 'stuck' || (e.r === 'restart' && (e.dur || 0) >= A.quickRestartS))).slice(-A.n);
   const won = tries.reduce((a, e) => a + (e.r === 'win' ? (e.rb ? 0.5 : 1) : 0), 0);
   return { step, won, n: tries.length };
 }
@@ -210,20 +198,19 @@ function stuckStreak(pid) {
 }
 function analyse(ev) {
   const levels = new Map(), days = new Map();
-  const day = t => { const k = dkey(new Date(t)); if (!days.has(k)) days.set(k, { k, sec: 0, fg: 0, wins: 0, losses: 0, restarts: 0, hints: 0, shuf: 0, starts: 0 }); return days.get(k); };
-  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, rescues: 0, easy: 0, first: e.t, won: null, sec: 0, best: null, stars: 0, closest: null, n: 0 }); return levels.get(k); };
+  const day = t => { const k = dkey(new Date(t)); if (!days.has(k)) days.set(k, { k, sec: 0, wins: 0, losses: 0, rescues: 0 }); return days.get(k); };
+  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, rescues: 0, first: e.t, won: null, sec: 0, stars: 0, closest: null }); return levels.get(k); };
   for (const e of ev) {
     if (e.k === 'end') {
-      const l = L(e); l.ends.push(e); l.sec += e.dur || 0; l.n = e.n || l.n;
+      const l = L(e); l.ends.push(e); l.sec += e.dur || 0;
       const d = day(e.t); d.sec += e.dur || 0;
-      if (e.r === 'win') { d.wins++; if (!l.won) { l.won = e.t; l.winAt = e.at; l.winDur = noTime(e) ? null : e.dur; } l.stars = Math.max(l.stars, e.st || 0); if (!noTime(e)) l.best = Math.min(l.best ?? 1e9, e.dur || 0); }
-      else if (e.r === 'stuck') { d.losses++; if (typeof e.left === 'number') l.closest = Math.min(l.closest ?? 1e9, e.left); } else d.restarts++;
-    } else if (e.k === 'pause') { const d = day(e.t); }
-    else if (e.k === 'rescue') { L(e).rescues++; day(e.t).rescues = (day(e.t).rescues || 0) + 1; }
-    else if (e.k === 'hint') { L(e).hints++; day(e.t).hints++; }
-    else if (e.k === 'shuf') { L(e).shuf++; day(e.t).shuf++; }
-    else if (e.k === 'start') { const l = L(e); if (e.ez >= 2) l.easy = Math.max(l.easy, e.ez); day(e.t).starts++; }
-    else if (e.k === 'hide' && e.fg) day(e.t).fg += Math.min(e.fg, 4 * 3600);
+      if (e.r === 'win') { d.wins++; if (!l.won) { l.won = e.t; l.winAt = e.at; l.winDur = noTime(e) ? null : e.dur; } l.stars = Math.max(l.stars, e.st || 0); }
+      else if (e.r === 'stuck') { d.losses++; if (typeof e.left === 'number') l.closest = Math.min(l.closest ?? 1e9, e.left); }
+    }
+    else if (e.k === 'rescue') { L(e).rescues++; day(e.t).rescues++; }
+    else if (e.k === 'hint') L(e).hints++;
+    else if (e.k === 'shuf') L(e).shuf++;
+    else if (e.k === 'start') L(e);
   }
   return { levels: [...levels.values()], days };
 }
@@ -299,7 +286,7 @@ function render() {
   $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
 
   // KPIs
-  const today = days.get(dkey(new Date())) || { sec: 0, wins: 0, losses: 0, restarts: 0, starts: 0, hints: 0, shuf: 0 };
+  const today = days.get(dkey(new Date())) || { sec: 0, wins: 0, losses: 0 };
   const won = levels.filter(l => l.won && !l.daily);
   const ends = ev.filter(e => e.k === 'end');
   const avgTries = won.length ? (won.reduce((a, l) => a + (l.winAt || 1), 0) / won.length) : 0;
@@ -330,7 +317,7 @@ function render() {
   const stuckList = ev.filter(e => e.k === 'end' && e.r === 'stuck' && e.n).slice(-30);
   barChart($('#chClose'), stuckList.map(e => { const pct = Math.round((e.n - e.left) / e.n * 100); return { v: pct, cls: pct >= 85 ? 'warn' : '', short: e.m === 'd' ? 'dag' : 'L' + e.lv, tip: `${lvlName(e)} · poging ${e.at || 1} · ${DAYN[new Date(e.t).getDay()]} ${hm(e.t)}: ${e.left} van ${e.n} stenen over (${pct}% af)${e.rb ? ' · na terugleggen' : ''}${e.ez >= 2 ? ' · 🌱 makkelijker' : ''}` }; }), '%', { max: 100, legend: stuckList.length ? '<div class="legend"><i class="c-acc"></i> vastgelopen <i style="background:var(--warn)"></i> bijna gehaald (85% of meer)</div>' : '' });
   const lv = levels.filter(l => !l.daily).sort((a, b) => a.lv - b.lv).slice(-30);
-  barChart($('#chTries'), lv.map(l => ({ v: l.ends.filter(e => e.r !== 'restart' || true).length + (l.won ? 0 : 0), short: String(l.lv), tip: `Level ${l.lv}: ${l.ends.length} ${l.ends.length === 1 ? 'poging' : 'pogingen'}${l.won ? ' · gehaald' : ' · nog niet gehaald'}${l.hints || l.shuf ? ` · ${l.hints}× hint, ${l.shuf}× schudden` : ''}` })), 'pogingen');
+  barChart($('#chTries'), lv.map(l => ({ v: l.ends.length, short: String(l.lv), tip: `Level ${l.lv}: ${l.ends.length} ${l.ends.length === 1 ? 'poging' : 'pogingen'}${l.won ? ' · gehaald' : ' · nog niet gehaald'}${l.hints || l.shuf ? ` · ${l.hints}× hint, ${l.shuf}× schudden` : ''}` })), 'pogingen');
   heatmap($('#chHeat'), ev);
 
   // table
@@ -399,7 +386,7 @@ function renderAlerts() {
   const html = list.map(a => {
     const nm = esc(nameOf(a.pid)), pct = a.closest != null && a.last.n ? Math.round((a.last.n - a.closest) / a.last.n * 100) : null;
     return `<div class="alert"><div class="msg">😟 <b>${nm}</b> zit vast op <b>${esc(a.title.toLowerCase())}</b>: ${a.n}× niet gelukt, laatste keer ${ago(a.last.t)}.
-      <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${isCare(a.pid) ? (a.n >= 3 ? 'Haar volgende poging is makkelijker 🌱. ' : 'Lukt het nog een keer niet, dan wordt het level makkelijker 🌱. ') : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
+      <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${isCare(a.pid) ? (a.n >= HELP.care.easierAfterFails ? 'Haar volgende poging is makkelijker 🌱. ' : a.n === HELP.care.easierAfterFails - 1 ? 'Lukt het nog een keer niet, dan wordt het level makkelijker 🌱. ' : '') : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
   }).join('');
   const typing = document.activeElement && document.activeElement.closest && document.activeElement.closest('#alerts');
   if ($('#alerts').dataset.html !== html && !typing) { $('#alerts').innerHTML = html; $('#alerts').dataset.html = html; }
@@ -426,10 +413,10 @@ document.addEventListener('click', async e => {
   b.disabled = true; b.textContent = 'versturen…';
   try {
     const t = Date.now();
-    const r = await fetch(`${DB}/hearts/${encodeURIComponent(to)}/${encodeURIComponent(from)}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: nameOf(from).slice(0, 24), t }) });
+    const r = await dbSend(`hearts/${encodeURIComponent(to)}/${encodeURIComponent(from)}`, { name: nameOf(from).slice(0, 24), t });
     if (!r.ok) throw new Error(r.status);
     const inp = b.parentNode.querySelector('.hmsg'), msg = inp ? inp.value.trim() : '';
-    if (msg) await fetch(`${DB}/plays/${encodeURIComponent(msgKey(to))}.json`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ k: 'msg', t, from, name: nameOf(from).slice(0, 24), ...msgParts(msg) }) });
+    if (msg) await dbSend(`plays/${encodeURIComponent(msgKey(to))}`, { k: 'msg', t, from, name: nameOf(from).slice(0, 24), ...msgParts(msg) }, 'POST');
     const hs = lsGet('dash.hearts', {}); hs[to] = { from, t, seen: 0, msg: msg || undefined }; lsSet('dash.hearts', hs); lsSet('dash.me', from);
   } catch (err) { alert('Hartje versturen lukte niet: ' + err.message); }
   $('#alerts').dataset.html = ''; renderAlerts(); renderHeartTop();
@@ -439,7 +426,7 @@ async function checkHeartsSeen() {
   const hs = lsGet('dash.hearts', {}); let changed = false;
   for (const [to, h] of Object.entries(hs)) {
     if (h.seen || Date.now() - h.t > 3 * 864e5) continue;
-    try { const v = await (await fetch(`${DB}/hearts/${encodeURIComponent(to)}/${encodeURIComponent(h.from)}.json`, { cache: 'no-store' })).json(); if (v && v.t < 0) { h.seen = Date.now(); changed = true; } } catch (e) { }
+    try { const v = await dbGet(`hearts/${encodeURIComponent(to)}/${encodeURIComponent(h.from)}`); if (v && v.t < 0) { h.seen = Date.now(); changed = true; } } catch (e) { }
   }
   if (changed) { lsSet('dash.hearts', hs); $('#alerts').dataset.html = ''; renderAlerts(); renderHeartTop(); }
 }
@@ -447,9 +434,9 @@ async function checkHeartsSeen() {
 function renderHeartTop() { const el = $('#heartTop'); if (el) el.innerHTML = sel && !stuckStreak(sel) ? heartBox(sel) : ''; }
 
 // ---------- live connection ----------
-async function loadScores() { try { SCORES = await (await fetch(DB + '/scores.json', { cache: 'no-store' })).json() || {}; } catch (e) { } }
+async function loadScores() { try { SCORES = await dbGet('scores') || {}; } catch (e) { } }
 function stream() {
-  const es = new EventSource(DB + '/plays.json');
+  const es = new EventSource(dbUrl('plays'));
   const apply = (type, msg) => {
     const { path, data } = JSON.parse(msg.data);
     const parts = path.split('/').filter(Boolean);

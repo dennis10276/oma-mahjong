@@ -1,10 +1,11 @@
-/* Oma's Mahjong — core: settings, saved progress, dates, small helpers, themes and prizes.
-   All game scripts share one global scope and are loaded in the order of index.html. */
+/* Oma's Mahjong — core: saved progress, dates, small helpers, backgrounds and prizes.
+   All game scripts share one global scope and are loaded in the order of index.html
+   (the tunable numbers are in js/rules.js). */
 'use strict';
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.21';
+const APP_VERSION = '1.22';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -30,17 +31,21 @@ const BGS = [
 ];
 const numBgs = BGS.filter(b => typeof b.need === 'number');
 
-const defaults = () => ({ level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', sfx: true, music: true, vibrate: true, highlight: true, bestStreak: 0, seenIntro: false, matches: 0, nums: true, trophies: {}, bestCombo: 0, sunSeen: false, bonusStars: 0, bonusPts: 0, stats: {}, heartsSent: {}, heartsSeen: {}, frame: 'none', weekWins: 0, bigTiles: false, contrast: false });
+// the saved progress; every list and counter exists from the start, so code never has to check
+const defaults = () => ({
+  level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', frame: 'none',
+  sfx: true, music: true, vibrate: true, highlight: true, nums: true, bigTiles: false, contrast: false,
+  seenIntro: false, sunSeen: false, seenSp: {},
+  matches: 0, bestCombo: 0, bestStreak: 0, winStreak: 0, bonusStars: 0, bonusPts: 0, weekWins: 0,
+  stats: {}, trophies: {}, att: {}, fails: {}, lvlPts: {}, dayPts: {}, lvlHist: {}, botLv: {},
+  heartsSent: {}, heartsSeen: {}, heartsOut: {}, pendingHearts: [],
+});
 let S;
 try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
-// 1.1: the green Jade background is the standard again (the Zonnebloem field stays if chosen)
-if (!S.bgJade) { if (S.bg !== 'sunfield') S.bg = 'jade'; S.bgJade = true; }
 const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
-/* Grandma gets a little extra help that the rest of the family does not get: a second chance
-   when the tray is full, and easier retries after failing the same level 3 times. She is recognised by
-   her player id, or by a name starting with "Oma" (in case she ever reinstalls the app). */
-const CARE_PIDS = ['pmuy4wmdp17hbws'];
-const careMode = () => CARE_PIDS.includes(S.pid) || /^oma/i.test(S.name || '');
+// grandma (see CARE in rules.js) gets the "care" help, everyone else the "normal" help
+const careMode = () => isCarePlayer(S.pid, S.name);
+const help = () => careMode() ? HELP.care : HELP.normal;
 
 // ---------- dates ----------
 const pad = n => String(n).padStart(2, '0');
@@ -50,7 +55,8 @@ const parseKey = k => { const [y, m, d] = k.split('-').map(Number); return new D
 const MONTHS = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
 const todayKey = () => dkey(new Date());
 
-const totalStars = () => Object.values(S.stars).reduce((a, b) => a + b, 0) + Object.values(S.daily).reduce((a, b) => a + b, 0) + (S.bonusStars || 0);
+const sum = o => Object.values(o).reduce((a, b) => a + b, 0);
+const totalStars = () => sum(S.stars) + sum(S.daily) + S.bonusStars;
 function streak() {
   const d = new Date();
   if (!S.daily[dkey(d)]) d.setDate(d.getDate() - 1);
@@ -60,6 +66,17 @@ function streak() {
 }
 
 // ---------- helpers ----------
+const modalFree = () => $('#modal').classList.contains('hidden');   // no pop-up open
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function bumpStat(k, n = 1) { S.stats[k] = (S.stats[k] || 0) + n; }
+// extra stars and points outside a level (tasks, chest, gift, streak); points also count for the week
+function giveBonus(stars = 0, pts = 0) { S.bonusStars += stars; S.bonusPts += pts; if (pts) ensureWeek().pts += pts; }
+// play a CSS animation again from the start (optionally remove the class after ms)
+function replay(el, cls, ms = 0) {
+  if (!el) return;
+  el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
+  if (ms) { clearTimeout(el['_' + cls]); el['_' + cls] = setTimeout(() => el.classList.remove(cls), ms); }
+}
 function buzz(ms) {
   if (!S.vibrate) return;
   try {
@@ -71,13 +88,13 @@ let toastT;
 function toast(msg, ms = 2400) {
   if (inPlay()) return gameMsg(msg, ms);   // while playing: in the strip under the tray, never over the tiles
   const t = $('#toast'); t.textContent = msg;
-  t.classList.toggle('top', !$('#modal').classList.contains('hidden'));   // above a pop-up, so it never hides its buttons
+  t.classList.toggle('top', !modalFree());   // above a pop-up, so it never hides its buttons
   t.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms);
 }
 /* While playing, every message goes to one strip between the tray and the pile (#gameMsg):
    nothing ever covers the tiles. A new message waits until the current one was readable. */
-const inPlay = () => typeof curScreen !== 'undefined' && curScreen === 'game' && $('#modal').classList.contains('hidden');
+const inPlay = () => typeof curScreen !== 'undefined' && curScreen === 'game' && modalFree();
 let msgT, msgPend, msgShown = 0, msgBig = false;
 function gameMsg(text, ms = 2400, big = false) {
   const m = $('#gameMsg'); if (!m) return;
@@ -99,7 +116,7 @@ function floatScore(text) {
   f.style.left = (r.left + r.width / 2) + 'px'; f.style.top = (r.bottom + 4) + 'px';
   document.body.appendChild(f); setTimeout(() => f.remove(), 950);
 }
-const sunUnlocked = () => S.level > 20;
+const sunUnlocked = () => S.level > RULES.sunflower.level;
 const bgLocked = b => b.sun ? !sunUnlocked() : totalStars() < b.need;
 function applyBg() {
   let b = BGS.find(b => b.id === S.bg) || BGS[0];
@@ -113,7 +130,7 @@ function applyTheme() {
   document.body.classList.toggle('sunny', sunny);
   Sound.setMood(sunny ? 'sunny' : 'calm');
 }
-function flash() { const f = $('#flash'); f.classList.remove('on'); void f.offsetWidth; f.classList.add('on'); }
+const flash = () => replay($('#flash'), 'on');
 function bee() {
   const b = document.createElement('div'); b.className = 'bee'; b.textContent = '🐝';
   b.style.top = (18 + Math.random() * 45) + '%';
@@ -127,7 +144,7 @@ const TROPHIES = [
   { id: 'l1', ico: '🎉', name: 'Eerste level', desc: 'Speel level 1 uit', prog: () => [S.level - 1, 1] },
   { id: 'l5', ico: '🥉', name: 'Op weg', desc: 'Speel 5 levels uit', prog: () => [S.level - 1, 5] },
   { id: 'l10', ico: '🥈', name: 'Doorzetter', desc: 'Speel 10 levels uit', prog: () => [S.level - 1, 10] },
-  { id: 'l20', ico: '🌻', name: 'Zonnebloem', desc: 'Speel 20 levels uit', prog: () => [S.level - 1, 20] },
+  { id: 'l20', ico: '🌻', name: 'Zonnebloem', desc: `Speel ${RULES.sunflower.level} levels uit`, prog: () => [S.level - 1, RULES.sunflower.level] },
   { id: 'l30', ico: '🥇', name: 'Kampioen', desc: 'Speel 30 levels uit', prog: () => [S.level - 1, 30] },
   { id: 'l50', ico: '👑', name: 'Mahjong-koningin', desc: 'Speel 50 levels uit', prog: () => [S.level - 1, 50] },
   { id: 'p5', ico: '⭐', name: 'Perfect', desc: '5 levels met 3 sterren', prog: () => [threeStars(), 5] },
@@ -140,9 +157,9 @@ const TROPHIES = [
   { id: 'm100', ico: '🀄', name: '100 paren', desc: 'Maak 100 paren', prog: () => [S.matches, 100] },
   { id: 'm500', ico: '💎', name: '500 paren', desc: 'Maak 500 paren', prog: () => [S.matches, 500] },
   { id: 'c5', ico: '🌈', name: 'Supercombo', desc: 'Maak 5 paren vlak na elkaar', prog: () => [S.bestCombo, 5] },
-  { id: 'k5', ico: '🎁', name: 'Schatzoeker', desc: 'Open 5 schatkisten', prog: () => [(S.stats || {}).chests || 0, 5] },
-  { id: 'h3', ico: '💛', name: 'Geliefd', desc: 'Krijg 3 hartjes van familie', prog: () => [(S.stats || {}).hearts || 0, 3] },
-  { id: 'w1', ico: '👑', name: 'Weekwinnaar', desc: 'Word 1e in de weekstrijd', prog: () => [S.weekWins || 0, 1] },
+  { id: 'k5', ico: '🎁', name: 'Schatzoeker', desc: 'Open 5 schatkisten', prog: () => [S.stats.chests || 0, 5] },
+  { id: 'h3', ico: '💛', name: 'Geliefd', desc: 'Krijg 3 hartjes van familie', prog: () => [S.stats.hearts || 0, 3] },
+  { id: 'w1', ico: '👑', name: 'Weekwinnaar', desc: 'Word 1e in de weekstrijd', prog: () => [S.weekWins, 1] },
 ];
 function newTrophies() {
   const out = [];

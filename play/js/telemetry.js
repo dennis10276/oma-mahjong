@@ -6,7 +6,7 @@
    so the family can follow along on the dashboard. Without internet the events wait in a
    queue on the phone and are sent later. */
 const LOGQ = 'omamj.logq';
-const DEV = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'ios' : location.protocol === 'file:' ? 'android' : 'web';
+const DEV = IS_IOS ? 'ios' : location.protocol === 'file:' ? 'android' : 'web';
 const SES = Date.now().toString(36);
 const readQ = () => { try { return JSON.parse(localStorage.getItem(LOGQ) || '[]') || []; } catch (e) { return []; } };
 function logEvt(k, data = {}) {
@@ -28,7 +28,7 @@ async function flushLog() {
     for (let n = 0; n < 60; n++) {
       const q = readQ(); if (!q.length) break;
       const e = q[0];
-      const r = await fetch(`${DB_URL}/plays/${S.pid}.json`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(e) });
+      const r = await dbSend(`plays/${S.pid}`, e, 'POST');
       if (!r.ok) break;                         // try again later (no internet, or not allowed yet)
       const q2 = readQ();                       // new events may have been added meanwhile
       if (q2.length && q2[0].t === e.t && q2[0].k === e.k) { q2.shift(); localStorage.setItem(LOGQ, JSON.stringify(q2)); }
@@ -36,6 +36,8 @@ async function flushLog() {
   } catch (e) { } finally { flushing = false; }
 }
 const lvInfo = () => G ? (G.mode === 'level' ? { lv: G.level } : { m: 'd', d: G.date, lv: S.level }) : { lv: S.level };
+// something happened in the level being played: which level, which try, after how long, tiles left
+function logLvl(k, extra = {}) { syncClock(); logEvt(k, { ...lvInfo(), at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ...extra }); }
 function endLevel(r, extra = {}) {
   if (!G || G.logged) return;
   G.logged = true; syncClock();
