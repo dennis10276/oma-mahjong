@@ -39,6 +39,7 @@ const lvInfo = () => G ? (G.mode === 'level' ? { lv: G.level } : { m: 'd', d: G.
 function endLevel(r, extra = {}) {
   if (!G || G.logged) return;
   G.logged = true; syncClock();
+  adaptNote(r);
   const st = G.st || {};
   logEvt('end', { ...lvInfo(), r, at: G.attempt || 1, dur: Math.round(G.elapsed), sc: G.score, n: G.tiles.length, left: aliveCount(), h: !!G.usedHint, sh: !!G.usedShuffle, rb: G.rescued ? 1 : undefined, ez: G.ez || undefined, mc: st.mc || 0, tm: st.tm || 0, bt: st.bt || 0, fl: st.fl || 0, tp: st.tp || 0, ...extra });
 }

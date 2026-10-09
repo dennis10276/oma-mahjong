@@ -134,4 +134,55 @@ module.exports = [
       t.eq(await q.evaluate(() => __mj.G.usedShuffle), true, 'Dennis can shuffle at the start');
     },
   },
+  {
+    name: 'grandma: her own results move the difficulty by half steps, only when a new level starts',
+    async run(t, { startLevel, solve, fillTray, click, sleep }) {
+      const bad = [0, 1, 0, 0, 0.5, 0, 1, 0, 0, 0];      // 25% won
+      const p = await t.phone({ state: { ...OMA, adapt: { step: 0, hist: bad, since: 6, key: 'L11' } } });
+      await startLevel(p, 12);
+      t.eq(await p.evaluate(() => [__mj.S.adapt.step, __mj.G.ez, __mj.S.adapt.since]), [1, 1.5, 0], 'won too little: half a step easier');
+      let ev = p.db.plays('test-oma');
+      t.ok(ev.some(e => e.k === 'adapt' && e.from === 0 && e.to === 1 && e.rate === 25), 'change logged for the dashboard', ev.filter(e => e.k === 'adapt'));
+      t.ok(ev.some(e => e.k === 'start' && e.lv === 12 && e.ad === 1 && e.ez === 1.5), 'start logged with her step');
+      // a failed try is remembered; the retry keeps the same step and the same deal
+      const faces = await p.evaluate(() => __mj.G.tiles.map(t => t.face).join());
+      await fillTray(p); await click(p, '#rsRetry'); await sleep(900);
+      t.eq(await p.evaluate(() => [__mj.S.adapt.step, __mj.G.ez, __mj.S.adapt.hist.slice(-1)[0], __mj.S.adapt.since]), [1, 1.5, 0, 1], 'retry: same step, the stuck try counted');
+      t.eq(await p.evaluate(() => __mj.G.tiles.map(t => t.face).join()), faces, 'retry: same deal');
+      t.ok(await solve(p), 'easier deal solvable');
+      t.eq(await p.evaluate(() => [__mj.S.adapt.hist.slice(-1)[0], __mj.S.adapt.since]), [1, 2], 'the win counted');
+      // the next level: too few tries since the change, so no new change yet
+      await startLevel(p, 13);
+      t.eq(await p.evaluate(() => [__mj.S.adapt.step, __mj.G.ez]), [1, 1.5], 'no change after only 2 tries');
+    },
+  },
+  {
+    name: 'grandma: winning a lot moves her back towards the normal level, never past it',
+    async run(t, { startLevel }) {
+      const good = [1, 1, 1, 1, 1, 1, 1, 0.5, 1, 1];
+      const p = await t.phone({ state: { ...OMA, level: 20, adapt: { step: -1, hist: good, since: 5, key: 'L19' } } });
+      await startLevel(p, 20);
+      t.eq(await p.evaluate(() => [__mj.S.adapt.step, __mj.G.ez]), [-2, 0], 'one half step harder: now the normal level');
+      await p.evaluate(() => { __mj.S.adapt.since = 9; __mj.S.adapt.key = 'L19'; }); await startLevel(p, 21);
+      t.eq(await p.evaluate(() => [__mj.S.adapt.step, __mj.G.ez]), [-2, 0], 'not harder than normal');
+      // in between 60% and 85%: stays
+      const q = await t.phone({ state: { ...OMA, level: 20, adapt: { step: 0, hist: [1, 1, 0, 1, 1, 0, 1, 0, 1, 1], since: 8, key: 'L19' } } });
+      await startLevel(q, 20);
+      t.eq(await q.evaluate(() => [__mj.S.adapt.step, __mj.G.ez]), [0, 1], '70% won: stays at her gentle level');
+      // the 3-failed-tries help still comes on top
+      const r = await t.phone({ state: { ...OMA, level: 20, fails: { L20: 3 }, adapt: { step: 1, hist: [], since: 0, key: 'L20' } } });
+      await startLevel(r, 20);
+      t.eq(await r.evaluate(() => __mj.G.ez), 2.5, 'step +1 and 3 failed tries: 2.5');
+    },
+  },
+  {
+    name: 'others: results do not change their levels',
+    async run(t, { startLevel, fillTray, click, sleep }) {
+      const p = await t.phone({ state: { ...DENNIS, adapt: { step: 0, hist: [0, 0, 0, 0, 0, 0], since: 6, key: 'L11' } } });
+      await startLevel(p, 12);
+      await fillTray(p); await click(p, '#sRetry'); await sleep(900);
+      t.eq(await p.evaluate(() => [__mj.G.ez, __mj.S.adapt.step, __mj.S.adapt.hist.length]), [0, 0, 6], 'Dennis: normal level, nothing recorded');
+      t.ok(!p.db.plays('test-dennis').some(e => e.k === 'adapt' || (e.k === 'start' && e.ad != null)), 'no step in his log');
+    },
+  },
 ];

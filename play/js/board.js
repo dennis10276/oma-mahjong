@@ -69,7 +69,7 @@ function begin(o, restart = false) {
   S.att = S.att || {};
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
-  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined });
+  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: careMode() && o.mode === 'level' ? adaptState().step : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -94,8 +94,39 @@ const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLeve
 function noteFail() { if (!G) return; S.fails = S.fails || {}; S.fails[G.key] = (S.fails[G.key] || 0) + 1; S.winStreak = 0; save(); }
 function easeFor(key) {
   if (!careMode()) return 0;
+  // grandma's gentle deal (1), moved by half steps by her own results on recent levels
+  const base = key[0] === 'L' ? 1 + adaptFor(key) * 0.5 : 1;
   const f = (S.fails || {})[key] || 0;
-  return f >= 3 ? 2 : 1;    // grandma always gets the gentle deal; easier only after 3 failed tries on the same level
+  return f >= 3 ? Math.min(3, base + 1) : base;    // and one step easier after 3 failed tries on the same level
+}
+/* Grandma's difficulty follows her own results: her last 10 tries on levels are kept (a win 1,
+   a win after putting tiles back 0.5, stuck 0). When a NEW level starts (never during a level or
+   its retries) and at least 5 tries were played since the last change:
+   won less than 60% -> half a step easier, more than 85% -> half a step back towards normal.
+   Steps run from -2 (the normal level, like the family) to +2 (the gentle deal of a 4th try). */
+const ADAPT = { n: 10, min: 5, low: 0.6, high: 0.85, minStep: -2, maxStep: 2 };
+const adaptState = () => (S.adapt = S.adapt || { step: 0, hist: [], since: 0, key: '' });
+const adaptRate = a => a.hist.length ? a.hist.reduce((x, y) => x + y, 0) / a.hist.length : null;
+function adaptFor(key) {
+  const a = adaptState();
+  if (a.key !== key) {
+    if (a.hist.length >= ADAPT.min && a.since >= ADAPT.min) {
+      const rate = adaptRate(a);
+      const to = rate < ADAPT.low ? Math.min(ADAPT.maxStep, a.step + 1) : rate > ADAPT.high ? Math.max(ADAPT.minStep, a.step - 1) : a.step;
+      if (to !== a.step) { logEvt('adapt', { from: a.step, to, rate: Math.round(rate * 100), n: a.hist.length, lv: +key.slice(1) || undefined }); a.step = to; a.since = 0; }
+    }
+    a.key = key; save();
+  }
+  return a.step;
+}
+// a try on a level ended: remember how it went (grandma only)
+function adaptNote(r) {
+  if (!careMode() || !G || G.o.mode !== 'level') return;
+  if (r === 'restart' && G.elapsed < 30) return;          // starting over right away is not a failed try
+  const v = r === 'win' ? (G.rescued ? 0.5 : 1) : r === 'stuck' || r === 'restart' ? 0 : null;
+  if (v === null) return;
+  const a = adaptState();
+  a.hist = a.hist.concat(v).slice(-ADAPT.n); a.since++; save();
 }
 
 const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);

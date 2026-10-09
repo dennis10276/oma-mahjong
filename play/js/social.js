@@ -143,19 +143,45 @@ async function pushScore() {
 }
 
 // ---- hearts between family members ----
+/* A heart can carry a short message. The heart itself lives in hearts/<to>/<from> (as before);
+   the message is stored next to the play log, in plays/msg-<to> (the database only takes pieces
+   of up to 40 characters there, so a longer message is split over m0, m1, m2). */
+const escHTML = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const msgKey = pid => pid.startsWith('test-') ? 'test-msg-' + pid.slice(5) : 'msg-' + pid;
+function msgParts(txt) {
+  const out = {}; let k = 0, cur = '';
+  for (const ch of Array.from(String(txt).trim().slice(0, 140))) {
+    if ((cur + ch).length > 38) { out['m' + k++] = cur; cur = ''; if (k > 2) break; }
+    cur += ch;
+  }
+  if (cur && k <= 2) out['m' + k] = cur;
+  return out;
+}
+const msgText = m => [m.m0, m.m1, m.m2].filter(Boolean).join('');
+const HEART_MSGS = () => ['Goed bezig! 💪', 'Ik denk aan je 😘', 'Dank je wel! 😊', `Ik ben bij level ${S.level}! 🧩`];
 async function sendHeart(pid, name, btn) {
   if (!S.name) return askName(() => sendHeart(pid, name, btn));
   S.heartsSent = S.heartsSent || {};
   if (S.heartsSent[pid] === todayKey()) { toast(`Je hebt ${name} vandaag al een hartje gestuurd 💛`); return; }
+  // pick a short message to go with it (or none): just tapping, no typing needed
+  openModal(`<div class="heart-big sm">💛</div><h2>Hartje voor ${escHTML(name)}</h2><p class="note small">Wil je er een berichtje bij doen?</p>
+    <div class="msg-pick">${HEART_MSGS().map((m, i) => `<button class="mp" data-i="${i}">${escHTML(m)}</button>`).join('')}</div>
+    <button class="big-btn play" id="hmNone"><span class="bb-text"><b>Alleen een hartje 💛</b></span></button>`, true);
+  document.querySelectorAll('.msg-pick .mp').forEach(b => b.onclick = () => { closeModal(); doSendHeart(pid, name, btn, HEART_MSGS()[+b.dataset.i]); });
+  $('#hmNone').onclick = () => { closeModal(); doSendHeart(pid, name, btn, ''); };
+}
+async function doSendHeart(pid, name, btn, msg) {
   ensureId();
   try {
-    const r = await fetch(`${DB_URL}/hearts/${pid}/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: S.name.slice(0, 24), t: Date.now() }) });
+    const t = Date.now();
+    const r = await fetch(`${DB_URL}/hearts/${pid}/${S.pid}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: S.name.slice(0, 24), t }) });
     if (!r.ok) throw 0;
+    if (msg) fetch(`${DB_URL}/plays/${msgKey(pid)}.json`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ k: 'msg', t, from: S.pid, name: S.name.slice(0, 24), ...msgParts(msg) }) }).catch(() => { });
     S.heartsSent[pid] = todayKey(); bumpStat('heartsSent'); save();
-    logEvt('heart_out', { to: name });
+    logEvt('heart_out', { to: name, msg: msg ? 1 : undefined });
     Sound.unlock(); buzz(20);
     if (btn) { btn.classList.add('sent'); btn.textContent = '💛✓'; }
-    S.heartsOut = S.heartsOut || {}; S.heartsOut[pid] = { t: Date.now(), seen: 0, name }; save();
+    S.heartsOut = S.heartsOut || {}; S.heartsOut[pid] = { t, seen: 0, name }; save();
     showHeartSent(name);
   } catch (e) { toast('Hartje versturen lukte niet. Is er internet?'); }
 }
@@ -208,20 +234,30 @@ async function fetchHearts() {
     const fresh = Object.entries(data).filter(([from, v]) => v && v.t > (S.heartsSeen[from] || 0) && (S.pid.startsWith('test-') || !from.startsWith('test-')))
       .map(([from, v]) => ({ from, name: String(v.name || 'Iemand').slice(0, 24), t: v.t }));
     fresh.forEach(h => { S.heartsSeen[h.from] = h.t; });
+    if (fresh.length) await attachMsgs(fresh);
     if (fresh.length) { S.stats = S.stats || {}; S.stats.hearts = (S.stats.hearts || 0) + fresh.length; save(); }
     return fresh;
   } catch (e) { return []; } finally { heartsBusy = false; }
 }
+// the message that came with a heart: same sender, sent at the same moment
+async function attachMsgs(list) {
+  try {
+    const r = await fetch(`${DB_URL}/plays/${msgKey(S.pid)}.json`, { cache: 'no-store' });
+    const ms = r.ok ? Object.values(await r.json() || {}) : [];
+    list.forEach(h => { const m = ms.filter(m => m && m.from === h.from && Math.abs(m.t - h.t) < 120000).pop(); if (m && msgText(m)) h.msg = msgText(m).slice(0, 140); });
+  } catch (e) { }
+}
+const msgHTML = list => list.filter(h => h.msg).map(h => `<p class="heart-msg">“${escHTML(h.msg)}”<small>${escHTML(h.name)}</small></p>`).join('');
 function showHearts(list, then) {
   Sound.trophy(); buzz([20, 40, 20, 40, 40]);
   heartRain();
   const names = [...new Set(list.map(h => h.name))];
   const who = names.length === 1 ? `<b>${names[0]}</b> stuurde je een hartje!` : `<b>${names.slice(0, -1).join(', ')}</b> en <b>${names.slice(-1)}</b> stuurden je een hartje!`;
-  openModal(`<div class="heart-big">💛</div><h2 class="heart-h">Een hartje voor jou!</h2><p class="heart-who">${who}</p>
+  openModal(`<div class="heart-big">💛</div><h2 class="heart-h">Een hartje voor jou!</h2><p class="heart-who">${who}</p>${msgHTML(list)}
     <button class="big-btn play" id="hOk"><span class="bb-text"><b>Wat lief! 😊</b></span></button>`, false);
   setTimeout(heartRain, 900); setTimeout(heartRain, 1900);
   markHeartsSeen(list);
-  logEvt('heart_in', { from: names.join(', '), where: 'popup' });
+  logEvt('heart_in', { from: names.join(', '), where: 'popup', msg: list.some(h => h.msg) ? 1 : undefined });
   $('#hOk').onclick = () => { closeModal(); if (then) then(); };
 }
 // hearts fountain up from the bottom of the curScreen, so the words stay readable
@@ -241,13 +277,13 @@ function heartPop(list) {
   const names = [...new Set(list.map(h => h.name))];
   let el = $('#heartPop');
   if (!el) { el = document.createElement('div'); el.id = 'heartPop'; document.body.appendChild(el); }
-  el.innerHTML = `<div class="hp-card"><div class="hp-heart">💛</div><b>${names.join(' en ')}</b><span>${names.length > 1 ? 'sturen' : 'stuurt'} je een hartje!</span><small>Tik om verder te spelen</small></div>`;
+  el.innerHTML = `<div class="hp-card"><div class="hp-heart">💛</div><b>${names.join(' en ')}</b><span>${names.length > 1 ? 'sturen' : 'stuurt'} je een hartje!</span>${msgHTML(list)}<small>Tik om verder te spelen</small></div>`;
   el.className = 'on';
   Sound.trophy(); buzz([20, 40, 20, 40, 60]); heartRain(); setTimeout(heartRain, 900);
   markHeartsSeen(list);
-  logEvt('heart_in', { from: names.join(', '), where: 'level' });
+  logEvt('heart_in', { from: names.join(', '), where: 'level', msg: list.some(h => h.msg) ? 1 : undefined });
   const close = () => { el.className = ''; clearTimeout(el._t); };
-  el.onclick = close; clearTimeout(el._t); el._t = setTimeout(close, 6500);
+  el.onclick = close; clearTimeout(el._t); el._t = setTimeout(close, list.some(h => h.msg) ? 11000 : 6500);
 }
 // live: the database tells us the moment someone sends a heart
 let heartStream = null;

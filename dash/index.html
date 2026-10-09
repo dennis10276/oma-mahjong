@@ -83,6 +83,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .alert .msg small { display: block; color: var(--ink-2); font-size: 13px; margin-top: 2px; }
 .heart-act { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink-2); }
 .btn { font: inherit; font-weight: 700; padding: 7px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); cursor: pointer; }
+.hmsg { font: inherit; font-size: 13.5px; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--line, #ccc); min-width: 190px; background: transparent; color: inherit; }
 .btn.heart { background: #ffd23f; border-color: #e0a800; color: #3a2a00; }
 .btn:disabled { opacity: .55; cursor: default; }
 .hs-state { font-weight: 700; }
@@ -107,6 +108,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <button class="btn" id="notify" hidden>🔔 Meldingen aan</button>
   </div>
   <div id="heartTop" class="wide"></div>
+  <datalist id="msgIdeas"><option value="Goed bezig oma! 💪"><option value="Wat knap, oma! 🌟"><option value="Ik denk aan je 😘"><option value="Wie haalt het volgende level eerst? 😉"><option value="Even doorzetten, je kan het! 🍀"></datalist>
   <div id="alerts"></div>
   <div id="notice"></div>
 
@@ -148,8 +150,20 @@ const lvlKey = e => e.m === 'd' ? 'D' + e.d : 'L' + e.lv;
 // ---------- data in ----------
 function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e.t).sort((a, b) => a.t - b.t); }
 function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
+// messages that came with a heart are stored in plays/msg-<pid> (see the app's social.js)
+const msgKey = pid => pid.startsWith('test-') ? 'test-msg-' + pid.slice(5) : 'msg-' + pid;
+const isMsgKey = id => id.startsWith('msg-') || id.startsWith('test-msg-');
+function msgParts(txt) {
+  const out = {}; let k = 0, cur = '';
+  for (const ch of Array.from(String(txt).trim().slice(0, 140))) {
+    if ((cur + ch).length > 38) { out['m' + k++] = cur; cur = ''; if (k > 2) break; }
+    cur += ch;
+  }
+  if (cur && k <= 2) out['m' + k] = cur;
+  return out;
+}
 function players() {
-  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !id.startsWith('test-') || id === want));
+  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && (!id.startsWith('test-') || id === want)));
   return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 }))
     .filter(p => p.name !== p.id || p.id === want)   // visitors who never chose a name are left out
     .sort((a, b) => b.last - a.last);
@@ -169,6 +183,17 @@ $('#who').onchange = e => { sel = e.target.value; history.replaceState(null, '',
 const noTime = e => e.k === 'end' && !e.dur && !e.tp;
 // grandma gets extra help in the game (see careMode in the app)
 const isCare = pid => pid === 'pmuy4wmdp17hbws' || /^oma/i.test(nameOf(pid));
+// grandma's difficulty step (the app moves it by her own results, see adaptFor in the app)
+const STEP_NAME = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', '0': 'zacht (haar standaard)', '1': 'iets makkelijker', '2': 'makkelijker' };
+const stepName = s => STEP_NAME[String(s)] || String(s);
+function adaptInfo(ev) {
+  const last = [...ev].reverse().find(e => e.k === 'adapt' || (e.k === 'start' && e.ad != null));
+  if (!last) return null;
+  const step = last.k === 'adapt' ? last.to : last.ad;
+  const tries = ev.filter(e => e.k === 'end' && e.m !== 'd' && (e.r === 'win' || e.r === 'stuck' || (e.r === 'restart' && (e.dur || 0) >= 30))).slice(-10);
+  const won = tries.reduce((a, e) => a + (e.r === 'win' ? (e.rb ? 0.5 : 1) : 0), 0);
+  return { step, won, n: tries.length };
+}
 /* "Stuck": the last tries on her current level all failed (2 or more), recently. */
 function stuckStreak(pid) {
   const ends = events(pid).filter(e => e.k === 'end');
@@ -293,6 +318,7 @@ function render() {
     k('Vastgelopen', ends.length ? Math.round(stuckEnds.length / ends.length * 100) + '%' : '–', `${stuckEnds.length}× van ${ends.length} pogingen` + (stuckEnds.length ? ` · gem. ${Math.round(stuckEnds.reduce((a, e) => a + (e.n ? (e.n - e.left) / e.n : 0), 0) / stuckEnds.length * 100)}% af` : '')) +
     k('Hulp gebruikt', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden` + (nRescue || isCare(sel) ? ` · ${nRescue}× ↩ · ${nNudge}× ✨` : '')) +
     k('Tijd per level', timed.length ? mmss(timed.reduce((a, e) => a + (e.dur || 0), 0) / timed.length) : '–', 'gemiddeld bij gehaald') +
+    (() => { const a = isCare(sel) && adaptInfo(ev); if (!a) return ''; const w = String(a.won).replace('.', ','); return k('Moeilijkheid', `<span style="font-size:19px;line-height:1.3;display:block;padding-top:4px">${stepName(a.step)}</span>`, `won ${w} van de laatste ${a.n} pogingen · past zich vanzelf aan`); })() +
     k('App geopend', ev.filter(e => e.k === 'open').length + '×', last ? `sinds ${new Date(ev[0].t).toLocaleDateString('nl-NL')}` : '');
 
   // charts: last 14 days
@@ -333,12 +359,15 @@ function render() {
       case 'shufno': return ['🔀', `Wilde meteen schudden in ${lvlName(e).toLowerCase()}: bewaard voor later`];
       case 'gift': return ['🎁', `Dagcadeau geopend: +${e.stars} ⭐`];
       case 'rescue': return ['↩', `Stenen teruggelegd in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)}, ${e.left} stenen op het bord)`];
+      case 'adapt': return ['🎚️', `Moeilijkheid aangepast: <b>${stepName(e.to)}</b> (was ${stepName(e.from)}; won ${e.rate}% van de laatste ${e.n} pogingen)`];
+      case 'msg': return ['💌', `Bericht van ${esc(e.name)}: “${esc([e.m0, e.m1, e.m2].filter(Boolean).join(''))}”`];
       case 'err': return ['⚠️', `Foutje in de app: ${esc(e.msg)}${e.w ? ` <small>(${esc(e.w)})</small>` : ''}`];
       default: return ['•', esc(e.k)];
     }
   };
   let lastDay = '', html = '';
-  for (const e of [...ev].reverse().slice(0, 150)) {
+  const feedEv = ev.concat(events(msgKey(sel))).sort((a, b) => a.t - b.t);
+  for (const e of [...feedEv].reverse().slice(0, 150)) {
     const dk = new Date(e.t).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
     if (dk !== lastDay) { html += `<li class="day">${dk}</li>`; lastDay = dk; }
     const [ico, t] = txt(e);
@@ -357,8 +386,10 @@ function heartBox(to) {
   if (!from.length) return '';
   const me = lsGet('dash.me', null), pick = from.some(p => p.id === me) ? me : (from.find(p => !isCare(p.id)) || from[0]).id;
   const st = (lsGet('dash.hearts', {}))[to];
-  const state = st ? (st.seen ? `<span class="hs-state seen">💛 gezien 👀 ${hm(st.seen)}</span>` : `<span class="hs-state">💛 verstuurd ${hm(st.t)}, nog niet gezien</span>`) : '';
+  const withMsg = st && st.msg ? ' met berichtje' : '';
+  const state = st ? (st.seen ? `<span class="hs-state seen">💛${withMsg} gezien 👀 ${hm(st.seen)}</span>` : `<span class="hs-state">💛${withMsg} verstuurd ${hm(st.t)}, nog niet gezien</span>`) : '';
   return `<span class="heart-act">als <select data-from="${esc(to)}">${from.map(p => `<option value="${esc(p.id)}"${p.id === pick ? ' selected' : ''}>${esc(p.name)}</option>`).join('')}</select>
+    <input class="hmsg" maxlength="110" list="msgIdeas" placeholder="berichtje (mag leeg)" data-msg="${esc(to)}">
     <button class="btn heart" data-heart="${esc(to)}">💛 Stuur een hartje</button>${state}</span>`;
 }
 function renderAlerts() {
@@ -370,7 +401,8 @@ function renderAlerts() {
     return `<div class="alert"><div class="msg">😟 <b>${nm}</b> zit vast op <b>${esc(a.title.toLowerCase())}</b>: ${a.n}× niet gelukt, laatste keer ${ago(a.last.t)}.
       <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${isCare(a.pid) ? (a.n >= 3 ? 'Haar volgende poging is makkelijker 🌱. ' : 'Lukt het nog een keer niet, dan wordt het level makkelijker 🌱. ') : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
   }).join('');
-  if ($('#alerts').dataset.html !== html) { $('#alerts').innerHTML = html; $('#alerts').dataset.html = html; }
+  const typing = document.activeElement && document.activeElement.closest && document.activeElement.closest('#alerts');
+  if ($('#alerts').dataset.html !== html && !typing) { $('#alerts').innerHTML = html; $('#alerts').dataset.html = html; }
   document.title = (list.length ? '😟 ' : '') + "Oma's Mahjong · Volgen";
   // a desktop notification for a new alert (only when allowed, once per alert)
   if (alertsBaseline && 'Notification' in window && Notification.permission === 'granted') {
@@ -396,7 +428,9 @@ document.addEventListener('click', async e => {
     const t = Date.now();
     const r = await fetch(`${DB}/hearts/${encodeURIComponent(to)}/${encodeURIComponent(from)}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: nameOf(from).slice(0, 24), t }) });
     if (!r.ok) throw new Error(r.status);
-    const hs = lsGet('dash.hearts', {}); hs[to] = { from, t, seen: 0 }; lsSet('dash.hearts', hs); lsSet('dash.me', from);
+    const inp = b.parentNode.querySelector('.hmsg'), msg = inp ? inp.value.trim() : '';
+    if (msg) await fetch(`${DB}/plays/${encodeURIComponent(msgKey(to))}.json`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ k: 'msg', t, from, name: nameOf(from).slice(0, 24), ...msgParts(msg) }) });
+    const hs = lsGet('dash.hearts', {}); hs[to] = { from, t, seen: 0, msg: msg || undefined }; lsSet('dash.hearts', hs); lsSet('dash.me', from);
   } catch (err) { alert('Hartje versturen lukte niet: ' + err.message); }
   $('#alerts').dataset.html = ''; renderAlerts(); renderHeartTop();
 });

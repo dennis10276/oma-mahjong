@@ -13,7 +13,8 @@ function fixture() {
     ev('pOma', 60, { k: 'start', lv: 12, at: 1, n: 72 }),
     ev('pOma', 55, { k: 'rescue', lv: 12, at: 1, s: 180, left: 30 }),
     ev('pOma', 50, { k: 'end', r: 'stuck', lv: 12, at: 1, n: 72, left: 6, dur: 420, tp: 80, rb: 1, tm: 4 }),
-    ev('pOma', 40, { k: 'start', lv: 12, at: 2, n: 72 }),
+    ev('pOma', 45, { k: 'adapt', from: 0, to: 1, rate: 40, n: 10, lv: 12 }),
+    ev('pOma', 40, { k: 'start', lv: 12, at: 2, n: 72, ez: 1.5, ad: 1 }),
     ev('pOma', 30, { k: 'err', msg: 'test error', w: 'board.js:12', lv: 12 }),
     ev('pOma', 20, { k: 'end', r: 'stuck', lv: 12, at: 2, n: 72, left: 20, dur: 300, tp: 60, tm: 4 }),
     ev('pDen', 100, { k: 'open', lv: 26, name: 'Dennis' }),
@@ -51,16 +52,24 @@ module.exports = [
         const kpi = await txt('#kpis');
         t.ok(/Vastgelopen\s*67%/.test(kpi), 'stuck rate KPI', kpi);
         t.ok(/Tijd per level\s*–/.test(kpi), 'the 0-second win does not count as a time', kpi);
+        t.ok(/Moeilijkheid\s*iets makkelijker/.test(kpi) && /won 1 van de laatste 3 pogingen/.test(kpi), 'her difficulty step', kpi);
+        t.ok(/Moeilijkheid aangepast: iets makkelijker/.test(await txt('#feed')), 'the change is in the feed');
         t.ok(await p.evaluate(() => document.querySelectorAll('#chClose .bar').length) === 2, 'closeness chart has both failed tries');
         const tbl = await txt('#tbl'), feed = await txt('#feed');
         t.ok(/↩/.test(tbl) && /6 over/.test(tbl), 'table shows the rescue and the closest try', tbl.slice(0, 300));
         t.ok(/Stenen teruggelegd/.test(feed) && /tijd onbekend/.test(feed) && /Foutje in de app: test error/.test(feed), 'feed shows the new events', feed.slice(0, 600));
         // send a heart from the PC as Dennis
-        await p.evaluate(() => { const s = document.querySelector('#alerts select'); s.value = 'pDen'; s.dispatchEvent(new Event('change', { bubbles: true })); document.querySelector('#alerts [data-heart]').click(); });
+        await p.evaluate(() => { const s = document.querySelector('#alerts select'); s.value = 'pDen'; s.dispatchEvent(new Event('change', { bubbles: true })); document.querySelector('#alerts .hmsg').value = 'Goed bezig oma, wie haalt level 13 eerst? 😉'; document.querySelector('#alerts [data-heart]').click(); });
         await sleep(800);
         const h = db.get('hearts/pOma/pDen');
         t.ok(h && h.name === 'Dennis' && h.t > 0, 'heart written to the database', h);
         t.ok(/verstuurd/.test(await txt('#alerts')), 'shows it was sent');
+        const msgs = Object.values(db.get('plays/msg-pOma') || {});
+        t.ok(msgs.length === 1 && msgs[0].from === 'pDen' && msgs[0].t === h.t && [msgs[0].m0, msgs[0].m1, msgs[0].m2].join('') === 'Goed bezig oma, wie haalt level 13 eerst? 😉' && [msgs[0].m0, msgs[0].m1].every(x => x.length <= 40), 'message stored in pieces of at most 40', msgs);
+        t.ok(/met berichtje/.test(await txt('#alerts')), 'says it went with a message');
+        await sleep(5000);
+        t.ok(/Bericht van Dennis: “Goed bezig oma/.test(await txt('#feed')), 'message in her feed');
+        t.ok(!(await p.evaluate(() => [...document.querySelectorAll('#who option')].map(o => o.value))).some(v => v.startsWith('msg-')), 'the messages are not a player in the list');
         db.set('hearts/pOma/pDen', { name: 'Dennis', t: -h.t });       // Oma's app marks it seen
         await p.evaluate(() => checkHeartsSeen()); await sleep(500);
         t.ok(/gezien/.test(await txt('#alerts')), 'shows it was seen');

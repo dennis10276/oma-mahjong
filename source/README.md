@@ -42,6 +42,17 @@ Grandma (her player id, or any name starting with "Oma") gets help the others do
 - the helper: when nothing moved for 6 seconds and a free pair includes a face-down tile, that tile
   is turned over and the pair glows until it is matched; a visible pair glows after 14 seconds
 - more lucky moments (from level 1, up to twice per level) and 10 seconds to keep a combo going
+- (1.21) her difficulty follows her own results (`adaptFor` in `www/js/board.js`): her last 10 tries
+  on levels are kept on the phone (win 1, win after putting tiles back 0.5, stuck 0; starting over
+  within 30 s does not count). When a new level starts and 5+ tries were played since the last change:
+  under 60% won -> half a step easier, over 85% -> half a step back. Steps -2..+2 mean ease 0..2
+  (`Layouts.ease` takes half steps); the 3-failed-tries help comes on top. Easier steps also get less
+  ice and fewer locks. The dashboard shows her step ("Moeilijkheid") and every change in the feed.
+
+Hearts can carry a short message (1.21): from the dashboard (type it, or pick an idea) or in the
+app (four ready-made lines, no typing). The heart stays in `hearts/<to>/<from>`; the message goes to
+`plays/msg-<to>` (pieces m0..m2 of at most 40 characters, so the existing database rules allow it) and
+is matched to the heart by sender and time.
 
 Special tiles and mechanics (everyone):
 - level 20+: a gold pair (double points)

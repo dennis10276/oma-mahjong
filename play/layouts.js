@@ -240,15 +240,27 @@ const Layouts = (() => {
   /* Gentler deals for grandma (see careMode): the same pile, but more matching pictures.
      ez 1 = always for her: fewer rare pictures and face-down tiles, an easier deal;
      ez 2 = after 2 failed tries: every picture 4 times, half the face-down tiles;
-     ez 3 = after 4 failed tries: every picture about 6 times, no face-down tiles. */
+     ez 3 = after 4 failed tries: every picture about 6 times, no face-down tiles.
+     Half steps (0.5, 1.5, 2.5) lie in between: grandma's own results move her by half steps. */
+  function easeStep(spec, ez) {
+    const pairs = spec.tiles.length / 2, d = spec.diff;
+    if (ez <= 0) return { kinds: spec.kinds, diff: d };
+    if (ez >= 3) return { kinds: Math.max(4, Math.round(pairs / 3)), diff: { ...d, rare: 0, down: 0, open: 0.15, cap: 2, target: 1 } };
+    if (ez === 2) return { kinds: Math.max(4, Math.ceil(pairs / 2)), diff: { ...d, rare: 0, down: d.down / 2, open: d.open * 0.5, target: Math.max(d.target, 0.95) } };
+    const rare = d.rare / 2;
+    return { kinds: Math.round(pairs / 2 + pairs / 2 * rare), diff: { ...d, rare, down: d.down * 0.6, open: d.open * 0.75, target: Math.max(d.target, 0.9) } };
+  }
   function ease(spec, ez) {
     if (!ez) return spec;
-    const pairs = spec.tiles.length / 2, d = spec.diff;
-    let kinds, diff;
-    if (ez >= 3) { kinds = Math.max(4, Math.round(pairs / 3)); diff = { ...d, rare: 0, down: 0, open: 0.15, cap: 2, target: 1 }; }
-    else if (ez === 2) { kinds = Math.max(4, Math.ceil(pairs / 2)); diff = { ...d, rare: 0, down: d.down / 2, open: d.open * 0.5, target: Math.max(d.target, 0.95) }; }
-    else { const rare = d.rare / 2; kinds = Math.round(pairs / 2 + pairs / 2 * rare); diff = { ...d, rare, down: d.down * 0.6, open: d.open * 0.75, target: Math.max(d.target, 0.9) }; }
-    return { ...spec, kinds: Math.min(kinds, spec.kinds), diff, seed: spec.seed + ez * 7777 };
+    ez = Math.max(0, Math.min(3, ez));
+    const lo = Math.floor(ez), hi = Math.ceil(ez), f = ez - lo;
+    const a = easeStep(spec, lo), b = easeStep(spec, hi);
+    const mix = (x, y) => x + (y - x) * f;
+    const diff = { ...b.diff };
+    for (const k of ['rare', 'down', 'open', 'target']) diff[k] = mix(a.diff[k] || 0, b.diff[k] || 0);
+    diff.cap = Math.round(mix(a.diff.cap, b.diff.cap));
+    const kinds = Math.round(mix(Math.min(a.kinds, spec.kinds), Math.min(b.kinds, spec.kinds)));
+    return { ...spec, kinds: Math.min(kinds, spec.kinds), diff, seed: spec.seed + Math.round(ez * 7777) };
   }
 
   // ---------- rules ----------
@@ -309,8 +321,9 @@ const Layouts = (() => {
      freeze tiles whose neighbours are taken earlier in that solution, and only lock tiles that are
      taken after the key pair. */
   function obstacles(tiles, faces, opt) {
-    const { level, seed, avoid = new Set() } = opt;
+    const { level, seed, avoid = new Set(), ez = 0 } = opt;
     const wantIce = level >= 35, wantLock = level >= 45;
+    const fewer = ez >= 2.5 ? 2 : ez >= 1.5 ? 1 : 0;     // grandma on an easier step: less ice and fewer locks
     if (!wantIce) return null;
     const n = tiles.length, nb = neighbors(tiles), all = new Uint8Array(n).fill(1);
     const P = solve(tiles, nb, faces, all, [], 60000);
@@ -332,19 +345,19 @@ const Layouts = (() => {
       if (pool.length) {
         const [a, b, k] = pool[Math.floor(r() * pool.length)];
         const cand = visibleFirst(P.filter(i => pos[i] > k + 6 && ok(i) && i !== a && i !== b));
-        const nLock = level < 50 ? 2 : 3;
+        const nLock = Math.max(1, (level < 50 ? 2 : 3) - fewer);
         if (cand.length >= nLock) { res.keys = [a, b]; res.locks = cand.slice(0, nLock); [a, b, ...res.locks].forEach(i => used.add(i)); }
       }
     }
     if (level <= 37 || r() < 0.75) {
       const inb = iceNeighbors(tiles);
-      const nIce = level < 40 ? 2 : level < 50 ? 3 : 4;
+      const nIce = Math.max(1, (level < 40 ? 2 : level < 50 ? 3 : 4) - fewer);
       const cand = visibleFirst(P.filter(i => ok(i) && !used.has(i) && pos[i] > 3));
       for (const i of cand) {
         if (Object.keys(res.ice).length >= nIce) break;
         if (inb[i].some(j => res.ice[j])) continue;                 // not two frozen tiles side by side
         const before = inb[i].filter(j => pos[j] < pos[i]).length;
-        const h = level >= 42 && !Object.values(res.ice).includes(2) && r() < 0.5 ? 2 : 1;
+        const h = level >= 42 && !fewer && !Object.values(res.ice).includes(2) && r() < 0.5 ? 2 : 1;
         if (before >= h) res.ice[i] = h;
       }
     }

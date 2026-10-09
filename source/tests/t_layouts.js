@@ -42,6 +42,13 @@ module.exports = [
       }
       const b = Layouts.forLevel(10, 1.5);
       t.ok(Layouts.ease(b, 0) === b, 'ease 0 changes nothing');
+      // grandma's half steps lie neatly between the whole ones
+      for (const L of [12, 28, 40]) {
+        const base = Layouts.forLevel(L, 1.5);
+        const st = [0, 0.5, 1, 1.5, 2, 2.5, 3].map(ez => { const sp = Layouts.ease(base, ez); return { ez, kinds: sp.kinds, down: sp.diff.down, target: sp.diff.target, ok: solvable(sp).ok }; });
+        t.ok(st.every(x => x.ok), `level ${L}: every half step solvable`, st);
+        t.ok(st.every((x, i) => !i || (x.kinds <= st[i - 1].kinds && x.down <= st[i - 1].down + 1e-9 && x.target >= st[i - 1].target - 1e-9)), `level ${L}: each step a bit easier`, st);
+      }
     },
   },
   {
@@ -60,6 +67,14 @@ module.exports = [
         t.ok(!Object.keys(ob.ice).some(i => d.down.includes(+i)), `level ${L}: no ice on face-down tiles`);
       }
       t.ok(withIce >= 20 && withLock >= 12, 'most levels have them', { withIce, withLock });
+      // on grandma's easier steps: less ice and fewer locks
+      let n1 = 0, n2 = 0;
+      for (let L = 45; L <= 60; L++) {
+        const spec = Layouts.forLevel(L, 1.5), d = Layouts.makeDeal(spec);
+        const cnt = ez => { const o = Layouts.obstacles(spec.tiles, d.faces, { level: L, seed: spec.seed, avoid: new Set(d.down), ez }); return o ? Object.keys(o.ice).length + o.locks.length : 0; };
+        n1 += cnt(1); n2 += cnt(2.5);
+      }
+      t.ok(n2 < n1 * 0.75, 'easier steps: fewer obstacles', { normal: n1, easier: n2 });
     },
   },
   {

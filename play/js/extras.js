@@ -203,7 +203,7 @@ function addObstacles(o, spec) {
   o.obstDone = true; o.obst = null;
   if (o.mode !== 'level' || o.level < 35) return;
   const avoid = new Set([...(o.down || []), ...(o.gold || [])]);
-  o.obst = Layouts.obstacles(spec.tiles, o.faces, { level: o.level, seed: spec.seed, avoid });
+  o.obst = Layouts.obstacles(spec.tiles, o.faces, { level: o.level, seed: spec.seed, avoid, ez: o.ez || 0 });
 }
 function setObstacles(ob) {
   G.ob = null; G.inb = null;
