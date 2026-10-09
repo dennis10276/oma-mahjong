@@ -29,11 +29,11 @@ module.exports = [
       await startLevel(p, 12);
       await p.evaluate(() => { toast('🍀 Geluksmoment! Pak snel de glinsterende steen', 3000); }); await sleep(400);
       const r = await p.evaluate(() => { const box = e => e.getBoundingClientRect().toJSON(); return { msg: box(document.querySelector('#gameMsg')), board: box(document.querySelector('#boardWrap')), text: document.querySelector('#gameMsg').innerText, toast: document.querySelector('#toast').classList.contains('on') }; });
-      t.ok(/Geluksmoment/.test(r.text), 'message in the strip', r.text);
+      t.ok(/Geluksmoment/.test(r.text), 'message in the top bar', r.text);
       t.ok(!r.toast, 'no floating toast while playing');
-      t.ok(!overlaps(r.msg, r.board), 'strip is not over the pile', r);
+      t.ok(!overlaps(r.msg, r.board), 'message is not over the pile', r);
       await p.evaluate(() => __mj.maybeLucky && praise('Halverwege! 💪')); await sleep(1500);
-      t.ok(/Halverwege/.test(await p.evaluate(() => document.querySelector('#gameMsg').innerText)), 'praise in the strip too, after the first message was readable');
+      t.ok(/Halverwege/.test(await p.evaluate(() => document.querySelector('#gameMsg').innerText)), 'praise there too, after the first message was readable');
       t.eq(await p.evaluate(() => document.querySelectorAll('#praise').length), 0, 'the old praise text over the board is gone');
       // points come out of the score counter, not out of the pile
       await p.evaluate(() => floatScore('+20'));

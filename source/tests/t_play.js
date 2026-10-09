@@ -8,8 +8,15 @@ module.exports = [
     async run(t, { solve, modal, sleep }) {
       const p = await t.phone({ state: { level: 40 }, size: [360, 740] });
       await p.evaluate(() => __mj.startDaily('2026-10-07')); await sleep(1500);
-      // two taps in the same moment on a free pair
-      const pair = await p.evaluate(`(${free})()`).then(fr => p.evaluate(fr => { const G = __mj.G; const up = fr.filter(i => !G.down[i]); for (const a of up) for (const c of up) if (a < c && G.tiles[a].face === G.tiles[c].face) return [a, c]; return null; }, fr));
+      // two taps in the same moment on a free pair (made into a pair by swapping pictures, if the deal has none)
+      const pair = await p.evaluate(`(${free})()`).then(fr => p.evaluate(fr => {
+        const G = __mj.G, up = fr.filter(i => !G.down[i] && G.tiles[i].face < 100);
+        for (const a of up) for (const c of up) if (a < c && G.tiles[a].face === G.tiles[c].face) return [a, c];
+        const [a, c] = up, w = G.tiles.findIndex((t, k) => k !== a && k !== c && t.face === G.tiles[a].face);
+        if (a === undefined || c === undefined || w < 0) return null;
+        const fc = G.tiles[c].face; G.tiles[c].face = G.tiles[a].face; G.tiles[w].face = fc;
+        return [a, c];
+      }, fr));
       if (t.ok(pair, 'a free pair exists')) {
         await p.evaluate(([a, c]) => { __mj.onTap(a); __mj.onTap(c); }, pair); await sleep(500);
         t.eq(await p.evaluate(([a, c]) => [__mj.G.alive[a], __mj.G.alive[c], __mj.G.tray.length], pair), [0, 0, 0], 'pair matched at once');

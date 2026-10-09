@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="style.css?v=1.25" id="css">
+<link rel="stylesheet" href="style.css?v=1.26" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -69,6 +69,7 @@
         <div id="gameTitle">Level 1</div>
         <div id="comboTag"></div>
         <div class="progress"><div id="progressBar"></div></div>
+        <div id="gameMsg" aria-live="polite"></div>
       </div>
       <div class="chip score" id="score">0</div>
       <button class="icon-btn" id="btnRestart" aria-label="Level opnieuw beginnen">↻</button>
@@ -76,7 +77,6 @@
     <div class="traybar">
       <div id="tray"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
     </div>
-    <div id="gameMsg" aria-live="polite"></div>
     <div id="boardWrap"><div id="board"></div></div>
     <div class="toolbar">
       <button class="tool" id="btnHint"><span>💡</span>Hint<i class="badge">1</i></button>
@@ -154,7 +154,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.25', KEY = 'omamj.code', FILES = ['tiles.js?v=1.25', 'audio.js?v=1.25', 'layouts.js?v=1.25', 'js/rules.js?v=1.25', 'js/core.js?v=1.25', 'js/fx.js?v=1.25', 'js/update.js?v=1.25', 'js/screens.js?v=1.25', 'js/board.js?v=1.25', 'js/help.js?v=1.25', 'js/specials.js?v=1.25', 'js/rewards.js?v=1.25', 'js/telemetry.js?v=1.25', 'js/social.js?v=1.25', 'js/hearts.js?v=1.25', 'js/win.js?v=1.25', 'js/main.js?v=1.25'];
+  var BUILT = '1.26', KEY = 'omamj.code', FILES = ['tiles.js?v=1.26', 'audio.js?v=1.26', 'layouts.js?v=1.26', 'js/rules.js?v=1.26', 'js/core.js?v=1.26', 'js/fx.js?v=1.26', 'js/update.js?v=1.26', 'js/screens.js?v=1.26', 'js/board.js?v=1.26', 'js/help.js?v=1.26', 'js/specials.js?v=1.26', 'js/rewards.js?v=1.26', 'js/telemetry.js?v=1.26', 'js/social.js?v=1.26', 'js/hearts.js?v=1.26', 'js/win.js?v=1.26', 'js/main.js?v=1.26'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

@@ -156,7 +156,7 @@ function layoutBoard() {
   const depthF = 0.085;            // the tile's side, drawn right and below it
   const tw = Math.min(150, (W - 8) / (r - l + depthF + 0.04), (H - 8) / (b - t0 + depthF * 1.4 + 0.04));
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
-  // centre what is really there
+  // centred on what is really there: even space left and right, and between the tray and the buttons below
   const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = (H - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
   const board = $('#board');
   board.style.setProperty('--d', d.toFixed(1) + 'px');

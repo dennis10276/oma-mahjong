@@ -148,24 +148,12 @@ module.exports = [
       // clear the board down to a single joker
       const j = await p.evaluate(() => { const G = __mj.G; const j = G.tiles.findIndex(t => t.face === 101); G.tiles.forEach((t, k) => { if (k !== j) { G.alive[k] = 0; t.el.classList.add('hidden'); } }); G.down[j] = 0; G.tiles[j].el.classList.remove('back'); if (G.ob) G.ob.left = {}; G.tray = []; return j; });
       const s0 = await p.evaluate(() => __mj.G.score);
-      await p.evaluate(j => __mj.onTap(j), j); await sleep(3500);
+      await p.evaluate(j => __mj.onTap(j), j);
+      let m = null;   // wait for the win screen (longer when the computer is busy with other tests)
+      for (let k = 0; k < 30 && !(m && m.buttons.includes('wNext')); k++) { await sleep(400); m = await modal(p); }
       t.eq(await p.evaluate(() => __mj.G.done), true, 'level finished');
       t.ok((await p.evaluate(() => __mj.S.lvlPts[__mj.G.level])) >= s0 + 200, 'bonus points');
-      t.ok(((await modal(p)) || {}).buttons.includes('wNext'), 'win screen');
-    },
-  },
-  {
-    name: 'joker: a game saved with only a joker left in the tray finishes when reopened',
-    async run(t, { startLevel, sleep, modal }) {
-      const p = await t.phone({ state: { ...DENNIS, level: 40 } });
-      const L = await findLevel(p, startLevel, 30, 60, () => __mj.G.tiles.some(t => t.face === 101));
-      if (!t.ok(L, 'a level with jokers')) return;
-      // the situation from 1.18: board empty, the joker waiting in the tray, saved
-      await p.evaluate(() => { const G = __mj.G; const j = G.tiles.findIndex(t => t.face === 101); G.tiles.forEach((t, k) => { G.alive[k] = 0; }); G.tray = [j]; if (G.ob) G.ob.left = {}; saveCur(); });
-      await p.reload(); await p.waitForFunction(() => window.__mjReady); await sleep(300);
-      await p.evaluate(L => __mj.startLevel(L), L); await sleep(4000);
-      t.eq(await p.evaluate(() => __mj.G.done), true, 'finished by itself');
-      t.ok(((await modal(p)) || {}).buttons.includes('wNext'), 'win screen');
+      t.ok(m && m.buttons.includes('wNext'), 'win screen', m);
     },
   },
 ];

@@ -5,7 +5,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.25';
+const APP_VERSION = '1.26';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -92,8 +92,9 @@ function toast(msg, ms = 2400) {
   t.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms);
 }
-/* While playing, every message goes to one strip between the tray and the pile (#gameMsg):
-   nothing ever covers the tiles. A new message waits until the current one was readable. */
+/* While playing, every message goes to the title spot in the top bar (#gameMsg; the title and the
+   progress bar step aside meanwhile): nothing ever covers the tiles. A new message waits until the
+   current one was readable. */
 const inPlay = () => typeof curScreen !== 'undefined' && curScreen === 'game' && modalFree();
 let msgT, msgPend, msgShown = 0, msgBig = false;
 function gameMsg(text, ms = 2400, big = false) {
@@ -104,9 +105,13 @@ function gameMsg(text, ms = 2400, big = false) {
   const s = document.createElement('span');
   s.className = big ? 'big' : 'msg'; s.textContent = text;
   m.replaceChildren(s); msgShown = performance.now(); msgBig = big;
-  clearTimeout(msgT); msgT = setTimeout(() => { s.classList.add('out'); msgShown = 0; }, ms);
+  m.parentNode.classList.add('msg-on');
+  clearTimeout(msgT); msgT = setTimeout(() => {
+    s.classList.add('out'); msgShown = 0;
+    setTimeout(() => { if (m.firstChild === s) m.parentNode.classList.remove('msg-on'); }, 300);
+  }, ms);
 }
-function clearGameMsg() { clearTimeout(msgT); clearTimeout(msgPend); msgShown = 0; const m = $('#gameMsg'); if (m) m.replaceChildren(); }
+function clearGameMsg() { clearTimeout(msgT); clearTimeout(msgPend); msgShown = 0; const m = $('#gameMsg'); if (m) { m.replaceChildren(); m.parentNode.classList.remove('msg-on'); } }
 function praise(text) { gameMsg(text, 1500, true); }
 // points float out of the score counter (top right), not over the pile
 function floatScore(text) {

@@ -87,9 +87,9 @@ back to its built-in version and skips that update. New files in `js/` only need
   can be taken the ice melts / the locks open by themselves.
 - a face-down tile whose twin waits in the tray matches as soon as it is tapped
 
-Piles (1.24/1.25): shapes that match the screen, fill their box and have no dents or holes are
-preferred (`buildOnce` in layouts.js, `DENT_W`), a pile that comes out too flat is built again, and the board is sized and
-centred on where the tiles really are (so upper layers no longer leave an empty strip at the top).
+Piles (1.26): many different shapes, roughly the screen's shape (a random pick among the good fits, so
+every level looks different); a pile that comes out too flat is built again. The board is sized on where
+the tiles really are and centred: even space left and right, and between the tray and the buttons. Messages while playing show in the title spot of the top bar, so the pile gets all the room.
 An upper tile never sits exactly on one tile. Each layer first tries to rest every tile
 on 4 tiles below (half a tile shifted both ways, the stepped pyramid look), otherwise on 2 (shifted
 sideways or down), so taking a tile always uncovers part of several.
@@ -116,8 +116,8 @@ matched to the heart by sender and time.
 | `t_layouts` | the engine (in Node): every level solvable, easier deals, ice/locks, even difficulty |
 | `t_play` | tapping fast, face-down tiles, winning levels and the daily puzzle |
 | `t_grandma` | tray rescue, easier retries, adaptive difficulty, no early shuffle; none of it for others |
-| `t_joy` | the message strip, the helper, win streak, daily gift, face-down match, see-through |
-| `t_mech` | gold, joker, ice, lock & key |
+| `t_joy` | messages in the top bar, the helper, win streak, daily gift, face-down match, see-through |
+| `t_mech` | gold, joker (also as the last tile), ice, lock & key |
 | `t_progress` | tasks and chest, the weekly reset, unlocking backgrounds and the prize, wiping progress, resuming |
 | `t_rules` | changing `rules.js` really changes the game |
 | `t_ranking`, `t_hearts` | computer players, climbing, hearts with messages |

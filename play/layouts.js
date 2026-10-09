@@ -22,8 +22,7 @@ const Layouts = (() => {
   const overlaps = (a, b) => Math.abs(a.x - b.x) < 2 && Math.abs(a.y - b.y) < 2;
 
   // ---------- base shapes ----------
-  /* Every shape is mirror-symmetric left/right, like the boards in Vita Mahjong 
-     Shapes with dents or holes are used less: empty space inside a pile is wasted on a phone).
+  /* Every shape is mirror-symmetric left/right, like the boards in Vita Mahjong.
      u = -1..1 across, v = -1 (top) .. 1 (bottom); c may be fractional (brick rows). */
   const UV = (c, r, W, H) => [(c - (W - 1) / 2) / (W / 2), (r - (H - 1) / 2) / (H / 2)];
   const SHAPES = {
@@ -47,7 +46,6 @@ const Layouts = (() => {
   };
   // early levels get calm, simple shapes; the fancy ones come later
   const EASY = ['block', 'oval', 'diamond', 'octagon', 'cross', 'pyramid'];
-  const DENT_W = 6;          // how strongly shapes with dents are avoided (0 = not at all)
   const NAMES = Object.keys(SHAPES);
 
   function shapeCells(name, W, H, brick) {
@@ -77,10 +75,7 @@ const Layouts = (() => {
             // skip shapes that fall apart into a thin mess at this size
             const rowsUsed = new Set(ys).size;
             if (rowsUsed < Math.min(H, 3)) continue;
-            // dents: empty spots between tiles of the same row or column (0 for a diamond, high for an H)
-            const dent = (key, along, step) => { const by = {}; cells.forEach(c => (by[c[key]] = by[c[key]] || []).push(c[along])); let e = 0; for (const v of Object.values(by)) e += (Math.max(...v) - Math.min(...v)) / step + 1 - v.length; return e; };
-            const dents = (dent('y', 'x', 2) + dent('x', 'y', brick ? 4 : 2)) / cells.length;
-            BASES.push({ name, W, H, brick, n: cells.length, w, h, dents });
+            BASES.push({ name, W, H, brick, n: cells.length, w, h });
           }
     return BASES;
   }
@@ -111,9 +106,9 @@ const Layouts = (() => {
   function buildOnce(r, target, layers, aspect, level, baseTarget) {
     const want = aspect / 1.24; // rows per column that fill the area exactly
     const pool = level < 8 ? bases().filter(b => EASY.includes(b.name)) : bases();
-    // a base close to the wanted size, above all one with the screen's shape, not too thin (less than
-    // 80% of its box) and without dents, so the pile fills the screen
-    const scored = pool.map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 10 * Math.abs(Math.log((b.h + 0.25) / (b.w + 0.35) / want)) + 10 * Math.max(0, 0.8 - b.n / (b.w * b.h)) + DENT_W * b.dents }));
+    // a base close to the wanted size and roughly the screen's shape; among the good ones a random
+    // pick, so the piles look different every level
+    const scored = pool.map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 6 * Math.abs(Math.log((b.h + 0.25) / (b.w + 0.35) / want)) }));
     const bestSc = Math.min(...scored.map(x => x.sc));
     const cands = scored.filter(x => x.sc <= bestSc + 1.2).map(x => x.b);
     const names = [...new Set(cands.map(c => c.name))];
