@@ -6,13 +6,17 @@ const QUICK = { HELP: { care: { nudge: { downS: 2, upS: 5 } } } };
 const DENNIS = { name: 'Dennis', pid: 'test-dennis', level: 12 };
 const overlaps = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
 
-// make tile d (face down, free) and u (face up, free) a pair, keeping every picture count even
+// make tile d (face down, free) and u (face up, free) a pair, keeping every picture count even:
+// u swaps pictures with another tile w that has d's picture
 const makeHiddenPair = () => {
-  const G = __mj.G, L = __mj.Layouts, fr = G.tiles.map((t, i) => i).filter(i => G.alive[i] && L.isFree(i, G.alive, G.nb));
-  const d = fr.find(i => G.down[i]), u = fr.find(i => !G.down[i] && i !== d);
-  if (d === undefined || u === undefined) return null;
-  const w = G.tiles.findIndex((t, i) => i !== d && i !== u && t.face === G.tiles[d].face);
-  const fu = G.tiles[u].face; G.tiles[u].face = G.tiles[d].face; G.tiles[w].face = fu;
+  const G = __mj.G, L = __mj.Layouts, fr = G.tiles.map((t, i) => i).filter(i => G.alive[i] && L.isFree(i, G.alive, G.nb) && G.tiles[i].face < 100);
+  const d = fr.find(i => G.down[i]);
+  if (d === undefined) return null;
+  const f = G.tiles[d].face;
+  const u = fr.find(i => !G.down[i] && i !== d && G.tiles[i].face !== f && G.tiles.some((t, k) => k !== d && k !== i && t.face === f));
+  if (u === undefined) return null;
+  const w = G.tiles.findIndex((t, i) => i !== d && i !== u && t.face === f);
+  const fu = G.tiles[u].face; G.tiles[u].face = f; G.tiles[w].face = fu;
   for (const i of [u, w]) G.tiles[i].el.querySelector('.face').innerHTML = Tiles.faceHTML(__mj.S.theme, G.tiles[i].face);
   return [d, u];
 };

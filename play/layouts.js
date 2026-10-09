@@ -80,28 +80,35 @@ const Layouts = (() => {
     return BASES;
   }
 
-  /* Neat, symmetric piles: a base shape, then each higher layer sits exactly on top,
-     or half a tile shifted so it bridges the tiles below (the "stepped" look).
+  /* Neat, symmetric piles: a base shape, then each higher layer bridges the tiles below it:
+     preferably shifted half a tile both ways, so a tile rests on 4 tiles (the stepped "pyramid"
+     look, like Vita Mahjong), otherwise half a tile sideways or down so it rests on 2. A tile never
+     sits exactly on top of a single tile: taking one off always uncovers part of several.
      Layers shrink towards one hill in the middle, or two mirrored hills.
      aspect = height / width of the free screen area: the pile takes the same shape. */
   function buildPiles(seed, target, maxLayers, aspect = 1.55, level = 99) {
     const layers = Math.max(1, maxLayers);
     const baseFrac = layers === 1 ? 1 : layers === 2 ? 0.6 : layers === 3 ? 0.47 : layers === 4 ? 0.4 : 0.36;
-    // upper layers can run out of room on some shapes: then try again with a bigger base
+    // upper layers can run out of room on some shapes: then try again with a bigger base, or another
+    // shape. A pile that is right in size but too flat (fewer layers than planned) is too easy.
     let bt = Math.round(target * baseFrac), best = null;
-    for (let k = 0; k < 7; k++) {
+    const flat = res => Math.max(0, Math.min(layers, 4) - 1 - Math.max(...res.tiles.map(t => t.z)));
+    const score = res => Math.abs(res.tiles.length - target) + 4 * flat(res);
+    for (let k = 0; k < 10; k++) {
       const res = buildOnce(rng(seed + k * 101), target, layers, aspect, level, bt);
       const n = res.tiles.length;
-      if (!best || Math.abs(n - target) < Math.abs(best.tiles.length - target)) best = res;
-      if (Math.abs(n - target) <= 2) break;
-      bt = Math.max(4, Math.round(bt + (target - n) * (n < target ? 0.7 : 0.5)));
+      if (!best || score(res) < score(best)) best = res;
+      if (score(best) <= 2) break;
+      if (Math.abs(n - target) > 2) bt = Math.max(4, Math.round(bt + (target - n) * (n < target ? 0.7 : 0.5)));
     }
     return best;
   }
   function buildOnce(r, target, layers, aspect, level, baseTarget) {
     const want = aspect / 1.24; // rows per column that fill the area exactly
     const pool = level < 8 ? bases().filter(b => EASY.includes(b.name)) : bases();
-    const scored = pool.map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 6 * Math.abs(Math.log((b.h + 0.25) / (b.w + 0.35) / want)) }));
+    // a base close to the wanted size, above all one with the screen's shape, and not too thin
+    // (shapes that fill less than 80% of their box get a penalty), so the pile fills the screen
+    const scored = pool.map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 10 * Math.abs(Math.log((b.h + 0.25) / (b.w + 0.35) / want)) + 6 * Math.max(0, 0.8 - b.n / (b.w * b.h)) }));
     const bestSc = Math.min(...scored.map(x => x.sc));
     const cands = scored.filter(x => x.sc <= bestSc + 1.2).map(x => x.b);
     const names = [...new Set(cands.map(c => c.name))];
@@ -124,26 +131,22 @@ const Layouts = (() => {
 
     let remaining = target - tiles.length;
     let prev = tiles.slice();
-    let lastOp = '';
     // the planned number of layers; if the top ran out of room, one extra small layer
     const zMax = layers + (layers >= 3 ? 1 : 0);
     for (let z = 1; z < zMax && remaining > 0; z++) {
       const prevSet = new Set(prev.map(t => key(t.x, t.y)));
       const has = (x, y) => prevSet.has(key(x, y));
       const OPS = {
-        stack: () => prev.map(t => ({ x: t.x, y: t.y })),
         shiftX: () => prev.filter(t => has(t.x + 2, t.y)).map(t => ({ x: t.x + 1, y: t.y })),
         shiftY: () => prev.filter(t => has(t.x, t.y + 2)).map(t => ({ x: t.x, y: t.y + 1 })),
         shiftXY: () => prev.filter(t => has(t.x + 2, t.y) && has(t.x, t.y + 2) && has(t.x + 2, t.y + 2)).map(t => ({ x: t.x + 1, y: t.y + 1 })),
       };
       const nWant = z >= layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (0.52 + r() * 0.2))));
-      // pick a way of stacking that has room for this layer; vary it from layer to layer
-      const order = shuffleArr(r, ['stack', 'shiftX', 'shiftXY', 'shiftY', 'shiftX']).filter((o, k, a) => a.indexOf(o) === k);
-      order.sort((a, c) => (a === lastOp) - (c === lastOp));
-      let cand = null, op = '';
-      for (const o of order) { const c = OPS[o](); if (c.length >= Math.min(nWant, 2)) { cand = c; op = o; break; } }
+      // resting on 4 tiles first; when that layer has no room, a bridge over 2 (sideways or down)
+      const order = ['shiftXY', ...shuffleArr(r, ['shiftX', 'shiftY'])];
+      let cand = null;
+      for (const o of order) { const c = OPS[o](); if (c.length >= Math.min(nWant, 2)) { cand = c; break; } }
       if (!cand || !cand.length) break;
-      lastOp = op;
       // group mirror twins so the layer stays symmetric, then fill from the hilltop outwards
       const seen = new Set(), groups = [];
       const cset = new Map(cand.map(p => [key(p.x, p.y), p]));

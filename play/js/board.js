@@ -146,26 +146,29 @@ function layoutBoard() {
   const wrap = $('#boardWrap');
   const W = wrap.clientWidth, H = wrap.clientHeight;
   if (!W || !H) return;
-  let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, maxZ = 0;
-  for (const t of G.tiles) { minX = Math.min(minX, t.x); maxX = Math.max(maxX, t.x); minY = Math.min(minY, t.y); maxY = Math.max(maxY, t.y); maxZ = Math.max(maxZ, t.z); }
-  const cols = (maxX - minX) / 2 + 1, rows = (maxY - minY) / 2 + 1;
-  const ratio = 1.24, dF = 0.14;   // each layer shifts this much, so more of the tiles below shows
-  let tw = Math.min((W - 8) / (cols + maxZ * dF + 0.12), (H - 8) / (rows * ratio + maxZ * dF + 0.15));
-  tw = Math.min(tw, 150);
-  const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * 0.085);
-  const bw = cols * tw + maxZ * dz + d, bh = rows * th + maxZ * dz + d * 1.4;
-  const ox = (W - bw) / 2 + maxZ * dz, oy = (H - bh) / 2 + maxZ * dz;
+  const ratio = 1.24, dF = 0.14;   // tile height / width; each layer shifts up-left this much, so more of the tiles below shows
+  // where the tiles really land, in tile widths (an upper layer only reaches the edge if its tiles do)
+  let l = 1e9, r = -1e9, t0 = 1e9, b = -1e9;
+  for (const t of G.tiles) {
+    const x = t.x / 2 - t.z * dF, y = t.y / 2 * ratio - t.z * dF;
+    l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + ratio);
+  }
+  const depthF = 0.085;            // the tile's side, drawn right and below it
+  const tw = Math.min(150, (W - 8) / (r - l + depthF + 0.04), (H - 8) / (b - t0 + depthF * 1.4 + 0.04));
+  const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
+  // centre what is really there
+  const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = (H - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
   const board = $('#board');
   board.style.setProperty('--d', d.toFixed(1) + 'px');
   board.style.setProperty('--fs', (tw * 0.66).toFixed(1) + 'px');
   G.tw = tw;
   for (const t of G.tiles) {
     const s = t.el.style, zi = t.z * 10000 + t.y * 100 + t.x;
-    const l = ox + (t.x - minX) / 2 * tw - t.z * dz, tp = oy + (t.y - minY) / 2 * th - t.z * dz;
-    s.left = l.toFixed(1) + 'px'; s.top = tp.toFixed(1) + 'px';
+    const lf = ox + t.x / 2 * tw - t.z * dz, tp = oy + t.y / 2 * th - t.z * dz;
+    s.left = lf.toFixed(1) + 'px'; s.top = tp.toFixed(1) + 'px';
     s.width = (tw - 1.5).toFixed(1) + 'px'; s.height = (th - 1.5).toFixed(1) + 'px';
     s.zIndex = zi;
-    t.r = { l: +l.toFixed(1), t: +tp.toFixed(1), w: tw - 1.5, h: th - 1.5, zi };
+    t.r = { l: +lf.toFixed(1), t: +tp.toFixed(1), w: tw - 1.5, h: th - 1.5, zi };
   }
   sizeTray();
 }

@@ -22,6 +22,25 @@ module.exports = [
     },
   },
   {
+    name: 'levels: tiles never sit exactly on one tile; every upper tile bridges 2 or 4 below',
+    async run(t) {
+      let up = 0, four = 0;
+      const bad = [];
+      const check = (label, tiles) => {
+        for (const a of tiles) if (a.z > 0) {
+          up++;
+          const below = tiles.filter(b => b.z === a.z - 1 && Math.abs(a.x - b.x) < 2 && Math.abs(a.y - b.y) < 2);
+          if (below.length < 2 || below.some(b => b.x === a.x && b.y === a.y)) bad.push({ label, tile: a, below: below.length });
+          if (below.length === 4) four++;
+        }
+      };
+      for (let L = 1; L <= 80; L++) for (const a of [1.2, 1.9]) check(`level ${L} @${a}`, Layouts.forLevel(L, a).tiles);
+      for (const ymd of [20261007, 20261008, 20261225]) check(`daily ${ymd}`, Layouts.forDate(ymd, 1.5).tiles);
+      t.eq(bad.slice(0, 3), [], 'no tile on a single tile');
+      t.ok(four / up > 0.35, 'many tiles rest on 4 (the pyramid look)', { share: +(four / up).toFixed(2) });
+    },
+  },
+  {
     name: 'levels: phone shapes and big tiles still give clearable piles',
     async run(t) {
       for (const a of [0.9, 1.2, 1.9]) for (const L of [3, 12, 25]) t.ok(solvable(Layouts.forLevel(L, a)).ok, `level ${L} at aspect ${a}`);
