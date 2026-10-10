@@ -18,8 +18,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Collect the news
         run: |
-          git fetch -q origin news && git show origin/news:candidates.json > /tmp/old.json || echo '{}' > /tmp/old.json
+          git fetch -q origin +news:refs/remotes/origin/news || true
+          git show origin/news:candidates.json > /tmp/old.json 2>/dev/null || echo '{}' > /tmp/old.json
+          git show origin/news:thumbs.json > /tmp/old-thumbs.json 2>/dev/null || echo '{}' > /tmp/old-thumbs.json
           python3 source/tools/news.py --old /tmp/old.json --out /tmp/news.json --cand /tmp/candidates.json
+      - name: Preview photos for the review page
+        run: |
+          pip install -q pillow
+          python3 source/tools/thumbs.py --cand /tmp/candidates.json --old /tmp/old-thumbs.json --out /tmp/thumbs.json
       - name: Publish on the news branch
         run: |
           python3 - <<'PY'
@@ -30,6 +36,6 @@ jobs:
           open('/tmp/same', 'w').write('1' if same else '0')
           PY
           if [ "$(cat /tmp/same)" = "1" ]; then echo "nothing new"; exit 0; fi
-          cd "$(mktemp -d)" && cp /tmp/news.json /tmp/candidates.json . && git init -q && git checkout -q -b news
-          git add news.json candidates.json && git -c user.name=news-bot -c user.email=news-bot@users.noreply.github.com commit -q -m "news"
+          cd "$(mktemp -d)" && cp /tmp/news.json /tmp/candidates.json /tmp/thumbs.json . && git init -q && git checkout -q -b news
+          git add news.json candidates.json thumbs.json && git -c user.name=news-bot -c user.email=news-bot@users.noreply.github.com commit -q -m "news"
           git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" news
