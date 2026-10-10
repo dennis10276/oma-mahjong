@@ -28,7 +28,7 @@ PLACES = re.compile(r'\b(apeldoorn\w*|ugchelen|beekbergen|loenen|hoenderloo|udde
                     r'apeldoorns kanaal|055)\b', re.I)
 # src, feed, pages to read (WordPress feeds have older pages: ?paged=2, ...), must name a place
 FEEDS = [
-    ('Samen1', 'https://samen1.nl/feed/', 3, True),                        # Omroep Apeldoorn (also news from the region)
+    ('Samen1', 'https://samen1.nl/feed/', 5, True),                        # Omroep Apeldoorn (also news from the region)
     ('Apeldoorn Direct', 'https://www.apeldoorndirect.nl/feed/', 3, False),  # only Apeldoorn
     ('Stedendriehoek', 'https://www.stedendriehoek.nl/feed/', 4, True),     # the regional free paper
     ('Gemeente Apeldoorn', 'https://www.apeldoorn.nl/rss-actueel', 1, False),
@@ -96,7 +96,15 @@ def shorten(s, n=280):
 
 def items_from(src, xml, need_place=False):
     out = []
-    root = ET.fromstring(xml.lstrip() if isinstance(xml, (bytes, str)) else xml)    # some feeds start with an empty line
+    xml = xml.lstrip() if isinstance(xml, (bytes, str)) else xml    # some feeds start with an empty line
+    try:
+        root = ET.fromstring(xml)
+    except ET.ParseError:
+        # some feeds have a bare & or control characters in their text: repair and try again
+        s = xml.decode('utf-8', 'replace') if isinstance(xml, bytes) else xml
+        s = re.sub(r'&(?!(#\d+|#x[0-9a-fA-F]+|[a-zA-Z]\w*);)', '&amp;', s)
+        s = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', ' ', s)
+        root = ET.fromstring(s.encode('utf-8'))
     for it in root.iter('item'):
         title = clean(it.findtext('title'))
         text = shorten(clean(it.findtext('description')))
