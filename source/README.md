@@ -134,6 +134,28 @@ The real news is filtered on purpose: no accidents, fires, police, illness, poli
 (`SKIP_CATS`, `SKIP_IN`, `SKIP_START` in `tools/news.py`; also inside longer words, and no photo whose file name says police or accident). The game reads `news.json` from the `news` branch.
 That needs `tools/news.yml` as `.github/workflows/news.yml` in the GitHub repo (a scheduled job).
 
+### Switching it off, or removing it
+
+- **For one player:** on the family dashboard, pick the player and use the ⚙️ settings card
+  ("📰 Nieuws uit Apeldoorn" Aan/Uit). The phone picks it up within half a minute.
+- **For everyone, keeping the code:** set `VILLAGE.enabled = false` in `www/js/rules.js` and release.
+- **Stop collecting news:** in the GitHub repo, Actions → "Apeldoorn news" → Disable workflow
+  (or delete `.github/workflows/news.yml`; the `news` branch can then be deleted too).
+- **Removing it completely:** delete `www/js/village.js` and `www/js/stories.js` and take them out of
+  `FILES` in `index.html`; then remove the few lines that call it: `villageOn()` in `win.js` (the
+  `village` reward) and `board.js` (the teaser), `loadNews`/`openPaper` in `main.js`,
+  `renderPaperChip` in `screens.js`, `chatBtn`/`.vg-chat` in `social.js`, the `#btnPaper` button in
+  `index.html`, the `vg*` texts in `lang.js`, the `.vg`/`.paper-chip` styles in `style.css`,
+  `VILLAGE`/`getsNews` in `rules.js`, and `t_village.js`. Remove `tools/news.*` and the copying of
+  `tools/` in `release.py`.
+
+## Settings per player (family dashboard)
+
+The ⚙️ card on the dashboard switches **👵 Oma-modus** (all of `HELP.care`) and **📰 Nieuws** per
+player. Each switch is a small event in `plays/cfg-<pid>` (the newest counts; `cfgKey`, `playerCfg`
+in `rules.js`); the app reads it at start, on return and every 30 s. A setting never switched follows
+the defaults in `rules.js` (`GRANDMA`, `CARE`). DennisTEST (`GRANDMA.like`) always follows grandma's.
+
 ## The helper's pace (`HELP.care.nudge.pace`)
 
 The glowing pair waits longer when she wins easily (×2.8: about 40 s for a visible pair) and comes
@@ -160,7 +182,7 @@ sooner when she struggles or the level already went wrong once (×0.7), based on
 | `t_screens` | every screen opens, themes, nothing needs scrolling on small phones |
 | `t_log`, `t_dash` | the play log and the family dashboard |
 | `t_lang` | every text in both languages, the language switch, Mama: English with grandma's help |
-| `t_village` | news for grandma and DennisTEST only, 80/20 news/stories, memory question, Het krantje, 💬, the helper's pace, the news filter |
+| `t_village` | news for grandma and DennisTEST only, dashboard settings per player, 80/20 news/stories, memory question, Het krantje, 💬, the helper's pace, the news filter |
 | `t_update` | self-update from an old 1.5 app and the current one; a broken update is thrown away |
 | `t_online` | (with `--online`) a heart and the play log through the real database |
 

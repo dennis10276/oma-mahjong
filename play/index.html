@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.29/style.css" id="css">
+<link rel="stylesheet" href="v/1.30/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -155,7 +155,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.29', KEY = 'omamj.code', FILES = ['v/1.29/tiles.js', 'v/1.29/audio.js', 'v/1.29/layouts.js', 'v/1.29/js/rules.js', 'v/1.29/js/lang.js', 'v/1.29/js/core.js', 'v/1.29/js/fx.js', 'v/1.29/js/update.js', 'v/1.29/js/screens.js', 'v/1.29/js/board.js', 'v/1.29/js/help.js', 'v/1.29/js/specials.js', 'v/1.29/js/rewards.js', 'v/1.29/js/telemetry.js', 'v/1.29/js/social.js', 'v/1.29/js/hearts.js', 'v/1.29/js/stories.js', 'v/1.29/js/village.js', 'v/1.29/js/win.js', 'v/1.29/js/main.js'];
+  var BUILT = '1.30', KEY = 'omamj.code', FILES = ['v/1.30/tiles.js', 'v/1.30/audio.js', 'v/1.30/layouts.js', 'v/1.30/js/rules.js', 'v/1.30/js/lang.js', 'v/1.30/js/core.js', 'v/1.30/js/fx.js', 'v/1.30/js/update.js', 'v/1.30/js/screens.js', 'v/1.30/js/board.js', 'v/1.30/js/help.js', 'v/1.30/js/specials.js', 'v/1.30/js/rewards.js', 'v/1.30/js/telemetry.js', 'v/1.30/js/social.js', 'v/1.30/js/hearts.js', 'v/1.30/js/stories.js', 'v/1.30/js/village.js', 'v/1.30/js/win.js', 'v/1.30/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

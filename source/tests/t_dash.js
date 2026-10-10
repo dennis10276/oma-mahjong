@@ -87,5 +87,29 @@ module.exports = [
       } finally { await ctx.close(); site.close(); }
     },
   },
+  {
+    name: 'dashboard: switching grandma mode and the news per player',
+    async run(t, { serve, FakeDB, browser, sleep, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
+      const f = fixture();
+      f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, care: true } };          // Dennis was put in grandma mode earlier
+      const db = new FakeDB(f);
+      const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 } });
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+      try {
+        await p.goto(site.url + 'dash/#pOma'); await sleep(1800);
+        const sw = () => p.evaluate(() => [...document.querySelectorAll('#cfgBox .sw')].map(b => b.dataset.k + ':' + b.textContent));
+        t.eq(await sw(), ['care:Aan', 'news:Aan'], 'grandma: grandma mode and news on (her defaults)');
+        t.ok(!(await p.evaluate(() => [...document.querySelectorAll('#who option')].some(o => o.value.startsWith('cfg-')))), 'settings are not a player in the list');
+        await p.evaluate(() => document.querySelector('#cfgBox .sw[data-k="news"]').click()); await sleep(400);
+        const post = db.log.find(l => l.m === 'POST' && /plays\/cfg-pOma/.test(l.p));
+        t.ok(post && post.body.k === 'cfg' && post.body.news === false && !('care' in post.body), 'turning the news off is saved for her', post);
+        await p.evaluate(() => { document.querySelector('#who').value = 'pDen'; document.querySelector('#who').dispatchEvent(new Event('change')); }); await sleep(400);
+        t.eq(await sw(), ['care:Aan', 'news:Uit'], 'Dennis: grandma mode on (switched), no news (his default)');
+        t.eq(errs, [], 'no errors');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
 ];
 module.exports.fixture = fixture;   // also used to make screenshots of the dashboard

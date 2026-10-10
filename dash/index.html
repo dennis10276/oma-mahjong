@@ -89,6 +89,14 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .hs-state { font-weight: 700; }
 .hs-state.seen { color: var(--good-ink); }
 .wide { margin-bottom: 12px; }
+.cfgs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+.cfg { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
+.cfg b { display: block; } .cfg small { color: var(--ink-3); font-size: 13px; }
+.sw { font: inherit; font-weight: 800; min-width: 64px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.sw.on { background: var(--good); border-color: var(--good); color: #fff; }
+.sw:disabled { opacity: .55; cursor: default; }
+.sw:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.cfg-note { color: var(--ink-3); font-size: 13px; margin: 8px 0 0; }
 .warnbox { background: var(--surface-2); border-left: 4px solid var(--warn); padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
 .foot { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
 </style>
@@ -108,6 +116,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <button class="btn" id="notify" hidden>🔔 Meldingen aan</button>
   </div>
   <div id="heartTop" class="wide"></div>
+  <section class="card wide" id="cfgBox" hidden></section>
   <datalist id="msgIdeas"><option value="Goed bezig oma! 💪"><option value="Wat knap, oma! 🌟"><option value="Ik denk aan je 😘"><option value="Wie haalt het volgende level eerst? 😉"><option value="Even doorzetten, je kan het! 🍀"></datalist>
   <div id="alerts"></div>
   <div id="notice"></div>
@@ -152,7 +161,7 @@ const lvlKey = e => e.m === 'd' ? 'D' + e.d : 'L' + e.lv;
 function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e.t).sort((a, b) => a.t - b.t); }
 function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
 function players() {
-  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && (!id.startsWith('test-') || id === want)));
+  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && !isCfgKey(id) && (!id.startsWith('test-') || id === want)));
   return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 }))
     .filter(p => p.name !== p.id || p.id === want)   // visitors who never chose a name are left out
     .sort((a, b) => b.last - a.last);
@@ -171,7 +180,8 @@ $('#who').onchange = e => { sel = e.target.value; history.replaceState(null, '',
 // a level logged without a clock (an old app bug in 1.10): its time is unknown, not 0 seconds
 const noTime = e => e.k === 'end' && !e.dur && !e.tp;
 // grandma gets extra help in the game (CARE / HELP in the app's rules.js)
-const isCare = pid => isCarePlayer(pid, nameOf(pid));
+const cfgFor = pid => playerCfg(events(cfgKey(cfgPid(pid))));
+const isCare = pid => isCarePlayer(pid, nameOf(pid), cfgFor(pid));
 // grandma's difficulty step (the app moves it by her own results, see help.js)
 const stepName = s => ADAPT_STEPS[s] || String(s);
 function adaptInfo(ev) {
@@ -283,6 +293,7 @@ function render() {
   $('#meta').innerHTML = [`Nu bij <b>level ${curLv || '?'}</b>`, ver ? `versie <b>${esc(ver.v)}</b>${dev ? ' · ' + dev : ''}` : 'versie onbekend', last ? `laatst actief ${ago(last.t)}` : 'nog geen activiteit'].join(' · ');
   $('#live').classList.toggle('on', !!active);
   if (!document.activeElement || !document.activeElement.closest('#heartTop')) renderHeartTop();
+  renderCfg();
   $('#liveTxt').textContent = active ? (last.k === 'start' || last.k === 'hint' || last.k === 'shuf' ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
   $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
 
@@ -439,6 +450,28 @@ async function checkHeartsSeen() {
     try { const v = await dbGet(`hearts/${encodeURIComponent(to)}/${encodeURIComponent(h.from)}`); if (v && v.t < 0) { h.seen = Date.now(); changed = true; } } catch (e) { }
   }
   if (changed) { lsSet('dash.hearts', hs); $('#alerts').dataset.html = ''; renderAlerts(); renderHeartTop(); }
+}
+// ---------- settings per player: grandma mode and the news (the app reads them within half a minute) ----------
+function renderCfg() {
+  const el = $('#cfgBox');
+  if (!sel) { el.hidden = true; return; }
+  if (el.contains(document.activeElement) && el.dataset.busy) return;
+  const name = nameOf(sel), c = cfgFor(sel), follows = GRANDMA.like.includes(sel);
+  const care = isCarePlayer(sel, name, c), news = getsNews(sel, name, c);
+  const row = (k, on, label, note) => `<div class="cfg"><span><b>${label}</b><small>${note}</small></span><button class="sw${on ? ' on' : ''}" data-k="${k}" aria-pressed="${on}"${follows ? ' disabled' : ''}>${on ? 'Aan' : 'Uit'}</button></div>`;
+  const html = `<h2>⚙️ Instellingen voor ${esc(name)}</h2><div class="cfgs">
+    ${row('care', care, '👵 Oma-modus', 'zachter spel, het hulpje, stenen terugleggen, makkelijker na 3 keer mis')}
+    ${VILLAGE.enabled ? row('news', news, '📰 Nieuws uit Apeldoorn', 'na een gewonnen level een nieuwtje of buurtverhaal') : ''}</div>
+    <p class="cfg-note">${follows ? `Volgt altijd de instellingen van ${esc(nameOf(GRANDMA.pids[0]))}.` : 'De telefoon neemt een wijziging binnen een halve minuut over; een level dat al bezig is, speelt gewoon verder.'}</p>`;
+  if (el.dataset.html !== html) { el.innerHTML = html; el.dataset.html = html; }
+  el.hidden = false;
+  el.querySelectorAll('.sw').forEach(b => b.onclick = async () => {
+    const v = !b.classList.contains('on');
+    b.disabled = true; el.dataset.busy = '1';
+    try { const r = await dbSend(`plays/${cfgKey(cfgPid(sel))}`, { k: 'cfg', t: Date.now(), [b.dataset.k]: v }, 'POST'); if (!r.ok) throw 0; }
+    catch (e) { b.disabled = false; el.querySelector('.cfg-note').textContent = 'Opslaan lukte niet. Controleer de internetverbinding en probeer het opnieuw.'; }
+    delete el.dataset.busy;
+  });
 }
 // a heart can always be sent to the player on screen, not only when she is stuck
 function renderHeartTop() { const el = $('#heartTop'); if (el) el.innerHTML = sel && !stuckStreak(sel) ? heartBox(sel) : ''; }

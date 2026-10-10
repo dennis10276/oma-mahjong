@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 """Builds the review page (an artifact) where Dennis rates news items for grandma: Top / Fine / No.
+It shows the current news, by the same rules as the game: at most 7 days old, event not over.
 The ratings are stored in the page's database (collection `ratings`, one doc per item id), where
 Claude reads them to tune tools/interest.json.
 
   python3 tools/review_page.py candidates.json thumbs.json out.html
 """
-import html, json, sys
-from datetime import datetime
+import html, json, sys, time
+from datetime import datetime, timedelta, timezone
 
 cand, thumbs, out = sys.argv[1:4]
 items = json.load(open(cand, encoding='utf-8'))['items']
 th = json.load(open(thumbs, encoding='utf-8'))
+now = time.time() * 1000
 data = [{'id': it['id'], 't': it['t'], 'title': it['title'], 'text': it.get('text', ''), 'src': it['src'],
-         'img': th.get(it['id'], '')} for it in items if th.get(it['id'])]
+         'until': it.get('until'), 'img': th.get(it['id'], '')} for it in items
+        if th.get(it['id']) and it['t'] > now - 7 * 864e5 and it.get('until', now + 1) > now]
+stamp = datetime.now(timezone(timedelta(hours=2))).strftime('%a %d %b, %H:%M')
 data.sort(key=lambda x: -x['t'])
 
 PAGE = r'''<title>Oma's News Review</title>
@@ -66,7 +70,7 @@ h1 { font-family: var(--display); font-weight: 700; font-size: 26px; margin: 0 0
 <div class="wrap">
 <header>
   <h1>Oma's News Review</h1>
-  <p class="intro">Real Apeldoorn news the collector found. Would grandma enjoy this after a level? <b>Top</b> = exactly her thing, <b>Fine</b> = okay now and then, <b>No</b> = skip. Keys 1, 2, 3 rate the first unrated item.</p>
+  <p class="intro">Current Apeldoorn news, as grandma's app gets it: the past 7 days, no events that are over (as of __STAMP__). Would grandma enjoy this after a level? <b>Top</b> = exactly her thing, <b>Fine</b> = okay now and then, <b>No</b> = skip. Keys 1, 2, 3 rate the first unrated item.</p>
   <div class="bar">
     <div class="meter" aria-hidden="true"><i class="m-top"></i><i class="m-ok"></i><i class="m-no"></i></div>
     <div class="tally"><span id="nDone">0 of 0 rated</span><span class="t-top" id="nTop">0 top</span><span class="t-ok" id="nOk">0 fine</span><span class="t-no" id="nNo">0 no</span></div>
@@ -97,7 +101,7 @@ function render() {
     const b = (k, cls, lbl) => `<button class="${cls}" data-id="${esc(it.id)}" data-r="${k}" aria-pressed="${r === k}">${lbl}</button>`;
     return `<article class="card${r !== undefined ? ' rated' : ''}" id="c-${esc(it.id)}">
       <img src="${it.img}" alt="" loading="lazy">
-      <div><div class="meta">${esc(it.src)} · ${day(it.t)}</div><h2>${esc(it.title)}</h2>${it.text ? `<p>${esc(it.text)}</p>` : ''}
+      <div><div class="meta">${esc(it.src)} · ${day(it.t)}${it.until ? ` · event until ${day(it.until)}` : ''}</div><h2>${esc(it.title)}</h2>${it.text ? `<p>${esc(it.text)}</p>` : ''}
       <div class="rate">${b(2, 'b-top', 'Top')}${b(1, 'b-ok', 'Fine')}${b(0, 'b-no', 'No')}</div></div></article>`;
   }).join('') : `<p class="empty">${show === 'open' ? 'Everything is rated. Thank you! Claude can take it from here.' : 'No items.'}</p>`;
 }
@@ -136,5 +140,5 @@ render();
 })();
 </script>
 '''
-open(out, 'w', encoding='utf-8').write(PAGE.replace('__DATA__', json.dumps(data, ensure_ascii=False).replace('</', '<\\/')))
+open(out, 'w', encoding='utf-8').write(PAGE.replace('__STAMP__', stamp).replace('__DATA__', json.dumps(data, ensure_ascii=False).replace('</', '<\\/')))
 print(f'{len(data)} items, {sum(len(d["img"]) for d in data) // 1024} KB of photos')

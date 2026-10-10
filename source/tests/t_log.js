@@ -30,7 +30,7 @@ module.exports = [
     async run(t, { startLevel, sleep }) {
       const p = await t.phone({ state: { level: 3 } });
       await startLevel(p, 3); await sleep(800);
-      t.eq(p.db.log.filter(r => r.p.startsWith('/plays')).length, 0, 'no plays written');
+      t.eq(p.db.log.filter(r => r.p.startsWith('/plays') && r.m !== 'GET').length, 0, 'no plays written (reading its settings is fine)');
       t.ok(await p.evaluate(() => JSON.parse(localStorage.getItem('omamj.logq') || '[]').length) > 0, 'events wait in the queue');
     },
   },

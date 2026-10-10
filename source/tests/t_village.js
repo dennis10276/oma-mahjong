@@ -146,6 +146,25 @@ module.exports = [
     },
   },
   {
+    name: 'settings from the dashboard: grandma mode and news per player; DennisTEST follows grandma; the master switch',
+    async run(t, { FakeDB, sleep }) {
+      const db = new FakeDB({ scores: {}, plays: {
+        'test-cfg-dennis': { a: { k: 'cfg', t: 1, care: true, news: true } },
+        'test-cfg-oma': { a: { k: 'cfg', t: 1, news: true }, b: { k: 'cfg', t: 2, news: false } },
+        'cfg-pmuy4wmdp17hbws': { a: { k: 'cfg', t: 1, care: false } },
+      } });
+      const state = p => p.evaluate(async () => { await loadCfg(); return { care: careMode(), news: villageOn(), chip: !document.querySelector('#btnPaper').classList.contains('hidden') }; });
+      const d = await t.phone({ state: DENNIS, db }); await sleep(200);
+      t.eq(await state(d), { care: true, news: true, chip: true }, 'Dennis switched to grandma mode with news');
+      const o = await t.phone({ state: OMA, db }); await sleep(200);
+      t.eq(await state(o), { care: true, news: false, chip: false }, 'grandma with the news switched off (the newest setting counts)');
+      const x = await t.phone({ state: DTEST, db }); await sleep(200);
+      t.eq(await state(x), { care: false, news: true, chip: true }, 'DennisTEST follows the real grandma\'s settings');
+      const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma2' }, tune: { VILLAGE: { enabled: false } } });
+      t.eq(await g.evaluate(() => villageOn()), false, 'VILLAGE.enabled = false: no news for anyone');
+    },
+  },
+  {
     name: 'helper: waits longer when she wins easily, sooner when she struggles',
     async run(t, { startLevel }) {
       const p = await t.phone({ state: OMA });
