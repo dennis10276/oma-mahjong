@@ -128,6 +128,12 @@ def main():
         shutil.copy(os.path.join(ROOT, 'android', 'AndroidManifest.xml'), os.path.join(REPO, 'source', 'android', 'AndroidManifest.xml'))
         for f in ['README.md', 'release.py']:
             shutil.copy(os.path.join(ROOT, f), os.path.join(REPO, 'source', f))
+        # the news collector for grandma's village news (approved by Dennis on 2026-10-10): its script,
+        # and the GitHub workflow that runs it every two hours (switch it off under Actions in the repo)
+        shutil.rmtree(os.path.join(REPO, 'source', 'tools'), ignore_errors=True)
+        shutil.copytree(os.path.join(ROOT, 'tools'), os.path.join(REPO, 'source', 'tools'), ignore=shutil.ignore_patterns('__pycache__'))
+        os.makedirs(os.path.join(REPO, '.github', 'workflows'), exist_ok=True)
+        shutil.copy(os.path.join(ROOT, 'tools', 'news.yml'), os.path.join(REPO, '.github', 'workflows', 'news.yml'))
         shutil.rmtree(os.path.join(REPO, 'source', 'tests'), ignore_errors=True)
         shutil.copytree(os.path.join(ROOT, 'tests'), os.path.join(REPO, 'source', 'tests'), ignore=shutil.ignore_patterns('node_modules'))
         msg = f'Version {v}' + (' (game update + fresh APK on the download page)' if apk else ' (game update only)')

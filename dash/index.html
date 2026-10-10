@@ -132,6 +132,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <div id="tip"></div>
 <!-- the game's rules: grandma's id, the database, message format, difficulty steps (shared with the app) -->
 <script src="../play/js/rules.js"></script>
+<script src="../play/js/stories.js"></script>
 <script>
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
 const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
@@ -306,6 +307,12 @@ function render() {
     k('Hulp gebruikt', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden` + (nRescue || isCare(sel) ? ` · ${nRescue}× ↩ · ${nNudge}× ✨` : '')) +
     k('Tijd per level', timed.length ? mmss(timed.reduce((a, e) => a + (e.dur || 0), 0) / timed.length) : '–', 'gemiddeld bij gehaald') +
     (() => { const a = isCare(sel) && adaptInfo(ev); if (!a) return ''; const w = String(a.won).replace('.', ','); return k('Moeilijkheid', `<span style="font-size:19px;line-height:1.3;display:block;padding-top:4px">${stepName(a.step)}</span>`, `won ${w} van de laatste ${a.n} pogingen · past zich vanzelf aan`); })() +
+    (() => {
+      const nN = ev.filter(e => e.k === 'vnews').length, nS = ev.filter(e => e.k === 'vstory').length, asks = ev.filter(e => e.k === 'vask');
+      if (!nN && !nS) return '';
+      return k('Buurtnieuws gelezen', nN + nS, `${nN} echt nieuws · ${nS} verhaal` + (asks.length ? ` · ${asks.filter(e => e.ok).length} van ${asks.length} geheugenvragen goed` : ''));
+    })() +
+    (() => { const w = ev.filter(e => e.k === 'nudge' && e.w).map(e => e.w); if (!w.length) return ''; return k('Hulpje wacht nu', '~' + w[w.length - 1] + ' s', 'langer als het goed gaat, korter als ze vastloopt'); })() +
     k('App geopend', ev.filter(e => e.k === 'open').length + '×', last ? `sinds ${new Date(ev[0].t).toLocaleDateString('nl-NL')}` : '');
 
   // charts: last 14 days
@@ -342,7 +349,10 @@ function render() {
       case 'heart_in': return ['💛', `Hartje gezien van ${esc(e.from)}${e.where === 'level' ? ' (tijdens een level)' : ''}`];
       case 'heart_out': return ['💌', `Hartje gestuurd naar ${esc(e.to)}`];
       case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
-      case 'nudge': return ['✨', `Hulpje: een paar ging oplichten in ${lvlName(e).toLowerCase()}${e.down ? ' (omgedraaide steen voor haar omgekeerd)' : ''}`];
+      case 'nudge': return ['✨', `Hulpje: een paar ging oplichten in ${lvlName(e).toLowerCase()}${e.down ? ' (omgedraaide steen voor haar omgekeerd)' : ''}${e.w ? ` · wachtte ~${e.w} s` : ''}`];
+      case 'vnews': return ['📰', `Nieuws gelezen: “${esc(e.title)}” <small>(${esc(e.src || '')})</small>`];
+      case 'vstory': { const st = (typeof STORIES !== 'undefined' ? STORIES : []).find(x => x.id === e.id); return ['🏘️', `Buurtverhaal gelezen: ${st ? `${st.ico} ${esc(st.title)}` : esc(e.id)}, deel ${e.p}${st ? ` van ${st.parts.length}` : ''}`]; }
+      case 'vask': return ['🧠', `Geheugenvraag over het buurtverhaal: ${e.ok ? '<b>goed</b> (+⭐)' : 'niet goed'}`];
       case 'shufno': return ['🔀', `Wilde meteen schudden in ${lvlName(e).toLowerCase()}: bewaard voor later`];
       case 'gift': return ['🎁', `Dagcadeau geopend: +${e.stars} ⭐`];
       case 'rescue': return ['↩', `Stenen teruggelegd in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)}, ${e.left} stenen op het bord)`];

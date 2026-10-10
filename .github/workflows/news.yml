@@ -1,0 +1,34 @@
+# Real news from Apeldoorn for the village news in the game (see source/tools/news.py).
+# Every two hours: collect, filter, and publish news.json on the `news` branch (one commit, replaced
+# each time), which the game reads from raw.githubusercontent.com.
+name: Apeldoorn news
+on:
+  schedule:
+    - cron: '23 */2 * * *'
+  push:                       # also right after a release that changes the collector
+    branches: [main]
+    paths: ['source/tools/**', '.github/workflows/news.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect the news
+        run: |
+          git fetch -q origin news && git show origin/news:news.json > /tmp/old.json || echo '{}' > /tmp/old.json
+          python3 source/tools/news.py --old /tmp/old.json --out /tmp/news.json
+      - name: Publish on the news branch
+        run: |
+          python3 - <<'PY'
+          import json
+          a = json.load(open('/tmp/old.json')); b = json.load(open('/tmp/news.json'))
+          same = a.get('items') == b.get('items')
+          open('/tmp/same', 'w').write('1' if same else '0')
+          PY
+          if [ "$(cat /tmp/same)" = "1" ]; then echo "nothing new"; exit 0; fi
+          cd "$(mktemp -d)" && cp /tmp/news.json . && git init -q && git checkout -q -b news
+          git add news.json && git -c user.name=news-bot -c user.email=news-bot@users.noreply.github.com commit -q -m "news"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" news

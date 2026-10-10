@@ -1,7 +1,7 @@
 /* Test helpers for Oma's Mahjong: a small web server for www/, a fake database (so tests never
    touch the real one), and shortcuts for setting up a player and playing a level. */
 'use strict';
-const fs = require('fs'), path = require('path'), http = require('http');
+const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -15,20 +15,28 @@ const BLANK = path.join(require('os').tmpdir(), 'omamj-blank.html');
 fs.writeFileSync(BLANK, '<!doctype html><title>blank</title>');
 
 // ---------- a static web server ----------
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.woff2': 'font/woff2', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml' };
+// It runs in its own thread: the engine tests (t_layouts) keep this process busy for many seconds,
+// and a page loading in another test at that moment would otherwise time out.
 // mounts: { '/play/': WWW } serves that url prefix from another folder (the dashboard loads ../play/js/rules.js)
+const SERVER_CODE = `
+const http = require('http'), fs = require('fs'), path = require('path'), { parentPort, workerData } = require('worker_threads');
+const { dir, mounts, types } = workerData;
+const srv = http.createServer((req, res) => {
+  let p = decodeURIComponent(req.url.split('?')[0]);
+  if (p.endsWith('/')) p += 'index.html';
+  const m = Object.keys(mounts).find(pre => p.startsWith(pre));
+  const base = m ? mounts[m] : dir, f = path.join(base, m ? p.slice(m.length) : p);
+  if (!f.startsWith(base) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end('not found'); }
+  res.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+  fs.createReadStream(f).pipe(res);
+});
+srv.listen(0, '127.0.0.1', () => parentPort.postMessage(srv.address().port));`;
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.woff2': 'font/woff2', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml' };
 function serve(dir, mounts = {}) {
+  const { Worker } = require('worker_threads');
   return new Promise(resolve => {
-    const srv = http.createServer((req, res) => {
-      let p = decodeURIComponent(req.url.split('?')[0]);
-      if (p.endsWith('/')) p += 'index.html';
-      const m = Object.keys(mounts).find(pre => p.startsWith(pre));
-      const base = m ? mounts[m] : dir, f = path.join(base, m ? p.slice(m.length) : p);
-      if (!f.startsWith(base) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end('not found'); }
-      res.writeHead(200, { 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
-      fs.createReadStream(f).pipe(res);
-    });
-    srv.listen(0, '127.0.0.1', () => resolve({ url: `http://127.0.0.1:${srv.address().port}/`, close: () => srv.close() }));
+    const w = new Worker(SERVER_CODE, { eval: true, workerData: { dir, mounts, types: TYPES } });
+    w.once('message', port => resolve({ url: `http://127.0.0.1:${port}/`, close: () => w.terminate() }));
   });
 }
 
@@ -79,12 +87,16 @@ async function teardown() { if (browser) await browser.close(); if (server) serv
    state: saved progress (merged over sensible test defaults), db: FakeDB (a new one if omitted),
    lb: cached leaderboard entries, size: [w, h], ios: iPhone user agent, url: other start page,
    realDb: talk to the real database (online tests only, test- players only),
-   tune: { RULES: {...}, HELP: {...} } changes the game's rules (js/rules.js) for this page */
+   tune: { RULES: {...}, HELP: {...} } changes the game's rules (js/rules.js) for this page,
+   news: the news file grandma's phone gets ({ updated, items }; default: up to date and empty) */
 async function phone(opts = {}) {
   const [w, h] = opts.size || [390, 820];
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, hasTouch: true, isMobile: true, ...(opts.ios ? { userAgent: IPHONE_UA } : {}) });
   const db = opts.db || new FakeDB({ scores: {} });
-  if (!opts.realDb) await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+  if (!opts.realDb) await ctx.route(/^https:\/\/[^/]*firebasedatabase\.app\//, r => db.handle(r));   // a pattern, not a function: the browser then only asks this (sometimes busy) process about database requests
+  // grandma's news from Apeldoorn (js/village.js): none unless the test brings its own (news: {items})
+  const news = opts.news || { updated: 4102444800000, items: [] };
+  await ctx.route('**/news.json*', r => r.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(news) }));
   if (opts.routes) for (const [pat, fn] of opts.routes) await ctx.route(pat, fn);
   const page = await ctx.newPage();
   page.errors = [];
@@ -113,7 +125,7 @@ async function phone(opts = {}) {
 function tune(page, changes) {
   return page.evaluate(ch => {
     const merge = (a, b) => { for (const k of Object.keys(b)) { if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) && a[k] && typeof a[k] === 'object') merge(a[k], b[k]); else a[k] = b[k]; } };
-    const roots = { RULES, HELP };
+    const roots = { RULES, HELP, VILLAGE };
     for (const [name, c] of Object.entries(ch)) merge(roots[name], c);
   }, changes);
 }

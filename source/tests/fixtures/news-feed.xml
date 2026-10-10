@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel><title>Testfeed</title><link>https://example.org</link><description>test</description>
+<item><title>Indrukwekkend schouwspel op de heide: kudde schapen trekt door bij Uddel</title><link>https://example.org/1</link>
+<pubDate>Fri, 09 Oct 2026 10:00:00 +0000</pubDate><category><![CDATA[Regio]]></category><guid isPermaLink="false">https://example.org/?p=1</guid>
+<media:content url="https://example.org/uploads/schapen-uddel-150x150.jpg" width="150" height="150" medium="image"/>
+<description><![CDATA[<p><img src="x.jpg"/>Een kudde van ruim tweehonderd schapen graast deze week op de heide bij Uddel. Herder en honden houden alles in de gaten.</p><p>Het bericht <a href="#">Kudde</a> verscheen eerst op Samen1.</p>]]></description></item>
+<item><title>Brand in een woning aan de Wulpenlaan</title><link>https://example.org/2</link>
+<pubDate>Fri, 09 Oct 2026 09:00:00 +0000</pubDate><category>Regio</category><guid>https://example.org/?p=2</guid>
+<description><![CDATA[De brandweer rukte uit.]]></description></item>
+<item><title>Fatbiker na val op de Wormenseweg</title><link>https://example.org/3</link>
+<pubDate>Fri, 09 Oct 2026 08:00:00 +0000</pubDate><category>112</category><guid>https://example.org/?p=3</guid>
+<description><![CDATA[Een fatbiker viel.]]></description></item>
+<item><title>Dier van de week: Piertje</title><link>https://example.org/4</link>
+<pubDate>Thu, 08 Oct 2026 12:00:00 +0000</pubDate><category>Regio</category><guid>https://example.org/?p=4</guid>
+<description><![CDATA[<img src="https://example.org/uploads/logo-samen1.png" /><img src="http://example.org/uploads/piertje-540x430-c.jpg" alt="Piertje" />Piertje is een nieuwsgierige Californische kuifkwartel die een nieuw thuis zoekt met een veilige buitenren. Hij is dol op meelwormen &amp; zonnebaden.]]></description></item>
+<item><title>Dier van de week: Piertje</title><link>https://example.org/5</link>
+<pubDate>Thu, 08 Oct 2026 11:00:00 +0000</pubDate><category>Regio</category><guid>https://example.org/?p=5</guid>
+<description><![CDATA[Dubbel.]]></description></item>
+<item><title>Column: de stad</title><link>https://example.org/6</link><pubDate>Thu, 08 Oct 2026 10:00:00 +0000</pubDate><category>Columns</category><guid>https://example.org/?p=6</guid><description>x</description></item>
+</channel></rss>

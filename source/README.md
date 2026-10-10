@@ -22,6 +22,8 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
     | `telemetry.js` | play log for the dashboard |
     | `social.js` | ranking: family online, computer players, the weekly challenge, profile, climbing |
     | `hearts.js` | hearts (with a message) between family members |
+    | `stories.js` | the made-up neighbourhood stories (Dutch), about the computer players |
+    | `village.js` | grandma's news after a won level: real Apeldoorn news + story parts, Het krantje, 💬 in the ranking |
     | `win.js` | the win screen and the rewards after it |
     | `main.js` | buttons, touch, start-up |
   - `style.css` all styles
@@ -29,6 +31,9 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
   "send a heart" button (with a message), desktop notifications, how close she got, her difficulty
   step, all levels and a live feed. It loads `play/js/rules.js`, so it always matches the game.
 - `tests/`: the test suite (see below)
+- `tools/news.py`: collects friendly local news from Apeldoorn (Samen1, Apeldoorn Direct, Stedendriehoek)
+  into `news.json`; `tools/news.yml` is the GitHub workflow that would run it every two hours and
+  publish it on the `news` branch (not switched on yet: see "News from Apeldoorn" below)
 - `firebase/rules.json`: database rules
 - `android/`: the small Android wrapper (WebView) + `build.sh` (aapt2/javac/d8/apksigner, no Gradle needed)
 - `android/keystore/`: the signing key + password. KEEP THESE SAFE: updates must be signed with this
@@ -47,7 +52,11 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
   lucky moments, a gentler deal, easier after N failed tries, putting the tray back, the helper and
   its timings, no shuffle at the start, and the adaptive difficulty. To give someone else a kind of
   help, change it under `normal` (e.g. `rescue: true`).
-- `CARE`: who gets grandma's help (player ids: grandma and Mama, or a name starting with "Oma").
+- `GRANDMA`: grandma's player id (or a name starting with "Oma"); `like` = players who always get
+  exactly what she gets (DennisTEST, to see what she sees).
+- `CARE`: who else gets grandma's help (Mama).
+- `VILLAGE`: grandma's news after a won level: 1 in 5 a story part (`storyShare`), how old news may be,
+  when stories may fill in because the news file is old, the star for a memory question.
 - `START_ENGLISH`: player ids that start in English (Mama). Anyone can switch in the settings
   (🌐 Language); that choice is saved in `S.lang` and always wins.
 - When ice and locks start is in `layouts.js` (`MECH`), the tray size there too (`SLOTS`).
@@ -111,6 +120,25 @@ ready-made lines, no typing). The heart stays in `hearts/<to>/<from>`; the messa
 `plays/msg-<to>` (pieces m0..m2 of at most 40 characters, so the database rules allow it) and is
 matched to the heart by sender and time.
 
+## News from Apeldoorn (grandma and DennisTEST)
+
+After every won level grandma gets one item: about 4 in 5 are real local news (headline + the short
+summary the site puts in its feed, with the source), 1 in 5 is the next part of a made-up story about
+the computer players in her ranking, ending with a little cliffhanger; the next level's top bar
+teases what comes next. Before part 5 of a story she gets a memory question (right = a bonus star).
+Everything read is in Het krantje (📰 on the home screen), and 💬 next to a computer player in the
+ranking shows its story so far. When there is no fresh real news, nothing is shown, unless the news
+file has not been updated for 2 days; then the stories fill in.
+
+The real news is filtered on purpose: no accidents, fires, police, illness, politics or columns
+(`SKIP_CATS` / `SKIP_WORDS` in `tools/news.py`). The game reads `news.json` from the `news` branch.
+That needs `tools/news.yml` as `.github/workflows/news.yml` in the GitHub repo (a scheduled job).
+
+## The helper's pace (`HELP.care.nudge.pace`)
+
+The glowing pair waits longer when she wins easily (×2.8: about 40 s for a visible pair) and comes
+sooner when she struggles or the level already went wrong once (×0.7), based on her last 8 tries.
+
 ## Tests
 
     cd tests && npm install          # once: Playwright (uses Chromium; set CHROME=... if needed)
@@ -132,6 +160,7 @@ matched to the heart by sender and time.
 | `t_screens` | every screen opens, themes, nothing needs scrolling on small phones |
 | `t_log`, `t_dash` | the play log and the family dashboard |
 | `t_lang` | every text in both languages, the language switch, Mama: English with grandma's help |
+| `t_village` | news for grandma and DennisTEST only, 80/20 news/stories, memory question, Het krantje, 💬, the helper's pace, the news filter |
 | `t_update` | self-update from an old 1.5 app and the current one; a broken update is thrown away |
 | `t_online` | (with `--online`) a heart and the play log through the real database |
 

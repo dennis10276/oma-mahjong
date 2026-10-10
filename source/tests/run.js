@@ -45,8 +45,13 @@ async function runOne(test) {
 
 (async () => {
   await lib.setup();
-  const t0 = Date.now(), results = [], queue = todo.slice();
-  // a few tests at the same time: most of a test is waiting for animations and timers
+  const t0 = Date.now(), results = [];
+  // the engine tests (t_layouts) only compute, for many seconds, which keeps this process busy:
+  // they go first, on their own, so they never hold up a phone page of another test
+  const cpu = t => t.file === 't_layouts.js';
+  for (const t of todo.filter(cpu)) results.push(await runOne(t));
+  // the rest a few at the same time: most of a test is waiting for animations and timers
+  const queue = todo.filter(t => !cpu(t));
   await Promise.all(Array.from({ length: Math.min(JOBS, queue.length) }, async () => {
     while (queue.length) results.push(await runOne(queue.shift()));
   }));
