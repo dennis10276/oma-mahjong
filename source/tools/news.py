@@ -31,7 +31,7 @@ FEEDS = [
     ('Samen1', 'https://samen1.nl/feed/', 5, True),                        # Omroep Apeldoorn (also news from the region)
     ('Apeldoorn Direct', 'https://www.apeldoorndirect.nl/feed/', 3, False),  # only Apeldoorn
     ('Stedendriehoek', 'https://www.stedendriehoek.nl/feed/', 4, True),     # the regional free paper
-    ('Gemeente Apeldoorn', 'https://www.apeldoorn.nl/rss-actueel', 1, False),
+    # (not the municipality's own news: Dennis dropped it on 2026-10-10)
 ]
 NEWS_DAYS, NEWS_MAX = 21, 80          # news.json: how old and how many
 CAND_DAYS, CAND_MAX = 60, 300         # candidates.json
@@ -183,6 +183,8 @@ def main():
         except Exception:
             old = []
     files = [a[i + 1] for i, x in enumerate(a) if x == '--file']
+    if not files:
+        old = [it for it in old if it.get('src') in {f[0] for f in FEEDS}]     # a source that was dropped goes entirely
     new, failed, tried = [], 0, 0
     for src, url, pages, need in ([('Test', f, 1, False) for f in files] if files else FEEDS):
         for pg in range(1, pages + 1):

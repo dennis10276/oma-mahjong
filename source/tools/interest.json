@@ -2,9 +2,7 @@
  "note": "Interest of a news item for grandma: sum of the weights of word stems in title (counts double) and text, plus the source. Starting guess; to be tuned with ratings.",
  "bias": 0,
  "min": -99,
- "src": {
-  "Gemeente Apeldoorn": -1
- },
+ "src": {},
  "words": {
   "dier": 2,
   "hond": 2,
