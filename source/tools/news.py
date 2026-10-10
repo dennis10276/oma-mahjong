@@ -15,6 +15,7 @@ with a photo: the one the site puts in its feed, or else the share photo of the 
 How interesting an item is comes from tools/interest.json (see interest()).
 """
 import html, json, os, re, sys, time, urllib.request
+from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from xml.etree import ElementTree as ET
 
@@ -33,7 +34,7 @@ FEEDS = [
     ('Stedendriehoek', 'https://www.stedendriehoek.nl/feed/', 4, True),     # the regional free paper
     # (not the municipality's own news: Dennis dropped it on 2026-10-10)
 ]
-NEWS_DAYS, NEWS_MAX = 21, 80          # news.json: how old and how many
+NEWS_DAYS, NEWS_MAX = 7, 80           # news.json: at most a week old, and how many
 CAND_DAYS, CAND_MAX = 60, 300         # candidates.json
 OG_PER_RUN = 60                       # article pages read per run for a share photo
 SKIP_CATS = {'112', 'politiek', 'column', 'columns', 'opinie', 'ingezonden', 'ondernemend', 'partnerbijdrage', 'advertorial', 'overig'}
@@ -123,6 +124,9 @@ def items_from(src, xml, need_place=False):
             text = shorten(full)
         item = {'id': re.sub(r'\W+', '', guid)[-40:], 't': t, 'title': title[:140], 'text': text, 'src': src,
                 'link': (it.findtext('link') or '').strip(), 'cats': cats[:6]}
+        until = event_until(item, full)
+        if until:
+            item['until'] = until
         img = image_of(it)
         if img:
             item['img'] = img
@@ -147,6 +151,48 @@ def og_image(link):
         if m and ok_photo(m.group(1)):
             return ok_photo(m.group(1))
     return None
+
+
+# ---------- when is the event an item talks about over? ----------
+MONTHS = {'jan': 1, 'januari': 1, 'feb': 2, 'februari': 2, 'mrt': 3, 'maart': 3, 'apr': 4, 'april': 4, 'mei': 5, 'jun': 6, 'juni': 6,
+          'jul': 7, 'juli': 7, 'aug': 8, 'augustus': 8, 'sep': 9, 'sept': 9, 'september': 9, 'okt': 10, 'oktober': 10,
+          'nov': 11, 'november': 11, 'dec': 12, 'december': 12}
+DATE_RE = re.compile(r'\b(\d{1,2})(?:\s*(?:en|t/m|tot en met|tot|-|–)\s*(\d{1,2}))?\s+(' + '|'.join(sorted(MONTHS, key=len, reverse=True)) + r')\b\.?(?:\s+(\d{4}))?', re.I)
+AMS = timezone(timedelta(hours=2))      # Amsterdam (summer time; an hour off in winter does not matter here)
+
+
+def event_until(it, full=''):
+    """The last day the event in the item is on (end of that day, ms), or None when it names no date.
+    Dates are read from the text ("zaterdag 10 oktober", "10 t/m 12 oktober", "tot en met 1 november");
+    "vandaag"/"vanavond" is the day it was published, "morgen" the day after. Dates long before the
+    item was published are history ("gebouwd in mei 1960"), not the event, and are skipped."""
+    pub = datetime.fromtimestamp(it['t'] / 1000, AMS).date()
+    s = ' '.join([it['title'], it.get('text', ''), full[:2500]])
+    days = []
+    for m in DATE_RE.finditer(s):
+        d1, d2, mon, yr = m.group(1), m.group(2), MONTHS[m.group(3).lower()], m.group(4)
+        for d in [int(d2 or d1)]:
+            years = [int(yr)] if yr else [pub.year - 1, pub.year, pub.year + 1]
+            cands = []
+            for y in years:
+                try:
+                    cands.append(date(y, mon, d))
+                except ValueError:
+                    pass
+            if not cands:
+                continue
+            day = min(cands, key=lambda x: abs((x - pub).days)) if not yr else cands[0]
+            if pub - timedelta(days=60) <= day <= pub + timedelta(days=370):
+                days.append(day)
+    low = s.lower()
+    if re.search(r'\b(vandaag|vanavond|vanmiddag)\b', low):
+        days.append(pub)
+    if re.search(r'\bmorgen(avond|middag|ochtend)?\b', low):
+        days.append(pub + timedelta(days=1))
+    if not days:
+        return None
+    last = max(days)
+    return int(datetime(last.year, last.month, last.day, 23, 59, tzinfo=AMS).timestamp() * 1000)
 
 
 # ---------- how interesting is it (for grandma: small human stories, animals, royals, nature, curiosities) ----------
@@ -200,7 +246,7 @@ def main():
     # merge with what we had (keeps photos found earlier), newest first, no doubles
     known = {it['id']: it for it in old}
     seen, items = set(), []
-    now = time.time() * 1000
+    now = float(opt('--now') or time.time() * 1000)      # (--now: a fixed 'today' for the tests)
     for it in sorted(new + old, key=lambda x: -x['t']):
         key = re.sub(r'\W+', '', it['title'].lower())[:50]
         if it['id'] in seen or key in seen or SKIP_RE.search(it['title'] + ' ' + it.get('text', '')) or it['t'] < now - CAND_DAYS * 864e5:
@@ -232,13 +278,14 @@ def main():
     for it in items:
         it['s'] = interest(it, model)
     cand = {'v': FORMAT, 'updated': int(now), 'items': items[:CAND_MAX]}
-    keep = [{k: it[k] for k in ('id', 't', 'title', 'text', 'src', 'img', 'thumb', 's') if k in it}
-            for it in items if it['t'] > now - NEWS_DAYS * 864e5 and it['s'] >= model.get('min', -99)]
+    # for the game: at most a week old, the event (if any) not over yet, interesting enough
+    keep = [{k: it[k] for k in ('id', 't', 'title', 'text', 'src', 'img', 'thumb', 's', 'until') if k in it}
+            for it in items if it['t'] > now - NEWS_DAYS * 864e5 and it.get('until', now + 1) > now and it['s'] >= model.get('min', -99)]
     news = {'v': FORMAT, 'updated': int(now), 'items': keep[:NEWS_MAX]}
     json.dump(news, open(opt('--out') or 'news.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     if opt('--cand'):
         json.dump(cand, open(opt('--cand'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print(f'{len(keep)} news items, {len(items)} candidates ({len(new)} from the feeds, {reads} article pages read)')
+    print(f'{len(keep)} news items ({sum(1 for it in items if it.get("until", now + 1) <= now)} about events that are over), {len(items)} candidates ({len(new)} from the feeds, {reads} article pages read)')
 
 
 if __name__ == '__main__':

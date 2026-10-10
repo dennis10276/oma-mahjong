@@ -132,6 +132,20 @@ module.exports = [
     },
   },
   {
+    name: 'village: news older than a week, or about an event that is over, is not shown; the most interesting first',
+    async run(t, { sleep }) {
+      const items = [
+        { id: 'old', t: NOW - 8 * 864e5, title: 'Te oud', text: 'x', src: 'Samen1', s: 9 },
+        { id: 'over', t: NOW - 2 * 864e5, until: NOW - 3600e3, title: 'Markt was gisteren', text: 'x', src: 'Samen1', s: 9 },
+        { id: 'dull', t: NOW - 1 * 864e5, title: 'Saai', text: 'x', src: 'Samen1', s: 0 },
+        { id: 'fun', t: NOW - 3 * 864e5, until: NOW + 864e5, title: 'Schapen op de hei', text: 'x', src: 'Samen1', s: 8 },
+      ];
+      const p = await t.phone({ state: OMA, news: { updated: NOW, items } });
+      await p.evaluate(() => loadNews(true)); await sleep(300);
+      t.eq(await p.evaluate(() => freshNews().map(i => i.id)), ['fun', 'dull'], 'only this week, events not over, most interesting first');
+    },
+  },
+  {
     name: 'helper: waits longer when she wins easily, sooner when she struggles',
     async run(t, { startLevel }) {
       const p = await t.phone({ state: OMA });
@@ -151,7 +165,7 @@ module.exports = [
     name: 'news collector: keeps friendly local news, drops accidents, police, columns and doubles',
     async run(t) {
       const root = path.join(__dirname, '..'), out = path.join(require('os').tmpdir(), 'omamj-news-test.json');
-      execFileSync('python3', [path.join(root, 'tools', 'news.py'), '--file', path.join(__dirname, 'fixtures', 'news-feed.xml'), '--out', out]);
+      execFileSync('python3', [path.join(root, 'tools', 'news.py'), '--file', path.join(__dirname, 'fixtures', 'news-feed.xml'), '--out', out, '--now', String(new Date('2026-10-10T12:00:00Z').getTime())]);
       const j = require(out);
       t.eq(j.items.map(i => i.title), ['Indrukwekkend schouwspel op de heide: kudde schapen trekt door bij Uddel', 'Dier van de week: Piertje'], 'friendly items with a photo only (no "geluidsoverlast", no advertorials, no police photo)');
       t.ok(!/verscheen eerst|<|&amp;/.test(j.items.map(i => i.text).join(' ')), 'summaries are plain text', j.items.map(i => i.text));
