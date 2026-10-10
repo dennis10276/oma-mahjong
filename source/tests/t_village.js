@@ -66,7 +66,7 @@ module.exports = [
       await click(p, '#wNext');
       let m = null;
       for (let k = 0; k < 12 && !(m && m.buttons.includes('vgOk')); k++) { await sleep(500); m = await modal(p); if (m && !m.buttons.includes('vgOk') && m.buttons.length) await click(p, '#' + m.buttons[0]); }
-      t.ok(m && m.text.includes('Nieuws uit Apeldoorn') && m.text.includes('Nieuwsbericht 0') && m.text.includes('Samen1'), 'real news after the win', m);
+      t.ok(m && m.text.includes('Nieuws uit Apeldoorn') && m.text.includes('Nieuwsbericht 0') && !m.text.includes('Samen1') && !/gisteren|vandaag|geleden/.test(m.text), 'real news after the win, without source or date', m);
       await click(p, '#vgOk'); await sleep(2600);
       t.eq(await p.evaluate(() => __mj.G.level), 4, 'then the next level');
       t.ok((await p.evaluate(() => document.querySelector('#gameMsg').textContent)).includes('nieuws uit Apeldoorn'), 'the top bar teases the next news');

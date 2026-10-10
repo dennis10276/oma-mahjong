@@ -123,7 +123,7 @@ matched to the heart by sender and time.
 ## News from Apeldoorn (grandma and DennisTEST)
 
 After every won level grandma gets one item: about 4 in 5 are real local news (headline + the short
-summary the site puts in its feed, with the source), 1 in 5 is the next part of a made-up story about
+summary the site puts in its feed, and its photo; the app shows no source or date), 1 in 5 is the next part of a made-up story about
 the computer players in her ranking, ending with a little cliffhanger; the next level's top bar
 teases what comes next. Before part 5 of a story she gets a memory question (right = a bonus star).
 Everything read is in Het krantje (📰 on the home screen), and 💬 next to a computer player in the
