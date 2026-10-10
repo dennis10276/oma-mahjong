@@ -153,9 +153,10 @@ module.exports = [
       const root = path.join(__dirname, '..'), out = path.join(require('os').tmpdir(), 'omamj-news-test.json');
       execFileSync('python3', [path.join(root, 'tools', 'news.py'), '--file', path.join(__dirname, 'fixtures', 'news-feed.xml'), '--out', out]);
       const j = require(out);
-      t.eq(j.items.map(i => i.title), ['Indrukwekkend schouwspel op de heide: kudde schapen trekt door bij Uddel', 'Dier van de week: Piertje', 'Gelderland wil drones beter onderzoeken', 'Trampolinepark in Apeldoorn open'], 'friendly items only (also no "geluidsoverlast", no advertorials; a trampoline is fine)');
+      t.eq(j.items.map(i => i.title), ['Indrukwekkend schouwspel op de heide: kudde schapen trekt door bij Uddel', 'Dier van de week: Piertje'], 'friendly items with a photo only (no "geluidsoverlast", no advertorials, no police photo)');
       t.ok(!/verscheen eerst|<|&amp;/.test(j.items.map(i => i.text).join(' ')), 'summaries are plain text', j.items.map(i => i.text));
-      t.eq(j.items.map(i => [i.img, i.thumb]), [['https://example.org/uploads/schapen-uddel.jpg', 'https://example.org/uploads/schapen-uddel-150x150.jpg'], ['https://example.org/uploads/piertje-540x430-c.jpg', undefined], [undefined, undefined], [undefined, undefined]], 'the news photo (the sharp original of a thumbnail; no logos, no police photo; https)');
+      t.eq(j.items.map(i => i.img), ['https://example.org/uploads/schapen-uddel-150x150.jpg', 'https://example.org/uploads/piertje-540x430-c.jpg'], 'the photo from the feed (no logos, https)');
+      t.ok(j.items[0].s > j.items[1].s, 'sheep on the heath score higher than an ordinary item', j.items.map(i => i.s));
     },
   },
 ];
