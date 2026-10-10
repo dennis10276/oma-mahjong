@@ -7,7 +7,7 @@ to the `news` branch; the game reads it from raw.githubusercontent.com.
   python3 tools/news.py --out news.json [--old old-news.json] [--file feed.xml ...]
 
 Only light, friendly local news gets through: no accidents, fires, police, illness, politics or
-columns (see SKIP_CATS and SKIP_WORDS). Only the headline, the short summary and the photo that
+columns (see SKIP_CATS, SKIP_IN and SKIP_START). Only the headline, the short summary and the photo that
 the site itself puts in its feed are used, with the name of the source; the photo is not copied,
 the game shows it from the news site (like a news reader app does).
 """
@@ -23,14 +23,17 @@ FEEDS = [
     ('Stedendriehoek', 'https://www.stedendriehoek.nl/feed/', PLACES),   # the regional free paper: Apeldoorn items only
 ]
 KEEP_DAYS, KEEP_MAX = 10, 60
-SKIP_CATS = {'112', 'politiek', 'column', 'columns', 'opinie', 'ingezonden', 'ondernemend', 'partnerbijdrage', 'advertorial'}
-# a word that starts with one of these (title or summary) keeps the item out
-SKIP_WORDS = """brand ongeluk ongeval gewond dode dood doden overle overlijd sterf stierf politie arrest aangehouden
-verdacht steek schiet schot mishandel inbraak inbre diefstal gestolen overval drugs gaslek ontruim ziek kanker ramp oorlog
-racis misbruik verkracht explosie ontplof vermist crash botsing letsel rechter rechtbank ziekenhuis trauma zelfdoding
-begrafenis uitvaart faillis ontslag overlast crimin bedreig slachtoffer geweld moord dader alcohol vuurwerk storing
-noodweer evacu asiel protest demonstr staking hufter boete handhav dakloos verslav""".split()
-SKIP_RE = re.compile(r'\b(' + '|'.join(map(re.escape, SKIP_WORDS)) + r')', re.I)
+SKIP_CATS = {'112', 'politiek', 'column', 'columns', 'opinie', 'ingezonden', 'ondernemend', 'partnerbijdrage', 'advertorial', 'overig'}
+# these keep an item out wherever they appear, also inside a longer Dutch word (woningbrand, geluidsoverlast)
+SKIP_IN = """brand ongeluk ongeval gewond dood doden overlijd overleden politie arrest mishandel inbraak diefstal
+overval drugs ontruim kanker oorlog racis misbruik verkracht explosie ontplof vermist botsing letsel rechtbank
+zelfdoding uitvaart begrafenis faillis overlast crimin bedreig slachtoffer geweld moord verslav evacu gaslek
+noodweer steekpartij schietpartij traumaheli aanrijding""".split()
+# these only at the start of a word (inside other words they are harmless: trampoline, Schotland)
+SKIP_START = """ramp dode sterf stierf aangehouden verdacht steek schiet schot ziek crash rechter ontslag dader alcohol
+vuurwerk storing asiel protest demonstr staking hufter boete handhav dakloos inbre gestolen trauma""".split()
+SKIP_RE = re.compile('(' + '|'.join(map(re.escape, SKIP_IN)) + r')|\b(' + '|'.join(map(re.escape, SKIP_START)) + ')', re.I)
+FORMAT = 2      # news.json from an older collector is not merged in (its items were filtered less strictly)
 MEDIA, CONTENT = '{http://search.yahoo.com/mrss/}', '{http://purl.org/rss/1.0/modules/content/}'
 # pictures that are not a news photo (site logos, disclaimers, tracking pixels, ...)
 NOT_PHOTO = re.compile(r'disclaimer|logo|banner|icon|avatar|pixel|emoji|gravatar|advert|\.gif|\.svg', re.I)
@@ -56,8 +59,8 @@ def image_of(it):
     if not url:
         return None, None
     url = html.unescape(url).replace('http://', 'https://', 1)
-    if not url.startswith('https://'):
-        return None, None
+    if not url.startswith('https://') or SKIP_RE.search(url.rsplit('/', 1)[-1].replace('_', ' ').replace('-', ' ')):
+        return None, None       # (also no photo whose file name says police, accident, ...)
     full = re.sub(r'-\d{2,4}x\d{2,4}(?=\.(jpe?g|png|webp)$)', '', url, flags=re.I)
     return full, (url if full != url else None)
 
@@ -82,7 +85,7 @@ def shorten(s, n=280):
 
 def items_from(src, xml, need=None):
     out = []
-    root = ET.fromstring(xml)
+    root = ET.fromstring(xml.lstrip() if isinstance(xml, (bytes, str)) else xml)    # some feeds start with an empty line
     for it in root.iter('item'):
         title = clean(it.findtext('title'))
         text = shorten(clean(it.findtext('description')))
@@ -117,7 +120,8 @@ def main():
     old = []
     if opt('--old'):
         try:
-            old = json.load(open(opt('--old'), encoding='utf-8')).get('items', [])
+            o = json.load(open(opt('--old'), encoding='utf-8'))
+            old = o.get('items', []) if o.get('v') == FORMAT else []
         except Exception:
             old = []
     new = []
@@ -139,7 +143,7 @@ def main():
         seen.update([it['id'], key])
         if it['t'] > (time.time() - KEEP_DAYS * 86400) * 1000:
             items.append(it)
-    out = {'updated': int(time.time() * 1000), 'items': items[:KEEP_MAX]}
+    out = {'v': FORMAT, 'updated': int(time.time() * 1000), 'items': items[:KEEP_MAX]}
     json.dump(out, open(opt('--out') or 'news.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f'{len(out["items"])} items ({len(new)} new from the feeds)')
 

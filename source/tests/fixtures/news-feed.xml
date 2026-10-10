@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel><title>Testfeed</title><link>https://example.org</link><description>test</description>
@@ -18,4 +19,9 @@
 <pubDate>Thu, 08 Oct 2026 11:00:00 +0000</pubDate><category>Regio</category><guid>https://example.org/?p=5</guid>
 <description><![CDATA[Dubbel.]]></description></item>
 <item><title>Column: de stad</title><link>https://example.org/6</link><pubDate>Thu, 08 Oct 2026 10:00:00 +0000</pubDate><category>Columns</category><guid>https://example.org/?p=6</guid><description>x</description></item>
+<item><title>Zo maak je geluidsoverlast bespreekbaar in Apeldoorn</title><link>https://example.org/7</link><pubDate>Thu, 08 Oct 2026 09:00:00 +0000</pubDate><category>Algemeen</category><guid>https://example.org/?p=7</guid><description>Meten is weten.</description></item>
+<item><title>Slimmer omgaan met stroom in Apeldoorn</title><link>https://example.org/8</link><pubDate>Thu, 08 Oct 2026 08:00:00 +0000</pubDate><category>Overig</category><guid>https://example.org/?p=8</guid><description>Batterijen.</description></item>
+<item><title>Gelderland wil drones beter onderzoeken</title><link>https://example.org/9</link><pubDate>Thu, 08 Oct 2026 07:00:00 +0000</pubDate><category>Regio</category><guid>https://example.org/?p=9</guid>
+<media:content url="https://example.org/uploads/air_politie_traumahelikopter-150x150.jpg" width="150" height="150" medium="image"/><description>Een commissie wil meer onderzoek.</description></item>
+<item><title>Trampolinepark in Apeldoorn open</title><link>https://example.org/10</link><pubDate>Thu, 08 Oct 2026 06:00:00 +0000</pubDate><category>Regio</category><guid>https://example.org/?p=10</guid><description>Springen maar.</description></item>
 </channel></rss>

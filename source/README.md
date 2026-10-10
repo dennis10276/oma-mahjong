@@ -131,7 +131,7 @@ ranking shows its story so far. When there is no fresh real news, nothing is sho
 file has not been updated for 2 days; then the stories fill in.
 
 The real news is filtered on purpose: no accidents, fires, police, illness, politics or columns
-(`SKIP_CATS` / `SKIP_WORDS` in `tools/news.py`). The game reads `news.json` from the `news` branch.
+(`SKIP_CATS`, `SKIP_IN`, `SKIP_START` in `tools/news.py`; also inside longer words, and no photo whose file name says police or accident). The game reads `news.json` from the `news` branch.
 That needs `tools/news.yml` as `.github/workflows/news.yml` in the GitHub repo (a scheduled job).
 
 ## The helper's pace (`HELP.care.nudge.pace`)
