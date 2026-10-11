@@ -4,6 +4,7 @@
 'use strict';
 
 const RULES = {
+  levels: { blockedFrom: 75 },                // Keep 75 and above closed until Dennis gives the go-ahead; then set null.
   tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
@@ -24,6 +25,8 @@ const RULES = {
     popupMs: 6500, popupWithMsgMs: 11000,      // a heart during a level (ready-made messages: quickMsgs in lang.js)
   },
 };
+
+const levelBlocked = level => RULES.levels.blockedFrom != null && level >= RULES.levels.blockedFrom;
 
 /* Help: `normal` is what everyone gets; `care` holds the gentler values. Which of them a player gets
    is decided per part (PARTS below): a part that is on takes its values from `care`.

@@ -45,6 +45,9 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
 
 ## Changing the rules (`www/js/rules.js`)
 
+- Level 75 and above are on hold for everyone, including saved games. Keep
+  `RULES.levels.blockedFrom: 75` until Dennis explicitly gives the go-ahead; set it to `null`
+  to reopen them. Progress is preserved, and earlier levels and daily puzzles remain available.
 - `RULES`: from which level the tools, the Zonnebloem prize, gold pairs and jokers come; points per
   pair, combo, stars, gold, lucky moment and joker finale; the win-streak bonus; the chest; the daily
   gift; hearts (how long the pop-up stays; the ready-made messages are in `lang.js`, `quickMsgs`).

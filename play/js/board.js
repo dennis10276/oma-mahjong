@@ -34,6 +34,12 @@ function startDaily(k) {
 
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
 function begin(o, restart = false) {
+  // Check before loading a saved board, dealing tiles or recording an attempt (also on restart).
+  if (o.mode === 'level' && levelBlocked(o.level)) {
+    show('levels');
+    toast(tx('levelsOnHold', RULES.levels.blockedFrom), 4500);
+    return;
+  }
   $('#modal').classList.add('hidden'); modalOnClose = null;
   $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
   show('game');

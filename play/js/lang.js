@@ -15,6 +15,8 @@ const TEXT = {
   nice: ['Fijn! 😊', 'Lovely! 😊'],
   hooray: ['Hoera!', 'Hooray!'],
   levelN: [n => `Level ${n}`, n => `Level ${n}`],
+  levelOnHold: [n => `🔒 Level ${n}`, n => `🔒 Level ${n}`],
+  levelsOnHold: [n => `🔒 Levels vanaf ${n} zijn nog gesloten. Je kunt eerdere levels en de dagpuzzel spelen.`, n => `🔒 Levels ${n} and above are on hold. You can play earlier levels and the daily puzzle.`],
   levelsN: [n => `${n} ${pl(n, 'level', 'levels')}`, n => `${n} ${pl(n, 'level', 'levels')}`],
   days: [n => `${n} ${pl(n, 'dag', 'dagen')}`, n => `${n} ${pl(n, 'day', 'days')}`],
   daysInRow: [n => `${n} ${pl(n, 'dag', 'dagen')} op rij`, n => `${n} ${pl(n, 'day', 'days')} in a row`],

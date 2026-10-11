@@ -184,7 +184,7 @@ module.exports = [
     name: 'news collector: keeps friendly local news, drops accidents, police, columns and doubles',
     async run(t) {
       const root = path.join(__dirname, '..'), out = path.join(require('os').tmpdir(), 'omamj-news-test.json');
-      execFileSync('python3', [path.join(root, 'tools', 'news.py'), '--file', path.join(__dirname, 'fixtures', 'news-feed.xml'), '--out', out, '--now', String(new Date('2026-10-10T12:00:00Z').getTime())]);
+      execFileSync(process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3'), [path.join(root, 'tools', 'news.py'), '--file', path.join(__dirname, 'fixtures', 'news-feed.xml'), '--out', out, '--now', String(new Date('2026-10-10T12:00:00Z').getTime())]);
       const j = require(out);
       t.eq(j.items.map(i => i.title), ['Indrukwekkend schouwspel op de heide: kudde schapen trekt door bij Uddel', 'Dier van de week: Piertje'], 'friendly items with a photo only (no "geluidsoverlast", no advertorials, no police photo)');
       t.ok(!/verscheen eerst|<|&amp;/.test(j.items.map(i => i.text).join(' ')), 'summaries are plain text', j.items.map(i => i.text));

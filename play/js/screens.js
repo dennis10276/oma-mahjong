@@ -23,7 +23,7 @@ function renderHome() {
   const ts = totalStars();
   $('#homeStars').textContent = '⭐ ' + ts;
   const cur = loadCur();
-  $('#playLabel').innerHTML = cur && cur.key === 'L' + S.level ? fx('continueLevel', S.level) : fx('levelN', S.level);
+  $('#playLabel').innerHTML = levelBlocked(S.level) ? fx('levelOnHold', S.level) : cur && cur.key === 'L' + S.level ? fx('continueLevel', S.level) : fx('levelN', S.level);
   const doneToday = !!S.daily[todayKey()];
   $('#dailyLabel').innerHTML = fx(doneToday ? 'dailyDone' : 'dailyWaiting');
   $('#btnDaily').classList.toggle('pulse', !doneToday);
@@ -67,10 +67,12 @@ function renderLevels() {
   for (let i = 1; i <= N; i++) {
     const b = document.createElement('button');
     const st = S.stars[i] || 0;
-    b.className = 'lv' + (i === S.level ? ' current' : '') + (i > S.level ? ' locked' : '');
-    b.innerHTML = i > S.level ? `🔒<small style="color:rgba(255,255,255,.6)">${i}</small>` : `${i}<small>${i === S.level && !st ? '▶' : starsStr(st)}</small>`;
+    const locked = i > S.level || levelBlocked(i);
+    b.className = 'lv' + (i === S.level ? ' current' : '') + (locked ? ' locked' : '');
+    b.innerHTML = locked ? `🔒<small style="color:rgba(255,255,255,.6)">${i}</small>` : `${i}<small>${i === S.level && !st ? '▶' : starsStr(st)}</small>`;
+    b.disabled = locked;
     if (i === RULES.sunflower.level) { b.classList.add('prize'); b.insertAdjacentHTML('beforeend', '<span class="prize-ico">🌻</span>'); }
-    if (i <= S.level) b.onclick = () => startLevel(i);
+    if (!locked) b.onclick = () => startLevel(i);
     grid.appendChild(b);
   }
   const cur = grid.querySelector('.current');
