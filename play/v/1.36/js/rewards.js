@@ -63,9 +63,9 @@ function renderTaskChip() {
 }
 function openTasks() {
   const T = ensureTasks(), n = tasksDone(), ready = chestReady();
-  openModal(`<h2>${tx('tasksTitle')}</h2>
-    <div class="task-list">${T.list.map(t => { const ty = taskType(t.id); return `<div class="task${t.done ? ' done' : ''}"><span class="t-ico">${t.done ? '✅' : ty.ico}</span><div><b>${ty.text(t.goal)}</b><span class="bar"><i style="width:${Math.round(t.prog / t.goal * 100)}%"></i></span><small>${t.done ? tx('taskDoneShort') : `${fmtN(t.prog)} / ${fmtN(t.goal)}`}</small></div></div>`; }).join('')}</div>
-    <button class="chest-btn${ready ? ' ready' : ''}${T.chest ? ' opened' : ''}" id="chestBtn"><span class="chest-ico">${T.chest ? '📭' : '🎁'}</span><span>${T.chest ? tx('chestOpened') : ready ? tx('chestReady') : tx('chestNeed', n)}</span></button>
+  openModal(`<h2>${fx('tasksTitle')}</h2>
+    <div class="task-list">${T.list.map(t => { const ty = taskType(t.id); return `<div class="task${t.done ? ' done' : ''}"><span class="t-ico">${t.done ? '✅' : ty.ico}</span><div><b>${fx('task_' + t.id, t.id === 'points' ? fmtN(t.goal) : t.goal)}</b><span class="bar"><i style="width:${Math.round(t.prog / t.goal * 100)}%"></i></span><small>${t.done ? tx('taskDoneShort') : `${fmtN(t.prog)} / ${fmtN(t.goal)}`}</small></div></div>`; }).join('')}</div>
+    <button class="chest-btn${ready ? ' ready' : ''}${T.chest ? ' opened' : ''}" id="chestBtn"><span class="chest-ico">${T.chest ? '📭' : '🎁'}</span><span>${T.chest ? fx('chestOpened') : ready ? fx('chestReady') : fx('chestNeed', n)}</span></button>
     <button class="link-btn" id="tkClose">${tx('close')}</button>`);
   $('#tkClose').onclick = closeModal;
   $('#chestBtn').onclick = () => { if (ready) openChest(); else if (!T.chest) { Sound.blocked(); toast(tx('tasksFirst')); } };

@@ -15,7 +15,8 @@ function addSpecials(o, spec) {
     const f = anyF[Math.floor(r() * anyF.length)];
     o.gold = o.faces.map((x, i) => x === f ? i : -1).filter(i => i >= 0).slice(0, 2);
   }
-  if (o.mode === 'level' && lvl >= sp.jokerFrom && r() < sp.jokerChance) {
+  const jg = help().jokersGoneFrom;           // no jokers in the deal from there on (not in grandma mode)
+  if (o.mode === 'level' && lvl >= sp.jokerFrom && !(jg && lvl >= jg) && r() < sp.jokerChance) {
     const cnt = {};
     o.faces.forEach(f => cnt[f] = (cnt[f] || 0) + 1);
     const twos = Object.keys(cnt).filter(f => cnt[f] === 2 && +f < 100).map(Number);

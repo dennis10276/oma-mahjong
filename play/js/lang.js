@@ -338,9 +338,43 @@ function tx(key, ...a) {
 }
 const locale = () => isEn() ? 'en-GB' : 'nl-NL';
 // the fixed texts in index.html (data-t="key", data-t-label for aria-labels)
+/* Dutch and English must look the same: Dutch is the reference layout. A text written with fx()
+   (or a [data-t] element) that needs MORE lines in English than the Dutch text in the same spot is
+   made a little smaller until it fits on as many lines; one that needs FEWER lines keeps the Dutch
+   height. In both languages a label that does not fit sideways (a button) gets a smaller font too.
+   fitTexts() runs after a screen or pop-up is drawn. */
+const fx = (key, ...a) => `<span class="fx" data-k="${key}"${a.length ? ` data-a="${esc(JSON.stringify(a))}"` : ''}>${tx(key, ...a)}</span>`;
+function fitTexts(root = document) {
+  root.querySelectorAll('.fit-row').forEach(r => {
+    r.style.fontSize = r.style.minHeight = '';
+    if (!r.offsetParent) return;
+    const h = r.offsetHeight;          // the row keeps its height, only the words get smaller
+    for (let f = 96; r.scrollWidth > r.clientWidth + 1 && f >= 60; f -= 4) r.style.fontSize = f + '%';
+    if (r.offsetHeight < h) r.style.minHeight = h + 'px';
+  });
+  root.querySelectorAll('.fx').forEach(s => {
+    const p = s.parentElement;       // what changes height when the text needs another line
+    s.style.fontSize = '';
+    if (p.dataset.fxMin) { p.style.minHeight = ''; delete p.dataset.fxMin; }
+    if (!s.offsetParent) return;
+    // in any language: a word that does not fit next to its icon gets a smaller font
+    const wide = () => p.scrollWidth > p.clientWidth + 1;
+    if (!isEn()) { for (let f = 96; wide() && f >= 60; f -= 4) s.style.fontSize = f + '%'; return; }
+    const v = TEXT[s.dataset.k]; if (!v) return;
+    const a = s.dataset.a ? JSON.parse(s.dataset.a) : [];
+    const nl = typeof v[0] === 'function' ? v[0](...a) : v[0], en = s.innerHTML;
+    s.innerHTML = nl;
+    const hNl = p.offsetHeight;      // (offsetHeight: not fooled by a pop-up's opening animation)
+    s.innerHTML = en;
+    for (let f = 96; (p.offsetHeight > hNl || wide()) && f >= 60; f -= 4) s.style.fontSize = f + '%';
+    const diff = hNl - p.offsetHeight;
+    if (diff > 0) { p.style.minHeight = (parseFloat(getComputedStyle(p).height) + diff) + 'px'; p.dataset.fxMin = 1; }
+  });
+}
 function applyLang() {
   document.documentElement.lang = isEn() ? 'en' : 'nl';
-  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = tx(el.dataset.t); });
+  document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = fx(el.dataset.t); });
   document.querySelectorAll('[data-t-label]').forEach(el => el.setAttribute('aria-label', tx(el.dataset.tLabel)));
   const wd = tx('weekdays'); document.querySelectorAll('.cal-days span').forEach((el, i) => el.textContent = wd[i]);
+  fitTexts();
 }

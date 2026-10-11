@@ -10,7 +10,7 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
     | file | what |
     |---|---|
     | `rules.js` | **every number you may want to tune** (see below); also used by the dashboard |
-    | `lang.js` | every text of the game in Dutch and English (`tx('key')`), the language switch |
+    | `lang.js` | every text of the game in Dutch and English (`tx('key')`), the language switch; `fx('key')` + `fitTexts()` keep English in the exact Dutch layout (smaller font instead of an extra line) |
     | `core.js` | saved progress (`S`), dates, small helpers, backgrounds, prizes |
     | `fx.js` | particles: confetti, sparkles, flying emoji |
     | `update.js` | self-update from the website |

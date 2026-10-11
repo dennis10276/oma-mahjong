@@ -74,4 +74,34 @@ module.exports = [
       t.ok(await p.evaluate(() => document.querySelectorAll('.tile.nudge').length >= 1), 'a pair glows');
     },
   },
+  {
+    name: 'lang: Dutch and English have exactly the same layout (home, settings, prizes, how-to-play, tasks), on small and big phones',
+    async run(t, { sleep }) {
+      const measure = async (lang, size) => {
+        const p = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 12, lang }, size });
+        await p.evaluate(() => __mj.show('home')); await sleep(400);
+        const home = await p.evaluate(() => ['#btnPlay', '#btnDaily', '#btnLevels', '#btnThemes', '#btnTrophies', '#btnRanking', '#nextUnlock'].map(s => { const e = document.querySelector(s); return [e.offsetTop, e.offsetHeight, e.offsetWidth]; }));   // (offset*: not moved by the pulse animation)
+        const fits = await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth && [...document.querySelectorAll('.row2 .mid-btn b')].every(b => b.scrollWidth <= b.clientWidth + 1));
+        await p.evaluate(() => document.querySelector('#btnSettings').click()); await sleep(500);
+        const rows = await p.evaluate(() => [...document.querySelectorAll('#modalBox .set-row')].map(r => r.offsetHeight));
+        const more = {};
+        await p.evaluate(() => { document.querySelector('#modal').classList.add('hidden'); __mj.show('trophies'); }); await sleep(300);
+        more.trophies = await p.evaluate(() => [...document.querySelectorAll('.trophy')].map(c => c.offsetHeight).join());
+        for (const [k, js] of [['intro', 'showIntro()'], ['tasks', "__mj.show('home'); document.querySelector('#btnTasks').click()"]]) {
+          await p.evaluate(js); await sleep(500);
+          more[k] = await p.evaluate(() => [...document.querySelectorAll('#modalBox > *')].map(e => e.offsetHeight).join());
+          await p.evaluate(() => document.querySelector('#modal').classList.add('hidden'));
+        }
+        await p.ctx.close();
+        return { home, rows, fits, more };
+      };
+      for (const size of [[390, 760], [360, 640]]) {
+        const nl = await measure('nl', size), en = await measure('en', size);
+        t.eq(en.home, nl.home, `${size[0]}px: home screen buttons in the same place and size`);
+        t.eq(en.rows, nl.rows, `${size[0]}px: settings rows the same height`);
+        t.ok(nl.fits && en.fits, `${size[0]}px: nothing sticks out of the screen or its button`, { nl: nl.fits, en: en.fits });
+        t.eq(en.more, nl.more, `${size[0]}px: prizes, how-to-play and tasks the same`);
+      }
+    },
+  },
 ];

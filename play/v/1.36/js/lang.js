@@ -117,6 +117,11 @@ const TEXT = {
   fullTitle: ['Oei, alle vakjes zijn vol!', 'Oops, all the slots are full!'],
   fullText: ['Alle 4 vakjes zitten vol zonder paar. Geen nood, probeer het gewoon nog eens!', 'All 4 slots are full without a pair. No worries, just try again!'],
   tryAgain: ['↻ Opnieuw proberen', '↻ Try again'],
+  autoFinish: ['Dit kan niet meer misgaan!', 'Nothing can go wrong now!'],
+  autoFinish2: ['De rest gaat vanzelf ✨', 'The rest plays itself ✨'],
+  toolsGoneTitle: ['Je bent een echte meester! 🏆', 'You are a true master! 🏆'],
+  toolsGoneText: [n => `Vanaf level ${n} speel je zonder 💡 Hint en 🔀 Schudden. Alleen jouw eigen slimme blik telt nu!`, n => `From level ${n} you play without 💡 Hint and 🔀 Shuffle. Only your own sharp eye counts now!`],
+  toolsGoneOk: ['Kom maar op! 💪', 'Bring it on! 💪'],
   toolsLocked: [n => `Hint en Schudden komen vrij vanaf level ${n} 🔒`, n => `Hint and Shuffle unlock at level ${n} 🔒`],
   hintUsed: ['Je hint voor dit level is al gebruikt', 'You already used your hint in this level'],
   shuffleUsed: ['Je hebt in dit level al geschud', 'You already shuffled in this level'],
@@ -333,9 +338,43 @@ function tx(key, ...a) {
 }
 const locale = () => isEn() ? 'en-GB' : 'nl-NL';
 // the fixed texts in index.html (data-t="key", data-t-label for aria-labels)
+/* Dutch and English must look the same: Dutch is the reference layout. A text written with fx()
+   (or a [data-t] element) that needs MORE lines in English than the Dutch text in the same spot is
+   made a little smaller until it fits on as many lines; one that needs FEWER lines keeps the Dutch
+   height. In both languages a label that does not fit sideways (a button) gets a smaller font too.
+   fitTexts() runs after a screen or pop-up is drawn. */
+const fx = (key, ...a) => `<span class="fx" data-k="${key}"${a.length ? ` data-a="${esc(JSON.stringify(a))}"` : ''}>${tx(key, ...a)}</span>`;
+function fitTexts(root = document) {
+  root.querySelectorAll('.fit-row').forEach(r => {
+    r.style.fontSize = r.style.minHeight = '';
+    if (!r.offsetParent) return;
+    const h = r.offsetHeight;          // the row keeps its height, only the words get smaller
+    for (let f = 96; r.scrollWidth > r.clientWidth + 1 && f >= 60; f -= 4) r.style.fontSize = f + '%';
+    if (r.offsetHeight < h) r.style.minHeight = h + 'px';
+  });
+  root.querySelectorAll('.fx').forEach(s => {
+    const p = s.parentElement;       // what changes height when the text needs another line
+    s.style.fontSize = '';
+    if (p.dataset.fxMin) { p.style.minHeight = ''; delete p.dataset.fxMin; }
+    if (!s.offsetParent) return;
+    // in any language: a word that does not fit next to its icon gets a smaller font
+    const wide = () => p.scrollWidth > p.clientWidth + 1;
+    if (!isEn()) { for (let f = 96; wide() && f >= 60; f -= 4) s.style.fontSize = f + '%'; return; }
+    const v = TEXT[s.dataset.k]; if (!v) return;
+    const a = s.dataset.a ? JSON.parse(s.dataset.a) : [];
+    const nl = typeof v[0] === 'function' ? v[0](...a) : v[0], en = s.innerHTML;
+    s.innerHTML = nl;
+    const hNl = p.offsetHeight;      // (offsetHeight: not fooled by a pop-up's opening animation)
+    s.innerHTML = en;
+    for (let f = 96; (p.offsetHeight > hNl || wide()) && f >= 60; f -= 4) s.style.fontSize = f + '%';
+    const diff = hNl - p.offsetHeight;
+    if (diff > 0) { p.style.minHeight = (parseFloat(getComputedStyle(p).height) + diff) + 'px'; p.dataset.fxMin = 1; }
+  });
+}
 function applyLang() {
   document.documentElement.lang = isEn() ? 'en' : 'nl';
-  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = tx(el.dataset.t); });
+  document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = fx(el.dataset.t); });
   document.querySelectorAll('[data-t-label]').forEach(el => el.setAttribute('aria-label', tx(el.dataset.tLabel)));
   const wd = tx('weekdays'); document.querySelectorAll('.cal-days span').forEach((el, i) => el.textContent = wd[i]);
+  fitTexts();
 }
