@@ -117,6 +117,10 @@ const TEXT = {
   fullTitle: ['Oei, alle vakjes zijn vol!', 'Oops, all the slots are full!'],
   fullText: ['Alle 4 vakjes zitten vol zonder paar. Geen nood, probeer het gewoon nog eens!', 'All 4 slots are full without a pair. No worries, just try again!'],
   tryAgain: ['↻ Opnieuw proberen', '↻ Try again'],
+  autoFinish: ['Dit kan niet meer misgaan! De rest gaat vanzelf ✨', 'Nothing can go wrong now! The rest plays itself ✨'],
+  toolsGoneTitle: ['Je bent een echte meester! 🏆', 'You are a true master! 🏆'],
+  toolsGoneText: [n => `Vanaf level ${n} speel je zonder 💡 Hint en 🔀 Schudden. Alleen jouw eigen slimme blik telt nu!`, n => `From level ${n} you play without 💡 Hint and 🔀 Shuffle. Only your own sharp eye counts now!`],
+  toolsGoneOk: ['Kom maar op! 💪', 'Bring it on! 💪'],
   toolsLocked: [n => `Hint en Schudden komen vrij vanaf level ${n} 🔒`, n => `Hint and Shuffle unlock at level ${n} 🔒`],
   hintUsed: ['Je hint voor dit level is al gebruikt', 'You already used your hint in this level'],
   shuffleUsed: ['Je hebt in dit level al geschud', 'You already shuffled in this level'],
@@ -309,7 +313,6 @@ const TEXT = {
   // ---------- news from Apeldoorn and the neighbourhood (village.js) ----------
   vgNewsHead: ['📰 Nieuws uit Apeldoorn', '📰 News from Apeldoorn'],
   vgStoryHead: [w => `Uit de buurt: ${w}`, w => `From the neighbourhood: ${w}`],
-  vgSource: [(src, ago) => `${src} · ${ago}`, (src, ago) => `${src} · ${ago}`],
   vgPart: [(p, n) => `deel ${p} van ${n}`, (p, n) => `part ${p} of ${n}`],
   vgMore: ['Wordt vervolgd:', 'To be continued:'],
   vgEnd: ['— Einde —', '— The end —'],
@@ -324,9 +327,6 @@ const TEXT = {
   vgPaperLbl: ['Het krantje', 'The paper'],
   vgPaperEmpty: ['Win een level, dan staat hier het eerste nieuws.', 'Win a level and the first news appears here.'],
   vgChatLbl: ['Verhaal lezen', 'Read the story'],
-  today: ['vandaag', 'today'],
-  yesterday: ['gisteren', 'yesterday'],
-  daysAgo: [n => `${n} dagen geleden`, n => `${n} days ago`],
 };
 // the text for key in the player's language (a function is called with the extra arguments)
 function tx(key, ...a) {

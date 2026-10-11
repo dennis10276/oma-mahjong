@@ -25,7 +25,7 @@ const playOut = page => page.evaluate(async () => {
 
 module.exports = [
   {
-    name: 'mechanics: gold pairs from level 20, jokers (a pair) from level 30',
+    name: 'mechanics: gold pairs from level 20, jokers (a pair) from level 30 to 49 (grandma mode: always)',
     async run(t, { startLevel }) {
       const p = await t.phone({ state: { ...DENNIS, level: 60 } });
       const look = () => p.evaluate(() => { const G = __mj.G; return { jokers: G.tiles.filter(t => t.face === 101).length, gold: G.gold.size }; });
@@ -38,6 +38,12 @@ module.exports = [
         withJoker += r.jokers > 0;
       }
       t.ok(withJoker >= 2, 'jokers in several levels', withJoker);
+      // from level 50: no jokers any more, except in grandma mode
+      for (let L = 50; L <= 57; L++) { await startLevel(p, L); t.eq((await look()).jokers, 0, `level ${L}: no jokers`); }
+      const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 70 } });
+      let omaJoker = 0;
+      for (let L = 50; L <= 57; L++) { await startLevel(g, L); omaJoker += await g.evaluate(() => __mj.G.tiles.some(t => t.face === 101)); }
+      t.ok(omaJoker >= 2, 'grandma mode still gets jokers after level 50', omaJoker);
     },
   },
   {

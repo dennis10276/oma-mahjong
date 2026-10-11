@@ -7,7 +7,7 @@
    to a computer player shows its story so far. */
 'use strict';
 
-const villageOn = () => typeof isGrandma === 'function' && isGrandma(S.pid, S.name);
+const villageOn = () => getsNews(S.pid, S.name, S.cfg || {});      // grandma by default; switch per player on the dashboard
 const NEWS_KEY = 'omamj.news';
 // what she has read: n/s = news items / story parts shown, sp = parts shown per story, act = the
 // stories running now, seen = news ids, log = Het krantje, ask = memory questions (1 right, 0 wrong)
@@ -76,14 +76,10 @@ function showVillage(then) {
 }
 const whoAvatar = name => (BOTS.find(b => b[0] === name) || [name, '🙂'])[1];
 const vgCard = (head, body, btn) => `<div class="vg-head">${head}</div>${body}<button class="big-btn play" id="vgOk"><span class="bb-text"><b>${btn}</b></span></button>`;
-function newsAgo(t) {
-  const d = Math.floor((new Date().setHours(0, 0, 0, 0) - new Date(t).setHours(0, 0, 0, 0)) / 864e5);
-  return d <= 0 ? tx('today') : d === 1 ? tx('yesterday') : tx('daysAgo', d);
-}
 // the news photo, shown from the news site itself (if it does not load: the smaller one, or none)
 function vgImgErr(img) { if (img.dataset.alt) { img.src = img.dataset.alt; img.dataset.alt = ''; } else img.parentNode.remove(); }
 const photoHTML = it => it.img && /^https:\/\//.test(it.img) ? `<div class="vg-photo"><img src="${esc(it.img)}"${it.thumb ? ` data-alt="${esc(it.thumb)}"` : ''} alt="" referrerpolicy="no-referrer" onerror="vgImgErr(this)"></div>` : '';
-const newsHTML = it => `${photoHTML(it)}<h2 class="vg-title">${esc(it.title)}</h2>${it.text ? `<p class="vg-text">${esc(it.text)}</p>` : ''}<p class="vg-src">${tx('vgSource', esc(it.src || ''), newsAgo(it.t))}</p>`;
+const newsHTML = it => `${photoHTML(it)}<h2 class="vg-title">${esc(it.title)}</h2>${it.text ? `<p class="vg-text">${esc(it.text)}</p>` : ''}`;   // no source or date shown (Dennis's choice)
 // fetch the next news photo in the background while she plays, so it is there right away
 function preloadNext() { const x = villageNext(); if (x && x.k === 'n' && x.item.img) { const i = new Image(); i.referrerPolicy = 'no-referrer'; i.src = x.item.img; } }
 function showNewsItem(it, then) {

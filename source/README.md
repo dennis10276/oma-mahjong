@@ -56,6 +56,10 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
   its timings, no shuffle at the start, and the adaptive difficulty. To give someone else a kind of
   help, change it under `normal` (e.g. `rescue: true`).
   `toolsGoneFrom`: from that level on there is no Hint/Schudden (normal: 50; grandma mode: never).
+  `jokersGoneFrom`: from that level on no jokers are dealt (normal: 50; grandma mode: never).
+- Planned: a shop where hints, shuffles and jokers can be bought. A bought joker used on a pair costs a
+  star, one that finishes the level does not; the stars are counted in one place (`starsFor` in
+  `win.js`) for that.
 - `GRANDMA`: grandma's player id (or a name starting with "Oma"); `like` = players who always get
   exactly what she gets (DennisTEST, to see what she sees).
 - `CARE`: who else gets grandma's help (Mama).

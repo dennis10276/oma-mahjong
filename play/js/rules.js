@@ -37,6 +37,7 @@ const HELP = {
     shuffleAfter: null,                        // no shuffle right at the start of a level
     adapt: null,                               // difficulty that follows her own results
     toolsGoneFrom: 50,                         // from this level on there is no 💡 Hint and 🔀 Schudden any more
+    jokersGoneFrom: 50,                        // ... and no 🃏 jokers in the deal
   },
   care: {
     comboMs: 10000,
@@ -54,6 +55,7 @@ const HELP = {
     // quickRestartS seconds does not count
     adapt: { n: 10, min: 5, low: 0.6, high: 0.85, minStep: -2, maxStep: 2, quickRestartS: 30 },
     toolsGoneFrom: null,                       // grandma mode keeps Hint and Schudden at every level
+    jokersGoneFrom: null,                      // ... and the jokers
   },
 };
 const ADAPT_STEPS = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', 0: 'zacht (haar standaard)', 1: 'iets makkelijker', 2: 'makkelijker' };
