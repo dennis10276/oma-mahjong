@@ -101,4 +101,16 @@ module.exports = [
       t.eq((await look(plain)).combo, 10000, 'everyone: 10 seconds for a combo');
     },
   },
+  {
+    name: 'rules: "redo from level 75" from the database sends a player back once (stars, points and tries from there wiped)',
+    async run(t, { FakeDB, sleep }) {
+      const stars = Object.fromEntries(Array.from({ length: 79 }, (_, i) => [i + 1, 3]));
+      const db = new FakeDB({ scores: {}, plays: { 'test-cfg-dennis': { a: { k: 'cfg', t: 1, redo: 75, redoId: 'r1' } } } });
+      const p = await t.phone({ db, state: { name: 'Dennis', pid: 'test-dennis', level: 80, stars, lvlPts: { 74: 900, 75: 800, 79: 700 }, att: { L75: 3, L74: 1 } } });
+      await p.evaluate(() => loadCfg()); await sleep(300);
+      t.eq(await p.evaluate(() => [__mj.S.level, __mj.S.stars[74], __mj.S.stars[75], __mj.S.stars[79], __mj.S.lvlPts[75], __mj.S.lvlPts[74], __mj.S.att.L75, __mj.S.att.L74]), [75, 3, undefined, undefined, undefined, 900, undefined, 1], 'back to 75, everything from 75 wiped, before kept');
+      await p.evaluate(() => { __mj.S.level = 77; save(); }); await p.reload(); await p.waitForFunction(() => window.__mjReady); await p.evaluate(() => loadCfg()); await sleep(300);
+      t.eq(await p.evaluate(() => __mj.S.level), 77, 'only once');
+    },
+  },
 ];

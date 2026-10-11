@@ -5,10 +5,28 @@
 'use strict';
 const { fork } = require('child_process');
 const path = require('path'), fs = require('fs');
-const Hard = require('../../www/hard.js');
+const Hard = require('../../www/hard.js'), L = require('../../www/layouts.js');
+function check(d) {
+  const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z })), nb = L.neighbors(tiles), n = tiles.length;
+  const down = new Uint8Array(n); d.down.forEach(i => down[i] = 1);
+  const ob = d.obst, rules = ob && (Object.keys(ob.ice || {}).length || (ob.keys || []).length) ? { iceNb: L.iceNeighbors(tiles), ice: ob.ice || {}, locks: (ob.keys || []).length ? new Set(ob.locks) : null, keys: ob.keys || [] } : null;
+  const g = { tiles, nb, faces: d.faces, down, rules, clock: d.clock };
+  return { q: Hard.rate(g, 100, 31337 + d.level, Hard.persona('sensible')).rate, st: Hard.rate(g, 80, 31337 + d.level, Hard.persona('strong')).rate };
+}
 if (process.argv[2] === '--worker') {
   process.on('message', ({ levels }) => {
-    for (const lv of levels) process.send({ lv, row: Hard.pack(Hard.makeNow(lv, Hard.ASPECT, 1)) });
+    for (const lv of levels) {
+      // design, measure on fresh games; a level that misses a target by more than 0.1 is made
+      // again (another salt), up to 3 times, and the closest one is kept
+      let best = null;
+      for (let salt = 0; salt < 3; salt++) {
+        const d = Hard.makeNow(lv, Hard.ASPECT, 1, salt), m = check(d);
+        const miss = Math.abs(m.q - Hard.target(lv)) + Math.abs(m.st - Hard.target(lv, 'strong'));
+        if (!best || miss < best.miss) best = { d, miss, m };
+        if (Math.abs(m.q - Hard.target(lv)) <= 0.1 && Math.abs(m.st - Hard.target(lv, 'strong')) <= 0.1) break;
+      }
+      process.send({ lv, row: Hard.pack(best.d), miss: best.miss });
+    }
     process.send({ done: true });
   });
 } else {

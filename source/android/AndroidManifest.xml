@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nl.oma.mahjong"
-    android:versionCode="60"
-    android:versionName="1.44">
+    android:versionCode="61"
+    android:versionName="1.45">
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application

@@ -137,6 +137,15 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   the same levels hard). `sensible` sits between and is the yardstick.
 - **From `measureFrom` (70)** every level is designed (`Hard.make`) so the sensible test player wins
   about `sense` (0.69, what it wins on the old levels 65-74) of first tries.
+- **Two targets from 75**: the sensible player (0.55 at 75 to 0.35 at 150) and the strong player, who
+  plays like Dennisisdebeste (`strongStart` 0.75 to `strongEnd` 0.55). A level that only suits the
+  middle player can be a coin flip or a walk-over for a good one, so both count. Every level is
+  measured on fresh games while it is built; one that misses by more than 0.1 is made again
+  (up to 3 tries, the closest is kept).
+- **Tile size**: a pile from 75 must give tiles of at least `minTile` (54) pixels on a typical phone
+  (`minTileBig` 48 every 10th level, which may hold up to 96 tiles).
+- **Redo from a level**: a settings event `{ k: 'cfg', t, redo: 75, redoId }` in `plays/cfg-<pid>`
+  sends that player back to level 75 once (stars, points and tries from there wiped).
 - **From `from` (75)** the levels get harder: target from `start` (0.62) to `end` (0.45) at
   `endLevel` (120). Deals along a known way through, often with a tile lying on its own twin;
   face-down tiles (same share as before) only on tiles you can see but not take yet, never on the

@@ -15,7 +15,7 @@ const RULES = {
   // its own twin, face-down tiles where they hurt, deals tuned against the test player), the
   // target going from `start` to `end` at endLevel; from clockFrom the alarm clock.
   // pile: 'classic' (tower piles were tried: fewer choices, but more luck than skill)
-  hard: { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.5, end: 0.3, endLevel: 150, pile: 'classic' },
+  hard: { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.55, end: 0.35, endLevel: 150, strongSense: 0.88, strongStart: 0.75, strongEnd: 0.55, minTile: 54, minTileBig: 48, pile: 'classic' },
   sunflower: { level: 20 },                    // the big prize: the Zonnebloem theme after this level
   score: {
     pair: 10, maxCombo: 5,                     // a pair is worth 10 × combo (up to ×5)
@@ -106,7 +106,7 @@ const cfgPid = pid => GRANDMA.like.includes(pid) ? GRANDMA.pids[0] : pid;
 function playerCfg(list) {
   const c = {};
   (list || []).filter(e => e && e.k === 'cfg').sort((a, b) => a.t - b.t).forEach(e => {
-    for (const [k, v] of Object.entries(e)) if (k !== 'k' && k !== 't') c[k === 'care' ? 'super' : k] = !!v;   // (care: the old name)
+    for (const [k, v] of Object.entries(e)) if (k !== 'k' && k !== 't') c[k === 'care' ? 'super' : k] = typeof v === 'number' || typeof v === 'string' ? v : !!v;   // (care: the old name; numbers: e.g. redo)
   });
   return c;
 }

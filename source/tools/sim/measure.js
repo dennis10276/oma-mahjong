@@ -13,9 +13,9 @@ function measure(lv, runs) {
   const down = new Uint8Array(n); d.down.forEach(i => down[i] = 1);
   const ob = d.obst, rules = ob && (Object.keys(ob.ice || {}).length || (ob.keys || []).length) ? { iceNb: L.iceNeighbors(tiles), ice: ob.ice || {}, locks: (ob.keys || []).length ? new Set(ob.locks) : null, keys: ob.keys || [] } : null;
   const g = { tiles, nb, faces: d.faces, down, rules, clock: d.clock };
-  const q = k => H.rate(g, runs, 424242 + lv, H.persona(k));
+  const q = k => H.rate(g, runs, 990001 + lv, H.persona(k));   // (other games than the designer and the build check used)
   const s = q('sensible');
-  return { lv, target: +H.target(lv).toFixed(2), sensible: s.rate, strong: q('strong').rate, average: q('average').rate, choices: +s.choices.toFixed(1), n, clock: d.clock ? d.clock.n : null };
+  return { lv, target: +H.target(lv).toFixed(2), targetStrong: +H.target(lv, 'strong').toFixed(2), sensible: s.rate, strong: q('strong').rate, average: q('average').rate, choices: +s.choices.toFixed(1), n, clock: d.clock ? d.clock.n : null };
 }
 if (process.argv[2] === '--worker') {
   process.on('message', ({ levels, runs }) => { for (const lv of levels) process.send(measure(lv, runs)); process.send({ done: true }); });
@@ -31,7 +31,7 @@ if (process.argv[2] === '--worker') {
   function done() {
     rows.sort((a, b) => a.lv - b.lv);
     fs.writeFileSync(path.join(__dirname, 'measure.json'), JSON.stringify(rows));
-    const band = (lo, hi) => { const r = rows.filter(x => x.lv >= lo && x.lv <= hi); const m = k => (r.reduce((a, x) => a + x[k], 0) / r.length); return `${lo}-${hi}: target ${m('target').toFixed(2)} | sensible ${m('sensible').toFixed(2)} strong ${m('strong').toFixed(2)} average ${m('average').toFixed(2)} | choices ${m('choices').toFixed(1)}`; };
+    const band = (lo, hi) => { const r = rows.filter(x => x.lv >= lo && x.lv <= hi); const m = k => (r.reduce((a, x) => a + x[k], 0) / r.length); return `${lo}-${hi}: sensible ${m('sensible').toFixed(2)} (target ${m('target').toFixed(2)}) strong ${m('strong').toFixed(2)} (target ${m('targetStrong').toFixed(2)}) average ${m('average').toFixed(2)} | choices ${m('choices').toFixed(1)}`; };
     console.log('\n' + [[70, 74], [75, 89], [90, 104], [105, 119], [120, 134], [135, 150], [151, 200], [201, to]].map(([a, b]) => band(a, b)).join('\n'));
   }
 }

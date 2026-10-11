@@ -173,15 +173,23 @@ const Hard = (() => {
      make() is a generator: the game runs it in small steps while the player is busy with the level
      before (board.js), and keeps the result. The same level and screen shape always give the same
      result, on every phone (fixed numbers of steps, no clocks). */
-  const GENV = 1;      // change when make() changes: saved designs are then made again
-  const DEF = { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.5, end: 0.3, endLevel: 150, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
+  const GENV = 2;      // change when make() changes: saved designs are then made again
+  const DEF = { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.55, end: 0.35, endLevel: 150, strongSense: 0.88, strongStart: 0.75, strongEnd: 0.55, minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
-  // the share of first tries the sensible test player should win
-  function target(level) {
-    const c = cfg();
-    if (level < c.from) return c.sense;
+  // the share of first tries the sensible and the strong test player should win (the strong one
+  // plays like Dennisisdebeste: a level that only suits the middle player can still be a coin flip
+  // or a walk-over for him, so both count)
+  function target(level, who = 'sensible') {
+    const c = cfg(), st = who === 'strong';
+    if (level < c.from) return st ? c.strongSense : c.sense;
     const f = Math.min(1, (level - c.from) / Math.max(1, c.endLevel - c.from));
-    return c.start + (c.end - c.start) * f;
+    return st ? c.strongStart + (c.strongEnd - c.strongStart) * f : c.start + (c.end - c.start) * f;
+  }
+  // how big a tile gets on a typical phone (a 392 x 600 pixel pile area, as in board.js layoutBoard)
+  function tilePx(tiles) {
+    let l = 1e9, r = -1e9, t0 = 1e9, b = -1e9;
+    for (const t of tiles) { const x = t.x / 2 - t.z * 0.14, y = t.y / 2 * 1.24 - t.z * 0.14; l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + 1.24); }
+    return Math.min(384 / (r - l + 0.125), 592 / (b - t0 + 0.16));
   }
   const size = (level, scale) => { const e = L.effLevel(level); let t = L.targetFor(Math.round(e)); if (e > 26) t = L.targetFor(level); t = Math.max(8, Math.round(t * scale)); return t - t % 2; };
   function twinsOn(faces, nb) { let c = 0; for (let d = 0; d < faces.length; d++) for (const u of nb.above[d]) if (faces[u] === faces[d]) { c++; break; } return c; }
@@ -222,35 +230,30 @@ const Hard = (() => {
   }
   // compact shapes (no holes or thin arms) carry towers well
   const TOWER = ['block', 'oval', 'diamond', 'octagon', 'cross', 'pyramid', 'house', 'hourglass', 'bowtie', 'butterfly', 'heart'];
-  function* make(level, aspect, scale = 1) {
-    const c = cfg(), hard = level >= c.from, T = target(level);
-    const seed = level * 7919 + 13, r = L.rng(seed + 4242);
+  // salt: another try at the same level (when a measurement says it missed)
+  function* make(level, aspect, scale = 1, salt = 0) {
+    const c = cfg(), hard = level >= c.from, T = target(level), TS = target(level, 'strong');
+    const seed = level * 7919 + 13 + salt * 100003, r = L.rng(seed + 4242);
     const eff = L.effLevel(level), diff = L.difficultyFor(eff);
-    let tiles, piles;
+    let tiles;
     if (hard && c.pile !== 'classic') {
       const o = c.pile === 'semi' ? { baseFrac: 0.27 + r() * 0.04, keep: [0.68, 0.85], stack: 0.25 + r() * 0.2, noBrick: true, shapes: TOWER }
         : { baseFrac: 0.19 + r() * 0.06, keep: [0.85, 0.96], stack: 0.85 + r() * 0.15, noBrick: r() < 0.7, shapes: TOWER };
       tiles = L.buildPiles(seed, size(level, scale), c.pile === 'semi' ? 5 : r() < 0.5 ? 5 : 6, aspect, level, o).tiles;
     } else if (hard) {
-      // the pile: of a few for this level (no extra-big party piles: big piles have more ways
-      // through), the one the test player finds hardest with a quick deal; fewer free tiles at the
-      // start count as a plus (fewer choices)
-      piles = [];
-      for (let k = 0; k < c.piles; k++) {
-        const t = L.buildPiles(seed + k * 1009, Math.min(c.maxTiles, size(level, scale)), L.layersFor(eff), aspect, level).tiles;
+      // the pile: tiles at least as big as on the usual levels (every 10th level may be a bit
+      // bigger, with slightly smaller tiles); of a few that fit, the one with the fewest free tiles
+      // at the start (fewer choices)
+      const big = level % 10 === 0, minPx = big ? c.minTileBig : c.minTile;
+      let bp = null;
+      for (let k = 0; k < c.piles * 3 && !(bp && k >= c.piles); k++) {
+        const t = L.buildPiles(seed + k * 1009, Math.min(big ? 96 : c.maxTiles, size(level, scale)), L.layersFor(eff), aspect, level).tiles;
+        if (tilePx(t) < minPx) continue;
         const nb0 = L.neighbors(t), al = new Uint8Array(t.length).fill(1);
         let fr = 0; for (let i = 0; i < t.length; i++) if (L.isFree(i, al, nb0)) fr++;
-        piles.push({ t, nb0, fr: fr / t.length });
+        if (!bp || fr / t.length < bp.fr) bp = { t, fr: fr / t.length };
       }
-      let bp = null;
-      for (const pl of piles) {
-        const rr = L.rng(seed + 5151), n0 = pl.t.length;
-        const d = hdeal(pl.t, pl.nb0, L.pairFacesFor(n0 / 2, L.kindsFor(n0 / 2, eff, diff), rr), rr, { cap: 3, open: 1, twin: 0.5 });
-        if (!d) continue;
-        const q = (yield* rateG({ tiles: pl.t, nb: pl.nb0, faces: d.faces, down: null, rules: null, cover: coverOf(pl.t, pl.nb0) }, 16, seed, persona('sensible'))).rate + pl.fr * 0.5;
-        if (!bp || q < bp.q) bp = { t: pl.t, q };
-      }
-      tiles = (bp || { t: piles[0].t }).t;
+      tiles = bp ? bp.t : L.forLevel(level, aspect, scale, '').tiles;
     } else tiles = L.forLevel(level, aspect, scale, '').tiles;
     const n = tiles.length, nb = L.neighbors(tiles), cover = coverOf(tiles, nb);
     const all = new Uint8Array(n).fill(1);
@@ -285,9 +288,13 @@ const Hard = (() => {
     // (blind: how the test player does with every tile face down, for the record. Real players
     // look for the twins of what waits in the tray, like the test player; levels that punish that
     // can be done by keeping the tray empty instead: a trap, which is part of being harder)
-    const aim = T - 0.03, off = s => Math.abs(s.q - aim);   // (the careful final measurement comes out a little easier)
-    // 1. deals along a way through, screened quickly; tune how much waits in the tray (and the
-    //    pictures) until the sensible test player wins about the target share
+    // aim a little below the targets (the careful final measurement comes out a little easier);
+    // off: how far a deal is from both targets, dev: too easy (+) or too hard (-)
+    const aim = T - 0.03, aimS = TS - 0.02;
+    const off = s => Math.abs(s.q - aim) + (s.st === undefined ? 0 : Math.abs(s.st - aimS));
+    const dev = s => s.st === undefined ? s.q - aim : (s.q - aim + s.st - aimS) / 2;
+    // 1. deals along a way through, screened quickly by both test players; tune how much waits
+    //    in the tray (and the pictures) towards the targets
     const cands = [];
     let open = hard ? 0.95 : diff.open, kinds = L.kindsFor(n / 2, eff, diff);
     const twin = hard ? Math.min(0.9, c.twin + (level - c.from) * 0.005) : 0;   // more twins on twins as the levels go up
@@ -301,12 +308,13 @@ const Hard = (() => {
         const s = make1(d.faces, d.order);
         const j = yield* judge(s, null, hard ? c.screen : 12); s.q = j.rate; s.risky = j.risky;
         if (hard && s.risky !== null && s.risky > c.risky) continue;   // careful with tray pressure
+        s.st = (yield* judge(s, null, 12, 'strong')).rate;
         cands.push(s);
         if (!rb || off(s) < off(rb)) rb = s;
       }
       if (!rb) continue;
-      if (rb.q < aim - 0.05) { open = Math.max(0, open - 0.25); kinds = Math.max(4, Math.round(kinds * 0.88)); }
-      else if (rb.q > aim + 0.05) { open = Math.min(1, open + 0.2); kinds = Math.min(36, n / 2, Math.round(kinds * 1.12) + 1); }
+      if (dev(rb) < -0.05) { open = Math.max(0, open - 0.25); kinds = Math.max(4, Math.round(kinds * 0.88)); }
+      else if (dev(rb) > 0.05) { open = Math.min(1, open + 0.2); kinds = Math.min(36, n / 2, Math.round(kinds * 1.12) + 1); }
     }
     if (!cands.length) {     // (practically never) the usual level
       const sp = L.forLevel(level, aspect, scale, ''), d = L.makeDeal(sp);
@@ -316,17 +324,17 @@ const Hard = (() => {
     //    as often as the sensible one (otherwise the level is luck, or fools the test player)
     cands.sort((a, b) => off(a) - off(b));
     let best = null;
-    for (const s of cands.slice(0, hard ? 6 : 4)) {
+    for (const s of cands.slice(0, 6)) {
       s.q = (yield* judge(s, null, 48, 'sensible', false, 1)).rate;
-      s.strong = hard ? (yield* judge(s, null, 30, 'strong', false, 1)).rate : 1;
-      if (hard && s.strong < s.q - 0.05) continue;
+      s.st = (yield* judge(s, null, 36, 'strong', false, 1)).rate;
+      if (hard && s.st < s.q - 0.05) continue;
       if (!best || off(s) < off(best)) best = s;
     }
     best = best || cands[0];
     // 3. still too easy: change the deal step by step (swap two pictures, mostly putting a tile on
     //    its own twin; the way through must still work with the 4-slot tray) and keep what helps
     const fits = (faces, path) => { const tray = []; for (const m of path) { const q = tray.indexOf(faces[m]); if (q >= 0) tray.splice(q, 1); else { tray.push(faces[m]); if (tray.length > SLOTS - 1) return false; } } return !tray.length; };
-    if (hard) for (let st = 0; st < c.steps && best.q > aim + 0.05; st++) {
+    if (hard) for (let st = 0; st < c.steps && dev(best) > 0.05; st++) {
       const faces = best.faces.slice();
       let a, b;
       if (r() < 0.6) { const d = Math.floor(r() * n), ups = nb.above[d]; if (!ups.length) continue; const u = ups[Math.floor(r() * ups.length)]; const xs = []; for (let x = 0; x < n; x++) if (x !== u && x !== d && faces[x] === faces[u]) xs.push(x); if (!xs.length || faces[d] === faces[u]) continue; a = d; b = xs[Math.floor(r() * xs.length)]; }
@@ -337,13 +345,12 @@ const Hard = (() => {
       s.q = (yield* judge(s, null, 24)).rate;
       if (s.q < best.q - 0.02) {
         s.q = (yield* judge(s, null, 36, 'sensible', false, 2 + st)).rate;
-        s.strong = (yield* judge(s, null, 30, 'strong', false, 2 + st)).rate;
-        if (s.q < best.q && s.strong >= s.q - 0.05) best = s;
+        s.st = (yield* judge(s, null, 30, 'strong', false, 2 + st)).rate;
+        if (off(s) < off(best) && s.st >= s.q - 0.05) best = s;
       }
     }
     // 3. the alarm clock: a tile you can see but not take yet (not face-down, iced, locked or
-    //    gold); n = moves allowed. It makes the level harder, so the deal is one notch easier:
-    //    we take the n that brings the test player closest to the target
+    //    gold); n = moves allowed: the n that brings both test players closest to their targets
     let clock = null;
     if (hard && level >= c.clockFrom) {
       const ob = best.ob || {};
@@ -355,29 +362,30 @@ const Hard = (() => {
         for (let k = 0; k < 20; k++) { const res = play(g, P, seed * 31 + k); if (res.win && res.at[ci] >= 0) when.push(res.at[ci]); yield; }
         if (when.length < 4) continue;
         when.sort((a, b) => a - b);
-        for (const pct of [0.9, 0.7, 0.5, 0.35, 0.2]) {
+        for (const pct of [0.95, 0.8, 0.65, 0.5, 0.35]) {
           const cn = when[Math.min(when.length - 1, Math.floor(when.length * pct))] + 2;
-          const q = (yield* judge(best, { i: ci, n: cn }, 36, 'sensible', false, 1)).rate;
-          if (bc && Math.abs(q - aim) >= Math.abs(bc.q - aim)) continue;
-          const st = (yield* judge(best, { i: ci, n: cn }, 24, 'strong', false, 1)).rate;
-          if (st >= q - 0.05) bc = { i: ci, n: cn, q };          // fair: a good player copes better with the clock too
+          const o = { i: ci, n: cn };
+          o.q = (yield* judge(best, o, 36, 'sensible', false, 1)).rate;
+          o.st = (yield* judge(best, o, 30, 'strong', false, 1)).rate;
+          if (o.st < o.q - 0.05) continue;                 // fair: a good player copes better with the clock too
+          if (!bc || off(o) < off(bc)) bc = o;
         }
       }
       if (bc) clock = { i: bc.i, n: bc.n };
     }
     // 4. the record: how the three test players do on the finished level
     best.q = (yield* judge(best, clock, 90, 'sensible', false, 99)).rate;
-    best.strong = (yield* judge(best, clock, 30, 'strong', false, 99)).rate;
+    best.strong = (yield* judge(best, clock, 60, 'strong', false, 99)).rate;
     best.blind = hard ? (yield* judge(best, clock, 30, 'sensible', true, 99)).rate : null;
     return finish(tiles, best.faces, best.down, best, clock);
 
     function finish(tl, faces, down, x, clk) {
       return { v: GENV, level, aspect, scale, tiles: tl.map(t => [t.x, t.y, t.z]), faces, down: down.slice(), gold: x ? x.gold : null, obst: x ? x.ob : null, clock: clk,
-        info: { target: +T.toFixed(2), rate: x ? +x.q.toFixed(2) : null, strong: x ? +x.strong.toFixed(2) : null, blind: x && x.blind !== null && x.blind !== undefined ? +x.blind.toFixed(2) : null, twins: twinsOn(faces, L.neighbors(tl)), hard } };
+        info: { target: +T.toFixed(2), targetStrong: +TS.toFixed(2), rate: x ? +x.q.toFixed(2) : null, strong: x ? +x.strong.toFixed(2) : null, blind: x && x.blind !== null && x.blind !== undefined ? +x.blind.toFixed(2) : null, twins: twinsOn(faces, L.neighbors(tl)), hard } };
     }
   }
   // the whole design at once (tests, tools; the game prefers the steps in between taps)
-  const makeNow = (level, aspect, scale = 1) => drain(make(level, aspect, scale));
+  const makeNow = (level, aspect, scale = 1, salt = 0) => drain(make(level, aspect, scale, salt));
 
   /* ---------- in the game: the levels are made in advance ----------
      Designing takes seconds, so it is done once, on the computer (tools/sim/build_levels.js), for

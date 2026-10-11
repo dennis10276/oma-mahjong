@@ -4,11 +4,18 @@
 'use strict';
 
 const RULES = {
+  levels: { blockedFrom: null },              // a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
   tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
+  // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
+  // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
+  // its own twin, face-down tiles where they hurt, deals tuned against the test player), the
+  // target going from `start` to `end` at endLevel; from clockFrom the alarm clock.
+  // pile: 'classic' (tower piles were tried: fewer choices, but more luck than skill)
+  hard: { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.55, end: 0.35, endLevel: 150, strongSense: 0.88, strongStart: 0.75, strongEnd: 0.55, minTile: 54, minTileBig: 48, pile: 'classic' },
   sunflower: { level: 20 },                    // the big prize: the Zonnebloem theme after this level
   score: {
     pair: 10, maxCombo: 5,                     // a pair is worth 10 × combo (up to ×5)
@@ -24,6 +31,8 @@ const RULES = {
     popupMs: 6500, popupWithMsgMs: 11000,      // a heart during a level (ready-made messages: quickMsgs in lang.js)
   },
 };
+
+const levelBlocked = level => RULES.levels.blockedFrom != null && level >= RULES.levels.blockedFrom;
 
 /* Help: `normal` is what everyone gets; `care` holds the gentler values. Which of them a player gets
    is decided per part (PARTS below): a part that is on takes its values from `care`.
@@ -97,7 +106,7 @@ const cfgPid = pid => GRANDMA.like.includes(pid) ? GRANDMA.pids[0] : pid;
 function playerCfg(list) {
   const c = {};
   (list || []).filter(e => e && e.k === 'cfg').sort((a, b) => a.t - b.t).forEach(e => {
-    for (const [k, v] of Object.entries(e)) if (k !== 'k' && k !== 't') c[k === 'care' ? 'super' : k] = !!v;   // (care: the old name)
+    for (const [k, v] of Object.entries(e)) if (k !== 'k' && k !== 't') c[k === 'care' ? 'super' : k] = typeof v === 'number' || typeof v === 'string' ? v : !!v;   // (care: the old name; numbers: e.g. redo)
   });
   return c;
 }
