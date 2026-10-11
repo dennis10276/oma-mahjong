@@ -5,7 +5,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.27';
+const APP_VERSION = '1.32';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -45,8 +45,18 @@ const defaults = () => ({
 let S;
 try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
 const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
-// grandma (see CARE in rules.js) gets the "care" help, everyone else the "normal" help
-const careMode = () => isCarePlayer(S.pid, S.name);
+// grandma (see CARE in rules.js, or switched on the dashboard) gets the "care" help, everyone else the "normal" help
+const careMode = () => isCarePlayer(S.pid, S.name, S.cfg || {});
+// this player's settings from the family dashboard (grandma mode, news); kept on the phone for offline starts
+async function loadCfg() {
+  if (!DB_URL || !S.pid) return;
+  try {
+    const c = playerCfg(Object.values(await dbGet(`plays/${cfgKey(cfgPid(S.pid))}`) || {}));
+    if (JSON.stringify(c) === JSON.stringify(S.cfg || {})) return;
+    S.cfg = c; save();
+    if (typeof curScreen !== 'undefined' && curScreen === 'home') renderHome();
+  } catch (e) { }
+}
 const help = () => careMode() ? HELP.care : HELP.normal;
 
 // ---------- dates ----------

@@ -183,7 +183,7 @@ function askName(then) {
 function rowHTML(e, rank, withHeart = false, mode = 'week') {
   const heart = withHeart && !e.me && !e.bot ? heartBtn(e) : '';
   const sub = mode === 'week' ? tx('levelWord', e.level) : tx('points', fmtN(e.points));
-  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e)}<span class="rn">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}${e.bot ? ` <i class="bot" title="${tx('botTitle')}">🤖</i>` : e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small></span><span class="rp">${rowVal(e, mode)}${heart}</span>`;
+  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e)}<span class="rn">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}${e.bot ? ` <i class="bot" title="${tx('botTitle')}">🤖</i>` : e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small></span><span class="rp">${rowVal(e, mode)}${heart}${chatBtn(e)}</span>`;
 }
 let rankMode = 'week';
 function renderRanking() {
@@ -198,6 +198,7 @@ function renderRanking() {
     : tx('allInfo');
   $('#famBox').innerHTML = famHTML(rankMode, list, tx('family'), true);
   $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, true, rankMode)}</div>`).join('');
+  document.querySelectorAll('.vg-chat').forEach(b => b.onclick = ev => { ev.stopPropagation(); openWho(b.dataset.who); });
   document.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast(tx('heartAlreadyShort')); });
   const online = !!DB_URL;
   $('#rankNote').innerHTML = tx(online ? 'rankNoteOnline' : 'rankNoteBots');

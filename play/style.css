@@ -628,6 +628,7 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 .msg-pick .mp:active { transform: scale(.97); }
 
 /* ---------- news from Apeldoorn and the neighbourhood (village.js) ---------- */
+.toolbar.gone { display: none; }
 .paper-chip { font-size: 20px; padding: 5px 12px; position: relative; }
 .paper-chip.hidden { display: none; }
 .paper-chip.new::after { content: ''; position: absolute; top: 3px; right: 5px; width: 11px; height: 11px; border-radius: 50%; background: #ff5a5f; box-shadow: 0 0 0 2px #fff; }

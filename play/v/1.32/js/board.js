@@ -34,6 +34,7 @@ function begin(o, restart = false) {
   $('#modal').classList.add('hidden'); modalOnClose = null;
   $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear();
   show('game');
+  $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
   const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
@@ -82,6 +83,7 @@ function begin(o, restart = false) {
     updateScore(false); updateProgress();
   } catch (e) { logErr(e, 'begin'); }
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
+  if (villageOn()) setTimeout(villageTease, 1800);
   if (!S.seenTray) setTimeout(() => showIntro(), 700);
   else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
   else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
@@ -178,8 +180,12 @@ function updateBlocked() { G.tiles.forEach((t, i) => { if (G.alive[i]) t.el.clas
 function updateProgress() { const n = G.tiles.length; $('#progressBar').style.width = ((n - aliveCount() - G.tray.length) / n * 100) + '%'; }
 function updateScore(bump = true) { const el = $('#score'); el.textContent = G.score; if (bump) replay(el, 'bump'); }
 function addScore(pts) { G.score += pts; updateScore(); floatScore('+' + pts); }
-// Hint and Schudden unlock at a level (daily puzzles: once you have reached that level)
-const toolsOpen = () => !!G && (G.mode === 'level' ? G.level : S.level) >= RULES.tools.fromLevel;
+// Hint and Schudden unlock at a level (daily puzzles: once you have reached that level), and are gone
+// again from HELP.<kind>.toolsGoneFrom on (not in grandma mode): then the toolbar is not shown at all
+const toolLevel = o => o.mode === 'level' ? o.level : S.level;
+const toolsGoneFor = o => { const g = help().toolsGoneFrom; return !!g && toolLevel(o) >= g; };
+const toolsGone = () => !!G && toolsGoneFor(G);
+const toolsOpen = () => !!G && toolLevel(G) >= RULES.tools.fromLevel && !toolsGone();
 function updateTools() {
   const open = toolsOpen();
   for (const [id, used] of [['#btnHint', G.usedHint], ['#btnShuffle', G.usedShuffle]]) {

@@ -52,6 +52,7 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
   lucky moments, a gentler deal, easier after N failed tries, putting the tray back, the helper and
   its timings, no shuffle at the start, and the adaptive difficulty. To give someone else a kind of
   help, change it under `normal` (e.g. `rescue: true`).
+  `toolsGoneFrom`: from that level on there is no Hint/Schudden (normal: 50; grandma mode: never).
 - `GRANDMA`: grandma's player id (or a name starting with "Oma"); `like` = players who always get
   exactly what she gets (DennisTEST, to see what she sees).
 - `CARE`: who else gets grandma's help (Mama).

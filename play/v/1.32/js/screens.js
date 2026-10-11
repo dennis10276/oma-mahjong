@@ -33,7 +33,7 @@ function renderHome() {
   renderGoal($('#nextUnlock'));
   $('#trophyCount').textContent = `${trophyCount()}/${TROPHIES.length}`;
   $('#rankBadge').textContent = '#' + myRank(undefined, 'week');
-  renderTaskChip();
+  renderTaskChip(); renderPaperChip();
   if (S.lastWeek) setTimeout(() => { if (curScreen === 'home') checkLastWeek(); }, 400);
   else if (S.pendingHearts.length) setTimeout(() => { if (curScreen === 'home' && modalFree() && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
   if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && modalFree()) showSunflowerUnlock(() => renderHome()); }, 500);

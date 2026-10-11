@@ -626,3 +626,33 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 .msg-pick { display: grid; gap: 8px; margin: 6px 0 12px; }
 .msg-pick .mp { font: inherit; font-size: 19px; font-weight: 800; padding: 12px 10px; border-radius: 16px; border: 3px solid #ff9fc0; background: #fff3f7; color: var(--ink); cursor: pointer; }
 .msg-pick .mp:active { transform: scale(.97); }
+
+/* ---------- news from Apeldoorn and the neighbourhood (village.js) ---------- */
+.toolbar.gone { display: none; }
+.paper-chip { font-size: 20px; padding: 5px 12px; position: relative; }
+.paper-chip.hidden { display: none; }
+.paper-chip.new::after { content: ''; position: absolute; top: 3px; right: 5px; width: 11px; height: 11px; border-radius: 50%; background: #ff5a5f; box-shadow: 0 0 0 2px #fff; }
+.modal-box.vg { text-align: left; }
+.vg-head { font-weight: 900; font-size: 17px; color: #8a5a00; background: #fff1c4; border-radius: 999px; padding: 6px 14px; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.vg-who { font-size: 24px; line-height: 1; }
+.vg-photo { margin: 0 -6px 12px; border-radius: 18px; overflow: hidden; background: #efe3c6; aspect-ratio: 4 / 3; max-height: min(240px, 27vh); width: calc(100% + 12px); }
+.vg-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vg.paper .vg-photo { max-height: 180px; }
+.vg-title { font-size: 21px; line-height: 1.25; margin: 4px 0 10px; }
+.vg-title small { display: block; font-size: 15px; color: #8d8d8d; font-weight: 800; margin-top: 2px; }
+.vg-text { font-size: 20px; line-height: 1.45; margin: 0 0 12px; }
+.vg-cliff { font-size: 19px; line-height: 1.4; font-weight: 800; color: #b25d00; background: #fff6df; border-radius: 14px; padding: 10px 12px; margin: 0 0 14px; }
+.vg-end { font-size: 17px; font-weight: 800; color: #8d8d8d; text-align: center; margin: 0 0 14px; }
+.vg .big-btn { justify-content: center; text-align: center; }
+/* the button stays in view at the bottom, also when the news is long */
+.vg #vgOk, .vg #vgClose { position: sticky; bottom: 0; margin-top: 4px; box-shadow: 0 7px 0 var(--green-d), 0 10px 18px rgba(0,0,0,.3), 0 -16px 12px 8px var(--cream), 0 16px 0 14px var(--cream); }
+.vg-answers { display: grid; gap: 12px; margin-top: 6px; }
+.vg-a { background: linear-gradient(#fffdf6, #ffeec2); color: #5a3a00; text-shadow: none; box-shadow: 0 6px 0 #e3c46a, 0 8px 14px rgba(0,0,0,.15); }
+.vg-a:disabled { opacity: .55; }
+.vg-a.right { background: linear-gradient(#8ee07d, #48b33a); color: #fff; opacity: 1; box-shadow: 0 6px 0 #2f8a24; }
+.vg-a.wrong { background: linear-gradient(#ffb0a8, #e3584b); color: #fff; opacity: 1; box-shadow: 0 6px 0 #b13a2f; }
+.vg.paper .vg-item { border-top: 2px dashed #e8dcc0; padding-top: 12px; margin-top: 12px; }
+.vg.paper .vg-item:first-of-type { border-top: 0; margin-top: 0; }
+.vg.paper .vg-text { font-size: 18px; }
+.vg.paper > h2 { text-align: center; }
+.vg-chat { border: 0; background: #fff1c4; border-radius: 50%; width: 38px; height: 38px; font-size: 20px; margin-left: 6px; vertical-align: middle; animation: chipPulse 1.6s ease-in-out infinite; }

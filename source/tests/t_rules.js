@@ -31,4 +31,27 @@ module.exports = [
       t.ok(await p.evaluate(() => sunUnlocked()), 'the prize theme after level 5');
     },
   },
+  {
+    name: 'rules: Hint and Schudden are gone from level 50 (with a one-time message), but not in grandma mode',
+    async run(t, { startLevel, solve, click, modal, sleep }) {
+      const bar = p => p.evaluate(() => ({ shown: getComputedStyle(document.querySelector('.toolbar')).display !== 'none', open: toolsOpen() }));
+      const p = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 50 } });
+      await startLevel(p, 49);
+      t.eq(await bar(p), { shown: true, open: true }, 'level 49: still there');
+      await startLevel(p, 50);
+      t.eq(await bar(p), { shown: false, open: false }, 'level 50: gone');
+      const h0 = await p.evaluate(() => { const b = document.querySelector('#board').getBoundingClientRect(); return b.height; });
+      t.ok(h0 > 0, 'the pile is drawn');
+      await startLevel(p, 49);
+      t.ok(await solve(p), 'level 49 won');
+      let seen = false;
+      await click(p, '#wNext');
+      for (let k = 0; k < 10 && !seen; k++) { await sleep(500); const m = await modal(p); if (m && m.buttons.includes('tgOk')) { seen = true; await click(p, '#tgOk'); } else if (m && m.buttons.length) await click(p, '#' + m.buttons[0]); }
+      t.ok(seen, 'told once that from level 50 there are no tools');
+      t.eq(await p.evaluate(() => __mj.S.toolsGoneSeen), true, 'not again');
+      const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 60 } });
+      await startLevel(g, 60);
+      t.eq(await bar(g), { shown: true, open: true }, 'grandma mode: still there at level 60');
+    },
+  },
 ];

@@ -86,7 +86,8 @@ function shuffleTooEarly() {
 /* ---------- the helper ----------
    When nothing has moved for a while and a pair can be matched, the pair starts to glow and keeps
    glowing until it is matched. A face-down tile in such a pair is turned face up (after downS
-   seconds); a pair that can already be seen glows after upS seconds. Free, no star lost. */
+   seconds); a pair that can already be seen glows after upS seconds. Free, no star lost.
+   Both waits follow her results (nudgePace). */
 function findNudge(downOnly) {
   const fr = [];
   for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
@@ -99,16 +100,31 @@ function findNudge(downOnly) {
   for (const l of byFace.values()) if (l.length >= 2) { const h = l.find(hidden); cands.push(h !== undefined ? [h, l.find(i => i !== h)] : [l[0], l[1]]); }
   return cands.find(c => c.some(hidden)) || (downOnly ? null : cands[0]) || null;
 }
+/* How long the helper waits follows how she is doing (HELP.care.nudge.pace): winning easily, it
+   waits longer so she does more of the thinking herself; struggling (or this level already went
+   wrong once), it comes sooner. Gives the factor for downS and upS. */
+function nudgePace() {
+  const P = help().nudge && help().nudge.pace;
+  if (!P) return 1;
+  if (G && (S.fails[G.key] || 0) > 0) return P.fast;
+  const h = (S.adapt && S.adapt.hist || []).slice(-P.n);
+  if (h.length < P.min) return 1;
+  const rate = h.reduce((a, b) => a + b, 0) / h.length, mid = (P.low + P.high) / 2;
+  if (rate <= P.low) return P.fast;
+  if (rate >= P.high) return P.slow;
+  return rate < mid ? P.fast + (1 - P.fast) * (rate - P.low) / (mid - P.low) : 1 + (P.slow - 1) * (rate - mid) / (P.high - mid);
+}
+const nudgeWaits = () => { const N = help().nudge, f = nudgePace(); return { downS: Math.round(N.downS * f), upS: Math.round(N.upS * f) }; };
 function nudgeTick() {
   const N = help().nudge;
   if (!N || !G || G.done || G.busy || G.flights || !inPlay() || document.hidden || !G.tStart) return;
   if (G.nudge && G.nudge.length) return;                 // already glowing: until it is matched
-  const idle = (performance.now() - (G.lastMove || 0)) / 1000;
-  if (idle < N.downS) return;
-  const pair = findNudge(idle < N.upS);
-  if (pair) startNudge(pair);
+  const idle = (performance.now() - (G.lastMove || 0)) / 1000, w = nudgeWaits();
+  if (idle < w.downS) return;
+  const pair = findNudge(idle < w.upS);
+  if (pair) startNudge(pair, w.upS);
 }
-function startNudge(pair) {
+function startNudge(pair, wait) {
   G.nudge = pair.slice();
   let turned = 0;
   for (const i of pair) {
@@ -118,7 +134,7 @@ function startNudge(pair) {
   markTrayNudge();
   Sound.hint(); buzz(12);
   saveCur();
-  logLvl('nudge', { down: turned || undefined });
+  logLvl('nudge', { down: turned || undefined, w: wait });
 }
 function updateNudge() {
   if (!G || !G.nudge) return;

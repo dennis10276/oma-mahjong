@@ -33,6 +33,7 @@ const HELP = {
     nudge: null,                               // the helper that makes a pair glow
     shuffleAfter: null,                        // no shuffle right at the start of a level
     adapt: null,                               // difficulty that follows her own results
+    toolsGoneFrom: 50,                         // from this level on there is no 💡 Hint and 🔀 Schudden any more
   },
   care: {
     comboMs: 10000,
@@ -40,22 +41,58 @@ const HELP = {
     gentle: 1,
     easierAfterFails: 3,
     rescue: true,
-    nudge: { downS: 6, upS: 14 },              // a pair with a face-down tile after 6 s, a visible pair after 14 s
+    // the helper: a pair with a face-down tile glows after downS seconds, a visible pair after upS.
+    // pace: the waits follow her last n tries: won ≥ high -> × slow (she can do it herself),
+    // won ≤ low or already failed this level -> × fast (sooner help), in between gradually
+    nudge: { downS: 6, upS: 14, pace: { n: 8, min: 3, low: 0.4, high: 0.85, fast: 0.7, slow: 2.8 } },
     shuffleAfter: { taken: 8, tray: 2 },       // Schudden works after 8 tiles are gone or with 2 in the tray
     // her last n tries: won < low -> half a step easier, > high -> half a step back (only when a new
     // level starts, after at least `min` tries since the last change); starting over within
     // quickRestartS seconds does not count
     adapt: { n: 10, min: 5, low: 0.6, high: 0.85, minStep: -2, maxStep: 2, quickRestartS: 30 },
+    toolsGoneFrom: null,                       // grandma mode keeps Hint and Schudden at every level
   },
 };
 const ADAPT_STEPS = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', 0: 'zacht (haar standaard)', 1: 'iets makkelijker', 2: 'makkelijker' };
 
-/* Who gets the "care" help: grandma and Mama (by player id), or a name starting with "Oma" (in case
-   grandma ever reinstalls the app). */
-const CARE = { pids: ['pmuy4wmdp17hbws', 'pmv13884fc9vndv'], name: /^oma/i };
+/* Grandma: her player id, or a name starting with "Oma" (in case she ever reinstalls the app).
+   `like` = players who always get exactly what grandma gets (DennisTEST: to see what she sees). */
+const GRANDMA = { pids: ['pmuy4wmdp17hbws'], like: ['pmuxw2uqkzcnbgx'], name: /^oma/i };
+// news from Apeldoorn: on for grandma by default, switchable per player on the dashboard
+const getsNews = (pid, name, cfg = {}) => VILLAGE.enabled && ('news' in cfg ? cfg.news : isGrandma(pid, name));
+const isGrandma = (pid, name) => GRANDMA.pids.includes(pid) || GRANDMA.like.includes(pid) || GRANDMA.name.test(name || '');
+// who gets the "care" help by default: grandma (and DennisTEST), and Mama
+const CARE = { pids: ['pmv13884fc9vndv'] };
 // players who start in English until they pick a language in the settings (Mama)
 const START_ENGLISH = ['pmv13884fc9vndv'];
-const isCarePlayer = (pid, name) => CARE.pids.includes(pid) || CARE.name.test(name || '');
+
+/* Settings per player, switched on the family dashboard (⚙️ per player): grandma mode (the care help)
+   and the news from Apeldoorn. They are small events in plays/cfg-<pid>; the newest one per setting
+   counts. A setting that was never switched follows the defaults above (GRANDMA, CARE). Players in
+   GRANDMA.like follow grandma's settings. */
+const cfgKey = pid => pid.startsWith('test-') ? 'test-cfg-' + pid.slice(5) : 'cfg-' + pid;
+const isCfgKey = id => id.startsWith('cfg-') || id.startsWith('test-cfg-');
+const cfgPid = pid => GRANDMA.like.includes(pid) ? GRANDMA.pids[0] : pid;
+function playerCfg(list) {
+  const c = {};
+  (list || []).filter(e => e && e.k === 'cfg').sort((a, b) => a.t - b.t).forEach(e => { if ('care' in e) c.care = !!e.care; if ('news' in e) c.news = !!e.news; });
+  return c;
+}
+const isCarePlayer = (pid, name, cfg = {}) => 'care' in cfg ? cfg.care : isGrandma(pid, name) || CARE.pids.includes(pid);
+
+/* News from Apeldoorn after a won level (js/village.js), only for grandma (and DennisTEST).
+   Mostly real local news (collected every two hours by tools/news.py), sometimes a made-up story
+   about the computer players in the ranking (js/stories.js), told one part per won level. */
+const VILLAGE = {
+  enabled: true,                               // false: the news is gone for everyone (see README: removing the news)
+  newsUrl: 'https://raw.githubusercontent.com/dennis10276/oma-mahjong/news/news.json',
+  storyShare: 0.2,                             // 1 in 5 items is a story part, the rest real news
+  newsDays: 7,                                 // real news older than this is not shown any more (events that are over: never)
+  staleDays: 2,                                // no fresh news file for this long: stories may fill in
+  active: 2,                                   // stories running at the same time
+  askStar: 1,                                  // a memory question answered right: a bonus star
+  refreshMin: 30,                              // fetch the news again after this many minutes
+};
 
 // ---------- the database (Firebase Realtime Database; empty = only the computer players) ----------
 const DB_URL = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
