@@ -35,6 +35,11 @@ module.exports = [
           await p.evaluate(m => { const G = __mj.G; if (!G.alive[m]) return; __mj.onTap(m); if (G.alive[m]) __mj.onTap(m); }, m);
           await sleep(60);
         }
+        if (expect) {
+          await p.waitForFunction(() => __mj.G.autoFin, null, { timeout: 5000 }).catch(() => { });
+          await sleep(500);
+          t.ok(await p.evaluate(() => { const b = document.querySelector('#autoBanner'); return !!b && b.classList.contains('on') && b.innerText.includes('misgaan'); }), 'the big message over the pile');
+        }
         await sleep(6000);
         const st = await p.evaluate(() => ({ done: !!__mj.G.done, auto: !!__mj.G.autoFin }));
         if (expect) {

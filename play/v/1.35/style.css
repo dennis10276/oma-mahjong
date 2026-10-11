@@ -628,6 +628,16 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 .msg-pick .mp:active { transform: scale(.97); }
 
 /* ---------- news from Apeldoorn and the neighbourhood (village.js) ---------- */
+.toolbar.gone { display: none; }
+/* auto-finish: a big message over the pile, which plays itself now */
+#autoBanner { position: absolute; left: 50%; top: 50%; z-index: 3000000; width: min(86%, 380px); transform: translate(-50%, -50%) scale(.85); opacity: 0; pointer-events: none;
+  display: grid; justify-items: center; gap: 4px; text-align: center; padding: 18px 16px; border-radius: 24px; color: #fff;
+  background: rgba(16, 70, 52, .86); box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 0 3px rgba(255,215,90,.75); transition: opacity .35s, transform .35s cubic-bezier(.3,1.5,.6,1); }
+#autoBanner.on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+#autoBanner .ab-ico { font-size: 44px; line-height: 1; }
+#autoBanner b { font-size: clamp(22px, 6.4vw, 30px); line-height: 1.15; text-wrap: balance; }
+#autoBanner span:last-child { font-size: clamp(18px, 5vw, 23px); font-weight: 800; color: #ffe27a; }
+@media (prefers-reduced-motion: reduce) { #autoBanner { transition: opacity .2s; transform: translate(-50%, -50%); } }
 .paper-chip { font-size: 20px; padding: 5px 12px; position: relative; }
 .paper-chip.hidden { display: none; }
 .paper-chip.new::after { content: ''; position: absolute; top: 3px; right: 5px; width: 11px; height: 11px; border-radius: 50%; background: #ff5a5f; box-shadow: 0 0 0 2px #fff; }
@@ -642,7 +652,6 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 .vg-text { font-size: 20px; line-height: 1.45; margin: 0 0 12px; }
 .vg-cliff { font-size: 19px; line-height: 1.4; font-weight: 800; color: #b25d00; background: #fff6df; border-radius: 14px; padding: 10px 12px; margin: 0 0 14px; }
 .vg-end { font-size: 17px; font-weight: 800; color: #8d8d8d; text-align: center; margin: 0 0 14px; }
-.vg-src { font-size: 15px; color: #8d8d8d; font-weight: 700; margin: 0 0 14px; }
 .vg .big-btn { justify-content: center; text-align: center; }
 /* the button stays in view at the bottom, also when the news is long */
 .vg #vgOk, .vg #vgClose { position: sticky; bottom: 0; margin-top: 4px; box-shadow: 0 7px 0 var(--green-d), 0 10px 18px rgba(0,0,0,.3), 0 -16px 12px 8px var(--cream), 0 16px 0 14px var(--cream); }

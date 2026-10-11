@@ -5,6 +5,9 @@
 
 const RULES = {
   tools: { fromLevel: 15 },                    // 💡 Hint and 🔀 Schudden: one of each per level from here
+  // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
+  // (checked exactly, for at most maxTiles tiles left and within a search budget)
+  autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   sunflower: { level: 20 },                    // the big prize: the Zonnebloem theme after this level
   score: {
     pair: 10, maxCombo: 5,                     // a pair is worth 10 × combo (up to ×5)
@@ -33,6 +36,8 @@ const HELP = {
     nudge: null,                               // the helper that makes a pair glow
     shuffleAfter: null,                        // no shuffle right at the start of a level
     adapt: null,                               // difficulty that follows her own results
+    toolsGoneFrom: 50,                         // from this level on there is no 💡 Hint and 🔀 Schudden any more
+    jokersGoneFrom: 50,                        // ... and no 🃏 jokers in the deal
   },
   care: {
     comboMs: 10000,
@@ -49,6 +54,8 @@ const HELP = {
     // level starts, after at least `min` tries since the last change); starting over within
     // quickRestartS seconds does not count
     adapt: { n: 10, min: 5, low: 0.6, high: 0.85, minStep: -2, maxStep: 2, quickRestartS: 30 },
+    toolsGoneFrom: null,                       // grandma mode keeps Hint and Schudden at every level
+    jokersGoneFrom: null,                      // ... and the jokers
   },
 };
 const ADAPT_STEPS = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', 0: 'zacht (haar standaard)', 1: 'iets makkelijker', 2: 'makkelijker' };

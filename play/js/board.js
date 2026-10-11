@@ -32,7 +32,7 @@ function startDaily(k) {
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
 function begin(o, restart = false) {
   $('#modal').classList.add('hidden'); modalOnClose = null;
-  $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear();
+  $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
   show('game');
   $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
@@ -466,10 +466,16 @@ function autoFinishOK() {
   if (G.tiles.some((t, i) => G.alive[i] && (t.face === JOKER || obKind(i))) || G.tray.some(t => faceOf(t) === JOKER)) return false;
   return finishSafe({ faces: G.tiles.map(t => t.face), nb: G.nb, alive: G.alive, down: G.down, tray: G.tray.map(faceOf) }) === true;
 }
+function autoBanner(on) {
+  let el = $('#autoBanner');
+  if (!el) { el = document.createElement('div'); el.id = 'autoBanner'; $('#boardWrap').appendChild(el); }
+  if (on) el.innerHTML = `<span class="ab-ico">🪄</span><b>${tx('autoFinish')}</b><span>${tx('autoFinish2')}</span>`;
+  el.classList.toggle('on', on);
+}
 function maybeAutoFinish() {
   if (!autoFinishOK()) return;
   G.autoFin = true; clearNudge(); clearHint();
-  praise(tx('autoFinish'));
+  autoBanner(true);      // big over the pile (nobody needs to see it any more); combo texts stay in the top bar
   logLvl('auto');
   const step = () => {
     if (!G || G.done || !G.autoFin) return;

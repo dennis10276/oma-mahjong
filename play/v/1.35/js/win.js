@@ -2,11 +2,16 @@
 'use strict';
 
 // ---------- winning ----------
+/* 3 stars, one less for each help used: hint, shuffle, putting the tray back.
+   (Planned: hints, shuffles and jokers bought in a shop; each bought joker used on a pair will cost a
+   star too, a joker that finishes the level will not. Count them here, e.g. G.boughtJokersUsed.) */
+const starsFor = G => Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].filter(Boolean).length - (G.boughtJokersUsed || 0));
+
 function win() {
   syncClock(); G.tStart = 0;
+  if (G.autoFin) autoBanner(false);
   clearCur();
-  // 3 stars, one less for each help used (hint, shuffle, putting the tray back)
-  const stars = Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].filter(Boolean).length);
+  const stars = starsFor(G);
   G.score += stars * RULES.score.perStar;
   endLevel('win', { st: stars });
   const before = totalStars();
@@ -18,7 +23,7 @@ function win() {
   // daily tasks + statistics
   if (G.mode === 'level') taskProgress('levels'); else taskProgress('daily');
   if (stars === 3) taskProgress('stars3');
-  if (!G.usedHint && !G.usedShuffle && !G.rescued && toolsOpen()) taskProgress('nohelp');
+  if (!G.usedHint && !G.usedShuffle && !G.rescued && (toolsOpen() || toolsGone())) taskProgress('nohelp');
   delete S.fails[G.key];   // won: the next level starts without easier retries
   // levels won in a row (a failed try breaks the streak): a bonus star now and then
   let streakBonus = false;
@@ -59,6 +64,7 @@ function win() {
   const chase = nextUp && wkRankAfter >= wkRankBefore ? `<p class="chase">${tx('chase', wkRankAfter, fmtN(nextUp.points - wkAfter + 1), nextUp.avatar + ' ' + esc(nextUp.name))}</p>` : '';
   if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
   if (S.level >= RULES.tools.fromLevel && !S.toolsSeen) rewards.push({ type: 'tools' });
+  if (help().toolsGoneFrom && S.level >= help().toolsGoneFrom && !S.toolsGoneSeen) rewards.push({ type: 'toolsGone' });
   const tr = newTrophies();
   if (tr.length) rewards.push({ type: 'trophies', list: tr });
   if (unlocked.length) rewards.push({ type: 'bgs', list: unlocked });
@@ -118,6 +124,7 @@ function runRewards(queue, then) {
   else if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next, r.mode)); else showClimb(r.from, r.to, next, r.mode); }
   else if (r.type === 'sun') showSunflowerUnlock(next);
   else if (r.type === 'tools') showToolsUnlock(next);
+  else if (r.type === 'toolsGone') showToolsGone(next);
   else if (r.type === 'trophies') showTrophies(r.list, next);
   else if (r.type === 'village') showVillage(next);
   else showUnlock(r.list.slice(), next);
@@ -131,6 +138,16 @@ function showToolsUnlock(then) {
     <p class="note">${tx('toolsNote')}</p>
     <button class="big-btn play" id="tlOk"><span class="bb-text"><b>${tx('top')}</b></span></button>`, false);
   $('#tlOk').onclick = () => { closeModal(); then(); };
+}
+// from level 50: no more Hint and Schudden, told once as a compliment
+function showToolsGone(then) {
+  S.toolsGoneSeen = true; save();
+  Sound.unlock(); FX.confetti(); buzz([20, 40, 20, 40, 40]);
+  openModal(`<h2>${tx('toolsGoneTitle')}</h2>
+    <div class="tools-new"><span>🏆</span></div>
+    <p>${tx('toolsGoneText', help().toolsGoneFrom)}</p>
+    <button class="big-btn play" id="tgOk"><span class="bb-text"><b>${tx('toolsGoneOk')}</b></span></button>`, false);
+  $('#tgOk').onclick = () => { closeModal(); then(); };
 }
 function showSunflowerUnlock(then) {
   S.sunSeen = true; save();

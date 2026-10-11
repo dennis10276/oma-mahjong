@@ -9,6 +9,7 @@ const starsFor = G => Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].fil
 
 function win() {
   syncClock(); G.tStart = 0;
+  if (G.autoFin) autoBanner(false);
   clearCur();
   const stars = starsFor(G);
   G.score += stars * RULES.score.perStar;
