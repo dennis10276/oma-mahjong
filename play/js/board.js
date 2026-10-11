@@ -25,21 +25,13 @@ function resumeClock() { if (G && !G.done && curScreen === 'game') G.tStart = pe
 const tileScale = () => S.bigTiles ? 0.7 : 1;
 // the part "own, easier levels" (grandma mode) plays its own, gentler levels (Layouts track 'care')
 const levelTrack = () => part('levels') ? 'care' : '';
-// from RULES.hard.measureFrom the test player designs the levels (hard.js); an easier try (help
-// after losing) gets the usual level, made easier
+// from RULES.hard.measureFrom the levels come ready-made (designed with the test player, hard.js and
+// levels-hard.js); an easier try (help after losing) gets the usual level, made easier
 function startLevel(level) {
-  const tr = levelTrack(), hard = Hard.applies(level, tr) && !levelBlocked(level);   // (a closed level: begin() says so)
-  if (hard && !startLevel.building) {
-    const a = S.asp && S.asp[toolsGoneFor({ mode: 'level', level }) ? 'g' : 't'];
-    if (!a || !Hard.cached(level, a, tileScale())) {
-      // not made yet: say so first (making it takes a moment), then start
-      startLevel.building = true; buildMsg(true);
-      setTimeout(() => { try { startLevel(level); } finally { startLevel.building = false; buildMsg(false); } }, 80);
-      return;
-    }
-  }
+  const tr = levelTrack(), hard = Hard.applies(level, tr);
   begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level),
-    makeSpec: a => hard ? Hard.spec(level, a, tileScale()) : Layouts.forLevel(level, a, tileScale(), tr), makeEasy: a => Layouts.forLevel(level, a, tileScale(), tr) });
+    // (designed levels: the same for everyone, on any screen)
+    makeSpec: a => hard ? Hard.spec(level) : Layouts.forLevel(level, a, tileScale(), tr), makeEasy: a => Layouts.forLevel(level, a, tileScale(), tr) });
 }
 function startDaily(k) {
   const d = parseKey(k);
@@ -116,9 +108,6 @@ function begin(o, restart = false) {
     updateScore(false); updateProgress();
   } catch (e) { logErr(e, 'begin'); }
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
-  // remember the screen shape (with and without the tool buttons) and make the next designed level
-  S.asp = S.asp || {}; S.asp[toolsGoneFor(o) ? 'g' : 't'] = o.aspect;
-  if (o.mode === 'level') setTimeout(() => prefetchLevel(o.level + 1), 2500);
   if (villageOn()) setTimeout(villageTease, 1800);
   if (!S.seenTray) setTimeout(() => showIntro(), 700);
   else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
@@ -680,15 +669,4 @@ function checkClock() {
     $('#sRetry').onclick = () => { closeModal(); restart(); };
     $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);
-}
-// make the next designed level in quiet moments, for the screen shape it will have
-function prefetchLevel(level) {
-  if (!S.asp || !Hard.applies(level, levelTrack())) return;
-  const a = S.asp[toolsGoneFor({ mode: 'level', level }) ? 'g' : 't'];
-  if (a) Hard.prefetch(level, a, tileScale());
-}
-function buildMsg(on) {
-  let el = $('#buildMsg');
-  if (on && !el) { el = document.createElement('div'); el.id = 'buildMsg'; el.innerHTML = `<span>🧩</span><b>${tx('building')}</b>`; document.body.appendChild(el); }
-  if (!on && el) el.remove();
 }

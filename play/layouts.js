@@ -358,7 +358,7 @@ const Layouts = (() => {
      freeze tiles whose neighbours are taken earlier in that solution, and only lock tiles that are
      taken after the key pair. */
   function obstacles(tiles, faces, opt) {
-    const { level, seed, avoid = new Set(), ez = 0 } = opt;
+    const { level, seed, avoid = new Set(), ez = 0, extra = 0 } = opt;   // extra: more ice and locks (the harder levels)
     const wantIce = level >= MECH.ice, wantLock = level >= MECH.lock;
     const fewer = ez >= 2.5 ? 2 : ez >= 1.5 ? 1 : 0;     // an easier deal: less ice and fewer locks
     if (!wantIce) return null;
@@ -373,7 +373,7 @@ const Layouts = (() => {
     const visibleFirst = list => { const top = list.filter(i => !nb.above[i].length); return [...shuffleArr(r, top), ...shuffleArr(r, list.filter(i => nb.above[i].length))]; };
     const res = { ice: {}, locks: [], keys: [] };
     const used = new Set();
-    if (wantLock && (level <= MECH.lock + 2 || r() < 0.65)) {
+    if (wantLock && (level <= MECH.lock + 2 || r() < 0.65 || extra > 0)) {
       // the pairs as they are made in the solution, with the moment they are complete
       const tray = [], pairs = [];
       P.forEach((m, k) => { const q = tray.findIndex(t => faces[t] === faces[m]); if (q >= 0) { pairs.push([tray[q], m, k]); tray.splice(q, 1); } else tray.push(m); });
@@ -383,13 +383,13 @@ const Layouts = (() => {
       if (pool.length) {
         const [a, b, k] = pool[Math.floor(r() * pool.length)];
         const cand = visibleFirst(P.filter(i => pos[i] > k + 6 && ok(i) && i !== a && i !== b));
-        const nLock = Math.max(1, (level < 50 ? 2 : 3) - fewer);
+        const nLock = Math.max(1, (level < 50 ? 2 : 3) - fewer) + Math.floor(extra / 2);
         if (cand.length >= nLock) { res.keys = [a, b]; res.locks = cand.slice(0, nLock); [a, b, ...res.locks].forEach(i => used.add(i)); }
       }
     }
-    if (level <= MECH.ice + 2 || r() < 0.75) {
+    if (level <= MECH.ice + 2 || r() < 0.75 || extra > 0) {
       const inb = iceNeighbors(tiles);
-      const nIce = Math.max(1, (level < 40 ? 2 : level < 50 ? 3 : 4) - fewer);
+      const nIce = Math.max(1, (level < 40 ? 2 : level < 50 ? 3 : 4) - fewer) + extra;
       const cand = visibleFirst(P.filter(i => ok(i) && !used.has(i) && pos[i] > 3));
       for (const i of cand) {
         if (Object.keys(res.ice).length >= nIce) break;

@@ -147,10 +147,14 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   other) were tried too: fewer choices, but more luck than skill, so they are off.
 - **The alarm clock (from `clockFrom`, 80)**: one tile shows ⏰ with the moves left; every tile taken
   is a move; at 0 with the clock tile still there, the level is over (logged as `end` with `ck: 1`).
-- Designs are the same on every phone for the same screen shape; the next level is made in quiet
-  moments while playing (`requestIdleCallback`) and kept (`omamj.hard`); if it is not ready, a
-  short "level wordt gebouwd" message shows. The start of a level logs `pr`, the test player's
-  chance, so real results can be compared later (`tools/sim/survey.js` for the numbers).
+- **Made in advance, the same for everyone**: designing takes seconds, so the levels are designed once
+  on the computer (`node tools/sim/build_levels.js 70 269 2`, a few minutes) for one screen shape
+  (`Hard.ASPECT`; the pile is fitted to every screen) and ship in `www/levels-hard.js`. They start at
+  once. Past the last one, the levels from `cycleFrom` (120) come round again, mirrored and with other
+  pictures. After changing hard.js or `RULES.hard`: run the build again (and `GENV` + 1).
+  The start of a level logs `pr`, the test player's chance, so real results can be compared later.
+  `node tools/sim/measure.js` measures the shipped levels with the three test players (other games
+  than the designer used) and prints the curve per band (`tools/sim/measure.json`).
 - An easier try (help after losing) plays the usual level made easier; grandma's levels are her own.
 
 ## Special tiles and mechanics (everyone)

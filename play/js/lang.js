@@ -163,7 +163,6 @@ const TEXT = {
   nt_ice: ['Bevroren stenen', 'Frozen tiles'],
   nt_ice_text: ['Sommige stenen zitten vast in het <b>ijs</b>. Haal een steen weg die ernaast, erop of eronder ligt: dan smelt het ijs. Bij dik ijs ❄️❄️ moet dat twee keer.',
     'Some tiles are stuck in the <b>ice</b>. Remove a tile next to it, on top of it or underneath it, and the ice melts. Thick ice ❄️❄️ needs that twice.'],
-  building: ['Nieuw level wordt gebouwd…', 'Building a new level…'],
   nt_clock: ['De wekker', 'The alarm clock'],
   nt_clock_text: ['Op één steen staat een <b>⏰ wekker</b> met een getal: zoveel zetten heb je nog. Elke steen die je wegspeelt is een zet. Haal de wekkersteen weg <b>voordat het getal op 0 staat</b>, anders is het level voorbij.', 'One tile carries an <b>⏰ alarm clock</b> with a number: the moves you have left. Every tile you take is a move. Take the clock tile away <b>before the number reaches 0</b>, or the level is over.'],
   clockSaved: ['⏰ Op tijd!', '⏰ Just in time!'],

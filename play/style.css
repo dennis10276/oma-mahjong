@@ -567,8 +567,6 @@ body.nonum .cn { display: none; }
 #clockBadge b { color: #b23c00; font-weight: 900; font-variant-numeric: tabular-nums; min-width: 1.2em; text-align: center; }
 #clockBadge.urgent { background: #ff4d3d; border-color: #b51d10; animation: ckPulse .8s ease-in-out infinite; }
 #clockBadge.urgent b { color: #fff; }
-#buildMsg { position: fixed; inset: auto 16px 40% 16px; z-index: 5000; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 16px; border-radius: 22px; background: rgba(255,253,245,.97); color: var(--ink); box-shadow: 0 10px 30px rgba(0,0,0,.35); font-size: 20px; text-align: center; }
-#buildMsg span { font-size: 44px; animation: ckPulse 1s ease-in-out infinite; }
 @keyframes ckPulse { 50% { transform: scale(1.18); } }
 .ob-crack { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3; background: radial-gradient(circle, rgba(255,255,255,.95) 0%, rgba(180,225,255,.7) 40%, transparent 70%); animation: crack .55s ease-out forwards; }
 @keyframes crack { from { opacity: 1; transform: scale(.6); } to { opacity: 0; transform: scale(1.5); } }

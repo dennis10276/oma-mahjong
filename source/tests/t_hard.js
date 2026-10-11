@@ -88,16 +88,23 @@ module.exports = [
     },
   },
   {
-    name: 'hard: the next level is built in quiet moments while playing; grandma keeps her own levels',
+    name: 'hard: the designed levels come ready-made: the same on every phone, started at once (also past the last one); grandma keeps her own levels',
     async run(t, { startLevel, sleep }) {
+      const look = async (size, lv) => {
+        const p = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 300, stars: STARS, seenSp: SEEN }, size });
+        const t0 = Date.now(); await p.evaluate(lv => { localStorage.removeItem('omamj.cur'); __mj.startLevel(lv); }, lv); const ms = Date.now() - t0;
+        const r = await p.evaluate(() => ({ made: !!__mj.G.o.spec.made, faces: __mj.G.tiles.map(t => t.face).join(), tiles: __mj.G.tiles.map(t => t.x + ',' + t.y + ',' + t.z).join(' '), clock: __mj.G.clock }));
+        return { p, ms, ...r };
+      };
+      for (const lv of [76, 150, 280]) {
+        const a = await look([390, 820], lv), b = await look([360, 640], lv);
+        t.ok(a.made && b.made, `level ${lv}: designed`);
+        t.ok(a.faces === b.faces && a.tiles === b.tiles && JSON.stringify(a.clock) === JSON.stringify(b.clock), `level ${lv}: the same level on a big and a small phone`);
+        t.ok(a.ms < 400 && b.ms < 400, `level ${lv}: starts at once`, [a.ms, b.ms]);
+        await a.p.ctx.close(); await b.p.ctx.close();
+      }
       const p = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 90, stars: STARS, seenSp: SEEN } });
-      await startLevel(p, 76);
-      t.ok(await p.evaluate(() => !!__mj.G.o.spec.made && !__mj.G.clock), 'level 76: designed, no clock yet');
-      let ready = false;
-      for (let k = 0; k < 120 && !ready; k++) { await sleep(500); ready = await p.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('omamj.hard') || '{}')).some(k => k.split(':')[1] === '77')); }
-      t.ok(ready, 'level 77 was made in the background');
-      const t0 = Date.now(); await p.evaluate(() => __mj.startLevel(77)); await sleep(100);
-      t.ok(await p.evaluate(() => __mj.G.key === 'L77' && !document.querySelector('#buildMsg')), 'and starts right away');
+      await startLevel(p, 77);
       // a half-played designed level comes back the same
       await p.evaluate(() => { const G = __mj.G; const i = G.tiles.findIndex((t, i) => G.alive[i] && !G.down[i] && canTake(i)); __mj.onTap(i); saveCur(); });
       const before = await p.evaluate(() => ({ faces: __mj.G.tiles.map(t => t.face).join(), mv: __mj.G.mv }));

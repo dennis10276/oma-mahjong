@@ -4,10 +4,18 @@
 'use strict';
 
 const RULES = {
-  tools: { fromLevel: 15 },                    // 💡 Hint and 🔀 Schudden: one of each per level from here
+  levels: { blockedFrom: null },              // a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
+  tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
+    earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
+  // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
+  // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
+  // its own twin, face-down tiles where they hurt, deals tuned against the test player), the
+  // target going from `start` to `end` at endLevel; from clockFrom the alarm clock.
+  // pile: 'classic' (tower piles were tried: fewer choices, but more luck than skill)
+  hard: { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.5, end: 0.3, endLevel: 150, pile: 'classic' },
   sunflower: { level: 20 },                    // the big prize: the Zonnebloem theme after this level
   score: {
     pair: 10, maxCombo: 5,                     // a pair is worth 10 × combo (up to ×5)
@@ -24,6 +32,8 @@ const RULES = {
   },
 };
 
+const levelBlocked = level => RULES.levels.blockedFrom != null && level >= RULES.levels.blockedFrom;
+
 /* Help: `normal` is what everyone gets; `care` holds the gentler values. Which of them a player gets
    is decided per part (PARTS below): a part that is on takes its values from `care`.
    Change a value here to change it for everyone, e.g. normal.rescue = true. */
@@ -37,7 +47,7 @@ const HELP = {
     nudge: null,                               // the helper that makes a pair glow
     shuffleAfter: null,                        // no shuffle right at the start of a level
     adapt: null,                               // difficulty that follows her own results
-    toolsGoneFrom: 50,                         // from this level on there is no 💡 Hint and 🔀 Schudden any more
+    toolsGoneFrom: 50,                         // from this level on 💡 Hint and 🔀 Schudden only when earned: every level so far on 3 stars
     jokersGoneFrom: 50,                        // ... and no 🃏 jokers in the deal
   },
   care: {

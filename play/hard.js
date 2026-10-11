@@ -174,7 +174,7 @@ const Hard = (() => {
      before (board.js), and keeps the result. The same level and screen shape always give the same
      result, on every phone (fixed numbers of steps, no clocks). */
   const GENV = 1;      // change when make() changes: saved designs are then made again
-  const DEF = { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.5, end: 0.4, endLevel: 120, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 6, steps: 18 };
+  const DEF = { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.5, end: 0.3, endLevel: 150, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible test player should win
   function target(level) {
@@ -226,23 +226,31 @@ const Hard = (() => {
     const c = cfg(), hard = level >= c.from, T = target(level);
     const seed = level * 7919 + 13, r = L.rng(seed + 4242);
     const eff = L.effLevel(level), diff = L.difficultyFor(eff);
-    let tiles;
+    let tiles, piles;
     if (hard && c.pile !== 'classic') {
       const o = c.pile === 'semi' ? { baseFrac: 0.27 + r() * 0.04, keep: [0.68, 0.85], stack: 0.25 + r() * 0.2, noBrick: true, shapes: TOWER }
         : { baseFrac: 0.19 + r() * 0.06, keep: [0.85, 0.96], stack: 0.85 + r() * 0.15, noBrick: r() < 0.7, shapes: TOWER };
       tiles = L.buildPiles(seed, size(level, scale), c.pile === 'semi' ? 5 : r() < 0.5 ? 5 : 6, aspect, level, o).tiles;
     } else if (hard) {
-      // fewer choices: of a few piles for this level, the one with the fewest free tiles at the
-      // start (and enough layers): fewer ways through, while everything stays in sight
-      let bestP = null;
-      for (let k = 0; k < 8; k++) {
-        const t = L.buildPiles(seed + k * 1009, size(level, scale), L.layersFor(eff), aspect, level).tiles;
+      // the pile: of a few for this level (no extra-big party piles: big piles have more ways
+      // through), the one the test player finds hardest with a quick deal; fewer free tiles at the
+      // start count as a plus (fewer choices)
+      piles = [];
+      for (let k = 0; k < c.piles; k++) {
+        const t = L.buildPiles(seed + k * 1009, Math.min(c.maxTiles, size(level, scale)), L.layersFor(eff), aspect, level).tiles;
         const nb0 = L.neighbors(t), al = new Uint8Array(t.length).fill(1);
         let fr = 0; for (let i = 0; i < t.length; i++) if (L.isFree(i, al, nb0)) fr++;
-        const sc = fr / t.length + 0.08 * Math.max(0, 4 - (Math.max(...t.map(q => q.z)) + 1));
-        if (!bestP || sc < bestP.sc) bestP = { t, sc };
+        piles.push({ t, nb0, fr: fr / t.length });
       }
-      tiles = bestP.t;
+      let bp = null;
+      for (const pl of piles) {
+        const rr = L.rng(seed + 5151), n0 = pl.t.length;
+        const d = hdeal(pl.t, pl.nb0, L.pairFacesFor(n0 / 2, L.kindsFor(n0 / 2, eff, diff), rr), rr, { cap: 3, open: 1, twin: 0.5 });
+        if (!d) continue;
+        const q = (yield* rateG({ tiles: pl.t, nb: pl.nb0, faces: d.faces, down: null, rules: null, cover: coverOf(pl.t, pl.nb0) }, 16, seed, persona('sensible'))).rate + pl.fr * 0.5;
+        if (!bp || q < bp.q) bp = { t: pl.t, q };
+      }
+      tiles = (bp || { t: piles[0].t }).t;
     } else tiles = L.forLevel(level, aspect, scale, '').tiles;
     const n = tiles.length, nb = L.neighbors(tiles), cover = coverOf(tiles, nb);
     const all = new Uint8Array(n).fill(1);
@@ -266,7 +274,7 @@ const Hard = (() => {
     function extras(faces, down, path) {
       const rg = L.rng(seed + 555), anyF = faces.filter(f => f < 100), gf = anyF[Math.floor(rg() * anyF.length)];
       const gold = faces.map((x, i) => x === gf ? i : -1).filter(i => i >= 0).slice(0, 2);
-      const ob = level >= L.MECH.ice ? L.obstacles(tiles, faces, { level, seed, avoid: new Set([...down, ...gold]), ez: 0, path }) : null;
+      const ob = level >= L.MECH.ice ? L.obstacles(tiles, faces, { level, seed, avoid: new Set([...down, ...gold]), ez: 0, path, extra: hard ? Math.min(c.extraMax, Math.floor((level - c.from) / c.extraEvery)) : 0 }) : null;   // more ice and locks as the levels go up
       const rules = ob && (Object.keys(ob.ice || {}).length || (ob.keys || []).length) ? { iceNb: L.iceNeighbors(tiles), ice: ob.ice || {}, locks: (ob.keys || []).length ? new Set(ob.locks) : null, keys: ob.keys || [] } : null;
       return { gold, ob, rules };
     }
@@ -282,23 +290,23 @@ const Hard = (() => {
     //    pictures) until the sensible test player wins about the target share
     const cands = [];
     let open = hard ? 0.95 : diff.open, kinds = L.kindsFor(n / 2, eff, diff);
-    const twin = hard ? c.twin : 0;
+    const twin = hard ? Math.min(0.9, c.twin + (level - c.from) * 0.005) : 0;   // more twins on twins as the levels go up
     const make1 = (faces, path) => { const must = hard ? fullMoments(faces, path) : new Set(); const down = placeDown(faces, must); return { faces, path, down, dn: asDown(down), must, ...extras(faces, down, path) }; };
-    for (let round = 0; round < c.rounds; round++) {
+    for (let round = 0; round < (hard ? c.rounds : 6); round++) {
       let rb = null;
-      for (let k = 0; k < 4; k++) {
+      for (let k = 0; k < (hard ? c.deals : 4); k++) {
         const rr = L.rng(seed + k * 31337 + round * 7777);
         const d = hdeal(tiles, nb, L.pairFacesFor(n / 2, kinds, rr), rr, { cap: 3, open, twin });
         if (!d) continue;
         const s = make1(d.faces, d.order);
-        const j = yield* judge(s, null, 12); s.q = j.rate; s.risky = j.risky;
+        const j = yield* judge(s, null, hard ? c.screen : 12); s.q = j.rate; s.risky = j.risky;
         if (hard && s.risky !== null && s.risky > c.risky) continue;   // careful with tray pressure
         cands.push(s);
         if (!rb || off(s) < off(rb)) rb = s;
       }
       if (!rb) continue;
-      if (rb.q < T) { open = Math.max(0, open - 0.25); kinds = Math.max(4, Math.round(kinds * 0.88)); }
-      else if (rb.q > T + 0.1) { open = Math.min(1, open + 0.2); kinds = Math.min(36, n / 2, Math.round(kinds * 1.12) + 1); }
+      if (rb.q < aim - 0.05) { open = Math.max(0, open - 0.25); kinds = Math.max(4, Math.round(kinds * 0.88)); }
+      else if (rb.q > aim + 0.05) { open = Math.min(1, open + 0.2); kinds = Math.min(36, n / 2, Math.round(kinds * 1.12) + 1); }
     }
     if (!cands.length) {     // (practically never) the usual level
       const sp = L.forLevel(level, aspect, scale, ''), d = L.makeDeal(sp);
@@ -308,7 +316,7 @@ const Hard = (() => {
     //    as often as the sensible one (otherwise the level is luck, or fools the test player)
     cands.sort((a, b) => off(a) - off(b));
     let best = null;
-    for (const s of cands.slice(0, 4)) {
+    for (const s of cands.slice(0, hard ? 6 : 4)) {
       s.q = (yield* judge(s, null, 48, 'sensible', false, 1)).rate;
       s.strong = hard ? (yield* judge(s, null, 30, 'strong', false, 1)).rate : 1;
       if (hard && s.strong < s.q - 0.05) continue;
@@ -342,15 +350,17 @@ const Hard = (() => {
       const bad = new Set([...best.down, ...best.gold, ...Object.keys(ob.ice || {}).map(Number), ...(ob.locks || []), ...(ob.keys || [])]);
       const pool = L.shuffleArr(L.rng(seed + 99), tiles.map((t, i) => i).filter(i => !free0[i] && !cover[i].length && !bad.has(i)));
       let bc = null;
-      for (const ci of pool.slice(0, 2)) {
+      for (const ci of pool.slice(0, 3)) {
         const when = [], g = game(best, null);
         for (let k = 0; k < 20; k++) { const res = play(g, P, seed * 31 + k); if (res.win && res.at[ci] >= 0) when.push(res.at[ci]); yield; }
         if (when.length < 4) continue;
         when.sort((a, b) => a - b);
-        for (const pct of [0.9, 0.7, 0.5]) {
+        for (const pct of [0.9, 0.7, 0.5, 0.35, 0.2]) {
           const cn = when[Math.min(when.length - 1, Math.floor(when.length * pct))] + 2;
           const q = (yield* judge(best, { i: ci, n: cn }, 36, 'sensible', false, 1)).rate;
-          if (!bc || Math.abs(q - aim) < Math.abs(bc.q - aim)) bc = { i: ci, n: cn, q };
+          if (bc && Math.abs(q - aim) >= Math.abs(bc.q - aim)) continue;
+          const st = (yield* judge(best, { i: ci, n: cn }, 24, 'strong', false, 1)).rate;
+          if (st >= q - 0.05) bc = { i: ci, n: cn, q };          // fair: a good player copes better with the clock too
         }
       }
       if (bc) clock = { i: bc.i, n: bc.n };
@@ -369,60 +379,53 @@ const Hard = (() => {
   // the whole design at once (tests, tools; the game prefers the steps in between taps)
   const makeNow = (level, aspect, scale = 1) => drain(make(level, aspect, scale));
 
-  /* ---------- in the game: keep designs, make the next one in quiet moments ----------
-     A design is kept on the phone (a few, the newest), keyed by version, level, screen shape and
-     tile size. prefetch() works on one in small steps whenever the phone has nothing else to do
-     (requestIdleCallback): a step is one game of the test player, a few ms. get() returns the
-     design, making it right away if needed (rare: a second or a few on a slow phone). */
-  const STORE = 'omamj.hard', KEEP = 6;
-  const key = (level, aspect, scale) => `${GENV}:${level}:${aspect}:${scale}`;
-  const applies = (level, track) => !track && level >= cfg().measureFrom;
-  function load() { try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (e) { return {}; } }
-  function keep(d) {
-    try {
-      const all = load(); all[key(d.level, d.aspect, d.scale)] = { ...d, at: Date.now() };
-      const ks = Object.keys(all).sort((a, b) => all[b].at - all[a].at);
-      ks.slice(KEEP).forEach(k => delete all[k]);
-      localStorage.setItem(STORE, JSON.stringify(all));
-    } catch (e) { }
+  /* ---------- in the game: the levels are made in advance ----------
+     Designing takes seconds, so it is done once, on the computer (tools/sim/build_levels.js), for
+     one screen shape (ASPECT; the pile is fitted to every screen). The result ships with the game
+     in levels-hard.js (HARD_LEVELS): everyone gets the same levels, and they start at once.
+     Past the last one, the levels from `cycleFrom` on come round again, mirrored and with other
+     pictures, so they never look the same. Packed: tile positions, faces and tile numbers as
+     letters (64 per letter). */
+  const ASPECT = 1.6;
+  const A64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+  const e1 = v => A64[v], e2 = v => A64[v >> 6] + A64[v & 63];
+  const d1 = (s, i) => A64.indexOf(s[i]), d2 = (s, i) => d1(s, i) * 64 + d1(s, i + 1);
+  const list2 = s => { const o = []; for (let i = 0; i < s.length; i += 2) o.push(d2(s, i)); return o; };
+  function pack(d) {
+    const ob = d.obst || {};
+    return [d.tiles.map(([x, y, z]) => e1(x) + e1(y) + e1(z)).join(''), d.faces.map(e1).join(''), d.down.map(e2).join(''), (d.gold || []).map(e2).join(''),
+      Object.entries(ob.ice || {}).map(([i, h]) => e2(+i) + e1(h)).join(''), (ob.locks || []).map(e2).join(''), (ob.keys || []).map(e2).join(''),
+      d.clock ? [d.clock.i, d.clock.n] : 0, d.info.rate, d.info.strong];
   }
-  const cached = (level, aspect, scale) => load()[key(level, aspect, scale)] || null;
-  let job = null;          // { k, it } the design being made in quiet moments
-  function get(level, aspect, scale = 1) {
-    let d = cached(level, aspect, scale);
-    if (d) return d;
-    const k = key(level, aspect, scale);
-    const it = job && job.k === k ? job.it : make(level, aspect, scale);   // carry on where the quiet steps got
-    if (job && job.k === k) job = null;
-    d = drain(it); keep(d);
+  function unpack(level, r) {
+    const [t, f, dn, g, ice, locks, keys, ck, rate, strong] = r;
+    const tiles = []; for (let i = 0; i < t.length; i += 3) tiles.push([d1(t, i), d1(t, i + 1), d1(t, i + 2)]);
+    const faces = []; for (let i = 0; i < f.length; i++) faces.push(d1(f, i));
+    const iceO = {}; for (let i = 0; i < ice.length; i += 3) iceO[d2(ice, i)] = d1(ice, i + 2);
+    const obst = ice || keys ? { ice: iceO, locks: list2(locks), keys: list2(keys) } : null;
+    return { level, tiles, faces, down: list2(dn), gold: list2(g), obst, clock: ck ? { i: ck[0], n: ck[1] } : null, info: { rate, strong } };
+  }
+  const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);
+  const applies = (level, track) => !track && level >= cfg().measureFrom && !!table();
+  // the design of a level (past the table: an earlier one, mirrored, other pictures)
+  function get(level) {
+    const T = table(), last = T.from + T.levels.length - 1;
+    if (level <= last) return unpack(level, T.levels[level - T.from]);
+    const span = last - T.cycleFrom + 1, base = T.cycleFrom + (level - T.cycleFrom) % span;
+    const d = unpack(level, T.levels[base - T.from]);
+    const w = Math.max(...d.tiles.map(t => t[0]));
+    d.tiles = d.tiles.map(([x, y, z]) => [w - x, y, z]);                 // mirrored left-right: the same rules apply
+    const perm = L.shuffleArr(L.rng(level * 7907 + 3), [...Array(36).keys()]);
+    d.faces = d.faces.map(x => x < 36 ? perm[x] : x);                   // other pictures
     return d;
   }
-  function prefetch(level, aspect, scale = 1) {
-    if (typeof window === 'undefined' || !aspect || cached(level, aspect, scale)) return;
-    const k = key(level, aspect, scale);
-    if (job && job.k === k) return;
-    job = { k, it: make(level, aspect, scale) };
-    const mine = job;
-    const idle = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 2000 }) : f => setTimeout(() => f({ timeRemaining: () => 8 }), 60);
-    const work = dl => {
-      if (job !== mine) return;
-      if (document.hidden) { setTimeout(() => idle(work), 1000); return; }
-      const t0 = performance.now();
-      while (performance.now() - t0 < Math.min(14, Math.max(4, dl.timeRemaining()))) {
-        const s = mine.it.next();
-        if (s.done) { keep(s.value); job = null; return; }
-      }
-      idle(work);
-    };
-    idle(work);
-  }
   // the design as a level spec for board.js
-  function spec(level, aspect, scale = 1) {
-    const d = get(level, aspect, scale);
+  function spec(level) {
+    const d = get(level);
     const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z }));
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { P, REF, persona, play, rate, coverOf, target, make, makeNow, cfg, GENV, applies, get, prefetch, spec, cached };
+  return { P, REF, persona, play, rate, coverOf, target, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;
