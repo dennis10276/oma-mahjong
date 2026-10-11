@@ -5,7 +5,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.35';
+const APP_VERSION = '1.40';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -45,8 +45,9 @@ const defaults = () => ({
 let S;
 try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
 const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
-// grandma (see CARE in rules.js, or switched on the dashboard) gets the "care" help, everyone else the "normal" help
+// 👵 Super-omamodus (grandma, or switched on the dashboard); each part of it can also be on by itself
 const careMode = () => isCarePlayer(S.pid, S.name, S.cfg || {});
+const part = id => partOn(id, S.pid, S.name, S.cfg || {});
 // this player's settings from the family dashboard (grandma mode, news); kept on the phone for offline starts
 async function loadCfg() {
   if (!DB_URL || !S.pid) return;
@@ -57,7 +58,7 @@ async function loadCfg() {
     if (typeof curScreen !== 'undefined' && curScreen === 'home') renderHome();
   } catch (e) { }
 }
-const help = () => careMode() ? HELP.care : HELP.normal;
+const help = () => helpFor(S.pid, S.name, S.cfg || {});
 
 // ---------- dates ----------
 const pad = n => String(n).padStart(2, '0');

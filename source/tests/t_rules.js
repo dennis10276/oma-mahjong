@@ -32,26 +32,50 @@ module.exports = [
     },
   },
   {
-    name: 'rules: Hint and Schudden are gone from level 50 (with a one-time message), but not in grandma mode',
+    name: 'rules: from level 50 Hint and Schudden only with 3 stars on every level so far, checked every 5 levels, with a popup (not in grandma mode)',
     async run(t, { startLevel, solve, click, modal, sleep }) {
       const bar = p => p.evaluate(() => ({ shown: getComputedStyle(document.querySelector('.toolbar')).display !== 'none', open: toolsOpen() }));
-      const p = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 50 } });
+      const stars = (to, s = 3, extra = {}) => ({ ...Object.fromEntries(Array.from({ length: to }, (_, i) => [i + 1, s])), ...extra });
+      const room = p => p.evaluate(() => document.querySelector('#boardWrap').clientHeight);
+      // every level 3 stars: the buttons are there in 50-54, and the pile leaves room for them
+      const p = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 56, stars: stars(49, 3, { 50: 3, 51: 2, 52: 3, 53: 3, 54: 3, 55: 3 }) } });
       await startLevel(p, 49);
-      t.eq(await bar(p), { shown: true, open: true }, 'level 49: still there');
+      t.eq(await bar(p), { shown: true, open: true }, 'level 49: there as always');
       await startLevel(p, 50);
-      t.eq(await bar(p), { shown: false, open: false }, 'level 50: gone');
-      const h0 = await p.evaluate(() => { const b = document.querySelector('#board').getBoundingClientRect(); return b.height; });
-      t.ok(h0 > 0, 'the pile is drawn');
-      await startLevel(p, 49);
-      t.ok(await solve(p), 'level 49 won');
-      let seen = false;
-      await click(p, '#wNext');
-      for (let k = 0; k < 10 && !seen; k++) { await sleep(500); const m = await modal(p); if (m && m.buttons.includes('tgOk')) { seen = true; await click(p, '#tgOk'); } else if (m && m.buttons.length) await click(p, '#' + m.buttons[0]); }
-      t.ok(seen, 'told once that from level 50 there are no tools');
-      t.eq(await p.evaluate(() => __mj.S.toolsGoneSeen), true, 'not again');
+      t.eq(await bar(p), { shown: true, open: true }, 'level 50: earned (1-49 all 3 stars)');
+      const withTools = await room(p);
+      await startLevel(p, 54);
+      t.eq(await bar(p), { shown: true, open: true }, 'level 54: same block, still there (51 having 2 stars counts from 55)');
+      await startLevel(p, 55);
+      t.eq(await bar(p), { shown: false, open: false }, 'level 55: checked again, gone (level 51 has 2 stars)');
+      t.ok(await room(p) > withTools, 'without the buttons the pile gets their space', { withTools, without: await room(p) });
+      t.eq(await p.evaluate(() => toolsMissing(55)), [51], 'knows which level is missing');
+      await p.evaluate(() => { __mj.S.stars[51] = 3; });
+      await startLevel(p, 56);
+      t.eq(await bar(p), { shown: true, open: true }, 'level 51 played again for 3 stars: back');
+
+      // the popup: level 12 has 2 stars, winning level 49 leads to level 50 -> told they are not there, and why
+      const q = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 49, stars: stars(48, 3, { 12: 2 }) } });
+      const winAndFind = async (lv, id) => {
+        await startLevel(q, lv);
+        t.ok(await solve(q), `level ${lv} won`);
+        let html = null;
+        await click(q, '#wNext');
+        for (let k = 0; k < 12 && !html; k++) { await sleep(500); const m = await modal(q); if (m && m.buttons.includes(id)) { html = await q.evaluate(() => document.querySelector('#modalBox').innerText); await click(q, '#' + id); } else if (m && m.buttons.length) await click(q, '#' + m.buttons[0]); }
+        return html;
+      };
+      let txt = await winAndFind(49, 'tgOk');
+      t.ok(txt && /Even zonder Hint en Schudden/.test(txt) && /level 12\b/.test(txt) && /alle levels|al je levels/i.test(txt) && /Elke 5 levels/.test(txt), 'popup: not earned, which level, and the rule', txt);
+      t.eq(await q.evaluate(() => __mj.S.toolsSt), { b: 50, on: false }, 'remembered');
+      // level 12 again for 3 stars (set here), then a win in the same block: told they are back
+      await q.evaluate(() => { __mj.S.stars[12] = 3; __mj.S.level = Math.max(__mj.S.level, 51); });
+      txt = await winAndFind(50, 'tgOk');
+      t.ok(txt && /Verdiend/.test(txt) && /level 50 t\/m 54/.test(txt), 'popup: earned again', txt);
+      t.eq(await q.evaluate(() => __mj.S.toolsSt.on), true, 'remembered as on');
+
       const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 60 } });
       await startLevel(g, 60);
-      t.eq(await bar(g), { shown: true, open: true }, 'grandma mode: still there at level 60');
+      t.eq(await bar(g), { shown: true, open: true }, 'grandma mode: still there at level 60, without any stars');
     },
   },
   {

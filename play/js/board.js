@@ -78,7 +78,7 @@ function begin(o, restart = false) {
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };    // taps, blocked taps, flips, best combo, most in tray
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
-  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined });
+  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -184,10 +184,18 @@ function updateBlocked() { G.tiles.forEach((t, i) => { if (G.alive[i]) t.el.clas
 function updateProgress() { const n = G.tiles.length; $('#progressBar').style.width = ((n - aliveCount() - G.tray.length) / n * 100) + '%'; }
 function updateScore(bump = true) { const el = $('#score'); el.textContent = G.score; if (bump) replay(el, 'bump'); }
 function addScore(pts) { G.score += pts; updateScore(); floatScore('+' + pts); }
-// Hint and Schudden unlock at a level (daily puzzles: once you have reached that level), and are gone
-// again from HELP.<kind>.toolsGoneFrom on (not in grandma mode): then the toolbar is not shown at all
+// Hint and Schudden unlock at a level (daily puzzles: once you have reached that level). From
+// HELP.toolsGoneFrom on (not in grandma mode) they have to be earned: the levels go in blocks of
+// RULES.tools.earn.every (50-54, 55-59, ...), and in a block you have them when every level before
+// that block has 3 stars. So they are checked again every 5 levels, and come back as soon as the
+// missing levels are played again for 3 stars. Without them the toolbar is not shown and the pile
+// gets its space; with them the pile leaves room for the buttons, as before level 50.
 const toolLevel = o => o.mode === 'level' ? o.level : S.level;
-const toolsGoneFor = o => { const g = help().toolsGoneFrom; return !!g && toolLevel(o) >= g; };
+const toolBlock = L => { const g = help().toolsGoneFrom, k = RULES.tools.earn.every; return g + Math.floor((L - g) / k) * k; };
+function toolsMissing(L) { const m = []; for (let l = 1; l < toolBlock(L); l++) if ((S.stars[l] || 0) < RULES.tools.earn.stars) m.push(l); return m; }
+const toolsEarnLevel = L => { const g = help().toolsGoneFrom; return !!g && L >= g; };     // a level where they have to be earned
+const toolsEarned = L => toolsEarnLevel(L) && !toolsMissing(L).length;
+const toolsGoneFor = o => toolsEarnLevel(toolLevel(o)) && !toolsEarned(toolLevel(o));
 const toolsGone = () => !!G && toolsGoneFor(G);
 const toolsOpen = () => !!G && toolLevel(G) >= RULES.tools.fromLevel && !toolsGone();
 function updateTools() {

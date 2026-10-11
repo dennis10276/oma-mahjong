@@ -4,7 +4,8 @@
 'use strict';
 
 const RULES = {
-  tools: { fromLevel: 15 },                    // 💡 Hint and 🔀 Schudden: one of each per level from here
+  tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
+    earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
@@ -37,7 +38,7 @@ const HELP = {
     nudge: null,                               // the helper that makes a pair glow
     shuffleAfter: null,                        // no shuffle right at the start of a level
     adapt: null,                               // difficulty that follows her own results
-    toolsGoneFrom: 50,                         // from this level on there is no 💡 Hint and 🔀 Schudden any more
+    toolsGoneFrom: 50,                         // from this level on 💡 Hint and 🔀 Schudden only when earned: every level so far on 3 stars
     jokersGoneFrom: 50,                        // ... and no 🃏 jokers in the deal
   },
   care: {

@@ -13,18 +13,19 @@ function show(id) {
   if (id === 'themes') renderThemes();
   if (id === 'trophies') renderTrophies();
   if (id === 'ranking') renderRanking();
+  fitTexts(document.getElementById(id));
 }
 
 function renderHome() {
   if (applyUpdate()) return;
   setTimeout(maybeDailyGift, 900);
-  $('#greet').textContent = tx('greet', new Date().getHours());
+  $('#greet').innerHTML = fx('greet', new Date().getHours());
   const ts = totalStars();
   $('#homeStars').textContent = '⭐ ' + ts;
   const cur = loadCur();
-  $('#playLabel').textContent = cur && cur.key === 'L' + S.level ? tx('continueLevel', S.level) : tx('levelN', S.level);
+  $('#playLabel').innerHTML = cur && cur.key === 'L' + S.level ? fx('continueLevel', S.level) : fx('levelN', S.level);
   const doneToday = !!S.daily[todayKey()];
-  $('#dailyLabel').textContent = tx(doneToday ? 'dailyDone' : 'dailyWaiting');
+  $('#dailyLabel').innerHTML = fx(doneToday ? 'dailyDone' : 'dailyWaiting');
   $('#btnDaily').classList.toggle('pulse', !doneToday);
   $('#streakBadge').textContent = '🔥 ' + streak();
   const lt = document.querySelectorAll('.logo-tiles .lt');
@@ -37,6 +38,7 @@ function renderHome() {
   if (S.lastWeek) setTimeout(() => { if (curScreen === 'home') checkLastWeek(); }, 400);
   else if (S.pendingHearts.length) setTimeout(() => { if (curScreen === 'home' && modalFree() && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
   if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && modalFree()) showSunflowerUnlock(() => renderHome()); }, 500);
+  fitTexts($('#home'));
 }
 // the Zonnebloem prize: levels played so far, out of the levels needed
 const sunProgress = () => { const need = RULES.sunflower.level, done = Math.min(need, S.level - 1); return { need, done, left: need - done, pct: Math.round(done / need * 100) }; };
@@ -45,7 +47,7 @@ function renderGoal(el) {
     // the big prize comes first
     const { left, pct } = sunProgress();
     el.classList.add('sun');
-    el.innerHTML = `<span class="g-ico">🌻</span><div>${tx('goalSun', left)}<div class="bar"><i style="width:${pct}%"></i></div></div>`;
+    el.innerHTML = `<span class="g-ico">🌻</span><div>${fx('goalSun', left)}<div class="bar"><i style="width:${pct}%"></i></div></div>`;
     return;
   }
   el.classList.remove('sun');
@@ -54,7 +56,7 @@ function renderGoal(el) {
   if (!next) { el.innerHTML = tx('goalAllBgs'); return; }
   const prev = [...numBgs].reverse().find(b => b.need <= ts);
   const pct = Math.round((ts - prev.need) / (next.need - prev.need) * 100);
-  el.innerHTML = `${tx('goalBg', next.need - ts, next.name)}<div class="bar"><i style="width:${pct}%"></i></div>`;
+  el.innerHTML = `${fx('goalBg', next.need - ts, next.name)}<div class="bar"><i style="width:${pct}%"></i></div>`;
 }
 
 function starsStr(n) { return '★'.repeat(n) + `<span class="off">${'★'.repeat(3 - n)}</span>`; }
@@ -156,7 +158,7 @@ function renderTrophies() {
   $('#trophyGrid').innerHTML = TROPHIES.map(t => {
     const got = S.trophies[t.id];
     const [v, n] = t.prog();
-    return `<div class="trophy${got ? ' got' : ''}"><span class="t-ico">${t.ico}</span><b>${t.name}</b><small>${t.desc}</small>${got ? `<em>${tx('won')}</em>` : `<span class="bar"><i style="width:${Math.round(Math.min(1, v / n) * 100)}%"></i></span><em>${Math.min(v, n)} / ${n}</em>`}</div>`;
+    return `<div class="trophy${got ? ' got' : ''}"><span class="t-ico">${t.ico}</span><b>${fx('tr_' + t.id)}</b><small>${fx('tr_' + t.id + '_d', RULES.sunflower.level)}</small>${got ? `<em>${tx('won')}</em>` : `<span class="bar"><i style="width:${Math.round(Math.min(1, v / n) * 100)}%"></i></span><em>${Math.min(v, n)} / ${n}</em>`}</div>`;
   }).join('');
 }
 
@@ -175,6 +177,7 @@ function openModal(html, closable = true, onClose = null, cls = '') {
   const box = $('#modalBox');
   box.className = 'modal-box' + (cls ? ' ' + cls : '');   // 'compact': the after-level screens, they must fit without scrolling
   box.innerHTML = html; box.scrollTop = 0; $('#modal').classList.remove('hidden');
+  fitTexts(box);
   modalClosable = closable; modalOnClose = onClose;
 }
 function closeModal() {
@@ -187,8 +190,8 @@ function openSettings() {
   const rows = ['sfx', 'music', 'vibrate', 'highlight', 'nums', 'bigTiles', 'contrast'];
   const cur = langOf(S);
   openModal(`<h2>${tx('settings')}</h2>
-    <div class="set-row">${tx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
-    ${rows.map(k => `<div class="set-row">${tx('set_' + k)}<button class="tog ${S[k] ? 'on' : ''}" data-k="${k}"></button></div>`).join('')}
+    <div class="set-row">${fx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
+    ${rows.map(k => `<div class="set-row">${fx('set_' + k)}<button class="tog ${S[k] ? 'on' : ''}" data-k="${k}"></button></div>`).join('')}
     <button class="big-btn gold" id="mHow"><span class="bb-text"><b>${tx('howToPlay')}</b></span></button>
     <button class="link-btn" id="mClose">${tx('close')}</button>
     <button class="reset-btn" id="mReset">${tx('wipe')}</button>
@@ -231,11 +234,11 @@ function confirmReset() {
 
 function showIntro(after) {
   const f = Tiles.faceHTML('classic', 31), g = Tiles.faceHTML('classic', 4);
-  openModal(`<h2>${tx('introTitle')}</h2>
-    <p>${tx('intro1')}</p>
+  openModal(`<h2>${fx('introTitle')}</h2>
+    <p>${fx('intro1')}</p>
     <div class="how-tray"><div class="hm">${g}</div><div class="hm">${f}</div><div class="hm glow">${f}</div><div class="hm empty"></div></div>
-    <p>${tx('intro2')}</p>
-    <p>${tx('intro3', RULES.tools.fromLevel)}</p>
+    <p>${fx('intro2')}</p>
+    <p>${fx('intro3', RULES.tools.fromLevel)}</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>
     <button class="link-btn" id="mLang">${tx('introLang')}</button>`, true, after);
   $('#mGo').onclick = closeModal;

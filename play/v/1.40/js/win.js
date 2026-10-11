@@ -64,7 +64,7 @@ function win() {
   const chase = nextUp && wkRankAfter >= wkRankBefore ? `<p class="chase">${tx('chase', wkRankAfter, fmtN(nextUp.points - wkAfter + 1), nextUp.avatar + ' ' + esc(nextUp.name))}</p>` : '';
   if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
   if (S.level >= RULES.tools.fromLevel && !S.toolsSeen) rewards.push({ type: 'tools' });
-  if (help().toolsGoneFrom && S.level >= help().toolsGoneFrom && !S.toolsGoneSeen) rewards.push({ type: 'toolsGone' });
+  if (toolsEarnLevel(S.level)) { const st = { b: toolBlock(S.level), on: toolsEarned(S.level) }; if (!S.toolsSt || S.toolsSt.b !== st.b || S.toolsSt.on !== st.on) rewards.push({ type: 'toolsEarn', st }); }
   const tr = newTrophies();
   if (tr.length) rewards.push({ type: 'trophies', list: tr });
   if (unlocked.length) rewards.push({ type: 'bgs', list: unlocked });
@@ -124,7 +124,7 @@ function runRewards(queue, then) {
   else if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next, r.mode)); else showClimb(r.from, r.to, next, r.mode); }
   else if (r.type === 'sun') showSunflowerUnlock(next);
   else if (r.type === 'tools') showToolsUnlock(next);
-  else if (r.type === 'toolsGone') showToolsGone(next);
+  else if (r.type === 'toolsEarn') showToolsEarn(r.st, next);
   else if (r.type === 'trophies') showTrophies(r.list, next);
   else if (r.type === 'village') showVillage(next);
   else showUnlock(r.list.slice(), next);
@@ -139,14 +139,19 @@ function showToolsUnlock(then) {
     <button class="big-btn play" id="tlOk"><span class="bb-text"><b>${tx('top')}</b></span></button>`, false);
   $('#tlOk').onclick = () => { closeModal(); then(); };
 }
-// from level 50: no more Hint and Schudden, told once as a compliment
-function showToolsGone(then) {
-  S.toolsGoneSeen = true; save();
-  Sound.unlock(); FX.confetti(); buzz([20, 40, 20, 40, 40]);
-  openModal(`<h2>${tx('toolsGoneTitle')}</h2>
-    <div class="tools-new"><span>🏆</span></div>
-    <p>${tx('toolsGoneText', help().toolsGoneFrom)}</p>
-    <button class="big-btn play" id="tgOk"><span class="bb-text"><b>${tx('toolsGoneOk')}</b></span></button>`, false);
+// from level 50: Hint and Schudden only with 3 stars on every level so far, checked every 5 levels.
+// Told at each new block of 5 levels, and when they come back in between (old levels played again).
+function showToolsEarn(st, then) {
+  const first = !S.toolsSt;
+  S.toolsSt = st; save();
+  const miss = toolsMissing(S.level), show = miss.slice(0, 6), more = miss.length - show.length;
+  const list = show.join(', ') + (more > 0 ? tx('toolsMore', more) : '');
+  if (st.on) { Sound.unlock(); FX.confetti(); buzz([20, 40, 20, 40, 40]); } else Sound.hint();
+  openModal(`<h2>${tx(st.on ? 'toolsEarnTitle' : 'toolsOffTitle')}</h2>
+    <div class="tools-new${st.on ? '' : ' off'}"><span>💡</span><span>🔀</span></div>
+    <p>${st.on ? tx('toolsEarnText', st.b, st.b + RULES.tools.earn.every - 1) : tx('toolsOffText', list)}</p>
+    ${first || !st.on ? `<p class="note">${tx('toolsRule', help().toolsGoneFrom, RULES.tools.earn.every)}</p>` : ''}
+    <button class="big-btn play" id="tgOk"><span class="bb-text"><b>${tx(st.on ? 'top' : 'toolsOffOk')}</b></span></button>`, false);
   $('#tgOk').onclick = () => { closeModal(); then(); };
 }
 function showSunflowerUnlock(then) {
