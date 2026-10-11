@@ -324,6 +324,15 @@ function render() {
       return k('Buurtnieuws gelezen', nN + nS, `${nN} echt nieuws · ${nS} verhaal` + (asks.length ? ` · ${asks.filter(e => e.ok).length} van ${asks.length} geheugenvragen goed` : ''));
     })() +
     (() => { const w = ev.filter(e => e.k === 'nudge' && e.w).map(e => e.w); if (!w.length) return ''; return k('Hulpje wacht nu', '~' + w[w.length - 1] + ' s', 'langer als het goed gaat, korter als ze vastloopt'); })() +
+    (() => {   // grandma's own levels: how much help and how often first time right, the last 7 days
+      if (!isCare(sel)) return '';
+      const wk = ev.filter(e => e.t > Date.now() - 7 * 864e5 && e.m !== 'd' && e.lv);
+      const tries = wk.filter(e => e.k === 'start' && !e.res).length, nudges = wk.filter(e => e.k === 'nudge').length;
+      const firsts = wk.filter(e => e.k === 'end' && (e.at || 1) === 1), firstWins = firsts.filter(e => e.r === 'win').length;
+      if (!tries) return '';
+      return k('Hulpje per poging', (nudges / tries).toFixed(1).replace('.', ','), 'deze week · doel: minder dan 2') +
+        k('In één keer goed', firsts.length ? Math.round(firstWins / firsts.length * 100) + '%' : '–', `${firstWins} van ${firsts.length} levels deze week · doel: 85%`);
+    })() +
     k('App geopend', ev.filter(e => e.k === 'open').length + '×', last ? `sinds ${new Date(ev[0].t).toLocaleDateString('nl-NL')}` : '');
 
   // charts: last 14 days

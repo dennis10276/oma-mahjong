@@ -185,4 +185,24 @@ module.exports = [
       t.ok(!p.db.plays('test-dennis').some(e => e.k === 'adapt' || (e.k === 'start' && e.ad != null)), 'no step in his log');
     },
   },
+  {
+    name: 'grandma levels: grandma plays her own gentler levels with the same points; others the normal ones',
+    async run(t, { startLevel, solve, sleep }) {
+      const p = await t.phone({ state: { ...OMA, level: 40 } });
+      await startLevel(p, 35);
+      const g = await p.evaluate(() => { const G = __mj.G; return { track: G.o.track, down: G.down.reduce((a, b) => a + b, 0), n: G.tiles.length, scale: G.ptsScale }; });
+      t.eq(g.track, 'care', 'her own set of levels');
+      t.ok(g.down <= 3, 'at most 3 face-down tiles at level 35', g);
+      t.ok(g.scale > 1 && Math.abs(g.scale * g.n - 86) <= 6, 'her smaller pile scores like the normal one', g);
+      t.ok(p.db.plays('test-oma').some(e => e.k === 'start' && e.lv === 35 && e.tk === 'care'), 'logged for the dashboard');
+      const q = await t.phone({ state: { ...DENNIS, level: 40 } });
+      await startLevel(q, 35);
+      t.eq(await q.evaluate(() => [__mj.G.o.track || '', __mj.G.down.reduce((a, b) => a + b, 0) > 10]), ['', true], 'Dennis: the normal levels');
+      // a level saved from the old (normal) deal is not resumed into grandma's new levels
+      await q.evaluate(() => { const c = JSON.parse(localStorage.getItem('omamj.cur')); localStorage.setItem('omamj.cur', JSON.stringify(c)); __mj.S.name = 'OmaHanny'; });
+      await startLevel(q, 35, false);
+      t.eq(await q.evaluate(() => __mj.G.o.track), 'care', 'switching to grandma mode: her own deal, not the saved normal one');
+      t.ok(await solve(q), 'and it can be cleared');
+    },
+  },
 ];

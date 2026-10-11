@@ -42,7 +42,7 @@ const HELP = {
   care: {
     comboMs: 10000,
     lucky: { fromLevel: 1, perLevel: 2, chance: 0.5 },
-    gentle: 1,
+    gentle: 1,                                 // on top of her own gentle levels (layouts.js, track 'care'); her results move it
     easierAfterFails: 3,
     rescue: true,
     // the helper: a pair with a face-down tile glows after downS seconds, a visible pair after upS.
@@ -66,8 +66,8 @@ const GRANDMA = { pids: ['pmuy4wmdp17hbws'], like: ['pmuxw2uqkzcnbgx'], name: /^
 // news from Apeldoorn: on for grandma by default, switchable per player on the dashboard
 const getsNews = (pid, name, cfg = {}) => VILLAGE.enabled && ('news' in cfg ? cfg.news : isGrandma(pid, name));
 const isGrandma = (pid, name) => GRANDMA.pids.includes(pid) || GRANDMA.like.includes(pid) || GRANDMA.name.test(name || '');
-// who gets the "care" help by default: grandma (and DennisTEST), and Mama
-const CARE = { pids: ['pmv13884fc9vndv'] };
+// who else gets the "care" help by default (besides grandma and DennisTEST); Mama is not in grandma mode
+const CARE = { pids: [] };
 // players who start in English until they pick a language in the settings (Mama)
 const START_ENGLISH = ['pmv13884fc9vndv'];
 

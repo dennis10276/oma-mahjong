@@ -112,4 +112,30 @@ module.exports = [
       }
     },
   },
+  {
+    name: 'grandma levels: easy first try, few face-down tiles (only on top, never a pair), same points',
+    async run(t) {
+      const bad = [], winRates = [];
+      for (let lv = 1; lv <= 100; lv += 3) {
+        const spec = Layouts.ease(Layouts.forLevel(lv, 1.5, 1, 'care'), 1);     // her standard: one step gentler
+        const d = Layouts.makeDeal(spec), nb = Layouts.neighbors(spec.tiles);
+        const want = Layouts.careDownN(lv);
+        if (d.down.length > want) bad.push(`L${lv}: ${d.down.length} face-down (max ${want})`);
+        if (d.down.some(i => nb.above[i].length)) bad.push(`L${lv}: a face-down tile under another tile`);
+        if (new Set(d.down.map(i => d.faces[i])).size !== d.down.length) bad.push(`L${lv}: two face-down tiles with the same picture`);
+        if (lv < 10 && d.down.length) bad.push(`L${lv}: face-down before level 10`);
+        const w = Layouts.botWinRate(spec.tiles, nb, d.faces, 200, 3);
+        winRates.push(w);
+        if (w < 0.72) bad.push(`L${lv}: only ${Math.round(w * 100)}% first try`);
+        const normal = Layouts.forLevel(lv, 1.5, 1);
+        if (Math.abs(spec.ptsScale * spec.tiles.length - normal.tiles.length) > 6) bad.push(`L${lv}: points not like a normal level`);
+      }
+      t.eq(bad, [], 'every sampled level');
+      const avg = winRates.reduce((a, b) => a + b, 0) / winRates.length;
+      t.ok(avg >= 0.85, 'about 9 in 10 first tries succeed', Math.round(avg * 100));
+      // much gentler than the normal levels: her level 35 plays like a normal level ~13, ice only much later
+      t.ok(Layouts.careEff(35) < 14 && Layouts.forLevel(35, 1.5, 1, 'care').mechLevel < Layouts.MECH.ice, 'level 35: no ice yet');
+      t.ok(Layouts.forLevel(70, 1.5, 1, 'care').mechLevel >= Layouts.MECH.ice, 'ice does come, later');
+    },
+  },
 ];

@@ -62,7 +62,7 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
   `win.js`) for that.
 - `GRANDMA`: grandma's player id (or a name starting with "Oma"); `like` = players who always get
   exactly what she gets (DennisTEST, to see what she sees).
-- `CARE`: who else gets grandma's help (Mama).
+- `CARE`: who else gets grandma's help by default (nobody now; Mama is not in grandma mode).
 - `VILLAGE`: grandma's news after a won level: 1 in 5 a story part (`storyShare`), how old news may be,
   when stories may fill in because the news file is old, the star for a memory question.
 - `START_ENGLISH`: player ids that start in English (Mama). Anyone can switch in the settings
@@ -85,6 +85,22 @@ errors in 1.26). The reload goes to `?v=<version>` so the browser fetches the ne
 
     python3 release.py 1.6 --deploy   # phones update themselves, and the download page
                                       # always gets a fresh APK of the same version
+
+## Grandma's own levels (grandma mode)
+
+Everyone in grandma mode plays a separate, gentler set of levels (`forCare` in `layouts.js`, track
+`care`; the level numbers, stars and prizes are the same):
+- the difficulty climbs at a quarter of the normal speed (her level 35 plays like a normal level 13);
+- piles of 64-80 tiles in their own shapes, a party pile of 96 every 10 levels; points are scaled so a
+  level is worth the same as the normal level (`ptsScale`);
+- few face-down tiles: none before level 10, then 2, one more every 15 levels, at most 6, only on tiles
+  with nothing on top and never both tiles of a picture (`careDownN`);
+- ice and locks only when her difficulty reaches that of normal level 35/45 (`mechLevel`, around her
+  level 64/84);
+- deals are picked so a sensible player clears ~90% first time (tested for every 3rd level up to 100);
+- on top of that her usual help below (one step gentler, adaptive, easier after 3 failed tries).
+A level saved from the other set of levels is not resumed (it starts fresh). The dashboard shows
+"Hulpje per poging" and "In één keer goed" for the last 7 days.
 
 ## Extra help for grandma (`HELP.care`)
 
@@ -189,7 +205,7 @@ sooner when she struggles or the level already went wrong once (×0.7), based on
 | `t_ranking`, `t_hearts` | computer players, climbing, hearts with messages |
 | `t_screens` | every screen opens, themes, nothing needs scrolling on small phones |
 | `t_log`, `t_dash` | the play log and the family dashboard |
-| `t_lang` | every text in both languages, the language switch, Mama: English with grandma's help |
+| `t_lang` | every text in both languages, the language switch, Mama starts in English, equal layout |
 | `t_village` | news for grandma and DennisTEST only, dashboard settings per player, 80/20 news/stories, memory question, Het krantje, 💬, the helper's pace, the news filter |
 | `t_finish` | auto-finish: the exact check, the end playing itself from level 50, speed |
 | `t_update` | self-update from an old 1.5 app and the current one; a broken update is thrown away |

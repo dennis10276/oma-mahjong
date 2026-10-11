@@ -224,7 +224,8 @@ const Layouts = (() => {
   /* Gentler curve: after level 6 the difficulty climbs at half speed
      (level 26 now plays like the old level 16). */
   const effLevel = level => level <= 6 ? level : 6 + (level - 6) / 2;
-  function forLevel(level, aspect, scale = 1) {
+  function forLevel(level, aspect, scale = 1, track = '') {
+    if (track === 'care') return forCare(level, aspect, scale);
     const e = effLevel(level);
     let target = targetFor(Math.round(e));
     if (e > 26) target = targetFor(level);           // keep variety in the endless levels
@@ -234,12 +235,38 @@ const Layouts = (() => {
     const diff = difficultyFor(e);
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1, diff };
   }
-  function forDate(ymd, aspect, scale = 1) {
+  /* ---------- grandma mode has its own levels (track 'care') ----------
+     The difficulty climbs at a quarter of the normal speed (her level 35 plays like a normal level
+     13, level 100 like 30), piles of 64-80 tiles (a party pile of 96 every 10 levels) in their own
+     shapes, deals that a sensible player clears first time ~88% of the time, and only a few
+     face-down tiles: none before level 10, then 2, one more every 15 levels, at most 6; only tiles
+     with nothing on top, and never two of the same picture (its twin is always face up).
+     Ice and locks come when her difficulty reaches that of normal level 35 / 45 (mechLevel).
+     Points stay the same as a normal level (ptsScale makes up for the smaller pile). */
+  const careEff = level => level <= 6 ? level : 6 + (level - 6) / 4;
+  const careDownN = level => level < 10 ? 0 : Math.min(6, 2 + Math.floor((level - 10) / 15));
+  const careRate = level => level <= 50 ? 0.88 : Math.max(0.75, 0.88 - (level - 50) * 0.0026);
+  function normalTarget(level, scale) {
+    const e = effLevel(level);
+    let t = targetFor(Math.round(e)); if (e > 26) t = targetFor(level);
+    t = Math.max(8, Math.round(t * scale)); return t - t % 2;
+  }
+  function forCare(level, aspect, scale) {
+    const e = careEff(level);
+    let target = level >= 10 && level % 10 === 0 ? 96 : Math.min(targetFor(Math.round(e)), 64 + Math.floor(rng(level * 53 + 11)() * 9) * 2);
+    target = Math.max(8, Math.round(target * scale)); target -= target % 2;
+    const res = buildPiles(level * 7919 + 999331, target, layersFor(e), aspect, level);
+    const d = difficultyFor(e);
+    const diff = { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) };
+    return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 333, diff, track: 'care',
+      mechLevel: Math.round(6 + (e - 6) * 2), ptsScale: normalTarget(level, scale) / res.tiles.length };
+  }
+  function forDate(ymd, aspect, scale = 1, track = '') {
     const r0 = rng(ymd);
     let target = Math.round((60 + Math.floor(r0() * 11) * 2) * scale); target -= target % 2; // 60..80
     const res = buildPiles(ymd * 13 + 5, target, 4, aspect);
-    const diff = { ...difficultyFor(10), target: 0.75, down: 0.15 };
-    return { ...res, kinds: kindsFor(res.tiles.length / 2, 10, diff), seed: ymd * 7 + 3, diff };
+    const diff = track === 'care' ? { ...difficultyFor(8), target: 0.88, down: 0, downN: 2 } : { ...difficultyFor(10), target: 0.75, down: 0.15 };
+    return { ...res, kinds: kindsFor(res.tiles.length / 2, track === 'care' ? 8 : 10, diff), seed: ymd * 7 + 3, diff, track };
   }
 
   /* Gentler deals (grandma, see HELP in js/rules.js): the same pile, but more matching pictures.
@@ -250,10 +277,11 @@ const Layouts = (() => {
   function easeStep(spec, ez) {
     const pairs = spec.tiles.length / 2, d = spec.diff;
     if (ez <= 0) return { kinds: spec.kinds, diff: d };
-    if (ez >= 3) return { kinds: Math.max(4, Math.round(pairs / 3)), diff: { ...d, rare: 0, down: 0, open: 0.15, cap: 2, target: 1 } };
-    if (ez === 2) return { kinds: Math.max(4, Math.ceil(pairs / 2)), diff: { ...d, rare: 0, down: d.down / 2, open: d.open * 0.5, target: Math.max(d.target, 0.95) } };
+    const dn = f => d.downN === undefined ? {} : { downN: Math.floor(d.downN * f) };
+    if (ez >= 3) return { kinds: Math.max(4, Math.round(pairs / 3)), diff: { ...d, rare: 0, down: 0, ...dn(0), open: 0.15, cap: 2, target: 1 } };
+    if (ez === 2) return { kinds: Math.max(4, Math.ceil(pairs / 2)), diff: { ...d, rare: 0, down: d.down / 2, ...dn(0.5), open: d.open * 0.5, target: Math.max(d.target, 0.95) } };
     const rare = d.rare / 2;
-    return { kinds: Math.round(pairs / 2 + pairs / 2 * rare), diff: { ...d, rare, down: d.down * 0.6, open: d.open * 0.75, target: Math.max(d.target, 0.9) } };
+    return { kinds: Math.round(pairs / 2 + pairs / 2 * rare), diff: { ...d, rare, down: d.down * 0.6, ...dn(1), open: d.open * 0.75, target: Math.max(d.target, 0.9) } };   // (grandma's few face-down tiles stay)
   }
   function ease(spec, ez) {
     if (!ez) return spec;
@@ -264,6 +292,7 @@ const Layouts = (() => {
     const diff = { ...b.diff };
     for (const k of ['rare', 'down', 'open', 'target']) diff[k] = mix(a.diff[k] || 0, b.diff[k] || 0);
     diff.cap = Math.round(mix(a.diff.cap, b.diff.cap));
+    if (spec.diff.downN !== undefined) diff.downN = Math.round(mix(a.diff.downN, b.diff.downN));
     const kinds = Math.round(mix(Math.min(a.kinds, spec.kinds), Math.min(b.kinds, spec.kinds)));
     return { ...spec, kinds: Math.min(kinds, spec.kinds), diff, seed: spec.seed + Math.round(ez * 7777) };
   }
@@ -497,8 +526,17 @@ const Layouts = (() => {
       else { if (open === 1) kinds = Math.min(36, pairs, Math.round(kinds * 1.15) + 1); open = Math.min(1, open + 0.22); }
     }
     const r2 = rng(spec.seed + 777);
-    const nDown = Math.round(tiles.length * (spec.diff.down || 0));
-    best.down = shuffleArr(r2, tiles.map((t, i) => i)).slice(0, nDown);
+    if (spec.diff.downN !== undefined) {
+      // grandma: a few, only tiles with nothing on top, at most one of each picture
+      const used = new Set(); best.down = [];
+      for (const i of shuffleArr(r2, tiles.map((t, i) => i).filter(i => nb.above[i].length === 0))) {
+        if (best.down.length >= spec.diff.downN) break;
+        if (!used.has(best.faces[i])) { used.add(best.faces[i]); best.down.push(i); }
+      }
+    } else {
+      const nDown = Math.round(tiles.length * (spec.diff.down || 0));
+      best.down = shuffleArr(r2, tiles.map((t, i) => i)).slice(0, nDown);
+    }
     return best;
   }
 
@@ -553,6 +591,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, MECH, effLevel, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, obstacles, solve };
+  return { SLOTS, MECH, effLevel, careEff, careDownN, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, obstacles, solve };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

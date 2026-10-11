@@ -2,7 +2,7 @@
    English with grandma's extra help. */
 'use strict';
 const fs = require('fs'), path = require('path');
-const MAMA = 'pmv13884fc9vndv';      // in CARE.pids and START_ENGLISH (js/rules.js); the database is fake here
+const MAMA = 'pmv13884fc9vndv';      // in START_ENGLISH (js/rules.js); the database is fake here
 const homeTexts = p => p.evaluate(() => ['#btnPlay b', '#btnLevels b', '#btnThemes b', '#btnRanking b'].map(s => document.querySelector(s).textContent));
 const windLetters = p => p.evaluate(() => [27, 28, 29, 30].map(k => (Tiles.faceHTML('classic', k).match(/class="cn"[^>]*>(\w)</) || [])[1]).join(''));
 
@@ -44,34 +44,15 @@ module.exports = [
     },
   },
   {
-    name: 'lang: Mama starts in English with grandma\'s help (the helper, the rescue)',
-    async run(t, { startLevel, fillTray, modal, sleep }) {
+    name: 'lang: Mama starts in English (not in grandma mode); grandma stays Dutch',
+    async run(t) {
       const p = await t.phone({ state: { name: 'Mama', pid: MAMA, level: 12 } });
-      t.ok(await p.evaluate(() => careMode() && isEn()), 'care mode, in English');
+      t.ok(await p.evaluate(() => isEn() && !careMode()), 'English, normal game');
       t.eq(await homeTexts(p), ['Play', 'Levels', 'Themes', 'Leaderboard'], 'home screen in English');
-      await startLevel(p, 12);
-      t.eq(await p.evaluate(() => __mj.G.ez), 1, 'the gentle deal');
-      await fillTray(p);
-      const m = await modal(p);
-      t.ok(m && m.buttons.includes('rsBack'), 'a full tray offers to put the tiles back', m);
-      const txt = await p.evaluate(() => document.querySelector('#modalBox').innerText);
-      t.ok(/tiles back/i.test(txt) && !/stenen|terug/i.test(txt), 'the rescue is explained in English', txt);
-      // she can still pick Dutch herself
-      await p.evaluate(() => { document.querySelector('#modal').classList.add('hidden'); __mj.show('home'); setLang('nl'); }); await sleep(200);
+      await p.evaluate(() => { setLang('nl'); __mj.show('home'); });
       t.eq((await homeTexts(p))[0], 'Spelen', 'her own choice wins');
-      // grandma herself stays Dutch
       const q = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma' } });
       t.ok(await q.evaluate(() => careMode() && !isEn()), 'grandma: care mode, Dutch');
-    },
-  },
-  {
-    name: 'lang: the helper makes a pair glow for Mama too',
-    async run(t, { startLevel, sleep }) {
-      const p = await t.phone({ state: { name: 'Mama', pid: MAMA, level: 5 }, tune: { HELP: { care: { nudge: { downS: 1, upS: 2 } } } } });
-      await startLevel(p, 5);
-      await p.evaluate(() => { __mj.G.lastMove = performance.now() - 5000; });
-      await p.waitForFunction(() => document.querySelectorAll('.tile.nudge').length >= 1, null, { timeout: 6000 }).catch(() => { });
-      t.ok(await p.evaluate(() => document.querySelectorAll('.tile.nudge').length >= 1), 'a pair glows');
     },
   },
   {

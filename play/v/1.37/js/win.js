@@ -2,11 +2,16 @@
 'use strict';
 
 // ---------- winning ----------
+/* 3 stars, one less for each help used: hint, shuffle, putting the tray back.
+   (Planned: hints, shuffles and jokers bought in a shop; each bought joker used on a pair will cost a
+   star too, a joker that finishes the level will not. Count them here, e.g. G.boughtJokersUsed.) */
+const starsFor = G => Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].filter(Boolean).length - (G.boughtJokersUsed || 0));
+
 function win() {
   syncClock(); G.tStart = 0;
+  if (G.autoFin) autoBanner(false);
   clearCur();
-  // 3 stars, one less for each help used (hint, shuffle, putting the tray back)
-  const stars = Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].filter(Boolean).length);
+  const stars = starsFor(G);
   G.score += stars * RULES.score.perStar;
   endLevel('win', { st: stars });
   const before = totalStars();

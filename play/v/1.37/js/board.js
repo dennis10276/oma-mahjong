@@ -14,7 +14,7 @@ function saveCur() {
   if (!G || G.done) return;
   syncClock();
   try {
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, ob: obState() }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState() }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -23,23 +23,27 @@ function resumeClock() { if (G && !G.done && curScreen === 'game') G.tStart = pe
 
 // ---------- starting a level ----------
 const tileScale = () => S.bigTiles ? 0.7 : 1;
-function startLevel(level) { begin({ mode: 'level', level, key: 'L' + level, title: tx('levelN', level), makeSpec: a => Layouts.forLevel(level, a, tileScale()) }); }
+// grandma mode plays its own, gentler levels (Layouts track 'care')
+const levelTrack = () => careMode() ? 'care' : '';
+function startLevel(level) { const tr = levelTrack(); begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), makeSpec: a => Layouts.forLevel(level, a, tileScale(), tr) }); }
 function startDaily(k) {
   const d = parseKey(k);
-  begin({ mode: 'daily', date: k, key: 'D' + k, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), makeSpec: a => Layouts.forDate(dnum(k), a, tileScale()) });
+  const tr = levelTrack();
+  begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), makeSpec: a => Layouts.forDate(dnum(k), a, tileScale(), tr) });
 }
 
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
 function begin(o, restart = false) {
   $('#modal').classList.add('hidden'); modalOnClose = null;
-  $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear();
+  $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
   show('game');
   $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
   const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
-  const ez = cur && cur.key === o.key ? (cur.ez || 0) : easeFor(o.key);
+  const sameTrack = cur && (cur.tr || '') === (o.track || '');      // a saved level from the other set of levels is not resumed
+  const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {
     if (!o.spec) o.aspect = aspect;
     o.spec = Layouts.ease(o.makeSpec(o.aspect), ez);
@@ -48,8 +52,8 @@ function begin(o, restart = false) {
   const spec = o.spec;
   const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
   const n = tiles.length;
-  G = { o, ...o, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false };
-  const resumed = !!(cur && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
+  G = { o, ...o, ptsScale: spec.ptsScale || 1, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false };
+  const resumed = !!(cur && sameTrack && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
   if (resumed) {
     cur.faces.forEach((f, i) => tiles[i].face = f);
     cur.alive.forEach((a, i) => G.alive[i] = a);
@@ -74,7 +78,7 @@ function begin(o, restart = false) {
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };    // taps, blocked taps, flips, best combo, most in tray
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
-  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o) });
+  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -111,7 +115,7 @@ function afterLogic() {
 }
 function afterLand() {
   if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
-  if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeLucky(); }
+  if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeLucky(); maybeAutoFinish(); }
 }
 
 // ---------- drawing ----------
@@ -280,8 +284,8 @@ function showBlockers(i) {
 
 // ---------- tapping ----------
 let blockedTaps = 0, comboTimer;
-function onTap(i) {
-  if (!G || G.done || G.busy || !G.alive[i]) return;
+function onTap(i, auto = false) {
+  if (!G || G.done || G.busy || !G.alive[i] || (G.autoFin && !auto)) return;   // (auto-finish: hands off)
   Sound.init();
   const el = G.tiles[i].el;
   G.st.tp++;
@@ -391,7 +395,7 @@ function onMatch(c, face, gold) {
   G.combo = now - G.lastMatch < comboMs ? G.combo + 1 : 1;
   G.lastMatch = now;
   const mult = specialMatch(face, gold, c);
-  const pts = sc.pair * Math.min(G.combo, sc.maxCombo) * mult;
+  const pts = Math.round(sc.pair * Math.min(G.combo, sc.maxCombo) * mult * (G.ptsScale || 1));   // (grandma's smaller piles: same points)
   G.score += pts;
   S.matches++;
   taskProgress('pairs'); taskProgress('combo', G.combo, true);
@@ -425,6 +429,70 @@ function milestone(m) {
   const r = bar.getBoundingClientRect(); FX.burst(r.right, r.top + r.height / 2, 18, true);
 }
 
+// ---------- auto-finish (RULES.autoFinish) ----------
+/* Can the rest still go wrong? Every order of taps is tried: taking any free tile (a face-down one
+   too: peeking changes nothing), and taking a peeked face-down tile together with its free twin.
+   Unsafe as soon as some order puts a 4th tile without a partner in the tray. The tray follows from
+   which tiles are gone, so a position is just the set of tiles still on the board (memoised).
+   p = { faces, nb, alive (Uint8Array), down, tray: [faces] }. Returns true (safe), false, or null
+   (too big to be sure). */
+function finishSafe(p, budget = RULES.autoFinish.budget) {
+  const rem = []; for (let i = 0; i < p.alive.length; i++) if (p.alive[i]) rem.push(i);
+  if (rem.length > 30) return null;
+  const alive = new Uint8Array(p.alive.length), memo = new Map();
+  let nodes = 0;
+  function go(mask, tray) {
+    if (mask === 0) return true;
+    const known = memo.get(mask); if (known !== undefined) return known;
+    if (++nodes > budget) throw 'budget';
+    alive.fill(0); rem.forEach((t, k) => { if (mask & (1 << k)) alive[t] = 1; });
+    const fr = []; rem.forEach((t, k) => { if ((mask & (1 << k)) && Layouts.isFree(t, alive, p.nb)) fr.push(k); });
+    let safe = fr.length > 0;
+    for (const k of fr) {
+      if (!safe) break;
+      const f = p.faces[rem[k]], m = mask & ~(1 << k), at = tray.indexOf(f);
+      if (at >= 0) safe = go(m, tray.slice(0, at).concat(tray.slice(at + 1)));
+      else if (tray.length + 1 >= SLOTS) safe = false;                 // a 4th tile without a partner
+      else safe = go(m, tray.concat(f));
+      // a peeked face-down tile and its free twin go together, without the tray
+      if (safe && p.down[rem[k]] && at < 0) for (const j of fr) if (j !== k && p.faces[rem[j]] === f) { safe = go(m & ~(1 << j), tray); if (!safe) break; }
+    }
+    memo.set(mask, safe);
+    return safe;
+  }
+  try { return go(rem.length === 32 ? -1 : (1 << rem.length) - 1, p.tray.slice()); } catch (e) { return null; }
+}
+function autoFinishOK() {
+  const A = RULES.autoFinish;
+  if (!A || !G || G.done || G.autoFin || G.busy || G.flights || G.overShown || toolLevel(G) < A.fromLevel) return false;
+  if (aliveCount() > A.maxTiles || !aliveCount()) return false;
+  // ice, locks and jokers have their own rules: only when none of them are left
+  if (G.tiles.some((t, i) => G.alive[i] && (t.face === JOKER || obKind(i))) || G.tray.some(t => faceOf(t) === JOKER)) return false;
+  return finishSafe({ faces: G.tiles.map(t => t.face), nb: G.nb, alive: G.alive, down: G.down, tray: G.tray.map(faceOf) }) === true;
+}
+function autoBanner(on) {
+  let el = $('#autoBanner');
+  if (!el) { el = document.createElement('div'); el.id = 'autoBanner'; $('#boardWrap').appendChild(el); }
+  if (on) el.innerHTML = `<span class="ab-ico">🪄</span><b>${tx('autoFinish')}</b><span>${tx('autoFinish2')}</span>`;
+  el.classList.toggle('on', on);
+}
+function maybeAutoFinish() {
+  if (!autoFinishOK()) return;
+  G.autoFin = true; clearNudge(); clearHint();
+  autoBanner(true);      // big over the pile (nobody needs to see it any more); combo texts stay in the top bar
+  logLvl('auto');
+  const step = () => {
+    if (!G || G.done || !G.autoFin) return;
+    // a tile whose twin waits in the tray first, then any free tile (every order is safe now)
+    const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && free(i)) fr.push(i);
+    const i = fr.find(i => trayHas(faceOf(i))) ?? fr.find(i => fr.some(j => j !== i && faceOf(j) === faceOf(i))) ?? fr[0];
+    if (i === undefined) return;
+    onTap(i, true); if (G.alive[i]) onTap(i, true);              // a face-down tile: turn it, then take it
+    setTimeout(step, RULES.autoFinish.stepMs);
+  };
+  setTimeout(step, 700);
+}
+
 // ---------- a full tray ----------
 function checkStuck() {
   if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
@@ -449,7 +517,7 @@ function gameOver() {
 
 // ---------- 💡 hint and 🔀 shuffle (once per level each) ----------
 function toolUsable(used, usedMsg) {
-  if (!G || G.done || G.busy) return false;
+  if (!G || G.done || G.busy || G.autoFin) return false;
   Sound.init();
   if (!toolsOpen()) { toolsLockedMsg(); return false; }
   if (used) { toast(usedMsg); Sound.blocked(); return false; }
