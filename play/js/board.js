@@ -315,8 +315,9 @@ function onTap(i, auto = false) {
       // face-down tile: first tap turns it over (only one at a time), second tap takes it
       if (pk >= 0 && G.alive[pk]) turn(pk, true);
       G.peek = i; turn(i, false);
-      Sound.flip(); buzz(8); clearHint(); saveCur();
-      taskProgress('flips'); bumpStat('flips'); G.st.fl++;
+      Sound.flip(); buzz(8); clearHint();
+      bumpStat('flips'); G.st.fl++;
+      afterPaint(() => { taskProgress('flips'); saveCur(); });
       return;
     }
     // its twin waits in the tray, or is the open tile (which counts as picked): it matches right
@@ -382,11 +383,17 @@ function onTap(i, auto = false) {
     if (G.tray.length === SLOTS - 1) Sound.warn(); else Sound.land();
   });
 }
+/* Turning a face-down tile over (or back). The new side shows right away, with a short squeeze
+   played by the graphics chip itself (Web Animations). Before 1.41 the face only showed after
+   140 ms, and restarting a CSS animation made the phone lay out the whole pile again on every
+   turn, which felt laggy on slower phones. */
 function turn(i, faceDown) {
   const el = G.tiles[i].el;
-  replay(el, 'turning', 300);
-  setTimeout(() => el.classList.toggle('back', faceDown), 140);
+  el.classList.toggle('back', faceDown);
+  try { el.animate([{ transform: 'scaleX(.12)' }, { transform: 'scaleX(1)' }], { duration: faceDown ? 140 : 180, easing: 'cubic-bezier(.2,.9,.3,1)' }); } catch (e) { }
 }
+// work that can wait until the screen has shown the change (saving, task counting)
+const afterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
 function showDownTip() {
   openModal(`<h2>${tx('downTitle')}</h2>
     <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>

@@ -279,8 +279,6 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
     linear-gradient(160deg, #3dbb90, #1b8063); }
 .tile.back .face { visibility: hidden; }
 .tile.back::after { background: rgba(10,30,20,.35); }
-.tile.turning { animation: turnx .3s ease; }
-@keyframes turnx { 50% { transform: scaleX(0.05); } }
 /* corner numbers can be switched off in the settings */
 body.nonum .cn { display: none; }
 
@@ -376,6 +374,7 @@ body.nonum .cn { display: none; }
 .tools-new { display: flex; justify-content: center; gap: 18px; font-size: 64px; margin: 6px 0; }
 .tools-new span { animation: sunPop 1s cubic-bezier(.3,1.6,.5,1) backwards; }
 .tools-new span:nth-child(2) { animation-delay: .2s; }
+.tools-new.off span { filter: grayscale(1); opacity: .45; }   /* not earned (from level 50) */
 .tr-new { display: grid; gap: 10px; margin: 12px 0; }
 .trn { display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 16px; padding: 10px 12px; text-align: left; animation: pop .5s cubic-bezier(.3,1.5,.6,1) backwards; }
 .trn:nth-child(2) { animation-delay: .15s; } .trn:nth-child(3) { animation-delay: .3s; } .trn:nth-child(4) { animation-delay: .45s; }

@@ -279,8 +279,6 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
     linear-gradient(160deg, #3dbb90, #1b8063); }
 .tile.back .face { visibility: hidden; }
 .tile.back::after { background: rgba(10,30,20,.35); }
-.tile.turning { animation: turnx .3s ease; }
-@keyframes turnx { 50% { transform: scaleX(0.05); } }
 /* corner numbers can be switched off in the settings */
 body.nonum .cn { display: none; }
 
