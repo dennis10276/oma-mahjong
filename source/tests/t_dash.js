@@ -20,6 +20,9 @@ function fixture() {
     ev('pDen', 100, { k: 'open', lv: 26, name: 'Dennis' }),
     ev('pDen', 99, { k: 'start', lv: 26, at: 1, n: 80 }),
     ev('pDen', 90, { k: 'end', r: 'win', lv: 26, at: 1, n: 80, left: 0, dur: 170, tp: 100, st: 3, sc: 1500 }),
+    ev('pDen', 600, { k: 'start', lv: 27, at: 1, n: 84 }),                 // started in the morning, paused,
+    ev('pDen', 598, { k: 'pause', lv: 27, at: 1, left: 68, s: 82 }),
+    ev('pDen', 30, { k: 'start', lv: 27, at: 1, n: 84, res: true }),       // and continued in the evening
   ];
   const plays = {};
   for (const [pid, id, e] of rows) (plays[pid] = plays[pid] || {})[id] = e;
@@ -56,6 +59,8 @@ module.exports = [
         t.ok(/Moeilijkheid aangepast: iets makkelijker/.test(await txt('#feed')), 'the change is in the feed');
         t.ok(await p.evaluate(() => document.querySelectorAll('#chClose .bar').length) === 2, 'closeness chart has both failed tries');
         const tbl = await txt('#tbl'), feed = await txt('#feed');
+        const when = await p.evaluate(() => { const l = analyse(events('pDen')).levels; return { order: l.sort((a, b) => b.last - a.last).map(x => x.lv), ago: Math.round((Date.now() - l.find(x => x.lv === 27).last) / 60e3) }; });
+        t.ok(when.order[0] === 27 && when.ago >= 29 && when.ago <= 32, 'a level continued later shows when it was last played (not when it was first started)', when);
         t.ok(/↩/.test(tbl) && /6 over/.test(tbl), 'table shows the rescue and the closest try', tbl.slice(0, 300));
         t.ok(/Stenen teruggelegd/.test(feed) && /tijd onbekend/.test(feed) && /Foutje in de app: test error/.test(feed), 'feed shows the new events', feed.slice(0, 600));
         // send a heart from the PC as Dennis

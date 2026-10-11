@@ -223,7 +223,7 @@ function stuckStreak(pid) {
 function analyse(ev) {
   const levels = new Map(), days = new Map();
   const day = t => { const k = dkey(new Date(t)); if (!days.has(k)) days.set(k, { k, sec: 0, wins: 0, losses: 0, rescues: 0 }); return days.get(k); };
-  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, rescues: 0, first: e.t, won: null, sec: 0, stars: 0, closest: null }); return levels.get(k); };
+  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, rescues: 0, first: e.t, last: e.t, won: null, sec: 0, stars: 0, closest: null }); const l = levels.get(k); l.last = Math.max(l.last, e.t); return l; };   // last: the latest moment she played it (also after continuing later)
   for (const e of ev) {
     if (e.k === 'end') {
       const l = L(e); l.ends.push(e); l.sec += e.dur || 0;
@@ -235,6 +235,7 @@ function analyse(ev) {
     else if (e.k === 'hint') L(e).hints++;
     else if (e.k === 'shuf') L(e).shuf++;
     else if (e.k === 'start') L(e);
+    else if (e.k === 'pause' && levels.has(lvlKey(e))) L(e);
   }
   return { levels: [...levels.values()], days };
 }
@@ -361,10 +362,9 @@ function render() {
   heatmap($('#chHeat'), ev);
 
   // table
-  const lastT = l => Math.max(l.first, ...l.ends.map(e => e.t));
-  const rows = levels.sort((a, b) => lastT(b) - lastT(a));
+  const rows = levels.sort((a, b) => b.last - a.last);
   const res = l => l.ends.map(e => (e.ez >= 2 ? '<small title="makkelijker gemaakt">🌱</small>' : '') + (e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : '<span class="r">↻</span>') + (e.rb ? '<small title="stenen teruggelegd">↩</small>' : '')).join('');
-  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.first).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
+  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
 
   // live feed
   const txt = e => {
