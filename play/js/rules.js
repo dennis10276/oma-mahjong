@@ -24,11 +24,12 @@ const RULES = {
   },
 };
 
-/* Help per kind of player. Grandma gets "care"; everyone else "normal".
-   Change a value here to give (or take away) a kind of help, e.g. normal.rescue = true. */
+/* Help: `normal` is what everyone gets; `care` holds the gentler values. Which of them a player gets
+   is decided per part (PARTS below): a part that is on takes its values from `care`.
+   Change a value here to change it for everyone, e.g. normal.rescue = true. */
 const HELP = {
   normal: {
-    comboMs: 6000,                             // time to keep a combo going
+    comboMs: 10000,                            // time to keep a combo going (everyone)
     lucky: { fromLevel: 10, perLevel: 1, chance: 0.3 },
     gentle: 0,                                 // 0 = the normal deal (see Layouts.ease)
     easierAfterFails: 0,                       // 0 = never
@@ -40,7 +41,6 @@ const HELP = {
     jokersGoneFrom: 50,                        // ... and no 🃏 jokers in the deal
   },
   care: {
-    comboMs: 10000,
     lucky: { fromLevel: 1, perLevel: 2, chance: 0.5 },
     gentle: 1,                                 // on top of her own gentle levels (layouts.js, track 'care'); her results move it
     easierAfterFails: 3,
@@ -60,30 +60,57 @@ const HELP = {
 };
 const ADAPT_STEPS = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', 0: 'zacht (haar standaard)', 1: 'iets makkelijker', 2: 'makkelijker' };
 
+/* Grandma mode in parts, each switchable per player on the family dashboard. 👵 Super-omamodus
+   turns them all on (by default only for grandma, see GRANDMA); a part switched on its own (PUK:
+   only `adapt`) works without the others. `help`: the HELP.care values the part brings. */
+const PARTS = [
+  { id: 'levels', group: 'easy', label: 'Eigen, makkelijkere levels', note: 'langzamer moeilijker, weinig omgedraaide stenen' },
+  { id: 'gentle', group: 'easy', help: ['gentle'], label: 'Elk level een stapje makkelijker', note: 'meer dezelfde plaatjes' },
+  { id: 'adapt', group: 'easy', help: ['adapt'], label: 'Past zich aan de resultaten aan', note: 'laatste 10 pogingen: makkelijker als het vaak misgaat' },
+  { id: 'retry', group: 'easy', help: ['easierAfterFails'], label: 'Makkelijker na 3 keer mis', note: 'de 4e poging van hetzelfde level' },
+  { id: 'rescue', group: 'help', help: ['rescue'], label: 'Stenen terugleggen', note: 'vol bakje: 1× per level terugleggen (kost een ster)' },
+  { id: 'nudge', group: 'help', help: ['nudge'], label: 'Het hulpje', note: 'een paar licht op na een tijdje niets doen' },
+  { id: 'shuffleLater', group: 'help', help: ['shuffleAfter'], label: 'Schudden niet meteen', note: 'pas na een paar zetten (bewaart de ster)' },
+  { id: 'lucky', group: 'extra', help: ['lucky'], label: 'Meer geluksmomentjes', note: 'vanaf level 1, tot 2 per level' },
+  { id: 'keepTools', group: 'extra', help: ['toolsGoneFrom', 'jokersGoneFrom'], label: 'Hint, Schudden en jokers na level 50', note: 'blijven, ook na level 50' },
+  { id: 'news', group: 'news', label: 'Nieuws uit Apeldoorn', note: 'na een gewonnen level een nieuwtje of buurtverhaal' },
+];
+const PART_GROUPS = { easy: 'Makkelijker spelen', help: 'Hulp', extra: "Extra's", news: 'Nieuws' };
+
 /* Grandma: her player id, or a name starting with "Oma" (in case she ever reinstalls the app).
    `like` = players who always get exactly what grandma gets (DennisTEST: to see what she sees). */
 const GRANDMA = { pids: ['pmuy4wmdp17hbws'], like: ['pmuxw2uqkzcnbgx'], name: /^oma/i };
-// news from Apeldoorn: on for grandma by default, switchable per player on the dashboard
-const getsNews = (pid, name, cfg = {}) => VILLAGE.enabled && ('news' in cfg ? cfg.news : isGrandma(pid, name));
 const isGrandma = (pid, name) => GRANDMA.pids.includes(pid) || GRANDMA.like.includes(pid) || GRANDMA.name.test(name || '');
-// who else gets the "care" help by default (besides grandma and DennisTEST); Mama is not in grandma mode
+// who else has Super-omamodus by default (besides grandma and DennisTEST); Mama is not in grandma mode
 const CARE = { pids: [] };
 // players who start in English until they pick a language in the settings (Mama)
 const START_ENGLISH = ['pmv13884fc9vndv'];
 
-/* Settings per player, switched on the family dashboard (⚙️ per player): grandma mode (the care help)
-   and the news from Apeldoorn. They are small events in plays/cfg-<pid>; the newest one per setting
-   counts. A setting that was never switched follows the defaults above (GRANDMA, CARE). Players in
-   GRANDMA.like follow grandma's settings. */
+/* Settings per player, switched on the family dashboard (⚙️ per player): Super-omamodus and each part
+   of it (PARTS). They are small events in plays/cfg-<pid>; the newest one per setting counts. A part
+   never switched on its own follows Super-omamodus; that one, never switched, follows the defaults
+   above (GRANDMA, CARE). Players in GRANDMA.like follow grandma's settings. */
 const cfgKey = pid => pid.startsWith('test-') ? 'test-cfg-' + pid.slice(5) : 'cfg-' + pid;
 const isCfgKey = id => id.startsWith('cfg-') || id.startsWith('test-cfg-');
 const cfgPid = pid => GRANDMA.like.includes(pid) ? GRANDMA.pids[0] : pid;
 function playerCfg(list) {
   const c = {};
-  (list || []).filter(e => e && e.k === 'cfg').sort((a, b) => a.t - b.t).forEach(e => { if ('care' in e) c.care = !!e.care; if ('news' in e) c.news = !!e.news; });
+  (list || []).filter(e => e && e.k === 'cfg').sort((a, b) => a.t - b.t).forEach(e => {
+    for (const [k, v] of Object.entries(e)) if (k !== 'k' && k !== 't') c[k === 'care' ? 'super' : k] = !!v;   // (care: the old name)
+  });
   return c;
 }
-const isCarePlayer = (pid, name, cfg = {}) => 'care' in cfg ? cfg.care : isGrandma(pid, name) || CARE.pids.includes(pid);
+// 👵 Super-omamodus: all parts at once
+const isCarePlayer = (pid, name, cfg = {}) => 'super' in cfg ? cfg.super : isGrandma(pid, name) || CARE.pids.includes(pid);
+const partOn = (id, pid, name, cfg = {}) => id in cfg ? cfg[id] : isCarePlayer(pid, name, cfg);
+// the help one player gets: the normal values, with the gentler ones of every part that is on
+function helpFor(pid, name, cfg = {}) {
+  const h = { ...HELP.normal };
+  for (const p of PARTS) if (p.help && partOn(p.id, pid, name, cfg)) for (const k of p.help) h[k] = HELP.care[k];
+  return h;
+}
+// news from Apeldoorn (a part too; VILLAGE.enabled switches it off for everyone)
+const getsNews = (pid, name, cfg = {}) => VILLAGE.enabled && partOn('news', pid, name, cfg);
 
 /* News from Apeldoorn after a won level (js/village.js), only for grandma (and DennisTEST).
    Mostly real local news (collected every two hours by tools/news.py), sometimes a made-up story

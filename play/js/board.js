@@ -23,8 +23,8 @@ function resumeClock() { if (G && !G.done && curScreen === 'game') G.tStart = pe
 
 // ---------- starting a level ----------
 const tileScale = () => S.bigTiles ? 0.7 : 1;
-// grandma mode plays its own, gentler levels (Layouts track 'care')
-const levelTrack = () => careMode() ? 'care' : '';
+// the part "own, easier levels" (grandma mode) plays its own, gentler levels (Layouts track 'care')
+const levelTrack = () => part('levels') ? 'care' : '';
 function startLevel(level) { const tr = levelTrack(); begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), makeSpec: a => Layouts.forLevel(level, a, tileScale(), tr) }); }
 function startDaily(k) {
   const d = parseKey(k);

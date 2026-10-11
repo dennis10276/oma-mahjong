@@ -88,25 +88,28 @@ module.exports = [
     },
   },
   {
-    name: 'dashboard: switching grandma mode and the news per player',
+    name: 'dashboard: Super-omamodus and each part of it switched per player',
     async run(t, { serve, FakeDB, browser, sleep, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
       const f = fixture();
-      f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, care: true } };          // Dennis was put in grandma mode earlier
+      f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, adapt: true } };          // Dennis: only the part that follows his results
       const db = new FakeDB(f);
-      const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 } });
+      const ctx = await browser.newContext({ viewport: { width: 1200, height: 1100 } });
       await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
       const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
       try {
         await p.goto(site.url + 'dash/#pOma'); await sleep(1800);
-        const sw = () => p.evaluate(() => [...document.querySelectorAll('#cfgBox .sw')].map(b => b.dataset.k + ':' + b.textContent));
-        t.eq(await sw(), ['care:Aan', 'news:Aan'], 'grandma: grandma mode and news on (her defaults)');
+        const sw = () => p.evaluate(() => Object.fromEntries([...document.querySelectorAll('#cfgBox .sw')].map(b => [b.dataset.k, b.textContent])));
+        const oma = await sw();
+        t.eq(Object.values(oma).filter(v => v === 'Aan').length, Object.keys(oma).length, 'grandma: Super-omamodus and every part on');
+        t.ok('super' in oma && 'levels' in oma && 'adapt' in oma && 'news' in oma && !('combo' in oma), 'the switches', Object.keys(oma));
         t.ok(!(await p.evaluate(() => [...document.querySelectorAll('#who option')].some(o => o.value.startsWith('cfg-')))), 'settings are not a player in the list');
         await p.evaluate(() => document.querySelector('#cfgBox .sw[data-k="news"]').click()); await sleep(400);
         const post = db.log.find(l => l.m === 'POST' && /plays\/cfg-pOma/.test(l.p));
-        t.ok(post && post.body.k === 'cfg' && post.body.news === false && !('care' in post.body), 'turning the news off is saved for her', post);
+        t.ok(post && post.body.k === 'cfg' && post.body.news === false && Object.keys(post.body).length === 3, 'one part off for her: only that is saved', post);
         await p.evaluate(() => { document.querySelector('#who').value = 'pDen'; document.querySelector('#who').dispatchEvent(new Event('change')); }); await sleep(400);
-        t.eq(await sw(), ['care:Aan', 'news:Uit'], 'Dennis: grandma mode on (switched), no news (his default)');
+        const den = await sw();
+        t.eq([den.super, den.adapt, den.levels, den.rescue, den.news], ['Uit', 'Aan', 'Uit', 'Uit', 'Uit'], 'Dennis: only "follows the results"');
         t.eq(errs, [], 'no errors');
       } finally { await ctx.close(); site.close(); }
     },

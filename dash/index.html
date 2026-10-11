@@ -96,6 +96,9 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .sw.on { background: var(--good); border-color: var(--good); color: #fff; }
 .sw:disabled { opacity: .55; cursor: default; }
 .sw:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.cfg-group { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); margin: 14px 0 6px; }
+.cfg-super { background: var(--accent-soft); margin-top: 4px; }
+.cfg i { font-style: normal; color: var(--accent); }
 .cfg-note { color: var(--ink-3); font-size: 13px; margin: 8px 0 0; }
 .warnbox { background: var(--surface-2); border-left: 4px solid var(--warn); padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
 .foot { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
@@ -182,8 +185,10 @@ const noTime = e => e.k === 'end' && !e.dur && !e.tp;
 // grandma gets extra help in the game (CARE / HELP in the app's rules.js)
 const cfgFor = pid => playerCfg(events(cfgKey(cfgPid(pid))));
 const isCare = pid => isCarePlayer(pid, nameOf(pid), cfgFor(pid));
+const partFor = (id, pid) => partOn(id, pid, nameOf(pid), cfgFor(pid));
 // grandma's difficulty step (the app moves it by her own results, see help.js)
-const stepName = s => ADAPT_STEPS[s] || String(s);
+// her steps are around her gentle standard; without the "one step gentler" part 0 is just the normal level
+const stepName = (s, pid) => pid && !partFor('gentle', pid) ? (s <= 0 ? 'normaal' : s === 1 ? 'iets makkelijker' : 'makkelijker') : ADAPT_STEPS[s] || String(s);
 function adaptInfo(ev) {
   const last = [...ev].reverse().find(e => e.k === 'adapt' || (e.k === 'start' && e.ad != null));
   if (!last) return null;
@@ -315,9 +320,9 @@ function render() {
     k('Pogingen per level', avgTries ? avgTries.toFixed(1).replace('.', ',') : '–', 'gemiddeld tot het lukt' + (nEasy ? ` · ${nEasy}× 🌱 makkelijker` : '')) +
     k('Kans per poging', ends.length ? Math.round(winEnds.length / ends.length * 100) + '%' : '–', `${winEnds.length} van ${ends.length} pogingen`) +
     k('Vastgelopen', ends.length ? Math.round(stuckEnds.length / ends.length * 100) + '%' : '–', `${stuckEnds.length}× van ${ends.length} pogingen` + (stuckEnds.length ? ` · gem. ${Math.round(stuckEnds.reduce((a, e) => a + (e.n ? (e.n - e.left) / e.n : 0), 0) / stuckEnds.length * 100)}% af` : '')) +
-    k('Hulp gebruikt', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden` + (nRescue || isCare(sel) ? ` · ${nRescue}× ↩ · ${nNudge}× ✨` : '')) +
+    k('Hulp gebruikt', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden` + (nRescue || partFor('rescue', sel) || partFor('nudge', sel) ? ` · ${nRescue}× ↩ · ${nNudge}× ✨` : '')) +
     k('Tijd per level', timed.length ? mmss(timed.reduce((a, e) => a + (e.dur || 0), 0) / timed.length) : '–', 'gemiddeld bij gehaald') +
-    (() => { const a = isCare(sel) && adaptInfo(ev); if (!a) return ''; const w = String(a.won).replace('.', ','); return k('Moeilijkheid', `<span style="font-size:19px;line-height:1.3;display:block;padding-top:4px">${stepName(a.step)}</span>`, `won ${w} van de laatste ${a.n} pogingen · past zich vanzelf aan`); })() +
+    (() => { const a = partFor('adapt', sel) && adaptInfo(ev); if (!a) return ''; const w = String(a.won).replace('.', ','); return k('Moeilijkheid', `<span style="font-size:19px;line-height:1.3;display:block;padding-top:4px">${stepName(a.step, sel)}</span>`, `won ${w} van de laatste ${a.n} pogingen · past zich vanzelf aan`); })() +
     (() => {
       const nN = ev.filter(e => e.k === 'vnews').length, nS = ev.filter(e => e.k === 'vstory').length, asks = ev.filter(e => e.k === 'vask');
       if (!nN && !nS) return '';
@@ -325,7 +330,7 @@ function render() {
     })() +
     (() => { const w = ev.filter(e => e.k === 'nudge' && e.w).map(e => e.w); if (!w.length) return ''; return k('Hulpje wacht nu', '~' + w[w.length - 1] + ' s', 'langer als het goed gaat, korter als ze vastloopt'); })() +
     (() => {   // grandma's own levels: how much help and how often first time right, the last 7 days
-      if (!isCare(sel)) return '';
+      if (!partFor('levels', sel) && !partFor('nudge', sel)) return '';
       const wk = ev.filter(e => e.t > Date.now() - 7 * 864e5 && e.m !== 'd' && e.lv);
       const tries = wk.filter(e => e.k === 'start' && !e.res).length, nudges = wk.filter(e => e.k === 'nudge').length;
       const firsts = wk.filter(e => e.k === 'end' && (e.at || 1) === 1), firstWins = firsts.filter(e => e.r === 'win').length;
@@ -377,7 +382,7 @@ function render() {
       case 'shufno': return ['🔀', `Wilde meteen schudden in ${lvlName(e).toLowerCase()}: bewaard voor later`];
       case 'gift': return ['🎁', `Dagcadeau geopend: +${e.stars} ⭐`];
       case 'rescue': return ['↩', `Stenen teruggelegd in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)}, ${e.left} stenen op het bord)`];
-      case 'adapt': return ['🎚️', `Moeilijkheid aangepast: <b>${stepName(e.to)}</b> (was ${stepName(e.from)}; won ${e.rate}% van de laatste ${e.n} pogingen)`];
+      case 'adapt': return ['🎚️', `Moeilijkheid aangepast: <b>${stepName(e.to, sel)}</b> (was ${stepName(e.from, sel)}; won ${e.rate}% van de laatste ${e.n} pogingen)`];
       case 'msg': return ['💌', `Bericht van ${esc(e.name)}: “${esc([e.m0, e.m1, e.m2].filter(Boolean).join(''))}”`];
       case 'err': return ['⚠️', `Foutje in de app: ${esc(e.msg)}${e.w ? ` <small>(${esc(e.w)})</small>` : ''}`];
       default: return ['•', esc(e.k)];
@@ -417,7 +422,7 @@ function renderAlerts() {
   const html = list.map(a => {
     const nm = esc(nameOf(a.pid)), pct = a.closest != null && a.last.n ? Math.round((a.last.n - a.closest) / a.last.n * 100) : null;
     return `<div class="alert"><div class="msg">😟 <b>${nm}</b> zit vast op <b>${esc(a.title.toLowerCase())}</b>: ${a.n}× niet gelukt, laatste keer ${ago(a.last.t)}.
-      <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${isCare(a.pid) ? (a.n >= HELP.care.easierAfterFails ? 'Haar volgende poging is makkelijker 🌱. ' : a.n === HELP.care.easierAfterFails - 1 ? 'Lukt het nog een keer niet, dan wordt het level makkelijker 🌱. ' : '') : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
+      <small>${a.closest != null ? `Beste poging: nog ${a.closest} stenen over (${pct}% af). ` : ''}${partFor('retry', a.pid) ? (a.n >= HELP.care.easierAfterFails ? 'Haar volgende poging is makkelijker 🌱. ' : a.n === HELP.care.easierAfterFails - 1 ? 'Lukt het nog een keer niet, dan wordt het level makkelijker 🌱. ' : '') : ''}Een hartje doet wonderen!</small></div>${heartBox(a.pid)}</div>`;
   }).join('');
   const typing = document.activeElement && document.activeElement.closest && document.activeElement.closest('#alerts');
   if ($('#alerts').dataset.html !== html && !typing) { $('#alerts').innerHTML = html; $('#alerts').dataset.html = html; }
@@ -466,20 +471,33 @@ function renderCfg() {
   const el = $('#cfgBox');
   if (!sel) { el.hidden = true; return; }
   if (el.contains(document.activeElement) && el.dataset.busy) return;
-  const name = nameOf(sel), c = cfgFor(sel), follows = GRANDMA.like.includes(sel);
-  const care = isCarePlayer(sel, name, c), news = getsNews(sel, name, c);
-  const row = (k, on, label, note) => `<div class="cfg"><span><b>${label}</b><small>${note}</small></span><button class="sw${on ? ' on' : ''}" data-k="${k}" aria-pressed="${on}"${follows ? ' disabled' : ''}>${on ? 'Aan' : 'Uit'}</button></div>`;
-  const html = `<h2>⚙️ Instellingen voor ${esc(name)}</h2><div class="cfgs">
-    ${row('care', care, '👵 Oma-modus', 'zachter spel, het hulpje, stenen terugleggen, makkelijker na 3 keer mis')}
-    ${VILLAGE.enabled ? row('news', news, '📰 Nieuws uit Apeldoorn', 'na een gewonnen level een nieuwtje of buurtverhaal') : ''}</div>
+  const name = nameOf(sel), c = cfgFor(sel), follows = GRANDMA.like.includes(sel), sup = isCarePlayer(sel, name, c);
+  const dis = follows ? ' disabled' : '';
+  const sw = (k, on) => `<button class="sw${on ? ' on' : ''}" data-k="${k}" aria-pressed="${on}"${dis}>${on ? 'Aan' : 'Uit'}</button>`;
+  const parts = PARTS.filter(p => p.id !== 'news' || VILLAGE.enabled);
+  const groups = Object.entries(PART_GROUPS).map(([g, title]) => {
+    const rows = parts.filter(p => p.group === g).map(p => {
+      const on = partOn(p.id, sel, name, c), own = p.id in c;
+      const why = own ? (on !== sup ? ' · <i>los ingesteld</i>' : '') : sup ? ' · <i>via Super-omamodus</i>' : '';
+      return `<div class="cfg"><span><b>${p.label}</b><small>${p.note}${why}</small></span>${sw(p.id, on)}</div>`;
+    }).join('');
+    return rows ? `<h3 class="cfg-group">${title}</h3><div class="cfgs">${rows}</div>` : '';
+  }).join('');
+  const html = `<h2>⚙️ Instellingen voor ${esc(name)}</h2>
+    <div class="cfg cfg-super"><span><b>👵 Super-omamodus</b><small>alles hieronder aan; een onderdeel kan daarna nog los uit (of los aan, zonder Super-omamodus)</small></span>${sw('super', sup)}</div>
+    ${groups}
     <p class="cfg-note">${follows ? `Volgt altijd de instellingen van ${esc(nameOf(GRANDMA.pids[0]))}.` : 'De telefoon neemt een wijziging binnen een halve minuut over; een level dat al bezig is, speelt gewoon verder.'}</p>`;
   if (el.dataset.html !== html) { el.innerHTML = html; el.dataset.html = html; }
   el.hidden = false;
   el.querySelectorAll('.sw').forEach(b => b.onclick = async () => {
-    const v = !b.classList.contains('on');
+    const v = !b.classList.contains('on'), k = b.dataset.k;
+    // Super-omamodus switched: the parts follow it again (their own settings are cleared)
+    const body = { k: 'cfg', t: Date.now(), [k]: v };
     b.disabled = true; el.dataset.busy = '1';
-    try { const r = await dbSend(`plays/${cfgKey(cfgPid(sel))}`, { k: 'cfg', t: Date.now(), [b.dataset.k]: v }, 'POST'); if (!r.ok) throw 0; }
-    catch (e) { b.disabled = false; el.querySelector('.cfg-note').textContent = 'Opslaan lukte niet. Controleer de internetverbinding en probeer het opnieuw.'; }
+    try {
+      const r = await dbSend(`plays/${cfgKey(cfgPid(sel))}`, body, 'POST'); if (!r.ok) throw 0;
+      if (k === 'super') { const own = PARTS.filter(p => p.id in c && c[p.id] !== v); if (own.length) await dbSend(`plays/${cfgKey(cfgPid(sel))}`, { k: 'cfg', t: Date.now() + 1, ...Object.fromEntries(own.map(p => [p.id, v])) }, 'POST'); }
+    } catch (e) { b.disabled = false; el.querySelector('.cfg-note').textContent = 'Opslaan lukte niet. Controleer de internetverbinding en probeer het opnieuw.'; }
     delete el.dataset.busy;
   });
 }

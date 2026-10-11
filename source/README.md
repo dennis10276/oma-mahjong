@@ -62,7 +62,7 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
   `win.js`) for that.
 - `GRANDMA`: grandma's player id (or a name starting with "Oma"); `like` = players who always get
   exactly what she gets (DennisTEST, to see what she sees).
-- `CARE`: who else gets grandma's help by default (nobody now; Mama is not in grandma mode).
+- `CARE`: who else has Super-omamodus by default (nobody now; Mama is not in grandma mode).
 - `VILLAGE`: grandma's news after a won level: 1 in 5 a story part (`storyShare`), how old news may be,
   when stories may fill in because the news file is old, the star for a memory question.
 - `START_ENGLISH`: player ids that start in English (Mama). Anyone can switch in the settings
@@ -174,10 +174,15 @@ That needs `tools/news.yml` as `.github/workflows/news.yml` in the GitHub repo (
 
 ## Settings per player (family dashboard)
 
-The ⚙️ card on the dashboard switches **👵 Oma-modus** (all of `HELP.care`) and **📰 Nieuws** per
-player. Each switch is a small event in `plays/cfg-<pid>` (the newest counts; `cfgKey`, `playerCfg`
-in `rules.js`); the app reads it at start, on return and every 30 s. A setting never switched follows
-the defaults in `rules.js` (`GRANDMA`, `CARE`). DennisTEST (`GRANDMA.like`) always follows grandma's.
+Grandma mode is made of parts (`PARTS` in `rules.js`), each switchable per player on the dashboard's
+⚙️ card: own easier levels, one step gentler, follows the results (last 10 tries), easier after 3
+misses, putting tiles back, the helper, no shuffle at the start, more lucky moments, keeping Hint /
+Schudden / jokers after level 50, and the news. **👵 Super-omamodus** turns them all on (default: only
+grandma; DennisTEST follows her); a part can still be switched off for her, or on for someone else on
+its own (PUK: only "follows the results": easier when he loses a lot, never harder than normal).
+Each switch is a small event in `plays/cfg-<pid>` (the newest counts; `playerCfg`, `partOn`,
+`helpFor` in `rules.js`); the app reads it at start, on return and every 30 s. Combos last 10 s for
+everyone.
 
 ## The helper's pace (`HELP.care.nudge.pace`)
 

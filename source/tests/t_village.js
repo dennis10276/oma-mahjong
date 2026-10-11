@@ -24,7 +24,7 @@ module.exports = [
     async run(t) {
       for (const [st, on] of [[OMA, true], [DTEST, true], [DENNIS, false], [{ name: 'Mama', pid: 'pmv13884fc9vndv' }, false]]) {
         const p = await t.phone({ state: st, news: NEWS });
-        const r = await p.evaluate(() => ({ on: villageOn(), care: careMode(), help: help() === HELP.care, chip: !document.querySelector('#btnPaper').classList.contains('hidden'), en: isEn() }));
+        const r = await p.evaluate(() => ({ on: villageOn(), care: careMode(), help: help().rescue === true && help().gentle === 1 && !!help().nudge, chip: !document.querySelector('#btnPaper').classList.contains('hidden'), en: isEn() }));
         t.eq([r.on, r.chip], [on, on], `${st.name}: news ${on ? 'on' : 'off'}`);
         if (st === DTEST) t.eq(r, { on: true, care: true, help: true, chip: true, en: false }, 'DennisTEST: exactly like grandma');
         await p.ctx.close();
@@ -159,7 +159,7 @@ module.exports = [
       const o = await t.phone({ state: OMA, db }); await sleep(200);
       t.eq(await state(o), { care: true, news: false, chip: false }, 'grandma with the news switched off (the newest setting counts)');
       const x = await t.phone({ state: DTEST, db }); await sleep(200);
-      t.eq(await state(x), { care: false, news: true, chip: true }, 'DennisTEST follows the real grandma\'s settings');
+      t.eq(await state(x), { care: false, news: false, chip: false }, 'DennisTEST follows the real grandma\'s settings (Super-omamodus off: its parts too)');
       const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma2' }, tune: { VILLAGE: { enabled: false } } });
       t.eq(await g.evaluate(() => villageOn()), false, 'VILLAGE.enabled = false: no news for anyone');
     },

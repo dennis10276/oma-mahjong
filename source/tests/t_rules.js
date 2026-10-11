@@ -54,4 +54,27 @@ module.exports = [
       t.eq(await bar(g), { shown: true, open: true }, 'grandma mode: still there at level 60');
     },
   },
+  {
+    name: 'parts: each part of grandma mode works on its own (PUK: only easier after losing); Super-omamodus = all; combos 10 s for everyone',
+    async run(t, { FakeDB, startLevel, sleep }) {
+      const db = new FakeDB({ scores: {}, plays: {
+        'test-cfg-puk': { a: { k: 'cfg', t: 1, adapt: true } },
+        'test-cfg-oma': { a: { k: 'cfg', t: 1, news: false } },
+        'test-cfg-den': { a: { k: 'cfg', t: 1, super: true }, b: { k: 'cfg', t: 2, rescue: false } },
+      } });
+      const look = p => p.evaluate(async () => { await loadCfg(); const h = help(); return { sup: careMode(), track: levelTrack(), gentle: h.gentle, adapt: !!h.adapt, retry: h.easierAfterFails, rescue: h.rescue, nudge: !!h.nudge, shuffleLater: !!h.shuffleAfter, lucky: h.lucky.fromLevel, tools: h.toolsGoneFrom, news: villageOn(), combo: h.comboMs }; });
+      const puk = await t.phone({ state: { name: 'PUK', pid: 'test-puk', level: 13 }, db });
+      t.eq(await look(puk), { sup: false, track: '', gentle: 0, adapt: true, retry: 0, rescue: false, nudge: false, shuffleLater: false, lucky: 10, tools: 50, news: false, combo: 10000 }, 'PUK: only the adaptive part');
+      // losing a lot makes his next level easier, winning a lot never makes it harder than normal
+      t.eq(await puk.evaluate(() => { S.adapt = { step: 0, hist: [0, 0, 0, 0, 0, 0], since: 6, key: 'L12' }; return easeFor('L13'); }), 0.5, 'losing: half a step easier');
+      t.eq(await puk.evaluate(() => { S.adapt = { step: -2, hist: [1, 1, 1, 1, 1, 1], since: 6, key: 'L12' }; return easeFor('L14'); }), 0, 'winning: never harder than normal');
+      const oma = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 13 }, db });
+      t.eq(await look(oma), { sup: true, track: 'care', gentle: 1, adapt: true, retry: 3, rescue: true, nudge: true, shuffleLater: true, lucky: 1, tools: null, news: false, combo: 10000 }, 'grandma: everything, except the news she had switched off');
+      const den = await t.phone({ state: { name: 'Dennis', pid: 'test-den', level: 13 }, db });
+      const d = await look(den);
+      t.ok(d.sup && d.track === 'care' && d.nudge && d.rescue === false, 'Super-omamodus switched on, one part off again', d);
+      const plain = await t.phone({ state: { name: 'Rashmi', pid: 'test-rash', level: 13 } });
+      t.eq((await look(plain)).combo, 10000, 'everyone: 10 seconds for a combo');
+    },
+  },
 ];
