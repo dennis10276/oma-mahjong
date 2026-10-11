@@ -195,6 +195,7 @@ module.exports = [
       t.ok(g.down <= 3, 'at most 3 face-down tiles at level 35', g);
       t.ok(g.scale > 1 && Math.abs(g.scale * g.n - 86) <= 6, 'her smaller pile scores like the normal one', g);
       t.ok(p.db.plays('test-oma').some(e => e.k === 'start' && e.lv === 35 && e.tk === 'care'), 'logged for the dashboard');
+      t.ok(await p.evaluate(() => !!__mj.G.ob), 'ice at level 35, like everyone');
       const q = await t.phone({ state: { ...DENNIS, level: 40 } });
       await startLevel(q, 35);
       t.eq(await q.evaluate(() => [__mj.G.o.track || '', __mj.G.down.reduce((a, b) => a + b, 0) > 10]), ['', true], 'Dennis: the normal levels');

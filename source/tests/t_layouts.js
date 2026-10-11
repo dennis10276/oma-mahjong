@@ -133,9 +133,8 @@ module.exports = [
       t.eq(bad, [], 'every sampled level');
       const avg = winRates.reduce((a, b) => a + b, 0) / winRates.length;
       t.ok(avg >= 0.85, 'about 9 in 10 first tries succeed', Math.round(avg * 100));
-      // much gentler than the normal levels: her level 35 plays like a normal level ~13, ice only much later
-      t.ok(Layouts.careEff(35) < 14 && Layouts.forLevel(35, 1.5, 1, 'care').mechLevel < Layouts.MECH.ice, 'level 35: no ice yet');
-      t.ok(Layouts.forLevel(70, 1.5, 1, 'care').mechLevel >= Layouts.MECH.ice, 'ice does come, later');
+      // much gentler than the normal levels: her level 35 plays like a normal level ~13
+      t.ok(Layouts.careEff(35) < 14, 'level 35 plays like a normal level 13');
     },
   },
 ];

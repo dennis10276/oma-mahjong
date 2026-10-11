@@ -159,11 +159,11 @@ function askName(then) {
   const cur = S.name || '';
   let av = S.avatar || '👵', fr = frameOk(S.frame || 'none') ? (S.frame || 'none') : 'none';
   openModal(`<h2>${tx(cur ? 'profile' : 'whatName')}</h2>
-    <p>${tx('nameWhy')}</p>
+    <p>${fx('nameWhy')}</p>
     <input id="nmIn" class="name-in" maxlength="20" value="${cur.replace(/"/g, '')}" placeholder="${tx('namePh')}" autocomplete="off">
-    <div class="quick-names">${tx('quickNames').map(n => `<button class="qn">${n}</button>`).join('')}</div>
+    <div class="quick-names fit-row">${tx('quickNames').map(n => `<button class="qn">${n}</button>`).join('')}</div>
     <div class="avatars">${AVATARS.map(a => `<button class="av${av === a ? ' on' : ''}">${a}</button>`).join('')}</div>
-    <h3 class="fr-title">${tx('frameTitle')}</h3>
+    <h3 class="fr-title">${fx('frameTitle')}</h3>
     <div class="frames">${FRAMES.map(f => `<button class="frm${fr === f.id ? ' on' : ''}${f.ok() ? '' : ' locked'}" data-f="${f.id}"><span class="ra fr-${f.id}">${av}</span><small>${f.ok() ? f.name : '🔒 ' + f.how()}</small></button>`).join('')}</div>
     <button class="big-btn play" id="nmOk"><span class="bb-text"><b>${tx('save')}</b></span></button>`, false);
   document.querySelectorAll('.qn').forEach(b => b.onclick = () => { $('#nmIn').value = b.textContent; });

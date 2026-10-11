@@ -95,8 +95,7 @@ Everyone in grandma mode plays a separate, gentler set of levels (`forCare` in `
   level is worth the same as the normal level (`ptsScale`);
 - few face-down tiles: none before level 10, then 2, one more every 15 levels, at most 6, only on tiles
   with nothing on top and never both tiles of a picture (`careDownN`);
-- ice and locks only when her difficulty reaches that of normal level 35/45 (`mechLevel`, around her
-  level 64/84);
+- ice and locks at the same level numbers as everyone (35 and 45);
 - deals are picked so a sensible player clears ~90% first time (tested for every 3rd level up to 100);
 - on top of that her usual help below (one step gentler, adaptive, easier after 3 failed tries).
 A level saved from the other set of levels is not resumed (it starts fresh). The dashboard shows

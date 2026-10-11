@@ -37,11 +37,12 @@ const HELP = {
     shuffleAfter: null,                        // no shuffle right at the start of a level
     adapt: null,                               // difficulty that follows her own results
     toolsGoneFrom: 50,                         // from this level on there is no 💡 Hint and 🔀 Schudden any more
+    jokersGoneFrom: 50,                        // ... and no 🃏 jokers in the deal
   },
   care: {
     comboMs: 10000,
     lucky: { fromLevel: 1, perLevel: 2, chance: 0.5 },
-    gentle: 1,
+    gentle: 1,                                 // on top of her own gentle levels (layouts.js, track 'care'); her results move it
     easierAfterFails: 3,
     rescue: true,
     // the helper: a pair with a face-down tile glows after downS seconds, a visible pair after upS.
@@ -54,6 +55,7 @@ const HELP = {
     // quickRestartS seconds does not count
     adapt: { n: 10, min: 5, low: 0.6, high: 0.85, minStep: -2, maxStep: 2, quickRestartS: 30 },
     toolsGoneFrom: null,                       // grandma mode keeps Hint and Schudden at every level
+    jokersGoneFrom: null,                      // ... and the jokers
   },
 };
 const ADAPT_STEPS = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', 0: 'zacht (haar standaard)', 1: 'iets makkelijker', 2: 'makkelijker' };
@@ -64,8 +66,8 @@ const GRANDMA = { pids: ['pmuy4wmdp17hbws'], like: ['pmuxw2uqkzcnbgx'], name: /^
 // news from Apeldoorn: on for grandma by default, switchable per player on the dashboard
 const getsNews = (pid, name, cfg = {}) => VILLAGE.enabled && ('news' in cfg ? cfg.news : isGrandma(pid, name));
 const isGrandma = (pid, name) => GRANDMA.pids.includes(pid) || GRANDMA.like.includes(pid) || GRANDMA.name.test(name || '');
-// who gets the "care" help by default: grandma (and DennisTEST), and Mama
-const CARE = { pids: ['pmv13884fc9vndv'] };
+// who else gets the "care" help by default (besides grandma and DennisTEST); Mama is not in grandma mode
+const CARE = { pids: [] };
 // players who start in English until they pick a language in the settings (Mama)
 const START_ENGLISH = ['pmv13884fc9vndv'];
 

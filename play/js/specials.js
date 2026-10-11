@@ -100,7 +100,7 @@ function jokerLeftover() {
 function addObstacles(o, spec) {
   if (o.obstDone) return;
   o.obstDone = true; o.obst = null;
-  const ml = spec.mechLevel || o.level;      // grandma's levels: ice and locks come later (her difficulty)
+  const ml = spec.mechLevel || o.level;      // (a set of levels may give its own level for ice and locks)
   if (o.mode !== 'level' || ml < Layouts.MECH.ice) return;
   const avoid = new Set([...(o.down || []), ...(o.gold || [])]);
   o.obst = Layouts.obstacles(spec.tiles, o.faces, { level: ml, seed: spec.seed, avoid, ez: o.ez || 0 });

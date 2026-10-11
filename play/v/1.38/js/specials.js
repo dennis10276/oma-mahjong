@@ -15,7 +15,8 @@ function addSpecials(o, spec) {
     const f = anyF[Math.floor(r() * anyF.length)];
     o.gold = o.faces.map((x, i) => x === f ? i : -1).filter(i => i >= 0).slice(0, 2);
   }
-  if (o.mode === 'level' && lvl >= sp.jokerFrom && r() < sp.jokerChance) {
+  const jg = help().jokersGoneFrom;           // no jokers in the deal from there on (not in grandma mode)
+  if (o.mode === 'level' && lvl >= sp.jokerFrom && !(jg && lvl >= jg) && r() < sp.jokerChance) {
     const cnt = {};
     o.faces.forEach(f => cnt[f] = (cnt[f] || 0) + 1);
     const twos = Object.keys(cnt).filter(f => cnt[f] === 2 && +f < 100).map(Number);
@@ -99,9 +100,10 @@ function jokerLeftover() {
 function addObstacles(o, spec) {
   if (o.obstDone) return;
   o.obstDone = true; o.obst = null;
-  if (o.mode !== 'level' || o.level < Layouts.MECH.ice) return;
+  const ml = spec.mechLevel || o.level;      // (a set of levels may give its own level for ice and locks)
+  if (o.mode !== 'level' || ml < Layouts.MECH.ice) return;
   const avoid = new Set([...(o.down || []), ...(o.gold || [])]);
-  o.obst = Layouts.obstacles(spec.tiles, o.faces, { level: o.level, seed: spec.seed, avoid, ez: o.ez || 0 });
+  o.obst = Layouts.obstacles(spec.tiles, o.faces, { level: ml, seed: spec.seed, avoid, ez: o.ez || 0 });
 }
 function setObstacles(ob) {
   G.ob = null; G.inb = null;

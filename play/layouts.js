@@ -241,7 +241,7 @@ const Layouts = (() => {
      shapes, deals that a sensible player clears first time ~88% of the time, and only a few
      face-down tiles: none before level 10, then 2, one more every 15 levels, at most 6; only tiles
      with nothing on top, and never two of the same picture (its twin is always face up).
-     Ice and locks come when her difficulty reaches that of normal level 35 / 45 (mechLevel).
+     Ice and locks come at the same level numbers as for everyone (they are not that hard).
      Points stay the same as a normal level (ptsScale makes up for the smaller pile). */
   const careEff = level => level <= 6 ? level : 6 + (level - 6) / 4;
   const careDownN = level => level < 10 ? 0 : Math.min(6, 2 + Math.floor((level - 10) / 15));
@@ -259,7 +259,7 @@ const Layouts = (() => {
     const d = difficultyFor(e);
     const diff = { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) };
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 333, diff, track: 'care',
-      mechLevel: Math.round(6 + (e - 6) * 2), ptsScale: normalTarget(level, scale) / res.tiles.length };
+      ptsScale: normalTarget(level, scale) / res.tiles.length };
   }
   function forDate(ymd, aspect, scale = 1, track = '') {
     const r0 = rng(ymd);
