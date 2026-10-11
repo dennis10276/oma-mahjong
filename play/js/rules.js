@@ -5,6 +5,9 @@
 
 const RULES = {
   tools: { fromLevel: 15 },                    // 💡 Hint and 🔀 Schudden: one of each per level from here
+  // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
+  // (checked exactly, for at most maxTiles tiles left and within a search budget)
+  autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   sunflower: { level: 20 },                    // the big prize: the Zonnebloem theme after this level
   score: {
     pair: 10, maxCombo: 5,                     // a pair is worth 10 × combo (up to ×5)

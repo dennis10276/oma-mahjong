@@ -48,6 +48,9 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
 - `RULES`: from which level the tools, the Zonnebloem prize, gold pairs and jokers come; points per
   pair, combo, stars, gold, lucky moment and joker finale; the win-streak bonus; the chest; the daily
   gift; hearts (how long the pop-up stays; the ready-made messages are in `lang.js`, `quickMsgs`).
+- `RULES.autoFinish`: from level 50, when no order of the remaining taps can fill the tray any more
+  (checked exactly by `finishSafe` in `board.js`, trying every order; not while ice, locks or a joker
+  are left), the last tiles play themselves. In practice that is the last 4-7 tiles.
 - `HELP`: the help per kind of player, `care` (grandma) and `normal` (everyone else): combo time,
   lucky moments, a gentler deal, easier after N failed tries, putting the tray back, the helper and
   its timings, no shuffle at the start, and the adaptive difficulty. To give someone else a kind of
@@ -184,6 +187,7 @@ sooner when she struggles or the level already went wrong once (×0.7), based on
 | `t_log`, `t_dash` | the play log and the family dashboard |
 | `t_lang` | every text in both languages, the language switch, Mama: English with grandma's help |
 | `t_village` | news for grandma and DennisTEST only, dashboard settings per player, 80/20 news/stories, memory question, Het krantje, 💬, the helper's pace, the news filter |
+| `t_finish` | auto-finish: the exact check, the end playing itself from level 50, speed |
 | `t_update` | self-update from an old 1.5 app and the current one; a broken update is thrown away |
 | `t_online` | (with `--online`) a heart and the play log through the real database |
 
