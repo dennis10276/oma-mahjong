@@ -17,6 +17,7 @@ function show(id) {
 }
 
 function renderHome() {
+  setTimeout(() => { if (typeof prefetchLevel === 'function') prefetchLevel(S.level); }, 1500);   // the next designed level, in quiet moments
   if (applyUpdate()) return;
   setTimeout(maybeDailyGift, 900);
   $('#greet').innerHTML = fx('greet', new Date().getHours());

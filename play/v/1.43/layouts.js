@@ -86,16 +86,18 @@ const Layouts = (() => {
      sits exactly on top of a single tile: taking one off always uncovers part of several.
      Layers shrink towards one hill in the middle, or two mirrored hills.
      aspect = height / width of the free screen area: the pile takes the same shape. */
-  function buildPiles(seed, target, maxLayers, aspect = 1.55, level = 99) {
+  // o (the harder levels, hard.js): { baseFrac, keep: [min, max] share of a layer that carries on
+  // upwards, noBrick: only straight rows (long rows: only their ends are free) }
+  function buildPiles(seed, target, maxLayers, aspect = 1.55, level = 99, o = {}) {
     const layers = Math.max(1, maxLayers);
-    const baseFrac = layers === 1 ? 1 : layers === 2 ? 0.6 : layers === 3 ? 0.47 : layers === 4 ? 0.4 : 0.36;
+    const baseFrac = o.baseFrac || (layers === 1 ? 1 : layers === 2 ? 0.6 : layers === 3 ? 0.47 : layers === 4 ? 0.4 : 0.36);
     // upper layers can run out of room on some shapes: then try again with a bigger base, or another
     // shape. A pile that is right in size but too flat (fewer layers than planned) is too easy.
     let bt = Math.round(target * baseFrac), best = null;
     const flat = res => Math.max(0, Math.min(layers, 4) - 1 - Math.max(...res.tiles.map(t => t.z)));
     const score = res => Math.abs(res.tiles.length - target) + 4 * flat(res);
     for (let k = 0; k < 10; k++) {
-      const res = buildOnce(rng(seed + k * 101), target, layers, aspect, level, bt);
+      const res = buildOnce(rng(seed + k * 101), target, layers, aspect, level, bt, o);
       const n = res.tiles.length;
       if (!best || score(res) < score(best)) best = res;
       if (score(best) <= 2) break;
@@ -103,9 +105,9 @@ const Layouts = (() => {
     }
     return best;
   }
-  function buildOnce(r, target, layers, aspect, level, baseTarget) {
+  function buildOnce(r, target, layers, aspect, level, baseTarget, o = {}) {
     const want = aspect / 1.24; // rows per column that fill the area exactly
-    const pool = level < 8 ? bases().filter(b => EASY.includes(b.name)) : bases();
+    const pool = (level < 8 ? bases().filter(b => EASY.includes(b.name)) : bases()).filter(b => (!o.noBrick || !b.brick) && (!o.shapes || o.shapes.includes(b.name)));
     // a base close to the wanted size and roughly the screen's shape; among the good ones a random
     // pick, so the piles look different every level
     const scored = pool.map(b => ({ b, sc: Math.abs(b.n - baseTarget) / 2 + 6 * Math.abs(Math.log((b.h + 0.25) / (b.w + 0.35) / want)) }));
@@ -140,10 +142,11 @@ const Layouts = (() => {
         shiftX: () => prev.filter(t => has(t.x + 2, t.y)).map(t => ({ x: t.x + 1, y: t.y })),
         shiftY: () => prev.filter(t => has(t.x, t.y + 2)).map(t => ({ x: t.x, y: t.y + 1 })),
         shiftXY: () => prev.filter(t => has(t.x + 2, t.y) && has(t.x, t.y + 2) && has(t.x + 2, t.y + 2)).map(t => ({ x: t.x + 1, y: t.y + 1 })),
+        stack: () => prev.map(t => ({ x: t.x, y: t.y })),      // (harder levels: right on top, towers)
       };
-      const nWant = z >= layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (0.52 + r() * 0.2))));
+      const nWant = z >= layers - 1 ? remaining : Math.min(remaining, Math.max(2, Math.round(prev.length * (o.keep ? o.keep[0] + r() * (o.keep[1] - o.keep[0]) : 0.52 + r() * 0.2))));
       // resting on 4 tiles first; when that layer has no room, a bridge over 2 (sideways or down)
-      const order = ['shiftXY', ...shuffleArr(r, ['shiftX', 'shiftY'])];
+      const order = o.stack && r() < o.stack ? ['stack'] : ['shiftXY', ...shuffleArr(r, ['shiftX', 'shiftY'])];
       let cand = null;
       for (const o of order) { const c = OPS[o](); if (c.length >= Math.min(nWant, 2)) { cand = c; break; } }
       if (!cand || !cand.length) break;
@@ -360,7 +363,8 @@ const Layouts = (() => {
     const fewer = ez >= 2.5 ? 2 : ez >= 1.5 ? 1 : 0;     // an easier deal: less ice and fewer locks
     if (!wantIce) return null;
     const n = tiles.length, nb = neighbors(tiles), all = new Uint8Array(n).fill(1);
-    const P = solve(tiles, nb, faces, all, [], 60000);
+    // opt.path: a known way through (the harder levels know theirs: no need to search one)
+    const P = opt.path || solve(tiles, nb, faces, all, [], 60000);
     if (!P) return null;
     const r = rng(seed + 4242);
     const pos = new Array(n).fill(1e9); P.forEach((t, k) => pos[t] = k);
@@ -398,7 +402,7 @@ const Layouts = (() => {
     if (!res.keys.length && !Object.keys(res.ice).length) return null;
     // double-check with the rules switched on
     const rules = { iceNb: iceNeighbors(tiles), ice: res.ice, locks: res.locks.length ? new Set(res.locks) : null, keys: res.keys };
-    if (!solve(tiles, nb, faces, all, [], 80000, rules)) {
+    if (!opt.path && !solve(tiles, nb, faces, all, [], 80000, rules)) {
       if (res.keys.length) { res.keys = []; res.locks = []; rules.locks = null; rules.keys = []; if (Object.keys(res.ice).length && solve(tiles, nb, faces, all, [], 80000, rules)) return res; }
       return null;
     }
@@ -591,6 +595,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, MECH, effLevel, careEff, careDownN, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, obstacles, solve };
+  return { SLOTS, MECH, effLevel, careEff, careDownN, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, takeable, obstacles, solve, buildPiles, difficultyFor, kindsFor, pairFacesFor, layersFor };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

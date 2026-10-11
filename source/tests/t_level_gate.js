@@ -1,11 +1,14 @@
+/* The level lock (RULES.levels.blockedFrom, added by Codex while the harder levels waited for
+   approval; Dennis opened them on 2026-10-11, so it is off: null). */
 'use strict';
 
 module.exports = [
   {
-    name: 'level gate: 75 and above stay locked, including saved games, for every player',
-    async run(t, { click }) {
+    name: 'level gate: when switched on (75), 75 and above stay locked, including saved games, for every player',
+    async run(t, { click, startLevel }) {
       for (const name of ['Dennis', 'Oma']) {
-        const p = await t.phone({ state: { name, pid: 'test-gate-' + name, level: 90, lang: 'en' } });
+        const p = await t.phone({ state: { name, pid: 'test-gate-' + name, level: 90, lang: 'en' }, tune: { RULES: { levels: { blockedFrom: 75 } } } });
+        await p.evaluate(() => renderHome());
         t.ok((await p.locator('#playLabel').textContent()).includes('🔒'), 'home shows the hold');
         await click(p, '#btnPlay');
         t.eq(await p.evaluate(() => [curScreen, __mj.G, __mj.S.att.L90 || 0]), ['levels', null, 0], 'Play cannot start a later level');
@@ -22,7 +25,7 @@ module.exports = [
           const b = document.querySelector('#levelGrid').children[i - 1];
           return [b.disabled, b.classList.contains('locked'), !!b.onclick];
         })), [[false, false, true], [true, true, false], [true, true, false]], 'picker locks the boundary and later levels');
-        await p.evaluate(() => __mj.startLevel(74));
+        await startLevel(p, 74, false);
         t.eq(await p.evaluate(() => [curScreen, __mj.G.level]), ['game', 74], 'level 74 remains playable');
         t.eq(await p.evaluate(() => {
           begin({ mode: 'level', level: 75 }, true);
@@ -34,12 +37,12 @@ module.exports = [
     },
   },
   {
-    name: 'level gate: only changing the hold setting reopens level 75',
-    async run(t, { tune }) {
+    name: 'level gate: switched off (null, now) level 75 and up play normally',
+    async run(t, { startLevel }) {
       const p = await t.phone({ state: { name: 'Dennis', pid: 'test-gate-release', level: 75 } });
-      await tune(p, { RULES: { levels: { blockedFrom: null } } });
-      await p.evaluate(() => __mj.startLevel(75));
-      t.eq(await p.evaluate(() => [curScreen, __mj.G.level]), ['game', 75], 'explicitly lifting the hold restores access');
+      t.eq(await p.evaluate(() => RULES.levels.blockedFrom), null, 'all levels open');
+      await startLevel(p, 75);
+      t.eq(await p.evaluate(() => [curScreen, __mj.G.level]), ['game', 75], 'level 75 starts');
     },
   },
 ];

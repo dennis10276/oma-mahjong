@@ -14,7 +14,7 @@ function saveCur() {
   if (!G || G.done) return;
   syncClock();
   try {
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState() }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -25,7 +25,22 @@ function resumeClock() { if (G && !G.done && curScreen === 'game') G.tStart = pe
 const tileScale = () => S.bigTiles ? 0.7 : 1;
 // the part "own, easier levels" (grandma mode) plays its own, gentler levels (Layouts track 'care')
 const levelTrack = () => part('levels') ? 'care' : '';
-function startLevel(level) { const tr = levelTrack(); begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), makeSpec: a => Layouts.forLevel(level, a, tileScale(), tr) }); }
+// from RULES.hard.measureFrom the test player designs the levels (hard.js); an easier try (help
+// after losing) gets the usual level, made easier
+function startLevel(level) {
+  const tr = levelTrack(), hard = Hard.applies(level, tr) && !levelBlocked(level);   // (a closed level: begin() says so)
+  if (hard && !startLevel.building) {
+    const a = S.asp && S.asp[toolsGoneFor({ mode: 'level', level }) ? 'g' : 't'];
+    if (!a || !Hard.cached(level, a, tileScale())) {
+      // not made yet: say so first (making it takes a moment), then start
+      startLevel.building = true; buildMsg(true);
+      setTimeout(() => { try { startLevel(level); } finally { startLevel.building = false; buildMsg(false); } }, 80);
+      return;
+    }
+  }
+  begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level),
+    makeSpec: a => hard ? Hard.spec(level, a, tileScale()) : Layouts.forLevel(level, a, tileScale(), tr), makeEasy: a => Layouts.forLevel(level, a, tileScale(), tr) });
+}
 function startDaily(k) {
   const d = parseKey(k);
   const tr = levelTrack();
@@ -34,7 +49,7 @@ function startDaily(k) {
 
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
 function begin(o, restart = false) {
-  // Check before loading a saved board, dealing tiles or recording an attempt (also on restart).
+  // closed levels (RULES.levels.blockedFrom): checked before a saved board is loaded, a deal is made or a try is counted
   if (o.mode === 'level' && levelBlocked(o.level)) {
     show('levels');
     toast(tx('levelsOnHold', RULES.levels.blockedFrom), 4500);
@@ -52,13 +67,15 @@ function begin(o, restart = false) {
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {
     if (!o.spec) o.aspect = aspect;
-    o.spec = Layouts.ease(o.makeSpec(o.aspect), ez);
-    o.ez = ez; o.faces = null; o.down = null; o.gold = null; o.specials = false; o.obstDone = false;   // a new deal
+    let sp = o.makeSpec(o.aspect);
+    if (ez && sp.made && o.makeEasy) sp = o.makeEasy(o.aspect);
+    o.spec = Layouts.ease(sp, ez);
+    o.ez = ez; o.faces = null; o.down = null; o.gold = null; o.specials = false; o.obstDone = false; o.clock = null;   // a new deal
   }
   const spec = o.spec;
   const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
   const n = tiles.length;
-  G = { o, ...o, ptsScale: spec.ptsScale || 1, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false };
+  G = { o, ...o, ptsScale: spec.ptsScale || 1, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false, mv: 0, clock: null };
   const resumed = !!(cur && sameTrack && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
   if (resumed) {
     cur.faces.forEach((f, i) => tiles[i].face = f);
@@ -68,14 +85,20 @@ function begin(o, restart = false) {
     G.gold = new Set(cur.gold || []);
     Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, rescued: !!cur.rescued });
     setObstacles(cur.ob);
+    G.mv = cur.mv || 0; G.clock = cur.ck || null;
     G.mile = mileOf();
   } else {
-    if (!o.faces) { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; }
+    if (!o.faces) {
+      const m = spec.made;      // a designed level (hard.js): the deal, gold, ice, locks and clock come with it
+      if (m) { o.faces = m.faces.slice(); o.down = m.down.slice(); o.gold = (m.gold || []).slice(); o.specials = true; o.obst = m.obst; o.obstDone = true; o.clock = m.clock; }
+      else { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; }
+    }
     addSpecials(o, spec);
     o.faces.forEach((f, i) => tiles[i].face = f);
     G.gold = new Set(o.gold || []);
     (o.down || []).forEach(i => G.down[i] = 1);
     addObstacles(o, spec); setObstacles(o.obst);
+    G.clock = o.clock ? { ...o.clock } : null;
     clearCur();
   }
   // the clock and the play log come first, so they are right even if drawing the board goes wrong
@@ -84,7 +107,7 @@ function begin(o, restart = false) {
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };    // taps, blocked taps, flips, best combo, most in tray
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
-  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? spec.made.info.rate : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -93,6 +116,9 @@ function begin(o, restart = false) {
     updateScore(false); updateProgress();
   } catch (e) { logErr(e, 'begin'); }
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
+  // remember the screen shape (with and without the tool buttons) and make the next designed level
+  S.asp = S.asp || {}; S.asp[toolsGoneFor(o) ? 'g' : 't'] = o.aspect;
+  if (o.mode === 'level') setTimeout(() => prefetchLevel(o.level + 1), 2500);
   if (villageOn()) setTimeout(villageTease, 1800);
   if (!S.seenTray) setTimeout(() => showIntro(), 700);
   else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
@@ -110,12 +136,12 @@ const trayHas = face => G.tray.some(t => faceOf(t) === face);
 const centerOf = el => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
 const clearHint = () => G.tiles.forEach(t => t.el.classList.remove('hint'));
 // a tile leaves the board (the caller animates it)
-function takeOff(i) { G.alive[i] = 0; G.down[i] = 0; if (G.peek === i) G.peek = -1; G.tiles[i].el.classList.add('hidden'); }
+function takeOff(i) { G.alive[i] = 0; G.down[i] = 0; if (G.peek === i) G.peek = -1; G.tiles[i].el.classList.add('hidden'); G.mv++; clockMove(i); }
 /* After a tile left the board, it flies for ms; then fn runs and the level carries on.
    Taps never wait for this: the game state has changed already, the animation just catches up. */
 function afterFlight(ms, fn) { G.flights++; afterLogic(); setTimeout(() => { G.flights--; fn(); afterLand(); }, ms); }
 function afterLogic() {
-  updateBlocked(); updateObstacles(); updateProgress(); updateNudge();
+  updateBlocked(); updateObstacles(); updateProgress(); updateNudge(); checkClock();
   if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
 }
@@ -134,6 +160,20 @@ function decorate(i) {
   let ov = el.querySelector('.ob');
   if (!k) { if (ov) ov.remove(); }
   else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
+  if (G.clock && G.clock.i === i) clockBadge();
+}
+// the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
+function clockBadge() {
+  let ck = $('#clockBadge');
+  const on = clockOn(), el = on && G.tiles[G.clock.i].el;
+  G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
+  if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); return; }
+  if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; $('#board').appendChild(ck); }
+  const r = G.tiles[G.clock.i].r, left = clockLeft();
+  ck.innerHTML = `<span>⏰</span><b>${left}</b>`;
+  ck.style.left = (r.l + r.w * 0.55).toFixed(1) + 'px'; ck.style.top = (r.t - r.h * 0.16).toFixed(1) + 'px';
+  ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
+  ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.faceHTML(S.theme, faceOf(i)); decorate(i); };
 function renderBoard(enter) {
@@ -183,6 +223,7 @@ function layoutBoard() {
     t.r = { l: +lf.toFixed(1), t: +tp.toFixed(1), w: tw - 1.5, h: th - 1.5, zi };
   }
   sizeTray();
+  clockBadge();
 }
 // tray slots scale with the screen but stay big
 function sizeTray() { const slot = $('#tray .slot'); if (slot) $('#tray').style.setProperty('--sfs', (slot.clientWidth * 0.62).toFixed(1) + 'px'); }
@@ -487,6 +528,7 @@ function autoFinishOK() {
   const A = RULES.autoFinish;
   if (!A || !G || G.done || G.autoFin || G.busy || G.flights || G.overShown || toolLevel(G) < A.fromLevel) return false;
   if (aliveCount() > A.maxTiles || !aliveCount()) return false;
+  if (clockOn()) return false;                                   // the alarm clock: she plays it herself
   // ice, locks and jokers have their own rules: only when none of them are left
   if (G.tiles.some((t, i) => G.alive[i] && (t.face === JOKER || obKind(i))) || G.tray.some(t => faceOf(t) === JOKER)) return false;
   return finishSafe({ faces: G.tiles.map(t => t.face), nb: G.nb, alive: G.alive, down: G.down, tray: G.tray.map(faceOf) }) === true;
@@ -606,4 +648,47 @@ function solveNow(limit = 30000) {
     else faces[jb[jb.length - 1]] = -1;
   }
   return Layouts.solve(G.tiles, G.nb, faces, G.alive, tray, limit, obRules());
+}
+
+// ---------- ⏰ the alarm clock (from RULES.hard.clockFrom, designed in hard.js) ----------
+/* One tile carries a clock with a number: the moves left. Every tile you take off the board is a
+   move. Take the clock tile off the board in time; when the number reaches 0 while it is still
+   there, the level is over. */
+const clockOn = () => !!(G && G.clock && G.alive[G.clock.i]);
+const clockLeft = () => G && G.clock ? Math.max(0, G.clock.n - G.mv) : 0;
+function clockMove(i) {
+  if (!G.clock) return;
+  if (i === G.clock.i) {
+    const c = centerOf(G.tiles[i].el);
+    FX.emoji(c.x, c.y, ['⏰', '✨', '🎉'], 10); Sound.star(2); buzz([20, 40, 20]);
+    praise(tx('clockSaved'));
+    logLvl('clock', { ml: clockLeft() });
+    clockBadge();
+  } else if (G.alive[G.clock.i]) { decorate(G.clock.i); if (clockLeft() === 5) toast(tx('clockHurry'), 2400); }
+}
+function checkClock() {
+  if (!G || G.done || G.overShown || !clockOn() || clockLeft() > 0) return;
+  G.busy = true; G.overShown = true; syncClock();
+  bumpStat('losses'); noteFail(); endLevel('stuck', { ck: 1 });
+  setTimeout(() => {
+    Sound.stuck(); buzz([40, 80, 40]);
+    replay(G.tiles[G.clock.i].el, 'shake');
+    openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
+      <p>${tx('clockText', G.clock.n)}</p>
+      <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
+    $('#sRetry').onclick = () => { closeModal(); restart(); };
+    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
+  }, 600);
+}
+// make the next designed level in quiet moments, for the screen shape it will have
+function prefetchLevel(level) {
+  if (!S.asp || !Hard.applies(level, levelTrack())) return;
+  const a = S.asp[toolsGoneFor({ mode: 'level', level }) ? 'g' : 't'];
+  if (a) Hard.prefetch(level, a, tileScale());
+}
+function buildMsg(on) {
+  let el = $('#buildMsg');
+  if (on && !el) { el = document.createElement('div'); el.id = 'buildMsg'; el.innerHTML = `<span>🧩</span><b>${tx('building')}</b>`; document.body.appendChild(el); }
+  if (!on && el) el.remove();
 }

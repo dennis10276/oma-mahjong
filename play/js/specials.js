@@ -191,6 +191,7 @@ const NEW_TILES = {
   lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒' },
   ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊' },
   joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏' },
+  clock: { has: () => clockOn(), ico: '⏰' },
 };
 function newTileIntro() {
   if (!G || G.done) return false;

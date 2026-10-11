@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.42/style.css" id="css">
+<link rel="stylesheet" href="v/1.43/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -155,7 +155,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.42', KEY = 'omamj.code', FILES = ['v/1.42/tiles.js', 'v/1.42/audio.js', 'v/1.42/layouts.js', 'v/1.42/js/rules.js', 'v/1.42/js/lang.js', 'v/1.42/js/core.js', 'v/1.42/js/fx.js', 'v/1.42/js/update.js', 'v/1.42/js/screens.js', 'v/1.42/js/board.js', 'v/1.42/js/help.js', 'v/1.42/js/specials.js', 'v/1.42/js/rewards.js', 'v/1.42/js/telemetry.js', 'v/1.42/js/social.js', 'v/1.42/js/hearts.js', 'v/1.42/js/stories.js', 'v/1.42/js/village.js', 'v/1.42/js/win.js', 'v/1.42/js/main.js'];
+  var BUILT = '1.43', KEY = 'omamj.code', FILES = ['v/1.43/tiles.js', 'v/1.43/audio.js', 'v/1.43/layouts.js', 'v/1.43/hard.js', 'v/1.43/js/rules.js', 'v/1.43/js/lang.js', 'v/1.43/js/core.js', 'v/1.43/js/fx.js', 'v/1.43/js/update.js', 'v/1.43/js/screens.js', 'v/1.43/js/board.js', 'v/1.43/js/help.js', 'v/1.43/js/specials.js', 'v/1.43/js/rewards.js', 'v/1.43/js/telemetry.js', 'v/1.43/js/social.js', 'v/1.43/js/hearts.js', 'v/1.43/js/stories.js', 'v/1.43/js/village.js', 'v/1.43/js/win.js', 'v/1.43/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

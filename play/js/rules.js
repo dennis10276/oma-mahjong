@@ -4,12 +4,18 @@
 'use strict';
 
 const RULES = {
-  levels: { blockedFrom: 75 },                // Keep 75 and above closed until Dennis gives the go-ahead; then set null.
+  levels: { blockedFrom: null },              // a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
   tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
+  // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
+  // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
+  // its own twin, face-down tiles where they hurt, deals tuned against the test player), the
+  // target going from `start` to `end` at endLevel; from clockFrom the alarm clock.
+  // pile: 'classic' (tower piles were tried: fewer choices, but more luck than skill)
+  hard: { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.5, end: 0.4, endLevel: 120, pile: 'classic' },
   sunflower: { level: 20 },                    // the big prize: the Zonnebloem theme after this level
   score: {
     pair: 10, maxCombo: 5,                     // a pair is worth 10 × combo (up to ×5)

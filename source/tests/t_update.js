@@ -25,7 +25,7 @@ module.exports = [
     name: 'update: a broken update is thrown away and the app keeps working',
     async run(t, { WWW, buildBundle, sleep }) {
       const nb = buildBundle('99.2');
-      nb.js[3] = 'throw new Error("a broken update");';
+      nb.js[nb.js.findIndex(c => c.includes('const RULES = {'))] = 'throw new Error("a broken update");';   // the rules: nothing works without them
       const p = await t.phone({ url: 'file://' + path.join(WWW, 'index.html'), clock: false, state: { level: 6 }, routes: [['**/version.json*', json({ v: '99.2' })], ['**/bundle.json*', json(nb)]] });
       const built = await p.evaluate(() => window.__mjCode);
       // it downloads, switches, fails to start, and falls back within a few seconds

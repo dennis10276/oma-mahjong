@@ -48,7 +48,7 @@ async function runOne(test) {
   const t0 = Date.now(), results = [];
   // the engine tests (t_layouts) only compute, for many seconds, which keeps this process busy:
   // they go first, on their own, so they never hold up a phone page of another test
-  const cpu = t => t.file === 't_layouts.js';
+  const cpu = t => t.file === 't_layouts.js' || t.cpu;     // (t.cpu: a test that designs levels in this process, t_hard.js)
   for (const t of todo.filter(cpu)) results.push(await runOne(t));
   // the rest a few at the same time: most of a test is waiting for animations and timers
   const queue = todo.filter(t => !cpu(t));

@@ -134,6 +134,8 @@ function tune(page, changes) {
 const G = (page, fn, arg) => page.evaluate(fn, arg);
 async function startLevel(page, L, fresh = true) {
   await page.evaluate(([L, fresh]) => { if (fresh) localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, [L, fresh]);
+  // (a designed level, hard.js, may first be built: wait for it)
+  await page.waitForFunction(L => !document.querySelector('#buildMsg') && __mj.G && __mj.G.key === 'L' + L, L, { timeout: 30000 });
   await sleep(700);
   await closeModal(page);
 }

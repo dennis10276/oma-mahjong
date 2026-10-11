@@ -45,9 +45,6 @@ Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK
 
 ## Changing the rules (`www/js/rules.js`)
 
-- Level 75 and above are on hold for everyone, including saved games. Keep
-  `RULES.levels.blockedFrom: 75` until Dennis explicitly gives the go-ahead; set it to `null`
-  to reopen them. Progress is preserved, and earlier levels and daily puzzles remain available.
 - `RULES`: from which level the tools, the Zonnebloem prize, gold pairs and jokers come; points per
   pair, combo, stars, gold, lucky moment and joker finale; the win-streak bonus; the chest; the daily
   gift; hearts (how long the pop-up stays; the ready-made messages are in `lang.js`, `quickMsgs`).
@@ -122,6 +119,39 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   is turned over and the pair glows until it is matched; a visible pair glows after 14 seconds
 - no shuffling until 8 tiles are gone or 2 wait in the tray (it would waste the good deal)
 - more lucky moments (from level 1, up to twice per level) and 10 seconds to keep a combo going
+
+## Closing levels (`RULES.levels.blockedFrom`)
+- A level number closes that level and everything above it for everyone (also saved games; the
+  daily puzzle and earlier levels stay open, progress is kept). `null` = all open (now). Used from
+  1.42 to hold 75+ while the harder levels waited for approval; opened in 1.43.
+
+## The test player and the harder levels (`www/hard.js`, `RULES.hard`)
+- **The test player** plays like a person: it only knows a face-down tile once it can turn it over,
+  cannot see under a tile lying right on top, respects ice, locks and the alarm clock, takes a
+  tray match at once, and otherwise weighs each pair and each tile it could park (how full the
+  tray gets, how deep the twins of the waiting tiles lie, how much is free afterwards). It makes
+  human mistakes (`temp`) and plans the last tiles exactly when it can see them all (`end`).
+- **Fitted to real players** (`tools/sim/calibrate.js`, data in `tools/sim/real.json`): their levels
+  50-74 were made again as their phones made them. `strong` plays like Dennisisdebeste (won 89% of
+  his tries, the test player 87%), `average` like Mrs. Doubtfire (43%; test player 33%, and it finds
+  the same levels hard). `sensible` sits between and is the yardstick.
+- **From `measureFrom` (70)** every level is designed (`Hard.make`) so the sensible test player wins
+  about `sense` (0.69, what it wins on the old levels 65-74) of first tries.
+- **From `from` (75)** the levels get harder: target from `start` (0.62) to `end` (0.45) at
+  `endLevel` (120). Deals along a known way through, often with a tile lying on its own twin;
+  face-down tiles (same share as before) only on tiles you can see but not take yet, never on the
+  way out of a "3 waiting" moment; tray pressure kept near the old levels (`risky`); improved step by
+  step against the test player. Fair: the strong test player must win at least as often as the
+  sensible one. Fewer choices: of 8 piles for the level, the one with the fewest free tiles at the
+  start (13 options per move instead of 19). Tower piles (`pile: 'tower'`, tiles right on top of each
+  other) were tried too: fewer choices, but more luck than skill, so they are off.
+- **The alarm clock (from `clockFrom`, 80)**: one tile shows ⏰ with the moves left; every tile taken
+  is a move; at 0 with the clock tile still there, the level is over (logged as `end` with `ck: 1`).
+- Designs are the same on every phone for the same screen shape; the next level is made in quiet
+  moments while playing (`requestIdleCallback`) and kept (`omamj.hard`); if it is not ready, a
+  short "level wordt gebouwd" message shows. The start of a level logs `pr`, the test player's
+  chance, so real results can be compared later (`tools/sim/survey.js` for the numbers).
+- An easier try (help after losing) plays the usual level made easier; grandma's levels are her own.
 
 ## Special tiles and mechanics (everyone)
 
