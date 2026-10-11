@@ -325,6 +325,7 @@ function render() {
   $('#kpis').innerHTML =
     k('Vandaag gespeeld', mmss(today.sec), `${today.wins} gehaald · ${today.losses} vastgelopen`) +
     k('Deze week', mmss(week.reduce((a, d) => a + d.sec, 0)), `${week.reduce((a, d) => a + d.wins, 0)} levels gehaald`) +
+    (() => { const all = [...days.values()].filter(d => d.sec > 0), tot = all.reduce((a, d) => a + d.sec, 0); return k('Totaal gespeeld', mmss(tot), all.length ? `op ${all.length} ${all.length === 1 ? 'dag' : 'dagen'} sinds ${new Date(ev[0].t).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })} · gem. ${mmss(tot / all.length)} per speeldag` : 'nog niets'); })() +
     k('Levels gehaald', won.length, `${levels.filter(l => l.daily && l.won).length} dagpuzzels`) +
     k('Pogingen per level', avgTries ? avgTries.toFixed(1).replace('.', ',') : '–', 'gemiddeld tot het lukt' + (nEasy ? ` · ${nEasy}× 🌱 makkelijker` : '')) +
     k('Kans per poging', ends.length ? Math.round(winEnds.length / ends.length * 100) + '%' : '–', `${winEnds.length} van ${ends.length} pogingen`) +

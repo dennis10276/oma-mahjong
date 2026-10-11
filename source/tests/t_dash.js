@@ -55,6 +55,7 @@ module.exports = [
         const kpi = await txt('#kpis');
         t.ok(/Vastgelopen\s*67%/.test(kpi), 'stuck rate KPI', kpi);
         t.ok(/Tijd per level\s*–/.test(kpi), 'the 0-second win does not count as a time', kpi);
+        t.ok(/Totaal gespeeld\s*12:00/.test(kpi) && /per speeldag/.test(kpi), 'all-time play time (420 s + 300 s of tries)', kpi);
         t.ok(/Moeilijkheid\s*iets makkelijker/.test(kpi) && /won 1 van de laatste 3 pogingen/.test(kpi), 'her difficulty step', kpi);
         t.ok(/Moeilijkheid aangepast: iets makkelijker/.test(await txt('#feed')), 'the change is in the feed');
         t.ok(await p.evaluate(() => document.querySelectorAll('#chClose .bar').length) === 2, 'closeness chart has both failed tries');
