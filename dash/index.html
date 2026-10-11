@@ -96,6 +96,14 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .sw.on { background: var(--good); border-color: var(--good); color: #fff; }
 .sw:disabled { opacity: .55; cursor: default; }
 .sw:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.cfg-box > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; cursor: pointer; list-style: none; }
+.cfg-box > summary::-webkit-details-marker { display: none; }
+.cfg-box > summary::before { content: '▸'; color: var(--ink-3); transition: transform .15s; }
+.cfg-box[open] > summary::before { transform: rotate(90deg); }
+.cfg-box > summary h2 { margin: 0; }
+.cfg-sum { color: var(--ink-3); font-size: 13px; }
+.cfg-box[open] .cfg-sum { display: none; }
+.cfg-box > summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 .cfg-group { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); margin: 14px 0 6px; }
 .cfg-super { background: var(--accent-soft); margin-top: 4px; }
 .cfg i { font-style: normal; color: var(--accent); }
@@ -483,11 +491,19 @@ function renderCfg() {
     }).join('');
     return rows ? `<h3 class="cfg-group">${title}</h3><div class="cfgs">${rows}</div>` : '';
   }).join('');
-  const html = `<h2>⚙️ Instellingen voor ${esc(name)}</h2>
+  // collapsed, except for players who have something switched on (grandma, PUK); your own open/close is remembered
+  const onParts = parts.filter(p => partOn(p.id, sel, name, c));
+  const open = lsGet('dash.cfgOpen.' + sel, null) ?? (onParts.length > 0 && !follows);
+  const summary = sup ? '👵 Super-omamodus aan' : onParts.length ? `${onParts.length} onderdeel${onParts.length > 1 ? 'en' : ''} aan: ${onParts.map(p => p.label.toLowerCase()).join(', ')}` : 'alles uit';
+  const html = `<details class="cfg-box"${open ? ' open' : ''}><summary><h2>⚙️ Instellingen voor ${esc(name)}</h2><span class="cfg-sum">${summary}</span></summary>
     <div class="cfg cfg-super"><span><b>👵 Super-omamodus</b><small>alles hieronder aan; een onderdeel kan daarna nog los uit (of los aan, zonder Super-omamodus)</small></span>${sw('super', sup)}</div>
     ${groups}
-    <p class="cfg-note">${follows ? `Volgt altijd de instellingen van ${esc(nameOf(GRANDMA.pids[0]))}.` : 'De telefoon neemt een wijziging binnen een halve minuut over; een level dat al bezig is, speelt gewoon verder.'}</p>`;
-  if (el.dataset.html !== html) { el.innerHTML = html; el.dataset.html = html; }
+    <p class="cfg-note">${follows ? `Volgt altijd de instellingen van ${esc(nameOf(GRANDMA.pids[0]))}.` : 'De telefoon neemt een wijziging binnen een halve minuut over; een level dat al bezig is, speelt gewoon verder.'}</p></details>`;
+  if (el.dataset.html !== html) {
+    el.innerHTML = html; el.dataset.html = html;
+    const pid = sel;
+    el.querySelector('details').addEventListener('toggle', e => { lsSet('dash.cfgOpen.' + pid, e.target.open); el.dataset.html = ''; });
+  }
   el.hidden = false;
   el.querySelectorAll('.sw').forEach(b => b.onclick = async () => {
     const v = !b.classList.contains('on'), k = b.dataset.k;

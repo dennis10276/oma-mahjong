@@ -93,6 +93,7 @@ module.exports = [
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
       const f = fixture();
       f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, adapt: true } };          // Dennis: only the part that follows his results
+      f.scores.pRash = { name: 'Rashmi', avatar: '🌷', level: 5, points: 500, t: Date.now() };   // nothing switched on
       const db = new FakeDB(f);
       const ctx = await browser.newContext({ viewport: { width: 1200, height: 1100 } });
       await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
@@ -100,6 +101,7 @@ module.exports = [
       try {
         await p.goto(site.url + 'dash/#pOma'); await sleep(1800);
         const sw = () => p.evaluate(() => Object.fromEntries([...document.querySelectorAll('#cfgBox .sw')].map(b => [b.dataset.k, b.textContent])));
+        t.eq(await p.evaluate(() => document.querySelector('#cfgBox details').open), true, 'grandma: settings open');
         const oma = await sw();
         t.eq(Object.values(oma).filter(v => v === 'Aan').length, Object.keys(oma).length, 'grandma: Super-omamodus and every part on');
         t.ok('super' in oma && 'levels' in oma && 'adapt' in oma && 'news' in oma && !('combo' in oma), 'the switches', Object.keys(oma));
@@ -108,8 +110,15 @@ module.exports = [
         const post = db.log.find(l => l.m === 'POST' && /plays\/cfg-pOma/.test(l.p));
         t.ok(post && post.body.k === 'cfg' && post.body.news === false && Object.keys(post.body).length === 3, 'one part off for her: only that is saved', post);
         await p.evaluate(() => { document.querySelector('#who').value = 'pDen'; document.querySelector('#who').dispatchEvent(new Event('change')); }); await sleep(400);
+        t.eq(await p.evaluate(() => document.querySelector('#cfgBox details').open), true, 'Dennis has a part on: open');
         const den = await sw();
         t.eq([den.super, den.adapt, den.levels, den.rescue, den.news], ['Uit', 'Aan', 'Uit', 'Uit', 'Uit'], 'Dennis: only "follows the results"');
+        // someone with nothing switched on: collapsed, with a one-line summary; opening it is remembered
+        await p.evaluate(() => { document.querySelector('#who').value = 'pRash'; document.querySelector('#who').dispatchEvent(new Event('change')); }); await sleep(400);
+        t.eq(await p.evaluate(() => [document.querySelector('#cfgBox details').open, document.querySelector('#cfgBox summary').innerText.includes('alles uit')]), [false, true], 'nothing switched on: collapsed');
+        await p.evaluate(() => document.querySelector('#cfgBox summary').click()); await sleep(200);
+        await p.evaluate(() => { render(); }); await sleep(200);
+        t.eq(await p.evaluate(() => document.querySelector('#cfgBox details').open), true, 'opened by hand: stays open');
         t.eq(errs, [], 'no errors');
       } finally { await ctx.close(); site.close(); }
     },
