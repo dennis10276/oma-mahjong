@@ -181,6 +181,13 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   level, 1 per band). Focused win-rate limits remain 8 points at 80–89, 10 afterwards, 3 per band.
   Results are in `analysis/difficulty-1.48.md` and `analysis/validation-1.48.json`. New level start
   events record the focused win chance in `pr` and identify it with `pm: 'focused'`.
+
+- **1.49 explains the clock before playing**: the first active clock level (normally 80) opens a
+  Dutch/English popup before any tiles are taken. Existing players also see the updated explanation
+  once, remembered by `seenSp.clockMoves` when acknowledged. Every clock timeout repeats the full
+  explanation with Retry/Menu. It explains one move per tile (two per pair), free peeking and blocked
+  taps, free Hint/Shuffle, and taking the clock tile on the last allowed move. Popups fit a 360 × 640
+  phone. The 1.48 boards, counters and difficulty targets are unchanged; see `analysis/clock-help-1.49.md`.
 - **Made in advance, the same for everyone**: designing takes seconds, so the levels are designed once
   on the computer (the current tuning tool is `node tools/sim/tune_boards.js 80 269 8`) for one screen shape
   (`Hard.ASPECT`; the pile is fitted to every screen) and ship in `www/levels-hard.js`. They start at

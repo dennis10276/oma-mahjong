@@ -4,6 +4,49 @@ const H=require('../www/hard'), C=require('../tools/sim/clock_routes');
 const {game}=require('../tools/sim/tighten_clocks');
 const table=()=>vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+';HARD_LEVELS');
 module.exports=[
+  {name:'clocks: explain before level 80 even after the old tip, and repeat after every timeout in both languages',async run(t,{startLevel,modal,click,sleep}){
+    for(const lang of ['nl','en']){
+      const p=await t.phone({size:[360,640],state:{name:'Dennis',pid:'test-clock-help-'+lang,level:81,sunSeen:true,lang,seenSp:{clock:1,ice:1,lock:1,gold:1,joker2:1}}});
+      await startLevel(p,79);t.eq(await modal(p),null,'no clock popup before 80 '+lang);
+      await p.evaluate(()=>__mj.startLevel(80));
+      t.ok((await modal(p)).buttons.includes('ntGo'),'explanation is present before the first move '+lang);
+      t.eq(await p.evaluate(()=>[G.mv,!!S.seenSp.clockMoves]),[0,false],'acknowledgment required '+lang);
+      const text=await p.evaluate(()=>['nt_clock_text','clockMoves','clockFree','clockGoal'].map(k=>tx(k).replace(/<[^>]+>/g,'')));
+      for(const part of text)t.ok((await modal(p)).text.includes(part),'complete move explanation '+lang);
+      await sleep(1400);t.ok((await modal(p)).buttons.includes('ntGo'),'other tile tips do not replace the clock explanation '+lang);
+      t.ok(await p.evaluate(()=>$('#modalBox').scrollHeight<=$('#modalBox').clientHeight+1),'intro and acknowledgment fit on a small phone '+lang);
+      await click(p,'#ntGo');
+      t.ok(await p.evaluate(()=>JSON.parse(localStorage.getItem(STORE)).seenSp.clockMoves),'remember acknowledgment '+lang);
+      await startLevel(p,80);t.eq(await modal(p),null,'normal starts do not repeat the acknowledged tip '+lang);
+      for(let attempt=0;attempt<2;attempt++){
+        await p.evaluate(()=>{const i=G.tiles.findIndex((t,i)=>i!==G.clock.i&&G.alive[i]&&!G.down[i]&&canTake(i));if(i<0)throw Error('No free non-clock tile');G.clock.n=G.mv+1;__mj.onTap(i);});
+        await sleep(900);
+        const m=await modal(p);t.eq(m.title,await p.evaluate(()=>tx('clockTitle')),'clock timeout explains the loss '+lang);
+        for(const part of text)t.ok(m.text.includes(part),'repeat the complete explanation after timeout '+lang);
+        t.eq(m.buttons,['sRetry','sMenu'],'retry and menu are available '+lang);
+        t.ok(await p.evaluate(()=>$('#modalBox').scrollHeight<=$('#modalBox').clientHeight+1),'explanation, retry and menu fit on a small phone '+lang);
+        if(!attempt){await click(p,'#sRetry');await sleep(1400);t.eq(await modal(p),null,'retry starts directly after explanation '+lang);}
+      }
+      await click(p,'#sMenu');t.eq(await p.evaluate(()=>curScreen),'home','menu works after timeout '+lang);
+    }
+  }},
+  {name:'clocks: peeking and blocked taps are free; a pair removed together costs two moves',async run(t,{startLevel,sleep}){
+    const p=await t.phone({state:{name:'Dennis',pid:'test-clock-moves',level:80,sunSeen:true,seenSp:{clock:1,clockMoves:1,ice:1,lock:1,gold:1,joker2:1}}});
+    await startLevel(p,80);
+    const result=await p.evaluate(()=>{
+      const [a,b]=G.tiles.map((t,i)=>i).filter(i=>i!==G.clock.i&&canTake(i));
+      if(b===undefined)throw Error('Need two free tiles');
+      const blocked=G.tiles.findIndex((t,i)=>G.alive[i]&&!free(i));
+      if(blocked<0)throw Error('Need a blocked tile');
+      G.tiles[b].face=G.tiles[a].face;G.down[a]=1;G.down[b]=0;G.peek=-1;turn(a,true);turn(b,false);
+      const left=clockLeft();__mj.onTap(blocked);__mj.onTap(a);
+      const peek=[G.mv,clockLeft(),G.peek===a];__mj.onTap(b);
+      return {left,peek,pair:[G.mv,clockLeft(),!!G.alive[a],!!G.alive[b]]};
+    });
+    t.eq(result.peek,[0,result.left,true],'blocked tap and first flip do not spend a move');
+    t.eq(result.pair,[2,result.left-2,false,false],'both removed tiles count, even from one tap');
+    await sleep(300);
+  }},
   {name:'clocks: harder designs preserve levels through 79 and have complete clock-safe proofs, also after repetition',cpu:true,async run(t){
     const T=table(),old=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../analysis/levels-1.46.js'),'utf8')+';HARD_LEVELS');
     t.eq([T.from,T.aspect,T.levels.length],[old.from,old.aspect,old.levels.length],'same level range and aspect');

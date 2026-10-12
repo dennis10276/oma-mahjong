@@ -112,9 +112,12 @@ function begin(o, restart = false) {
   } catch (e) { logErr(e, 'begin'); }
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
   if (villageOn()) setTimeout(villageTease, 1800);
-  if (!S.seenTray) setTimeout(() => showIntro(), 700);
-  else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
-  else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
+  const ready = () => {
+    if (!S.seenTray) setTimeout(() => showIntro(), 700);
+    else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
+    else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
+  };
+  if (!clockIntro(ready)) ready();
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
@@ -666,9 +669,9 @@ function checkClock() {
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      <p>${tx('clockText', G.clock.n)}</p>
+      <p>${tx('clockText', G.clock.n)}</p>${clockHelpText()}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
     $('#sRetry').onclick = () => { closeModal(); restart(); };
     $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);
