@@ -85,12 +85,17 @@ const Hard = (() => {
       if (clock && alive[clock.i]) {
         const slack = clock.n - moves - depth(clock.i) - 1;
         if (slack < 0) s -= 1000; else s -= p.clock * Math.max(0, 6 - slack);
+        s -= (p.clockFocus || 0) * depth(clock.i);   // optional diagnostic: deliberately work towards the clock
       }
       return s;
     }
     const take = i => { alive[i] = 0; left--; moves++; const q = tray.indexOf(faces[i]); if (q >= 0) tray.splice(q, 1); else tray.push(faces[i]); };
     const at = new Int16Array(n).fill(-1);       // the move at which each tile was taken
-    const commit = i => { at[i] = moves; const q = trayT.findIndex(t => faces[t] === faces[i]); if (q >= 0) trayT.splice(q, 1); else trayT.push(i); take(i); };
+    const commit = i => {
+      if (clock && alive[clock.i] && moves >= clock.n) return false;
+      at[i] = moves; const q = trayT.findIndex(t => faces[t] === faces[i]); if (q >= 0) trayT.splice(q, 1); else trayT.push(i); take(i);
+      return true;
+    };
     const trayT = [];      // the waiting tiles themselves (for the exact end game)
     let plan = null;
     // the end game: everything left is in sight, so work it out exactly (ice counted from now on)
@@ -114,8 +119,8 @@ const Hard = (() => {
       if (!fr.length) return end(false, 'none');
       const m = fr.find(i => tray.includes(faces[i]));
       if (!plan) plan = endGame();
-      if (plan && plan.length) { commit(plan.shift()); continue; }
-      if (m !== undefined) { commit(m); continue; }
+      if (plan && plan.length) { if (!commit(plan.shift())) return end(false, 'clock'); continue; }
+      if (m !== undefined) { if (!commit(m)) return end(false, 'clock'); continue; }
       if (tray.length >= SLOTS - 1) return end(false, 'tray');
       // the options: a pair (two tiles that are free), or one tile into the tray
       const opts = [];
@@ -142,7 +147,7 @@ const Hard = (() => {
       while (k < w.length - 1 && (x -= w[k]) > 0) k++;
       if (trace) trace.push({ tray: tray.slice(), opts: opts.length, pick: opts[k], best: sc.indexOf(mx) === k });
       if (opts[k].length === 1 && tray.length === SLOTS - 2) risky++;   // a third tile waits: one more miss ends the level
-      opts[k].forEach(commit);
+      for (const i of opts[k]) if (!commit(i)) return end(false, 'clock');
     }
     return end(tray.length === 0, tray.length ? 'tray' : 'win');
     function end(win, why) { return { win, why, left, moves, at, risky, choices: decisions ? choices / decisions : 0 }; }

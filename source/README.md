@@ -42,6 +42,8 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
 
 To make an update: edit `www/`, then `python3 release.py <version> --deploy` (see below).
 Building the APK needs Android SDK build-tools 35 + platform 34 (set ANDROID_SDK).
+On Windows, `python tools/build_apk.py` uses the verified archives listed in
+`build/toolchain/packages.json`. It checks the signing certificate and packaged game assets.
 
 ## Changing the rules (`www/js/rules.js`)
 
@@ -146,8 +148,8 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   (`minTileBig` 48 every 10th level, which may hold up to 96 tiles).
 - **Redo from a level**: a settings event `{ k: 'cfg', t, redo: 75, redoId }` in `plays/cfg-<pid>`
   sends that player back to level 75 once (stars, points and tries from there wiped).
-- **From `from` (75)** the levels get harder: target from `start` (0.62) to `end` (0.45) at
-  `endLevel` (120). Deals along a known way through, often with a tile lying on its own twin;
+- **From `from` (75)** the levels get harder: target from `start` (0.55) to `end` (0.35) at
+  `endLevel` (150). Deals along a known way through, often with a tile lying on its own twin;
   face-down tiles (same share as before) only on tiles you can see but not take yet, never on the
   way out of a "3 waiting" moment; tray pressure kept near the old levels (`risky`); improved step by
   step against the test player. Fair: the strong test player must win at least as often as the
@@ -156,10 +158,15 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   other) were tried too: fewer choices, but more luck than skill, so they are off.
 - **The alarm clock (from `clockFrom`, 80)**: one tile shows ⏰ with the moves left; every tile taken
   is a move; at 0 with the clock tile still there, the level is over (logged as `end` with `ck: 1`).
+- **1.46 changes clocks only**: all 1.45 boards and difficulty targets stay intact. Existing clock
+  countdowns from 80 are tightened, with complete solution witnesses and separate simulated
+  acceptance games. Saved games retain their current counter; the next attempt uses the new one.
+  See `analysis/clock-changes.md` and `tools/sim/tighten_clocks.js`. The table's `rate` and `strong`
+  fields retain the 1.45 measurements and are not measurements of the new deadlines.
 - **Made in advance, the same for everyone**: designing takes seconds, so the levels are designed once
   on the computer (`node tools/sim/build_levels.js 70 269 2`, a few minutes) for one screen shape
   (`Hard.ASPECT`; the pile is fitted to every screen) and ship in `www/levels-hard.js`. They start at
-  once. Past the last one, the levels from `cycleFrom` (120) come round again, mirrored and with other
+  once. Past the last one, the levels from `cycleFrom` (150) come round again, mirrored and with other
   pictures. After changing hard.js or `RULES.hard`: run the build again (and `GENV` + 1).
   The start of a level logs `pr`, the test player's chance, so real results can be compared later.
   `node tools/sim/measure.js` measures the shipped levels with the three test players (other games

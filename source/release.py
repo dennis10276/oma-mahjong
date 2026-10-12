@@ -112,7 +112,10 @@ def main():
         code = int(re.search(r'android:versionCode="(\d+)"', open(man).read()).group(1)) + 1
         sub(man, r'android:versionCode="\d+"', f'android:versionCode="{code}"')
         sub(man, r'android:versionName="[^"]*"', f'android:versionName="{v}"')
-        subprocess.run(['bash', os.path.join(ROOT, 'android', 'build.sh')], check=True)
+        if os.name == 'nt':
+            subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'build_apk.py')], check=True)
+        else:
+            subprocess.run(['bash', os.path.join(ROOT, 'android', 'build.sh')], check=True)
         shutil.copy(os.path.join(ROOT, 'android', 'build', 'OmasMahjong.apk'), os.path.join(SITE, 'OmasMahjong.apk'))
         sub(os.path.join(SITE, 'index.html'), r'Versie [0-9.]+ ·', f'Versie {v} ·')
         print(f'APK built: version {v} (code {code})')
