@@ -101,7 +101,8 @@ function begin(o, restart = false) {
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };    // taps, blocked taps, flips, best combo, most in tray
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
-  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? spec.made.info.rate : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  const focused = !!spec.made && o.mode === 'level' && o.level >= RULES.hard.rebuildFrom;
+  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? 'focused' : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');

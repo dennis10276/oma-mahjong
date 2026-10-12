@@ -1,4 +1,18 @@
-# Difficulty plan — new measured levels from 80
+# Difficulty plan — clock-focused calibration from 80
+
+## Current direction: release 1.48
+
+Updated 12 October 2026 after the user played 1.47. Release 1.47 is published; its reset to 79 was acknowledged, and the user has since played level 80. The follow-up calibrates levels 80+ to the careful clock-focused bot and adds difficulty to the rest of the board, preserving the clock challenge. No additional reset was requested.
+
+Use exactly the 1.47 focused diagnostic: `temp: 0.7`, `end: 20`, `clockFocus: 4`. Keep the approved strong curve: 65% at 80, 60% at 85, 45% at 100, 35% at 120 and 30% from 150, interpolating between checkpoints. Middle and average players are diagnostics, not competing targets.
+
+Use `analysis/levels-1.47.js` as the immutable baseline. Retain geometry, hidden tiles, ice, locks, key/gold positions, clock position, clock counter and complete solution path. Freeze all faces in the path through clock removal, plus the gold and key pairs. Rearrange only the remaining faces, preserving face counts and a full legal solution with fewer than four unmatched tray tiles. Clock route margins remain unchanged.
+
+Independent checks measure 600 fresh games per persona. Focused wins must be within 8 percentage points of target at 80–89 and 10 afterwards, with band averages within 3 points. Reaching the clock and clock-expiry losses must not worsen beyond sampling tolerance: 3 points per level, 1 per band. Record the chance of finishing the board after reaching the clock. An unchanged countdown alone is insufficient protection.
+
+The pilot passed: 61.4% focused wins against a 60.5% average target, with clock reach improving from 92.9% to 97.9%. Apply the same tuning to all 190 boards, preserving levels through 79, grandma's track, tile sizes and mirrored repeats. Update the reported start-event chance to the focused model. Run the full app tests, publish the browser/bundle/signed APK together, update the PC project, and verify the live update. Do not send another player reset. Whole-table results belong in `difficulty-1.48.md` and `validation-1.48.json` after validation finishes.
+
+## Historical plan for release 1.47
 
 Updated 12 October 2026. The user has now authorized implementing and publishing the harder levels from 80, followed by resetting Dennisisdebeste to 79. Release 1.46 is the current baseline; the new release will be 1.47.
 

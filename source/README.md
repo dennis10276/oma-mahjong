@@ -139,7 +139,7 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   the same levels hard). `sensible` sits between and is the yardstick.
 - **From `measureFrom` (70)** every level is designed (`Hard.make`) so the sensible test player wins
   about `sense` (0.69, what it wins on the old levels 65-74) of first tries.
-- **Two targets from 75**: the sensible player (42% at reference level 75 to 22% at 120) and the strong player, who
+- **Historical 1.47 calibration**: the sensible player (42% at reference level 75 to 22% at 120) and the strong player, who
   plays like Dennisisdebeste (the 1.47 `strongCurve`: 70% at reference level 75, 60% at 85, 45% at 100, 35% at 120 and 30% from 150). A level that only suits the
   middle player can be a coin flip or a walk-over for a good one, so both count. Every level is
   measured on fresh games while it is built; one that misses by more than 0.1 is made again
@@ -169,8 +169,20 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   8 percentage points at 80–89 and 10 afterwards; band averages must be within 3 points.
   `analysis/difficulty-1.47.md` and `analysis/validation-1.47.json` record the final results.
   Historical 1.46 clock-only results are retained in `analysis/clock-changes.md`.
+- **1.48 calibrates 80+ to the clock-focused player** (`Hard.REF.focused`: `temp: 0.7`, `end: 20`,
+  `clockFocus: 4`), chosen by Dennis as the closer model of his play. The approved strong curve
+  stays the same; the middle and average players are now diagnostics. Difficulty is added by
+  rearranging faces away from the original clock-removal prefix. Clock counters, positions,
+  full solution routes, geometry, hidden tiles, ice, locks, keys and gold positions stay exactly
+  as in 1.47; faces along the clock route and the key/gold pairs stay fixed too.
+  `node tools/sim/tune_boards.js 80 269 8` resumes tuning against `analysis/levels-1.47.js`.
+  `node tools/sim/validate_focused.js` independently measures 600 games per persona and checks
+  that clock reach and expiry losses have not worsened beyond sampling tolerance (3 points per
+  level, 1 per band). Focused win-rate limits remain 8 points at 80–89, 10 afterwards, 3 per band.
+  Results are in `analysis/difficulty-1.48.md` and `analysis/validation-1.48.json`. New level start
+  events record the focused win chance in `pr` and identify it with `pm: 'focused'`.
 - **Made in advance, the same for everyone**: designing takes seconds, so the levels are designed once
-  on the computer (`node tools/sim/build_levels.js 80 269 8`) for one screen shape
+  on the computer (the current tuning tool is `node tools/sim/tune_boards.js 80 269 8`) for one screen shape
   (`Hard.ASPECT`; the pile is fitted to every screen) and ship in `www/levels-hard.js`. They start at
   once. Past the last one, the levels from `cycleFrom` (150) come round again, mirrored and with other
   pictures. After changing hard.js or `RULES.hard`: run the build again (and `GENV` + 1).

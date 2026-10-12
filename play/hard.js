@@ -24,7 +24,7 @@ const Hard = (() => {
   // end: with this many tiles left and all of them seen, it works out the rest exactly (a good
   // player plans the last part of a level; the average one does not)
   const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
-  const REF = { strong: { temp: 2, end: 20, clockFocus: 1 }, sensible: { temp: 3.5, end: 12, clockFocus: 0.35 }, average: { temp: 6, end: 0 } };
+  const REF = { strong: { temp: 2, end: 20, clockFocus: 1 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3.5, end: 12, clockFocus: 0.35 }, average: { temp: 6, end: 0 } };
   const persona = k => ({ ...P, ...REF[k] });
   // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
   const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
@@ -178,7 +178,7 @@ const Hard = (() => {
      make() is a generator: the game runs it in small steps while the player is busy with the level
      before (board.js), and keeps the result. The same level and screen shape always give the same
      result, on every phone (fixed numbers of steps, no clocks). */
-  const GENV = 3;      // route-based clocks and the approved strong-player curve
+  const GENV = 4;      // clock-focused board tuning; existing clock routes and budgets preserved
   const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30]], minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible and the strong test player should win (the strong one

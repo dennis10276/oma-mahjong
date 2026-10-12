@@ -42,7 +42,7 @@ function tune(lv,d) {
   return {lv,i:ci,old:d.clock.n,budget,routeMoves:base,spare:budget-base,earlyRouteMoves:earlyMoves,
     focusedBaseline:baseline,focusedFloor:floor,focusedRate:m.rate,clockLoss:m.clockLoss,solution:route};
 }
-if(process.argv[2]==='--worker')process.on('message',({rows})=>{try{for(const {lv,d} of rows)process.send(tune(lv,d));process.send({done:true});}catch(e){process.send({error:e.stack});process.exit(1);}});
+if(require.main===module&&process.argv[2]==='--worker')process.on('message',({rows})=>{try{for(const {lv,d} of rows)process.send(tune(lv,d));process.send({done:true});}catch(e){process.send({error:e.stack});process.exit(1);}});
 else if (require.main === module) {
   const [source,output,report] = process.argv.slice(2);
   if (!report) throw Error('Provide SOURCE OUTPUT REPORT; existing boards will be preserved.');
