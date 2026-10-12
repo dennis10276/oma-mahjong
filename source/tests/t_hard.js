@@ -1,6 +1,7 @@
 /* The test player and the harder levels (www/hard.js), and the alarm clock in the game. */
 'use strict';
-const path = require('path');
+const path = require('path'), fs=require('fs'), vm=require('vm');
+global.HARD_LEVELS=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+';HARD_LEVELS');
 const Hard = require(path.join(__dirname, '..', 'www', 'hard.js'));
 const L = require(path.join(__dirname, '..', 'www', 'layouts.js'));
 const asGame = d => {
@@ -19,9 +20,10 @@ module.exports = [
       const a = Hard.makeNow(83, 1.6), b = Hard.makeNow(83, 1.6);
       t.eq(a.faces, b.faces, 'the same level and screen give the same design (every phone)');
       for (const lv of [72, 77, 83, 97]) {
-        const d = Hard.makeNow(lv, 1.55), g = asGame(d), all = new Uint8Array(g.n).fill(1);
+        const d = Hard.get(lv), g = asGame(d), all = new Uint8Array(g.n).fill(1);
         t.ok(L.solve(g.tiles, g.nb, d.faces, all, [], 200000, g.rules), `level ${lv}: can be finished with ice and locks`);
-        t.ok(Math.abs(d.info.rate - d.info.target) <= 0.2, `level ${lv}: the sensible test player wins about the target share`, d.info);
+        const expected=lv>=80?Hard.target(lv):lv<75?0.69:0.55-0.2*(lv-75)/75;
+        t.ok(Math.abs(d.info.rate - expected) <= 0.2, `level ${lv}: the sensible test player wins about the target share`, d.info);
         if (lv >= 75) {
           t.ok(d.info.strong >= d.info.rate - 0.1, `level ${lv}: playing better helps (strong ${d.info.strong}, sensible ${d.info.rate})`);
           const free0 = d.down.filter(i => L.isFree(i, all, g.nb));

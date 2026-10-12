@@ -139,17 +139,17 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   the same levels hard). `sensible` sits between and is the yardstick.
 - **From `measureFrom` (70)** every level is designed (`Hard.make`) so the sensible test player wins
   about `sense` (0.69, what it wins on the old levels 65-74) of first tries.
-- **Two targets from 75**: the sensible player (0.55 at 75 to 0.35 at 150) and the strong player, who
-  plays like Dennisisdebeste (`strongStart` 0.75 to `strongEnd` 0.55). A level that only suits the
+- **Two targets from 75**: the sensible player (42% at reference level 75 to 22% at 120) and the strong player, who
+  plays like Dennisisdebeste (the 1.47 `strongCurve`: 70% at reference level 75, 60% at 85, 45% at 100, 35% at 120 and 30% from 150). A level that only suits the
   middle player can be a coin flip or a walk-over for a good one, so both count. Every level is
   measured on fresh games while it is built; one that misses by more than 0.1 is made again
-  (up to 3 tries, the closest is kept).
+  (a failed candidate is regenerated; no closest miss is silently published).
 - **Tile size**: a pile from 75 must give tiles of at least `minTile` (54) pixels on a typical phone
   (`minTileBig` 48 every 10th level, which may hold up to 96 tiles).
 - **Redo from a level**: a settings event `{ k: 'cfg', t, redo: 75, redoId }` in `plays/cfg-<pid>`
   sends that player back to level 75 once (stars, points and tries from there wiped).
-- **From `from` (75)** the levels get harder: target from `start` (0.55) to `end` (0.35) at
-  `endLevel` (150). Deals along a known way through, often with a tile lying on its own twin;
+- **From `from` (75)** the levels get harder: target from `start` (0.42) to `end` (0.22) at
+  `endLevel` (120). The shipped redesign begins at `rebuildFrom` (80); earlier boards are preserved. Deals along a known way through, often with a tile lying on its own twin;
   face-down tiles (same share as before) only on tiles you can see but not take yet, never on the
   way out of a "3 waiting" moment; tray pressure kept near the old levels (`risky`); improved step by
   step against the test player. Fair: the strong test player must win at least as often as the
@@ -158,13 +158,19 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   other) were tried too: fewer choices, but more luck than skill, so they are off.
 - **The alarm clock (from `clockFrom`, 80)**: one tile shows ⏰ with the moves left; every tile taken
   is a move; at 0 with the clock tile still there, the level is over (logged as `end` with `ck: 1`).
-- **1.46 changes clocks only**: all 1.45 boards and difficulty targets stay intact. Existing clock
-  countdowns from 80 are tightened, with complete solution witnesses and separate simulated
-  acceptance games. Saved games retain their current counter; the next attempt uses the new one.
-  See `analysis/clock-changes.md` and `tools/sim/tighten_clocks.js`. The table's `rate` and `strong`
-  fields retain the 1.45 measurements and are not measurements of the new deadlines.
+- **1.47 redesigns levels from 80**: levels through 79 and grandma's separate levels stay intact.
+  The strong target interpolates to 65% at 80, 60% at 85, 45% at 100, 35% at 120 and 30% from 150.
+  New clocks leave 3–4 route moves at 80–89, 2–3 at 90–109, and 1–2 from 110.
+  Complete solutions are packed with the boards. In-progress normal boards from earlier designs
+  at 80+ start fresh, keeping player progression; boards below 80 and grandma's saves still resume.
+  `tools/sim/build_levels.js 80 269 8` resumes generation from an analysis checkpoint; acceptance
+  screens candidates with separate 160-, 300- and 600-game samples for both personas, followed
+  by independent whole-table validation on 600 fresh games per persona. Per-level limits are
+  8 percentage points at 80–89 and 10 afterwards; band averages must be within 3 points.
+  `analysis/difficulty-1.47.md` and `analysis/validation-1.47.json` record the final results.
+  Historical 1.46 clock-only results are retained in `analysis/clock-changes.md`.
 - **Made in advance, the same for everyone**: designing takes seconds, so the levels are designed once
-  on the computer (`node tools/sim/build_levels.js 70 269 2`, a few minutes) for one screen shape
+  on the computer (`node tools/sim/build_levels.js 80 269 8`) for one screen shape
   (`Hard.ASPECT`; the pile is fitted to every screen) and ship in `www/levels-hard.js`. They start at
   once. Past the last one, the levels from `cycleFrom` (150) come round again, mirrored and with other
   pictures. After changing hard.js or `RULES.hard`: run the build again (and `GENV` + 1).

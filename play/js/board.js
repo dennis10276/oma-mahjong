@@ -14,7 +14,7 @@ function saveCur() {
   if (!G || G.done) return;
   syncClock();
   try {
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, hv: G.o.mode === 'level' && Hard.applies(G.o.level, G.o.track) ? Hard.GENV : null }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -55,7 +55,9 @@ function begin(o, restart = false) {
   const wrap = $('#boardWrap');
   const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
-  const sameTrack = cur && (cur.tr || '') === (o.track || '');      // a saved level from the other set of levels is not resumed
+  const sameTrack = cur && (cur.tr || '') === (o.track || '') &&
+    (o.mode !== 'level' || o.level < RULES.hard.rebuildFrom || !Hard.applies(o.level, o.track) || cur.hv === Hard.GENV);
+  // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {
     if (!o.spec) o.aspect = aspect;

@@ -1,31 +1,23 @@
 'use strict';
-const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('crypto');
+const fs=require('fs'),path=require('path'),vm=require('vm');
 const H=require('../www/hard'), C=require('../tools/sim/clock_routes');
 const {game}=require('../tools/sim/tighten_clocks');
 const table=()=>vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+';HARD_LEVELS');
-const report=require('../analysis/clock-changes.json');
 module.exports=[
-  {name:'clocks: only countdowns from 80 change; every clock has a complete legal solution, including repeated levels',cpu:true,async run(t){
-    const T=table(),old=require('./fixtures/clock-baseline.json');
-    t.eq([T.v,T.from,T.cycleFrom,T.aspect],[old.v,old.from,old.cycleFrom,old.aspect],'same table and repeat pool');
-    t.eq(T.levels.length,old.rows.length,'same level count');
-    T.levels.forEach((r,k)=>{r=JSON.parse(JSON.stringify(r));if(r[7]&&T.from+k>=80)r[7]=[r[7][0],0];
-      t.eq(crypto.createHash('sha256').update(JSON.stringify(r)).digest('hex'),old.rows[k],'all non-countdown fields unchanged at '+(T.from+k));});
-    for(const r of report.rows){
-      const d=H.unpack(r.lv,T.levels[r.lv-T.from]);
-      t.eq(d.clock,{i:r.i,n:r.budget},'table matches verified clock '+r.lv);
-      t.ok(r.budget<=r.old,'deadline never increases '+r.lv);
-      t.ok(C.clockSpare(r.lv).includes(r.spare),'spare moves in approved range '+r.lv);
-      t.ok(r.focusedRate>=r.focusedFloor,'independent deliberate-play check passes '+r.lv);
-      t.ok(C.validSolution(game(d),r.solution),'whole board finishes within deadline '+r.lv);
+  {name:'clocks: harder designs preserve levels through 79 and have complete clock-safe proofs, also after repetition',cpu:true,async run(t){
+    const T=table(),old=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../analysis/levels-1.46.js'),'utf8')+';HARD_LEVELS');
+    t.eq([T.from,T.aspect,T.levels.length],[old.from,old.aspect,old.levels.length],'same level range and aspect');
+    t.eq(T.v,H.GENV,'current design version');t.eq(T.cycleFrom,150,'repeat only the final difficulty plateau');
+    for(let lv=T.from;lv<80;lv++)t.eq(T.levels[lv-T.from],old.levels[lv-old.from],'preserved level '+lv);
+    for(let lv=80;lv<T.from+T.levels.length;lv++){
+      const d=H.unpack(lv,T.levels[lv-T.from]);t.ok(d.clock,'clock exists '+lv);
+      t.ok(H.validSolution(game(d),d.solution),'complete route within deadline '+lv);
+      t.ok(H.clockSpare(lv).includes(d.clock.n-d.solution.indexOf(d.clock.i)-1),'approved clock margin '+lv);
+      t.ok(d.clock.n <= (lv<90?22:lv<110?19:16),'early clock planning '+lv);
     }
     const context={};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/layouts.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/hard.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+'\nthis.get=Hard.get;',context);
     const last=T.from+T.levels.length-1,span=last-T.cycleFrom+1;
-    for(let lv=last+1;lv<=last+span;lv++){
-      const base=T.cycleFrom+(lv-T.cycleFrom)%span,r=report.rows.find(x=>x.lv===base);
-      if(r)t.ok(C.validSolution(game(context.get(lv)),r.solution),'mirrored/permuted proof at '+lv);
-    }
-    t.eq([H.cfg().start,H.cfg().end,H.cfg().endLevel,H.cfg().strongStart,H.cfg().strongEnd],[0.55,0.35,150,0.75,0.55],'1.45 curve remains active');
+    for(let lv=last+1;lv<=last+span;lv++){const d=context.get(lv);t.ok(H.validSolution(game(d),d.solution),'mirrored/permuted proof at '+lv);}
   }},
   {name:'clocks: simulator cannot skip a deadline by selecting a pair; final allowed clock tap succeeds',cpu:true,async run(t){
     const L=require('../www/layouts'),tiles=[{x:0,y:0,z:0},{x:2,y:0,z:0}];
@@ -33,16 +25,17 @@ module.exports=[
     t.eq(C.validSolution(g,[0,1]),false,'late clock fails');t.eq(C.validSolution(g,[1,0]),true,'final allowed clock tap works');
     t.eq(H.play(g,p,1).why,'clock','pair cannot bypass deadline');t.eq(H.play({...g,clock:{i:1,n:2}},p,1).win,true,'pair within deadline succeeds');
   }},
-  {name:'clocks: old saved countdown survives resume, next attempt gets new countdown, final allowed tap works in game',async run(t,{startLevel,sleep}){
-    const r=report.rows.find(x=>x.lv===80),p=await t.phone({state:{name:'Dennis',pid:'test-clock-only',level:90,seenSp:{clock:1,ice:1,lock:1,gold:1,joker:1}}});
+  {name:'clocks: final allowed tap works in the game',async run(t,{startLevel,sleep}){
+    const T=table(),d=H.unpack(80,T.levels[80-T.from]);
+    const p=await t.phone({state:{name:'Dennis',pid:'test-clock-hard',level:90,seenSp:{clock:1,ice:1,lock:1,gold:1,joker:1}}});
     await startLevel(p,80);
-    t.eq(await p.evaluate(()=>G.clock.n),r.budget,'new counter starts');
-    await p.evaluate(old=>{G.clock.n=old;G.mv=2;G.score=123;saveCur();__mj.startLevel(80);},r.old);
-    t.eq(await p.evaluate(()=>[G.clock.n,G.mv,G.score]),[r.old,2,123],'in-progress game resumes without sudden deadline change');
-    await p.evaluate(()=>restart());await sleep(900);
-    t.eq(await p.evaluate(()=>[G.clock.n,G.mv]),[r.budget,0],'retry uses the shorter counter');
-    for(const i of r.solution.slice(0,r.routeMoves-1)){await p.evaluate(i=>__mj.onTap(i),i);await sleep(500);}
+    t.eq(await p.evaluate(()=>G.clock.n),d.clock.n,'designed counter starts');
+    const prefix=d.solution.slice(0,d.solution.indexOf(d.clock.i));
+    for(const i of prefix){await p.evaluate(i=>{__mj.onTap(i);if(G.alive[i])__mj.onTap(i);},i);await sleep(500);}
     await p.evaluate(()=>{G.clock.n=G.mv+1;__mj.onTap(G.clock.i);});await sleep(900);
-    t.eq(await p.evaluate(()=>[!!G.alive[G.clock.i],clockOn(),!!G.overShown]),[false,false,false],'clock removed on final allowed move is safe');
+    t.eq(await p.evaluate(()=>[!!G.alive[G.clock.i],clockOn(),!!G.overShown]),[false,false,false],'final allowed clock tap is safe');
+    await p.evaluate(path=>{for(const i of path){__mj.onTap(i);if(G.alive[i])__mj.onTap(i);}},d.solution.slice(d.solution.indexOf(d.clock.i)+1));
+    await sleep(5000);
+    t.ok(await p.evaluate(()=>G.done&&S.stars[80]>0),'the complete designed route also wins in the actual game');
   }},
 ];

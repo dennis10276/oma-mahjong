@@ -24,7 +24,7 @@ const Hard = (() => {
   // end: with this many tiles left and all of them seen, it works out the rest exactly (a good
   // player plans the last part of a level; the average one does not)
   const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
-  const REF = { strong: { temp: 2, end: 20 }, sensible: { temp: 3.5, end: 12 }, average: { temp: 6, end: 0 } };
+  const REF = { strong: { temp: 2, end: 20, clockFocus: 1 }, sensible: { temp: 3.5, end: 12, clockFocus: 0.35 }, average: { temp: 6, end: 0 } };
   const persona = k => ({ ...P, ...REF[k] });
   // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
   const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
@@ -85,7 +85,7 @@ const Hard = (() => {
       if (clock && alive[clock.i]) {
         const slack = clock.n - moves - depth(clock.i) - 1;
         if (slack < 0) s -= 1000; else s -= p.clock * Math.max(0, 6 - slack);
-        s -= (p.clockFocus || 0) * depth(clock.i);   // optional diagnostic: deliberately work towards the clock
+        s -= (p.clockFocus || 0) * depth(clock.i);
       }
       return s;
     }
@@ -178,8 +178,8 @@ const Hard = (() => {
      make() is a generator: the game runs it in small steps while the player is busy with the level
      before (board.js), and keeps the result. The same level and screen shape always give the same
      result, on every phone (fixed numbers of steps, no clocks). */
-  const GENV = 2;      // change when make() changes: saved designs are then made again
-  const DEF = { measureFrom: 70, from: 75, clockFrom: 80, sense: 0.69, start: 0.55, end: 0.35, endLevel: 150, strongSense: 0.88, strongStart: 0.75, strongEnd: 0.55, minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
+  const GENV = 3;      // route-based clocks and the approved strong-player curve
+  const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30]], minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible and the strong test player should win (the strong one
   // plays like Dennisisdebeste: a level that only suits the middle player can still be a coin flip
@@ -187,6 +187,15 @@ const Hard = (() => {
   function target(level, who = 'sensible') {
     const c = cfg(), st = who === 'strong';
     if (level < c.from) return st ? c.strongSense : c.sense;
+    if (st && c.strongCurve && c.strongCurve.length) {
+      const points = c.strongCurve;
+      if (level <= points[0][0]) return points[0][1];
+      for (let i = 1; i < points.length; i++) {
+        const [a, x] = points[i - 1], [b, y] = points[i];
+        if (level <= b) return x + (y - x) * (level - a) / (b - a);
+      }
+      return points[points.length - 1][1];
+    }
     const f = Math.min(1, (level - c.from) / Math.max(1, c.endLevel - c.from));
     return st ? c.strongStart + (c.strongEnd - c.strongStart) * f : c.start + (c.end - c.start) * f;
   }
@@ -235,6 +244,69 @@ const Hard = (() => {
   }
   // compact shapes (no holes or thin arms) carry towers well
   const TOWER = ['block', 'oval', 'diamond', 'octagon', 'cross', 'pyramid', 'house', 'hourglass', 'bowtie', 'butterfly', 'heart'];
+  const clockSpare = level => level < 90 ? [3, 4] : level < 110 ? [2, 3] : [1, 2];
+  // Replay a complete witness, checking every tap including ice, locks, tray capacity and deadline.
+  function validSolution(g, path) {
+    if (!path || path.length !== g.tiles.length) return false;
+    const initial = new Uint8Array(g.tiles.length).fill(1), alive = initial.slice(), tray = [];
+    let clockTaken = !g.clock;
+    for (let move = 0; move < path.length; move++) {
+      const i = path[move];
+      if (!Number.isInteger(i) || !alive[i] || !(g.rules ? L.takeable(i, alive, g.nb, g.rules, initial) : L.isFree(i, alive, g.nb))) return false;
+      if (!clockTaken && move >= g.clock.n) return false;
+      alive[i] = 0;
+      if (g.clock && i === g.clock.i) clockTaken = true;
+      const q = tray.indexOf(g.faces[i]); if (q >= 0) tray.splice(q, 1); else tray.push(g.faces[i]);
+      if (tray.length >= SLOTS) return false;
+    }
+    return clockTaken && tray.length === 0;
+  }
+  // Bounded breadth-first search: prioritize the blockers of the clock, but keep alternative
+  // legal tray states. Accept a prefix only if an exact solver can finish the whole board.
+  function clockRoute(g, ci) {
+    const n = g.tiles.length, initial = new Uint8Array(n).fill(1);
+    const remainingRules = alive => {
+      if (!g.rules) return null;
+      const ice = {};
+      for (const k in g.rules.ice) {
+        const gone = g.rules.iceNb[k].filter(i => !alive[i]).length;
+        if (g.rules.ice[k] > gone) ice[k] = g.rules.ice[k] - gone;
+      }
+      return { ...g.rules, ice };
+    };
+    const blockers = alive => {
+      const up = new Set(), todo = [ci];
+      while (todo.length) for (const j of g.nb.above[todo.pop()]) if (alive[j] && !up.has(j)) { up.add(j); todo.push(j); }
+      const side = name => { const set = new Set(up), todo = [ci], seen = new Set();
+        while (todo.length) { const k = todo.pop(); if (seen.has(k)) continue; seen.add(k); for (const j of g.nb[name][k]) if (alive[j]) { set.add(j); todo.push(j); } }
+        return set.size;
+      };
+      return Math.min(side('left'), side('right')) + 1;
+    };
+    let frontier = [{ alive: initial.slice(), tray: [], path: [] }], nodes = 0;
+    const seen = new Set();
+    for (let depth = 0; depth < Math.min(36, n * 0.45) && frontier.length && nodes < 16000; depth++) {
+      const next = [];
+      for (const state of frontier) {
+        for (let i = 0; i < n; i++) {
+          if (!(g.rules ? L.takeable(i, state.alive, g.nb, g.rules, initial) : L.isFree(i, state.alive, g.nb))) continue;
+          const q = state.tray.findIndex(j => g.faces[j] === g.faces[i]);
+          if (q < 0 && state.tray.length >= SLOTS - 1) continue;
+          const alive = state.alive.slice(); alive[i] = 0;
+          const tray = q < 0 ? state.tray.concat(i) : state.tray.filter((_, k) => k !== q), path = state.path.concat(i);
+          const key = alive.join('') + '|' + tray.map(j => g.faces[j]).sort((a,b) => a-b).join(',');
+          if (seen.has(key)) continue; seen.add(key); nodes++;
+          if (i === ci) {
+            const rest = L.solve(g.tiles, g.nb, g.faces, alive, tray, 12000, remainingRules(alive));
+            if (rest) return path.concat(rest);
+          } else next.push({ alive, tray, path, score: blockers(alive) + tray.length * 0.15 });
+        }
+      }
+      next.sort((a,b) => a.score-b.score);
+      frontier = next.slice(0, 48);
+    }
+    return null;
+  }
   // salt: another try at the same level (when a measurement says it missed)
   function* make(level, aspect, scale = 1, salt = 0) {
     const c = cfg(), hard = level >= c.from, T = target(level), TS = target(level, 'strong');
@@ -295,7 +367,9 @@ const Hard = (() => {
     // can be done by keeping the tray empty instead: a trap, which is part of being harder)
     // aim a little below the targets (the careful final measurement comes out a little easier);
     // off: how far a deal is from both targets, dev: too easy (+) or too hard (-)
-    const aim = T - 0.03, aimS = TS - 0.02;
+    const clocked = hard && level >= c.clockFrom;
+    // Leave room for the clock to contribute to the difficulty, rather than loosening its deadline.
+    const aim = T + (clocked ? 0.08 : 0) - 0.03, aimS = TS + (clocked ? 0.08 : 0) - 0.02;
     const off = s => Math.abs(s.q - aim) + (s.st === undefined ? 0 : Math.abs(s.st - aimS));
     const dev = s => s.st === undefined ? s.q - aim : (s.q - aim + s.st - aimS) / 2;
     // 1. deals along a way through, screened quickly by both test players; tune how much waits
@@ -354,38 +428,41 @@ const Hard = (() => {
         if (off(s) < off(best) && s.st >= s.q - 0.05) best = s;
       }
     }
-    // 3. the alarm clock: a tile you can see but not take yet (not face-down, iced, locked or
-    //    gold); n = moves allowed: the n that brings both test players closest to their targets
-    let clock = null;
+    // The clock must require a route, not a long countdown chosen to preserve an easy board.
+    // A successful focused game supplies a full legal witness, including the remaining board.
+    let clock = null, solution = best.path;
     if (hard && level >= c.clockFrom) {
       const ob = best.ob || {};
       const bad = new Set([...best.down, ...best.gold, ...Object.keys(ob.ice || {}).map(Number), ...(ob.locks || []), ...(ob.keys || [])]);
       const pool = L.shuffleArr(L.rng(seed + 99), tiles.map((t, i) => i).filter(i => !free0[i] && !cover[i].length && !bad.has(i)));
       let bc = null;
-      for (const ci of pool.slice(0, 3)) {
-        const when = [], g = game(best, null);
-        for (let k = 0; k < 20; k++) { const res = play(g, P, seed * 31 + k); if (res.win && res.at[ci] >= 0) when.push(res.at[ci]); yield; }
-        if (when.length < 4) continue;
-        when.sort((a, b) => a - b);
-        for (const pct of [0.95, 0.8, 0.65, 0.5, 0.35]) {
-          const cn = when[Math.min(when.length - 1, Math.floor(when.length * pct))] + 2;
-          const o = { i: ci, n: cn };
+      for (const ci of pool.slice(0, 6)) {
+        const route = clockRoute(game(best, null), ci);
+        const base = route ? route.indexOf(ci) + 1 : Infinity;
+        yield;
+        // A late-board clock would again give a large, forgiving countdown. Require an early route.
+        const routeLimit = level < 90 ? 18 : level < 110 ? 16 : 14;
+        if (!route || base < 5 || base > routeLimit) continue;
+        for (const spare of clockSpare(level)) {
+          const o = { i: ci, n: base + spare, base, route };
+          if (!validSolution(game(best, o), route)) continue;
           o.q = (yield* judge(best, o, 36, 'sensible', false, 1)).rate;
-          o.st = (yield* judge(best, o, 30, 'strong', false, 1)).rate;
+          o.st = (yield* judge(best, o, 40, 'strong', false, 1)).rate;
           if (o.st < o.q - 0.05) continue;                 // fair: a good player copes better with the clock too
-          if (!bc || off(o) < off(bc)) bc = o;
+          const miss = x => Math.abs(x.q - T) + 1.5 * Math.abs(x.st - TS);
+          if (!bc || miss(o) < miss(bc)) bc = o;
         }
       }
-      if (bc) clock = { i: bc.i, n: bc.n };
+      if (bc) { clock = { i: bc.i, n: bc.n }; solution = bc.route; }
     }
     // 4. the record: how the three test players do on the finished level
     best.q = (yield* judge(best, clock, 90, 'sensible', false, 99)).rate;
     best.strong = (yield* judge(best, clock, 60, 'strong', false, 99)).rate;
     best.blind = hard ? (yield* judge(best, clock, 30, 'sensible', true, 99)).rate : null;
-    return finish(tiles, best.faces, best.down, best, clock);
+    return finish(tiles, best.faces, best.down, best, clock, solution);
 
-    function finish(tl, faces, down, x, clk) {
-      return { v: GENV, level, aspect, scale, tiles: tl.map(t => [t.x, t.y, t.z]), faces, down: down.slice(), gold: x ? x.gold : null, obst: x ? x.ob : null, clock: clk,
+    function finish(tl, faces, down, x, clk, path = null) {
+      return { v: GENV, level, aspect, scale, tiles: tl.map(t => [t.x, t.y, t.z]), faces, down: down.slice(), gold: x ? x.gold : null, obst: x ? x.ob : null, clock: clk, solution: path,
         info: { target: +T.toFixed(2), targetStrong: +TS.toFixed(2), rate: x ? +x.q.toFixed(2) : null, strong: x ? +x.strong.toFixed(2) : null, blind: x && x.blind !== null && x.blind !== undefined ? +x.blind.toFixed(2) : null, twins: twinsOn(faces, L.neighbors(tl)), hard } };
     }
   }
@@ -408,15 +485,15 @@ const Hard = (() => {
     const ob = d.obst || {};
     return [d.tiles.map(([x, y, z]) => e1(x) + e1(y) + e1(z)).join(''), d.faces.map(e1).join(''), d.down.map(e2).join(''), (d.gold || []).map(e2).join(''),
       Object.entries(ob.ice || {}).map(([i, h]) => e2(+i) + e1(h)).join(''), (ob.locks || []).map(e2).join(''), (ob.keys || []).map(e2).join(''),
-      d.clock ? [d.clock.i, d.clock.n] : 0, d.info.rate, d.info.strong];
+      d.clock ? [d.clock.i, d.clock.n] : 0, d.info.rate, d.info.strong, d.solution ? d.solution.map(e2).join('') : ''];
   }
   function unpack(level, r) {
-    const [t, f, dn, g, ice, locks, keys, ck, rate, strong] = r;
+    const [t, f, dn, g, ice, locks, keys, ck, rate, strong, proof] = r;
     const tiles = []; for (let i = 0; i < t.length; i += 3) tiles.push([d1(t, i), d1(t, i + 1), d1(t, i + 2)]);
     const faces = []; for (let i = 0; i < f.length; i++) faces.push(d1(f, i));
     const iceO = {}; for (let i = 0; i < ice.length; i += 3) iceO[d2(ice, i)] = d1(ice, i + 2);
     const obst = ice || keys ? { ice: iceO, locks: list2(locks), keys: list2(keys) } : null;
-    return { level, tiles, faces, down: list2(dn), gold: list2(g), obst, clock: ck ? { i: ck[0], n: ck[1] } : null, info: { rate, strong } };
+    return { level, tiles, faces, down: list2(dn), gold: list2(g), obst, clock: ck ? { i: ck[0], n: ck[1] } : null, solution: proof ? list2(proof) : null, info: { rate, strong } };
   }
   const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);
   const applies = (level, track) => !track && level >= cfg().measureFrom && !!table();
@@ -439,6 +516,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { P, REF, persona, play, rate, coverOf, target, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+  return { P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;
