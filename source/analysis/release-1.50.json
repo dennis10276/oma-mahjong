@@ -1,0 +1,32 @@
+{
+  "version": "1.50",
+  "checkedAt": "2026-10-13T00:06:55.687Z",
+  "apkSha256": "6984ea8d198d242305669b2e405ffd1647645f7785ec7833f61b642cc02900b0",
+  "versionCode": 66,
+  "liveLevelsAndClocksPreserved": true,
+  "replayComplete": true,
+  "replayResult": "win",
+  "replayBytes": 7330,
+  "replayEvents": {
+    "begin": 1,
+    "view": 1,
+    "tap": 60,
+    "state": 60,
+    "end": 1
+  },
+  "offlineTests": 103,
+  "firebaseEmulatorRules": "passed",
+  "resetRequested": false,
+  "commit": "a038e609bec16b9152a1866dc29cdcc7150416c8",
+  "cleanupWorkflow": "https://github.com/dennis10276/oma-mahjong/actions/runs/38325450445",
+  "cleanupWorkflowResult": "success",
+  "oldTestCleanup": {
+    "checkedAt": "2026-10-13T00:09:19.197Z",
+    "deletedAnonymousHistories": 7,
+    "deletedEvents": 22,
+    "keptDennisTEST": true,
+    "remainingNamedProfiles": 7,
+    "remainingHistoryBranches": 13,
+    "temporaryVerificationRecordsRemoved": true
+  }
+}

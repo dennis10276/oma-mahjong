@@ -155,3 +155,9 @@ are preserved from live version 1.49; the separate unpublished difficulty work i
 
 Firebase console usage checked on 2026-10-13: Spark, 270.95 KB stored, 44.44 MB downloaded
 this billing period, and six peak connections out of the free limit of 100.
+
+Release verification: 103/103 offline tests passed on the preserved live 1.49 boards.
+The published 1.50 app uploaded a complete winning replay to real Firebase; its temporary
+test profile, summaries and replay were deleted afterward. The daily GitHub cleanup job
+succeeded. Seven approved anonymous test histories (22 events) were removed; DennisTEST
+and all seven named profiles were kept. See `release-1.50.json`.
