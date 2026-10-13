@@ -35,6 +35,10 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
   into `news.json`; `tools/news.yml` is the GitHub workflow that would run it every two hours and
   publish it on the `news` branch (not switched on yet: see "News from Apeldoorn" below)
 - `firebase/rules.json`: database rules
+- Compact attempt replays: [recording, phone limits, storage measurements and deployment notes](analysis/replay-recording.md).
+  `tools/replays.js` reconstructs exported attempts offline; `tools/measure_replays.js` measures
+  size/CPU with a fake database. `tools/prune_replays.js` and `tools/replay-retention.yml` prepare
+  daily cleanup after 30 days, shipped with the replay database rules in version 1.50.
 - `android/`: the small Android wrapper (WebView) + `build.sh` (aapt2/javac/d8/apksigner, no Gradle needed)
 - `android/keystore/`: the signing key + password. KEEP THESE SAFE: updates must be signed with this
   same key or Android refuses to install them over the old version (and grandma would lose her progress).

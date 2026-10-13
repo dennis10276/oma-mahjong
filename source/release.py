@@ -137,6 +137,7 @@ def main():
         shutil.copytree(os.path.join(ROOT, 'tools'), os.path.join(REPO, 'source', 'tools'), ignore=shutil.ignore_patterns('__pycache__'))
         os.makedirs(os.path.join(REPO, '.github', 'workflows'), exist_ok=True)
         shutil.copy(os.path.join(ROOT, 'tools', 'news.yml'), os.path.join(REPO, '.github', 'workflows', 'news.yml'))
+        shutil.copy(os.path.join(ROOT, 'tools', 'replay-retention.yml'), os.path.join(REPO, '.github', 'workflows', 'replay-retention.yml'))
         shutil.rmtree(os.path.join(REPO, 'source', 'tests'), ignore_errors=True)
         shutil.copytree(os.path.join(ROOT, 'tests'), os.path.join(REPO, 'source', 'tests'), ignore=shutil.ignore_patterns('node_modules'))
         msg = f'Version {v}' + (' (game update + fresh APK on the download page)' if apk else ' (game update only)')

@@ -1,0 +1,95 @@
+{
+  "rules": {
+    "scores": {
+      ".read": true,
+      "$id": {
+        ".write": "newData.exists() || $id.beginsWith('test-')",
+        ".validate": "newData.hasChildren(['name', 'avatar', 'points', 'level', 't'])",
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 24"
+        },
+        "avatar": {
+          ".validate": "newData.isString() && newData.val().length <= 8"
+        },
+        "points": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000000"
+        },
+        "level": {
+          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 100000"
+        },
+        "t": {
+          ".validate": "newData.isNumber()"
+        },
+        "frame": {
+          ".validate": "newData.isString() && newData.val().length <= 12"
+        },
+        "wk": {
+          ".validate": "newData.isString() && newData.val().length <= 10"
+        },
+        "wkPts": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000000"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "hearts": {
+      "$to": {
+        ".read": true,
+        "$from": {
+          ".write": "newData.exists() || $from.beginsWith('test-') || $to.beginsWith('test-')",
+          ".validate": "newData.hasChildren(['name', 't'])",
+          "name": {
+            ".validate": "newData.isString() && newData.val().length <= 24"
+          },
+          "t": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      }
+    },
+    "replays": {
+      ".read": true,
+      "$pid": {
+        ".indexOn": ["createdAt"],
+        ".write": "$pid.beginsWith('test-')",
+        "$attempt": {
+          ".write": "!newData.exists() && data.child('createdAt').isNumber() && data.child('createdAt').val() <= now - 2592000000",
+          ".validate": "newData.hasChildren(['createdAt'])",
+          "createdAt": {
+            ".write": "!data.exists() || newData.val() === data.val()",
+            ".validate": "newData.isNumber() && newData.val() > now - 2592000000 && newData.val() <= now + 300000"
+          },
+          "$chunk": {
+            ".write": "newData.exists() && (!data.exists() || (data.child('v').val() === newData.child('v').val() && data.child('t').val() === newData.child('t').val() && data.child('code').val() === newData.child('code').val() && data.child('aid').val() === newData.child('aid').val() && data.child('seq').val() === newData.child('seq').val() && data.child('data').val() === newData.child('data').val()))",
+            ".validate": "newData.hasChildren(['v', 't', 'code', 'aid', 'seq', 'data']) && newData.child('aid').val() === $attempt",
+            "v": { ".validate": "newData.isNumber() && newData.val() === 1" },
+            "t": { ".validate": "newData.isNumber() && newData.val() >= newData.parent().parent().child('createdAt').val() && newData.val() <= now + 300000" },
+            "code": { ".validate": "newData.isString() && newData.val().length <= 40" },
+            "aid": { ".validate": "newData.isString() && newData.val().length <= 40" },
+            "seq": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000" },
+            "data": { ".validate": "newData.isString() && newData.val().length <= 16384" },
+            "$other": { ".validate": false }
+          }
+        }
+      }
+    },
+    "plays": {
+      ".read": true,
+      "$pid": {
+        ".write": "$pid.beginsWith('test-')",
+        "$id": {
+          ".write": "!data.exists() && newData.exists()",
+          ".validate": "newData.hasChildren(['k', 't'])",
+          "$f": {
+            ".validate": "newData.isNumber() || newData.isBoolean() || (newData.isString() && newData.val().length <= 40)"
+          }
+        }
+      }
+    }
+  }
+}

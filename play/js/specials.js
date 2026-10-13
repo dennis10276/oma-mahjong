@@ -169,6 +169,7 @@ function obRelief() {
   let anyFree = false;
   for (let i = 0; i < G.tiles.length; i++) if (free(i)) { anyFree = true; if (canTake(i)) return; }
   if (!anyFree) return;
+  replayMark('relief');
   if (Object.keys(G.ob.left).some(k => G.ob.left[k] > 0)) {
     Object.keys(G.ob.left).forEach(k => { if (G.ob.left[k] > 0) { G.ob.left[k] = 0; decorate(+k); crackFx(+k); } });
     praise(tx('iceSun')); Sound.unlock();
@@ -199,8 +200,10 @@ function clockIntro(after = null) {
   openModal(`<div class="nt-ico">⏰</div><h2>${tx('nt_clock')}</h2>${clockHelpText()}
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp.clock = S.seenSp.clockMoves = true; save();
+      replayMark('clock-help', 'acknowledged');
       if (after) after();
     }, 'clock-help');
+  replayMark('clock-help', 'intro');
   $('#ntGo').onclick = closeModal;
   return true;
 }

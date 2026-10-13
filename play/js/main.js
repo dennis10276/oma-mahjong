@@ -23,7 +23,9 @@ function pickTile(cx, cy) {
 $('#boardWrap').addEventListener('pointerdown', e => {
   if (e.button > 0) return;
   const i = pickTile(e.clientX, e.clientY);
-  if (i >= 0) { e.preventDefault(); onTap(i); }
+  const point = [Math.round(e.clientX), Math.round(e.clientY)];
+  if (i >= 0) { e.preventDefault(); onTap(i, false, point); }
+  else if (G && !G.done) replayMark('miss', point);
 });
 $('#btnHint').onclick = hint;
 $('#btnShuffle').onclick = shuffle;

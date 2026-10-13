@@ -1,0 +1,22 @@
+# Runs outside players' phones. Firebase rules allow deletion only after 30 days.
+name: Replay retention
+on:
+  schedule:
+    - cron: '41 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: replay-retention
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Delete replay attempts older than 30 days
+        run: node source/tools/prune_replays.js --apply

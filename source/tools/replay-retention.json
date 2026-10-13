@@ -1,0 +1,6 @@
+{
+  "days": 30,
+  "attemptsPerBatch": 10,
+  "maxDeletesPerRun": 10000,
+  "databaseURL": "https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app"
+}
