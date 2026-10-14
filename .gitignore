@@ -1,3 +1,12 @@
 *.jks
 keystore/
 password.txt
+# generated or local-only files in the source folder (the APK signing key never goes in git)
+source/android/build/
+source/android/keystore
+source/build/
+source/site/play/
+source/site/OmasMahjong.apk
+source/tests/node_modules/
+source/analysis/archive/
+__pycache__/
