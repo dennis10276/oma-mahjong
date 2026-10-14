@@ -199,4 +199,68 @@ module.exports.push({
     } finally { await ctx.close(); site.close(); }
   },
 });
+module.exports.push({
+  name: 'dashboard: video controls seek instantly, preserve paused state and scale playback speed',
+  async run(t, { serve, FakeDB, browser, WWW }) {
+    const site = await serve(SITE, { '/play/': WWW }), now = Date.now(), born = now - 3600000, aid = 'controlled-attempt', s = sample(aid, born);
+    const tail = { ...s.next, seq: 2, data: JSON.stringify({ events: [
+      [31000, 'tap', [1, 0, '', null]], [31000, 'state', { a: [[1, 0]], tr: [], p: -1, m: 2 }],
+      [61000, 'tap', [2, 0, '', null]], [61000, 'state', { a: [[2, 0]], tr: [2], m: 3 }], [90000, 'end', { r: 'stuck' }],
+    ] }) };
+    const db = new FakeDB({ scores: { pA: { name: 'Anna', level: 39 } }, plays: { pA: { s: { k: 'start', aid, lv: 39, t: born }, e: { k: 'end', aid, lv: 39, r: 'stuck', t: born + 90000 } } }, replays: { pA: { [aid]: { createdAt: born, first: s.first, next: s.next, tail } } } });
+    const ctx = await browser.newContext({ viewport: { width: 1500, height: 1100 } });
+    await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+    await ctx.addInitScript(value => { window.__transportNow = value; Date.now = () => window.__transportNow; }, now);
+    const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
+    const advance = async ms => { for (let n = 0; n < ms; n += 50) { await p.evaluate(v => window.__transportNow += v, Math.min(50, ms - n)); await p.waitForTimeout(25); } };
+    const seek = async value => p.locator('#watchSeek').evaluate((bar, value) => { bar.value = value; bar.dispatchEvent(new Event('input', { bubbles: true })); }, String(value));
+    try {
+      await p.goto(site.url + 'dash/#pA'); await p.waitForSelector('#tbl button[data-aid]'); await p.locator('#tbl button[data-aid]').click();
+      await p.waitForSelector('#watchBoard .watch-tile');
+      t.eq(await p.locator('#watchDuration').innerText(), '1:30', 'timeline covers the whole attempt');
+      await p.selectOption('#watchSpeed', '2'); await advance(450);
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, '2x does not play the one-second move early');
+      await advance(50); t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, '2x reaches one second in half a second');
+      t.ok(await p.locator('.watch-flight').count() > 0, 'selected tile visibly flies toward its tray slot');
+      t.ok(await p.evaluate(() => { const tile = document.querySelector('.watch-flight').getBoundingClientRect(), screen = document.querySelector('#watchScreen').getBoundingClientRect(); return tile.right >= screen.left && tile.left <= screen.right && tile.bottom >= screen.top && tile.top <= screen.bottom; }), 'flying tile stays within the displayed game');
+      t.eq(await p.evaluate(() => { const ids = [...document.querySelectorAll('[id]')].map(e => e.id); return ids.length === new Set(ids).size; }), true, 'SVG and transport controls have distinct IDs');
+      t.eq(await p.locator('#watchAction').innerText(), 'Steen naar het vakje', 'move feedback explains the change');
+      await p.locator('#watchForward').click();
+      t.eq(await p.locator('#watchPosition').innerText(), '0:31', 'skip advances exactly thirty seconds');
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 6, 'skip reconstructs all intervening moves');
+      t.eq(await p.locator('.watch-flight').count(), 0, 'seeking does not animate skipped moves');
+      await p.locator('#watchBack').click();
+      t.eq(await p.locator('#watchPosition').innerText(), '0:01', 'back skips thirty seconds');
+      t.eq(await p.locator('#watchTray .watch-slot:not(.vacant)').count(), 1, 'backwards seek restores the tray');
+      await p.locator('#watchPause').click();
+      const box = await p.locator('#watchSeek').boundingBox();
+      await p.mouse.move(box.x + box.width * .2, box.y + box.height / 2); await p.mouse.down();
+      await p.mouse.move(box.x + box.width * .7, box.y + box.height / 2, { steps: 8 });
+      const dragged = Number(await p.locator('#watchSeek').inputValue());
+      t.ok(dragged > 60000 && dragged < 66000, 'dragging the native slider scrubs to the pointed time');
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 5, 'board updates while dragging, before release');
+      await advance(1000); t.eq(Number(await p.locator('#watchSeek').inputValue()), dragged, 'clock does not fight the pointer while scrubbing');
+      await p.mouse.up(); await advance(500);
+      t.eq(Number(await p.locator('#watchSeek').inputValue()), dragged, 'scrub preserves manual pause after release');
+      await seek(35000); t.eq(await p.locator('#watchBoard .watch-tile').count(), 6, 'keyboard/input seek works while paused');
+      t.eq(await p.locator('#watchBoard .back svg').count(), 0, 'seek does not reveal hidden faces');
+      await seek(30000); await p.locator('#watchPause').click(); await advance(500);
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 6, 'resume retains 2x speed from the scrubbed point');
+      t.ok(await p.locator('.watch-flight').count() >= 2, 'matching tiles have visible removal feedback');
+      t.eq(await p.locator('#watchAction').innerText(), '✨ Paar weggehaald', 'match feedback is visible');
+      await p.locator('#watchForward').click(); await p.locator('#watchForward').click();
+      t.eq(await p.locator('#watchPosition').innerText(), '1:30', 'skip clamps at recording end');
+      t.ok((await p.locator('#watchPause').innerText()).includes('Opnieuw'), 'play control can restart a completed recording');
+      await p.locator('#watchPause').click();
+      t.eq(await p.locator('#watchPosition').innerText(), '0:00', 'play at the end restarts from the beginning');
+      await p.setViewportSize({ width: 390, height: 844 });
+      t.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'transport fits a phone screen');
+      t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'video controls never alter player data');
+      await p.emulateMedia({ reducedMotion: 'reduce' }); await advance(500);
+      t.eq(await p.locator('.watch-flight').count(), 0, 'reduced-motion preference avoids tile flights');
+      t.eq(await p.locator('#watchAction').innerText(), 'Steen naar het vakje', 'reduced-motion mode keeps readable feedback');
+      t.eq(errors, [], 'no transport or animation errors');
+    } finally { await ctx.close(); site.close(); }
+  },
+});
 module.exports.sample = sample;

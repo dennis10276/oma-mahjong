@@ -161,14 +161,21 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .game-watch { display: flex; flex-direction: column; min-width: 0; min-height: 620px; }
 .game-watch h2 { font-size: 18px; margin-bottom: 4px; }
 .watch-controls { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.watch-controls[hidden] { display: none; }
+.watch-controls[hidden], .watch-transport[hidden] { display: none; }
+.watch-transport { margin: 10px 0; }
+.watch-transport input { display: block; width: 100%; margin: 8px 0; cursor: pointer; accent-color: var(--accent); }
+.watch-time { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; font-size: 13px; }
+.watch-controls label { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+.watch-controls select { padding: 6px; }
+.watch-face { transform-box: fill-box; transform-origin: center; }
+.watch-action { position: absolute; left: 12px; right: 12px; bottom: 12px; border-radius: 9px; padding: 8px 12px; color: white; background: #102c29e8; text-align: center; font-weight: 700; pointer-events: none; }
 .attempt-play { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: inherit; padding: 3px 5px; margin: 2px; white-space: nowrap; letter-spacing: normal; }
 .attempt-play:hover, .attempt-play:focus-visible { background: var(--accent-soft); outline: 2px solid var(--accent); }
 .watch-name { font-weight: 700; margin-bottom: 4px; overflow-wrap: anywhere; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
 .watch-status.on { color: var(--good-ink); }
 .watch-status.on::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--good); border-radius: 50%; margin-right: 6px; }
-.watch-screen { flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
+.watch-screen { position: relative; flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
 .watch-screen[hidden], .watch-empty[hidden] { display: none; }
 .watch-board { display: block; width: 100%; height: auto; flex: none; min-height: 0; }
 .watch-board.nonum .cn { display: none; }
@@ -210,13 +217,21 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
       <div class="watch-status" id="watchStatus">Buffer opbouwen…</div>
       <div class="watch-controls" id="watchControls" hidden>
         <button class="btn" id="watchPause">⏸ Pauze</button>
+        <button class="btn" id="watchBack">−30 s</button>
+        <button class="btn" id="watchForward">+30 s</button>
         <button class="btn" id="watchRestart">↻ Opnieuw</button>
+        <label>Snelheid <select id="watchSpeed" aria-label="Afspeelsnelheid"><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option></select></label>
         <button class="btn" id="watchLive">Terug naar live</button>
+      </div>
+      <div class="watch-transport" id="watchTransport" hidden>
+        <input type="range" id="watchSeek" aria-label="Positie in opname" min="0" max="0" step="100" value="0" disabled>
+        <div class="watch-time"><output id="watchPosition" for="watchSeek">0:00</output><span id="watchDuration">0:00</span></div>
       </div>
       <button class="btn" id="watchReset" hidden>Ga naar 1 min vertraging</button>
       <div class="watch-empty" id="watchEmpty">Het spelbeeld verschijnt hier zodra er een opname beschikbaar is.</div>
       <div class="watch-screen" id="watchScreen" hidden>
         <svg class="watch-board" id="watchBoard" role="img" aria-label="Opgenomen spelscherm"></svg>
+        <div id="watchAction" class="watch-action" role="status" hidden></div>
       </div>
       <div class="watch-stats" id="watchStats"></div>
       <p class="watch-note"><span id="watchTiming">Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.</span> Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Klik op een poging bij Alle levels om een opname terug te kijken. Menu’s en niet-opgenomen effecten ontbreken.</p>
@@ -246,7 +261,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="../play/tiles.js"></script>
 <script src="replay-state.js?v=537f6d4c1bc1"></script>
 <script src="playback.js?v=db4d48cfd379"></script>
-<script src="watch.js?v=77df342f4091"></script>
+<script src="watch.js?v=09c9ff483e9c"></script>
 <script>
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
 const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
