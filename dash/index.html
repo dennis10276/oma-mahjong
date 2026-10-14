@@ -156,13 +156,14 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
   <div class="grid kpis" id="kpis"></div>
 
-  <aside class="dashboard-side" aria-label="Ranglijst en hartjes">
+  <aside class="dashboard-side" aria-label="Ranglijst, hartjes en levels">
     <section class="card wide" aria-labelledby="rankingTitle">
       <div class="ranking-head"><h2 id="rankingTitle">Ranglijst</h2><small>Op level · hetzelfde level, dezelfde plaats</small></div>
       <div class="ranking-list" id="ranking"><div class="empty">Nog geen spelers</div></div>
     </section>
     <div id="alerts"></div>
     <div id="heartTop" class="wide"></div>
+    <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
   </aside>
 
   <div class="grid two">
@@ -177,7 +178,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
     <section class="card"><h2>Live verloop</h2><ul class="feed" id="feed"></ul></section>
   </div>
-  <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
   <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.<br>Alleen voor oma: ↩ = stenen teruggelegd (één keer per level), 🌱 = makkelijker gemaakt na 3× niet gelukt, ✨ = hulpje liet een paar oplichten.</p>
 </main>
 <div id="tip"></div>
