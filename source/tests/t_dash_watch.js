@@ -129,6 +129,16 @@ module.exports = [
   },
 ];
 module.exports.push({
+  name: 'dashboard: replay asset URLs change whenever their contents change',
+  async run(t) {
+    const html = fs.readFileSync(path.join(SITE, 'dash', 'index.html'), 'utf8');
+    for (const name of ['replay-state.js', 'playback.js', 'watch.js']) {
+      const hash = require('crypto').createHash('sha256').update(fs.readFileSync(path.join(SITE, 'dash', name), 'utf8').replace(/\r\n/g, '\n')).digest('hex').slice(0, 12);
+      t.ok(html.includes(`src="${name}?v=${hash}"`), name + ' reference matches its contents');
+    }
+  },
+});
+module.exports.push({
   name: 'dashboard: offline attempts are selectable and replay independently of live updates',
   async run(t, { serve, FakeDB, browser, WWW }) {
     const site = await serve(SITE, { '/play/': WWW }), now = Date.now(), born = now - 3600000;
@@ -146,6 +156,13 @@ module.exports.push({
     const ctx = await browser.newContext({ viewport: { width: 1500, height: 1000 } });
     await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
     await ctx.addInitScript(value => { window.__archiveNow = value; Date.now = () => window.__archiveNow; }, now);
+    // Simulate a browser holding the old unversioned viewer in its HTTP cache.
+    // New HTML must request a different URL instead of pairing new buttons with it.
+    let staleViewerRequests = 0;
+    await ctx.route(u => u.pathname.endsWith('/watch.js') && !u.search, r => {
+      staleViewerRequests++;
+      return r.fulfill({ contentType: 'application/javascript', body: 'window.DashWatch = { follow() {} };' });
+    });
     const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
     const advance = async ms => { for (let n = 0; n < ms; n += 50) { await p.evaluate(v => window.__archiveNow += v, Math.min(50, ms - n)); await p.waitForTimeout(25); } };
     try {
@@ -177,6 +194,7 @@ module.exports.push({
       await p.locator('#ranking a[href="#pB"]').click();
       t.ok(await p.locator('#watchControls').isHidden(), 'switching player clears the old recording');
       t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'historical playback only reads data');
+      t.eq(staleViewerRequests, 0, 'new dashboard bypasses cached old viewer scripts');
       t.eq(errors, [], 'no replay errors');
     } finally { await ctx.close(); site.close(); }
   },
