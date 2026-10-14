@@ -533,6 +533,7 @@ function render() {
       case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
       case 'nudge': return ['✨', `Hulpje: een paar ging oplichten in ${lvlName(e).toLowerCase()}${e.down ? ' (omgedraaide steen voor haar omgekeerd)' : ''}${e.w ? ` · wachtte ~${e.w} s` : ''}`];
       case 'clock': return ['⏰', `${lvlName(e)}: wekkersteen op tijd weg (nog ${e.ml} zetten over)`];
+      case 'passed': return ['🏃', `Ingehaald door ${esc(e.by || '')} (zelf level ${e.lv}, nu ${e.rk}e)`];
       case 'redo': return ['↩️', `Opnieuw vanaf level ${e.from}: sterren en punten vanaf daar gewist`];
       case 'auto': return ['🪄', `${lvlName(e)}: kon niet meer misgaan, de laatste ${e.left} stenen gingen vanzelf`];
       case 'vnews': return ['📰', `Nieuws gelezen: “${esc(e.title)}” <small>(${esc(e.src || '')})</small>`];

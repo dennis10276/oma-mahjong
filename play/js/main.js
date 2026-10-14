@@ -75,8 +75,22 @@ applyLang();
 applyTheme();
 applyBg();
 ensureId();
-fetchOnline().then(ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); });
+fetchOnline().then(ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); if (ok) checkPassed(); });
+// back to the app after a while (phones keep it in memory): the same as opening it again
+let hiddenAt = 0;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { hiddenAt = Date.now(); return; }
+  if (hiddenAt && Date.now() - hiddenAt > 10 * 60000) fetchOnline().then(ok => { if (ok) checkPassed(); });
+});
 startHeartStream();
+updatePresence();
+setInterval(() => { if (!document.hidden) updatePresence(); }, 30000);
+setInterval(() => {
+  if (!document.hidden && winFamilyRefresh && !modalFree() && $('#wNext')) fetchOnline().then(() => { if (winFamilyRefresh) winFamilyRefresh(); });
+}, 15000);
+document.addEventListener('visibilitychange', () => updatePresence());
+addEventListener('pagehide', () => updatePresence(false));
+addEventListener('online', () => updatePresence());
 loadCfg().then(loadNews);
 $('#btnPaper').onclick = openPaper;
 // a heart can arrive any moment (the live stream can miss one): look again every half minute

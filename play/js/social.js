@@ -104,11 +104,51 @@ const isFam = e => !e.bot && !e.me;
 // value shown on the right of a row
 const rowVal = (e, mode) => mode === 'week' ? fmtN(e.points) : tx('levelWord', e.level);
 /* the family (real players) at a glance: everyone with their place */
-function famHTML(mode, list, title = tx('family'), withHearts = false) {
+const playerIsOnline = e => !e.me && e.online > 0 && Date.now() - e.online >= 0 && Date.now() - e.online < 90000;
+function famHTML(mode, list, title = tx('family'), withHearts = false, activity = false) {
   list = list || ranking(undefined, mode);
   const fam = list.map((e, i) => ({ e, r: i + 1 })).filter(x => !x.e.bot);
   if (fam.length < 2) return '';
-  return `<div class="fam-box"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatarHTML(e)}<span class="fr-name">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}<small class="fr-sub">${mode === 'week' ? `🧩 ${tx('levelWord', e.level)}` : tx('points', fmtN(e.points))}</small>${!e.me ? heartState(e.id) : ''}</span><span class="fr-val">${rowVal(e, mode)}${withHearts && !e.me ? heartBtn(e) : ''}</span></div>`).join('')}</div>`;
+  return `<div class="fam-box${activity ? ' win-family' : ''}"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => {
+    const online = activity && playerIsOnline(e), heart = withHearts && !e.me ? heartBtn(e) : '';
+    const avatar = avatarHTML(e).replace('</span>', `${online ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`);
+    return `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatar}<span class="fr-name">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}<small class="fr-sub">${mode === 'week' ? `🧩 ${tx('levelWord', e.level)}` : tx('points', fmtN(e.points))}${online ? ` · <span class="presence-text">${tx('playerOnline')}</span>` : ''}</small>${!e.me && !activity ? heartState(e.id) : ''}</span><span class="fr-val">${activity ? `${heart}<span class="points">${rowVal(e, mode)}</span>` : `${rowVal(e, mode)}${heart}`}</span></div>`;
+  }).join('')}</div>`;
+}
+/* Passed by family: who was below you in the all-time ranking (highest level, then points) the
+   last time you had the app open, and is above you now. You hear it the next time you open the
+   app (or come back to it after a while), with where they are now. S.famBelow: the players below
+   you then; your own wins only add to it (so being passed during a session is still told later). */
+const famOrder = () => ranking(undefined, 'all').filter(e => !e.bot);
+function famBelowIds() { const l = famOrder(), me = l.findIndex(e => e.me); return me < 0 ? [] : l.slice(me + 1).map(e => e.id); }
+function notePassedBaseline(reset) { const now = famBelowIds(); S.famBelow = reset || !Array.isArray(S.famBelow) ? now : [...new Set([...S.famBelow, ...now])]; save(); }
+function checkPassed() {
+  if (!S.name) return;
+  const l = famOrder(), me = l.findIndex(e => e.me);
+  if (me < 0) return;
+  if (!Array.isArray(S.famBelow)) { notePassedBaseline(true); return; }
+  const by = l.slice(0, me).filter(e => S.famBelow.includes(e.id));
+  notePassedBaseline(true);
+  if (!by.length) return;
+  S.passedNews = { t: Date.now(), rank: me + 1, mine: S.level, by: by.map(e => ({ id: e.id, name: e.name, avatar: e.avatar, frame: e.frame, level: e.level })) };
+  save();
+  logEvt('passed', { by: by.map(e => e.name).join(', ').slice(0, 40), lv: S.level, rk: me + 1 });
+  showPassed();
+}
+// the news waits for the home screen with no other pop-up open (hearts first)
+function showPassed() {
+  const n = S.passedNews;
+  if (!n) return;
+  if (curScreen !== 'home' || !modalFree()) { clearTimeout(showPassed.t); showPassed.t = setTimeout(showPassed, 1500); return; }
+  S.passedNews = null; save();
+  Sound.blocked(); buzz([30, 60, 30]);
+  const rows = n.by.map(e => `<div class="fam-row passed-row">${avatarHTML(e)}<span class="fr-name">${esc(e.name)}<small class="fr-sub">${tx('passedNow', e.level)}</small></span><span class="fr-val">${tx('levelWord', e.level)}</span></div>`).join('');
+  openModal(`<div class="nt-ico">🏃</div><h2>${tx(n.by.length > 1 ? 'passedTitleMany' : 'passedTitle')}</h2>
+    <p>${tx('passedText', n.by.length > 1 ? n.by.map(e => esc(e.name)).join(' & ') : esc(n.by[0].name), n.by.length)}</p>
+    <div class="fam-box">${rows}</div>
+    <p class="note">${tx('passedYou', n.mine, n.rank)}</p>
+    <button class="big-btn play" id="psOk"><span class="bb-text"><b>${tx('passedGo')}</b></span></button>`, false);
+  $('#psOk').onclick = () => { closeModal(); renderHome(); };
 }
 function ensureId() { if (!S.pid) { S.pid = 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); save(); } }
 async function fetchOnline() {
@@ -120,7 +160,7 @@ async function fetchOnline() {
     if (!res.ok) return false;
     const data = await res.json() || {};
     const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-') && !hiddenFromRanking(id, v.name))
-      .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0 }));
+      .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0, online: Number(v.online) || 0 }));
     localStorage.setItem(LB_CACHE, JSON.stringify(list));
     S.lbOnlineAt = Date.now(); save();
     return true;
@@ -130,12 +170,29 @@ async function pushScore() {
   if (!DB_URL || !S.name) return;
   ensureId();
   const base = { name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t: Date.now() };
-  const full = { ...base, frame: (S.frame || 'none').slice(0, 12), wk: ensureWeek().id, wkPts: S.wk.pts };
+  const full = { ...base, frame: (S.frame || 'none').slice(0, 12), wk: ensureWeek().id, wkPts: S.wk.pts, online: document.hidden ? 0 : Date.now() };
   try {
     const r = await dbSend(`scores/${S.pid}`, full);
     // older database rules only know the basic fields: fall back to those
-    if (!r.ok) await dbSend(`scores/${S.pid}`, base);
+    if (!r.ok) {
+      const { online, ...legacy } = full;
+      const old = await dbSend(`scores/${S.pid}`, legacy);
+      if (!old.ok) await dbSend(`scores/${S.pid}`, base);
+    }
   } catch (e) { }
+}
+
+// A foreground heartbeat is distinct from the last score update; older apps remain unknown.
+let presenceQueue = Promise.resolve();
+function updatePresence(active = !document.hidden) {
+  if (!DB_URL || !S.name || !S.pid || !navigator.onLine) return Promise.resolve();
+  const value = active ? Date.now() : 0;
+  presenceQueue = presenceQueue.then(async () => {
+    const ctl = new AbortController(), timeout = setTimeout(() => ctl.abort(), 6000);
+    try { await fetch(dbUrl(`scores/${S.pid}/online`), { method: 'PUT', body: JSON.stringify(value), headers: { 'Content-Type': 'application/json' }, keepalive: true, signal: ctl.signal }); }
+    catch (e) { } finally { clearTimeout(timeout); }
+  });
+  return presenceQueue;
 }
 
 // ---- avatar frames, earned through prizes ----

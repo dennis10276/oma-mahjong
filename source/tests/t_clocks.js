@@ -55,8 +55,10 @@ module.exports=[
     for(let lv=80;lv<T.from+T.levels.length;lv++){
       const d=H.unpack(lv,T.levels[lv-T.from]);t.ok(d.clock,'clock exists '+lv);
       t.ok(H.validSolution(game(d),d.solution),'complete route within deadline '+lv);
-      t.ok(H.clockSpare(lv).includes(d.clock.n-d.solution.indexOf(d.clock.i)-1),'approved clock margin '+lv);
-      t.ok(d.clock.n <= (lv<90?22:lv<110?19:16),'early clock planning '+lv);
+      // (from 90 the boards were re-ordered in 1.52: each keeps the clock margin it was designed with)
+      const spare=d.clock.n-d.solution.indexOf(d.clock.i)-1;
+      t.ok(lv<90?H.clockSpare(lv).includes(spare):spare>=1&&spare<=3,'approved clock margin '+lv);
+      t.ok(d.clock.n <= (lv<90?22:19),'early clock planning '+lv);
     }
     const context={};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/layouts.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/hard.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+'\nthis.get=Hard.get;',context);
     const last=T.from+T.levels.length-1,span=last-T.cycleFrom+1;

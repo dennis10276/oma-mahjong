@@ -1,5 +1,7 @@
 # Oma's Mahjong
 
+> This folder is the complete source; it lives in git (`source/` of the site repository). Read `AGENTS.md` at the repository root before changing anything: branches, releases, the level rules and the Firebase rules.
+
 Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or English.
 
 - `OmasMahjong.apk`: the app, ready to install

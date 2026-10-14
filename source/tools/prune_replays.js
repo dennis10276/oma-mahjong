@@ -4,6 +4,8 @@
 'use strict';
 const config = require('./replay-retention.json');
 const validKey = k => typeof k === 'string' && k.length > 0 && k.length <= 128 && !/[.#$\[\]/\u0000-\u001f\u007f]/.test(k);
+// FIREBASE_DB_SECRET (a GitHub secret): needed only if reading replays is locked in the rules
+const secret = process.env.FIREBASE_DB_SECRET || '';
 async function pruneReplays({ base = config.databaseURL, now = Date.now(), apply = false, request = fetch,
   batch = config.attemptsPerBatch, maxDeletes = config.maxDeletesPerRun } = {}) {
   if (!Number.isFinite(now) || !Number.isInteger(batch) || batch < 1 || batch > 100 ||
@@ -13,6 +15,7 @@ async function pruneReplays({ base = config.databaseURL, now = Date.now(), apply
   async function get(path, params) {
     const url = new URL(path + '.json', base.replace(/\/$/, '') + '/');
     for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
+    if (secret) url.searchParams.set('auth', secret);   // (only when reading is locked: see analysis/replay-access.md)
     const r = await request(url.href, { signal: AbortSignal.timeout(30000) });
     if (!r.ok) throw Error('Cleanup read failed: HTTP ' + r.status);
     const raw = await r.text(); stats.downloadBytes += Buffer.byteLength(raw);
@@ -41,7 +44,7 @@ async function pruneReplays({ base = config.databaseURL, now = Date.now(), apply
       if (!apply || !rows.length) break;
       for (const [aid] of rows) {
         if (stats.deleted >= maxDeletes) throw Error('Cleanup safety limit reached; rerun for remaining expired attempts');
-        const url = `${base.replace(/\/$/, '')}/replays/${encodeURIComponent(pid)}/${encodeURIComponent(aid)}.json`;
+        const url = `${base.replace(/\/$/, '')}/replays/${encodeURIComponent(pid)}/${encodeURIComponent(aid)}.json` + (secret ? `?auth=${encodeURIComponent(secret)}` : '');
         const r = await request(url, { method: 'DELETE', signal: AbortSignal.timeout(30000) });
         if (!r.ok) throw Error('Cleanup delete failed: HTTP ' + r.status);
         stats.deleted++;

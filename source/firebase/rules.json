@@ -20,6 +20,9 @@
         "t": {
           ".validate": "newData.isNumber()"
         },
+        "online": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
         "frame": {
           ".validate": "newData.isString() && newData.val().length <= 12"
         },

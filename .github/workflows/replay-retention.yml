@@ -19,4 +19,6 @@ jobs:
         with:
           node-version: '22'
       - name: Delete replay attempts older than 30 days
+        env:
+          FIREBASE_DB_SECRET: ${{ secrets.FIREBASE_DB_SECRET }}
         run: node source/tools/prune_replays.js --apply
