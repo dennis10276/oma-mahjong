@@ -36,6 +36,15 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
 main { max-width: 1080px; margin: 0 auto; padding: 16px 16px 48px; }
+/* Keep the statistics together, with family actions beside them on wide screens. */
+.dashboard-side { min-width: 0; }
+.dashboard-side .heart-act { display: flex; }
+.dashboard-side .hmsg { min-width: 0; flex: 1 1 190px; }
+@media (min-width: 1500px) {
+  main { display: grid; grid-template-columns: minmax(0, 1048px) minmax(0, 1fr); column-gap: 24px; max-width: 1800px; }
+  main > * { grid-column: 1; }
+  main > .dashboard-side { grid-column: 2; grid-row: 1 / span 20; align-self: start; }
+}
 h1 { font-size: 22px; margin: 0; }
 h2 { font-size: 16px; margin: 0 0 10px; }
 .top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 14px; }
@@ -137,7 +146,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <select id="who" aria-label="Kies speler"></select>
     <button class="btn" id="notify" hidden>🔔 Meldingen aan</button>
   </div>
-  <div id="heartTop" class="wide"></div>
   <section class="card wide" id="cfgBox" hidden></section>
   <datalist id="msgIdeas"><option value="Goed bezig oma! 💪"><option value="Wat knap, oma! 🌟"><option value="Ik denk aan je 😘"><option value="Wie haalt het volgende level eerst? 😉"><option value="Even doorzetten, je kan het! 🍀"></datalist>
   <div id="alerts"></div>
@@ -145,10 +153,13 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
   <div class="grid kpis" id="kpis"></div>
 
-  <section class="card wide" aria-labelledby="rankingTitle">
-    <div class="ranking-head"><h2 id="rankingTitle">Ranglijst</h2><small>Op level · hetzelfde level, dezelfde plaats</small></div>
-    <div class="ranking-list" id="ranking"><div class="empty">Nog geen spelers</div></div>
-  </section>
+  <aside class="dashboard-side" aria-label="Ranglijst en hartjes">
+    <section class="card wide" aria-labelledby="rankingTitle">
+      <div class="ranking-head"><h2 id="rankingTitle">Ranglijst</h2><small>Op level · hetzelfde level, dezelfde plaats</small></div>
+      <div class="ranking-list" id="ranking"><div class="empty">Nog geen spelers</div></div>
+    </section>
+    <div id="heartTop" class="wide"></div>
+  </aside>
 
   <div class="grid two">
     <section class="card"><h2>Speeltijd per dag (minuten)</h2><div id="chTime"></div></section>
