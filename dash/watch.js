@@ -10,7 +10,7 @@
   function close(entry) { entry.generation = ++generation; if (entry.source) entry.source.close(); entry.source = null; entry.connected = false; }
   function empty(message, keepReplay = false) {
     if (!keepReplay) replay = null;
-    scene = null; el('watchAction').hidden = true;
+    scene = null;
     el('watchScreen').hidden = true; el('watchEmpty').hidden = false;
     el('watchEmpty').textContent = message; el('watchStats').textContent = '';
   }
@@ -59,19 +59,13 @@
       return [Number(node.dataset.tile), { node, x: m.e, y: m.f, scale: m.a, width: Number(rect.getAttribute('width')) * m.a, slot: node.classList.contains('watch-slot') }];
     }));
   }
-  function feedback(text) {
-    const action = el('watchAction'); action.getAnimations().forEach(a => a.cancel()); action.textContent = text; action.hidden = false;
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) action.animate([{ opacity: 1 }, { opacity: 1, offset: .65 }, { opacity: 0 }], { duration: 1100, fill: 'forwards' });
-  }
   function animateMoves(before, previous) {
     if (!previous || previous.aid !== current.aid || clock.cursor <= previous.wall || clock.cursor - previous.wall > 2500) return;
     const after = captureTiles(), removed = [...before].filter(([id]) => !after.has(id));
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches, speed = recordedAid ? playbackSpeed : 1;
-    let changed = false, matched = false;
     for (const [id, from] of before) {
       const to = after.get(id), partner = removed.find(([other]) => other !== id && (previous.state.f[other] === previous.state.f[id] || previous.state.f[id] === 101 || previous.state.f[other] === 101));
       if (to && !from.slot && to.slot || !to) {
-        changed = true; matched ||= !!partner;
         if (reduced) continue;
         const destination = to || (partner ? from.slot ? from : partner[1].slot ? partner[1] : { ...from, x: (from.x + partner[1].x) / 2, y: (from.y + partner[1].y) / 2 - from.width * .3 } : from);
         const ghost = from.node.cloneNode(true); ghost.setAttribute('class', 'watch-flight'); ghost.removeAttribute('data-tile'); ghost.setAttribute('aria-hidden', 'true');
@@ -82,13 +76,10 @@
         if (destinationNode) destinationNode.style.opacity = '0';
         ghost.animate(frames, { duration: Math.max(80, (to ? 230 : 460) / speed), easing: 'cubic-bezier(.35,.1,.25,1)' }).onfinish = () => { ghost.remove(); if (destinationNode) destinationNode.style.opacity = ''; };
       } else if (to && !to.slot && (previous.state.d[id] !== replay.state.d[id] || previous.state.p !== replay.state.p && (previous.state.p === id || replay.state.p === id) || previous.state.f[id] !== replay.state.f[id])) {
-        changed = true;
         if (!reduced) el('watchBoard').querySelector(`.watch-tile[data-tile="${id}"] .watch-face`).animate([{ transform: 'scaleX(.1)', opacity: .4 }, { transform: 'scaleX(1)', opacity: 1 }], { duration: Math.max(80, 180 / speed) });
       }
     }
-    if (changed) feedback(matched ? '✨ Paar weggehaald' : replay.kind === 'shuffle' || previous.state.f.some((face, i) => face !== replay.state.f[i]) ? '🔀 Geschud' : replay.state.tr.length > previous.state.tr.length ? 'Steen naar het vakje' : 'Steen omgedraaid');
-    else if (replay.kind === 'hint') feedback('💡 Hint');
-    else if (replay.kind === 'tap' && replay.data && replay.data[2]) feedback('Deze steen zit nog vast');
+
   }
   function draw() {
     if (!replay || !replay.initial || !replay.view) { empty('Wachten op het opgenomen spelbeeld…', true); return; }
@@ -290,7 +281,7 @@
   function playAttempt(aid) {
     if (!context.pid || !context.events.some(e => e.aid === aid && (e.k === 'start' || e.k === 'end') && valid(e))) return false;
     for (const entry of sessions.values()) close(entry);
-    sessions.clear(); recordedAid = aid; playbackPaused = false; playbackFinished = false; scrubbing = false; scene = null; el('watchAction').hidden = true;
+    sessions.clear(); recordedAid = aid; playbackPaused = false; playbackFinished = false; scrubbing = false; scene = null;
     current = null; replay = null; paintKey = ''; error = ''; clock.suspend(Date.now());
     empty('Opname laden…'); reconcile(); status(); return true;
   }
@@ -298,7 +289,7 @@
     if (!recordedAid || !current || !current.timeline.frames.length) return;
     const frames = current.timeline.frames, start = frames[0].wall, last = frames[frames.length - 1].wall;
     clock.cursor = Math.max(start, Math.min(last, start + position)); current.started = true;
-    scene = null; paintKey = ''; el('watchAction').hidden = true; clock.suspend(Date.now());
+    scene = null; paintKey = ''; clock.suspend(Date.now());
     tickRecorded(Date.now()); status(); transport();
   }
   el('watchPause').onclick = () => {
@@ -322,7 +313,7 @@
   el('watchSeek').onchange = finishScrub;
   addEventListener('pointerup', finishScrub); addEventListener('pointercancel', finishScrub);
   el('watchLive').onclick = () => {
-    recordedAid = null; playbackPaused = false; playbackFinished = false; scrubbing = false; scene = null; el('watchAction').hidden = true;
+    recordedAid = null; playbackPaused = false; playbackFinished = false; scrubbing = false; scene = null;
     for (const entry of sessions.values()) close(entry);
     sessions.clear(); current = null; replay = null; paintKey = ''; error = ''; clock.reset(Date.now());
     empty('De uitzending wordt één minuut achter de speler opgebouwd…'); reconcile(); status();

@@ -224,7 +224,7 @@ module.exports.push({
       t.ok(await p.locator('.watch-flight').count() > 0, 'selected tile visibly flies toward its tray slot');
       t.ok(await p.evaluate(() => { const tile = document.querySelector('.watch-flight').getBoundingClientRect(), screen = document.querySelector('#watchScreen').getBoundingClientRect(); return tile.right >= screen.left && tile.left <= screen.right && tile.bottom >= screen.top && tile.top <= screen.bottom; }), 'flying tile stays within the displayed game');
       t.eq(await p.evaluate(() => { const ids = [...document.querySelectorAll('[id]')].map(e => e.id); return ids.length === new Set(ids).size; }), true, 'SVG and transport controls have distinct IDs');
-      t.eq(await p.locator('#watchAction').innerText(), 'Steen naar het vakje', 'move feedback explains the change');
+      t.eq(await p.locator('#watchAction, .watch-action').count(), 0, 'animations have no action-message overlay');
       await p.locator('#watchForward').click();
       t.eq(await p.locator('#watchPosition').innerText(), '0:31', 'skip advances exactly thirty seconds');
       t.eq(await p.locator('#watchBoard .watch-tile').count(), 6, 'skip reconstructs all intervening moves');
@@ -247,7 +247,6 @@ module.exports.push({
       await seek(30000); await p.locator('#watchPause').click(); await advance(500);
       t.eq(await p.locator('#watchBoard .watch-tile').count(), 6, 'resume retains 2x speed from the scrubbed point');
       t.ok(await p.locator('.watch-flight').count() >= 2, 'matching tiles have visible removal feedback');
-      t.eq(await p.locator('#watchAction').innerText(), '✨ Paar weggehaald', 'match feedback is visible');
       await p.locator('#watchForward').click(); await p.locator('#watchForward').click();
       t.eq(await p.locator('#watchPosition').innerText(), '1:30', 'skip clamps at recording end');
       t.ok((await p.locator('#watchPause').innerText()).includes('Opnieuw'), 'play control can restart a completed recording');
@@ -258,7 +257,7 @@ module.exports.push({
       t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'video controls never alter player data');
       await p.emulateMedia({ reducedMotion: 'reduce' }); await advance(500);
       t.eq(await p.locator('.watch-flight').count(), 0, 'reduced-motion preference avoids tile flights');
-      t.eq(await p.locator('#watchAction').innerText(), 'Steen naar het vakje', 'reduced-motion mode keeps readable feedback');
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'reduced-motion mode still applies the move');
       t.eq(errors, [], 'no transport or animation errors');
     } finally { await ctx.close(); site.close(); }
   },

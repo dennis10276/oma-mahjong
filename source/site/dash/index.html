@@ -168,7 +168,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .watch-controls label { display: flex; align-items: center; gap: 5px; font-size: 13px; }
 .watch-controls select { padding: 6px; }
 .watch-face { transform-box: fill-box; transform-origin: center; }
-.watch-action { position: absolute; left: 12px; right: 12px; bottom: 12px; border-radius: 9px; padding: 8px 12px; color: white; background: #102c29e8; text-align: center; font-weight: 700; pointer-events: none; }
 .attempt-play { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: inherit; padding: 3px 5px; margin: 2px; white-space: nowrap; letter-spacing: normal; }
 .attempt-play:hover, .attempt-play:focus-visible { background: var(--accent-soft); outline: 2px solid var(--accent); }
 .watch-name { font-weight: 700; margin-bottom: 4px; overflow-wrap: anywhere; }
@@ -231,7 +230,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
       <div class="watch-empty" id="watchEmpty">Het spelbeeld verschijnt hier zodra er een opname beschikbaar is.</div>
       <div class="watch-screen" id="watchScreen" hidden>
         <svg class="watch-board" id="watchBoard" role="img" aria-label="Opgenomen spelscherm"></svg>
-        <div id="watchAction" class="watch-action" role="status" hidden></div>
       </div>
       <div class="watch-stats" id="watchStats"></div>
       <p class="watch-note"><span id="watchTiming">Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.</span> Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Klik op een poging bij Alle levels om een opname terug te kijken. Menu’s en niet-opgenomen effecten ontbreken.</p>
@@ -261,7 +259,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="../play/tiles.js"></script>
 <script src="replay-state.js?v=537f6d4c1bc1"></script>
 <script src="playback.js?v=db4d48cfd379"></script>
-<script src="watch.js?v=09c9ff483e9c"></script>
+<script src="watch.js?v=26f6a2dd4e6b"></script>
 <script>
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
 const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
