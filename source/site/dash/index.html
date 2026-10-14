@@ -38,8 +38,9 @@ html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.4
 main { display: flex; flex-direction: column; max-width: 1080px; margin: 0 auto; padding: 16px 16px 48px; }
 /* Keep the statistics together, with family actions beside them on wide screens. */
 .dashboard-main { display: contents; min-width: 0; }
-.dashboard-main > .two, .dashboard-main > .foot { order: 2; }
-.dashboard-side { min-width: 0; order: 1; }
+.dashboard-main > .play-analysis { order: 1; }
+.dashboard-main > .foot { order: 3; }
+.dashboard-side { min-width: 0; order: 2; }
 .dashboard-side .heart-act { display: flex; }
 .dashboard-side .hmsg { min-width: 0; flex: 1 1 190px; }
 .dashboard-side .alert { padding: 18px; font-size: 16px; }
@@ -65,9 +66,8 @@ select { font: inherit; padding: 6px 10px; border-radius: 10px; border: 1px soli
 .kpi .lbl { font-size: 12.5px; color: var(--ink-2); font-weight: 600; }
 .kpi .val { font-size: 26px; font-weight: 800; letter-spacing: -.5px; margin-top: 2px; }
 .kpi .note { font-size: 12px; color: var(--ink-3); }
-.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 12px; }
-svg { display: block; width: 100%; height: auto; overflow: visible; }
-svg text { fill: var(--ink-2); font-size: 12px; }
+.analysis-details svg { display: block; width: 100%; height: auto; overflow: visible; }
+.analysis-details svg text { fill: var(--ink-2); font-size: 12px; }
 .axis line { stroke: var(--line); }
 .bar { fill: var(--accent); }
 .bar:hover, .bar.hl { fill: var(--seq-5); }
@@ -156,6 +156,25 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .cfg i { font-style: normal; color: var(--accent); }
 .cfg-note { color: var(--ink-3); font-size: 13px; margin: 8px 0 0; }
 .warnbox { background: var(--surface-2); border-left: 4px solid var(--warn); padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; font-size: 14px; }
+.play-analysis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+.analysis-details { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.game-watch { display: flex; flex-direction: column; min-width: 0; min-height: 620px; }
+.game-watch h2 { font-size: 18px; margin-bottom: 4px; }
+.watch-name { font-weight: 700; margin-bottom: 4px; overflow-wrap: anywhere; }
+.watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
+.watch-status.on { color: var(--good-ink); }
+.watch-status.on::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--good); border-radius: 50%; margin-right: 6px; }
+.watch-screen { flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
+.watch-screen[hidden], .watch-empty[hidden] { display: none; }
+.watch-board { display: block; width: 100%; height: auto; flex: none; min-height: 0; }
+.watch-board.nonum .cn { display: none; }
+.watch-empty { color: var(--ink-2); padding: 36px 12px; text-align: center; background: var(--surface-2); border-radius: 12px; }
+.watch-stats { font-size: 12.5px; margin-top: 10px; }
+.watch-note { font-size: 12px; color: var(--ink-3); margin: 8px 0 0; }
+@media (max-width: 700px) {
+  .play-analysis { grid-template-columns: minmax(0, 1fr); }
+  .game-watch { min-height: 0; }
+}
 .foot { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
 </style>
 </head>
@@ -180,17 +199,24 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
   <div class="grid kpis" id="kpis"></div>
 
-  <div class="grid two">
-    <section class="card"><h2>Speeltijd per dag (minuten)</h2><div id="chTime"></div></section>
-    <section class="card"><h2>Gehaald en vastgelopen per dag</h2><div id="chWins"></div></section>
-  </div>
-  <div class="grid two">
-    <section class="card"><h2>Pogingen per level</h2><div id="chTries"></div></section>
-    <section class="card"><h2>Hoe ver kwam ze als het misging? (% van het level af)</h2><div id="chClose"></div></section>
-  </div>
-  <div class="grid two">
-    <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
-    <section class="card"><h2>Live verloop</h2><ul class="feed" id="feed"></ul></section>
+  <div class="play-analysis">
+    <section class="card game-watch" aria-labelledby="watchTitle">
+      <h2 id="watchTitle">Meekijken</h2>
+      <div class="watch-name" id="watchName">Kies een speler</div>
+      <div class="watch-status" id="watchStatus">Buffer opbouwen…</div>
+      <button class="btn" id="watchReset" hidden>Ga naar 1 min vertraging</button>
+      <div class="watch-empty" id="watchEmpty">Het spelbeeld verschijnt hier zodra er een opname beschikbaar is.</div>
+      <div class="watch-screen" id="watchScreen" hidden>
+        <svg class="watch-board" id="watchBoard" role="img" aria-label="Opgenomen spelscherm"></svg>
+      </div>
+      <div class="watch-stats" id="watchStats"></div>
+      <p class="watch-note">1 minuut vertraagd, met de oorspronkelijke timing van elke zet. Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Menu’s en niet-opgenomen effecten ontbreken.</p>
+    </section>
+    <div class="analysis-details">
+      <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
+      <section class="card"><h2>Hoe ver kwam ze als het misging? (% van het level af)</h2><div id="chClose"></div></section>
+      <section class="card"><h2>Live verloop</h2><ul class="feed" id="feed"></ul></section>
+    </div>
   </div>
   <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.<br>Alleen voor oma: ↩ = stenen teruggelegd (één keer per level), 🌱 = makkelijker gemaakt na 3× niet gelukt, ✨ = hulpje liet een paar oplichten.</p>
   </div>
@@ -208,6 +234,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <!-- the game's rules: grandma's id, the database, message format, difficulty steps (shared with the app) -->
 <script src="../play/js/rules.js"></script>
 <script src="../play/js/stories.js"></script>
+<script src="../play/tiles.js"></script>
+<script src="replay-state.js"></script>
+<script src="playback.js"></script>
+<script src="watch.js"></script>
 <script>
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
 const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
@@ -378,10 +408,11 @@ function heatmap(el, ev) {
 function render() {
   renderAlerts();
   renderRanking();
-  if (!sel) return;
+  if (!sel) { DashWatch.follow(null, '', []); return; }
   const ev = events(sel), sc = SCORES[sel] || {}, last = ev[ev.length - 1];
   const { levels, days } = analyse(ev);
   const active = playerActivity(sel, ev).online;
+  DashWatch.follow(sel, nameOf(sel), ev);
   const ver = [...ev].reverse().find(e => e.v);
   const curLv = currentLevel(sel);
   $('#av').textContent = sc.avatar || '🙂';
@@ -433,16 +464,10 @@ function render() {
     })() +
     k('App geopend', ev.filter(e => e.k === 'open').length + '×', last ? `sinds ${new Date(ev[0].t).toLocaleDateString('nl-NL')}` : '');
 
-  // charts: last 14 days
-  const dayItems = [];
-  for (let i = 13; i >= 0; i--) { const d = new Date(Date.now() - i * 864e5), kk = dkey(d), v = days.get(kk) || { sec: 0, wins: 0, losses: 0 }; dayItems.push({ d, kk, v }); }
-  barChart($('#chTime'), dayItems.map(({ d, v }) => ({ v: mins(v.sec), short: DAYN[d.getDay()] + ' ' + d.getDate(), tip: `${DAYN[d.getDay()]} ${d.getDate()}-${d.getMonth() + 1}: ${mins(v.sec)} min in levels` })), 'min');
-  barChart($('#chWins'), dayItems.map(({ d, v }) => ({ v: v.wins, v2: v.losses, short: DAYN[d.getDay()] + ' ' + d.getDate(), tip: `${DAYN[d.getDay()]} ${d.getDate()}-${d.getMonth() + 1}: ${v.wins} gehaald, ${v.losses} vastgelopen${v.rescues ? `, ${v.rescues}× teruggelegd` : ''}` })), 'levels', { legend: '<div class="legend"><i class="c-acc"></i> gehaald <i class="c-bad"></i> vastgelopen</div>' });
-  // every failed try: how much of the level was done (the higher, the closer she got)
+  // Recent failed attempts and hourly activity.
+  // Every failed try: how much of the level was done (the higher, the closer she got)
   const stuckList = ev.filter(e => e.k === 'end' && e.r === 'stuck' && e.n).slice(-30);
   barChart($('#chClose'), stuckList.map(e => { const pct = Math.round((e.n - e.left) / e.n * 100); return { v: pct, cls: pct >= 85 ? 'warn' : '', short: e.m === 'd' ? 'dag' : 'L' + e.lv, tip: `${lvlName(e)} · poging ${e.at || 1} · ${DAYN[new Date(e.t).getDay()]} ${hm(e.t)}: ${e.left} van ${e.n} stenen over (${pct}% af)${e.rb ? ' · na terugleggen' : ''}${e.ez >= 2 ? ' · 🌱 makkelijker' : ''}` }; }), '%', { max: 100, legend: stuckList.length ? '<div class="legend"><i class="c-acc"></i> vastgelopen <i style="background:var(--warn)"></i> bijna gehaald (85% of meer)</div>' : '' });
-  const lv = levels.filter(l => !l.daily).sort((a, b) => a.lv - b.lv).slice(-30);
-  barChart($('#chTries'), lv.map(l => ({ v: l.ends.length, short: String(l.lv), tip: `Level ${l.lv}: ${l.ends.length} ${l.ends.length === 1 ? 'poging' : 'pogingen'}${l.won ? ' · gehaald' : ' · nog niet gehaald'}${l.hints || l.shuf ? ` · ${l.hints}× hint, ${l.shuf}× schudden` : ''}` })), 'pogingen');
   heatmap($('#chHeat'), ev);
 
   // table
