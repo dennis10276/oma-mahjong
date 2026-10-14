@@ -17,7 +17,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - Unreleased work lives on its own branch (`wip/...`), one topic per branch. It goes into `main`
   only when Dennis has approved it.
 - `wip/honest-observer`: the test player that no longer uses pictures a move would uncover, plus
-  the draft level set built with it. Not live. Its numbers must be re-fitted to real players first.
+  the draft level set built with it. Not live. Re-fitted to real players on 2026-10-15
+  (`source/analysis/honest-refit.md` on that branch); the new level targets wait for Dennis.
 
 ## Working together
 
