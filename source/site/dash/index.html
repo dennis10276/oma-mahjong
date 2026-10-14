@@ -160,6 +160,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .analysis-details { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .game-watch { display: flex; flex-direction: column; min-width: 0; min-height: 620px; }
 .game-watch h2 { font-size: 18px; margin-bottom: 4px; }
+.watch-controls { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.watch-controls[hidden] { display: none; }
+.attempt-play { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: inherit; padding: 3px 5px; margin: 2px; white-space: nowrap; letter-spacing: normal; }
+.attempt-play:hover, .attempt-play:focus-visible { background: var(--accent-soft); outline: 2px solid var(--accent); }
 .watch-name { font-weight: 700; margin-bottom: 4px; overflow-wrap: anywhere; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
 .watch-status.on { color: var(--good-ink); }
@@ -204,13 +208,18 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
       <h2 id="watchTitle">Meekijken</h2>
       <div class="watch-name" id="watchName">Kies een speler</div>
       <div class="watch-status" id="watchStatus">Buffer opbouwen…</div>
+      <div class="watch-controls" id="watchControls" hidden>
+        <button class="btn" id="watchPause">⏸ Pauze</button>
+        <button class="btn" id="watchRestart">↻ Opnieuw</button>
+        <button class="btn" id="watchLive">Terug naar live</button>
+      </div>
       <button class="btn" id="watchReset" hidden>Ga naar 1 min vertraging</button>
       <div class="watch-empty" id="watchEmpty">Het spelbeeld verschijnt hier zodra er een opname beschikbaar is.</div>
       <div class="watch-screen" id="watchScreen" hidden>
         <svg class="watch-board" id="watchBoard" role="img" aria-label="Opgenomen spelscherm"></svg>
       </div>
       <div class="watch-stats" id="watchStats"></div>
-      <p class="watch-note">1 minuut vertraagd, met de oorspronkelijke timing van elke zet. Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Menu’s en niet-opgenomen effecten ontbreken.</p>
+      <p class="watch-note"><span id="watchTiming">Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.</span> Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Klik op een poging bij Alle levels om een opname terug te kijken. Menu’s en niet-opgenomen effecten ontbreken.</p>
     </section>
     <div class="analysis-details">
       <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
@@ -472,9 +481,23 @@ function render() {
 
   // table
   const rows = levels.sort((a, b) => b.last - a.last);
-  const res = l => l.ends.map(e => (e.ez >= 2 ? '<small title="makkelijker gemaakt">🌱</small>' : '') + (e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : '<span class="r">↻</span>') + (e.rb ? '<small title="stenen teruggelegd">↩</small>' : '')).join('');
+  const resultSymbol = e => (e.ez >= 2 ? '<small title="makkelijker gemaakt">🌱</small>' : '') + (e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : e.k === 'start' ? '▶' : '<span class="r">↻</span>') + (e.rb ? '<small title="stenen teruggelegd">↩</small>' : '');
+  const res = l => {
+    const attempts = new Map();
+    for (const e of ev) if ((e.k === 'start' || e.k === 'end') && lvlKey(e) === l.k && typeof e.aid === 'string' && /^[A-Za-z0-9_-]{1,40}$/.test(e.aid)) attempts.set(e.aid, e);
+    const legacy = l.ends.filter(e => !attempts.has(e.aid)).map(resultSymbol).join('');
+    return legacy + [...attempts.values()].map((e, i) => {
+      const number = Number.isInteger(e.at) && e.at > 0 ? e.at : i + 1;
+      const symbol = resultSymbol(e), label = `${l.name} · poging ${number} · ${new Date(e.t).toLocaleString('nl-NL')}`;
+      return e.t >= Date.now() - 30 * 86400000 ? `<button class="attempt-play" data-aid="${esc(e.aid)}" aria-label="${esc('Bekijk opname: ' + label)}" title="${esc('Bekijk opname: ' + label)}">${number} ${symbol}</button>` : `<span title="Opname verlopen">${symbol}</span>`;
+    }).join('');
+  };
   $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
 
+  $('#tbl').onclick = event => {
+    const button = event.target.closest('button[data-aid]');
+    if (button && DashWatch.playAttempt(button.dataset.aid)) $('.game-watch').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   const headings = [...$('#tbl').querySelectorAll('th')].map(th => th.textContent);
   $('#tbl').querySelectorAll('tbody tr').forEach(row => [...row.cells].forEach((cell, i) => { cell.dataset.label = headings[i]; }));
 

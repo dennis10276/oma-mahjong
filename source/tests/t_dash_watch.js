@@ -128,4 +128,57 @@ module.exports = [
     },
   },
 ];
+module.exports.push({
+  name: 'dashboard: offline attempts are selectable and replay independently of live updates',
+  async run(t, { serve, FakeDB, browser, WWW }) {
+    const site = await serve(SITE, { '/play/': WWW }), now = Date.now(), born = now - 3600000;
+    const a = sample('recorded-one', born), b = sample('recorded-two', born + 3000);
+    for (const [s, at] of [[a, 1], [b, 2]]) { const data = JSON.parse(s.first.data); data.init.at = at; s.first.data = JSON.stringify(data); }
+    const finish = s => ({ ...s.next, seq: 2, data: JSON.stringify({ events: [[1500, 'end', { r: 'stuck' }]] }) });
+    const db = new FakeDB({ scores: { pA: { name: 'Anna', level: 39 }, pB: { name: 'Bram', level: 2 } },
+      plays: { pA: {
+        s: { k: 'start', aid: 'recorded-one', lv: 39, at: 1, t: born }, e: { k: 'end', aid: 'recorded-one', lv: 39, at: 1, r: 'stuck', t: born + 1500 },
+        n: { k: 'start', aid: 'recorded-two', lv: 39, at: 2, t: born + 3000 }, f: { k: 'end', aid: 'recorded-two', lv: 39, at: 2, r: 'stuck', t: born + 4500 },
+        missing: { k: 'end', aid: 'missing-recording', lv: 40, at: 1, r: 'stuck', t: born + 5000 },
+        expired: { k: 'end', aid: 'expired-recording', lv: 2, at: 1, r: 'stuck', t: now - 31 * 86400000 },
+        legacy: { k: 'end', lv: 3, at: 1, r: 'win', t: born - 5000 },
+      } }, replays: { pA: { 'recorded-one': { createdAt: born, first: a.first, next: a.next, finish: finish(a) }, 'recorded-two': { createdAt: born + 3000, first: b.first, next: b.next, finish: finish(b) } } } });
+    const ctx = await browser.newContext({ viewport: { width: 1500, height: 1000 } });
+    await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+    await ctx.addInitScript(value => { window.__archiveNow = value; Date.now = () => window.__archiveNow; }, now);
+    const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
+    const advance = async ms => { for (let n = 0; n < ms; n += 50) { await p.evaluate(v => window.__archiveNow += v, Math.min(50, ms - n)); await p.waitForTimeout(25); } };
+    try {
+      await p.goto(site.url + 'dash/#pA'); await p.waitForSelector('#tbl button[data-aid="recorded-one"]');
+      t.eq(await p.locator('#tbl button[data-aid^="recorded-"]').count(), 2, 'two attempts of one level have separate buttons without duplicate starts');
+      t.eq(await p.locator('#tbl button[data-aid="expired-recording"]').count(), 0, 'expired attempts cannot request deleted recordings');
+      await p.locator('#tbl button[data-aid="recorded-one"]').click();
+      await p.waitForSelector('#watchBoard .watch-tile');
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'old attempt starts from initial board, without one-minute waiting');
+      t.ok((await p.locator('#watchStats').innerText()).includes('poging 1'), 'chosen attempt is identified');
+      await advance(900); t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'historical move is not early');
+      await p.locator('#watchPause').click(); await advance(1000);
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'manual pause stops the replay clock');
+      await p.evaluate(() => render());
+      t.ok(await p.locator('#watchControls').isVisible(), 'regular dashboard render preserves archive selection');
+      await p.locator('#watchPause').click(); await advance(100);
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'resume plays move at its original offset');
+      await advance(500); t.ok((await p.locator('#watchStatus').innerText()).startsWith('Opname afgelopen'), 'recording stops at its own end');
+      await p.locator('#watchRestart').click(); await p.waitForTimeout(40);
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'restart returns to beginning');
+      await p.locator('#tbl button[data-aid="recorded-two"]').click(); await p.waitForFunction(() => document.querySelector('#watchStats').textContent.includes('poging 2'));
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'another attempt starts independently');
+      await advance(1700); await p.evaluate(() => render());
+      t.ok((await p.locator('#watchStatus').innerText()).startsWith('Opname afgelopen'), 'completed playback stays selected after data refresh');
+      await p.locator('#watchLive').click(); await p.waitForTimeout(40);
+      t.ok(await p.locator('#watchControls').isHidden(), 'explicit return restores delayed live mode');
+      await p.locator('#tbl button[data-aid="missing-recording"]').click(); await p.waitForFunction(() => document.querySelector('#watchStatus').textContent.includes('geen spelopname'));
+      t.ok(await p.locator('#watchScreen').isHidden(), 'missing recording shows a clear unavailable state');
+      await p.locator('#ranking a[href="#pB"]').click();
+      t.ok(await p.locator('#watchControls').isHidden(), 'switching player clears the old recording');
+      t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'historical playback only reads data');
+      t.eq(errors, [], 'no replay errors');
+    } finally { await ctx.close(); site.close(); }
+  },
+});
 module.exports.sample = sample;

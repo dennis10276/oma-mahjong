@@ -11,3 +11,9 @@ Active-time pause/resume events are mapped to wall time using the existing start
 The tall left game panel sits below the KPIs, beside the activity heatmap, closeness chart and live feed. Leaderboard, hearts and full levels remain on the right. Narrow screens stack the panels.
 
 Validation: `node tests/run.js t_dash` covers chunk validation, per-event timing independent of uploads, pause anchors, delayed level transitions, late batches, buffering, player switching, stale callbacks, unknown faces, recorded screen proportions, responsive layout and absence of database writes. Real recordings are used only for local read-only visual checks and are never committed.
+
+## Watching a previous attempt
+
+Each recent attempt with an `aid` has a numbered playback button in the levels table (start/end summaries are deduplicated by attempt ID). This also works while the player is offline. Selecting an attempt closes the live queue and subscribes only to that attempt. It plays from its first recorded event at 1x with original pauses, without waiting an extra minute. Pause/resume and restart control local playback; return-to-live explicitly rejoins the one-minute delayed broadcast. Dashboard refreshes preserve the selected recording. Switching players clears it. Old attempts without recording IDs and attempts beyond the 30-day retention have no playback button; missing/deleted recordings show an unavailable message. Historical playback never writes to the database.
+
+The offline playback test covers separate attempts of one level, original timing, pause/resume, restart, end-of-recording, selection persistence on dashboard refresh, returning to live, unavailable and expired recordings, player switching and read-only requests.

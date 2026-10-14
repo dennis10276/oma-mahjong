@@ -5,6 +5,7 @@
   const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
   const sessions = new Map(), clock = new DashPlayback.Clock();
   let context = { pid: null, name: '', events: [] }, replay = null, current = null, error = '', buffered = false, paintKey = '', generation = 0, lastUi = 0;
+  let recordedAid = null, playbackPaused = false, playbackFinished = false;
   function close(entry) { entry.generation = ++generation; if (entry.source) entry.source.close(); entry.source = null; entry.connected = false; }
   function empty(message, keepReplay = false) {
     if (!keepReplay) replay = null;
@@ -14,7 +15,16 @@
   function status(now = Date.now()) {
     const label = el('watchStatus'); label.classList.remove('on');
     const lag = clock.cursor === null ? 60 : Math.max(60, Math.round((now - clock.cursor) / 1000));
-    el('watchReset').hidden = !context.pid || lag < 65;
+    el('watchReset').hidden = !!recordedAid || !context.pid || lag < 65;
+    el('watchControls').hidden = !recordedAid;
+    el('watchTiming').textContent = recordedAid ? 'Opname op oorspronkelijke snelheid, zonder extra minuut vertraging.' : 'Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.';
+    el('watchPause').textContent = playbackPaused ? '▶ Verder' : '⏸ Pauze';
+    el('watchPause').disabled = playbackFinished || !replay;
+    if (recordedAid) {
+      const issue = current && (current.timeline.timingMissing ? ' · pauzetiming ontbreekt' : current.recording && (current.recording.gap || current.recording.truncated) ? ' · opname onvolledig' : '');
+      label.textContent = error || (!replay ? 'Opname laden…' : `${playbackFinished ? 'Opname afgelopen' : playbackPaused ? 'Afspelen gepauzeerd' : 'Opname afspelen'} · oorspronkelijke snelheid${issue || ''}`);
+      return;
+    }
     if (!context.pid) { label.textContent = 'Kies een speler'; return; }
     if (error) { label.textContent = error; return; }
     if (!replay || !replay.initial || !replay.view) { label.textContent = 'Buffer opbouwen · 1 minuut vertraagd'; return; }
@@ -104,10 +114,10 @@
       }
       entry.recording = DashReplay.read(entry.records, entry.aid);
       entry.timeline = DashPlayback.timeline(entry.recording, context.events, entry.aid);
-      entry.connected = true; entry.error = '';
+      entry.connected = true; entry.received = true; entry.error = '';
       // A first join may have less than a minute of delivered history. Start at the
       // available point once; subsequent uploads never move or reset the clock.
-      if (!entry.started && entry === current && entry.timeline.frames.length) clock.cursor = Math.min(clock.cursor, entry.timeline.coverage);
+      if (!recordedAid && !entry.started && entry === current && entry.timeline.frames.length) clock.cursor = Math.min(clock.cursor, entry.timeline.coverage);
     } catch (e) { entry.error = 'Spelopname is onvolledig of ongeldig'; }
   }
   function connect(entry) {
@@ -124,19 +134,48 @@
   function reconcile() {
     if (!context.pid) return;
     const wanted = new Set(), anchor = anchorAt(clock.cursor);
-    if (valid(anchor)) wanted.add(anchor.aid);
+    if (recordedAid) wanted.add(recordedAid);
+    else if (valid(anchor)) wanted.add(anchor.aid);
     // Prefetch only attempts in the selected player's one-minute broadcast queue.
     // This preserves short retries and level endings instead of switching early.
-    for (const e of context.events) if ((e.k === 'start' || e.k === 'end') && e.t >= clock.cursor && e.t <= Date.now() && valid(e)) wanted.add(e.aid);
+    if (!recordedAid) for (const e of context.events) if ((e.k === 'start' || e.k === 'end') && e.t >= clock.cursor && e.t <= Date.now() && valid(e)) wanted.add(e.aid);
     for (const [aid, entry] of sessions) if (!wanted.has(aid)) { close(entry); sessions.delete(aid); }
     for (const aid of wanted) {
       if (!sessions.has(aid)) sessions.set(aid, { aid, records: {}, recording: null, timeline: { frames: [], coverage: 0 }, source: null, generation: 0, connected: false, error: '' });
       connect(sessions.get(aid));
     }
   }
+  function tickRecorded(now) {
+    const previousMode = `${error}/${playbackFinished}/${!!replay}`;
+    current = sessions.get(recordedAid);
+    if (!current) { reconcile(); return; }
+    if (current.error) { error = current.error; empty('Dit spelbeeld kan niet betrouwbaar worden afgespeeld.'); clock.suspend(now); }
+    else if (!current.timeline.frames.length) {
+      error = current.received ? 'Voor deze poging is geen spelopname beschikbaar.' : '';
+      empty(error || 'Opname laden…'); clock.suspend(now);
+    } else {
+      error = '';
+      const frames = current.timeline.frames, last = frames[frames.length - 1].wall;
+      if (!current.started) { clock.cursor = frames[0].wall; clock.suspend(now); current.started = true; }
+      const elapsed = Math.min(100, Math.max(0, now - clock.lastReal));
+      if (!playbackPaused) clock.cursor = Math.min(last, clock.cursor + elapsed);
+      clock.suspend(now);
+      playbackFinished = clock.cursor >= last;
+      const index = DashPlayback.frameAt(frames, clock.cursor), frame = frames[index];
+      if (frame && frame.view) {
+        replay = { ...current.recording, ...frame, ms: frame.ms + (frame.paused || frame.result ? 0 : Math.max(0, clock.cursor - frame.wall)) };
+        const cue = frame.tapEvent && clock.cursor - frame.tapEvent.wall < 300, hint = frame.hint && clock.cursor - frame.hint.wall < 2500;
+        const stamp = `${current.aid}/${index}/${!!cue}/${!!hint}`;
+        if (stamp !== paintKey) { draw(); paintKey = stamp; }
+        if (now - lastUi >= 200) stats();
+      } else empty('Wachten op de oorspronkelijke weergave…');
+    }
+    if (previousMode !== `${error}/${playbackFinished}/${!!replay}` || now - lastUi >= 200) { status(now); lastUi = now; }
+  }
   function tick() {
     const now = Date.now();
     if (document.hidden || !context.pid) { clock.suspend(now); requestAnimationFrame(tick); return; }
+    if (recordedAid) { tickRecorded(now); requestAnimationFrame(tick); return; }
     const anchor = anchorAt(clock.cursor), entry = valid(anchor) ? sessions.get(anchor.aid) : null;
     let coverage = entry ? entry.timeline.frames.length ? entry.timeline.coverage : clock.cursor : Infinity;
     const next = context.events.find(e => e.k === 'start' && e.t > clock.cursor && e.t <= now - DashPlayback.DELAY);
@@ -183,6 +222,7 @@
   function follow(pid, name, events) {
     if (context.pid !== pid) {
       for (const entry of sessions.values()) close(entry);
+      recordedAid = null; playbackPaused = false; playbackFinished = false;
       sessions.clear(); current = null; replay = null; paintKey = ''; error = ''; clock.reset(Date.now());
       empty(pid ? 'De uitzending wordt één minuut achter de speler opgebouwd…' : 'Kies een speler om mee te kijken.');
     }
@@ -191,9 +231,24 @@
     for (const entry of sessions.values()) if (entry.recording) entry.timeline = DashPlayback.timeline(entry.recording, events, entry.aid);
     reconcile(); status();
   }
+  function playAttempt(aid) {
+    if (!context.pid || !context.events.some(e => e.aid === aid && (e.k === 'start' || e.k === 'end') && valid(e))) return false;
+    for (const entry of sessions.values()) close(entry);
+    sessions.clear(); recordedAid = aid; playbackPaused = false; playbackFinished = false;
+    current = null; replay = null; paintKey = ''; error = ''; clock.suspend(Date.now());
+    empty('Opname laden…'); reconcile(); status(); return true;
+  }
+  el('watchPause').onclick = () => { playbackPaused = !playbackPaused; clock.suspend(Date.now()); status(); };
+  el('watchRestart').onclick = () => { if (current) current.started = false; playbackPaused = false; playbackFinished = false; paintKey = ''; clock.suspend(Date.now()); };
+  el('watchLive').onclick = () => {
+    recordedAid = null; playbackPaused = false; playbackFinished = false;
+    for (const entry of sessions.values()) close(entry);
+    sessions.clear(); current = null; replay = null; paintKey = ''; error = ''; clock.reset(Date.now());
+    empty('De uitzending wordt één minuut achter de speler opgebouwd…'); reconcile(); status();
+  };
   el('watchReset').onclick = () => { clock.reset(Date.now()); current = null; paintKey = ''; reconcile(); };
   document.addEventListener('visibilitychange', () => { clock.suspend(Date.now()); if (document.hidden) { for (const entry of sessions.values()) close(entry); } else reconcile(); });
   addEventListener('pagehide', () => { for (const entry of sessions.values()) close(entry); });
   requestAnimationFrame(tick);
-  window.DashWatch = { follow };
+  window.DashWatch = { follow, playAttempt };
 })();
