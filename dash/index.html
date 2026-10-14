@@ -35,16 +35,18 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
-main { max-width: 1080px; margin: 0 auto; padding: 16px 16px 48px; }
+main { display: flex; flex-direction: column; max-width: 1080px; margin: 0 auto; padding: 16px 16px 48px; }
 /* Keep the statistics together, with family actions beside them on wide screens. */
-.dashboard-side { min-width: 0; }
+.dashboard-main { display: contents; min-width: 0; }
+.dashboard-main > .two, .dashboard-main > .foot { order: 2; }
+.dashboard-side { min-width: 0; order: 1; }
 .dashboard-side .heart-act { display: flex; }
 .dashboard-side .hmsg { min-width: 0; flex: 1 1 190px; }
 .dashboard-side .alert { padding: 18px; font-size: 16px; }
 @media (min-width: 1500px) {
-  main { display: grid; grid-template-columns: minmax(0, 1048px) minmax(0, 1fr); column-gap: 24px; max-width: 1800px; }
-  main > * { grid-column: 1; }
-  main > .dashboard-side { grid-column: 2; grid-row: 1 / span 20; align-self: start; }
+  main { display: grid; grid-template-columns: minmax(0, 1048px) minmax(0, 1fr); column-gap: 24px; max-width: 1800px; align-items: start; }
+  .dashboard-main { display: block; grid-column: 1; grid-row: 1; }
+  main > .dashboard-side { grid-column: 2; grid-row: 1; order: 0; }
 }
 h1 { font-size: 22px; margin: 0; }
 h2 { font-size: 16px; margin: 0 0 10px; }
@@ -76,7 +78,23 @@ table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
 th { font-size: 12px; color: var(--ink-2); font-weight: 700; position: sticky; top: 0; background: var(--surface); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-.tbl-wrap { overflow: auto; max-height: 460px; }
+.tbl-wrap { container-type: inline-size; }
+.tbl-wrap table { table-layout: fixed; }
+.tbl-wrap th, .tbl-wrap td { white-space: normal; overflow-wrap: anywhere; padding: 7px 4px; }
+.tbl-wrap th { position: static; }
+.tbl-wrap th:last-child { width: 19%; }
+/* Narrow columns show the same fields as labelled rows, without sideways scrolling. */
+@container (max-width: 560px) {
+  .tbl-wrap table, .tbl-wrap tbody { display: block; }
+  .tbl-wrap thead { display: none; }
+  .tbl-wrap tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .tbl-wrap td { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border: 0; padding: 2px 0; text-align: right; }
+  .tbl-wrap td::before { content: attr(data-label); font-size: 12px; font-weight: 600; color: var(--ink-2); text-align: left; letter-spacing: normal; }
+  .tbl-wrap td.res { display: block; }
+  .tbl-wrap td.res::before { float: left; margin-right: 8px; }
+  .tbl-wrap td:first-child, .tbl-wrap td:last-child { grid-column: 1 / -1; }
+  .tbl-wrap td:first-child { font-weight: 700; }
+}
 .res { font-weight: 700; letter-spacing: 1px; }
 .res .w { color: var(--good-ink); } .res .l { color: var(--bad); } .res .r { color: var(--ink-3); }
 .feed { list-style: none; margin: 0; padding: 0; max-height: 460px; overflow: auto; }
@@ -143,6 +161,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 </head>
 <body>
 <main>
+  <div class="dashboard-main">
   <div class="top">
     <div class="who">
       <span class="avatar" id="av">👵</span>
@@ -161,16 +180,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
   <div class="grid kpis" id="kpis"></div>
 
-  <aside class="dashboard-side" aria-label="Ranglijst, hartjes en levels">
-    <section class="card wide" aria-labelledby="rankingTitle">
-      <div class="ranking-head"><h2 id="rankingTitle">Ranglijst</h2><small>Op level · hetzelfde level, dezelfde plaats</small></div>
-      <div class="ranking-list" id="ranking"><div class="empty">Nog geen spelers</div></div>
-    </section>
-    <div id="alerts"></div>
-    <div id="heartTop" class="wide"></div>
-    <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
-  </aside>
-
   <div class="grid two">
     <section class="card"><h2>Speeltijd per dag (minuten)</h2><div id="chTime"></div></section>
     <section class="card"><h2>Gehaald en vastgelopen per dag</h2><div id="chWins"></div></section>
@@ -184,6 +193,16 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <section class="card"><h2>Live verloop</h2><ul class="feed" id="feed"></ul></section>
   </div>
   <p class="foot">Gegevens komen live uit het spel. ✓ = gehaald, ✗ = vastgelopen (4 vakjes vol), ↻ = opnieuw begonnen, ⏸ = weggegaan.<br>Alleen voor oma: ↩ = stenen teruggelegd (één keer per level), 🌱 = makkelijker gemaakt na 3× niet gelukt, ✨ = hulpje liet een paar oplichten.</p>
+  </div>
+  <aside class="dashboard-side" aria-label="Ranglijst, hartjes en levels">
+    <section class="card wide" aria-labelledby="rankingTitle">
+      <div class="ranking-head"><h2 id="rankingTitle">Ranglijst</h2><small>Op level · hetzelfde level, dezelfde plaats</small></div>
+      <div class="ranking-list" id="ranking"><div class="empty">Nog geen spelers</div></div>
+    </section>
+    <div id="alerts"></div>
+    <div id="heartTop" class="wide"></div>
+    <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
+  </aside>
 </main>
 <div id="tip"></div>
 <!-- the game's rules: grandma's id, the database, message format, difficulty steps (shared with the app) -->
@@ -430,6 +449,9 @@ function render() {
   const rows = levels.sort((a, b) => b.last - a.last);
   const res = l => l.ends.map(e => (e.ez >= 2 ? '<small title="makkelijker gemaakt">🌱</small>' : '') + (e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : '<span class="r">↻</span>') + (e.rb ? '<small title="stenen teruggelegd">↩</small>' : '')).join('');
   $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
+
+  const headings = [...$('#tbl').querySelectorAll('th')].map(th => th.textContent);
+  $('#tbl').querySelectorAll('tbody tr').forEach(row => [...row.cells].forEach((cell, i) => { cell.dataset.label = headings[i]; }));
 
   // live feed
   const txt = e => {
