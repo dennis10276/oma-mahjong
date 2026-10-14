@@ -48,13 +48,13 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 - The database rules are `source/firebase/rules.json`. Dennis publishes them in the Firebase
   console (Realtime Database, Rules); agents cannot. A release that needs new rules must say so.
-- Pending (2026-10-15): the `online` field for `scores` (the online dots in the game). Until the
-  rules are published, the app's online signal is refused, and the game works without it.
-- Recorded tries (`replays/`) are readable by anyone with the database address, which the
-  dashboard game viewer relies on. Locking them needs a decision from Dennis first (see
-  `source/analysis/replay-access.md`). If they are locked, the daily cleanup reads them with a key
-  stored as the GitHub secret `FIREBASE_DB_SECRET`. The key never goes into code, the game or
-  the dashboard.
+- The published rules match `source/firebase/rules.json` (checked by Codex 2026-10-15, including the
+  `online` field for the online dots).
+- Recorded tries (`replays/`) stay readable by anyone with the database address (option 1 in
+  `source/analysis/replay-access.md`, chosen 2026-10-15); the dashboard game viewer relies on it.
+  If people outside the family start playing, switch to option 2 (dashboard login). The daily cleanup
+  then reads them with a key stored as the GitHub secret `FIREBASE_DB_SECRET`. The key never goes
+  into code, the game or the dashboard.
 
 ## Players
 

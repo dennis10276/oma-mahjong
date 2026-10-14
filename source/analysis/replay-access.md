@@ -1,4 +1,7 @@
-# Who can read the recorded tries (replays) — decision pending
+# Who can read the recorded tries (replays)
+
+**Chosen 2026-10-15: option 1, leave them readable** (recommended by Codex, passed on by Dennis).
+Revisit, with option 2, if people outside the family start playing.
 
 Written 2026-10-15. Today anyone who knows the database address can read `replays/`: every tap of
 every named player, with timing. The address is in the public game code. The dashboard game viewer
