@@ -40,6 +40,7 @@ main { max-width: 1080px; margin: 0 auto; padding: 16px 16px 48px; }
 .dashboard-side { min-width: 0; }
 .dashboard-side .heart-act { display: flex; }
 .dashboard-side .hmsg { min-width: 0; flex: 1 1 190px; }
+.dashboard-side .alert { padding: 18px; font-size: 16px; }
 @media (min-width: 1500px) {
   main { display: grid; grid-template-columns: minmax(0, 1048px) minmax(0, 1fr); column-gap: 24px; max-width: 1800px; }
   main > * { grid-column: 1; }
@@ -99,13 +100,16 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .hs-state.seen { color: var(--good-ink); }
 .wide { margin-bottom: 12px; }
 .ranking-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
-.ranking-head h2 { margin: 0; }
+.ranking-head h2 { margin: 0; font-size: 20px; }
 .ranking-head small { color: var(--ink-3); }
-.ranking-list { max-height: 230px; overflow: auto; }
-.ranking-list table { table-layout: fixed; }
-.ranking-list th:first-child { width: 48px; }
-.ranking-list th:last-child { width: 80px; }
-.ranking-list a { display: block; overflow: hidden; text-overflow: ellipsis; color: inherit; text-decoration: none; }
+.ranking-list { overflow: visible; }
+.ranking-list table { table-layout: fixed; font-size: 18px; }
+.ranking-list th { font-size: 14px; position: static; }
+.ranking-list td { padding: 10px 8px; }
+.ranking-list td.num { font-size: 20px; font-weight: 700; }
+.ranking-list th:first-child { width: 60px; }
+.ranking-list th:last-child { width: 90px; }
+.ranking-list a { display: block; white-space: normal; overflow-wrap: anywhere; color: inherit; text-decoration: none; }
 .ranking-list a:hover { text-decoration: underline; }
 .ranking-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .ranking-list tr.selected td { background: var(--accent-soft); font-weight: 700; }
@@ -148,7 +152,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   </div>
   <section class="card wide" id="cfgBox" hidden></section>
   <datalist id="msgIdeas"><option value="Goed bezig oma! 💪"><option value="Wat knap, oma! 🌟"><option value="Ik denk aan je 😘"><option value="Wie haalt het volgende level eerst? 😉"><option value="Even doorzetten, je kan het! 🍀"></datalist>
-  <div id="alerts"></div>
   <div id="notice"></div>
 
   <div class="grid kpis" id="kpis"></div>
@@ -158,6 +161,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
       <div class="ranking-head"><h2 id="rankingTitle">Ranglijst</h2><small>Op level · hetzelfde level, dezelfde plaats</small></div>
       <div class="ranking-list" id="ranking"><div class="empty">Nog geen spelers</div></div>
     </section>
+    <div id="alerts"></div>
     <div id="heartTop" class="wide"></div>
   </aside>
 
