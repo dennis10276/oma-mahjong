@@ -5,6 +5,25 @@ const STATE = { level: 14, name: 'Dennis', pid: 'test-bots', since: '2026-10-05'
 
 module.exports = [
   {
+    name: 'ranking: DennisTEST is hidden from fresh and cached family lists',
+    async run(t, { FakeDB }) {
+      const family = { id: 'gerda', name: 'Gerda', avatar: '😊', points: 1000, level: 29 };
+      const hidden = { id: 'pmuxw2uqkzcnbgx', name: 'Renamed test account', avatar: '🚀', points: 99999, level: 100 };
+      const named = { id: 'other-test-account', name: 'dennisTest', avatar: '🚀', points: 99999, level: 100 };
+      const p = await t.phone({ state: STATE, db: new FakeDB({ scores: Object.fromEntries([family, hidden, named].map(e => [e.id, e])) }) });
+      const check = async source => {
+        for (const mode of ['all', 'week']) {
+          const ids = await p.evaluate(mode => __mj.ranking(undefined, mode).map(e => e.id), mode);
+          t.ok(ids.includes(family.id), `${source} ${mode}: Gerda remains visible`);
+          t.ok(!ids.includes(hidden.id) && !ids.includes(named.id), `${source} ${mode}: test account excluded by ID and name`);
+        }
+      };
+      await check('fresh');
+      await p.evaluate(entries => localStorage.setItem(LB_CACHE, JSON.stringify(entries)), [family, hidden, named]);
+      await check('cached');
+    },
+  },
+  {
     name: 'ranking: computer players play around your level, points match their level',
     async run(t, { FakeDB }) {
       const p = await t.phone({ state: STATE, db: new FakeDB({ scores: { pz1: { name: 'OmaHanny', avatar: '👵', frame: 'none', points: 10430, level: 10, wk: '2026-10-05', wkPts: 10430, t: 1 } } }) });

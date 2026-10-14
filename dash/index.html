@@ -220,7 +220,7 @@ function currentLevel(pid) {
   return Math.max((SCORES[pid] || {}).level || 0, ...events(pid).filter(e => e.m !== 'd' && e.lv).map(e => e.k === 'end' && e.r === 'win' ? e.lv + 1 : e.lv));
 }
 function renderRanking() {
-  const ps = players().filter(p => !p.id.startsWith('test-')).map(p => ({ ...p, level: currentLevel(p.id) }))
+  const ps = players().filter(p => !p.id.startsWith('test-') && !hiddenFromRanking(p.id, p.name)).map(p => ({ ...p, level: currentLevel(p.id) }))
     .sort((a, b) => b.level - a.level || a.name.localeCompare(b.name, 'nl') || a.id.localeCompare(b.id));
   let rank = 0;
   $('#ranking').innerHTML = ps.length ? `<table><thead><tr><th scope="col" class="num">#</th><th scope="col">Speler</th><th scope="col" class="num">Level</th></tr></thead><tbody>${ps.map((p, i) => {

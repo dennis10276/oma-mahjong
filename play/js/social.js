@@ -87,7 +87,7 @@ function myEntry(v, mode = 'all') {
 }
 function onlineEntries(mode = 'all', weekId) {
   let list = [];
-  try { list = (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid); } catch (e) { }
+  try { list = (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid && !hiddenFromRanking(e.id, e.name)); } catch (e) { }
   if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id ? (e.wkPts || 0) : 0 })); }
   return list;
 }
@@ -119,7 +119,7 @@ async function fetchOnline() {
     clearTimeout(to);
     if (!res.ok) return false;
     const data = await res.json() || {};
-    const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-'))
+    const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-') && !hiddenFromRanking(id, v.name))
       .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0 }));
     localStorage.setItem(LB_CACHE, JSON.stringify(list));
     S.lbOnlineAt = Date.now(); save();
