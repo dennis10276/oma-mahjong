@@ -17,14 +17,14 @@
 const Hard = (() => {
   const L = typeof Layouts !== 'undefined' ? Layouts : require('./layouts.js');
   const SLOTS = L.SLOTS;
-  // the sensible player (fitted, see tools/sim/calibrate.js)
-  // temp: how much noise in its choices. Fitted: Dennisisdebeste plays like temp 2 (won 89% of his
-  // tries on 50-74, the test player 85-91%), Mrs. Doubtfire like temp 6 (43%; test player 33-52%,
-  // and it finds the same levels hard: level 51 3% vs her 5 tries). The sensible player sits between.
-  // end: with this many tiles left and all of them seen, it works out the rest exactly (a good
-  // player plans the last part of a level; the average one does not)
+  // the sensible player. Personas re-fitted 2026-10-15 to 363 real attempts on the exact boards
+  // (tools/sim/refit, analysis/honest-refit.md): with honest knowledge, real players are not afraid
+  // of a tray tile whose twin they have not seen yet (unknown 0 fits every player better than 7).
+  // strong ~ Dennisisdebeste (temp 0.7-1), average ~ Mrs. Doubtfire (temp 3-6), sensible between.
+  // focused: the old clock-focused calibration model, kept for comparison.
+  // end: with this many tiles left and all of them seen, it works out the rest exactly
   const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
-  const REF = { strong: { temp: 2, end: 20, clockFocus: 1 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3.5, end: 12, clockFocus: 0.35 }, average: { temp: 6, end: 0 } };
+  const REF = { strong: { temp: 1, end: 12, clockFocus: 4, unknown: 0 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 2, end: 12, clockFocus: 4, unknown: 0 }, average: { temp: 4.5, end: 12, clockFocus: 1, unknown: 0 } };
   const persona = k => ({ ...P, ...REF[k] });
   // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
   const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
@@ -80,10 +80,17 @@ const Hard = (() => {
         for (const i of byFace.get(f)) if (alive[i] && known[i] && (freeNow[i] || (!down[i] && !hiddenNow(i)))) { const d = depth(i); if (d < best) best = d; }
         s -= best < 1e9 ? p.deep * best : p.unknown + unk / 12;
       }
-      let pr = 0;
-      for (const [f, list] of byFace) { const c = cnt[f & 255]; if (!c) continue; if (tr.includes(f)) pr += 2; else if (c >= 2) pr++; }
+      let pr = 0, safe = 0;
+      for (const [f, list] of byFace) {
+        const c = cnt[f & 255]; if (!c) continue;
+        if (tr.includes(f)) { pr += 2; safe++; continue; }
+        if (c < 2) continue;
+        pr++;
+        // a pair with a face-down tile in it needs no slot (turn it over, then tap its twin)
+        for (const i of list) if (alive[i] && freeNow[i] && down[i]) { safe++; break; }
+      }
       s += p.free * fr + p.pairs * pr;
-      if (tr.length >= SLOTS - 1 && !pr) s -= 1000;          // stuck for sure
+      if (tr.length >= SLOTS - 1 && !safe) s -= 1000;        // stuck for sure
       if (clock && alive[clock.i]) {
         const slack = clock.n - moves - depth(clock.i) - 1;
         if (slack < 0) s -= 1000; else s -= p.clock * Math.max(0, 6 - slack);
@@ -123,12 +130,15 @@ const Hard = (() => {
       if (!plan) plan = endGame();
       if (plan && plan.length) { if (!commit(plan.shift())) return end(false, 'clock'); continue; }
       if (m !== undefined) { if (!commit(m)) return end(false, 'clock'); continue; }
-      if (tray.length >= SLOTS - 1) return end(false, 'tray');
-      // the options: a pair (two tiles that are free), or one tile into the tray
+      // the options: a pair (two tiles that are free), or one tile into the tray. With 3 tiles
+      // waiting only a pair with a face-down tile in it is left: turned over, it matches its twin
+      // straight away without a slot (board.js peekPair); any other tile would be the 4th.
+      const full = tray.length >= SLOTS - 1;
       const opts = [];
       const byF = new Map(); for (const i of fr) { const f = faces[i]; if (!byF.has(f)) byF.set(f, []); byF.get(f).push(i); }
-      for (const [, list] of byF) if (list.length >= 2) for (let a = 0; a < list.length; a++) for (let b = a + 1; b < list.length; b++) opts.push([list[a], list[b]]);
-      for (const i of fr) opts.push([i]);
+      for (const [, list] of byF) if (list.length >= 2) for (let a = 0; a < list.length; a++) for (let b = a + 1; b < list.length; b++) if (!full || down[list[a]] || down[list[b]]) opts.push(down[list[b]] && !down[list[a]] ? [list[b], list[a]] : [list[a], list[b]]);
+      if (!full) for (const i of fr) opts.push([i]);
+      if (!opts.length) return end(false, 'tray');
       decisions++; choices += opts.length;
       for (let i = 0; i < n; i++) known[i] = alive[i] && (can(i) || (!down[i] && !hiddenNow(i))) ? 1 : 0;
       const mateKnown = i => tray.includes(faces[i]) || byFace.get(faces[i]).some(j => j !== i && alive[j] && known[j]);

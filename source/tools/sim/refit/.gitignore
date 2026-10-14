@@ -1,0 +1,4 @@
+# derived from the raw player export (analysis/archive): rebuild with node dataset.js > attempts.json
+attempts.json
+table-*.json
+*.log
