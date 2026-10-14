@@ -164,14 +164,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
 .watch-status.on { color: var(--good-ink); }
 .watch-status.on::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--good); border-radius: 50%; margin-right: 6px; }
-.watch-screen { flex: 1; display: flex; flex-direction: column; justify-content: space-between; background: #0b4d3c; border-radius: 12px; padding: 12px; }
+.watch-screen { flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
 .watch-screen[hidden], .watch-empty[hidden] { display: none; }
-.watch-board { display: block; width: 100%; height: auto; flex: 1 1 auto; min-height: 0; }
-.watch-board.nonum .cn, .watch-tray.nonum .cn { display: none; }
-.watch-tray { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-width: 280px; margin: 12px auto 0; }
-.watch-slot { background: #fff8e8; border-radius: 8px; aspect-ratio: 1 / 1.24; }
-.watch-slot svg { display: block; width: 100%; height: 100%; }
-.watch-slot.vacant { background: #ffffff16; border: 1px dashed #ffffff70; }
+.watch-board { display: block; width: 100%; height: auto; flex: none; min-height: 0; }
+.watch-board.nonum .cn { display: none; }
 .watch-empty { color: var(--ink-2); padding: 36px 12px; text-align: center; background: var(--surface-2); border-radius: 12px; }
 .watch-stats { font-size: 12.5px; margin-top: 10px; }
 .watch-note { font-size: 12px; color: var(--ink-3); margin: 8px 0 0; }
@@ -207,14 +203,14 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <section class="card game-watch" aria-labelledby="watchTitle">
       <h2 id="watchTitle">Meekijken</h2>
       <div class="watch-name" id="watchName">Kies een speler</div>
-      <div class="watch-status" id="watchStatus">Wachten op spelgegevens…</div>
+      <div class="watch-status" id="watchStatus">Buffer opbouwen…</div>
+      <button class="btn" id="watchReset" hidden>Ga naar 1 min vertraging</button>
       <div class="watch-empty" id="watchEmpty">Het spelbeeld verschijnt hier zodra er een opname beschikbaar is.</div>
       <div class="watch-screen" id="watchScreen" hidden>
-        <svg class="watch-board" id="watchBoard" role="img" aria-label="Opgenomen speelbord"></svg>
-        <div class="watch-tray" id="watchTray" role="group" aria-label="De vier vakjes"></div>
+        <svg class="watch-board" id="watchBoard" role="img" aria-label="Opgenomen spelscherm"></svg>
       </div>
       <div class="watch-stats" id="watchStats"></div>
-      <p class="watch-note">Alleen meekijken. Het spelbeeld wordt meestal binnen 30 seconden bijgewerkt; bij verbindingsproblemen duurt dat langer.</p>
+      <p class="watch-note">1 minuut vertraagd, met de oorspronkelijke timing van elke zet. Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Menu’s en niet-opgenomen effecten ontbreken.</p>
     </section>
     <div class="analysis-details">
       <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
@@ -240,6 +236,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="../play/js/stories.js"></script>
 <script src="../play/tiles.js"></script>
 <script src="replay-state.js"></script>
+<script src="playback.js"></script>
 <script src="watch.js"></script>
 <script>
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;

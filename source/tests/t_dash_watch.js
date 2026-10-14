@@ -2,6 +2,7 @@
 const path = require('path'), fs = require('fs');
 const SITE = fs.existsSync(path.join(__dirname, '..', 'site')) ? path.join(__dirname, '..', 'site') : path.join(__dirname, '..', '..');
 const { read } = require(path.join(SITE, 'dash', 'replay-state'));
+const Playback = require(path.join(SITE, 'dash', 'playback'));
 const clone = v => JSON.parse(JSON.stringify(v));
 function sample(aid = 'attempt-a', now = Date.now()) {
   const state = { a: Array(8).fill(1), d: [0, 0, 0, 1, 0, 0, 0, 0], f: [0, 0, 1, 2, 1, 2, 3, 3], tr: [], p: -1, m: 0,
@@ -35,78 +36,93 @@ module.exports = [
     },
   },
   {
-    name: 'dashboard: selected live board updates safely, hides unknown faces and closes old attempt streams',
+    name: 'dashboard: buffered replay preserves event timing, pauses and upload-independent clocks',
+    async run(t) {
+      const born = 1000000, s = sample('timed', born), summaries = [{ k: 'start', aid: 'timed', t: born }];
+      s.next.t = born + 90000;
+      const r = read({ createdAt: born, first: s.first, next: s.next }, 'timed');
+      let line = Playback.timeline(r, summaries, 'timed');
+      t.eq(line.frames.find(f => f.kind === 'tap').wall, born + 1000, 'move uses recorded milliseconds, not batch arrival');
+      t.eq(line.coverage, born + 1000, 'a partial batch cannot advertise unseen moves as idle time');
+      t.eq(line.frames[Playback.frameAt(line.frames, born + 999)].state.tr, [], 'move not visible early');
+      t.eq(line.frames[Playback.frameAt(line.frames, born + 1000)].state.tr, [0], 'move visible at original timestamp');
+      const paused = { ...s.next, seq: 2, data: JSON.stringify({ events: [[2000, 'pause', null], [2000, 'resume', null], [3000, 'tap', [1, 0, '', null]]] }) };
+      line = Playback.timeline(read({ createdAt: born, first: s.first, next: s.next, paused }, 'timed'), [...summaries, { k: 'show', scr: 'game', t: born + 22000 }], 'timed');
+      t.eq(line.frames.find(f => f.kind === 'resume').wall, born + 22000, 'background pause retains its real twenty-second gap');
+      t.eq(line.frames.at(-1).wall, born + 23000, 'subsequent moves keep timing after resume');
+      t.eq(line.frames[Playback.frameAt(line.frames, born + 15000)].paused, true, 'pause remains visible during its original interval');
+      const missing = Playback.timeline(read({ createdAt: born, first: s.first, next: s.next, paused }, 'timed'), summaries, 'timed');
+      t.eq(missing.timingMissing, true, 'missing wall-clock resume is not guessed');
+      const clock = new Playback.Clock(); clock.reset(born);
+      t.eq(clock.cursor, born - 60000, 'starts a minute behind');
+      clock.advance(born + 16); t.eq(clock.cursor, born - 60000 + 16, 'normal speed is one-to-one');
+      clock.advance(born + 32, born - 60000 + 20); t.eq(clock.cursor, born - 60000 + 20, 'late data stops playback at its known horizon');
+      clock.advance(born + 1032); t.eq(clock.cursor, born - 60000 + 120, 'new data does not seek or fast-forward past recorded actions');
+    },
+  },
+  {
+    name: 'dashboard: one-minute stream plays every move and level change instead of painting arriving batches',
     async run(t, { serve, FakeDB, browser, WWW }) {
-      const site = await serve(SITE, { '/play/': WWW });
-      const now = Date.now(), a = sample('attempt-a', now), b = sample('attempt-b', now);
-      const f = { scores: { pA: { name: 'Anna', level: 39 }, pB: { name: 'Bram', level: 39 }, pOld: { name: 'Oudere versie', level: 2 } },
-        plays: { pA: { s: { k: 'start', aid: 'attempt-a', lv: 39, t: now } }, pB: { s: { k: 'start', aid: 'attempt-b', lv: 39, t: now } }, pOld: { s: { k: 'start', lv: 2, t: now } } } };
-      const db = new FakeDB(f), ctx = await browser.newContext({ viewport: { width: 2546, height: 1200 } });
+      const site = await serve(SITE, { '/play/': WWW }), now = Date.now(), born = now - 60000;
+      const a = sample('attempt-a', born), b = sample('attempt-b', born + 2000), other = sample('other-player', born);
+      b.first = clone(b.first); const bInit = JSON.parse(b.first.data); bInit.init.key = 'L40'; b.first.data = JSON.stringify(bInit);
+      const finish = { ...a.next, seq: 2, data: JSON.stringify({ events: [[1500, 'end', { r: 'win' }]] }) };
+      const future = { ...b.next, seq: 2, data: JSON.stringify({ events: [[4000, 'state', { a: [[1, 0]], tr: [], m: 2 }]] }) };
+      const db = new FakeDB({ scores: { pA: { name: 'Anna', level: 40 }, pB: { name: 'Bram', level: 39 }, pOld: { name: 'Oudere versie', level: 2 } },
+        plays: { pA: { s: { k: 'start', aid: 'attempt-a', lv: 39, t: born }, e: { k: 'end', aid: 'attempt-a', r: 'win', lv: 39, t: born + 1500 }, n: { k: 'start', aid: 'attempt-b', lv: 40, t: born + 2000 } }, pB: { s: { k: 'start', aid: 'other-player', lv: 39, t: born } }, pOld: { s: { k: 'start', lv: 2, t: born - 1000 } } } });
+      const ctx = await browser.newContext({ viewport: { width: 2546, height: 1200 } });
       await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
-      await ctx.addInitScript(() => {
+      await ctx.addInitScript(value => {
+        window.__watchNow = value; Date.now = () => window.__watchNow;
         const Native = window.EventSource; window.__replayStreams = [];
         window.EventSource = class {
           constructor(url) { if (!url.includes('/replays/')) return new Native(url); this.url = url; this.closed = false; this.listeners = {}; window.__replayStreams.push(this); }
           addEventListener(type, callback) { (this.listeners[type] ||= []).push(callback); }
           close() { this.closed = true; }
-          emit(type, path, data) { for (const callback of this.listeners[type] || []) callback({ data: JSON.stringify({ path, data }) }); }
+          emit(type, data) { for (const callback of this.listeners[type] || []) callback({ data: JSON.stringify({ path: '/', data }) }); }
         };
-      });
+      }, now);
       const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
-      const emit = async (stream, type, eventPath, data) => p.evaluate(({ stream, type, eventPath, data }) => window.__replayStreams[stream].emit(type, eventPath, data), { stream, type, eventPath, data });
+      const emit = async (aid, data) => p.evaluate(({ aid, data }) => window.__replayStreams.findLast(s => s.url.endsWith('/' + aid + '.json')).emit('put', data), { aid, data });
+      const advance = async ms => { for (let n = 0; n < ms; n += 50) { await p.evaluate(v => window.__watchNow += v, Math.min(50, ms - n)); await p.waitForTimeout(25); } };
       try {
-        await p.goto(site.url + 'dash/#pA'); await p.waitForFunction(() => window.__replayStreams.length === 1);
-        t.ok(await p.locator('#watchEmpty').isVisible(), 'waiting state until actual recording arrives');
-        const noView = clone(a.first), parsed = JSON.parse(noView.data); parsed.events = parsed.events.filter(e => e[1] !== 'view'); noView.data = JSON.stringify(parsed);
-        await emit(0, 'put', '/', { first: noView });
-        t.ok(await p.locator('#watchScreen').isHidden(), 'does not guess the theme before display settings arrive');
-        await emit(0, 'put', '/', { createdAt: now, first: a.first });
-        t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'initial board shown');
-        t.eq(await p.locator('#watchBoard .back').count(), 1, 'hidden tile stays face down');
-        t.eq(await p.locator('#watchBoard .back svg').count(), 0, 'hidden identity never rendered in the tile');
-        t.ok((await p.locator('#watchStatus').innerText()).startsWith('Spel bezig'), 'fresh ongoing snapshot labelled as play');
-        t.ok((await p.locator('.watch-note').innerText()).includes('30 seconden'), 'batch delay made clear');
-        t.ok(await p.locator('.game-watch').evaluate(el => el.getBoundingClientRect().right <= document.querySelector('.analysis-details').getBoundingClientRect().left), 'game fills the left panel beside the heatmap, progress and live feed');
-        await emit(0, 'patch', '/', { next: a.next });
-        t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'streamed delta removes the selected tile');
-        t.eq(await p.locator('#watchTray .watch-slot:not(.vacant)').count(), 1, 'streamed tray shown');
-        t.eq(await p.locator('#watchBoard .back').count(), 0, 'peek visible when player sees it');
-        await p.locator('#ranking a[href="#pB"]').click(); await p.waitForFunction(() => window.__replayStreams.length === 2);
-        t.eq(await p.evaluate(() => window.__replayStreams[0].closed), true, 'old stream closed on player switch');
-        t.ok(await p.locator('#watchEmpty').isVisible(), 'old board immediately removed while switching');
-        await emit(1, 'put', '/', { first: b.first });
-        await emit(0, 'put', '/', { first: a.first, next: a.next });
-        t.eq(await p.locator('#watchName').innerText(), 'Bram', 'selected identity stays current');
-        t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'late old-player callback cannot overwrite current board');
-        await p.evaluate(() => { render(); render(); }); t.eq(await p.evaluate(() => window.__replayStreams.length), 2, 'summary refresh does not open duplicate streams');
-        const late = { ...b.next, seq: 2 };
-        await emit(1, 'patch', '/', { gap: late });
-        t.ok((await p.locator('#watchStatus').innerText()).startsWith('Onvolledig spelbeeld'), 'gap visibly flagged');
-        t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'gapped delta not applied');
-        await emit(1, 'put', '/', { first: b.first, next: b.next });
-        const ending = { ...b.next, seq: 2, data: JSON.stringify({ events: [[3000, 'pause', null]] }) };
-        await emit(1, 'patch', '/', { pause: ending });
-        t.ok((await p.locator('#watchStatus').innerText()).startsWith('Gepauzeerd'), 'pause not claimed as live play');
-        ending.seq = 3; ending.data = JSON.stringify({ events: [[4000, 'end', { r: 'win' }]] });
-        await emit(1, 'patch', '/', { finish: ending });
-        t.ok((await p.locator('#watchStatus').innerText()).startsWith('Level gehaald'), 'finished attempt labelled');
+        await p.goto(site.url + 'dash/#pA'); await p.waitForFunction(() => window.__replayStreams.length === 2);
+        await emit('attempt-a', { createdAt: born, first: a.first, next: a.next, finish });
+        await emit('attempt-b', { createdAt: born + 2000, first: b.first, next: b.next });
+        await p.waitForSelector('#watchBoard .watch-tile');
+        t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'arrival of a finished batch does not jump to its final board');
+        t.ok((await p.locator('#watchStats').innerText()).startsWith('Level 39'), 'future level is preloaded but not displayed early');
+        t.eq(await p.locator('#watchBoard .back svg').count(), 0, 'unknown tile identity remains hidden');
+        t.eq(await p.locator('#watchBoard').getAttribute('viewBox'), '0 0 390 844', 'uses recorded player screen proportions');
+        await advance(900); t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'no move before its scheduled time');
+        await advance(100); t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'move played at its original one-second offset');
+        t.eq(await p.locator('#watchTray .watch-slot:not(.vacant)').count(), 1, 'tray changes with that move');
+        await advance(600); t.ok((await p.locator('#watchStatus').innerText()).startsWith('Level gehaald'), 'ending is broadcast at its delayed time');
+        await advance(400); t.ok((await p.locator('#watchStats').innerText()).startsWith('Level 40'), 'next attempt follows at its original delayed start');
+        t.eq(await p.locator('#watchBoard .watch-tile').count(), 8, 'next attempt begins at its initial state');
+        await advance(1000); t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'next level streams its own first move');
+        await emit('attempt-b', { createdAt: born + 2000, first: b.first, next: b.next, future });
+        await p.waitForTimeout(40); t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'newly uploaded future state does not refresh the visible board');
+        await advance(3000); t.eq(await p.locator('#watchBoard .watch-tile').count(), 6, 'future move eventually appears at its own timestamp');
+        await advance(500); t.ok((await p.locator('#watchStatus').innerText()).startsWith('Bufferen'), 'playback buffers at the last known event instead of inventing progress');
         await p.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, value: true }); document.dispatchEvent(new Event('visibilitychange')); });
-        t.eq(await p.evaluate(() => window.__replayStreams[1].closed), true, 'background dashboard closes its replay connection');
+        t.ok(await p.evaluate(() => window.__replayStreams.every(s => s.closed)), 'background tab closes replay streams');
+        await advance(1000);
         await p.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, value: false }); document.dispatchEvent(new Event('visibilitychange')); });
-        t.eq(await p.evaluate(() => window.__replayStreams.length), 3, 'foreground dashboard reconnects only its selected attempt');
-        const stale = sample('attempt-b', now - 120000);
-        await emit(2, 'put', '/', { first: stale.first });
-        t.ok((await p.locator('#watchStatus').innerText()).startsWith('Laatste spelbeeld'), 'old snapshot is never labelled as live');
-        await emit(2, 'put', '/', { bad: { ...b.first, aid: 'wrong-attempt' } });
-        t.ok(await p.locator('#watchScreen').isHidden(), 'unreliable recording hides the board');
-        t.ok((await p.locator('#watchStatus').innerText()).includes('ongeldig'), 'unreliable recording explained');
-        await p.locator('#ranking a[href="#pOld"]').click();
-        t.eq(await p.evaluate(() => window.__replayStreams[2].closed), true, 'stream closed for legacy attempt');
-        t.ok((await p.locator('#watchEmpty').innerText()).includes('geen spelopname'), 'missing legacy recording explained');
-        t.ok(await p.locator('#watchScreen').isHidden(), 'no board invented for older recordings');
-        for (const width of [2100, 2048, 1500, 1200, 390]) { await p.setViewportSize({ width, height: 1000 }); t.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'viewer fits viewport ' + width); }
-        t.ok(await p.evaluate(() => window.__replayStreams.every(s => /\/replays\/p[AB]\/attempt-[ab]\.json$/.test(s.url))), 'only selected attempt is subscribed, never replay root or whole player history');
-        t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'watching writes nothing');
+        await emit('attempt-b', { createdAt: born + 2000, first: b.first, next: b.next, future });
+        await p.waitForTimeout(40);
+        t.eq(await p.locator('#watchBoard .watch-tile').count(), 6, 'returning to tab preserves playback position');
+        await p.locator('#ranking a[href="#pB"]').click();
+        t.ok(await p.evaluate(() => window.__replayStreams.filter(s => s.url.includes('/pA/')).every(s => s.closed)), 'old player streams closed');
+        await emit('other-player', { createdAt: born, first: other.first, next: other.next });
+        await p.waitForFunction(() => document.querySelector('#watchName').textContent === 'Bram' && document.querySelectorAll('#watchBoard .watch-tile').length === 7);
+        await emit('attempt-a', { createdAt: born, first: a.first }); await p.waitForTimeout(40);
+        t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'late old-player callback cannot paint over the stream');
+        await p.locator('#ranking a[href="#pOld"]').click(); await p.waitForTimeout(40);
+        t.ok(await p.locator('#watchScreen').isHidden(), 'unsupported legacy attempt has no invented video');
+        for (const width of [2048, 1500, 1200, 390]) { await p.setViewportSize({ width, height: 1000 }); t.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'fits viewport ' + width); }
+        t.ok(await p.evaluate(() => window.__replayStreams.every(s => /\/replays\/p[AB]\/(attempt-[ab]|other-player)\.json$/.test(s.url))), 'only selected-player attempts are subscribed');
+        t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'broadcast never writes to the game database');
         t.eq(errors, [], 'no dashboard errors');
       } finally { await ctx.close(); site.close(); }
     },

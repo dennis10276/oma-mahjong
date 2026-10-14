@@ -33,7 +33,7 @@
       if (old && (old.data !== row.data || old.code !== row.code)) throw Error('Tegenstrijdige opname');
       if (!old) chunks.set(row.seq, { ...row, parsed: data });
     }
-    const out = { initial: null, state: null, view: null, ms: 0, updatedAt: 0, result: null, paused: false, gap: false, truncated: false, tap: null };
+    const out = { initial: null, state: null, view: null, ms: 0, updatedAt: 0, result: null, paused: false, gap: false, truncated: false, tap: null, frames: [], born: Number(records && records.createdAt) || 0 };
     let expected = 0;
     for (const chunk of [...chunks.values()].sort((a, b) => a.seq - b.seq)) {
       if (chunk.seq !== expected++) { out.gap = true; break; }
@@ -48,6 +48,7 @@
         out.initial = copy(init); out.state = copy(init.state);
       }
       if (!out.initial) { out.gap = true; break; }
+      if (!out.born) out.born = chunk.t;
       for (const event of data.events) {
         if (!Array.isArray(event) || event.length !== 3 || !Number.isFinite(event[0]) || event[0] < 0 || typeof event[1] !== 'string') fail();
         const [ms, kind, value] = event;
@@ -70,6 +71,8 @@
         if (kind === 'resume' || kind === 'begin') out.paused = false;
         if (kind === 'end' && value && ['win', 'stuck', 'restart'].includes(value.r)) out.result = value.r;
         if (kind === 'truncated') out.truncated = true;
+        if (out.frames.length >= 5000) fail();
+        out.frames.push({ ms, kind, data: copy(value), state: copy(out.state), view: copy(out.view), result: out.result, paused: out.paused, tap: out.tap });
       }
       out.updatedAt = Math.max(out.updatedAt, chunk.t);
     }
