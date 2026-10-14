@@ -31,6 +31,43 @@ function fixture() {
 
 module.exports = [
   {
+    name: 'dashboard: compact leaderboard ranks by level, shares ties and follows live progress',
+    async run(t, { serve, FakeDB, browser, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
+      const f = fixture();
+      f.scores.pOma.points = 999999;
+      f.scores.pAnna = { name: 'Anna <3', avatar: '🌷', level: 27, points: 1 };
+      f.scores['test-hidden'] = { name: 'Test', level: 999, points: 9999999 };
+      f.plays.pLog = { a: { k: 'open', name: 'Logspeler', lv: 15, t: Date.now() }, b: { k: 'start', m: 'd', lv: 999, t: Date.now() + 1 } };
+      f.plays['msg-pOma'] = { a: { k: 'msg', name: 'Message', lv: 999, t: Date.now() } };
+      f.plays['cfg-pOma'] = { a: { k: 'cfg', name: 'Settings', lv: 999, t: Date.now() } };
+      const db = new FakeDB(f);
+      const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+      const rows = () => p.locator('#ranking tbody tr').evaluateAll(rs => rs.map(r => [...r.cells].map(c => c.textContent.trim())));
+      try {
+        await p.goto(site.url + 'dash/#pOma');
+        await p.waitForFunction(() => document.querySelectorAll('#ranking tbody tr').length === 4);
+        t.eq(await rows(), [['1', '🌷 Anna <3', '27'], ['1', '😊 Dennis', '27'], ['3', '🙂 Logspeler', '15'], ['4', '👵 OmaHanny', '12']], 'levels rank above points, ties share places, logs work without scores and daily/message/settings/test entries are excluded');
+        await p.locator('#ranking a').filter({ hasText: 'Anna <3' }).click();
+        t.eq(await p.locator('#name').textContent(), 'Anna <3', 'click opens that player');
+        t.eq(await p.locator('#who').inputValue(), 'pAnna', 'picker follows the clicked player');
+        t.eq(await p.locator('#ranking .selected a').getAttribute('aria-current'), 'true', 'selected player highlighted accessibly');
+        t.ok(await p.locator('#ranking').evaluate(el => el.scrollWidth <= el.clientWidth), 'compact ranking fits mobile width');
+        db.set('plays/pOma/-rankWin', { k: 'end', r: 'win', lv: 30, t: Date.now() + 2 });
+        await p.waitForFunction(() => document.querySelector('#ranking tbody tr').textContent.includes('OmaHanny'), null, { timeout: 10000 });
+        t.eq((await rows())[0], ['1', '👵 OmaHanny', '31'], 'live win updates ranking before score refresh');
+        db.set('scores/pAnna/level', 40);
+        await p.evaluate(async () => { await loadScores(); render(); });
+        t.eq((await rows())[0], ['1', '🌷 Anna <3', '40'], 'score refresh updates ranking');
+        await p.evaluate(() => { PLAYS = {}; SCORES = {}; sel = null; render(); });
+        t.eq(await p.locator('#ranking').innerText(), 'Nog geen spelers', 'empty leaderboard renders without a selected player');
+        t.eq(errs, [], 'no dashboard errors');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
+  {
     name: 'dashboard: stuck alert, heart from the PC, closeness chart and new events',
     async run(t, { serve, FakeDB, browser, sleep, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });   // the dashboard uses the game's rules.js

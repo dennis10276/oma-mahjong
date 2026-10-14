@@ -89,6 +89,17 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .hs-state { font-weight: 700; }
 .hs-state.seen { color: var(--good-ink); }
 .wide { margin-bottom: 12px; }
+.ranking-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
+.ranking-head h2 { margin: 0; }
+.ranking-head small { color: var(--ink-3); }
+.ranking-list { max-height: 230px; overflow: auto; }
+.ranking-list table { table-layout: fixed; }
+.ranking-list th:first-child { width: 48px; }
+.ranking-list th:last-child { width: 80px; }
+.ranking-list a { display: block; overflow: hidden; text-overflow: ellipsis; color: inherit; text-decoration: none; }
+.ranking-list a:hover { text-decoration: underline; }
+.ranking-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ranking-list tr.selected td { background: var(--accent-soft); font-weight: 700; }
 .cfgs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
 .cfg { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
 .cfg b { display: block; } .cfg small { color: var(--ink-3); font-size: 13px; }
@@ -133,6 +144,11 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   <div id="notice"></div>
 
   <div class="grid kpis" id="kpis"></div>
+
+  <section class="card wide" aria-labelledby="rankingTitle">
+    <div class="ranking-head"><h2 id="rankingTitle">Ranglijst</h2><small>Op level · hetzelfde level, dezelfde plaats</small></div>
+    <div class="ranking-list" id="ranking"><div class="empty">Nog geen spelers</div></div>
+  </section>
 
   <div class="grid two">
     <section class="card"><h2>Speeltijd per dag (minuten)</h2><div id="chTime"></div></section>
@@ -185,7 +201,23 @@ function fillPicker() {
   if ($('#who').innerHTML !== html) $('#who').innerHTML = html;
   if (cur !== sel) render();
 }
-$('#who').onchange = e => { sel = e.target.value; history.replaceState(null, '', '#' + sel); render(); };
+function selectPlayer(id) { sel = id; $('#who').value = id; history.replaceState(null, '', '#' + encodeURIComponent(id)); render(); }
+$('#who').onchange = e => selectPlayer(e.target.value);
+
+// Share the dashboard's progress calculation; daily puzzles never advance the ranking.
+function currentLevel(pid) {
+  return Math.max((SCORES[pid] || {}).level || 0, ...events(pid).filter(e => e.m !== 'd' && e.lv).map(e => e.k === 'end' && e.r === 'win' ? e.lv + 1 : e.lv));
+}
+function renderRanking() {
+  const ps = players().filter(p => !p.id.startsWith('test-')).map(p => ({ ...p, level: currentLevel(p.id) }))
+    .sort((a, b) => b.level - a.level || a.name.localeCompare(b.name, 'nl') || a.id.localeCompare(b.id));
+  let rank = 0;
+  $('#ranking').innerHTML = ps.length ? `<table><thead><tr><th scope="col" class="num">#</th><th scope="col">Speler</th><th scope="col" class="num">Level</th></tr></thead><tbody>${ps.map((p, i) => {
+    if (!i || p.level !== ps[i - 1].level) rank = i + 1;
+    return `<tr${p.id === sel ? ' class="selected"' : ''}><td class="num">${rank}</td><td><a href="#${encodeURIComponent(p.id)}"${p.id === sel ? ' aria-current="true"' : ''}>${esc((SCORES[p.id] || {}).avatar || '🙂')} ${esc(p.name)}</a></td><td class="num">${p.level || '–'}</td></tr>`;
+  }).join('')}</tbody></table>` : '<div class="empty">Nog geen spelers</div>';
+  $('#ranking').querySelectorAll('a').forEach(a => a.onclick = e => { e.preventDefault(); selectPlayer(decodeURIComponent(a.hash.slice(1))); });
+}
 
 // ---------- analysis ----------
 // a level logged without a clock (an old app bug in 1.10): its time is unknown, not 0 seconds
@@ -293,6 +325,7 @@ function heatmap(el, ev) {
 // ---------- render ----------
 function render() {
   renderAlerts();
+  renderRanking();
   if (!sel) return;
   const ev = events(sel), sc = SCORES[sel] || {}, last = ev[ev.length - 1];
   const { levels, days } = analyse(ev);
@@ -300,7 +333,7 @@ function render() {
   const lastHide = [...ev].reverse().find(e => e.k === 'hide');
   const active = last && Date.now() - last.t < 6 * 60 * 1000 && (!lastHide || (lastOpen && lastOpen.t > lastHide.t));
   const ver = [...ev].reverse().find(e => e.v);
-  const curLv = Math.max(sc.level || 0, ...ev.filter(e => e.m !== 'd' && e.lv).map(e => e.k === 'end' && e.r === 'win' ? e.lv + 1 : e.lv));
+  const curLv = currentLevel(sel);
   $('#av').textContent = sc.avatar || '🙂';
   $('#name').textContent = nameOf(sel);
   const dev = ver ? { android: 'Android-app', ios: 'iPhone/iPad', web: 'browser' }[ver.dev] || ver.dev : '';
