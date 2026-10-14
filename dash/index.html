@@ -110,6 +110,11 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .ranking-list th:first-child { width: 60px; }
 .ranking-list th:last-child { width: 90px; }
 .ranking-list a { display: block; white-space: normal; overflow-wrap: anywhere; color: inherit; text-decoration: none; }
+.ranking-player { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; }
+.ranking-player a { flex: 1 1 160px; }
+.ranking-status { font-size: 13.5px; font-weight: 400; color: var(--ink-2); white-space: normal; }
+.ranking-status.online { color: var(--good-ink); font-weight: 700; }
+.ranking-status.online::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--good); }
 .ranking-list a:hover { text-decoration: underline; }
 .ranking-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .ranking-list tr.selected td { background: var(--accent-soft); font-weight: 700; }
@@ -223,13 +228,26 @@ $('#who').onchange = e => selectPlayer(e.target.value);
 function currentLevel(pid) {
   return Math.max((SCORES[pid] || {}).level || 0, ...events(pid).filter(e => e.m !== 'd' && e.lv).map(e => e.k === 'end' && e.r === 'win' ? e.lv + 1 : e.lv));
 }
+// New apps send a foreground heartbeat; older apps use their recent play log.
+function playerActivity(pid, ev = events(pid)) {
+  const score = SCORES[pid] || {}, last = ev[ev.length - 1];
+  const opened = [...ev].reverse().find(e => e.k === 'open' || e.k === 'start' || e.k === 'show');
+  const hidden = [...ev].reverse().find(e => e.k === 'hide');
+  const heartbeat = typeof score.online === 'number' ? score.online : null;
+  const now = Date.now(), age = last ? now - last.t : Infinity;
+  const online = heartbeat !== null
+    ? heartbeat > 0 && now - heartbeat >= 0 && now - heartbeat < 90000 && (!hidden || heartbeat > hidden.t)
+    : !!(last && age >= 0 && age < 6 * 60000 && last.k !== 'hide' && (!hidden || (opened && opened.t > hidden.t)));
+  return { online, lastSeen: Math.max(last ? last.t : 0, Number(score.t) || 0, heartbeat || 0) };
+}
 function renderRanking() {
   const ps = players().filter(p => !p.id.startsWith('test-') && !hiddenFromRanking(p.id, p.name)).map(p => ({ ...p, level: currentLevel(p.id) }))
     .sort((a, b) => b.level - a.level || a.name.localeCompare(b.name, 'nl') || a.id.localeCompare(b.id));
   let rank = 0;
   $('#ranking').innerHTML = ps.length ? `<table><thead><tr><th scope="col" class="num">#</th><th scope="col">Speler</th><th scope="col" class="num">Level</th></tr></thead><tbody>${ps.map((p, i) => {
     if (!i || p.level !== ps[i - 1].level) rank = i + 1;
-    return `<tr${p.id === sel ? ' class="selected"' : ''}><td class="num">${rank}</td><td><a href="#${encodeURIComponent(p.id)}"${p.id === sel ? ' aria-current="true"' : ''}>${esc((SCORES[p.id] || {}).avatar || '🙂')} ${esc(p.name)}</a></td><td class="num">${p.level || '–'}</td></tr>`;
+    const activity = playerActivity(p.id), status = activity.online ? 'Online' : activity.lastSeen ? `Laatst gezien ${ago(activity.lastSeen)}` : 'Laatst gezien onbekend';
+    return `<tr${p.id === sel ? ' class="selected"' : ''}><td class="num">${rank}</td><td><div class="ranking-player"><a href="#${encodeURIComponent(p.id)}"${p.id === sel ? ' aria-current="true"' : ''}>${esc((SCORES[p.id] || {}).avatar || '🙂')} ${esc(p.name)}</a><span class="ranking-status${activity.online ? ' online' : ''}">${status}</span></div></td><td class="num">${p.level || '–'}</td></tr>`;
   }).join('')}</tbody></table>` : '<div class="empty">Nog geen spelers</div>';
   $('#ranking').querySelectorAll('a').forEach(a => a.onclick = e => { e.preventDefault(); selectPlayer(decodeURIComponent(a.hash.slice(1))); });
 }
@@ -344,9 +362,7 @@ function render() {
   if (!sel) return;
   const ev = events(sel), sc = SCORES[sel] || {}, last = ev[ev.length - 1];
   const { levels, days } = analyse(ev);
-  const lastOpen = [...ev].reverse().find(e => e.k === 'open' || e.k === 'start' || e.k === 'show');
-  const lastHide = [...ev].reverse().find(e => e.k === 'hide');
-  const active = last && Date.now() - last.t < 6 * 60 * 1000 && (!lastHide || (lastOpen && lastOpen.t > lastHide.t));
+  const active = playerActivity(sel, ev).online;
   const ver = [...ev].reverse().find(e => e.v);
   const curLv = currentLevel(sel);
   $('#av').textContent = sc.avatar || '🙂';
@@ -356,7 +372,7 @@ function render() {
   $('#live').classList.toggle('on', !!active);
   if (!document.activeElement || !document.activeElement.closest('#heartTop')) renderHeartTop();
   renderCfg();
-  $('#liveTxt').textContent = active ? (last.k === 'start' || last.k === 'hint' || last.k === 'shuf' ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
+  $('#liveTxt').textContent = active ? (last && ['start', 'hint', 'shuf'].includes(last.k) ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
   $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
 
   // KPIs
@@ -590,7 +606,7 @@ function stream() {
   es.addEventListener('cancel', () => { $('#notice').innerHTML = '<div class="warnbox">De database staat het lezen van speelgegevens nog niet toe. Publiceer de nieuwe Firebase-regels.</div>'; });
 }
 loadScores().then(() => { fillPicker(); render(); stream(); });
-setInterval(() => loadScores().then(render), 60000);
+setInterval(() => loadScores().then(render), 30000);
 setInterval(render, 30000);   // "x min geleden" stays fresh
 setInterval(checkHeartsSeen, 15000);
 let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(render, 200); });

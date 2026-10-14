@@ -31,6 +31,57 @@ function fixture() {
 
 module.exports = [
   {
+    name: 'dashboard: leaderboard shows online and last seen, respects hiding and expires heartbeats',
+    async run(t, { serve, FakeDB, browser, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
+      const now = Date.now(), minute = 60000;
+      const scores = {
+        pOnline: { name: 'Online speler', level: 10, online: now, t: now - 10 * minute },
+        pLegacy: { name: 'Oudere app', level: 9 },
+        pOffline: { name: 'Weggegaan', level: 8, online: 0 },
+        pStale: { name: 'Verlopen', level: 7, online: now - 90000 },
+        pHidden: { name: 'Verborgen', level: 6, online: now - 2000 },
+        pUnknown: { name: 'Onbekend', level: 5 },
+        pScore: { name: 'Alleen score', level: 4, t: now - minute },
+        pOldHidden: { name: 'Oud verborgen', level: 3 },
+      };
+      const plays = {
+        pOnline: { a: { k: 'open', t: now - 10 * minute } },
+        pLegacy: { a: { k: 'start', t: now - minute } },
+        pOffline: { a: { k: 'start', t: now - minute } },
+        pStale: { a: { k: 'start', t: now - minute } },
+        pHidden: { a: { k: 'open', t: now - 2 * minute }, b: { k: 'hide', t: now - 1000 } },
+        pOldHidden: { a: { k: 'open', t: now - 2 * minute }, b: { k: 'hide', t: now - minute }, c: { k: 'err', t: now - 1000 } },
+      };
+      const ctx = await browser.newContext({ viewport: { width: 2048, height: 1000 } });
+      await ctx.addInitScript(value => { window.__presenceNow = value; Date.now = () => window.__presenceNow; }, now);
+      const db = new FakeDB({ scores, plays });
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const p = await ctx.newPage();
+      const status = name => p.locator(`#ranking a[href="#${Object.keys(scores).find(id => scores[id].name === name)}"]`).locator('..').locator('.ranking-status');
+      try {
+        await p.goto(site.url + 'dash/#pOnline');
+        await p.waitForFunction(() => !!PLAYS.pLegacy);
+        t.eq(await status('Online speler').innerText(), 'Online', 'fresh heartbeat is online despite an older play log');
+        t.eq(await status('Oudere app').innerText(), 'Online', 'recent foreground activity supports older apps');
+        for (const name of ['Weggegaan', 'Verlopen', 'Verborgen', 'Alleen score', 'Oud verborgen']) {
+          t.ok((await status(name).innerText()).startsWith('Laatst gezien '), name + ' is offline');
+          t.eq(await status(name).evaluate(el => el.classList.contains('online')), false, name + ' has no green online label');
+        }
+        t.eq(await status('Onbekend').innerText(), 'Laatst gezien onbekend', 'missing activity does not invent a last-seen time');
+        t.eq(await p.locator('#live').evaluate(el => el.classList.contains('on')), true, 'selected player header agrees with online status');
+        await p.evaluate(() => { window.__presenceNow += 90000; render(); });
+        t.ok((await status('Online speler').innerText()).startsWith('Laatst gezien '), 'heartbeat expires at ninety seconds');
+        t.eq(await p.locator('#live').evaluate(el => el.classList.contains('on')), false, 'header also goes offline');
+        await p.evaluate(() => { SCORES.pOffline.online = Date.now(); renderRanking(); });
+        t.eq(await status('Weggegaan').innerText(), 'Online', 'a new foreground heartbeat restores online status');
+        await p.setViewportSize({ width: 390, height: 844 });
+        t.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'status wraps without making mobile page wider');
+        t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'viewing presence writes nothing to the database');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
+  {
     name: 'dashboard: compact leaderboard ranks by level, shares ties and follows live progress',
     async run(t, { serve, FakeDB, browser, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
@@ -47,7 +98,7 @@ module.exports = [
       const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
       await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
       const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
-      const rows = () => p.locator('#ranking tbody tr').evaluateAll(rs => rs.map(r => [...r.cells].map(c => c.textContent.trim())));
+      const rows = () => p.locator('#ranking tbody tr').evaluateAll(rs => rs.map(r => [...r.cells].map(c => (c.querySelector('a') || c).textContent.trim())));
       try {
         await p.goto(site.url + 'dash/#pOma');
         await p.waitForFunction(() => document.querySelectorAll('#ranking tbody tr').length === 4);
