@@ -1,0 +1,21 @@
+{
+  "pid": "pmuy78xu6tsths9",
+  "player": "Dennisisdebeste",
+  "event": {
+    "k": "cfg",
+    "t": 1791822878135,
+    "redo": 79,
+    "redoId": "redo79-1791822878135-73531f"
+  },
+  "key": "-P3kxpB_byGr4Oy-UjKL",
+  "publishedVersion": "1.47",
+  "liveVerifiedAt": 1791822871747,
+  "lastCheckedAt": 1791822938225,
+  "lastScoreLevel": 83,
+  "ack": {
+    "t": 1791823158339,
+    "v": "1.46",
+    "dev": "android",
+    "from": 79
+  }
+}

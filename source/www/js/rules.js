@@ -16,8 +16,8 @@ const RULES = {
   // target going from `start` to `end` at endLevel; from clockFrom the alarm clock.
   // pile: 'classic' (tower piles were tried: fewer choices, but more luck than skill)
   hard: { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88,
-    strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30]],
-    minTile: 54, minTileBig: 48, pile: 'classic' },
+    strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30], [269, 0.18]],
+    maxDown: 0.20, minTile: 54, minTileBig: 48, pile: 'classic' },
   sunflower: { level: 20 },                    // the big prize: the Zonnebloem theme after this level
   score: {
     pair: 10, maxCombo: 5,                     // a pair is worth 10 × combo (up to ×5)

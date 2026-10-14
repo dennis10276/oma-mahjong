@@ -57,6 +57,8 @@ def main():
     if len(args) != 1 or not re.fullmatch(r'\d+(\.\d+)*', args[0]):
         sys.exit(__doc__)
     v, apk, deploy = args[0], '--no-apk' not in sys.argv, '--deploy' in sys.argv
+    # This gate also applies to --no-tests: never publish a stale or reversed difficulty curve.
+    subprocess.run(['node', os.path.join(ROOT, 'tools', 'sim', 'check_ordered.js')], check=True)
     if '--no-tests' not in sys.argv:
         run_tests()
 

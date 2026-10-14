@@ -3,43 +3,34 @@ const fs = require('fs'), path = require('path'), vm = require('vm');
 const H = require('../www/hard');
 module.exports = [
   {
-    name: 'curve: clock-focused targets are met by changing the board, with clocks and their routes preserved',
+    name: 'curve: every measured neighbor is harder, with observer-safe data and protected clock routes',
     cpu: true,
     async run(t) {
-      const crypto=require('crypto'),report=require('../analysis/validation-1.48.json');
+      const check=require('../tools/sim/check_ordered');
+      t.eq(check(),[],'complete measured progression passes the release gate');
+      const report=require('../analysis/validation-ordered.json'),P=require('../tools/sim/ordered_policy');
       const table=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+';HARD_LEVELS');
-      const old=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../analysis/levels-1.47.js'),'utf8')+';HARD_LEVELS');
-      t.ok(report.runs>=300,'at least 300 independent games per persona');
-      t.eq(report.rows.length,190,'all rebuilt levels measured');
-      t.eq(report.profile,H.REF.focused,'the user-approved clock-focused player is the calibration model');
-      for(const r of report.rows){
-        const row=table.levels[r.lv-table.from],margin=r.lv<90?0.08:0.10;
-        t.eq(crypto.createHash('sha256').update(JSON.stringify(row)).digest('hex'),r.hash,'measured board is shipped '+r.lv);
-        t.eq([row[8],row[9]],[r.sensible,r.focused],'table logs the new measurements '+r.lv);
-        t.ok(Math.abs(r.focused-H.target(r.lv,'strong'))<=margin,'focused target '+r.lv);
-        t.ok(r.reach>=r.baseline.reach-.03&&r.clockLoss<=r.baseline.clockLoss+.03,'clock difficulty did not increase beyond sampling tolerance '+r.lv);
-        t.ok(r.tilePx>=r.minTile-0.001,'readable tiles '+r.lv);
-        const before=old.levels[r.lv-old.from];
-        for(const index of [0,2,3,4,5,6,7,10])t.eq(row[index],before[index],'only the face arrangement can change '+r.lv+' field '+index);
-        const d=H.unpack(r.lv,row),prev=H.unpack(r.lv,before),fixed=new Set([...prev.solution.slice(0,prev.solution.indexOf(prev.clock.i)+1),...(prev.gold||[]),...((prev.obst||{}).keys||[])]);
-        for(const i of fixed)t.eq(d.faces[i],prev.faces[i],'clock route and special pairs retain their faces '+r.lv+' tile '+i);
-      }
-      for(const b of report.bands){
-        t.ok(Math.abs(b.focused-b.targetStrong)<=0.03,'focused band '+b.from);
-        t.ok(b.reach>=b.baselineReach-.01&&b.clockLoss<=b.baselineClockLoss+.01,'clock difficulty unchanged within band sampling tolerance '+b.from);
+      // Replay measurements rather than trusting the stored percentages alone.
+      for(const lv of [80,86,150,269]){
+        const r=report.rows.find(r=>r.lv===lv),d=H.unpack(lv,table.levels[lv-table.from]);
+        t.eq(P.sample(d,report.runs,report.seed),{
+          win:r.win,reach:r.reach,clockLoss:r.clockLoss,afterClock:r.afterClock,
+          blindRate:r.blindRate,forcedPerGame:r.forcedPerGame,unknownShare:r.unknownShare,risky:r.risky
+        },'fresh measurement is reproducible '+lv);
       }
     },
   },
   {
-    name: 'curve: approved strong checkpoints, interpolation and plateau agree in browser and builder',
+    name: 'curve: approved checkpoints and the continuing difficulty increase agree in browser and builder',
     cpu: true,
     async run(t) {
-      const points = [[75,0.7],[85,0.6],[100,0.45],[120,0.35],[150,0.3],[300,0.3]];
+      const points = [[75,0.7],[85,0.6],[100,0.45],[120,0.35],[150,0.3],[269,0.18],[300,0.18]];
       points.forEach(([lv,q]) => t.eq(H.target(lv,'strong'),q,'strong target at '+lv));
       t.ok(Math.abs(H.target(80,'strong')-0.65)<1e-10,'interpolate between checkpoints');
       t.eq(H.target(74,'strong'),0.88,'earlier target preserved');
       const rules = vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/js/rules.js'),'utf8')+';RULES.hard');
-      t.eq(JSON.parse(JSON.stringify(rules.strongCurve)),H.cfg().strongCurve,'browser and build use the approved curve');
+      t.eq(JSON.parse(JSON.stringify(rules.strongCurve)),H.cfg().strongCurve,'browser and build use the same curve');
+      t.eq([rules.maxDown,H.cfg().maxDown],[0.20,0.20],'runtime and offline boards use the same information cap');
       t.eq([rules.start,rules.end,rules.endLevel],[H.cfg().start,H.cfg().end,H.cfg().endLevel],'middle curve agrees too');
     },
   },

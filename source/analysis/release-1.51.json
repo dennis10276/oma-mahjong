@@ -1,0 +1,17 @@
+{
+  "version": "1.51",
+  "commit": "daea4d0bf836e2643a7d03d928494baeeda265d0",
+  "scope": "Hide DennisTEST in game and dashboard family rankings; built from published 1.50 to preserve unrelated unpublished local changes",
+  "offlineTestsPassed": 105,
+  "versionCode": 67,
+  "apkSha256": "e4c96d51fccb878111c72db304fa07e2588f5bd3d14795ef7182b534c61ea484",
+  "signingCertificateMatchesPrevious": true,
+  "workflow": "https://github.com/dennis10276/oma-mahjong/actions/runs/38594780874",
+  "deploymentVerified": true,
+  "verifiedAt": "2026-10-14T16:05:20.219428+00:00",
+  "liveChecks": [
+    "version marker, update bundle and signed APK match release",
+    "dashboard excludes DennisTEST and retains diagnostic picker",
+    "web game 1.51 excludes test ID and name from weekly and all-time cached rankings"
+  ]
+}

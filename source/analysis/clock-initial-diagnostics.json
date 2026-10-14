@@ -1,0 +1,96 @@
+{
+  "runs": 300,
+  "notes": "Diagnostic only: existing 1.45 strong persona, no new win-rate target or recalibration.",
+  "rows": [
+    {
+      "lv": 80,
+      "clock": 6,
+      "strong": 0.5433333333333333,
+      "clockLoss": 0.23
+    },
+    {
+      "lv": 81,
+      "clock": 8,
+      "strong": 0.5333333333333333,
+      "clockLoss": 0.11333333333333333
+    },
+    {
+      "lv": 82,
+      "clock": 9,
+      "strong": 0.35,
+      "clockLoss": 0.5033333333333333
+    },
+    {
+      "lv": 83,
+      "clock": 18,
+      "strong": 0.07666666666666666,
+      "clockLoss": 0.08333333333333333
+    },
+    {
+      "lv": 84,
+      "clock": 17,
+      "strong": 0.006666666666666667,
+      "clockLoss": 0.27
+    },
+    {
+      "lv": 85,
+      "clock": 21,
+      "strong": 0,
+      "clockLoss": 0.4666666666666667
+    },
+    {
+      "lv": 86,
+      "clock": 19,
+      "strong": 0.14666666666666667,
+      "clockLoss": 0.07666666666666666
+    },
+    {
+      "lv": 87,
+      "clock": 13,
+      "strong": 0.13333333333333333,
+      "clockLoss": 0.43
+    },
+    {
+      "lv": 88,
+      "clock": 7,
+      "strong": 0.7233333333333334,
+      "clockLoss": 0.05
+    },
+    {
+      "lv": 89,
+      "clock": 17,
+      "strong": 0.02,
+      "clockLoss": 0.9233333333333333
+    },
+    {
+      "lv": 100,
+      "clock": 5,
+      "strong": 0.43333333333333335,
+      "clockLoss": 0.02666666666666667
+    },
+    {
+      "lv": 120,
+      "clock": 49,
+      "strong": 0,
+      "clockLoss": 0.13
+    },
+    {
+      "lv": 150,
+      "clock": 11,
+      "strong": 0.013333333333333334,
+      "clockLoss": 0.8266666666666667
+    },
+    {
+      "lv": 203,
+      "clock": 3,
+      "strong": 0.6066666666666667,
+      "clockLoss": 0
+    },
+    {
+      "lv": 269,
+      "clock": 43,
+      "strong": 0,
+      "clockLoss": 0.14
+    }
+  ]
+}

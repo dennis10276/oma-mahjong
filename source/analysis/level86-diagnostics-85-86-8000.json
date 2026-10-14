@@ -1,0 +1,119 @@
+{
+  "description": "Fresh same-seed comparison. Counterfactual control removes access to newly revealed identities during hypothetical move scoring. Production unchanged.",
+  "rows": [
+    {
+      "lv": 85,
+      "runs": 8000,
+      "seed": 554319,
+      "focused": 0.580375,
+      "noFaceDown": 0.93225,
+      "clockReached": 0.9995,
+      "clockLoss": 0.0005,
+      "risky": 2.26675,
+      "choices": 11.182610396754127,
+      "structure": {
+        "tiles": 88,
+        "layers": 6,
+        "down": 35,
+        "covered": 22,
+        "knownStart": 32,
+        "freeStart": 5,
+        "clock": {
+          "i": 65,
+          "n": 11
+        },
+        "routeMoves": 8
+      },
+      "metrics": {
+        "decisions": 1098,
+        "blindSingles": 117,
+        "forcedBlind": 0,
+        "unknownOptions": 1991,
+        "singleOptions": 11480
+      },
+      "probeStates": 21,
+      "probeChanged": 2,
+      "witness": {
+        "atMove": 14,
+        "swapped": [
+          56,
+          36
+        ],
+        "faces": [
+          4,
+          20
+        ],
+        "originalPick": [
+          73
+        ],
+        "swappedPick": [
+          62
+        ],
+        "knownUnchanged": true,
+        "fairOriginalPick": [
+          73
+        ],
+        "fairSwappedPick": [
+          73
+        ]
+      }
+    },
+    {
+      "lv": 86,
+      "runs": 8000,
+      "seed": 554319,
+      "focused": 0.621625,
+      "noFaceDown": 0.741125,
+      "clockReached": 0.99975,
+      "clockLoss": 0.00025,
+      "risky": 5.12575,
+      "choices": 14.583936742175508,
+      "structure": {
+        "tiles": 88,
+        "layers": 5,
+        "down": 35,
+        "covered": 27,
+        "knownStart": 37,
+        "freeStart": 11,
+        "clock": {
+          "i": 17,
+          "n": 8
+        },
+        "routeMoves": 5
+      },
+      "metrics": {
+        "decisions": 1150,
+        "blindSingles": 141,
+        "forcedBlind": 0,
+        "unknownOptions": 4754,
+        "singleOptions": 14547
+      },
+      "probeStates": 33,
+      "probeChanged": 5,
+      "witness": {
+        "atMove": 14,
+        "swapped": [
+          15,
+          38
+        ],
+        "faces": [
+          31,
+          34
+        ],
+        "originalPick": [
+          34
+        ],
+        "swappedPick": [
+          9
+        ],
+        "knownUnchanged": true,
+        "fairOriginalPick": [
+          9
+        ],
+        "fairSwappedPick": [
+          9
+        ]
+      }
+    }
+  ]
+}

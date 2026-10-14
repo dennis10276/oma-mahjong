@@ -1,0 +1,24 @@
+{
+  "verifiedAt": "2026-10-12T20:22:22.969Z",
+  "tests": {
+    "command": "node tests/run.js",
+    "offline": true,
+    "passed": 94,
+    "total": 94,
+    "seconds": 263
+  },
+  "releaseGate": true,
+  "legacyTableRejected": true,
+  "phoneScreenshotsInspected": [
+    80,
+    85,
+    86,
+    150
+  ],
+  "published": false,
+  "hashes": {
+    "www/hard.js": "29521f8f87c98f2892c43f9657d0300d51e664865dcbaabe34bf1add86ad44d6",
+    "www/levels-hard.js": "d0bcb633b7b8d91b5fc2f2cff518554e8401c2a01d5e233c53e09efb9d681c40",
+    "www/js/rules.js": "78445f2d779b54829848abf019500e962cf8a47a70092434fc753fa0ee1cf530"
+  }
+}

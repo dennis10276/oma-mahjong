@@ -1,0 +1,255 @@
+{
+  "runs": 600,
+  "seed": 991331,
+  "profile": {
+    "temp": 0.7,
+    "end": 20,
+    "clockFocus": 4
+  },
+  "bands": [
+    {
+      "from": 80,
+      "to": 89,
+      "focused": 0.6141666666666665,
+      "targetStrong": 0.605,
+      "reach": 0.9785,
+      "baselineReach": 0.9286666666666668,
+      "clockLoss": 0.002666666666666667,
+      "baselineClockLoss": 0.035166666666666666,
+      "sensible": 0.22033333333333333,
+      "average": 0.06683333333333333
+    }
+  ],
+  "rows": [
+    {
+      "lv": 80,
+      "hash": "38b59a590cfaf546ebe8cd44a81dae08570118e0bb6d4816aa1241158d43cdbe",
+      "targetStrong": 0.6499999999999999,
+      "focused": 0.615,
+      "reach": 0.8916666666666667,
+      "clockLoss": 0,
+      "afterClock": 0.6897196261682244,
+      "baseline": {
+        "win": 0.825,
+        "reach": 0.8916666666666667,
+        "clockLoss": 0,
+        "afterClock": 0.9252336448598131
+      },
+      "sensible": 0.19666666666666666,
+      "average": 0.06,
+      "clock": 10,
+      "routeMoves": 6,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 57.925636007827784,
+      "minTile": 48
+    },
+    {
+      "lv": 81,
+      "hash": "440a19cfa2fdc7f0b5c0cf92619772a7fedaa19d7563641f0d9eddec179a6d56",
+      "targetStrong": 0.64,
+      "focused": 0.6066666666666667,
+      "reach": 1,
+      "clockLoss": 0,
+      "afterClock": 0.6066666666666667,
+      "baseline": {
+        "win": 0.6066666666666667,
+        "reach": 1,
+        "clockLoss": 0,
+        "afterClock": 0.6066666666666667
+      },
+      "sensible": 0.455,
+      "average": 0.18666666666666668,
+      "clock": 8,
+      "routeMoves": 5,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    },
+    {
+      "lv": 82,
+      "hash": "dec4ca20ca87d8a0d25ad24f114fa59a27b54c6d0a38460d60df4180e9188028",
+      "targetStrong": 0.63,
+      "focused": 0.63,
+      "reach": 1,
+      "clockLoss": 0,
+      "afterClock": 0.63,
+      "baseline": {
+        "win": 0.9633333333333334,
+        "reach": 1,
+        "clockLoss": 0,
+        "afterClock": 0.9633333333333334
+      },
+      "sensible": 0.15666666666666668,
+      "average": 0.028333333333333332,
+      "clock": 8,
+      "routeMoves": 5,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    },
+    {
+      "lv": 83,
+      "hash": "9bb7cc9642ddb0db4bfe2096df4edb55ee22ae309aa6f5c37f75aa152724dfe6",
+      "targetStrong": 0.62,
+      "focused": 0.69,
+      "reach": 1,
+      "clockLoss": 0,
+      "afterClock": 0.69,
+      "baseline": {
+        "win": 0.65,
+        "reach": 0.6683333333333333,
+        "clockLoss": 0.32,
+        "afterClock": 0.972568578553616
+      },
+      "sensible": 0.09,
+      "average": 0.043333333333333335,
+      "clock": 8,
+      "routeMoves": 5,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    },
+    {
+      "lv": 84,
+      "hash": "fbbb26c185a23796fc9ca9620fb16eb4d897417a333c1396137bb9a38fa3a7ea",
+      "targetStrong": 0.61,
+      "focused": 0.63,
+      "reach": 0.92,
+      "clockLoss": 0,
+      "afterClock": 0.6847826086956522,
+      "baseline": {
+        "win": 0.755,
+        "reach": 0.7566666666666667,
+        "clockLoss": 0.0016666666666666668,
+        "afterClock": 0.9977973568281938
+      },
+      "sensible": 0.18833333333333332,
+      "average": 0.03166666666666667,
+      "clock": 16,
+      "routeMoves": 12,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    },
+    {
+      "lv": 85,
+      "hash": "0e5467660e7aacac67d21440f7173927f0ba58a87bceb282a4edf4d9e10a987f",
+      "targetStrong": 0.6,
+      "focused": 0.5583333333333333,
+      "reach": 1,
+      "clockLoss": 0,
+      "afterClock": 0.5583333333333333,
+      "baseline": {
+        "win": 0.88,
+        "reach": 1,
+        "clockLoss": 0,
+        "afterClock": 0.88
+      },
+      "sensible": 0.18833333333333332,
+      "average": 0.04666666666666667,
+      "clock": 11,
+      "routeMoves": 8,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    },
+    {
+      "lv": 86,
+      "hash": "696fd3de7b7a7576f4478ae69e32bc7a1709b13d63fcc391f07ab8f031c415e1",
+      "targetStrong": 0.59,
+      "focused": 0.635,
+      "reach": 1,
+      "clockLoss": 0,
+      "afterClock": 0.635,
+      "baseline": {
+        "win": 0.965,
+        "reach": 1,
+        "clockLoss": 0,
+        "afterClock": 0.965
+      },
+      "sensible": 0.09833333333333333,
+      "average": 0.021666666666666667,
+      "clock": 8,
+      "routeMoves": 5,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 62.69387755102041,
+      "minTile": 54
+    },
+    {
+      "lv": 87,
+      "hash": "22105a513a709a42bab99fe682102ec6289e913138072581096866f04db45bc1",
+      "targetStrong": 0.58,
+      "focused": 0.6066666666666667,
+      "reach": 1,
+      "clockLoss": 0,
+      "afterClock": 0.6066666666666667,
+      "baseline": {
+        "win": 0.8983333333333333,
+        "reach": 1,
+        "clockLoss": 0,
+        "afterClock": 0.8983333333333333
+      },
+      "sensible": 0.215,
+      "average": 0.085,
+      "clock": 10,
+      "routeMoves": 6,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    },
+    {
+      "lv": 88,
+      "hash": "99e6282c3823b4fa51e42f1c6dd71937af637b82d0b6d682e06ef2229d1f7eda",
+      "targetStrong": 0.57,
+      "focused": 0.57,
+      "reach": 0.9733333333333334,
+      "clockLoss": 0.02666666666666667,
+      "afterClock": 0.5856164383561644,
+      "baseline": {
+        "win": 0.9,
+        "reach": 0.97,
+        "clockLoss": 0.03,
+        "afterClock": 0.9278350515463918
+      },
+      "sensible": 0.33166666666666667,
+      "average": 0.13166666666666665,
+      "clock": 9,
+      "routeMoves": 5,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    },
+    {
+      "lv": 89,
+      "hash": "7c43eb5834d9d889d9f699998ed7283c02fc9e402e92bbc29055679e3349c454",
+      "targetStrong": 0.5599999999999999,
+      "focused": 0.6,
+      "reach": 1,
+      "clockLoss": 0,
+      "afterClock": 0.6,
+      "baseline": {
+        "win": 0.43666666666666665,
+        "reach": 1,
+        "clockLoss": 0,
+        "afterClock": 0.43666666666666665
+      },
+      "sensible": 0.2833333333333333,
+      "average": 0.03333333333333333,
+      "clock": 8,
+      "routeMoves": 5,
+      "clockUnchanged": true,
+      "proof": true,
+      "tilePx": 58.73015873015873,
+      "minTile": 54
+    }
+  ]
+}

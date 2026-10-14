@@ -1,0 +1,11 @@
+{
+  "version": "1.49",
+  "commit": "2a4c88cb47e6d54090454603a37cac62b3308608",
+  "liveVerifiedAt": 1791829579612,
+  "apkSha256": "f81fc03d5350fb7f729bc0c6142a62866fa1698d894fcfa213112064c417a0ec",
+  "versionCode": 65,
+  "offlineTests": 92,
+  "clockIntroVerified": true,
+  "repeatedTimeoutHelpVerified": true,
+  "resetRequested": false
+}

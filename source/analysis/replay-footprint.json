@@ -1,0 +1,104 @@
+{
+  "boards": "Archived live 1.49; current unpublished recorder",
+  "boardSHA256": "79db375bc2ece069a0bc1224ebc4d9fd7722e4c979ddf6ce4e31ebdde579d305",
+  "method": "Scripted stored winning routes; optional 100 repeated legal free peeks. Bytes include replay chunk envelopes, exclude Firebase keys/protocol overhead.",
+  "samples": [
+    {
+      "level": 80,
+      "extraPeeksRequested": 0,
+      "extraPeeksRecorded": 0,
+      "bytes": 14582,
+      "chunks": 7,
+      "taps": 117,
+      "states": 117
+    },
+    {
+      "level": 80,
+      "extraPeeksRequested": 100,
+      "extraPeeksRecorded": 100,
+      "bytes": 20864,
+      "chunks": 12,
+      "taps": 217,
+      "states": 217
+    },
+    {
+      "level": 84,
+      "extraPeeksRequested": 0,
+      "extraPeeksRecorded": 0,
+      "bytes": 12735,
+      "chunks": 7,
+      "taps": 108,
+      "states": 108
+    },
+    {
+      "level": 84,
+      "extraPeeksRequested": 100,
+      "extraPeeksRecorded": 100,
+      "bytes": 18942,
+      "chunks": 11,
+      "taps": 207,
+      "states": 207
+    },
+    {
+      "level": 88,
+      "extraPeeksRequested": 0,
+      "extraPeeksRecorded": 0,
+      "bytes": 12685,
+      "chunks": 7,
+      "taps": 98,
+      "states": 98
+    },
+    {
+      "level": 88,
+      "extraPeeksRequested": 100,
+      "extraPeeksRecorded": 100,
+      "bytes": 18950,
+      "chunks": 11,
+      "taps": 198,
+      "states": 198
+    },
+    {
+      "level": 90,
+      "extraPeeksRequested": 0,
+      "extraPeeksRecorded": 0,
+      "bytes": 15102,
+      "chunks": 8,
+      "taps": 120,
+      "states": 120
+    },
+    {
+      "level": 90,
+      "extraPeeksRequested": 100,
+      "extraPeeksRecorded": 100,
+      "bytes": 21368,
+      "chunks": 12,
+      "taps": 220,
+      "states": 220
+    },
+    {
+      "level": 150,
+      "extraPeeksRequested": 0,
+      "extraPeeksRecorded": 0,
+      "bytes": 16702,
+      "chunks": 7,
+      "taps": 117,
+      "states": 117
+    },
+    {
+      "level": 150,
+      "extraPeeksRequested": 100,
+      "extraPeeksRecorded": 100,
+      "bytes": 23084,
+      "chunks": 12,
+      "taps": 217,
+      "states": 217
+    }
+  ],
+  "recorderCPU": {
+    "throttle": 6,
+    "iterations": 200,
+    "totalMs": 48,
+    "averageRecorderMs": 0.24,
+    "cut": false
+  }
+}

@@ -1,0 +1,3638 @@
+{
+  "scope": "Unpublished local boards, with published 1.49 saved-route comparison",
+  "from": 80,
+  "to": 269,
+  "limit": 30000,
+  "visibility": "uncovered",
+  "visibilityNote": "Only completely uncovered face-up tiles; actual free-peek auto-match rules; no x-ray needed",
+  "claim": "Certificate proves a clock-safe route with no unidentified deliberate removals and a known matching partner for every deliberately parked tile. It does not prove the choice of route can be deduced from observations or that all consistent hidden arrangements are won. Failure is only for this restricted policy with fixed-order free inspection, NOT proof of required guessing.",
+  "hashes": {
+    "www/levels-hard.js": "d0bcb633b7b8d91b5fc2f2cff518554e8401c2a01d5e233c53e09efb9d681c40",
+    "www/hard.js": "29521f8f87c98f2892c43f9657d0300d51e664865dcbaabe34bf1add86ad44d6",
+    "www/layouts.js": "9cbb71e1b4775c89077e230a2934aa641732b662f5acf1d4c38b3fe6d795ab2b",
+    "www/js/board.js": "640a55b2cc73b71a1852244802c15a6880e22937ae78e780c54931d3e1d3b435",
+    "www/js/rules.js": "78445f2d779b54829848abf019500e962cf8a47a70092434fc753fa0ee1cf530",
+    "www/style.css": "1865e085297a09e015c791eccc21c76711481f6264e7a2bef234123f375bd0f5"
+  },
+  "rows": [
+    {
+      "lv": 80,
+      "boardHash": "460fe8dc5ef95958777aa620b366b4cc557dd2492497c392347beb0016f5ef23",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8016,
+      "bestLeft": 80,
+      "ms": 105,
+      "actions": null
+    },
+    {
+      "lv": 81,
+      "boardHash": "6d909c5585e2630c714ee3b24e5405b464172d925724116112ff941232d96e5a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1007,
+      "bestLeft": 72,
+      "ms": 14,
+      "actions": null
+    },
+    {
+      "lv": 82,
+      "boardHash": "e49ed9e3e9977303ba1891b528ba92584413271d885e6d2da8839ec1edd9f336",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 4513,
+      "bestLeft": 71,
+      "ms": 56,
+      "actions": null
+    },
+    {
+      "lv": 83,
+      "boardHash": "43a57c6c0f1b035e71d3eee6837471b180474766ece3a3700c582ff3141228ed",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 80,
+      "ms": 336,
+      "actions": null
+    },
+    {
+      "lv": 84,
+      "boardHash": "819770b122fc8caff80a964f6065d72082afe3ba08a71d10e9a4bc7cdda26667",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2087,
+      "bestLeft": 56,
+      "ms": 23,
+      "actions": null
+    },
+    {
+      "lv": 85,
+      "boardHash": "b81d5f69890c4b485bba677ef19b845b7952184edbb77ddef02a0b9e198b8c90",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 18165,
+      "bestLeft": 68,
+      "ms": 180,
+      "actions": null
+    },
+    {
+      "lv": 86,
+      "boardHash": "7e94b33a6aa2d86c71b379235d6dd107cb973e64c82f44ba0b19e09955bb327a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 10
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 5092,
+      "bestLeft": 80,
+      "ms": 56,
+      "actions": null
+    },
+    {
+      "lv": 87,
+      "boardHash": "66d37008ee8b548e7da6fd27bc0c83ffe9010b0847108e0b77f126d4b2681fd5",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 42,
+      "ms": 300,
+      "actions": null
+    },
+    {
+      "lv": 88,
+      "boardHash": "f887c6238268a0429e09dd0538f3a7c494043f0ca7f0b53b2f27560c4e6de7b3",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 78,
+      "ms": 335,
+      "actions": null
+    },
+    {
+      "lv": 89,
+      "boardHash": "6e464ce798abb0ac0ab7f0c667880d119ba815a6c5e48bd1bc1b1402dbc67340",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 9720,
+      "bestLeft": 67,
+      "ms": 110,
+      "actions": null
+    },
+    {
+      "lv": 90,
+      "boardHash": "fc4cceae0a45896da4335e2c84f2ffd810487686fbca7d49981fa3a64f588600",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1740,
+      "bestLeft": 77,
+      "ms": 19,
+      "actions": null
+    },
+    {
+      "lv": 91,
+      "boardHash": "9d9bcf8a63e0e61b873ee5acb3587560cabdb5a47d94c6e649b8a016f1fa5c86",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 25,
+      "ms": 279,
+      "actions": null
+    },
+    {
+      "lv": 92,
+      "boardHash": "1a37150df91b8201ab6d0343fa49497990809d7e1913d1f0339b06533ed8375f",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 46,
+      "ms": 318,
+      "actions": null
+    },
+    {
+      "lv": 93,
+      "boardHash": "1e8d83a8d25fb7466eacabf2daea36b8edc8f9ed34f617afd44c2ae2e5da9f00",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8052,
+      "bestLeft": 80,
+      "ms": 86,
+      "actions": null
+    },
+    {
+      "lv": 94,
+      "boardHash": "72c10cba7ceef9af02b5c1cb16be933ffa9dc6eb379fbc70da9d1bbef752078c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2106,
+      "bestLeft": 64,
+      "ms": 23,
+      "actions": null
+    },
+    {
+      "lv": 95,
+      "boardHash": "e02db51ed904d72c78530e572c119d2eb4403b17c3799bf33d446fa82678646c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 318,
+      "bestLeft": 60,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 96,
+      "boardHash": "1d2e8be3849627ac723f90df11987438a907de27f1ab4b699f95d912674f63ba",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2288,
+      "bestLeft": 73,
+      "ms": 26,
+      "actions": null
+    },
+    {
+      "lv": 97,
+      "boardHash": "a5b2a65a3c61090ded012dab62f27e291f0d1336e007038cee5ee393747a0785",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 307,
+      "bestLeft": 79,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 98,
+      "boardHash": "b127bc5c0c757e5bd52e6cf1198e8a258ed999979ab4aa1a0a44889fe7e32fe5",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 39,
+      "ms": 256,
+      "actions": null
+    },
+    {
+      "lv": 99,
+      "boardHash": "34f4075b49eb731a816c25ed05e408f22f718ed93f438464bdefa97f99bee1aa",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2907,
+      "bestLeft": 81,
+      "ms": 29,
+      "actions": null
+    },
+    {
+      "lv": 100,
+      "boardHash": "294ccb00e7243d1e28ef366784345e9b3b6c576d228a15bd513d0018c53fff5b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 742,
+      "bestLeft": 81,
+      "ms": 7,
+      "actions": null
+    },
+    {
+      "lv": 101,
+      "boardHash": "942366923e36a6533c689eed4b0a5f4371e9bc2116e97621a454cc3bc32d0e83",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8016,
+      "bestLeft": 80,
+      "ms": 87,
+      "actions": null
+    },
+    {
+      "lv": 102,
+      "boardHash": "a07a6f6526858575d2d1f1df7cc682be4cb364a6f4cf71b6e1ff52a54cf2bbcd",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 16,
+      "bestLeft": 76,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 103,
+      "boardHash": "364200a4fc6a7260b10a291fd731cf2e810002a59ce170df87fa096e8c1ea670",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 27,
+      "ms": 259,
+      "actions": null
+    },
+    {
+      "lv": 104,
+      "boardHash": "ac8f79406e0bf7516673a0021be6112c64c4358986e9378eedf5b8aa52e99889",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 144,
+      "bestLeft": 68,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 105,
+      "boardHash": "724556511df9b6c09ec3fb9559f373951859d6661b9842124b96561a068614e4",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 322,
+      "bestLeft": 79,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 106,
+      "boardHash": "2ceabfa43ba64415645480a10819e46442d74eb2994d69087c66a3cb1edf2089",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 576,
+      "bestLeft": 81,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 107,
+      "boardHash": "f0bf9827d918d06b4b4d1e9d77327f68a5ce5c777291df6d6a29e69341aca111",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 3077,
+      "bestLeft": 65,
+      "ms": 29,
+      "actions": null
+    },
+    {
+      "lv": 108,
+      "boardHash": "1c9ee41a85942ae7d01a58df63aea9dbc9c5f1de08aa4da0829f996f48d8b527",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 697,
+      "bestLeft": 72,
+      "ms": 8,
+      "actions": null
+    },
+    {
+      "lv": 109,
+      "boardHash": "b636ebdc5df8e43c0edd008d1dda3db0d1c2a24b54d8212fffda5f1e102a0a4c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 57,
+      "bestLeft": 74,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 110,
+      "boardHash": "e0cfb6a9273bb555b98d6ce78b3f4e436967b66993f3f2ceb23b9869d79d14b8",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 43,
+      "ms": 303,
+      "actions": null
+    },
+    {
+      "lv": 111,
+      "boardHash": "8f31cf255262b70705122fa678a3a89b920a3cb45f4a4912fcb3a7e38fc065a2",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1,
+      "bestLeft": 86,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 112,
+      "boardHash": "66317cc92394c4f2ac3aa20f4db2a75d331a5167a3ef8727de28fdc0b603f410",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 5563,
+      "bestLeft": 69,
+      "ms": 55,
+      "actions": null
+    },
+    {
+      "lv": 113,
+      "boardHash": "11d1bc2c050bc8ed5d36ac3dcb32e1d5215c5f81f45a09b18660dc384e297547",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1940,
+      "bestLeft": 65,
+      "ms": 22,
+      "actions": null
+    },
+    {
+      "lv": 114,
+      "boardHash": "4351f14c9ecbb39dba9feb79288e7b1553cedb0e9d1ccbb41cd7e285349ccafb",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2798,
+      "bestLeft": 72,
+      "ms": 29,
+      "actions": null
+    },
+    {
+      "lv": 115,
+      "boardHash": "7fdd1be23619cc93b2fadfd6e0f9fca0d78fb87b6db4bde071a62f9a1e8fc0ba",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 144,
+      "bestLeft": 68,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 116,
+      "boardHash": "3b04d67d1c62fd1720b3362688ff6749fb4f87d05f1beb63a437b6232dee5c13",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 50,
+      "bestLeft": 82,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 117,
+      "boardHash": "f5578eb0bc4dca25eaac6af917af2aaec3a5119cc287dc50111e18eb6c578162",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 11785,
+      "bestLeft": 80,
+      "ms": 129,
+      "actions": null
+    },
+    {
+      "lv": 118,
+      "boardHash": "dc16130acd15cefb55cd67c29e3aee70fb2d594aa1821a1fab14a0a1965ed280",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2574,
+      "bestLeft": 73,
+      "ms": 27,
+      "actions": null
+    },
+    {
+      "lv": 119,
+      "boardHash": "bf52a6c7a27fba254765f0f790736c83854e557574eec76618bc04df6c43840e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 589,
+      "bestLeft": 81,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 120,
+      "boardHash": "8fbfab623a721118e3f3cf334ec3314b32604090cf025cf4e84d84fe8f8de458",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 6091,
+      "bestLeft": 82,
+      "ms": 67,
+      "actions": null
+    },
+    {
+      "lv": 121,
+      "boardHash": "98e1f537e68c174073f4ed5eefdbc1ea6b63e6d7f58b4d96c8632533b748d7ae",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 308,
+      "bestLeft": 79,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 122,
+      "boardHash": "3a915d27859b1d97c4a13225fd60ea6a687b48b4c2ee68212ebfa503b53c9949",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 6309,
+      "bestLeft": 82,
+      "ms": 68,
+      "actions": null
+    },
+    {
+      "lv": 123,
+      "boardHash": "7697310ad5933fe1597d4dd51523afe450e89bf6f40f87b495770e22b3dd703f",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 3301,
+      "bestLeft": 82,
+      "ms": 35,
+      "actions": null
+    },
+    {
+      "lv": 124,
+      "boardHash": "0701a89c06e3fd78a2bdabaf2fdbb9f8ad4cf30f5b43e509fc05692c780b9308",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 23643,
+      "bestLeft": 78,
+      "ms": 243,
+      "actions": null
+    },
+    {
+      "lv": 125,
+      "boardHash": "c7eb5d22b2d6d58c52a39e477e1064cdd2528fee41fb19d7389755c2d14fbed2",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 22,
+      "bestLeft": 80,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 126,
+      "boardHash": "cc2627897642aff65ed105dd8c1d81731633dc7315fb6b92e37564158fb96238",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 53,
+      "ms": 289,
+      "actions": null
+    },
+    {
+      "lv": 127,
+      "boardHash": "2007a6ddde030024e1886c7d205a2eafa688ca9bf4dd9cb4886ffc48f8114350",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 12,
+        "optimisticUnknown": 11
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 5068,
+      "bestLeft": 82,
+      "ms": 58,
+      "actions": null
+    },
+    {
+      "lv": 128,
+      "boardHash": "408686e87017c656c174c810db028fff3b1ed8142198e205767100482eeb2c6b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1740,
+      "bestLeft": 77,
+      "ms": 19,
+      "actions": null
+    },
+    {
+      "lv": 129,
+      "boardHash": "8d9e39a56bc21b1c252b56fe174e95bfad05c89fe9d568f6d5ec8bc0f0ccc98d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2337,
+      "bestLeft": 64,
+      "ms": 24,
+      "actions": null
+    },
+    {
+      "lv": 130,
+      "boardHash": "8a9803983b80c3b058bcc11bd4c86adbad085807321af81a1fc659959a95e3d4",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1725,
+      "bestLeft": 65,
+      "ms": 17,
+      "actions": null
+    },
+    {
+      "lv": 131,
+      "boardHash": "17de63a2da469647f0f56d2315e3a03427517578191472df027ec8fa4f55f73b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 8
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 54,
+      "ms": 331,
+      "actions": null
+    },
+    {
+      "lv": 132,
+      "boardHash": "5ea680fb2b52b6e4cb33bfe38cf343e3e45f415d19ed10a36dc1c5b8fce421ba",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 463,
+      "bestLeft": 76,
+      "ms": 5,
+      "actions": null
+    },
+    {
+      "lv": 133,
+      "boardHash": "3db545852eabea6aa16423eaebc274c08e797b474cd8b68c18b6b8164070dd8d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 24,
+      "bestLeft": 83,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 134,
+      "boardHash": "1502cb92844c9942cce2c2c606ac2000ba98d876d55b2c1f92cf7b24eb25a587",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 53,
+      "bestLeft": 83,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 135,
+      "boardHash": "404650375447aabae89751696cb631f0860d7b4ea4b9fe1b086f976ef3d81a9f",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 76,
+      "ms": 311,
+      "actions": null
+    },
+    {
+      "lv": 136,
+      "boardHash": "8d47d0e52d9575be36f32288f2239e90d9d5c1b28e4d5bf3d3d5779b87b2cf1d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 721,
+      "bestLeft": 73,
+      "ms": 8,
+      "actions": null
+    },
+    {
+      "lv": 137,
+      "boardHash": "a6abafffe71c65d62cc6af1a5324d89e1bcdd6c50e4cde5d7d77bf4ec849930c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 105,
+      "bestLeft": 80,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 138,
+      "boardHash": "6064b01eda070379b118c29b479b0f43b723c269f5c907bfe4f84fed7bb2e7f3",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 14642,
+      "bestLeft": 86,
+      "ms": 178,
+      "actions": null
+    },
+    {
+      "lv": 139,
+      "boardHash": "534c7bb431caa9b610f92cf60514079c261da22373a90024b52b21bad9b1a1f8",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2731,
+      "bestLeft": 72,
+      "ms": 28,
+      "actions": null
+    },
+    {
+      "lv": 140,
+      "boardHash": "ba039593165e954b07e8880f92f6731b7daa11b1a703c56a043b313fd60f4ef0",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 3789,
+      "bestLeft": 70,
+      "ms": 41,
+      "actions": null
+    },
+    {
+      "lv": 141,
+      "boardHash": "2ddddbcfe0131e645ab64cf087f2239a7d2bc13dc1237646a06491c05309a25a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 2
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1740,
+      "bestLeft": 77,
+      "ms": 17,
+      "actions": null
+    },
+    {
+      "lv": 142,
+      "boardHash": "e919ea3f3e12e7fd8c2e9fc5dad18303a077eaa23d84b350f84d4e799ebe3c84",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 242,
+      "bestLeft": 68,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 143,
+      "boardHash": "c7c7b605dd1a0fb3b7c229a2556e3b53a691d6cc83e06f4a8c80bc8cff9351f3",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1316,
+      "bestLeft": 78,
+      "ms": 15,
+      "actions": null
+    },
+    {
+      "lv": 144,
+      "boardHash": "a8a2d7bb3240bb96257d84740b9272887c813a229e22ee68f5a16ef2e0f52d35",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8,
+      "bestLeft": 85,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 145,
+      "boardHash": "2d799dc078aff507e16ea8a6c2d5500cc80a868188829deafba1e72ed7b2d1ae",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 9878,
+      "bestLeft": 63,
+      "ms": 105,
+      "actions": null
+    },
+    {
+      "lv": 146,
+      "boardHash": "30dc39989da6790ec93bbc899bd87936a4c4aca50b056a5ad53e58b994527373",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 192,
+      "bestLeft": 76,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 147,
+      "boardHash": "895f05afb8a45b596191ba3add967ed91c90935c3f8d5f0099145f8c4cd95cd1",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 754,
+      "bestLeft": 73,
+      "ms": 9,
+      "actions": null
+    },
+    {
+      "lv": 148,
+      "boardHash": "4c74f135512b3890b6a5923c49dad1f6448062a01157ec8429a39c6549df9494",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2300,
+      "bestLeft": 81,
+      "ms": 23,
+      "actions": null
+    },
+    {
+      "lv": 149,
+      "boardHash": "e07afd977010e361f4267f0c2afe079e5fd06890e3f84ea20c9b7d7c601ffd80",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 368,
+      "bestLeft": 78,
+      "ms": 5,
+      "actions": null
+    },
+    {
+      "lv": 150,
+      "boardHash": "a612a96a9aef071364dc1df8614edcd2332b2ba2a28ecb1c1d109516549f33ea",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 402,
+      "bestLeft": 81,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 151,
+      "boardHash": "5eaca6688a667127710584bc321b3f4da3a51d277ec3c4a98e57b0d30b2ff441",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 13966,
+      "bestLeft": 61,
+      "ms": 153,
+      "actions": null
+    },
+    {
+      "lv": 152,
+      "boardHash": "a08e45a7fb2e081b6488fc2a9b91117949cdb87181fdf51c5647099c8ed2650e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 22859,
+      "bestLeft": 76,
+      "ms": 254,
+      "actions": null
+    },
+    {
+      "lv": 153,
+      "boardHash": "e4d0c6cb6b51cf285b1b428748e813559f8289bd3d358955ee7a944b1f223cec",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 9,
+      "bestLeft": 72,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 154,
+      "boardHash": "deb43d6abbe228fb3ff200a202ae9613cb4a5362549a35b81b6a1bb389da19a9",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 10
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8,
+      "bestLeft": 83,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 155,
+      "boardHash": "8cd4a78a622d6a79ab780cc17d9ccbc0fb445a1f5e0433220605d82556d995c3",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 10
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 47,
+      "ms": 305,
+      "actions": null
+    },
+    {
+      "lv": 156,
+      "boardHash": "534444318a31d01c645375a005cbaa639e26650e1890be6166aa2229ef82a050",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 144,
+      "bestLeft": 68,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 157,
+      "boardHash": "072b0ddeb7c73facfcec3ac7adb2c8d3d5c0149d6506e50cc151c30294214322",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1986,
+      "bestLeft": 64,
+      "ms": 19,
+      "actions": null
+    },
+    {
+      "lv": 158,
+      "boardHash": "f297be461c6067d32a96e4ac071e551c90e433bd6dfe5cf8e0e784738254f648",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 87,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 159,
+      "boardHash": "d5c098cb4ce62d85a9a55fc5e7071aa3defda3e848a3b02182d5a5d19ccd21be",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 85,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 160,
+      "boardHash": "de1a61cfcd6d02f8496343bd00c8435ec7559ddeaff3e6b870e05ee6d4c86a19",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 6040,
+      "bestLeft": 48,
+      "ms": 59,
+      "actions": null
+    },
+    {
+      "lv": 161,
+      "boardHash": "0862295ad05e9d901c44d3761f42475020194111e10232593fc4f68896bf178c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 105,
+      "bestLeft": 81,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 162,
+      "boardHash": "27965e24ffb20b752dc805b808c791874339bff0474b16ad0dde3887fa1e789c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 536,
+      "bestLeft": 74,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 163,
+      "boardHash": "89dbc52874d16535db72607a758ca706d3307aed03158b69c7d49ee81a5eddcd",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 858,
+      "bestLeft": 82,
+      "ms": 9,
+      "actions": null
+    },
+    {
+      "lv": 164,
+      "boardHash": "5ee53ea2b615b69218f5373beb821cccb94cd59327b3c6ac56e966846b5bed4e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 84,
+      "bestLeft": 82,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 165,
+      "boardHash": "94b6dd3a3115efbc5cb70e6d92c50a9d0efdba5b15b06770ffa3fe4fbf365072",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 576,
+      "bestLeft": 81,
+      "ms": 7,
+      "actions": null
+    },
+    {
+      "lv": 166,
+      "boardHash": "e8739dddaf2c182f8869be19fb654509620709489835207449baa5824c2c93bd",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 6435,
+      "bestLeft": 82,
+      "ms": 73,
+      "actions": null
+    },
+    {
+      "lv": 167,
+      "boardHash": "7b197e190e66cd308fb09c1606b00595037aff86db2873646d65c369257e9d27",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1740,
+      "bestLeft": 77,
+      "ms": 18,
+      "actions": null
+    },
+    {
+      "lv": 168,
+      "boardHash": "bd0df73b55dfb3e96aff4e405130d9a3c2dd0537a0d0897065bd3929253380e7",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 621,
+      "bestLeft": 67,
+      "ms": 7,
+      "actions": null
+    },
+    {
+      "lv": 169,
+      "boardHash": "fe1bacc8987e3245681fd70a7791d9dfc6d8cc20329735bd45db255b23ca0e9f",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 516,
+      "bestLeft": 76,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 170,
+      "boardHash": "2a89fc09cadde794d97314e9971224b7153c3cfc2e3155f16bf2c580c279b945",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2668,
+      "bestLeft": 64,
+      "ms": 26,
+      "actions": null
+    },
+    {
+      "lv": 171,
+      "boardHash": "7ab2623e9d06be7d9ee7f121a91e873d55ae5a487b03d23943f7a5770d1ada2a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 5,
+      "bestLeft": 86,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 172,
+      "boardHash": "3481299fb44473d0337822ca94a19c8827899d406bcd99f162409e10b638f67c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 305,
+      "bestLeft": 79,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 173,
+      "boardHash": "0025647f65cbdf0229cdccd03bf7afee9ca577a7156ffa6d11e251fb36ccd3be",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 431,
+      "bestLeft": 76,
+      "ms": 5,
+      "actions": null
+    },
+    {
+      "lv": 174,
+      "boardHash": "ee751d5417a836e86adf3f1d9614ec95568e5234084e190082b0dea01a413acf",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 15,
+        "optimisticUnknown": 14
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 15227,
+      "bestLeft": 80,
+      "ms": 168,
+      "actions": null
+    },
+    {
+      "lv": 175,
+      "boardHash": "2b4cb0d951e019c9df097be09f5003fb16dcd4b19e1766f2c2a812d093ab4895",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 16,
+      "bestLeft": 76,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 176,
+      "boardHash": "b0522fc412f1e1e61f04cfd1f1abdc572854d9a64530bcc73485bc1015ccc01c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 192,
+      "bestLeft": 76,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 177,
+      "boardHash": "063de87542fd6580d5146bf5b7a1d41cfb2b23a86468f8babeb0267c21157e9a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 9,
+      "bestLeft": 72,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 178,
+      "boardHash": "360371043ca75905a60d71e8347fbb97292e387682b81742dd45fcfe4e82504b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 87,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 179,
+      "boardHash": "45608398e8c6dddbbd32fef5864439a9765d3a36840ffd366f6d6b2e6ae8371f",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 365,
+      "bestLeft": 73,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 180,
+      "boardHash": "c32c459b6c480d576e5c237a18a061ef4ba9c13334250f56633e162a23b923e3",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 33,
+      "bestLeft": 84,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 181,
+      "boardHash": "6936d6154666e5a0cbd20e1dcf6ce758fcf014c9e0698052ac80337eb4b2338c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 14454,
+      "bestLeft": 50,
+      "ms": 138,
+      "actions": null
+    },
+    {
+      "lv": 182,
+      "boardHash": "75a810852ddc1b81412bf4be723b9c5159450333ced92be2a9971cddcc88fb72",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 283,
+      "bestLeft": 74,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 183,
+      "boardHash": "7c0f319e59bd9d66ca829a98ccf203cf68c073de1ee0201825a6b7ddbb9d3e81",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 3
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 53,
+      "ms": 319,
+      "actions": null
+    },
+    {
+      "lv": 184,
+      "boardHash": "176810f09485c3489b1d6711eacc14d380a9b146ccb015555266da1014231e2e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 55,
+      "ms": 321,
+      "actions": null
+    },
+    {
+      "lv": 185,
+      "boardHash": "2ab822789074fc98802c27c9f7cb79c7086f0f78288023ca19df0585004258b9",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 87,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 186,
+      "boardHash": "15822ab63de535be18dad5cfabf6a1f1c6b0259d86ec81e02973be95088f3979",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 48,
+      "ms": 317,
+      "actions": null
+    },
+    {
+      "lv": 187,
+      "boardHash": "ad68ad9a57e91b9195b43cb45054832e4d23794de2916fba3516b62a7119e115",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 305,
+      "bestLeft": 79,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 188,
+      "boardHash": "b72a004403dfef45c0fb7826cf110e5b2865b2b77470059dac247b694eab8d88",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 242,
+      "bestLeft": 68,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 189,
+      "boardHash": "456d2b9a28b7c6a1b7b43ecc1e56722ecc194e4e21925a7a05663d200ac2fd7e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 305,
+      "bestLeft": 79,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 190,
+      "boardHash": "46366f91474c9766fa7745a4f76cc44d3a0cef92884e501f79715f10fc7b4220",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2176,
+      "bestLeft": 64,
+      "ms": 22,
+      "actions": null
+    },
+    {
+      "lv": 191,
+      "boardHash": "22d9dc105808867b8b6309dcf5f1713ba9c5db1af34b4d827bfbf8e99f4852df",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8190,
+      "bestLeft": 80,
+      "ms": 92,
+      "actions": null
+    },
+    {
+      "lv": 192,
+      "boardHash": "1e63c3d5d6169b1b7c40512a1bd0a290d2abec2bec36822b8f5b1fc3d57cb740",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 79,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 193,
+      "boardHash": "e32dd49cb918d330f3da7fc4a0cd5c239808244d5296e29e8e52c40c43cbc32a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 728,
+      "bestLeft": 66,
+      "ms": 7,
+      "actions": null
+    },
+    {
+      "lv": 194,
+      "boardHash": "044f3f68fa4791cd3b0869f5905098d62a1159048c4b2592ea6caa9a7eb75acb",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 481,
+      "bestLeft": 74,
+      "ms": 5,
+      "actions": null
+    },
+    {
+      "lv": 195,
+      "boardHash": "eaa7df9d8a2d46efa9ae61a8499600f326cbbb535ec5bdbd3010957d4c1bf737",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 25229,
+      "bestLeft": 59,
+      "ms": 277,
+      "actions": null
+    },
+    {
+      "lv": 196,
+      "boardHash": "192126d135ebbb28de26009905b87690e0950b2784d8b20158cbc48cd400954b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 85,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 197,
+      "boardHash": "20eef11efc3f3437a00e1f8d8da6a11d362e1ef8f59e0b7c9ebe68f2488c629d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 13876,
+      "bestLeft": 78,
+      "ms": 141,
+      "actions": null
+    },
+    {
+      "lv": 198,
+      "boardHash": "6c8557c1936d8191c3068ca88240bc6bfbdd0bb42329e6f02d9a7c5cc4f5de81",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 10
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 84,
+      "bestLeft": 82,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 199,
+      "boardHash": "648699504ea91b12060ec55b9ab587dcd6116081143baa340e0822d82cbc9fc7",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2142,
+      "bestLeft": 70,
+      "ms": 21,
+      "actions": null
+    },
+    {
+      "lv": 200,
+      "boardHash": "921ae855387036ca805576e3a0d8ae383a4ea01760baf5941502ae057c0c6675",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 82,
+      "ms": 337,
+      "actions": null
+    },
+    {
+      "lv": 201,
+      "boardHash": "fd2bcbb7af770330c961f9f4311b9b1b73d26467612a876ba59a360dcdbb9d47",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 2
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 56,
+      "ms": 294,
+      "actions": null
+    },
+    {
+      "lv": 202,
+      "boardHash": "c6806e74e69197948458abe3bea485afc7afa6a055c15d383f5c6e8c998da288",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 10
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 211,
+      "bestLeft": 73,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 203,
+      "boardHash": "a1637e92bd63412228112555c2483921d0cdc14a37e6b5fa4c52c1f608330cd5",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 5,
+      "bestLeft": 86,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 204,
+      "boardHash": "c6c371a0bff6ea22baed78c745e8f8a27a29683cf7ffb79cbac275195158cc9c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 7109,
+      "bestLeft": 82,
+      "ms": 79,
+      "actions": null
+    },
+    {
+      "lv": 205,
+      "boardHash": "d7a8af34c2e02d0f8757ad01c15439cd9bb21f70c723d562a0b72805c3c4cde1",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 7
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 55,
+      "ms": 305,
+      "actions": null
+    },
+    {
+      "lv": 206,
+      "boardHash": "419eadca828492de6d085eb7f69cc10aec7aba459ffaeeb328de3bcc33005f49",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 9
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 42,
+      "ms": 308,
+      "actions": null
+    },
+    {
+      "lv": 207,
+      "boardHash": "078a516f5909093980c0abdc54c7aa3decf4647955325f06f8f6bdb6e873f6a9",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 29,
+      "ms": 265,
+      "actions": null
+    },
+    {
+      "lv": 208,
+      "boardHash": "795e17adb15dc0177741f99ab4f148d9a951af89151e19cf6a26e860947627bf",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 666,
+      "bestLeft": 70,
+      "ms": 7,
+      "actions": null
+    },
+    {
+      "lv": 209,
+      "boardHash": "c0de26e2cf3575dca6d60a7ab0dcbfa427c3067fe923fa341ad58ae4713701ee",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 33,
+      "bestLeft": 84,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 210,
+      "boardHash": "3718d4196c471bfc45a53431d21858ff246f41aef7decd66795d8cc88277acaf",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1143,
+      "bestLeft": 81,
+      "ms": 12,
+      "actions": null
+    },
+    {
+      "lv": 211,
+      "boardHash": "d86a7728c8be78b0fbb2421ad840670a57ac945d3f65cccc597ad6a82fd78178",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 85,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 212,
+      "boardHash": "14fbc505e849976f81bff575368e3147541045ca306f19af3f66719d72867532",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 23632,
+      "bestLeft": 59,
+      "ms": 258,
+      "actions": null
+    },
+    {
+      "lv": 213,
+      "boardHash": "9b5481ff47c33977fa869c2895caa312bc55ca07eb7c9fb48bc577a062071128",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 62,
+      "ms": 336,
+      "actions": null
+    },
+    {
+      "lv": 214,
+      "boardHash": "d0b7e08982dbe92a2c049b50ad9339261e0db9017d87b14727d3259ea1e8aef0",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8809,
+      "bestLeft": 61,
+      "ms": 104,
+      "actions": null
+    },
+    {
+      "lv": 215,
+      "boardHash": "bc238723a5871d73ab93088aa6958b5960578a85952a64aa5ce7a7551a20d97c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 229,
+      "bestLeft": 78,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 216,
+      "boardHash": "5286e3afbbeb29b15f91d39403d72c57fe6f4566dfad12977589bd2bfe0c5185",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 16,
+      "bestLeft": 76,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 217,
+      "boardHash": "125d02f9f7c0145c9a4ba5cc8697d16717e6806090b1ebf5452b170b51395e4b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 744,
+      "bestLeft": 81,
+      "ms": 8,
+      "actions": null
+    },
+    {
+      "lv": 218,
+      "boardHash": "708ae3bf5e2fc6887fe2dc05c5cf8fbf8ec21790dfacfae0e790f47373f7a93d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 482,
+      "bestLeft": 76,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 219,
+      "boardHash": "831b53f6caae939507ecf45ba8fba990915250a11331849a891770cc6240cd7c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 345,
+      "bestLeft": 67,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 220,
+      "boardHash": "5651dab54185240988cc50f8e5671d3b29f0290e6b3bd327969cd04dfdeb1ee1",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 9754,
+      "bestLeft": 69,
+      "ms": 96,
+      "actions": null
+    },
+    {
+      "lv": 221,
+      "boardHash": "e4d3694e84d1e50f0b87ac8282175943dc713381353dae1811c162c5e3353b8c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 921,
+      "bestLeft": 64,
+      "ms": 9,
+      "actions": null
+    },
+    {
+      "lv": 222,
+      "boardHash": "1150fab3297db1c6fd707fa069ab76ceb16df1018567dd181a6631978047f5de",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 12407,
+      "bestLeft": 76,
+      "ms": 133,
+      "actions": null
+    },
+    {
+      "lv": 223,
+      "boardHash": "362ebfd4f7e54effd7ce661bbf26bfbe8fcc6875684e3232081c231e240ecf44",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 152,
+      "bestLeft": 68,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 224,
+      "boardHash": "4799eb58f1849460d6be946edc53180685a6fde5fe6ad5a3bc971d614276e1df",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 87,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 225,
+      "boardHash": "e3137a1d65e89ff427fd6dca29e06b7bf4917ccb707fb21a882543c101deff84",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 4644,
+      "bestLeft": 86,
+      "ms": 57,
+      "actions": null
+    },
+    {
+      "lv": 226,
+      "boardHash": "4eaf14e57a737ef52d0d510d1a6880b57eb95edc8aca6b62fa587c0ab1d93c53",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 144,
+      "bestLeft": 68,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 227,
+      "boardHash": "d035454988395f387525c0fade1ad93681478981f8f73bded0c3b5993b5827c9",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 85,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 228,
+      "boardHash": "80320e77ac7aa890ea0caa3364a1ef0a63ea03249818238b4082f4ec0ecd14ca",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 82,
+      "ms": 348,
+      "actions": null
+    },
+    {
+      "lv": 229,
+      "boardHash": "ce5e7f9b034249b72b8c49ab17f973caf4ec4cd26223bd6ca70183bb0d368862",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 7
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 11900,
+      "bestLeft": 64,
+      "ms": 129,
+      "actions": null
+    },
+    {
+      "lv": 230,
+      "boardHash": "244f21dd784e89fab9fad7eddaff02e3d1fd37c74b76ba653ee79ca71f7ebcd5",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 285,
+      "bestLeft": 60,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 231,
+      "boardHash": "e9e75208212b752327289bb6290b810e64bf1d4a5a915b9a074a6243efe1a9d3",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 79,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 232,
+      "boardHash": "3c196c9067ebfa2f567fe31ce2e82b6347dbdd029fc830dcdbbfbc2ad62ddf93",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 398,
+      "bestLeft": 77,
+      "ms": 5,
+      "actions": null
+    },
+    {
+      "lv": 233,
+      "boardHash": "e25a8f7f515248a1d755111bb5a940911e5870671bde37823b10a53bafc6df3e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 9
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 858,
+      "bestLeft": 82,
+      "ms": 8,
+      "actions": null
+    },
+    {
+      "lv": 234,
+      "boardHash": "ff08540cc7f0e4c71021745a6744a2be277fd03a60064fd1bdfa6fa7656348ac",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 41,
+      "bestLeft": 78,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 235,
+      "boardHash": "67606b4504e208d28264eb9099723a6ab00d64ccd339265ebab2d1091e55844d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 10
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 5,
+      "bestLeft": 80,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 236,
+      "boardHash": "8a911ce21dcf902cd54944dea48c4f72dc22a22c21e915be468114a3320c57e3",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 10169,
+      "bestLeft": 86,
+      "ms": 120,
+      "actions": null
+    },
+    {
+      "lv": 237,
+      "boardHash": "48c945ffba56aec03a7dc105947492ec56a38fd84af8794a409cb7f8bbeb865f",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 605,
+      "bestLeft": 68,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 238,
+      "boardHash": "bf93985de4fffe2f74845d54c9eaf7b57c497665e636218ac13e3e699208bd44",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 10794,
+      "bestLeft": 78,
+      "ms": 113,
+      "actions": null
+    },
+    {
+      "lv": 239,
+      "boardHash": "6debba7073da06ef1d6b89e70fdc75ffe669a1adf02bb2a3f8abb0b45c5f0360",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 79,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 240,
+      "boardHash": "a84cde14376d402380b5561045a7b717abc8ebbadb716ad24f49f0fa6bfe3fb5",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 144,
+      "bestLeft": 68,
+      "ms": 2,
+      "actions": null
+    },
+    {
+      "lv": 241,
+      "boardHash": "da8a7fd22180d4073df1cd5aef30f216df1c37d341dddfd7af6ea075db6c0d81",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 144,
+      "bestLeft": 68,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 242,
+      "boardHash": "1104672456adabd175e0c2b207bcf09b048e198aa9303607d9fc20998b458f6f",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 56,
+      "ms": 304,
+      "actions": null
+    },
+    {
+      "lv": 243,
+      "boardHash": "6ecb3c8d997d3804a01671431bd527f1d335140f0afcc52f81f61faff2e7e9fb",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 498,
+      "bestLeft": 78,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 244,
+      "boardHash": "abc390225a12fce39f19c8ce90454f8299567d32ada7a1a42cd34c10a3ded449",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 20214,
+      "bestLeft": 78,
+      "ms": 205,
+      "actions": null
+    },
+    {
+      "lv": 245,
+      "boardHash": "44a997a946c626e0cc321db2676b3250e09edeba22b27ec1a86cd70ee1555d12",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 4644,
+      "bestLeft": 86,
+      "ms": 58,
+      "actions": null
+    },
+    {
+      "lv": 246,
+      "boardHash": "a663f1c07810b7d61b6790d86d3e2ea9c8c6c835ebfd91e92c7416c052a4079e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 858,
+      "bestLeft": 82,
+      "ms": 8,
+      "actions": null
+    },
+    {
+      "lv": 247,
+      "boardHash": "557f8b4ddc8d6f07e85b129d925167c47d6128607acc8d784fdf735949745f0d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 7
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 11
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1647,
+      "bestLeft": 65,
+      "ms": 18,
+      "actions": null
+    },
+    {
+      "lv": 248,
+      "boardHash": "cfa084cafb175f56e7e02c60b109d33a5fb93bea795c758ce6c308baea45dcab",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 10,
+        "optimisticUnknown": 10
+      },
+      "status": "search-limit",
+      "nodes": 30001,
+      "bestLeft": 30,
+      "ms": 258,
+      "actions": null
+    },
+    {
+      "lv": 249,
+      "boardHash": "733641b77568b5cf4460fbf3b0e28154c862a7c80fc9a768fdd1ec0128b53071",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1940,
+      "bestLeft": 65,
+      "ms": 23,
+      "actions": null
+    },
+    {
+      "lv": 250,
+      "boardHash": "de290d1de8803ce685d15a0f0eb21a7ff0128e3c38d24ae063811f12211e795e",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 292,
+      "bestLeft": 76,
+      "ms": 3,
+      "actions": null
+    },
+    {
+      "lv": 251,
+      "boardHash": "6d579e6cebed2cc083d0488165fd44708a4b0531c16b61e3230092e6fa2d43fb",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 117,
+      "bestLeft": 80,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 252,
+      "boardHash": "6d02610315ceb710110aabb9cd83a750aac21048b45dbab2582df66cb8b6ae3d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 75,
+      "bestLeft": 68,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 253,
+      "boardHash": "5f0615730a488e238ea8945194a5dc5af8e7147aae3545e03555267e6a22c3ba",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 734,
+      "bestLeft": 66,
+      "ms": 7,
+      "actions": null
+    },
+    {
+      "lv": 254,
+      "boardHash": "2a680b26c03f15705f4822143f65f177e4f0f13dd1a1652a79a6a879af2d84ca",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 9,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 3227,
+      "bestLeft": 72,
+      "ms": 33,
+      "actions": null
+    },
+    {
+      "lv": 255,
+      "boardHash": "24aef86a5ccd7e4da2265f8d6ca8399615367b5a94efeaed1695d974f3a22e1b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 620,
+      "bestLeft": 81,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 256,
+      "boardHash": "6e96c2dc6dbbd214601a9c09e104bb77958c5b38a2f56b9048332c9c444b140c",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 722,
+      "bestLeft": 81,
+      "ms": 8,
+      "actions": null
+    },
+    {
+      "lv": 257,
+      "boardHash": "6c7cdb5190ed8ce267d0c8918ea9a83db1ec442ab692bbd3a218986f9ca6cd59",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 22,
+      "bestLeft": 80,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 258,
+      "boardHash": "0fcc89e45f83f8bd1e9d5e3c5708190fc10d8c97dd9e0e279776e29cb34bf645",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 329,
+      "bestLeft": 79,
+      "ms": 4,
+      "actions": null
+    },
+    {
+      "lv": 259,
+      "boardHash": "b7c6edc9444a2649834f8df856a7197cd631148d6942c84c5797054f74b70b86",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 53,
+      "bestLeft": 79,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 260,
+      "boardHash": "578b7275ca832e77c2e97ee06354159c62e1983d0afcf7d06fc4aea4391f3195",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1895,
+      "bestLeft": 72,
+      "ms": 19,
+      "actions": null
+    },
+    {
+      "lv": 261,
+      "boardHash": "bba09315b4133be453bd14fb754db21bef4b0eaa62e50a4b5c69a3bd0728772d",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 12,
+        "optimisticUnknown": 10
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 4384,
+      "bestLeft": 72,
+      "ms": 42,
+      "actions": null
+    },
+    {
+      "lv": 262,
+      "boardHash": "7332ef3e5688935394c34a9c814b8bea0fe0371dcf3c2970936bf671c3025f82",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 79,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 263,
+      "boardHash": "b4e69b83e82650cdf86e30de45fefca00e7c3900d81c6acce891b3225baf76e8",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 8,
+        "optimisticUnknown": 8
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 18033,
+      "bestLeft": 80,
+      "ms": 199,
+      "actions": null
+    },
+    {
+      "lv": 264,
+      "boardHash": "d5e8923e50b884f7cdb4de66900b3d41c490af7bb6513d8c0c2d9db2d0ca5e43",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 2
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 1129,
+      "bestLeft": 72,
+      "ms": 12,
+      "actions": null
+    },
+    {
+      "lv": 265,
+      "boardHash": "9cd1a6a9e28bb73361ef5e6b7d536321357e5e69dbc31a6db876235ad4dbe3c2",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 530,
+      "bestLeft": 76,
+      "ms": 6,
+      "actions": null
+    },
+    {
+      "lv": 266,
+      "boardHash": "66f28ad3179eb29bd12777ec60109b3231da9f45d2a42f490aa47350d8d7133a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 2,
+        "optimisticUnknown": 2
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 2,
+      "bestLeft": 85,
+      "ms": 0,
+      "actions": null
+    },
+    {
+      "lv": 267,
+      "boardHash": "4a5c87247b78cbfa9dd18757cd52a6246e982928335535c0ecf7bc49dbc90158",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 143,
+      "bestLeft": 81,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 268,
+      "boardHash": "1ce90007581ee358abd2025272c182993bc8d79633f832d2abe3b42b469601ff",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 3
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 92,
+      "bestLeft": 79,
+      "ms": 1,
+      "actions": null
+    },
+    {
+      "lv": 269,
+      "boardHash": "7d4e2df3f958e81c2e8b3bb3b8193c6eb28c797d30b0f8473125ad8dd8cb1bb7",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 22,
+      "bestLeft": 80,
+      "ms": 0,
+      "actions": null
+    }
+  ],
+  "unchanged": true,
+  "summary": {
+    "count": 190,
+    "winningRoutes": 190,
+    "liveWinningRoutes": 190,
+    "certificates": 0,
+    "searchLimits": 24,
+    "restrictedFailures": 166
+  }
+}

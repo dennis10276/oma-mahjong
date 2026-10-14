@@ -1,0 +1,18 @@
+{
+  "version": "1.47",
+  "commit": "3cd86288754cee9df61ee241bf9516a1b10086fc",
+  "liveVerifiedAt": 1791822871747,
+  "apkSha256": "c9a36d584c71ffb3833c67910664287b8732ea1b4975ceac926922934663ac4c",
+  "versionCode": 63,
+  "offlineTests": 90,
+  "extraSaveChecksPassed": true,
+  "rebuiltFrom": 80,
+  "preservedThrough": 79,
+  "newBoards": 190,
+  "measurementRunsPerPersona": 600,
+  "reset": {
+    "level": 79,
+    "file": "reset-to-79-2026-10-12.json",
+    "acknowledged": true
+  }
+}

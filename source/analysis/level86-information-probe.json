@@ -1,0 +1,47 @@
+{
+  "description": "Counterfactual hidden-face swaps; all currently visible or freely peekable faces, geometry, obstacles, clock and RNG seed held fixed. First decision must not depend on the swap.",
+  "rows": [
+    {
+      "lv": 80,
+      "comparisons": 141,
+      "affected": 0,
+      "witness": null
+    },
+    {
+      "lv": 81,
+      "comparisons": 147,
+      "affected": 0,
+      "witness": null
+    },
+    {
+      "lv": 82,
+      "comparisons": 142,
+      "affected": 0,
+      "witness": null
+    },
+    {
+      "lv": 83,
+      "comparisons": 141,
+      "affected": 0,
+      "witness": null
+    },
+    {
+      "lv": 84,
+      "comparisons": 144,
+      "affected": 0,
+      "witness": null
+    },
+    {
+      "lv": 85,
+      "comparisons": 144,
+      "affected": 0,
+      "witness": null
+    },
+    {
+      "lv": 86,
+      "comparisons": 146,
+      "affected": 0,
+      "witness": null
+    }
+  ]
+}

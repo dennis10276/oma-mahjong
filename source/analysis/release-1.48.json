@@ -1,0 +1,12 @@
+{
+  "version": "1.48",
+  "commit": "6481f7b04475d32e9b0aa33cbde61153412d6a12",
+  "liveVerifiedAt": 1791825953313,
+  "apkSha256": "cb897ee9adc36d60faf253665accee4f873b877db248414343dac764cc38f1ba",
+  "versionCode": 64,
+  "offlineTests": 90,
+  "primaryModel": "focused",
+  "preservedClocks": true,
+  "changedFaceBoards": 161,
+  "resetRequested": false
+}

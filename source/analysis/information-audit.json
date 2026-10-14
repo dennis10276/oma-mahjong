@@ -1,0 +1,141 @@
+{
+  "scope": "Unpublished local boards, with published 1.49 saved-route comparison",
+  "from": 80,
+  "to": 269,
+  "limit": 30000,
+  "visibility": "Only completely uncovered face-up tiles; actual free-peek auto-match rules; no x-ray needed",
+  "claim": "Certificate proves a clock-safe route with no unidentified deliberate removals and a known matching partner for every deliberately parked tile. It does not prove the choice of route can be deduced from observations or that all consistent hidden arrangements are won.",
+  "hashes": {
+    "www/levels-hard.js": "d0bcb633b7b8d91b5fc2f2cff518554e8401c2a01d5e233c53e09efb9d681c40",
+    "www/hard.js": "29521f8f87c98f2892c43f9657d0300d51e664865dcbaabe34bf1add86ad44d6",
+    "www/layouts.js": "9cbb71e1b4775c89077e230a2934aa641732b662f5acf1d4c38b3fe6d795ab2b",
+    "www/js/board.js": "640a55b2cc73b71a1852244802c15a6880e22937ae78e780c54931d3e1d3b435",
+    "www/js/rules.js": "78445f2d779b54829848abf019500e962cf8a47a70092434fc753fa0ee1cf530",
+    "www/style.css": "1865e085297a09e015c791eccc21c76711481f6264e7a2bef234123f375bd0f5"
+  },
+  "rows": [
+    {
+      "lv": 80,
+      "boardHash": "460fe8dc5ef95958777aa620b366b4cc557dd2492497c392347beb0016f5ef23",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 6
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 8016,
+      "bestLeft": 80,
+      "ms": 104,
+      "actions": null
+    },
+    {
+      "lv": 85,
+      "boardHash": "b81d5f69890c4b485bba677ef19b845b7952184edbb77ddef02a0b9e198b8c90",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 3,
+        "optimisticUnknown": 3
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 18165,
+      "bestLeft": 68,
+      "ms": 188,
+      "actions": null
+    },
+    {
+      "lv": 86,
+      "boardHash": "7e94b33a6aa2d86c71b379235d6dd107cb973e64c82f44ba0b19e09955bb327a",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 1,
+        "optimisticUnknown": 1
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 11,
+        "optimisticUnknown": 10
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 5092,
+      "bestLeft": 80,
+      "ms": 63,
+      "actions": null
+    },
+    {
+      "lv": 100,
+      "boardHash": "294ccb00e7243d1e28ef366784345e9b3b6c576d228a15bd513d0018c53fff5b",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 742,
+      "bestLeft": 81,
+      "ms": 8,
+      "actions": null
+    },
+    {
+      "lv": 150,
+      "boardHash": "a612a96a9aef071364dc1df8614edcd2332b2ba2a28ecb1c1d109516549f33ea",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 6,
+        "optimisticUnknown": 6
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 5,
+        "optimisticUnknown": 5
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 402,
+      "bestLeft": 81,
+      "ms": 5,
+      "actions": null
+    },
+    {
+      "lv": 269,
+      "boardHash": "7d4e2df3f958e81c2e8b3bb3b8193c6eb28c797d30b0f8473125ad8dd8cb1bb7",
+      "saved": {
+        "valid": true,
+        "observerUnknown": 4,
+        "optimisticUnknown": 4
+      },
+      "liveSaved": {
+        "valid": true,
+        "observerUnknown": 7,
+        "optimisticUnknown": 7
+      },
+      "status": "no-route-under-this-restricted-policy",
+      "nodes": 22,
+      "bestLeft": 80,
+      "ms": 0,
+      "actions": null
+    }
+  ],
+  "unchanged": true,
+  "summary": {
+    "count": 6,
+    "winningRoutes": 6,
+    "liveWinningRoutes": 6,
+    "certificates": 0,
+    "searchLimits": 0,
+    "restrictedFailures": 6
+  }
+}

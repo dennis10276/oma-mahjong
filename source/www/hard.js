@@ -40,7 +40,7 @@ const Hard = (() => {
     const tray = [];        // faces waiting
     let moves = 0, left = n;
     const clock = g.clock && g.clock.i >= 0 ? g.clock : null;
-    let choices = 0, decisions = 0, risky = 0;
+    let choices = 0, decisions = 0, risky = 0, blind = 0, forcedBlind = 0, unknownOptions = 0, singleOptions = 0;
     const cover = g.cover || (g.cover = coverOf(tiles, nb));
 
     // how many tiles have to go before tile j can be taken (the ones on top of it, all the way up,
@@ -63,7 +63,9 @@ const Hard = (() => {
     // the tiles of each picture (so the tray's twins are found without looking at every tile)
     const byFace = new Map(); faces.forEach((f, i) => { if (!byFace.has(f)) byFace.set(f, []); byFace.get(f).push(i); });
     const hiddenNow = i => { for (const j of cover[i]) if (alive[j]) return true; return false; };
-    const freeNow = new Uint8Array(n), cnt = new Int16Array(256);
+    // Freeze knowledge BEFORE trying a move. Hypothetically uncovering a tile must not give
+    // its picture away while deciding which covering tile to take. Free tiles can be peeked.
+    const known = new Uint8Array(n), freeNow = new Uint8Array(n), cnt = new Int16Array(256);
     function score(tr) {
       memo.fill(0);
       let s = -p.tray[Math.min(3, tr.length)];
@@ -71,11 +73,11 @@ const Hard = (() => {
       for (let i = 0; i < n; i++) {
         if (!alive[i]) { freeNow[i] = 0; continue; }
         const f = can(i) ? 1 : 0; freeNow[i] = f;
-        if (f) { fr++; cnt[faces[i] & 255]++; } else if (down[i] || hiddenNow(i)) unk++;
+        if (f) { fr++; if (known[i]) cnt[faces[i] & 255]++; else unk++; } else if (down[i] || hiddenNow(i)) unk++;
       }
       for (const f of tr) {
         let best = 1e9;
-        for (const i of byFace.get(f)) if (alive[i] && (freeNow[i] || (!down[i] && !hiddenNow(i)))) { const d = depth(i); if (d < best) best = d; }
+        for (const i of byFace.get(f)) if (alive[i] && known[i] && (freeNow[i] || (!down[i] && !hiddenNow(i)))) { const d = depth(i); if (d < best) best = d; }
         s -= best < 1e9 ? p.deep * best : p.unknown + unk / 12;
       }
       let pr = 0;
@@ -128,12 +130,17 @@ const Hard = (() => {
       for (const [, list] of byF) if (list.length >= 2) for (let a = 0; a < list.length; a++) for (let b = a + 1; b < list.length; b++) opts.push([list[a], list[b]]);
       for (const i of fr) opts.push([i]);
       decisions++; choices += opts.length;
+      for (let i = 0; i < n; i++) known[i] = alive[i] && (can(i) || (!down[i] && !hiddenNow(i))) ? 1 : 0;
+      const mateKnown = i => tray.includes(faces[i]) || byFace.get(faces[i]).some(j => j !== i && alive[j] && known[j]);
+      const unknown = fr.filter(i => !mateKnown(i)).length;
+      unknownOptions += unknown; singleOptions += fr.length;
+      if (unknown === fr.length) forcedBlind++;
       const sc = opts.map(o => {
         const tr = tray.slice();
         o.forEach(take);
         // the obvious follow-up: tray matches that are now free
         const extra = [];
-        for (let guard = 0; guard < 6; guard++) { let k = -1; for (const f of tray) { for (const i of byFace.get(f)) if (alive[i] && can(i)) { k = i; break; } if (k >= 0) break; } if (k < 0) break; take(k); extra.push(k); }
+        for (let guard = 0; guard < 6; guard++) { let k = -1; for (const f of tray) { for (const i of byFace.get(f)) if (alive[i] && known[i] && can(i)) { k = i; break; } if (k >= 0) break; } if (k < 0) break; take(k); extra.push(k); }
         const v = score(tray);
         for (let q = extra.length - 1; q >= 0; q--) { alive[extra[q]] = 1; left++; moves--; }
         for (let q = o.length - 1; q >= 0; q--) { alive[o[q]] = 1; left++; moves--; }
@@ -147,10 +154,11 @@ const Hard = (() => {
       while (k < w.length - 1 && (x -= w[k]) > 0) k++;
       if (trace) trace.push({ tray: tray.slice(), opts: opts.length, pick: opts[k], best: sc.indexOf(mx) === k });
       if (opts[k].length === 1 && tray.length === SLOTS - 2) risky++;   // a third tile waits: one more miss ends the level
+      if (opts[k].length === 1 && !mateKnown(opts[k][0])) blind++;
       for (const i of opts[k]) if (!commit(i)) return end(false, 'clock');
     }
     return end(tray.length === 0, tray.length ? 'tray' : 'win');
-    function end(win, why) { return { win, why, left, moves, at, risky, choices: decisions ? choices / decisions : 0 }; }
+    function end(win, why) { return { win, why, left, moves, at, risky, decisions, blind, forcedBlind, unknownOptions, singleOptions, choices: decisions ? choices / decisions : 0 }; }
   }
   // share of games the test player wins (the same seeds every time, so two levels compare fairly)
   // risky: how often a winning game had to let a third tile wait (tray pressure)
@@ -170,7 +178,7 @@ const Hard = (() => {
        through; a tower hides what is under it until you dig),
      - a tile lying on its own twin (it has to go to the tray first),
      - face-down tiles only where they hurt: tiles you can see but not take yet (a free tile can
-       be turned over anyway), the same share as before; never a tile that is the only way out
+       be turned over anyway), capped at 20% from 80; never a tile that is the only way out
        when the tray holds 3 (that move must always be visible),
      - the deal is improved step by step until the sensible test player gets about the target
        share of first tries (pairs that are a trap come out of this by themselves),
@@ -178,8 +186,8 @@ const Hard = (() => {
      make() is a generator: the game runs it in small steps while the player is busy with the level
      before (board.js), and keeps the result. The same level and screen shape always give the same
      result, on every phone (fixed numbers of steps, no clocks). */
-  const GENV = 4;      // clock-focused board tuning; existing clock routes and budgets preserved
-  const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30]], minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
+  const GENV = 5;      // honest observer, more visible information, measured neighboring progression
+  const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30], [269, 0.18]], maxDown: 0.20, minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible and the strong test player should win (the strong one
   // plays like Dennisisdebeste: a level that only suits the middle player can still be a coin flip
@@ -335,7 +343,7 @@ const Hard = (() => {
     const n = tiles.length, nb = L.neighbors(tiles), cover = coverOf(tiles, nb);
     const all = new Uint8Array(n).fill(1);
     const free0 = tiles.map((t, i) => L.isFree(i, all, nb));
-    const nDown = Math.round(n * diff.down);
+    const nDown = level >= c.rebuildFrom ? Math.min(Math.round(n * diff.down), Math.floor(n * c.maxDown)) : Math.round(n * diff.down);
     const rd = L.rng(seed + 777), rnd = tiles.map(() => rd());
     // face-down tiles where they hurt: tiles you can see but not take yet (free ones can be turned
     // over anyway), first those whose twin is free (where is its partner?); never the only way
@@ -473,8 +481,8 @@ const Hard = (() => {
      Designing takes seconds, so it is done once, on the computer (tools/sim/build_levels.js), for
      one screen shape (ASPECT; the pile is fitted to every screen). The result ships with the game
      in levels-hard.js (HARD_LEVELS): everyone gets the same levels, and they start at once.
-     Past the last one, the levels from `cycleFrom` on come round again, mirrored and with other
-     pictures, so they never look the same. Packed: tile positions, faces and tile numbers as
+     Past the last authored level, retain the hardest validated board, mirrored with other
+     pictures. Do not cycle back to easier boards. Packed: tile positions, faces and tile numbers as
      letters (64 per letter). */
   const ASPECT = 1.6;
   const A64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -497,11 +505,11 @@ const Hard = (() => {
   }
   const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);
   const applies = (level, track) => !track && level >= cfg().measureFrom && !!table();
-  // the design of a level (past the table: an earlier one, mirrored, other pictures)
+  // The design of a level. Overflow keeps the hardest board; legacy tables retain their old cycle.
   function get(level) {
     const T = table(), last = T.from + T.levels.length - 1;
     if (level <= last) return unpack(level, T.levels[level - T.from]);
-    const span = last - T.cycleFrom + 1, base = T.cycleFrom + (level - T.cycleFrom) % span;
+    const base = T.overflow === 'hardest' ? last : T.cycleFrom + (level - T.cycleFrom) % (last - T.cycleFrom + 1);
     const d = unpack(level, T.levels[base - T.from]);
     const w = Math.max(...d.tiles.map(t => t[0]));
     d.tiles = d.tiles.map(([x, y, z]) => [w - x, y, z]);                 // mirrored left-right: the same rules apply
@@ -516,6 +524,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+  return { MODEL_VERSION: 2, P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;

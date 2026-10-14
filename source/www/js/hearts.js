@@ -8,39 +8,67 @@ const heartBtn = e => `<button class="heart-btn${sentToday(e.id) ? ' sent' : ''}
 const recent = t => Date.now() - Math.abs(t) <= RULES.hearts.showDays * 864e5;
 
 // ---------- sending ----------
-async function sendHeart(pid, name, btn) {
-  if (!S.name) return askName(() => sendHeart(pid, name, btn));
+async function sendHeart(pid, name, btn, context = null) {
+  if (!S.name) return askName(() => sendHeart(pid, name, btn, context));
   if (sentToday(pid)) { toast(tx('heartAlready', name)); return; }
   // pick a short message to go with it (or none): just tapping, no typing needed
   const quick = tx('quickMsgs', S.level);
   openModal(`<div class="heart-big sm">💛</div><h2>${tx('heartFor', esc(name))}</h2><p class="note small">${tx('heartMsgQ')}</p>
     <div class="msg-pick">${quick.map((m, i) => `<button class="mp" data-i="${i}">${esc(m)}</button>`).join('')}</div>
-    <button class="big-btn play" id="hmNone"><span class="bb-text"><b>${tx('heartOnly')}</b></span></button>`, true);
-  document.querySelectorAll('.msg-pick .mp').forEach(b => b.onclick = () => { closeModal(); doSendHeart(pid, name, btn, quick[+b.dataset.i]); });
-  $('#hmNone').onclick = () => { closeModal(); doSendHeart(pid, name, btn, ''); };
+    <label class="custom-message">${tx('heartCustom')}<textarea id="hmMessage" rows="2" maxlength="${Math.min(MSG.max, (MSG.piece - 1) * 3)}" placeholder="${tx('heartPlaceholder')}"></textarea></label>
+    <div class="heart-error" id="hmError" role="status" hidden></div>
+    <button class="big-btn play" id="hmNone"><span class="bb-text"><b>${tx('heartOnly')}</b></span></button>
+    <button class="link-btn" id="hmBack">${tx('heartBack')}</button>`, true, context ? context.restore : null, 'heart-compose');
+  if (context) $('#modalBox').style.setProperty('--heart-dialog-height', context.height + 'px');
+  const input = $('#hmMessage'), action = $('#hmNone b');
+  let busy = false;
+  const label = () => { action.textContent = tx(input.value.trim() ? 'heartSendMessage' : 'heartOnly'); };
+  input.oninput = label;
+  const send = async msg => {
+    if (busy) return; busy = true; modalClosable = false;
+    const controls = [...$('#modalBox').querySelectorAll('button, textarea')];
+    controls.forEach(b => b.disabled = true); action.textContent = tx('heartSending'); $('#hmError').hidden = true;
+    const ok = await doSendHeart(pid, name, btn, msg, false);
+    if (ok) {
+      if (context) showHeartSent(name, context, !!msg);
+      else { closeModal(); showHeartSent(name); }
+    }
+    else {
+      busy = false; modalClosable = true; controls.forEach(b => b.disabled = false); label();
+      $('#hmError').textContent = tx('heartFail'); $('#hmError').hidden = false;
+    }
+  };
+  document.querySelectorAll('.msg-pick .mp').forEach(b => b.onclick = () => send(quick[+b.dataset.i]));
+  $('#hmNone').onclick = () => send(input.value.trim());
+  $('#hmBack').onclick = closeModal;
 }
-async function doSendHeart(pid, name, btn, msg) {
+async function doSendHeart(pid, name, btn, msg, notify = true) {
   ensureId();
   try {
     const t = Date.now(), me = S.name.slice(0, 24);
+    // Store the message first: never report success if the custom message could not be saved.
+    if (msg) {
+      const m = await dbSend(`plays/${msgKey(pid)}`, { k: 'msg', t, from: S.pid, name: me, ...msgParts(msg) }, 'POST');
+      if (!m.ok) throw 0;
+    }
     const r = await dbSend(`hearts/${pid}/${S.pid}`, { name: me, t });
     if (!r.ok) throw 0;
-    if (msg) dbSend(`plays/${msgKey(pid)}`, { k: 'msg', t, from: S.pid, name: me, ...msgParts(msg) }, 'POST').catch(() => { });
     S.heartsSent[pid] = todayKey(); bumpStat('heartsSent');
     S.heartsOut[pid] = { t, seen: 0, name }; save();
     logEvt('heart_out', { to: name, msg: msg ? 1 : undefined });
     Sound.unlock(); buzz(20);
     if (btn) { btn.classList.add('sent'); btn.textContent = '💛✓'; }
-    showHeartSent(name);
-  } catch (e) { toast(tx('heartFail')); }
+    if (notify) showHeartSent(name);
+    return true;
+  } catch (e) { if (notify) toast(tx('heartFail')); return false; }
 }
 // a big, clear "it is on its way" moment for the sender
-function showHeartSent(name) {
+function showHeartSent(name, context = null, withMessage = false) {
   Sound.trophy(); buzz([20, 40, 20, 40, 60]); heartRain();
-  openModal(`<div class="heart-big">💛</div><h2>${tx('heartSent')}</h2>
-    <p>${tx('heartSentText', esc(name))}</p>
-    <p class="note small">${tx('heartSentNote')}</p>
-    <button class="big-btn play" id="hsOk"><span class="bb-text"><b>${tx('nice')}</b></span></button>`, false);
+  openModal(`<div class="heart-big">💛</div><h2>${tx(context && withMessage ? 'heartMessageSent' : 'heartSent')}</h2>
+    <p>${tx(context && withMessage ? 'heartMessageSentText' : 'heartSentText', esc(name))}</p>
+    ${context ? '' : `<p class="note small">${tx('heartSentNote')}</p>`}
+    <button class="big-btn play" id="hsOk"><span class="bb-text"><b>${tx('nice')}</b></span></button>`, !!context, context ? context.restore : null, context ? 'heart-confirm' : '');
   setTimeout(heartRain, 700);
   $('#hsOk').onclick = () => { closeModal(); if (curScreen === 'ranking') renderRanking(); };
 }

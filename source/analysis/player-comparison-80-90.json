@@ -1,0 +1,649 @@
+{
+  "checkedAt": "2026-10-12T23:01:39.920Z",
+  "versionsMatch80to90": true,
+  "scope": "Same live board designs in 1.48 and 1.49 only; excludes earlier changed boards. Resumed starts deduplicated by attempt number. No individual tile-choice log is available. Aggregate player statistics; keep local.",
+  "players": [
+    {
+      "name": "Dennis",
+      "rows": [
+        {
+          "lv": 80,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 212,
+          "winningPeeks": 105,
+          "totalLoggedSeconds": 212,
+          "clockWinning": 4,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 81,
+          "winningAttempt": 2,
+          "distinctStartedAttempts": 2,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 183,
+          "winningPeeks": 100,
+          "totalLoggedSeconds": 183,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 82,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 293,
+          "winningPeeks": 130,
+          "totalLoggedSeconds": 293,
+          "clockWinning": 3,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 83,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 179,
+          "winningPeeks": 123,
+          "totalLoggedSeconds": 179,
+          "clockWinning": 1,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 84,
+          "winningAttempt": 2,
+          "distinctStartedAttempts": 2,
+          "completedLosses": 0,
+          "restarts": 1,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 199,
+          "winningPeeks": 102,
+          "totalLoggedSeconds": 282,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 24,
+              "left": 81,
+              "dur": 83,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 85,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 248,
+          "winningPeeks": 141,
+          "totalLoggedSeconds": 248,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 86,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 180,
+          "winningPeeks": 98,
+          "totalLoggedSeconds": 180,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 87,
+          "winningAttempt": 2,
+          "distinctStartedAttempts": 2,
+          "completedLosses": 0,
+          "restarts": 1,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 116,
+          "winningPeeks": 58,
+          "totalLoggedSeconds": 183,
+          "clockWinning": 3,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 8,
+              "left": 65,
+              "dur": 67,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 88,
+          "winningAttempt": 3,
+          "distinctStartedAttempts": 3,
+          "completedLosses": 2,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 2,
+          "winningSeconds": 115,
+          "winningPeeks": 44,
+          "totalLoggedSeconds": 367,
+          "clockWinning": 1,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 37,
+              "left": 34,
+              "dur": 140,
+              "ck": 0
+            },
+            {
+              "at": 2,
+              "fl": 48,
+              "left": 30,
+              "dur": 112,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 89,
+          "winningAttempt": 2,
+          "distinctStartedAttempts": 2,
+          "completedLosses": 1,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 1,
+          "winningSeconds": 186,
+          "winningPeeks": 114,
+          "totalLoggedSeconds": 415,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 129,
+              "left": 18,
+              "dur": 229,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 90,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 179,
+          "winningPeeks": 111,
+          "totalLoggedSeconds": 179,
+          "clockWinning": 1,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        }
+      ],
+      "summary80to88": {
+        "attempts": 14,
+        "firstTryWins": 5,
+        "winningSeconds": 1725,
+        "winningPeeks": 901,
+        "loggedSeconds": 2127,
+        "clockLosses": 0,
+        "trayLosses": 2
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "rows": [
+        {
+          "lv": 80,
+          "winningAttempt": 12,
+          "distinctStartedAttempts": 12,
+          "completedLosses": 11,
+          "restarts": 0,
+          "clockLosses": 10,
+          "trayLosses": 1,
+          "winningSeconds": 206,
+          "winningPeeks": 99,
+          "totalLoggedSeconds": 384,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 2,
+              "left": 86,
+              "dur": 25,
+              "ck": 1
+            },
+            {
+              "at": 2,
+              "fl": 1,
+              "left": 86,
+              "dur": 8,
+              "ck": 1
+            },
+            {
+              "at": 3,
+              "fl": 5,
+              "left": 86,
+              "dur": 7,
+              "ck": 1
+            },
+            {
+              "at": 4,
+              "fl": 2,
+              "left": 85,
+              "dur": 8,
+              "ck": 1
+            },
+            {
+              "at": 5,
+              "fl": 0,
+              "left": 86,
+              "dur": 5,
+              "ck": 1
+            },
+            {
+              "at": 6,
+              "fl": 0,
+              "left": 86,
+              "dur": 7,
+              "ck": 1
+            },
+            {
+              "at": 7,
+              "fl": 2,
+              "left": 85,
+              "dur": 13,
+              "ck": 1
+            },
+            {
+              "at": 8,
+              "fl": 3,
+              "left": 88,
+              "dur": 9,
+              "ck": 0
+            },
+            {
+              "at": 9,
+              "fl": 0,
+              "left": 86,
+              "dur": 5,
+              "ck": 1
+            },
+            {
+              "at": 10,
+              "fl": 0,
+              "left": 86,
+              "dur": 9,
+              "ck": 1
+            },
+            {
+              "at": 11,
+              "fl": 4,
+              "left": 86,
+              "dur": 82,
+              "ck": 1
+            }
+          ]
+        },
+        {
+          "lv": 81,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 152,
+          "winningPeeks": 93,
+          "totalLoggedSeconds": 152,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 82,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 163,
+          "winningPeeks": 93,
+          "totalLoggedSeconds": 163,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 83,
+          "winningAttempt": 3,
+          "distinctStartedAttempts": 3,
+          "completedLosses": 2,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 2,
+          "winningSeconds": 175,
+          "winningPeeks": 85,
+          "totalLoggedSeconds": 278,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 37,
+              "left": 68,
+              "dur": 84,
+              "ck": 0
+            },
+            {
+              "at": 2,
+              "fl": 1,
+              "left": 80,
+              "dur": 19,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 84,
+          "winningAttempt": 10,
+          "distinctStartedAttempts": 10,
+          "completedLosses": 8,
+          "restarts": 1,
+          "clockLosses": 0,
+          "trayLosses": 8,
+          "winningSeconds": 182,
+          "winningPeeks": 88,
+          "totalLoggedSeconds": 814,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 29,
+              "left": 70,
+              "dur": 131,
+              "ck": 0
+            },
+            {
+              "at": 2,
+              "fl": 73,
+              "left": 50,
+              "dur": 134,
+              "ck": 0
+            },
+            {
+              "at": 3,
+              "fl": 22,
+              "left": 66,
+              "dur": 58,
+              "ck": 0
+            },
+            {
+              "at": 4,
+              "fl": 1,
+              "left": 82,
+              "dur": 8,
+              "ck": 0
+            },
+            {
+              "at": 5,
+              "fl": 9,
+              "left": 80,
+              "dur": 26,
+              "ck": 0
+            },
+            {
+              "at": 6,
+              "fl": 10,
+              "left": 80,
+              "dur": 31,
+              "ck": 0
+            },
+            {
+              "at": 7,
+              "fl": 9,
+              "left": 80,
+              "dur": 33,
+              "ck": 0
+            },
+            {
+              "at": 8,
+              "fl": 4,
+              "left": 76,
+              "dur": 35,
+              "ck": 0
+            },
+            {
+              "at": 9,
+              "fl": 85,
+              "left": 43,
+              "dur": 176,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 85,
+          "winningAttempt": 5,
+          "distinctStartedAttempts": 5,
+          "completedLosses": 4,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 4,
+          "winningSeconds": 173,
+          "winningPeeks": 110,
+          "totalLoggedSeconds": 818,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 98,
+              "left": 40,
+              "dur": 151,
+              "ck": 0
+            },
+            {
+              "at": 2,
+              "fl": 108,
+              "left": 36,
+              "dur": 170,
+              "ck": 0
+            },
+            {
+              "at": 3,
+              "fl": 10,
+              "left": 32,
+              "dur": 164,
+              "ck": 0
+            },
+            {
+              "at": 4,
+              "fl": 86,
+              "left": 34,
+              "dur": 160,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 86,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 171,
+          "winningPeeks": 96,
+          "totalLoggedSeconds": 171,
+          "clockWinning": 2,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 87,
+          "winningAttempt": 5,
+          "distinctStartedAttempts": 5,
+          "completedLosses": 4,
+          "restarts": 0,
+          "clockLosses": 1,
+          "trayLosses": 3,
+          "winningSeconds": 213,
+          "winningPeeks": 90,
+          "totalLoggedSeconds": 350,
+          "clockWinning": 4,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 1,
+              "left": 78,
+              "dur": 15,
+              "ck": 1
+            },
+            {
+              "at": 2,
+              "fl": 2,
+              "left": 82,
+              "dur": 20,
+              "ck": 0
+            },
+            {
+              "at": 3,
+              "fl": 10,
+              "left": 62,
+              "dur": 61,
+              "ck": 0
+            },
+            {
+              "at": 4,
+              "fl": 7,
+              "left": 70,
+              "dur": 41,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 88,
+          "winningAttempt": 1,
+          "distinctStartedAttempts": 1,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": 186,
+          "winningPeeks": 79,
+          "totalLoggedSeconds": 186,
+          "clockWinning": 3,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        },
+        {
+          "lv": 89,
+          "winningAttempt": null,
+          "distinctStartedAttempts": 2,
+          "completedLosses": 1,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 1,
+          "winningSeconds": null,
+          "winningPeeks": null,
+          "totalLoggedSeconds": 182,
+          "clockWinning": null,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": [
+            {
+              "at": 1,
+              "fl": 101,
+              "left": 20,
+              "dur": 182,
+              "ck": 0
+            }
+          ]
+        },
+        {
+          "lv": 90,
+          "winningAttempt": null,
+          "distinctStartedAttempts": 0,
+          "completedLosses": 0,
+          "restarts": 0,
+          "clockLosses": 0,
+          "trayLosses": 0,
+          "winningSeconds": null,
+          "winningPeeks": null,
+          "totalLoggedSeconds": 0,
+          "clockWinning": null,
+          "easier": false,
+          "usedTools": false,
+          "failedPeeks": []
+        }
+      ],
+      "summary80to88": {
+        "attempts": 39,
+        "firstTryWins": 4,
+        "winningSeconds": 1621,
+        "winningPeeks": 833,
+        "loggedSeconds": 3316,
+        "clockLosses": 11,
+        "trayLosses": 18
+      }
+    }
+  ]
+}

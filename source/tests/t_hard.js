@@ -19,6 +19,7 @@ module.exports = [
     async run(t) {
       const a = Hard.makeNow(83, 1.6), b = Hard.makeNow(83, 1.6);
       t.eq(a.faces, b.faces, 'the same level and screen give the same design (every phone)');
+      t.ok(a.down.length<=Math.floor(a.tiles.length*0.20),'new runtime candidates respect the information cap');
       for (const lv of [72, 77, 83, 97]) {
         const d = Hard.get(lv), g = asGame(d), all = new Uint8Array(g.n).fill(1);
         t.ok(L.solve(g.tiles, g.nb, d.faces, all, [], 200000, g.rules), `level ${lv}: can be finished with ice and locks`);

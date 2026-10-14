@@ -1,0 +1,294 @@
+{
+  "description": "Fresh same-seed comparison. Fair diagnostic removes access to newly revealed identities during hypothetical move scoring. Production unchanged.",
+  "rows": [
+    {
+      "lv": 80,
+      "runs": 1600,
+      "seed": 554319,
+      "focused": 0.599375,
+      "noFaceDown": 0.62125,
+      "clockReached": 0.905,
+      "clockLoss": 0,
+      "risky": 6.570625,
+      "choices": 18.46195605224053,
+      "structure": {
+        "tiles": 96,
+        "layers": 5,
+        "down": 38,
+        "covered": 24,
+        "knownStart": 44,
+        "freeStart": 13,
+        "clock": {
+          "i": 17,
+          "n": 10
+        },
+        "routeMoves": 6
+      },
+      "metrics": {
+        "decisions": 1153,
+        "blindSingles": 91,
+        "forcedBlind": 5,
+        "unknownOptions": 6359,
+        "singleOptions": 16888
+      },
+      "probeStates": 37,
+      "probeChanged": 13,
+      "witness": {
+        "atMove": 19,
+        "swapped": [
+          24,
+          42
+        ],
+        "faces": [
+          21,
+          15
+        ],
+        "originalPick": [
+          43
+        ],
+        "swappedPick": [
+          41
+        ],
+        "knownUnchanged": true,
+        "fairOriginalPick": [
+          43
+        ],
+        "fairSwappedPick": [
+          43
+        ]
+      }
+    },
+    {
+      "lv": 81,
+      "runs": 1600,
+      "seed": 554319,
+      "focused": 0.631875,
+      "noFaceDown": 0.906875,
+      "clockReached": 1,
+      "clockLoss": 0,
+      "risky": 0.55,
+      "choices": 13.040316936307255,
+      "structure": {
+        "tiles": 80,
+        "layers": 5,
+        "down": 32,
+        "covered": 17,
+        "knownStart": 35,
+        "freeStart": 7,
+        "clock": {
+          "i": 74,
+          "n": 8
+        },
+        "routeMoves": 5
+      },
+      "metrics": {
+        "decisions": 732,
+        "blindSingles": 0,
+        "forcedBlind": 0,
+        "unknownOptions": 1760,
+        "singleOptions": 9131
+      },
+      "probeStates": 10,
+      "probeChanged": 2,
+      "witness": {
+        "atMove": 10,
+        "swapped": [
+          4,
+          38
+        ],
+        "faces": [
+          33,
+          5
+        ],
+        "originalPick": [
+          2
+        ],
+        "swappedPick": [
+          72
+        ],
+        "knownUnchanged": true,
+        "fairOriginalPick": [
+          72
+        ],
+        "fairSwappedPick": [
+          72
+        ]
+      }
+    },
+    {
+      "lv": 82,
+      "runs": 1600,
+      "seed": 554319,
+      "focused": 0.6125,
+      "noFaceDown": 0.939375,
+      "clockReached": 1,
+      "clockLoss": 0,
+      "risky": 8.07625,
+      "choices": 15.85218204329318,
+      "structure": {
+        "tiles": 76,
+        "layers": 4,
+        "down": 30,
+        "covered": 5,
+        "knownStart": 41,
+        "freeStart": 12,
+        "clock": {
+          "i": 45,
+          "n": 8
+        },
+        "routeMoves": 5
+      },
+      "metrics": {
+        "decisions": 894,
+        "blindSingles": 150,
+        "forcedBlind": 0,
+        "unknownOptions": 3653,
+        "singleOptions": 12557
+      },
+      "probeStates": 38,
+      "probeChanged": 6,
+      "witness": {
+        "atMove": 17,
+        "swapped": [
+          16,
+          31
+        ],
+        "faces": [
+          35,
+          8
+        ],
+        "originalPick": [
+          36,
+          67
+        ],
+        "swappedPick": [
+          58,
+          67
+        ],
+        "knownUnchanged": true,
+        "fairOriginalPick": [
+          36,
+          67
+        ],
+        "fairSwappedPick": [
+          36,
+          67
+        ]
+      }
+    },
+    {
+      "lv": 83,
+      "runs": 1600,
+      "seed": 554319,
+      "focused": 0.68,
+      "noFaceDown": 0.7875,
+      "clockReached": 0.9975,
+      "clockLoss": 0.0025,
+      "risky": 2.204375,
+      "choices": 15.05234556535154,
+      "structure": {
+        "tiles": 88,
+        "layers": 4,
+        "down": 35,
+        "covered": 19,
+        "knownStart": 36,
+        "freeStart": 9,
+        "clock": {
+          "i": 63,
+          "n": 8
+        },
+        "routeMoves": 5
+      },
+      "metrics": {
+        "decisions": 909,
+        "blindSingles": 78,
+        "forcedBlind": 0,
+        "unknownOptions": 2635,
+        "singleOptions": 11714
+      },
+      "probeStates": 62,
+      "probeChanged": 10,
+      "witness": {
+        "atMove": 20,
+        "swapped": [
+          75,
+          60
+        ],
+        "faces": [
+          31,
+          24
+        ],
+        "originalPick": [
+          54
+        ],
+        "swappedPick": [
+          68
+        ],
+        "knownUnchanged": true,
+        "fairOriginalPick": [
+          54
+        ],
+        "fairSwappedPick": [
+          54
+        ]
+      }
+    },
+    {
+      "lv": 84,
+      "runs": 1600,
+      "seed": 554319,
+      "focused": 0.585,
+      "noFaceDown": 0.606875,
+      "clockReached": 0.926875,
+      "clockLoss": 0,
+      "risky": 5.843125,
+      "choices": 10.823301950627426,
+      "structure": {
+        "tiles": 88,
+        "layers": 5,
+        "down": 35,
+        "covered": 20,
+        "knownStart": 36,
+        "freeStart": 8,
+        "clock": {
+          "i": 78,
+          "n": 16
+        },
+        "routeMoves": 12
+      },
+      "metrics": {
+        "decisions": 782,
+        "blindSingles": 23,
+        "forcedBlind": 4,
+        "unknownOptions": 2641,
+        "singleOptions": 7973
+      },
+      "probeStates": 136,
+      "probeChanged": 32,
+      "witness": {
+        "atMove": 42,
+        "swapped": [
+          11,
+          27
+        ],
+        "faces": [
+          0,
+          35
+        ],
+        "originalPick": [
+          67
+        ],
+        "swappedPick": [
+          44
+        ],
+        "knownUnchanged": true,
+        "fairOriginalPick": [
+          67
+        ],
+        "fairSwappedPick": [
+          67
+        ]
+      }
+    }
+  ]
+}

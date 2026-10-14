@@ -1,0 +1,14 @@
+{
+  "passed": 8,
+  "checks": [
+    "Uncovered known pair gets a verified certificate",
+    "Unknown free peeks and automatic pair are replayed correctly",
+    "Verifier rejects a deliberate unidentified tap",
+    "Verifier rejects an incomplete winning claim",
+    "Exact information search detects a real indistinguishable-world guessing trap",
+    "A computation limit is inconclusive, not evidence of guessing",
+    "Every recorded optimistic certificate verifies independently",
+    "Game sources still match the pre-audit hashes"
+  ],
+  "gameChanged": false
+}

@@ -1,0 +1,16 @@
+{
+  "passed": 7,
+  "checks": [
+    "All captured live assets match the manifest",
+    "All 71 winning witnesses validate against the live board data",
+    "All per-level game counts reconcile",
+    "65 recorded winning examples reproduce and have valid complete paths",
+    "Every bounded route-search result refers to the same live boards",
+    "Game sources and unpublished boards unchanged",
+    "Live version and level table rechecked after measurement"
+  ],
+  "replayedExamples": 65,
+  "verifiedAt": "2026-10-12T22:00:25.685Z",
+  "gameChanged": false,
+  "published": false
+}

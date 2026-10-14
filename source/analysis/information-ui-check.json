@@ -1,0 +1,68 @@
+{
+  "fakeDatabase": true,
+  "note": "Actual handler replay validates tap effects only; it is not a visibility or no-guess proof.",
+  "results": [
+    {
+      "level": 82,
+      "lv": 82,
+      "removals": 88,
+      "initialFaceUp": 71,
+      "initialFaceUpNotDirectlyClickable": [
+        12,
+        17,
+        18,
+        19,
+        20,
+        46,
+        47,
+        56
+      ],
+      "unreachableActionTargets": [],
+      "actualHandlerCleared": true
+    },
+    {
+      "level": 86,
+      "lv": 86,
+      "removals": 88,
+      "initialFaceUp": 71,
+      "initialFaceUpNotDirectlyClickable": [
+        12,
+        17,
+        18,
+        19,
+        20,
+        46,
+        47,
+        56
+      ],
+      "unreachableActionTargets": [],
+      "actualHandlerCleared": true
+    },
+    {
+      "level": 104,
+      "lv": 104,
+      "removals": 76,
+      "initialFaceUp": 61,
+      "initialFaceUpNotDirectlyClickable": [],
+      "unreachableActionTargets": [],
+      "actualHandlerCleared": true
+    },
+    {
+      "level": 267,
+      "lv": 267,
+      "removals": 88,
+      "initialFaceUp": 71,
+      "initialFaceUpNotDirectlyClickable": [
+        8,
+        15,
+        20,
+        42,
+        43,
+        45,
+        46
+      ],
+      "unreachableActionTargets": [],
+      "actualHandlerCleared": true
+    }
+  ]
+}

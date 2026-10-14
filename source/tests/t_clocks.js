@@ -47,10 +47,10 @@ module.exports=[
     t.eq(result.pair,[2,result.left-2,false,false],'both removed tiles count, even from one tap');
     await sleep(300);
   }},
-  {name:'clocks: harder designs preserve levels through 79 and have complete clock-safe proofs, also after repetition',cpu:true,async run(t){
+  {name:'clocks: harder designs preserve levels through 79 and have complete clock-safe proofs, also beyond the authored range',cpu:true,async run(t){
     const T=table(),old=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../analysis/levels-1.46.js'),'utf8')+';HARD_LEVELS');
     t.eq([T.from,T.aspect,T.levels.length],[old.from,old.aspect,old.levels.length],'same level range and aspect');
-    t.eq(T.v,H.GENV,'current design version');t.eq(T.cycleFrom,150,'repeat only the final difficulty plateau');
+    t.eq(T.v,H.GENV,'current design version');t.eq(T.cycleFrom,T.from+T.levels.length-1,'overflow uses the hardest validated board');
     for(let lv=T.from;lv<80;lv++)t.eq(T.levels[lv-T.from],old.levels[lv-old.from],'preserved level '+lv);
     for(let lv=80;lv<T.from+T.levels.length;lv++){
       const d=H.unpack(lv,T.levels[lv-T.from]);t.ok(d.clock,'clock exists '+lv);
@@ -59,8 +59,14 @@ module.exports=[
       t.ok(d.clock.n <= (lv<90?22:lv<110?19:16),'early clock planning '+lv);
     }
     const context={};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/layouts.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/hard.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+'\nthis.get=Hard.get;',context);
-    const last=T.from+T.levels.length-1,span=last-T.cycleFrom+1;
-    for(let lv=last+1;lv<=last+span;lv++){const d=context.get(lv);t.ok(H.validSolution(game(d),d.solution),'mirrored/permuted proof at '+lv);}
+    const last=T.from+T.levels.length-1,hardest=H.unpack(last,T.levels[last-T.from]);
+    for(const lv of [last+1,last+120,last+121,last+1000]){
+      const d=context.get(lv);t.ok(H.validSolution(game(d),d.solution),'overflow proof at '+lv);t.eq(d.info.strong,hardest.info.strong,'overflow cannot jump back to an easier measured level '+lv);
+      for(let k=0;k<64;k++){
+        const a=H.play(game(hardest),H.persona('focused'),378521+k*104729),b=H.play(game(d),H.persona('focused'),378521+k*104729);
+        t.eq([a.win,a.why,Array.from(a.at)],[b.win,b.why,Array.from(b.at)],'mirroring and picture renaming retain the same challenge '+lv+' seed '+k);
+      }
+    }
   }},
   {name:'clocks: simulator cannot skip a deadline by selecting a pair; final allowed clock tap succeeds',cpu:true,async run(t){
     const L=require('../www/layouts'),tiles=[{x:0,y:0,z:0},{x:2,y:0,z:0}];

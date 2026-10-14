@@ -498,6 +498,42 @@ body.nonum .cn { display: none; }
 .compact .big-btn { padding: 11px 16px; margin-top: 8px; }
 .compact .big-btn b { font-size: 24px; }
 .compact .link-btn { margin-top: 2px; padding: 6px 16px; font-size: 18px; }
+#wFamily { display: contents; }
+.compact .win-family .fam-row { grid-template-columns: 34px 28px minmax(0, 1fr) minmax(78px, auto); gap: 4px; padding: 2px 1px; }
+.compact .win-family .fr-name { white-space: nowrap; }
+.compact .win-family .ra { position: relative; }
+.compact .win-family .fr-val { display: flex; align-items: center; justify-content: flex-end; gap: 3px; }
+.compact .win-family .points { min-width: 43px; text-align: right; }
+.compact .win-family .heart-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; min-width: 32px; height: 28px; padding: 0; margin: 0; font-size: 19px; }
+.compact .win-family .heart-btn.sent { font-size: 14px; }
+.compact .win-family .fr-sub { white-space: nowrap; }
+.presence-dot { position: absolute; right: -2px; bottom: 0; width: 10px; height: 10px; border-radius: 50%; background: #299d3b; box-shadow: 0 0 0 2px #ffdeeb; }
+.presence-text { color: #237a2b; font-weight: 900; }
+/* The heart picker uses the win popup's measured height; smaller viewports can scroll. */
+.modal-box.heart-compose { height: var(--heart-dialog-height, auto); max-height: calc(100dvh - 40px); padding: 16px 16px 12px; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; }
+.heart-compose > * { flex-shrink: 0; }
+.heart-compose .heart-big.sm { height: 32px; font-size: 32px; line-height: 1; margin: 0; }
+.heart-compose h2 { font-size: 27px; line-height: 1.15; margin: 0; }
+.heart-compose .note.small { font-size: 16px; line-height: 1.35; margin: 0; }
+.heart-compose .msg-pick { gap: 6px; margin: 0; }
+.heart-compose .msg-pick .mp { height: 38px; font-size: 17px; line-height: 1.2; padding: 5px 8px; border-width: 2px; border-radius: 14px; }
+.custom-message { display: block; text-align: left; font-size: 16px; line-height: 1.2; font-weight: 900; color: var(--ink); margin: 0; }
+.custom-message textarea { display: block; width: 100%; height: 56px; resize: none; margin: 4px 0 0; padding: 7px 10px; border: 2px solid #ff9bc4; border-radius: 14px; font: 700 17px/1.2 Nunito, system-ui, sans-serif; color: var(--ink); background: #fff9f5; }
+.custom-message textarea::placeholder { color: #9b8758; }
+.custom-message textarea:focus-visible { outline: 2px solid #e85d8f; outline-offset: 2px; }
+.heart-compose .big-btn { margin: 0; padding: 11px 16px; }
+.heart-compose .big-btn b { font-size: 24px; }
+.heart-compose .link-btn { font-size: 18px; line-height: 1.1; margin: 0 auto; padding: 6px 16px; }
+.heart-compose button:disabled { opacity: .65; cursor: wait; }
+.heart-error { font-size: 14px; color: #ac2637; font-weight: 800; }
+.modal-box.heart-confirm { height: auto; max-height: calc(100dvh - 40px); padding: 24px 16px 20px; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; }
+.heart-confirm > * { flex-shrink: 0; }
+.heart-confirm .heart-big { font-size: 80px; }
+.heart-confirm .heart-big, .heart-compose .heart-big { align-self: center; width: max-content; }
+.heart-confirm h2 { font-size: 27px; line-height: 1.15; margin: 0; }
+.heart-confirm p { font-size: 20px; margin: 0; }
+.heart-confirm .big-btn { padding: 11px 16px; }
+.heart-confirm .big-btn b { font-size: 24px; }
 .compact .climb { margin: 6px 0 4px; }
 .compact .climb .rrow { height: 40px; padding: 2px 10px; grid-template-columns: 40px 32px 1fr auto; }
 .compact .climb .rrow .ra { width: 30px; height: 30px; font-size: 19px; }

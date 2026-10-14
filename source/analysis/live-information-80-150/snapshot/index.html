@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b4d3c">
+<title>Oma's Mahjong</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mahjong">
+<link rel="stylesheet" href="v/1.49/style.css" id="css">
+<script>
+  // if anything fails to load, say so instead of showing a dead screen
+  window.addEventListener('error', function (e) {
+    // only for loading problems (a missing or broken file), not for hiccups once the game runs
+    if (window.__mjReady && !(e.target && e.target !== window && (e.target.src || e.target.href))) { if (window.console) console.warn(e.message); return; }
+    var d = document.getElementById('loadErr');
+    if (!d) { d = document.createElement('div'); d.id = 'loadErr'; d.style.cssText = 'position:fixed;left:12px;right:12px;bottom:12px;z-index:999;background:#fff3c4;color:#3b2a14;border-radius:14px;padding:12px 14px;font:700 16px sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.35)'; (document.body || document.documentElement).appendChild(d); }
+    d.textContent = 'Er ging iets mis bij het laden. Herlaad de pagina (vernieuwen). [' + (e.message || 'bestand') + ']';
+  }, true);
+</script>
+</head>
+<body>
+<div id="bg"></div>
+<div id="app">
+
+  <!-- HOME -->
+  <section id="home" class="screen active">
+    <div class="home-top">
+      <div class="chip big-chip" id="homeStars">⭐ 0</div>
+      <button class="chip task-chip" id="btnTasks">📋 <span id="taskDots">○○○</span></button>
+      <button class="chip paper-chip hidden" id="btnPaper" aria-label="Het krantje" data-t-label="vgPaperLbl">📰</button>
+      <button class="icon-btn" id="btnSettings" aria-label="Instellingen" data-t-label="settings">⚙️</button>
+    </div>
+    <div class="logo">
+      <div class="logo-tiles">
+        <div class="lt t1"></div><div class="lt t2"></div><div class="lt t3"></div>
+      </div>
+      <h1>Oma's Mahjong</h1>
+      <p class="greet" id="greet">Goedemorgen!</p>
+    </div>
+    <div class="home-buttons">
+      <button class="big-btn play" id="btnPlay">
+        <span class="bb-icon">▶</span>
+        <span class="bb-text"><b data-t="play">Spelen</b><small id="playLabel">Level 1</small></span>
+      </button>
+      <button class="big-btn daily" id="btnDaily">
+        <span class="bb-icon">📅</span>
+        <span class="bb-text"><b data-t="daily">Dagpuzzel</b><small id="dailyLabel">Puzzel van vandaag</small></span>
+        <span class="streak" id="streakBadge">🔥 0</span>
+      </button>
+      <div class="row2">
+        <button class="mid-btn" id="btnLevels"><span>🗺️</span><b data-t="levels">Levels</b></button>
+        <button class="mid-btn" id="btnThemes"><span>🎨</span><b data-t="themes">Thema's</b></button>
+        <button class="mid-btn" id="btnTrophies"><span>🏅</span><b data-t="prizes">Prijzen</b><i class="mid-badge" id="trophyCount">0</i></button>
+        <button class="mid-btn" id="btnRanking"><span>🏆</span><b data-t="ranking">Ranglijst</b><i class="mid-badge" id="rankBadge">#1</i></button>
+      </div>
+    </div>
+    <div class="goal" id="nextUnlock"></div>
+  </section>
+
+  <!-- GAME -->
+  <section id="game" class="screen">
+    <div class="topbar">
+      <button class="icon-btn" id="btnHome" aria-label="Menu" data-t-label="menu">🏠</button>
+      <div class="title-wrap">
+        <div id="gameTitle">Level 1</div>
+        <div id="comboTag"></div>
+        <div class="progress"><div id="progressBar"></div></div>
+        <div id="gameMsg" aria-live="polite"></div>
+      </div>
+      <div class="chip score" id="score">0</div>
+      <button class="icon-btn" id="btnRestart" aria-label="Level opnieuw beginnen" data-t-label="restartLevel">↻</button>
+    </div>
+    <div class="traybar">
+      <div id="tray"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+    </div>
+    <div id="boardWrap"><div id="board"></div></div>
+    <div class="toolbar">
+      <button class="tool" id="btnHint"><span>💡</span><b data-t="hint">Hint</b><i class="badge">1</i></button>
+      <button class="tool" id="btnShuffle"><span>🔀</span><b data-t="shuffle">Schudden</b><i class="badge">1</i></button>
+    </div>
+  </section>
+
+  <!-- LEVELS -->
+  <section id="levels" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2 data-t="levels">Levels</h2><div class="chip" id="lvStars">⭐ 0</div></div>
+    <div class="scroll"><div class="level-grid" id="levelGrid"></div></div>
+  </section>
+
+  <!-- DAILY -->
+  <section id="daily" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2 data-t="daily">Dagpuzzel</h2><div class="chip" id="dStreak">🔥 0</div></div>
+    <div class="scroll">
+      <div class="card streak-card">
+        <div class="flame">🔥</div>
+        <div><b id="streakText">0 dagen op rij</b><small id="bestText">Record: 0 dagen</small></div>
+      </div>
+      <div class="card cal">
+        <div class="cal-head">
+          <button class="icon-btn small" id="calPrev">‹</button>
+          <b id="calTitle">oktober 2026</b>
+          <button class="icon-btn small" id="calNext">›</button>
+        </div>
+        <div class="cal-days"><span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-count" id="calCount"></div>
+      </div>
+      <button class="big-btn play" id="btnPlayDaily"><span class="bb-icon">▶</span><span class="bb-text"><b data-t="playDaily">Speel</b><small id="dailyDateLabel">vandaag</small></span></button>
+    </div>
+  </section>
+
+  <!-- RANKING -->
+  <section id="ranking" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2 data-t="ranking">Ranglijst</h2><div class="chip" id="rkMine">🏆 #1</div></div>
+    <div id="famBox" class="fam-fixed"></div>
+    <div class="scroll">
+      <button class="name-chip" id="rankName">😊 Naam kiezen ✏️</button>
+      <div class="rk-tabs"><button id="rkWeek" class="on" data-t="thisWeek">📅 Deze week</button><button id="rkAll" data-t="allTime">🏆 Altijd</button></div>
+      <p class="wk-info" id="wkInfo"></p>
+      <div class="rank-list" id="rankList"></div>
+      <p class="rank-note" id="rankNote"></p>
+    </div>
+  </section>
+
+  <!-- PRIZES -->
+  <section id="trophies" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2 data-t="trophyCabinet">Prijzenkast</h2><div class="chip" id="trCount">🏅 0</div></div>
+    <div class="scroll"><div id="statsBox"></div><div class="trophy-grid" id="trophyGrid"></div></div>
+  </section>
+
+  <!-- THEMES -->
+  <section id="themes" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2 data-t="themes">Thema's</h2><div class="chip" id="thStars">⭐ 0</div></div>
+    <div class="scroll">
+      <div id="sunCard"></div>
+      <h3 class="sec" data-t="tilesHead">Stenen</h3>
+      <div class="theme-list" id="tileThemes"></div>
+      <h3 class="sec" data-t="bgHead">Achtergrond</h3>
+      <div class="bg-list" id="bgThemes"></div>
+    </div>
+  </section>
+</div>
+
+<div id="flash"></div>
+<canvas id="fx"></canvas>
+<div id="toast"></div>
+<div id="modal" class="hidden"><div class="modal-box" id="modalBox"></div></div>
+
+<script id="boot">
+/* Self-update: the app downloads newer game files from the website (js/update.js checkUpdate)
+   and keeps them on the phone. On start we use that downloaded version when it is newer
+   than the one built into the app; if it does not start properly, we fall back at once. */
+(function () {
+  var BUILT = '1.49', KEY = 'omamj.code', FILES = ['v/1.49/tiles.js', 'v/1.49/audio.js', 'v/1.49/layouts.js', 'v/1.49/hard.js', 'v/1.49/levels-hard.js', 'v/1.49/js/rules.js', 'v/1.49/js/lang.js', 'v/1.49/js/core.js', 'v/1.49/js/fx.js', 'v/1.49/js/update.js', 'v/1.49/js/screens.js', 'v/1.49/js/board.js', 'v/1.49/js/help.js', 'v/1.49/js/specials.js', 'v/1.49/js/rewards.js', 'v/1.49/js/telemetry.js', 'v/1.49/js/social.js', 'v/1.49/js/hearts.js', 'v/1.49/js/stories.js', 'v/1.49/js/village.js', 'v/1.49/js/win.js', 'v/1.49/js/main.js'];
+  function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
+  function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
+  var c = null;
+  try { if (location.protocol === 'file:') c = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { c = null; }
+  if (c && (c.fail || 0) >= 2) { try { localStorage.setItem('omamj.badv', c.v); localStorage.removeItem(KEY); } catch (e) { } c = null; }
+  if (!c || !c.v || !newer(c.v, BUILT) || !c.js) {
+    if (c && !newer(c.v, BUILT)) { try { localStorage.removeItem(KEY); } catch (e) { } }   // the app itself is newer now
+    window.__mjCode = BUILT; builtIn(); return;
+  }
+  try {
+    c.fail = (c.fail || 0) + 1; localStorage.setItem(KEY, JSON.stringify(c));
+    window.__mjCode = c.v;
+    var st = document.createElement('style'); st.textContent = c.css;
+    var link = document.getElementById('css'); link.parentNode.replaceChild(st, link);
+    var boot = document.getElementById('boot');
+    document.body.innerHTML = c.body;
+    document.body.appendChild(boot);
+    c.js.forEach(function (code) { var s = document.createElement('script'); s.text = code; document.body.appendChild(s); });
+  } catch (e) { }
+  // safety net: if the downloaded version does not start, throw it away and use the built-in one
+  setTimeout(function () { if (!window.__mjReady) { try { localStorage.setItem('omamj.badv', c.v); localStorage.removeItem(KEY); } catch (e) { } location.reload(); } }, 5000);
+})();
+</script>
+</body>
+</html>

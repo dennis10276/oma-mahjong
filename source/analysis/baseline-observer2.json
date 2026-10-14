@@ -1,0 +1,40 @@
+{
+  "modelVersion": 2,
+  "runs": 8192,
+  "seed": 986347,
+  "rows": [
+    {
+      "lv": 80,
+      "win": 0.2774658203125,
+      "reach": 0.854736328125,
+      "clockLoss": 0,
+      "afterClock": 0.3246215367037989,
+      "blindRate": 0.07684352254766133,
+      "forcedPerGame": 0.6685791015625,
+      "unknownShare": 0.406136284135101,
+      "risky": 7.3450927734375
+    },
+    {
+      "lv": 85,
+      "win": 0.0001220703125,
+      "reach": 0.9990234375,
+      "clockLoss": 0.0009765625,
+      "afterClock": 0.00012218963831867058,
+      "blindRate": 0.021302661468718072,
+      "forcedPerGame": 0.0001220703125,
+      "unknownShare": 0.2843654413292214,
+      "risky": 1.8797607421875
+    },
+    {
+      "lv": 86,
+      "win": 0,
+      "reach": 0.9998779296875,
+      "clockLoss": 0.0001220703125,
+      "afterClock": 0,
+      "blindRate": 0.08033671278206075,
+      "forcedPerGame": 0,
+      "unknownShare": 0.34082532373857893,
+      "risky": 3.292724609375
+    }
+  ]
+}

@@ -302,3 +302,9 @@ sooner when she struggles or the level already went wrong once (×0.7), based on
 | `t_online` | (with `--online`) a heart and the play log through the real database |
 
 `release.py` runs the offline tests first and releases nothing if one fails.
+
+## Local win-screen preview
+
+Run `node tools/preview_win_hearts.cjs` from this source folder, or `node source/tools/preview_win_hearts.cjs` from the published repository checkout. Open the localhost URL printed by the server. It completes a sample level automatically; all scores, online status, messages and hearts stay in memory on localhost. A reload starts the sample level again.
+
+The source supports an optional numeric `scores/<id>/online` foreground heartbeat. The accompanying Firebase rules must be published before enabling presence in a future live release; older apps show no online indicator. This local preview uses a mock database and needs no Firebase changes.

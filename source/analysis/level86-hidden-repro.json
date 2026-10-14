@@ -1,0 +1,33 @@
+{
+  "level": 86,
+  "seed": 4390333195,
+  "identicalPrefix": [
+    85,
+    0,
+    77,
+    63,
+    39,
+    17,
+    57,
+    59,
+    33,
+    69,
+    10,
+    6,
+    84,
+    7
+  ],
+  "firstDifferentMove": 15,
+  "originalPick": 83,
+  "swappedPick": 86,
+  "swapped": [
+    15,
+    38
+  ],
+  "originalFaces": [
+    31,
+    34
+  ],
+  "visibleIdentitiesUnchanged": true,
+  "clockAlreadyRemoved": true
+}
