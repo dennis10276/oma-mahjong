@@ -16,8 +16,11 @@ module.exports = [
       // before); their stored chance is the combined fresh measurement (analysis/reorder-1.52.json)
       const reorder=require('../analysis/reorder-1.52.json'),hash=row=>crypto.createHash('sha256').update(JSON.stringify(row.slice(0,9).concat([row[10]]))).digest('hex');
       const shipped=new Map(reorder.moves.map(m=>[m.was,m.lv]));
+      // (1.53: levels 106-269 were remade, see the next test; the boards still shipped up to 105 are checked here)
       for(const r of report.rows){
-        const now=r.lv<90?r.lv:shipped.get(r.lv),row=table.levels[now-table.from],before=old.levels[r.lv-old.from],margin=r.lv<90?0.08:0.10;
+        const now=r.lv<90?r.lv:shipped.get(r.lv);
+        if(now>105)continue;
+        const row=table.levels[now-table.from],before=old.levels[r.lv-old.from],margin=r.lv<90?0.08:0.10;
         if(r.lv<90){t.eq(crypto.createHash('sha256').update(JSON.stringify(row)).digest('hex'),r.hash,'measured board is shipped '+r.lv);t.eq([row[8],row[9]],[r.sensible,r.focused],'table logs the new measurements '+r.lv);}
         else t.eq(row[8],r.sensible,'board '+r.lv+' is shipped at level '+now);
         t.ok(Math.abs(r.focused-H.target(r.lv,'strong'))<=margin,'focused target '+r.lv);
@@ -28,11 +31,38 @@ module.exports = [
         for(const i of fixed)t.eq(d.faces[i],prev.faces[i],'clock route and special pairs retain their faces '+r.lv+' tile '+i);
       }
       const ch=reorder.moves.map(m=>m.chance);
-      reorder.moves.forEach((m,k)=>{ if(k&&ch[k]>ch[k-1]) t.ok((m.lv%10===0||(m.lv-1)%10===0)&&ch[k]-ch[k-1]<=0.03,'always at least as hard, except a little around a big board at level '+m.lv); });
+      reorder.moves.forEach((m,k)=>{ if(k&&m.lv<=105&&ch[k]>ch[k-1]) t.ok((m.lv%10===0||(m.lv-1)%10===0)&&ch[k]-ch[k-1]<=0.03,'always at least as hard, except a little around a big board at level '+m.lv); });
       for(const b of report.bands){
         t.ok(Math.abs(b.focused-b.targetStrong)<=0.03,'focused band '+b.from);
         t.ok(b.reach>=b.baselineReach-.01&&b.clockLoss<=b.baselineClockLoss+.01,'clock difficulty unchanged within band sampling tolerance '+b.from);
       }
+    },
+  },
+  {
+    name: 'curve 1.53: levels 106-269 remade for the new curve (re-fitted strong test player); up to 105 unchanged',
+    cpu: true,
+    async run(t) {
+      const load=f=>vm.runInNewContext(fs.readFileSync(path.join(__dirname,f),'utf8')+';HARD_LEVELS');
+      const table=load('../www/levels-hard.js'),before=load('../analysis/levels-1.52.js'),rep=require('../analysis/remake-1.53.json');
+      const L=require('../www/layouts');
+      const game=d=>{const tiles=d.tiles.map(([x,y,z])=>({x,y,z})),nb=L.neighbors(tiles),down=new Uint8Array(tiles.length);d.down.forEach(i=>down[i]=1);const ob=d.obst,rules=ob&&(Object.keys(ob.ice||{}).length||(ob.keys||[]).length)?{iceNb:L.iceNeighbors(tiles),ice:ob.ice||{},locks:(ob.keys||[]).length?new Set(ob.locks):null,keys:ob.keys||[]}:null;return{tiles,nb,faces:d.faces,down,rules,clock:d.clock};};
+      for(let lv=table.from;lv<=105;lv++)t.eq(table.levels[lv-table.from],before.levels[lv-before.from],'unchanged level '+lv);
+      t.eq(rep.levels.length,164,'every remade level measured');
+      t.ok(rep.runs>=300,'measured on at least 300 fresh games per player');
+      const srcs=new Set();
+      for(const r of rep.levels){
+        const row=table.levels[r.lv-table.from],src=before.levels[r.src-before.from];
+        srcs.add(r.src);
+        for(const k of [0,2,3,4,5,6,7,10])t.eq(row[k],src[k],'level '+r.lv+': same tiles, face-down tiles, gold, ice, locks, keys, clock and solution as board '+r.src+' (field '+k+')');
+        t.eq(row[1].split('').sort().join(''),src[1].split('').sort().join(''),'level '+r.lv+': the same pictures, swapped around');
+        t.eq((row[0].length/3>88),r.lv%10===0,'big boards only on every 10th level ('+r.lv+')');
+        t.ok(H.validSolution(game(H.unpack(r.lv,row)),H.unpack(r.lv,row).solution),'level '+r.lv+' can be finished in time');
+        t.eq([row[8],row[9]],[r.sensible,r.strong],'the table holds the measured chances '+r.lv);
+        t.ok(r.strong>=0.2,'no level below 20% for the strong test player ('+r.lv+')');
+        t.ok(Math.abs(r.strong-r.target)<=0.12,'level '+r.lv+' close to the curve ('+r.strong+' / '+r.target+')');
+      }
+      t.eq(srcs.size,164,'every board used once');
+      for(const b of rep.bands)t.ok(Math.abs(b.strong-b.target)<=0.04,'band '+b.from+'-'+b.to+' on the curve ('+b.strong+' / '+b.target+')');
     },
   },
   {

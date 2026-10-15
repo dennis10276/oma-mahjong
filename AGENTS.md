@@ -16,9 +16,9 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - `main` is exactly what is live. Releases are made only from an up-to-date, clean `main`.
 - Unreleased work lives on its own branch (`wip/...`), one topic per branch. It goes into `main`
   only when Dennis has approved it.
-- `wip/honest-observer`: the test player that no longer uses pictures a move would uncover, plus
-  the draft level set built with it. Not live. Re-fitted to real players on 2026-10-15
-  (`source/analysis/honest-refit.md` on that branch); the new level targets wait for Dennis.
+- `wip/honest-observer`: the honest test player (no peeking at pictures a move would uncover, smart
+  guessing, clock planning), re-fitted to real players on 2026-10-15, and the tools that remade
+  levels 106-269 for 1.53. Its code is not in the game; only the level table it made is.
 
 ## Working together
 
@@ -35,13 +35,17 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
-- Levels 1-89 stay as they are. From 90 the shipped boards are ordered so that each level is at least
-  as hard as the one before, by the current clock-focused measure (`tools/sim/reorder_levels.js`).
-  Every 10th level is the only place for a big board.
-- The current percentages come from the old test player, which could peek at pictures a move
-  would uncover. Do not design or re-measure live levels with new targets until the honest test
-  player (branch above) is re-fitted to real play. Nothing from that work goes live without
-  Dennis's approval.
+- Levels 1-105 stay as they are (75-105: the 1.52 boards).
+- Levels 106-269 were remade in 1.53 for a new curve, measured with the honest test player
+  re-fitted to real play (branch `wip/honest-observer`, `source/analysis/honest-refit.md` there):
+  the strong player (fitted to Dennisisdebeste) wins about 54% of first tries at 106, 45% at 150,
+  then 40% to 269; no level below 20%. Each level is a 1.52 board with its pictures swapped
+  (positions, face-down tiles, specials, clock and solution kept). Big boards only on every 10th
+  level. Measurements: `source/analysis/remake-1.53.json`; tools: `source/tools/sim/refit/remake_*.js`
+  on the branch. The stored chances in the table (fields 8 and 9) for 106+ are the new sensible
+  and strong players; up to 105 they are still the old focused measure.
+- `Hard.target` / `strongCurve` in the game are the OLD measure (old test player); do not use them
+  to judge 106+. Use the branch's test player.
 - Keep the current skill level roughly (tray pressure as it is). The alarm clock stays as it is.
 - Face-down share: measured later as a side project of the honest test player.
 
