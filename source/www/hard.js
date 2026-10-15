@@ -26,11 +26,12 @@ const Hard = (() => {
   //   (his replay of level 105: from his opening the test player lost 9 of 10, now about 9 of 10 won).
   // strong ~ Dennisisdebeste (first tries 80-89: 0.71 real, 0.70 test player), average ~ Mrs. Doubtfire.
   // memory: on a retry, the chance to remember a picture seen at the start / middle / end of the lost
-  //   try (rate2; fitted to real retries: Dennisisdebeste about half, Mrs. Doubtfire none).
+  //   try (rate2; fitted to real retries 2026-10-16: Dennisisdebeste 75% throughout, Mrs. Doubtfire and
+  //   Gerda none; sensible kept at 50/30/50). One test player per person: tools/sim/refit/players.
   // focused: the old clock-focused calibration model, kept for comparison.
   // end: with this many tiles left and all of them seen, it works out the rest exactly
   const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
-  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 1, unknown: 0, reveal: 8, plan: 10, memory: [0.5, 0.3, 0.5] }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: [0.5, 0.3, 0.5] }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: 0 } };
+  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 1, unknown: 0, reveal: 8, plan: 10, memory: [0.75, 0.75, 0.75] }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: [0.5, 0.3, 0.5] }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: 0 } };
   const persona = k => ({ ...P, ...REF[k] });
   // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
   const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
