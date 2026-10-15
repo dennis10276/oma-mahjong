@@ -67,6 +67,10 @@ const Hard = (() => {
     // the tiles of each picture (so the tray's twins are found without looking at every tile)
     const byFace = new Map(); faces.forEach((f, i) => { if (!byFace.has(f)) byFace.set(f, []); byFace.get(f).push(i); });
     const hiddenNow = i => { for (const j of cover[i]) if (alive[j]) return true; return false; };
+    // a retry (g.memory): the pictures it remembers from the try before (the same board comes back),
+    // also of tiles that are face down or covered now. seenEver: what this try showed it (for the next)
+    const mem = g.memory || null, seenEver = new Uint8Array(n);
+    const sees = i => can(i) || (!down[i] && !hiddenNow(i)) || (mem !== null && mem[i] === 1);
     // Freeze knowledge BEFORE trying a move. Hypothetically uncovering a tile must not give
     // its picture away while deciding which covering tile to take. Free tiles can be peeked.
     const known = new Uint8Array(n), freeNow = new Uint8Array(n), cnt = new Int16Array(256);
@@ -80,11 +84,11 @@ const Hard = (() => {
       for (let i = 0; i < n; i++) {
         if (!alive[i]) { freeNow[i] = 0; continue; }
         const f = can(i) ? 1 : 0; freeNow[i] = f;
-        if (f) { fr++; if (known[i]) cnt[faces[i] & 255]++; else unk++; } else if (down[i] || hiddenNow(i)) unk++;
+        if (f) { fr++; if (known[i]) cnt[faces[i] & 255]++; else unk++; } else if ((down[i] || hiddenNow(i)) && !(mem !== null && mem[i] === 1)) unk++;
       }
       for (const f of tr) {
         let best = 1e9;
-        for (const i of byFace.get(f)) if (alive[i] && known[i] && (freeNow[i] || (!down[i] && !hiddenNow(i)))) { const d = depth(i); if (d < best) best = d; }
+        for (const i of byFace.get(f)) if (alive[i] && known[i] && (freeNow[i] || (!down[i] && !hiddenNow(i)) || (mem !== null && mem[i] === 1))) { const d = depth(i); if (d < best) best = d; }
         s -= best < 1e9 ? p.deep * best : p.unknown + unk / 12;
       }
       let pr = 0, safe = 0;
@@ -125,7 +129,7 @@ const Hard = (() => {
     const at = new Int16Array(n).fill(-1);       // the move at which each tile was taken
     const commit = i => {
       if (clock && alive[clock.i] && moves >= clock.n) return false;
-      at[i] = moves; const q = trayT.findIndex(t => faces[t] === faces[i]); if (q >= 0) trayT.splice(q, 1); else trayT.push(i); take(i);
+      at[i] = moves; seenEver[i] = 1; const q = trayT.findIndex(t => faces[t] === faces[i]); if (q >= 0) trayT.splice(q, 1); else trayT.push(i); take(i);
       return true;
     };
     const trayT = [];      // the waiting tiles themselves (for the exact end game)
@@ -136,7 +140,7 @@ const Hard = (() => {
     // the end game: everything left is in sight, so work it out exactly (ice counted from now on)
     function endGame() {
       if (!p.end || left > p.end) return null;
-      for (let i = 0; i < n; i++) if (alive[i] && !(can(i) || (!down[i] && !hiddenNow(i)))) return null;
+      for (let i = 0; i < n; i++) if (alive[i] && !sees(i)) return null;
       let ru = null;
       if (rules) {
         const ice = {};
@@ -158,7 +162,7 @@ const Hard = (() => {
     function clockSearch() {
       const budget = clock.n - moves;
       if (budget > p.plan) return null;
-      for (let i = 0; i < n; i++) seen0[i] = alive[i] && (can(i) || (!down[i] && !hiddenNow(i))) ? 1 : 0;
+      for (let i = 0; i < n; i++) seen0[i] = alive[i] && sees(i) ? 1 : 0;
       const usable = i => alive[i] && seen0[i] && can(i);
       const path = [], visited = new Set();
       let nodes = 0, found = null;
@@ -232,7 +236,7 @@ const Hard = (() => {
       if (!full) for (const i of fr) opts.push([i]);
       if (!opts.length) return end(false, 'tray');
       decisions++; choices += opts.length;
-      for (let i = 0; i < n; i++) known[i] = alive[i] && (can(i) || (!down[i] && !hiddenNow(i))) ? 1 : 0;
+      for (let i = 0; i < n; i++) { known[i] = alive[i] && sees(i) ? 1 : 0; if (known[i]) seenEver[i] = 1; }
       if (p.reveal) { unseen.fill(0); unseenN = 0; for (let i = 0; i < n; i++) if (alive[i] && !known[i]) { unseen[faces[i] & 255]++; unseenN++; } }
       const mateKnown = i => tray.includes(faces[i]) || byFace.get(faces[i]).some(j => j !== i && alive[j] && known[j]);
       const unknown = fr.filter(i => !mateKnown(i)).length;
@@ -264,7 +268,7 @@ const Hard = (() => {
       for (const i of opts[k]) if (!commit(i)) return end(false, 'clock');
     }
     return end(tray.length === 0, tray.length ? 'tray' : 'win');
-    function end(win, why) { return { win, why, left, moves, at, risky, decisions, blind, forcedBlind, unknownOptions, singleOptions, choices: decisions ? choices / decisions : 0 }; }
+    function end(win, why) { return { win, why, left, moves, at, seen: seenEver, risky, decisions, blind, forcedBlind, unknownOptions, singleOptions, choices: decisions ? choices / decisions : 0 }; }
   }
   // share of games the test player wins (the same seeds every time, so two levels compare fairly)
   // risky: how often a winning game had to let a third tile wait (tray pressure)
@@ -275,6 +279,21 @@ const Hard = (() => {
   }
   const drain = it => { for (;;) { const s = it.next(); if (s.done) return s.value; } };
   function rate(g, runs = 60, seed = 1, p = P) { return drain(rateG(g, runs, seed, p)); }
+  // first try and a second try after losing it: the same board, now remembering each picture it saw
+  // on the first try with chance memP. two: share of games won within two tries
+  function rate2(g, runs = 60, seed = 1, p = P, memP = 1) {
+    let w1 = 0, w2 = 0, again = 0;
+    const r = L.rng(seed * 31 + 7);
+    for (let k = 0; k < runs; k++) {
+      const a = play(g, p, seed * 7919 + k * 104729);
+      if (a.win) { w1++; continue; }
+      const memory = new Uint8Array(g.tiles.length);
+      for (let i = 0; i < memory.length; i++) if (a.seen[i] && r() < memP) memory[i] = 1;
+      again++;
+      if (play({ ...g, memory }, p, seed * 6007 + k * 15485863).win) w2++;
+    }
+    return { first: w1 / runs, two: (w1 + w2) / runs, second: again ? w2 / again : null };
+  }
 
 
   /* ---------- the harder levels ----------
@@ -630,6 +649,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { MODEL_VERSION: 2, P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+  return { MODEL_VERSION: 2, P, REF, persona, play, rate, rate2, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;

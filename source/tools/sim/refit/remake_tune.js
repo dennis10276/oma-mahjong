@@ -12,13 +12,14 @@ const fs = require('fs'), path = require('path');
 const B = require('./boards.js'), L = B.L;
 const Hard = require(path.join(__dirname, '..', '..', '..', 'www', 'hard.js'));
 const [cmd, v] = process.argv.slice(2, 4);
-const FROM = 106, TO = 269;
+// FROM / TO / TAG: another range with its own plan and result files (fix-94-98-101: TAG=fix)
+const FROM = +(process.env.FROM || 106), TO = +(process.env.TO || 269), TAG = process.env.TAG || 'remake';
 // the new curve (strong first-try chance), agreed 2026-10-15
 const CURVE = [[100, 0.55], [150, 0.45], [170, 0.40], [269, 0.40]];
 const target = lv => { for (let i = 1; i < CURVE.length; i++) { const [a, x] = CURVE[i - 1], [b, y] = CURVE[i]; if (lv <= b) return x + (y - x) * (lv - a) / (b - a); } return CURVE[CURVE.length - 1][1]; };
 const tenth = lv => lv % 10 === 0;
 const tol = lv => tenth(lv) ? 0.07 : 0.05;
-const planFile = path.join(__dirname, 'remake-plan.json');
+const planFile = path.join(__dirname, `${TAG}-plan.json`);
 
 function game(d) {
   const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z })), nb = L.neighbors(tiles), n = tiles.length;
@@ -50,15 +51,15 @@ if (cmd === 'tune' || cmd === 'retune') {
   // ROUND=3 and up: the best board of the earlier rounds, only where it is still more than 0.10 off
   const ROUND = again ? +(process.env.ROUND || 2) : 1;
   const prev = {};
-  if (again) for (const f of fs.readdirSync(__dirname).filter(f => /^remake-tuned\d*-\d+\.json$/.test(f))) {
-    const rd = +(f.match(/^remake-tuned(\d*)-/)[1] || 1); if (rd >= ROUND) continue;
+  if (again) for (const f of fs.readdirSync(__dirname).filter(f => new RegExp(`^${TAG}-tuned\\d*-\\d+\\.json$`).test(f))) {
+    const rd = +(f.match(new RegExp(`^${TAG}-tuned(\\d*)-`))[1] || 1); if (rd >= ROUND) continue;
     for (const [lv, x] of Object.entries(JSON.parse(fs.readFileSync(path.join(__dirname, f), 'utf8')))) if (x.valid && (!prev[lv] || Math.abs(x.strong - x.target) < Math.abs(prev[lv].strong - prev[lv].target))) prev[lv] = x;
   }
-  const file = path.join(__dirname, `remake-tuned${again ? ROUND : ''}-${part}.json`);
+  const file = path.join(__dirname, `${TAG}-tuned${again ? ROUND : ''}-${part}.json`);
   const out = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {};
   const ctx = B.tableOf(v);
   for (let lv = FROM; lv <= TO; lv++) {
-    if ((lv - FROM) % parts !== part || out[lv]) continue;
+    if ((lv - FROM) % parts !== part || out[lv] || !plan[lv]) continue;
     const p = plan[lv], T = p.target;
     // LEVELS=a,b,...: only these (found off target or unfair on fresh games), checked for fairness too
     const only = process.env.LEVELS ? process.env.LEVELS.split(',').map(Number) : null;

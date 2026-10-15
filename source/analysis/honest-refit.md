@@ -117,3 +117,16 @@ after that, with the same players.
 Also to bring along: the game's own helpers in `layouts.js` (the solver and the "can the level still
 be finished" check) also stop at 3 waiting. They do not know the face-down pair rule either. That is
 safe (they only underrate), but they should match the game.
+
+## Retries (2026-10-15)
+
+`Hard.rate2` plays a first try and, after a loss, a second try on the same board that remembers
+each picture it saw with chance `memP` (`tools/sim/refit/retry_fit.js`, `measure_retry.js`).
+
+- Dennisisdebeste remembers everything: of his 21 tries right after a lost try he won 16; the strong
+  player with full memory predicts 16.8 (without memory 14.3).
+- Mrs. Doubtfire does not seem to use memory: of 79 such tries she won 22; the average player
+  without memory predicts 24.7, with memory 30.
+- Won within two tries on the live 1.53 levels (`analysis/retry-1.53.json`): strong 99% (75-79),
+  88% (80-89), 94% (90-99), 84-85% (106-149), falling to 72% (240-269). Dennis won 94% of 80-89
+  within two tries.
