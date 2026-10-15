@@ -25,10 +25,12 @@ const Hard = (() => {
   // - plan 10: with 10 moves or fewer left on the alarm clock they plan the way to the clock tile
   //   (his replay of level 105: from his opening the test player lost 9 of 10, now about 9 of 10 won).
   // strong ~ Dennisisdebeste (first tries 80-89: 0.71 real, 0.70 test player), average ~ Mrs. Doubtfire.
+  // memory: on a retry, the chance to remember a picture seen at the start / middle / end of the lost
+  //   try (rate2; fitted to real retries: Dennisisdebeste about half, Mrs. Doubtfire none).
   // focused: the old clock-focused calibration model, kept for comparison.
   // end: with this many tiles left and all of them seen, it works out the rest exactly
   const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
-  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 1, unknown: 0, reveal: 8, plan: 10 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10 }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10 } };
+  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 1, unknown: 0, reveal: 8, plan: 10, memory: [0.5, 0.3, 0.5] }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: [0.5, 0.3, 0.5] }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: 0 } };
   const persona = k => ({ ...P, ...REF[k] });
   // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
   const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
@@ -69,7 +71,7 @@ const Hard = (() => {
     const hiddenNow = i => { for (const j of cover[i]) if (alive[j]) return true; return false; };
     // a retry (g.memory): the pictures it remembers from the try before (the same board comes back),
     // also of tiles that are face down or covered now. seenEver: what this try showed it (for the next)
-    const mem = g.memory || null, seenEver = new Uint8Array(n);
+    const mem = g.memory || null, seenEver = new Int16Array(n);   // seenEver: 1 + the move at which it was first seen
     const sees = i => can(i) || (!down[i] && !hiddenNow(i)) || (mem !== null && mem[i] === 1);
     // Freeze knowledge BEFORE trying a move. Hypothetically uncovering a tile must not give
     // its picture away while deciding which covering tile to take. Free tiles can be peeked.
@@ -129,7 +131,7 @@ const Hard = (() => {
     const at = new Int16Array(n).fill(-1);       // the move at which each tile was taken
     const commit = i => {
       if (clock && alive[clock.i] && moves >= clock.n) return false;
-      at[i] = moves; seenEver[i] = 1; const q = trayT.findIndex(t => faces[t] === faces[i]); if (q >= 0) trayT.splice(q, 1); else trayT.push(i); take(i);
+      at[i] = moves; if (!seenEver[i]) seenEver[i] = moves + 1; const q = trayT.findIndex(t => faces[t] === faces[i]); if (q >= 0) trayT.splice(q, 1); else trayT.push(i); take(i);
       return true;
     };
     const trayT = [];      // the waiting tiles themselves (for the exact end game)
@@ -236,7 +238,7 @@ const Hard = (() => {
       if (!full) for (const i of fr) opts.push([i]);
       if (!opts.length) return end(false, 'tray');
       decisions++; choices += opts.length;
-      for (let i = 0; i < n; i++) { known[i] = alive[i] && sees(i) ? 1 : 0; if (known[i]) seenEver[i] = 1; }
+      for (let i = 0; i < n; i++) { known[i] = alive[i] && sees(i) ? 1 : 0; if (known[i] && !seenEver[i]) seenEver[i] = moves + 1; }
       if (p.reveal) { unseen.fill(0); unseenN = 0; for (let i = 0; i < n; i++) if (alive[i] && !known[i]) { unseen[faces[i] & 255]++; unseenN++; } }
       const mateKnown = i => tray.includes(faces[i]) || byFace.get(faces[i]).some(j => j !== i && alive[j] && known[j]);
       const unknown = fr.filter(i => !mateKnown(i)).length;
@@ -280,15 +282,25 @@ const Hard = (() => {
   const drain = it => { for (;;) { const s = it.next(); if (s.done) return s.value; } };
   function rate(g, runs = 60, seed = 1, p = P) { return drain(rateG(g, runs, seed, p)); }
   // first try and a second try after losing it: the same board, now remembering each picture it saw
-  // on the first try with chance memP. two: share of games won within two tries
-  function rate2(g, runs = 60, seed = 1, p = P, memP = 1) {
+  // on the first try with chance memP. memP can also be [start, middle, end]: the chance for a
+  // picture first seen in the first, middle or last third of the lost try (a person remembers the
+  // start and the end of a game better than the middle). two: share of games won within two tries
+  function remembered(seen, moves, memP, r) {
+    const m = new Uint8Array(seen.length), third = Math.max(1, moves) / 3;
+    for (let i = 0; i < seen.length; i++) {
+      if (!seen[i]) continue;
+      const q = Array.isArray(memP) ? memP[Math.min(2, Math.floor((seen[i] - 1) / third))] : memP;
+      if (r() < q) m[i] = 1;
+    }
+    return m;
+  }
+  function rate2(g, runs = 60, seed = 1, p = P, memP = p.memory === undefined ? 1 : p.memory) {
     let w1 = 0, w2 = 0, again = 0;
     const r = L.rng(seed * 31 + 7);
     for (let k = 0; k < runs; k++) {
       const a = play(g, p, seed * 7919 + k * 104729);
       if (a.win) { w1++; continue; }
-      const memory = new Uint8Array(g.tiles.length);
-      for (let i = 0; i < memory.length; i++) if (a.seen[i] && r() < memP) memory[i] = 1;
+      const memory = remembered(a.seen, a.moves, memP, r);
       again++;
       if (play({ ...g, memory }, p, seed * 6007 + k * 15485863).win) w2++;
     }
@@ -649,6 +661,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { MODEL_VERSION: 2, P, REF, persona, play, rate, rate2, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+  return { MODEL_VERSION: 2, P, REF, persona, play, rate, rate2, remembered, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;

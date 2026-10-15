@@ -16,10 +16,11 @@ for (const list of Object.values(byKey)) { list.sort((x, y) => x.at - y.at); for
 const keys = [...new Set(retries.map(a => a.key))];
 const out = { name, persona, retries: retries.length, realWins: retries.filter(a => a.r === 'win').length, boards: keys.length, fits: [] };
 const cache = {};
-for (const mp of mps.split(',').map(Number)) {
+// memPs: numbers, or start/middle/end triples like 0.5/0.3/0.5, separated by commas
+for (const mp of mps.split(',').map(x => x.includes('/') ? x.split('/').map(Number) : +x)) {
   let pred = 0, ll = 0, firstPred = 0;
   for (const a of retries) {
-    const k = a.key + '|' + mp;
+    const k = a.key + '|' + JSON.stringify(mp);
     if (!cache[k]) cache[k] = Hard.rate2(build(a), runs, 5, Hard.persona(persona), mp);
     const p = Math.min(0.99, Math.max(0.01, cache[k].second === null ? cache[k].first : cache[k].second));
     pred += p; firstPred += cache[k].first; ll += Math.log(a.r === 'win' ? p : 1 - p);

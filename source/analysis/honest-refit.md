@@ -121,12 +121,15 @@ safe (they only underrate), but they should match the game.
 ## Retries (2026-10-15)
 
 `Hard.rate2` plays a first try and, after a loss, a second try on the same board that remembers
-each picture it saw with chance `memP` (`tools/sim/refit/retry_fit.js`, `measure_retry.js`).
+pictures from the lost try (`tools/sim/refit/retry_fit.js`, `measure_retry.js`). Memory is human:
+a picture first seen at the start or the end of the lost try is remembered half of the time, one
+from the middle a third of the time (Dennis's suggestion, start/middle/end = 50/30/50%).
 
-- Dennisisdebeste remembers everything: of his 21 tries right after a lost try he won 16; the strong
-  player with full memory predicts 16.8 (without memory 14.3).
-- Mrs. Doubtfire does not seem to use memory: of 79 such tries she won 22; the average player
-  without memory predicts 24.7, with memory 30.
-- Won within two tries on the live 1.53 levels (`analysis/retry-1.53.json`): strong 99% (75-79),
-  88% (80-89), 94% (90-99), 84-85% (106-149), falling to 72% (240-269). Dennis won 94% of 80-89
-  within two tries.
+- Dennisisdebeste: 21 tries right after a lost try, 16 won. Memory 50/30/50 predicts 15.2; perfect
+  memory 16.8; none 14.3. All within the noise of 21 tries.
+- Mrs. Doubtfire: 79 such tries, 22 won. No memory predicts 24.7; 50/30/50 predicts 27.3. The
+  average player therefore keeps no memory.
+- Dennis's level 92 (1.49; now level 91): strong wins 30% first try; within two tries 66% (with
+  perfect memory it was 91%). He needed 5 tries.
+- Won within two tries on the live 1.53 levels (`analysis/retry-1.53.json`), strong: 99% (75-79),
+  85% (80-89; Dennis 94% of 17), 87% (90-99), 80% (106-149), 72% (150-209), 67% (210-269).
