@@ -33,4 +33,4 @@ function classic(lv, aspect) {
   const down = new Uint8Array(n); (d.down || []).forEach(i => down[i] = 1);
   return { key: `c${aspect}:${lv}`, tiles, nb, faces: d.faces, down, rules: rulesOf(tiles, ob), clock: null };
 }
-module.exports = { designed, classic, L };
+module.exports = { designed, classic, L, tableOf: tableCtx };
