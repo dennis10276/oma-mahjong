@@ -184,6 +184,32 @@ module.exports = [
     },
   },
   {
+    name: 'dashboard: prediction from the player\'s own test player, with the real results next to it',
+    async run(t, { serve, FakeDB, browser, sleep, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
+      const db = new FakeDB(fixture());
+      const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 } });
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const levels = {}; for (let lv = 26; lv < 46; lv++) levels[lv] = [lv === 26 ? 80 : 40, 70, lv === 30 ? 50 : 90, lv >= 30 ? 9 : 0];
+      const pred = { made: '2026-10-16', version: '1.53', players: { pDen: { name: 'Dennis', from: 26, fit: { firstTries: 74, retries: 21, levels: [42, 105], memory: [75, 75, 75], blunder: 15 }, levels } } };
+      await ctx.route(u => /\/dash\/predict\.json/.test(u.pathname), r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(pred) }));
+      const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+      try {
+        await p.goto(site.url + 'dash/#pDen'); await sleep(2000);
+        const txt = await p.evaluate(() => document.querySelector('#pred').innerText);
+        t.ok(/De komende 10 levels: gemiddeld 40% in één keer, 70% binnen 2 pogingen/.test(txt), 'summary of the next 10 levels', txt.slice(0, 300));
+        t.ok(/26[^\n]*80%[^\n]*gehaald in 1 poging/.test(txt), 'a level played since the prediction shows the real result', txt);
+        t.ok(/verwachtte er 0,8 in één keer, het werden er 1/.test(txt), 'expected against real first tries');
+        t.ok(/27[^\n]*nog bezig|27[^\n]*begonnen/.test(txt), 'the level being played');
+        t.ok(/Eigen testspeler van Dennis, afgesteld op 74 eerste pogingen en 21 herkansingen \(levels 42–105\); onthoudt bij een herkansing 75%/.test(txt), 'how the test player was made', txt.slice(-300));
+        t.eq(await p.evaluate(() => [...document.querySelectorAll('#pred tr.hard td:first-child')].map(td => td.textContent)), ['30'], 'hard level (under 60% within 4 tries) marked');
+        await p.evaluate(() => selectPlayer('pOma')); await sleep(300);
+        t.ok(/Nog geen eigen testspeler voor OmaHanny/.test(await p.evaluate(() => document.querySelector('#pred').innerText)), 'a player without a test player');
+        t.eq(errs, [], 'no errors on the dashboard');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
+  {
     name: 'dashboard: Super-omamodus and each part of it switched per player',
     async run(t, { serve, FakeDB, browser, sleep, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });

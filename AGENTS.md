@@ -50,6 +50,15 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - Keep the current skill level roughly (tray pressure as it is). The alarm clock stays as it is.
 - Face-down share: measured later as a side project of the honest test player.
 
+## Predictions on the dashboard
+
+- `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, what their own
+  test player predicts for their next 60 levels: first try, within 2 and within 4 tries. The dashboard
+  shows it in the card "Voorspelling", with the real results next to it once played.
+- It is made on `wip/honest-observer` (`source/tools/sim/refit`): `dataset.js` (fresh data from
+  Firebase), `player_fit.js` (one test player per person), `predict.js`, then
+  `publish_predict.js <version> <file>`. Publishing it changes no game version: copy it to both places.
+
 ## Firebase
 
 - The database rules are `source/firebase/rules.json`. Dennis publishes them in the Firebase

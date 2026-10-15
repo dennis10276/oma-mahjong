@@ -79,6 +79,11 @@ th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line
 th { font-size: 12px; color: var(--ink-2); font-weight: 700; position: sticky; top: 0; background: var(--surface); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tbl-wrap { container-type: inline-size; }
+.pred-sum { margin: 0 0 8px; font-size: 14px; }
+.pred-note { margin: 8px 0 0; font-size: 12px; color: var(--ink-3); }
+#pred td.num, #pred th.num { text-align: right; }
+#pred tr.hard td:first-child::after { content: ' ⚠️'; }
+#pred tr.done td { color: var(--ink-2); }
 .tbl-wrap table { table-layout: fixed; }
 .tbl-wrap th, .tbl-wrap td { white-space: normal; overflow-wrap: anywhere; padding: 7px 4px; }
 .tbl-wrap th { position: static; }
@@ -249,6 +254,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     </section>
     <div id="alerts"></div>
     <div id="heartTop" class="wide"></div>
+    <section class="card wide" aria-labelledby="predTitle"><h2 id="predTitle">Voorspelling</h2><div id="pred"></div></section>
     <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
   </aside>
 </main>
@@ -444,6 +450,7 @@ function render() {
   $('#live').classList.toggle('on', !!active);
   if (!document.activeElement || !document.activeElement.closest('#heartTop')) renderHeartTop();
   renderCfg();
+  renderPred(levels, curLv);
   $('#liveTxt').textContent = active ? (last && ['start', 'hint', 'shuf'].includes(last.k) ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
   $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
 
@@ -672,6 +679,31 @@ function renderCfg() {
 // a heart can always be sent to the player on screen, not only when she is stuck
 function renderHeartTop() { const el = $('#heartTop'); if (el) el.innerHTML = sel && !stuckStreak(sel) ? heartBox(sel) : ''; }
 
+// ---------- prediction (predict.json: each player's own test player, fitted to their tries) ----------
+let PRED = null;
+async function loadPred() { try { const r = await fetch('predict.json?t=' + Math.floor(Date.now() / 600000)); if (r.ok) PRED = await r.json(); } catch (e) { } }
+function renderPred(levels, curLv) {
+  const el = $('#pred'); if (!el) return;
+  const p = PRED && PRED.players && PRED.players[sel];
+  if (!p) { el.innerHTML = `<div class="empty">Nog geen eigen testspeler voor ${esc(nameOf(sel))}: daarvoor zijn meer pogingen nodig.</div>`; return; }
+  const byLv = new Map(levels.filter(l => !l.daily).map(l => [l.lv, l]));
+  const all = Object.keys(p.levels).map(Number).sort((a, b) => a - b);
+  const played = all.filter(lv => lv < curLv && byLv.has(lv) && byLv.get(lv).won);
+  const ahead = all.filter(lv => lv >= curLv).slice(0, 15);
+  const pc = x => x + '%';
+  const real = lv => { const l = byLv.get(lv); if (!l) return ''; const n = l.ends.length; return l.won ? `gehaald in ${l.winAt || n} ${(l.winAt || n) === 1 ? 'poging' : 'pogingen'}` : n ? `${n} ${n === 1 ? 'poging' : 'pogingen'}, nog bezig` : 'begonnen'; };
+  const row = lv => { const [a, b, c] = p.levels[lv]; return `<tr class="${c < 60 ? 'hard' : ''}${lv < curLv ? ' done' : ''}"><td>${lv}</td><td class="num">${pc(a)}</td><td class="num">${pc(b)}</td><td class="num">${pc(c)}</td><td>${real(lv)}</td></tr>`; };
+  const next = ahead.slice(0, 10), avg = k => next.length ? Math.round(next.reduce((s, lv) => s + p.levels[lv][k], 0) / next.length) : 0;
+  const sum = next.length ? `De komende ${next.length} levels: gemiddeld <b>${avg(0)}%</b> in één keer, <b>${avg(1)}%</b> binnen 2 pogingen, <b>${avg(2)}%</b> binnen 4.` : `${esc(nameOf(sel))} is voorbij de voorspelde levels; er komt een nieuwe voorspelling.`;
+  const exp = played.reduce((s, lv) => s + p.levels[lv][0] / 100, 0), got = played.filter(lv => (byLv.get(lv).winAt || 0) === 1).length;
+  const check = played.length ? ` Sinds de voorspelling ${played.length} ${played.length === 1 ? 'level' : 'levels'} gehaald: de testspeler verwachtte er ${exp.toFixed(1).replace('.', ',')} in één keer, het werden er <b>${got}</b>.` : '';
+  const f = p.fit, mem = Array.isArray(f.memory) ? (f.memory.every(x => x === f.memory[0]) ? f.memory[0] + '%' : f.memory.join('/') + '% (begin/midden/eind)') : f.memory + '%';
+  el.innerHTML = `<p class="pred-sum">${sum}${check}</p>
+    <div class="tbl-wrap"><table><thead><tr><th scope="col">Level</th><th scope="col" class="num">1e poging</th><th scope="col" class="num">Binnen 2</th><th scope="col" class="num">Binnen 4</th><th scope="col">Echt</th></tr></thead>
+    <tbody>${[...played.slice(-5), ...ahead].map(row).join('')}</tbody></table></div>
+    <p class="pred-note">Eigen testspeler van ${esc(nameOf(sel))}, afgesteld op ${f.firstTries} eerste pogingen en ${f.retries} herkansingen (levels ${f.levels[0]}–${f.levels[1]}); onthoudt bij een herkansing ${mem} van wat er te zien was. Speelt elk level 150 keer op precies het bord van dat level. ⚠️ = binnen 4 pogingen minder dan 60%. Gemaakt ${new Date(PRED.made).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} (versie ${esc(PRED.version)}).</p>`;
+}
+
 // ---------- live connection ----------
 async function loadScores() { try { SCORES = await dbGet('scores') || {}; } catch (e) { } }
 function stream() {
@@ -690,6 +722,8 @@ function stream() {
   es.addEventListener('cancel', () => { $('#notice').innerHTML = '<div class="warnbox">De database staat het lezen van speelgegevens nog niet toe. Publiceer de nieuwe Firebase-regels.</div>'; });
 }
 loadScores().then(() => { fillPicker(); render(); stream(); });
+loadPred().then(render);
+setInterval(() => loadPred().then(render), 600000);
 setInterval(() => loadScores().then(render), 30000);
 setInterval(render, 30000);   // "x min geleden" stays fresh
 setInterval(checkHeartsSeen, 15000);
