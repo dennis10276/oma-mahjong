@@ -19,7 +19,7 @@ module.exports = [
       // (1.53: levels 106-269 were remade, see the next test; the boards still shipped up to 105 are checked here)
       for(const r of report.rows){
         const now=r.lv<90?r.lv:shipped.get(r.lv);
-        if(now>105)continue;
+        if(now>105||[94,98,101].includes(now))continue;   // 1.53: remade (106+) or made fairer (94, 98, 101), checked below
         const row=table.levels[now-table.from],before=old.levels[r.lv-old.from],margin=r.lv<90?0.08:0.10;
         if(r.lv<90){t.eq(crypto.createHash('sha256').update(JSON.stringify(row)).digest('hex'),r.hash,'measured board is shipped '+r.lv);t.eq([row[8],row[9]],[r.sensible,r.focused],'table logs the new measurements '+r.lv);}
         else t.eq(row[8],r.sensible,'board '+r.lv+' is shipped at level '+now);
@@ -39,14 +39,25 @@ module.exports = [
     },
   },
   {
-    name: 'curve 1.53: levels 106-269 remade for the new curve (re-fitted strong test player); up to 105 unchanged',
+    name: 'curve 1.53: levels 106-269 remade for the new curve (re-fitted strong test player); up to 105 unchanged except 94, 98 and 101 (fairer)',
     cpu: true,
     async run(t) {
       const load=f=>vm.runInNewContext(fs.readFileSync(path.join(__dirname,f),'utf8')+';HARD_LEVELS');
       const table=load('../www/levels-hard.js'),before=load('../analysis/levels-1.52.js'),rep=require('../analysis/remake-1.53.json');
       const L=require('../www/layouts');
       const game=d=>{const tiles=d.tiles.map(([x,y,z])=>({x,y,z})),nb=L.neighbors(tiles),down=new Uint8Array(tiles.length);d.down.forEach(i=>down[i]=1);const ob=d.obst,rules=ob&&(Object.keys(ob.ice||{}).length||(ob.keys||[]).length)?{iceNb:L.iceNeighbors(tiles),ice:ob.ice||{},locks:(ob.keys||[]).length?new Set(ob.locks):null,keys:ob.keys||[]}:null;return{tiles,nb,faces:d.faces,down,rules,clock:d.clock};};
-      for(let lv=table.from;lv<=105;lv++)t.eq(table.levels[lv-table.from],before.levels[lv-before.from],'unchanged level '+lv);
+      const fixed=new Map((rep.fixed||[]).map(f=>[f.lv,f]));
+      t.eq([...fixed.keys()],[94,98,101],'only 94, 98 and 101 changed before 106');
+      for(let lv=table.from;lv<=105;lv++){
+        const row=table.levels[lv-table.from],src=before.levels[lv-before.from];
+        if(!fixed.has(lv)){t.eq(row,src,'unchanged level '+lv);continue;}
+        const f=fixed.get(lv);
+        for(const k of [0,2,3,4,5,6,7,10])t.eq(row[k],src[k],'level '+lv+' made fairer: only the pictures moved (field '+k+')');
+        t.eq(row[1].split('').sort().join(''),src[1].split('').sort().join(''),'level '+lv+': the same pictures');
+        t.ok(H.validSolution(game(H.unpack(lv,row)),H.unpack(lv,row).solution),'level '+lv+' can be finished in time');
+        t.eq([row[8],row[9]],[f.sensible,f.strong],'the table holds the measured chances '+lv);
+        t.ok(f.strong>=0.35&&f.strong<=0.65&&f.strong>f.before.strong+0.2,'level '+lv+' fairer for the strong player ('+f.before.strong+' -> '+f.strong+')');
+      }
       t.eq(rep.levels.length,164,'every remade level measured');
       t.ok(rep.runs>=300,'measured on at least 300 fresh games per player');
       const srcs=new Set();

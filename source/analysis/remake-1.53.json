@@ -1823,5 +1823,44 @@
    "sensible": 0.66,
    "average": 0.43
   }
- }
+ },
+ "fixed": [
+  {
+   "lv": 94,
+   "target": 0.5,
+   "before": {
+    "strong": 0.1033,
+    "sensible": 0.15,
+    "average": 0.15
+   },
+   "strong": 0.5867,
+   "sensible": 0.4033,
+   "average": 0.3
+  },
+  {
+   "lv": 98,
+   "target": 0.5,
+   "before": {
+    "strong": 0.12,
+    "sensible": 0.0867,
+    "average": 0.0433
+   },
+   "strong": 0.5133,
+   "sensible": 0.21,
+   "average": 0.07
+  },
+  {
+   "lv": 101,
+   "target": 0.5,
+   "before": {
+    "strong": 0.1867,
+    "sensible": 0.2367,
+    "average": 0.18
+   },
+   "strong": 0.4,
+   "sensible": 0.42,
+   "average": 0.2933
+  }
+ ],
+ "fixedNote": "94, 98 and 101 were the hardest boards before 106 (strong 10-19%); their pictures were swapped towards 50% for the strong player, everything else kept."
 }

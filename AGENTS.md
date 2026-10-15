@@ -35,7 +35,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
-- Levels 1-105 stay as they are (75-105: the 1.52 boards).
+- Levels 1-105 stay as they are (75-105: the 1.52 boards), except 94, 98 and 101: in 1.53 their
+  pictures were swapped to make them fairer (strong player 10-19% -> 40-59%).
 - Levels 106-269 were remade in 1.53 for a new curve, measured with the honest test player
   re-fitted to real play (branch `wip/honest-observer`, `source/analysis/honest-refit.md` there):
   the strong player (fitted to Dennisisdebeste) wins about 54% of first tries at 106, 45% at 150,
