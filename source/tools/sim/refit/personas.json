@@ -1,3 +1,3 @@
-{ "strong": { "temp": 1, "end": 12, "clockFocus": 4, "unknown": 0 },
-  "sensible": { "temp": 2, "end": 12, "clockFocus": 4, "unknown": 0 },
-  "average": { "temp": 4.5, "end": 12, "clockFocus": 1, "unknown": 0 } }
+{ "strong": { "temp": 1.5, "end": 12, "clockFocus": 4, "unknown": 0, "reveal": 8 },
+  "sensible": { "temp": 3, "end": 12, "clockFocus": 4, "unknown": 0, "reveal": 8 },
+  "average": { "temp": 4.5, "end": 12, "clockFocus": 4, "unknown": 0, "reveal": 8 } }

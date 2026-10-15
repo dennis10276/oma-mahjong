@@ -18,13 +18,15 @@ const Hard = (() => {
   const L = typeof Layouts !== 'undefined' ? Layouts : require('./layouts.js');
   const SLOTS = L.SLOTS;
   // the sensible player. Personas re-fitted 2026-10-15 to 363 real attempts on the exact boards
-  // (tools/sim/refit, analysis/honest-refit.md): with honest knowledge, real players are not afraid
-  // of a tray tile whose twin they have not seen yet (unknown 0 fits every player better than 7).
-  // strong ~ Dennisisdebeste (temp 0.7-1), average ~ Mrs. Doubtfire (temp 3-6), sensible between.
+  // (tools/sim/refit, analysis/honest-refit.md):
+  // - unknown 0: real players are not afraid of a tray tile whose twin they have not seen yet;
+  // - reveal 8: they dig where the uncovered tiles are likely to fit something (smart guessing,
+  //   found in Dennisisdebeste's replay of level 102: the test player had 0%, he won).
+  // strong ~ Dennisisdebeste (first tries 80-89: 0.71 real, 0.69 test player), average ~ Mrs. Doubtfire.
   // focused: the old clock-focused calibration model, kept for comparison.
   // end: with this many tiles left and all of them seen, it works out the rest exactly
   const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
-  const REF = { strong: { temp: 1, end: 12, clockFocus: 4, unknown: 0 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 2, end: 12, clockFocus: 4, unknown: 0 }, average: { temp: 4.5, end: 12, clockFocus: 1, unknown: 0 } };
+  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8 }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8 } };
   const persona = k => ({ ...P, ...REF[k] });
   // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
   const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
@@ -66,6 +68,9 @@ const Hard = (() => {
     // Freeze knowledge BEFORE trying a move. Hypothetically uncovering a tile must not give
     // its picture away while deciding which covering tile to take. Free tiles can be peeked.
     const known = new Uint8Array(n), freeNow = new Uint8Array(n), cnt = new Int16Array(256);
+    // smart guessing (p.reveal): the pictures it has not seen yet, counted the way a person counts
+    // what is still missing (how many of each, never where they are)
+    const unseen = new Int16Array(256); let unseenN = 0;
     function score(tr) {
       memo.fill(0);
       let s = -p.tray[Math.min(3, tr.length)];
@@ -90,6 +95,17 @@ const Hard = (() => {
         for (const i of list) if (alive[i] && freeNow[i] && down[i]) { safe++; break; }
       }
       s += p.free * fr + p.pairs * pr;
+      // tiles this move uncovers that it could not see before: each is a draw from the pictures still
+      // missing. A draw that fits a waiting tile, or a free tile without a partner, is worth a pair.
+      if (p.reveal && unseenN) {
+        let nf = 0; for (let i = 0; i < n; i++) if (freeNow[i] && !known[i]) nf++;
+        if (nf) {
+          let hit = 0;
+          for (const f of tr) hit += unseen[f & 255];
+          for (const [f] of byFace) { const c = cnt[f & 255]; if (c & 1 && !tr.includes(f)) hit += unseen[f & 255]; }
+          s += p.reveal * nf * Math.min(1, hit / unseenN);
+        }
+      }
       if (tr.length >= SLOTS - 1 && !safe) s -= 1000;        // stuck for sure
       if (clock && alive[clock.i]) {
         const slack = clock.n - moves - depth(clock.i) - 1;
@@ -107,6 +123,9 @@ const Hard = (() => {
     };
     const trayT = [];      // the waiting tiles themselves (for the exact end game)
     let plan = null;
+    // start from a position in the middle of a game: these tiles were taken already, in this order
+    // (tools/sim/refit/replay.js plays on from a real player's position)
+    if (g.start) for (const i of g.start) if (!commit(i)) return end(false, 'clock');
     // the end game: everything left is in sight, so work it out exactly (ice counted from now on)
     function endGame() {
       if (!p.end || left > p.end) return null;
@@ -141,6 +160,7 @@ const Hard = (() => {
       if (!opts.length) return end(false, 'tray');
       decisions++; choices += opts.length;
       for (let i = 0; i < n; i++) known[i] = alive[i] && (can(i) || (!down[i] && !hiddenNow(i))) ? 1 : 0;
+      if (p.reveal) { unseen.fill(0); unseenN = 0; for (let i = 0; i < n; i++) if (alive[i] && !known[i]) { unseen[faces[i] & 255]++; unseenN++; } }
       const mateKnown = i => tray.includes(faces[i]) || byFace.get(faces[i]).some(j => j !== i && alive[j] && known[j]);
       const unknown = fr.filter(i => !mateKnown(i)).length;
       unknownOptions += unknown; singleOptions += fr.length;

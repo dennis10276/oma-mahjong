@@ -13,7 +13,10 @@ const part = +(process.argv[2] || 0), parts = +(process.argv[3] || 1), runs = +(
 const GRID = +(process.env.GRID || 1);
 const G1 = GRID === 1;
 const TEMPS = G1 ? [0.3, 0.5, 0.7, 1, 1.5, 2, 3, 4.5, 6, 9] : GRID === 2 ? [0.3, 0.7, 1.5, 3, 6] : [0.3, 0.7, 1, 1.5, 2, 3, 4.5, 6];
-const ENDS = G1 ? [0, 12, 20] : [12], FOCUS = G1 ? [0, 1, 4] : [1, 4], UNK = G1 ? [7] : [0, 2, 7];
+const ENDS = G1 ? [0, 12, 20] : [12], FOCUS = G1 ? [0, 1, 4] : [1, 4], UNK = G1 ? [7] : GRID === 4 ? [0] : [0, 2, 7];
+// GRID=4: smart guessing (reveal: the value of uncovering tiles that may fit) as the extra axis
+const REVEAL = GRID === 4 ? [0, 2, 4, 8] : [0];
+if (GRID === 4) TEMPS.splice(0, TEMPS.length, 0.5, 1, 1.5, 2, 3, 4.5, 6);
 const A = require('./attempts.json');
 const keys = [...new Set(A.map(a => a.key))].sort().filter((k, i) => i % parts === part);
 const OUT = path.join(__dirname, G1 ? 'rates' : 'rates' + GRID); fs.mkdirSync(OUT, { recursive: true });
@@ -24,9 +27,9 @@ const t0 = Date.now();
 keys.forEach((k, n) => {
   if (res[k]) return;
   const g = build(k), out = {};
-  for (const temp of TEMPS) for (const end of ENDS) for (const cf of (g.clock ? FOCUS : [0])) for (const unknown of UNK) {
-    const r = Hard.rate(g, runs, 1, { ...Hard.P, temp, end, clockFocus: cf, unknown });
-    out[`${temp}|${end}|${cf}` + (G1 ? '' : `|${unknown}`)] = r.rate;
+  for (const temp of TEMPS) for (const end of ENDS) for (const cf of (g.clock ? FOCUS : [0])) for (const unknown of UNK) for (const reveal of REVEAL) {
+    const r = Hard.rate(g, runs, 1, { ...Hard.P, temp, end, clockFocus: cf, unknown, reveal });
+    out[`${temp}|${end}|${cf}` + (G1 ? '' : `|${unknown}`) + (GRID === 4 ? `|${reveal}` : '')] = r.rate;
   }
   res[k] = { tiles: g.tiles.length, clock: !!g.clock, runs, r: out };
   fs.writeFileSync(file, JSON.stringify(res));
