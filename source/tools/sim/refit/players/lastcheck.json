@@ -1,0 +1,142 @@
+{
+ "Dennisisdebeste": [
+  {
+   "lv": 105,
+   "key": "t1.52:105",
+   "real": "won at try 1",
+   "first": 0.7,
+   "within2": 0.95,
+   "within4": 1,
+   "median": 1,
+   "chanceOfReal": 0.7,
+   "chanceSoManyOrMore": 1
+  },
+  {
+   "lv": 104,
+   "key": "t1.50:104",
+   "real": "won at try 4",
+   "first": 0.65,
+   "within2": 0.91,
+   "within4": 0.99,
+   "median": 1,
+   "chanceOfReal": 0.015,
+   "chanceSoManyOrMore": 0.02
+  },
+  {
+   "lv": 103,
+   "key": "t1.50:103",
+   "real": "won at try 1",
+   "first": 0.84,
+   "within2": 1,
+   "within4": 1,
+   "median": 1,
+   "chanceOfReal": 0.84,
+   "chanceSoManyOrMore": 1
+  }
+ ],
+ "Mrs. Doubtfire": [
+  {
+   "lv": 90,
+   "key": "t1.52:90",
+   "real": "won at try 1",
+   "first": 0.68,
+   "within2": 0.89,
+   "within4": 0.99,
+   "median": 1,
+   "chanceOfReal": 0.68,
+   "chanceSoManyOrMore": 1
+  },
+  {
+   "lv": 89,
+   "key": "t1.49:89",
+   "real": "won at try 13",
+   "first": 0.17,
+   "within2": 0.28,
+   "within4": 0.52,
+   "median": 4,
+   "chanceOfReal": 0.02,
+   "chanceSoManyOrMore": 0.19
+  },
+  {
+   "lv": 88,
+   "key": "t1.49:88",
+   "real": "won at try 1",
+   "first": 0.31,
+   "within2": 0.57,
+   "within4": 0.83,
+   "median": 2,
+   "chanceOfReal": 0.31,
+   "chanceSoManyOrMore": 1
+  }
+ ],
+ "PUK": [
+  {
+   "lv": 49,
+   "key": "c1:49",
+   "real": "1 tries, not won",
+   "first": 0.5,
+   "within2": 0.74,
+   "within4": 0.93,
+   "median": 1,
+   "chanceOfReal": null,
+   "chanceSoManyOrMore": 0.5
+  },
+  {
+   "lv": 48,
+   "key": "c1:48",
+   "real": "won at try 1",
+   "first": 0.65,
+   "within2": 0.89,
+   "within4": 0.98,
+   "median": 1,
+   "chanceOfReal": 0.65,
+   "chanceSoManyOrMore": 1
+  },
+  {
+   "lv": 47,
+   "key": "c1:47",
+   "real": "won at try 1",
+   "first": 0.66,
+   "within2": 0.88,
+   "within4": 0.96,
+   "median": 1,
+   "chanceOfReal": 0.66,
+   "chanceSoManyOrMore": 1
+  }
+ ],
+ "Gerda": [
+  {
+   "lv": 52,
+   "key": "c1.4:52",
+   "real": "won at try 1",
+   "first": 0.53,
+   "within2": 0.79,
+   "within4": 0.96,
+   "median": 1,
+   "chanceOfReal": 0.53,
+   "chanceSoManyOrMore": 1
+  },
+  {
+   "lv": 51,
+   "key": "c1.4:51",
+   "real": "won at try 17",
+   "first": 0.03,
+   "within2": 0.04,
+   "within4": 0.07,
+   "median": ">20",
+   "chanceOfReal": 0.025,
+   "chanceSoManyOrMore": 0.71
+  },
+  {
+   "lv": 50,
+   "key": "c1.4:50",
+   "real": "won at try 2",
+   "first": 0.33,
+   "within2": 0.59,
+   "within4": 0.8,
+   "median": 2,
+   "chanceOfReal": 0.265,
+   "chanceSoManyOrMore": 0.675
+  }
+ ]
+}
