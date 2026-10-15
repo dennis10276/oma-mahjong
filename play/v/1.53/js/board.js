@@ -14,12 +14,13 @@ function saveCur() {
   if (!G || G.done) return;
   syncClock();
   try {
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, hv: G.o.mode === 'level' && Hard.applies(G.o.level, G.o.track) ? Hard.GENV : null }));
+    replayCapture();
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: G.o.mode === 'level' && Hard.applies(G.o.level, G.o.track) ? Hard.GENV : null }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
-function pauseClock() { syncClock(); if (G) G.tStart = 0; saveCur(); }
-function resumeClock() { if (G && !G.done && curScreen === 'game') G.tStart = performance.now(); }
+function pauseClock() { syncClock(); if (G) { G.tStart = 0; replayMark('pause'); replayCapture(); replayDrain(G); } saveCur(); }
+function resumeClock() { if (G && !G.done && curScreen === 'game') { G.tStart = performance.now(); replayMark('resume'); } }
 
 // ---------- starting a level ----------
 const tileScale = () => S.bigTiles ? 0.7 : 1;
@@ -47,6 +48,8 @@ function begin(o, restart = false) {
     toast(tx('levelsOnHold', RULES.levels.blockedFrom), 4500);
     return;
   }
+  const previousReplay = G && G.rp;
+  if (previousReplay) { replayCapture(); replayDrain(G); }
   $('#modal').classList.add('hidden'); modalOnClose = null;
   $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
   show('game');
@@ -55,6 +58,10 @@ function begin(o, restart = false) {
   const wrap = $('#boardWrap');
   const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
+  // A same-page resume may follow a drained tail. Adopt its cursor only when the saved
+  // position matches, without writing over saves replaced by an update/reset.
+  if (cur && cur.rp && previousReplay && cur.rp.id === previousReplay.id &&
+      JSON.stringify(cur.rp.last) === JSON.stringify(previousReplay.last)) cur.rp = previousReplay;
   const sameTrack = cur && (cur.tr || '') === (o.track || '') &&
     (o.mode !== 'level' || o.level < RULES.hard.rebuildFrom || !Hard.applies(o.level, o.track) || cur.hv === Hard.GENV);
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
@@ -98,11 +105,12 @@ function begin(o, restart = false) {
   // the clock and the play log come first, so they are right even if drawing the board goes wrong
   // (in 1.10 a level could be played without them: logged as won in 0 seconds with 0 taps)
   G.tStart = performance.now(); G.lastMove = performance.now(); G.nudge = null;
-  G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 };    // taps, blocked taps, flips, best combo, most in tray
+  G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0, ...(resumed && cur.st || {}) };    // counters continue across closing/reopening
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
+  replayBegin(cur, resumed);
   const focused = !!spec.made && o.mode === 'level' && o.level >= RULES.hard.rebuildFrom;
-  logEvt('start', { ...lvInfo(), at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? 'focused' : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? (o.level >= 106 ? 'strong' : 'focused') : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -110,11 +118,15 @@ function begin(o, restart = false) {
     renderTray(); updateTools();
     updateScore(false); updateProgress();
   } catch (e) { logErr(e, 'begin'); }
+  saveCur();
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
   if (villageOn()) setTimeout(villageTease, 1800);
-  if (!S.seenTray) setTimeout(() => showIntro(), 700);
-  else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
-  else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
+  const ready = () => {
+    if (!S.seenTray) setTimeout(() => showIntro(), 700);
+    else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
+    else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
+  };
+  if (!clockIntro(ready)) ready();
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
@@ -216,6 +228,7 @@ function layoutBoard() {
   }
   sizeTray();
   clockBadge();
+  replayView();
 }
 // tray slots scale with the screen but stay big
 function sizeTray() { const slot = $('#tray .slot'); if (slot) $('#tray').style.setProperty('--sfs', (slot.clientWidth * 0.62).toFixed(1) + 'px'); }
@@ -331,8 +344,16 @@ function showBlockers(i) {
 
 // ---------- tapping ----------
 let blockedTaps = 0, comboTimer;
-function onTap(i, auto = false) {
-  if (!G || G.done || G.busy || !G.alive[i] || (G.autoFin && !auto)) return;   // (auto-finish: hands off)
+function onTap(i, auto = false, point = null) {
+  if (!G || G.done) return;
+  if (G.busy || !G.alive[i] || (G.autoFin && !auto)) {
+    replayMark('ignored', [i, auto ? 1 : 0, point, G.busy ? 'busy' : !G.alive[i] ? 'gone' : 'auto']);
+    return;   // (auto-finish: hands off)
+  }
+  replayMark('tap', [i, auto ? 1 : 0, !free(i) ? 'covered' : frozen(i) ? 'ice' : lockedT(i) ? 'lock' : '', point]);
+  try { return tapTile(i); } finally { replayCapture(); }
+}
+function tapTile(i) {
   Sound.init();
   const el = G.tiles[i].el;
   G.st.tp++;
@@ -534,6 +555,7 @@ function autoBanner(on) {
 function maybeAutoFinish() {
   if (!autoFinishOK()) return;
   G.autoFin = true; clearNudge(); clearHint();
+  replayMark('auto');
   autoBanner(true);      // big over the pile (nobody needs to see it any more); combo texts stay in the top bar
   logLvl('auto');
   const step = () => {
@@ -587,6 +609,7 @@ function hint() {
   // show the next one or two safe taps
   const show2 = [path[0]];
   if (path[1] !== undefined && faceOf(path[1]) === faceOf(path[0])) show2.push(path[1]);
+  replayMark('hint', show2);
   show2.forEach(i => G.tiles[i].el.classList.add('hint'));
   Sound.hint(); buzz(15);
 }
@@ -625,6 +648,7 @@ function shuffle() {
     setTimeout(() => setFace(i), 200 + delay);
     setTimeout(() => { el.classList.remove('flip'); el.style.animationDelay = ''; }, 700);
   });
+  replayMark('shuffle'); replayCapture();
   setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); checkStuck(); }, 520);
 }
 
@@ -666,9 +690,9 @@ function checkClock() {
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      <p>${tx('clockText', G.clock.n)}</p>
+      <p>${tx('clockText', G.clock.n)}</p>${clockHelpText()}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
     $('#sRetry').onclick = () => { closeModal(); restart(); };
     $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);

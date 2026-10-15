@@ -32,7 +32,7 @@ function specialMatch(face, gold, c) {
 }
 // the first time a special tile shows up: a short explanation
 function specialTip() {
-  if (!G || G.done || newTileIntro()) return;
+  if (!G || G.done || !modalFree() || newTileIntro()) return;
   if (G.gold.size > 0 && !S.seenSp.gold) { S.seenSp.gold = true; save(); toast(tx('goldNew'), 4200); }
 }
 
@@ -169,6 +169,7 @@ function obRelief() {
   let anyFree = false;
   for (let i = 0; i < G.tiles.length; i++) if (free(i)) { anyFree = true; if (canTake(i)) return; }
   if (!anyFree) return;
+  replayMark('relief');
   if (Object.keys(G.ob.left).some(k => G.ob.left[k] > 0)) {
     Object.keys(G.ob.left).forEach(k => { if (G.ob.left[k] > 0) { G.ob.left[k] = 0; decorate(+k); crackFx(+k); } });
     praise(tx('iceSun')); Sound.unlock();
@@ -191,8 +192,21 @@ const NEW_TILES = {
   lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒' },
   ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊' },
   joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏' },
-  clock: { has: () => clockOn(), ico: '⏰' },
 };
+// The same explanation before the first clock level and after every clock timeout.
+const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
+function clockIntro(after = null) {
+  if (!clockOn() || S.seenSp.clockMoves) return false;
+  openModal(`<div class="nt-ico">⏰</div><h2>${tx('nt_clock')}</h2>${clockHelpText()}
+    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
+      S.seenSp.clock = S.seenSp.clockMoves = true; save();
+      replayMark('clock-help', 'acknowledged');
+      if (after) after();
+    }, 'clock-help');
+  replayMark('clock-help', 'intro');
+  $('#ntGo').onclick = closeModal;
+  return true;
+}
 function newTileIntro() {
   if (!G || G.done) return false;
   const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has());

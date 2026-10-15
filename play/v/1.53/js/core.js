@@ -5,7 +5,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.48';
+const APP_VERSION = '1.53';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -55,6 +55,7 @@ async function loadCfg() {
     const c = playerCfg(Object.values(await dbGet(`plays/${cfgKey(cfgPid(S.pid))}`) || {}));
     if (JSON.stringify(c) === JSON.stringify(S.cfg || {})) return;
     S.cfg = c; save();
+    if (typeof G !== 'undefined' && G && G.rp) replayMark('help', help());
     applyRedo(c);
     if (typeof curScreen !== 'undefined' && curScreen === 'home') renderHome();
   } catch (e) { }

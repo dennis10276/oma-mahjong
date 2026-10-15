@@ -178,7 +178,7 @@ const Hard = (() => {
      make() is a generator: the game runs it in small steps while the player is busy with the level
      before (board.js), and keeps the result. The same level and screen shape always give the same
      result, on every phone (fixed numbers of steps, no clocks). */
-  const GENV = 6;      // 6: levels 90-269 re-ordered (always harder); 4: clock-focused board tuning (5 is used on wip/honest-observer)
+  const GENV = 7;      // 7: levels 106-269 remade for the re-fitted strong test player; 6: 90-269 re-ordered; 4: clock-focused tuning (5 is used on wip/honest-observer)
   const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30]], minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible and the strong test player should win (the strong one

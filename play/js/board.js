@@ -110,7 +110,7 @@ function begin(o, restart = false) {
   G.attempt = S.att[o.key];
   replayBegin(cur, resumed);
   const focused = !!spec.made && o.mode === 'level' && o.level >= RULES.hard.rebuildFrom;
-  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? 'focused' : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? (o.level >= 106 ? 'strong' : 'focused') : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
