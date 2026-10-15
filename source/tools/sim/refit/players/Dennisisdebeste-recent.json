@@ -1,0 +1,126 @@
+{
+ "name": "Dennisisdebeste",
+ "made": "2026-10-15",
+ "base": "strong",
+ "persona": {
+  "temp": 2,
+  "end": 12,
+  "clockFocus": 1,
+  "unknown": 0,
+  "reveal": 8,
+  "plan": 10,
+  "memory": [
+   1,
+   0.5,
+   1
+  ],
+  "blunder": 0.3
+ },
+ "data": {
+  "firstTries": 20,
+  "firstWins": 10,
+  "retries": 12,
+  "retryWins": 8,
+  "levels": [
+   86,
+   105
+  ]
+ },
+ "firstTryFit": [
+  {
+   "temp": 2,
+   "blunder": 0.3,
+   "ll": -10.77,
+   "pred": 0.513
+  },
+  {
+   "temp": 2,
+   "blunder": 0.15,
+   "ll": -10.79,
+   "pred": 0.527
+  },
+  {
+   "temp": 1.5,
+   "blunder": 0.3,
+   "ll": -10.85,
+   "pred": 0.586
+  },
+  {
+   "temp": 1.5,
+   "blunder": 0.15,
+   "ll": -11.22,
+   "pred": 0.6
+  },
+  {
+   "temp": 2,
+   "blunder": 0,
+   "ll": -11.32,
+   "pred": 0.552
+  }
+ ],
+ "memoryFit": [
+  {
+   "mem": [
+    1,
+    0.5,
+    1
+   ],
+   "ll": -11.24,
+   "predWins": 6.7
+  },
+  {
+   "mem": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "ll": -11.34,
+   "predWins": 6.2
+  },
+  {
+   "mem": [
+    1,
+    0.3,
+    1
+   ],
+   "ll": -11.39,
+   "predWins": 6.6
+  },
+  {
+   "mem": [
+    0.75,
+    0,
+    0.75
+   ],
+   "ll": -11.75,
+   "predWins": 6.2
+  },
+  {
+   "mem": [
+    0.75,
+    0.3,
+    0.75
+   ],
+   "ll": -11.81,
+   "predWins": 6.9
+  }
+ ],
+ "bands": {
+  "80": {
+   "n": 4,
+   "real": 0.25,
+   "pred": 0.44
+  },
+  "90": {
+   "n": 10,
+   "real": 0.6,
+   "pred": 0.48
+  },
+  "100": {
+   "n": 6,
+   "real": 0.5,
+   "pred": 0.61
+  }
+ },
+ "recent": 20
+}

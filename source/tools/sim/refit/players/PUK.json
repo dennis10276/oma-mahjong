@@ -1,0 +1,130 @@
+{
+ "name": "PUK",
+ "made": "2026-10-15",
+ "base": "average",
+ "persona": {
+  "temp": 6,
+  "end": 12,
+  "clockFocus": 4,
+  "unknown": 0,
+  "reveal": 8,
+  "plan": 10,
+  "memory": [
+   1,
+   0.3,
+   1
+  ],
+  "blunder": 0
+ },
+ "data": {
+  "firstTries": 33,
+  "firstWins": 19,
+  "retries": 18,
+  "retryWins": 11,
+  "levels": [
+   10,
+   49
+  ]
+ },
+ "firstTryFit": [
+  {
+   "temp": 6,
+   "blunder": 0,
+   "ll": -21.18,
+   "pred": 0.543
+  },
+  {
+   "temp": 4.5,
+   "blunder": 0,
+   "ll": -22.36,
+   "pred": 0.646
+  },
+  {
+   "temp": 6,
+   "blunder": 0.15,
+   "ll": -22.38,
+   "pred": 0.505
+  },
+  {
+   "temp": 4.5,
+   "blunder": 0.15,
+   "ll": -22.52,
+   "pred": 0.615
+  },
+  {
+   "temp": 4.5,
+   "blunder": 0.3,
+   "ll": -22.55,
+   "pred": 0.589
+  }
+ ],
+ "memoryFit": [
+  {
+   "mem": [
+    1,
+    0.3,
+    1
+   ],
+   "ll": -10.53,
+   "predWins": 8.6
+  },
+  {
+   "mem": [
+    0.75,
+    0.5,
+    0.75
+   ],
+   "ll": -10.66,
+   "predWins": 8.9
+  },
+  {
+   "mem": [
+    0.5,
+    0.3,
+    0.5
+   ],
+   "ll": -10.77,
+   "predWins": 8.5
+  },
+  {
+   "mem": [
+    1,
+    0.75,
+    1
+   ],
+   "ll": -10.94,
+   "predWins": 8.4
+  },
+  {
+   "mem": [
+    1,
+    0.3,
+    0.75
+   ],
+   "ll": -11,
+   "predWins": 8.7
+  }
+ ],
+ "bands": {
+  "10": {
+   "n": 8,
+   "real": 0.75,
+   "pred": 0.66
+  },
+  "20": {
+   "n": 7,
+   "real": 0.43,
+   "pred": 0.58
+  },
+  "30": {
+   "n": 10,
+   "real": 0.6,
+   "pred": 0.5
+  },
+  "40": {
+   "n": 8,
+   "real": 0.5,
+   "pred": 0.46
+  }
+ }
+}

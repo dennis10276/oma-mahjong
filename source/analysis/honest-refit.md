@@ -133,3 +133,20 @@ from the middle a third of the time (Dennis's suggestion, start/middle/end = 50/
   perfect memory it was 91%). He needed 5 tries.
 - Won within two tries on the live 1.53 levels (`analysis/retry-1.53.json`), strong: 99% (75-79),
   85% (80-89; Dennis 94% of 17), 87% (90-99), 80% (106-149), 72% (150-209), 67% (210-269).
+
+## A test player per family member (2026-10-16)
+
+`tools/sim/refit/player_fit.js` fits one test player per person to their own tries (data refreshed
+2026-10-16): how carefully they play (temp), how often they play on with 3 tiles waiting as if the
+tray had room (blunder), and how much they remember of a lost try at its start / middle / end for
+tries 2-4 (`Hard.rateChain`). Fitted on all their levels and on their 20 most recent ones (players
+improve: Gerda went from temp 9 to 6). The chosen bots are in `tools/sim/refit/players/bots.json`;
+`predict.js` gives each one's first try / within 2 / within 4 tries for the 30 levels ahead
+(`players/predict-1.53-<name>.json`).
+
+| player | data | temp | blunder | memory (start/middle/end) |
+|---|---|---|---|---|
+| Dennisisdebeste | 74 first tries, 21 retries (42-105) | 2 | 0.15 | 75/75/75% |
+| Mrs. Doubtfire | 52 first tries; 46 recent retries (71-90) | 4.5 | 0 | none |
+| PUK | 20 recent first tries, 7 retries (28-49) | 4.5 | 0.15 | 100/50/100% (few retries) |
+| Gerda | 19 recent first tries, 54 retries (31-52) | 6 | 0 | none |

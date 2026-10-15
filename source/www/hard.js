@@ -231,7 +231,11 @@ const Hard = (() => {
       // the options: a pair (two tiles that are free), or one tile into the tray. With 3 tiles
       // waiting only a pair with a face-down tile in it is left: turned over, it matches its twin
       // straight away without a slot (board.js peekPair); any other tile would be the 4th.
-      const full = tray.length >= SLOTS - 1;
+      // p.blunder: how often, with 3 tiles waiting, it does not watch the tray and plays as if there
+      // were room (a pair goes through the tray, so its first tile is the 4th: the level is over).
+      // Gerda does this (analysis/archive/gerda-investigation.md).
+      const careless = !!p.blunder && tray.length >= SLOTS - 1 && r() < p.blunder;
+      const full = tray.length >= SLOTS - 1 && !careless;
       const opts = [];
       const byF = new Map(); for (const i of fr) { const f = faces[i]; if (!byF.has(f)) byF.set(f, []); byF.get(f).push(i); }
       for (const [, list] of byF) if (list.length >= 2) for (let a = 0; a < list.length; a++) for (let b = a + 1; b < list.length; b++) if (!full || down[list[a]] || down[list[b]]) opts.push(down[list[a]] && !down[list[b]] ? [list[b], list[a]] : [list[a], list[b]]);   // the face-down one is turned over, the other tapped and taken first (board.js)
@@ -267,6 +271,7 @@ const Hard = (() => {
       if (trace) trace.push({ tray: tray.slice(), opts: opts.length, pick: opts[k], best: sc.indexOf(mx) === k });
       if (opts[k].length === 1 && tray.length === SLOTS - 2) risky++;   // a third tile waits: one more miss ends the level
       if (opts[k].length === 1 && !mateKnown(opts[k][0])) blind++;
+      if (careless && !opts[k].some(i => tray.includes(faces[i])) && !(opts[k].length === 2 && (down[opts[k][0]] || down[opts[k][1]]))) return end(false, 'tray');
       for (const i of opts[k]) if (!commit(i)) return end(false, 'clock');
     }
     return end(tray.length === 0, tray.length ? 'tray' : 'win');
@@ -293,6 +298,23 @@ const Hard = (() => {
       if (r() < q) m[i] = 1;
     }
     return m;
+  }
+  // tries 1..maxT on the same board, each remembering (memP) what the lost tries before it showed;
+  // cond[t-1]: the chance to win try t when tries 1..t-1 were lost (null: no game got that far)
+  function rateChain(g, runs = 60, seed = 1, p = P, memP = p.memory === undefined ? 1 : p.memory, maxT = 4) {
+    const reach = new Array(maxT).fill(0), won = new Array(maxT).fill(0), r = L.rng(seed * 31 + 11);
+    for (let k = 0; k < runs; k++) {
+      let memory = null;
+      for (let t = 0; t < maxT; t++) {
+        reach[t]++;
+        const a = play(memory ? { ...g, memory } : g, p, seed * 7919 + k * 104729 + t * 15485863);
+        if (a.win) { won[t]++; break; }
+        const m = remembered(a.seen, a.moves, memP, r);
+        if (memory) for (let i = 0; i < m.length; i++) m[i] |= memory[i];
+        memory = m;
+      }
+    }
+    return { first: won[0] / runs, cond: reach.map((n, t) => n ? won[t] / n : null), within: won.map((w, t) => won.slice(0, t + 1).reduce((a, b) => a + b, 0) / runs) };
   }
   function rate2(g, runs = 60, seed = 1, p = P, memP = p.memory === undefined ? 1 : p.memory) {
     let w1 = 0, w2 = 0, again = 0;
@@ -661,6 +683,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { MODEL_VERSION: 2, P, REF, persona, play, rate, rate2, remembered, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+  return { MODEL_VERSION: 2, P, REF, persona, play, rate, rate2, rateChain, remembered, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;
