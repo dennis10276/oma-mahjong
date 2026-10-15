@@ -21,12 +21,14 @@ const Hard = (() => {
   // (tools/sim/refit, analysis/honest-refit.md):
   // - unknown 0: real players are not afraid of a tray tile whose twin they have not seen yet;
   // - reveal 8: they dig where the uncovered tiles are likely to fit something (smart guessing,
-  //   found in Dennisisdebeste's replay of level 102: the test player had 0%, he won).
-  // strong ~ Dennisisdebeste (first tries 80-89: 0.71 real, 0.69 test player), average ~ Mrs. Doubtfire.
+  //   found in Dennisisdebeste's replay of level 102: the test player had 0%, he won);
+  // - plan 10: with 10 moves or fewer left on the alarm clock they plan the way to the clock tile
+  //   (his replay of level 105: from his opening the test player lost 9 of 10, now about 9 of 10 won).
+  // strong ~ Dennisisdebeste (first tries 80-89: 0.71 real, 0.70 test player), average ~ Mrs. Doubtfire.
   // focused: the old clock-focused calibration model, kept for comparison.
   // end: with this many tiles left and all of them seen, it works out the rest exactly
   const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
-  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8 }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8 } };
+  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 1, unknown: 0, reveal: 8, plan: 10 }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10 }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10 } };
   const persona = k => ({ ...P, ...REF[k] });
   // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
   const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
@@ -106,7 +108,11 @@ const Hard = (() => {
           s += p.reveal * nf * Math.min(1, hit / unseenN);
         }
       }
-      if (tr.length >= SLOTS - 1 && !safe) s -= 1000;        // stuck for sure
+      if (tr.length >= SLOTS - 1 && !safe) {
+        // stuck for sure, unless the move uncovered tiles it has not seen yet (one may fit)
+        let nf = 0; for (let i = 0; i < n; i++) if (freeNow[i] && !known[i]) nf++;
+        s -= nf ? 20 : 1000;
+      }
       if (clock && alive[clock.i]) {
         const slack = clock.n - moves - depth(clock.i) - 1;
         if (slack < 0) s -= 1000; else s -= p.clock * Math.max(0, 6 - slack);
@@ -114,6 +120,7 @@ const Hard = (() => {
       }
       return s;
     }
+    const clockTight = () => { if (!clock || !alive[clock.i]) return false; memo.fill(0); return clock.n - moves - depth(clock.i) - 1 <= 0; };
     const take = i => { alive[i] = 0; left--; moves++; const q = tray.indexOf(faces[i]); if (q >= 0) tray.splice(q, 1); else tray.push(faces[i]); };
     const at = new Int16Array(n).fill(-1);       // the move at which each tile was taken
     const commit = i => {
@@ -141,21 +148,87 @@ const Hard = (() => {
       return path;
     }
 
+    // planning for the alarm clock (p.plan: how many moves ahead): with the moves that are left,
+    // find a way to take the clock tile in time using only what it can see now, without filling
+    // the tray, and ending with at most 2 waiting (or a seen tile that fits). A face-down tile
+    // that a move would uncover cannot be planned with. Dennisisdebeste on level 105: from his
+    // opening the test player lost 9 of 10 games; he planned the 11 moves to the clock tile.
+    let cplan = null;
+    const seen0 = new Uint8Array(n);
+    function clockSearch() {
+      const budget = clock.n - moves;
+      if (budget > p.plan) return null;
+      for (let i = 0; i < n; i++) seen0[i] = alive[i] && (can(i) || (!down[i] && !hiddenNow(i))) ? 1 : 0;
+      const usable = i => alive[i] && seen0[i] && can(i);
+      const path = [], visited = new Set();
+      let nodes = 0, found = null;
+      const put = i => { const t = tray.slice(); take(i); path.push(i); return t; };
+      const undo = (i, t) => { alive[i] = 1; left++; moves--; path.pop(); tray.length = 0; tray.push(...t); };
+      function ok() {
+        if (tray.length <= SLOTS - 2) return true;
+        for (let i = 0; i < n; i++) if (usable(i) && tray.includes(faces[i])) return true;
+        return false;
+      }
+      function rec() {
+        if (!alive[clock.i]) { if (ok()) { found = path.slice(); return true; } return false; }
+        if (++nodes > (p.planNodes || 3000)) return true;
+        memo.fill(0);
+        if (moves + depth(clock.i) + 1 > clock.n) return false;
+        const key = path.slice().sort((a, b) => a - b).join(',') + '|' + tray.slice().sort().join(',');
+        if (visited.has(key)) return false; visited.add(key);
+        const fr = []; for (let i = 0; i < n; i++) if (usable(i)) fr.push(i);
+        const tries = [];
+        // the clock tile itself first, then tiles that fit a waiting one, then pairs, then single tiles
+        // on the way to the clock (the ones lying on it or next to it), then any other single tile
+        const cone = new Set(); { const st = [clock.i]; while (st.length) { const k = st.pop(); for (const a of nb.above[k]) if (alive[a] && !cone.has(a)) { cone.add(a); st.push(a); } } for (const d of [nb.left, nb.right]) { let k = clock.i; for (let c = 0; c < 6; c++) { const x = d[k].find(q => alive[q]); if (x === undefined) break; cone.add(x); k = x; } } }
+        const twin = i => fr.find(j => j !== i && faces[j] === faces[i]);
+        if (can(clock.i)) { const t = twin(clock.i); if (t !== undefined) tries.push([clock.i, t]); tries.push([clock.i]); }
+        for (const i of fr) if (i !== clock.i && tray.includes(faces[i])) tries.push([i]);
+        for (let a = 0; a < fr.length; a++) for (let b = a + 1; b < fr.length; b++) if (fr[a] !== clock.i && fr[b] !== clock.i && faces[fr[a]] === faces[fr[b]] && !tray.includes(faces[fr[a]])) {
+          const pr = down[fr[a]] && !down[fr[b]] ? [fr[b], fr[a]] : [fr[a], fr[b]];
+          if (tray.length <= SLOTS - 2 || down[fr[a]] || down[fr[b]]) tries.push(pr);
+        }
+        if (tray.length < SLOTS - 1) {
+          for (const i of fr) if (i !== clock.i && cone.has(i) && !tray.includes(faces[i])) tries.push([i]);
+          for (const i of fr) if (i !== clock.i && !cone.has(i) && !tray.includes(faces[i])) tries.push([i]);
+        }
+        for (const o of tries) {
+          if (moves + o.length > clock.n && alive[clock.i] && o[0] !== clock.i) continue;
+          const saved = [];
+          for (const i of o) saved.push([i, put(i)]);
+          const done = (tray.length < SLOTS) && rec();
+          for (let q = saved.length - 1; q >= 0; q--) undo(saved[q][0], saved[q][1]);
+          if (done) return true;
+        }
+        return false;
+      }
+      rec();
+      return found;
+    }
+
     while (left > 0) {
       if (clock && alive[clock.i] && moves >= clock.n) return end(false, 'clock');
+      if (p.plan && clock && alive[clock.i]) {
+        if (cplan && cplan.length && !(alive[cplan[0]] && can(cplan[0]))) cplan = null;
+        if (!cplan || !cplan.length) cplan = clockSearch();
+        if (cplan && cplan.length) { if (!commit(cplan.shift())) return end(false, 'clock'); continue; }
+      }
       const fr = []; for (let i = 0; i < n; i++) if (can(i)) fr.push(i);
       if (!fr.length) return end(false, 'none');
       const m = fr.find(i => tray.includes(faces[i]));
       if (!plan) plan = endGame();
       if (plan && plan.length) { if (!commit(plan.shift())) return end(false, 'clock'); continue; }
-      if (m !== undefined) { if (!commit(m)) return end(false, 'clock'); continue; }
+      // a tile that fits a waiting one is taken at once, unless the alarm clock cannot wait: then the
+      // clock tile (or the way to it) comes first and the match is just one of the options
+      // (Dennisisdebeste on level 105: took the clock tile as move 13 of 13, the match after it)
+      if (m !== undefined && !clockTight()) { if (!commit(m)) return end(false, 'clock'); continue; }
       // the options: a pair (two tiles that are free), or one tile into the tray. With 3 tiles
       // waiting only a pair with a face-down tile in it is left: turned over, it matches its twin
       // straight away without a slot (board.js peekPair); any other tile would be the 4th.
       const full = tray.length >= SLOTS - 1;
       const opts = [];
       const byF = new Map(); for (const i of fr) { const f = faces[i]; if (!byF.has(f)) byF.set(f, []); byF.get(f).push(i); }
-      for (const [, list] of byF) if (list.length >= 2) for (let a = 0; a < list.length; a++) for (let b = a + 1; b < list.length; b++) if (!full || down[list[a]] || down[list[b]]) opts.push(down[list[b]] && !down[list[a]] ? [list[b], list[a]] : [list[a], list[b]]);
+      for (const [, list] of byF) if (list.length >= 2) for (let a = 0; a < list.length; a++) for (let b = a + 1; b < list.length; b++) if (!full || down[list[a]] || down[list[b]]) opts.push(down[list[a]] && !down[list[b]] ? [list[b], list[a]] : [list[a], list[b]]);   // the face-down one is turned over, the other tapped and taken first (board.js)
       if (!full) for (const i of fr) opts.push([i]);
       if (!opts.length) return end(false, 'tray');
       decisions++; choices += opts.length;
@@ -167,11 +240,14 @@ const Hard = (() => {
       if (unknown === fr.length) forcedBlind++;
       const sc = opts.map(o => {
         const tr = tray.slice();
-        o.forEach(take);
+        // the alarm clock rings when a move is made after its last one with the clock tile still there
+        let rang = false;
+        const tk = i => { if (clock && alive[clock.i] && moves >= clock.n) rang = true; take(i); };
+        o.forEach(tk);
         // the obvious follow-up: tray matches that are now free
         const extra = [];
-        for (let guard = 0; guard < 6; guard++) { let k = -1; for (const f of tray) { for (const i of byFace.get(f)) if (alive[i] && known[i] && can(i)) { k = i; break; } if (k >= 0) break; } if (k < 0) break; take(k); extra.push(k); }
-        const v = score(tray);
+        for (let guard = 0; guard < 6; guard++) { let k = -1; for (const f of tray) { for (const i of byFace.get(f)) if (alive[i] && known[i] && can(i)) { k = i; break; } if (k >= 0) break; } if (k < 0) break; tk(k); extra.push(k); }
+        const v = rang ? -1e4 : score(tray);
         for (let q = extra.length - 1; q >= 0; q--) { alive[extra[q]] = 1; left++; moves--; }
         for (let q = o.length - 1; q >= 0; q--) { alive[o[q]] = 1; left++; moves--; }
         tray.length = 0; tray.push(...tr);

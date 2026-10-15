@@ -35,12 +35,24 @@ Branch `wip/honest-observer`. Nothing here is live.
    it fits a waiting tile or a free tile without a partner. With that, it wins 102 from the start
    about 30% of the time and follows his 100 win smoothly.
 
+4. **Fixes found while following Dennisisdebeste's level 105 (1.52, won on the first try).**
+   - An alarm-clock rule was wrong in the test player's look-ahead: it counted on taking the clock
+     tile after its last move.
+   - In a pair with a face-down tile it took the wrong tile first. The tapped tile goes first; that
+     matters when it is the clock tile.
+   - When the clock cannot wait, a tile that fits a waiting one is no longer taken automatically.
+   - **Planning for the clock (`plan`).** With 10 moves or fewer left, it now searches for a way to
+     take the clock tile in time, using only what it can see, without filling the tray. From his
+     opening, the test player used to lose 9 of 10 games. With planning, it wins about 9 of 10 from
+     every position of his game. This also brings Mrs. Doubtfire's fit closer (80–89: real 40%,
+     model 31%).
+
 Fit to all tries (log-likelihood, higher is better):
 
 | player | start | + rule & unknown 0 | + smart guessing |
 |---|---|---|---|
-| Dennisisdebeste (103 tries) | -96.5 | -66.5 | **-57.7** |
-| Mrs. Doubtfire (134 tries) | -102.4 | -76.7 | -83.0* |
+| Dennisisdebeste (103 tries) | -96.5 | -66.5 | -57.7 → **-56.3** with planning |
+| Mrs. Doubtfire (134 tries) | -102.4 | -76.7 | -83.0* → **-73.4** with planning |
 
 \* On all tries Mrs. Doubtfire fits slightly better without smart guessing, and on first tries
 equally well (-33.8). On 80–89 she still does better than the model predicts (real 40%,
@@ -48,11 +60,11 @@ model 23%, from only 10 tries).
 
 ## Personas (`www/hard.js` REF on this branch, `tools/sim/refit/personas.json`)
 
-All three: unknown 0, reveal 8, end 12.
+All three: unknown 0, reveal 8, plan 10, end 12.
 
 | persona | temp | clockFocus | fitted to |
 |---|---|---|---|
-| strong | 1.5 | 4 | Dennisisdebeste |
+| strong | 1.5 | 1 | Dennisisdebeste |
 | sensible | 3 | 4 | between the two |
 | average | 4.5 | 4 | Mrs. Doubtfire |
 
@@ -60,41 +72,42 @@ First tries, real vs. strong, on the boards Dennis played:
 
 | levels | real | strong |
 |---|---|---|
-| 30–49 | 1.00 | 0.92 |
+| 30–49 | 1.00 | 0.93 |
 | 50–74 | 0.82 | 0.94 |
 | 75–79 | 0.91 | 0.88 |
-| 80–89 | **0.71** | **0.69** |
-| 90–104 | 0.53 | 0.57 |
+| 80–89 | **0.71** | **0.70** |
+| 90–104 | 0.53 | 0.61 |
 
-## The live levels (1.52), measured with the smarter players
+## The live levels (1.52), measured with these players
 
 200 games per level and persona (`analysis/refit-1.52.json`). Average first-try chance:
 
-| levels | strong | sensible | average | strong before smart guessing |
-|---|---|---|---|---|
-| 75–79 | 0.88 | 0.72 | 0.57 | 0.88 |
-| 80–89 | 0.60 | 0.37 | 0.20 | 0.38 |
-| 90–99 | 0.52 | 0.35 | 0.24 | 0.38 |
-| 100–119 | 0.52 | 0.32 | 0.19 | 0.41 |
-| 120–149 | 0.43 | 0.24 | 0.14 | 0.36 |
-| 150–179 | 0.37 | 0.21 | 0.13 | 0.28 |
-| 180–209 | 0.40 | 0.24 | 0.16 | 0.32 |
-| 210–239 | 0.47 | 0.28 | 0.16 | 0.32 |
-| 240–269 | 0.45 | 0.24 | 0.14 | 0.32 |
+| levels | strong | sensible | average |
+|---|---|---|---|
+| 75–79 | 0.88 | 0.73 | 0.58 |
+| 80–89 | 0.63 | 0.45 | 0.29 |
+| 90–99 | 0.58 | 0.51 | 0.38 |
+| 100–119 | 0.53 | 0.41 | 0.30 |
+| 120–149 | 0.57 | 0.41 | 0.27 |
+| 150–179 | 0.57 | 0.43 | 0.32 |
+| 180–209 | 0.53 | 0.42 | 0.30 |
+| 210–239 | 0.52 | 0.41 | 0.29 |
+| 240–269 | 0.60 | 0.42 | 0.31 |
 
-- From 80 to about 150 the levels do get harder, then the curve goes flat and even a little easier.
-- 24 levels are very hard for strong (below 15%): 94 98 111 112 126 136 158 159 164 165 171 179
-  190 195 202 205 209 219 221 230 244 256 264 267.
-- 9 levels from 90 on are very easy for strong (above 90%).
-- Every 10th level swings widely: from 0.07 (190) to 0.98 (250).
+- After the step at 80, the levels **do not get harder**: strong stays at about 0.55 all the way to 269.
+- Level 104: 0.98; 105: 0.87 (Dennis won it first try); 106: 0.60.
+- 17 levels are very hard for strong (below 15%): 94 98 108 111 112 132 159 164 195 196 204 205
+  209 221 230 256 264.
+- 23 levels from 90 on are very easy for strong (above 90%).
+- Every 10th level swings from 0.12 (230) to 0.97 (90).
 
 ## Proposal (for Dennis to decide; point 4 of the stalled-work list)
 
 Targets in the new measure, strong first-try chance, keeping today's skill level roughly:
 
 - 75–79: about 0.85 (as now)
-- 80: 0.65, going down to 0.50 at 100 and 0.40 at 150
-- 150–269: plateau at 0.38
+- 80: 0.70, going down to 0.55 at 100 and 0.45 at 150
+- 150–269: plateau at 0.40
 - No board below 0.20 for strong. Every 10th level within ±0.10 of the curve.
 
 Doing this means re-making the boards from 106 (so that nobody's finished levels change), or from

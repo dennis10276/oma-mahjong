@@ -6,7 +6,7 @@ const DIR = path.join(__dirname, process.env.RATES || 'rates4');
 const R = {}; for (const f of fs.readdirSync(DIR)) Object.assign(R, JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')));
 const A = require('./attempts.json').filter(a => R[a.key]);
 const cfgs = Object.keys(Object.values(R).find(x => x.clock).r);
-const get = (k, c) => { const r = R[k].r; if (r[c] !== undefined) return r[c]; const q = c.split('|'); q[2] = '0'; return r[q.join('|')]; };
+const get = (k, c) => { const r = R[k].r; if (r[c] !== undefined) return r[c]; const q = c.split('|'); q[2] = '0'; if (q.length > 5) q[5] = '0'; return r[q.join('|')]; };
 const bands = [[10, 29], [30, 49], [50, 74], [75, 79], [80, 89], [90, 104]];
 const out = {};
 for (const name of ['Dennisisdebeste', 'Mrs. Doubtfire', 'Gerda', 'PUK']) {

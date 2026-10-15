@@ -13,7 +13,7 @@ const att = A.filter(a => R[a.key] && a.lv >= +(process.env.MINLV || 0) && a.lv 
 // the settings measured on boards with a clock (those have every clockFocus)
 const cfgs = Object.keys(Object.values(R).find(x => x.clock).r);
 // cfg: temp|end|clockFocus[|unknown]; on a board without a clock clockFocus is stored as 0
-const rateOf = (k, c) => { const x = R[k]; let v = x.r[c]; if (v === undefined) { const q = c.split('|'); q[2] = '0'; v = x.r[q.join('|')]; } return (v * x.runs + 0.5) / (x.runs + 1); };
+const rateOf = (k, c) => { const x = R[k]; let v = x.r[c]; if (v === undefined) { const q = c.split('|'); q[2] = '0'; if (q.length > 5) q[5] = '0'; v = x.r[q.join('|')]; } return (v * x.runs + 0.5) / (x.runs + 1); };
 const logit = p => Math.log(p / (1 - p)), sig = z => 1 / (1 + Math.exp(-z));
 const B = [0, 0.25, 0.5, 0.75, 1, 1.5, 2];
 function ll(list, c, b) {
