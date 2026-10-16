@@ -88,13 +88,18 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tbl-wrap th, .tbl-wrap td { white-space: normal; overflow-wrap: anywhere; padding: 7px 4px; }
 .tbl-wrap th { position: static; }
 .tbl-wrap th:last-child { width: 19%; }
+#tbl { overflow-x: auto; }
+#tbl table { table-layout: auto; min-width: 960px; }
+#tbl th, #tbl td { white-space: nowrap; overflow-wrap: normal; padding: 7px 8px; }
 #tbl th:first-child { width: 116px; }
-#tbl td:first-child { white-space: nowrap; overflow-wrap: normal; }
 #tbl th:nth-child(2) { width: 240px; }
 #tbl th:nth-child(8) { width: 72px; }
 #tbl td:nth-child(8) { white-space: nowrap; overflow-wrap: normal; }
+#tbl th:last-child { width: auto; }
 /* Narrow columns show the same fields as labelled rows, without sideways scrolling. */
 @container (max-width: 560px) {
+  #tbl table { min-width: 0; }
+  #tbl td { padding: 2px 0; }
   .tbl-wrap table, .tbl-wrap tbody { display: block; }
   .tbl-wrap thead { display: none; }
   .tbl-wrap tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
