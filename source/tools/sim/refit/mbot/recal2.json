@@ -1,0 +1,54 @@
+{
+ "HALF": 20,
+ "PULL": 1,
+ "B0": 0.5,
+ "CAPQ": 0.05,
+ "KEY": "2|high",
+ "SECOND": null,
+ "res": {
+  "Dennisisdebeste": {
+   "slope": 0.06,
+   "tries": 99,
+   "logLoss": 0.598,
+   "first": {
+    "n": 68,
+    "won": 51,
+    "predicted": 49.9,
+    "logLoss": 0.56
+   }
+  },
+  "Mrs. Doubtfire": {
+   "slope": 0.16,
+   "tries": 145,
+   "logLoss": 0.579,
+   "first": {
+    "n": 47,
+    "won": 24,
+    "predicted": 25.7,
+    "logLoss": 0.731
+   }
+  },
+  "PUK": {
+   "slope": 0.16,
+   "tries": 43,
+   "logLoss": 0.677,
+   "first": {
+    "n": 30,
+    "won": 18,
+    "predicted": 17.8,
+    "logLoss": 0.686
+   }
+  },
+  "Gerda": {
+   "slope": 0.17,
+   "tries": 126,
+   "logLoss": 0.636,
+   "first": {
+    "n": 40,
+    "won": 15,
+    "predicted": 18.7,
+    "logLoss": 0.722
+   }
+  }
+ }
+}

@@ -58,6 +58,7 @@ for (const name of NAMES) {
       const v = design({ pi, l: L[i], x }); let z = 0; for (let k = 0; k < K; k++) z += v[k] * w[k];
       if (nb) { const q0 = clamp(sig(z), 0.03), q1 = clamp(sig(z + e), 0.03); BE.n++; BE.without -= Math.log(x.won ? q0 : 1 - q0); BE.with -= Math.log(x.won ? q1 : 1 - q1); }
       if (process.env.BOARD) z += e;
+      z *= +(process.env.SHRINK || 1);   // pull every chance towards 50% (overconfidence)
       const q = clamp(sig(z), 0.03);
       ll -= Math.log(x.won ? q : 1 - q); n++; cal.push([q, x.won ? 1 : 0, x.at === 1]);
       if (x.at === 1) { ll1 -= Math.log(x.won ? q : 1 - q); n1++; p1 += q; w1 += x.won; }
