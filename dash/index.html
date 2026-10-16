@@ -192,6 +192,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 }
 .foot { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
 </style>
+<link rel="stylesheet" href="layout.css?v=6b2eb2a7e236">
 </head>
 <body>
 <main>
@@ -206,6 +207,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     </div>
     <span class="live" id="live"><span class="dot"></span><span id="liveTxt">verbinden…</span></span>
     <select id="who" aria-label="Kies speler"></select>
+    <button class="btn" id="layoutEdit" aria-expanded="false" aria-controls="layoutEditor">✏️ Indeling aanpassen</button>
     <button class="btn" id="notify" hidden>🔔 Meldingen aan</button>
   </div>
   <section class="card wide" id="cfgBox" hidden></section>
@@ -729,5 +731,6 @@ setInterval(render, 30000);   // "x min geleden" stays fresh
 setInterval(checkHeartsSeen, 15000);
 let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(render, 200); });
 </script>
+<script src="layout.js?v=9b094981a815"></script>
 </body>
 </html>
