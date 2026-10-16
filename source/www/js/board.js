@@ -15,7 +15,7 @@ function saveCur() {
   syncClock();
   try {
     replayCapture();
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: G.o.mode === 'level' && Hard.applies(G.o.level, G.o.track) ? Hard.designVersion(G.o.level) : null }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o) }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -23,7 +23,6 @@ function pauseClock() { syncClock(); if (G) { G.tStart = 0; replayMark('pause');
 function resumeClock() { if (G && !G.done && curScreen === 'game') { G.tStart = performance.now(); replayMark('resume'); } }
 
 // ---------- starting a level ----------
-const tileScale = () => S.bigTiles ? 0.7 : 1;
 // the part "own, easier levels" (grandma mode) plays its own, gentler levels (Layouts track 'care')
 const levelTrack = () => part('levels') ? 'care' : '';
 // from RULES.hard.measureFrom the levels come ready-made (designed with the test player, hard.js and
@@ -32,16 +31,18 @@ const levelTrack = () => part('levels') ? 'care' : '';
 // own levels follow her screen
 const sameShape = tr => tr ? null : RULES.levels.aspect;
 function startLevel(level) {
-  const tr = levelTrack(), hard = Hard.applies(level, tr), early = !hard && Hard.appliesEarly(level, tr), salt = early ? Hard.earlySalt(level) : 0;
+  const tr = levelTrack(), hard = Hard.applies(level, tr), early = !hard && Hard.appliesEarly(level, tr);
   begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), fixedAspect: sameShape(tr),
     // (ready-made levels, the same for everyone on any screen: 1-69 in levels-early.js, from 70 the designed ones)
-    makeSpec: a => hard ? Hard.spec(level) : early && !S.bigTiles ? Hard.earlySpec(level) : Layouts.forLevel(level, a, tileScale(), tr, salt), makeEasy: a => Layouts.forLevel(level, a, tileScale(), tr, salt) });
+    makeSpec: a => hard ? Hard.spec(level) : early ? Hard.earlySpec(level) : Layouts.forLevel(level, a, 1, tr), makeEasy: a => Layouts.forLevel(level, a, 1, tr) });
 }
 function startDaily(k) {
   const d = parseKey(k);
   const tr = levelTrack();
-  begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), fixedAspect: sameShape(tr), makeSpec: a => Layouts.forDate(dnum(k), a, tileScale(), tr) });
+  begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), fixedAspect: sameShape(tr), makeSpec: a => Layouts.forDate(dnum(k), a, 1, tr) });
 }
+// which version of a ready-made level a saved board belongs to (designed: its design version, early: the table's)
+const boardVer = o => o.mode !== 'level' ? null : Hard.applies(o.level, o.track) ? Hard.designVersion(o.level) : Hard.appliesEarly(o.level, o.track) ? 'e' + Hard.earlyV() : null;
 
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
 function begin(o, restart = false) {
@@ -66,7 +67,7 @@ function begin(o, restart = false) {
   if (cur && cur.rp && previousReplay && cur.rp.id === previousReplay.id &&
       JSON.stringify(cur.rp.last) === JSON.stringify(previousReplay.last)) cur.rp = previousReplay;
   const sameTrack = cur && (cur.tr || '') === (o.track || '') &&
-    (o.mode !== 'level' || o.level < RULES.hard.rebuildFrom || !Hard.applies(o.level, o.track) || cur.hv === Hard.designVersion(o.level));
+    (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : !Hard.appliesEarly(o.level, o.track) || cur.hv === boardVer(o)));
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {

@@ -1,5 +1,5 @@
 /* Everyone plays the same levels: the screen shape and the phone's speed do not change a level.
-   Levels 1-69 come from the ready-made table www/levels-early.js (tools/build_early.js), 70+ from
+   Levels 1-69 come from the ready-made table www/levels-early.js (the boards Gerda played), 70+ from
    levels-hard.js; the daily level is built for the same fixed shape. */
 'use strict';
 const path = require('path'), fs = require('fs'), vm = require('vm');
@@ -29,6 +29,13 @@ module.exports = [
       const j = H.earlySpec(30).made.faces;
       t.ok(!j.includes(63), 'no stored joker code left on the board');
       t.ok(H.appliesEarly(51, '') && !H.appliesEarly(70, '') && !H.appliesEarly(51, 'care'), 'the table is for levels 1-69 of the normal track only');
+      // the standard is the board Gerda played: her recorded boards, exactly
+      const G = JSON.parse(fs.readFileSync(path.join(root, 'analysis', 'early-gerda.json'), 'utf8'));
+      t.eq(Object.keys(G.boards).length >= 51, true, 'her recorded levels are in');
+      for (const [lv, b] of Object.entries(G.boards)) {
+        const d = H.earlySpec(+lv).made, ice = (d.obst && d.obst.ice) || {};
+        t.eq([d.tiles, d.faces, d.down.slice().sort((a, b) => a - b), d.gold, ice], [b.tiles, b.faces, b.down, b.gold, (b.obst && b.obst.ice) || {}], `level ${lv}: Gerda's board`);
+      }
     },
   },
   {

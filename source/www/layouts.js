@@ -227,18 +227,16 @@ const Layouts = (() => {
   /* Gentler curve: after level 6 the difficulty climbs at half speed
      (level 26 now plays like the old level 16). */
   const effLevel = level => level <= 6 ? level : 6 + (level - 6) / 2;
-  // salt: another deal for the same level number (RULES.levels.salt: a level whose usual deal is much
-  // harder or easier than that level on most phones gets one that fits)
-  function forLevel(level, aspect, scale = 1, track = '', salt = 0) {
+  function forLevel(level, aspect, scale = 1, track = '') {
     if (track === 'care') return forCare(level, aspect, scale);
     const e = effLevel(level);
     let target = targetFor(Math.round(e));
     if (e > 26) target = targetFor(level);           // keep variety in the endless levels
     target = Math.max(8, Math.round(target * scale));
     target -= target % 2;
-    const res = buildPiles(level * 7919 + 13 + salt * 1000003, target, layersFor(e), aspect, level);
+    const res = buildPiles(level * 7919 + 13, target, layersFor(e), aspect, level);
     const diff = difficultyFor(e);
-    return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1 + salt * 7919, diff };
+    return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1, diff };
   }
   /* ---------- grandma mode has its own levels (track 'care') ----------
      The difficulty climbs at a quarter of the normal speed (her level 35 plays like a normal level

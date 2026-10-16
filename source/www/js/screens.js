@@ -201,7 +201,7 @@ function keepModal() {
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' && modalClosable) closeModal(); });
 
 function openSettings() {
-  const rows = ['sfx', 'music', 'vibrate', 'highlight', 'nums', 'bigTiles', 'contrast'];
+  const rows = ['sfx', 'music', 'vibrate', 'highlight', 'nums', 'contrast'];
   const cur = langOf(S);
   openModal(`<h2>${tx('settings')}</h2>
     <div class="set-row">${fx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
@@ -219,7 +219,6 @@ function openSettings() {
     if (k === 'highlight') $('#board').classList.toggle('hl', S.highlight);
     if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
     if (k === 'contrast') document.body.classList.toggle('contrast', S.contrast);
-    if (k === 'bigTiles') toast(tx(S.bigTiles ? 'bigOn' : 'bigOff'));
   });
   $('#mHow').onclick = () => showIntro();
   $('#mReset').onclick = confirmReset;
@@ -235,7 +234,7 @@ function confirmReset() {
     <button class="reset-btn" id="rsYes">${tx('wipeYes')}</button>`);
   $('#rsNo').onclick = closeModal;
   $('#rsYes').onclick = () => {
-    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, bigTiles: S.bigTiles, contrast: S.contrast, lang: S.lang };
+    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, contrast: S.contrast, lang: S.lang };
     const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
     Object.keys(S).forEach(k => delete S[k]);
     Object.assign(S, defaults(), keep, { theme });

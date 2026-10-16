@@ -6,7 +6,7 @@
 const RULES = {
   // aspect: every level (and the daily puzzle) is made for this screen shape on every phone, so all
   // players get the same levels (grandma's own levels still follow her screen). Levels 1-69 come
-  // ready-made (levels-early.js), each with the deal that is about as hard as that level on most phones.
+  // ready-made (levels-early.js): the boards Gerda played.
   // blockedFrom: a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
   levels: { blockedFrom: null, aspect: 1.6 },
   tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
