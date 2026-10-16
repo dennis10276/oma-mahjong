@@ -15,7 +15,7 @@ module.exports = [{
     const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
     const content = () => p.locator('#pred').innerText();
     const row = lv => p.locator('#pred tbody tr').filter({ has: p.locator('td:first-child', { hasText: new RegExp('^' + lv + '$') }) });
-    const event = async e => p.evaluate(({ pid, e }) => { PLAYS[pid].latest = e; render(); }, { pid, e });
+    const event = async (e, key = 'latest') => p.evaluate(({ pid, e, key }) => { PLAYS[pid][key] = e; render(); }, { pid, e, key });
     try {
       await p.goto(site.url + 'dash/#' + pid);
       await p.waitForFunction(() => document.querySelector('#pred .pred-note')?.textContent.includes('versie 1.53'));
@@ -33,7 +33,7 @@ module.exports = [{
       t.ok((await row(92).innerText()).includes(v154.levels[92][0] + '%'), 'new board uses the reviewed new prediction');
       // 1.55: the move-based test players; boards of 1.54 from level 70 on are the same, so a 1.54
       // result still counts next to the 1.55 prediction
-      await event({ k: 'end', v: '1.54', lv: 93, at: 1, r: 'win', dur: 70, n: 76, left: 0, t: now + 1500 });
+      await event({ k: 'end', v: '1.54', lv: 93, at: 1, r: 'win', dur: 70, n: 76, left: 0, t: now + 1500 }, 'won93');
       await event({ k: 'open', v: '1.55', lv: 94, t: now + 2000 });
       t.ok((await content()).includes('versie 1.55'), 'the 1.55 prediction for a 1.55 app');
       const current = require('../site/dash/predict.json');

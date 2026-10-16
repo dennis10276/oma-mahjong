@@ -49,9 +49,11 @@ module.exports = [
     const report = require('../analysis/reorder-92.json'), moves = new Map(report.moves.map(m => [m.lv, m]));
     const baseline = load('../analysis/levels-before-reorder-92.js');
     t.eq(original.version, '1.53', 'old-client predictions retained');
-    const released = require('../site/dash/predict.json');
-    t.eq(released.version, '1.54', 'current prediction version matches the reorder release');
-    t.eq(released.previousVersions['1.53'], 'predict-1.53.json', 'old-client prediction file registered');
+    // 1.54's predictions are kept for 1.54 apps (predict-1.54.json); the current file (1.55 on) registers both
+    const released = require('../site/dash/predict-1.54.json'), current = require('../site/dash/predict.json');
+    t.eq(released.version, '1.54', 'the 1.54 prediction version matches the reorder release');
+    t.eq(current.previousVersions['1.53'], 'predict-1.53.json', 'old-client prediction file registered');
+    t.eq(current.previousVersions['1.54'], 'predict-1.54.json', '1.54 prediction file registered');
     t.eq(draft.baseVersion, '1.53', 'draft identifies its baseline');
     t.eq(draft.generation, 8, 'draft identifies reordered generation');
     t.eq(draft.version, 'unpublished-reorder-92', 'draft cannot be confused with released predictions');

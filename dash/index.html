@@ -719,7 +719,9 @@ function renderPred(levels, curLv) {
   if (!p) { el.innerHTML = `<div class="empty">Nog geen eigen testspeler voor ${esc(nameOf(sel))}: daarvoor zijn meer pogingen nodig.</div>`; return; }
   // Old numbered boards must not count as results for their replacements. Through 91 the
   // immediate previous release has identical boards and its results remain comparable.
-  const matching = ev.filter(e => e.v === prediction.version ||
+  // comparable: older versions whose boards are the same for some levels ([[from, to], ...])
+  const sameBoard = e => e.lv && (prediction.comparable || []).some(c => c.version === e.v && c.levels.some(([a, b]) => e.lv >= a && e.lv <= b));
+  const matching = ev.filter(e => e.v === prediction.version || sameBoard(e) ||
     (e.lv && e.lv < (prediction.reorderFrom || 0) && e.v === prediction.baseVersion));
   const byLv = new Map(analyse(matching).levels.filter(l => !l.daily).map(l => [l.lv, l]));
   const all = Object.keys(p.levels).map(Number).sort((a, b) => a - b);
@@ -734,10 +736,16 @@ function renderPred(levels, curLv) {
   const check = played.length ? ` Sinds de voorspelling ${played.length} ${played.length === 1 ? 'level' : 'levels'} gehaald: de testspeler verwachtte er ${exp.toFixed(1).replace('.', ',')} in één keer, het werden er <b>${got}</b>.` : '';
   const f = p.fit, mem = Array.isArray(f.memory) ? (f.memory.every(x => x === f.memory[0]) ? f.memory[0] + '%' : f.memory.join('/') + '% (begin/midden/eind)') : f.memory + '%';
   const runs = prediction.runsByRange ? `Speelt levels t/m ${prediction.reorderFrom - 1} ${prediction.runsByRange.through91} keer en vanaf ${prediction.reorderFrom} ${prediction.runsByRange.from92} keer.` : 'Speelt elk level 150 keer op precies het bord van dat level.';
+  const made = `Gemaakt ${new Date(prediction.made).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} (versie ${esc(prediction.version)}).`;
+  // the move-based test player (fit.model 'move'): their own habits from their recorded games, corrected
+  // for how it has gone lately; fit.test: how it did on earlier levels, predicted before they were played
+  const howMade = f.model === 'move'
+    ? `Eigen testspeler van ${esc(nameOf(sel))}: speelt met de eigen gewoontes uit de opgenomen spellen (wanneer een steen wordt omgedraaid, een paar of een losse steen wordt gepakt, wat er gebeurt met 3 stenen in het bakje) en is bijgesteld op hoe het de laatste tijd ging (${f.tries} pogingen, levels ${f.levels[0]}–${f.levels[1]}). Onthoudt bij een herkansing ${mem} van wat er te zien was. Speelt elk level ${prediction.runs || 60} keer op het echte bord.${f.test ? ` Getoetst op ${f.test.levels} eerdere levels, steeds voorspeld vóór het spelen: verwacht ${String(f.test.expected).replace('.', ',')} keer in één keer, het werden er ${f.test.won}.` : ''} Eén poging blijft een gok: de kansen zijn wat telt.`
+    : `Eigen testspeler van ${esc(nameOf(sel))}, afgesteld op ${f.firstTries} eerste pogingen en ${f.retries} herkansingen (levels ${f.levels[0]}–${f.levels[1]}); onthoudt bij een herkansing ${mem} van wat er te zien was. ${runs}`;
   el.innerHTML = `<p class="pred-sum">${sum}${check}</p>
     <div class="tbl-wrap"><table><thead><tr><th scope="col">Level</th><th scope="col" class="num">1e poging</th><th scope="col" class="num">Binnen 2</th><th scope="col" class="num">Binnen 4</th><th scope="col">Echt</th></tr></thead>
     <tbody>${[...played.slice(-5), ...ahead].map(row).join('')}</tbody></table></div>
-    <p class="pred-note">Eigen testspeler van ${esc(nameOf(sel))}, afgesteld op ${f.firstTries} eerste pogingen en ${f.retries} herkansingen (levels ${f.levels[0]}–${f.levels[1]}); onthoudt bij een herkansing ${mem} van wat er te zien was. ${runs} ⚠️ = binnen 4 pogingen minder dan 60%. Gemaakt ${new Date(prediction.made).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} (versie ${esc(prediction.version)}).</p>`;
+    <p class="pred-note">${howMade} ⚠️ = binnen 4 pogingen minder dan 60%. ${made}</p>`;
 }
 
 // ---------- live connection ----------
