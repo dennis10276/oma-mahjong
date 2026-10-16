@@ -1,5 +1,8 @@
 # Reorder from level 92 — unpublished work
 
+Follow-up: Dennis authorized publication on 2026-10-16. See `release-1.54.md` for the release;
+the unpublished constraints below document the original preparation request.
+
 Requested by Dennis on 2026-10-16. This explicitly supersedes the earlier decision to keep
 92–105 fixed. Levels 1–91 remain fixed. No publication, APK build, database writes, player
 resets or changes to completed stars/history are authorized by this task.

@@ -2,6 +2,9 @@
 
 Status: **unpublished**. Branch: `wip/reorder-levels-92`. Levels 1–91 and the live website are unchanged.
 
+Follow-up: publication was authorized on 2026-10-16. Release preparation is recorded in
+`release-1.54.md`; this review describes the original unpublished implementation.
+
 ## What changed
 
 All 178 boards from 92–269 occur exactly once in the new order. Their pictures, geometry, face-down tiles, specials, clocks, complete solutions and legacy rating fields are preserved. Large boards stay at every tenth level; levels beyond 269 repeat the same final range as before.

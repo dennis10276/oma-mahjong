@@ -35,7 +35,14 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
-- Levels 1-105 stay as they are (75-105: the 1.52 boards), except 94, 98 and 101: in 1.53 their
+- Latest decision (2026-10-16, release 1.54): levels 1-91 stay fixed; 92-269 are reordered using
+  both fitted personal players, including retries, in five-point ease bands with smoothing.
+  Each complete 1.53 board is preserved exactly, with large boards every tenth level. See
+  `source/analysis/reorder-92.json`, its mapping/review, and `source/tools/sim/reorder_honest.js`.
+  The offline calibrated engine is frozen in `source/tools/sim/honest/` at commit 316f3b1;
+  experimental move-cloning models are not used. Saves through 91 retain generation 7;
+  reordered levels use generation 8. Progress, stars and old recordings are not rewritten.
+- Historical 1.53 decision: levels 1-105 stayed as they were (75-105: the 1.52 boards), except 94, 98 and 101: in 1.53 their
   pictures were swapped to make them fairer (strong player 10-19% -> 40-59%).
 - Levels 106-269 were remade in 1.53 for a new curve, measured with the honest test player
   re-fitted to real play (branch `wip/honest-observer`, `source/analysis/honest-refit.md` there):
@@ -45,6 +52,9 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   level. Measurements: `source/analysis/remake-1.53.json`; tools: `source/tools/sim/refit/remake_*.js`
   on the branch. The stored chances in the table (fields 8 and 9) for 106+ are the new sensible
   and strong players; up to 105 they are still the old focused measure.
+  In 1.54 these packed ratings travel with their boards: use `Hard.ratingModel(level)` rather
+  than assuming the model from the level number. The new order uses separate personal ratings
+  in `reorder-92.json`, not those legacy packed ratings.
 - `Hard.target` / `strongCurve` in the game are the OLD measure (old test player); do not use them
   to judge 106+. Use the branch's test player.
 - Keep the current skill level roughly (tray pressure as it is). The alarm clock stays as it is.
@@ -52,6 +62,10 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Predictions on the dashboard
 
+- The 1.54 predictions match the reordered boards. `predict-1.53.json` preserves old-client
+  predictions; `predict.json.previousVersions` registers it. The dashboard selects by the
+  player's latest logged app version and excludes results from replaced boards when comparing
+  forecasts (1.53 results through 91 remain comparable). Unknown versions get no substitute.
 - `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, what their own
   test player predicts for their next 60 levels: first try, within 2 and within 4 tries. The dashboard
   shows it in the card "Voorspelling", with the real results next to it once played.

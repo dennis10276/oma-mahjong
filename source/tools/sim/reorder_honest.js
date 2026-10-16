@@ -189,7 +189,8 @@ function writeReview(report) {
 function forecast() {
   const report = JSON.parse(fs.readFileSync(REPORT, 'utf8'));
   if (report.fingerprint !== fingerprint) throw Error('Forecast requires the current completed reorder');
-  const pred = JSON.parse(fs.readFileSync(path.join(ROOT, 'site/dash/predict.json'), 'utf8'));
+  const archived = path.join(ROOT, 'site/dash/predict-1.53.json');
+  const pred = JSON.parse(fs.readFileSync(fs.existsSync(archived) ? archived : path.join(ROOT, 'site/dash/predict.json'), 'utf8'));
   if (pred.version !== '1.53') throw Error('Baseline predictions changed; review before rebuilding forecast');
   pred.baseVersion = pred.version; pred.version = 'unpublished-reorder-92'; pred.generation = T.v + 1;
   pred.status = 'draft; bind to the actual new release version before use';

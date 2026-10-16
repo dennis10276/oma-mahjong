@@ -45,10 +45,13 @@ module.exports = [
     }
   } },
   { name: 'reorder honest: draft predictions follow relocated boards and leave current 1.53 predictions separate', cpu: true, async run(t) {
-    const original = require('../site/dash/predict.json'), draft = require('../analysis/reorder-92-predictions.json');
+    const original = require('../site/dash/predict-1.53.json'), draft = require('../analysis/reorder-92-predictions.json');
     const report = require('../analysis/reorder-92.json'), moves = new Map(report.moves.map(m => [m.lv, m]));
     const baseline = load('../analysis/levels-before-reorder-92.js');
-    t.eq(original.version, '1.53', 'live prediction version untouched');
+    t.eq(original.version, '1.53', 'old-client predictions retained');
+    const released = require('../site/dash/predict.json');
+    t.eq(released.version, '1.54', 'current prediction version matches the reorder release');
+    t.eq(released.previousVersions['1.53'], 'predict-1.53.json', 'old-client prediction file registered');
     t.eq(draft.baseVersion, '1.53', 'draft identifies its baseline');
     t.eq(draft.generation, 8, 'draft identifies reordered generation');
     t.eq(draft.version, 'unpublished-reorder-92', 'draft cannot be confused with released predictions');
@@ -60,6 +63,7 @@ module.exports = [
         t.eq(odds[3], old[7] ? old[7][1] : 0, 'clock belongs to relocated board ' + p.name + ' ' + lv);
         t.ok(0 <= odds[0] && odds[0] <= odds[1] && odds[1] <= odds[2] && odds[2] <= 100, 'valid draft cumulative odds ' + p.name + ' ' + lv);
         if (r) t.eq(odds.slice(0, 3), [r.first, r.two, r.four].map(q => Math.round(q * 100)), 'draft prediction measured on relocated board ' + p.name + ' ' + lv);
+        t.eq(released.players[id].levels[lv], odds, 'release uses the reviewed prediction ' + p.name + ' ' + lv);
       }
     }
   } },

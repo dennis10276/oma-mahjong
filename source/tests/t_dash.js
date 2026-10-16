@@ -187,7 +187,9 @@ module.exports = [
     name: 'dashboard: prediction from the player\'s own test player, with the real results next to it',
     async run(t, { serve, FakeDB, browser, sleep, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
-      const db = new FakeDB(fixture());
+      const data = fixture();
+      for (const es of Object.values(data.plays)) for (const e of Object.values(es)) e.v = '1.53';
+      const db = new FakeDB(data);
       const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 } });
       await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
       const levels = {}; for (let lv = 26; lv < 46; lv++) levels[lv] = [lv === 26 ? 80 : 40, 70, lv === 30 ? 50 : 90, lv >= 30 ? 9 : 0];
