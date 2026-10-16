@@ -1,0 +1,74 @@
+{
+ "Dennisisdebeste": {
+  "train": 73,
+  "trainWins": 56,
+  "temp": 1.5,
+  "fits": [
+   {
+    "temp": 0.75,
+    "ll": -1.077,
+    "sim": 48.7
+   },
+   {
+    "temp": 1,
+    "ll": -1.091,
+    "sim": 48.4
+   },
+   {
+    "temp": 1.5,
+    "ll": -0.995,
+    "sim": 46.2
+   },
+   {
+    "temp": 2,
+    "ll": -1.047,
+    "sim": 43.5
+   },
+   {
+    "temp": 3,
+    "ll": -1.078,
+    "sim": 38.1
+   },
+   {
+    "temp": 4,
+    "ll": -1.153,
+    "sim": 34.3
+   },
+   {
+    "temp": 6,
+    "ll": -1.23,
+    "sim": 28.9
+   },
+   {
+    "temp": 9,
+    "ll": -1.319,
+    "sim": 22.1
+   }
+  ],
+  "test": 1,
+  "testWins": 1,
+  "moveBot": {
+   "ll": 0.511,
+   "brier": 0.16,
+   "predicted": 0.6
+  },
+  "dashboardBot": {
+   "ll": 0.357,
+   "brier": 0.09,
+   "predicted": 0.7
+  },
+  "ownRate": {
+   "ll": 0.274,
+   "brier": 0.058,
+   "predicted": 0.8
+  },
+  "levels": [
+   {
+    "lv": 105,
+    "won": true,
+    "moveBot": 0.6,
+    "dashboardBot": 0.7
+   }
+  ]
+ }
+}

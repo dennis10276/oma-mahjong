@@ -1,0 +1,188 @@
+{
+ "name": "Mrs. Doubtfire",
+ "cut": "2026-10-16T05:51:17.986Z",
+ "trainLevels": 54,
+ "trainTries": 151,
+ "best": {
+  "temp": 9,
+  "mem": "none",
+  "ll": -0.5890135650563537
+ },
+ "grid": [
+  {
+   "temp": 1,
+   "mem": "none",
+   "ll": -1.0885
+  },
+  {
+   "temp": 1,
+   "mem": "low",
+   "ll": -1.108
+  },
+  {
+   "temp": 1,
+   "mem": "half",
+   "ll": -1.0742
+  },
+  {
+   "temp": 1,
+   "mem": "high",
+   "ll": -0.8666
+  },
+  {
+   "temp": 1,
+   "mem": "full",
+   "ll": -1.2434
+  },
+  {
+   "temp": 1.5,
+   "mem": "none",
+   "ll": -1.0821
+  },
+  {
+   "temp": 1.5,
+   "mem": "low",
+   "ll": -1.1756
+  },
+  {
+   "temp": 1.5,
+   "mem": "half",
+   "ll": -0.887
+  },
+  {
+   "temp": 1.5,
+   "mem": "high",
+   "ll": -0.7899
+  },
+  {
+   "temp": 1.5,
+   "mem": "full",
+   "ll": -1.1942
+  },
+  {
+   "temp": 2,
+   "mem": "none",
+   "ll": -0.7259
+  },
+  {
+   "temp": 2,
+   "mem": "low",
+   "ll": -1.0613
+  },
+  {
+   "temp": 2,
+   "mem": "half",
+   "ll": -0.837
+  },
+  {
+   "temp": 2,
+   "mem": "high",
+   "ll": -0.8533
+  },
+  {
+   "temp": 2,
+   "mem": "full",
+   "ll": -1.1424
+  },
+  {
+   "temp": 3,
+   "mem": "none",
+   "ll": -0.6769
+  },
+  {
+   "temp": 3,
+   "mem": "low",
+   "ll": -0.7431
+  },
+  {
+   "temp": 3,
+   "mem": "half",
+   "ll": -0.7831
+  },
+  {
+   "temp": 3,
+   "mem": "high",
+   "ll": -0.8063
+  },
+  {
+   "temp": 3,
+   "mem": "full",
+   "ll": -0.7528
+  },
+  {
+   "temp": 4,
+   "mem": "none",
+   "ll": -0.6813
+  },
+  {
+   "temp": 4,
+   "mem": "low",
+   "ll": -0.7388
+  },
+  {
+   "temp": 4,
+   "mem": "half",
+   "ll": -0.7156
+  },
+  {
+   "temp": 4,
+   "mem": "high",
+   "ll": -0.7143
+  },
+  {
+   "temp": 4,
+   "mem": "full",
+   "ll": -0.7533
+  },
+  {
+   "temp": 6,
+   "mem": "none",
+   "ll": -0.6458
+  },
+  {
+   "temp": 6,
+   "mem": "low",
+   "ll": -0.6219
+  },
+  {
+   "temp": 6,
+   "mem": "half",
+   "ll": -0.6826
+  },
+  {
+   "temp": 6,
+   "mem": "high",
+   "ll": -0.6462
+  },
+  {
+   "temp": 6,
+   "mem": "full",
+   "ll": -0.6189
+  },
+  {
+   "temp": 9,
+   "mem": "none",
+   "ll": -0.589
+  },
+  {
+   "temp": 9,
+   "mem": "low",
+   "ll": -0.6214
+  },
+  {
+   "temp": 9,
+   "mem": "half",
+   "ll": -0.6276
+  },
+  {
+   "temp": 9,
+   "mem": "high",
+   "ll": -0.6051
+  },
+  {
+   "temp": 9,
+   "mem": "full",
+   "ll": -0.6416
+  }
+ ]
+}

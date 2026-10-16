@@ -1,0 +1,170 @@
+{
+ "Gerda": {
+  "train": 23,
+  "trainWins": 8,
+  "temp": 9,
+  "fits": [
+   {
+    "temp": 0.75,
+    "ll": -1.96,
+    "sim": 21.3
+   },
+   {
+    "temp": 1,
+    "ll": -1.881,
+    "sim": 21.2
+   },
+   {
+    "temp": 1.5,
+    "ll": -1.821,
+    "sim": 21.4
+   },
+   {
+    "temp": 2,
+    "ll": -1.562,
+    "sim": 20.7
+   },
+   {
+    "temp": 3,
+    "ll": -1.33,
+    "sim": 19.4
+   },
+   {
+    "temp": 4,
+    "ll": -1.159,
+    "sim": 18.6
+   },
+   {
+    "temp": 6,
+    "ll": -0.893,
+    "sim": 16.7
+   },
+   {
+    "temp": 9,
+    "ll": -0.736,
+    "sim": 14.5
+   }
+  ],
+  "test": 17,
+  "testWins": 9,
+  "moveBot": {
+   "ll": 0.763,
+   "brier": 0.287,
+   "predicted": 6
+  },
+  "dashboardBot": {
+   "ll": 0.75,
+   "brier": 0.277,
+   "predicted": 7.8
+  },
+  "ownRate": {
+   "ll": 0.751,
+   "brier": 0.278,
+   "predicted": 6.1
+  },
+  "levels": [
+   {
+    "lv": 37,
+    "won": true,
+    "moveBot": 0.47,
+    "dashboardBot": 0.72
+   },
+   {
+    "lv": 38,
+    "won": false,
+    "moveBot": 0.4,
+    "dashboardBot": 0.42
+   },
+   {
+    "lv": 39,
+    "won": false,
+    "moveBot": 0.4,
+    "dashboardBot": 0.4
+   },
+   {
+    "lv": 41,
+    "won": true,
+    "moveBot": 0.33,
+    "dashboardBot": 0.33
+   },
+   {
+    "lv": 42,
+    "won": false,
+    "moveBot": 0.38,
+    "dashboardBot": 0.35
+   },
+   {
+    "lv": 43,
+    "won": false,
+    "moveBot": 0.7,
+    "dashboardBot": 0.75
+   },
+   {
+    "lv": 44,
+    "won": false,
+    "moveBot": 0.4,
+    "dashboardBot": 0.45
+   },
+   {
+    "lv": 46,
+    "won": true,
+    "moveBot": 0.4,
+    "dashboardBot": 0.68
+   },
+   {
+    "lv": 48,
+    "won": true,
+    "moveBot": 0.38,
+    "dashboardBot": 0.23
+   },
+   {
+    "lv": 49,
+    "won": true,
+    "moveBot": 0.28,
+    "dashboardBot": 0.28
+   },
+   {
+    "lv": 50,
+    "won": false,
+    "moveBot": 0.13,
+    "dashboardBot": 0.45
+   },
+   {
+    "lv": 51,
+    "won": false,
+    "moveBot": 0,
+    "dashboardBot": 0
+   },
+   {
+    "lv": 52,
+    "won": true,
+    "moveBot": 0.25,
+    "dashboardBot": 0.57
+   },
+   {
+    "lv": 53,
+    "won": true,
+    "moveBot": 0.33,
+    "dashboardBot": 0.5
+   },
+   {
+    "lv": 54,
+    "won": true,
+    "moveBot": 0.5,
+    "dashboardBot": 0.5
+   },
+   {
+    "lv": 55,
+    "won": true,
+    "moveBot": 0.38,
+    "dashboardBot": 0.45
+   },
+   {
+    "lv": 56,
+    "won": false,
+    "moveBot": 0.3,
+    "dashboardBot": 0.72
+   }
+  ]
+ }
+}

@@ -1,0 +1,366 @@
+{
+ "name": "PUK",
+ "cut": "2026-10-15T15:41:29.405Z",
+ "trainLevels": 28,
+ "trainTries": 45,
+ "best": {
+  "temp": 9,
+  "mem": "none",
+  "ll": -0.7552307755487025
+ },
+ "grid": [
+  {
+   "temp": 1,
+   "mem": "none",
+   "ll": -1.0391
+  },
+  {
+   "temp": 1,
+   "mem": "low",
+   "ll": -1.0548
+  },
+  {
+   "temp": 1,
+   "mem": "half",
+   "ll": -1.102
+  },
+  {
+   "temp": 1,
+   "mem": "high",
+   "ll": -1.0963
+  },
+  {
+   "temp": 1,
+   "mem": "full",
+   "ll": -1.0569
+  },
+  {
+   "temp": 1.5,
+   "mem": "none",
+   "ll": -0.9575
+  },
+  {
+   "temp": 1.5,
+   "mem": "low",
+   "ll": -0.9134
+  },
+  {
+   "temp": 1.5,
+   "mem": "half",
+   "ll": -1.0167
+  },
+  {
+   "temp": 1.5,
+   "mem": "high",
+   "ll": -1.0183
+  },
+  {
+   "temp": 1.5,
+   "mem": "full",
+   "ll": -0.9302
+  },
+  {
+   "temp": 2,
+   "mem": "none",
+   "ll": -0.988
+  },
+  {
+   "temp": 2,
+   "mem": "low",
+   "ll": -1.0298
+  },
+  {
+   "temp": 2,
+   "mem": "half",
+   "ll": -0.9036
+  },
+  {
+   "temp": 2,
+   "mem": "high",
+   "ll": -1.1021
+  },
+  {
+   "temp": 2,
+   "mem": "full",
+   "ll": -1.0483
+  },
+  {
+   "temp": 3,
+   "mem": "none",
+   "ll": -1.0659
+  },
+  {
+   "temp": 3,
+   "mem": "low",
+   "ll": -0.9873
+  },
+  {
+   "temp": 3,
+   "mem": "half",
+   "ll": -0.9809
+  },
+  {
+   "temp": 3,
+   "mem": "high",
+   "ll": -1.0041
+  },
+  {
+   "temp": 3,
+   "mem": "full",
+   "ll": -1.0111
+  },
+  {
+   "temp": 4,
+   "mem": "none",
+   "ll": -0.9247
+  },
+  {
+   "temp": 4,
+   "mem": "low",
+   "ll": -0.8858
+  },
+  {
+   "temp": 4,
+   "mem": "half",
+   "ll": -0.9716
+  },
+  {
+   "temp": 4,
+   "mem": "high",
+   "ll": -0.9022
+  },
+  {
+   "temp": 4,
+   "mem": "full",
+   "ll": -0.9784
+  },
+  {
+   "temp": 6,
+   "mem": "none",
+   "ll": -0.7909
+  },
+  {
+   "temp": 6,
+   "mem": "low",
+   "ll": -0.8199
+  },
+  {
+   "temp": 6,
+   "mem": "half",
+   "ll": -0.8427
+  },
+  {
+   "temp": 6,
+   "mem": "high",
+   "ll": -0.8482
+  },
+  {
+   "temp": 6,
+   "mem": "full",
+   "ll": -1.0474
+  },
+  {
+   "temp": 9,
+   "mem": "none",
+   "ll": -0.7552
+  },
+  {
+   "temp": 9,
+   "mem": "low",
+   "ll": -0.7604
+  },
+  {
+   "temp": 9,
+   "mem": "half",
+   "ll": -0.78
+  },
+  {
+   "temp": 9,
+   "mem": "high",
+   "ll": -0.8172
+  },
+  {
+   "temp": 9,
+   "mem": "full",
+   "ll": -0.8046
+  }
+ ],
+ "test": {
+  "levels": 8,
+  "moveBot": {
+   "first": {
+    "n": 8,
+    "won": 6,
+    "predicted": 3.1,
+    "ll": 0.74
+   },
+   "retries": {
+    "n": 3,
+    "won": 1,
+    "predicted": 0.7,
+    "ll": 1.358
+   },
+   "all": 0.909
+  },
+  "dashboardBot": {
+   "first": {
+    "n": 8,
+    "won": 6,
+    "predicted": 4.9,
+    "ll": 0.499
+   },
+   "retries": {
+    "n": 3,
+    "won": 1,
+    "predicted": 1.2,
+    "ll": 1.076
+   },
+   "all": 0.656
+  },
+  "ownRate": {
+   "first": {
+    "n": 8,
+    "won": 6,
+    "predicted": 4.4,
+    "ll": 0.647
+   },
+   "retries": {
+    "n": 3,
+    "won": 1,
+    "predicted": 2,
+    "ll": 0.843
+   },
+   "all": 0.7
+  },
+  "perLevel": [
+   {
+    "lv": 44,
+    "tries": "W",
+    "moveBot": [
+     0.46,
+     0.69,
+     0.77,
+     0.88
+    ],
+    "dashboardBot": [
+     0.71,
+     0.9,
+     0.94,
+     0.94
+    ]
+   },
+   {
+    "lv": 45,
+    "tries": "W",
+    "moveBot": [
+     0.19,
+     0.29,
+     0.42,
+     0.5
+    ],
+    "dashboardBot": [
+     0.29,
+     0.56,
+     0.69,
+     0.85
+    ]
+   },
+   {
+    "lv": 46,
+    "tries": "LLW",
+    "moveBot": [
+     0.19,
+     0.35,
+     0.46,
+     0.48
+    ],
+    "dashboardBot": [
+     0.38,
+     0.67,
+     0.77,
+     0.81
+    ]
+   },
+   {
+    "lv": 47,
+    "tries": "W",
+    "moveBot": [
+     0.38,
+     0.65,
+     0.77,
+     0.9
+    ],
+    "dashboardBot": [
+     0.85,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "lv": 48,
+    "tries": "W",
+    "moveBot": [
+     0.5,
+     0.75,
+     0.83,
+     0.94
+    ],
+    "dashboardBot": [
+     0.69,
+     0.92,
+     0.96,
+     0.96
+    ]
+   },
+   {
+    "lv": 49,
+    "tries": "LL",
+    "moveBot": [
+     0.25,
+     0.58,
+     0.71,
+     0.79
+    ],
+    "dashboardBot": [
+     0.54,
+     0.81,
+     0.9,
+     0.96
+    ]
+   },
+   {
+    "lv": 50,
+    "tries": "W",
+    "moveBot": [
+     0.35,
+     0.65,
+     0.73,
+     0.81
+    ],
+    "dashboardBot": [
+     0.73,
+     0.9,
+     0.96,
+     0.96
+    ]
+   },
+   {
+    "lv": 51,
+    "tries": "W",
+    "moveBot": [
+     0.77,
+     0.9,
+     0.98,
+     1
+    ],
+    "dashboardBot": [
+     0.73,
+     0.94,
+     0.96,
+     1
+    ]
+   }
+  ]
+ }
+}

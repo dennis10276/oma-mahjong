@@ -1,0 +1,67 @@
+{
+ "Mrs. Doubtfire": {
+  "train": 52,
+  "trainWins": 28,
+  "temp": 3,
+  "fits": [
+   {
+    "temp": 0.75,
+    "ll": -1.143,
+    "sim": 40.8
+   },
+   {
+    "temp": 1,
+    "ll": -1.06,
+    "sim": 40.4
+   },
+   {
+    "temp": 1.5,
+    "ll": -0.957,
+    "sim": 38.9
+   },
+   {
+    "temp": 2,
+    "ll": -0.931,
+    "sim": 36.8
+   },
+   {
+    "temp": 3,
+    "ll": -0.888,
+    "sim": 33.2
+   },
+   {
+    "temp": 4,
+    "ll": -0.898,
+    "sim": 30.3
+   },
+   {
+    "temp": 6,
+    "ll": -0.925,
+    "sim": 26.8
+   },
+   {
+    "temp": 9,
+    "ll": -0.946,
+    "sim": 21.1
+   }
+  ],
+  "test": 0,
+  "testWins": 0,
+  "moveBot": {
+   "ll": 0,
+   "brier": 0,
+   "predicted": 0
+  },
+  "dashboardBot": {
+   "ll": 0,
+   "brier": 0,
+   "predicted": 0
+  },
+  "ownRate": {
+   "ll": 0,
+   "brier": 0,
+   "predicted": 0
+  },
+  "levels": []
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "PUK": {
+  "train": 27,
+  "trainWins": 15,
+  "temp": 9,
+  "fits": [
+   {
+    "temp": 0.75,
+    "ll": -1.217,
+    "sim": 23.7
+   },
+   {
+    "temp": 1,
+    "ll": -1.105,
+    "sim": 23
+   },
+   {
+    "temp": 1.5,
+    "ll": -1.117,
+    "sim": 22.9
+   },
+   {
+    "temp": 2,
+    "ll": -1.064,
+    "sim": 22.2
+   },
+   {
+    "temp": 3,
+    "ll": -1.047,
+    "sim": 21.9
+   },
+   {
+    "temp": 4,
+    "ll": -1.025,
+    "sim": 21.2
+   },
+   {
+    "temp": 6,
+    "ll": -0.907,
+    "sim": 19.4
+   },
+   {
+    "temp": 9,
+    "ll": -0.862,
+    "sim": 17.8
+   }
+  ],
+  "test": 8,
+  "testWins": 6,
+  "moveBot": {
+   "ll": 0.677,
+   "brier": 0.234,
+   "predicted": 3.5
+  },
+  "dashboardBot": {
+   "ll": 0.528,
+   "brier": 0.17,
+   "predicted": 4.5
+  },
+  "ownRate": {
+   "ll": 0.647,
+   "brier": 0.227,
+   "predicted": 4.4
+  },
+  "levels": [
+   {
+    "lv": 44,
+    "won": true,
+    "moveBot": 0.53,
+    "dashboardBot": 0.78
+   },
+   {
+    "lv": 45,
+    "won": true,
+    "moveBot": 0.17,
+    "dashboardBot": 0.23
+   },
+   {
+    "lv": 46,
+    "won": false,
+    "moveBot": 0.25,
+    "dashboardBot": 0.35
+   },
+   {
+    "lv": 47,
+    "won": true,
+    "moveBot": 0.6,
+    "dashboardBot": 0.7
+   },
+   {
+    "lv": 48,
+    "won": true,
+    "moveBot": 0.55,
+    "dashboardBot": 0.57
+   },
+   {
+    "lv": 49,
+    "won": false,
+    "moveBot": 0.33,
+    "dashboardBot": 0.4
+   },
+   {
+    "lv": 50,
+    "won": true,
+    "moveBot": 0.4,
+    "dashboardBot": 0.65
+   },
+   {
+    "lv": 51,
+    "won": true,
+    "moveBot": 0.72,
+    "dashboardBot": 0.82
+   }
+  ]
+ }
+}
