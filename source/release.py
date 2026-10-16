@@ -4,6 +4,8 @@
   python3 release.py 1.6 --deploy    the usual way: new game files (phones update themselves)
                                      AND a fresh APK on the download page, so new installs
                                      always get the newest version too
+  python3 release.py --dashboard-only --deploy  publish dashboard changes without a game release
+
   --no-apk                           skip the APK (only for quick tests)
   --no-tests                         skip the test suite (tests/run.js), which otherwise must pass first
 
@@ -52,7 +54,31 @@ def sub(path, pattern, repl, count=1):
     open(path, 'w', encoding='utf-8').write(s2)
 
 
+def dashboard_only(deploy):
+    """Publish the dashboard source, with no phone/app version change."""
+    if deploy:
+        branch = subprocess.check_output(['git', '-C', REPO, 'branch', '--show-current'], text=True).strip()
+        dirty = subprocess.check_output(['git', '-C', REPO, 'status', '--porcelain'], text=True).strip()
+        if branch != 'main' or dirty:
+            sys.exit('Dashboard releases require a clean main. Commit source changes and update main first.')
+    run_tests()
+    shutil.copytree(os.path.join(SITE, 'dash'), os.path.join(REPO, 'dash'), dirs_exist_ok=True)
+    if deploy:
+        subprocess.run(['git', '-C', REPO, 'add', '--', 'dash'], check=True)
+        if subprocess.run(['git', '-C', REPO, 'diff', '--cached', '--quiet']).returncode == 0:
+            print('dashboard already matches source')
+            return
+        subprocess.run(['git', '-C', REPO, 'commit', '-m', 'Publish dashboard update'], check=True)
+        subprocess.run(['git', '-C', REPO, 'push', 'origin', 'main'], check=True)
+        print('dashboard deployed')
+
+
 def main():
+    if '--dashboard-only' in sys.argv:
+        if any(not a.startswith('--') for a in sys.argv[1:]):
+            sys.exit('--dashboard-only takes no game version')
+        dashboard_only('--deploy' in sys.argv)
+        return
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     if len(args) != 1 or not re.fullmatch(r'\d+(\.\d+)*', args[0]):
         sys.exit(__doc__)
