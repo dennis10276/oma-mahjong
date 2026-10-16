@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.53/style.css" id="css">
+<link rel="stylesheet" href="v/1.54/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -155,7 +155,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.53', KEY = 'omamj.code', FILES = ['v/1.53/tiles.js', 'v/1.53/audio.js', 'v/1.53/layouts.js', 'v/1.53/hard.js', 'v/1.53/levels-hard.js', 'v/1.53/js/rules.js', 'v/1.53/js/lang.js', 'v/1.53/js/core.js', 'v/1.53/js/fx.js', 'v/1.53/js/update.js', 'v/1.53/js/screens.js', 'v/1.53/js/board.js', 'v/1.53/js/help.js', 'v/1.53/js/specials.js', 'v/1.53/js/rewards.js', 'v/1.53/js/telemetry.js', 'v/1.53/js/social.js', 'v/1.53/js/hearts.js', 'v/1.53/js/stories.js', 'v/1.53/js/village.js', 'v/1.53/js/win.js', 'v/1.53/js/main.js'];
+  var BUILT = '1.54', KEY = 'omamj.code', FILES = ['v/1.54/tiles.js', 'v/1.54/audio.js', 'v/1.54/layouts.js', 'v/1.54/hard.js', 'v/1.54/levels-hard.js', 'v/1.54/js/rules.js', 'v/1.54/js/lang.js', 'v/1.54/js/core.js', 'v/1.54/js/fx.js', 'v/1.54/js/update.js', 'v/1.54/js/screens.js', 'v/1.54/js/board.js', 'v/1.54/js/help.js', 'v/1.54/js/specials.js', 'v/1.54/js/rewards.js', 'v/1.54/js/telemetry.js', 'v/1.54/js/social.js', 'v/1.54/js/hearts.js', 'v/1.54/js/stories.js', 'v/1.54/js/village.js', 'v/1.54/js/win.js', 'v/1.54/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

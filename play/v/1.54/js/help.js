@@ -57,6 +57,7 @@ function rescueTray() {
   if (!G || G.done) return;
   closeModal();
   G.rescued = true; G.overShown = false; G.combo = 0; clearNudge();
+  replayMark('rescue', G.tray.slice());
   logLvl('rescue', { ez: G.ez || undefined });
   bumpStat('rescues');
   const back = G.tray.slice(), slots = $('#tray').children, MS = 420;
@@ -125,6 +126,7 @@ function nudgeTick() {
   if (pair) startNudge(pair, w.upS);
 }
 function startNudge(pair, wait) {
+  replayMark('nudge', pair.slice());
   G.nudge = pair.slice();
   let turned = 0;
   for (const i of pair) {

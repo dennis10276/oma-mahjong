@@ -103,6 +103,7 @@ function maybeLucky() {
   if (!cand.length) return;
   const i = cand[Math.floor(Math.random() * cand.length)];
   G.lucky = { i, until: Date.now() + LUCKY_MS }; G.luckyN = (G.luckyN || 0) + 1;
+  replayMark('lucky', [i, LUCKY_MS]);
   G.tiles[i].el.classList.add('lucky');
   toast(tx('lucky'), 4000);
   Sound.hint();

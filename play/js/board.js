@@ -15,7 +15,7 @@ function saveCur() {
   syncClock();
   try {
     replayCapture();
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: G.o.mode === 'level' && Hard.applies(G.o.level, G.o.track) ? Hard.GENV : null }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: G.o.mode === 'level' && Hard.applies(G.o.level, G.o.track) ? Hard.designVersion(G.o.level) : null }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -63,7 +63,7 @@ function begin(o, restart = false) {
   if (cur && cur.rp && previousReplay && cur.rp.id === previousReplay.id &&
       JSON.stringify(cur.rp.last) === JSON.stringify(previousReplay.last)) cur.rp = previousReplay;
   const sameTrack = cur && (cur.tr || '') === (o.track || '') &&
-    (o.mode !== 'level' || o.level < RULES.hard.rebuildFrom || !Hard.applies(o.level, o.track) || cur.hv === Hard.GENV);
+    (o.mode !== 'level' || o.level < RULES.hard.rebuildFrom || !Hard.applies(o.level, o.track) || cur.hv === Hard.designVersion(o.level));
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {
@@ -110,7 +110,7 @@ function begin(o, restart = false) {
   G.attempt = S.att[o.key];
   replayBegin(cur, resumed);
   const focused = !!spec.made && o.mode === 'level' && o.level >= RULES.hard.rebuildFrom;
-  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? (o.level >= 106 ? 'strong' : 'focused') : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? Hard.ratingModel(o.level) : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');

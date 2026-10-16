@@ -177,6 +177,7 @@ function setLang(code) {
 let modalClosable = true, modalOnClose = null;
 function openModal(html, closable = true, onClose = null, cls = '') {
   const box = $('#modalBox');
+  box.style.removeProperty('--heart-dialog-height');
   box.className = 'modal-box' + (cls ? ' ' + cls : '');   // 'compact': the after-level screens, they must fit without scrolling
   box.innerHTML = html; box.scrollTop = 0; $('#modal').classList.remove('hidden');
   fitTexts(box);
@@ -185,6 +186,17 @@ function openModal(html, closable = true, onClose = null, cls = '') {
 function closeModal() {
   $('#modal').classList.add('hidden');
   const f = modalOnClose; modalOnClose = null; if (f) f();
+}
+// Keep the actual nodes and their handlers, so a heart picker can return to a completed level.
+function keepModal() {
+  const box = $('#modalBox'), nodes = [...box.childNodes], cls = box.className.replace(/^modal-box\s*/, ''),
+    style = box.getAttribute('style'), scroll = box.scrollTop, closable = modalClosable, onClose = modalOnClose;
+  return () => {
+    openModal('', closable, onClose, cls);
+    box.replaceChildren(...nodes);
+    if (style == null) box.removeAttribute('style'); else box.setAttribute('style', style);
+    box.scrollTop = scroll;
+  };
 }
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' && modalClosable) closeModal(); });
 

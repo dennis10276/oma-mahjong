@@ -92,6 +92,8 @@ const PART_GROUPS = { easy: 'Makkelijker spelen', help: 'Hulp', extra: "Extra's"
 /* Grandma: her player id, or a name starting with "Oma" (in case she ever reinstalls the app).
    `like` = players who always get exactly what grandma gets (DennisTEST: to see what she sees). */
 const GRANDMA = { pids: ['pmuy4wmdp17hbws'], like: ['pmuxw2uqkzcnbgx'], name: /^oma/i };
+// Keep the test account available for diagnostics, but out of family competition.
+const hiddenFromRanking = (pid, name) => pid === 'pmuxw2uqkzcnbgx' || /^dennistest$/i.test(String(name || '').trim());
 const isGrandma = (pid, name) => GRANDMA.pids.includes(pid) || GRANDMA.like.includes(pid) || GRANDMA.name.test(name || '');
 // who else has Super-omamodus by default (besides grandma and DennisTEST); Mama is not in grandma mode
 const CARE = { pids: [] };
