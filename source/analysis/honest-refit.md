@@ -195,3 +195,43 @@ Two ways to build the per-person player:
    newest recorded games (not used for fitting) it beats "their usual win share" for all four
    (log-loss: Dennis 0.29 vs 0.47, Mrs. Doubtfire 1.26 vs 1.57, PUK 0.62 vs 0.67, Gerda 0.53 vs 0.68)
    and predicts about the right number of wins (Gerda 10.7 vs 14 of 39, PUK 5.1 vs 6 of 10).
+
+## The move-based test player per person, made reliable (2026-10-16)
+
+Data refreshed (Firebase `replays/` and `plays/`). The recorded games are used whole now: a "lucky"
+glow only shows a known match, and the relief rule (ice and locks give way when they block every free
+tile) is now in the test player (`Hard.play`, `relieved`). 229 recorded games, 11,000 decisions.
+
+Why the literal copy lost far too often:
+1. **Wrong signs.** People almost never walk into "stuck for sure" or a fatal 4th tile, so those
+   weights could not be learned from moves and came out positive (Gerda: overflow +2.85). Now fixed
+   by bounds (`mimic_fit2.py`).
+2. **Old habits.** Gerda turned no tile over on her first day (27 lost tries on level 5, won when she
+   started flipping); her flipping went from 9% to 50%. Habits are now from her recent games (half-life
+   20 games; `kinds.js` gives the habits at any moment from the recordings before it).
+3. **The choice within a kind.** In two steps: what kind of move per situation (turn a tile over, pair,
+   single, fatal 4th; tiles waiting x safe pair known x tile left to turn over), straight from their
+   recordings (`p.kinds`, `mimic_types.py` / `kinds.js`); then which move of that kind. People's choice
+   within a kind is close to random by every measure the test player knows (move weights, engine
+   ranking), yet their results only match a careful choice (Gerda's newest 24 games: real 16 wins;
+   own learned weights 7.4; engine care 1.5-4: 14-17). So the choice within a kind is the engine's,
+   at care level 2.
+
+Game rules found on the way: only one face-down tile is open at a time (opening another closes the
+first; people re-open them), and tapping a face-down tile whose twin waits in the tray matches at once.
+
+How good can a prediction be? A first try is close to a coin flip for this family: the best board
+measures tell won from lost first tries with AUC 0.6-0.69 (0.5 = coin). Gerda improved faster than the
+levels got harder (higher level = more wins). So the prediction is two parts:
+- the board, for this person: their move-based test player (habits now, care 2, memory of a lost try
+  75/50/75% start/middle/end),
+- how it has gone lately: logit P = a + b * logit(test player's chance) + c * [retry], fitted on their
+  tries with recent ones weighted (half-life 12 tries), pulled towards a = 0, b = 0.3, c = 0
+  (`mbot_recal.js`, `predict_mbot.js`). Choosing memory per person overfitted (worse); one memory for
+  all, and each person's retry difference in c.
+
+Rolling test (`mbot_chains.js`, `mbot_recal.js`): every level predicted with only what came before it.
+Log-loss over all 399 tries (lower is better): move-based + correction **0.614**, own recent win share
+0.627, dashboard players (fitted on everything, so a head start) 0.717 raw / 0.656 corrected. First
+tries expected vs won: Dennis 52 vs 51 (68 levels), Mrs. Doubtfire 23.6 vs 23 (46), PUK 17.8 vs 18
+(30), Gerda 15.4 vs 14 (34). Calibration: said 31% -> real 19%, 51% -> 54%, 69% -> 58%, 88% -> 80%.

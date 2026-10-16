@@ -55,7 +55,10 @@ const Hard = (() => {
     const alive = new Uint8Array(n).fill(1), alive0 = new Uint8Array(n).fill(1);
     const rules = g.rules || null;
     const down = g.down || new Uint8Array(n);
-    const can = i => rules ? L.takeable(i, alive, nb, rules, alive0) : L.isFree(i, alive, nb);
+    // relief (specials.js obRelief): when tiles are free but ice or locks block every one of them, the
+    // game melts the ice and opens the locks; from then on only the pile itself counts
+    let relieved = false;
+    const can = i => rules && !relieved ? L.takeable(i, alive, nb, rules, alive0) : L.isFree(i, alive, nb);
     const tray = [];        // faces waiting
     let moves = 0, left = n;
     const clock = g.clock && g.clock.i >= 0 ? g.clock : null;
@@ -74,8 +77,8 @@ const Hard = (() => {
       while (st.length) { const k = st.pop(); for (const a of nb.above[k]) if (alive[a] && seen[a] !== stamp) { seen[a] = stamp; up++; st.push(a); } }
       const side = d => { let c = 0, k = j; for (;;) { const nx = (d < 0 ? nb.left[k] : nb.right[k]).find(x => alive[x]); if (nx === undefined) return c; c++; k = nx; if (c > 12) return c; } };
       let v = up + Math.min(side(-1), side(1));
-      if (rules && rules.ice && rules.ice[j]) { let gone = 0; for (const q of rules.iceNb[j]) if (alive0[q] && !alive[q]) gone++; v += Math.max(0, rules.ice[j] - gone); }
-      if (rules && rules.locks && rules.locks.has(j)) for (const k of rules.keys) if (alive[k]) v += 1 + up;
+      if (rules && !relieved && rules.ice && rules.ice[j]) { let gone = 0; for (const q of rules.iceNb[j]) if (alive0[q] && !alive[q]) gone++; v += Math.max(0, rules.ice[j] - gone); }
+      if (rules && !relieved && rules.locks && rules.locks.has(j)) for (const k of rules.keys) if (alive[k]) v += 1 + up;
       memo[j] = v + 1;
       return v;
     }
@@ -177,13 +180,14 @@ const Hard = (() => {
     // start from a position in the middle of a game: these tiles were taken already, in this order
     // (tools/sim/refit/replay.js plays on from a real player's position)
     if (g.start) for (const i of g.start) if (!commit(i)) return end(false, 'clock');
+    if (g.peekedAtStart) for (const i of g.peekedAtStart) peeked[i] = 1;   // (the tiles they had turned over by then)
     // the end game: everything left is in sight, so work it out exactly (ice counted from now on)
     function endGame() {
       if (hasJoker) return null;   // (the exact solver does not know jokers)
       if (!p.end || left > p.end) return null;
       for (let i = 0; i < n; i++) if (alive[i] && !sees(i)) return null;
       let ru = null;
-      if (rules) {
+      if (rules && !relieved) {
         const ice = {};
         for (const k in rules.ice) { let gone = 0; for (const q of rules.iceNb[k]) if (alive0[q] && !alive[q]) gone++; const h = rules.ice[k] - gone; if (h > 0) ice[k] = h; }
         ru = { iceNb: rules.iceNb, ice, locks: rules.locks, keys: rules.keys };
@@ -276,6 +280,7 @@ const Hard = (() => {
         if (cplan && cplan.length) { if (!commit(cplan.shift())) return end(false, 'clock'); continue; }
       }
       const fr = []; for (let i = 0; i < n; i++) if (can(i)) fr.push(i);
+      if (!fr.length && rules && !relieved && tray.length < SLOTS) { for (let i = 0; i < n; i++) if (alive[i] && L.isFree(i, alive, nb)) { relieved = true; memo.fill(0); break; } if (relieved) { for (let i = 0; i < n; i++) if (can(i)) fr.push(i); } }
       if (!fr.length) return end(false, 'none');
       // p.search: with tiles waiting, the chance per move that it turns over a free face-down tile that
       // turns out to be the twin of a waiting one (people go looking; fitted from recorded games)
@@ -304,7 +309,7 @@ const Hard = (() => {
       // flipping a free face-down tile it has not seen is a move of its own (free: it costs no move);
       // only for players that do it (p.flips: a player's own test player, and follow mode)
       const flipT = p.flips || follow ? fr.filter(i => down[i] && peeked[i] !== 1) : [];
-      if (!opts.length && !flipT.length) return end(false, 'tray');
+      if (!opts.length && !flipT.length) { if (p.stats) p.stats.dieNone = (p.stats.dieNone || 0) + 1; return end(false, 'tray'); }
       decisions++; choices += opts.length;
       for (let i = 0; i < n; i++) { known[i] = alive[i] && sees(i) ? 1 : 0; if (known[i] && !seenEver[i]) seenEver[i] = moves + 1; }
       unseen.fill(0); unseenN = 0; for (let i = 0; i < n; i++) if (alive[i] && !known[i]) { unseen[faces[i] & 255]++; unseenN++; }
@@ -312,7 +317,7 @@ const Hard = (() => {
       const unknown = fr.filter(i => !mateKnown(i)).length;
       unknownOptions += unknown; singleOptions += fr.length;
       if (unknown === fr.length) forcedBlind++;
-      logF = follow ? [] : null;
+      logF = follow || (p.stats && p.stats.feat) ? [] : null;
       // what a flip may bring: the share of the unseen pictures that fit a waiting tile or a free single
       let flipHit = 0;
       if (flipT.length && unseenN) {
@@ -321,21 +326,45 @@ const Hard = (() => {
         for (const [f, c] of kc) if (c & 1 && !tray.includes(f)) hit += unseen[f & 255];
         flipHit = Math.min(1, hit / unseenN);
       }
+      // p.kinds: a person's own test player in two steps (tools/sim/refit/mimic_types.py). First what
+      // kind of move, with their own rates per situation (tiles waiting, a safe pair known, a tile left
+      // to turn over): turn a tile over, a pair, a single tile, or (3 waiting) a fatal 4th tile. Then
+      // which move of that kind: their learned weights.
+      let only = null;
+      if (!follow && p.kinds) {
+        const kindOf = o => tray.length >= SLOTS - 1 && !o.some(i => tray.includes(faces[i])) && !(o.length === 2 && (down[o[0]] || down[o[1]])) ? 'fatal' : o.length === 2 ? 'pair' : 'single';
+        const ko = opts.map(kindOf);
+        const has = { flip: flipT.length > 0, pair: ko.includes('pair'), single: ko.includes('single'), fatal: ko.includes('fatal') };
+        const key = 't' + Math.min(SLOTS - 1, tray.length) + (has.pair ? 'p' : 'n') + (has.flip ? '' : '-');
+        const rates = p.kinds[key] || {};
+        const ks = ['flip', 'pair', 'single', 'fatal'].filter(q => has[q]);
+        let pr = ks.map(q => rates[q] || 0), tot = pr.reduce((a, b) => a + b, 0);
+        if (tot <= 0) { pr = ks.map(q => q === 'fatal' ? 0.01 : 1); tot = pr.reduce((a, b) => a + b, 0); }
+        let x = r() * tot, q = 0; while (q < ks.length - 1 && (x -= pr[q]) > 0) q++;
+        const kind = ks[q];
+        if (p.stats) { const c = p.stats.sit || (p.stats.sit = {}); const e = c[key] || (c[key] = { flip: 0, pair: 0, single: 0, fatal: 0, n: 0 }); e[kind]++; e.n++; }
+        if (kind === 'flip') { peeked[flipT[Math.floor(r() * flipT.length)]] = 1; continue; }
+        if (kind === 'fatal') { if (p.stats) p.stats.dieFatal = (p.stats.dieFatal || 0) + 1; return end(false, 'tray'); }
+        only = ko.map(k2 => k2 === kind);
+      }
       // p.flipRate: a person's own habit of turning a tile over, per situation (how full the tray is,
       // and whether a pair is known), taken from their recorded games; then the move is chosen
       // among the real moves only
-      if (!follow && p.flipRate && flipT.length) {
+      // p.stats: counts for comparing a test player with real games (decisions, at 3 waiting, flips)
+      if (p.stats && !follow) { p.stats.dec = (p.stats.dec || 0) + 1; p.stats['t' + Math.min(SLOTS - 1, tray.length)] = (p.stats['t' + Math.min(SLOTS - 1, tray.length)] || 0) + 1; }
+      if (!follow && !p.kinds && p.flipRate && flipT.length) {
         const pairKnown = opts.some(o => o.length === 2 && (tray.length < SLOTS - 1 || down[o[0]] || down[o[1]]));
         const key = 't' + Math.min(SLOTS - 1, tray.length) + (pairKnown ? 'p' : 'n');
-        if (!opts.length || r() < (p.flipRate[key] ?? 0)) { peeked[flipT[Math.floor(r() * flipT.length)]] = 1; continue; }
+        if (p.stats) p.stats.key = key;
+        if (!opts.length || r() < (p.flipRate[key] ?? 0)) { if (p.stats) { const c = p.stats.sit || (p.stats.sit = {}); (c[key] || (c[key] = { flip: 0, pair: 0, single: 0, n: 0 })).flip++; c[key].n++; } peeked[flipT[Math.floor(r() * flipT.length)]] = 1; continue; }
       }
       // p.blunder3: with 3 tiles waiting, the chance it puts a 4th tile in the tray even when a safe
       // move is known (Gerda: 38 of 39 times in her recorded games)
-      if (!follow && p.blunder3 && tray.length >= SLOTS - 1) {
+      if (!follow && !p.kinds && p.blunder3 && tray.length >= SLOTS - 1) {
         const fatal = opts.filter(o => !o.some(i => tray.includes(faces[i])) && !(o.length === 2 && (down[o[0]] || down[o[1]])));
-        if (fatal.length && fatal.length < opts.length && r() < p.blunder3) return end(false, 'tray');
+        if (fatal.length && fatal.length < opts.length && r() < p.blunder3) { if (p.stats) p.stats.dieB3 = (p.stats.dieB3 || 0) + 1; return end(false, 'tray'); }
       }
-      const flipSc = (p.flipRate ? [] : flipT).map(() => { cf.fill(0); cf[19] = 1; cf[20] = flipHit; if (logF) logF.push(Array.from(cf)); let v = 0; for (let q = 0; q < NF; q++) v += W[q] * cf[q]; return v; });
+      const flipSc = (p.flipRate || p.kinds ? [] : flipT).map(() => { cf.fill(0); cf[19] = 1; cf[20] = flipHit; if (logF) logF.push(Array.from(cf)); let v = 0; for (let q = 0; q < NF; q++) v += W[q] * cf[q]; return v; });
       const flipF = logF ? logF.splice(0, logF.length) : null;   // (logged after the moves, below)
       const sc = opts.map(o => {
         // overflow: this move puts a 4th tile without a partner in the tray (the level is over)
@@ -379,16 +408,21 @@ const Hard = (() => {
         if (k < 0) { for (const i of (pairK >= 0 ? [h, h2] : [h])) take(i); fi = pairK >= 0 ? f2 + 1 : fi + 1; if (tray.length >= SLOTS) return end(false, 'tray'); continue; }
         fi = opts[k].length === 2 ? f2 + 1 : fi + 1;
       } else {
-        const w = all.map(v => Math.exp(v - mx));
+        const m2 = only ? Math.max(...all.filter((v, q) => only[q])) : mx;   // (the best move of the chosen kind)
+        const w = all.map((v, q) => only && !only[q] ? 0 : Math.exp(v - m2));
         let x = r() * w.reduce((a, b) => a + b, 0);
         while (k < w.length - 1 && (x -= w[k]) > 0) k++;
         if (k >= opts.length) { peeked[flipT[k - opts.length]] = 1; continue; }   // turned a tile over
       }
       if (trace) trace.push({ tray: tray.slice(), opts: opts.length, pick: opts[k], best: sc.indexOf(mx) === k });
+      if (p.stats && p.stats.feat && !follow && logF) { const kd = opts[k].length === 2 ? 'pair' : 'single'; const S = p.stats.feat; const a = S[kd] || (S[kd] = { n: 0, sum: new Array(NF).fill(0), opts: 0 }); a.n++; a.opts += opts.filter(o => o.length === opts[k].length).length; logF[k].forEach((v, q) => a.sum[q] += Math.min(50, v)); }
       if (opts[k].length === 1 && tray.length === SLOTS - 2) risky++;   // a third tile waits: one more miss ends the level
       if (opts[k].length === 1 && !mateKnown(opts[k][0])) blind++;
-      if (!follow && careless && tray.length >= SLOTS - 1 && !opts[k].some(i => tray.includes(faces[i])) && !(opts[k].length === 2 && (down[opts[k][0]] || down[opts[k][1]]))) return end(false, 'tray');
+      if (!follow && careless && tray.length >= SLOTS - 1 && !opts[k].some(i => tray.includes(faces[i])) && !(opts[k].length === 2 && (down[opts[k][0]] || down[opts[k][1]]))) { if (p.stats) p.stats.dieSoft = (p.stats.dieSoft || 0) + 1; return end(false, 'tray'); }
+      const before = tray.length;
+      if (p.stats && !follow && !p.kinds) { const key = 't' + Math.min(SLOTS - 1, tray.length) + (opts.some(o => o.length === 2 && (tray.length < SLOTS - 1 || down[o[0]] || down[o[1]])) ? 'p' : 'n') + (flipT.length ? '' : '-'); const c = p.stats.sit || (p.stats.sit = {}); (c[key] || (c[key] = { flip: 0, pair: 0, single: 0, n: 0 }))[opts[k].length === 2 ? 'pair' : 'single']++; c[key].n++; }
       for (const i of opts[k]) if (!commit(i)) return end(false, 'clock');
+      if (p.stats && !follow) { const S = p.stats; if (before < SLOTS - 1 && tray.length >= SLOTS - 1) S.enter3 = (S.enter3 || 0) + 1; if (opts[k].length === 1) S.single = (S.single || 0) + 1; else S.pair = (S.pair || 0) + 1; if (opts[k].length === 1 && !mateKnown(opts[k][0])) S.blindSingle = (S.blindSingle || 0) + 1; }
       if (follow && tray.length >= SLOTS) return end(false, 'tray');
     }
     return end(tray.length === 0, tray.length ? 'tray' : 'win');

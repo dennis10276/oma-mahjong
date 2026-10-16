@@ -7,7 +7,7 @@ const DATA = process.env.DATA || path.join(__dirname, '..', '..', '..', 'analysi
 const plays = JSON.parse(fs.readFileSync(path.join(DATA, 'plays.json'), 'utf8'));
 const scores = JSON.parse(fs.readFileSync(path.join(DATA, 'scores.json'), 'utf8'));
 const ver = s => (s || '0').split('.').map(Number).reduce((a, x) => a * 100 + x, 0);
-const TABLE_VERSIONS = ['1.44', '1.45', '1.46', '1.47', '1.48', '1.49', '1.50', '1.51', '1.52', '1.53'];
+const TABLE_VERSIONS = ['1.44', '1.45', '1.46', '1.47', '1.48', '1.49', '1.50', '1.51', '1.52', '1.53', '1.54', '1.55'];
 const SKIP = new Set(['pmuxw2uqkzcnbgx']);                      // DennisTEST
 const out = [], notes = {};
 for (const [pid, ev] of Object.entries(plays)) {

@@ -30,7 +30,7 @@ for (const [aid, ch] of Object.entries(R)) {
   // the tiles they took, in order, until something changed the board or pointed at a move
   const take = []; let end = null, t0 = null;
   for (const [ms, kind, data] of ev) {
-    if (['hint', 'shuffle', 'rescue', 'nudge', 'lucky', 'relief'].includes(kind)) break;
+    if (['hint', 'shuffle', 'rescue', 'nudge'].includes(kind)) break;   // (lucky only makes a tile glow; relief is a game rule the test player knows)
     if (kind === 'end') { end = data && data.r; break; }
     if (kind === 'state' && data.p !== undefined && data.p >= 0) take.push(-(data.p + 1));   // turned this tile over
     if (kind === 'state' && data.a) for (const [i, v] of data.a) if (v === 0) take.push(i);
