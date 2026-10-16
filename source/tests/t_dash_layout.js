@@ -13,6 +13,46 @@ module.exports = [
     },
   },
   {
+    name: 'dashboard: hiding predictions preserves the original wide-screen layout and migrates visibility-only settings',
+    async run(t, { serve, FakeDB, browser, WWW }) {
+      const site = await serve(SITE, { '/play/': WWW }), now = Date.now();
+      const db = new FakeDB({ scores: { pA: { name: 'Anna', level: 39 }, pB: { name: 'Bram', level: 40 } }, plays: { pA: { a: { k: 'open', name: 'Anna', lv: 39, t: now } } } });
+      const ctx = await browser.newContext(); await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
+      const geometry = () => p.evaluate(() => ['#kpis', '.game-watch', '#ranking', '#chHeat', '#chClose', '#tbl'].map(selector => { const b = document.querySelector(selector).getBoundingClientRect(); return { x: b.x + scrollX, y: b.y + scrollY, width: b.width }; }));
+      try {
+        for (const width of [2546, 1600]) {
+          await p.setViewportSize({ width, height: 1200 }); await p.goto(site.url + 'dash/#pA'); await p.waitForFunction(() => document.querySelector('#feed').textContent.includes('App geopend'));
+          await p.evaluate(key => localStorage.removeItem(key), KEY); await p.reload(); await p.waitForFunction(() => document.querySelector('#feed').textContent.includes('App geopend')); await p.waitForTimeout(300);
+          const before = await geometry();
+          await p.locator('#layoutEdit').click();
+          t.ok(await p.locator('#layoutBoard').isHidden(), 'opening editor preserves existing columns at ' + width);
+          await p.getByRole('checkbox', { name: 'Voorspelling', exact: true }).uncheck();
+          await p.getByRole('button', { name: 'Indeling opslaan', exact: true }).click(); await p.waitForTimeout(300);
+          const after = await geometry();
+          t.ok(after.every((box, i) => Math.abs(box.x - before[i].x) < 1 && Math.abs(box.width - before[i].width) < 1), 'visibility changes preserve all original widths and columns at ' + width);
+          // FakeDB closes its one-shot stream, so the connection label can wrap the header. Compare positions below that header.
+          t.ok([1, 3, 4].every(i => Math.abs((after[i].y - after[0].y) - (before[i].y - before[0].y)) < 1) && Math.abs(after[2].y - before[2].y) < 1, 'unrelated panels keep their arrangement below the header at ' + width, { before, after });
+          t.ok(await p.locator('#pred').isHidden(), 'prediction hidden without repacking');
+          const state = await p.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+          t.eq(state.mode, 'original', 'visibility-only edits use the original layout');
+          // Reproduce preferences saved by the first editor release: no mode field.
+          delete state.mode; await p.evaluate(({ key, state }) => localStorage.setItem(key, JSON.stringify(state)), { key: KEY, state });
+          await p.reload(); await p.waitForFunction(() => document.querySelector('#feed').textContent.includes('App geopend')); await p.waitForTimeout(300);
+          t.ok(await p.locator('#layoutBoard').isHidden(), 'legacy visibility-only settings migrate back to original columns');
+          t.ok(await p.locator('#pred').isHidden(), 'migration keeps prediction hidden');
+          const restored = await geometry();
+          t.ok(restored.every((box, i) => Math.abs(box.x - before[i].x) < 1 && Math.abs(box.width - before[i].width) < 1), 'reload preserves original widths at ' + width);
+          await p.locator('#layoutEdit').click(); await p.getByRole('checkbox', { name: 'Voorspelling', exact: true }).check();
+          await p.getByRole('button', { name: 'Indeling opslaan', exact: true }).click();
+          t.ok(await p.locator('#pred').isVisible(), 'prediction can be restored in the same column');
+        }
+        t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'visibility changes only modify browser preferences');
+        t.eq(errors, [], 'no visibility-editor errors');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
+  {
     name: 'dashboard: visual layout editing moves, resizes and hides panels without interrupting data or playback',
     async run(t, { serve, FakeDB, browser, WWW }) {
       const site = await serve(SITE, { '/play/': WWW }), born = Date.now() - 3600000, aid = 'layout-attempt';
@@ -26,7 +66,7 @@ module.exports = [
       try {
         await p.goto(site.url + 'dash/#pA'); await p.waitForSelector('#tbl button[data-aid]');
         t.ok(await p.locator('#layoutBoard').isHidden(), 'original layout remains until editor is used');
-        await p.locator('#layoutEdit').click(); await p.waitForSelector('#layoutBoard .layout-panel');
+        await p.locator('#layoutEdit').click(); await p.getByRole('button', { name: 'Andere indeling kiezen', exact: true }).click(); await p.waitForSelector('#layoutBoard .layout-panel');
         t.eq(await p.locator('#layoutBoard .layout-panel').count(), 9, 'every dashboard panel has an edit control');
         await p.getByLabel('Breedte Meekijken', { exact: true }).selectOption('6');
         await p.getByLabel('Toon Live verloop', { exact: true }).uncheck();
@@ -59,6 +99,11 @@ module.exports = [
         db.set('scores/pA/level', 55); await p.evaluate(async () => { await loadScores(); render(); });
         t.ok((await p.locator('#ranking').innerText()).includes('55'), 'live dashboard data still updates moved panels');
         t.eq(await panel('game').evaluate(n => n.style.getPropertyValue('--panel-span')), '8', 'render does not reset panel size');
+        const fixed = await panel('game').boundingBox();
+        await p.locator('#layoutEdit').click(); await p.getByLabel('Toon Voorspelling', { exact: true }).uncheck();
+        await p.getByRole('button', { name: 'Indeling opslaan', exact: true }).click();
+        const afterHide = await panel('game').boundingBox();
+        t.ok(Math.abs(afterHide.x - fixed.x) < 1 && Math.abs(afterHide.width - fixed.width) < 1, 'hiding a custom panel preserves other panel columns and widths');
         await p.reload(); await p.waitForSelector('#layoutBoard .game-watch');
         t.eq(await panel('game').evaluate(n => n.style.getPropertyValue('--panel-span')), '8', 'saved layout restored after reload');
         t.ok(await panel('feed').isHidden(), 'hidden setting restored after reload');
