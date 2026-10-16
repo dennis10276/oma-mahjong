@@ -5,7 +5,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.50';
+const APP_VERSION = '1.55';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -36,7 +36,7 @@ const numBgs = BGS.filter(b => typeof b.need === 'number');
 // the saved progress; every list and counter exists from the start, so code never has to check
 const defaults = () => ({
   level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', frame: 'none',
-  sfx: true, music: true, vibrate: true, highlight: true, nums: true, bigTiles: false, contrast: false,
+  sfx: true, music: true, vibrate: true, highlight: true, nums: true, contrast: false,
   seenIntro: false, sunSeen: false, seenSp: {},
   matches: 0, bestCombo: 0, bestStreak: 0, winStreak: 0, bonusStars: 0, bonusPts: 0, weekWins: 0,
   stats: {}, trophies: {}, att: {}, fails: {}, lvlPts: {}, dayPts: {}, lvlHist: {}, botLv: {},

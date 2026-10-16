@@ -502,7 +502,9 @@ const Layouts = (() => {
      lucky streak), and when no deal comes close,
      the dealing itself is tuned: too hard -> fewer tiles "parked" behind their partner, too easy -> more.
      This keeps neighbouring levels about equally hard. */
-  function makeDeal(spec, tries = 24) {
+  // noLimit: no time limit (the time limit lets a slow phone start sooner, but then the deal can
+  // depend on the phone; ready-made levels and the daily puzzle are made without it)
+  function makeDeal(spec, tries = 24, noLimit = false) {
     const tiles = spec.tiles, nb = neighbors(tiles), target = spec.diff.target;
     let best = null, open = spec.diff.open, cap = spec.diff.cap, kinds = spec.kinds;
     const t0 = Date.now();   // a time limit, so a slow phone never waits long before a level starts
@@ -522,7 +524,7 @@ const Layouts = (() => {
       roundBest.w = botWinRate(tiles, nb, roundBest.faces, 400, spec.seed + 5555 + round);
       roundBest.score = Math.abs(roundBest.w - target);
       if (!best || roundBest.score < best.score) best = roundBest;
-      if (best.score < 0.06 || Date.now() - t0 > 400) break;
+      if (best.score < 0.06 || (!noLimit && Date.now() - t0 > 400)) break;
       // tune the dealing for the next round
       // when the dealing is already at its limit: fewer different pictures (easier) or more (harder)
       const pairs = tiles.length / 2;

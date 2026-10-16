@@ -4,7 +4,11 @@
 'use strict';
 
 const RULES = {
-  levels: { blockedFrom: null },              // a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
+  // aspect: ready-made levels and the daily puzzle are the same on every phone (made for this screen
+  // shape). Levels 51 and 53-69 come ready-made (levels-early.js): the boards Gerda played (51 and 53
+  // switched); 1-50 and 52 are still made for each screen; grandma's own levels follow her screen.
+  // blockedFrom: a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
+  levels: { blockedFrom: null, aspect: 1.6 },
   tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
@@ -92,6 +96,8 @@ const PART_GROUPS = { easy: 'Makkelijker spelen', help: 'Hulp', extra: "Extra's"
 /* Grandma: her player id, or a name starting with "Oma" (in case she ever reinstalls the app).
    `like` = players who always get exactly what grandma gets (DennisTEST: to see what she sees). */
 const GRANDMA = { pids: ['pmuy4wmdp17hbws'], like: ['pmuxw2uqkzcnbgx'], name: /^oma/i };
+// Keep the test account available for diagnostics, but out of family competition.
+const hiddenFromRanking = (pid, name) => pid === 'pmuxw2uqkzcnbgx' || /^dennistest$/i.test(String(name || '').trim());
 const isGrandma = (pid, name) => GRANDMA.pids.includes(pid) || GRANDMA.like.includes(pid) || GRANDMA.name.test(name || '');
 // who else has Super-omamodus by default (besides grandma and DennisTEST); Mama is not in grandma mode
 const CARE = { pids: [] };
