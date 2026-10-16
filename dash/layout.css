@@ -3,6 +3,9 @@
 #layoutEditor p { margin: 0 0 10px; }
 .layout-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 #layoutMessage { font-size: 13px; color: var(--ink-2); }
+.layout-options { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-bottom: 14px; }
+.layout-options[hidden], .layout-hidden { display: none !important; }
+.layout-options label { display: flex; align-items: center; gap: 6px; }
 html.layout-custom main { display: block; max-width: 1800px; }
 html.layout-custom .dashboard-main { display: contents; }
 html.layout-custom .play-analysis, html.layout-custom main > .dashboard-side { display: none; }
