@@ -1,0 +1,222 @@
+{
+ "Dennisisdebeste": {
+  "engine": "strong",
+  "temp": 2,
+  "train": {
+   "n": 6,
+   "realWins": 4,
+   "simWins": 3.5,
+   "logLoss": 0.814,
+   "baseline": 0.64
+  },
+  "test": {
+   "n": 2,
+   "realWins": 2,
+   "simWins": 1.5,
+   "logLoss": 0.294,
+   "baseline": 0.47
+  },
+  "fits": [
+   {
+    "temp": 1,
+    "ll": 1.227,
+    "sim": 4.8
+   },
+   {
+    "temp": 1.5,
+    "ll": 0.877,
+    "sim": 4.3
+   },
+   {
+    "temp": 2,
+    "ll": 0.814,
+    "sim": 3.5
+   },
+   {
+    "temp": 3,
+    "ll": 0.868,
+    "sim": 2.6
+   },
+   {
+    "temp": 4.5,
+    "ll": 1.085,
+    "sim": 2.1
+   },
+   {
+    "temp": 6,
+    "ll": 1.277,
+    "sim": 1.5
+   },
+   {
+    "temp": 9,
+    "ll": 1.674,
+    "sim": 1
+   }
+  ]
+ },
+ "Mrs. Doubtfire": {
+  "engine": "average",
+  "temp": 9,
+  "train": {
+   "n": 8,
+   "realWins": 0,
+   "simWins": 0.6,
+   "logLoss": 0.073,
+   "baseline": 0.105
+  },
+  "test": {
+   "n": 3,
+   "realWins": 2,
+   "simWins": 0.5,
+   "logLoss": 1.261,
+   "baseline": 1.57
+  },
+  "fits": [
+   {
+    "temp": 1,
+    "ll": 1.273,
+    "sim": 5.8
+   },
+   {
+    "temp": 1.5,
+    "ll": 1.109,
+    "sim": 5.4
+   },
+   {
+    "temp": 2,
+    "ll": 0.713,
+    "sim": 4.1
+   },
+   {
+    "temp": 3,
+    "ll": 0.4,
+    "sim": 2.6
+   },
+   {
+    "temp": 4.5,
+    "ll": 0.163,
+    "sim": 1.2
+   },
+   {
+    "temp": 6,
+    "ll": 0.117,
+    "sim": 0.9
+   },
+   {
+    "temp": 9,
+    "ll": 0.073,
+    "sim": 0.6
+   }
+  ]
+ },
+ "PUK": {
+  "engine": "average",
+  "temp": 6,
+  "train": {
+   "n": 27,
+   "realWins": 17,
+   "simWins": 15.7,
+   "logLoss": 0.684,
+   "baseline": 0.659
+  },
+  "test": {
+   "n": 10,
+   "realWins": 6,
+   "simWins": 5.1,
+   "logLoss": 0.615,
+   "baseline": 0.674
+  },
+  "fits": [
+   {
+    "temp": 1,
+    "ll": 1.417,
+    "sim": 25.2
+   },
+   {
+    "temp": 1.5,
+    "ll": 1.279,
+    "sim": 24.6
+   },
+   {
+    "temp": 2,
+    "ll": 1.06,
+    "sim": 23.7
+   },
+   {
+    "temp": 3,
+    "ll": 0.876,
+    "sim": 22
+   },
+   {
+    "temp": 4.5,
+    "ll": 0.719,
+    "sim": 18.6
+   },
+   {
+    "temp": 6,
+    "ll": 0.684,
+    "sim": 15.7
+   },
+   {
+    "temp": 9,
+    "ll": 0.755,
+    "sim": 12.1
+   }
+  ]
+ },
+ "Gerda": {
+  "engine": "average",
+  "temp": 9,
+  "train": {
+   "n": 118,
+   "realWins": 30,
+   "simWins": 70,
+   "logLoss": 0.852,
+   "baseline": 0.567
+  },
+  "test": {
+   "n": 39,
+   "realWins": 14,
+   "simWins": 10.7,
+   "logLoss": 0.53,
+   "baseline": 0.677
+  },
+  "fits": [
+   {
+    "temp": 1,
+    "ll": 2.729,
+    "sim": 111.4
+   },
+   {
+    "temp": 1.5,
+    "ll": 2.621,
+    "sim": 111.5
+   },
+   {
+    "temp": 2,
+    "ll": 2.347,
+    "sim": 108
+   },
+   {
+    "temp": 3,
+    "ll": 1.69,
+    "sim": 101.3
+   },
+   {
+    "temp": 4.5,
+    "ll": 1.268,
+    "sim": 91.3
+   },
+   {
+    "temp": 6,
+    "ll": 1.029,
+    "sim": 81.4
+   },
+   {
+    "temp": 9,
+    "ll": 0.852,
+    "sim": 70
+   }
+  ]
+ }
+}

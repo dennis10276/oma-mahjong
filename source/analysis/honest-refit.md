@@ -174,3 +174,24 @@ Results-based alternative (`predict_model.py`): logistic model per person on the
 for the test players. Tested on each person's second half: beats "their usual win share" for all
 four (log-loss per try: Dennis 0.61 vs 0.74, Mrs. Doubtfire 0.55 vs 0.60, PUK 0.63 vs 0.68, Gerda
 0.50 vs 0.59) and picks the harder of two boards right about 70% of the time.
+
+## Per-person test players from the recordings, second round (2026-10-16)
+
+Situations (`mimic_situ.py`, per decision in the recorded games):
+- With no known pair, people turn face-down tiles over until they find one: 75-95% of such decisions
+  are a flip (all four). 89-91% of their real moves are made with a pair already known.
+- With 3 waiting and no known way out: Dennis and Mrs. Doubtfire flip (hunting for the twin or the
+  face-down-first pair) nearly always; Gerda almost never and puts a 4th tile in the tray: with a
+  safe move known she still did that 38 of 39 times.
+- Jokers (levels below 50) are now known to the test player (`take`: a joker takes a waiting tile
+  with its twin, or waits and takes the next tile with its twin).
+
+Two ways to build the per-person player:
+1. Literal copy of the moves (`mimic_fit.py`): predicts their next move far better than the fixed
+   players, but whole games drift into positions the person avoids (no lookahead): too weak.
+2. Hybrid (`hybrid_eval.js`): the planning test player with the person's habits from the recordings
+   (they see a face-down tile only after turning it over, flip rate per situation, the fatal 4th
+   tile with 3 waiting); only its care level is fitted on their older recorded games. On their
+   newest recorded games (not used for fitting) it beats "their usual win share" for all four
+   (log-loss: Dennis 0.29 vs 0.47, Mrs. Doubtfire 1.26 vs 1.57, PUK 0.62 vs 0.67, Gerda 0.53 vs 0.68)
+   and predicts about the right number of wins (Gerda 10.7 vs 14 of 39, PUK 5.1 vs 6 of 10).

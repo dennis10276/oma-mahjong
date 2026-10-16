@@ -1,0 +1,198 @@
+{
+ "Dennisisdebeste": {
+  "games": 8,
+  "train": {
+   "n": 6,
+   "realWins": 4,
+   "x1": {
+    "simWins": 0.5,
+    "logLoss": 2.106,
+    "meanWhenWon": 0.098,
+    "meanWhenLost": 0.05
+   },
+   "x2": {
+    "simWins": 1.8,
+    "logLoss": 1.337,
+    "meanWhenWon": 0.325,
+    "meanWhenLost": 0.255
+   },
+   "x3": {
+    "simWins": 2.6,
+    "logLoss": 1.232,
+    "meanWhenWon": 0.448,
+    "meanWhenLost": 0.39
+   },
+   "baselineLogLoss": 0.64
+  },
+  "test": {
+   "n": 2,
+   "realWins": 2,
+   "x1": {
+    "simWins": 0.4,
+    "logLoss": 1.777,
+    "meanWhenWon": 0.185,
+    "meanWhenLost": null
+   },
+   "x2": {
+    "simWins": 1.1,
+    "logLoss": 0.625,
+    "meanWhenWon": 0.54,
+    "meanWhenLost": null
+   },
+   "x3": {
+    "simWins": 1.4,
+    "logLoss": 0.354,
+    "meanWhenWon": 0.715,
+    "meanWhenLost": null
+   },
+   "baselineLogLoss": 0.47
+  }
+ },
+ "Mrs. Doubtfire": {
+  "games": 11,
+  "train": {
+   "n": 8,
+   "realWins": 0,
+   "x1": {
+    "simWins": 0.3,
+    "logLoss": 0.041,
+    "meanWhenWon": null,
+    "meanWhenLost": 0.04
+   },
+   "x2": {
+    "simWins": 1.4,
+    "logLoss": 0.186,
+    "meanWhenWon": null,
+    "meanWhenLost": 0.17
+   },
+   "x3": {
+    "simWins": 2.8,
+    "logLoss": 0.431,
+    "meanWhenWon": null,
+    "meanWhenLost": 0.35
+   },
+   "baselineLogLoss": 0.105
+  },
+  "test": {
+   "n": 3,
+   "realWins": 2,
+   "x1": {
+    "simWins": 0.1,
+    "logLoss": 2.021,
+    "meanWhenWon": 0.055,
+    "meanWhenLost": 0.03
+   },
+   "x2": {
+    "simWins": 0.8,
+    "logLoss": 0.996,
+    "meanWhenWon": 0.265,
+    "meanWhenLost": 0.28
+   },
+   "x3": {
+    "simWins": 1.3,
+    "logLoss": 0.739,
+    "meanWhenWon": 0.43,
+    "meanWhenLost": 0.41
+   },
+   "baselineLogLoss": 1.57
+  }
+ },
+ "PUK": {
+  "games": 37,
+  "train": {
+   "n": 27,
+   "realWins": 17,
+   "x1": {
+    "simWins": 10,
+    "logLoss": 0.841,
+    "meanWhenWon": 0.388,
+    "meanWhenLost": 0.345
+   },
+   "x2": {
+    "simWins": 13.4,
+    "logLoss": 0.797,
+    "meanWhenWon": 0.519,
+    "meanWhenLost": 0.461
+   },
+   "x3": {
+    "simWins": 14.3,
+    "logLoss": 0.83,
+    "meanWhenWon": 0.554,
+    "meanWhenLost": 0.492
+   },
+   "baselineLogLoss": 0.659
+  },
+  "test": {
+   "n": 10,
+   "realWins": 6,
+   "x1": {
+    "simWins": 1.8,
+    "logLoss": 1.077,
+    "meanWhenWon": 0.213,
+    "meanWhenLost": 0.135
+   },
+   "x2": {
+    "simWins": 3,
+    "logLoss": 0.826,
+    "meanWhenWon": 0.348,
+    "meanWhenLost": 0.232
+   },
+   "x3": {
+    "simWins": 4,
+    "logLoss": 0.69,
+    "meanWhenWon": 0.475,
+    "meanWhenLost": 0.295
+   },
+   "baselineLogLoss": 0.674
+  }
+ },
+ "Gerda": {
+  "games": 157,
+  "train": {
+   "n": 118,
+   "realWins": 30,
+   "x1": {
+    "simWins": 39,
+    "logLoss": 0.771,
+    "meanWhenWon": 0.357,
+    "meanWhenLost": 0.321
+   },
+   "x2": {
+    "simWins": 51.9,
+    "logLoss": 0.859,
+    "meanWhenWon": 0.478,
+    "meanWhenLost": 0.426
+   },
+   "x3": {
+    "simWins": 59.2,
+    "logLoss": 0.869,
+    "meanWhenWon": 0.55,
+    "meanWhenLost": 0.485
+   },
+   "baselineLogLoss": 0.567
+  },
+  "test": {
+   "n": 39,
+   "realWins": 14,
+   "x1": {
+    "simWins": 0.5,
+    "logLoss": 1.495,
+    "meanWhenWon": 0.02,
+    "meanWhenLost": 0.01
+   },
+   "x2": {
+    "simWins": 2.4,
+    "logLoss": 1.062,
+    "meanWhenWon": 0.099,
+    "meanWhenLost": 0.042
+   },
+   "x3": {
+    "simWins": 3.9,
+    "logLoss": 0.911,
+    "meanWhenWon": 0.152,
+    "meanWhenLost": 0.071
+   },
+   "baselineLogLoss": 0.677
+  }
+ }
+}

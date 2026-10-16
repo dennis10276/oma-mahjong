@@ -31,7 +31,14 @@ def decisions(games):
         for dc in g['decisions']:
             if dc['k'] < 0 or len(dc['F']) < 2:
                 continue
-            out.append((np.clip(np.array(dc['F'], dtype=float), -CAP, CAP), dc['k']))
+            F = np.clip(np.array(dc['F'], dtype=float), -CAP, CAP)
+            # turning a tile over is decided by the per-situation habit (mimic_situ.py); the weights
+            # are learned from the real moves only
+            isflip = F[:, 19] > 0
+            if isflip[dc['k']] or (~isflip).sum() < 2:
+                continue
+            k = int(np.sum(~isflip[:dc['k']]))
+            out.append((F[~isflip], k))
     return out
 
 def nll(w, ds, w0=None, lam=0.0):

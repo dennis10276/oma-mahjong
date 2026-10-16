@@ -84,6 +84,7 @@ const Hard = (() => {
     const hiddenNow = i => { for (const j of cover[i]) if (alive[j]) return true; return false; };
     // a retry (g.memory): the pictures it remembers from the try before (the same board comes back),
     // also of tiles that are face down or covered now. seenEver: what this try showed it (for the next)
+    const JOKER = 101, hasJoker = faces.includes(JOKER);
     const mem = g.memory || null, seenEver = new Int16Array(n);   // seenEver: 1 + the move at which it was first seen
     // p.peek: the chance it turns over a free face-down tile to see its picture (a person does not
     // turn over every one; 1 = all of them). Follow mode: exactly the tiles the person turned over.
@@ -145,7 +146,26 @@ const Hard = (() => {
       }
     }
     const clockTight = () => { if (!clock || !alive[clock.i]) return false; memo.fill(0); return clock.n - moves - depth(clock.i) - 1 <= 0; };
-    const take = i => { alive[i] = 0; left--; moves++; const q = tray.indexOf(faces[i]); if (q >= 0) tray.splice(q, 1); else tray.push(faces[i]); };
+    // jr: every tile taken, in order (also the twin a joker takes along), so a tried move can be undone
+    const jr = [];
+    const off = i => { alive[i] = 0; left--; moves++; jr.push(i); };
+    // the twin a joker takes along: a free one if there is one, otherwise the top-most (specials.js)
+    const jokerTwin = (f, x) => { let y = -1, best = -1; for (let k = 0; k < n; k++) if (k !== x && alive[k] && faces[k] === f) { const s2 = (can(k) ? 1000 : 0) + tiles[k].z; if (s2 > best) { best = s2; y = k; } } return y; };
+    const take = i => {
+      off(i);
+      const f = faces[i], q = tray.indexOf(f);
+      if (q >= 0) { tray.splice(q, 1); return; }
+      // the joker (specials.js): it takes a waiting tile with its twin, or waits and takes the next tile with its twin
+      if (f === JOKER) {
+        const t = tray.findIndex(x => x !== JOKER);
+        if (t >= 0) { const w = tray[t]; tray.splice(t, 1); const y = jokerTwin(w, -1); if (y >= 0) off(y); return; }
+        tray.push(f); return;
+      }
+      const jq = tray.indexOf(JOKER);
+      if (jq >= 0) { tray.splice(jq, 1); const y = jokerTwin(f, i); if (y >= 0) off(y); return; }
+      tray.push(f);
+    };
+    const undoTo = (mark, tr) => { while (jr.length > mark) { alive[jr.pop()] = 1; left++; moves--; } tray.length = 0; tray.push(...tr); };
     const at = new Int16Array(n).fill(-1);       // the move at which each tile was taken
     const commit = i => {
       if (clock && alive[clock.i] && moves >= clock.n) return false;
@@ -159,6 +179,7 @@ const Hard = (() => {
     if (g.start) for (const i of g.start) if (!commit(i)) return end(false, 'clock');
     // the end game: everything left is in sight, so work it out exactly (ice counted from now on)
     function endGame() {
+      if (hasJoker) return null;   // (the exact solver does not know jokers)
       if (!p.end || left > p.end) return null;
       for (let i = 0; i < n; i++) if (alive[i] && !sees(i)) return null;
       let ru = null;
@@ -186,8 +207,8 @@ const Hard = (() => {
       const usable = i => alive[i] && seen0[i] && can(i);
       const path = [], visited = new Set();
       let nodes = 0, found = null;
-      const put = i => { const t = tray.slice(); take(i); path.push(i); return t; };
-      const undo = (i, t) => { alive[i] = 1; left++; moves--; path.pop(); tray.length = 0; tray.push(...t); };
+      const put = i => { const t = [tray.slice(), jr.length]; take(i); path.push(i); return t; };
+      const undo = (i, t) => { undoTo(t[1], t[0]); path.pop(); };
       function ok() {
         if (tray.length <= SLOTS - 2) return true;
         for (let i = 0; i < n; i++) if (usable(i) && tray.includes(faces[i])) return true;
@@ -300,12 +321,26 @@ const Hard = (() => {
         for (const [f, c] of kc) if (c & 1 && !tray.includes(f)) hit += unseen[f & 255];
         flipHit = Math.min(1, hit / unseenN);
       }
-      const flipSc = flipT.map(() => { cf.fill(0); cf[19] = 1; cf[20] = flipHit; if (logF) logF.push(Array.from(cf)); let v = 0; for (let q = 0; q < NF; q++) v += W[q] * cf[q]; return v; });
+      // p.flipRate: a person's own habit of turning a tile over, per situation (how full the tray is,
+      // and whether a pair is known), taken from their recorded games; then the move is chosen
+      // among the real moves only
+      if (!follow && p.flipRate && flipT.length) {
+        const pairKnown = opts.some(o => o.length === 2 && (tray.length < SLOTS - 1 || down[o[0]] || down[o[1]]));
+        const key = 't' + Math.min(SLOTS - 1, tray.length) + (pairKnown ? 'p' : 'n');
+        if (!opts.length || r() < (p.flipRate[key] ?? 0)) { peeked[flipT[Math.floor(r() * flipT.length)]] = 1; continue; }
+      }
+      // p.blunder3: with 3 tiles waiting, the chance it puts a 4th tile in the tray even when a safe
+      // move is known (Gerda: 38 of 39 times in her recorded games)
+      if (!follow && p.blunder3 && tray.length >= SLOTS - 1) {
+        const fatal = opts.filter(o => !o.some(i => tray.includes(faces[i])) && !(o.length === 2 && (down[o[0]] || down[o[1]])));
+        if (fatal.length && fatal.length < opts.length && r() < p.blunder3) return end(false, 'tray');
+      }
+      const flipSc = (p.flipRate ? [] : flipT).map(() => { cf.fill(0); cf[19] = 1; cf[20] = flipHit; if (logF) logF.push(Array.from(cf)); let v = 0; for (let q = 0; q < NF; q++) v += W[q] * cf[q]; return v; });
       const flipF = logF ? logF.splice(0, logF.length) : null;   // (logged after the moves, below)
       const sc = opts.map(o => {
         // overflow: this move puts a 4th tile without a partner in the tray (the level is over)
         const over = tray.length >= SLOTS - 1 && !o.some(i => tray.includes(faces[i])) && !(o.length === 2 && (down[o[0]] || down[o[1]])) ? 1 : 0;
-        const tr = tray.slice();
+        const tr = tray.slice(), mark = jr.length;
         // the alarm clock rings when a move is made after its last one with the clock tile still there
         let rang = false;
         const tk = i => { if (clock && alive[clock.i] && moves >= clock.n) rang = true; take(i); };
@@ -320,9 +355,7 @@ const Hard = (() => {
         cf[17] = rang ? 1 : 0; cf[18] = over;
         if (logF) logF.push(Array.from(cf));
         let v = 0; for (let q = 0; q < NF; q++) v += W[q] * cf[q];
-        for (let q = extra.length - 1; q >= 0; q--) { alive[extra[q]] = 1; left++; moves--; }
-        for (let q = o.length - 1; q >= 0; q--) { alive[o[q]] = 1; left++; moves--; }
-        tray.length = 0; tray.push(...tr);
+        undoTo(mark, tr);
         return v;
       });
       if (logF) logF.push(...flipF);

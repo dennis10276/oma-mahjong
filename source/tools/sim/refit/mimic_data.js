@@ -20,7 +20,7 @@ for (const [aid, ch] of Object.entries(R)) {
   if (init.partial) { skipped.partial++; continue; }
   if (init.track) { skipped.track++; continue; }
   const st = init.state;
-  if (st.f.some(f => f >= 100)) { skipped.joker++; continue; }
+  if (st.f.some(f => f >= 100 && f !== 101)) { skipped.joker++; continue; }   // other special tiles than the joker (101, which the test player knows)
   const tiles = init.tiles.map(([x, y, z]) => ({ x, y, z })), nb = L.neighbors(tiles), n = tiles.length;
   const down = new Uint8Array(n); st.d.forEach((v, i) => { if (v) down[i] = 1; });
   const ob = st.ob || {};
