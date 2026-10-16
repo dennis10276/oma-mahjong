@@ -28,16 +28,19 @@ const tileScale = () => S.bigTiles ? 0.7 : 1;
 const levelTrack = () => part('levels') ? 'care' : '';
 // from RULES.hard.measureFrom the levels come ready-made (designed with the test player, hard.js and
 // levels-hard.js); an easier try (help after losing) gets the usual level, made easier
+// the screen shape a level is made for: the same for everyone (RULES.levels.aspect); only grandma's
+// own levels follow her screen
+const sameShape = tr => tr ? null : RULES.levels.aspect;
 function startLevel(level) {
-  const tr = levelTrack(), hard = Hard.applies(level, tr);
-  begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level),
-    // (designed levels: the same for everyone, on any screen)
-    makeSpec: a => hard ? Hard.spec(level) : Layouts.forLevel(level, a, tileScale(), tr), makeEasy: a => Layouts.forLevel(level, a, tileScale(), tr) });
+  const tr = levelTrack(), hard = Hard.applies(level, tr), early = !hard && Hard.appliesEarly(level, tr), salt = early ? Hard.earlySalt(level) : 0;
+  begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), fixedAspect: sameShape(tr),
+    // (ready-made levels, the same for everyone on any screen: 1-69 in levels-early.js, from 70 the designed ones)
+    makeSpec: a => hard ? Hard.spec(level) : early && !S.bigTiles ? Hard.earlySpec(level) : Layouts.forLevel(level, a, tileScale(), tr, salt), makeEasy: a => Layouts.forLevel(level, a, tileScale(), tr, salt) });
 }
 function startDaily(k) {
   const d = parseKey(k);
   const tr = levelTrack();
-  begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), makeSpec: a => Layouts.forDate(dnum(k), a, tileScale(), tr) });
+  begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), fixedAspect: sameShape(tr), makeSpec: a => Layouts.forDate(dnum(k), a, tileScale(), tr) });
 }
 
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
@@ -67,7 +70,7 @@ function begin(o, restart = false) {
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {
-    if (!o.spec) o.aspect = aspect;
+    if (!o.spec) o.aspect = o.fixedAspect || aspect;
     let sp = o.makeSpec(o.aspect);
     if (ez && sp.made && o.makeEasy) sp = o.makeEasy(o.aspect);
     o.spec = Layouts.ease(sp, ez);
@@ -92,7 +95,7 @@ function begin(o, restart = false) {
     if (!o.faces) {
       const m = spec.made;      // a designed level (hard.js): the deal, gold, ice, locks and clock come with it
       if (m) { o.faces = m.faces.slice(); o.down = m.down.slice(); o.gold = (m.gold || []).slice(); o.specials = true; o.obst = m.obst; o.obstDone = true; o.clock = m.clock; }
-      else { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; }
+      else { const d = Layouts.makeDeal(spec, 24, !o.track); o.faces = d.faces; o.down = d.down; }   // (no time limit: the same deal on every phone)
     }
     addSpecials(o, spec);
     o.faces.forEach((f, i) => tiles[i].face = f);

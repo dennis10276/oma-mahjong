@@ -4,7 +4,11 @@
 'use strict';
 
 const RULES = {
-  levels: { blockedFrom: null },              // a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
+  // aspect: every level (and the daily puzzle) is made for this screen shape on every phone, so all
+  // players get the same levels (grandma's own levels still follow her screen). Levels 1-69 come
+  // ready-made (levels-early.js), each with the deal that is about as hard as that level on most phones.
+  // blockedFrom: a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
+  levels: { blockedFrom: null, aspect: 1.6 },
   tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself

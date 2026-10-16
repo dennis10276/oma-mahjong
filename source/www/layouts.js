@@ -227,16 +227,18 @@ const Layouts = (() => {
   /* Gentler curve: after level 6 the difficulty climbs at half speed
      (level 26 now plays like the old level 16). */
   const effLevel = level => level <= 6 ? level : 6 + (level - 6) / 2;
-  function forLevel(level, aspect, scale = 1, track = '') {
+  // salt: another deal for the same level number (RULES.levels.salt: a level whose usual deal is much
+  // harder or easier than that level on most phones gets one that fits)
+  function forLevel(level, aspect, scale = 1, track = '', salt = 0) {
     if (track === 'care') return forCare(level, aspect, scale);
     const e = effLevel(level);
     let target = targetFor(Math.round(e));
     if (e > 26) target = targetFor(level);           // keep variety in the endless levels
     target = Math.max(8, Math.round(target * scale));
     target -= target % 2;
-    const res = buildPiles(level * 7919 + 13, target, layersFor(e), aspect, level);
+    const res = buildPiles(level * 7919 + 13 + salt * 1000003, target, layersFor(e), aspect, level);
     const diff = difficultyFor(e);
-    return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1, diff };
+    return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 1 + salt * 7919, diff };
   }
   /* ---------- grandma mode has its own levels (track 'care') ----------
      The difficulty climbs at a quarter of the normal speed (her level 35 plays like a normal level
@@ -502,7 +504,9 @@ const Layouts = (() => {
      lucky streak), and when no deal comes close,
      the dealing itself is tuned: too hard -> fewer tiles "parked" behind their partner, too easy -> more.
      This keeps neighbouring levels about equally hard. */
-  function makeDeal(spec, tries = 24) {
+  // noLimit: no time limit (the time limit lets a slow phone start sooner, but then the deal can
+  // depend on the phone; ready-made levels and the daily puzzle are made without it)
+  function makeDeal(spec, tries = 24, noLimit = false) {
     const tiles = spec.tiles, nb = neighbors(tiles), target = spec.diff.target;
     let best = null, open = spec.diff.open, cap = spec.diff.cap, kinds = spec.kinds;
     const t0 = Date.now();   // a time limit, so a slow phone never waits long before a level starts
@@ -522,7 +526,7 @@ const Layouts = (() => {
       roundBest.w = botWinRate(tiles, nb, roundBest.faces, 400, spec.seed + 5555 + round);
       roundBest.score = Math.abs(roundBest.w - target);
       if (!best || roundBest.score < best.score) best = roundBest;
-      if (best.score < 0.06 || Date.now() - t0 > 400) break;
+      if (best.score < 0.06 || (!noLimit && Date.now() - t0 > 400)) break;
       // tune the dealing for the next round
       // when the dealing is already at its limit: fewer different pictures (easier) or more (harder)
       const pairs = tiles.length / 2;
