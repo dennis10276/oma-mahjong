@@ -51,14 +51,16 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - Face-down share: measured later as a side project of the honest test player.
 - Everyone plays the same levels (Dennis, 2026-10-16; from 1.54). Before, levels 1-69 were built
   live for the screen shape (and the deal could stop early on a slow phone), so a level could be
-  very different per phone (level 51: about 2% for Gerda's long screen, 98% for PUK's wide one).
-  Now levels 1-69 of the normal track come from the ready-made table `www/levels-early.js`, built
-  by `source/tools/build_early.js` for shape 1.6 (`RULES.levels.aspect`); `--check` tests it. For
-  levels where shape 1.6 gave an outlier, another deal was chosen (a salt per level; measured with
-  the average test player over shapes 1.0-2.2: `source/analysis/early-salts.json`). The daily level
-  is built for the same fixed shape. Not covered: grandma's own track (still built for her screen)
-  and the extra-large tiles setting (builds its own board). Keep the table: changing it changes
-  levels people are playing.
+  very different per phone (level 51: about 2% on Gerda's screen, 98% on PUK's).
+  The standard is the board Gerda played ("don't make it easier for her"): levels 1-69 of the normal
+  track come from the ready-made table `www/levels-early.js`, built by `source/tools/build_early.js`
+  (`--check` tests it). Levels 2-52 are her exact recorded boards (`source/analysis/early-gerda.json`,
+  from `source/tools/early_from_replays.js`); level 1 is made for her first screen shape (1.4),
+  53-69 for her current one (1.6). The daily puzzle is made for shape 1.6 (`RULES.levels.aspect`).
+  Grandma's own track still follows her screen. Level 51 stays very hard (strong test player under 1%
+  first try; Gerda needed 17 tries). The extra-large tiles setting is removed (it changed the level).
+  Keep the table: changing it changes levels people are playing (a half-played board of another table
+  version starts fresh).
 
 ## Predictions on the dashboard
 

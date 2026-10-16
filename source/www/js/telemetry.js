@@ -119,7 +119,7 @@ function replayView() {
     if (!G || !G.rp) return;
     const w = $('#boardWrap'), br = $('#board').getBoundingClientRect();
     const view = [innerWidth, innerHeight, w.clientWidth, w.clientHeight, Math.round((G.tw || 0) * 10) / 10,
-      S.theme, !!S.nums, !!S.contrast, !!S.highlight, !!S.bigTiles, !toolsGone(), help(), [Math.round(br.left), Math.round(br.top)]];
+      S.theme, !!S.nums, !!S.contrast, !!S.highlight, false, !toolsGone(), help(), [Math.round(br.left), Math.round(br.top)]];
     const key = JSON.stringify(view);
     if (key !== G.rp.view) { G.rp.view = key; replayMark('view', view); }
   } catch (e) { }

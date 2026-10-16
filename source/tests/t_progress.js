@@ -64,8 +64,8 @@ module.exports = [
     async run(t, { modal, click, sleep }) {
       const p = await t.phone({ state: { ...DENNIS, level: 30, stars: { 1: 3, 2: 2 }, bonusStars: 5, sfx: false, music: false, bigTiles: true, contrast: true } });
       await p.evaluate(() => confirmReset()); await click(p, '#rsYes'); await sleep(300);
-      const s = await p.evaluate(() => { const S = __mj.S; return { level: S.level, stars: S.stars, bonus: S.bonusStars, sfx: S.sfx, music: S.music, big: S.bigTiles, contrast: S.contrast, name: S.name, pid: S.pid }; });
-      t.eq(s, { level: 1, stars: {}, bonus: 0, sfx: false, music: false, big: true, contrast: true, name: 'Dennis', pid: 'test-prog' }, 'progress gone, settings kept');
+      const s = await p.evaluate(() => { const S = __mj.S; return { level: S.level, stars: S.stars, bonus: S.bonusStars, sfx: S.sfx, music: S.music, big: !!S.bigTiles, contrast: S.contrast, name: S.name, pid: S.pid }; });
+      t.eq(s, { level: 1, stars: {}, bonus: 0, sfx: false, music: false, big: false, contrast: true, name: 'Dennis', pid: 'test-prog' }, 'progress gone, settings kept');
     },
   },
   {
