@@ -522,11 +522,11 @@ const Hard = (() => {
     d.faces = d.faces.map(x => x < 36 ? perm[x] : x);                   // other pictures
     return d;
   }
-  /* levels 1-69 come ready-made too (levels-early.js, EARLY_LEVELS, made by tools/build_early.js):
-     every phone gets the same level, the board Gerda played. Rows as above; picture 63 is the joker
-     (101). v: the table's version (a saved half-played board of another version is not resumed). */
+  /* levels 51 and 53-69 come ready-made too (levels-early.js, EARLY_LEVELS, made by tools/build_early.js):
+     every phone gets the same level, the board Gerda played. Rows as above (null: not in the table,
+     made for the screen as before); picture 63 is the joker (101). v: the table's version. */
   const early = () => (typeof EARLY_LEVELS !== 'undefined' ? EARLY_LEVELS : null);
-  const appliesEarly = (level, track) => { const T = early(); return !track && !!T && level >= T.from && level < T.from + T.levels.length; };
+  const appliesEarly = (level, track) => { const T = early(); return !track && !!T && level >= T.from && level < T.from + T.levels.length && !!T.levels[level - T.from]; };
   const earlyV = () => { const T = early(); return T ? T.v : 0; };
   function earlySpec(level) {
     const T = early(), d = unpack(level, T.levels[level - T.from]);

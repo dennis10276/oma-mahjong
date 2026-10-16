@@ -36,9 +36,9 @@ module.exports = [
       await startLevel(q, 16);
       t.ok(await q.evaluate(() => document.body.classList.contains('contrast')), 'high contrast on');
       // extra-large tiles are gone (1.54): an old saved setting changes nothing, and it is not offered
-      const r = await t.phone({ state: { level: 16, bigTiles: true } });
-      await startLevel(r, 16);
-      t.eq(await r.evaluate(() => __mj.G.tiles.map(x => [x.x, x.y, x.z, x.face])), await r.evaluate(() => { const m = Hard.earlySpec(16); return m.tiles.map((x, i) => [x.x, x.y, x.z, m.made.faces[i]]); }), 'level 16 is the usual level with an old "big tiles" setting');
+      const r = await t.phone({ state: { level: 60, bigTiles: true } });
+      await startLevel(r, 60);
+      t.eq(await r.evaluate(() => __mj.G.tiles.map(x => [x.x, x.y, x.z, x.face])), await r.evaluate(() => { const m = Hard.earlySpec(60); return m.tiles.map((x, i) => [x.x, x.y, x.z, m.made.faces[i]]); }), 'level 60 is the usual level with an old "big tiles" setting');
       await r.evaluate(() => openSettings());
       t.eq(await r.evaluate(() => !!document.querySelector('.tog[data-k="bigTiles"]')), false, 'no extra-large tiles setting');
     },

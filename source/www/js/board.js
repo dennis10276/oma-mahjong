@@ -32,8 +32,8 @@ const levelTrack = () => part('levels') ? 'care' : '';
 const sameShape = tr => tr ? null : RULES.levels.aspect;
 function startLevel(level) {
   const tr = levelTrack(), hard = Hard.applies(level, tr), early = !hard && Hard.appliesEarly(level, tr);
-  begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), fixedAspect: sameShape(tr),
-    // (ready-made levels, the same for everyone on any screen: 1-69 in levels-early.js, from 70 the designed ones)
+  begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), fixedAspect: early ? sameShape(tr) : null,
+    // (ready-made levels, the same for everyone on any screen: 51 and 53-69 in levels-early.js, from 70 the designed ones)
     makeSpec: a => hard ? Hard.spec(level) : early ? Hard.earlySpec(level) : Layouts.forLevel(level, a, 1, tr), makeEasy: a => Layouts.forLevel(level, a, 1, tr) });
 }
 function startDaily(k) {
@@ -67,7 +67,8 @@ function begin(o, restart = false) {
   if (cur && cur.rp && previousReplay && cur.rp.id === previousReplay.id &&
       JSON.stringify(cur.rp.last) === JSON.stringify(previousReplay.last)) cur.rp = previousReplay;
   const sameTrack = cur && (cur.tr || '') === (o.track || '') &&
-    (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : !Hard.appliesEarly(o.level, o.track) || cur.hv === boardVer(o)));
+    (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : !Hard.appliesEarly(o.level, o.track) || cur.hv == null || cur.hv === boardVer(o)));
+  // (a save from before the table (no hv) resumes when its screen shape and tile count fit the level)
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {

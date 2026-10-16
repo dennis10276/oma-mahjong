@@ -59,18 +59,19 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   to judge 106+. Use the branch's test player.
 - Keep the current skill level roughly (tray pressure as it is). The alarm clock stays as it is.
 - Face-down share: measured later as a side project of the honest test player.
-- Everyone plays the same levels (Dennis, 2026-10-16; from 1.54). Before, levels 1-69 were built
+- Everyone plays the same levels (Dennis, 2026-10-16; from 1.55). Before, levels below 70 were built
   live for the screen shape (and the deal could stop early on a slow phone), so a level could be
   very different per phone (level 51: about 2% on Gerda's screen, 98% on PUK's).
-  The standard is the board Gerda played ("don't make it easier for her"): levels 1-69 of the normal
-  track come from the ready-made table `www/levels-early.js`, built by `source/tools/build_early.js`
-  (`--check` tests it). Levels 2-52 are her exact recorded boards (`source/analysis/early-gerda.json`,
-  from `source/tools/early_from_replays.js`); level 1 is made for her first screen shape (1.4),
-  53-69 for her current one (1.6). The daily puzzle is made for shape 1.6 (`RULES.levels.aspect`).
-  Grandma's own track still follows her screen. Level 51 stays very hard (strong test player under 1%
-  first try; Gerda needed 17 tries). The extra-large tiles setting is removed (it changed the level).
-  Keep the table: changing it changes levels people are playing (a half-played board of another table
-  version starts fresh).
+  The family had passed level 52, so the change starts there: levels 51 and 53-69 of the normal track
+  come from the ready-made table `www/levels-early.js` (`source/tools/build_early.js`, `--check`
+  tests it); 1-50 and 52 are still made for each screen as before. The standard is the board Gerda
+  played ("don't make it easier for her"): her recorded boards (`source/analysis/early-gerda.json`,
+  from `source/tools/early_from_replays.js`), and for levels she had not played yet the board made
+  for her screen shape (1.6). Her very hard 51 (strong test player under 1% first try; she needed
+  17 tries) and her 53 are switched: level 53 is now her 51, level 51 her 53. The daily puzzle is made
+  for shape 1.6 (`RULES.levels.aspect`). Grandma's own track still follows her screen. The
+  extra-large tiles setting is removed (it changed the level). Keep the table: changing it changes
+  levels people are playing.
 
 ## Predictions on the dashboard
 
