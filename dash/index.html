@@ -543,7 +543,7 @@ function render() {
       case 'open': return ['📱', `App geopend (versie ${esc(e.v)})`];
       case 'show': return ['👀', 'Terug in de app'];
       case 'hide': return ['💤', `App weggelegd${e.fg ? ` na ${mmss(e.fg)}` : ''}${e.lv && e.scr === 'game' ? ` (midden in ${lvlName(e).toLowerCase()})` : ''}`];
-      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez >= 2 && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}${e.pr != null && e.at === 1 && !e.res ? ` · testspeler haalt hem ${Math.round(e.pr * 100)}% in één keer` : ''}${e.ck && e.at === 1 && !e.res ? ` · ⏰ ${e.ck} zetten` : ''}${e.tl === 1 && e.at === 1 && !e.res ? ' · 💡🔀 verdiend' : e.tl === 0 && e.at === 1 && !e.res ? ' · zonder 💡🔀 (nog niet alles 3 sterren)' : ''}`];
+      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez >= 2 && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}${e.pr != null && e.at === 1 && !e.res ? ` · testspeler haalt hem ${Math.round(e.pr * 100)}% in één keer` : ''}${e.ck && e.at === 1 && !e.res ? ` · ⏰ ${e.ck} zetten` : ''}${e.tl === 1 && e.at === 1 && !e.res ? ' · 💡🔀 verdiend' : ''}`];
       case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${noTime(e) ? '? (tijd onbekend)' : mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''} · ${e.sc} punten${e.rb ? ' · met ↩ terugleggen' : ''}`]
         : e.r === 'stuck' && e.ck ? ['⏰', `${lvlName(e)}: de wekker ging af na ${mmss(e.dur || 0)} (${e.left} stenen over)`]
         : e.r === 'stuck' ? ['❌', `${lvlName(e)}: vastgelopen na ${mmss(e.dur || 0)} (${e.left} stenen over${e.rb ? ', al teruggelegd' : ''})`]
