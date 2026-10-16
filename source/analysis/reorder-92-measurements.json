@@ -1,0 +1,5206 @@
+{
+  "fingerprint": "89f7652202850f3339fc16b7e741753181a4f0c649bc8db3b0338afb8006544c",
+  "phases": {
+    "primary": {
+      "runs": 1200,
+      "seed": 17011
+    },
+    "validation": {
+      "runs": 600,
+      "seed": 93097
+    }
+  },
+  "rows": [
+    {
+      "lv": 91,
+      "hash": "90de22f6eae0465903f7d469f77fed0878f7b9d5c0c55321d6a9c30d45c53dbf",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2941666666666667,
+          "two": 0.7591666666666667,
+          "four": 0.985
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1775,
+          "two": 0.32083333333333336,
+          "four": 0.5341666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2733333333333333,
+          "two": 0.765,
+          "four": 0.985
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16833333333333333,
+          "two": 0.2966666666666667,
+          "four": 0.49833333333333335
+        }
+      }
+    },
+    {
+      "lv": 92,
+      "hash": "8d4087159b17c4519afb0cbe8158272ecc80896fa70c546c819cc82b27e04172",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.35333333333333333,
+          "two": 0.86,
+          "four": 0.9966666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2808333333333333,
+          "two": 0.4866666666666667,
+          "four": 0.7425
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.36333333333333334,
+          "two": 0.865,
+          "four": 0.9966666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.26666666666666666,
+          "two": 0.45,
+          "four": 0.7016666666666667
+        }
+      }
+    },
+    {
+      "lv": 93,
+      "hash": "3aada46b84a00c45f447c88335c55bb0eff33a59f5f5b4ef6aefb06f11309195",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.7266666666666667,
+          "two": 0.9716666666666667,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.5233333333333333,
+          "two": 0.7816666666666666,
+          "four": 0.9508333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.7133333333333334,
+          "two": 0.9616666666666667,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.4866666666666667,
+          "two": 0.7383333333333333,
+          "four": 0.9316666666666666
+        }
+      }
+    },
+    {
+      "lv": 94,
+      "hash": "2844422fff7c2d4f4e2023a8bff83fb7b7adcf9c2ff09ef443380050814f0ed7",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.44916666666666666,
+          "two": 0.67,
+          "four": 0.8675
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2866666666666667,
+          "two": 0.48333333333333334,
+          "four": 0.7241666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.45166666666666666,
+          "two": 0.695,
+          "four": 0.8883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29333333333333333,
+          "two": 0.4683333333333333,
+          "four": 0.7466666666666667
+        }
+      }
+    },
+    {
+      "lv": 95,
+      "hash": "5a5f2c219d159cd1a49bb24df737ba50e15b81449782170f0c098e6f998db854",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.49083333333333334,
+          "two": 0.8141666666666667,
+          "four": 0.97
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.31583333333333335,
+          "two": 0.5375,
+          "four": 0.7891666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.48833333333333334,
+          "two": 0.7883333333333333,
+          "four": 0.9683333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.34833333333333333,
+          "two": 0.545,
+          "four": 0.795
+        }
+      }
+    },
+    {
+      "lv": 96,
+      "hash": "a545e7743e91db350ec08220dfd00015f841a42281813a9a2fc3b5b22de6ab58",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.82,
+          "two": 0.9716666666666667,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.6333333333333333,
+          "two": 0.88,
+          "four": 0.9833333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.8283333333333334,
+          "two": 0.9783333333333334,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.6266666666666667,
+          "two": 0.8616666666666667,
+          "four": 0.975
+        }
+      }
+    },
+    {
+      "lv": 97,
+      "hash": "860b1c1d759828926dd90a944365c382ff108af1d6de5ee9cccfc50a6325a0d8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.9683333333333334,
+          "two": 0.9991666666666666,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.715,
+          "two": 0.905,
+          "four": 0.9916666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.9633333333333334,
+          "two": 0.9983333333333333,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.7333333333333333,
+          "two": 0.9283333333333333,
+          "four": 0.9933333333333333
+        }
+      }
+    },
+    {
+      "lv": 98,
+      "hash": "c8a89867d87e418f84e3d25c08569fba454984e7bfc755f6cc91c81ec2db5cfc",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.35833333333333334,
+          "two": 0.7216666666666667,
+          "four": 0.9616666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1,
+          "two": 0.18083333333333335,
+          "four": 0.32666666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3333333333333333,
+          "two": 0.715,
+          "four": 0.9733333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10166666666666667,
+          "two": 0.19333333333333333,
+          "four": 0.3233333333333333
+        }
+      }
+    },
+    {
+      "lv": 99,
+      "hash": "2117641a2d1c95cbe0fa8e4b3126419eddbcd205feae6dc715d512cc040c820f",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.6325,
+          "two": 0.8783333333333333,
+          "four": 0.9891666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3908333333333333,
+          "two": 0.63,
+          "four": 0.8683333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.6316666666666667,
+          "two": 0.875,
+          "four": 0.985
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.4033333333333333,
+          "two": 0.6416666666666667,
+          "four": 0.8983333333333333
+        }
+      }
+    },
+    {
+      "lv": 100,
+      "hash": "d5d095a5029c5ebf5b070cfd01812f42b3b59e6f40ac2ef8e1cba8c4fdb60469",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.6283333333333333,
+          "two": 0.8883333333333333,
+          "four": 0.99
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.31333333333333335,
+          "two": 0.5208333333333334,
+          "four": 0.7616666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.6116666666666667,
+          "two": 0.885,
+          "four": 0.9933333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.27666666666666667,
+          "two": 0.49,
+          "four": 0.75
+        }
+      }
+    },
+    {
+      "lv": 101,
+      "hash": "6be2eb93f1c51a6b3de85e96a40d69970cee13fdcb8f3648f9661646b6ef79ea",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.39,
+          "two": 0.75,
+          "four": 0.9833333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.30416666666666664,
+          "two": 0.5383333333333333,
+          "four": 0.7866666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.445,
+          "two": 0.785,
+          "four": 0.9816666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.32166666666666666,
+          "two": 0.5366666666666666,
+          "four": 0.7916666666666666
+        }
+      }
+    },
+    {
+      "lv": 102,
+      "hash": "306f0da533b1dbc0ccdb0c4f3067aaad8392c62032671590a03e77b92b6b05de",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.36916666666666664,
+          "two": 0.595,
+          "four": 0.805
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1525,
+          "two": 0.285,
+          "four": 0.4775
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.415,
+          "two": 0.6166666666666667,
+          "four": 0.8183333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15,
+          "two": 0.31,
+          "four": 0.5283333333333333
+        }
+      }
+    },
+    {
+      "lv": 103,
+      "hash": "cf6ee2ae7c03c0143a8b058f4564b718ccd004796b677e9718b3c69392ebd6c8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.635,
+          "two": 0.8958333333333334,
+          "four": 0.9933333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.415,
+          "two": 0.6475,
+          "four": 0.8716666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.625,
+          "two": 0.9066666666666666,
+          "four": 0.9966666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.38166666666666665,
+          "two": 0.645,
+          "four": 0.8783333333333333
+        }
+      }
+    },
+    {
+      "lv": 104,
+      "hash": "3d2c54c960efaab7068e02a9d1b0132fe05df3ec9320290eef37910ebe887cde",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.86,
+          "two": 0.99,
+          "four": 0.9991666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.63,
+          "two": 0.8633333333333333,
+          "four": 0.9775
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.8733333333333333,
+          "two": 0.9866666666666667,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.62,
+          "two": 0.8533333333333334,
+          "four": 0.975
+        }
+      }
+    },
+    {
+      "lv": 105,
+      "hash": "e5d1ea6ead9621cae0c35b0609f0fd27ca4139e414848e842fbf638843e1729f",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.7275,
+          "two": 0.9566666666666667,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.44333333333333336,
+          "two": 0.6958333333333333,
+          "four": 0.9166666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.725,
+          "two": 0.9533333333333334,
+          "four": 1
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.44,
+          "two": 0.6583333333333333,
+          "four": 0.9
+        }
+      }
+    },
+    {
+      "lv": 106,
+      "hash": "7086e539af77d6a373fe0eb52abc9961f07fd8167b541273b1f04aa7ea760b00",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4125,
+          "two": 0.7983333333333333,
+          "four": 0.9858333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.32416666666666666,
+          "two": 0.5241666666666667,
+          "four": 0.7875
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3933333333333333,
+          "two": 0.7883333333333333,
+          "four": 0.9883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.285,
+          "two": 0.495,
+          "four": 0.7783333333333333
+        }
+      }
+    },
+    {
+      "lv": 107,
+      "hash": "10623c8e7a86acbc56f85bb42c2797ad5c48ed0d01cfae7c26f1d2b13e72cafb",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.445,
+          "two": 0.7425,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.235,
+          "two": 0.41,
+          "four": 0.665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.44,
+          "two": 0.7716666666666666,
+          "four": 0.9566666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.22833333333333333,
+          "two": 0.41333333333333333,
+          "four": 0.6583333333333333
+        }
+      }
+    },
+    {
+      "lv": 108,
+      "hash": "0bd2ff365ea949d9a4b8a240be17c90dd9028a5d7b32e40fd0b2362cb764c5dd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.42,
+          "two": 0.6625,
+          "four": 0.8608333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1625,
+          "two": 0.305,
+          "four": 0.5283333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4266666666666667,
+          "two": 0.665,
+          "four": 0.87
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.165,
+          "two": 0.33166666666666667,
+          "four": 0.5483333333333333
+        }
+      }
+    },
+    {
+      "lv": 109,
+      "hash": "ce93079ec31469197f95b3192b0e4268ba888015d62714ac1d3d4d80f97c63dd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4483333333333333,
+          "two": 0.8016666666666666,
+          "four": 0.9858333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.36583333333333334,
+          "two": 0.6041666666666666,
+          "four": 0.835
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.5083333333333333,
+          "two": 0.8166666666666667,
+          "four": 0.9766666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.41333333333333333,
+          "two": 0.6483333333333333,
+          "four": 0.8816666666666667
+        }
+      }
+    },
+    {
+      "lv": 110,
+      "hash": "9ed57eeaa78c487600f2983294d7773238efaf742cece10f3707d704f4c6b2c9",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.395,
+          "two": 0.6358333333333334,
+          "four": 0.8725
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21416666666666667,
+          "two": 0.38666666666666666,
+          "four": 0.6133333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3933333333333333,
+          "two": 0.6216666666666667,
+          "four": 0.8683333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.22166666666666668,
+          "two": 0.37833333333333335,
+          "four": 0.63
+        }
+      }
+    },
+    {
+      "lv": 111,
+      "hash": "7e8337dc6dd0a83ef1db37552d467283c52c2235457f9476e6114e531be39ec6",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4825,
+          "two": 0.785,
+          "four": 0.9725
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2758333333333333,
+          "two": 0.4766666666666667,
+          "four": 0.7325
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4633333333333333,
+          "two": 0.7516666666666667,
+          "four": 0.9666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25,
+          "two": 0.4633333333333333,
+          "four": 0.7266666666666667
+        }
+      }
+    },
+    {
+      "lv": 112,
+      "hash": "2320627bd5e14ee89038dddb9492009e7f2878ff214a6ffca25bec0b53c0daab",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.385,
+          "two": 0.6866666666666666,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11333333333333333,
+          "two": 0.23166666666666666,
+          "four": 0.41
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.36666666666666664,
+          "two": 0.695,
+          "four": 0.9566666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12833333333333333,
+          "two": 0.22,
+          "four": 0.37833333333333335
+        }
+      }
+    },
+    {
+      "lv": 113,
+      "hash": "8f974099cb58d07d2827b4d6a798c1fae52a4102033f38effedd4b26cc725e3c",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4691666666666667,
+          "two": 0.8091666666666667,
+          "four": 0.9783333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2816666666666667,
+          "two": 0.4633333333333333,
+          "four": 0.7283333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.485,
+          "two": 0.81,
+          "four": 0.9783333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.31,
+          "two": 0.505,
+          "four": 0.755
+        }
+      }
+    },
+    {
+      "lv": 114,
+      "hash": "7271f95fedb236a197a76c5d8ef69f70d5191a4b0650db4fbfa979b63bd2f534",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3825,
+          "two": 0.6091666666666666,
+          "four": 0.8441666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.19,
+          "two": 0.35,
+          "four": 0.57
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.38,
+          "two": 0.6116666666666667,
+          "four": 0.8483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.22,
+          "two": 0.36,
+          "four": 0.5883333333333334
+        }
+      }
+    },
+    {
+      "lv": 115,
+      "hash": "45e811cca9dff689bf47a4e2520dc5713a70b3d553edb37bd26fcd5f95588ad9",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.41083333333333333,
+          "two": 0.7766666666666666,
+          "four": 0.9858333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.275,
+          "two": 0.4766666666666667,
+          "four": 0.6983333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.425,
+          "two": 0.765,
+          "four": 0.9816666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.27666666666666667,
+          "two": 0.48,
+          "four": 0.7266666666666667
+        }
+      }
+    },
+    {
+      "lv": 116,
+      "hash": "3b3d4cc8824d928798537fe0715411da66ef08ca1f85839cb6483f0fba498c96",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.54,
+          "two": 0.8233333333333334,
+          "four": 0.9858333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.49666666666666665,
+          "two": 0.7133333333333334,
+          "four": 0.9133333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.5083333333333333,
+          "two": 0.83,
+          "four": 0.9883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.49666666666666665,
+          "two": 0.755,
+          "four": 0.9416666666666667
+        }
+      }
+    },
+    {
+      "lv": 117,
+      "hash": "f85baf8a6e6e67b7d5cdded617e4797cac8b6b6964c4ee72fc2ba0b7a681208b",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4066666666666667,
+          "two": 0.6383333333333333,
+          "four": 0.8625
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.24833333333333332,
+          "two": 0.43583333333333335,
+          "four": 0.685
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4166666666666667,
+          "two": 0.635,
+          "four": 0.8583333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21166666666666667,
+          "two": 0.4216666666666667,
+          "four": 0.6516666666666666
+        }
+      }
+    },
+    {
+      "lv": 118,
+      "hash": "d3d056995818da8e88e0d1fbc15e43362e8080247563bfa33610e7074ca2b6c1",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.42833333333333334,
+          "two": 0.6816666666666666,
+          "four": 0.8808333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25,
+          "two": 0.44,
+          "four": 0.6875
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43666666666666665,
+          "two": 0.6816666666666666,
+          "four": 0.9016666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.255,
+          "two": 0.43,
+          "four": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "lv": 119,
+      "hash": "cac2852116a6d2b00a77f08d36e1e50a1b77bd7454c984ed1e10052412a8e800",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.39666666666666667,
+          "two": 0.7866666666666666,
+          "four": 0.9875
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21416666666666667,
+          "two": 0.3566666666666667,
+          "four": 0.5766666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.38333333333333336,
+          "two": 0.7783333333333333,
+          "four": 0.975
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.19666666666666666,
+          "two": 0.37833333333333335,
+          "four": 0.5816666666666667
+        }
+      }
+    },
+    {
+      "lv": 120,
+      "hash": "e79ebcec276f742b14771f62413e1ac99da3c376ea63cad719e9d1497f5b685c",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31,
+          "two": 0.6508333333333334,
+          "four": 0.9658333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12583333333333332,
+          "two": 0.2525,
+          "four": 0.4425
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.30666666666666664,
+          "two": 0.67,
+          "four": 0.9583333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14166666666666666,
+          "two": 0.27166666666666667,
+          "four": 0.4483333333333333
+        }
+      }
+    },
+    {
+      "lv": 121,
+      "hash": "1c1cbc56d3cabb75ea21b59d828650407a0e5eef5400d82d01eb89c57590ee4e",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38083333333333336,
+          "two": 0.6833333333333333,
+          "four": 0.9325
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15416666666666667,
+          "two": 0.2966666666666667,
+          "four": 0.5
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.38166666666666665,
+          "two": 0.695,
+          "four": 0.9433333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15333333333333332,
+          "two": 0.29,
+          "four": 0.48833333333333334
+        }
+      }
+    },
+    {
+      "lv": 122,
+      "hash": "5cb77bf8d4127a3500eea60832cf2eb5a7f22916c1cb8f366c4ca5891c8713e3",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.5875,
+          "two": 0.9075,
+          "four": 0.9991666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.4508333333333333,
+          "two": 0.7216666666666667,
+          "four": 0.9266666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.59,
+          "two": 0.91,
+          "four": 0.9933333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.45,
+          "two": 0.685,
+          "four": 0.9033333333333333
+        }
+      }
+    },
+    {
+      "lv": 123,
+      "hash": "2270b380fbb9cc62573bab25859518bdd566a3e0caf078760bf5acb6c13840e8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4008333333333333,
+          "two": 0.7416666666666667,
+          "four": 0.9625
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2708333333333333,
+          "two": 0.45916666666666667,
+          "four": 0.7108333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4033333333333333,
+          "two": 0.7383333333333333,
+          "four": 0.9866666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2683333333333333,
+          "two": 0.4266666666666667,
+          "four": 0.6783333333333333
+        }
+      }
+    },
+    {
+      "lv": 124,
+      "hash": "61ebdd2a94b8ccf78f7b4b0746eebcfcf1634fe3f23092cf497f94b96451eef6",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.42,
+          "two": 0.755,
+          "four": 0.9658333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.23583333333333334,
+          "two": 0.4066666666666667,
+          "four": 0.6558333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.38666666666666666,
+          "two": 0.765,
+          "four": 0.98
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25833333333333336,
+          "two": 0.43833333333333335,
+          "four": 0.6683333333333333
+        }
+      }
+    },
+    {
+      "lv": 125,
+      "hash": "45e4cec78279ced4dbbd28b0f3a227342d156b906bbbc85b5f74f510fb4e3c3b",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4658333333333333,
+          "two": 0.7958333333333333,
+          "four": 0.9791666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29083333333333333,
+          "two": 0.49583333333333335,
+          "four": 0.73
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.425,
+          "two": 0.7933333333333333,
+          "four": 0.99
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.28,
+          "two": 0.485,
+          "four": 0.7
+        }
+      }
+    },
+    {
+      "lv": 126,
+      "hash": "7de4637930f23b31cdfa350bc6d8c3e270e5ce4012aea64bfe9cab15aea55871",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.46,
+          "two": 0.8516666666666667,
+          "four": 0.9875
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2708333333333333,
+          "two": 0.46166666666666667,
+          "four": 0.7125
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43833333333333335,
+          "two": 0.8433333333333334,
+          "four": 0.99
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.27,
+          "two": 0.4666666666666667,
+          "four": 0.7083333333333334
+        }
+      }
+    },
+    {
+      "lv": 127,
+      "hash": "1009ad50cf9eae98180629d683597c5a5cfa6a40b3420d956bdeba49ddb7efdb",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.47333333333333333,
+          "two": 0.8866666666666667,
+          "four": 0.995
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3516666666666667,
+          "two": 0.5683333333333334,
+          "four": 0.8175
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4866666666666667,
+          "two": 0.89,
+          "four": 0.9983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.37,
+          "two": 0.5933333333333334,
+          "four": 0.8333333333333334
+        }
+      }
+    },
+    {
+      "lv": 128,
+      "hash": "049305516c0cf8ce24b1ae427ccb24e703b3d6db60b1b50026a63b08ce52e1d4",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.35,
+          "two": 0.6366666666666667,
+          "four": 0.84
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18083333333333335,
+          "two": 0.3333333333333333,
+          "four": 0.5591666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33666666666666667,
+          "two": 0.6316666666666667,
+          "four": 0.85
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18333333333333332,
+          "two": 0.33,
+          "four": 0.53
+        }
+      }
+    },
+    {
+      "lv": 129,
+      "hash": "d59c29bbe908a74ce921e44fc60191c60457d88a4119c612470ff7395455113a",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.5241666666666667,
+          "two": 0.8366666666666667,
+          "four": 0.9783333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29833333333333334,
+          "two": 0.5166666666666667,
+          "four": 0.7775
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.53,
+          "two": 0.835,
+          "four": 0.9833333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.33,
+          "two": 0.5433333333333333,
+          "four": 0.7866666666666666
+        }
+      }
+    },
+    {
+      "lv": 130,
+      "hash": "d7df8883ad0d9363b9f09c3dd07a4f17b9aaf7886b2285c7efe94eb90b111baf",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3675,
+          "two": 0.6425,
+          "four": 0.9033333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1875,
+          "two": 0.33666666666666667,
+          "four": 0.585
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.39,
+          "two": 0.6716666666666666,
+          "four": 0.9083333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.165,
+          "two": 0.3566666666666667,
+          "four": 0.585
+        }
+      }
+    },
+    {
+      "lv": 131,
+      "hash": "7267a1790c517c83998486bf8de55a36e2927e9d779b9b07491c4120c2217d19",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.5016666666666667,
+          "two": 0.765,
+          "four": 0.9408333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.32083333333333336,
+          "two": 0.525,
+          "four": 0.7608333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.49833333333333335,
+          "two": 0.7833333333333333,
+          "four": 0.95
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.33166666666666667,
+          "two": 0.535,
+          "four": 0.7766666666666666
+        }
+      }
+    },
+    {
+      "lv": 132,
+      "hash": "6b5eaa83b3fcb1b47b9a3414ef9b20fc8379e43a364310c9d51ecde9868166a1",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3875,
+          "two": 0.6883333333333334,
+          "four": 0.955
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25583333333333336,
+          "two": 0.43333333333333335,
+          "four": 0.675
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4116666666666667,
+          "two": 0.7216666666666667,
+          "four": 0.95
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.24833333333333332,
+          "two": 0.43666666666666665,
+          "four": 0.6966666666666667
+        }
+      }
+    },
+    {
+      "lv": 133,
+      "hash": "6e249764d118cabb6932aa03a73b62400609cea090e641ba942907c1b9481cad",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4,
+          "two": 0.745,
+          "four": 0.9775
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.30083333333333334,
+          "two": 0.51,
+          "four": 0.7883333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4633333333333333,
+          "two": 0.7783333333333333,
+          "four": 0.9833333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.295,
+          "two": 0.5216666666666666,
+          "four": 0.7483333333333333
+        }
+      }
+    },
+    {
+      "lv": 134,
+      "hash": "182c87a68a4b015c095b6f9bddef0cd8255f56318ce152df4006ea9ce1a548bd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.39416666666666667,
+          "two": 0.7366666666666667,
+          "four": 0.9691666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14416666666666667,
+          "two": 0.29,
+          "four": 0.4625
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.39,
+          "two": 0.725,
+          "four": 0.965
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.135,
+          "two": 0.28,
+          "four": 0.43666666666666665
+        }
+      }
+    },
+    {
+      "lv": 135,
+      "hash": "402c645c65f5493dada92fe4a6481f365367a88dbeb3f32088da1c360ac21a7e",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38166666666666665,
+          "two": 0.6825,
+          "four": 0.9491666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20083333333333334,
+          "two": 0.37,
+          "four": 0.5891666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.35833333333333334,
+          "two": 0.645,
+          "four": 0.9266666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18,
+          "two": 0.33,
+          "four": 0.575
+        }
+      }
+    },
+    {
+      "lv": 136,
+      "hash": "3f07e7c8ff1bfb5fb968ce20c8f2c518c11f9013685573fbc853ad455b3ea8cd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.44083333333333335,
+          "two": 0.7833333333333333,
+          "four": 0.9725
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29333333333333333,
+          "two": 0.5016666666666667,
+          "four": 0.7641666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.45166666666666666,
+          "two": 0.78,
+          "four": 0.98
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.28833333333333333,
+          "two": 0.475,
+          "four": 0.77
+        }
+      }
+    },
+    {
+      "lv": 137,
+      "hash": "b5d1bd6c1c94a277e2557e86c7d1a981cf430584b59e640b18f47759ec6e0281",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.37833333333333335,
+          "two": 0.7058333333333333,
+          "four": 0.9608333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17166666666666666,
+          "two": 0.3425,
+          "four": 0.5841666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4066666666666667,
+          "two": 0.725,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18833333333333332,
+          "two": 0.35333333333333333,
+          "four": 0.5783333333333334
+        }
+      }
+    },
+    {
+      "lv": 138,
+      "hash": "371557248a65e83de7ef3130ca5ad9b671f1abd401e284584c9f45b7088ac9e4",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38916666666666666,
+          "two": 0.6108333333333333,
+          "four": 0.7858333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.255,
+          "two": 0.4375,
+          "four": 0.6708333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4066666666666667,
+          "two": 0.635,
+          "four": 0.785
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.23,
+          "two": 0.41833333333333333,
+          "four": 0.6516666666666666
+        }
+      }
+    },
+    {
+      "lv": 139,
+      "hash": "20693b06e9c1ac9a01875750aee31ba4d50928071c48adadda818b2bd7eebe00",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4058333333333333,
+          "two": 0.6933333333333334,
+          "four": 0.9408333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2841666666666667,
+          "two": 0.5008333333333334,
+          "four": 0.75
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.37333333333333335,
+          "two": 0.7333333333333333,
+          "four": 0.9633333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.30333333333333334,
+          "two": 0.5083333333333333,
+          "four": 0.765
+        }
+      }
+    },
+    {
+      "lv": 140,
+      "hash": "592620af503b43cbdae36a3cabde297d12d49ac206774d27fa1b28b688e4b5ef",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.44583333333333336,
+          "two": 0.7741666666666667,
+          "four": 0.9725
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3233333333333333,
+          "two": 0.5416666666666666,
+          "four": 0.7941666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43666666666666665,
+          "two": 0.7566666666666667,
+          "four": 0.9716666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.325,
+          "two": 0.5483333333333333,
+          "four": 0.8116666666666666
+        }
+      }
+    },
+    {
+      "lv": 141,
+      "hash": "d53c2a5220b5b429a0f3edf02e59e73719dfae14fc68dedd4af4d4bad0f0826d",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3591666666666667,
+          "two": 0.705,
+          "four": 0.9766666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.26916666666666667,
+          "two": 0.475,
+          "four": 0.7108333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3466666666666667,
+          "two": 0.7183333333333334,
+          "four": 0.9733333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.295,
+          "two": 0.5183333333333333,
+          "four": 0.7333333333333333
+        }
+      }
+    },
+    {
+      "lv": 142,
+      "hash": "5f3a2406155e6ef003fd6bd816487b5994990bd31f1151fe754908c80b094690",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38666666666666666,
+          "two": 0.7025,
+          "four": 0.9525
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.205,
+          "two": 0.345,
+          "four": 0.5475
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4033333333333333,
+          "two": 0.72,
+          "four": 0.9516666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.205,
+          "two": 0.37833333333333335,
+          "four": 0.595
+        }
+      }
+    },
+    {
+      "lv": 143,
+      "hash": "6c0194e137cf3e2a18e5ad098d1c246ad7c860f419ec4bd2e7be275888745f00",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4525,
+          "two": 0.795,
+          "four": 0.9816666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.37,
+          "two": 0.5891666666666666,
+          "four": 0.8325
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.49,
+          "two": 0.83,
+          "four": 0.99
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.35833333333333334,
+          "two": 0.5983333333333334,
+          "four": 0.8333333333333334
+        }
+      }
+    },
+    {
+      "lv": 144,
+      "hash": "0ae571d6b2dc6817b753dc5e377c38b764d936d164cfabbdf659239fb8e11918",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.36333333333333334,
+          "two": 0.7041666666666667,
+          "four": 0.955
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14833333333333334,
+          "two": 0.2808333333333333,
+          "four": 0.475
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.35,
+          "two": 0.6766666666666666,
+          "four": 0.9466666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17166666666666666,
+          "two": 0.3016666666666667,
+          "four": 0.5166666666666667
+        }
+      }
+    },
+    {
+      "lv": 145,
+      "hash": "d9117173b23099ced77db09c93b1df75442cfbfd565134f90c6cbe13a2af7452",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.33666666666666667,
+          "two": 0.5866666666666667,
+          "four": 0.8866666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17416666666666666,
+          "two": 0.31666666666666665,
+          "four": 0.5483333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33666666666666667,
+          "two": 0.5816666666666667,
+          "four": 0.8883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17833333333333334,
+          "two": 0.305,
+          "four": 0.5466666666666666
+        }
+      }
+    },
+    {
+      "lv": 146,
+      "hash": "214a2790a17040c1606faf5996fe08df52a40e6d0fcc36b8bde2779d1e44e3d9",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.44333333333333336,
+          "two": 0.7458333333333333,
+          "four": 0.9625
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3883333333333333,
+          "two": 0.6266666666666667,
+          "four": 0.8766666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.44333333333333336,
+          "two": 0.7466666666666667,
+          "four": 0.9616666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.42333333333333334,
+          "two": 0.6233333333333333,
+          "four": 0.8616666666666667
+        }
+      }
+    },
+    {
+      "lv": 147,
+      "hash": "19e253b73c8d5c668e47bbc9ad34789e8c9f1d147c524c756a97b7f2c7f970ab",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4683333333333333,
+          "two": 0.805,
+          "four": 0.9883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3825,
+          "two": 0.6325,
+          "four": 0.8666666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.465,
+          "two": 0.795,
+          "four": 0.9883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.395,
+          "two": 0.6283333333333333,
+          "four": 0.8766666666666667
+        }
+      }
+    },
+    {
+      "lv": 148,
+      "hash": "8e939a7d974b59791eeb6ba55f9759112e6c846a4f60fd20838d5d40b456a8ed",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.32166666666666666,
+          "two": 0.7175,
+          "four": 0.9675
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13333333333333333,
+          "two": 0.25916666666666666,
+          "four": 0.44333333333333336
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.335,
+          "two": 0.685,
+          "four": 0.9583333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14833333333333334,
+          "two": 0.3,
+          "four": 0.4716666666666667
+        }
+      }
+    },
+    {
+      "lv": 149,
+      "hash": "18e6f5ca46be4e41adcc4263552677d6de16315b1bcfe69b6059095ff3eb811e",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.37166666666666665,
+          "two": 0.7491666666666666,
+          "four": 0.9741666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14083333333333334,
+          "two": 0.2725,
+          "four": 0.4866666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4083333333333333,
+          "two": 0.755,
+          "four": 0.9716666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17333333333333334,
+          "two": 0.2816666666666667,
+          "four": 0.4866666666666667
+        }
+      }
+    },
+    {
+      "lv": 150,
+      "hash": "c043962ceab891041c7a453abdd93296766ff21c97488e0eaa28a8ca09af2417",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.48583333333333334,
+          "two": 0.8241666666666667,
+          "four": 0.9883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.42,
+          "two": 0.6591666666666667,
+          "four": 0.8883333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.5133333333333333,
+          "two": 0.8566666666666667,
+          "four": 0.995
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.44166666666666665,
+          "two": 0.6916666666666667,
+          "four": 0.885
+        }
+      }
+    },
+    {
+      "lv": 151,
+      "hash": "b965311381f670226c93141d8b8f22bb27997af9441efbf4ddfd649866ec9762",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.24916666666666668,
+          "two": 0.455,
+          "four": 0.6966666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09333333333333334,
+          "two": 0.17916666666666667,
+          "four": 0.33416666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.245,
+          "two": 0.45,
+          "four": 0.7583333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.095,
+          "two": 0.205,
+          "four": 0.3233333333333333
+        }
+      }
+    },
+    {
+      "lv": 152,
+      "hash": "3efffef365af36a1bae5faf7f97dca1beb511961e19aa73d7747f5d4893989f3",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4266666666666667,
+          "two": 0.7775,
+          "four": 0.98
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.38083333333333336,
+          "two": 0.6275,
+          "four": 0.8691666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.44666666666666666,
+          "two": 0.7716666666666666,
+          "four": 0.9833333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.4083333333333333,
+          "two": 0.6266666666666667,
+          "four": 0.8733333333333333
+        }
+      }
+    },
+    {
+      "lv": 153,
+      "hash": "8f9fdb9a54570b9fb455d803ce5d1eca56cf2bb1f3f202862b1d308be93feef7",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.36916666666666664,
+          "two": 0.735,
+          "four": 0.9775
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2975,
+          "two": 0.5108333333333334,
+          "four": 0.7491666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.375,
+          "two": 0.77,
+          "four": 0.98
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.31,
+          "two": 0.515,
+          "four": 0.7683333333333333
+        }
+      }
+    },
+    {
+      "lv": 154,
+      "hash": "9353833982298ac4f806572c6f7309304ca53255bd285d8d68045a2b8a2db18b",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3641666666666667,
+          "two": 0.7483333333333333,
+          "four": 0.98
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18666666666666668,
+          "two": 0.33666666666666667,
+          "four": 0.5325
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.38666666666666666,
+          "two": 0.8116666666666666,
+          "four": 0.99
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17833333333333334,
+          "two": 0.315,
+          "four": 0.51
+        }
+      }
+    },
+    {
+      "lv": 155,
+      "hash": "a4995f1665d556a0ac772d34d76ac4e2492e9f7eed6b5cf24a4461c743c033f8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.35583333333333333,
+          "two": 0.8016666666666666,
+          "four": 0.99
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.24666666666666667,
+          "two": 0.41083333333333333,
+          "four": 0.6416666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31333333333333335,
+          "two": 0.7766666666666666,
+          "four": 0.9816666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25166666666666665,
+          "two": 0.42833333333333334,
+          "four": 0.635
+        }
+      }
+    },
+    {
+      "lv": 156,
+      "hash": "82abdd4dfb13e046ed5f9b7742242f625929147a3caec421b3e73f60401cf4cf",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2925,
+          "two": 0.6275,
+          "four": 0.9541666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1475,
+          "two": 0.2675,
+          "four": 0.4725
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.305,
+          "two": 0.69,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14,
+          "two": 0.27666666666666667,
+          "four": 0.5033333333333333
+        }
+      }
+    },
+    {
+      "lv": 157,
+      "hash": "9047717299887ea99b6df5a599ab675ee984adfddb89d67f4293bb765c67d260",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3458333333333333,
+          "two": 0.6475,
+          "four": 0.8925
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1625,
+          "two": 0.29583333333333334,
+          "four": 0.5183333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.36,
+          "two": 0.665,
+          "four": 0.9116666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18166666666666667,
+          "two": 0.325,
+          "four": 0.5366666666666666
+        }
+      }
+    },
+    {
+      "lv": 158,
+      "hash": "3a938f8d3894bf0bd36b75345781d0e0a798eaf5df339d248de96d5123e77455",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31416666666666665,
+          "two": 0.665,
+          "four": 0.9625
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15083333333333335,
+          "two": 0.265,
+          "four": 0.44166666666666665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3,
+          "two": 0.695,
+          "four": 0.9616666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14333333333333334,
+          "two": 0.27,
+          "four": 0.45166666666666666
+        }
+      }
+    },
+    {
+      "lv": 159,
+      "hash": "575afdf1085376196ecadbf839ab82398fd3d7708af28969860919fd3bfb37ed",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4483333333333333,
+          "two": 0.7558333333333334,
+          "four": 0.965
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.34833333333333333,
+          "two": 0.5783333333333334,
+          "four": 0.8391666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.44,
+          "two": 0.78,
+          "four": 0.9666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.385,
+          "two": 0.6016666666666667,
+          "four": 0.835
+        }
+      }
+    },
+    {
+      "lv": 160,
+      "hash": "53805041f1184d675e2bdf4854e3c70166180b053b5b3a04281a7ee029fdf03f",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.35083333333333333,
+          "two": 0.6391666666666667,
+          "four": 0.9241666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21916666666666668,
+          "two": 0.3875,
+          "four": 0.6391666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3233333333333333,
+          "two": 0.595,
+          "four": 0.8983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20833333333333334,
+          "two": 0.385,
+          "four": 0.61
+        }
+      }
+    },
+    {
+      "lv": 161,
+      "hash": "73c6fe99ed90d3da2a1420bcf60b5ad391fd89cf631186ae948a00d8e79f2425",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4266666666666667,
+          "two": 0.7416666666666667,
+          "four": 0.9641666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2758333333333333,
+          "two": 0.49833333333333335,
+          "four": 0.75
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.44333333333333336,
+          "two": 0.7416666666666667,
+          "four": 0.9683333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.28,
+          "two": 0.4633333333333333,
+          "four": 0.7016666666666667
+        }
+      }
+    },
+    {
+      "lv": 162,
+      "hash": "bf305ed98d5c2ebe24f9105d697938859a0e7863e5778340c9f31a1ae88ba554",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3525,
+          "two": 0.6408333333333334,
+          "four": 0.9058333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17583333333333334,
+          "two": 0.3275,
+          "four": 0.5425
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.32666666666666666,
+          "two": 0.6216666666666667,
+          "four": 0.915
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18333333333333332,
+          "two": 0.2966666666666667,
+          "four": 0.5566666666666666
+        }
+      }
+    },
+    {
+      "lv": 163,
+      "hash": "6441981117df3c0d14af820f897be4cd0bdd617651bce0f8c084c12efbf99129",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.30916666666666665,
+          "two": 0.6191666666666666,
+          "four": 0.9108333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14666666666666667,
+          "two": 0.29333333333333333,
+          "four": 0.49583333333333335
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.375,
+          "two": 0.6333333333333333,
+          "four": 0.9116666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.135,
+          "two": 0.26,
+          "four": 0.465
+        }
+      }
+    },
+    {
+      "lv": 164,
+      "hash": "9eff8ea12fe7c5e32095ecf5269f29d62792fea2d18553b7f7b6cecd72f4cfe6",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.33166666666666667,
+          "two": 0.6658333333333334,
+          "four": 0.9408333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16583333333333333,
+          "two": 0.30583333333333335,
+          "four": 0.5316666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33,
+          "two": 0.6633333333333333,
+          "four": 0.935
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16,
+          "two": 0.305,
+          "four": 0.5266666666666666
+        }
+      }
+    },
+    {
+      "lv": 165,
+      "hash": "0a64b4821880b287ca6151568bd5e602ef8f6506456ac5219861be75ff1ee9c0",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.42583333333333334,
+          "two": 0.78,
+          "four": 0.9758333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.4058333333333333,
+          "two": 0.6316666666666667,
+          "four": 0.8541666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.42833333333333334,
+          "two": 0.7733333333333333,
+          "four": 0.9933333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.4083333333333333,
+          "two": 0.63,
+          "four": 0.8733333333333333
+        }
+      }
+    },
+    {
+      "lv": 166,
+      "hash": "eaecc7bbb190a475d23e93f1e83c744ba033c0010c86a623c0b879b13e3fbdf8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.37083333333333335,
+          "two": 0.6291666666666667,
+          "four": 0.8941666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.255,
+          "two": 0.4583333333333333,
+          "four": 0.7225
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.32666666666666666,
+          "two": 0.65,
+          "four": 0.895
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25333333333333335,
+          "two": 0.43666666666666665,
+          "four": 0.7133333333333334
+        }
+      }
+    },
+    {
+      "lv": 167,
+      "hash": "321efb518cbd5d1208137fb591ec69bd5d23a6d80ad49ffd02daa59dab36b0ff",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2658333333333333,
+          "two": 0.5191666666666667,
+          "four": 0.785
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1025,
+          "two": 0.18333333333333332,
+          "four": 0.345
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2916666666666667,
+          "two": 0.5283333333333333,
+          "four": 0.8016666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.06333333333333334,
+          "two": 0.17833333333333334,
+          "four": 0.3
+        }
+      }
+    },
+    {
+      "lv": 168,
+      "hash": "5ac8fb6143d6332a7d79e7a21ce1075b2c98eb087cc283f2e0cf4677f821c530",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.29,
+          "two": 0.6016666666666667,
+          "four": 0.9308333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13333333333333333,
+          "two": 0.23833333333333334,
+          "four": 0.4125
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31166666666666665,
+          "two": 0.6233333333333333,
+          "four": 0.9066666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13166666666666665,
+          "two": 0.23833333333333334,
+          "four": 0.42
+        }
+      }
+    },
+    {
+      "lv": 169,
+      "hash": "ab8f674362d77028821858435403a67a2e0275fb68451ba2b3bf05e17e9412f1",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2608333333333333,
+          "two": 0.5916666666666667,
+          "four": 0.9133333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.08583333333333333,
+          "two": 0.17583333333333334,
+          "four": 0.30666666666666664
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2816666666666667,
+          "two": 0.6033333333333334,
+          "four": 0.92
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07666666666666666,
+          "two": 0.145,
+          "four": 0.31166666666666665
+        }
+      }
+    },
+    {
+      "lv": 170,
+      "hash": "41c0ef2b930ca58f5b5f6a8b5d36546d368762a11f0faebab818fcbfe848a89f",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3283333333333333,
+          "two": 0.73,
+          "four": 0.9675
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21416666666666667,
+          "two": 0.4075,
+          "four": 0.6583333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33166666666666667,
+          "two": 0.6933333333333334,
+          "four": 0.97
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.24,
+          "two": 0.43833333333333335,
+          "four": 0.6616666666666666
+        }
+      }
+    },
+    {
+      "lv": 171,
+      "hash": "e89281500219d2d55d2ad9a5768bc13d462ab677ec02008d522efe53b68c6856",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.24166666666666667,
+          "two": 0.4841666666666667,
+          "four": 0.7825
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.075,
+          "two": 0.14416666666666667,
+          "four": 0.28
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.245,
+          "two": 0.5,
+          "four": 0.8283333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07833333333333334,
+          "two": 0.15,
+          "four": 0.29
+        }
+      }
+    },
+    {
+      "lv": 172,
+      "hash": "b218efaa21bd976faebbb26e26b7a5356366b0f443a88d3d9e14e49f4915e92e",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2916666666666667,
+          "two": 0.5075,
+          "four": 0.8116666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1475,
+          "two": 0.2833333333333333,
+          "four": 0.48833333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2833333333333333,
+          "two": 0.505,
+          "four": 0.7716666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17333333333333334,
+          "two": 0.2916666666666667,
+          "four": 0.47333333333333333
+        }
+      }
+    },
+    {
+      "lv": 173,
+      "hash": "57524ddbd81d23d8596fdeae266c658ebf6cfbbdc0c0fec431069d7d4868bd31",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4875,
+          "two": 0.8433333333333334,
+          "four": 0.995
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3616666666666667,
+          "two": 0.5933333333333334,
+          "four": 0.8383333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.49,
+          "two": 0.8433333333333334,
+          "four": 0.99
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.325,
+          "two": 0.5333333333333333,
+          "four": 0.8066666666666666
+        }
+      }
+    },
+    {
+      "lv": 174,
+      "hash": "38cb47e9d2b8388543b9f2d1a0bd51c7185ff0561598394bad6e84bbc2a19c23",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.27166666666666667,
+          "two": 0.5683333333333334,
+          "four": 0.9125
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11,
+          "two": 0.21416666666666667,
+          "four": 0.3858333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.28,
+          "two": 0.5966666666666667,
+          "four": 0.9016666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10333333333333333,
+          "two": 0.175,
+          "four": 0.33666666666666667
+        }
+      }
+    },
+    {
+      "lv": 175,
+      "hash": "86a62166903ffb583f197b6b2d561760c18ab37d8490a341f35a54c2a20a5fa5",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.35583333333333333,
+          "two": 0.6858333333333333,
+          "four": 0.9491666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1975,
+          "two": 0.3475,
+          "four": 0.5716666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.36333333333333334,
+          "two": 0.665,
+          "four": 0.9366666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.165,
+          "two": 0.3233333333333333,
+          "four": 0.5566666666666666
+        }
+      }
+    },
+    {
+      "lv": 176,
+      "hash": "1eea8eb9c2ab8785b1342cc9a207b9cfb47f9959d32ea23a31d689761d97fed9",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31083333333333335,
+          "two": 0.6441666666666667,
+          "four": 0.9358333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15333333333333332,
+          "two": 0.2866666666666667,
+          "four": 0.4875
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33,
+          "two": 0.6783333333333333,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15166666666666667,
+          "two": 0.27666666666666667,
+          "four": 0.4866666666666667
+        }
+      }
+    },
+    {
+      "lv": 177,
+      "hash": "1d1b5cd69691dccf66472f014bd50549b399aec0021d1e80cde4b24ea3da0fae",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.315,
+          "two": 0.6483333333333333,
+          "four": 0.9133333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15916666666666668,
+          "two": 0.2891666666666667,
+          "four": 0.49083333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2866666666666667,
+          "two": 0.6183333333333333,
+          "four": 0.9433333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16333333333333333,
+          "two": 0.325,
+          "four": 0.535
+        }
+      }
+    },
+    {
+      "lv": 178,
+      "hash": "60d77876d4b55a32464f5c77c5a6b9a3bb83ce07b997d9de8bf3d77e252c6f71",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38916666666666666,
+          "two": 0.8483333333333334,
+          "four": 0.995
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2925,
+          "two": 0.4791666666666667,
+          "four": 0.7466666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.39166666666666666,
+          "two": 0.845,
+          "four": 0.9966666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29,
+          "two": 0.49166666666666664,
+          "four": 0.7583333333333333
+        }
+      }
+    },
+    {
+      "lv": 179,
+      "hash": "7c6e684114f304f63b53ecb717a1c1bd913c58eac21dd01c365515ace6af9a5e",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.195,
+          "two": 0.41083333333333333,
+          "four": 0.72
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.019166666666666665,
+          "two": 0.04583333333333333,
+          "four": 0.09916666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.22666666666666666,
+          "two": 0.42333333333333334,
+          "four": 0.7483333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.018333333333333333,
+          "two": 0.041666666666666664,
+          "four": 0.07666666666666666
+        }
+      }
+    },
+    {
+      "lv": 180,
+      "hash": "6b3c2414a424f96f3445323d41d528ddc86f23d3c03d154698377eb0cfb626d9",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.37166666666666665,
+          "two": 0.6141666666666666,
+          "four": 0.8466666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2225,
+          "two": 0.3908333333333333,
+          "four": 0.6083333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.36333333333333334,
+          "two": 0.5966666666666667,
+          "four": 0.8383333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20833333333333334,
+          "two": 0.37666666666666665,
+          "four": 0.6016666666666667
+        }
+      }
+    },
+    {
+      "lv": 181,
+      "hash": "8db73440943aaaaf9114cf7775a27903c62e0858be8ebf3f48ab05bb1a2a20a8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.34833333333333333,
+          "two": 0.6133333333333333,
+          "four": 0.8683333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15583333333333332,
+          "two": 0.29833333333333334,
+          "four": 0.49916666666666665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3333333333333333,
+          "two": 0.64,
+          "four": 0.8616666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15166666666666667,
+          "two": 0.265,
+          "four": 0.48833333333333334
+        }
+      }
+    },
+    {
+      "lv": 182,
+      "hash": "91c7267194fc3494d677cf6733018b50973dc953c098e904472a27e6a7fc602c",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3516666666666667,
+          "two": 0.5508333333333333,
+          "four": 0.8391666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16666666666666666,
+          "two": 0.30333333333333334,
+          "four": 0.53
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3383333333333333,
+          "two": 0.5316666666666666,
+          "four": 0.845
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2,
+          "two": 0.3416666666666667,
+          "four": 0.575
+        }
+      }
+    },
+    {
+      "lv": 183,
+      "hash": "2fde44d6a103391e6411bcc46714a9b308bc41f52c377b7a02c324caa32ecacb",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.29,
+          "two": 0.67,
+          "four": 0.9641666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17666666666666667,
+          "two": 0.31916666666666665,
+          "four": 0.545
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.29333333333333333,
+          "two": 0.66,
+          "four": 0.955
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18166666666666667,
+          "two": 0.32666666666666666,
+          "four": 0.5633333333333334
+        }
+      }
+    },
+    {
+      "lv": 184,
+      "hash": "436c6301db924bb07b99a0ea0530b0f1cf0f30925bc60140f1f721622689419c",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31833333333333336,
+          "two": 0.5333333333333333,
+          "four": 0.7816666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.075,
+          "two": 0.13416666666666666,
+          "four": 0.25416666666666665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2866666666666667,
+          "two": 0.5183333333333333,
+          "four": 0.76
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07833333333333334,
+          "two": 0.14666666666666667,
+          "four": 0.24833333333333332
+        }
+      }
+    },
+    {
+      "lv": 185,
+      "hash": "f2039b8add778e9fde9696eafff4e18d23bb04b812d490525c5022d6063ae0cf",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.36833333333333335,
+          "two": 0.6633333333333333,
+          "four": 0.9266666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.23916666666666667,
+          "two": 0.4033333333333333,
+          "four": 0.6383333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.37333333333333335,
+          "two": 0.6416666666666667,
+          "four": 0.94
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.26666666666666666,
+          "two": 0.46166666666666667,
+          "four": 0.7083333333333334
+        }
+      }
+    },
+    {
+      "lv": 186,
+      "hash": "8367ddab140b3a6d70378a9e919c21c07adfdf7dd7d2e9629395a3d894883fd8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.39416666666666667,
+          "two": 0.7375,
+          "four": 0.9675
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2275,
+          "two": 0.4116666666666667,
+          "four": 0.6666666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.385,
+          "two": 0.7333333333333333,
+          "four": 0.9616666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2633333333333333,
+          "two": 0.445,
+          "four": 0.695
+        }
+      }
+    },
+    {
+      "lv": 187,
+      "hash": "6042005804d2be717a6141c80f507331ab0e2997e4bad5a4320cfb265f1ed860",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4025,
+          "two": 0.8325,
+          "four": 0.9983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21666666666666667,
+          "two": 0.4025,
+          "four": 0.6541666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4166666666666667,
+          "two": 0.81,
+          "four": 0.9983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.23666666666666666,
+          "two": 0.425,
+          "four": 0.6583333333333333
+        }
+      }
+    },
+    {
+      "lv": 188,
+      "hash": "eb4911a19bf784bb95e8f5afcc56b4d2a04b59607d5f79d0f01164a2ff48d693",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4608333333333333,
+          "two": 0.7591666666666667,
+          "four": 0.9558333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29083333333333333,
+          "two": 0.5083333333333333,
+          "four": 0.75
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43333333333333335,
+          "two": 0.7533333333333333,
+          "four": 0.9666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.295,
+          "two": 0.505,
+          "four": 0.7533333333333333
+        }
+      }
+    },
+    {
+      "lv": 189,
+      "hash": "90f3eb0d3cd74b6b32bace5b74935e3826fc4173a22563f7bab048056d2cf32e",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3475,
+          "two": 0.6241666666666666,
+          "four": 0.8975
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14666666666666667,
+          "two": 0.2708333333333333,
+          "four": 0.45666666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31333333333333335,
+          "two": 0.6066666666666667,
+          "four": 0.9266666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12,
+          "two": 0.25666666666666665,
+          "four": 0.43833333333333335
+        }
+      }
+    },
+    {
+      "lv": 190,
+      "hash": "0f8d7d634eed6d0bb3f4bfb9a830880311dde39526d6e8acd223d55b9108a43c",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31833333333333336,
+          "two": 0.5441666666666667,
+          "four": 0.7716666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.105,
+          "two": 0.20416666666666666,
+          "four": 0.395
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3433333333333333,
+          "two": 0.56,
+          "four": 0.7866666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12,
+          "two": 0.21333333333333335,
+          "four": 0.4066666666666667
+        }
+      }
+    },
+    {
+      "lv": 191,
+      "hash": "630fa5c821722171df3b97ea67511ae69ffd2ba7d37c4e49e3a86b5c81203616",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.35833333333333334,
+          "two": 0.7066666666666667,
+          "four": 0.9566666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1725,
+          "two": 0.3075,
+          "four": 0.53
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.35,
+          "two": 0.7183333333333334,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.185,
+          "two": 0.32,
+          "four": 0.5566666666666666
+        }
+      }
+    },
+    {
+      "lv": 192,
+      "hash": "30ffe3154a06c99b6e0cb1a65471167e65e6ee7938fa2da3ba30bfc306114e45",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2758333333333333,
+          "two": 0.555,
+          "four": 0.8966666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.0825,
+          "two": 0.16583333333333333,
+          "four": 0.32166666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.245,
+          "two": 0.5233333333333333,
+          "four": 0.9016666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11666666666666667,
+          "two": 0.20333333333333334,
+          "four": 0.35333333333333333
+        }
+      }
+    },
+    {
+      "lv": 193,
+      "hash": "b7a910a4f568acc32d5282b5a274c234ac104bdf2ecbe629c52ff8e3eb788f2b",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38416666666666666,
+          "two": 0.6933333333333334,
+          "four": 0.9575
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2658333333333333,
+          "two": 0.4716666666666667,
+          "four": 0.71
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.37,
+          "two": 0.71,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.27666666666666667,
+          "two": 0.4633333333333333,
+          "four": 0.7083333333333334
+        }
+      }
+    },
+    {
+      "lv": 194,
+      "hash": "071f9a17737bf2d17bb176a70467ebfcb05da74efdd629d9fb509e084e9ed7d1",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.41333333333333333,
+          "two": 0.7091666666666666,
+          "four": 0.955
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3225,
+          "two": 0.5416666666666666,
+          "four": 0.7983333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43166666666666664,
+          "two": 0.73,
+          "four": 0.965
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3233333333333333,
+          "two": 0.565,
+          "four": 0.8
+        }
+      }
+    },
+    {
+      "lv": 195,
+      "hash": "5ba6c41c145d0f8ea98f9806672993c33e4fe723b1741580cd710c24fcc5efad",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.30916666666666665,
+          "two": 0.5441666666666667,
+          "four": 0.8216666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1475,
+          "two": 0.3,
+          "four": 0.5091666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.36,
+          "two": 0.6016666666666667,
+          "four": 0.8333333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17333333333333334,
+          "two": 0.29,
+          "four": 0.49166666666666664
+        }
+      }
+    },
+    {
+      "lv": 196,
+      "hash": "18d51431b1f1acdda7ea960041b87696ad88d861ed77dc34437a514eed3a6c1f",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.305,
+          "two": 0.5808333333333333,
+          "four": 0.8583333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13166666666666665,
+          "two": 0.2425,
+          "four": 0.43166666666666664
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.29333333333333333,
+          "two": 0.555,
+          "four": 0.8616666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.125,
+          "two": 0.25166666666666665,
+          "four": 0.44666666666666666
+        }
+      }
+    },
+    {
+      "lv": 197,
+      "hash": "00268b82047b780ef7051e17ddf836fe63f3c685dd72c04e69cfc1643bd33680",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2525,
+          "two": 0.5133333333333333,
+          "four": 0.8191666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13166666666666665,
+          "two": 0.2225,
+          "four": 0.3908333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.225,
+          "two": 0.5333333333333333,
+          "four": 0.8333333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12,
+          "two": 0.24833333333333332,
+          "four": 0.4033333333333333
+        }
+      }
+    },
+    {
+      "lv": 198,
+      "hash": "4b6318e4f8ed938e692595132dda277956f2b469038468dccb3563ce3ae986b7",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2925,
+          "two": 0.7341666666666666,
+          "four": 0.9883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1975,
+          "two": 0.3408333333333333,
+          "four": 0.5883333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3383333333333333,
+          "two": 0.7516666666666667,
+          "four": 0.9883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.195,
+          "two": 0.33,
+          "four": 0.5733333333333334
+        }
+      }
+    },
+    {
+      "lv": 199,
+      "hash": "218cc99c7b79d77ea9e97f5b381b903fe6bb05a3455b808dec7b70ebef0d3885",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3416666666666667,
+          "two": 0.5825,
+          "four": 0.8516666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1725,
+          "two": 0.3308333333333333,
+          "four": 0.5658333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.32,
+          "two": 0.5933333333333334,
+          "four": 0.8433333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20166666666666666,
+          "two": 0.36333333333333334,
+          "four": 0.5833333333333334
+        }
+      }
+    },
+    {
+      "lv": 200,
+      "hash": "d48b63dbdfc89c893e5891df9539221fa155c7311349d031033cc8dc74dfd3ac",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4216666666666667,
+          "two": 0.6841666666666667,
+          "four": 0.8991666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29083333333333333,
+          "two": 0.4891666666666667,
+          "four": 0.7683333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43666666666666665,
+          "two": 0.685,
+          "four": 0.915
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2966666666666667,
+          "two": 0.48833333333333334,
+          "four": 0.7883333333333333
+        }
+      }
+    },
+    {
+      "lv": 201,
+      "hash": "29e23e852933770b2ca65c7d5ebc389b2044f6758c746632a52e8d91e34aa23f",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.27666666666666667,
+          "two": 0.5716666666666667,
+          "four": 0.8891666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.08833333333333333,
+          "two": 0.16666666666666666,
+          "four": 0.30666666666666664
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.26666666666666666,
+          "two": 0.5733333333333334,
+          "four": 0.88
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07,
+          "two": 0.145,
+          "four": 0.26666666666666666
+        }
+      }
+    },
+    {
+      "lv": 202,
+      "hash": "e67f37aa227fac252334078c5622827ddcbaeee56a91c2bcd71cee0e7ff48f52",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2675,
+          "two": 0.5366666666666666,
+          "four": 0.8308333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09166666666666666,
+          "two": 0.16833333333333333,
+          "four": 0.3416666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.27666666666666667,
+          "two": 0.545,
+          "four": 0.8383333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10333333333333333,
+          "two": 0.18666666666666668,
+          "four": 0.34833333333333333
+        }
+      }
+    },
+    {
+      "lv": 203,
+      "hash": "4cb8ba838d1a4ffb34c60e2c91d2deb847ec5fae2a4b4aa73838a74f9b322598",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.36666666666666664,
+          "two": 0.73,
+          "four": 0.985
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21916666666666668,
+          "two": 0.3775,
+          "four": 0.6083333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.395,
+          "two": 0.7516666666666667,
+          "four": 0.9833333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.23166666666666666,
+          "two": 0.4033333333333333,
+          "four": 0.6433333333333333
+        }
+      }
+    },
+    {
+      "lv": 204,
+      "hash": "d5203188feac0435a8c95069a85258a5ac7c00f6563e0a4c274d1ca32af0c5cd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31166666666666665,
+          "two": 0.5991666666666666,
+          "four": 0.8983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14583333333333334,
+          "two": 0.2825,
+          "four": 0.4725
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31833333333333336,
+          "two": 0.635,
+          "four": 0.9166666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.145,
+          "two": 0.28833333333333333,
+          "four": 0.49833333333333335
+        }
+      }
+    },
+    {
+      "lv": 205,
+      "hash": "bb6e5eecc8fa645e235e768f13a92d6bc68906bc673f06b1332eaeb5572985d1",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3933333333333333,
+          "two": 0.7175,
+          "four": 0.9691666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3333333333333333,
+          "two": 0.5566666666666666,
+          "four": 0.7966666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.41333333333333333,
+          "two": 0.7216666666666667,
+          "four": 0.975
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3433333333333333,
+          "two": 0.5633333333333334,
+          "four": 0.7766666666666666
+        }
+      }
+    },
+    {
+      "lv": 206,
+      "hash": "0b04e04d302a162869581c1241ec50027b4a3b099d10a9378e1e045123ef189a",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.24916666666666668,
+          "two": 0.42,
+          "four": 0.6033333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11583333333333333,
+          "two": 0.22416666666666665,
+          "four": 0.41583333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.23166666666666666,
+          "two": 0.4216666666666667,
+          "four": 0.58
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15,
+          "two": 0.24333333333333335,
+          "four": 0.3933333333333333
+        }
+      }
+    },
+    {
+      "lv": 207,
+      "hash": "4cb045bb756b3ba047ffdd323a654618c368d3041613ba431a5ed2d9fad3c708",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3433333333333333,
+          "two": 0.7058333333333333,
+          "four": 0.9658333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2325,
+          "two": 0.41083333333333333,
+          "four": 0.6491666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3333333333333333,
+          "two": 0.71,
+          "four": 0.9666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.24,
+          "two": 0.40166666666666667,
+          "four": 0.665
+        }
+      }
+    },
+    {
+      "lv": 208,
+      "hash": "dd6e5ef92a13081c9501040f22af75db7beda8bed34f2f00ea3f30f4ab528ded",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.325,
+          "two": 0.6975,
+          "four": 0.9666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17333333333333334,
+          "two": 0.33416666666666667,
+          "four": 0.5258333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.32,
+          "two": 0.695,
+          "four": 0.9666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20166666666666666,
+          "two": 0.32166666666666666,
+          "four": 0.53
+        }
+      }
+    },
+    {
+      "lv": 209,
+      "hash": "b75364b19eabf66bdea48db181411438b7fff1c35fb6a6d11c48e05adee695d6",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.24,
+          "two": 0.5183333333333333,
+          "four": 0.8533333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.06916666666666667,
+          "two": 0.12583333333333332,
+          "four": 0.22333333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.225,
+          "two": 0.515,
+          "four": 0.8316666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.055,
+          "two": 0.11666666666666667,
+          "four": 0.22
+        }
+      }
+    },
+    {
+      "lv": 210,
+      "hash": "888320d8fc2999078cfd277cad8d88ed60f02ed63554f55a395936e1dc77795d",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.29583333333333334,
+          "two": 0.615,
+          "four": 0.9158333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1275,
+          "two": 0.24416666666666667,
+          "four": 0.43416666666666665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.29833333333333334,
+          "two": 0.6,
+          "four": 0.905
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12666666666666668,
+          "two": 0.24833333333333332,
+          "four": 0.45666666666666667
+        }
+      }
+    },
+    {
+      "lv": 211,
+      "hash": "7bec7db08437d63ae3a55c65fa3e6e26526e5b85fbd825ebd6c6218a079691b3",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31333333333333335,
+          "two": 0.6158333333333333,
+          "four": 0.895
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10583333333333333,
+          "two": 0.2325,
+          "four": 0.4083333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.32666666666666666,
+          "two": 0.6083333333333333,
+          "four": 0.9
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11,
+          "two": 0.23833333333333334,
+          "four": 0.43166666666666664
+        }
+      }
+    },
+    {
+      "lv": 212,
+      "hash": "351afeb26a5ab95decf114c986b088150fb990be96522c55cdffb2d440dd12ff",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3933333333333333,
+          "two": 0.6875,
+          "four": 0.9408333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2816666666666667,
+          "two": 0.4841666666666667,
+          "four": 0.7525
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.42333333333333334,
+          "two": 0.7233333333333334,
+          "four": 0.9433333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.26666666666666666,
+          "two": 0.4716666666666667,
+          "four": 0.725
+        }
+      }
+    },
+    {
+      "lv": 213,
+      "hash": "589f5625eb948563a345f7b46b0881ab7cfb48ec48d788e5574837b7d22d7848",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.25083333333333335,
+          "two": 0.6175,
+          "four": 0.9375
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17916666666666667,
+          "two": 0.31916666666666665,
+          "four": 0.5216666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.25666666666666665,
+          "two": 0.595,
+          "four": 0.9383333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17,
+          "two": 0.3283333333333333,
+          "four": 0.5316666666666666
+        }
+      }
+    },
+    {
+      "lv": 214,
+      "hash": "29d5e25771646d8c3554bc7068d6180e1ecfbb9015abd821709fb9300bb483a1",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.30666666666666664,
+          "two": 0.5416666666666666,
+          "four": 0.8241666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12083333333333333,
+          "two": 0.23083333333333333,
+          "four": 0.42083333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3333333333333333,
+          "two": 0.5783333333333334,
+          "four": 0.8366666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13666666666666666,
+          "two": 0.24666666666666667,
+          "four": 0.4083333333333333
+        }
+      }
+    },
+    {
+      "lv": 215,
+      "hash": "0ef411f2b885a3d8a9bccdfe8fb73acced07e8e6f8b829b1d250d6f286a41b9a",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2875,
+          "two": 0.5525,
+          "four": 0.8775
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14583333333333334,
+          "two": 0.2733333333333333,
+          "four": 0.48333333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2816666666666667,
+          "two": 0.5333333333333333,
+          "four": 0.8516666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.145,
+          "two": 0.2733333333333333,
+          "four": 0.485
+        }
+      }
+    },
+    {
+      "lv": 216,
+      "hash": "e2821929d33bec1ffb52bdd45cdb04e2e9846cc7994fb2ac629d447d9e7defe0",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.42583333333333334,
+          "two": 0.755,
+          "four": 0.9625
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.43416666666666665,
+          "two": 0.7016666666666667,
+          "four": 0.9033333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.405,
+          "two": 0.735,
+          "four": 0.9466666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.415,
+          "two": 0.68,
+          "four": 0.8916666666666667
+        }
+      }
+    },
+    {
+      "lv": 217,
+      "hash": "175821fac69a7eed94b5df3aae927fbc172e3925ec4838dce02d30441c190989",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.27416666666666667,
+          "two": 0.3925,
+          "four": 0.5858333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.08,
+          "two": 0.15166666666666667,
+          "four": 0.28583333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.25833333333333336,
+          "two": 0.38333333333333336,
+          "four": 0.5866666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07333333333333333,
+          "two": 0.165,
+          "four": 0.32
+        }
+      }
+    },
+    {
+      "lv": 218,
+      "hash": "65f2aefd9ce4d81825554fe1a4a48865eeb4c5f022f2c0850dc28add5d98b6f4",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.26166666666666666,
+          "two": 0.6383333333333333,
+          "four": 0.9666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14416666666666667,
+          "two": 0.2783333333333333,
+          "four": 0.4875
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2783333333333333,
+          "two": 0.6616666666666666,
+          "four": 0.9583333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14166666666666666,
+          "two": 0.265,
+          "four": 0.4766666666666667
+        }
+      }
+    },
+    {
+      "lv": 219,
+      "hash": "dbf7591850fc4487064914fa24c29000616d4d150fbc3b5eb3accfb3e2406f0c",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3541666666666667,
+          "two": 0.57,
+          "four": 0.7983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15,
+          "two": 0.2675,
+          "four": 0.4691666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3516666666666667,
+          "two": 0.5683333333333334,
+          "four": 0.7866666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17333333333333334,
+          "two": 0.295,
+          "four": 0.5
+        }
+      }
+    },
+    {
+      "lv": 220,
+      "hash": "bab18bc1f487151e27b3b99911b494061afe8cd8b6afb428aac1be43f3a83480",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38416666666666666,
+          "two": 0.6766666666666666,
+          "four": 0.9258333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.22166666666666668,
+          "two": 0.3958333333333333,
+          "four": 0.625
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.38166666666666665,
+          "two": 0.6583333333333333,
+          "four": 0.925
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.21166666666666667,
+          "two": 0.3883333333333333,
+          "four": 0.6266666666666667
+        }
+      }
+    },
+    {
+      "lv": 221,
+      "hash": "d63df14d0853253b333d8c58bdd3846a0cf591dbcddc80b14e5e17aa35f175ee",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.21333333333333335,
+          "two": 0.44083333333333335,
+          "four": 0.745
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10916666666666666,
+          "two": 0.21916666666666668,
+          "four": 0.4241666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.18666666666666668,
+          "two": 0.44333333333333336,
+          "four": 0.75
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10166666666666667,
+          "two": 0.195,
+          "four": 0.37833333333333335
+        }
+      }
+    },
+    {
+      "lv": 222,
+      "hash": "f90fe4fd7649bfb2cf7aed37dff9d0a1c6616969cc77ec650d2e270279819666",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3441666666666667,
+          "two": 0.6333333333333333,
+          "four": 0.895
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20583333333333334,
+          "two": 0.375,
+          "four": 0.6175
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33166666666666667,
+          "two": 0.6133333333333333,
+          "four": 0.92
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20166666666666666,
+          "two": 0.37666666666666665,
+          "four": 0.6266666666666667
+        }
+      }
+    },
+    {
+      "lv": 223,
+      "hash": "e328cd3d43686ab796f8ed9f65442ff3871ea97cc20a2d8fb16428cdcb60dac7",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3458333333333333,
+          "two": 0.5966666666666667,
+          "four": 0.8816666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1375,
+          "two": 0.26416666666666666,
+          "four": 0.47333333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33,
+          "two": 0.5816666666666667,
+          "four": 0.8866666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16666666666666666,
+          "two": 0.2966666666666667,
+          "four": 0.51
+        }
+      }
+    },
+    {
+      "lv": 224,
+      "hash": "b616f38e4fc987b12d37716d9166b8ba829746b5e10a83420bb980f440f94bc6",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.4,
+          "two": 0.6733333333333333,
+          "four": 0.9058333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3283333333333333,
+          "two": 0.5425,
+          "four": 0.7758333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43833333333333335,
+          "two": 0.7116666666666667,
+          "four": 0.9033333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.325,
+          "two": 0.5233333333333333,
+          "four": 0.765
+        }
+      }
+    },
+    {
+      "lv": 225,
+      "hash": "5211e5ef4bd9afa0f8636f8c94ce516759f6db6344ea68ed48612a81b20ee34e",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.37666666666666665,
+          "two": 0.6975,
+          "four": 0.9508333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.24583333333333332,
+          "two": 0.44916666666666666,
+          "four": 0.6916666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.36333333333333334,
+          "two": 0.6933333333333334,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2833333333333333,
+          "two": 0.47333333333333333,
+          "four": 0.71
+        }
+      }
+    },
+    {
+      "lv": 226,
+      "hash": "211e738cd1b790a053f3bc7ea737ce38ff5c5bff8bc27235694deb044a4540d5",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.32,
+          "two": 0.6325,
+          "four": 0.9366666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.23416666666666666,
+          "two": 0.4075,
+          "four": 0.6433333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3283333333333333,
+          "two": 0.6483333333333333,
+          "four": 0.9466666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25833333333333336,
+          "two": 0.4216666666666667,
+          "four": 0.6683333333333333
+        }
+      }
+    },
+    {
+      "lv": 227,
+      "hash": "efbb21f78ca173861c9f1511e67484924dc3643536816f5fca94caf611344228",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3233333333333333,
+          "two": 0.6425,
+          "four": 0.9033333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.19083333333333333,
+          "two": 0.345,
+          "four": 0.575
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31666666666666665,
+          "two": 0.6116666666666667,
+          "four": 0.8816666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18166666666666667,
+          "two": 0.345,
+          "four": 0.58
+        }
+      }
+    },
+    {
+      "lv": 228,
+      "hash": "4de8c6f055c9ad2a2560f471536a9b10f010075f2c886cf7ebb6095065a78c9b",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.405,
+          "two": 0.6725,
+          "four": 0.9291666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.30416666666666664,
+          "two": 0.5241666666666667,
+          "four": 0.765
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.43666666666666665,
+          "two": 0.695,
+          "four": 0.925
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2966666666666667,
+          "two": 0.5183333333333333,
+          "four": 0.7783333333333333
+        }
+      }
+    },
+    {
+      "lv": 229,
+      "hash": "0a0456b67ffb9e4fdb667a14e9f6332419fb6db4a2086ff7b1a4c2a33169aa37",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.39916666666666667,
+          "two": 0.6566666666666666,
+          "four": 0.8925
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.33666666666666667,
+          "two": 0.5633333333333334,
+          "four": 0.815
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4033333333333333,
+          "two": 0.6583333333333333,
+          "four": 0.8883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.355,
+          "two": 0.595,
+          "four": 0.82
+        }
+      }
+    },
+    {
+      "lv": 230,
+      "hash": "47ec132dbf2b3718f1e60e1920dcc32b60087a84c05b28f852e8786b0c4f0137",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3858333333333333,
+          "two": 0.6683333333333333,
+          "four": 0.9216666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2225,
+          "two": 0.4091666666666667,
+          "four": 0.6366666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.38,
+          "two": 0.6783333333333333,
+          "four": 0.9283333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.26,
+          "two": 0.42833333333333334,
+          "four": 0.6933333333333334
+        }
+      }
+    },
+    {
+      "lv": 231,
+      "hash": "af0ca3db742265bfbf4316830b9b7180f8e10acd4824e1e3b1d14a4ec0641853",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.215,
+          "two": 0.41,
+          "four": 0.6933333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.085,
+          "two": 0.155,
+          "four": 0.3175
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.21,
+          "two": 0.3983333333333333,
+          "four": 0.6666666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07333333333333333,
+          "two": 0.185,
+          "four": 0.3466666666666667
+        }
+      }
+    },
+    {
+      "lv": 232,
+      "hash": "d02d6da50921316e61762125c1a22bcc0e853120a0d3974b0b3639a70fe43449",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31166666666666665,
+          "two": 0.6075,
+          "four": 0.8983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09083333333333334,
+          "two": 0.16666666666666666,
+          "four": 0.31
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2733333333333333,
+          "two": 0.56,
+          "four": 0.86
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.075,
+          "two": 0.155,
+          "four": 0.28833333333333333
+        }
+      }
+    },
+    {
+      "lv": 233,
+      "hash": "4489348e94c60a470fb8b30ad0b249b68a65f50f42564569bb1fe3f76808de71",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.30333333333333334,
+          "two": 0.605,
+          "four": 0.9083333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14666666666666667,
+          "two": 0.29,
+          "four": 0.5166666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2833333333333333,
+          "two": 0.585,
+          "four": 0.8883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.155,
+          "two": 0.27166666666666667,
+          "four": 0.5266666666666666
+        }
+      }
+    },
+    {
+      "lv": 234,
+      "hash": "17ad66d988859dbaae6ccc59b8d293f1da29730fab8703897fb1003f57594811",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3325,
+          "two": 0.535,
+          "four": 0.7758333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13416666666666666,
+          "two": 0.25083333333333335,
+          "four": 0.45
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.325,
+          "two": 0.515,
+          "four": 0.7616666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.135,
+          "two": 0.26,
+          "four": 0.4633333333333333
+        }
+      }
+    },
+    {
+      "lv": 235,
+      "hash": "9866500f40cf909f61a011865cf34edabb3db2a947f48746b2c8e20012aa9cbd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3458333333333333,
+          "two": 0.64,
+          "four": 0.9383333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09666666666666666,
+          "two": 0.1825,
+          "four": 0.3333333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.28833333333333333,
+          "two": 0.6033333333333334,
+          "four": 0.95
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09166666666666666,
+          "two": 0.19166666666666668,
+          "four": 0.34833333333333333
+        }
+      }
+    },
+    {
+      "lv": 236,
+      "hash": "547beee2ba9ae132f46b1171aca3e6e5587c9907dffa52e4aa851b661452df41",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3233333333333333,
+          "two": 0.3908333333333333,
+          "four": 0.4025
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.14666666666666667,
+          "two": 0.2708333333333333,
+          "four": 0.4558333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.27166666666666667,
+          "two": 0.33666666666666667,
+          "four": 0.345
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13333333333333333,
+          "two": 0.25166666666666665,
+          "four": 0.4583333333333333
+        }
+      }
+    },
+    {
+      "lv": 237,
+      "hash": "7de30e1d26cbf0e9103a44a5ef4ad6ba2952464f26554cd840e1994aac3659c2",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.26416666666666666,
+          "two": 0.6508333333333334,
+          "four": 0.9316666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.051666666666666666,
+          "two": 0.10416666666666667,
+          "four": 0.19416666666666665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.25,
+          "two": 0.7083333333333334,
+          "four": 0.9416666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.04666666666666667,
+          "two": 0.09166666666666666,
+          "four": 0.18666666666666668
+        }
+      }
+    },
+    {
+      "lv": 238,
+      "hash": "0683bd9c8d4dfe09eab7c769a9cf570a87df2713e2071511897e7c9ec008aef8",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2775,
+          "two": 0.4875,
+          "four": 0.7641666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.06166666666666667,
+          "two": 0.11,
+          "four": 0.2
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2833333333333333,
+          "two": 0.5016666666666667,
+          "four": 0.7466666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.04,
+          "two": 0.08833333333333333,
+          "four": 0.18333333333333332
+        }
+      }
+    },
+    {
+      "lv": 239,
+      "hash": "eb5dae90283402492a95e668a230d1a652d4e79ac9f2bd69c66c3d0df1640068",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3325,
+          "two": 0.5775,
+          "four": 0.8333333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12833333333333333,
+          "two": 0.22666666666666666,
+          "four": 0.4166666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.33,
+          "two": 0.5883333333333334,
+          "four": 0.8466666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12833333333333333,
+          "two": 0.25166666666666665,
+          "four": 0.43666666666666665
+        }
+      }
+    },
+    {
+      "lv": 240,
+      "hash": "aeab22a5568f9da2bd6d7afb6ad0fc47268d7ddea51260be0f8aad156de13efa",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.31,
+          "two": 0.5641666666666667,
+          "four": 0.8566666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17583333333333334,
+          "two": 0.31666666666666665,
+          "four": 0.5283333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31333333333333335,
+          "two": 0.5783333333333334,
+          "four": 0.86
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15833333333333333,
+          "two": 0.3016666666666667,
+          "four": 0.52
+        }
+      }
+    },
+    {
+      "lv": 241,
+      "hash": "a74992dcaafa7531b2838b0c4a0998c5de9cf0e2acaebd5fe41a105551c7c4f2",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3308333333333333,
+          "two": 0.6425,
+          "four": 0.895
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.19833333333333333,
+          "two": 0.3566666666666667,
+          "four": 0.5783333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.325,
+          "two": 0.6483333333333333,
+          "four": 0.8983333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16666666666666666,
+          "two": 0.325,
+          "four": 0.5216666666666666
+        }
+      }
+    },
+    {
+      "lv": 242,
+      "hash": "27018faed31be6e531720dfc1ed7d8a44492e71539a65cf6099e6d7c36196b20",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.32666666666666666,
+          "two": 0.52,
+          "four": 0.7233333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.185,
+          "two": 0.3258333333333333,
+          "four": 0.5683333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3,
+          "two": 0.515,
+          "four": 0.7183333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.195,
+          "two": 0.3566666666666667,
+          "four": 0.5366666666666666
+        }
+      }
+    },
+    {
+      "lv": 243,
+      "hash": "95afff50318743b116426caeaf9ed967da96732ff4052ad8549390acec648121",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2991666666666667,
+          "two": 0.5866666666666667,
+          "four": 0.9183333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12416666666666666,
+          "two": 0.23333333333333334,
+          "four": 0.43666666666666665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.30333333333333334,
+          "two": 0.615,
+          "four": 0.915
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10833333333333334,
+          "two": 0.21,
+          "four": 0.38666666666666666
+        }
+      }
+    },
+    {
+      "lv": 244,
+      "hash": "859fc66ab112e9d0542ebe901ff0529f94e778c9dc7ecdee91147060b2c1f55b",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.28833333333333333,
+          "two": 0.5908333333333333,
+          "four": 0.9033333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12666666666666668,
+          "two": 0.2375,
+          "four": 0.435
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2783333333333333,
+          "two": 0.5666666666666667,
+          "four": 0.8933333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11666666666666667,
+          "two": 0.23333333333333334,
+          "four": 0.435
+        }
+      }
+    },
+    {
+      "lv": 245,
+      "hash": "475da64163d04934a3e9e701be521a5be1bd883cd8ae81046d73c1dce7929615",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.22416666666666665,
+          "two": 0.415,
+          "four": 0.715
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15166666666666667,
+          "two": 0.25083333333333335,
+          "four": 0.43583333333333335
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2633333333333333,
+          "two": 0.43,
+          "four": 0.7083333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11666666666666667,
+          "two": 0.255,
+          "four": 0.45
+        }
+      }
+    },
+    {
+      "lv": 246,
+      "hash": "427ac905ad7a33cae011035a940fd0ffd94135697c52d8598501df204456917b",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2625,
+          "two": 0.5391666666666667,
+          "four": 0.9033333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1425,
+          "two": 0.265,
+          "four": 0.4608333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.24666666666666667,
+          "two": 0.5116666666666667,
+          "four": 0.8883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12833333333333333,
+          "two": 0.24833333333333332,
+          "four": 0.44333333333333336
+        }
+      }
+    },
+    {
+      "lv": 247,
+      "hash": "35fa9df49cdb939025dce26e7d6ae17eb50b644f0a0c91a3b545dcec1058d325",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2783333333333333,
+          "two": 0.63,
+          "four": 0.95
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07666666666666666,
+          "two": 0.1625,
+          "four": 0.2966666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.27,
+          "two": 0.63,
+          "four": 0.9483333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.07833333333333334,
+          "two": 0.19333333333333333,
+          "four": 0.3416666666666667
+        }
+      }
+    },
+    {
+      "lv": 248,
+      "hash": "37ae89ef1b46688d0937ac828505f8fbc07cba3e918384f02125dcc567b63981",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2825,
+          "two": 0.5175,
+          "four": 0.7633333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12833333333333333,
+          "two": 0.24916666666666668,
+          "four": 0.42
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.26,
+          "two": 0.49166666666666664,
+          "four": 0.7816666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.105,
+          "two": 0.22333333333333333,
+          "four": 0.42833333333333334
+        }
+      }
+    },
+    {
+      "lv": 249,
+      "hash": "9165358dbacc28a8903b0fd95bf366a0c60156306015bb51c1b7cd4de8a4c6fa",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.25166666666666665,
+          "two": 0.44333333333333336,
+          "four": 0.6633333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11166666666666666,
+          "two": 0.22,
+          "four": 0.37333333333333335
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.26166666666666666,
+          "two": 0.42833333333333334,
+          "four": 0.6583333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10166666666666667,
+          "two": 0.20166666666666666,
+          "four": 0.4166666666666667
+        }
+      }
+    },
+    {
+      "lv": 250,
+      "hash": "889a6416eb42fb60ddc266a0ad93980c4c62109d0367b8857af72018c14c01d1",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.295,
+          "two": 0.6641666666666667,
+          "four": 0.9458333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17416666666666666,
+          "two": 0.3233333333333333,
+          "four": 0.5341666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.29333333333333333,
+          "two": 0.6133333333333333,
+          "four": 0.9216666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15833333333333333,
+          "two": 0.32,
+          "four": 0.5366666666666666
+        }
+      }
+    },
+    {
+      "lv": 251,
+      "hash": "dac781bef226cb0a8e0937e14cdcc78046e9be1e9f644281b7fa20d9a972e0c6",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3516666666666667,
+          "two": 0.6708333333333333,
+          "four": 0.9475
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15166666666666667,
+          "two": 0.2841666666666667,
+          "four": 0.4716666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.355,
+          "two": 0.7,
+          "four": 0.9516666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.145,
+          "two": 0.275,
+          "four": 0.4633333333333333
+        }
+      }
+    },
+    {
+      "lv": 252,
+      "hash": "5fdd5fb9ee014e1866fde36e5fa3d27b785374022ba28bb46af0257f41e56438",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.30416666666666664,
+          "two": 0.6283333333333333,
+          "four": 0.9191666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.11833333333333333,
+          "two": 0.23333333333333334,
+          "four": 0.4125
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2966666666666667,
+          "two": 0.6366666666666667,
+          "four": 0.92
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.115,
+          "two": 0.25333333333333335,
+          "four": 0.42
+        }
+      }
+    },
+    {
+      "lv": 253,
+      "hash": "171b02df1b5a94d7b810b8652e2077df1b1136082e2547c5fdb7a041b665f8a0",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2825,
+          "two": 0.5683333333333334,
+          "four": 0.8566666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1275,
+          "two": 0.24416666666666667,
+          "four": 0.43416666666666665
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.29833333333333334,
+          "two": 0.575,
+          "four": 0.8666666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.13666666666666666,
+          "two": 0.24333333333333335,
+          "four": 0.46
+        }
+      }
+    },
+    {
+      "lv": 254,
+      "hash": "65cd8edc52d3b156f80af59ae61e44c1b1779fca4869bfb4b130ade42d69b791",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2808333333333333,
+          "two": 0.5758333333333333,
+          "four": 0.9125
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.19333333333333333,
+          "two": 0.335,
+          "four": 0.5675
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.30666666666666664,
+          "two": 0.6016666666666667,
+          "four": 0.9183333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.18666666666666668,
+          "two": 0.36833333333333335,
+          "four": 0.5933333333333334
+        }
+      }
+    },
+    {
+      "lv": 255,
+      "hash": "9ed3d3730a861f98a5be3b757099643d069af0a68eba1c7f2139fd3f58cfedb2",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.37833333333333335,
+          "two": 0.645,
+          "four": 0.8925
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1925,
+          "two": 0.3433333333333333,
+          "four": 0.5833333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.4083333333333333,
+          "two": 0.7083333333333334,
+          "four": 0.9183333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20666666666666667,
+          "two": 0.355,
+          "four": 0.5633333333333334
+        }
+      }
+    },
+    {
+      "lv": 256,
+      "hash": "054d17fc62607623a76ddd7e43b69d97c86eae88d161f91cdd1b9062e3d228c2",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.32166666666666666,
+          "two": 0.5816666666666667,
+          "four": 0.8866666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.20166666666666666,
+          "two": 0.3641666666666667,
+          "four": 0.6316666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2916666666666667,
+          "two": 0.56,
+          "four": 0.8383333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.22666666666666666,
+          "two": 0.4033333333333333,
+          "four": 0.6516666666666666
+        }
+      }
+    },
+    {
+      "lv": 257,
+      "hash": "6568a2ae80175113cad4d630a5e3575c65a2d69516c0af75e3770d6496ce2957",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2791666666666667,
+          "two": 0.5691666666666667,
+          "four": 0.82
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.1725,
+          "two": 0.2975,
+          "four": 0.5058333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3,
+          "two": 0.565,
+          "four": 0.85
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15833333333333333,
+          "two": 0.27,
+          "four": 0.49833333333333335
+        }
+      }
+    },
+    {
+      "lv": 258,
+      "hash": "03742a21c6e98ba82c747f51a77c0d9d46d7db90e2ededddd10a70fa41e73458",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.30583333333333335,
+          "two": 0.5675,
+          "four": 0.8591666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.16583333333333333,
+          "two": 0.32166666666666666,
+          "four": 0.5608333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31166666666666665,
+          "two": 0.6016666666666667,
+          "four": 0.87
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.155,
+          "two": 0.2866666666666667,
+          "four": 0.49
+        }
+      }
+    },
+    {
+      "lv": 259,
+      "hash": "5d021b9a9ef8d07510b9b2a785fa15e0f199b97ef8dd15f640edcc35382338dd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3233333333333333,
+          "two": 0.5941666666666666,
+          "four": 0.8741666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.17333333333333334,
+          "two": 0.2916666666666667,
+          "four": 0.4975
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31,
+          "two": 0.585,
+          "four": 0.88
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15666666666666668,
+          "two": 0.2866666666666667,
+          "four": 0.505
+        }
+      }
+    },
+    {
+      "lv": 260,
+      "hash": "3a9c1fa6463b2ae8400103e6624f60c08f0c898cf44b3d0b364db8da08bc02cb",
+      "big": true,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.25916666666666666,
+          "two": 0.5283333333333333,
+          "four": 0.8158333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09833333333333333,
+          "two": 0.17583333333333334,
+          "four": 0.32666666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.24666666666666667,
+          "two": 0.47833333333333333,
+          "four": 0.7866666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09833333333333333,
+          "two": 0.18,
+          "four": 0.34
+        }
+      }
+    },
+    {
+      "lv": 261,
+      "hash": "4605a4f1ea6b48ffc590372b1dc5dc7afdd93780768db711015718b5827a76ef",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.38,
+          "two": 0.7716666666666666,
+          "four": 0.965
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.43666666666666665,
+          "two": 0.685,
+          "four": 0.905
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.41,
+          "two": 0.7933333333333333,
+          "four": 0.9733333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.44333333333333336,
+          "two": 0.7066666666666667,
+          "four": 0.9116666666666666
+        }
+      }
+    },
+    {
+      "lv": 262,
+      "hash": "be58c0202b186db5d7bbd222fb48a5875ed5bcbff08f4fc52bc72c236248b88d",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.255,
+          "two": 0.5608333333333333,
+          "four": 0.8741666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.10083333333333333,
+          "two": 0.20166666666666666,
+          "four": 0.3541666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.255,
+          "two": 0.5816666666666667,
+          "four": 0.89
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.105,
+          "two": 0.195,
+          "four": 0.37
+        }
+      }
+    },
+    {
+      "lv": 263,
+      "hash": "d8400f58e896e668d8beb99f1142d876c474bfe0039ec324b97e49ac7643cf39",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.3125,
+          "two": 0.7016666666666667,
+          "four": 0.9716666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.15416666666666667,
+          "two": 0.2916666666666667,
+          "four": 0.48333333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.32,
+          "two": 0.695,
+          "four": 0.9733333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12333333333333334,
+          "two": 0.2783333333333333,
+          "four": 0.495
+        }
+      }
+    },
+    {
+      "lv": 264,
+      "hash": "ebbf9e4836481e3201c01112beaad94288921f4b8b7fda1a4b113e77e6c97c24",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.42,
+          "two": 0.7216666666666667,
+          "four": 0.95
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.3416666666666667,
+          "two": 0.5775,
+          "four": 0.8183333333333334
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.42833333333333334,
+          "two": 0.7433333333333333,
+          "four": 0.965
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.34833333333333333,
+          "two": 0.59,
+          "four": 0.8466666666666667
+        }
+      }
+    },
+    {
+      "lv": 265,
+      "hash": "38a2d73c02468d27694e06f2433e2a0c7523660b0b9577eb1174c17d7f070326",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.325,
+          "two": 0.5958333333333333,
+          "four": 0.8883333333333333
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.22583333333333333,
+          "two": 0.3975,
+          "four": 0.6383333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.2966666666666667,
+          "two": 0.5783333333333334,
+          "four": 0.885
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25833333333333336,
+          "two": 0.42,
+          "four": 0.655
+        }
+      }
+    },
+    {
+      "lv": 266,
+      "hash": "1ea3d8d0a2b92bc3f0ef64fcc5b15a572a6adb9a8cea66ff292004901d252cd5",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.33166666666666667,
+          "two": 0.5183333333333333,
+          "four": 0.7816666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2025,
+          "two": 0.36333333333333334,
+          "four": 0.6141666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.3333333333333333,
+          "two": 0.54,
+          "four": 0.7966666666666666
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.2,
+          "two": 0.37666666666666665,
+          "four": 0.6083333333333333
+        }
+      }
+    },
+    {
+      "lv": 267,
+      "hash": "d5c5bc01775810192669ed83e5d1c66b8dda9068a5a7c1635f7de609064ad7dd",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.24166666666666667,
+          "two": 0.5466666666666666,
+          "four": 0.8908333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.12,
+          "two": 0.23083333333333333,
+          "four": 0.3933333333333333
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.19,
+          "two": 0.5016666666666667,
+          "four": 0.8866666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.09833333333333333,
+          "two": 0.20833333333333334,
+          "four": 0.375
+        }
+      }
+    },
+    {
+      "lv": 268,
+      "hash": "458361de6748ef0bb70c11e56ae8bd69d6e9e380dda9488079d2696f77e93817",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.25666666666666665,
+          "two": 0.5325,
+          "four": 0.8233333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.0675,
+          "two": 0.13333333333333333,
+          "four": 0.26166666666666666
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.235,
+          "two": 0.53,
+          "four": 0.8166666666666667
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.08166666666666667,
+          "two": 0.15,
+          "four": 0.2633333333333333
+        }
+      }
+    },
+    {
+      "lv": 269,
+      "hash": "a99a5d7fa365844cc9f9c8f7a1d6bfe1101efc9680532f9c6bab021630e7af75",
+      "big": false,
+      "primary": {
+        "Dennisisdebeste": {
+          "first": 0.2925,
+          "two": 0.65,
+          "four": 0.9383333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.25166666666666665,
+          "two": 0.46416666666666667,
+          "four": 0.7166666666666667
+        }
+      },
+      "validation": {
+        "Dennisisdebeste": {
+          "first": 0.31166666666666665,
+          "two": 0.6416666666666667,
+          "four": 0.9433333333333334
+        },
+        "Mrs. Doubtfire": {
+          "first": 0.29333333333333333,
+          "two": 0.47833333333333333,
+          "four": 0.7333333333333333
+        }
+      }
+    }
+  ]
+}

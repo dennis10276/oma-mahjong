@@ -178,7 +178,7 @@ const Hard = (() => {
      make() is a generator: the game runs it in small steps while the player is busy with the level
      before (board.js), and keeps the result. The same level and screen shape always give the same
      result, on every phone (fixed numbers of steps, no clocks). */
-  const GENV = 7;      // 7: levels 106-269 remade for the re-fitted strong test player; 6: 90-269 re-ordered; 4: clock-focused tuning (5 is used on wip/honest-observer)
+  const GENV = 8;      // 8: 92+ reordered; unchanged boards through 91 keep saved-game generation 7
   const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30]], minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible and the strong test player should win (the strong one
@@ -496,6 +496,19 @@ const Hard = (() => {
     return { level, tiles, faces, down: list2(dn), gold: list2(g), obst, clock: ck ? { i: ck[0], n: ck[1] } : null, solution: proof ? list2(proof) : null, info: { rate, strong } };
   }
   const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);
+  // Reordering 92+ must not discard a saved game on an unchanged earlier board.
+  const designVersion = level => {
+    const T = table();
+    return T && T.reorderFrom && level < T.reorderFrom ? T.previousVersion : GENV;
+  };
+  // Packed chances travel with each board, including their original calibration model.
+  const ratingModel = level => {
+    const T = table();
+    if (!T || !T.ratingModels) return level >= 106 ? 'strong' : 'focused';
+    const last = T.from + T.levels.length - 1;
+    const base = level <= last ? level : T.cycleFrom + (level - T.cycleFrom) % (last - T.cycleFrom + 1);
+    return T.ratingModels[base - T.from];
+  };
   const applies = (level, track) => !track && level >= cfg().measureFrom && !!table();
   // the design of a level (past the table: an earlier one, mirrored, other pictures)
   function get(level) {
@@ -516,6 +529,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+  return { P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, designVersion, ratingModel, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;

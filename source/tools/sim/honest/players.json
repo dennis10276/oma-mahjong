@@ -1,0 +1,74 @@
+{
+ "made": "2026-10-16",
+ "note": "One test player per family member, fitted to their own tries (player_fit.js). level: their level now.",
+ "bots": {
+  "Dennisisdebeste": {
+   "from": "players/Dennisisdebeste.json (all levels 42-105)",
+   "aspect": 1.5,
+   "level": 106,
+   "persona": {
+    "temp": 2,
+    "end": 12,
+    "clockFocus": 1,
+    "unknown": 0,
+    "reveal": 8,
+    "plan": 10,
+    "memory": [
+     0.75,
+     0.75,
+     0.75
+    ],
+    "blunder": 0.15
+   }
+  },
+  "Mrs. Doubtfire": {
+   "from": "players/Mrs_Doubtfire.json (play) + players/Mrs_Doubtfire-recent.json (memory, 46 retries 71-90)",
+   "aspect": 1.6,
+   "level": 91,
+   "persona": {
+    "temp": 4.5,
+    "end": 12,
+    "clockFocus": 4,
+    "unknown": 0,
+    "reveal": 8,
+    "plan": 10,
+    "memory": 0,
+    "blunder": 0
+   }
+  },
+  "PUK": {
+   "from": "players/PUK-recent.json (levels 28-49)",
+   "aspect": 1,
+   "level": 49,
+   "persona": {
+    "temp": 4.5,
+    "end": 12,
+    "clockFocus": 4,
+    "unknown": 0,
+    "reveal": 8,
+    "plan": 10,
+    "memory": [
+     1,
+     0.5,
+     1
+    ],
+    "blunder": 0.15
+   }
+  },
+  "Gerda": {
+   "from": "players/Gerda-recent.json (levels 31-52)",
+   "aspect": 1.4,
+   "level": 53,
+   "persona": {
+    "temp": 6,
+    "end": 12,
+    "clockFocus": 4,
+    "unknown": 0,
+    "reveal": 8,
+    "plan": 10,
+    "memory": 0,
+    "blunder": 0
+   }
+  }
+ }
+}

@@ -1,13 +1,15 @@
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm');
 const H = require('../www/hard');
+// Historical tuning claims are checked against the frozen 1.53 release.
+// t_reorder_honest.js checks that the current table is exactly its permitted permutation.
 module.exports = [
   {
     name: 'curve: clock-focused targets are met by changing the board, with clocks and their routes preserved',
     cpu: true,
     async run(t) {
       const crypto=require('crypto'),report=require('../analysis/validation-1.48.json');
-      const table=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+';HARD_LEVELS');
+      const table=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../analysis/levels-before-reorder-92.js'),'utf8')+';HARD_LEVELS');
       const old=vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../analysis/levels-1.47.js'),'utf8')+';HARD_LEVELS');
       t.ok(report.runs>=300,'at least 300 independent games per persona');
       t.eq(report.rows.length,190,'all rebuilt levels measured');
@@ -43,7 +45,7 @@ module.exports = [
     cpu: true,
     async run(t) {
       const load=f=>vm.runInNewContext(fs.readFileSync(path.join(__dirname,f),'utf8')+';HARD_LEVELS');
-      const table=load('../www/levels-hard.js'),before=load('../analysis/levels-1.52.js'),rep=require('../analysis/remake-1.53.json');
+      const table=load('../analysis/levels-before-reorder-92.js'),before=load('../analysis/levels-1.52.js'),rep=require('../analysis/remake-1.53.json');
       const L=require('../www/layouts');
       const game=d=>{const tiles=d.tiles.map(([x,y,z])=>({x,y,z})),nb=L.neighbors(tiles),down=new Uint8Array(tiles.length);d.down.forEach(i=>down[i]=1);const ob=d.obst,rules=ob&&(Object.keys(ob.ice||{}).length||(ob.keys||[]).length)?{iceNb:L.iceNeighbors(tiles),ice:ob.ice||{},locks:(ob.keys||[]).length?new Set(ob.locks):null,keys:ob.keys||[]}:null;return{tiles,nb,faces:d.faces,down,rules,clock:d.clock};};
       const fixed=new Map((rep.fixed||[]).map(f=>[f.lv,f]));
@@ -99,7 +101,7 @@ module.exports = [
       await p.evaluate(()=>{G.mv=2;saveCur();});
       await p.evaluate(()=>__mj.startLevel(83));
       t.eq(await p.evaluate(()=>G.mv),2,'same design resumes the move count');
-      await p.evaluate(()=>{const c=JSON.parse(localStorage.getItem(CUR));c.hv=Hard.GENV-1;localStorage.setItem(CUR,JSON.stringify(c));__mj.startLevel(83);});
+      await p.evaluate(()=>{const c=JSON.parse(localStorage.getItem(CUR));c.hv=Hard.designVersion(83)-1;localStorage.setItem(CUR,JSON.stringify(c));__mj.startLevel(83);});
       t.eq(await p.evaluate(()=>G.mv),0,'previous design cannot restore an old clock');
       await p.evaluate(()=>__mj.startLevel(79));
       await p.evaluate(()=>{G.mv=2;saveCur();const c=JSON.parse(localStorage.getItem(CUR));delete c.hv;localStorage.setItem(CUR,JSON.stringify(c));__mj.startLevel(79);});

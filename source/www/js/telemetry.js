@@ -72,7 +72,7 @@ function replayBegin(cur, resumed) {
       const id = replayId();
       G.rp = { v: REPLAY.version, id, owner: S.pid, born: Date.now(), seq: 0, chars: 0, cut: false, events: [], last: replayState(),
         init: { partial: resumed, key: G.key, at: G.attempt, track: G.o.track || '', ez: G.ez || 0,
-          gen: Hard.GENV, tiles: G.tiles.map(t => [t.x, t.y, t.z]), gold: [...G.gold], state: replayState(),
+          gen: G.o.mode === 'level' ? Hard.designVersion(G.o.level) : Hard.GENV, tiles: G.tiles.map(t => [t.x, t.y, t.z]), gold: [...G.gold], state: replayState(),
           help: JSON.parse(JSON.stringify(help())), cfg: { ...S.cfg }, aspect: G.o.aspect,
           seenClock: !!S.seenSp.clockMoves } };
     }

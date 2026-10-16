@@ -19,7 +19,7 @@ module.exports = [
     async run(t) {
       const a = Hard.makeNow(83, 1.6), b = Hard.makeNow(83, 1.6);
       t.eq(a.faces, b.faces, 'the same level and screen give the same design (every phone)');
-      for (const lv of [72, 77, 83, 97]) {
+      for (const lv of [72, 77, 83, 91]) {
         const d = Hard.get(lv), g = asGame(d), all = new Uint8Array(g.n).fill(1);
         t.ok(L.solve(g.tiles, g.nb, d.faces, all, [], 200000, g.rules), `level ${lv}: can be finished with ice and locks`);
         const expected=lv>=80?Hard.target(lv,'strong'):lv<75?0.69:0.55-0.2*(lv-75)/75;
