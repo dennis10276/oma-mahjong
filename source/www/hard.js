@@ -522,6 +522,18 @@ const Hard = (() => {
     d.faces = d.faces.map(x => x < 36 ? perm[x] : x);                   // other pictures
     return d;
   }
+  /* levels 1-69 come ready-made too (levels-early.js, EARLY_LEVELS, made by tools/build_early.js
+     with the game's own level code for screen shape 1.6): every phone gets the same level, at once.
+     Rows as above; picture 63 is the joker (101). salts: which deal of that level number it is. */
+  const early = () => (typeof EARLY_LEVELS !== 'undefined' ? EARLY_LEVELS : null);
+  const appliesEarly = (level, track) => { const T = early(); return !track && !!T && level >= T.from && level < T.from + T.levels.length; };
+  const earlySalt = level => { const T = early(); return (T && T.salts[level - T.from]) || 0; };
+  function earlySpec(level) {
+    const T = early(), d = unpack(level, T.levels[level - T.from]);
+    d.faces = d.faces.map(f => f === 63 ? 101 : f);
+    const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z }));
+    return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1 + earlySalt(level) * 7919, diff: L.difficultyFor(L.effLevel(level)), made: d };
+  }
   // the design as a level spec for board.js
   function spec(level) {
     const d = get(level);
@@ -529,6 +541,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, designVersion, ratingModel, ASPECT, applies, get, spec, pack, unpack };
+  return { P, REF, persona, play, rate, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, designVersion, ratingModel, ASPECT, applies, get, spec, pack, unpack, appliesEarly, earlySalt, earlySpec };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;

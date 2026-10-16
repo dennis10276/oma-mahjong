@@ -59,6 +59,16 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   to judge 106+. Use the branch's test player.
 - Keep the current skill level roughly (tray pressure as it is). The alarm clock stays as it is.
 - Face-down share: measured later as a side project of the honest test player.
+- Everyone plays the same levels (Dennis, 2026-10-16; from 1.54). Before, levels 1-69 were built
+  live for the screen shape (and the deal could stop early on a slow phone), so a level could be
+  very different per phone (level 51: about 2% for Gerda's long screen, 98% for PUK's wide one).
+  Now levels 1-69 of the normal track come from the ready-made table `www/levels-early.js`, built
+  by `source/tools/build_early.js` for shape 1.6 (`RULES.levels.aspect`); `--check` tests it. For
+  levels where shape 1.6 gave an outlier, another deal was chosen (a salt per level; measured with
+  the average test player over shapes 1.0-2.2: `source/analysis/early-salts.json`). The daily level
+  is built for the same fixed shape. Not covered: grandma's own track (still built for her screen)
+  and the extra-large tiles setting (builds its own board). Keep the table: changing it changes
+  levels people are playing.
 
 ## Predictions on the dashboard
 
