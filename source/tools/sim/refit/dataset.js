@@ -29,7 +29,13 @@ for (const [pid, ev] of Object.entries(plays)) {
     if (!r) continue;
     let board = null;
     if (e.lv >= 70 && TABLE_VERSIONS.includes(e.v)) board = { v: e.v, lv: e.lv, kind: 'table' };
-    else if (e.lv < 70 && ver(e.v) >= ver('1.31') && aspect) board = { aspect, lv: e.lv, kind: 'classic' };
+    else if (e.lv < 70 && ver(e.v) >= ver('1.31') && aspect) {
+      // their usual shape, or (a player can change phones: Gerda 1.4, then 1.6) the shape that
+      // gives the tile count they logged for this try
+      let a = aspect;
+      if (e.n && B.L.forLevel(e.lv, aspect, 1, '').tiles.length !== e.n) for (let x = 1.0; x <= 2.41; x += 0.1) { const s = Math.round(x * 10) / 10; if (B.L.forLevel(e.lv, s, 1, '').tiles.length === e.n) { a = s; break; } }
+      board = { aspect: a, lv: e.lv, kind: 'classic' };
+    }
     else if (e.lv >= 70 && ver(e.v) < ver('1.43') && ver(e.v) >= ver('1.31') && aspect) board = { aspect, lv: e.lv, kind: 'classic' };
     if (!board) continue;
     out.push({ pid, name, lv: e.lv, v: e.v, at: e.at || 1, r, n: e.n, t: e.t, dur: e.dur, board });
