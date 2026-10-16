@@ -1,0 +1,1360 @@
+{
+ "feature": "average",
+ "scores": {
+  "strong": {
+   "model": 0.5719,
+   "rate": 0.6418,
+   "bot": 0.6331,
+   "n": 200
+  },
+  "sensible": {
+   "model": 0.5745,
+   "rate": 0.6418,
+   "bot": 0.6331,
+   "n": 200
+  },
+  "average": {
+   "model": 0.5615,
+   "rate": 0.6418,
+   "bot": 0.6331,
+   "n": 200
+  },
+  "weak": {
+   "model": 0.5729,
+   "rate": 0.6418,
+   "bot": 0.6331,
+   "n": 200
+  },
+  "mix": {
+   "model": 0.5678,
+   "rate": 0.6418,
+   "bot": 0.6331,
+   "n": 200
+  }
+ },
+ "walk": {
+  "Dennisisdebeste": [
+   {
+    "lv": 80,
+    "key": "t1.46:80",
+    "tries": [
+     "win"
+    ],
+    "n": 1
+   },
+   {
+    "lv": 81,
+    "key": "t1.46:81",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.685,
+     "rate": 0.872,
+     "bot": 0.36,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 82,
+    "key": "t1.46:82",
+    "tries": [
+     "clock",
+     "win"
+    ],
+    "first": {
+     "model": 0.894,
+     "rate": 0.875,
+     "bot": 0.96,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 79,
+    "key": "t1.47:79",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.849,
+     "rate": 0.857,
+     "bot": 0.91,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 80,
+    "key": "t1.47:80",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.776,
+     "rate": 0.86,
+     "bot": 0.725,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 80,
+    "key": "t1.48:80",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.662,
+     "rate": 0.863,
+     "bot": 0.645,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 81,
+    "key": "t1.48:81",
+    "tries": [
+     "win"
+    ],
+    "n": 1
+   },
+   {
+    "lv": 82,
+    "key": "t1.48:82",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.668,
+     "rate": 0.865,
+     "bot": 0.465,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 83,
+    "key": "t1.49:83",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.817,
+     "rate": 0.868,
+     "bot": 0.65,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 84,
+    "key": "t1.49:84",
+    "tries": [
+     "gaveup",
+     "win"
+    ],
+    "first": {
+     "model": 0.636,
+     "rate": 0.87,
+     "bot": 0.395,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 85,
+    "key": "t1.49:85",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.664,
+     "rate": 0.855,
+     "bot": 0.655,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 86,
+    "key": "t1.49:86",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.62,
+     "rate": 0.857,
+     "bot": 0.47,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 87,
+    "key": "t1.49:87",
+    "tries": [
+     "gaveup",
+     "win"
+    ],
+    "first": {
+     "model": 0.753,
+     "rate": 0.86,
+     "bot": 0.56,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 88,
+    "key": "t1.49:88",
+    "tries": [
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.744,
+     "rate": 0.845,
+     "bot": 0.835,
+     "won": false
+    },
+    "n": 3
+   },
+   {
+    "lv": 89,
+    "key": "t1.49:89",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.641,
+     "rate": 0.831,
+     "bot": 0.6,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 90,
+    "key": "t1.49:90",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.891,
+     "rate": 0.817,
+     "bot": 0.975,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 91,
+    "key": "t1.49:91",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.876,
+     "rate": 0.82,
+     "bot": 0.99,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 92,
+    "key": "t1.49:92",
+    "tries": [
+     "tray",
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.463,
+     "rate": 0.823,
+     "bot": 0.3,
+     "won": false
+    },
+    "n": 4
+   },
+   {
+    "lv": 93,
+    "key": "t1.49:93",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.634,
+     "rate": 0.81,
+     "bot": 0.37,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 94,
+    "key": "t1.49:94",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.807,
+     "rate": 0.812,
+     "bot": 0.835,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 95,
+    "key": "t1.49:95",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.538,
+     "rate": 0.815,
+     "bot": 0.12,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 96,
+    "key": "t1.49:96",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.579,
+     "rate": 0.803,
+     "bot": 0.505,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 97,
+    "key": "t1.49:97",
+    "tries": [
+     "gaveup",
+     "win"
+    ],
+    "first": {
+     "model": 0.738,
+     "rate": 0.806,
+     "bot": 0.75,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 98,
+    "key": "t1.49:98",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.666,
+     "rate": 0.794,
+     "bot": 0.57,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 99,
+    "key": "t1.49:99",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.511,
+     "rate": 0.797,
+     "bot": 0.19,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 100,
+    "key": "t1.50:100",
+    "tries": [
+     "gaveup",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.645,
+     "rate": 0.786,
+     "bot": 0.85,
+     "won": false
+    },
+    "n": 3
+   },
+   {
+    "lv": 101,
+    "key": "t1.50:101",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.848,
+     "rate": 0.775,
+     "bot": 0.96,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 102,
+    "key": "t1.50:102",
+    "tries": [
+     "gaveup",
+     "win"
+    ],
+    "first": {
+     "model": 0.224,
+     "rate": 0.778,
+     "bot": 0.15,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 103,
+    "key": "t1.50:103",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.865,
+     "rate": 0.767,
+     "bot": 0.92,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 104,
+    "key": "t1.50:104",
+    "tries": [
+     "clock",
+     "gaveup"
+    ],
+    "first": {
+     "model": 0.698,
+     "rate": 0.77,
+     "bot": 0.715,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 104,
+    "key": "t1.52:104",
+    "tries": [
+     "win"
+    ],
+    "n": 1
+   },
+   {
+    "lv": 105,
+    "key": "t1.52:105",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.74,
+     "rate": 0.76,
+     "bot": 0.82,
+     "won": true
+    },
+    "n": 1
+   }
+  ],
+  "Mrs. Doubtfire": [
+   {
+    "lv": 71,
+    "key": "c1.6:71",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.62,
+     "rate": 0.559,
+     "bot": 0.67,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 72,
+    "key": "c1.6:72",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.521,
+     "rate": 0.543,
+     "bot": 0.575,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 73,
+    "key": "c1.6:73",
+    "tries": [
+     "tray"
+    ],
+    "first": {
+     "model": 0.467,
+     "rate": 0.556,
+     "bot": 0.49,
+     "won": false
+    },
+    "n": 1
+   },
+   {
+    "lv": 73,
+    "key": "t1.45:73",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "n": 2
+   },
+   {
+    "lv": 74,
+    "key": "t1.45:74",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.507,
+     "rate": 0.541,
+     "bot": 0.55,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 75,
+    "key": "t1.45:75",
+    "tries": [
+     "tray",
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.44,
+     "rate": 0.553,
+     "bot": 0.445,
+     "won": false
+    },
+    "n": 4
+   },
+   {
+    "lv": 76,
+    "key": "t1.45:76",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.601,
+     "rate": 0.538,
+     "bot": 0.66,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 77,
+    "key": "t1.48:77",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.525,
+     "rate": 0.55,
+     "bot": 0.55,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 78,
+    "key": "t1.48:78",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.658,
+     "rate": 0.561,
+     "bot": 0.715,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 79,
+    "key": "t1.48:79",
+    "tries": [
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.567,
+     "rate": 0.571,
+     "bot": 0.58,
+     "won": false
+    },
+    "n": 3
+   },
+   {
+    "lv": 80,
+    "key": "t1.48:80",
+    "tries": [
+     "clock",
+     "clock",
+     "clock",
+     "clock",
+     "clock",
+     "clock",
+     "clock",
+     "tray",
+     "clock",
+     "clock",
+     "clock",
+     "win"
+    ],
+    "first": {
+     "model": 0.308,
+     "rate": 0.558,
+     "bot": 0.255,
+     "won": false
+    },
+    "n": 12
+   },
+   {
+    "lv": 81,
+    "key": "t1.48:81",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.764,
+     "rate": 0.545,
+     "bot": 0.84,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 82,
+    "key": "t1.48:82",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.269,
+     "rate": 0.556,
+     "bot": 0.23,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 83,
+    "key": "t1.48:83",
+    "tries": [
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.482,
+     "rate": 0.565,
+     "bot": 0.45,
+     "won": false
+    },
+    "n": 3
+   },
+   {
+    "lv": 84,
+    "key": "t1.49:84",
+    "tries": [
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "gaveup",
+     "win"
+    ],
+    "first": {
+     "model": 0.262,
+     "rate": 0.553,
+     "bot": 0.18,
+     "won": false
+    },
+    "n": 10
+   },
+   {
+    "lv": 85,
+    "key": "t1.49:85",
+    "tries": [
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.312,
+     "rate": 0.542,
+     "bot": 0.25,
+     "won": false
+    },
+    "n": 5
+   },
+   {
+    "lv": 86,
+    "key": "t1.49:86",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.242,
+     "rate": 0.531,
+     "bot": 0.19,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 87,
+    "key": "t1.49:87",
+    "tries": [
+     "clock",
+     "tray",
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.37,
+     "rate": 0.54,
+     "bot": 0.295,
+     "won": false
+    },
+    "n": 5
+   },
+   {
+    "lv": 88,
+    "key": "t1.49:88",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.372,
+     "rate": 0.529,
+     "bot": 0.32,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 89,
+    "key": "t1.49:89",
+    "tries": [
+     "tray"
+    ],
+    "first": {
+     "model": 0.324,
+     "rate": 0.538,
+     "bot": 0.225,
+     "won": false
+    },
+    "n": 1
+   },
+   {
+    "lv": 89,
+    "key": "t1.50:89",
+    "tries": [
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "clock"
+    ],
+    "n": 8
+   },
+   {
+    "lv": 89,
+    "key": "t1.52:89",
+    "tries": [
+     "tray",
+     "clock",
+     "win"
+    ],
+    "n": 3
+   },
+   {
+    "lv": 90,
+    "key": "t1.52:90",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.65,
+     "rate": 0.528,
+     "bot": 0.695,
+     "won": true
+    },
+    "n": 1
+   }
+  ],
+  "PUK": [
+   {
+    "lv": 29,
+    "key": "c1:29",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.581,
+     "rate": 0.562,
+     "bot": 0.685,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 30,
+    "key": "c1:30",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.405,
+     "rate": 0.588,
+     "bot": 0.47,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 31,
+    "key": "c1:31",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.308,
+     "rate": 0.556,
+     "bot": 0.375,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 32,
+    "key": "c1:32",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.758,
+     "rate": 0.526,
+     "bot": 0.84,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 33,
+    "key": "c1:33",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.459,
+     "rate": 0.55,
+     "bot": 0.575,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 34,
+    "key": "c1:34",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.466,
+     "rate": 0.571,
+     "bot": 0.555,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 35,
+    "key": "c1:35",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.63,
+     "rate": 0.591,
+     "bot": 0.7,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 36,
+    "key": "c1:36",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.302,
+     "rate": 0.609,
+     "bot": 0.325,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 37,
+    "key": "c1:37",
+    "tries": [
+     "tray"
+    ],
+    "first": {
+     "model": 0.553,
+     "rate": 0.625,
+     "bot": 0.57,
+     "won": false
+    },
+    "n": 1
+   },
+   {
+    "lv": 38,
+    "key": "c1:38",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.774,
+     "rate": 0.6,
+     "bot": 0.825,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 39,
+    "key": "c1:39",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.645,
+     "rate": 0.615,
+     "bot": 0.685,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 42,
+    "key": "c1:42",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.536,
+     "rate": 0.593,
+     "bot": 0.59,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 43,
+    "key": "c1:43",
+    "tries": [
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.4,
+     "rate": 0.571,
+     "bot": 0.455,
+     "won": false
+    },
+    "n": 3
+   },
+   {
+    "lv": 44,
+    "key": "c1:44",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.63,
+     "rate": 0.552,
+     "bot": 0.72,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 45,
+    "key": "c1:45",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.519,
+     "rate": 0.567,
+     "bot": 0.595,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 46,
+    "key": "c1:46",
+    "tries": [
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.373,
+     "rate": 0.581,
+     "bot": 0.415,
+     "won": false
+    },
+    "n": 3
+   },
+   {
+    "lv": 47,
+    "key": "c1:47",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.577,
+     "rate": 0.562,
+     "bot": 0.65,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 48,
+    "key": "c1:48",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.693,
+     "rate": 0.576,
+     "bot": 0.755,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 49,
+    "key": "c1:49",
+    "tries": [
+     "tray"
+    ],
+    "first": {
+     "model": 0.449,
+     "rate": 0.588,
+     "bot": 0.48,
+     "won": false
+    },
+    "n": 1
+   }
+  ],
+  "Gerda": [
+   {
+    "lv": 36,
+    "key": "c1.4:36",
+    "tries": [
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.191,
+     "rate": 0.375,
+     "bot": 0.44,
+     "won": false
+    },
+    "n": 20
+   },
+   {
+    "lv": 37,
+    "key": "c1.4:37",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.594,
+     "rate": 0.36,
+     "bot": 0.87,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 38,
+    "key": "c1.4:38",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.21,
+     "rate": 0.385,
+     "bot": 0.49,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 39,
+    "key": "c1.4:39",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.266,
+     "rate": 0.37,
+     "bot": 0.58,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 41,
+    "key": "c1.4:41",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.216,
+     "rate": 0.357,
+     "bot": 0.515,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 42,
+    "key": "c1.4:42",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.195,
+     "rate": 0.379,
+     "bot": 0.445,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 43,
+    "key": "c1.4:43",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.447,
+     "rate": 0.367,
+     "bot": 0.755,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 44,
+    "key": "c1.4:44",
+    "tries": [
+     "tray"
+    ],
+    "first": {
+     "model": 0.309,
+     "rate": 0.355,
+     "bot": 0.63,
+     "won": false
+    },
+    "n": 1
+   },
+   {
+    "lv": 45,
+    "key": "c1.4:45",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "n": 2
+   },
+   {
+    "lv": 46,
+    "key": "c1.4:46",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.42,
+     "rate": 0.344,
+     "bot": 0.75,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 48,
+    "key": "c1.4:48",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.122,
+     "rate": 0.364,
+     "bot": 0.32,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 49,
+    "key": "c1.4:49",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.246,
+     "rate": 0.382,
+     "bot": 0.5,
+     "won": true
+    },
+    "n": 1
+   },
+   {
+    "lv": 50,
+    "key": "c1.4:50",
+    "tries": [
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.234,
+     "rate": 0.4,
+     "bot": 0.45,
+     "won": false
+    },
+    "n": 2
+   },
+   {
+    "lv": 51,
+    "key": "c1.4:51",
+    "tries": [
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "tray",
+     "win"
+    ],
+    "first": {
+     "model": 0.017,
+     "rate": 0.389,
+     "bot": 0.03,
+     "won": false
+    },
+    "n": 17
+   },
+   {
+    "lv": 52,
+    "key": "c1.4:52",
+    "tries": [
+     "win"
+    ],
+    "first": {
+     "model": 0.449,
+     "rate": 0.378,
+     "bot": 0.725,
+     "won": true
+    },
+    "n": 1
+   }
+  ]
+ }
+}

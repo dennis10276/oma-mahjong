@@ -32,7 +32,7 @@ for (const [pid, ev] of Object.entries(plays)) {
     else if (e.lv < 70 && ver(e.v) >= ver('1.31') && aspect) board = { aspect, lv: e.lv, kind: 'classic' };
     else if (e.lv >= 70 && ver(e.v) < ver('1.43') && ver(e.v) >= ver('1.31') && aspect) board = { aspect, lv: e.lv, kind: 'classic' };
     if (!board) continue;
-    out.push({ pid, name, lv: e.lv, v: e.v, at: e.at || 1, r, n: e.n, board });
+    out.push({ pid, name, lv: e.lv, v: e.v, at: e.at || 1, r, n: e.n, t: e.t, dur: e.dur, board });
   }
 }
 // check the tile counts against the rebuilt boards

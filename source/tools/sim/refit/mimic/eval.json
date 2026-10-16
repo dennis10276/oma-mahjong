@@ -1,0 +1,698 @@
+{
+ "Dennisisdebeste": {
+  "tests": 2,
+  "firstTries": 1,
+  "logLoss": {
+   "rate": 0.302,
+   "mimic": 4.605,
+   "mimicPlan": 4.605,
+   "oldBot": 0.142
+  },
+  "rows": [
+   {
+    "lv": 104,
+    "at": 4,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 1
+   },
+   {
+    "lv": 105,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.76
+   }
+  ]
+ },
+ "Mrs. Doubtfire": {
+  "tests": 3,
+  "firstTries": 1,
+  "logLoss": {
+   "rate": 0.747,
+   "mimic": 3.073,
+   "mimicPlan": 3.073,
+   "oldBot": 0.912
+  },
+  "rows": [
+   {
+    "lv": 89,
+    "at": 12,
+    "r": "clock",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.1
+   },
+   {
+    "lv": 89,
+    "at": 13,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.1
+   },
+   {
+    "lv": 90,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.72
+   }
+  ]
+ },
+ "PUK": {
+  "tests": 23,
+  "firstTries": 16,
+  "logLoss": {
+   "rate": 0.665,
+   "mimic": 3.007,
+   "mimicPlan": 3.007,
+   "oldBot": 0.642
+  },
+  "rows": [
+   {
+    "lv": 31,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.38
+   },
+   {
+    "lv": 32,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.87
+   },
+   {
+    "lv": 33,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.67
+   },
+   {
+    "lv": 34,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.45
+   },
+   {
+    "lv": 35,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.58
+   },
+   {
+    "lv": 36,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.17
+   },
+   {
+    "lv": 37,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.57
+   },
+   {
+    "lv": 38,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.67
+   },
+   {
+    "lv": 39,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.63
+   },
+   {
+    "lv": 39,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.67
+   },
+   {
+    "lv": 42,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.59
+   },
+   {
+    "lv": 42,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.69
+   },
+   {
+    "lv": 43,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.49
+   },
+   {
+    "lv": 43,
+    "at": 2,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.47
+   },
+   {
+    "lv": 43,
+    "at": 3,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.45
+   },
+   {
+    "lv": 44,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.65
+   },
+   {
+    "lv": 45,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.59
+   },
+   {
+    "lv": 46,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.29
+   },
+   {
+    "lv": 46,
+    "at": 2,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.24
+   },
+   {
+    "lv": 46,
+    "at": 4,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.36
+   },
+   {
+    "lv": 47,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.6
+   },
+   {
+    "lv": 48,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.7
+   },
+   {
+    "lv": 49,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.48
+   }
+  ]
+ },
+ "Gerda": {
+  "tests": 53,
+  "firstTries": 13,
+  "logLoss": {
+   "rate": 0.579,
+   "mimic": 1.224,
+   "mimicPlan": 1.224,
+   "oldBot": 0.445
+  },
+  "rows": [
+   {
+    "lv": 36,
+    "at": 4,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.25
+   },
+   {
+    "lv": 36,
+    "at": 5,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.21
+   },
+   {
+    "lv": 36,
+    "at": 6,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.42
+   },
+   {
+    "lv": 36,
+    "at": 7,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.28
+   },
+   {
+    "lv": 36,
+    "at": 8,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 9,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 10,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 10,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 11,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 12,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 13,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 14,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 15,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 16,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 17,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 18,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 36,
+    "at": 19,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.15
+   },
+   {
+    "lv": 37,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.7
+   },
+   {
+    "lv": 38,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.3
+   },
+   {
+    "lv": 38,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.39
+   },
+   {
+    "lv": 39,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.48
+   },
+   {
+    "lv": 39,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.42
+   },
+   {
+    "lv": 41,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.35
+   },
+   {
+    "lv": 42,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.32
+   },
+   {
+    "lv": 42,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.34
+   },
+   {
+    "lv": 43,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.61
+   },
+   {
+    "lv": 43,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.64
+   },
+   {
+    "lv": 44,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.49
+   },
+   {
+    "lv": 45,
+    "at": 2,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.33
+   },
+   {
+    "lv": 45,
+    "at": 3,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.31
+   },
+   {
+    "lv": 46,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.55
+   },
+   {
+    "lv": 48,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.18
+   },
+   {
+    "lv": 49,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.39
+   },
+   {
+    "lv": 50,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.33
+   },
+   {
+    "lv": 50,
+    "at": 2,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.36
+   },
+   {
+    "lv": 51,
+    "at": 1,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.03
+   },
+   {
+    "lv": 51,
+    "at": 2,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.01
+   },
+   {
+    "lv": 51,
+    "at": 3,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.03
+   },
+   {
+    "lv": 51,
+    "at": 4,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.02
+   },
+   {
+    "lv": 51,
+    "at": 5,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.02
+   },
+   {
+    "lv": 51,
+    "at": 6,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.03
+   },
+   {
+    "lv": 51,
+    "at": 7,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.03
+   },
+   {
+    "lv": 51,
+    "at": 8,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 9,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 10,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 11,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 12,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 13,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 14,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 15,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 16,
+    "r": "tray",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 51,
+    "at": 17,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.04
+   },
+   {
+    "lv": 52,
+    "at": 1,
+    "r": "win",
+    "mimic": 0,
+    "mimicPlan": 0,
+    "oldBot": 0.58
+   }
+  ]
+ }
+}

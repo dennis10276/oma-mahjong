@@ -150,3 +150,27 @@ improve: Gerda went from temp 9 to 6). The chosen bots are in `tools/sim/refit/p
 | Mrs. Doubtfire | 52 first tries; 46 recent retries (71-90) | 4.5 | 0 | none |
 | PUK | 20 recent first tries, 7 retries (28-49) | 4.5 | 0.15 | 100/50/100% (few retries) |
 | Gerda | 19 recent first tries, 54 retries (31-52) | 6 | 0 | none |
+
+## Literal per-person test players (behaviour cloning), first attempt (2026-10-16)
+
+Move-level data from the recordings (`replays/`, from 1.50): every decision with the parts of every
+possible move (`mimic_data.js`, `Hard.play` follow mode), weights per person by maximum likelihood
+(`mimic_fit.py`), tested on each person's newest quarter of games.
+
+Learned about how they play:
+- Turning face-down tiles over: Dennisisdebeste and Mrs. Doubtfire had seen about two thirds of the
+  free face-down tiles at their decisions (66%, 70%); PUK and Gerda about a quarter (23%, 28%).
+- Finding the face-down twin of a waiting tile: Dennis and Mrs. Doubtfire about half the chances,
+  PUK 24%, Gerda 15%.
+- With a safe move available, a fatal 4th tile in the tray: Dennis 1 of 127 decisions, Mrs.
+  Doubtfire 1 of 146, PUK 0, Gerda 36 of 2059.
+- Turning a tile over is a move of its own (flip, free) and is now one in the test player.
+
+Result: the move model predicts their next move clearly better than the fixed test players, but
+full games played with it lose far too often (a policy copied move by move drifts into positions
+people avoid by planning ahead). Not usable for predictions yet.
+
+Results-based alternative (`predict_model.py`): logistic model per person on the boards' difficulty
+for the test players. Tested on each person's second half: beats "their usual win share" for all
+four (log-loss per try: Dennis 0.61 vs 0.74, Mrs. Doubtfire 0.55 vs 0.60, PUK 0.63 vs 0.68, Gerda
+0.50 vs 0.59) and picks the harder of two boards right about 70% of the time.
