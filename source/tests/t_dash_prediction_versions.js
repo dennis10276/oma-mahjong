@@ -29,10 +29,19 @@ module.exports = [{
       t.ok((await row(91).innerText()).includes('gehaald in 1 poging'), 'unchanged level-91 result still comparable');
       await event({ k: 'end', v: '1.54', lv: 92, at: 2, r: 'win', dur: 80, n: 76, left: 0, t: now + 1000 });
       t.ok((await row(92).innerText()).includes('gehaald in 2 pogingen'), 'new board result uses the new attempt, not the old win');
-      const current = require('../site/dash/predict.json').players[pid];
-      t.ok((await row(92).innerText()).includes(current.levels[92][0] + '%'), 'new board uses the reviewed new prediction');
-      await event({ k: 'open', v: '1.55', lv: 93, t: now + 2000 });
-      t.ok((await content()).includes('Geen passende voorspelling voor versie 1.55'), 'unsupported version never gets another version predictions');
+      const v154 = require('../site/dash/predict-1.54.json').players[pid];
+      t.ok((await row(92).innerText()).includes(v154.levels[92][0] + '%'), 'new board uses the reviewed new prediction');
+      // 1.55: the move-based test players; boards of 1.54 from level 70 on are the same, so a 1.54
+      // result still counts next to the 1.55 prediction
+      await event({ k: 'end', v: '1.54', lv: 93, at: 1, r: 'win', dur: 70, n: 76, left: 0, t: now + 1500 });
+      await event({ k: 'open', v: '1.55', lv: 94, t: now + 2000 });
+      t.ok((await content()).includes('versie 1.55'), 'the 1.55 prediction for a 1.55 app');
+      const current = require('../site/dash/predict.json');
+      t.eq(current.version, '1.55', 'the current prediction file is for 1.55');
+      t.ok((await content()).includes('eigen gewoontes uit de opgenomen spellen'), 'explains the move-based test player');
+      if (current.players[pid].levels[93]) t.ok((await row(93).innerText()).includes('gehaald in 1 poging'), 'a 1.54 result on a board that did not change still counts');
+      await event({ k: 'open', v: '1.56', lv: 94, t: now + 3000 });
+      t.ok((await content()).includes('Geen passende voorspelling voor versie 1.56'), 'unsupported version never gets another version predictions');
       t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'viewing predictions writes no player data');
       t.eq(errors, [], 'no dashboard errors');
     } finally { await ctx.close(); site.close(); }

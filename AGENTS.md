@@ -75,16 +75,23 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Predictions on the dashboard
 
-- The 1.54 predictions match the reordered boards. `predict-1.53.json` preserves old-client
-  predictions; `predict.json.previousVersions` registers it. The dashboard selects by the
-  player's latest logged app version and excludes results from replaced boards when comparing
-  forecasts (1.53 results through 91 remain comparable). Unknown versions get no substitute.
-- `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, what their own
-  test player predicts for their next 60 levels: first try, within 2 and within 4 tries. The dashboard
-  shows it in the card "Voorspelling", with the real results next to it once played.
-- It is made on `wip/honest-observer` (`source/tools/sim/refit`): `dataset.js` (fresh data from
-  Firebase), `player_fit.js` (one test player per person), `predict.js`, then
-  `publish_predict.js <version> <file>`. Publishing it changes no game version: copy it to both places.
+- `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, the prediction for
+  their next 60 levels: first try, within 2 and within 4 tries. The dashboard shows it in the card
+  "Voorspelling", with the real results next to it once played. It picks the file of the player's app
+  version: older versions keep their own file (`previousVersions`, e.g. `predict-1.54.json`), and
+  `comparable` lists older versions whose results still count for some levels (same boards).
+- From 1.55 (2026-10-16): the move-based test player per person (`fit.model: 'move'`), made on
+  `wip/honest-observer` (`source/tools/sim/refit`, notes in `source/analysis/honest-refit.md` there):
+  their own habits from their recorded games (what kind of move per situation: turn a tile over, pair,
+  single, fatal 4th tile; `kinds.js`), the engine's choice within that kind (care level 2), memory of a
+  lost try 75/50/75%; then corrected for how it has gone lately (per person) with a slope shared by the
+  family, plus how the family did on that exact board before (boards are the same for everyone).
+  Steps: `dataset.js` (fresh data), `mimic_data.js`, `mbot_chains.js` + `dash_chains.js` per person,
+  `mbot_recal2.js` (rolling test, `BOARD=1 SAVE=1`), `predict_mbot.js <name> <from>`,
+  `finalize_predict.js`, `publish_mbot.js <version> <file> '<comparable>' '<previous versions>'`.
+  Publishing it changes no game version: copy it to both places (`source/site/dash/` and `dash/`).
+- A single first try stays close to a coin flip for this family (rolling test: first tries tell won
+  from lost with AUC ~0.65); the chances are honest on average, not a promise per level.
 
 ## Firebase
 
