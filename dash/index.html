@@ -88,6 +88,9 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tbl-wrap th, .tbl-wrap td { white-space: normal; overflow-wrap: anywhere; padding: 7px 4px; }
 .tbl-wrap th { position: static; }
 .tbl-wrap th:last-child { width: 19%; }
+#tbl th:nth-child(2) { width: 240px; }
+#tbl th:nth-child(8) { width: 72px; }
+#tbl td:nth-child(8) { white-space: nowrap; overflow-wrap: normal; }
 /* Narrow columns show the same fields as labelled rows, without sideways scrolling. */
 @container (max-width: 560px) {
   .tbl-wrap table, .tbl-wrap tbody { display: block; }
@@ -95,13 +98,16 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   .tbl-wrap tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
   .tbl-wrap td { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border: 0; padding: 2px 0; text-align: right; }
   .tbl-wrap td::before { content: attr(data-label); font-size: 12px; font-weight: 600; color: var(--ink-2); text-align: left; letter-spacing: normal; }
-  .tbl-wrap td.res { display: block; }
-  .tbl-wrap td.res::before { float: left; margin-right: 8px; }
+  .tbl-wrap td.res { grid-column: 1 / -1; align-items: flex-start; justify-content: flex-start; }
+  .tbl-wrap td.res::before { flex-shrink: 0; }
   .tbl-wrap td:first-child, .tbl-wrap td:last-child { grid-column: 1 / -1; }
   .tbl-wrap td:first-child { font-weight: 700; }
 }
 .res { font-weight: 700; letter-spacing: 1px; }
 .res .w { color: var(--good-ink); } .res .l { color: var(--bad); } .res .r { color: var(--ink-3); }
+.attempt-results { display: inline-grid; grid-template-columns: repeat(5, max-content); gap: 4px; max-width: 100%; vertical-align: middle; }
+.attempt-result { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; white-space: nowrap; }
+@container (max-width: 320px) { .attempt-results { grid-template-columns: repeat(4, max-content); } }
 .feed { list-style: none; margin: 0; padding: 0; max-height: 460px; overflow: auto; }
 .feed li { display: grid; grid-template-columns: 54px 22px 1fr; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
 .feed .t { color: var(--ink-3); font-variant-numeric: tabular-nums; }
@@ -173,7 +179,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .watch-controls label { display: flex; align-items: center; gap: 5px; font-size: 13px; }
 .watch-controls select { padding: 6px; }
 .watch-face { transform-box: fill-box; transform-origin: center; }
-.attempt-play { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: inherit; padding: 3px 5px; margin: 2px; white-space: nowrap; letter-spacing: normal; }
+.attempt-play { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: inherit; padding: 3px 5px; margin: 0; white-space: nowrap; letter-spacing: normal; }
 .attempt-play:hover, .attempt-play:focus-visible { background: var(--accent-soft); outline: 2px solid var(--accent); }
 .watch-name { font-weight: 700; margin-bottom: 4px; overflow-wrap: anywhere; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
@@ -507,12 +513,13 @@ function render() {
   const res = l => {
     const attempts = new Map();
     for (const e of ev) if ((e.k === 'start' || e.k === 'end') && lvlKey(e) === l.k && typeof e.aid === 'string' && /^[A-Za-z0-9_-]{1,40}$/.test(e.aid)) attempts.set(e.aid, e);
-    const legacy = l.ends.filter(e => !attempts.has(e.aid)).map(resultSymbol).join('');
-    return legacy + [...attempts.values()].map((e, i) => {
+    const legacy = l.ends.filter(e => !attempts.has(e.aid)).map(e => `<span class="attempt-result">${resultSymbol(e)}</span>`).join('');
+    const recorded = [...attempts.values()].map((e, i) => {
       const number = Number.isInteger(e.at) && e.at > 0 ? e.at : i + 1;
       const symbol = resultSymbol(e), label = `${l.name} · poging ${number} · ${new Date(e.t).toLocaleString('nl-NL')}`;
-      return e.t >= Date.now() - 30 * 86400000 ? `<button class="attempt-play" data-aid="${esc(e.aid)}" aria-label="${esc('Bekijk opname: ' + label)}" title="${esc('Bekijk opname: ' + label)}">${number} ${symbol}</button>` : `<span title="Opname verlopen">${symbol}</span>`;
+      return e.t >= Date.now() - 30 * 86400000 ? `<button class="attempt-play" data-aid="${esc(e.aid)}" aria-label="${esc('Bekijk opname: ' + label)}" title="${esc('Bekijk opname: ' + label)}">${number} ${symbol}</button>` : `<span class="attempt-result" title="Opname verlopen">${symbol}</span>`;
     }).join('');
+    return legacy || recorded ? `<div class="attempt-results">${legacy}${recorded}</div>` : '';
   };
   $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
 
