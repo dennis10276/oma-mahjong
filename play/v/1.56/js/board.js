@@ -15,7 +15,7 @@ function saveCur() {
   syncClock();
   try {
     replayCapture();
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: G.o.mode === 'level' && Hard.applies(G.o.level, G.o.track) ? Hard.GENV : null }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o) }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -23,22 +23,26 @@ function pauseClock() { syncClock(); if (G) { G.tStart = 0; replayMark('pause');
 function resumeClock() { if (G && !G.done && curScreen === 'game') { G.tStart = performance.now(); replayMark('resume'); } }
 
 // ---------- starting a level ----------
-const tileScale = () => S.bigTiles ? 0.7 : 1;
 // the part "own, easier levels" (grandma mode) plays its own, gentler levels (Layouts track 'care')
 const levelTrack = () => part('levels') ? 'care' : '';
 // from RULES.hard.measureFrom the levels come ready-made (designed with the test player, hard.js and
 // levels-hard.js); an easier try (help after losing) gets the usual level, made easier
+// the screen shape a level is made for: the same for everyone (RULES.levels.aspect); only grandma's
+// own levels follow her screen
+const sameShape = tr => tr ? null : RULES.levels.aspect;
 function startLevel(level) {
-  const tr = levelTrack(), hard = Hard.applies(level, tr);
-  begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level),
-    // (designed levels: the same for everyone, on any screen)
-    makeSpec: a => hard ? Hard.spec(level) : Layouts.forLevel(level, a, tileScale(), tr), makeEasy: a => Layouts.forLevel(level, a, tileScale(), tr) });
+  const tr = levelTrack(), hard = Hard.applies(level, tr), early = !hard && Hard.appliesEarly(level, tr);
+  begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), fixedAspect: early ? sameShape(tr) : null,
+    // (ready-made levels, the same for everyone on any screen: 51 and 53-69 in levels-early.js, from 70 the designed ones)
+    makeSpec: a => hard ? Hard.spec(level) : early ? Hard.earlySpec(level) : Layouts.forLevel(level, a, 1, tr), makeEasy: a => Layouts.forLevel(level, a, 1, tr) });
 }
 function startDaily(k) {
   const d = parseKey(k);
   const tr = levelTrack();
-  begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), makeSpec: a => Layouts.forDate(dnum(k), a, tileScale(), tr) });
+  begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), fixedAspect: sameShape(tr), makeSpec: a => Layouts.forDate(dnum(k), a, 1, tr) });
 }
+// which version of a ready-made level a saved board belongs to (designed: its design version, early: the table's)
+const boardVer = o => o.mode !== 'level' ? null : Hard.applies(o.level, o.track) ? Hard.designVersion(o.level) : Hard.appliesEarly(o.level, o.track) ? 'e' + Hard.earlyV() : null;
 
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
 function begin(o, restart = false) {
@@ -49,6 +53,7 @@ function begin(o, restart = false) {
     return;
   }
   const previousReplay = G && G.rp;
+  stopLessonDemo();
   if (previousReplay) { replayCapture(); replayDrain(G); }
   $('#modal').classList.add('hidden'); modalOnClose = null;
   $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
@@ -63,11 +68,12 @@ function begin(o, restart = false) {
   if (cur && cur.rp && previousReplay && cur.rp.id === previousReplay.id &&
       JSON.stringify(cur.rp.last) === JSON.stringify(previousReplay.last)) cur.rp = previousReplay;
   const sameTrack = cur && (cur.tr || '') === (o.track || '') &&
-    (o.mode !== 'level' || o.level < RULES.hard.rebuildFrom || !Hard.applies(o.level, o.track) || cur.hv === Hard.GENV);
+    (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : !Hard.appliesEarly(o.level, o.track) || cur.hv == null || cur.hv === boardVer(o)));
+  // (a save from before the table (no hv) resumes when its screen shape and tile count fit the level)
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {
-    if (!o.spec) o.aspect = aspect;
+    if (!o.spec) o.aspect = o.fixedAspect || aspect;
     let sp = o.makeSpec(o.aspect);
     if (ez && sp.made && o.makeEasy) sp = o.makeEasy(o.aspect);
     o.spec = Layouts.ease(sp, ez);
@@ -92,7 +98,7 @@ function begin(o, restart = false) {
     if (!o.faces) {
       const m = spec.made;      // a designed level (hard.js): the deal, gold, ice, locks and clock come with it
       if (m) { o.faces = m.faces.slice(); o.down = m.down.slice(); o.gold = (m.gold || []).slice(); o.specials = true; o.obst = m.obst; o.obstDone = true; o.clock = m.clock; }
-      else { const d = Layouts.makeDeal(spec); o.faces = d.faces; o.down = d.down; }
+      else { const d = Layouts.makeDeal(spec, 24, !o.track); o.faces = d.faces; o.down = d.down; }   // (no time limit: the same deal on every phone)
     }
     addSpecials(o, spec);
     o.faces.forEach((f, i) => tiles[i].face = f);
@@ -110,7 +116,7 @@ function begin(o, restart = false) {
   G.attempt = S.att[o.key];
   replayBegin(cur, resumed);
   const focused = !!spec.made && o.mode === 'level' && o.level >= RULES.hard.rebuildFrom;
-  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? 'focused' : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? Hard.ratingModel(o.level) : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -126,7 +132,7 @@ function begin(o, restart = false) {
     else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
     else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
   };
-  if (!clockIntro(ready)) ready();
+  if (!clockIntro(ready) && !newTileIntro(ready) && !retryTileHelp(ready, resumed)) ready();
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
@@ -690,9 +696,10 @@ function checkClock() {
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      <p>${tx('clockText', G.clock.n)}</p>${clockHelpText()}
+      <p>${tx('clockText', G.clock.n)}</p>${lessonDemoHTML('clock')}${clockHelpText()}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
+    startLessonDemo();
     $('#sRetry').onclick = () => { closeModal(); restart(); };
     $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);

@@ -4,7 +4,11 @@
 'use strict';
 
 const RULES = {
-  levels: { blockedFrom: null },              // a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
+  // aspect: ready-made levels and the daily puzzle are the same on every phone (made for this screen
+  // shape). Levels 51 and 53-69 come ready-made (levels-early.js): the boards Gerda played (51 and 53
+  // switched); 1-50 and 52 are still made for each screen; grandma's own levels follow her screen.
+  // blockedFrom: a level number closes that level and all above it (e.g. while new levels wait for approval); null = all open
+  levels: { blockedFrom: null, aspect: 1.6 },
   tools: { fromLevel: 15,                      // 💡 Hint and 🔀 Schudden: one of each per level from here
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself

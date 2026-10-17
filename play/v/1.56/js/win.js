@@ -6,6 +6,7 @@
    (Planned: hints, shuffles and jokers bought in a shop; each bought joker used on a pair will cost a
    star too, a joker that finishes the level will not. Count them here, e.g. G.boughtJokersUsed.) */
 const starsFor = G => Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].filter(Boolean).length - (G.boughtJokersUsed || 0));
+let winFamilyRefresh = null;
 
 function win() {
   syncClock(); G.tStart = 0;
@@ -40,7 +41,7 @@ function win() {
   const ptsAfter = myPoints();
   if (G.mode === 'level') {
     S.stars[G.level] = Math.max(S.stars[G.level] || 0, stars);
-    if (G.level === S.level) S.level++;
+    if (G.level === S.level) { S.level++; notePassedBaseline(false); }
   } else {
     S.daily[G.date] = Math.max(S.daily[G.date] || 0, stars);
     const s = streak(); if (s > S.bestStreak) S.bestStreak = s;
@@ -57,7 +58,7 @@ function win() {
   if (wkRankAfter < wkRankBefore) rewards.push({ type: 'rank', mode: 'week', from: wkBefore, to: wkAfter });
   else if (rankAfter < rankBefore) rewards.push({ type: 'rank', mode: 'all', from: lvlBefore, to: S.level });
   // the family is always on the win screen, so you see where everyone stands
-  const famNow = famHTML('week', ranking(wkAfter, 'week'), tx('famWeek'));
+  const famNow = famHTML('week', ranking(wkAfter, 'week'), tx('famWeek'), true, true);
   pushScore();
   const heartsP = Promise.race([fetchHearts(), new Promise(r => setTimeout(() => r([]), 2500))]);
   const nextUp = ranking(wkAfter, 'week')[wkRankAfter - 2];
@@ -80,21 +81,36 @@ function win() {
       <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
       <div class="win-stats"><div>${tx('scoreWord')}<b id="wScore">0</b></div><div>${tx('timeWord')}<b>${mins}:${pad(secs)}</b></div>${G.mode === 'level' && S.winStreak >= 2 ? `<div class="ws-streak${streakBonus ? ' bonus' : ''}">🔥<b>${tx('inARow', S.winStreak)}${streakBonus ? ' +⭐' : ''}</b></div>` : ''}</div>
       <div class="perfect" id="wPerfect">${stars === 3 ? tx('perfect') : ''}</div>
-      ${extra}${chase}${famNow}
+      ${extra}${chase}<div id="wFamily">${famNow}</div>
       <div class="goal" id="wGoal"></div>
       <button class="big-btn play pulse" id="wNext"><span class="bb-text"><b>${nextLbl}</b></span></button>
       <button class="link-btn" id="wMenu">${tx('menu')}</button>`, false, null, 'compact');
     renderGoal($('#wGoal'));
+    const familyNode = $('#wFamily');
+    const bindHearts = () => familyNode.querySelectorAll('.heart-btn').forEach(btn => btn.onclick = () => {
+      if (sentToday(btn.dataset.pid)) { toast(tx('heartAlreadyShort')); return; }
+      const height = parseFloat(getComputedStyle($('#modalBox')).height), resume = keepModal();
+      sendHeart(btn.dataset.pid, btn.dataset.name, btn, { height, restore: () => { resume(); winFamilyRefresh(); } });
+    });
+    winFamilyRefresh = () => {
+      if (!$('#wNext') || $('#wFamily') !== familyNode) return;
+      familyNode.innerHTML = famHTML('week', ranking(wkAfter, 'week'), tx('famWeek'), true, true);
+      bindHearts();
+    };
+    bindHearts();
+    fetchOnline().then(winFamilyRefresh);
     const sts = document.querySelectorAll('.stars .st');
     for (let i = 0; i < stars; i++) setTimeout(() => {
       sts[i].classList.add('on'); Sound.star(i); buzz(20);
       const c = centerOf(sts[i]); FX.burst(c.x, c.y, 26, true);
       if (S.theme === 'sunflower') FX.emoji(c.x, c.y, ['🌻', '✨'], 5);
     }, 450 + i * 420);
-    if (stars === 3) setTimeout(() => { const p = $('#wPerfect'); if (p) { p.classList.add('on'); Sound.perfect(); } }, 450 + 3 * 420 + 150);
+    const perfectEl = $('#wPerfect');
+    if (stars === 3) setTimeout(() => { perfectEl.classList.add('on'); Sound.perfect(); }, 450 + 3 * 420 + 150);
     const el = $('#wScore'), target = G.score, t0 = performance.now();
     (function tick() { const p = Math.min(1, (performance.now() - t0) / 1100); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); })();
     const go = (dest) => {
+      winFamilyRefresh = null;
       closeModal();
       const finish = () => {
         if (updateReady) {   // a new version is waiting: switch now, then carry on where we were going

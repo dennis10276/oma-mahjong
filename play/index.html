@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.55/style.css" id="css">
+<link rel="stylesheet" href="v/1.56/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -155,7 +155,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.55', KEY = 'omamj.code', FILES = ['v/1.55/tiles.js', 'v/1.55/audio.js', 'v/1.55/layouts.js', 'v/1.55/hard.js', 'v/1.55/levels-hard.js', 'v/1.55/levels-early.js', 'v/1.55/js/rules.js', 'v/1.55/js/lang.js', 'v/1.55/js/core.js', 'v/1.55/js/fx.js', 'v/1.55/js/update.js', 'v/1.55/js/screens.js', 'v/1.55/js/board.js', 'v/1.55/js/help.js', 'v/1.55/js/specials.js', 'v/1.55/js/rewards.js', 'v/1.55/js/telemetry.js', 'v/1.55/js/social.js', 'v/1.55/js/hearts.js', 'v/1.55/js/stories.js', 'v/1.55/js/village.js', 'v/1.55/js/win.js', 'v/1.55/js/main.js'];
+  var BUILT = '1.56', KEY = 'omamj.code', FILES = ['v/1.56/tiles.js', 'v/1.56/audio.js', 'v/1.56/layouts.js', 'v/1.56/hard.js', 'v/1.56/levels-hard.js', 'v/1.56/levels-early.js', 'v/1.56/js/rules.js', 'v/1.56/js/lang.js', 'v/1.56/js/core.js', 'v/1.56/js/fx.js', 'v/1.56/js/update.js', 'v/1.56/js/screens.js', 'v/1.56/js/board.js', 'v/1.56/js/help.js', 'v/1.56/js/specials.js', 'v/1.56/js/rewards.js', 'v/1.56/js/telemetry.js', 'v/1.56/js/social.js', 'v/1.56/js/hearts.js', 'v/1.56/js/stories.js', 'v/1.56/js/village.js', 'v/1.56/js/win.js', 'v/1.56/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

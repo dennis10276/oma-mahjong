@@ -176,20 +176,34 @@ function setLang(code) {
 // ---------- modal ----------
 let modalClosable = true, modalOnClose = null;
 function openModal(html, closable = true, onClose = null, cls = '') {
+  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   const box = $('#modalBox');
+  box.style.removeProperty('--heart-dialog-height');
   box.className = 'modal-box' + (cls ? ' ' + cls : '');   // 'compact': the after-level screens, they must fit without scrolling
   box.innerHTML = html; box.scrollTop = 0; $('#modal').classList.remove('hidden');
   fitTexts(box);
   modalClosable = closable; modalOnClose = onClose;
 }
 function closeModal() {
+  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   $('#modal').classList.add('hidden');
   const f = modalOnClose; modalOnClose = null; if (f) f();
+}
+// Keep the actual nodes and their handlers, so a heart picker can return to a completed level.
+function keepModal() {
+  const box = $('#modalBox'), nodes = [...box.childNodes], cls = box.className.replace(/^modal-box\s*/, ''),
+    style = box.getAttribute('style'), scroll = box.scrollTop, closable = modalClosable, onClose = modalOnClose;
+  return () => {
+    openModal('', closable, onClose, cls);
+    box.replaceChildren(...nodes);
+    if (style == null) box.removeAttribute('style'); else box.setAttribute('style', style);
+    box.scrollTop = scroll;
+  };
 }
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' && modalClosable) closeModal(); });
 
 function openSettings() {
-  const rows = ['sfx', 'music', 'vibrate', 'highlight', 'nums', 'bigTiles', 'contrast'];
+  const rows = ['sfx', 'music', 'vibrate', 'highlight', 'nums', 'contrast'];
   const cur = langOf(S);
   openModal(`<h2>${tx('settings')}</h2>
     <div class="set-row">${fx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
@@ -207,7 +221,6 @@ function openSettings() {
     if (k === 'highlight') $('#board').classList.toggle('hl', S.highlight);
     if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
     if (k === 'contrast') document.body.classList.toggle('contrast', S.contrast);
-    if (k === 'bigTiles') toast(tx(S.bigTiles ? 'bigOn' : 'bigOff'));
   });
   $('#mHow').onclick = () => showIntro();
   $('#mReset').onclick = confirmReset;
@@ -223,7 +236,7 @@ function confirmReset() {
     <button class="reset-btn" id="rsYes">${tx('wipeYes')}</button>`);
   $('#rsNo').onclick = closeModal;
   $('#rsYes').onclick = () => {
-    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, bigTiles: S.bigTiles, contrast: S.contrast, lang: S.lang };
+    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, contrast: S.contrast, lang: S.lang };
     const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
     Object.keys(S).forEach(k => delete S[k]);
     Object.assign(S, defaults(), keep, { theme });
@@ -242,8 +255,10 @@ function showIntro(after) {
     <p>${fx('intro2')}</p>
     <p>${fx('intro3', RULES.tools.fromLevel)}</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>
+    <button class="link-btn" id="mTileHelp">${tx('lessonMenu')}</button>
     <button class="link-btn" id="mLang">${tx('introLang')}</button>`, true, after);
   $('#mGo').onclick = closeModal;
+  $('#mTileHelp').onclick = showLessonMenu;
   // switch the language right here (the explanation is shown again in the other language)
   $('#mLang').onclick = () => { setLang(isEn() ? 'nl' : 'en'); showIntro(after); };
   S.seenTray = true; S.seenIntro = true; save();
