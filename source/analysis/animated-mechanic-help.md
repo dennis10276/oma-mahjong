@@ -11,7 +11,9 @@ The wording and captions are available in Dutch and English.
 
 Rules explained:
 
-- Ice needs one or two touching tiles actually removed from the board. Peeking
+- Ice counts touching tiles beside, above, on top of and below it; the Dutch
+  explanation explicitly lists "ernaast, erboven, erop én eronder". One or two
+  of these tiles must actually be removed from the board. Peeking
   does not melt it, and the thawed tile still needs to be free.
 - Both marked key tiles must leave the board. The first key leaves locks shut;
   the second opens all locks. An unlocked tile still needs to be free.
