@@ -1,6 +1,7 @@
 # Animated tile explanations
 
-Unreleased on `wip/animated-mechanic-help` (2026-10-17).
+Approved for release by Dennis on 2026-10-17, with ice above/below demonstrated
+explicitly and Hint/Shuffle removed from the clock explanation.
 
 Ice, keys/locks, the alarm clock and the face-down pair trick now have small
 four-step demonstrations using the game's own tile pictures. Each loops in
@@ -15,7 +16,7 @@ Rules explained:
 - Both marked key tiles must leave the board. The first key leaves locks shut;
   the second opens all locks. An unlocked tile still needs to be free.
 - The clock counts removed tiles, not seconds: one tile costs one move and a
-  pair costs two. Peeking, blocked taps and tools are free. Taking the clock
+  pair costs two. Peeking and blocked taps are free. Taking the clock
   tile stops it; its twin can wait. The final allowed move is safe.
 - With three tray slots occupied, peek at a free face-down tile first, then
   tap a free matching tile. Both disappear without using another slot. Taking
@@ -41,10 +42,11 @@ Verification: `t_tile_help` exercises acknowledgment, third-loss rotation,
 resume behavior, pause/replay, reduced motion, both languages at 360×640, no
 mutation of the live game, and the actual three-slot pair/fourth-tile loss.
 `t_clocks` checks complete timeout explanations and small-phone buttons.
-The complete offline suite finished with 130/131 passing (330 seconds), including
-all new lesson checks and all existing clock/mechanics/gameplay checks.
-On this Windows checkout, the existing `build_early.js --check` compares checked-out
-CRLF text with generated LF text and reports a difference. Normalizing line endings
-in memory makes it pass; no level data or builder code was changed for this check.
+The first full offline run finished with 130/131 passing (330 seconds), including
+all new lesson checks and all existing clock/mechanics/gameplay checks. The
+remaining check compared Windows CRLF text with generated LF text. The builder's
+check now normalizes CRLF before comparing, without changing level data. The
+complete suite is run again for the release.
 
-No levels, difficulty, published files, APK or live player data are changed.
+No levels, difficulty or live player data are changed. Publishing updates the
+game files and builds a fresh APK with the existing signing certificate.

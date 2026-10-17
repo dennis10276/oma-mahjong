@@ -10,6 +10,11 @@ module.exports = [
         const before = await p.evaluate(() => JSON.stringify([G.mv, G.tray, [...G.alive], [...G.down], obState(), G.clock]));
         await p.evaluate(k => k === 'clock' ? showClockLesson() : showTileLesson(k), kind);
         t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), kind, 'correct demonstration');
+        if (kind === 'ice') t.ok(await p.evaluate(() => {
+          const [above, ice, below] = [...$('.lesson-ice-board').children].map(e => e.getBoundingClientRect());
+          return above.bottom <= ice.top && ice.bottom <= below.top;
+        }), 'ice demonstration includes touching tiles above and below');
+        if (kind === 'clock') t.ok(!/hint|schudden|shuffle/i.test(await p.locator('#modalBox').innerText), 'clock explanation does not mention tools');
         t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'lesson and button fit: ' + lang + ' ' + kind);
         await click(p, '.lesson-toggle');
         const step = await p.locator('.lesson-demo').getAttribute('data-step');
@@ -27,6 +32,9 @@ module.exports = [
         await click(p, '#ntGo');
         t.eq(await p.evaluate(() => lessonTimer), null, 'closing cleans up timer');
       }
+      await p.evaluate(() => showTileLesson('ice', null, true));
+      t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'ice reminder also fits: ' + lang);
+      await click(p, '#ntGo');
       await p.evaluate(() => showIntro()); await click(p, '#mTileHelp');
       t.eq(await p.locator('.lesson-pick').count(), 4, 'all lessons can be reopened from How to play');
       await p.emulateMedia({ reducedMotion: 'reduce' });

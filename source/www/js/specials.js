@@ -202,7 +202,7 @@ const lessonTray = faces => `<div class="lesson-tray">${[0, 1, 2, 3].map(i => `<
 function lessonFrame(kind, step) {
   const tile = lessonTile;
   const gone = (yes, leaving) => yes ? (leaving ? 'lesson-leaving' : 'lesson-gone') : '';
-  if (kind === 'ice') return `<div class="lesson-board">${tile(4, '', gone(step > 0, step === 1))}${tile(31, step < 2 ? (step ? '❄️' : '❄️❄️') : '', step < 2 ? 'lesson-ice' : step === 3 ? 'lesson-focus' : '')}${tile(8, '', gone(step > 1, step === 2))}</div>`;
+  if (kind === 'ice') return `<div class="lesson-board lesson-ice-board">${tile(4, '', gone(step > 0, step === 1))}${tile(31, step < 2 ? (step ? '❄️' : '❄️❄️') : '', step < 2 ? 'lesson-ice' : step === 3 ? 'lesson-focus' : '')}${tile(8, '', gone(step > 1, step === 2))}</div>`;
   if (kind === 'lock') return `<div class="lesson-board">${tile(4, '🔑', gone(step > 0, step === 1))}${tile(31, step < 2 ? '🔒' : '🔓', step === 3 ? 'lesson-focus' : '')}${tile(4, '🔑', gone(step > 1, step === 2))}${tile(8, step < 2 ? '🔒' : '🔓')}</div>${lessonTray(step === 1 ? [4] : [])}`;
   if (kind === 'clock') return `<div class="lesson-board"><strong class="lesson-counter">⏰ ${step === 0 ? '3' : step === 3 ? '✓' : '2'}</strong>${tile(31, '⏰', gone(step === 3, step === 3))}${tile(4, '', gone(step > 0, step === 1))}${tile(8, '', step < 2 ? 'lesson-back' : step === 2 ? 'lesson-focus' : '')}</div>${lessonTray(step === 3 ? [4, 31] : step ? [4] : [])}`;
   return `${lessonTray([4, 8, 12])}<div class="lesson-board">${tile(31, '', step === 0 ? 'lesson-back lesson-focus' : step === 3 ? 'lesson-leaving' : step === 1 ? 'lesson-focus' : '')}${tile(31, '', step === 3 ? 'lesson-leaving' : step === 2 ? 'lesson-focus' : '')}</div>`;

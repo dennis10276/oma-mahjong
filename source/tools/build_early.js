@@ -41,6 +41,6 @@ const T = { v: 3, from: FROM, levels: [] };
 for (let lv = FROM; lv <= TO; lv++) T.levels.push(level(lv));
 const text = `/* Levels ${FROM}-${TO} (not ${[...OWN].join(', ')}), the same for everyone: the boards Gerda played (51 and 53 switched) (made by tools/build_early.js; see hard.js earlySpec). */\nconst EARLY_LEVELS = ${JSON.stringify(T)};\n`;
 const file = path.join(W, 'levels-early.js');
-if (process.argv.includes('--check')) { const ok = fs.existsSync(file) && fs.readFileSync(file, 'utf8') === text; console.log(ok ? 'levels-early.js matches' : 'levels-early.js differs'); process.exit(ok ? 0 : 1); }
+if (process.argv.includes('--check')) { const ok = fs.existsSync(file) && fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n') === text; console.log(ok ? 'levels-early.js matches' : 'levels-early.js differs'); process.exit(ok ? 0 : 1); }
 fs.writeFileSync(file, text);
 console.log(`wrote ${file}: ${T.levels.filter(Boolean).length} levels (${T.levels.filter((r, i) => r && GERDA.boards[SWAP[FROM + i] || FROM + i]).length} her recorded boards), ${(text.length / 1024).toFixed(0)} KB`);
