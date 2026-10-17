@@ -176,6 +176,7 @@ function setLang(code) {
 // ---------- modal ----------
 let modalClosable = true, modalOnClose = null;
 function openModal(html, closable = true, onClose = null, cls = '') {
+  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   const box = $('#modalBox');
   box.style.removeProperty('--heart-dialog-height');
   box.className = 'modal-box' + (cls ? ' ' + cls : '');   // 'compact': the after-level screens, they must fit without scrolling
@@ -184,6 +185,7 @@ function openModal(html, closable = true, onClose = null, cls = '') {
   modalClosable = closable; modalOnClose = onClose;
 }
 function closeModal() {
+  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   $('#modal').classList.add('hidden');
   const f = modalOnClose; modalOnClose = null; if (f) f();
 }
@@ -253,8 +255,10 @@ function showIntro(after) {
     <p>${fx('intro2')}</p>
     <p>${fx('intro3', RULES.tools.fromLevel)}</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>
+    <button class="link-btn" id="mTileHelp">${tx('lessonMenu')}</button>
     <button class="link-btn" id="mLang">${tx('introLang')}</button>`, true, after);
   $('#mGo').onclick = closeModal;
+  $('#mTileHelp').onclick = showLessonMenu;
   // switch the language right here (the explanation is shown again in the other language)
   $('#mLang').onclick = () => { setLang(isEn() ? 'nl' : 'en'); showIntro(after); };
   S.seenTray = true; S.seenIntro = true; save();
