@@ -118,6 +118,11 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .feed { list-style: none; margin: 0; padding: 0; max-height: 460px; overflow: auto; }
 .feed li { display: grid; grid-template-columns: 54px 22px 1fr; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
 .feed .t { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.feed .help-message { min-width: 0; }
+.feed .help-context { display: block; color: var(--ink-3); margin-top: 2px; }
+.feed .help-copy { margin-top: 5px; }
+.feed .help-copy summary { cursor: pointer; color: var(--ink-2); }
+.feed .help-copy p { white-space: pre-wrap; overflow-wrap: anywhere; margin: 6px 0 2px; padding: 8px; border-left: 3px solid var(--line); font-size: 13px; line-height: 1.4; }
 .feed li.day { display: block; font-weight: 800; color: var(--ink-2); padding-top: 12px; border: 0; }
 #tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 600; opacity: 0; transition: opacity .1s; z-index: 10; white-space: nowrap; }
 .empty { color: var(--ink-3); padding: 18px 0; text-align: center; }
@@ -538,6 +543,7 @@ function render() {
   $('#tbl').querySelectorAll('tbody tr').forEach(row => [...row.cells].forEach((cell, i) => { cell.dataset.label = headings[i]; }));
 
   // live feed
+  const openMessages = new Set([...$('#feed').querySelectorAll('details[data-message][open]')].map(d => d.dataset.message));
   const txt = e => {
     switch (e.k) {
       case 'open': return ['📱', `App geopend (versie ${esc(e.v)})`];
@@ -556,6 +562,16 @@ function render() {
       case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
       case 'nudge': return ['✨', `Hulpje: een paar ging oplichten in ${lvlName(e).toLowerCase()}${e.down ? ' (omgedraaide steen voor haar omgekeerd)' : ''}${e.w ? ` · wachtte ~${e.w} s` : ''}`];
       case 'clock': return ['⏰', `${lvlName(e)}: wekkersteen op tijd weg (nog ${e.ml} zetten over)`];
+      case 'help_msg': {
+        const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'] };
+        const [icon, topic] = topics[e.topic] || ['📖', 'Speluitleg'];
+        const reasons = { intro: 'eerste uitleg', retry: `herinnering na ${Number(e.fails) || 3} mislukte pogingen`, manual: 'zelf geopend', timeout: 'na afloop van de wekker' };
+        const actions = { shown: 'Uitleg getoond', ack: 'Uitleg bevestigd', retry: 'Uitleg gesloten · opnieuw proberen', menu: 'Uitleg gesloten · naar menu' };
+        const context = [e.scr === 'game' ? lvlName(e) : 'Menu', e.scr === 'game' && e.at ? `poging ${Number(e.at)}` : '', reasons[e.why] || '', e.lang === 'en' ? 'Engels' : 'Nederlands'].filter(Boolean).join(' · ');
+        const copy = Object.keys(e).filter(k => /^m\d+$/.test(k)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))).map(k => typeof e[k] === 'string' ? e[k] : '').join('');
+        const messageId = String(e.mid || `${e.t}-${e.topic}`);
+        return [icon, `<div class="help-message"><b>${actions[e.action] || 'Speluitleg'}: ${topic}</b><small class="help-context">${esc(context)}</small>${e.action === 'shown' ? `<details class="help-copy" data-message="${esc(messageId)}"${openMessages.has(messageId) ? ' open' : ''}><summary>Bericht: ${esc(e.title || topic)}</summary><p>${esc(copy || 'De berichttekst is niet vastgelegd.')}</p></details>` : ''}</div>`];
+      }
       case 'passed': return ['🏃', `Ingehaald door ${esc(e.by || '')} (zelf level ${e.lv}, nu ${e.rk}e)`];
       case 'redo': return ['↩️', `Opnieuw vanaf level ${e.from}: sterren en punten vanaf daar gewist`];
       case 'auto': return ['🪄', `${lvlName(e)}: kon niet meer misgaan, de laatste ${e.left} stenen gingen vanzelf`];
@@ -577,7 +593,8 @@ function render() {
     const dk = new Date(e.t).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
     if (dk !== lastDay) { html += `<li class="day">${dk}</li>`; lastDay = dk; }
     const [ico, t] = txt(e);
-    html += `<li><span class="t">${hm(e.t)}</span><span>${ico}</span><span>${t}</span></li>`;
+    const shownTime = e.k === 'help_msg' ? `${hm(e.t)}:${pad(new Date(e.t).getSeconds())}` : hm(e.t);
+    html += `<li><span class="t" title="${esc(new Date(e.t).toLocaleString('nl-NL'))}">${shownTime}</span><span>${ico}</span><span>${t}</span></li>`;
   }
   $('#feed').innerHTML = html || '<li class="empty">Nog niets gebeurd</li>';
 }

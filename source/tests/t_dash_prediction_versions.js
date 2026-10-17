@@ -39,7 +39,7 @@ module.exports = [{
       const current = require('../site/dash/predict.json');
       const v155 = require('../site/dash/predict-1.55.json');
       t.eq(v155.version, '1.55', '1.55 predictions are archived for older apps');
-      t.eq(current.version, '1.56', 'the current prediction file supports the tutorial release');
+      t.eq(current.version, '1.57', 'the current prediction file supports the message-logging release');
       t.eq(current.players, v155.players, 'unchanged boards keep the same prediction values');
       t.ok((await content()).includes('eigen gewoontes uit de opgenomen spellen'), 'explains the move-based test player');
       if (current.players[pid].levels[93]) t.ok((await row(93).innerText()).includes('gehaald in 1 poging'), 'a 1.54 result on a board that did not change still counts');
@@ -50,7 +50,10 @@ module.exports = [{
       await event({ k: 'open', v: '1.56', lv: 95, t: now + 3600 });
       if (current.players[pid].levels[94]) t.ok((await row(94).innerText()).includes('gehaald in 2 pogingen'), 'new-version results are compared with their predictions');
       await event({ k: 'open', v: '1.57', lv: 95, t: now + 4000 });
-      t.ok((await content()).includes('Geen passende voorspelling voor versie 1.57'), 'unsupported version never gets another version predictions');
+      t.ok((await content()).includes('versie 1.57'), 'message logging update keeps predictions available');
+      if (current.players[pid].levels[94]) t.ok((await row(94).innerText()).includes('gehaald in 2 pogingen'), '1.56 results remain comparable in 1.57');
+      await event({ k: 'open', v: '1.58', lv: 95, t: now + 4500 });
+      t.ok((await content()).includes('Geen passende voorspelling voor versie 1.58'), 'unsupported version never gets another version predictions');
       t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'viewing predictions writes no player data');
       t.eq(errors, [], 'no dashboard errors');
     } finally { await ctx.close(); site.close(); }
