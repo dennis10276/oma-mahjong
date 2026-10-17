@@ -52,3 +52,7 @@ complete suite is run again for the release.
 
 No levels, difficulty or live player data are changed. Publishing updates the
 game files and builds a fresh APK with the existing signing certificate.
+
+For 1.56 the dashboard predictions retain all 1.55 numbers, since the boards are
+identical. The original file is archived as `predict-1.55.json`, the current
+metadata registers 1.56, and 1.55 results remain comparable on all levels.

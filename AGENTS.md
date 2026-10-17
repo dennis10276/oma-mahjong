@@ -75,6 +75,10 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Predictions on the dashboard
 
+- Release 1.56 only improves tutorials; all boards are identical to 1.55. Current
+  predictions carry the same numbers under version 1.56, with 1.55 registered as
+  comparable on all levels and its original file preserved in `predict-1.55.json`.
+
 - `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, the prediction for
   their next 60 levels: first try, within 2 and within 4 tries. The dashboard shows it in the card
   "Voorspelling", with the real results next to it once played. It picks the file of the player's app
