@@ -243,7 +243,7 @@ function startLessonDemo() {
   demo.querySelector('.lesson-replay').onclick = () => { step = 0; playing = true; run(); };
   run();
 }
-function showTileLesson(kind, after = null, reminder = false) {
+function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_' + kind)}</h2>
     ${lessonDemoHTML(kind)}<p>${tx('nt_' + kind + '_text')}</p>
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
@@ -251,7 +251,8 @@ function showTileLesson(kind, after = null, reminder = false) {
       if (after) after();
     }, 'tile-help');
   startLessonDemo();
-  $('#ntGo').onclick = closeModal;
+  const message = recordHelpMessage(kind, why);
+  $('#ntGo').onclick = () => { message('ack'); closeModal(); };
 }
 // One relevant reminder per retry, from the third failure; rotate as failures accumulate.
 // Resuming an unfinished try does not trigger it again.
@@ -268,12 +269,12 @@ function retryTileHelp(after = null, resumed = false) {
 function showLessonMenu() {
   openModal(`<h2>${tx('lessonMenu')}</h2>${['ice', 'lock', 'clock', 'trayPair'].map(k => `<button class="big-btn lesson-pick" data-kind="${k}"><span class="bb-text"><b>${tx('nt_' + k)}</b></span></button>`).join('')}
     <button class="link-btn" id="mClose">${tx('gotIt')}</button>`, true, null, 'tile-help');
-  $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { b.onclick = () => b.dataset.kind === 'clock' ? showClockLesson(showLessonMenu) : showTileLesson(b.dataset.kind, showLessonMenu); });
+  $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { b.onclick = () => b.dataset.kind === 'clock' ? showClockLesson(showLessonMenu, false, 'manual') : showTileLesson(b.dataset.kind, showLessonMenu, false, 'manual'); });
   $('#mClose').onclick = closeModal;
 }
 // The same explanation before the first clock level and after every clock timeout.
 const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
-function showClockLesson(after = null, reminder = false) {
+function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${lessonDemoHTML('clock')}${clockHelpText()}
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp.clock = S.seenSp.clockMoves = true; save();
@@ -282,7 +283,8 @@ function showClockLesson(after = null, reminder = false) {
     }, 'clock-help');
   startLessonDemo();
   replayMark('clock-help', 'intro');
-  $('#ntGo').onclick = closeModal;
+  const message = recordHelpMessage('clock', why);
+  $('#ntGo').onclick = () => { message('ack'); closeModal(); };
 }
 function clockIntro(after = null) {
   if (!clockOn() || S.seenSp.clockMoves) return false;

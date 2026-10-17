@@ -700,7 +700,8 @@ function checkClock() {
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
     startLessonDemo();
-    $('#sRetry').onclick = () => { closeModal(); restart(); };
-    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
+    const message = recordHelpMessage('clock', 'timeout');
+    $('#sRetry').onclick = () => { message('retry'); closeModal(); restart(); };
+    $('#sMenu').onclick = () => { message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);
 }

@@ -32,7 +32,7 @@ function specialMatch(face, gold, c) {
 }
 // the first time a special tile shows up: a short explanation
 function specialTip() {
-  if (!G || G.done || !modalFree() || newTileIntro()) return;
+  if (!G || G.done || !modalFree()) return;
   if (G.gold.size > 0 && !S.seenSp.gold) { S.seenSp.gold = true; save(); toast(tx('goldNew'), 4200); }
 }
 
@@ -192,29 +192,114 @@ const NEW_TILES = {
   lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒' },
   ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊' },
   joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏' },
+  trayPair: { has: () => G.down.some(Boolean), first: () => G.o.mode === 'level' && G.o.level === 50, ico: '🀄' },
 };
+// Small, local demonstrations: no download, sound or changes to the real board.
+let lessonTimer = null;
+function stopLessonDemo() { clearInterval(lessonTimer); lessonTimer = null; }
+const lessonTile = (face, badge = '', cls = '') => `<span class="lesson-tile ${cls}"><span class="lesson-face">${Tiles.faceHTML('classic', face)}</span>${badge ? `<b class="lesson-badge">${badge}</b>` : ''}</span>`;
+const lessonTray = faces => `<div class="lesson-tray">${[0, 1, 2, 3].map(i => `<span class="lesson-slot">${i < faces.length ? lessonTile(faces[i]) : ''}</span>`).join('')}</div>`;
+function lessonFrame(kind, step) {
+  const tile = lessonTile;
+  const gone = (yes, leaving) => yes ? (leaving ? 'lesson-leaving' : 'lesson-gone') : '';
+  if (kind === 'ice') return `<div class="lesson-board lesson-ice-board">${tile(4, '', gone(step > 0, step === 1))}${tile(31, step < 2 ? (step ? '❄️' : '❄️❄️') : '', step < 2 ? 'lesson-ice' : step === 3 ? 'lesson-focus' : '')}${tile(8, '', gone(step > 1, step === 2))}</div>`;
+  if (kind === 'lock') return `<div class="lesson-board">${tile(4, '🔑', gone(step > 0, step === 1))}${tile(31, step < 2 ? '🔒' : '🔓', step === 3 ? 'lesson-focus' : '')}${tile(4, '🔑', gone(step > 1, step === 2))}${tile(8, step < 2 ? '🔒' : '🔓')}</div>${lessonTray(step === 1 ? [4] : [])}`;
+  if (kind === 'clock') return `<div class="lesson-board"><strong class="lesson-counter">⏰ ${step === 0 ? '3' : step === 3 ? '✓' : '2'}</strong>${tile(31, '⏰', gone(step === 3, step === 3))}${tile(4, '', gone(step > 0, step === 1))}${tile(8, '', step < 2 ? 'lesson-back' : step === 2 ? 'lesson-focus' : '')}</div>${lessonTray(step === 3 ? [4, 31] : step ? [4] : [])}`;
+  return `${lessonTray([4, 8, 12])}<div class="lesson-board">${tile(31, '', step === 0 ? 'lesson-back lesson-focus' : step === 3 ? 'lesson-leaving' : step === 1 ? 'lesson-focus' : '')}${tile(31, '', step === 3 ? 'lesson-leaving' : step === 2 ? 'lesson-focus' : '')}</div>`;
+}
+function lessonDemoHTML(kind) {
+  return `<div class="lesson-demo" data-lesson="${kind}">
+    <div class="lesson-scene" aria-hidden="true"></div>
+    <div class="lesson-caption"></div>
+    <div class="lesson-controls"><span>${tx('lessonExample')}</span><button type="button" class="lesson-toggle"></button><button type="button" class="lesson-replay">↺ ${tx('lessonReplay')}</button></div>
+  </div>`;
+}
+function startLessonDemo() {
+  stopLessonDemo();
+  const demo = $('#modalBox .lesson-demo');
+  if (!demo) return;
+  const kind = demo.dataset.lesson, prefix = { ice: 'Ice', lock: 'Lock', clock: 'Clock', trayPair: 'Pair' }[kind];
+  let step = 0, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const toggle = demo.querySelector('.lesson-toggle');
+  const paint = () => {
+    const changed = demo.dataset.step !== String(step);
+    demo.dataset.step = step;
+    demo.classList.toggle('lesson-paused', !playing);
+    if (changed) demo.querySelector('.lesson-scene').innerHTML = lessonFrame(kind, step);
+    demo.querySelector('.lesson-caption').textContent = tx('lesson' + prefix + step);
+    toggle.textContent = tx(playing ? 'lessonPause' : 'lessonPlay');
+    toggle.setAttribute('aria-pressed', String(playing));
+  };
+  const run = () => {
+    stopLessonDemo();
+    if (playing) lessonTimer = setInterval(() => {
+      if (!demo.isConnected || modalFree()) { stopLessonDemo(); return; }
+      if (document.hidden) return;
+      step = (step + 1) % 4; paint();
+    }, 2400);
+    paint();
+  };
+  toggle.onclick = () => { playing = !playing; run(); };
+  demo.querySelector('.lesson-replay').onclick = () => { step = 0; playing = true; run(); };
+  run();
+}
+function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
+  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_' + kind)}</h2>
+    ${lessonDemoHTML(kind)}<p>${tx('nt_' + kind + '_text')}</p>
+    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
+      S.seenSp[kind] = true; save();
+      if (after) after();
+    }, 'tile-help');
+  startLessonDemo();
+  const message = recordHelpMessage(kind, why);
+  $('#ntGo').onclick = () => { message('ack'); closeModal(); };
+}
+// One relevant reminder per retry, from the third failure; rotate as failures accumulate.
+// Resuming an unfinished try does not trigger it again.
+function retryTileHelp(after = null, resumed = false) {
+  if (!G || resumed || G.o.mode !== 'level' || (S.fails[G.key] || 0) < 3) return false;
+  const kinds = ['ice', 'lock', 'trayPair'].filter(k => NEW_TILES[k].has());
+  if (G.clock) kinds.push('clock');
+  if (!kinds.length) return false;
+  const kind = kinds[((S.fails[G.key] || 0) - 3) % kinds.length];
+  if (kind === 'clock') showClockLesson(after, true);
+  else showTileLesson(kind, after, true);
+  return true;
+}
+function showLessonMenu() {
+  openModal(`<h2>${tx('lessonMenu')}</h2>${['ice', 'lock', 'clock', 'trayPair'].map(k => `<button class="big-btn lesson-pick" data-kind="${k}"><span class="bb-text"><b>${tx('nt_' + k)}</b></span></button>`).join('')}
+    <button class="link-btn" id="mClose">${tx('gotIt')}</button>`, true, null, 'tile-help');
+  $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { b.onclick = () => b.dataset.kind === 'clock' ? showClockLesson(showLessonMenu, false, 'manual') : showTileLesson(b.dataset.kind, showLessonMenu, false, 'manual'); });
+  $('#mClose').onclick = closeModal;
+}
 // The same explanation before the first clock level and after every clock timeout.
 const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
-function clockIntro(after = null) {
-  if (!clockOn() || S.seenSp.clockMoves) return false;
-  openModal(`<div class="nt-ico">⏰</div><h2>${tx('nt_clock')}</h2>${clockHelpText()}
+function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
+  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${lessonDemoHTML('clock')}${clockHelpText()}
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp.clock = S.seenSp.clockMoves = true; save();
       replayMark('clock-help', 'acknowledged');
       if (after) after();
     }, 'clock-help');
+  startLessonDemo();
   replayMark('clock-help', 'intro');
-  $('#ntGo').onclick = closeModal;
+  const message = recordHelpMessage('clock', why);
+  $('#ntGo').onclick = () => { message('ack'); closeModal(); };
+}
+function clockIntro(after = null) {
+  if (!clockOn() || S.seenSp.clockMoves) return false;
+  showClockLesson(after);
   return true;
 }
-function newTileIntro() {
+function newTileIntro(after = null) {
   if (!G || G.done) return false;
-  const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has());
+  const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
+  if (k !== 'joker2') { showTileLesson(k, after); return true; }
   S.seenSp[k] = true; save();
   const t = NEW_TILES[k];
   openModal(`<div class="nt-ico">${t.ico}</div><h2>${tx('newTile', tx('nt_' + k))}</h2><p>${tx('nt_' + k + '_text')}</p>
-    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, true);
+    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, true, after);
   $('#ntGo').onclick = closeModal;
   return true;
 }
