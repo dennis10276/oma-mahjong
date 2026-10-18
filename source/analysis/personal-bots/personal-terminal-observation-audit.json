@@ -1,0 +1,532 @@
+{
+  "made": "2026-10-18T06:09:05.559Z",
+  "evidence": "terminal-visible-memory-diagnostic",
+  "targetMet": false,
+  "fingerprint": "ab2585ef23dd6ac20277fb59e80d06840e2a69889c887e946dc1a714afa27575",
+  "fingerprintFiles": [
+    "www/hard.js",
+    "www/layouts.js",
+    "tools/sim/refit/personal_prefix_data.js",
+    "tools/sim/refit/mimic_games.js",
+    "analysis/archive/realdata/plays.json",
+    "analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "tools/sim/refit/personal_retry_memory.js",
+    "tools/sim/refit/attempt_campaigns.js",
+    "tools/sim/refit/personal_model.js",
+    "tools/sim/refit/personal_terminal_observation_audit.js",
+    "tools/sim/refit/personal_context_runtime_audit.js",
+    "www/js/board.js"
+  ],
+  "immutablePrefixParent": "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z",
+  "immutablePrefixSha256": "f859cee9b0244211cad658f20f3fa1908b321106b156168c308548f5202c75ab",
+  "players": {
+    "Dennisisdebeste": {
+      "prefixes": 74,
+      "affected": 7,
+      "missingVisiblePictures": 7,
+      "initialNewAffected": 3,
+      "byTerminal": {
+        "clock/end": 1,
+        "tray/end": 6
+      },
+      "rows": [
+        {
+          "aid": "dc420c02-efac-47ff-b8db-fdc06c6d6ec1",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "clock",
+          "missing": [
+            43
+          ],
+          "msAfterFinalAction": 7
+        },
+        {
+          "aid": "a5e6a3f2-9a33-4f5a-b3d6-a22fe3cc1842",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            28
+          ],
+          "msAfterFinalAction": 245
+        },
+        {
+          "aid": "5d9cdde1-8175-4614-b6c4-65450bbee997",
+          "level": 108,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            50
+          ],
+          "msAfterFinalAction": 243
+        },
+        {
+          "aid": "7f00a2e4-bb0e-4ad9-8e76-e3d05e38616e",
+          "level": 109,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            57
+          ],
+          "msAfterFinalAction": 243
+        },
+        {
+          "aid": "64e2f7f0-3c64-4a7a-902c-745de1199144",
+          "level": 109,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            11
+          ],
+          "msAfterFinalAction": 241
+        },
+        {
+          "aid": "12d958f6-91c1-4fad-a757-d93382a17b0a",
+          "level": 115,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            45
+          ],
+          "msAfterFinalAction": 252
+        },
+        {
+          "aid": "abcb5c7f-2dbb-4c13-9dd6-3a99c4d54182",
+          "level": 115,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            13
+          ],
+          "msAfterFinalAction": 245
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "prefixes": 65,
+      "affected": 11,
+      "missingVisiblePictures": 11,
+      "initialNewAffected": 2,
+      "byTerminal": {
+        "clock/end": 4,
+        "tray/end": 7
+      },
+      "rows": [
+        {
+          "aid": "e6686c50-df17-4202-ada2-fdc0fdb33e22",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "clock",
+          "missing": [
+            34
+          ],
+          "msAfterFinalAction": 5
+        },
+        {
+          "aid": "65b6bfcc-641b-4701-a82d-721cd10663b9",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            28
+          ],
+          "msAfterFinalAction": 240
+        },
+        {
+          "aid": "5bb3d343-fd5b-4ae9-a450-967706eb37b6",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "clock",
+          "missing": [
+            40
+          ],
+          "msAfterFinalAction": 3
+        },
+        {
+          "aid": "a26bc167-9c17-4af3-98de-b7309775264f",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "clock",
+          "missing": [
+            40
+          ],
+          "msAfterFinalAction": 4
+        },
+        {
+          "aid": "0abe9988-900d-4875-badd-4caeca687176",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            17
+          ],
+          "msAfterFinalAction": 235
+        },
+        {
+          "aid": "351b7ffd-f558-4f5a-aaf2-8e831e9535c3",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            23
+          ],
+          "msAfterFinalAction": 238
+        },
+        {
+          "aid": "fc197908-9d20-46e4-bbe9-3a79fd598e2d",
+          "level": 91,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            17
+          ],
+          "msAfterFinalAction": 236
+        },
+        {
+          "aid": "310d321c-a36c-49bb-92c4-7850414e3e38",
+          "level": 93,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "clock",
+          "missing": [
+            21
+          ],
+          "msAfterFinalAction": 5
+        },
+        {
+          "aid": "6a159ce0-33ec-4bd7-9f01-bdb0a7fd1035",
+          "level": 94,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            6
+          ],
+          "msAfterFinalAction": 238
+        },
+        {
+          "aid": "179d3bca-ee3a-4bb4-9b63-4379fe4e0267",
+          "level": 94,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            42
+          ],
+          "msAfterFinalAction": 238
+        },
+        {
+          "aid": "1ee36661-7913-4a58-9f57-3ea6af7ed230",
+          "level": 99,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            40
+          ],
+          "msAfterFinalAction": 240
+        }
+      ]
+    },
+    "PUK": {
+      "prefixes": 57,
+      "affected": 2,
+      "missingVisiblePictures": 2,
+      "initialNewAffected": 1,
+      "byTerminal": {
+        "tray/end": 2
+      },
+      "rows": [
+        {
+          "aid": "c8d3ead3-7f90-41c4-8cb2-df96164b26e3",
+          "level": 39,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            22
+          ],
+          "msAfterFinalAction": 241
+        },
+        {
+          "aid": "e92633c4-4d5d-4138-ad17-bce3450a641c",
+          "level": 43,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            31
+          ],
+          "msAfterFinalAction": 242
+        }
+      ]
+    },
+    "Gerda": {
+      "prefixes": 202,
+      "affected": 18,
+      "missingVisiblePictures": 18,
+      "initialNewAffected": 5,
+      "byTerminal": {
+        "tray/end": 15,
+        "stopped/shuffle": 2,
+        "stopped/conflictingChunk": 1
+      },
+      "rows": [
+        {
+          "aid": "47035804-9ae3-4df7-89f8-1ccd596511a0",
+          "level": 5,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            21
+          ],
+          "msAfterFinalAction": 243
+        },
+        {
+          "aid": "7f779395-2f86-4d94-9276-11cd816d2977",
+          "level": 6,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            22
+          ],
+          "msAfterFinalAction": 245
+        },
+        {
+          "aid": "89d9a8d6-2374-4dcd-801c-7964ed09565e",
+          "level": 26,
+          "initialNewLevel": true,
+          "ending": null,
+          "stopReason": "shuffle",
+          "why": "stopped",
+          "missing": [
+            22
+          ],
+          "msAfterFinalAction": 2856
+        },
+        {
+          "aid": "d881b05a-0e55-41b2-8470-25826d0d7ca0",
+          "level": 26,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            14
+          ],
+          "msAfterFinalAction": 242
+        },
+        {
+          "aid": "11025e5d-7117-4e7a-aef3-087e8ccdef83",
+          "level": 27,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            28
+          ],
+          "msAfterFinalAction": 240
+        },
+        {
+          "aid": "56a19d6f-a2c5-47fd-a199-3033f034fb21",
+          "level": 27,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            37
+          ],
+          "msAfterFinalAction": 240
+        },
+        {
+          "aid": "b67b8cd7-c750-487a-b1c0-baf83f4a2d51",
+          "level": 28,
+          "initialNewLevel": true,
+          "ending": null,
+          "stopReason": "shuffle",
+          "why": "stopped",
+          "missing": [
+            37
+          ],
+          "msAfterFinalAction": 7972
+        },
+        {
+          "aid": "c33c73c4-352f-4583-a2aa-bb2db816edf9",
+          "level": 28,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            50
+          ],
+          "msAfterFinalAction": 239
+        },
+        {
+          "aid": "2bf88cf4-5ff0-442c-90fe-0927675ae76f",
+          "level": 28,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            7
+          ],
+          "msAfterFinalAction": 247
+        },
+        {
+          "aid": "98104883-c62c-4e83-a34f-3c58ca964566",
+          "level": 28,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            66
+          ],
+          "msAfterFinalAction": 243
+        },
+        {
+          "aid": "07d7de05-d01c-47aa-b9fe-cef0c991ae0b",
+          "level": 29,
+          "initialNewLevel": true,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            29
+          ],
+          "msAfterFinalAction": 242
+        },
+        {
+          "aid": "c4dff8ce-2047-47d1-8187-4c12ecdf9d3a",
+          "level": 29,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            16
+          ],
+          "msAfterFinalAction": 247
+        },
+        {
+          "aid": "98359114-2a04-45fe-b6e0-ece801eb10bf",
+          "level": 31,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            34
+          ],
+          "msAfterFinalAction": 241
+        },
+        {
+          "aid": "3d2d8b46-255e-4ebf-b672-921394debc33",
+          "level": 35,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            30
+          ],
+          "msAfterFinalAction": 244
+        },
+        {
+          "aid": "0e50f1f1-8fd5-4dc2-a485-b3ec33234bde",
+          "level": 36,
+          "initialNewLevel": false,
+          "ending": null,
+          "stopReason": "conflictingChunk",
+          "why": "stopped",
+          "missing": [
+            30
+          ],
+          "msAfterFinalAction": 9893
+        },
+        {
+          "aid": "9e703ad3-e7bc-40e6-8e7b-2e0b8390afc1",
+          "level": 36,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            22
+          ],
+          "msAfterFinalAction": 243
+        },
+        {
+          "aid": "a6b781c6-13f3-4ae9-8b36-38f9ab7a4939",
+          "level": 36,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            41
+          ],
+          "msAfterFinalAction": 237
+        },
+        {
+          "aid": "a6fe1fba-cd91-4a1c-9892-2c899417b235",
+          "level": 36,
+          "initialNewLevel": false,
+          "ending": "stuck",
+          "stopReason": "end",
+          "why": "tray",
+          "missing": [
+            50
+          ],
+          "msAfterFinalAction": 239
+        }
+      ]
+    }
+  },
+  "note": "Read-only reconstruction of the unchanged 398-prefix cohort. Only currently exposed face-up tiles count; neither unseen face-down pictures, covered pictures, nor blocked-click xray are credited. The current UI exposes the board before delayed failure modals; visibility is an opportunity, not proof of human recall. Interrupted and assisted prefixes remain labelled, not converted into natural completed failures. No bot behavior, human winning-count label, forecast, or accuracy measurement is changed."
+}

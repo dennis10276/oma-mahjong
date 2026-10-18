@@ -1,0 +1,11 @@
+{
+  "purpose": "Observed research defect, not a forecast result: a known Joker can clear a waiting tile but the move-kind selector treats it as fatal.",
+  "tiles": [[0, 10, 0], [4, 10, 0], [8, 10, 0], [12, 10, 0], [0, 0, 0], [4, 0, 0], [8, 0, 0], [0, 0, 1], [4, 0, 1], [8, 0, 1]],
+  "faces": [0, 1, 2, 101, 0, 1, 2, 3, 3, 101],
+  "down": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  "start": [0, 1, 2],
+  "persona": {"allMoves": true, "flips": true, "peek": 0, "end": 0, "plan": 0, "kinds": {"t3p-": {"pair": 1, "fatal": 0}}},
+  "seed": 1,
+  "observed": {"win": false, "why": "tray", "moves": 3},
+  "expectedInvariant": "Do not declare a known Joker fatal while ordinary tiles wait in the tray. Unknown Joker pictures still require observation."
+}

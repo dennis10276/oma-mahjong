@@ -1,0 +1,5608 @@
+{
+  "made": "2026-10-18T05:50:20.539Z",
+  "evidence": "episode-lifecycle-throughput-pilot-only",
+  "targetMet": false,
+  "fingerprint": "85bd5f605a583e115882d4bde28c0951429aafd0c3a06184f3ef1a349b4fb026",
+  "fingerprintFiles": [
+    "www/hard.js",
+    "www/layouts.js",
+    "tools/sim/refit/personal_prefix_data.js",
+    "tools/sim/refit/mimic_games.js",
+    "analysis/archive/realdata/plays.json",
+    "analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "tools/sim/refit/personal_retry_memory.js",
+    "tools/sim/refit/attempt_campaigns.js",
+    "tools/sim/refit/personal_model.js",
+    "tools/sim/refit/personal_context_runtime_audit.js",
+    "tools/sim/refit/personal_context_choice.js",
+    "tools/sim/refit/physical_count_data.js",
+    "analysis/personal-bots/personal-context-runtime-audit.json",
+    "analysis/archive/personal-bots/experiments/personal-episode-actions-2026-10-18T05-33-43-593Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-episode-actions-2026-10-18T05-33-43-593Z/analysis/archive/personal-bots/personal-plan-models.json",
+    "analysis/archive/personal-bots/experiments/personal-episode-actions-2026-10-18T05-33-43-593Z/analysis/personal-bots/personal-plan-action-evaluation.json",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/policy-value-prefix-data.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-count-data.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-count-requests.json",
+    "tools/sim/refit/personal_plan_runtime_audit.js",
+    "tools/sim/refit/personal_plan_choice.js",
+    "tools/sim/refit/personal_plan.py",
+    "analysis/personal-bots/personal-plan-runtime-audit.json",
+    "tools/sim/refit/personal_plan_count_data.js",
+    "tools/sim/refit/personal_plan_count_fit.py",
+    "tools/sim/refit/personal_count_fit.py",
+    "tools/sim/refit/attempt_count_fit.py",
+    "tools/sim/refit/attempt_hazard.py",
+    "tools/sim/refit/board_recall_eval.py",
+    "tools/sim/refit/attempt_count.js",
+    "tools/sim/refit/attempt_count_labels.js",
+    "tools/sim/refit/attempt_features.js",
+    "tools/sim/refit/pdata.js",
+    "tools/sim/refit/boards.js",
+    "tools/sim/refit/board_versions.js",
+    "tools/sim/refit/kinds.js",
+    "tools/sim/refit/personal_policy_prior.js",
+    "tools/sim/refit/attempts.json",
+    "tools/sim/refit/tables/early-1.55.js",
+    "tools/sim/refit/tables/hard-1.44.js",
+    "tools/sim/refit/tables/hard-1.45.js",
+    "tools/sim/refit/tables/hard-1.46.js",
+    "tools/sim/refit/tables/hard-1.47.js",
+    "tools/sim/refit/tables/hard-1.48.js",
+    "tools/sim/refit/tables/hard-1.49.js",
+    "tools/sim/refit/tables/hard-1.50.js",
+    "tools/sim/refit/tables/hard-1.51.js",
+    "tools/sim/refit/tables/hard-1.52.js",
+    "tools/sim/refit/tables/hard-1.53.js",
+    "tools/sim/refit/tables/hard-1.55.js",
+    "tools/sim/refit/tables/levels-1.44.js",
+    "tools/sim/refit/tables/levels-1.45.js",
+    "tools/sim/refit/tables/levels-1.46.js",
+    "tools/sim/refit/tables/levels-1.47.js",
+    "tools/sim/refit/tables/levels-1.48.js",
+    "tools/sim/refit/tables/levels-1.49.js",
+    "tools/sim/refit/tables/levels-1.50.js",
+    "tools/sim/refit/tables/levels-1.51.js",
+    "tools/sim/refit/tables/levels-1.52.js",
+    "tools/sim/refit/tables/levels-1.53.js",
+    "tools/sim/refit/tables/levels-1.55.js",
+    "analysis/archive/personal-bots/experiments/personal-context-full-2026-10-18T05-17-41-214Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-context-full-2026-10-18T05-17-41-214Z/analysis/archive/personal-bots/physical-context-count-data.json",
+    "analysis/archive/personal-bots/experiments/personal-context-full-2026-10-18T05-17-41-214Z/analysis/archive/personal-bots/physical-context-count-scored.json",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/personal-context-models.json"
+  ],
+  "planRuns": 2,
+  "planAttempts": 3,
+  "controlRuns": 32,
+  "controlAttempts": 32,
+  "controlChainsMatched": 828,
+  "computationCaps": 0,
+  "rows": [
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 34,
+      "start": 1791657385690,
+      "board": "37f46416f6fc4314dab35af39bf24bb02a23ab44483c35b996ddc3ddfb4e2ea6",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 66,
+        "ownStepPlan8": 68,
+        "ownEpisodePlan8": 62,
+        "ownAdaptiveEpisodePlan8": 57,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 35,
+      "start": 1791657627920,
+      "board": "4b7a940b1abccfc356eba94982f1b787ed497f9d06b247d2c0eb15dd01222d5d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 93,
+        "ownStepPlan8": 80,
+        "ownEpisodePlan8": 69,
+        "ownAdaptiveEpisodePlan8": 65,
+        "ownCarryEpisodePlan8": 66
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 36,
+      "start": 1791658041638,
+      "board": "945750c5e2eb61770854686df4631ba1338d6e0c1d7eac7f6ec993206d155c37",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 82,
+        "ownStepPlan8": 76,
+        "ownEpisodePlan8": 64,
+        "ownAdaptiveEpisodePlan8": 63,
+        "ownCarryEpisodePlan8": 60
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 37,
+      "start": 1791658242653,
+      "board": "54883b8018d9b4e09146149fa64757463ff29aeff1abf75067f90b642e691fe2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 99,
+        "ownStepPlan8": 95,
+        "ownEpisodePlan8": 90,
+        "ownAdaptiveEpisodePlan8": 88,
+        "ownCarryEpisodePlan8": 86
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 38,
+      "start": 1791658454951,
+      "board": "e4bae72a6f22602ba0e9de889044672afbfacdc81fd69fae6edebf2d72867ecb",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 50,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 48,
+        "ownCarryEpisodePlan8": 47
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 39,
+      "start": 1791658644840,
+      "board": "b313115631608b17330352b7e9b365e264c1be417bc986e4049c6968037539f7",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 42,
+        "ownStepPlan8": 42,
+        "ownEpisodePlan8": 42,
+        "ownAdaptiveEpisodePlan8": 40,
+        "ownCarryEpisodePlan8": 38
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 42,
+      "start": 1791671822274,
+      "board": "6c0af07e9d139e65f14e8b4440dfc37e2d92b2c6870f01f9b468bfbe022f0ce2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 58,
+        "ownStepPlan8": 57,
+        "ownEpisodePlan8": 58,
+        "ownAdaptiveEpisodePlan8": 76,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 43,
+      "start": 1791672051695,
+      "board": "a93ab4c21ab988d47bed52dc5aa9a01966a6081c6a2ae2fb5d10a461fba37c4b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 113,
+        "ownStepPlan8": 109,
+        "ownEpisodePlan8": 125,
+        "ownAdaptiveEpisodePlan8": 106,
+        "ownCarryEpisodePlan8": 109
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 44,
+      "start": 1791672248764,
+      "board": "6cd8e2d7902de9b69f7a030c20feffda58f83dd846bc76bfec422bf18cc8a0ae",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 80,
+        "ownStepPlan8": 78,
+        "ownEpisodePlan8": 80,
+        "ownAdaptiveEpisodePlan8": 87,
+        "ownCarryEpisodePlan8": 74
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 45,
+      "start": 1791672544404,
+      "board": "e9d35a325c74f801f85fc669db5dec2b6b04db3b69a4cba8a8e53854efbf3bf1",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 81,
+        "ownStepPlan8": 75,
+        "ownEpisodePlan8": 73,
+        "ownAdaptiveEpisodePlan8": 73,
+        "ownCarryEpisodePlan8": 66
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 46,
+      "start": 1791672693383,
+      "board": "3a9683b514b2954dc2ef3eca388aed2201705dee67a178e4fdf099d272d51bbd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 60,
+        "ownStepPlan8": 62,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 58
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 47,
+      "start": 1791672941993,
+      "board": "9bc31cf8546d1ebc4d041003648c68c6e426afe854d7b2d97effc0b5020b27cd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 61,
+        "ownStepPlan8": 62,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 52
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 48,
+      "start": 1791673110862,
+      "board": "5d18742df8dea6f6a0b84b416fbceda356818ee8d9f2bec5d06c60da0a96d564",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 98,
+        "ownStepPlan8": 106,
+        "ownEpisodePlan8": 100,
+        "ownAdaptiveEpisodePlan8": 101,
+        "ownCarryEpisodePlan8": 95
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 49,
+      "start": 1791673261914,
+      "board": "554c38899b0b19d3366b7737b43b8a420b0b00f66198038dbae11dadfa8acec2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 23,
+        "ownStepPlan8": 26,
+        "ownEpisodePlan8": 26,
+        "ownAdaptiveEpisodePlan8": 27,
+        "ownCarryEpisodePlan8": 28
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 50,
+      "start": 1791673449588,
+      "board": "6acab72ecfdca76eba147b6a440621ad4d69d6242321be33cc8e63e3bf84df3f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 95,
+        "ownStepPlan8": 95,
+        "ownEpisodePlan8": 95,
+        "ownAdaptiveEpisodePlan8": 92,
+        "ownCarryEpisodePlan8": 92
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 51,
+      "start": 1791673658738,
+      "board": "5e1a94a46876a08dd855aeb8128ba7a49fd93b827d7cac4c771e406cf5552888",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 34,
+        "ownStepPlan8": 37,
+        "ownEpisodePlan8": 36,
+        "ownAdaptiveEpisodePlan8": 37,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 52,
+      "start": 1791673820036,
+      "board": "4655a2cf7c1afa62ce97927c2282583e927a11d32e0faa204ccb75d99fd0667f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 122,
+        "ownStepPlan8": 129,
+        "ownEpisodePlan8": 121,
+        "ownAdaptiveEpisodePlan8": 123,
+        "ownCarryEpisodePlan8": 125
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 40,
+      "start": 1791707141764,
+      "board": "a1b6025525c6d0224df6a3bc9380ecfdc4a5292cac404e08d7d6f66f9264d1d4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 51,
+        "ownStepPlan8": 55,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 52,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 41,
+      "start": 1791707305664,
+      "board": "d1ad15df402776cb4f0dfc1afdb63ca84095a2d8685abe1bcf97da728999b1be",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 235,
+        "ownStepPlan8": 237,
+        "ownEpisodePlan8": 230,
+        "ownAdaptiveEpisodePlan8": 233,
+        "ownCarryEpisodePlan8": 234
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 42,
+      "start": 1791707753465,
+      "board": "07e6efc8961e7fb727eabb9e7ab24a48f62839bfe1ade92578b55b553e90eb5c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 44,
+        "ownStepPlan8": 48,
+        "ownEpisodePlan8": 48,
+        "ownAdaptiveEpisodePlan8": 44,
+        "ownCarryEpisodePlan8": 43
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 43,
+      "start": 1791708162742,
+      "board": "d64871a8e2ac6360603cf5ceb7df82f0bde94bca9d32f2bdda16827e84429a9d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 59,
+        "ownStepPlan8": 66,
+        "ownEpisodePlan8": 76,
+        "ownAdaptiveEpisodePlan8": 77,
+        "ownCarryEpisodePlan8": 61
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 44,
+      "start": 1791708692314,
+      "board": "6cd8e2d7902de9b69f7a030c20feffda58f83dd846bc76bfec422bf18cc8a0ae",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 78,
+        "ownStepPlan8": 79,
+        "ownEpisodePlan8": 81,
+        "ownAdaptiveEpisodePlan8": 79,
+        "ownCarryEpisodePlan8": 77
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 45,
+      "start": 1791709866381,
+      "board": "a1ede846616fcb6a3e3cdf1e3edb8c21400989f3a6f9204fee2114ce48f6e8b6",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 64,
+        "ownStepPlan8": 53,
+        "ownEpisodePlan8": 48,
+        "ownAdaptiveEpisodePlan8": 42,
+        "ownCarryEpisodePlan8": 48
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 46,
+      "start": 1791710141232,
+      "board": "c7d65ce7fdddd039bf16742ad503b0501d504df86480d20ab7ca3c0ae5c9de4a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 45,
+        "ownStepPlan8": 48,
+        "ownEpisodePlan8": 48,
+        "ownAdaptiveEpisodePlan8": 48,
+        "ownCarryEpisodePlan8": 50
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 47,
+      "start": 1791710366592,
+      "board": "9bc31cf8546d1ebc4d041003648c68c6e426afe854d7b2d97effc0b5020b27cd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 55,
+        "ownStepPlan8": 59,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 53,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 53,
+      "start": 1791715830286,
+      "board": "7f15614b606e99c0593d87ddc07e0e7a6c3d658b7dbd8b800f6e74dd4faae72b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 54,
+        "ownStepPlan8": 60,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 58,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 54,
+      "start": 1791716048556,
+      "board": "f986aeed08b4db2c26b7b3a83e8ab4523202bdbc8dc84b645e702daac92669b3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 22,
+        "ownStepPlan8": 24,
+        "ownEpisodePlan8": 23,
+        "ownAdaptiveEpisodePlan8": 22,
+        "ownCarryEpisodePlan8": 23
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 55,
+      "start": 1791716687401,
+      "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 34,
+        "ownStepPlan8": 34,
+        "ownEpisodePlan8": 36,
+        "ownAdaptiveEpisodePlan8": 36,
+        "ownCarryEpisodePlan8": 33
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 56,
+      "start": 1791716879037,
+      "board": "2040743fb27e1621f679dac916da5ad52833eb23cd3c299ec03c04f2fde0b608",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 57,
+        "ownStepPlan8": 62,
+        "ownEpisodePlan8": 61,
+        "ownAdaptiveEpisodePlan8": 63,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 57,
+      "start": 1791717125342,
+      "board": "844d0dfcd12319ab0e126e0ddc1b5ceb959d9c0a90969986f7d567607d4fdd29",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 32,
+        "ownStepPlan8": 33,
+        "ownEpisodePlan8": 34,
+        "ownAdaptiveEpisodePlan8": 32,
+        "ownCarryEpisodePlan8": 32
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 58,
+      "start": 1791717353426,
+      "board": "f9b0b1dd4a7934726c321efc0ae9cc6507151f43f70be603d308e965bc2b3918",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 123,
+        "ownStepPlan8": 136,
+        "ownEpisodePlan8": 135,
+        "ownAdaptiveEpisodePlan8": 143,
+        "ownCarryEpisodePlan8": 143
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 10,
+      "start": 1791723360156,
+      "board": "e5fbf302e462abedc8e30e6d2bd0b9882d865c69774906e012bfe5dc0b8d98b2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 17,
+        "ownStepPlan8": 17,
+        "ownEpisodePlan8": 18,
+        "ownAdaptiveEpisodePlan8": 17,
+        "ownCarryEpisodePlan8": 19
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 11,
+      "start": 1791723586490,
+      "board": "191257396618fc5e3694fc17be8d9853adacf4ddcfb175d06ab69d0b5d66344f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 25,
+        "ownStepPlan8": 27,
+        "ownEpisodePlan8": 26,
+        "ownAdaptiveEpisodePlan8": 26,
+        "ownCarryEpisodePlan8": 27
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 12,
+      "start": 1791723762028,
+      "board": "12b067d9d2933040f7eed2b828624b13f2abdbfa47fce06fe310d5626f3dc31d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 31,
+        "ownStepPlan8": 31,
+        "ownEpisodePlan8": 32,
+        "ownAdaptiveEpisodePlan8": 31,
+        "ownCarryEpisodePlan8": 29
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 13,
+      "start": 1791735711452,
+      "board": "6fc6feaed9d90c5da2e15dce6a6e4446079300edc72c4d43f56c7b7e6452ad4a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 23,
+        "ownStepPlan8": 26,
+        "ownEpisodePlan8": 24,
+        "ownAdaptiveEpisodePlan8": 26,
+        "ownCarryEpisodePlan8": 25
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 14,
+      "start": 1791736449684,
+      "board": "fbf8a97dca2e4dad9ce19a7de37172050b12f6a1522d8dda7ec2cee38d5eb20a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 25,
+        "ownStepPlan8": 27,
+        "ownEpisodePlan8": 27,
+        "ownAdaptiveEpisodePlan8": 25,
+        "ownCarryEpisodePlan8": 26
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 48,
+      "start": 1791739345039,
+      "board": "5d18742df8dea6f6a0b84b416fbceda356818ee8d9f2bec5d06c60da0a96d564",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 93,
+        "ownStepPlan8": 96,
+        "ownEpisodePlan8": 103,
+        "ownAdaptiveEpisodePlan8": 98,
+        "ownCarryEpisodePlan8": 95
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 49,
+      "start": 1791739537339,
+      "board": "554c38899b0b19d3366b7737b43b8a420b0b00f66198038dbae11dadfa8acec2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 23,
+        "ownStepPlan8": 25,
+        "ownEpisodePlan8": 24,
+        "ownAdaptiveEpisodePlan8": 24,
+        "ownCarryEpisodePlan8": 27
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 50,
+      "start": 1791739688578,
+      "board": "6acab72ecfdca76eba147b6a440621ad4d69d6242321be33cc8e63e3bf84df3f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 92,
+        "ownStepPlan8": 99,
+        "ownEpisodePlan8": 116,
+        "ownAdaptiveEpisodePlan8": 100,
+        "ownCarryEpisodePlan8": 97
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 51,
+      "start": 1791740007073,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 101,
+        "ownStepPlan8": 118,
+        "ownEpisodePlan8": 104,
+        "ownAdaptiveEpisodePlan8": 102,
+        "ownCarryEpisodePlan8": 106
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 52,
+      "start": 1791740694592,
+      "board": "232ec33c8b8d51d359b52faae3872cba59676900e299b18c814afa07bbd6e26c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 58,
+        "ownStepPlan8": 61,
+        "ownEpisodePlan8": 60,
+        "ownAdaptiveEpisodePlan8": 60,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 53,
+      "start": 1791741136165,
+      "board": "eefae6e74eab8436943a0ccba6fd8e46ec322c956b97aeddcdcd840133e6e9e4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 84,
+        "ownStepPlan8": 90,
+        "ownEpisodePlan8": 91,
+        "ownAdaptiveEpisodePlan8": 87,
+        "ownCarryEpisodePlan8": 87
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 15,
+      "start": 1791741258213,
+      "board": "b0426f53a5d3029a10737a11ee04b9b1e7bb7427cee6520e6187cf32c4ef074f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 27,
+        "ownStepPlan8": 29,
+        "ownEpisodePlan8": 29,
+        "ownAdaptiveEpisodePlan8": 30,
+        "ownCarryEpisodePlan8": 28
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 54,
+      "start": 1791741452257,
+      "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 53,
+        "ownStepPlan8": 56,
+        "ownEpisodePlan8": 53,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 16,
+      "start": 1791741565729,
+      "board": "a8fa32a8a33c60569c6b73e26e5678622aa47ba1d3ba43a81a498ceee04697a3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 23,
+        "ownStepPlan8": 23,
+        "ownEpisodePlan8": 24,
+        "ownAdaptiveEpisodePlan8": 24,
+        "ownCarryEpisodePlan8": 24
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 55,
+      "start": 1791741604886,
+      "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 33,
+        "ownStepPlan8": 35,
+        "ownEpisodePlan8": 34,
+        "ownAdaptiveEpisodePlan8": 35,
+        "ownCarryEpisodePlan8": 34
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 17,
+      "start": 1791741825209,
+      "board": "7f4936ae90b737f23e2ed37b7385097cf522ad422a1646d685b4f4ced69b15ad",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 20,
+        "ownStepPlan8": 23,
+        "ownEpisodePlan8": 22,
+        "ownAdaptiveEpisodePlan8": 21,
+        "ownCarryEpisodePlan8": 22
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 18,
+      "start": 1791742016475,
+      "board": "2ae0a3e91c29c4473ba48c1d3db36c7d58f89c5f85ee2d3183dc8d22691eb677",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 31,
+        "ownStepPlan8": 36,
+        "ownEpisodePlan8": 37,
+        "ownAdaptiveEpisodePlan8": 35,
+        "ownCarryEpisodePlan8": 34
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 56,
+      "start": 1791742130737,
+      "board": "2040743fb27e1621f679dac916da5ad52833eb23cd3c299ec03c04f2fde0b608",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 60,
+        "ownStepPlan8": 62,
+        "ownEpisodePlan8": 61,
+        "ownAdaptiveEpisodePlan8": 61,
+        "ownCarryEpisodePlan8": 60
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 59,
+      "start": 1791742237699,
+      "board": "c4d83c187f438ed6db9c6a447700bf23fd5278f0f3efa57426aec562895472a6",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 34,
+        "ownStepPlan8": 37,
+        "ownEpisodePlan8": 38,
+        "ownAdaptiveEpisodePlan8": 37,
+        "ownCarryEpisodePlan8": 38
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 19,
+      "start": 1791742266671,
+      "board": "0fbf1bdede43a3cb75ce106b8c4a1d99cd2bbf3b54e0317bdcb67df272f90c29",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 32,
+        "ownStepPlan8": 35,
+        "ownEpisodePlan8": 34,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 33
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 60,
+      "start": 1791742365813,
+      "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 57,
+        "ownStepPlan8": 59,
+        "ownEpisodePlan8": 60,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 57,
+      "start": 1791742385211,
+      "board": "14ec2debe925513ec377e5e1eda3c8eb45f4a2a1813d323abc5920410887f090",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 118,
+        "ownStepPlan8": 134,
+        "ownEpisodePlan8": 122,
+        "ownAdaptiveEpisodePlan8": 122,
+        "ownCarryEpisodePlan8": 120
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 61,
+      "start": 1791742580573,
+      "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 35,
+        "ownStepPlan8": 37,
+        "ownEpisodePlan8": 35,
+        "ownAdaptiveEpisodePlan8": 36,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 20,
+      "start": 1791742586485,
+      "board": "e994b8b1be215f03760c49c40de66436380725894786af9535949814df799d67",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 49,
+        "ownStepPlan8": 52,
+        "ownEpisodePlan8": 50,
+        "ownAdaptiveEpisodePlan8": 50,
+        "ownCarryEpisodePlan8": 52
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 62,
+      "start": 1791742879544,
+      "board": "763aa4a771730324bac833ac88562e1ef4a09dcefdd8e480ff31dea939ffabfc",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 76,
+        "ownStepPlan8": 78,
+        "ownEpisodePlan8": 79,
+        "ownAdaptiveEpisodePlan8": 77,
+        "ownCarryEpisodePlan8": 81
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 58,
+      "start": 1791742926289,
+      "board": "97efa877d0b07620cad96fe453fe564a728aa77ddb84f612972ed010f2b1b620",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 68,
+        "ownStepPlan8": 73,
+        "ownEpisodePlan8": 74,
+        "ownAdaptiveEpisodePlan8": 77,
+        "ownCarryEpisodePlan8": 75
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 63,
+      "start": 1791743007563,
+      "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 52,
+        "ownStepPlan8": 57,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 53,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 59,
+      "start": 1791743045800,
+      "board": "4dcdf9289212568fd3cd578ea5d47831092fb768b4ff47542c72e7b357132248",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 51,
+        "ownStepPlan8": 61,
+        "ownEpisodePlan8": 59,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 64,
+      "start": 1791743201636,
+      "board": "0259f37131a8373e88b179174f260da14b96574fa694df30babfb012b7f7fde2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 27,
+        "ownStepPlan8": 32,
+        "ownEpisodePlan8": 29,
+        "ownAdaptiveEpisodePlan8": 30,
+        "ownCarryEpisodePlan8": 31
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 60,
+      "start": 1791743225262,
+      "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 51,
+        "ownStepPlan8": 57,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 65,
+      "start": 1791743341063,
+      "board": "fee40dc4af5658f538c72717353412fb4f9e3e62a499dafa44f29b93562bff6b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 26,
+        "ownStepPlan8": 31,
+        "ownEpisodePlan8": 28,
+        "ownAdaptiveEpisodePlan8": 29,
+        "ownCarryEpisodePlan8": 28
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 61,
+      "start": 1791743432185,
+      "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 35,
+        "ownStepPlan8": 34,
+        "ownEpisodePlan8": 39,
+        "ownAdaptiveEpisodePlan8": 35,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 66,
+      "start": 1791743472593,
+      "board": "aa999405167e5798e1121e621f01358626ed3bf6803e6599f5deb3eff102b646",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 87,
+        "ownStepPlan8": 88,
+        "ownEpisodePlan8": 92,
+        "ownAdaptiveEpisodePlan8": 94,
+        "ownCarryEpisodePlan8": 96
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 67,
+      "start": 1791743606232,
+      "board": "cdfdb52d06cd3646ff6cf4ae22df5b9d649230fd78a234cbad0dbcfe9c73a3cb",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 32,
+        "ownStepPlan8": 34,
+        "ownEpisodePlan8": 34,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 34
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 68,
+      "start": 1791743744977,
+      "board": "c22ebcc8d028940eb25dd563ffba1a514a5e0c9265034f49b195b0549630edf3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 32,
+        "ownStepPlan8": 35,
+        "ownEpisodePlan8": 36,
+        "ownAdaptiveEpisodePlan8": 36,
+        "ownCarryEpisodePlan8": 34
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 69,
+      "start": 1791743895284,
+      "board": "1154931950dfc4f97f7589b341ff7b26b360e6335706edf7682d9929bf8077cc",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 167,
+        "ownStepPlan8": 176,
+        "ownEpisodePlan8": 163,
+        "ownAdaptiveEpisodePlan8": 169,
+        "ownCarryEpisodePlan8": 169
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 62,
+      "start": 1791744028772,
+      "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 43,
+        "ownStepPlan8": 48,
+        "ownEpisodePlan8": 47,
+        "ownAdaptiveEpisodePlan8": 46,
+        "ownCarryEpisodePlan8": 49
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 70,
+      "start": 1791744206837,
+      "board": "7dda2763b90fd7442f5f7c971f9022a8e46c8d59188121f1395bc1ad04fc2c50",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 39,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 42,
+        "ownAdaptiveEpisodePlan8": 39,
+        "ownCarryEpisodePlan8": 41
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 71,
+      "start": 1791744389925,
+      "board": "d5d3327c2a13c2fa060593fa2dc5198b3b0ea49182985aa3a644a519f4d4d160",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 81,
+        "ownStepPlan8": 92,
+        "ownEpisodePlan8": 94,
+        "ownAdaptiveEpisodePlan8": 94,
+        "ownCarryEpisodePlan8": 92
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 63,
+      "start": 1791746778188,
+      "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 46,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 52,
+        "ownAdaptiveEpisodePlan8": 52,
+        "ownCarryEpisodePlan8": 52
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 64,
+      "start": 1791746929215,
+      "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 90,
+        "ownStepPlan8": 99,
+        "ownEpisodePlan8": 106,
+        "ownAdaptiveEpisodePlan8": 117,
+        "ownCarryEpisodePlan8": 100
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 65,
+      "start": 1791747069767,
+      "board": "e9413bac05ebb393ab989d27542153a30200c748c0a05d52be7dd0267727649a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 29,
+        "ownStepPlan8": 34,
+        "ownEpisodePlan8": 35,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 66,
+      "start": 1791747179315,
+      "board": "e60dad526eb6b66a292f0441cfb36a7029aa3d28419b0864fea5838a87df36fd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 95,
+        "ownStepPlan8": 102,
+        "ownEpisodePlan8": 106,
+        "ownAdaptiveEpisodePlan8": 113,
+        "ownCarryEpisodePlan8": 105
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 67,
+      "start": 1791747324184,
+      "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 37,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 43,
+        "ownAdaptiveEpisodePlan8": 42,
+        "ownCarryEpisodePlan8": 41
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 73,
+      "start": 1791747347304,
+      "board": "da0171a9ce79235dfbdd5310fb906f47d16316cb6631fda41a6a34bccc292a1d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 45,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 48,
+        "ownAdaptiveEpisodePlan8": 46,
+        "ownCarryEpisodePlan8": 46
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 68,
+      "start": 1791747546005,
+      "board": "037cdceb767780b89ba0f36effc40e7d4c11ef37cf4645bf616e36a041158d8a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 44,
+        "ownStepPlan8": 48,
+        "ownEpisodePlan8": 48,
+        "ownAdaptiveEpisodePlan8": 48,
+        "ownCarryEpisodePlan8": 45
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 69,
+      "start": 1791747833761,
+      "board": "ca9d38515e25c9d90f2d37cabcacea5b842dd6529a931b3422fe804a634295cb",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 90,
+        "ownStepPlan8": 98,
+        "ownEpisodePlan8": 99,
+        "ownAdaptiveEpisodePlan8": 94,
+        "ownCarryEpisodePlan8": 97
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 74,
+      "start": 1791748052081,
+      "board": "1f9e359685fdeabc1d0962d85673912daa48eb0daa9d16e72fa3827dfa137dd2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 71,
+        "ownStepPlan8": 74,
+        "ownEpisodePlan8": 77,
+        "ownAdaptiveEpisodePlan8": 76,
+        "ownCarryEpisodePlan8": 83
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 70,
+      "start": 1791748958236,
+      "board": "7dda2763b90fd7442f5f7c971f9022a8e46c8d59188121f1395bc1ad04fc2c50",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 35,
+        "ownStepPlan8": 41,
+        "ownEpisodePlan8": 42,
+        "ownAdaptiveEpisodePlan8": 41,
+        "ownCarryEpisodePlan8": 46
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 71,
+      "start": 1791749139315,
+      "board": "d5d3327c2a13c2fa060593fa2dc5198b3b0ea49182985aa3a644a519f4d4d160",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 79,
+        "ownStepPlan8": 88,
+        "ownEpisodePlan8": 88,
+        "ownAdaptiveEpisodePlan8": 86,
+        "ownCarryEpisodePlan8": 85
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 72,
+      "start": 1791749476034,
+      "board": "f670aa718ae587421cbcf084b59981d9f0686f82c9f2e329dd9f520327af79ff",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 51,
+        "ownStepPlan8": 55,
+        "ownEpisodePlan8": 54,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 73,
+      "start": 1791749715644,
+      "board": "90eed79d642fa9e60adfa912b05c034947e9fa945fdea97536f61690b8359a0a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 55,
+        "ownStepPlan8": 60,
+        "ownEpisodePlan8": 61,
+        "ownAdaptiveEpisodePlan8": 60,
+        "ownCarryEpisodePlan8": 58
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 21,
+      "start": 1791767764236,
+      "board": "25f98dc61251bf985a69711e595c86b7385570864537585d163499eedcfab68c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 37,
+        "ownStepPlan8": 38,
+        "ownEpisodePlan8": 38,
+        "ownAdaptiveEpisodePlan8": 39,
+        "ownCarryEpisodePlan8": 40
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 22,
+      "start": 1791768179873,
+      "board": "d1ed76629040d80b18d9af8a7553b4743eec7c40849af516f9de8d530fe38c7d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 57,
+        "ownStepPlan8": 59,
+        "ownEpisodePlan8": 62,
+        "ownAdaptiveEpisodePlan8": 59,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 75,
+      "start": 1791811381298,
+      "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 130,
+        "ownStepPlan8": 120,
+        "ownEpisodePlan8": 125,
+        "ownAdaptiveEpisodePlan8": 119,
+        "ownCarryEpisodePlan8": 115
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 76,
+      "start": 1791811576725,
+      "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 40,
+        "ownStepPlan8": 33,
+        "ownEpisodePlan8": 31,
+        "ownAdaptiveEpisodePlan8": 32,
+        "ownCarryEpisodePlan8": 32
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 77,
+      "start": 1791811875161,
+      "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 65,
+        "ownStepPlan8": 73,
+        "ownEpisodePlan8": 77,
+        "ownAdaptiveEpisodePlan8": 78,
+        "ownCarryEpisodePlan8": 79
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 78,
+      "start": 1791812043285,
+      "board": "b8515e26acc7b671fdfefea9f4e3a3a75975ba73b8b297a2a24f59af022f2cee",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 108,
+        "ownStepPlan8": 123,
+        "ownEpisodePlan8": 127,
+        "ownAdaptiveEpisodePlan8": 122,
+        "ownCarryEpisodePlan8": 118
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 79,
+      "start": 1791812262664,
+      "board": "b034c4d69055af5729b6ec99160de9d4fd58df051610bcc81d6276ef3ce273f5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 98,
+        "ownStepPlan8": 101,
+        "ownEpisodePlan8": 103,
+        "ownAdaptiveEpisodePlan8": 102,
+        "ownCarryEpisodePlan8": 103
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 80,
+      "start": 1791812442889,
+      "board": "68698d1f70c6e8c2559ba8ba1f6449f98e6fcfdbc2935dae03476a3f81eeb90c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 88,
+        "ownStepPlan8": 87,
+        "ownEpisodePlan8": 80,
+        "ownAdaptiveEpisodePlan8": 82,
+        "ownCarryEpisodePlan8": 79
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 81,
+      "start": 1791812612374,
+      "board": "bd4435edc6d8127b8f0fd6420808910db310b360f9bb58d9ced61b4ccccef910",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 86,
+        "ownStepPlan8": 86,
+        "ownEpisodePlan8": 81,
+        "ownAdaptiveEpisodePlan8": 81,
+        "ownCarryEpisodePlan8": 80
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 82,
+      "start": 1791812865155,
+      "board": "fb5c3b042f700cc524901c5400913e6bf531de1981ce736035e4d6174dc29fd8",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 57,
+        "ownStepPlan8": 60,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 83,
+      "start": 1791813031973,
+      "board": "e7302c1e81d567e565d9594edf95fddb08e8ca85b00675f6c991a444e6564be0",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 41,
+        "ownStepPlan8": 43,
+        "ownEpisodePlan8": 41,
+        "ownAdaptiveEpisodePlan8": 41,
+        "ownCarryEpisodePlan8": 40
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 84,
+      "start": 1791813182633,
+      "board": "fdb97f7b485261da4fe271c5a61764509acac8956207cb59bbe004e061ebe328",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 40,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 42,
+        "ownAdaptiveEpisodePlan8": 41,
+        "ownCarryEpisodePlan8": 41
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 74,
+      "start": 1791814787730,
+      "board": "ce6a4fe2c655982a8468b537cc7201a1f14e251213071ab22b6ac620a9602d92",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 54,
+        "ownStepPlan8": 55,
+        "ownEpisodePlan8": 59,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 58
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 75,
+      "start": 1791815018744,
+      "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 116,
+        "ownStepPlan8": 126,
+        "ownEpisodePlan8": 130,
+        "ownAdaptiveEpisodePlan8": 123,
+        "ownCarryEpisodePlan8": 120
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 75,
+      "start": 1791815392913,
+      "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 106,
+        "ownStepPlan8": 121,
+        "ownEpisodePlan8": 122,
+        "ownAdaptiveEpisodePlan8": 112,
+        "ownCarryEpisodePlan8": 111
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 76,
+      "start": 1791815527152,
+      "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 29,
+        "ownStepPlan8": 33,
+        "ownEpisodePlan8": 32,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 32
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 76,
+      "start": 1791815713783,
+      "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 33,
+        "ownStepPlan8": 36,
+        "ownEpisodePlan8": 33,
+        "ownAdaptiveEpisodePlan8": 33,
+        "ownCarryEpisodePlan8": 31
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 77,
+      "start": 1791815729003,
+      "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 74,
+        "ownStepPlan8": 85,
+        "ownEpisodePlan8": 69,
+        "ownAdaptiveEpisodePlan8": 65,
+        "ownCarryEpisodePlan8": 65
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 78,
+      "start": 1791815981229,
+      "board": "b8515e26acc7b671fdfefea9f4e3a3a75975ba73b8b297a2a24f59af022f2cee",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 117,
+        "ownStepPlan8": 120,
+        "ownEpisodePlan8": 117,
+        "ownAdaptiveEpisodePlan8": 124,
+        "ownCarryEpisodePlan8": 121
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 79,
+      "start": 1791816201636,
+      "board": "b034c4d69055af5729b6ec99160de9d4fd58df051610bcc81d6276ef3ce273f5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 105,
+        "ownStepPlan8": 112,
+        "ownEpisodePlan8": 107,
+        "ownAdaptiveEpisodePlan8": 116,
+        "ownCarryEpisodePlan8": 101
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 80,
+      "start": 1791816476458,
+      "board": "7b33fbebca946b50a6937af95ddbae1b63cd081810054f7a6ebd25595575e13f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 109,
+        "ownStepPlan8": 86,
+        "ownEpisodePlan8": 85,
+        "ownAdaptiveEpisodePlan8": 78,
+        "ownCarryEpisodePlan8": 79
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 81,
+      "start": 1791818314855,
+      "board": "3be65a548f483a74511a3b479cb252c4375add3f14db7879a9ad6e8497e50c1f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 65,
+        "ownStepPlan8": 64,
+        "ownEpisodePlan8": 63,
+        "ownAdaptiveEpisodePlan8": 65,
+        "ownCarryEpisodePlan8": 63
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 82,
+      "start": 1791818711874,
+      "board": "7c7caa712e16d3ba36bf75b829b7e2cf251ee092dfc65622a21f3936fd3fdaad",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 118,
+        "ownStepPlan8": 119,
+        "ownEpisodePlan8": 127,
+        "ownAdaptiveEpisodePlan8": 131,
+        "ownCarryEpisodePlan8": 120
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 83,
+      "start": 1791818833130,
+      "board": "7b4cb74eecba9fb19068310c584d693e2748c94d77abef020ae44d3e5004d829",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 82,
+        "ownStepPlan8": 88,
+        "ownEpisodePlan8": 79,
+        "ownAdaptiveEpisodePlan8": 79,
+        "ownCarryEpisodePlan8": 79
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 79,
+      "start": 1791823165338,
+      "board": "b034c4d69055af5729b6ec99160de9d4fd58df051610bcc81d6276ef3ce273f5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 97,
+        "ownStepPlan8": 105,
+        "ownEpisodePlan8": 108,
+        "ownAdaptiveEpisodePlan8": 99,
+        "ownCarryEpisodePlan8": 101
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 80,
+      "start": 1791823327591,
+      "board": "76ed8989d1f85cace74ef0fb57862cafe8601859c5f9f0bab582254db2425f00",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 99,
+        "ownStepPlan8": 104,
+        "ownEpisodePlan8": 107,
+        "ownAdaptiveEpisodePlan8": 114,
+        "ownCarryEpisodePlan8": 116
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 77,
+      "start": 1791827279104,
+      "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 67,
+        "ownStepPlan8": 67,
+        "ownEpisodePlan8": 66,
+        "ownAdaptiveEpisodePlan8": 67,
+        "ownCarryEpisodePlan8": 68
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 78,
+      "start": 1791827465217,
+      "board": "b8515e26acc7b671fdfefea9f4e3a3a75975ba73b8b297a2a24f59af022f2cee",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 119,
+        "ownStepPlan8": 125,
+        "ownEpisodePlan8": 119,
+        "ownAdaptiveEpisodePlan8": 122,
+        "ownCarryEpisodePlan8": 135
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 79,
+      "start": 1791827663099,
+      "board": "b034c4d69055af5729b6ec99160de9d4fd58df051610bcc81d6276ef3ce273f5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 119,
+        "ownStepPlan8": 119,
+        "ownEpisodePlan8": 107,
+        "ownAdaptiveEpisodePlan8": 100,
+        "ownCarryEpisodePlan8": 103
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 80,
+      "start": 1791828103285,
+      "board": "cb0dd1bdca577d926a5f3396ed049b76860561ad5e768ef47bf88f6cd7e7b096",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 48,
+        "ownStepPlan8": 49,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 49,
+        "ownCarryEpisodePlan8": 50
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 81,
+      "start": 1791828742090,
+      "board": "5f8079b8f1cf82ee69cb46c8e3bcd47ba01b3b2c34ba089d3fba9aa2e882fa18",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 30,
+        "ownStepPlan8": 33,
+        "ownEpisodePlan8": 34,
+        "ownAdaptiveEpisodePlan8": 35,
+        "ownCarryEpisodePlan8": 33
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 80,
+      "start": 1791828743560,
+      "board": "cb0dd1bdca577d926a5f3396ed049b76860561ad5e768ef47bf88f6cd7e7b096",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 50,
+        "ownStepPlan8": 53,
+        "ownEpisodePlan8": 55,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 81,
+      "start": 1791829216958,
+      "board": "5f8079b8f1cf82ee69cb46c8e3bcd47ba01b3b2c34ba089d3fba9aa2e882fa18",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 30,
+        "ownStepPlan8": 32,
+        "ownEpisodePlan8": 32,
+        "ownAdaptiveEpisodePlan8": 32,
+        "ownCarryEpisodePlan8": 32
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 82,
+      "start": 1791829374137,
+      "board": "27e3edfd73fd1c47c21d088c9ea561be0228a839bdf0e861cf7e60a7795955fa",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 83,
+        "ownStepPlan8": 82,
+        "ownEpisodePlan8": 83,
+        "ownAdaptiveEpisodePlan8": 81,
+        "ownCarryEpisodePlan8": 84
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 82,
+      "start": 1791829394608,
+      "board": "27e3edfd73fd1c47c21d088c9ea561be0228a839bdf0e861cf7e60a7795955fa",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 81,
+        "ownStepPlan8": 84,
+        "ownEpisodePlan8": 85,
+        "ownAdaptiveEpisodePlan8": 103,
+        "ownCarryEpisodePlan8": 81
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 83,
+      "start": 1791829538817,
+      "board": "7b4cb74eecba9fb19068310c584d693e2748c94d77abef020ae44d3e5004d829",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 90,
+        "ownStepPlan8": 78,
+        "ownEpisodePlan8": 80,
+        "ownAdaptiveEpisodePlan8": 85,
+        "ownCarryEpisodePlan8": 81
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 84,
+      "start": 1791829826286,
+      "board": "4490d717ab07e3cf189225167d76e7c4dd812b15861c3192093f019cb705beaa",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 45,
+        "ownStepPlan8": 45,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 45,
+        "ownCarryEpisodePlan8": 46
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 85,
+      "start": 1791830660440,
+      "board": "5990d9f6b6669d64f31896b097b680b37cd8cee585e50cedb476d989ca9f12b2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 93,
+        "ownStepPlan8": 93,
+        "ownEpisodePlan8": 97,
+        "ownAdaptiveEpisodePlan8": 105,
+        "ownCarryEpisodePlan8": 96
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 84,
+      "start": 1791830873066,
+      "board": "4490d717ab07e3cf189225167d76e7c4dd812b15861c3192093f019cb705beaa",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 43,
+        "ownStepPlan8": 44,
+        "ownEpisodePlan8": 43,
+        "ownAdaptiveEpisodePlan8": 42,
+        "ownCarryEpisodePlan8": 45
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 85,
+      "start": 1791831166987,
+      "board": "5990d9f6b6669d64f31896b097b680b37cd8cee585e50cedb476d989ca9f12b2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 84,
+        "ownStepPlan8": 96,
+        "ownEpisodePlan8": 100,
+        "ownAdaptiveEpisodePlan8": 95,
+        "ownCarryEpisodePlan8": 92
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 86,
+      "start": 1791831421521,
+      "board": "d17c137dec323400b97054451fefe2104832edd9c38b180610ebdd18e1a8a336",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 49,
+        "ownStepPlan8": 58,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 87,
+      "start": 1791831608168,
+      "board": "d0aed6becb28c43665c69a3ca9634485ce0922a73916a971a9cbbfeb6c13e684",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 36,
+        "ownStepPlan8": 41,
+        "ownEpisodePlan8": 41,
+        "ownAdaptiveEpisodePlan8": 41,
+        "ownCarryEpisodePlan8": 41
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 86,
+      "start": 1791834095552,
+      "board": "d17c137dec323400b97054451fefe2104832edd9c38b180610ebdd18e1a8a336",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 51,
+        "ownStepPlan8": 54,
+        "ownEpisodePlan8": 53,
+        "ownAdaptiveEpisodePlan8": 52,
+        "ownCarryEpisodePlan8": 52
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 87,
+      "start": 1791834271571,
+      "board": "d0aed6becb28c43665c69a3ca9634485ce0922a73916a971a9cbbfeb6c13e684",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 36,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 41,
+        "ownAdaptiveEpisodePlan8": 40,
+        "ownCarryEpisodePlan8": 39
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 88,
+      "start": 1791834629701,
+      "board": "b2ee0d6c7780b6722b4a2eb4ee88c49c2f6b212de55f852a629f13345948ac84",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 84,
+        "ownStepPlan8": 92,
+        "ownEpisodePlan8": 93,
+        "ownAdaptiveEpisodePlan8": 90,
+        "ownCarryEpisodePlan8": 89
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 89,
+      "start": 1791834825129,
+      "board": "4fc1e6d2c9d6d481f550ed8a184e3af44e0ad34b2209979fb6593e41216e75ec",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 80,
+        "ownStepPlan8": 80,
+        "ownEpisodePlan8": 84,
+        "ownAdaptiveEpisodePlan8": 86,
+        "ownCarryEpisodePlan8": 106
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 88,
+      "start": 1791842498669,
+      "board": "b2ee0d6c7780b6722b4a2eb4ee88c49c2f6b212de55f852a629f13345948ac84",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 98,
+        "ownStepPlan8": 100,
+        "ownEpisodePlan8": 94,
+        "ownAdaptiveEpisodePlan8": 95,
+        "ownCarryEpisodePlan8": 98
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 89,
+      "start": 1791842879887,
+      "board": "4fc1e6d2c9d6d481f550ed8a184e3af44e0ad34b2209979fb6593e41216e75ec",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 73,
+        "ownStepPlan8": 81,
+        "ownEpisodePlan8": 86,
+        "ownAdaptiveEpisodePlan8": 91,
+        "ownCarryEpisodePlan8": 89
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 90,
+      "start": 1791843475699,
+      "board": "4fd0a7e0af351a655d6db41004ca8ea60ebc0b0f9f3a525f95bd97a38610e1ab",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 72,
+        "ownStepPlan8": 78,
+        "ownEpisodePlan8": 76,
+        "ownAdaptiveEpisodePlan8": 78,
+        "ownCarryEpisodePlan8": 75
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 91,
+      "start": 1791843657466,
+      "board": "b036311749c913edcd2c7c3f3e468285f1b5ea36f67b76384b7b8648c8d775ce",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 49,
+        "ownStepPlan8": 49,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 50,
+        "ownCarryEpisodePlan8": 49
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 92,
+      "start": 1791843820985,
+      "board": "320e53c5644e27b66a9421605c304eb3f4666e960d89fae76c520f9ff99c4e8d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 73,
+        "ownStepPlan8": 76,
+        "ownEpisodePlan8": 82,
+        "ownAdaptiveEpisodePlan8": 77,
+        "ownCarryEpisodePlan8": 77
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 93,
+      "start": 1791844234905,
+      "board": "27808b801d1894db04021499b5a9b455076c257d6c23da647a8443380f4aa728",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 87,
+        "ownStepPlan8": 94,
+        "ownEpisodePlan8": 95,
+        "ownAdaptiveEpisodePlan8": 94,
+        "ownCarryEpisodePlan8": 93
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 94,
+      "start": 1791844390602,
+      "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 4,
+        "ownStepPlan8": 5,
+        "ownEpisodePlan8": 5,
+        "ownAdaptiveEpisodePlan8": 5,
+        "ownCarryEpisodePlan8": 4
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 95,
+      "start": 1791844584806,
+      "board": "38024f6063377247dff1bea043f3593efafb88ebbc78c9c2916d598f650c1abb",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 60,
+        "ownStepPlan8": 70,
+        "ownEpisodePlan8": 69,
+        "ownAdaptiveEpisodePlan8": 66,
+        "ownCarryEpisodePlan8": 71
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 96,
+      "start": 1791844855083,
+      "board": "33fd9645d44638d5fbdaac955a8a633b6f41aade6a9204d3c06ebc2d78a300d4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 91,
+        "ownStepPlan8": 95,
+        "ownEpisodePlan8": 99,
+        "ownAdaptiveEpisodePlan8": 97,
+        "ownCarryEpisodePlan8": 95
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 97,
+      "start": 1791845035558,
+      "board": "d5c6f77d55920ea382613bf810233b9f65cbc7fcb25b93576b1a0b54e0e429e3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 2,
+        "ownStepPlan8": 2,
+        "ownEpisodePlan8": 2,
+        "ownAdaptiveEpisodePlan8": 1,
+        "ownCarryEpisodePlan8": 2
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 98,
+      "start": 1791845230609,
+      "board": "ffa756e3f8d74e9575ef7beb14d36edce38118c0a5634aaa150e72aba6bdbebe",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 37,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 37,
+        "ownAdaptiveEpisodePlan8": 39,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 99,
+      "start": 1791845416169,
+      "board": "f8f81af2c7ef9a6eb4ac04e6be8ec2cd53a232a844209d2523d4064a029cfe33",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 96,
+        "ownStepPlan8": 102,
+        "ownEpisodePlan8": 107,
+        "ownAdaptiveEpisodePlan8": 105,
+        "ownCarryEpisodePlan8": 99
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 100,
+      "start": 1791910612845,
+      "board": "cce5df71523b594c4979c2242d2075654837d78508adf19665ed1a2c40531fd7",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 65,
+        "ownStepPlan8": 69,
+        "ownEpisodePlan8": 69,
+        "ownAdaptiveEpisodePlan8": 70,
+        "ownCarryEpisodePlan8": 70
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 101,
+      "start": 1791911568306,
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 54,
+        "ownStepPlan8": 56,
+        "ownEpisodePlan8": 57,
+        "ownAdaptiveEpisodePlan8": 57,
+        "ownCarryEpisodePlan8": 39
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 102,
+      "start": 1791911749246,
+      "board": "c842c8eaf4d739de5c5053bbfc1f789c17c5d19f8b75e05f84ad72165fd1cdd5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 98,
+        "ownStepPlan8": 97,
+        "ownEpisodePlan8": 101,
+        "ownAdaptiveEpisodePlan8": 99,
+        "ownCarryEpisodePlan8": 69
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 103,
+      "start": 1791912126978,
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 106,
+        "ownStepPlan8": 90,
+        "ownEpisodePlan8": 121,
+        "ownAdaptiveEpisodePlan8": 126,
+        "ownCarryEpisodePlan8": 49
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 104,
+      "start": 1791914835209,
+      "board": "6dc7d96dfc85b59f14927cf8cdc773f37e34ffdc0e22afabeebd1f6c703a3f83",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 132,
+        "ownStepPlan8": 123,
+        "ownEpisodePlan8": 137,
+        "ownAdaptiveEpisodePlan8": 138,
+        "ownCarryEpisodePlan8": 171
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 23,
+      "start": 1791971427414,
+      "board": "d08a9436d0f135607e371920a1ad7373884f923a2aa94bf20c915780c1a68f54",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 38,
+        "ownStepPlan8": 45,
+        "ownEpisodePlan8": 46,
+        "ownAdaptiveEpisodePlan8": 49,
+        "ownCarryEpisodePlan8": 46
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 24,
+      "start": 1791972046022,
+      "board": "75424da01b4c60163d4944f736349570e988f7525453665151557016988136ef",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 51,
+        "ownStepPlan8": 56,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 27
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 25,
+      "start": 1791972604147,
+      "board": "4473c07954c70adefdab5a02d04f41150ef1c82bc745942e0c5c3ffbd3e02466",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 31,
+        "ownStepPlan8": 34,
+        "ownEpisodePlan8": 35,
+        "ownAdaptiveEpisodePlan8": 33,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 26,
+      "start": 1791973252051,
+      "board": "fd7f2b995129eac10641e80e455ca5c5c97b6c9082e2a81de85158b1def67b0a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 27,
+        "ownStepPlan8": 31,
+        "ownEpisodePlan8": 32,
+        "ownAdaptiveEpisodePlan8": 30,
+        "ownCarryEpisodePlan8": 24
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 27,
+      "start": 1791974062702,
+      "board": "b9fb5301c806f1787b44e0323eb1614efbfa7e304307a7ecb12049f4f5b29d31",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 26,
+        "ownStepPlan8": 41,
+        "ownEpisodePlan8": 29,
+        "ownAdaptiveEpisodePlan8": 31,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 28,
+      "start": 1791974554563,
+      "board": "3417a8ba80bd5db9efc9518fc4baf508bd130ed69b2fce47fdd59ac953573f1f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 21,
+        "ownStepPlan8": 41,
+        "ownEpisodePlan8": 19,
+        "ownAdaptiveEpisodePlan8": 21,
+        "ownCarryEpisodePlan8": 20
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 29,
+      "start": 1791974855992,
+      "board": "8849186d83d1585cb22603904bf86564f2fe2238e183e086e28bd4b260472125",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 38,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 46,
+        "ownAdaptiveEpisodePlan8": 46,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 30,
+      "start": 1791979370603,
+      "board": "c4254d42e55b47c452fbe214fc84cb54c2237ce7b4c61095ba8cbc661fc1235e",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 22,
+        "ownStepPlan8": 30,
+        "ownEpisodePlan8": 38,
+        "ownAdaptiveEpisodePlan8": 39,
+        "ownCarryEpisodePlan8": 43
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 31,
+      "start": 1791981356001,
+      "board": "a1bc27b4e14fd570e853343587618b1e7defc7ff39e8665127fa7a31d77680b1",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 36,
+        "ownStepPlan8": 39,
+        "ownEpisodePlan8": 44,
+        "ownAdaptiveEpisodePlan8": 45,
+        "ownCarryEpisodePlan8": 29
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 32,
+      "start": 1791982188947,
+      "board": "73d11c53365d4029caf34777d756c36ff517f82f29b1467f0eaa2e0de5dc12a6",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 28,
+        "ownStepPlan8": 31,
+        "ownEpisodePlan8": 25,
+        "ownAdaptiveEpisodePlan8": 25,
+        "ownCarryEpisodePlan8": 58
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 10,
+      "start": 1791982562312,
+      "board": "5b29904d6fca52b1e7ef368189d9e67a55d0aff589928fa82e389a182c488ded",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 39,
+        "ownStepPlan8": 35,
+        "ownEpisodePlan8": 46,
+        "ownAdaptiveEpisodePlan8": 45,
+        "ownCarryEpisodePlan8": 44
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 11,
+      "start": 1791983008152,
+      "board": "e1f92d0869d9b98aaa12eb1286a20d81214cd0ede468315780c59d2c4f3161e9",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 31,
+        "ownStepPlan8": 33,
+        "ownEpisodePlan8": 35,
+        "ownAdaptiveEpisodePlan8": 36,
+        "ownCarryEpisodePlan8": 39
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 12,
+      "start": 1791983163976,
+      "board": "ebcdf5d8772251fc67afa46264d01dfd55719c13becc3eaf73e0db9897acaddd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 18,
+        "ownStepPlan8": 11,
+        "ownEpisodePlan8": 8,
+        "ownAdaptiveEpisodePlan8": 11,
+        "ownCarryEpisodePlan8": 9
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 13,
+      "start": 1791983433203,
+      "board": "dddc25b149eb2be4a96eb994ca81b50ee7f086bece88627c233d759099943efb",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 16,
+        "ownStepPlan8": 23,
+        "ownEpisodePlan8": 16,
+        "ownAdaptiveEpisodePlan8": 18,
+        "ownCarryEpisodePlan8": 15
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 14,
+      "start": 1791983690431,
+      "board": "ee2efca617fd1b8cadfe36f46477b7b72e1bf954e9c08511ad48ab93bde00c2f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 28,
+        "ownStepPlan8": 33,
+        "ownEpisodePlan8": 32,
+        "ownAdaptiveEpisodePlan8": 37,
+        "ownCarryEpisodePlan8": 23
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 15,
+      "start": 1791983806996,
+      "board": "232afeb606f1490821855b32d8403c1bf5db41104a3d4aad2807bc8282a464aa",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 36,
+        "ownStepPlan8": 30,
+        "ownEpisodePlan8": 31,
+        "ownAdaptiveEpisodePlan8": 36,
+        "ownCarryEpisodePlan8": 28
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 16,
+      "start": 1791984151257,
+      "board": "a8fa32a8a33c60569c6b73e26e5678622aa47ba1d3ba43a81a498ceee04697a3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 25,
+        "ownStepPlan8": 22,
+        "ownEpisodePlan8": 33,
+        "ownAdaptiveEpisodePlan8": 31,
+        "ownCarryEpisodePlan8": 22
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 17,
+      "start": 1791984528874,
+      "board": "12827abb3dabac4df8b0457b0420536b9bfad2f1a19b680a38deae74a48de6b3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 29,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 54,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 58
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 18,
+      "start": 1791984779454,
+      "board": "dc2bded95e417ea1c953899850755c8efd1cc4d0b0015e6c4dae589a82e5e690",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 32,
+        "ownStepPlan8": 43,
+        "ownEpisodePlan8": 41,
+        "ownAdaptiveEpisodePlan8": 38,
+        "ownCarryEpisodePlan8": 47
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 19,
+      "start": 1791985105630,
+      "board": "f087dc7a956a3f269742c1b9098d13d193e4e5f18fc1ab4e43e950fe060db9cd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 48,
+        "ownStepPlan8": 38,
+        "ownEpisodePlan8": 77,
+        "ownAdaptiveEpisodePlan8": 72,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 20,
+      "start": 1791985420241,
+      "board": "d704be963ba05a9469cc4580e7a991fce29a5bbe24bfd1ab5facf31a12da5fb7",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 56,
+        "ownStepPlan8": 43,
+        "ownEpisodePlan8": 42,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 37
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 21,
+      "start": 1791985852991,
+      "board": "4e1ba5fd561e765f33c39614edf34e1d7fcbad95a6235e8a02ceb654585d06c3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 46,
+        "ownStepPlan8": 46,
+        "ownEpisodePlan8": 60,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 52
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 22,
+      "start": 1791988705319,
+      "board": "c15471e338fbec3d34c5604e7c05b2d26c3d65a780378800fc2518f26ee6266c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 35,
+        "ownStepPlan8": 26,
+        "ownEpisodePlan8": 23,
+        "ownAdaptiveEpisodePlan8": 22,
+        "ownCarryEpisodePlan8": 20
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 23,
+      "start": 1791988906915,
+      "board": "23d8f1d9dbb17eb289095dcaf5a5205623c2050df107eacdf457614a92aab761",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 25,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 36,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 33
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 24,
+      "start": 1791989398679,
+      "board": "52e8158106b3fa3e40764c19634b715df0641610d7b450edb29d0f03c2f8d0e0",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 40,
+        "ownStepPlan8": 41,
+        "ownEpisodePlan8": 42,
+        "ownAdaptiveEpisodePlan8": 42,
+        "ownCarryEpisodePlan8": 38
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 25,
+      "start": 1791990039611,
+      "board": "d7ca6ab0f4197c7cbb9fb5210a6009f0edd38a1aa2f948d36be13d123c45daa2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 29,
+        "ownStepPlan8": 37,
+        "ownEpisodePlan8": 38,
+        "ownAdaptiveEpisodePlan8": 40,
+        "ownCarryEpisodePlan8": 37
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 26,
+      "start": 1791990222420,
+      "board": "559a756105f2daf0663c1975513552fb6f18f73a60898d65c03c5b6e5029a48b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 19,
+        "ownStepPlan8": 17,
+        "ownEpisodePlan8": 31,
+        "ownAdaptiveEpisodePlan8": 30,
+        "ownCarryEpisodePlan8": 24
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 27,
+      "start": 1791990639167,
+      "board": "33207a69e754c2e5e067243c39f8f74b695e935ee1d029793a342f4e5f3bef36",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 24,
+        "ownStepPlan8": 27,
+        "ownEpisodePlan8": 38,
+        "ownAdaptiveEpisodePlan8": 35,
+        "ownCarryEpisodePlan8": 21
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 28,
+      "start": 1791991007493,
+      "board": "876c8fa0c6301cd66a28c6b02a890c4ec04a954743bb07a22c8ed8c1f474464c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 30,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 45,
+        "ownAdaptiveEpisodePlan8": 44,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 29,
+      "start": 1791991932950,
+      "board": "1a3dfdd63eb94d4f061b48b191539994178de668f5324f3ccdb7292fce491e1d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 41,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 47,
+        "ownAdaptiveEpisodePlan8": 50,
+        "ownCarryEpisodePlan8": 50
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 30,
+      "start": 1791992398889,
+      "board": "ea03d37c4a9e97ff6ba2eaeb6d23133f447cdde40fd5dfc75b84fd4e1a6e79e8",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 19,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 36,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 35
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 31,
+      "start": 1791992608923,
+      "board": "0737844fdceb47b29a36336f4e253713ac50843b581c1bda92e2af30885f49ed",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 44,
+        "ownStepPlan8": 45,
+        "ownEpisodePlan8": 58,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 33,
+      "start": 1791993082923,
+      "board": "93c0d08b720d1de36c15b30ee1f761f0cd2792244d75864710ca3bb1905e2c5d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 54,
+        "ownStepPlan8": 61,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 50,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 34,
+      "start": 1791993467593,
+      "board": "d00d7b6154ea810c303f28f93e2d977d1096a7e512f31225271d01aa7b8e96bd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 67,
+        "ownStepPlan8": 33,
+        "ownEpisodePlan8": 44,
+        "ownAdaptiveEpisodePlan8": 47,
+        "ownCarryEpisodePlan8": 60
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 35,
+      "start": 1791993866872,
+      "board": "8e3855f33489fe651bc48405e2ae9880b33d7a4cb9782f31f107688265c998a8",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 50,
+        "ownStepPlan8": 45,
+        "ownEpisodePlan8": 34,
+        "ownAdaptiveEpisodePlan8": 35,
+        "ownCarryEpisodePlan8": 30
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 36,
+      "start": 1791994331125,
+      "board": "ca374d69285fb48e2d819b92f613ed5c2cb8806bfebc19179a8373f606956870",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 83,
+        "ownStepPlan8": 56,
+        "ownEpisodePlan8": 100,
+        "ownAdaptiveEpisodePlan8": 103,
+        "ownCarryEpisodePlan8": 45
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 37,
+      "start": 1791994730739,
+      "board": "104e5c483b51fa671a91808e5bfb689cb9902a2fbaaa02c2dda63a9360cafa44",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 57,
+        "ownStepPlan8": 46,
+        "ownEpisodePlan8": 62,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 38,
+      "start": 1791995772536,
+      "board": "7027b72409400eef9578cf1f86b5954219c5b74403350762fb1f7f59ea3ce229",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 38,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 35,
+        "ownAdaptiveEpisodePlan8": 38,
+        "ownCarryEpisodePlan8": 52
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 32,
+      "start": 1792000097829,
+      "board": "62de2689c4b5eb327196ef92ceeeb944b2fb67f9177ebbf97a339b2280a45c82",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 61,
+        "ownStepPlan8": 74,
+        "ownEpisodePlan8": 52,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 74
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 33,
+      "start": 1792000506441,
+      "board": "5c2c93973987d7e340e320163a34fc837b40962140072f69cef7459bf94c1860",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 35,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 60,
+        "ownAdaptiveEpisodePlan8": 60,
+        "ownCarryEpisodePlan8": 67
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 34,
+      "start": 1792000773006,
+      "board": "f19daf665a28d363dc13ab8d65b8075f0b04248e11e466dd1438917eb94bcf5f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 89,
+        "ownStepPlan8": 71,
+        "ownEpisodePlan8": 65,
+        "ownAdaptiveEpisodePlan8": 67,
+        "ownCarryEpisodePlan8": 94
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 35,
+      "start": 1792003564942,
+      "board": "8bb0bc74a9f63ed88aa7512ba773b39d80cefd3b4ab100eefa95d7c0edb4f5db",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 38,
+        "ownStepPlan8": 35,
+        "ownEpisodePlan8": 42,
+        "ownAdaptiveEpisodePlan8": 40,
+        "ownCarryEpisodePlan8": 44
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 36,
+      "start": 1792005193024,
+      "board": "4a86d69761c2f4ed70e082df3fc87978d9d3393f31c3765b505716d2d6b9b69b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 53,
+        "ownStepPlan8": 42,
+        "ownEpisodePlan8": 73,
+        "ownAdaptiveEpisodePlan8": 73,
+        "ownCarryEpisodePlan8": 50
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 39,
+      "start": 1792013300819,
+      "board": "c9997948be06fdd8006b2b7cf0f447c4bad9a788c7e6134cd209d486ea6ac725",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 40,
+        "ownStepPlan8": 37,
+        "ownEpisodePlan8": 28,
+        "ownAdaptiveEpisodePlan8": 29,
+        "ownCarryEpisodePlan8": 29
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 40,
+      "start": 1792014233172,
+      "board": "d034789dcb770067e42f39b5b9d8c35633cc940739123e3c74926e4f86360676",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 57,
+        "ownStepPlan8": 55,
+        "ownEpisodePlan8": 57,
+        "ownAdaptiveEpisodePlan8": 51,
+        "ownCarryEpisodePlan8": 86
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 41,
+      "start": 1792014797696,
+      "board": "54a0eeedfa0e6800472aa4f05fe4ea6c6d866a41f84ea76ceaf7b875b0651ef3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 85,
+        "ownStepPlan8": 75,
+        "ownEpisodePlan8": 37,
+        "ownAdaptiveEpisodePlan8": 40,
+        "ownCarryEpisodePlan8": 64
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 42,
+      "start": 1792031107788,
+      "board": "511decd059e925a9289e9c441ce516d102c27e2f45d520497bd5a725fd334563",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 55,
+        "ownStepPlan8": 45,
+        "ownEpisodePlan8": 60,
+        "ownAdaptiveEpisodePlan8": 60,
+        "ownCarryEpisodePlan8": 33
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 43,
+      "start": 1792031786444,
+      "board": "5800e4a30fea3c1cecf813ac550dbcecd369fd7bf217f6de23cf399a6d52b74b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 69,
+        "ownStepPlan8": 64,
+        "ownEpisodePlan8": 67,
+        "ownAdaptiveEpisodePlan8": 61,
+        "ownCarryEpisodePlan8": 75
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 105,
+      "start": 1792048732189,
+      "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 119,
+        "ownStepPlan8": 120,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 43,
+        "ownCarryEpisodePlan8": 60
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 106,
+      "start": 1792048898439,
+      "board": "33fd9645d44638d5fbdaac955a8a633b6f41aade6a9204d3c06ebc2d78a300d4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 34,
+        "ownStepPlan8": 58,
+        "ownEpisodePlan8": 63,
+        "ownAdaptiveEpisodePlan8": 61,
+        "ownCarryEpisodePlan8": 61
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 37,
+      "start": 1792074676736,
+      "board": "ed8fa4f4a020ed466fcea8f16bc629ed776e0e6e765985ebd8e7326cc234540f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 25,
+        "ownStepPlan8": 32,
+        "ownEpisodePlan8": 28,
+        "ownAdaptiveEpisodePlan8": 29,
+        "ownCarryEpisodePlan8": 34
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 38,
+      "start": 1792074863140,
+      "board": "3e30a0dbb05944dfb1b58dde7e39903a6ee4798528358e8762347a06d29f7a22",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 53,
+        "ownStepPlan8": 54,
+        "ownEpisodePlan8": 72,
+        "ownAdaptiveEpisodePlan8": 76,
+        "ownCarryEpisodePlan8": 70
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 39,
+      "start": 1792076375354,
+      "board": "471806f112a897cda0926829df6c651f84eb8b5f0a90bad275635e55109ac5fd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 64,
+        "ownStepPlan8": 64,
+        "ownEpisodePlan8": 97,
+        "ownAdaptiveEpisodePlan8": 98,
+        "ownCarryEpisodePlan8": 73
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 40,
+      "start": 1792076789756,
+      "board": "161a2bef08e3bcd815f58c627590f49642bb892ba6a0d9fa47b5fddda6c507ad",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 69,
+        "ownStepPlan8": 68,
+        "ownEpisodePlan8": 92,
+        "ownAdaptiveEpisodePlan8": 79,
+        "ownCarryEpisodePlan8": 48
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 41,
+      "start": 1792077019998,
+      "board": "1641afe586bf78c5dd06ac6f1592084d0441798883ad867df9f3c6f611060692",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 112,
+        "ownStepPlan8": 48,
+        "ownEpisodePlan8": 77,
+        "ownAdaptiveEpisodePlan8": 82,
+        "ownCarryEpisodePlan8": 97
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 42,
+      "start": 1792077236210,
+      "board": "6c0af07e9d139e65f14e8b4440dfc37e2d92b2c6870f01f9b468bfbe022f0ce2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 70,
+        "ownStepPlan8": 79,
+        "ownEpisodePlan8": 75,
+        "ownAdaptiveEpisodePlan8": 76,
+        "ownCarryEpisodePlan8": 53
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 43,
+      "start": 1792077779174,
+      "board": "21727cf176fdb9786a8f1620fb6175504b03803cf11bfee5c1b83e83fe7d04d7",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 64,
+        "ownStepPlan8": 61,
+        "ownEpisodePlan8": 38,
+        "ownAdaptiveEpisodePlan8": 39,
+        "ownCarryEpisodePlan8": 33
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 44,
+      "start": 1792078155465,
+      "board": "802e7f173fcab5605d378e1b0cf64e8cc90ec19b7c6a4688d1729aee28be02ea",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 67,
+        "ownStepPlan8": 60,
+        "ownEpisodePlan8": 80,
+        "ownAdaptiveEpisodePlan8": 78,
+        "ownCarryEpisodePlan8": 46
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 45,
+      "start": 1792078697711,
+      "board": "0485b2523e7e195ee7cfa95508f2e1870c596d55d329397fc331c79729f01f4c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 60,
+        "ownStepPlan8": 60,
+        "ownEpisodePlan8": 45,
+        "ownAdaptiveEpisodePlan8": 44,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 44,
+      "start": 1792078889406,
+      "board": "d673c28d46c390946030a420f6d936d958f686d8bbd9bc82abaa86b420e2579e",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 55,
+        "ownStepPlan8": 87,
+        "ownEpisodePlan8": 73,
+        "ownAdaptiveEpisodePlan8": 84,
+        "ownCarryEpisodePlan8": 97
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 45,
+      "start": 1792079446450,
+      "board": "683e1b54c0a140ac7735ff1eff0382d813546bf35bab12387fed0395f4a0671b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 93,
+        "ownStepPlan8": 64,
+        "ownEpisodePlan8": 52,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 83
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 46,
+      "start": 1792079848122,
+      "board": "3a9683b514b2954dc2ef3eca388aed2201705dee67a178e4fdf099d272d51bbd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 86,
+        "ownStepPlan8": 93,
+        "ownEpisodePlan8": 102,
+        "ownAdaptiveEpisodePlan8": 103,
+        "ownCarryEpisodePlan8": 89
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 46,
+      "start": 1792079998136,
+      "board": "e449e56a005ed7aa3366a338fa9749fd60addffe56ace2cb52fbf5c91e18b722",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 62,
+        "ownStepPlan8": 62,
+        "ownEpisodePlan8": 63,
+        "ownAdaptiveEpisodePlan8": 61,
+        "ownCarryEpisodePlan8": 57
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 47,
+      "start": 1792080050551,
+      "board": "ab39fa77735d2c53f770c112299e412fdf8f36add2df32061b8cd77fe14636a0",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 56,
+        "ownStepPlan8": 67,
+        "ownEpisodePlan8": 81,
+        "ownAdaptiveEpisodePlan8": 86,
+        "ownCarryEpisodePlan8": 59
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 47,
+      "start": 1792081570535,
+      "board": "727e2f83b69ea4b721d56ddf961a13c12fd37d15bd3595c3d9aec618ff90cbda",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 40,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 47,
+        "ownAdaptiveEpisodePlan8": 57,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 90,
+      "start": 1792083395933,
+      "board": "4fd0a7e0af351a655d6db41004ca8ea60ebc0b0f9f3a525f95bd97a38610e1ab",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 41,
+        "ownStepPlan8": 74,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 55,
+        "ownCarryEpisodePlan8": 70
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 91,
+      "start": 1792083635769,
+      "board": "320e53c5644e27b66a9421605c304eb3f4666e960d89fae76c520f9ff99c4e8d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 62,
+        "ownStepPlan8": 51,
+        "ownEpisodePlan8": 71,
+        "ownAdaptiveEpisodePlan8": 71,
+        "ownCarryEpisodePlan8": 38
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 48,
+      "start": 1792084600541,
+      "board": "91fdf3804f38a91e25531a38849f352998ac209ef8a92d1c452949f8122e5c84",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 53,
+        "ownStepPlan8": 92,
+        "ownEpisodePlan8": 80,
+        "ownAdaptiveEpisodePlan8": 81,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 49,
+      "start": 1792084839692,
+      "board": "554c38899b0b19d3366b7737b43b8a420b0b00f66198038dbae11dadfa8acec2",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 30,
+        "ownStepPlan8": 49,
+        "ownEpisodePlan8": 45,
+        "ownAdaptiveEpisodePlan8": 44,
+        "ownCarryEpisodePlan8": 38
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 50,
+      "start": 1792085063827,
+      "board": "6acab72ecfdca76eba147b6a440621ad4d69d6242321be33cc8e63e3bf84df3f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 23,
+        "ownStepPlan8": 30,
+        "ownEpisodePlan8": 52,
+        "ownAdaptiveEpisodePlan8": 52,
+        "ownCarryEpisodePlan8": 45
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 51,
+      "start": 1792093661933,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 38,
+        "ownStepPlan8": 53,
+        "ownEpisodePlan8": 50,
+        "ownAdaptiveEpisodePlan8": 53,
+        "ownCarryEpisodePlan8": 51
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 52,
+      "start": 1792096748424,
+      "board": "232ec33c8b8d51d359b52faae3872cba59676900e299b18c814afa07bbd6e26c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 46,
+        "ownStepPlan8": 79,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 64
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 48,
+      "start": 1792097612195,
+      "board": "250dd4793af6305b635c53ba74cd0001470a2e79ef0416181a3afdf8b64a1620",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 73,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 59,
+        "ownAdaptiveEpisodePlan8": 63,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 49,
+      "start": 1792098056466,
+      "board": "112ea4c54b325088ff1a875f656a763ea8726c556d3bb596106074598f3dbc6d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 84,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 33,
+        "ownAdaptiveEpisodePlan8": 31,
+        "ownCarryEpisodePlan8": 63
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 50,
+      "start": 1792137899571,
+      "board": "a6c639da85d34f65a680f153f9276249074f1a8ce18af8bcfea3f3b2e8e629a6",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 82,
+        "ownStepPlan8": 52,
+        "ownEpisodePlan8": 63,
+        "ownAdaptiveEpisodePlan8": 63,
+        "ownCarryEpisodePlan8": 46
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 51,
+      "start": 1792138391388,
+      "board": "0144f15e2a214d776026d6ffae471af801a2bfeb08f1b019a780f05ca1eba258",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 35,
+        "ownStepPlan8": 53,
+        "ownEpisodePlan8": 72,
+        "ownAdaptiveEpisodePlan8": 73,
+        "ownCarryEpisodePlan8": 27
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 53,
+      "start": 1792166705549,
+      "board": "eefae6e74eab8436943a0ccba6fd8e46ec322c956b97aeddcdcd840133e6e9e4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 37,
+        "ownStepPlan8": 51,
+        "ownEpisodePlan8": 43,
+        "ownAdaptiveEpisodePlan8": 43,
+        "ownCarryEpisodePlan8": 53
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 54,
+      "start": 1792167038374,
+      "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 43,
+        "ownStepPlan8": 73,
+        "ownEpisodePlan8": 46,
+        "ownAdaptiveEpisodePlan8": 49,
+        "ownCarryEpisodePlan8": 57
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 55,
+      "start": 1792167284004,
+      "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 60,
+        "ownStepPlan8": 73,
+        "ownEpisodePlan8": 58,
+        "ownAdaptiveEpisodePlan8": 62,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 56,
+      "start": 1792167538665,
+      "board": "e5eecb7f05223aa125c9c3bbfe8067c097948ad1102a3a61a705f4586390d0e0",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 103,
+        "ownStepPlan8": 157,
+        "ownEpisodePlan8": 124,
+        "ownAdaptiveEpisodePlan8": 123,
+        "ownCarryEpisodePlan8": 100
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 57,
+      "start": 1792170422833,
+      "board": "14ec2debe925513ec377e5e1eda3c8eb45f4a2a1813d323abc5920410887f090",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 68,
+        "ownStepPlan8": 92,
+        "ownEpisodePlan8": 51,
+        "ownAdaptiveEpisodePlan8": 48,
+        "ownCarryEpisodePlan8": 65
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 58,
+      "start": 1792170857134,
+      "board": "97efa877d0b07620cad96fe453fe564a728aa77ddb84f612972ed010f2b1b620",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 66,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 75,
+        "ownAdaptiveEpisodePlan8": 66,
+        "ownCarryEpisodePlan8": 60
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 59,
+      "start": 1792171113962,
+      "board": "4dcdf9289212568fd3cd578ea5d47831092fb768b4ff47542c72e7b357132248",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 45,
+        "ownStepPlan8": 61,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 47,
+        "ownCarryEpisodePlan8": 57
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 60,
+      "start": 1792171635042,
+      "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 93,
+        "ownStepPlan8": 74,
+        "ownEpisodePlan8": 127,
+        "ownAdaptiveEpisodePlan8": 126,
+        "ownCarryEpisodePlan8": 78
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 61,
+      "start": 1792172079918,
+      "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 47,
+        "ownStepPlan8": 80,
+        "ownEpisodePlan8": 86,
+        "ownAdaptiveEpisodePlan8": 85,
+        "ownCarryEpisodePlan8": 61
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 62,
+      "start": 1792172831970,
+      "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 107,
+        "ownStepPlan8": 152,
+        "ownEpisodePlan8": 121,
+        "ownAdaptiveEpisodePlan8": 128,
+        "ownCarryEpisodePlan8": 142
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 91,
+      "start": 1792173656313,
+      "board": "320e53c5644e27b66a9421605c304eb3f4666e960d89fae76c520f9ff99c4e8d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 163,
+        "ownStepPlan8": 206,
+        "ownEpisodePlan8": 210,
+        "ownAdaptiveEpisodePlan8": 205,
+        "ownCarryEpisodePlan8": 166
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 92,
+      "start": 1792173667131,
+      "board": "b036311749c913edcd2c7c3f3e468285f1b5ea36f67b76384b7b8648c8d775ce",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 45,
+        "ownStepPlan8": 49,
+        "ownEpisodePlan8": 45,
+        "ownAdaptiveEpisodePlan8": 39,
+        "ownCarryEpisodePlan8": 34
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 92,
+      "start": 1792174127418,
+      "board": "b036311749c913edcd2c7c3f3e468285f1b5ea36f67b76384b7b8648c8d775ce",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 87,
+        "ownStepPlan8": 131,
+        "ownEpisodePlan8": 151,
+        "ownAdaptiveEpisodePlan8": 150,
+        "ownCarryEpisodePlan8": 172
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 52,
+      "start": 1792174210433,
+      "board": "e79a42da72628cb240e0b52c6f68a0ee325a12fb445e762dd535d9894516ca89",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 44,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 36,
+        "ownAdaptiveEpisodePlan8": 36,
+        "ownCarryEpisodePlan8": 56
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 93,
+      "start": 1792174447777,
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 91,
+        "ownStepPlan8": 62,
+        "ownEpisodePlan8": 40,
+        "ownAdaptiveEpisodePlan8": 41,
+        "ownCarryEpisodePlan8": 109
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 53,
+      "start": 1792174506087,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 45,
+        "ownStepPlan8": 66,
+        "ownEpisodePlan8": 57,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 44
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 94,
+      "start": 1792174671192,
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 48,
+        "ownStepPlan8": 53,
+        "ownEpisodePlan8": 133,
+        "ownAdaptiveEpisodePlan8": 138,
+        "ownCarryEpisodePlan8": 76
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 95,
+      "start": 1792174835469,
+      "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 5,
+        "ownStepPlan8": 5,
+        "ownEpisodePlan8": 5,
+        "ownAdaptiveEpisodePlan8": 4,
+        "ownCarryEpisodePlan8": 5
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 96,
+      "start": 1792175045491,
+      "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 68,
+        "ownStepPlan8": 63,
+        "ownEpisodePlan8": 92,
+        "ownAdaptiveEpisodePlan8": 96,
+        "ownCarryEpisodePlan8": 75
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 97,
+      "start": 1792175308886,
+      "board": "75e2f5b1ed2213098af63340cc00df9e9b3148a8bdf6bc61c9cef8feb4970114",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 55,
+        "ownStepPlan8": 50,
+        "ownEpisodePlan8": 105,
+        "ownAdaptiveEpisodePlan8": 106,
+        "ownCarryEpisodePlan8": 89
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 53,
+      "start": 1792179552342,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 92,
+        "ownStepPlan8": 85,
+        "ownEpisodePlan8": 69,
+        "ownAdaptiveEpisodePlan8": 69,
+        "ownCarryEpisodePlan8": 83
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 93,
+      "start": 1792218827820,
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 46,
+        "ownStepPlan8": 46,
+        "ownEpisodePlan8": 27,
+        "ownAdaptiveEpisodePlan8": 30,
+        "ownCarryEpisodePlan8": 31
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 94,
+      "start": 1792219008645,
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 47,
+        "ownStepPlan8": 48,
+        "ownEpisodePlan8": 46,
+        "ownAdaptiveEpisodePlan8": 65,
+        "ownCarryEpisodePlan8": 32
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 95,
+      "start": 1792219379250,
+      "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 4,
+        "ownStepPlan8": 5,
+        "ownEpisodePlan8": 5,
+        "ownAdaptiveEpisodePlan8": 5,
+        "ownCarryEpisodePlan8": 4
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 96,
+      "start": 1792219621915,
+      "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 21,
+        "ownStepPlan8": 19,
+        "ownEpisodePlan8": 33,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 37
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 97,
+      "start": 1792219886790,
+      "board": "75e2f5b1ed2213098af63340cc00df9e9b3148a8bdf6bc61c9cef8feb4970114",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 29,
+        "ownStepPlan8": 57,
+        "ownEpisodePlan8": 80,
+        "ownAdaptiveEpisodePlan8": 75,
+        "ownCarryEpisodePlan8": 58
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 107,
+      "start": 1792236558549,
+      "board": "967ff719207784bb402983e61f9caf68912a844bbe46baf0d033aaadd0388d0d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 83,
+        "ownStepPlan8": 117,
+        "ownEpisodePlan8": 69,
+        "ownAdaptiveEpisodePlan8": 69,
+        "ownCarryEpisodePlan8": 66
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 108,
+      "start": 1792236711656,
+      "board": "9ce01b4a2c3845ea24d2f149b4290986bec974e250d3e831e829405d461edf7b",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 43,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 76,
+        "ownAdaptiveEpisodePlan8": 75,
+        "ownCarryEpisodePlan8": 46
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 109,
+      "start": 1792237007560,
+      "board": "df4be479a9ae3655e3edc4fbe389ae1961b112494a65e7950e98ba17d46506cd",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 48,
+        "ownStepPlan8": 41,
+        "ownEpisodePlan8": 50,
+        "ownAdaptiveEpisodePlan8": 48,
+        "ownCarryEpisodePlan8": 61
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 110,
+      "start": 1792237324237,
+      "board": "79e03ed202f8ac314e212d14cb7876493f245051dd543db7712396f1181dce29",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 42,
+        "ownStepPlan8": 51,
+        "ownEpisodePlan8": 58,
+        "ownAdaptiveEpisodePlan8": 56,
+        "ownCarryEpisodePlan8": 52
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 111,
+      "start": 1792237449745,
+      "board": "734de8ea4726b4395e633297684868883b4c0a00349812dbfa39212a3104d8c6",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 35,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 49,
+        "ownAdaptiveEpisodePlan8": 41,
+        "ownCarryEpisodePlan8": 27
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 112,
+      "start": 1792237765230,
+      "board": "6feaedf11b69c2d75c2fa7f0cc90d2a3ec2ac78f20997f7fcb5211f2cc44c28c",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 49,
+        "ownStepPlan8": 57,
+        "ownEpisodePlan8": 63,
+        "ownAdaptiveEpisodePlan8": 68,
+        "ownCarryEpisodePlan8": 61
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 113,
+      "start": 1792237901717,
+      "board": "a4afad79446ee57a8cd17f673f6f92c16ee6b5d4188e42794a0f734a0494e312",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 57,
+        "ownStepPlan8": 76,
+        "ownEpisodePlan8": 71,
+        "ownAdaptiveEpisodePlan8": 75,
+        "ownCarryEpisodePlan8": 69
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 114,
+      "start": 1792238142501,
+      "board": "ffa756e3f8d74e9575ef7beb14d36edce38118c0a5634aaa150e72aba6bdbebe",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 38,
+        "ownStepPlan8": 75,
+        "ownEpisodePlan8": 91,
+        "ownAdaptiveEpisodePlan8": 90,
+        "ownCarryEpisodePlan8": 102
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 115,
+      "start": 1792238277298,
+      "board": "72a93edadec31d72ac45905618b70b4806785e3bf55e7865e2259f705ad11f4e",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 25,
+        "ownStepPlan8": 28,
+        "ownEpisodePlan8": 31,
+        "ownAdaptiveEpisodePlan8": 30,
+        "ownCarryEpisodePlan8": 35
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 116,
+      "start": 1792238811966,
+      "board": "a16edc4d92039a124f5971a7ed4e512abe55f0ea3450746faa07190be65b7927",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 46,
+        "ownStepPlan8": 55,
+        "ownEpisodePlan8": 89,
+        "ownAdaptiveEpisodePlan8": 90,
+        "ownCarryEpisodePlan8": 76
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 117,
+      "start": 1792239201873,
+      "board": "c54931303d4e9df9c80ac1f032fc7bdc44a5dc08c957bc4b804555ec9f3ce29f",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 89,
+        "ownStepPlan8": 72,
+        "ownEpisodePlan8": 46,
+        "ownAdaptiveEpisodePlan8": 48,
+        "ownCarryEpisodePlan8": 68
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 118,
+      "start": 1792239395598,
+      "board": "9270e848a74474092952aa52c4e050deb893997a476e277b9a2a38b6abb37d7a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 46,
+        "ownStepPlan8": 26,
+        "ownEpisodePlan8": 30,
+        "ownAdaptiveEpisodePlan8": 29,
+        "ownCarryEpisodePlan8": 36
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 119,
+      "start": 1792243578185,
+      "board": "0d449a10ad31e6cadf9dc0797b642a19869b9b1a6a956baaa7245b12bf02896e",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 70,
+        "ownStepPlan8": 52,
+        "ownEpisodePlan8": 59,
+        "ownAdaptiveEpisodePlan8": 58,
+        "ownCarryEpisodePlan8": 105
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 62,
+      "start": 1792249845408,
+      "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 79,
+        "ownStepPlan8": 60,
+        "ownEpisodePlan8": 59,
+        "ownAdaptiveEpisodePlan8": 61,
+        "ownCarryEpisodePlan8": 110
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 120,
+      "start": 1792256114462,
+      "board": "4029553f9b77e7a17233e5aa8808c7267d4e16ad52a5bce9eaf7bda65ae19577",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 70,
+        "ownStepPlan8": 78,
+        "ownEpisodePlan8": 136,
+        "ownAdaptiveEpisodePlan8": 94,
+        "ownCarryEpisodePlan8": 55
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 121,
+      "start": 1792256342328,
+      "board": "1411743adcac720eac5553f7e8ea87edb375d07fdd6bcf16c7ae0dd830f4aaa4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 39,
+        "ownStepPlan8": 44,
+        "ownEpisodePlan8": 45,
+        "ownAdaptiveEpisodePlan8": 42,
+        "ownCarryEpisodePlan8": 33
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 122,
+      "start": 1792258037360,
+      "board": "d5f4f7110a2e982ef412aab8d202f2e5e9e06d01a1251049058125469e8a1f36",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 39,
+        "ownStepPlan8": 47,
+        "ownEpisodePlan8": 28,
+        "ownAdaptiveEpisodePlan8": 27,
+        "ownCarryEpisodePlan8": 31
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 123,
+      "start": 1792258252689,
+      "board": "6843946d1b7c5a05bf30360ada8a964260e44c9c7704683f62d7047d9eb25d14",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 108,
+        "ownStepPlan8": 136,
+        "ownEpisodePlan8": 90,
+        "ownAdaptiveEpisodePlan8": 86,
+        "ownCarryEpisodePlan8": 65
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 124,
+      "start": 1792258657069,
+      "board": "05b046def6653509b81fb4b5c49c6867627be434769fa216853785cee08718e5",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 61,
+        "ownStepPlan8": 60,
+        "ownEpisodePlan8": 41,
+        "ownAdaptiveEpisodePlan8": 42,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 125,
+      "start": 1792261397034,
+      "board": "3f0f892fe9b782e9f2e8eb6291f665ebb2a163ba9985a559f98b769a60a72574",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 32,
+        "ownStepPlan8": 35,
+        "ownEpisodePlan8": 51,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 47
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 98,
+      "start": 1792262199013,
+      "board": "6dc7d96dfc85b59f14927cf8cdc773f37e34ffdc0e22afabeebd1f6c703a3f83",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 33,
+        "ownStepPlan8": 20,
+        "ownEpisodePlan8": 40,
+        "ownAdaptiveEpisodePlan8": 40,
+        "ownCarryEpisodePlan8": 32
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 99,
+      "start": 1792262565093,
+      "board": "d5c6f77d55920ea382613bf810233b9f65cbc7fcb25b93576b1a0b54e0e429e3",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 2,
+        "ownStepPlan8": 1,
+        "ownEpisodePlan8": 2,
+        "ownAdaptiveEpisodePlan8": 2,
+        "ownCarryEpisodePlan8": 1
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 100,
+      "start": 1792263071225,
+      "board": "cce5df71523b594c4979c2242d2075654837d78508adf19665ed1a2c40531fd7",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 33,
+        "ownStepPlan8": 43,
+        "ownEpisodePlan8": 52,
+        "ownAdaptiveEpisodePlan8": 53,
+        "ownCarryEpisodePlan8": 28
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 101,
+      "start": 1792263326840,
+      "board": "9c3c5e33a245120e57f297761acad229adebbefc3dbdd9994e7ce68289d621e4",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 40,
+        "ownStepPlan8": 57,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 72,
+        "ownCarryEpisodePlan8": 41
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 102,
+      "start": 1792263743318,
+      "board": "8075dfe9993e5daa0862a3ec5474864949ceb5b70fddabcf13d1e2fd1becfabf",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 32,
+        "ownStepPlan8": 49,
+        "ownEpisodePlan8": 45,
+        "ownAdaptiveEpisodePlan8": 48,
+        "ownCarryEpisodePlan8": 29
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 103,
+      "start": 1792263948381,
+      "board": "0e95c0df50d367a85de23366248b273303f1e524505f28fe247d5537024a9bbe",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 9,
+        "ownStepPlan8": 27,
+        "ownEpisodePlan8": 32,
+        "ownAdaptiveEpisodePlan8": 34,
+        "ownCarryEpisodePlan8": 17
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 126,
+      "start": 1792264518693,
+      "board": "3905f0d9417d9d36949dd18ff90dcc00f58518b786cd11405bdf00cb11094a6d",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 46,
+        "ownStepPlan8": 40,
+        "ownEpisodePlan8": 56,
+        "ownAdaptiveEpisodePlan8": 54,
+        "ownCarryEpisodePlan8": 54
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 127,
+      "start": 1792264825227,
+      "board": "77479623b0c96bf4477225e63b5c2e4b7cded080a59489723f215e5184a82a90",
+      "computationCaps": {
+        "ownLegalRepeatPlan8": 0,
+        "ownStepPlan8": 0,
+        "ownEpisodePlan8": 0,
+        "ownAdaptiveEpisodePlan8": 0,
+        "ownCarryEpisodePlan8": 0
+      },
+      "elapsedMs": {
+        "ownLegalRepeatPlan8": 51,
+        "ownStepPlan8": 54,
+        "ownEpisodePlan8": 55,
+        "ownAdaptiveEpisodePlan8": 57,
+        "ownCarryEpisodePlan8": 48
+      }
+    }
+  ],
+  "note": "All276 campaigns and three full32-run/32-try controls are retained. Two episode runs/up tothree attempts exercise isolated plans and simulated-failure transitions. No human winning outcomes, predicted winning counts or accuracy score are exported. This cannot replace full count testing or frozen future evidence."
+}

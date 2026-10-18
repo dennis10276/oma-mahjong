@@ -1,0 +1,349 @@
+{
+  "made": "2026-10-18T16:01:51.774707+00:00",
+  "evidence": "historical-predictive-tail-correction-audit",
+  "targetMet": false,
+  "sourceHashes": {
+    "analysis/archive/personal-bots/experiments/personal-outcome-styles-scored-2026-10-18T15-48-20-154Z/manifest.json": "ca58688c83c8be932aa98f88801bae7c939f168a98dfa69a9479c216736eba61",
+    "analysis/archive/personal-bots/experiments/personal-outcome-styles-scored-2026-10-18T15-48-20-154Z/analysis/archive/personal-bots/physical-outcome-styles-count-data.json": "6f73af2e0a2f8fa92ebfc688ad14dde9a1b9e44716239a5c7d0ea3a6dfbd4afe",
+    "analysis/archive/personal-bots/experiments/personal-outcome-styles-scored-2026-10-18T15-48-20-154Z/analysis/archive/personal-bots/physical-outcome-styles-count-scored.json": "b9d01014d9b97b0645eb0c67be10c8b4808f550fed583abe20341ad66f80a370",
+    "analysis/archive/personal-bots/experiments/personal-outcome-styles-scored-2026-10-18T15-48-20-154Z/analysis/personal-bots/physical-outcome-styles-count-evaluation.json": "6783bbbc8cffc71851bca50962b69818ffe74420a12065948fc935212c6ac71c",
+    "tools/sim/refit/predictive_tail_audit.py": "74e77b6ef1ca94eb866763b181ebdd94e712c5fa49911b64307037c3488f14d6",
+    "tools/sim/refit/attempt_count_fit.py": "7f8582dd327bd62334086ad779dbeefb7cb0b61733497ae439ab8a43ad1b7a55",
+    "tools/sim/refit/personal_count_fit.py": "208bf8f3a4f5c5f26651a3db5211edf6240d63a5e26a7713eabfa738985c8d28",
+    "tools/sim/refit/attempt_hazard.py": "6d716888e622f99b727056eb46e59f27a9923e15516166f6448737f73381152a"
+  },
+  "ledgerHashesUnchanged": {
+    "prospective": "58de3c411ba779071e6c7f7d30c360cce7f69986465948e0543a044003f13057",
+    "kind-prospective": "98b8409ede1146938e8495b598706d07fba424ec31dc9b4017081bf61988cd27",
+    "count-profile-prospective": "1e3bd3ba0ae3780aee63791128d4e6a5f031ff073ba8bcddc4599f041de2db62",
+    "progression-prospective": "e98206e69c55013ffd54544ad8320e2b54d5040b752041941849d98d99e09938"
+  },
+  "analyticNumericControlsMatched": 1008,
+  "campaigns": 252,
+  "heldIds": [
+    "Dennisisdebeste|1792236711656",
+    "Dennisisdebeste|1792237007560",
+    "Dennisisdebeste|1792237324237",
+    "Dennisisdebeste|1792237449745",
+    "Dennisisdebeste|1792237765230",
+    "Dennisisdebeste|1792237901717",
+    "Dennisisdebeste|1792238142501",
+    "Dennisisdebeste|1792238277298",
+    "Dennisisdebeste|1792238811966",
+    "Dennisisdebeste|1792239201873",
+    "Dennisisdebeste|1792239395598",
+    "Dennisisdebeste|1792243578185",
+    "Dennisisdebeste|1792256114462",
+    "Dennisisdebeste|1792256342328",
+    "Dennisisdebeste|1792258037360",
+    "Dennisisdebeste|1792258252689",
+    "Dennisisdebeste|1792258657069",
+    "Dennisisdebeste|1792261397034",
+    "Dennisisdebeste|1792264518693",
+    "Dennisisdebeste|1792264825227",
+    "Mrs. Doubtfire|1791829826286",
+    "Mrs. Doubtfire|1791830660440",
+    "Mrs. Doubtfire|1791834095552",
+    "Mrs. Doubtfire|1791834271571",
+    "Mrs. Doubtfire|1791834629701",
+    "Mrs. Doubtfire|1791834825129",
+    "Mrs. Doubtfire|1792083395933",
+    "Mrs. Doubtfire|1792083635769",
+    "Mrs. Doubtfire|1792173667131",
+    "Mrs. Doubtfire|1792218827820",
+    "Mrs. Doubtfire|1792219008645",
+    "Mrs. Doubtfire|1792219379250",
+    "Mrs. Doubtfire|1792219621915",
+    "Mrs. Doubtfire|1792219886790",
+    "Mrs. Doubtfire|1792262199013",
+    "Mrs. Doubtfire|1792262565093",
+    "Mrs. Doubtfire|1792263071225",
+    "Mrs. Doubtfire|1792263326840",
+    "Mrs. Doubtfire|1792263743318",
+    "Mrs. Doubtfire|1792263948381",
+    "PUK|1791993467593",
+    "PUK|1791993866872",
+    "PUK|1791994331125",
+    "PUK|1791994730739",
+    "PUK|1791995772536",
+    "PUK|1792013300819",
+    "PUK|1792014233172",
+    "PUK|1792014797696",
+    "PUK|1792031107788",
+    "PUK|1792031786444",
+    "PUK|1792078889406",
+    "PUK|1792079446450",
+    "PUK|1792079998136",
+    "PUK|1792081570535",
+    "PUK|1792097612195",
+    "PUK|1792098056466",
+    "PUK|1792137899571",
+    "PUK|1792138391388",
+    "PUK|1792174210433",
+    "PUK|1792174506087",
+    "Gerda|1792077779174",
+    "Gerda|1792078155465",
+    "Gerda|1792078697711",
+    "Gerda|1792079848122",
+    "Gerda|1792080050551",
+    "Gerda|1792084600541",
+    "Gerda|1792084839692",
+    "Gerda|1792085063827",
+    "Gerda|1792093661933",
+    "Gerda|1792096748424",
+    "Gerda|1792166705549",
+    "Gerda|1792167038374",
+    "Gerda|1792167284004",
+    "Gerda|1792167538665",
+    "Gerda|1792170422833",
+    "Gerda|1792170857134",
+    "Gerda|1792171113962",
+    "Gerda|1792171635042",
+    "Gerda|1792172079918",
+    "Gerda|1792172831970"
+  ],
+  "changes": [],
+  "players": {
+    "Dennisisdebeste": {
+      "selectedBeforeTestUnchanged": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.15
+      },
+      "analyticMethods": {
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 0,
+          "accuracy": 0.0,
+          "exactAccuracy": 0.0,
+          "wilson95": [
+            -1.3877787807814457e-17,
+            0.16113012549493322
+          ],
+          "meanAbsoluteError": 5.15
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 3.7
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 3.4
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.2
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "selectedBeforeTestUnchanged": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 7,
+        "accuracy": 0.35,
+        "exactAccuracy": 0.35,
+        "wilson95": [
+          0.18118954786794464,
+          0.5671494897805354
+        ],
+        "meanAbsoluteError": 3.45
+      },
+      "analyticMethods": {
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.0,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 5.55
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.0,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 5.35
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.0,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 5.35
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 2,
+          "accuracy": 0.1,
+          "exactAccuracy": 0.05,
+          "wilson95": [
+            0.027865893984153206,
+            0.30103820641179335
+          ],
+          "meanAbsoluteError": 5.2
+        }
+      }
+    },
+    "PUK": {
+      "selectedBeforeTestUnchanged": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 13,
+        "accuracy": 0.65,
+        "exactAccuracy": 0.65,
+        "wilson95": [
+          0.43285051021946463,
+          0.8188104521320554
+        ],
+        "meanAbsoluteError": 1.2
+      },
+      "analyticMethods": {
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 2.35
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 2.6
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 2.65
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 1.35
+        }
+      }
+    },
+    "Gerda": {
+      "selectedBeforeTestUnchanged": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 2.05
+      },
+      "analyticMethods": {
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 4.0
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 3.65
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 3.4
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 2.05
+        }
+      }
+    }
+  },
+  "note": "Original1008 analytic numeric controls reproduce before including ignored model tail mass. Probability beyond128 belongs to the shared8+ success bucket, but is not an invented observed winning attempt. The corrected candidate points are diagnostic only; all old forecasts, labels, held IDs and selected methods stay immutable. No model is reselected on held labels and no genuinely frozen prospective80% claim follows."
+}

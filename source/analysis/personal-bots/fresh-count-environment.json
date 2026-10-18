@@ -1,0 +1,11 @@
+{
+  "made": "2026-10-18T16:18:25.228697+00:00",
+  "python": "3.11.15 (main, Jun 23 2026, 15:20:37) [MSC v.1944 64 bit (AMD64)]",
+  "numpy": "2.4.6",
+  "sklearn": "1.9.0",
+  "node": "v24.15.0",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  }
+}

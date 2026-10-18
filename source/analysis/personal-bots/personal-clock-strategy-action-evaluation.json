@@ -1,0 +1,4898 @@
+{
+  "made": "2026-10-18T11:29:29.047912+00:00",
+  "evidence": "historical-exploratory",
+  "targetMet": false,
+  "personalOnly": true,
+  "scope": "ownAll",
+  "models": 138,
+  "dataSha256": "802bf0e17bcb9e2e3a5ab865a7919f40a44b6020b8e5c6465088195cffb518d4",
+  "modelsSha256": "cf3c3edf00c76151a2a7f22a1f967bac7495ea02375facc2f3ec400c622a125d",
+  "fitSourceHashes": {
+    "personal_clock_strategy_fit.py": "41e671ae9ba8cb8597b59d2cafbb67d474d6a6f70c65e816adadf51e00e15a90",
+    "personal_clock_strategy.py": "83b3228bd3400fe94412b318118d2789045d708bbb12818e888c1a306115593f",
+    "personal_clock_strategy_snapshot.py": "bc74de58636e464d988f5214c3383849ea757cd0feb20b5462a0ae6dde4de4a8",
+    "personal_full_choice_fit.py": "f830b849f07d517e1e05dc64f0393fe461064b136c2255b5bb32eef7324b0096",
+    "personal_known_plan.py": "0ad5d663760767c7c075ac4f27e799b60ae6530daf27bada5705a8705a19b079",
+    "personal_known_plan_fit.py": "7d27ceeff56b7ead74ee685df276899b28bd5bb3d77bbdc7ba56386b611aa50e",
+    "personal_known_plan_snapshot.py": "05c2e1e3ad4d906de026fd31f3d581c21175723c59388c6c6cf6eab8fcbf4c38",
+    "personal_plan_fit.py": "e2b552c8ba46cfd89efba41438628150b3c9ec5395c36c9eb0f7ee23e119a316",
+    "personal_value_fit.py": "b8b63433ef8f85db35f9d6e145614a84b22c84f18e98d451ee671b26dba5227d",
+    "personal_policy_fit.py": "989884f4851967e89fdc393b7b478d96509e22e17b01759c11a4c3f6ccae52c7",
+    "personal_kind_fit.py": "c8a9fd59e0d4d6942a1e9b17c648a5b3aec05376a6a14091b9866312e43c66bf"
+  },
+  "inputHashes": {
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/manifest.json": "77f1b1911d08e7f9a3555ba6229755b8720ee9304d15b06b68b4aec1fbc1b289",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json": "2a3ad9dfebc5b0afe469a82887e3f8a6b819393723977692a25e2d8cad9b07b2",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-count-requests.json": "dae9c763d2a0dc03e1b1564ec4ce493c3fea6edc7b3decc5f6d5c0a0a19b53d9",
+    "analysis/archive/personal-bots/experiments/personal-episode-actions-2026-10-18T05-33-43-593Z/manifest.json": "9bd15ce17fdbf72449c2f6c56b80bbf07d1200ba6489491539241977cf5b34fd",
+    "analysis/archive/personal-bots/experiments/personal-episode-actions-2026-10-18T05-33-43-593Z/analysis/personal-bots/personal-plan-action-evaluation.json": "28d84317fc222920ba8062acdbcfd9c409023fe1fb65a1a057cb864acebdfec2"
+  },
+  "actionControlsMatched": 197,
+  "players": {
+    "Dennisisdebeste": {
+      "initialCandidates": 20,
+      "campaignCandidates": 42,
+      "initialModels": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.709515242537463,
+          "topActionAccuracy": 0.4102787456445993
+        },
+        "adaptiveClock": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.7011663908323782,
+          "topActionAccuracy": 0.4115853658536585
+        }
+      },
+      "retryModels": {
+        "control": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6420943976449005,
+          "topActionAccuracy": 0.4154611211573237
+        },
+        "adaptiveClock": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6352137009984788,
+          "topActionAccuracy": 0.4163652802893309
+        }
+      },
+      "rows": [
+        {
+          "aid": "cf8b410c-ea52-4086-af9b-34c87f90d99d",
+          "level": 107,
+          "opening": 1792236558549,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 131,
+              "jointLogLoss": 1.4418665423675174,
+              "topActionAccuracy": 0.48854961832061067
+            },
+            "adaptiveClock": {
+              "decisions": 131,
+              "jointLogLoss": 1.4391000080851168,
+              "topActionAccuracy": 0.48854961832061067
+            }
+          },
+          "lineage": {
+            "id": "6e6b2a6a1fd87511af567128af93411a6775247b44ebb885d5156e952634ec27",
+            "trainingCut": 1792236553041,
+            "availableThrough": 1792236553040
+          }
+        },
+        {
+          "aid": "5d9cdde1-8175-4614-b6c4-65450bbee997",
+          "level": 108,
+          "opening": 1792236711656,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 95,
+              "jointLogLoss": 1.8715249430888161,
+              "topActionAccuracy": 0.3157894736842105
+            },
+            "adaptiveClock": {
+              "decisions": 95,
+              "jointLogLoss": 1.8589723518870092,
+              "topActionAccuracy": 0.30526315789473685
+            }
+          },
+          "lineage": {
+            "id": "6c17760ce4fef5d8120a384767e9ca9233e80c69af0806b860730f8704516c87",
+            "trainingCut": 1792236707251,
+            "availableThrough": 1792236707250
+          }
+        },
+        {
+          "aid": "05f89784-b684-4c7e-b15e-7f0e67e183c7",
+          "level": 108,
+          "opening": 1792236711656,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 126,
+              "jointLogLoss": 1.3496068623975157,
+              "topActionAccuracy": 0.6190476190476191
+            },
+            "adaptiveClock": {
+              "decisions": 126,
+              "jointLogLoss": 1.3444389342174585,
+              "topActionAccuracy": 0.626984126984127
+            }
+          },
+          "lineage": {
+            "id": "6c17760ce4fef5d8120a384767e9ca9233e80c69af0806b860730f8704516c87",
+            "trainingCut": 1792236707251,
+            "availableThrough": 1792236707250
+          }
+        },
+        {
+          "aid": "7f00a2e4-bb0e-4ad9-8e76-e3d05e38616e",
+          "level": 109,
+          "opening": 1792237007560,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 51,
+              "jointLogLoss": 1.475722461619807,
+              "topActionAccuracy": 0.5098039215686274
+            },
+            "adaptiveClock": {
+              "decisions": 51,
+              "jointLogLoss": 1.4623431730380922,
+              "topActionAccuracy": 0.5098039215686274
+            }
+          },
+          "lineage": {
+            "id": "6993f373b4dbfe30ae43db0ae1df05fda43709574f4447a920fc1a0674e8ed6d",
+            "trainingCut": 1792237001866,
+            "availableThrough": 1792237001865
+          }
+        },
+        {
+          "aid": "64e2f7f0-3c64-4a7a-902c-745de1199144",
+          "level": 109,
+          "opening": 1792237007560,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 30,
+              "jointLogLoss": 1.6188673087347576,
+              "topActionAccuracy": 0.26666666666666666
+            },
+            "adaptiveClock": {
+              "decisions": 30,
+              "jointLogLoss": 1.592030169710912,
+              "topActionAccuracy": 0.26666666666666666
+            }
+          },
+          "lineage": {
+            "id": "6993f373b4dbfe30ae43db0ae1df05fda43709574f4447a920fc1a0674e8ed6d",
+            "trainingCut": 1792237001866,
+            "availableThrough": 1792237001865
+          }
+        },
+        {
+          "aid": "ecd370bc-3505-4e24-a997-51dab5344d90",
+          "level": 109,
+          "opening": 1792237007560,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 33,
+              "jointLogLoss": 1.2985583546556718,
+              "topActionAccuracy": 0.5454545454545454
+            },
+            "adaptiveClock": {
+              "decisions": 33,
+              "jointLogLoss": 1.2741609555430848,
+              "topActionAccuracy": 0.5454545454545454
+            }
+          },
+          "lineage": {
+            "id": "6993f373b4dbfe30ae43db0ae1df05fda43709574f4447a920fc1a0674e8ed6d",
+            "trainingCut": 1792237001866,
+            "availableThrough": 1792237001865
+          }
+        },
+        {
+          "aid": "1e602d5b-774e-4da6-a52e-c199f1c7358e",
+          "level": 109,
+          "opening": 1792237007560,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 144,
+              "jointLogLoss": 1.4206446239914863,
+              "topActionAccuracy": 0.4513888888888889
+            },
+            "adaptiveClock": {
+              "decisions": 144,
+              "jointLogLoss": 1.4150535533615187,
+              "topActionAccuracy": 0.4513888888888889
+            }
+          },
+          "lineage": {
+            "id": "6993f373b4dbfe30ae43db0ae1df05fda43709574f4447a920fc1a0674e8ed6d",
+            "trainingCut": 1792237001866,
+            "availableThrough": 1792237001865
+          }
+        },
+        {
+          "aid": "a00f695e-fe99-4e8b-9a46-8173045107dd",
+          "level": 110,
+          "opening": 1792237324237,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 122,
+              "jointLogLoss": 1.607896862602825,
+              "topActionAccuracy": 0.5245901639344263
+            },
+            "adaptiveClock": {
+              "decisions": 122,
+              "jointLogLoss": 1.5998600120668822,
+              "topActionAccuracy": 0.5245901639344263
+            }
+          },
+          "lineage": {
+            "id": "9b69fb28c4250539b357c6338c20d526a6ee7f1090a31aa5f12de20a4902f55b",
+            "trainingCut": 1792237319201,
+            "availableThrough": 1792237319200
+          }
+        },
+        {
+          "aid": "5ae9f572-0f2c-43c5-9ca5-a702dadcd3b7",
+          "level": 111,
+          "opening": 1792237449745,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 100,
+              "jointLogLoss": 1.633329178353156,
+              "topActionAccuracy": 0.41
+            },
+            "adaptiveClock": {
+              "decisions": 100,
+              "jointLogLoss": 1.627053003993327,
+              "topActionAccuracy": 0.41
+            }
+          },
+          "lineage": {
+            "id": "648fde3d70926f2b76b37f6cf769493ec014b4bdac7ea38acf0c329fdf8f1284",
+            "trainingCut": 1792237443929,
+            "availableThrough": 1792237443928
+          }
+        },
+        {
+          "aid": "9f0c7d9a-9e2d-4d19-9cf3-6b2e559a5ea8",
+          "level": 111,
+          "opening": 1792237449745,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 103,
+              "jointLogLoss": 2.0513535365631332,
+              "topActionAccuracy": 0.21359223300970873
+            },
+            "adaptiveClock": {
+              "decisions": 103,
+              "jointLogLoss": 2.0452601634015966,
+              "topActionAccuracy": 0.21359223300970873
+            }
+          },
+          "lineage": {
+            "id": "648fde3d70926f2b76b37f6cf769493ec014b4bdac7ea38acf0c329fdf8f1284",
+            "trainingCut": 1792237443929,
+            "availableThrough": 1792237443928
+          }
+        },
+        {
+          "aid": "88bee9ab-065b-43ee-8bdf-657ad8447fb4",
+          "level": 111,
+          "opening": 1792237449745,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 132,
+              "jointLogLoss": 1.7129698390134476,
+              "topActionAccuracy": 0.3787878787878788
+            },
+            "adaptiveClock": {
+              "decisions": 132,
+              "jointLogLoss": 1.708215161470733,
+              "topActionAccuracy": 0.3787878787878788
+            }
+          },
+          "lineage": {
+            "id": "648fde3d70926f2b76b37f6cf769493ec014b4bdac7ea38acf0c329fdf8f1284",
+            "trainingCut": 1792237443929,
+            "availableThrough": 1792237443928
+          }
+        },
+        {
+          "aid": "70633ed7-a7ed-408e-8194-f7d6e1e7a7df",
+          "level": 112,
+          "opening": 1792237765230,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 157,
+              "jointLogLoss": 1.731029608028183,
+              "topActionAccuracy": 0.42038216560509556
+            },
+            "adaptiveClock": {
+              "decisions": 157,
+              "jointLogLoss": 1.7247702958012583,
+              "topActionAccuracy": 0.42038216560509556
+            }
+          },
+          "lineage": {
+            "id": "08a945d6c7e3c03d740d8c12b0bba1a2d9fc2ebfda4e553882d51e9a32c360f0",
+            "trainingCut": 1792237761997,
+            "availableThrough": 1792237761996
+          }
+        },
+        {
+          "aid": "6004da1b-844c-4eba-922e-6f1a4e90c7a6",
+          "level": 113,
+          "opening": 1792237901717,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 169,
+              "jointLogLoss": 1.5792110130445745,
+              "topActionAccuracy": 0.41420118343195267
+            },
+            "adaptiveClock": {
+              "decisions": 169,
+              "jointLogLoss": 1.57346197259841,
+              "topActionAccuracy": 0.42011834319526625
+            }
+          },
+          "lineage": {
+            "id": "3592a2bc3591137e90d259a2f02130b9f5b722261b228d52c47d5051981177dd",
+            "trainingCut": 1792237899449,
+            "availableThrough": 1792237899448
+          }
+        },
+        {
+          "aid": "cb7b9713-024b-4bad-9d58-c5169a6ba86d",
+          "level": 114,
+          "opening": 1792238142501,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 126,
+              "jointLogLoss": 1.479603500963405,
+              "topActionAccuracy": 0.5079365079365079
+            },
+            "adaptiveClock": {
+              "decisions": 126,
+              "jointLogLoss": 1.4731691044872275,
+              "topActionAccuracy": 0.5079365079365079
+            }
+          },
+          "lineage": {
+            "id": "87a1e8c856875e64095e32fb3c9e2fe09ffe96aa3eaaafeaf538ce40cc5c8d62",
+            "trainingCut": 1792238139919,
+            "availableThrough": 1792238139918
+          }
+        },
+        {
+          "aid": "12d958f6-91c1-4fad-a757-d93382a17b0a",
+          "level": 115,
+          "opening": 1792238277298,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 15,
+              "jointLogLoss": 1.4901429948840321,
+              "topActionAccuracy": 0.6666666666666666
+            },
+            "adaptiveClock": {
+              "decisions": 15,
+              "jointLogLoss": 1.4430631696372347,
+              "topActionAccuracy": 0.6666666666666666
+            }
+          },
+          "lineage": {
+            "id": "1b5fcc490423ba4029329ba54fa0b2535f4beb90c9ee8cf0e92bc4f77e45c1a0",
+            "trainingCut": 1792238271415,
+            "availableThrough": 1792238271414
+          }
+        },
+        {
+          "aid": "abcb5c7f-2dbb-4c13-9dd6-3a99c4d54182",
+          "level": 115,
+          "opening": 1792238277298,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 115,
+              "jointLogLoss": 1.5892685924392385,
+              "topActionAccuracy": 0.4
+            },
+            "adaptiveClock": {
+              "decisions": 115,
+              "jointLogLoss": 1.5831249006891894,
+              "topActionAccuracy": 0.4
+            }
+          },
+          "lineage": {
+            "id": "1b5fcc490423ba4029329ba54fa0b2535f4beb90c9ee8cf0e92bc4f77e45c1a0",
+            "trainingCut": 1792238271415,
+            "availableThrough": 1792238271414
+          }
+        },
+        {
+          "aid": "19154d14-1cab-44bb-afec-744716566416",
+          "level": 115,
+          "opening": 1792238277298,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 132,
+              "jointLogLoss": 1.5794151441654414,
+              "topActionAccuracy": 0.4015151515151515
+            },
+            "adaptiveClock": {
+              "decisions": 132,
+              "jointLogLoss": 1.5740626854438078,
+              "topActionAccuracy": 0.4015151515151515
+            }
+          },
+          "lineage": {
+            "id": "1b5fcc490423ba4029329ba54fa0b2535f4beb90c9ee8cf0e92bc4f77e45c1a0",
+            "trainingCut": 1792238271415,
+            "availableThrough": 1792238271414
+          }
+        },
+        {
+          "aid": "407f90c0-8e24-4b62-8269-571cc0ebe7b2",
+          "level": 115,
+          "opening": 1792238277298,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 184,
+              "jointLogLoss": 1.4996167020849103,
+              "topActionAccuracy": 0.4782608695652174
+            },
+            "adaptiveClock": {
+              "decisions": 184,
+              "jointLogLoss": 1.49577689474113,
+              "topActionAccuracy": 0.4782608695652174
+            }
+          },
+          "lineage": {
+            "id": "1b5fcc490423ba4029329ba54fa0b2535f4beb90c9ee8cf0e92bc4f77e45c1a0",
+            "trainingCut": 1792238271415,
+            "availableThrough": 1792238271414
+          }
+        },
+        {
+          "aid": "4a7600f2-13f6-401b-9da2-03109a0b7b86",
+          "level": 116,
+          "opening": 1792238811966,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 183,
+              "jointLogLoss": 1.938983766523254,
+              "topActionAccuracy": 0.33879781420765026
+            },
+            "adaptiveClock": {
+              "decisions": 183,
+              "jointLogLoss": 1.9346141988191794,
+              "topActionAccuracy": 0.33879781420765026
+            }
+          },
+          "lineage": {
+            "id": "f7780c59c90cc22eb23c7f53ecbe22deecad51e580463a69da714315825fd49f",
+            "trainingCut": 1792238809488,
+            "availableThrough": 1792238809487
+          }
+        },
+        {
+          "aid": "6b891e2e-868a-49ff-bce1-a7c7097b98f0",
+          "level": 116,
+          "opening": 1792238811966,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 183,
+              "jointLogLoss": 1.7983562714606043,
+              "topActionAccuracy": 0.37158469945355194
+            },
+            "adaptiveClock": {
+              "decisions": 183,
+              "jointLogLoss": 1.7932244974586904,
+              "topActionAccuracy": 0.37158469945355194
+            }
+          },
+          "lineage": {
+            "id": "f7780c59c90cc22eb23c7f53ecbe22deecad51e580463a69da714315825fd49f",
+            "trainingCut": 1792238809488,
+            "availableThrough": 1792238809487
+          }
+        },
+        {
+          "aid": "784c1381-9c98-44d7-b1a5-a62615c71280",
+          "level": 117,
+          "opening": 1792239201873,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 153,
+              "jointLogLoss": 1.4443209142578297,
+              "topActionAccuracy": 0.46405228758169936
+            },
+            "adaptiveClock": {
+              "decisions": 153,
+              "jointLogLoss": 1.439773665752067,
+              "topActionAccuracy": 0.47058823529411764
+            }
+          },
+          "lineage": {
+            "id": "b2b6029988a4612150fcb507927e16e2b9ba0eac950990c01db6d254f8c38385",
+            "trainingCut": 1792239199391,
+            "availableThrough": 1792239199390
+          }
+        },
+        {
+          "aid": "a776a740-a11f-449d-844e-402db9b05d83",
+          "level": 118,
+          "opening": 1792239395598,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 101,
+              "jointLogLoss": 1.737322393311309,
+              "topActionAccuracy": 0.32673267326732675
+            },
+            "adaptiveClock": {
+              "decisions": 101,
+              "jointLogLoss": 1.7337394481170585,
+              "topActionAccuracy": 0.32673267326732675
+            }
+          },
+          "lineage": {
+            "id": "cebf0848133ff7d8cd5a645651f60ed82c02903c5d0c93c89b0e26370da6318d",
+            "trainingCut": 1792239391544,
+            "availableThrough": 1792239391543
+          }
+        },
+        {
+          "aid": "8cc54178-23ba-43e9-81c8-2b315c4729dc",
+          "level": 118,
+          "opening": 1792239395598,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 8,
+              "jointLogLoss": 2.1131237842604107,
+              "topActionAccuracy": 0.375
+            },
+            "adaptiveClock": {
+              "decisions": 8,
+              "jointLogLoss": 2.2970676681620614,
+              "topActionAccuracy": 0.375
+            }
+          },
+          "lineage": {
+            "id": "cebf0848133ff7d8cd5a645651f60ed82c02903c5d0c93c89b0e26370da6318d",
+            "trainingCut": 1792239391544,
+            "availableThrough": 1792239391543
+          }
+        },
+        {
+          "aid": "714ea337-cfef-4469-8311-534d594753b1",
+          "level": 118,
+          "opening": 1792239395598,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 130,
+              "jointLogLoss": 1.7003763304189765,
+              "topActionAccuracy": 0.4230769230769231
+            },
+            "adaptiveClock": {
+              "decisions": 130,
+              "jointLogLoss": 1.697592657668059,
+              "topActionAccuracy": 0.4230769230769231
+            }
+          },
+          "lineage": {
+            "id": "cebf0848133ff7d8cd5a645651f60ed82c02903c5d0c93c89b0e26370da6318d",
+            "trainingCut": 1792239391544,
+            "availableThrough": 1792239391543
+          }
+        },
+        {
+          "aid": "4bd549f0-5e86-4617-97d9-b1878806d505",
+          "level": 120,
+          "opening": 1792256114462,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 10,
+              "jointLogLoss": 2.584555482175225,
+              "topActionAccuracy": 0.2
+            },
+            "adaptiveClock": {
+              "decisions": 10,
+              "jointLogLoss": 2.383200371346513,
+              "topActionAccuracy": 0.2
+            }
+          },
+          "lineage": {
+            "id": "0ba25c662d0f094dca6b326ad573ed0cf16f4b69bab8eadd81307a11cab374ed",
+            "trainingCut": 1792256108435,
+            "availableThrough": 1792256108434
+          }
+        },
+        {
+          "aid": "0429f806-4d4e-4c97-9276-f907b42a1782",
+          "level": 120,
+          "opening": 1792256114462,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 6,
+              "jointLogLoss": 3.1532773334250983,
+              "topActionAccuracy": 0.16666666666666666
+            },
+            "adaptiveClock": {
+              "decisions": 6,
+              "jointLogLoss": 2.9632971771204635,
+              "topActionAccuracy": 0.16666666666666666
+            }
+          },
+          "lineage": {
+            "id": "0ba25c662d0f094dca6b326ad573ed0cf16f4b69bab8eadd81307a11cab374ed",
+            "trainingCut": 1792256108435,
+            "availableThrough": 1792256108434
+          }
+        },
+        {
+          "aid": "f2332425-1d8f-4064-9385-a7cee62f1055",
+          "level": 120,
+          "opening": 1792256114462,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 190,
+              "jointLogLoss": 1.7235562990676276,
+              "topActionAccuracy": 0.42105263157894735
+            },
+            "adaptiveClock": {
+              "decisions": 190,
+              "jointLogLoss": 1.7172398073021893,
+              "topActionAccuracy": 0.42105263157894735
+            }
+          },
+          "lineage": {
+            "id": "0ba25c662d0f094dca6b326ad573ed0cf16f4b69bab8eadd81307a11cab374ed",
+            "trainingCut": 1792256108435,
+            "availableThrough": 1792256108434
+          }
+        },
+        {
+          "aid": "5fff03dd-90e6-4cb7-a6e8-03b8029f6c35",
+          "level": 121,
+          "opening": 1792256342328,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 12,
+              "jointLogLoss": 1.0998288722655,
+              "topActionAccuracy": 0.5
+            },
+            "adaptiveClock": {
+              "decisions": 12,
+              "jointLogLoss": 1.0024445441620962,
+              "topActionAccuracy": 0.5
+            }
+          },
+          "lineage": {
+            "id": "9f4c9c1c293619ec0a029a18311693e08b179f354b577b133e440edec4db2f2b",
+            "trainingCut": 1792256338659,
+            "availableThrough": 1792256338658
+          }
+        },
+        {
+          "aid": "8db405af-b43c-45cc-9584-bd25e3a1f265",
+          "level": 121,
+          "opening": 1792256342328,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 22,
+              "jointLogLoss": 1.2045783195092394,
+              "topActionAccuracy": 0.5909090909090909
+            },
+            "adaptiveClock": {
+              "decisions": 22,
+              "jointLogLoss": 1.1916064384961411,
+              "topActionAccuracy": 0.5909090909090909
+            }
+          },
+          "lineage": {
+            "id": "9f4c9c1c293619ec0a029a18311693e08b179f354b577b133e440edec4db2f2b",
+            "trainingCut": 1792256338659,
+            "availableThrough": 1792256338658
+          }
+        },
+        {
+          "aid": "5d70f797-c5f4-41b4-baa0-b1e097767868",
+          "level": 121,
+          "opening": 1792256342328,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 83,
+              "jointLogLoss": 1.4315722493239624,
+              "topActionAccuracy": 0.4819277108433735
+            },
+            "adaptiveClock": {
+              "decisions": 83,
+              "jointLogLoss": 1.4226327320247962,
+              "topActionAccuracy": 0.4819277108433735
+            }
+          },
+          "lineage": {
+            "id": "9f4c9c1c293619ec0a029a18311693e08b179f354b577b133e440edec4db2f2b",
+            "trainingCut": 1792256338659,
+            "availableThrough": 1792256338658
+          }
+        },
+        {
+          "aid": "b8f5fa3a-cd05-4d6b-9190-509aee65ee2f",
+          "level": 121,
+          "opening": 1792256342328,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 122,
+              "jointLogLoss": 1.2968636059208904,
+              "topActionAccuracy": 0.5327868852459017
+            },
+            "adaptiveClock": {
+              "decisions": 122,
+              "jointLogLoss": 1.2907818031681786,
+              "topActionAccuracy": 0.5327868852459017
+            }
+          },
+          "lineage": {
+            "id": "9f4c9c1c293619ec0a029a18311693e08b179f354b577b133e440edec4db2f2b",
+            "trainingCut": 1792256338659,
+            "availableThrough": 1792256338658
+          }
+        },
+        {
+          "aid": "fa97ed27-36cf-4efb-b594-38df3defdebb",
+          "level": 122,
+          "opening": 1792258037360,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 7,
+              "jointLogLoss": 1.7738140503573,
+              "topActionAccuracy": 0.2857142857142857
+            },
+            "adaptiveClock": {
+              "decisions": 7,
+              "jointLogLoss": 1.7160249840426254,
+              "topActionAccuracy": 0.2857142857142857
+            }
+          },
+          "lineage": {
+            "id": "b1d38ae2606e009bc467e90cab4bb01340899978941c9392c5366c9e1ef5afcf",
+            "trainingCut": 1792258031983,
+            "availableThrough": 1792258031982
+          }
+        },
+        {
+          "aid": "9e5f9520-ed4f-4f90-9e7a-39acb7bee83d",
+          "level": 122,
+          "opening": 1792258037360,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 7,
+              "jointLogLoss": 1.4489718061557357,
+              "topActionAccuracy": 0.5714285714285714
+            },
+            "adaptiveClock": {
+              "decisions": 7,
+              "jointLogLoss": 1.2585360273416222,
+              "topActionAccuracy": 0.7142857142857143
+            }
+          },
+          "lineage": {
+            "id": "b1d38ae2606e009bc467e90cab4bb01340899978941c9392c5366c9e1ef5afcf",
+            "trainingCut": 1792258031983,
+            "availableThrough": 1792258031982
+          }
+        },
+        {
+          "aid": "278557ae-74b4-40fd-aac4-71d5f6d50145",
+          "level": 122,
+          "opening": 1792258037360,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 6,
+              "jointLogLoss": 1.6367085813872209,
+              "topActionAccuracy": 0.6666666666666666
+            },
+            "adaptiveClock": {
+              "decisions": 6,
+              "jointLogLoss": 1.4522534624551382,
+              "topActionAccuracy": 0.6666666666666666
+            }
+          },
+          "lineage": {
+            "id": "b1d38ae2606e009bc467e90cab4bb01340899978941c9392c5366c9e1ef5afcf",
+            "trainingCut": 1792258031983,
+            "availableThrough": 1792258031982
+          }
+        },
+        {
+          "aid": "3f779156-5aa7-478b-af5f-3ed98a5f5efd",
+          "level": 122,
+          "opening": 1792258037360,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 105,
+              "jointLogLoss": 1.625156641718781,
+              "topActionAccuracy": 0.44761904761904764
+            },
+            "adaptiveClock": {
+              "decisions": 105,
+              "jointLogLoss": 1.6148607315688066,
+              "topActionAccuracy": 0.44761904761904764
+            }
+          },
+          "lineage": {
+            "id": "b1d38ae2606e009bc467e90cab4bb01340899978941c9392c5366c9e1ef5afcf",
+            "trainingCut": 1792258031983,
+            "availableThrough": 1792258031982
+          }
+        },
+        {
+          "aid": "a0d459e2-bc7b-49ec-92f1-744eb1720bbb",
+          "level": 123,
+          "opening": 1792258252689,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 200,
+              "jointLogLoss": 1.935465106583049,
+              "topActionAccuracy": 0.335
+            },
+            "adaptiveClock": {
+              "decisions": 200,
+              "jointLogLoss": 1.929049289492115,
+              "topActionAccuracy": 0.34
+            }
+          },
+          "lineage": {
+            "id": "33e19972bbc777f83f999f70580de057f94aea31bcab2f38b3443d84559f0efb",
+            "trainingCut": 1792258245827,
+            "availableThrough": 1792258245826
+          }
+        },
+        {
+          "aid": "47baa64c-3758-4bf9-a3c7-26287232a6ad",
+          "level": 124,
+          "opening": 1792258657069,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 221,
+              "jointLogLoss": 1.84097256346316,
+              "topActionAccuracy": 0.3438914027149321
+            },
+            "adaptiveClock": {
+              "decisions": 221,
+              "jointLogLoss": 1.8375871117570388,
+              "topActionAccuracy": 0.3438914027149321
+            }
+          },
+          "lineage": {
+            "id": "c1fb8e817d4213880982f017529906153352aa19d9e7e247c1f338595ae32053",
+            "trainingCut": 1792258537658,
+            "availableThrough": 1792258537657
+          }
+        },
+        {
+          "aid": "241f2afd-e4d5-4970-9b27-1f1d57009c38",
+          "level": 124,
+          "opening": 1792258657069,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 145,
+              "jointLogLoss": 1.934061603449054,
+              "topActionAccuracy": 0.25517241379310346
+            },
+            "adaptiveClock": {
+              "decisions": 145,
+              "jointLogLoss": 1.9301239635848573,
+              "topActionAccuracy": 0.25517241379310346
+            }
+          },
+          "lineage": {
+            "id": "c1fb8e817d4213880982f017529906153352aa19d9e7e247c1f338595ae32053",
+            "trainingCut": 1792258537658,
+            "availableThrough": 1792258537657
+          }
+        },
+        {
+          "aid": "1e60eb59-75b1-4cec-9d0c-d1be4eec2102",
+          "level": 124,
+          "opening": 1792258657069,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 206,
+              "jointLogLoss": 1.8138883172890612,
+              "topActionAccuracy": 0.3592233009708738
+            },
+            "adaptiveClock": {
+              "decisions": 206,
+              "jointLogLoss": 1.8102563521109398,
+              "topActionAccuracy": 0.3592233009708738
+            }
+          },
+          "lineage": {
+            "id": "c1fb8e817d4213880982f017529906153352aa19d9e7e247c1f338595ae32053",
+            "trainingCut": 1792258537658,
+            "availableThrough": 1792258537657
+          }
+        },
+        {
+          "aid": "2b1d1212-dee2-4b6a-ba23-9d2195cc5c2c",
+          "level": 125,
+          "opening": 1792261397034,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 107,
+              "jointLogLoss": 1.4098595153243627,
+              "topActionAccuracy": 0.5233644859813084
+            },
+            "adaptiveClock": {
+              "decisions": 107,
+              "jointLogLoss": 1.4014384436907723,
+              "topActionAccuracy": 0.5233644859813084
+            }
+          },
+          "lineage": {
+            "id": "d6bb68ac5c400a2ae8c82e889676a6aa76153f897aa53c486986c5bbd0b92c10",
+            "trainingCut": 1792261391988,
+            "availableThrough": 1792261391987
+          }
+        },
+        {
+          "aid": "1c291f5a-591e-4369-89b9-83ff643a8845",
+          "level": 126,
+          "opening": 1792264518693,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 220,
+              "jointLogLoss": 2.075731538507824,
+              "topActionAccuracy": 0.35
+            },
+            "adaptiveClock": {
+              "decisions": 220,
+              "jointLogLoss": 2.0697099737926257,
+              "topActionAccuracy": 0.35
+            }
+          },
+          "lineage": {
+            "id": "817e309da2b90b53dae476a96f4748e1ae8e984a94c844a34de609aed07285e8",
+            "trainingCut": 1792264513309,
+            "availableThrough": 1792264513308
+          }
+        },
+        {
+          "aid": "873cd1ff-0abd-49ea-aff8-f024c6779a0d",
+          "level": 127,
+          "opening": 1792264825227,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 116,
+              "jointLogLoss": 1.482415335542017,
+              "topActionAccuracy": 0.47413793103448276
+            },
+            "adaptiveClock": {
+              "decisions": 116,
+              "jointLogLoss": 1.4638697129731442,
+              "topActionAccuracy": 0.4827586206896552
+            }
+          },
+          "lineage": {
+            "id": "c127c8a6649bba6ce569777b06440fabe7d37969b3d5caea19409c31486704be",
+            "trainingCut": 1792264823724,
+            "availableThrough": 1792264823723
+          }
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "initialCandidates": 14,
+      "campaignCandidates": 54,
+      "initialModels": {
+        "control": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8796504107288818,
+          "topActionAccuracy": 0.3351028533510285
+        },
+        "adaptiveClock": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8726167198754438,
+          "topActionAccuracy": 0.3364299933642999
+        }
+      },
+      "retryModels": {
+        "control": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8263835025468405,
+          "topActionAccuracy": 0.36993464052287583
+        },
+        "adaptiveClock": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8185206177205318,
+          "topActionAccuracy": 0.37254901960784315
+        }
+      },
+      "rows": [
+        {
+          "aid": "40ec9181-90db-40a6-b4a0-e09e0476b63f",
+          "level": 90,
+          "opening": 1792083395933,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 205,
+              "jointLogLoss": 2.217115776599117,
+              "topActionAccuracy": 0.21951219512195122
+            },
+            "adaptiveClock": {
+              "decisions": 205,
+              "jointLogLoss": 2.2152061717774765,
+              "topActionAccuracy": 0.21951219512195122
+            }
+          },
+          "lineage": {
+            "id": "0c404321f0b718f4bc2a157e361b1b29a5fc88c4e29c3f3720535937fb65b5d4",
+            "trainingCut": 1792083385949,
+            "availableThrough": 1792083385948
+          }
+        },
+        {
+          "aid": "496ae0a1-30a2-48b2-beb3-10c1442c3964",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 88,
+              "jointLogLoss": 1.9188978798218796,
+              "topActionAccuracy": 0.3522727272727273
+            },
+            "adaptiveClock": {
+              "decisions": 88,
+              "jointLogLoss": 1.9157749924564167,
+              "topActionAccuracy": 0.3522727272727273
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "e6686c50-df17-4202-ada2-fdc0fdb33e22",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 7,
+              "jointLogLoss": 1.3681897524698987,
+              "topActionAccuracy": 0.7142857142857143
+            },
+            "adaptiveClock": {
+              "decisions": 7,
+              "jointLogLoss": 1.3663256036563918,
+              "topActionAccuracy": 0.7142857142857143
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "6c7d3224-7d15-4155-95aa-e36a68507ca1",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 110,
+              "jointLogLoss": 1.7566918077676086,
+              "topActionAccuracy": 0.36363636363636365
+            },
+            "adaptiveClock": {
+              "decisions": 110,
+              "jointLogLoss": 1.7541934978764535,
+              "topActionAccuracy": 0.36363636363636365
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "641431a4-1043-4fee-9d83-8a846c91caa8",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 55,
+              "jointLogLoss": 1.714024585905076,
+              "topActionAccuracy": 0.43636363636363634
+            },
+            "adaptiveClock": {
+              "decisions": 55,
+              "jointLogLoss": 1.7086560908247634,
+              "topActionAccuracy": 0.43636363636363634
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "2df8244b-f96e-464d-8212-5714bfe4ca89",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 95,
+              "jointLogLoss": 1.8401155471085504,
+              "topActionAccuracy": 0.4
+            },
+            "adaptiveClock": {
+              "decisions": 95,
+              "jointLogLoss": 1.8372227672345816,
+              "topActionAccuracy": 0.4
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "2ec424b1-28f7-4b1c-961e-88ec39346c98",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 52,
+              "jointLogLoss": 1.6057812574374961,
+              "topActionAccuracy": 0.40384615384615385
+            },
+            "adaptiveClock": {
+              "decisions": 52,
+              "jointLogLoss": 1.6001030414871666,
+              "topActionAccuracy": 0.40384615384615385
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "65b6bfcc-641b-4701-a82d-721cd10663b9",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 67,
+              "jointLogLoss": 1.7625534079283605,
+              "topActionAccuracy": 0.3582089552238806
+            },
+            "adaptiveClock": {
+              "decisions": 67,
+              "jointLogLoss": 1.7584517051219861,
+              "topActionAccuracy": 0.3582089552238806
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "5bb3d343-fd5b-4ae9-a450-967706eb37b6",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 7,
+              "jointLogLoss": 1.351386750469814,
+              "topActionAccuracy": 0.5714285714285714
+            },
+            "adaptiveClock": {
+              "decisions": 7,
+              "jointLogLoss": 1.3499261572365664,
+              "topActionAccuracy": 0.5714285714285714
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "fa8567ba-5fbd-46b0-9a04-4b8f6ee64db4",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 45,
+              "jointLogLoss": 1.854235749327056,
+              "topActionAccuracy": 0.4
+            },
+            "adaptiveClock": {
+              "decisions": 45,
+              "jointLogLoss": 1.8501866631794617,
+              "topActionAccuracy": 0.4
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "58aff72f-96a6-43b0-bd92-9b6ea4159193",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 52,
+              "jointLogLoss": 1.6578867029660906,
+              "topActionAccuracy": 0.4807692307692308
+            },
+            "adaptiveClock": {
+              "decisions": 52,
+              "jointLogLoss": 1.652601816657878,
+              "topActionAccuracy": 0.4807692307692308
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "a26bc167-9c17-4af3-98de-b7309775264f",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 7,
+              "jointLogLoss": 1.4122091537576738,
+              "topActionAccuracy": 0.42857142857142855
+            },
+            "adaptiveClock": {
+              "decisions": 7,
+              "jointLogLoss": 1.4241939834781088,
+              "topActionAccuracy": 0.42857142857142855
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "0abe9988-900d-4875-badd-4caeca687176",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 32,
+              "jointLogLoss": 1.6904001542934977,
+              "topActionAccuracy": 0.46875
+            },
+            "adaptiveClock": {
+              "decisions": 32,
+              "jointLogLoss": 1.681812214042652,
+              "topActionAccuracy": 0.46875
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "351b7ffd-f558-4f5a-aaf2-8e831e9535c3",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 61,
+              "jointLogLoss": 1.902989407145182,
+              "topActionAccuracy": 0.3442622950819672
+            },
+            "adaptiveClock": {
+              "decisions": 61,
+              "jointLogLoss": 1.8984842581611325,
+              "topActionAccuracy": 0.3442622950819672
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "fc197908-9d20-46e4-bbe9-3a79fd598e2d",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 39,
+              "jointLogLoss": 1.60765985453877,
+              "topActionAccuracy": 0.5384615384615384
+            },
+            "adaptiveClock": {
+              "decisions": 39,
+              "jointLogLoss": 1.6006133394611535,
+              "topActionAccuracy": 0.5384615384615384
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "fbf1118f-19be-4550-bf08-839a5a055857",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 51,
+              "jointLogLoss": 1.7438432786144056,
+              "topActionAccuracy": 0.4117647058823529
+            },
+            "adaptiveClock": {
+              "decisions": 51,
+              "jointLogLoss": 1.738454767084464,
+              "topActionAccuracy": 0.4117647058823529
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "970a2f78-dd00-424b-a647-ff7b1eee501d",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 87,
+              "jointLogLoss": 1.7932735171886665,
+              "topActionAccuracy": 0.41379310344827586
+            },
+            "adaptiveClock": {
+              "decisions": 87,
+              "jointLogLoss": 1.7901147345676658,
+              "topActionAccuracy": 0.41379310344827586
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "6525d2e1-115b-4316-b061-39a96ce0cb4c",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 39,
+              "jointLogLoss": 1.8336138760384932,
+              "topActionAccuracy": 0.46153846153846156
+            },
+            "adaptiveClock": {
+              "decisions": 39,
+              "jointLogLoss": 1.8270778352965862,
+              "topActionAccuracy": 0.46153846153846156
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "dd582979-eedb-478a-9e11-b6d7129eaddc",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 66,
+              "jointLogLoss": 1.7926671888948176,
+              "topActionAccuracy": 0.45454545454545453
+            },
+            "adaptiveClock": {
+              "decisions": 66,
+              "jointLogLoss": 1.7885033390762257,
+              "topActionAccuracy": 0.45454545454545453
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "9acaca29-f086-433b-861a-75c409b2d8ae",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 71,
+              "jointLogLoss": 1.7981226199044915,
+              "topActionAccuracy": 0.38028169014084506
+            },
+            "adaptiveClock": {
+              "decisions": 71,
+              "jointLogLoss": 1.7934863006029849,
+              "topActionAccuracy": 0.39436619718309857
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "16f8a0a9-54d2-4472-88b7-2b78130cbfd2",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 38,
+              "jointLogLoss": 1.759472346446898,
+              "topActionAccuracy": 0.5
+            },
+            "adaptiveClock": {
+              "decisions": 38,
+              "jointLogLoss": 1.754269619059698,
+              "topActionAccuracy": 0.5
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "5022f286-5a17-4d6f-a5cb-29e98ba2dd0e",
+          "level": 91,
+          "opening": 1792083635769,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 128,
+              "jointLogLoss": 1.8977273053019208,
+              "topActionAccuracy": 0.40625
+            },
+            "adaptiveClock": {
+              "decisions": 128,
+              "jointLogLoss": 1.89558032023921,
+              "topActionAccuracy": 0.40625
+            }
+          },
+          "lineage": {
+            "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+            "trainingCut": 1792083630483,
+            "availableThrough": 1792083630482
+          }
+        },
+        {
+          "aid": "4fdd41cd-dc23-451a-a2a5-e476ea8cbc6c",
+          "level": 92,
+          "opening": 1792173667131,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 111,
+              "jointLogLoss": 2.1822617604585544,
+              "topActionAccuracy": 0.2702702702702703
+            },
+            "adaptiveClock": {
+              "decisions": 111,
+              "jointLogLoss": 2.175541238286322,
+              "topActionAccuracy": 0.2702702702702703
+            }
+          },
+          "lineage": {
+            "id": "0f5ec9591127682d1e48bdcf1a805bd03cc1720ffd7950d764056df0bcceb0c7",
+            "trainingCut": 1792173649392,
+            "availableThrough": 1792173649391
+          }
+        },
+        {
+          "aid": "324dc1d4-d460-4521-ac0b-52d2a9f7656f",
+          "level": 92,
+          "opening": 1792173667131,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 164,
+              "jointLogLoss": 1.9488127161555422,
+              "topActionAccuracy": 0.2865853658536585
+            },
+            "adaptiveClock": {
+              "decisions": 164,
+              "jointLogLoss": 1.9439988074755183,
+              "topActionAccuracy": 0.2865853658536585
+            }
+          },
+          "lineage": {
+            "id": "0f5ec9591127682d1e48bdcf1a805bd03cc1720ffd7950d764056df0bcceb0c7",
+            "trainingCut": 1792173649392,
+            "availableThrough": 1792173649391
+          }
+        },
+        {
+          "aid": "310d321c-a36c-49bb-92c4-7850414e3e38",
+          "level": 93,
+          "opening": 1792218827820,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 9,
+              "jointLogLoss": 1.328420034861055,
+              "topActionAccuracy": 0.5555555555555556
+            },
+            "adaptiveClock": {
+              "decisions": 9,
+              "jointLogLoss": 1.2819882889640164,
+              "topActionAccuracy": 0.5555555555555556
+            }
+          },
+          "lineage": {
+            "id": "9474e987d8edcbdb84b22e1e602f8144273a999bb9cd8cc73405c42d2dfa80e4",
+            "trainingCut": 1792218825934,
+            "availableThrough": 1792218825933
+          }
+        },
+        {
+          "aid": "86998407-4cfa-4271-b0f2-d6a7cb921f5f",
+          "level": 93,
+          "opening": 1792218827820,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 169,
+              "jointLogLoss": 1.7805059592743908,
+              "topActionAccuracy": 0.3254437869822485
+            },
+            "adaptiveClock": {
+              "decisions": 169,
+              "jointLogLoss": 1.7781222565888328,
+              "topActionAccuracy": 0.33136094674556216
+            }
+          },
+          "lineage": {
+            "id": "9474e987d8edcbdb84b22e1e602f8144273a999bb9cd8cc73405c42d2dfa80e4",
+            "trainingCut": 1792218825934,
+            "availableThrough": 1792218825933
+          }
+        },
+        {
+          "aid": "6a159ce0-33ec-4bd7-9f01-bdb0a7fd1035",
+          "level": 94,
+          "opening": 1792219008645,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 7,
+              "jointLogLoss": 2.7835473442576446,
+              "topActionAccuracy": 0.2857142857142857
+            },
+            "adaptiveClock": {
+              "decisions": 7,
+              "jointLogLoss": 2.69079737084352,
+              "topActionAccuracy": 0.2857142857142857
+            }
+          },
+          "lineage": {
+            "id": "d941d97e710cf39127d5bbf733f8c50aebf0c254aafa94bc6ff2c0652990c3fe",
+            "trainingCut": 1792219006624,
+            "availableThrough": 1792219006623
+          }
+        },
+        {
+          "aid": "179d3bca-ee3a-4bb4-9b63-4379fe4e0267",
+          "level": 94,
+          "opening": 1792219008645,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 15,
+              "jointLogLoss": 1.8940258810185417,
+              "topActionAccuracy": 0.5333333333333333
+            },
+            "adaptiveClock": {
+              "decisions": 15,
+              "jointLogLoss": 1.8234685325810482,
+              "topActionAccuracy": 0.5333333333333333
+            }
+          },
+          "lineage": {
+            "id": "d941d97e710cf39127d5bbf733f8c50aebf0c254aafa94bc6ff2c0652990c3fe",
+            "trainingCut": 1792219006624,
+            "availableThrough": 1792219006623
+          }
+        },
+        {
+          "aid": "674c133d-8038-4e99-834c-6dd7a9cb2e43",
+          "level": 94,
+          "opening": 1792219008645,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 8,
+              "jointLogLoss": 1.1007736565711386,
+              "topActionAccuracy": 0.5
+            },
+            "adaptiveClock": {
+              "decisions": 8,
+              "jointLogLoss": 1.0250185972880788,
+              "topActionAccuracy": 0.5
+            }
+          },
+          "lineage": {
+            "id": "d941d97e710cf39127d5bbf733f8c50aebf0c254aafa94bc6ff2c0652990c3fe",
+            "trainingCut": 1792219006624,
+            "availableThrough": 1792219006623
+          }
+        },
+        {
+          "aid": "e0372a0d-4ea5-4b63-8706-b4b39db77fa2",
+          "level": 94,
+          "opening": 1792219008645,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 117,
+              "jointLogLoss": 1.6731428479827641,
+              "topActionAccuracy": 0.36752136752136755
+            },
+            "adaptiveClock": {
+              "decisions": 117,
+              "jointLogLoss": 1.6652296087667466,
+              "topActionAccuracy": 0.36752136752136755
+            }
+          },
+          "lineage": {
+            "id": "d941d97e710cf39127d5bbf733f8c50aebf0c254aafa94bc6ff2c0652990c3fe",
+            "trainingCut": 1792219006624,
+            "availableThrough": 1792219006623
+          }
+        },
+        {
+          "aid": "f9aea09d-738b-42e1-9e7b-3191bf682aaf",
+          "level": 94,
+          "opening": 1792219008645,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 181,
+              "jointLogLoss": 1.7462373964278641,
+              "topActionAccuracy": 0.35359116022099446
+            },
+            "adaptiveClock": {
+              "decisions": 181,
+              "jointLogLoss": 1.7428387355418946,
+              "topActionAccuracy": 0.35359116022099446
+            }
+          },
+          "lineage": {
+            "id": "d941d97e710cf39127d5bbf733f8c50aebf0c254aafa94bc6ff2c0652990c3fe",
+            "trainingCut": 1792219006624,
+            "availableThrough": 1792219006623
+          }
+        },
+        {
+          "aid": "c046e698-f3d8-4588-bc9a-63003f8607ee",
+          "level": 95,
+          "opening": 1792219379250,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 113,
+              "jointLogLoss": 1.9773761713042624,
+              "topActionAccuracy": 0.2831858407079646
+            },
+            "adaptiveClock": {
+              "decisions": 113,
+              "jointLogLoss": 1.9720303948535216,
+              "topActionAccuracy": 0.2831858407079646
+            }
+          },
+          "lineage": {
+            "id": "9ca7876b664c27e51fc099257faf82eedde5d93ba85d075ab811b5de528c57ea",
+            "trainingCut": 1792219375551,
+            "availableThrough": 1792219375550
+          }
+        },
+        {
+          "aid": "b8fb799f-8dac-40a0-b776-473e5228c920",
+          "level": 95,
+          "opening": 1792219379250,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 161,
+              "jointLogLoss": 1.6871258866752057,
+              "topActionAccuracy": 0.38509316770186336
+            },
+            "adaptiveClock": {
+              "decisions": 161,
+              "jointLogLoss": 1.6837584998464608,
+              "topActionAccuracy": 0.38509316770186336
+            }
+          },
+          "lineage": {
+            "id": "9ca7876b664c27e51fc099257faf82eedde5d93ba85d075ab811b5de528c57ea",
+            "trainingCut": 1792219375551,
+            "availableThrough": 1792219375550
+          }
+        },
+        {
+          "aid": "071bc6a8-2f96-4e0a-be4f-8b1e3bb01cd5",
+          "level": 96,
+          "opening": 1792219621915,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 26,
+              "jointLogLoss": 1.8780237857095794,
+              "topActionAccuracy": 0.3076923076923077
+            },
+            "adaptiveClock": {
+              "decisions": 26,
+              "jointLogLoss": 1.7739066421143421,
+              "topActionAccuracy": 0.2692307692307692
+            }
+          },
+          "lineage": {
+            "id": "51c84c48109313c8d1c6cc712907f5dade5126f6fd17ff989c9624299febbe20",
+            "trainingCut": 1792219620219,
+            "availableThrough": 1792219620218
+          }
+        },
+        {
+          "aid": "ef831f3b-27ec-4bf7-8b4e-7e6fa99f18d7",
+          "level": 96,
+          "opening": 1792219621915,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 17,
+              "jointLogLoss": 2.5125174291106553,
+              "topActionAccuracy": 0.17647058823529413
+            },
+            "adaptiveClock": {
+              "decisions": 17,
+              "jointLogLoss": 2.379618409354406,
+              "topActionAccuracy": 0.17647058823529413
+            }
+          },
+          "lineage": {
+            "id": "51c84c48109313c8d1c6cc712907f5dade5126f6fd17ff989c9624299febbe20",
+            "trainingCut": 1792219620219,
+            "availableThrough": 1792219620218
+          }
+        },
+        {
+          "aid": "e7a97a2c-263c-4e9d-9ce8-1cbf56b77cf3",
+          "level": 96,
+          "opening": 1792219621915,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 26,
+              "jointLogLoss": 2.3263483118746757,
+              "topActionAccuracy": 0.3076923076923077
+            },
+            "adaptiveClock": {
+              "decisions": 26,
+              "jointLogLoss": 2.213208140656109,
+              "topActionAccuracy": 0.3076923076923077
+            }
+          },
+          "lineage": {
+            "id": "51c84c48109313c8d1c6cc712907f5dade5126f6fd17ff989c9624299febbe20",
+            "trainingCut": 1792219620219,
+            "availableThrough": 1792219620218
+          }
+        },
+        {
+          "aid": "b683b6e4-8538-461d-bccd-d89bd60de4ab",
+          "level": 96,
+          "opening": 1792219621915,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 19,
+              "jointLogLoss": 2.1634033740882583,
+              "topActionAccuracy": 0.42105263157894735
+            },
+            "adaptiveClock": {
+              "decisions": 19,
+              "jointLogLoss": 2.044505665306919,
+              "topActionAccuracy": 0.47368421052631576
+            }
+          },
+          "lineage": {
+            "id": "51c84c48109313c8d1c6cc712907f5dade5126f6fd17ff989c9624299febbe20",
+            "trainingCut": 1792219620219,
+            "availableThrough": 1792219620218
+          }
+        },
+        {
+          "aid": "c4c957ab-554a-413b-a19c-9b3d990c2f80",
+          "level": 96,
+          "opening": 1792219621915,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 157,
+              "jointLogLoss": 1.780875200742188,
+              "topActionAccuracy": 0.4140127388535032
+            },
+            "adaptiveClock": {
+              "decisions": 157,
+              "jointLogLoss": 1.7725874573721756,
+              "topActionAccuracy": 0.42038216560509556
+            }
+          },
+          "lineage": {
+            "id": "51c84c48109313c8d1c6cc712907f5dade5126f6fd17ff989c9624299febbe20",
+            "trainingCut": 1792219620219,
+            "availableThrough": 1792219620218
+          }
+        },
+        {
+          "aid": "502362b1-48c0-4bad-9411-3c93b41de051",
+          "level": 97,
+          "opening": 1792219886790,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 179,
+              "jointLogLoss": 1.8938095190232391,
+              "topActionAccuracy": 0.2681564245810056
+            },
+            "adaptiveClock": {
+              "decisions": 179,
+              "jointLogLoss": 1.8844924178498714,
+              "topActionAccuracy": 0.2737430167597765
+            }
+          },
+          "lineage": {
+            "id": "8a9d447d9765d98a96ebe154e6afb53eda0022aacab3e181bb20858ebb6c6f4b",
+            "trainingCut": 1792219872500,
+            "availableThrough": 1792219872499
+          }
+        },
+        {
+          "aid": "19190b31-1593-4dd7-8a92-d57d973a7553",
+          "level": 98,
+          "opening": 1792262199013,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 136,
+              "jointLogLoss": 1.7507015296055704,
+              "topActionAccuracy": 0.4411764705882353
+            },
+            "adaptiveClock": {
+              "decisions": 136,
+              "jointLogLoss": 1.7423497256033327,
+              "topActionAccuracy": 0.45588235294117646
+            }
+          },
+          "lineage": {
+            "id": "a480f4fb44f4da690395ba70e6818a92b58ff7e905bfdd5793097c66beb05ae6",
+            "trainingCut": 1792262192949,
+            "availableThrough": 1792262192948
+          }
+        },
+        {
+          "aid": "a614c26d-9359-4473-b445-d70c1bf02b82",
+          "level": 98,
+          "opening": 1792262199013,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 175,
+              "jointLogLoss": 2.0316440295967535,
+              "topActionAccuracy": 0.28
+            },
+            "adaptiveClock": {
+              "decisions": 175,
+              "jointLogLoss": 2.0252376730614072,
+              "topActionAccuracy": 0.2857142857142857
+            }
+          },
+          "lineage": {
+            "id": "a480f4fb44f4da690395ba70e6818a92b58ff7e905bfdd5793097c66beb05ae6",
+            "trainingCut": 1792262192949,
+            "availableThrough": 1792262192948
+          }
+        },
+        {
+          "aid": "afff27aa-24f1-4661-afaa-10b6448aadfd",
+          "level": 99,
+          "opening": 1792262565093,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 11,
+              "jointLogLoss": 1.9896915441623042,
+              "topActionAccuracy": 0.45454545454545453
+            },
+            "adaptiveClock": {
+              "decisions": 11,
+              "jointLogLoss": 1.9797279585626162,
+              "topActionAccuracy": 0.45454545454545453
+            }
+          },
+          "lineage": {
+            "id": "092b8a35914a550d9582cb8b25d927fc98ed43f61882ff8d62673f84270346c7",
+            "trainingCut": 1792262554319,
+            "availableThrough": 1792262554318
+          }
+        },
+        {
+          "aid": "ce8ef543-c1b6-4167-84d8-3642fb6fa4d4",
+          "level": 99,
+          "opening": 1792262565093,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 4,
+              "jointLogLoss": 3.1246257736423035,
+              "topActionAccuracy": 0.5
+            },
+            "adaptiveClock": {
+              "decisions": 4,
+              "jointLogLoss": 3.0346771658318508,
+              "topActionAccuracy": 0.5
+            }
+          },
+          "lineage": {
+            "id": "092b8a35914a550d9582cb8b25d927fc98ed43f61882ff8d62673f84270346c7",
+            "trainingCut": 1792262554319,
+            "availableThrough": 1792262554318
+          }
+        },
+        {
+          "aid": "0970e01e-038a-4024-8088-fef11019c0a2",
+          "level": 99,
+          "opening": 1792262565093,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 160,
+              "jointLogLoss": 1.8698089603137376,
+              "topActionAccuracy": 0.36875
+            },
+            "adaptiveClock": {
+              "decisions": 160,
+              "jointLogLoss": 1.8591181606153562,
+              "topActionAccuracy": 0.375
+            }
+          },
+          "lineage": {
+            "id": "092b8a35914a550d9582cb8b25d927fc98ed43f61882ff8d62673f84270346c7",
+            "trainingCut": 1792262554319,
+            "availableThrough": 1792262554318
+          }
+        },
+        {
+          "aid": "1ee36661-7913-4a58-9f57-3ea6af7ed230",
+          "level": 99,
+          "opening": 1792262565093,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 76,
+              "jointLogLoss": 1.8696693870440761,
+              "topActionAccuracy": 0.35526315789473684
+            },
+            "adaptiveClock": {
+              "decisions": 76,
+              "jointLogLoss": 1.8398944551460177,
+              "topActionAccuracy": 0.35526315789473684
+            }
+          },
+          "lineage": {
+            "id": "092b8a35914a550d9582cb8b25d927fc98ed43f61882ff8d62673f84270346c7",
+            "trainingCut": 1792262554319,
+            "availableThrough": 1792262554318
+          }
+        },
+        {
+          "aid": "1947ce59-fdd0-45ed-831b-fce0ae93d277",
+          "level": 99,
+          "opening": 1792262565093,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 192,
+              "jointLogLoss": 2.0664218215994707,
+              "topActionAccuracy": 0.28125
+            },
+            "adaptiveClock": {
+              "decisions": 192,
+              "jointLogLoss": 2.059255750835389,
+              "topActionAccuracy": 0.2864583333333333
+            }
+          },
+          "lineage": {
+            "id": "092b8a35914a550d9582cb8b25d927fc98ed43f61882ff8d62673f84270346c7",
+            "trainingCut": 1792262554319,
+            "availableThrough": 1792262554318
+          }
+        },
+        {
+          "aid": "2a67889d-7fd4-4a89-b586-a2f5aa69e6f2",
+          "level": 100,
+          "opening": 1792263071225,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 216,
+              "jointLogLoss": 1.655513714006746,
+              "topActionAccuracy": 0.375
+            },
+            "adaptiveClock": {
+              "decisions": 216,
+              "jointLogLoss": 1.6509661719936128,
+              "topActionAccuracy": 0.37962962962962965
+            }
+          },
+          "lineage": {
+            "id": "6c89a9a82a7b263cdd352f2e4cddf6ceba74845b3442b3b4005088cdcc9b4ad9",
+            "trainingCut": 1792263067217,
+            "availableThrough": 1792263067216
+          }
+        },
+        {
+          "aid": "81e7a42d-33f1-4230-961a-dff82cdbb171",
+          "level": 101,
+          "opening": 1792263326840,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 15,
+              "jointLogLoss": 1.5595184915955385,
+              "topActionAccuracy": 0.6
+            },
+            "adaptiveClock": {
+              "decisions": 15,
+              "jointLogLoss": 1.5174340152722108,
+              "topActionAccuracy": 0.6
+            }
+          },
+          "lineage": {
+            "id": "07908d21582df3ce39f95cbfeec79b1a87bba504359a2c06b9030343fadc32c9",
+            "trainingCut": 1792263314932,
+            "availableThrough": 1792263314931
+          }
+        },
+        {
+          "aid": "0ed8079f-8e67-4c82-93df-bf2b68f44645",
+          "level": 101,
+          "opening": 1792263326840,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 8,
+              "jointLogLoss": 1.3413317085790801,
+              "topActionAccuracy": 0.5
+            },
+            "adaptiveClock": {
+              "decisions": 8,
+              "jointLogLoss": 1.3842063812394925,
+              "topActionAccuracy": 0.5
+            }
+          },
+          "lineage": {
+            "id": "07908d21582df3ce39f95cbfeec79b1a87bba504359a2c06b9030343fadc32c9",
+            "trainingCut": 1792263314932,
+            "availableThrough": 1792263314931
+          }
+        },
+        {
+          "aid": "a39842e2-1d08-46f5-8076-a2a238e4b3ba",
+          "level": 101,
+          "opening": 1792263326840,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 7,
+              "jointLogLoss": 2.9901650929659107,
+              "topActionAccuracy": 0.14285714285714285
+            },
+            "adaptiveClock": {
+              "decisions": 7,
+              "jointLogLoss": 3.233810161395653,
+              "topActionAccuracy": 0.14285714285714285
+            }
+          },
+          "lineage": {
+            "id": "07908d21582df3ce39f95cbfeec79b1a87bba504359a2c06b9030343fadc32c9",
+            "trainingCut": 1792263314932,
+            "availableThrough": 1792263314931
+          }
+        },
+        {
+          "aid": "f2457a7a-8d3c-4459-ae12-b0cb8af5891d",
+          "level": 101,
+          "opening": 1792263326840,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 101,
+              "jointLogLoss": 1.8387240694728462,
+              "topActionAccuracy": 0.31683168316831684
+            },
+            "adaptiveClock": {
+              "decisions": 101,
+              "jointLogLoss": 1.834170755443813,
+              "topActionAccuracy": 0.32673267326732675
+            }
+          },
+          "lineage": {
+            "id": "07908d21582df3ce39f95cbfeec79b1a87bba504359a2c06b9030343fadc32c9",
+            "trainingCut": 1792263314932,
+            "availableThrough": 1792263314931
+          }
+        },
+        {
+          "aid": "8676a5bf-25ed-4e73-89b6-a262e8462202",
+          "level": 101,
+          "opening": 1792263326840,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 194,
+              "jointLogLoss": 1.71471679767071,
+              "topActionAccuracy": 0.3865979381443299
+            },
+            "adaptiveClock": {
+              "decisions": 194,
+              "jointLogLoss": 1.7116192120811413,
+              "topActionAccuracy": 0.3865979381443299
+            }
+          },
+          "lineage": {
+            "id": "07908d21582df3ce39f95cbfeec79b1a87bba504359a2c06b9030343fadc32c9",
+            "trainingCut": 1792263314932,
+            "availableThrough": 1792263314931
+          }
+        },
+        {
+          "aid": "955f8b28-343b-4d82-8347-62004d3c432d",
+          "level": 102,
+          "opening": 1792263743318,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 202,
+              "jointLogLoss": 1.7981053046715667,
+              "topActionAccuracy": 0.32673267326732675
+            },
+            "adaptiveClock": {
+              "decisions": 202,
+              "jointLogLoss": 1.7958002975962186,
+              "topActionAccuracy": 0.32673267326732675
+            }
+          },
+          "lineage": {
+            "id": "72e51f5352052a789517dda0cb7036237dbcab1568737351e5ec51e79958d58b",
+            "trainingCut": 1792263705369,
+            "availableThrough": 1792263705368
+          }
+        },
+        {
+          "aid": "d82fe10e-2495-4511-9ff3-7a7ba8ef2883",
+          "level": 103,
+          "opening": 1792263948381,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 189,
+              "jointLogLoss": 1.6938767109028965,
+              "topActionAccuracy": 0.43915343915343913
+            },
+            "adaptiveClock": {
+              "decisions": 189,
+              "jointLogLoss": 1.694845475272244,
+              "topActionAccuracy": 0.43386243386243384
+            }
+          },
+          "lineage": {
+            "id": "ec3a67837b1658429c1a0e96310f7a4a78b51e83419b878ce6c2645186c3ef1c",
+            "trainingCut": 1792263942884,
+            "availableThrough": 1792263942883
+          }
+        }
+      ]
+    },
+    "PUK": {
+      "initialCandidates": 20,
+      "campaignCandidates": 40,
+      "initialModels": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7771649734399049,
+          "topActionAccuracy": 0.4296714579055442
+        },
+        "adaptiveClock": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7771649734399046,
+          "topActionAccuracy": 0.4296714579055442
+        }
+      },
+      "retryModels": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.7931731984156674,
+          "topActionAccuracy": 0.4074328974535444
+        },
+        "adaptiveClock": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.793173198415667,
+          "topActionAccuracy": 0.4074328974535444
+        }
+      },
+      "rows": [
+        {
+          "aid": "a74c895d-085c-4d87-aef0-9f41987f793a",
+          "level": 34,
+          "opening": 1791993467593,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 62,
+              "jointLogLoss": 1.8164873911306096,
+              "topActionAccuracy": 0.41935483870967744
+            },
+            "adaptiveClock": {
+              "decisions": 62,
+              "jointLogLoss": 1.81648739113061,
+              "topActionAccuracy": 0.41935483870967744
+            }
+          },
+          "lineage": {
+            "id": "33269e5261f6ac79d9f8b1d9b67c892f7ef1f7489d43bf68051f11954936e8dc",
+            "trainingCut": 1791993427422,
+            "availableThrough": 1791993427421
+          }
+        },
+        {
+          "aid": "79530e8a-9279-44e3-b75c-9d8e05548401",
+          "level": 35,
+          "opening": 1791993866872,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 106,
+              "jointLogLoss": 1.4018874424878838,
+              "topActionAccuracy": 0.4811320754716981
+            },
+            "adaptiveClock": {
+              "decisions": 106,
+              "jointLogLoss": 1.4018874424878836,
+              "topActionAccuracy": 0.4811320754716981
+            }
+          },
+          "lineage": {
+            "id": "f817ba6ef1264e8e509c321aecc532218915aa8ead57d50cd4cae4061feec52c",
+            "trainingCut": 1791993853775,
+            "availableThrough": 1791993853774
+          }
+        },
+        {
+          "aid": "bd9ea179-b735-4b9c-83ca-ea5f08a2621e",
+          "level": 36,
+          "opening": 1791994331125,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 103,
+              "jointLogLoss": 1.4521426114297897,
+              "topActionAccuracy": 0.5631067961165048
+            },
+            "adaptiveClock": {
+              "decisions": 103,
+              "jointLogLoss": 1.4521426114297897,
+              "topActionAccuracy": 0.5631067961165048
+            }
+          },
+          "lineage": {
+            "id": "8a58c67123dae9c16e360483e92d080cb9f99bb06f4adb8029b9bd6bb90a25e4",
+            "trainingCut": 1791994314140,
+            "availableThrough": 1791994314139
+          }
+        },
+        {
+          "aid": "13f81deb-c4b1-4fe9-957e-8a57ba6f7e88",
+          "level": 37,
+          "opening": 1791994730739,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 85,
+              "jointLogLoss": 2.2556107634035696,
+              "topActionAccuracy": 0.2235294117647059
+            },
+            "adaptiveClock": {
+              "decisions": 85,
+              "jointLogLoss": 2.2556107634035696,
+              "topActionAccuracy": 0.2235294117647059
+            }
+          },
+          "lineage": {
+            "id": "a64d27b0c2650d6701069b0a801bef66a10be7a98f62928aeb92836180ef9d5b",
+            "trainingCut": 1791994708934,
+            "availableThrough": 1791994708933
+          }
+        },
+        {
+          "aid": "3d34e678-c824-4b62-8ab6-a7e37276a444",
+          "level": 38,
+          "opening": 1791995772536,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 127,
+              "jointLogLoss": 2.0578796238622936,
+              "topActionAccuracy": 0.3543307086614173
+            },
+            "adaptiveClock": {
+              "decisions": 127,
+              "jointLogLoss": 2.0578796238622945,
+              "topActionAccuracy": 0.3543307086614173
+            }
+          },
+          "lineage": {
+            "id": "4c23b257a94bc6a9ec043f12c371e8ab4e4ff70c17e2e4a651f409768afcc390",
+            "trainingCut": 1791995283012,
+            "availableThrough": 1791995283011
+          }
+        },
+        {
+          "aid": "c8d3ead3-7f90-41c4-8cb2-df96164b26e3",
+          "level": 39,
+          "opening": 1792013300819,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 76,
+              "jointLogLoss": 1.779257251811215,
+              "topActionAccuracy": 0.47368421052631576
+            },
+            "adaptiveClock": {
+              "decisions": 76,
+              "jointLogLoss": 1.779257251811215,
+              "topActionAccuracy": 0.47368421052631576
+            }
+          },
+          "lineage": {
+            "id": "ff57e2b7c26d0a84eb33b442eb3a3ba834221e17cb2822fc750c651c2cd4f8f4",
+            "trainingCut": 1791996321876,
+            "availableThrough": 1791996321875
+          }
+        },
+        {
+          "aid": "a1e9f029-98a9-4838-9ba7-354c949382f5",
+          "level": 39,
+          "opening": 1792013300819,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 107,
+              "jointLogLoss": 1.7214158726672026,
+              "topActionAccuracy": 0.3925233644859813
+            },
+            "adaptiveClock": {
+              "decisions": 107,
+              "jointLogLoss": 1.7214158726672022,
+              "topActionAccuracy": 0.3925233644859813
+            }
+          },
+          "lineage": {
+            "id": "ff57e2b7c26d0a84eb33b442eb3a3ba834221e17cb2822fc750c651c2cd4f8f4",
+            "trainingCut": 1791996321876,
+            "availableThrough": 1791996321875
+          }
+        },
+        {
+          "aid": "c72be715-2bc6-4471-82cb-298eef7d8db8",
+          "level": 40,
+          "opening": 1792014233172,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 96,
+              "jointLogLoss": 1.8486610566055193,
+              "topActionAccuracy": 0.3958333333333333
+            },
+            "adaptiveClock": {
+              "decisions": 96,
+              "jointLogLoss": 1.848661056605519,
+              "topActionAccuracy": 0.3958333333333333
+            }
+          },
+          "lineage": {
+            "id": "d80e146fbfa0e795a526a27569dcba03679f1e85fe0734ac08d9fc008261d87b",
+            "trainingCut": 1792014203948,
+            "availableThrough": 1792014203947
+          }
+        },
+        {
+          "aid": "35673774-df3a-49e3-b79d-b89cea05f729",
+          "level": 41,
+          "opening": 1792014797696,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 57,
+              "jointLogLoss": 1.9147782871022887,
+              "topActionAccuracy": 0.3508771929824561
+            },
+            "adaptiveClock": {
+              "decisions": 57,
+              "jointLogLoss": 1.9147782871022887,
+              "topActionAccuracy": 0.3508771929824561
+            }
+          },
+          "lineage": {
+            "id": "42c10f447cdb3590d0a5d7b425d758f4db23155226bbb0563a06b0695b7b4a76",
+            "trainingCut": 1792014784837,
+            "availableThrough": 1792014784836
+          }
+        },
+        {
+          "aid": "26aa951a-e30a-4464-8237-e986553ad747",
+          "level": 42,
+          "opening": 1792031107788,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 77,
+              "jointLogLoss": 1.8928400369299672,
+              "topActionAccuracy": 0.4805194805194805
+            },
+            "adaptiveClock": {
+              "decisions": 77,
+              "jointLogLoss": 1.8928400369299676,
+              "topActionAccuracy": 0.4805194805194805
+            }
+          },
+          "lineage": {
+            "id": "7b5c569b270d55f9a391cc73a4ab95e10839dad95bfe8b22af2bd35ae69197cc",
+            "trainingCut": 1792015241560,
+            "availableThrough": 1792015241559
+          }
+        },
+        {
+          "aid": "94aa1548-bdab-4bd1-a6c5-06ec6b339bce",
+          "level": 42,
+          "opening": 1792031107788,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 119,
+              "jointLogLoss": 1.7271474460677525,
+              "topActionAccuracy": 0.453781512605042
+            },
+            "adaptiveClock": {
+              "decisions": 119,
+              "jointLogLoss": 1.7271474460677518,
+              "topActionAccuracy": 0.453781512605042
+            }
+          },
+          "lineage": {
+            "id": "7b5c569b270d55f9a391cc73a4ab95e10839dad95bfe8b22af2bd35ae69197cc",
+            "trainingCut": 1792015241560,
+            "availableThrough": 1792015241559
+          }
+        },
+        {
+          "aid": "010a1b23-ff83-4cce-b486-5b95229b92f0",
+          "level": 43,
+          "opening": 1792031786444,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 111,
+              "jointLogLoss": 2.0004900568313073,
+              "topActionAccuracy": 0.3783783783783784
+            },
+            "adaptiveClock": {
+              "decisions": 111,
+              "jointLogLoss": 2.000490056831307,
+              "topActionAccuracy": 0.3783783783783784
+            }
+          },
+          "lineage": {
+            "id": "d04e5aa7efc1d01b0d7fe9ce2f0474f3c4ab4cd71fb1c69ada20d29a30498d40",
+            "trainingCut": 1792031739812,
+            "availableThrough": 1792031739811
+          }
+        },
+        {
+          "aid": "e92633c4-4d5d-4138-ad17-bce3450a641c",
+          "level": 43,
+          "opening": 1792031786444,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 104,
+              "jointLogLoss": 2.0708795144271823,
+              "topActionAccuracy": 0.3076923076923077
+            },
+            "adaptiveClock": {
+              "decisions": 104,
+              "jointLogLoss": 2.0708795144271823,
+              "topActionAccuracy": 0.3076923076923077
+            }
+          },
+          "lineage": {
+            "id": "d04e5aa7efc1d01b0d7fe9ce2f0474f3c4ab4cd71fb1c69ada20d29a30498d40",
+            "trainingCut": 1792031739812,
+            "availableThrough": 1792031739811
+          }
+        },
+        {
+          "aid": "322b720c-f82c-4432-8047-664cfa07ebba",
+          "level": 43,
+          "opening": 1792031786444,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 118,
+              "jointLogLoss": 1.8296859569477504,
+              "topActionAccuracy": 0.423728813559322
+            },
+            "adaptiveClock": {
+              "decisions": 118,
+              "jointLogLoss": 1.8296859569477508,
+              "topActionAccuracy": 0.423728813559322
+            }
+          },
+          "lineage": {
+            "id": "d04e5aa7efc1d01b0d7fe9ce2f0474f3c4ab4cd71fb1c69ada20d29a30498d40",
+            "trainingCut": 1792031739812,
+            "availableThrough": 1792031739811
+          }
+        },
+        {
+          "aid": "8e40d7c7-cdd3-4a98-896c-d722706491f7",
+          "level": 44,
+          "opening": 1792078889406,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 126,
+              "jointLogLoss": 1.7271797872628867,
+              "topActionAccuracy": 0.4126984126984127
+            },
+            "adaptiveClock": {
+              "decisions": 126,
+              "jointLogLoss": 1.7271797872628873,
+              "topActionAccuracy": 0.4126984126984127
+            }
+          },
+          "lineage": {
+            "id": "b94517b54f8674cba7267d7771fee2f8b4787e82142b15ee1495b009939e1bde",
+            "trainingCut": 1792075954615,
+            "availableThrough": 1792075954614
+          }
+        },
+        {
+          "aid": "a7c03165-f257-4a3b-9f90-04329b0bd93d",
+          "level": 45,
+          "opening": 1792079446450,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 143,
+              "jointLogLoss": 2.0681275286362246,
+              "topActionAccuracy": 0.3986013986013986
+            },
+            "adaptiveClock": {
+              "decisions": 143,
+              "jointLogLoss": 2.068127528636226,
+              "topActionAccuracy": 0.3986013986013986
+            }
+          },
+          "lineage": {
+            "id": "6758080d2292a5c078d32a525c97b6c7146cd6740d18f3f5d3873c1d43214615",
+            "trainingCut": 1792079407530,
+            "availableThrough": 1792079407529
+          }
+        },
+        {
+          "aid": "a08d1a20-78d1-4827-8e04-67565352c8c1",
+          "level": 46,
+          "opening": 1792079998136,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 94,
+              "jointLogLoss": 1.737538103698917,
+              "topActionAccuracy": 0.39361702127659576
+            },
+            "adaptiveClock": {
+              "decisions": 94,
+              "jointLogLoss": 1.737538103698917,
+              "topActionAccuracy": 0.39361702127659576
+            }
+          },
+          "lineage": {
+            "id": "11624202346f8c059f1ef5df4989ec108ccf4346eb65a9458a2d5887d59f7148",
+            "trainingCut": 1792079970880,
+            "availableThrough": 1792079970879
+          }
+        },
+        {
+          "aid": "5a172c15-0fc0-40dd-bb2a-0f69700dab51",
+          "level": 46,
+          "opening": 1792079998136,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 53,
+              "jointLogLoss": 2.088246994822128,
+              "topActionAccuracy": 0.37735849056603776
+            },
+            "adaptiveClock": {
+              "decisions": 53,
+              "jointLogLoss": 2.0882469948221276,
+              "topActionAccuracy": 0.37735849056603776
+            }
+          },
+          "lineage": {
+            "id": "11624202346f8c059f1ef5df4989ec108ccf4346eb65a9458a2d5887d59f7148",
+            "trainingCut": 1792079970880,
+            "availableThrough": 1792079970879
+          }
+        },
+        {
+          "aid": "c61aeaef-4ab9-41e5-9e21-86d8274eea91",
+          "level": 46,
+          "opening": 1792079998136,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 105,
+              "jointLogLoss": 1.5904260509567325,
+              "topActionAccuracy": 0.45714285714285713
+            },
+            "adaptiveClock": {
+              "decisions": 105,
+              "jointLogLoss": 1.5904260509567323,
+              "topActionAccuracy": 0.45714285714285713
+            }
+          },
+          "lineage": {
+            "id": "11624202346f8c059f1ef5df4989ec108ccf4346eb65a9458a2d5887d59f7148",
+            "trainingCut": 1792079970880,
+            "availableThrough": 1792079970879
+          }
+        },
+        {
+          "aid": "9bed8001-4327-4454-8793-01fbb998aa57",
+          "level": 47,
+          "opening": 1792081570535,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 114,
+              "jointLogLoss": 1.7619552667288534,
+              "topActionAccuracy": 0.4298245614035088
+            },
+            "adaptiveClock": {
+              "decisions": 114,
+              "jointLogLoss": 1.7619552667288538,
+              "topActionAccuracy": 0.4298245614035088
+            }
+          },
+          "lineage": {
+            "id": "8337aa376665cdbd80cc6431ce7fe8e869a24d402e82e20ce9fe287a9b3c826c",
+            "trainingCut": 1792081533361,
+            "availableThrough": 1792081533360
+          }
+        },
+        {
+          "aid": "911cd273-e39a-48f4-97f1-912d4098267b",
+          "level": 48,
+          "opening": 1792097612195,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 124,
+              "jointLogLoss": 1.4587230221588174,
+              "topActionAccuracy": 0.5080645161290323
+            },
+            "adaptiveClock": {
+              "decisions": 124,
+              "jointLogLoss": 1.4587230221588172,
+              "topActionAccuracy": 0.5080645161290323
+            }
+          },
+          "lineage": {
+            "id": "48c3b5ac39dfdd4935ceb53c7c072b49e907d6b634e407bf08d3e471ecfde4eb",
+            "trainingCut": 1792082167115,
+            "availableThrough": 1792082167114
+          }
+        },
+        {
+          "aid": "85a34136-6637-4584-b8ec-7201886288e3",
+          "level": 49,
+          "opening": 1792098056466,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 77,
+              "jointLogLoss": 1.8796674429277953,
+              "topActionAccuracy": 0.4025974025974026
+            },
+            "adaptiveClock": {
+              "decisions": 77,
+              "jointLogLoss": 1.8796674429277944,
+              "topActionAccuracy": 0.4025974025974026
+            }
+          },
+          "lineage": {
+            "id": "34c716612e540c29bddf16e967c84bd12b65be31650e3657b6a2070f8818acb8",
+            "trainingCut": 1792098036834,
+            "availableThrough": 1792098036833
+          }
+        },
+        {
+          "aid": "71761e06-cc9a-41d2-af50-93338b275bc3",
+          "level": 49,
+          "opening": 1792098056466,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 105,
+              "jointLogLoss": 1.68683653154155,
+              "topActionAccuracy": 0.44761904761904764
+            },
+            "adaptiveClock": {
+              "decisions": 105,
+              "jointLogLoss": 1.6868365315415503,
+              "topActionAccuracy": 0.44761904761904764
+            }
+          },
+          "lineage": {
+            "id": "34c716612e540c29bddf16e967c84bd12b65be31650e3657b6a2070f8818acb8",
+            "trainingCut": 1792098036834,
+            "availableThrough": 1792098036833
+          }
+        },
+        {
+          "aid": "b3e8cf6e-31db-4646-9d8d-a003295ca9f6",
+          "level": 50,
+          "opening": 1792137899571,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 119,
+              "jointLogLoss": 1.4092387390464833,
+              "topActionAccuracy": 0.5210084033613446
+            },
+            "adaptiveClock": {
+              "decisions": 119,
+              "jointLogLoss": 1.409238739046483,
+              "topActionAccuracy": 0.5210084033613446
+            }
+          },
+          "lineage": {
+            "id": "4f9a5cb9181e250c7d45a2aefceda9e9b77f20bfc702ad5d0714a2b1610ccaec",
+            "trainingCut": 1792137468822,
+            "availableThrough": 1792137468821
+          }
+        },
+        {
+          "aid": "155cb84b-3d63-4d5b-9b7b-7daf1b673c7b",
+          "level": 51,
+          "opening": 1792138391388,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 96,
+              "jointLogLoss": 1.8089432299580943,
+              "topActionAccuracy": 0.4583333333333333
+            },
+            "adaptiveClock": {
+              "decisions": 96,
+              "jointLogLoss": 1.8089432299580936,
+              "topActionAccuracy": 0.4583333333333333
+            }
+          },
+          "lineage": {
+            "id": "6af935b38519e328adadee48b1ce143563bc0feab3dfc6ede400c014399fc0d1",
+            "trainingCut": 1792138372678,
+            "availableThrough": 1792138372677
+          }
+        },
+        {
+          "aid": "c8162ff9-76ce-45a2-8fbf-939346bbd6fa",
+          "level": 52,
+          "opening": 1792174210433,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 82,
+              "jointLogLoss": 1.6380748618067498,
+              "topActionAccuracy": 0.47560975609756095
+            },
+            "adaptiveClock": {
+              "decisions": 82,
+              "jointLogLoss": 1.6380748618067502,
+              "topActionAccuracy": 0.47560975609756095
+            }
+          },
+          "lineage": {
+            "id": "9b30a766b14fd4e74b0b88c99a5d29d711070fe70989200a7e8182e06e14bc16",
+            "trainingCut": 1792138633617,
+            "availableThrough": 1792138633616
+          }
+        },
+        {
+          "aid": "ed6d1a22-d6ba-44ba-8067-f0df742edd22",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 73,
+              "jointLogLoss": 1.7746820881213166,
+              "topActionAccuracy": 0.4246575342465753
+            },
+            "adaptiveClock": {
+              "decisions": 73,
+              "jointLogLoss": 1.7746820881213166,
+              "topActionAccuracy": 0.4246575342465753
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "45a21abb-6b1c-43c4-a79b-1ad8f6529a9f",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 47,
+              "jointLogLoss": 1.6455835747865988,
+              "topActionAccuracy": 0.5106382978723404
+            },
+            "adaptiveClock": {
+              "decisions": 47,
+              "jointLogLoss": 1.6455835747865988,
+              "topActionAccuracy": 0.5106382978723404
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "f0e073e5-4a17-4d2c-84d8-8c3c4d4a5814",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 56,
+              "jointLogLoss": 2.0589510795245802,
+              "topActionAccuracy": 0.21428571428571427
+            },
+            "adaptiveClock": {
+              "decisions": 56,
+              "jointLogLoss": 2.0589510795245807,
+              "topActionAccuracy": 0.21428571428571427
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "9ba644eb-804a-4502-a7ce-39e1b250786b",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 36,
+              "jointLogLoss": 1.852570925631581,
+              "topActionAccuracy": 0.3611111111111111
+            },
+            "adaptiveClock": {
+              "decisions": 36,
+              "jointLogLoss": 1.852570925631581,
+              "topActionAccuracy": 0.3611111111111111
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "93779101-e352-4e9d-93ca-3b5580ce5f21",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 21,
+              "jointLogLoss": 1.9230874908379083,
+              "topActionAccuracy": 0.42857142857142855
+            },
+            "adaptiveClock": {
+              "decisions": 21,
+              "jointLogLoss": 1.9230874908379079,
+              "topActionAccuracy": 0.42857142857142855
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "4fe4ab02-bd6f-412e-947a-0dc8ab4d3612",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 44,
+              "jointLogLoss": 1.9144161482883824,
+              "topActionAccuracy": 0.4318181818181818
+            },
+            "adaptiveClock": {
+              "decisions": 44,
+              "jointLogLoss": 1.9144161482883824,
+              "topActionAccuracy": 0.4318181818181818
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "8599dc0d-cebd-4c4a-99c6-9c4b3db39547",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 28,
+              "jointLogLoss": 1.803613055682798,
+              "topActionAccuracy": 0.2857142857142857
+            },
+            "adaptiveClock": {
+              "decisions": 28,
+              "jointLogLoss": 1.803613055682798,
+              "topActionAccuracy": 0.2857142857142857
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "4b7a8511-c6ab-4889-913f-d8fa4682b9a8",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 34,
+              "jointLogLoss": 1.9526235005040065,
+              "topActionAccuracy": 0.38235294117647056
+            },
+            "adaptiveClock": {
+              "decisions": 34,
+              "jointLogLoss": 1.9526235005040065,
+              "topActionAccuracy": 0.38235294117647056
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "85d06e78-e621-4b22-b09a-b2242e2c126c",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 46,
+              "jointLogLoss": 1.6805884745045019,
+              "topActionAccuracy": 0.4782608695652174
+            },
+            "adaptiveClock": {
+              "decisions": 46,
+              "jointLogLoss": 1.6805884745045019,
+              "topActionAccuracy": 0.4782608695652174
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "1d68f281-750b-4526-9f41-cdbae64fac83",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 67,
+              "jointLogLoss": 1.6456305807676792,
+              "topActionAccuracy": 0.47761194029850745
+            },
+            "adaptiveClock": {
+              "decisions": 67,
+              "jointLogLoss": 1.6456305807676792,
+              "topActionAccuracy": 0.47761194029850745
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "79ca6e14-1547-4071-9143-ee6e417f3c46",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 64,
+              "jointLogLoss": 1.5992525318559148,
+              "topActionAccuracy": 0.546875
+            },
+            "adaptiveClock": {
+              "decisions": 64,
+              "jointLogLoss": 1.5992525318559148,
+              "topActionAccuracy": 0.546875
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "6848d264-e65d-4756-85bf-03fde640deff",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 127,
+              "jointLogLoss": 1.7049493939801592,
+              "topActionAccuracy": 0.3779527559055118
+            },
+            "adaptiveClock": {
+              "decisions": 127,
+              "jointLogLoss": 1.7049493939801592,
+              "topActionAccuracy": 0.3779527559055118
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "a0ad6c3a-e48b-4882-90da-e31f1b96f94c",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 70,
+              "jointLogLoss": 1.8936942809552173,
+              "topActionAccuracy": 0.38571428571428573
+            },
+            "adaptiveClock": {
+              "decisions": 70,
+              "jointLogLoss": 1.8936942809552169,
+              "topActionAccuracy": 0.38571428571428573
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        },
+        {
+          "aid": "683ae4f2-137b-4454-8583-45ced41eea7f",
+          "level": 53,
+          "opening": 1792174506087,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 102,
+              "jointLogLoss": 1.8612267730683187,
+              "topActionAccuracy": 0.3627450980392157
+            },
+            "adaptiveClock": {
+              "decisions": 102,
+              "jointLogLoss": 1.861226773068318,
+              "topActionAccuracy": 0.3627450980392157
+            }
+          },
+          "lineage": {
+            "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+            "trainingCut": 1792174483508,
+            "availableThrough": 1792174483507
+          }
+        }
+      ]
+    },
+    "Gerda": {
+      "initialCandidates": 20,
+      "campaignCandidates": 61,
+      "initialModels": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 2.002004307846316,
+          "topActionAccuracy": 0.29559971611071684
+        },
+        "adaptiveClock": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 2.0020043078463154,
+          "topActionAccuracy": 0.29559971611071684
+        }
+      },
+      "retryModels": {
+        "control": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.112139748719071,
+          "topActionAccuracy": 0.27580645161290324
+        },
+        "adaptiveClock": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.112139748719071,
+          "topActionAccuracy": 0.27580645161290324
+        }
+      },
+      "rows": [
+        {
+          "aid": "2e39da0a-b62f-4cf2-a3df-562b82813a2d",
+          "level": 43,
+          "opening": 1792077779174,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 129,
+              "jointLogLoss": 1.9550889713395891,
+              "topActionAccuracy": 0.3643410852713178
+            },
+            "adaptiveClock": {
+              "decisions": 129,
+              "jointLogLoss": 1.9550889713395898,
+              "topActionAccuracy": 0.3643410852713178
+            }
+          },
+          "lineage": {
+            "id": "8f1aa5ce17141562bbb9a10a5d464efdc86a77b8a9481c02fa6d9776cdec6cb3",
+            "trainingCut": 1792077775153,
+            "availableThrough": 1792077775152
+          }
+        },
+        {
+          "aid": "8c4d4092-abc2-4cb9-96ad-757d9a057de6",
+          "level": 43,
+          "opening": 1792077779174,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 117,
+              "jointLogLoss": 1.7533694390800105,
+              "topActionAccuracy": 0.4188034188034188
+            },
+            "adaptiveClock": {
+              "decisions": 117,
+              "jointLogLoss": 1.7533694390800103,
+              "topActionAccuracy": 0.4188034188034188
+            }
+          },
+          "lineage": {
+            "id": "8f1aa5ce17141562bbb9a10a5d464efdc86a77b8a9481c02fa6d9776cdec6cb3",
+            "trainingCut": 1792077775153,
+            "availableThrough": 1792077775152
+          }
+        },
+        {
+          "aid": "fab20d55-05c3-4ffc-a845-c601938efc9a",
+          "level": 44,
+          "opening": 1792078155465,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 111,
+              "jointLogLoss": 1.9403339899551018,
+              "topActionAccuracy": 0.36036036036036034
+            },
+            "adaptiveClock": {
+              "decisions": 111,
+              "jointLogLoss": 1.9403339899551022,
+              "topActionAccuracy": 0.36036036036036034
+            }
+          },
+          "lineage": {
+            "id": "3efb63e42f88456604f864260804fc78ea8218fc03fecd848f190de43ee1b640",
+            "trainingCut": 1792078152167,
+            "availableThrough": 1792078152166
+          }
+        },
+        {
+          "aid": "eecdcb84-da32-4388-9b3b-85f366eee110",
+          "level": 44,
+          "opening": 1792078155465,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 88,
+              "jointLogLoss": 2.0997060142572788,
+              "topActionAccuracy": 0.2840909090909091
+            },
+            "adaptiveClock": {
+              "decisions": 88,
+              "jointLogLoss": 2.099706014257279,
+              "topActionAccuracy": 0.2840909090909091
+            }
+          },
+          "lineage": {
+            "id": "3efb63e42f88456604f864260804fc78ea8218fc03fecd848f190de43ee1b640",
+            "trainingCut": 1792078152167,
+            "availableThrough": 1792078152166
+          }
+        },
+        {
+          "aid": "821a5dd9-6aea-4dda-8e20-3956eb6e67e0",
+          "level": 45,
+          "opening": 1792078697711,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 84,
+              "jointLogLoss": 1.9119221613270057,
+              "topActionAccuracy": 0.2619047619047619
+            },
+            "adaptiveClock": {
+              "decisions": 84,
+              "jointLogLoss": 1.911922161327005,
+              "topActionAccuracy": 0.2619047619047619
+            }
+          },
+          "lineage": {
+            "id": "be72277817b6c5a1ddd61e3b97c46f158d1e690b80e586874ee61ad46b567ec0",
+            "trainingCut": 1792078692796,
+            "availableThrough": 1792078692795
+          }
+        },
+        {
+          "aid": "f7a039e9-5460-4c60-b3f6-d4d37d58098c",
+          "level": 45,
+          "opening": 1792078697711,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 95,
+              "jointLogLoss": 1.9745886327696238,
+              "topActionAccuracy": 0.24210526315789474
+            },
+            "adaptiveClock": {
+              "decisions": 95,
+              "jointLogLoss": 1.9745886327696245,
+              "topActionAccuracy": 0.24210526315789474
+            }
+          },
+          "lineage": {
+            "id": "be72277817b6c5a1ddd61e3b97c46f158d1e690b80e586874ee61ad46b567ec0",
+            "trainingCut": 1792078692796,
+            "availableThrough": 1792078692795
+          }
+        },
+        {
+          "aid": "ac4135e0-24cd-4680-9954-caeda2009bf3",
+          "level": 45,
+          "opening": 1792078697711,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 128,
+              "jointLogLoss": 1.7859012281745923,
+              "topActionAccuracy": 0.3203125
+            },
+            "adaptiveClock": {
+              "decisions": 128,
+              "jointLogLoss": 1.7859012281745923,
+              "topActionAccuracy": 0.3203125
+            }
+          },
+          "lineage": {
+            "id": "be72277817b6c5a1ddd61e3b97c46f158d1e690b80e586874ee61ad46b567ec0",
+            "trainingCut": 1792078692796,
+            "availableThrough": 1792078692795
+          }
+        },
+        {
+          "aid": "6086fde3-85af-45f0-8e43-3dda57eb45d9",
+          "level": 46,
+          "opening": 1792079848122,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 163,
+              "jointLogLoss": 2.1008773851653357,
+              "topActionAccuracy": 0.25766871165644173
+            },
+            "adaptiveClock": {
+              "decisions": 163,
+              "jointLogLoss": 2.1008773851653335,
+              "topActionAccuracy": 0.25766871165644173
+            }
+          },
+          "lineage": {
+            "id": "90008b5cb22bec82d1e42410fabff4ba9520067126c45de917fa50d905605e76",
+            "trainingCut": 1792079207605,
+            "availableThrough": 1792079207604
+          }
+        },
+        {
+          "aid": "c0fda5c8-ab6d-4c4e-b8d9-e10d8a0c0d11",
+          "level": 47,
+          "opening": 1792080050551,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 93,
+              "jointLogLoss": 1.8879372663048497,
+              "topActionAccuracy": 0.34408602150537637
+            },
+            "adaptiveClock": {
+              "decisions": 93,
+              "jointLogLoss": 1.8879372663048497,
+              "topActionAccuracy": 0.34408602150537637
+            }
+          },
+          "lineage": {
+            "id": "e6a53fa9f3217e356b27ab10480cef5e032403e1e593ecc784e68e2470a5011c",
+            "trainingCut": 1792080047378,
+            "availableThrough": 1792080047377
+          }
+        },
+        {
+          "aid": "0ac5bc8e-2a21-448e-bac1-13744a02efe6",
+          "level": 48,
+          "opening": 1792084600541,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 165,
+              "jointLogLoss": 1.7369531442528914,
+              "topActionAccuracy": 0.4484848484848485
+            },
+            "adaptiveClock": {
+              "decisions": 165,
+              "jointLogLoss": 1.736953144252891,
+              "topActionAccuracy": 0.4484848484848485
+            }
+          },
+          "lineage": {
+            "id": "40d31f75070ee07ccbe5b450a3445b559d8bfd71354061f4243b457a31704d48",
+            "trainingCut": 1792080271405,
+            "availableThrough": 1792080271404
+          }
+        },
+        {
+          "aid": "1ca24284-d9d6-4110-a2dc-b6023168fa79",
+          "level": 49,
+          "opening": 1792084839692,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 116,
+              "jointLogLoss": 1.6824206599511446,
+              "topActionAccuracy": 0.3620689655172414
+            },
+            "adaptiveClock": {
+              "decisions": 116,
+              "jointLogLoss": 1.6824206599511453,
+              "topActionAccuracy": 0.3620689655172414
+            }
+          },
+          "lineage": {
+            "id": "921261591e618c1ca929da657ab62933ad7b18b795d1144809db667e09740e19",
+            "trainingCut": 1792084833594,
+            "availableThrough": 1792084833593
+          }
+        },
+        {
+          "aid": "0520d88e-5f12-4ca5-9b6a-9c202713e3b0",
+          "level": 50,
+          "opening": 1792085063827,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 174,
+              "jointLogLoss": 2.209591750572497,
+              "topActionAccuracy": 0.27586206896551724
+            },
+            "adaptiveClock": {
+              "decisions": 174,
+              "jointLogLoss": 2.2095917505724967,
+              "topActionAccuracy": 0.27586206896551724
+            }
+          },
+          "lineage": {
+            "id": "8e3b94139fc1b354144ad0a3d9b98d95331e016ab7771cbc46a2e641227e3dc3",
+            "trainingCut": 1792085008067,
+            "availableThrough": 1792085008066
+          }
+        },
+        {
+          "aid": "f6c83a56-3366-4ea3-8143-9cdaf06b0f65",
+          "level": 50,
+          "opening": 1792085063827,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 185,
+              "jointLogLoss": 1.9968777881121726,
+              "topActionAccuracy": 0.2918918918918919
+            },
+            "adaptiveClock": {
+              "decisions": 185,
+              "jointLogLoss": 1.9968777881121718,
+              "topActionAccuracy": 0.2918918918918919
+            }
+          },
+          "lineage": {
+            "id": "8e3b94139fc1b354144ad0a3d9b98d95331e016ab7771cbc46a2e641227e3dc3",
+            "trainingCut": 1792085008067,
+            "availableThrough": 1792085008066
+          }
+        },
+        {
+          "aid": "628d7c5e-6bf8-4cf8-938b-0ee6888e62d2",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 91,
+              "jointLogLoss": 1.819402290468502,
+              "topActionAccuracy": 0.31868131868131866
+            },
+            "adaptiveClock": {
+              "decisions": 91,
+              "jointLogLoss": 1.8194022904685025,
+              "topActionAccuracy": 0.31868131868131866
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "2fa77dab-c846-4250-a6ed-1cc369ded4e7",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 54,
+              "jointLogLoss": 1.819332370492876,
+              "topActionAccuracy": 0.2777777777777778
+            },
+            "adaptiveClock": {
+              "decisions": 54,
+              "jointLogLoss": 1.8193323704928763,
+              "topActionAccuracy": 0.2777777777777778
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "7c6160b7-6a1a-4b2b-8457-dcf898c61852",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 73,
+              "jointLogLoss": 1.8489717511144579,
+              "topActionAccuracy": 0.3150684931506849
+            },
+            "adaptiveClock": {
+              "decisions": 73,
+              "jointLogLoss": 1.8489717511144579,
+              "topActionAccuracy": 0.3150684931506849
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "7dcffc0d-54c8-4469-a3d3-8db3f9599abc",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 12,
+              "jointLogLoss": 2.0663551290375475,
+              "topActionAccuracy": 0.16666666666666666
+            },
+            "adaptiveClock": {
+              "decisions": 12,
+              "jointLogLoss": 2.0663551290375475,
+              "topActionAccuracy": 0.16666666666666666
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "90ad1661-9545-416f-a7c6-304fcbe25b9b",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 69,
+              "jointLogLoss": 2.143400591734764,
+              "topActionAccuracy": 0.21739130434782608
+            },
+            "adaptiveClock": {
+              "decisions": 69,
+              "jointLogLoss": 2.1434005917347645,
+              "topActionAccuracy": 0.21739130434782608
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "2f59e246-f70d-41f8-bf09-3c668f2dc590",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 61,
+              "jointLogLoss": 1.8745174222657293,
+              "topActionAccuracy": 0.32786885245901637
+            },
+            "adaptiveClock": {
+              "decisions": 61,
+              "jointLogLoss": 1.8745174222657295,
+              "topActionAccuracy": 0.32786885245901637
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "541a726c-4524-4407-8f5e-e2af5c9330c7",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 61,
+              "jointLogLoss": 1.6090424381252582,
+              "topActionAccuracy": 0.4098360655737705
+            },
+            "adaptiveClock": {
+              "decisions": 61,
+              "jointLogLoss": 1.6090424381252584,
+              "topActionAccuracy": 0.4098360655737705
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "1229ed49-aabd-4b72-9e5a-fa144e0d9512",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 57,
+              "jointLogLoss": 1.97387222087745,
+              "topActionAccuracy": 0.2631578947368421
+            },
+            "adaptiveClock": {
+              "decisions": 57,
+              "jointLogLoss": 1.9738722208774504,
+              "topActionAccuracy": 0.2631578947368421
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "e7db3e29-05d6-4237-bdf8-b5ae3f57eea8",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 23,
+              "jointLogLoss": 2.366998647751747,
+              "topActionAccuracy": 0.2608695652173913
+            },
+            "adaptiveClock": {
+              "decisions": 23,
+              "jointLogLoss": 2.366998647751747,
+              "topActionAccuracy": 0.2608695652173913
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "6fee0e52-11f1-438a-9e95-354ff45a52a4",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 56,
+              "jointLogLoss": 1.8061027488830417,
+              "topActionAccuracy": 0.4642857142857143
+            },
+            "adaptiveClock": {
+              "decisions": 56,
+              "jointLogLoss": 1.806102748883042,
+              "topActionAccuracy": 0.4642857142857143
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "67725a48-2151-4e96-8285-2f60afdde0c9",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 62,
+              "jointLogLoss": 1.9092240474578945,
+              "topActionAccuracy": 0.3870967741935484
+            },
+            "adaptiveClock": {
+              "decisions": 62,
+              "jointLogLoss": 1.9092240474578945,
+              "topActionAccuracy": 0.3870967741935484
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "4e06e521-19f9-44c2-be76-8927fd0bd748",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 42,
+              "jointLogLoss": 1.9906647375389805,
+              "topActionAccuracy": 0.35714285714285715
+            },
+            "adaptiveClock": {
+              "decisions": 42,
+              "jointLogLoss": 1.9906647375389808,
+              "topActionAccuracy": 0.35714285714285715
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "052f66f9-82bd-4dc7-9046-1b1198feea5e",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 23,
+              "jointLogLoss": 2.327265231705751,
+              "topActionAccuracy": 0.21739130434782608
+            },
+            "adaptiveClock": {
+              "decisions": 23,
+              "jointLogLoss": 2.327265231705751,
+              "topActionAccuracy": 0.21739130434782608
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "6f2b1f56-3952-4516-a0b9-76a6af29ee0e",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 55,
+              "jointLogLoss": 1.787246746871359,
+              "topActionAccuracy": 0.34545454545454546
+            },
+            "adaptiveClock": {
+              "decisions": 55,
+              "jointLogLoss": 1.7872467468713593,
+              "topActionAccuracy": 0.34545454545454546
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "f534e50b-8c77-4153-a010-168df70245c4",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 27,
+              "jointLogLoss": 2.047251494880711,
+              "topActionAccuracy": 0.25925925925925924
+            },
+            "adaptiveClock": {
+              "decisions": 27,
+              "jointLogLoss": 2.0472514948807112,
+              "topActionAccuracy": 0.25925925925925924
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "d5974636-1d18-4aef-8218-f3c8d2132854",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 54,
+              "jointLogLoss": 1.9664268884509417,
+              "topActionAccuracy": 0.37037037037037035
+            },
+            "adaptiveClock": {
+              "decisions": 54,
+              "jointLogLoss": 1.9664268884509415,
+              "topActionAccuracy": 0.37037037037037035
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "f1ff4790-dd7e-48a9-9dba-2243b47db272",
+          "level": 51,
+          "opening": 1792093661933,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 101,
+              "jointLogLoss": 1.8869562220231162,
+              "topActionAccuracy": 0.22772277227722773
+            },
+            "adaptiveClock": {
+              "decisions": 101,
+              "jointLogLoss": 1.8869562220231162,
+              "topActionAccuracy": 0.22772277227722773
+            }
+          },
+          "lineage": {
+            "id": "baec1ef9c91df4f6731c70ba6acca50165d31e59b1d2824898f3541958c059e0",
+            "trainingCut": 1792085610934,
+            "availableThrough": 1792085610933
+          }
+        },
+        {
+          "aid": "e3441a3d-4296-4ebc-80fd-5cccc17000cd",
+          "level": 52,
+          "opening": 1792096748424,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 161,
+              "jointLogLoss": 2.2063730263483445,
+              "topActionAccuracy": 0.21739130434782608
+            },
+            "adaptiveClock": {
+              "decisions": 161,
+              "jointLogLoss": 2.2063730263483436,
+              "topActionAccuracy": 0.21739130434782608
+            }
+          },
+          "lineage": {
+            "id": "5b34c19c19ef46f6c196f6bfc2c267348f2e61884f71f2a1eef6b60b75a7e6a0",
+            "trainingCut": 1792096721603,
+            "availableThrough": 1792096721602
+          }
+        },
+        {
+          "aid": "92d8c897-640f-4ce7-80ad-60386ef26922",
+          "level": 53,
+          "opening": 1792166705549,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 206,
+              "jointLogLoss": 1.7556268964669766,
+              "topActionAccuracy": 0.32524271844660196
+            },
+            "adaptiveClock": {
+              "decisions": 206,
+              "jointLogLoss": 1.755626896466976,
+              "topActionAccuracy": 0.32524271844660196
+            }
+          },
+          "lineage": {
+            "id": "5e11b4f3af7f36d6bb358ab61aa430eef9bed116acc1372af7c85b77e05f6f5c",
+            "trainingCut": 1792096979385,
+            "availableThrough": 1792096979384
+          }
+        },
+        {
+          "aid": "7c023b22-2c78-4996-9e79-4e1deb1ab4b5",
+          "level": 54,
+          "opening": 1792167038374,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 140,
+              "jointLogLoss": 1.732776041848425,
+              "topActionAccuracy": 0.3357142857142857
+            },
+            "adaptiveClock": {
+              "decisions": 140,
+              "jointLogLoss": 1.7327760418484253,
+              "topActionAccuracy": 0.3357142857142857
+            }
+          },
+          "lineage": {
+            "id": "c3e416d570657b12fec148fb7592041fdd5079858814feb0a6d529924bc69590",
+            "trainingCut": 1792167022746,
+            "availableThrough": 1792167022745
+          }
+        },
+        {
+          "aid": "15bcad8f-2cf3-4f47-b52d-9ffa7fe93ca2",
+          "level": 55,
+          "opening": 1792167284004,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 187,
+              "jointLogLoss": 2.1738294691952023,
+              "topActionAccuracy": 0.24064171122994651
+            },
+            "adaptiveClock": {
+              "decisions": 187,
+              "jointLogLoss": 2.1738294691952023,
+              "topActionAccuracy": 0.24064171122994651
+            }
+          },
+          "lineage": {
+            "id": "8ce0ab5bfa6666e9b9ea0647b9296a04871ed5ad86ad89dafddca58513fcfb65",
+            "trainingCut": 1792167266894,
+            "availableThrough": 1792167266893
+          }
+        },
+        {
+          "aid": "ee903f05-ce73-465e-8c7b-587dd21816b5",
+          "level": 56,
+          "opening": 1792167538665,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 131,
+              "jointLogLoss": 2.690426951822708,
+              "topActionAccuracy": 0.16793893129770993
+            },
+            "adaptiveClock": {
+              "decisions": 131,
+              "jointLogLoss": 2.6904269518227055,
+              "topActionAccuracy": 0.16793893129770993
+            }
+          },
+          "lineage": {
+            "id": "01fe6ef448904dad87004f9f8f5ba2e5be026836d6b6faceef8d724bc4da0fb8",
+            "trainingCut": 1792167530353,
+            "availableThrough": 1792167530352
+          }
+        },
+        {
+          "aid": "37c9053f-30fd-4086-944d-557bbf908017",
+          "level": 56,
+          "opening": 1792167538665,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 214,
+              "jointLogLoss": 2.2435302018282584,
+              "topActionAccuracy": 0.2850467289719626
+            },
+            "adaptiveClock": {
+              "decisions": 214,
+              "jointLogLoss": 2.2435302018282584,
+              "topActionAccuracy": 0.2850467289719626
+            }
+          },
+          "lineage": {
+            "id": "01fe6ef448904dad87004f9f8f5ba2e5be026836d6b6faceef8d724bc4da0fb8",
+            "trainingCut": 1792167530353,
+            "availableThrough": 1792167530352
+          }
+        },
+        {
+          "aid": "73174618-7044-4419-a37c-d403677c85a7",
+          "level": 57,
+          "opening": 1792170422833,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 71,
+              "jointLogLoss": 1.5510629923098298,
+              "topActionAccuracy": 0.43661971830985913
+            },
+            "adaptiveClock": {
+              "decisions": 71,
+              "jointLogLoss": 1.5510629923098305,
+              "topActionAccuracy": 0.43661971830985913
+            }
+          },
+          "lineage": {
+            "id": "7db8353d2b688e7c7283c5136e5214c4c11495b6846ae2fc119130e1029d38f4",
+            "trainingCut": 1792170385332,
+            "availableThrough": 1792170385331
+          }
+        },
+        {
+          "aid": "e7810058-f333-4954-96c5-6869d3f76e48",
+          "level": 57,
+          "opening": 1792170422833,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 178,
+              "jointLogLoss": 1.827705413322691,
+              "topActionAccuracy": 0.3202247191011236
+            },
+            "adaptiveClock": {
+              "decisions": 178,
+              "jointLogLoss": 1.827705413322692,
+              "topActionAccuracy": 0.3202247191011236
+            }
+          },
+          "lineage": {
+            "id": "7db8353d2b688e7c7283c5136e5214c4c11495b6846ae2fc119130e1029d38f4",
+            "trainingCut": 1792170385332,
+            "availableThrough": 1792170385331
+          }
+        },
+        {
+          "aid": "2dfe15db-c7af-42ff-ab01-f601e2390623",
+          "level": 58,
+          "opening": 1792170857134,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 207,
+              "jointLogLoss": 1.847781309195229,
+              "topActionAccuracy": 0.30917874396135264
+            },
+            "adaptiveClock": {
+              "decisions": 207,
+              "jointLogLoss": 1.8477813091952286,
+              "topActionAccuracy": 0.30917874396135264
+            }
+          },
+          "lineage": {
+            "id": "46efe0b37ee7f73c57b60ece7611cb6312f006af95c3721be1e4955bef83495c",
+            "trainingCut": 1792170853488,
+            "availableThrough": 1792170853487
+          }
+        },
+        {
+          "aid": "386437ff-0fc7-452d-b1a3-311aff29a719",
+          "level": 59,
+          "opening": 1792171113962,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 136,
+              "jointLogLoss": 1.931009012628989,
+              "topActionAccuracy": 0.29411764705882354
+            },
+            "adaptiveClock": {
+              "decisions": 136,
+              "jointLogLoss": 1.9310090126289887,
+              "topActionAccuracy": 0.29411764705882354
+            }
+          },
+          "lineage": {
+            "id": "35b93aba351242c08915f420e66fbd4373233d850c99ba912fc08168f883f25d",
+            "trainingCut": 1792171110536,
+            "availableThrough": 1792171110535
+          }
+        },
+        {
+          "aid": "f1407a9f-a5c1-4ef6-a395-a2770427e288",
+          "level": 59,
+          "opening": 1792171113962,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 46,
+              "jointLogLoss": 2.6099720504338793,
+              "topActionAccuracy": 0.15217391304347827
+            },
+            "adaptiveClock": {
+              "decisions": 46,
+              "jointLogLoss": 2.60997205043388,
+              "topActionAccuracy": 0.15217391304347827
+            }
+          },
+          "lineage": {
+            "id": "35b93aba351242c08915f420e66fbd4373233d850c99ba912fc08168f883f25d",
+            "trainingCut": 1792171110536,
+            "availableThrough": 1792171110535
+          }
+        },
+        {
+          "aid": "580c3c00-4a3b-48ec-9980-b6204069df9a",
+          "level": 59,
+          "opening": 1792171113962,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 153,
+              "jointLogLoss": 1.8750225143387973,
+              "topActionAccuracy": 0.29411764705882354
+            },
+            "adaptiveClock": {
+              "decisions": 153,
+              "jointLogLoss": 1.8750225143387984,
+              "topActionAccuracy": 0.29411764705882354
+            }
+          },
+          "lineage": {
+            "id": "35b93aba351242c08915f420e66fbd4373233d850c99ba912fc08168f883f25d",
+            "trainingCut": 1792171110536,
+            "availableThrough": 1792171110535
+          }
+        },
+        {
+          "aid": "ef40df03-4f8b-4844-b33f-6cd4f95c83b7",
+          "level": 60,
+          "opening": 1792171635042,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 156,
+              "jointLogLoss": 2.235205486279451,
+              "topActionAccuracy": 0.22435897435897437
+            },
+            "adaptiveClock": {
+              "decisions": 156,
+              "jointLogLoss": 2.2352054862794506,
+              "topActionAccuracy": 0.22435897435897437
+            }
+          },
+          "lineage": {
+            "id": "f36f922fb7c06d168b454330d1a2dfa1a932afb7abf141a42b4448421cbf38bf",
+            "trainingCut": 1792171629658,
+            "availableThrough": 1792171629657
+          }
+        },
+        {
+          "aid": "07e3e7d4-7586-42fd-bb42-ed0e1c9aae20",
+          "level": 60,
+          "opening": 1792171635042,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 188,
+              "jointLogLoss": 2.02693222297244,
+              "topActionAccuracy": 0.23404255319148937
+            },
+            "adaptiveClock": {
+              "decisions": 188,
+              "jointLogLoss": 2.0269322229724396,
+              "topActionAccuracy": 0.23404255319148937
+            }
+          },
+          "lineage": {
+            "id": "f36f922fb7c06d168b454330d1a2dfa1a932afb7abf141a42b4448421cbf38bf",
+            "trainingCut": 1792171629658,
+            "availableThrough": 1792171629657
+          }
+        },
+        {
+          "aid": "805dcd6e-b06b-4710-aa4c-df09e57f8b6b",
+          "level": 61,
+          "opening": 1792172079918,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 111,
+              "jointLogLoss": 1.886258266008621,
+              "topActionAccuracy": 0.3153153153153153
+            },
+            "adaptiveClock": {
+              "decisions": 111,
+              "jointLogLoss": 1.8862582660086211,
+              "topActionAccuracy": 0.3153153153153153
+            }
+          },
+          "lineage": {
+            "id": "c7b3c11a297ae316960ad2dcf29c059457daeb3d11ecaebafeea4c3d5a5fe002",
+            "trainingCut": 1792172069516,
+            "availableThrough": 1792172069515
+          }
+        },
+        {
+          "aid": "89845d51-60f2-4f45-a6b6-b35f6de2b617",
+          "level": 61,
+          "opening": 1792172079918,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 120,
+              "jointLogLoss": 2.032735758669107,
+              "topActionAccuracy": 0.25
+            },
+            "adaptiveClock": {
+              "decisions": 120,
+              "jointLogLoss": 2.032735758669107,
+              "topActionAccuracy": 0.25
+            }
+          },
+          "lineage": {
+            "id": "c7b3c11a297ae316960ad2dcf29c059457daeb3d11ecaebafeea4c3d5a5fe002",
+            "trainingCut": 1792172069516,
+            "availableThrough": 1792172069515
+          }
+        },
+        {
+          "aid": "ab7410b3-a024-461d-b1eb-0847a8d023df",
+          "level": 61,
+          "opening": 1792172079918,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 166,
+              "jointLogLoss": 2.0466511772386564,
+              "topActionAccuracy": 0.25301204819277107
+            },
+            "adaptiveClock": {
+              "decisions": 166,
+              "jointLogLoss": 2.0466511772386573,
+              "topActionAccuracy": 0.25301204819277107
+            }
+          },
+          "lineage": {
+            "id": "c7b3c11a297ae316960ad2dcf29c059457daeb3d11ecaebafeea4c3d5a5fe002",
+            "trainingCut": 1792172069516,
+            "availableThrough": 1792172069515
+          }
+        },
+        {
+          "aid": "180c2671-2deb-43f7-ad26-ef5296647527",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": true,
+          "initialNewLevel": true,
+          "scores": {
+            "control": {
+              "decisions": 186,
+              "jointLogLoss": 2.322168129420304,
+              "topActionAccuracy": 0.1935483870967742
+            },
+            "adaptiveClock": {
+              "decisions": 186,
+              "jointLogLoss": 2.322168129420303,
+              "topActionAccuracy": 0.1935483870967742
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "3bf3a5e8-ad3b-4f58-8665-30d698cdc76e",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 131,
+              "jointLogLoss": 2.304780894371965,
+              "topActionAccuracy": 0.2595419847328244
+            },
+            "adaptiveClock": {
+              "decisions": 131,
+              "jointLogLoss": 2.3047808943719663,
+              "topActionAccuracy": 0.2595419847328244
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "026e3886-6e68-490d-b464-7afc82f00037",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 20,
+              "jointLogLoss": 3.046616099538819,
+              "topActionAccuracy": 0.2
+            },
+            "adaptiveClock": {
+              "decisions": 20,
+              "jointLogLoss": 3.046616099538819,
+              "topActionAccuracy": 0.2
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "4f22899a-bd54-4529-92c4-47a6ed63af08",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 94,
+              "jointLogLoss": 2.6584541111166335,
+              "topActionAccuracy": 0.1702127659574468
+            },
+            "adaptiveClock": {
+              "decisions": 94,
+              "jointLogLoss": 2.658454111116634,
+              "topActionAccuracy": 0.1702127659574468
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "10810509-33cb-47a6-8a8d-c6873a263fb5",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 116,
+              "jointLogLoss": 2.53896199638491,
+              "topActionAccuracy": 0.14655172413793102
+            },
+            "adaptiveClock": {
+              "decisions": 116,
+              "jointLogLoss": 2.538961996384912,
+              "topActionAccuracy": 0.14655172413793102
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "285adab2-d2b7-4187-a5d5-1fbadc276a5b",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 34,
+              "jointLogLoss": 2.5061415962591753,
+              "topActionAccuracy": 0.29411764705882354
+            },
+            "adaptiveClock": {
+              "decisions": 34,
+              "jointLogLoss": 2.5061415962591758,
+              "topActionAccuracy": 0.29411764705882354
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "dd010714-e454-41b9-b26d-db489ea1e53b",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 133,
+              "jointLogLoss": 2.6488918981427925,
+              "topActionAccuracy": 0.11278195488721804
+            },
+            "adaptiveClock": {
+              "decisions": 133,
+              "jointLogLoss": 2.6488918981427925,
+              "topActionAccuracy": 0.11278195488721804
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "6ba4a9be-185c-431d-86d0-23108b1e34b6",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 75,
+              "jointLogLoss": 2.4888383119458513,
+              "topActionAccuracy": 0.22666666666666666
+            },
+            "adaptiveClock": {
+              "decisions": 75,
+              "jointLogLoss": 2.4888383119458517,
+              "topActionAccuracy": 0.22666666666666666
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "1e93bf36-7771-49e6-996d-262d1da304ba",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 125,
+              "jointLogLoss": 2.3623720114674307,
+              "topActionAccuracy": 0.256
+            },
+            "adaptiveClock": {
+              "decisions": 125,
+              "jointLogLoss": 2.36237201146743,
+              "topActionAccuracy": 0.256
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "185e020b-02b2-4b97-94fd-10e7d32586e5",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 123,
+              "jointLogLoss": 2.3465668049347155,
+              "topActionAccuracy": 0.3008130081300813
+            },
+            "adaptiveClock": {
+              "decisions": 123,
+              "jointLogLoss": 2.3465668049347155,
+              "topActionAccuracy": 0.3008130081300813
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "4c95dda9-a526-4ca3-aa7c-30803b214756",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 101,
+              "jointLogLoss": 2.1921130738910755,
+              "topActionAccuracy": 0.3069306930693069
+            },
+            "adaptiveClock": {
+              "decisions": 101,
+              "jointLogLoss": 2.1921130738910763,
+              "topActionAccuracy": 0.3069306930693069
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "bddd27f6-5cad-48d7-8e2b-1af45032e9f7",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 73,
+              "jointLogLoss": 2.3728003068885566,
+              "topActionAccuracy": 0.2465753424657534
+            },
+            "adaptiveClock": {
+              "decisions": 73,
+              "jointLogLoss": 2.372800306888556,
+              "topActionAccuracy": 0.2465753424657534
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "201c835a-af99-4071-9431-6e610a895127",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 39,
+              "jointLogLoss": 2.533862025236909,
+              "topActionAccuracy": 0.38461538461538464
+            },
+            "adaptiveClock": {
+              "decisions": 39,
+              "jointLogLoss": 2.533862025236909,
+              "topActionAccuracy": 0.38461538461538464
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        },
+        {
+          "aid": "78bc53a4-833e-47cb-9f9d-4659be982c6a",
+          "level": 62,
+          "opening": 1792172831970,
+          "initial": false,
+          "initialNewLevel": false,
+          "scores": {
+            "control": {
+              "decisions": 148,
+              "jointLogLoss": 2.0497084089512505,
+              "topActionAccuracy": 0.28378378378378377
+            },
+            "adaptiveClock": {
+              "decisions": 148,
+              "jointLogLoss": 2.049708408951251,
+              "topActionAccuracy": 0.28378378378378377
+            }
+          },
+          "lineage": {
+            "id": "420fc8fe98bbbed299edb8b93162e9c8f36fd659be7150ac05045d2f94edde93",
+            "trainingCut": 1792172826685,
+            "availableThrough": 1792172826684
+          }
+        }
+      ]
+    }
+  },
+  "note": "Two exchangeable strategies, own-person route/pair preferences and context-dependent switching. All138 earlier-only memberships,197 per-prefix controls and eight summary controls are fixed. Held evaluation uses forward filtering with past actions only, never smoothed future states. Generic clock planning must be disabled. Action-fit evidence cannot establish winning-try accuracy or future80% success."
+}

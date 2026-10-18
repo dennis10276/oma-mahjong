@@ -1,0 +1,178 @@
+{
+  "made": "2026-10-18T06:21:27.848Z",
+  "evidence": "context-runtime-parity-diagnostic",
+  "targetMet": false,
+  "fingerprint": "a9ff14cc1dbb0c9e27e5a6e1ea570db0a5f599ac17c957f430b7b83d488b31d1",
+  "fingerprintFiles": [
+    "www/hard.js",
+    "www/layouts.js",
+    "tools/sim/refit/personal_prefix_data.js",
+    "tools/sim/refit/mimic_games.js",
+    "analysis/archive/realdata/plays.json",
+    "analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "tools/sim/refit/personal_retry_memory.js",
+    "tools/sim/refit/attempt_campaigns.js",
+    "tools/sim/refit/personal_model.js",
+    "tools/sim/refit/personal_context_runtime_audit.js",
+    "tools/sim/refit/personal_context_choice.js",
+    "tools/sim/refit/physical_count_data.js"
+  ],
+  "controlPrefixes": 398,
+  "controlDecisions": 33543,
+  "runtimePrefixes": 398,
+  "runtimeDecisions": 33543,
+  "maskedInspectionRows": 0,
+  "unsupported": [],
+  "probabilityDecisions": 51414,
+  "measured": {
+    "Dennisisdebeste": {
+      "ownAll": {
+        "control": {
+          "decisions": 2296,
+          "jointLogLoss": 1.7095152425374611,
+          "topActionAccuracy": 0.4102787456445993
+        },
+        "context8": {
+          "decisions": 2296,
+          "jointLogLoss": 1.7005218500011896,
+          "topActionAccuracy": 0.4094076655052265
+        },
+        "context24": {
+          "decisions": 2296,
+          "jointLogLoss": 1.6990545299375517,
+          "topActionAccuracy": 0.4063588850174216
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 2296,
+          "jointLogLoss": 1.708917596166584,
+          "topActionAccuracy": 0.4133275261324042
+        },
+        "context8": {
+          "decisions": 2296,
+          "jointLogLoss": 1.699820122434731,
+          "topActionAccuracy": 0.41114982578397213
+        },
+        "context24": {
+          "decisions": 2296,
+          "jointLogLoss": 1.6994629361233493,
+          "topActionAccuracy": 0.4107142857142857
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "ownAll": {
+        "control": {
+          "decisions": 1507,
+          "jointLogLoss": 1.879650410728878,
+          "topActionAccuracy": 0.3351028533510285
+        },
+        "context8": {
+          "decisions": 1507,
+          "jointLogLoss": 1.8715125317496506,
+          "topActionAccuracy": 0.3404114134041141
+        },
+        "context24": {
+          "decisions": 1507,
+          "jointLogLoss": 1.8697800685732995,
+          "topActionAccuracy": 0.34439283344392835
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 1507,
+          "jointLogLoss": 1.9026663307262173,
+          "topActionAccuracy": 0.3238221632382216
+        },
+        "context8": {
+          "decisions": 1507,
+          "jointLogLoss": 1.9007980678503202,
+          "topActionAccuracy": 0.32581287325812874
+        },
+        "context24": {
+          "decisions": 1507,
+          "jointLogLoss": 1.9010904338269479,
+          "topActionAccuracy": 0.32050431320504313
+        }
+      }
+    },
+    "PUK": {
+      "ownAll": {
+        "control": {
+          "decisions": 1948,
+          "jointLogLoss": 1.777164973439908,
+          "topActionAccuracy": 0.4296714579055442
+        },
+        "context8": {
+          "decisions": 1948,
+          "jointLogLoss": 1.727417861500686,
+          "topActionAccuracy": 0.43788501026694043
+        },
+        "context24": {
+          "decisions": 1948,
+          "jointLogLoss": 1.694555622830702,
+          "topActionAccuracy": 0.4491786447638604
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 1948,
+          "jointLogLoss": 1.7762185494099625,
+          "topActionAccuracy": 0.43018480492813144
+        },
+        "context8": {
+          "decisions": 1948,
+          "jointLogLoss": 1.7290008293962285,
+          "topActionAccuracy": 0.43788501026694043
+        },
+        "context24": {
+          "decisions": 1948,
+          "jointLogLoss": 1.700491616770864,
+          "topActionAccuracy": 0.44969199178644764
+        }
+      }
+    },
+    "Gerda": {
+      "ownAll": {
+        "control": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0020043078463194,
+          "topActionAccuracy": 0.29559971611071684
+        },
+        "context8": {
+          "decisions": 2818,
+          "jointLogLoss": 1.9984703510423956,
+          "topActionAccuracy": 0.2913413768630234
+        },
+        "context24": {
+          "decisions": 2818,
+          "jointLogLoss": 1.997556087910792,
+          "topActionAccuracy": 0.2895670688431512
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0178225924408353,
+          "topActionAccuracy": 0.28459900638750885
+        },
+        "context8": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0167614980282256,
+          "topActionAccuracy": 0.2817601135557133
+        },
+        "context24": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0209047862296363,
+          "topActionAccuracy": 0.2831795599716111
+        }
+      }
+    }
+  },
+  "pinnedActionExperiment": "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z",
+  "note": "Every original zero-memory natural prefix matches unchanged followed features/physical outcomes, and every actual decision now replays through the optional runtime selector without inspection masks or discarded prefixes. The prior two-reinspection mismatch is preserved separately; context bots permit legal repeats with an explicit computation boundary, never silently treating that boundary as a measured human loss. All held zero/configured-memory control/context probability summaries match Python to1e-12, including the explicit float32 boundary unit test. Human indices are supplied only for parity diagnostics, never autonomous forecast evidence. Full autonomous count cohorts remain separate and unchanged; no winning-count accuracy or new forecast is claimed."
+}

@@ -1,0 +1,10 @@
+{
+  "made": "2026-10-18T16:24:32.096873+00:00",
+  "targetMet": false,
+  "evidence": "native-clock-numerical-reference-only",
+  "dataSha256": "3d3c3d903f2deb1395a1a4e308cb671eb224cd8cbfff7c32fc625729e20115f5",
+  "modelsSha256": "d8f868d08b366005fa04fa7141e4d162461c48d6957d3e0ff18d453bdf935fa2",
+  "prefixes": 445,
+  "decisions": 39268,
+  "note": "Training-prefix numerical references only; no held count accuracy or future outcome is inferred."
+}

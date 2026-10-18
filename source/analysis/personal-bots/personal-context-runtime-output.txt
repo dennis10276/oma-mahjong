@@ -1,0 +1,9 @@
+All JavaScript context/control likelihoods match pinned Python summaries to1e-12
+Verified 50 autonomous feature/control prefixes
+Verified 100 autonomous feature/control prefixes
+Verified 150 autonomous feature/control prefixes
+Verified 200 autonomous feature/control prefixes
+Verified 250 autonomous feature/control prefixes
+Verified 300 autonomous feature/control prefixes
+Verified 350 autonomous feature/control prefixes
+Verified 398 prefixes, 33543 actual choices and 51414 probability decisions

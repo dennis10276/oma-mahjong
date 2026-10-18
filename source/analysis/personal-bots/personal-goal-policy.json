@@ -1,0 +1,124 @@
+{
+  "features": [
+    "keyTaken",
+    "keyDepthGain",
+    "unlockedShare",
+    "clockTaken",
+    "clockDepthGain",
+    "clockUrgentGain",
+    "keyReveal",
+    "clockReveal"
+  ],
+  "dataSha256": "956341d695bc0bf6cd06dee42ada52b6547a97dc9c559b06e49f060c0b1cf981",
+  "players": {
+    "Dennisisdebeste": {
+      "trainingCut": 1792174835467,
+      "trainingGames": 15,
+      "testingGames": 6,
+      "trainingAvailableUntil": 1792174831215,
+      "familyAvailableUntil": 1792174831215,
+      "weights": [
+        0.1939553338262921,
+        -0.020875619907169685,
+        0.009608011989813169,
+        -0.0814896381641449,
+        0.1524283661341209,
+        0.15279166072150147,
+        0.0,
+        0.0
+      ],
+      "base": {
+        "decisions": 209,
+        "logLoss": 1.3318000044315774,
+        "topChoiceAccuracy": 0.423775347459558
+      },
+      "goal": {
+        "decisions": 209,
+        "logLoss": 1.3261935504800328,
+        "topChoiceAccuracy": 0.423775347459558
+      }
+    },
+    "Mrs. Doubtfire": {
+      "trainingCut": 1792173079220,
+      "trainingGames": 21,
+      "testingGames": 7,
+      "trainingAvailableUntil": 1792173078076,
+      "familyAvailableUntil": 1792173078076,
+      "weights": [
+        -0.36319028718907537,
+        -0.3407117819166539,
+        -0.0075769789874589825,
+        -0.06579384927769497,
+        -0.11186686743047969,
+        0.15496628841763843,
+        0.0,
+        0.0
+      ],
+      "base": {
+        "decisions": 220,
+        "logLoss": 1.4671131005401217,
+        "topChoiceAccuracy": 0.37391233766233806
+      },
+      "goal": {
+        "decisions": 220,
+        "logLoss": 1.4593606922192066,
+        "topChoiceAccuracy": 0.38300324675324715
+      }
+    },
+    "PUK": {
+      "trainingCut": 1792081060278,
+      "trainingGames": 33,
+      "testingGames": 12,
+      "trainingAvailableUntil": 1792080735810,
+      "familyAvailableUntil": 1792080735810,
+      "weights": [
+        0.1898703288862688,
+        0.13502462070838878,
+        0.0034585612651590815,
+        0.00011117282587619683,
+        0.010784700672594533,
+        0.005517391893469513,
+        0.0,
+        0.0
+      ],
+      "base": {
+        "decisions": 444,
+        "logLoss": 3.7423112831924774,
+        "topChoiceAccuracy": 0.33413765288765274
+      },
+      "goal": {
+        "decisions": 444,
+        "logLoss": 3.743317424437694,
+        "topChoiceAccuracy": 0.33188540063540045
+      }
+    },
+    "Gerda": {
+      "trainingCut": 1792084600540,
+      "trainingGames": 135,
+      "testingGames": 46,
+      "trainingAvailableUntil": 1792080047377,
+      "familyAvailableUntil": 1792083630482,
+      "weights": [
+        0.2571395272265427,
+        -0.04739202605086722,
+        0.003169990482461498,
+        0.002726680379218893,
+        0.07168254281669915,
+        0.10738491856031865,
+        0.0,
+        0.0
+      ],
+      "base": {
+        "decisions": 1586,
+        "logLoss": 4.63274384625587,
+        "topChoiceAccuracy": 0.294126407622619
+      },
+      "goal": {
+        "decisions": 1586,
+        "logLoss": 4.632913019458321,
+        "topChoiceAccuracy": 0.294126407622619
+      }
+    }
+  },
+  "note": "Conditional tile-choice diagnostic for visible keys/clocks; move type and base planning weights are not refitted. This is not winning-attempt accuracy."
+}

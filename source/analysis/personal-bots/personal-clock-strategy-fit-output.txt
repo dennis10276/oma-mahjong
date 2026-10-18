@@ -1,0 +1,135 @@
+Adaptive clock models 10 / 138
+Adaptive clock models 20 / 138
+Adaptive clock models 30 / 138
+Adaptive clock models 40 / 138
+Adaptive clock models 50 / 138
+Adaptive clock models 60 / 138
+Adaptive clock models 70 / 138
+Adaptive clock models 80 / 138
+Adaptive clock models 90 / 138
+Adaptive clock models 100 / 138
+Adaptive clock models 110 / 138
+Adaptive clock models 120 / 138
+Adaptive clock models 130 / 138
+{
+  "Dennisisdebeste": {
+    "initialModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.709515242537463,
+        "topActionAccuracy": 0.4102787456445993
+      },
+      "adaptiveClock": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7011663908323782,
+        "topActionAccuracy": 0.4115853658536585
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 22,
+        "decisions": 2212,
+        "jointLogLoss": 1.6420943976449005,
+        "topActionAccuracy": 0.4154611211573237
+      },
+      "adaptiveClock": {
+        "prefixes": 22,
+        "decisions": 2212,
+        "jointLogLoss": 1.6352137009984788,
+        "topActionAccuracy": 0.4163652802893309
+      }
+    }
+  },
+  "Mrs. Doubtfire": {
+    "initialModels": {
+      "control": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.8796504107288818,
+        "topActionAccuracy": 0.3351028533510285
+      },
+      "adaptiveClock": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.8726167198754438,
+        "topActionAccuracy": 0.3364299933642999
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 40,
+        "decisions": 3060,
+        "jointLogLoss": 1.8263835025468405,
+        "topActionAccuracy": 0.36993464052287583
+      },
+      "adaptiveClock": {
+        "prefixes": 40,
+        "decisions": 3060,
+        "jointLogLoss": 1.8185206177205318,
+        "topActionAccuracy": 0.37254901960784315
+      }
+    }
+  },
+  "PUK": {
+    "initialModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7771649734399049,
+        "topActionAccuracy": 0.4296714579055442
+      },
+      "adaptiveClock": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7771649734399046,
+        "topActionAccuracy": 0.4296714579055442
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 1453,
+        "jointLogLoss": 1.7931731984156674,
+        "topActionAccuracy": 0.4074328974535444
+      },
+      "adaptiveClock": {
+        "prefixes": 20,
+        "decisions": 1453,
+        "jointLogLoss": 1.793173198415667,
+        "topActionAccuracy": 0.4074328974535444
+      }
+    }
+  },
+  "Gerda": {
+    "initialModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.002004307846316,
+        "topActionAccuracy": 0.29559971611071684
+      },
+      "adaptiveClock": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.0020043078463154,
+        "topActionAccuracy": 0.29559971611071684
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 41,
+        "decisions": 3720,
+        "jointLogLoss": 2.112139748719071,
+        "topActionAccuracy": 0.27580645161290324
+      },
+      "adaptiveClock": {
+        "prefixes": 41,
+        "decisions": 3720,
+        "jointLogLoss": 2.112139748719071,
+        "topActionAccuracy": 0.27580645161290324
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"output":"C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\personal-bots\\personal-clock-strategy-throughput-audit.json","pilot":true,"prefixes":8,"milliseconds":6916,"totals":{"nodes":24221,"boundaries":64,"calls":712,"clockCalls":39}}

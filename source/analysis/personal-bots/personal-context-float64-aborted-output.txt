@@ -1,0 +1,3 @@
+Fitting 276 own-person contextual choice residuals
+Fitted 25 / 276 contextual personal actors
+Fitted 50 / 276 contextual personal actors

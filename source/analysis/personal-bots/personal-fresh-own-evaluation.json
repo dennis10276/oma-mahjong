@@ -1,0 +1,160 @@
+{
+  "made": "2026-10-18T15:50:06.497425+00:00",
+  "evidence": "fresh-future-only-own-model-fit",
+  "targetMet": false,
+  "personalOnly": true,
+  "requestTime": 1792338569837,
+  "bankSha256": "c34a3ab05c4a23faf823ae18d9b5ca346a92c628138a4ece94acc6afe22e182e",
+  "sourceHashes": {
+    "attempt_count_fit.py": "cc367f6e5c92f34be7652ee0affa2a2f60a349045dad843b78e8fa40625eff60",
+    "personal_prefix_versions.py": "e6096cac60dc0ba7bced2f8900b08708f69d661dff292390fbcd97177e4ef652",
+    "personal_value_fit.py": "b8b63433ef8f85db35f9d6e145614a84b22c84f18e98d451ee671b26dba5227d",
+    "personal_known_plan.py": "0ad5d663760767c7c075ac4f27e799b60ae6530daf27bada5705a8705a19b079",
+    "personal_plan_fit.py": "e2b552c8ba46cfd89efba41438628150b3c9ec5395c36c9eb0f7ee23e119a316",
+    "board_recall_eval.py": "167916bf764a1a6801fe67d39e4cb1147b069aa03a6da7d6f6bd3e358369df10",
+    "personal_outcome_styles.py": "713e13241979c3fdb7e5f0a364434e28772c4b8193f2ae428fa83752b17f2f40",
+    "personal_policy_fit.py": "989884f4851967e89fdc393b7b478d96509e22e17b01759c11a4c3f6ccae52c7",
+    "personal_plan.py": "f795b366bb27f8d26d2834f20b99ab56ef6d4d949de4ab96438b525ee0740892",
+    "personal_kind_fit.py": "c8a9fd59e0d4d6942a1e9b17c648a5b3aec05376a6a14091b9866312e43c66bf",
+    "physical_policy_bank.py": "3f57d1ce2fc6f9d527c491848af651a68c8a7e62c08baa8c06d1d384d8045e0f",
+    "attempt_hazard.py": "6d716888e622f99b727056eb46e59f27a9923e15516166f6448737f73381152a",
+    "personal_value.py": "06c06a7c8cfd63ca3b333dca8f3327cae3008dcb4bbcc0de940dc8be2a5f8fa1",
+    "personal_full_choice_fit.py": "f830b849f07d517e1e05dc64f0393fe461064b136c2255b5bb32eef7324b0096",
+    "personal_fresh_own_fit.py": "f973d74abbe73be521cba5fce9258c335406d2df868c1f5e27fe028b7100aa46",
+    "personal_count_fit.py": "4aed45949ad2de34abb044a2838e8609d66fdab0cdca56acb160c560a613e082"
+  },
+  "inputHashes": {
+    "analysis/archive/personal-bots/personal-prefix-versions.json": "c34a3ab05c4a23faf823ae18d9b5ca346a92c628138a4ece94acc6afe22e182e",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json": "2a3ad9dfebc5b0afe469a82887e3f8a6b819393723977692a25e2d8cad9b07b2",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/mimic_games.js": "72cca6b6fe8e79a2e4227e8d875d44499619e64d8b7653d4628012403fe1f7d4",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/policy-value-prefix-data.json": "f859cee9b0244211cad658f20f3fa1908b321106b156168c308548f5202c75ab",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmv2gaa0g00eq3q.json": "2a51f579112876d8b4299dd3e1d543f03a62b61a308231c1a726396ac10f0832",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmv6yhzz3x9oxs8.json": "cde6e4e3c84e847933e033b7974c6925430d37a1d2a3ff4f7ded4ad322966af1",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/www/hard.js": "42e61ae3b2e802eeebd9efcad4e956647656d349c7f6d89a731ce2511eda777b",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/manifest.json": "93cb2f4e51277096c2f969e8f1cc935624a29f30fcf3f7f01d9a969353f5f2bd",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/realdata/plays.json": "fa73ef795b173534c983af2fe4986a9ea1a7e5502422a1d25ca777aa25c6f3b1",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmuy78xu6tsths9.json": "7144e2de2731de9105e858946b177c5e299f9ba8d76d19a16914357452d5a5d6",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/personal_model.js": "50cd26a2dbd38d8c70ce3babad808b80b072f11f05557cdb5cc7d87beebd9d6b",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/personal_retry_memory.js": "d27cf68ed085eec7ea63d9b3bbd245eba15351ea5aefb19252cdb7a2223e4c82",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmv16kj3jr35750.json": "01a5c6be5f285be2476e14afcf6befd721e843fa4f6a8f6734059a804f3bbf6a",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/attempt_campaigns.js": "a3718edde77c191682aae9209e46af4f6e92faf8a2318d9ea14c193dc7567565",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/personal_prefix_data.js": "ce3af304654a9f96aa1228a356af3565db19644f8f697b78e0ae954364ae8bfc",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/personal_model.js": "50cd26a2dbd38d8c70ce3babad808b80b072f11f05557cdb5cc7d87beebd9d6b",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmv6yhzz3x9oxs8.json": "9046a98784950c86990fc550e0b4df0463d69c1452df6150751fb3b7bfd60950",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/www/hard.js": "5c1561bcbeda185510ed418c99478a32c7b85a34d4cac9a3b7b8949fc7fc8e89",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/personal_prefix_data.js": "7bbc5b0fbf933fa60faf6bb272b3a0e04abc20cb21ff9e3b906f7e826e49c2a7",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/mimic_games.js": "72cca6b6fe8e79a2e4227e8d875d44499619e64d8b7653d4628012403fe1f7d4",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmv2gaa0g00eq3q.json": "2a51f579112876d8b4299dd3e1d543f03a62b61a308231c1a726396ac10f0832",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/realdata/plays.json": "befd7cc83e6026773d9b2a86d3fc8d92ea026a92f64e18a275c4fbdb223e2328",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/attempt_campaigns.js": "a3718edde77c191682aae9209e46af4f6e92faf8a2318d9ea14c193dc7567565",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmuy78xu6tsths9.json": "8656ae8fdecc90f8c48eb46a97862621c7299ff466736afd3594ba6579436abd",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/personal-bots/policy-value-prefix-data.json": "9e9d499836bb1003ec104c38adf7b0f0da6ce233fae74c9fee6e43b444bcaff0",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmv16kj3jr35750.json": "01a5c6be5f285be2476e14afcf6befd721e843fa4f6a8f6734059a804f3bbf6a",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/personal_retry_memory.js": "d27cf68ed085eec7ea63d9b3bbd245eba15351ea5aefb19252cdb7a2223e4c82",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/manifest.json": "27b18a5bed132022be57a57cfb2868336506a4b604a6c049d6adbded0aa02f71"
+  },
+  "note": "Independent own-person fits from latest versions actually observed before this request. A later completion never overwrites an earlier version. Replay-local behavior may train the actor; new-progression winning-count scoring remains separate. Outcome-associated styles are not guaranteed outcomes. The level150 bee correction is preserved as human feedback, not a rewritten action or hidden positive target label. No historical target is rescored with these post-target models, and no80% result is claimed.",
+  "modelsSha256": "dffe93e21abed8a1e41ac079ae50be22d5ec0958ea9de65eb23f1fd94032f1fe",
+  "players": {
+    "Dennisisdebeste": {
+      "trainingGames": 113,
+      "previousTrainingGames": 74,
+      "newOwnAttempts": 39,
+      "availableThrough": 1792337025929,
+      "inputObservedThrough": 1792338235700,
+      "unchangedMembershipControlMatched": false,
+      "maximumStaticWeightChange": 0.34736796951978466,
+      "naturalOutcomeCounts": {
+        "0": 51,
+        "1": 61
+      },
+      "censoredOutcomePrefixes": 1,
+      "initialRetryPriors": [
+        [
+          0.32626266356032924,
+          0.6737373364396707
+        ],
+        [
+          0.4776330499986242,
+          0.5223669500013758
+        ]
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "trainingGames": 65,
+      "previousTrainingGames": 65,
+      "newOwnAttempts": 0,
+      "availableThrough": 1792264148974,
+      "inputObservedThrough": 1792288513885,
+      "unchangedMembershipControlMatched": true,
+      "maximumStaticWeightChange": 0.0,
+      "naturalOutcomeCounts": {
+        "0": 48,
+        "1": 15
+      },
+      "censoredOutcomePrefixes": 2,
+      "initialRetryPriors": [
+        [
+          0.5663996879627851,
+          0.433600312037215
+        ],
+        [
+          0.7175744427869394,
+          0.28242555721306056
+        ]
+      ]
+    },
+    "PUK": {
+      "trainingGames": 57,
+      "previousTrainingGames": 57,
+      "newOwnAttempts": 0,
+      "availableThrough": 1792243130063,
+      "inputObservedThrough": 1792288513885,
+      "unchangedMembershipControlMatched": true,
+      "maximumStaticWeightChange": 0.0,
+      "naturalOutcomeCounts": {
+        "0": 28,
+        "1": 26
+      },
+      "censoredOutcomePrefixes": 3,
+      "initialRetryPriors": [
+        [
+          0.4520539394089059,
+          0.547946060591094
+        ],
+        [
+          0.7333737776609079,
+          0.26662622233909195
+        ]
+      ]
+    },
+    "Gerda": {
+      "trainingGames": 210,
+      "previousTrainingGames": 202,
+      "newOwnAttempts": 8,
+      "availableThrough": 1792309731625,
+      "inputObservedThrough": 1792338235700,
+      "unchangedMembershipControlMatched": false,
+      "maximumStaticWeightChange": 0.24430013020574753,
+      "naturalOutcomeCounts": {
+        "0": 134,
+        "1": 59
+      },
+      "censoredOutcomePrefixes": 17,
+      "initialRetryPriors": [
+        [
+          0.5612942929041942,
+          0.43870570709580575
+        ],
+        [
+          0.6877481127035974,
+          0.31225188729640263
+        ]
+      ]
+    }
+  },
+  "beeFeedbackUsedAsSyntheticTargetLabel": false,
+  "readiness": "awaiting immutable runtime parity, autonomous counts and genuine future freezes"
+}

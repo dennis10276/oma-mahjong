@@ -1,0 +1,25 @@
+{
+  "reproducedFirstAttemptRates": 46,
+  "profiles": {
+    "ownOutcomeBase0": {
+      "runs": 736,
+      "wins": 31,
+      "failureReasons": {
+        "clock": 531,
+        "tray": 174
+      },
+      "averageRemainingAtFailure": 69.62978723404255,
+      "lossesWithSixOrFewerRemaining": 1
+    },
+    "ownOutcomeStyles0": {
+      "runs": 736,
+      "wins": 24,
+      "failureReasons": {
+        "clock": 488,
+        "tray": 224
+      },
+      "averageRemainingAtFailure": 69.98314606741573,
+      "lossesWithSixOrFewerRemaining": 2
+    }
+  }
+}

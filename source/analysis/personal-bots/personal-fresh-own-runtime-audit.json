@@ -1,0 +1,24 @@
+{
+  "made": "2026-10-18T15:54:28.737Z",
+  "evidence": "fresh-personal-native-javascript-parity-only",
+  "targetMet": false,
+  "fingerprint": "d99a6247f997f70c1f9520118a2eb20b16e3f3346bf38486892c462f10a0e254",
+  "fingerprintFiles": [
+    "analysis/archive/personal-bots/personal-fresh-own-models.json",
+    "analysis/archive/personal-bots/personal-prefix-versions.json",
+    "analysis/personal-bots/personal-fresh-own-native-bridge.json",
+    "tools/sim/refit/personal_context_choice.js",
+    "tools/sim/refit/personal_fresh_own_bridge.py",
+    "tools/sim/refit/personal_fresh_own_runtime_audit.js",
+    "tools/sim/refit/personal_full_choice_fit.py",
+    "tools/sim/refit/personal_outcome_styles.py",
+    "tools/sim/refit/personal_outcome_styles_choice.js",
+    "tools/sim/refit/personal_plan_choice.js",
+    "tools/sim/refit/personal_prefix_versions.py",
+    "www/layouts.js"
+  ],
+  "prefixes": 445,
+  "probabilityDecisions": 78536,
+  "models": 4,
+  "note": "All current own-person fitting-prefix numerical scores and forward posteriors match native scoring to1e-12. Each attempt gets a fresh seed-stable style selector. Saved source observation and prefix-version membership are checked. This is runtime parity on training data, not held action accuracy, an autonomous count score or prospective80% success."
+}

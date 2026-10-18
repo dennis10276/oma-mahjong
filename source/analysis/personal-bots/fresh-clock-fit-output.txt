@@ -1,0 +1,40 @@
+Fresh own clock fits 1 / 33
+Fresh own clock fits 2 / 33
+Fresh own clock fits 3 / 33
+Fresh own clock fits 4 / 33
+Fresh own clock fits 5 / 33
+Fresh own clock fits 6 / 33
+Fresh own clock fits 7 / 33
+Fresh own clock fits 8 / 33
+Fresh own clock fits 9 / 33
+Fresh own clock fits 10 / 33
+Fresh own clock fits 11 / 33
+Fresh own clock fits 12 / 33
+Fresh own clock fits 13 / 33
+Fresh own clock fits 14 / 33
+Fresh own clock fits 15 / 33
+Fresh own clock fits 16 / 33
+Fresh own clock fits 17 / 33
+Fresh own clock fits 18 / 33
+Fresh own clock fits 19 / 33
+Fresh own clock fits 20 / 33
+Fresh own clock fits 21 / 33
+Fresh own clock fits 22 / 33
+Fresh own clock fits 23 / 33
+Fresh own clock fits 24 / 33
+Fresh own clock fits 25 / 33
+Fresh own clock fits 26 / 33
+Fresh own clock fits 27 / 33
+Fresh own clock fits 28 / 33
+Fresh own clock fits 29 / 33
+Fresh own clock fits 30 / 33
+Fresh own clock fits 31 / 33
+Fresh own clock fits 32 / 33
+Fresh own clock fits 33 / 33
+{
+  "models": 33,
+  "futureModels": 4,
+  "historicalModels": 29,
+  "modelFileSha256": "d8f868d08b366005fa04fa7141e4d162461c48d6957d3e0ff18d453bdf935fa2",
+  "targetMet": false
+}

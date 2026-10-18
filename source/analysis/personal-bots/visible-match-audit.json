@@ -1,0 +1,3870 @@
+{
+  "made": "2026-10-16T23:58:59.220Z",
+  "players": {
+    "Dennisisdebeste": {
+      "games": 30,
+      "totals": {
+        "noClock": {
+          "opportunities": 366,
+          "matchTaps": 223,
+          "otherTaps": 143,
+          "flipsInstead": 116,
+          "reopenFlipsInstead": 86,
+          "novelOpportunities": 222,
+          "novelMatchTaps": 143,
+          "novelFlipTaps": 30,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 12
+        },
+        "earlyClock": {
+          "opportunities": 5,
+          "matchTaps": 5,
+          "otherTaps": 0,
+          "flipsInstead": 0,
+          "reopenFlipsInstead": 0,
+          "novelOpportunities": 5,
+          "novelMatchTaps": 5,
+          "novelFlipTaps": 0,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 0
+        },
+        "planningClock": {
+          "opportunities": 103,
+          "matchTaps": 60,
+          "otherTaps": 43,
+          "flipsInstead": 22,
+          "reopenFlipsInstead": 9,
+          "novelOpportunities": 85,
+          "novelMatchTaps": 48,
+          "novelFlipTaps": 13,
+          "keysInstead": 0,
+          "clockInstead": 7,
+          "pairsInstead": 0
+        }
+      },
+      "recentGames": [
+        {
+          "lv": 104,
+          "at": 4,
+          "availableAt": 1792048695084,
+          "counts": {
+            "noClock": {
+              "opportunities": 14,
+              "matchTaps": 14,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 12,
+              "novelMatchTaps": 12,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 2,
+              "matchTaps": 2,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 105,
+          "at": 1,
+          "availableAt": 1792048887818,
+          "counts": {
+            "noClock": {
+              "opportunities": 43,
+              "matchTaps": 15,
+              "otherTaps": 28,
+              "flipsInstead": 23,
+              "reopenFlipsInstead": 16,
+              "novelOpportunities": 28,
+              "novelMatchTaps": 9,
+              "novelFlipTaps": 7,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 3
+            },
+            "earlyClock": {
+              "opportunities": 1,
+              "matchTaps": 1,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 13,
+              "matchTaps": 3,
+              "otherTaps": 10,
+              "flipsInstead": 6,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 13,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 5,
+              "keysInstead": 0,
+              "clockInstead": 1,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 106,
+          "at": 1,
+          "availableAt": 1792048900028,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 2,
+          "availableAt": 1792173662738,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 3,
+          "availableAt": 1792173734236,
+          "counts": {
+            "noClock": {
+              "opportunities": 4,
+              "matchTaps": 4,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 4,
+              "novelMatchTaps": 4,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 4,
+          "availableAt": 1792173864644,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 5,
+          "availableAt": 1792173968195,
+          "counts": {
+            "noClock": {
+              "opportunities": 6,
+              "matchTaps": 4,
+              "otherTaps": 2,
+              "flipsInstead": 2,
+              "reopenFlipsInstead": 2,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 6,
+          "availableAt": 1792174117933,
+          "counts": {
+            "noClock": {
+              "opportunities": 14,
+              "matchTaps": 12,
+              "otherTaps": 2,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 13,
+              "novelMatchTaps": 11,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 92,
+          "at": 6,
+          "availableAt": 1792174445352,
+          "counts": {
+            "noClock": {
+              "opportunities": 16,
+              "matchTaps": 11,
+              "otherTaps": 5,
+              "flipsInstead": 4,
+              "reopenFlipsInstead": 4,
+              "novelOpportunities": 16,
+              "novelMatchTaps": 11,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 2,
+              "matchTaps": 2,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 93,
+          "at": 2,
+          "availableAt": 1792174666589,
+          "counts": {
+            "noClock": {
+              "opportunities": 27,
+              "matchTaps": 14,
+              "otherTaps": 13,
+              "flipsInstead": 12,
+              "reopenFlipsInstead": 12,
+              "novelOpportunities": 22,
+              "novelMatchTaps": 9,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 2,
+              "matchTaps": 2,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 94,
+          "at": 2,
+          "availableAt": 1792174681004,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 94,
+          "at": 3,
+          "availableAt": 1792174831215,
+          "counts": {
+            "noClock": {
+              "opportunities": 30,
+              "matchTaps": 15,
+              "otherTaps": 15,
+              "flipsInstead": 13,
+              "reopenFlipsInstead": 11,
+              "novelOpportunities": 12,
+              "novelMatchTaps": 10,
+              "novelFlipTaps": 2,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 2
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 5,
+              "matchTaps": 1,
+              "otherTaps": 4,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 1,
+              "keysInstead": 0,
+              "clockInstead": 1,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 95,
+          "at": 3,
+          "availableAt": 1792175038350,
+          "counts": {
+            "noClock": {
+              "opportunities": 37,
+              "matchTaps": 18,
+              "otherTaps": 19,
+              "flipsInstead": 16,
+              "reopenFlipsInstead": 11,
+              "novelOpportunities": 17,
+              "novelMatchTaps": 9,
+              "novelFlipTaps": 5,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 2,
+              "matchTaps": 1,
+              "otherTaps": 1,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 96,
+          "at": 2,
+          "availableAt": 1792175070843,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 1,
+              "matchTaps": 1,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 12,
+              "matchTaps": 1,
+              "otherTaps": 11,
+              "flipsInstead": 8,
+              "reopenFlipsInstead": 3,
+              "novelOpportunities": 12,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 5,
+              "keysInstead": 0,
+              "clockInstead": 1,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 96,
+          "at": 3,
+          "availableAt": 1792175128771,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 1,
+              "matchTaps": 1,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 6,
+              "matchTaps": 2,
+              "otherTaps": 4,
+              "flipsInstead": 4,
+              "reopenFlipsInstead": 4,
+              "novelOpportunities": 6,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 96,
+          "at": 4,
+          "availableAt": 1792175156847,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 1,
+              "matchTaps": 1,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 96,
+          "at": 5,
+          "availableAt": 1792175303596,
+          "counts": {
+            "noClock": {
+              "opportunities": 24,
+              "matchTaps": 13,
+              "otherTaps": 11,
+              "flipsInstead": 9,
+              "reopenFlipsInstead": 9,
+              "novelOpportunities": 5,
+              "novelMatchTaps": 5,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 1,
+              "matchTaps": 1,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 4,
+              "matchTaps": 2,
+              "otherTaps": 2,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 4,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 97,
+          "at": 4,
+          "availableAt": 1792175465502,
+          "counts": {
+            "noClock": {
+              "opportunities": 37,
+              "matchTaps": 14,
+              "otherTaps": 23,
+              "flipsInstead": 20,
+              "reopenFlipsInstead": 12,
+              "novelOpportunities": 26,
+              "novelMatchTaps": 8,
+              "novelFlipTaps": 8,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 53,
+          "at": 2,
+          "availableAt": 1792189725201,
+          "counts": {
+            "noClock": {
+              "opportunities": 24,
+              "matchTaps": 17,
+              "otherTaps": 7,
+              "flipsInstead": 3,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 8,
+              "novelMatchTaps": 5,
+              "novelFlipTaps": 3,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 54,
+          "at": 3,
+          "availableAt": 1792189742911,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "games": 35,
+      "totals": {
+        "noClock": {
+          "opportunities": 270,
+          "matchTaps": 155,
+          "otherTaps": 115,
+          "flipsInstead": 95,
+          "reopenFlipsInstead": 68,
+          "novelOpportunities": 203,
+          "novelMatchTaps": 134,
+          "novelFlipTaps": 27,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 9
+        },
+        "earlyClock": {
+          "opportunities": 0,
+          "matchTaps": 0,
+          "otherTaps": 0,
+          "flipsInstead": 0,
+          "reopenFlipsInstead": 0,
+          "novelOpportunities": 0,
+          "novelMatchTaps": 0,
+          "novelFlipTaps": 0,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 0
+        },
+        "planningClock": {
+          "opportunities": 104,
+          "matchTaps": 96,
+          "otherTaps": 8,
+          "flipsInstead": 4,
+          "reopenFlipsInstead": 0,
+          "novelOpportunities": 57,
+          "novelMatchTaps": 50,
+          "novelFlipTaps": 4,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 0
+        }
+      },
+      "recentGames": [
+        {
+          "lv": 91,
+          "at": 4,
+          "availableAt": 1792129538107,
+          "counts": {
+            "noClock": {
+              "opportunities": 4,
+              "matchTaps": 4,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 4,
+              "novelMatchTaps": 4,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 5,
+          "availableAt": 1792129672420,
+          "counts": {
+            "noClock": {
+              "opportunities": 12,
+              "matchTaps": 7,
+              "otherTaps": 5,
+              "flipsInstead": 3,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 8,
+              "novelMatchTaps": 5,
+              "novelFlipTaps": 2,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 6,
+          "availableAt": 1792129750613,
+          "counts": {
+            "noClock": {
+              "opportunities": 4,
+              "matchTaps": 4,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 4,
+              "novelMatchTaps": 4,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 7,
+          "availableAt": 1792129832923,
+          "counts": {
+            "noClock": {
+              "opportunities": 6,
+              "matchTaps": 6,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 6,
+              "novelMatchTaps": 6,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 8,
+          "availableAt": 1792129876704,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 9,
+          "availableAt": 1792129934171,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 6,
+              "matchTaps": 3,
+              "otherTaps": 3,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 6,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 1,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 10,
+          "availableAt": 1792130008181,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 11,
+          "availableAt": 1792130013997,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 12,
+          "availableAt": 1792130058303,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 13,
+          "availableAt": 1792162703405,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 14,
+          "availableAt": 1792162769238,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 15,
+          "availableAt": 1792173078076,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 16,
+          "availableAt": 1792173207640,
+          "counts": {
+            "noClock": {
+              "opportunities": 6,
+              "matchTaps": 6,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 6,
+              "novelMatchTaps": 6,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 17,
+          "availableAt": 1792173254744,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 18,
+          "availableAt": 1792173359975,
+          "counts": {
+            "noClock": {
+              "opportunities": 4,
+              "matchTaps": 4,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 4,
+              "novelMatchTaps": 4,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 19,
+          "availableAt": 1792173469047,
+          "counts": {
+            "noClock": {
+              "opportunities": 4,
+              "matchTaps": 4,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 4,
+              "novelMatchTaps": 4,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 4,
+              "matchTaps": 2,
+              "otherTaps": 2,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 4,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 1,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 20,
+          "availableAt": 1792173507020,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 5,
+              "matchTaps": 3,
+              "otherTaps": 2,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 1,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 91,
+          "at": 21,
+          "availableAt": 1792173649391,
+          "counts": {
+            "noClock": {
+              "opportunities": 14,
+              "matchTaps": 14,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 9,
+              "novelMatchTaps": 9,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 2,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 92,
+          "at": 1,
+          "availableAt": 1792173759333,
+          "counts": {
+            "noClock": {
+              "opportunities": 3,
+              "matchTaps": 3,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 3,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 2,
+              "matchTaps": 2,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 1,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 92,
+          "at": 2,
+          "availableAt": 1792182590392,
+          "counts": {
+            "noClock": {
+              "opportunities": 9,
+              "matchTaps": 4,
+              "otherTaps": 5,
+              "flipsInstead": 4,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 7,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 3,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 2,
+              "matchTaps": 2,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        }
+      ]
+    },
+    "PUK": {
+      "games": 30,
+      "totals": {
+        "noClock": {
+          "opportunities": 545,
+          "matchTaps": 504,
+          "otherTaps": 41,
+          "flipsInstead": 14,
+          "reopenFlipsInstead": 7,
+          "novelOpportunities": 487,
+          "novelMatchTaps": 459,
+          "novelFlipTaps": 7,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 4
+        },
+        "earlyClock": {
+          "opportunities": 0,
+          "matchTaps": 0,
+          "otherTaps": 0,
+          "flipsInstead": 0,
+          "reopenFlipsInstead": 0,
+          "novelOpportunities": 0,
+          "novelMatchTaps": 0,
+          "novelFlipTaps": 0,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 0
+        },
+        "planningClock": {
+          "opportunities": 0,
+          "matchTaps": 0,
+          "otherTaps": 0,
+          "flipsInstead": 0,
+          "reopenFlipsInstead": 0,
+          "novelOpportunities": 0,
+          "novelMatchTaps": 0,
+          "novelFlipTaps": 0,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 0
+        }
+      },
+      "recentGames": [
+        {
+          "lv": 29,
+          "at": 1,
+          "availableAt": 1791975315014,
+          "counts": {
+            "noClock": {
+              "opportunities": 27,
+              "matchTaps": 26,
+              "otherTaps": 1,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 18,
+              "novelMatchTaps": 18,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 30,
+          "at": 1,
+          "availableAt": 1791979697437,
+          "counts": {
+            "noClock": {
+              "opportunities": 20,
+              "matchTaps": 20,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 17,
+              "novelMatchTaps": 17,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 30,
+          "at": 2,
+          "availableAt": 1791980088988,
+          "counts": {
+            "noClock": {
+              "opportunities": 26,
+              "matchTaps": 23,
+              "otherTaps": 3,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 21,
+              "novelMatchTaps": 20,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 31,
+          "at": 1,
+          "availableAt": 1791981752446,
+          "counts": {
+            "noClock": {
+              "opportunities": 19,
+              "matchTaps": 16,
+              "otherTaps": 3,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 10,
+              "novelMatchTaps": 8,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 31,
+          "at": 2,
+          "availableAt": 1791982173801,
+          "counts": {
+            "noClock": {
+              "opportunities": 26,
+              "matchTaps": 24,
+              "otherTaps": 2,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 23,
+              "novelMatchTaps": 21,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 35,
+          "at": 1,
+          "availableAt": 1791994314139,
+          "counts": {
+            "noClock": {
+              "opportunities": 28,
+              "matchTaps": 21,
+              "otherTaps": 7,
+              "flipsInstead": 3,
+              "reopenFlipsInstead": 2,
+              "novelOpportunities": 23,
+              "novelMatchTaps": 20,
+              "novelFlipTaps": 1,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 36,
+          "at": 1,
+          "availableAt": 1791994708933,
+          "counts": {
+            "noClock": {
+              "opportunities": 22,
+              "matchTaps": 22,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 22,
+              "novelMatchTaps": 22,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 48,
+          "at": 1,
+          "availableAt": 1792098036833,
+          "counts": {
+            "noClock": {
+              "opportunities": 29,
+              "matchTaps": 22,
+              "otherTaps": 7,
+              "flipsInstead": 3,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 22,
+              "novelMatchTaps": 18,
+              "novelFlipTaps": 2,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 49,
+          "at": 1,
+          "availableAt": 1792098410343,
+          "counts": {
+            "noClock": {
+              "opportunities": 11,
+              "matchTaps": 11,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 11,
+              "novelMatchTaps": 11,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 49,
+          "at": 2,
+          "availableAt": 1792137468821,
+          "counts": {
+            "noClock": {
+              "opportunities": 16,
+              "matchTaps": 16,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 15,
+              "novelMatchTaps": 15,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 49,
+          "at": 3,
+          "availableAt": 1792137863715,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 50,
+          "at": 1,
+          "availableAt": 1792138372677,
+          "counts": {
+            "noClock": {
+              "opportunities": 21,
+              "matchTaps": 18,
+              "otherTaps": 3,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 18,
+              "novelMatchTaps": 16,
+              "novelFlipTaps": 1,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 51,
+          "at": 1,
+          "availableAt": 1792138633616,
+          "counts": {
+            "noClock": {
+              "opportunities": 24,
+              "matchTaps": 17,
+              "otherTaps": 7,
+              "flipsInstead": 6,
+              "reopenFlipsInstead": 3,
+              "novelOpportunities": 23,
+              "novelMatchTaps": 16,
+              "novelFlipTaps": 3,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 52,
+          "at": 1,
+          "availableAt": 1792174483507,
+          "counts": {
+            "noClock": {
+              "opportunities": 15,
+              "matchTaps": 15,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 15,
+              "novelMatchTaps": 15,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 53,
+          "at": 1,
+          "availableAt": 1792174992535,
+          "counts": {
+            "noClock": {
+              "opportunities": 6,
+              "matchTaps": 6,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 6,
+              "novelMatchTaps": 6,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 53,
+          "at": 2,
+          "availableAt": 1792175277078,
+          "counts": {
+            "noClock": {
+              "opportunities": 5,
+              "matchTaps": 5,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 5,
+              "novelMatchTaps": 5,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 53,
+          "at": 3,
+          "availableAt": 1792175554129,
+          "counts": {
+            "noClock": {
+              "opportunities": 5,
+              "matchTaps": 5,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 5,
+              "novelMatchTaps": 5,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 53,
+          "at": 4,
+          "availableAt": 1792175572666,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 53,
+          "at": 5,
+          "availableAt": 1792175727798,
+          "counts": {
+            "noClock": {
+              "opportunities": 6,
+              "matchTaps": 6,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 6,
+              "novelMatchTaps": 6,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 53,
+          "at": 6,
+          "availableAt": 1792175734529,
+          "counts": {
+            "noClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        }
+      ]
+    },
+    "Gerda": {
+      "games": 173,
+      "totals": {
+        "noClock": {
+          "opportunities": 3966,
+          "matchTaps": 2855,
+          "otherTaps": 1111,
+          "flipsInstead": 626,
+          "reopenFlipsInstead": 386,
+          "novelOpportunities": 2988,
+          "novelMatchTaps": 2208,
+          "novelFlipTaps": 240,
+          "keysInstead": 3,
+          "clockInstead": 0,
+          "pairsInstead": 60
+        },
+        "earlyClock": {
+          "opportunities": 0,
+          "matchTaps": 0,
+          "otherTaps": 0,
+          "flipsInstead": 0,
+          "reopenFlipsInstead": 0,
+          "novelOpportunities": 0,
+          "novelMatchTaps": 0,
+          "novelFlipTaps": 0,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 0
+        },
+        "planningClock": {
+          "opportunities": 0,
+          "matchTaps": 0,
+          "otherTaps": 0,
+          "flipsInstead": 0,
+          "reopenFlipsInstead": 0,
+          "novelOpportunities": 0,
+          "novelMatchTaps": 0,
+          "novelFlipTaps": 0,
+          "keysInstead": 0,
+          "clockInstead": 0,
+          "pairsInstead": 0
+        }
+      },
+      "recentGames": [
+        {
+          "lv": 56,
+          "at": 2,
+          "availableAt": 1792170385331,
+          "counts": {
+            "noClock": {
+              "opportunities": 25,
+              "matchTaps": 24,
+              "otherTaps": 1,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 20,
+              "novelMatchTaps": 19,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 57,
+          "at": 1,
+          "availableAt": 1792170578228,
+          "counts": {
+            "noClock": {
+              "opportunities": 16,
+              "matchTaps": 10,
+              "otherTaps": 6,
+              "flipsInstead": 3,
+              "reopenFlipsInstead": 2,
+              "novelOpportunities": 15,
+              "novelMatchTaps": 9,
+              "novelFlipTaps": 1,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 57,
+          "at": 2,
+          "availableAt": 1792170853487,
+          "counts": {
+            "noClock": {
+              "opportunities": 30,
+              "matchTaps": 24,
+              "otherTaps": 6,
+              "flipsInstead": 4,
+              "reopenFlipsInstead": 2,
+              "novelOpportunities": 17,
+              "novelMatchTaps": 13,
+              "novelFlipTaps": 2,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 58,
+          "at": 1,
+          "availableAt": 1792171110535,
+          "counts": {
+            "noClock": {
+              "opportunities": 26,
+              "matchTaps": 24,
+              "otherTaps": 2,
+              "flipsInstead": 2,
+              "reopenFlipsInstead": 2,
+              "novelOpportunities": 11,
+              "novelMatchTaps": 9,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 59,
+          "at": 1,
+          "availableAt": 1792171351285,
+          "counts": {
+            "noClock": {
+              "opportunities": 39,
+              "matchTaps": 8,
+              "otherTaps": 31,
+              "flipsInstead": 27,
+              "reopenFlipsInstead": 21,
+              "novelOpportunities": 23,
+              "novelMatchTaps": 5,
+              "novelFlipTaps": 6,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 59,
+          "at": 2,
+          "availableAt": 1792171415056,
+          "counts": {
+            "noClock": {
+              "opportunities": 31,
+              "matchTaps": 3,
+              "otherTaps": 28,
+              "flipsInstead": 23,
+              "reopenFlipsInstead": 16,
+              "novelOpportunities": 31,
+              "novelMatchTaps": 3,
+              "novelFlipTaps": 7,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 59,
+          "at": 3,
+          "availableAt": 1792171629657,
+          "counts": {
+            "noClock": {
+              "opportunities": 24,
+              "matchTaps": 23,
+              "otherTaps": 1,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 16,
+              "novelMatchTaps": 16,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 60,
+          "at": 1,
+          "availableAt": 1792171830971,
+          "counts": {
+            "noClock": {
+              "opportunities": 13,
+              "matchTaps": 13,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 10,
+              "novelMatchTaps": 10,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 60,
+          "at": 2,
+          "availableAt": 1792172069515,
+          "counts": {
+            "noClock": {
+              "opportunities": 68,
+              "matchTaps": 32,
+              "otherTaps": 36,
+              "flipsInstead": 27,
+              "reopenFlipsInstead": 17,
+              "novelOpportunities": 55,
+              "novelMatchTaps": 28,
+              "novelFlipTaps": 10,
+              "keysInstead": 1,
+              "clockInstead": 0,
+              "pairsInstead": 1
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 61,
+          "at": 1,
+          "availableAt": 1792172216352,
+          "counts": {
+            "noClock": {
+              "opportunities": 17,
+              "matchTaps": 16,
+              "otherTaps": 1,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 17,
+              "novelMatchTaps": 16,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 61,
+          "at": 2,
+          "availableAt": 1792172621579,
+          "counts": {
+            "noClock": {
+              "opportunities": 13,
+              "matchTaps": 10,
+              "otherTaps": 3,
+              "flipsInstead": 3,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 10,
+              "novelMatchTaps": 7,
+              "novelFlipTaps": 2,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 61,
+          "at": 3,
+          "availableAt": 1792172826684,
+          "counts": {
+            "noClock": {
+              "opportunities": 62,
+              "matchTaps": 27,
+              "otherTaps": 35,
+              "flipsInstead": 29,
+              "reopenFlipsInstead": 19,
+              "novelOpportunities": 51,
+              "novelMatchTaps": 21,
+              "novelFlipTaps": 10,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 1,
+          "availableAt": 1792173096209,
+          "counts": {
+            "noClock": {
+              "opportunities": 16,
+              "matchTaps": 15,
+              "otherTaps": 1,
+              "flipsInstead": 1,
+              "reopenFlipsInstead": 1,
+              "novelOpportunities": 9,
+              "novelMatchTaps": 9,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 2,
+          "availableAt": 1792173293511,
+          "counts": {
+            "noClock": {
+              "opportunities": 13,
+              "matchTaps": 13,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 13,
+              "novelMatchTaps": 13,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 3,
+          "availableAt": 1792173324619,
+          "counts": {
+            "noClock": {
+              "opportunities": 2,
+              "matchTaps": 1,
+              "otherTaps": 1,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 2,
+              "novelMatchTaps": 1,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 4,
+          "availableAt": 1792173476393,
+          "counts": {
+            "noClock": {
+              "opportunities": 26,
+              "matchTaps": 8,
+              "otherTaps": 18,
+              "flipsInstead": 15,
+              "reopenFlipsInstead": 8,
+              "novelOpportunities": 26,
+              "novelMatchTaps": 8,
+              "novelFlipTaps": 7,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 5,
+          "availableAt": 1792173645669,
+          "counts": {
+            "noClock": {
+              "opportunities": 10,
+              "matchTaps": 10,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 7,
+              "novelMatchTaps": 7,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 6,
+          "availableAt": 1792173702347,
+          "counts": {
+            "noClock": {
+              "opportunities": 7,
+              "matchTaps": 6,
+              "otherTaps": 1,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 7,
+              "novelMatchTaps": 6,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 7,
+          "availableAt": 1792173905629,
+          "counts": {
+            "noClock": {
+              "opportunities": 103,
+              "matchTaps": 13,
+              "otherTaps": 90,
+              "flipsInstead": 76,
+              "reopenFlipsInstead": 62,
+              "novelOpportunities": 47,
+              "novelMatchTaps": 8,
+              "novelFlipTaps": 14,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 3
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        },
+        {
+          "lv": 62,
+          "at": 8,
+          "availableAt": 1792174044325,
+          "counts": {
+            "noClock": {
+              "opportunities": 10,
+              "matchTaps": 10,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 10,
+              "novelMatchTaps": 10,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "earlyClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            },
+            "planningClock": {
+              "opportunities": 0,
+              "matchTaps": 0,
+              "otherTaps": 0,
+              "flipsInstead": 0,
+              "reopenFlipsInstead": 0,
+              "novelOpportunities": 0,
+              "novelMatchTaps": 0,
+              "novelFlipTaps": 0,
+              "keysInstead": 0,
+              "clockInstead": 0,
+              "pairsInstead": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "note": "Accepted human taps while an immediately visible tray match was takeable. Other taps do not prove forgetting: deliberate key, pair or clock planning can also explain them. Picture knowledge is limited to face-up or currently open tiles."
+}

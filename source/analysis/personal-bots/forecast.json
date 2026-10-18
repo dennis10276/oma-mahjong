@@ -1,0 +1,672 @@
+{
+  "made": "2026-10-16T20:11:28.615Z",
+  "version": "1.55",
+  "config": {
+    "halfLife": 20,
+    "pull": 1,
+    "slope": 0.5,
+    "boardPull": 1,
+    "care": 2,
+    "memory": [
+      0.75,
+      0.5,
+      0.75
+    ]
+  },
+  "runs": 1024,
+  "published": false,
+  "players": {
+    "Dennisisdebeste": {
+      "target": {
+        "lv": 53,
+        "at": 2,
+        "version": "1.55",
+        "observedAt": 1792179552342,
+        "active": true,
+        "assisted": false
+      },
+      "habitsFrom": "2026-10-16T19:42:47.206Z",
+      "tries": 120,
+      "habits": {
+        "t0p-": {
+          "flip": 0,
+          "pair": 0.7952,
+          "single": 0.2048,
+          "fatal": 0
+        },
+        "t0p": {
+          "flip": 0.4506,
+          "pair": 0.4246,
+          "single": 0.1248,
+          "fatal": 0
+        },
+        "t1p": {
+          "flip": 0.5645,
+          "pair": 0.3061,
+          "single": 0.1294,
+          "fatal": 0
+        },
+        "t2p": {
+          "flip": 0.5521,
+          "pair": 0.3954,
+          "single": 0.0525,
+          "fatal": 0
+        },
+        "t3n": {
+          "flip": 0.8014,
+          "pair": 0,
+          "single": 0,
+          "fatal": 0.1986
+        },
+        "t3p": {
+          "flip": 0.7858,
+          "pair": 0.1873,
+          "single": 0,
+          "fatal": 0.0269
+        },
+        "t1p-": {
+          "flip": 0,
+          "pair": 0.8378,
+          "single": 0.1622,
+          "fatal": 0
+        },
+        "t2p-": {
+          "flip": 0,
+          "pair": 0.7211,
+          "single": 0.2789,
+          "fatal": 0
+        },
+        "t1n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t0n": {
+          "flip": 0.8893,
+          "pair": 0,
+          "single": 0.1107,
+          "fatal": 0
+        },
+        "t0n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t1n": {
+          "flip": 0.8875,
+          "pair": 0,
+          "single": 0.1125,
+          "fatal": 0
+        },
+        "t2n": {
+          "flip": 0.8647,
+          "pair": 0,
+          "single": 0.1353,
+          "fatal": 0
+        },
+        "t2n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t3p-": {
+          "flip": 0,
+          "pair": 0.9074,
+          "single": 0,
+          "fatal": 0.0926
+        },
+        "t3n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 0,
+          "fatal": 1
+        }
+      },
+      "levels": {
+        "53": {
+          "fromAttempt": 2,
+          "next": 0.30828526966779174,
+          "within2": 0.5264097550934912,
+          "within4": 0.7751261834448483,
+          "rawConditional": [
+            0.06619144602851323,
+            0.08396946564885496,
+            0.05714285714285714,
+            0.09090909090909091
+          ],
+          "extrapolated": false,
+          "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 982,
+          "earlierTriesOnBoard": 28
+        },
+        "54": {
+          "fromAttempt": 1,
+          "next": 0.7446363070076164,
+          "within2": 0.9410902991610454,
+          "within4": 0.9968649667514783,
+          "rawConditional": [
+            0.9609375,
+            0.95,
+            1,
+            null
+          ],
+          "extrapolated": false,
+          "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 2
+        },
+        "55": {
+          "fromAttempt": 1,
+          "next": 0.7471111737278464,
+          "within2": 0.9422451644489657,
+          "within4": 0.9969876476217745,
+          "rawConditional": [
+            0.9794921875,
+            1,
+            null,
+            null
+          ],
+          "extrapolated": false,
+          "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 4
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "target": {
+        "lv": 92,
+        "at": 2,
+        "version": "1.55",
+        "observedAt": 1792173760345,
+        "active": true,
+        "assisted": false
+      },
+      "habitsFrom": "2026-10-16T18:04:07.303Z",
+      "tries": 160,
+      "habits": {
+        "t0p-": {
+          "flip": 0,
+          "pair": 0.7261,
+          "single": 0.2739,
+          "fatal": 0
+        },
+        "t0p": {
+          "flip": 0.3157,
+          "pair": 0.5136,
+          "single": 0.1707,
+          "fatal": 0
+        },
+        "t1p": {
+          "flip": 0.5119,
+          "pair": 0.3519,
+          "single": 0.1362,
+          "fatal": 0
+        },
+        "t2p": {
+          "flip": 0.528,
+          "pair": 0.4044,
+          "single": 0.0676,
+          "fatal": 0
+        },
+        "t3n": {
+          "flip": 0.8479,
+          "pair": 0,
+          "single": 0,
+          "fatal": 0.1521
+        },
+        "t3p": {
+          "flip": 0.4752,
+          "pair": 0.4075,
+          "single": 0,
+          "fatal": 0.1173
+        },
+        "t1p-": {
+          "flip": 0,
+          "pair": 0.5912,
+          "single": 0.4088,
+          "fatal": 0
+        },
+        "t2p-": {
+          "flip": 0,
+          "pair": 0.767,
+          "single": 0.233,
+          "fatal": 0
+        },
+        "t1n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t0n": {
+          "flip": 0.8694,
+          "pair": 0,
+          "single": 0.1306,
+          "fatal": 0
+        },
+        "t0n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t1n": {
+          "flip": 0.8379,
+          "pair": 0,
+          "single": 0.1621,
+          "fatal": 0
+        },
+        "t2n": {
+          "flip": 0.8271,
+          "pair": 0,
+          "single": 0.1729,
+          "fatal": 0
+        },
+        "t2n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t3p-": {
+          "flip": 0,
+          "pair": 0.6269,
+          "single": 0,
+          "fatal": 0.3731
+        },
+        "t3n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 0,
+          "fatal": 1
+        }
+      },
+      "levels": {
+        "92": {
+          "fromAttempt": 2,
+          "next": 0.2364142995756475,
+          "within2": 0.40046324429546976,
+          "within4": 0.6207593602273991,
+          "rawConditional": [
+            0.8679245283018868,
+            0.7142857142857143,
+            0,
+            1
+          ],
+          "extrapolated": false,
+          "board": "b036311749c913edcd2c7c3f3e468285f1b5ea36f67b76384b7b8648c8d775ce",
+          "source": "designed",
+          "simulatedPathsReachingAttempt": 53,
+          "earlierTriesOnBoard": 3
+        },
+        "93": {
+          "fromAttempt": 1,
+          "next": 0.41098341325766263,
+          "within2": 0.5674072690879837,
+          "within4": 0.7681205166391801,
+          "rawConditional": [
+            0.048828125,
+            0.0944558521560575,
+            0.0963718820861678,
+            0.10915934755332497
+          ],
+          "extrapolated": false,
+          "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+          "source": "designed",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 3
+        },
+        "94": {
+          "fromAttempt": 1,
+          "next": 0.3380839123548618,
+          "within2": 0.4726088735897277,
+          "within4": 0.666915521375061,
+          "rawConditional": [
+            0.2763671875,
+            0.3616734143049933,
+            0.39323467230443976,
+            0.37630662020905925
+          ],
+          "extrapolated": false,
+          "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+          "source": "designed",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 3
+        }
+      }
+    },
+    "PUK": {
+      "target": {
+        "lv": 53,
+        "at": 6,
+        "version": "1.55",
+        "observedAt": 1792175729574,
+        "active": true,
+        "assisted": false
+      },
+      "habitsFrom": "2026-10-16T18:35:27.798Z",
+      "tries": 61,
+      "habits": {
+        "t0p-": {
+          "flip": 0,
+          "pair": 0.8862,
+          "single": 0.1138,
+          "fatal": 0
+        },
+        "t0p": {
+          "flip": 0.2138,
+          "pair": 0.7106,
+          "single": 0.0756,
+          "fatal": 0
+        },
+        "t1p": {
+          "flip": 0.2694,
+          "pair": 0.6403,
+          "single": 0.0903,
+          "fatal": 0
+        },
+        "t2p": {
+          "flip": 0.3139,
+          "pair": 0.6146,
+          "single": 0.0716,
+          "fatal": 0
+        },
+        "t3n": {
+          "flip": 0.7251,
+          "pair": 0,
+          "single": 0,
+          "fatal": 0.2749
+        },
+        "t3p": {
+          "flip": 0.4181,
+          "pair": 0.2428,
+          "single": 0,
+          "fatal": 0.3392
+        },
+        "t1p-": {
+          "flip": 0,
+          "pair": 0.7908,
+          "single": 0.2092,
+          "fatal": 0
+        },
+        "t2p-": {
+          "flip": 0,
+          "pair": 0.8578,
+          "single": 0.1422,
+          "fatal": 0
+        },
+        "t1n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t0n": {
+          "flip": 0.7961,
+          "pair": 0,
+          "single": 0.2039,
+          "fatal": 0
+        },
+        "t0n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t1n": {
+          "flip": 0.768,
+          "pair": 0,
+          "single": 0.232,
+          "fatal": 0
+        },
+        "t2n": {
+          "flip": 0.7503,
+          "pair": 0,
+          "single": 0.2497,
+          "fatal": 0
+        },
+        "t2n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t3p-": {
+          "flip": 0,
+          "pair": 0.7003,
+          "single": 0,
+          "fatal": 0.2997
+        },
+        "t3n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 0,
+          "fatal": 1
+        }
+      },
+      "levels": {
+        "53": {
+          "fromAttempt": 6,
+          "next": 0.2231832004637805,
+          "within2": 0.396555659958305,
+          "within4": 0.6371647102686047,
+          "rawConditional": [
+            0.049338146811071,
+            0.03291139240506329,
+            0.051047120418848166,
+            0.05517241379310345
+          ],
+          "extrapolated": false,
+          "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 831,
+          "earlierTriesOnBoard": 28
+        },
+        "54": {
+          "fromAttempt": 1,
+          "next": 0.6844289412850982,
+          "within2": 0.8939033678579092,
+          "within4": 0.9889345179184731,
+          "rawConditional": [
+            0.935546875,
+            0.8787878787878788,
+            0.875,
+            1
+          ],
+          "extrapolated": false,
+          "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 2
+        },
+        "55": {
+          "fromAttempt": 1,
+          "next": 0.6881443910235643,
+          "within2": 0.8905493380002913,
+          "within4": 0.9880661807887462,
+          "rawConditional": [
+            0.9375,
+            0.796875,
+            0.7692307692307693,
+            1
+          ],
+          "extrapolated": false,
+          "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 4
+        }
+      }
+    },
+    "Gerda": {
+      "target": {
+        "lv": 62,
+        "at": 9,
+        "version": "1.55",
+        "observedAt": 1792174044326,
+        "active": false,
+        "assisted": false
+      },
+      "habitsFrom": "2026-10-16T18:07:24.325Z",
+      "tries": 146,
+      "habits": {
+        "t0p-": {
+          "flip": 0,
+          "pair": 0.8308,
+          "single": 0.1692,
+          "fatal": 0
+        },
+        "t0p": {
+          "flip": 0.4216,
+          "pair": 0.4716,
+          "single": 0.1068,
+          "fatal": 0
+        },
+        "t1p": {
+          "flip": 0.4735,
+          "pair": 0.4345,
+          "single": 0.092,
+          "fatal": 0
+        },
+        "t2p": {
+          "flip": 0.4403,
+          "pair": 0.4975,
+          "single": 0.0622,
+          "fatal": 0
+        },
+        "t3n": {
+          "flip": 0.5745,
+          "pair": 0,
+          "single": 0,
+          "fatal": 0.4255
+        },
+        "t3p": {
+          "flip": 0.5703,
+          "pair": 0.2501,
+          "single": 0,
+          "fatal": 0.1796
+        },
+        "t1p-": {
+          "flip": 0,
+          "pair": 0.7129,
+          "single": 0.2871,
+          "fatal": 0
+        },
+        "t2p-": {
+          "flip": 0,
+          "pair": 0.757,
+          "single": 0.243,
+          "fatal": 0
+        },
+        "t1n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t0n": {
+          "flip": 0.8544,
+          "pair": 0,
+          "single": 0.1456,
+          "fatal": 0
+        },
+        "t0n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t1n": {
+          "flip": 0.8484,
+          "pair": 0,
+          "single": 0.1516,
+          "fatal": 0
+        },
+        "t2n": {
+          "flip": 0.7948,
+          "pair": 0,
+          "single": 0.2052,
+          "fatal": 0
+        },
+        "t2n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 1,
+          "fatal": 0
+        },
+        "t3p-": {
+          "flip": 0,
+          "pair": 0.4497,
+          "single": 0,
+          "fatal": 0.5503
+        },
+        "t3n-": {
+          "flip": 0,
+          "pair": 0,
+          "single": 0,
+          "fatal": 1
+        }
+      },
+      "levels": {
+        "62": {
+          "fromAttempt": 9,
+          "next": 0.15482925941408177,
+          "within2": 0.3207600967415061,
+          "within4": 0.5612868347830262,
+          "rawConditional": [
+            0.6666666666666666,
+            1,
+            null,
+            null
+          ],
+          "extrapolated": false,
+          "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 3,
+          "earlierTriesOnBoard": 15
+        },
+        "63": {
+          "fromAttempt": 1,
+          "next": 0.48036388978154043,
+          "within2": 0.701430007469273,
+          "within4": 0.9002440518921925,
+          "rawConditional": [
+            0.9521484375,
+            0.8571428571428571,
+            0.5714285714285714,
+            1
+          ],
+          "extrapolated": false,
+          "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 2
+        },
+        "64": {
+          "fromAttempt": 1,
+          "next": 0.42108273268430063,
+          "within2": 0.6579682287330653,
+          "within4": 0.8926689887620735,
+          "rawConditional": [
+            0.7587890625,
+            0.7935222672064778,
+            0.8431372549019608,
+            1
+          ],
+          "extrapolated": false,
+          "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+          "source": "ready-made",
+          "simulatedPathsReachingAttempt": 1024,
+          "earlierTriesOnBoard": 1
+        }
+      }
+    }
+  }
+}

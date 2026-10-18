@@ -1,0 +1,215 @@
+{
+  "evidence": "prospective-frozen",
+  "attemptMetric": "episode-relative",
+  "scoringRule": {
+    "id": "attempt-tolerance-and-8plus-v2",
+    "toleranceByActualAttempt": {
+      "1-3": 0,
+      "4-5": 1,
+      "6+": 2
+    },
+    "sharedSuccessBucketMinimum": 8,
+    "combination": "within-tolerance-or-both-8plus"
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "n": 0,
+      "correct": 0,
+      "accuracy": null,
+      "wilson95": null
+    },
+    "Mrs. Doubtfire": {
+      "n": 3,
+      "correct": 0,
+      "accuracy": 0.0,
+      "exactAccuracy": 0.0,
+      "wilson95": [
+        0.0,
+        0.5615060804490177
+      ],
+      "meanAbsoluteError": 2.0
+    },
+    "PUK": {
+      "n": 0,
+      "correct": 0,
+      "accuracy": null,
+      "wilson95": null
+    },
+    "Gerda": {
+      "n": 3,
+      "correct": 1,
+      "accuracy": 0.3333333333333333,
+      "exactAccuracy": 0.3333333333333333,
+      "wilson95": [
+        0.0614903152761605,
+        0.7923450448735121
+      ],
+      "meanAbsoluteError": 0.6666666666666666
+    }
+  },
+  "scored": [
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 93,
+      "version": "1.55",
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "start": 1792218827820,
+      "end": 1792219006623,
+      "wonOn": 2,
+      "firstAttempt": 1,
+      "loggedFirstAttempt": 1,
+      "loggedWonOn": 2,
+      "campaignAids": [
+        "310d321c-a36c-49bb-92c4-7850414e3e38",
+        "86998407-4cfa-4271-b0f2-d6a7cb921f5f"
+      ],
+      "openingRecorded": true,
+      "frozenAt": 1792183842368,
+      "predictedAttempt": 1,
+      "correct": false
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 94,
+      "version": "1.55",
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "start": 1792219008645,
+      "end": 1792219375551,
+      "wonOn": 5,
+      "firstAttempt": 1,
+      "loggedFirstAttempt": 1,
+      "loggedWonOn": 5,
+      "campaignAids": [
+        "6a159ce0-33ec-4bd7-9f01-bdb0a7fd1035",
+        "179d3bca-ee3a-4bb4-9b63-4379fe4e0267",
+        "674c133d-8038-4e99-834c-6dd7a9cb2e43",
+        "e0372a0d-4ea5-4b63-8706-b4b39db77fa2",
+        "f9aea09d-738b-42e1-9e7b-3191bf682aaf"
+      ],
+      "openingRecorded": true,
+      "frozenAt": 1792183842368,
+      "predictedAttempt": 1,
+      "correct": false
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 95,
+      "version": "1.55",
+      "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+      "start": 1792219379250,
+      "end": 1792219620219,
+      "wonOn": 2,
+      "firstAttempt": 1,
+      "loggedFirstAttempt": 1,
+      "loggedWonOn": 2,
+      "campaignAids": [
+        "c046e698-f3d8-4588-bc9a-63003f8607ee",
+        "b8fb799f-8dac-40a0-b776-473e5228c920"
+      ],
+      "openingRecorded": true,
+      "frozenAt": 1792183842368,
+      "predictedAttempt": 1,
+      "correct": false
+    },
+    {
+      "name": "Gerda",
+      "lv": 63,
+      "version": "1.58",
+      "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+      "start": 1792307673823,
+      "end": 1792308108310,
+      "wonOn": 2,
+      "firstAttempt": 1,
+      "loggedFirstAttempt": 1,
+      "loggedWonOn": 2,
+      "campaignAids": [
+        "399c09de-27f9-4db1-ab07-64baca16e7ad",
+        "0a1eedc1-e50e-4797-8d99-19917487ff80"
+      ],
+      "openingRecorded": true,
+      "frozenAt": 1792183842368,
+      "predictedAttempt": 1,
+      "correct": false
+    },
+    {
+      "name": "Gerda",
+      "lv": 64,
+      "version": "1.58",
+      "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+      "start": 1792308111778,
+      "end": 1792308301483,
+      "wonOn": 1,
+      "firstAttempt": 1,
+      "loggedFirstAttempt": 1,
+      "loggedWonOn": 1,
+      "campaignAids": [
+        "1f14ca02-21f7-423f-a9a6-f55b53b42fdd"
+      ],
+      "openingRecorded": true,
+      "frozenAt": 1792183842368,
+      "predictedAttempt": 1,
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 65,
+      "version": "1.58",
+      "board": "e9413bac05ebb393ab989d27542153a30200c748c0a05d52be7dd0267727649a",
+      "start": 1792308310641,
+      "end": 1792308557608,
+      "wonOn": 2,
+      "firstAttempt": 1,
+      "loggedFirstAttempt": 1,
+      "loggedWonOn": 2,
+      "campaignAids": [
+        "476e36dc-27e7-410a-acd9-1553d3928426",
+        "d374488d-35fa-4520-8067-c8ba4185d652"
+      ],
+      "openingRecorded": true,
+      "frozenAt": 1792183842368,
+      "predictedAttempt": 1,
+      "correct": false
+    }
+  ],
+  "cohortStartsAfter": 1792183842368,
+  "cohortRule": "First 20 opened episodes per person after the first freeze, including unfinished or unforecasted episodes.",
+  "cohort": {
+    "Dennisisdebeste": {
+      "opened": 20,
+      "completed": 18,
+      "eligibleFrozenForecasts": 1,
+      "correct": 0,
+      "accuracy": null,
+      "pending": 2,
+      "missingForecastsOrOpening": 19
+    },
+    "Mrs. Doubtfire": {
+      "opened": 11,
+      "completed": 11,
+      "eligibleFrozenForecasts": 3,
+      "correct": 0,
+      "accuracy": null,
+      "pending": 0,
+      "missingForecastsOrOpening": 8
+    },
+    "PUK": {
+      "opened": 0,
+      "completed": 0,
+      "eligibleFrozenForecasts": 0,
+      "correct": 0,
+      "accuracy": null,
+      "pending": 0,
+      "missingForecastsOrOpening": 0
+    },
+    "Gerda": {
+      "opened": 6,
+      "completed": 5,
+      "eligibleFrozenForecasts": 3,
+      "correct": 1,
+      "accuracy": null,
+      "pending": 1,
+      "missingForecastsOrOpening": 3
+    }
+  },
+  "targetMet": false
+}

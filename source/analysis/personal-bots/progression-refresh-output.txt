@@ -1,0 +1,5 @@
+New progression targets: { Dennisisdebeste: 128, 'Mrs. Doubtfire': 104, PUK: 54, Gerda: 63 }
+Progression worker 0: 4/6
+Progression worker 1: 4/5
+Progression worker 2: 4/5
+Saved 16 new progression inputs; existing numeric forecasts are never replaced.

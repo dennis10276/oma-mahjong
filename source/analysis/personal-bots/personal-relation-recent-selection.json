@@ -1,0 +1,4352 @@
+{
+  "made": "2026-10-17T16:16:23.830756+00:00",
+  "evidence": "historical-exploratory-prequential",
+  "targetMet": false,
+  "measurementFingerprint": "ed020b8d249da7e16d3485147c8ba295f56e869fe6d37361ed3a890e797a6a67",
+  "inputSha256": {
+    "data": "6f7bb0c17a8aa737f21704d47669ec9058b090d036e9f356801530abe02a98c4",
+    "scored": "459529561973523336c89ee10c936eec0d821e254d5472c01d5fc35fc94bef18",
+    "evaluation": "cd827fbde750abfd61d023819a730a559f1429b9044c21593d024b087ed8f7f1"
+  },
+  "sourceSha256": "de8abcdc6281c9d193225de735d52e9859507dc4fa28d5531af5e89886cb0090",
+  "players": {
+    "Dennisisdebeste": {
+      "fixedBeforeTest": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.05
+      },
+      "recent20": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.05
+      },
+      "mechanicsRecent20": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.05
+      }
+    },
+    "Mrs. Doubtfire": {
+      "fixedBeforeTest": {
+        "n": 20,
+        "correct": 7,
+        "accuracy": 0.35,
+        "exactAccuracy": 0.35,
+        "wilson95": [
+          0.18118954786794464,
+          0.5671494897805354
+        ],
+        "meanAbsoluteError": 3.75
+      },
+      "recent20": {
+        "n": 20,
+        "correct": 3,
+        "accuracy": 0.15,
+        "exactAccuracy": 0.15,
+        "wilson95": [
+          0.05236779195949584,
+          0.36042329588695743
+        ],
+        "meanAbsoluteError": 5.3
+      },
+      "mechanicsRecent20": {
+        "n": 20,
+        "correct": 5,
+        "accuracy": 0.25,
+        "exactAccuracy": 0.25,
+        "wilson95": [
+          0.11186005278940309,
+          0.4687050099580636
+        ],
+        "meanAbsoluteError": 4.85
+      }
+    },
+    "PUK": {
+      "fixedBeforeTest": {
+        "n": 20,
+        "correct": 13,
+        "accuracy": 0.65,
+        "exactAccuracy": 0.65,
+        "wilson95": [
+          0.43285051021946463,
+          0.8188104521320554
+        ],
+        "meanAbsoluteError": 1.2
+      },
+      "recent20": {
+        "n": 20,
+        "correct": 13,
+        "accuracy": 0.65,
+        "exactAccuracy": 0.65,
+        "wilson95": [
+          0.43285051021946463,
+          0.8188104521320554
+        ],
+        "meanAbsoluteError": 1.2
+      },
+      "mechanicsRecent20": {
+        "n": 20,
+        "correct": 13,
+        "accuracy": 0.65,
+        "exactAccuracy": 0.65,
+        "wilson95": [
+          0.43285051021946463,
+          0.8188104521320554
+        ],
+        "meanAbsoluteError": 1.2
+      }
+    },
+    "Gerda": {
+      "fixedBeforeTest": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.45
+      },
+      "recent20": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.4
+      },
+      "mechanicsRecent20": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.4
+      }
+    }
+  },
+  "heldOut": {
+    "fixedBeforeTest": {
+      "n": 80,
+      "correct": 38,
+      "accuracy": 0.475,
+      "exactAccuracy": 0.475,
+      "wilson95": [
+        0.3692454986165162,
+        0.5830454881967124
+      ],
+      "meanAbsoluteError": 1.8625
+    },
+    "recent20": {
+      "n": 80,
+      "correct": 34,
+      "accuracy": 0.425,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.32256388014807325,
+        0.534309080291613
+      ],
+      "meanAbsoluteError": 2.2375
+    },
+    "mechanicsRecent20": {
+      "n": 80,
+      "correct": 36,
+      "accuracy": 0.45,
+      "exactAccuracy": 0.4375,
+      "wilson95": [
+        0.3457751037437976,
+        0.5588068698826599
+      ],
+      "meanAbsoluteError": 2.125
+    }
+  },
+  "rows": [
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 77,
+      "start": 1791827279104,
+      "end": 1791827459865,
+      "wonOn": 1,
+      "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "profileForest",
+        "mechanicsRecent20": "ownActorSmoothed"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791815937094,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.572504990936169,
+            "ownMode": 0.572504990936169,
+            "ownActorSmoothed": 0.6056864525294614,
+            "personalMixture": 0.6056864525294614,
+            "personalBest": 0.6056864525294614,
+            "mixtureCalibrated": 0.6056864525294614,
+            "controlForest": 0.5507485897264315,
+            "profileForest": 0.6214353458012197,
+            "recallProfileForest": 0.6214353458012197
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791815937094,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5370491368532362,
+            "ownMode": 0.5370491368532362,
+            "ownActorSmoothed": 0.5524039373300059,
+            "personalMixture": 0.5524039373300059,
+            "personalBest": 0.5524039373300059,
+            "mixtureCalibrated": 0.5524039373300059,
+            "controlForest": 0.5062809391939949,
+            "profileForest": 0.5501824234649241,
+            "recallProfileForest": 0.5501824234649241
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 78,
+      "start": 1791827465217,
+      "end": 1791827659313,
+      "wonOn": 1,
+      "board": "b8515e26acc7b671fdfefea9f4e3a3a75975ba73b8b297a2a24f59af022f2cee",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 3,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "profileForest",
+        "mechanicsRecent20": "ownActorSmoothed"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791827459865,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6149996669156068,
+            "ownMode": 0.6149996669156068,
+            "ownActorSmoothed": 0.64595906528956,
+            "personalMixture": 0.64595906528956,
+            "personalBest": 0.64595906528956,
+            "mixtureCalibrated": 0.64595906528956,
+            "controlForest": 0.5947002268098104,
+            "profileForest": 0.6606533022923028,
+            "recallProfileForest": 0.6606533022923028
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 12,
+          "availableThrough": 1791815000046,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.455739880848141,
+            "ownMode": 0.455739880848141,
+            "ownActorSmoothed": 0.4972464455625073,
+            "personalMixture": 0.4972464455625073,
+            "personalBest": 0.4972464455625073,
+            "mixtureCalibrated": 0.4972464455625073,
+            "controlForest": 0.455739880848141,
+            "profileForest": 0.455739880848141,
+            "recallProfileForest": 0.455739880848141
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 79,
+      "start": 1791827663099,
+      "end": 1791828094335,
+      "wonOn": 3,
+      "board": "b034c4d69055af5729b6ec99160de9d4fd58df051610bcc81d6276ef3ce273f5",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 5,
+        "mechanicsRecent20": 5
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "ownActorSmoothed",
+        "mechanicsRecent20": "ownActorSmoothed"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791827659313,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6357085542406553,
+            "ownMode": 0.6357085542406553,
+            "ownActorSmoothed": 0.6835347416501184,
+            "personalMixture": 0.6835347416501184,
+            "personalBest": 0.6835347416501184,
+            "mixtureCalibrated": 0.6835347416501184,
+            "controlForest": 0.6357085542406553,
+            "profileForest": 0.6214847602454038,
+            "recallProfileForest": 0.6214847602454038
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791827459865,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5819181853131157,
+            "ownMode": 0.5819181853131157,
+            "ownActorSmoothed": 0.596244720736407,
+            "personalMixture": 0.596244720736407,
+            "personalBest": 0.596244720736407,
+            "mixtureCalibrated": 0.596244720736407,
+            "controlForest": 0.5532104418069178,
+            "profileForest": 0.5941719750091291,
+            "recallProfileForest": 0.5941719750091291
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 80,
+      "start": 1791828103285,
+      "end": 1791829213699,
+      "wonOn": 12,
+      "board": "cb0dd1bdca577d926a5f3396ed049b76860561ad5e768ef47bf88f6cd7e7b096",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "mixtureCalibrated",
+        "mechanicsRecent20": "mixtureCalibrated"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791828094335,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5792704400192099,
+            "ownMode": 0.5792704400192099,
+            "ownActorSmoothed": 0.6238938507316611,
+            "personalMixture": 0.6238938507316611,
+            "personalBest": 0.6238938507316611,
+            "mixtureCalibrated": 0.6996540400453954,
+            "controlForest": 0.5792704400192099,
+            "profileForest": 0.5659991709568171,
+            "recallProfileForest": 0.5659991709568171
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791828094335,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5792704400192099,
+            "ownMode": 0.5792704400192099,
+            "ownActorSmoothed": 0.6238938507316611,
+            "personalMixture": 0.6238938507316611,
+            "personalBest": 0.6238938507316611,
+            "mixtureCalibrated": 0.6996540400453954,
+            "controlForest": 0.5792704400192099,
+            "profileForest": 0.5659991709568171,
+            "recallProfileForest": 0.5659991709568171
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 81,
+      "start": 1791829216958,
+      "end": 1791829368631,
+      "wonOn": 1,
+      "board": "5f8079b8f1cf82ee69cb46c8e3bcd47ba01b3b2c34ba089d3fba9aa2e882fa18",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 8,
+        "mechanicsRecent20": 8
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "ownActorSmoothed",
+        "mechanicsRecent20": "ownActorSmoothed"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829213699,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5266118174704786,
+            "ownMode": 0.5266118174704786,
+            "ownActorSmoothed": 0.6629471685022604,
+            "personalMixture": 0.5871869791885261,
+            "personalBest": 0.6629471685022604,
+            "mixtureCalibrated": 0.6578737352633144,
+            "controlForest": 0.5266118174704786,
+            "profileForest": 0.5142292855957044,
+            "recallProfileForest": 0.5142292855957044
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829213699,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5266118174704786,
+            "ownMode": 0.5266118174704786,
+            "ownActorSmoothed": 0.6629471685022604,
+            "personalMixture": 0.5871869791885261,
+            "personalBest": 0.6629471685022604,
+            "mixtureCalibrated": 0.6578737352633144,
+            "controlForest": 0.5266118174704786,
+            "profileForest": 0.5142292855957044,
+            "recallProfileForest": 0.5142292855957044
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 82,
+      "start": 1791829374137,
+      "end": 1791829536767,
+      "wonOn": 1,
+      "board": "27e3edfd73fd1c47c21d088c9ea561be0228a839bdf0e861cf7e60a7795955fa",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 17,
+        "mechanicsRecent20": 17
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "ownActorSmoothed",
+        "mechanicsRecent20": "ownActorSmoothed"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829368631,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.572179821985796,
+            "ownMode": 0.572179821985796,
+            "ownActorSmoothed": 0.6236250130974659,
+            "personalMixture": 0.5529382570226775,
+            "personalBest": 0.6236250130974659,
+            "mixtureCalibrated": 0.6188913325051698,
+            "controlForest": 0.572179821985796,
+            "profileForest": 0.48486632191414114,
+            "recallProfileForest": 0.48486632191414114
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829368631,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.572179821985796,
+            "ownMode": 0.572179821985796,
+            "ownActorSmoothed": 0.6236250130974659,
+            "personalMixture": 0.5529382570226775,
+            "personalBest": 0.6236250130974659,
+            "mixtureCalibrated": 0.6188913325051698,
+            "controlForest": 0.572179821985796,
+            "profileForest": 0.48486632191414114,
+            "recallProfileForest": 0.48486632191414114
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 83,
+      "start": 1791829538817,
+      "end": 1791829818917,
+      "wonOn": 3,
+      "board": "7b4cb74eecba9fb19068310c584d693e2748c94d77abef020ae44d3e5004d829",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829536767,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6146962735570854,
+            "ownMode": 0.6146962735570854,
+            "ownActorSmoothed": 0.5869361448064553,
+            "personalMixture": 0.5209830693239629,
+            "personalBest": 0.5869361448064553,
+            "mixtureCalibrated": 0.5825194646424456,
+            "controlForest": 0.5389360842433512,
+            "profileForest": 0.4574697080699457,
+            "recallProfileForest": 0.4574697080699457
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829536767,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6146962735570854,
+            "ownMode": 0.6146962735570854,
+            "ownActorSmoothed": 0.5869361448064553,
+            "personalMixture": 0.5209830693239629,
+            "personalBest": 0.5869361448064553,
+            "mixtureCalibrated": 0.5825194646424456,
+            "controlForest": 0.5389360842433512,
+            "profileForest": 0.4574697080699457,
+            "recallProfileForest": 0.4574697080699457
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 84,
+      "start": 1791829826286,
+      "end": 1791830648840,
+      "wonOn": 10,
+      "board": "4490d717ab07e3cf189225167d76e7c4dd812b15861c3192093f019cb705beaa",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829818917,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5596652889140075,
+            "ownMode": 0.5596652889140075,
+            "ownActorSmoothed": 0.5337641729403602,
+            "personalMixture": 0.47222777762187723,
+            "personalBest": 0.5337641729403602,
+            "mixtureCalibrated": 0.5296432646342728,
+            "controlForest": 0.488978532839219,
+            "profileForest": 0.488727905482218,
+            "recallProfileForest": 0.488727905482218
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791829818917,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5596652889140075,
+            "ownMode": 0.5596652889140075,
+            "ownActorSmoothed": 0.5337641729403602,
+            "personalMixture": 0.47222777762187723,
+            "personalBest": 0.5337641729403602,
+            "mixtureCalibrated": 0.5296432646342728,
+            "controlForest": 0.488978532839219,
+            "profileForest": 0.488727905482218,
+            "recallProfileForest": 0.488727905482218
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 85,
+      "start": 1791830660440,
+      "end": 1791834090511,
+      "wonOn": 5,
+      "board": "5990d9f6b6669d64f31896b097b680b37cd8cee585e50cedb476d989ca9f12b2",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 8,
+        "mechanicsRecent20": 8
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "mixtureCalibrated",
+        "mechanicsRecent20": "mixtureCalibrated"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791830648840,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5083195646852603,
+            "ownMode": 0.5083195646852603,
+            "ownActorSmoothed": 0.5030930162926599,
+            "personalMixture": 0.4456775292802643,
+            "personalBest": 0.5030930162926599,
+            "mixtureCalibrated": 0.5750082622017167,
+            "controlForest": 0.4423664892027679,
+            "profileForest": 0.4421326456101043,
+            "recallProfileForest": 0.4421326456101043
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791830648840,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5083195646852603,
+            "ownMode": 0.5083195646852603,
+            "ownActorSmoothed": 0.5030930162926599,
+            "personalMixture": 0.4456775292802643,
+            "personalBest": 0.5030930162926599,
+            "mixtureCalibrated": 0.5750082622017167,
+            "controlForest": 0.4423664892027679,
+            "profileForest": 0.4421326456101043,
+            "recallProfileForest": 0.4421326456101043
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 86,
+      "start": 1791834095552,
+      "end": 1791834266736,
+      "wonOn": 1,
+      "board": "d17c137dec323400b97054451fefe2104832edd9c38b180610ebdd18e1a8a336",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 8,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "mixtureCalibrated",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791834090511,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.46041231000548843,
+            "ownMode": 0.46041231000548843,
+            "ownActorSmoothed": 0.4555357679233286,
+            "personalMixture": 0.40196522431561044,
+            "personalBest": 0.4555357679233286,
+            "mixtureCalibrated": 0.5226350649509611,
+            "controlForest": 0.3988759146870057,
+            "profileForest": 0.3986577309001911,
+            "recallProfileForest": 0.3986577309001911
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 6,
+          "availableThrough": 1791834090511,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.36296891749081756,
+            "ownMode": 0.36296891749081756,
+            "ownActorSmoothed": 0.24108950066780555,
+            "personalMixture": 0.14122695974544314,
+            "personalBest": 0.24108950066780555,
+            "mixtureCalibrated": 0.27299637248238223,
+            "controlForest": 0.24825698100747576,
+            "profileForest": 0.2641721691044377,
+            "recallProfileForest": 0.2641721691044377
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 87,
+      "start": 1791834271571,
+      "end": 1791834626428,
+      "wonOn": 5,
+      "board": "d0aed6becb28c43665c69a3ca9634485ce0922a73916a971a9cbbfeb6c13e684",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791834266736,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.49147345016903954,
+            "ownMode": 0.49147345016903954,
+            "ownActorSmoothed": 0.41116328620803244,
+            "personalMixture": 0.3611802016474702,
+            "personalBest": 0.41116328620803244,
+            "mixtureCalibrated": 0.47376914404374126,
+            "controlForest": 0.3582977738429096,
+            "profileForest": 0.4338543904853275,
+            "recallProfileForest": 0.4338543904853275
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 7,
+          "availableThrough": 1791834266736,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.44763780858290797,
+            "ownMode": 0.44763780858290797,
+            "ownActorSmoothed": 0.21442312102956373,
+            "personalMixture": 0.12918970328926782,
+            "personalBest": 0.21442312102956373,
+            "mixtureCalibrated": 0.24165587225979904,
+            "controlForest": 0.2205406185445871,
+            "profileForest": 0.3633140526597945,
+            "recallProfileForest": 0.3633140526597945
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 88,
+      "start": 1791834629701,
+      "end": 1791834815476,
+      "wonOn": 1,
+      "board": "b2ee0d6c7780b6722b4a2eb4ee88c49c2f6b212de55f852a629f13345948ac84",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791834626428,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4446943293826474,
+            "ownMode": 0.4446943293826474,
+            "ownActorSmoothed": 0.36976229685129736,
+            "personalMixture": 0.3231264299375188,
+            "personalBest": 0.36976229685129736,
+            "mixtureCalibrated": 0.42817562767547684,
+            "controlForest": 0.32043702970014076,
+            "profileForest": 0.3909338457564157,
+            "recallProfileForest": 0.3909338457564157
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 8,
+          "availableThrough": 1791834626428,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.39490707332940667,
+            "ownMode": 0.39490707332940667,
+            "ownActorSmoothed": 0.19333982984197562,
+            "personalMixture": 0.11967266399079211,
+            "personalBest": 0.19333982984197562,
+            "mixtureCalibrated": 0.2168770720956476,
+            "controlForest": 0.19862717741035046,
+            "profileForest": 0.32202612736393804,
+            "recallProfileForest": 0.32202612736393804
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 89,
+      "start": 1791834825129,
+      "end": 1792083385949,
+      "wonOn": 13,
+      "board": "4fc1e6d2c9d6d481f550ed8a184e3af44e0ad34b2209979fb6593e41216e75ec",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791834815476,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4957481030160261,
+            "ownMode": 0.4957481030160261,
+            "ownActorSmoothed": 0.3500738552276329,
+            "personalMixture": 0.3065610528081576,
+            "personalBest": 0.3500738552276329,
+            "mixtureCalibrated": 0.4045754200321463,
+            "controlForest": 0.3798119429729714,
+            "profileForest": 0.3698276088380432,
+            "recallProfileForest": 0.3698276088380432
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 9,
+          "availableThrough": 1791834815476,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.46423914699089924,
+            "ownMode": 0.46423914699089924,
+            "ownActorSmoothed": 0.17628949620183115,
+            "personalMixture": 0.11197610969755607,
+            "personalBest": 0.17628949620183115,
+            "mixtureCalibrated": 0.19683813195854175,
+            "controlForest": 0.29288160033623395,
+            "profileForest": 0.2886360415685027,
+            "recallProfileForest": 0.2886360415685027
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 99,
+      "start": 1791845416169,
+      "end": 1791845681504,
+      "wonOn": 2,
+      "board": "f8f81af2c7ef9a6eb4ac04e6be8ec2cd53a232a844209d2523d4064a029cfe33",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791845410487,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6282112218265777,
+            "ownMode": 0.6282112218265777,
+            "ownActorSmoothed": 0.12945947510021324,
+            "personalMixture": 0.2827171716253561,
+            "personalBest": 0.2272241563152992,
+            "mixtureCalibrated": 0.4661726441286758,
+            "controlForest": 0.6282112218265777,
+            "profileForest": 0.6282112218265777,
+            "recallProfileForest": 0.6282112218265777
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 18,
+          "availableThrough": 1791845410487,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6118888822455,
+            "ownMode": 0.6118888822455,
+            "ownActorSmoothed": 0.13701550704588017,
+            "personalMixture": 0.2690403475073189,
+            "personalBest": 0.23907227134552908,
+            "mixtureCalibrated": 0.4427364569930429,
+            "controlForest": 0.6118888822455,
+            "profileForest": 0.6118888822455,
+            "recallProfileForest": 0.6118888822455
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 100,
+      "start": 1791910612845,
+      "end": 1791910919722,
+      "wonOn": 3,
+      "board": "cce5df71523b594c4979c2242d2075654837d78508adf19665ed1a2c40531fd7",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791845681504,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5722751815283571,
+            "ownMode": 0.5722751815283571,
+            "ownActorSmoothed": 0.12586339457448273,
+            "personalMixture": 0.2688578816393769,
+            "personalBest": 0.2170810675552367,
+            "mixtureCalibrated": 0.49684803194824856,
+            "controlForest": 0.5722751815283571,
+            "profileForest": 0.5722751815283571,
+            "recallProfileForest": 0.5722751815283571
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 19,
+          "availableThrough": 1791845681504,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5634127038593993,
+            "ownMode": 0.5634127038593993,
+            "ownActorSmoothed": 0.130179575901893,
+            "personalMixture": 0.25062754706295476,
+            "personalBest": 0.22328728321054703,
+            "mixtureCalibrated": 0.4864227003135671,
+            "controlForest": 0.5634127038593993,
+            "profileForest": 0.5634127038593993,
+            "recallProfileForest": 0.5634127038593993
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 101,
+      "start": 1791911568306,
+      "end": 1791911740340,
+      "wonOn": 1,
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791910919722,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5200850105141849,
+            "ownMode": 0.5200850105141849,
+            "ownActorSmoothed": 0.1225081328037531,
+            "personalMixture": 0.25592670684318264,
+            "personalBest": 0.20761723110601218,
+            "mixtureCalibrated": 0.44970899149836197,
+            "controlForest": 0.5200850105141849,
+            "profileForest": 0.5200850105141849,
+            "recallProfileForest": 0.5200850105141849
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791910919722,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5200850105141849,
+            "ownMode": 0.5200850105141849,
+            "ownActorSmoothed": 0.12406966505090476,
+            "personalMixture": 0.234170305633445,
+            "personalBest": 0.20917876335316388,
+            "mixtureCalibrated": 0.44970899149836197,
+            "controlForest": 0.5200850105141849,
+            "profileForest": 0.5200850105141849,
+            "recallProfileForest": 0.5200850105141849
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 102,
+      "start": 1791911749246,
+      "end": 1791912122118,
+      "wonOn": 2,
+      "board": "c842c8eaf4d739de5c5053bbfc1f789c17c5d19f8b75e05f84ad72165fd1cdd5",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791911740340,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5471500484377485,
+            "ownMode": 0.5471500484377485,
+            "ownActorSmoothed": 0.11937756287642015,
+            "personalMixture": 0.2438614941390041,
+            "personalBest": 0.19878715947237718,
+            "mixtureCalibrated": 0.481486900882964,
+            "controlForest": 0.5471500484377485,
+            "profileForest": 0.5471500484377485,
+            "recallProfileForest": 0.5471500484377485
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791911740340,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5471500484377485,
+            "ownMode": 0.5471500484377485,
+            "ownActorSmoothed": 0.12083452398036126,
+            "personalMixture": 0.22356205403320759,
+            "personalBest": 0.2002441205763183,
+            "mixtureCalibrated": 0.481486900882964,
+            "controlForest": 0.5471500484377485,
+            "profileForest": 0.5471500484377485,
+            "recallProfileForest": 0.5471500484377485
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 103,
+      "start": 1791912126978,
+      "end": 1791912364576,
+      "wonOn": 1,
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791912122118,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4966424324238939,
+            "ownMode": 0.4966424324238939,
+            "ownActorSmoothed": 0.09751659052347196,
+            "personalMixture": 0.21366420530766297,
+            "personalBest": 0.17160836399212884,
+            "mixtureCalibrated": 0.4353765494271305,
+            "controlForest": 0.4966424324238939,
+            "profileForest": 0.4966424324238939,
+            "recallProfileForest": 0.4966424324238939
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791912122118,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4966424324238939,
+            "ownMode": 0.4966424324238939,
+            "ownActorSmoothed": 0.11781603062926849,
+            "personalMixture": 0.21366420530766297,
+            "personalBest": 0.19190780409792535,
+            "mixtureCalibrated": 0.4353765494271305,
+            "controlForest": 0.4966424324238939,
+            "profileForest": 0.4966424324238939,
+            "recallProfileForest": 0.4966424324238939
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 104,
+      "start": 1791914835209,
+      "end": 1792048695084,
+      "wonOn": 4,
+      "board": "6dc7d96dfc85b59f14927cf8cdc773f37e34ffdc0e22afabeebd1f6c703a3f83",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791912364576,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5252773496728291,
+            "ownMode": 0.5252773496728291,
+            "ownActorSmoothed": 0.09605962941953085,
+            "personalMixture": 0.18548913857305577,
+            "personalBest": 0.16518969846725923,
+            "mixtureCalibrated": 0.4681142595812149,
+            "controlForest": 0.5252773496728291,
+            "profileForest": 0.5252773496728291,
+            "recallProfileForest": 0.5252773496728291
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791912364576,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5252773496728291,
+            "ownMode": 0.5252773496728291,
+            "ownActorSmoothed": 0.09605962941953085,
+            "personalMixture": 0.18548913857305577,
+            "personalBest": 0.16518969846725923,
+            "mixtureCalibrated": 0.4681142595812149,
+            "controlForest": 0.5252773496728291,
+            "profileForest": 0.5252773496728291,
+            "recallProfileForest": 0.5252773496728291
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 34,
+      "start": 1791993467593,
+      "end": 1791993853775,
+      "wonOn": 1,
+      "board": "d00d7b6154ea810c303f28f93e2d977d1096a7e512f31225271d01aa7b8e96bd",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 18,
+          "availableThrough": 1791993427422,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6117964696114243,
+            "ownMode": 0.6117964696114243,
+            "ownActorSmoothed": 0.3468065798979321,
+            "personalMixture": 0.3468065798979321,
+            "personalBest": 0.3468065798979321,
+            "mixtureCalibrated": 0.3468065798979321,
+            "controlForest": 0.3995036080710365,
+            "profileForest": 0.4084160153264046,
+            "recallProfileForest": 0.4084160153264046
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 18,
+          "availableThrough": 1791993427422,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6117964696114243,
+            "ownMode": 0.6117964696114243,
+            "ownActorSmoothed": 0.3468065798979321,
+            "personalMixture": 0.3468065798979321,
+            "personalBest": 0.3468065798979321,
+            "mixtureCalibrated": 0.3468065798979321,
+            "controlForest": 0.3995036080710365,
+            "profileForest": 0.4084160153264046,
+            "recallProfileForest": 0.4084160153264046
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 35,
+      "start": 1791993866872,
+      "end": 1791994314139,
+      "wonOn": 1,
+      "board": "8e3855f33489fe651bc48405e2ae9880b33d7a4cb9782f31f107688265c998a8",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 19,
+          "availableThrough": 1791993853775,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6406583384948157,
+            "ownMode": 0.6406583384948157,
+            "ownActorSmoothed": 0.3215746876431005,
+            "personalMixture": 0.3215746876431005,
+            "personalBest": 0.3215746876431005,
+            "mixtureCalibrated": 0.3989046315209682,
+            "controlForest": 0.44698081254480826,
+            "profileForest": 0.4551117170648841,
+            "recallProfileForest": 0.4551117170648841
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 19,
+          "availableThrough": 1791993853775,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6406583384948157,
+            "ownMode": 0.6406583384948157,
+            "ownActorSmoothed": 0.3215746876431005,
+            "personalMixture": 0.3215746876431005,
+            "personalBest": 0.3215746876431005,
+            "mixtureCalibrated": 0.3989046315209682,
+            "controlForest": 0.44698081254480826,
+            "profileForest": 0.4551117170648841,
+            "recallProfileForest": 0.4551117170648841
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 36,
+      "start": 1791994331125,
+      "end": 1791994708934,
+      "wonOn": 1,
+      "board": "ca374d69285fb48e2d819b92f613ed5c2cb8806bfebc19179a8373f606956870",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791994314139,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6664548894190514,
+            "ownMode": 0.6664548894190514,
+            "ownActorSmoothed": 0.2990225862495158,
+            "personalMixture": 0.2990225862495158,
+            "personalBest": 0.2990225862495158,
+            "mixtureCalibrated": 0.36970934232430425,
+            "controlForest": 0.48941562949641526,
+            "profileForest": 0.49684803194824856,
+            "recallProfileForest": 0.49684803194824856
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791994314139,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6664548894190514,
+            "ownMode": 0.6664548894190514,
+            "ownActorSmoothed": 0.2990225862495158,
+            "personalMixture": 0.2990225862495158,
+            "personalBest": 0.2990225862495158,
+            "mixtureCalibrated": 0.36970934232430425,
+            "controlForest": 0.48941562949641526,
+            "profileForest": 0.49684803194824856,
+            "recallProfileForest": 0.49684803194824856
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 37,
+      "start": 1791994730739,
+      "end": 1791995759101,
+      "wonOn": 2,
+      "board": "104e5c483b51fa671a91808e5bfb689cb9902a2fbaaa02c2dda63a9360cafa44",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791994708934,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6837179744232363,
+            "ownMode": 0.6837179744232363,
+            "ownActorSmoothed": 0.26513132409597107,
+            "personalMixture": 0.26513132409597107,
+            "personalBest": 0.26513132409597107,
+            "mixtureCalibrated": 0.3310843995784635,
+            "controlForest": 0.5185345041181567,
+            "profileForest": 0.5254691808120963,
+            "recallProfileForest": 0.5254691808120963
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791994708934,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6837179744232363,
+            "ownMode": 0.6837179744232363,
+            "ownActorSmoothed": 0.26513132409597107,
+            "personalMixture": 0.26513132409597107,
+            "personalBest": 0.26513132409597107,
+            "mixtureCalibrated": 0.3310843995784635,
+            "controlForest": 0.5185345041181567,
+            "profileForest": 0.5254691808120963,
+            "recallProfileForest": 0.5254691808120963
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 38,
+      "start": 1791995772536,
+      "end": 1791996321876,
+      "wonOn": 1,
+      "board": "7027b72409400eef9578cf1f86b5954219c5b74403350762fb1f7f59ea3ce229",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791995759101,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6240648129541109,
+            "ownMode": 0.6240648129541109,
+            "ownActorSmoothed": 0.23350965838189106,
+            "personalMixture": 0.23350965838189106,
+            "personalBest": 0.23350965838189106,
+            "mixtureCalibrated": 0.29504605370037384,
+            "controlForest": 0.46994318550293107,
+            "profileForest": 0.47641346764401804,
+            "recallProfileForest": 0.47641346764401804
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791995759101,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6240648129541109,
+            "ownMode": 0.6240648129541109,
+            "ownActorSmoothed": 0.23350965838189106,
+            "personalMixture": 0.23350965838189106,
+            "personalBest": 0.23350965838189106,
+            "mixtureCalibrated": 0.29504605370037384,
+            "controlForest": 0.46994318550293107,
+            "profileForest": 0.47641346764401804,
+            "recallProfileForest": 0.47641346764401804
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 39,
+      "start": 1792013300819,
+      "end": 1792014203948,
+      "wonOn": 2,
+      "board": "c9997948be06fdd8006b2b7cf0f447c4bad9a788c7e6134cd209d486ea6ac725",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791996321876,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6441666345676788,
+            "ownMode": 0.6441666345676788,
+            "ownActorSmoothed": 0.20400560102330612,
+            "personalMixture": 0.20400560102330612,
+            "personalBest": 0.20400560102330612,
+            "mixtureCalibrated": 0.26142108803570163,
+            "controlForest": 0.5003660714463833,
+            "profileForest": 0.5064030581485689,
+            "recallProfileForest": 0.5064030581485689
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1791996321876,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6441666345676788,
+            "ownMode": 0.6441666345676788,
+            "ownActorSmoothed": 0.20400560102330612,
+            "personalMixture": 0.20400560102330612,
+            "personalBest": 0.20400560102330612,
+            "mixtureCalibrated": 0.26142108803570163,
+            "controlForest": 0.5003660714463833,
+            "profileForest": 0.5064030581485689,
+            "recallProfileForest": 0.5064030581485689
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 40,
+      "start": 1792014233172,
+      "end": 1792014784836,
+      "wonOn": 1,
+      "board": "d034789dcb770067e42f39b5b9d8c35633cc940739123e3c74926e4f86360676",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792014203948,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5871621080093912,
+            "ownMode": 0.5871621080093912,
+            "ownActorSmoothed": 0.25223753143728633,
+            "personalMixture": 0.17647734212355198,
+            "personalBest": 0.25223753143728633,
+            "mixtureCalibrated": 0.23004788573127016,
+            "controlForest": 0.45299143841565126,
+            "profileForest": 0.4586241461782593,
+            "recallProfileForest": 0.4586241461782593
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792014203948,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5871621080093912,
+            "ownMode": 0.5871621080093912,
+            "ownActorSmoothed": 0.25223753143728633,
+            "personalMixture": 0.17647734212355198,
+            "personalBest": 0.25223753143728633,
+            "mixtureCalibrated": 0.23004788573127016,
+            "controlForest": 0.45299143841565126,
+            "profileForest": 0.4586241461782593,
+            "recallProfileForest": 0.4586241461782593
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 41,
+      "start": 1792014797696,
+      "end": 1792015241559,
+      "wonOn": 1,
+      "board": "54a0eeedfa0e6800472aa4f05fe4ea6c6d866a41f84ea76ceaf7b875b0651ef3",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792014784836,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6097351933773069,
+            "ownMode": 0.6097351933773069,
+            "ownActorSmoothed": 0.22147932444530313,
+            "personalMixture": 0.1507925683705147,
+            "personalBest": 0.22147932444530313,
+            "mixtureCalibrated": 0.20077565293107696,
+            "controlForest": 0.4845495321497632,
+            "profileForest": 0.48980503432396205,
+            "recallProfileForest": 0.48980503432396205
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792014784836,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6097351933773069,
+            "ownMode": 0.6097351933773069,
+            "ownActorSmoothed": 0.22147932444530313,
+            "personalMixture": 0.1507925683705147,
+            "personalBest": 0.22147932444530313,
+            "mixtureCalibrated": 0.20077565293107696,
+            "controlForest": 0.4845495321497632,
+            "profileForest": 0.48980503432396205,
+            "recallProfileForest": 0.48980503432396205
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 42,
+      "start": 1792031107788,
+      "end": 1792031739811,
+      "wonOn": 2,
+      "board": "511decd059e925a9289e9c441ce516d102c27e2f45d520497bd5a725fd334563",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792015241559,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6307966267463491,
+            "ownMode": 0.6307966267463491,
+            "ownActorSmoothed": 0.19278090256126465,
+            "personalMixture": 0.20258801639250656,
+            "personalBest": 0.19278090256126465,
+            "mixtureCalibrated": 0.24922388330628517,
+            "controlForest": 0.5139942747537006,
+            "profileForest": 0.5188978316693216,
+            "recallProfileForest": 0.5188978316693216
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792015241559,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6307966267463491,
+            "ownMode": 0.6307966267463491,
+            "ownActorSmoothed": 0.19278090256126465,
+            "personalMixture": 0.20258801639250656,
+            "personalBest": 0.19278090256126465,
+            "mixtureCalibrated": 0.24922388330628517,
+            "controlForest": 0.5139942747537006,
+            "profileForest": 0.5188978316693216,
+            "recallProfileForest": 0.5188978316693216
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 43,
+      "start": 1792031786444,
+      "end": 1792075954614,
+      "wonOn": 3,
+      "board": "5800e4a30fea3c1cecf813ac550dbcecd369fd7bf217f6de23cf399a6d52b74b",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792031739811,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5746874496149854,
+            "ownMode": 0.5746874496149854,
+            "ownActorSmoothed": 0.24176451745214922,
+            "personalMixture": 0.2509148782084548,
+            "personalBest": 0.24176451745214922,
+            "mixtureCalibrated": 0.2186674913141958,
+            "controlForest": 0.46570700171674945,
+            "profileForest": 0.47028218209490225,
+            "recallProfileForest": 0.47028218209490225
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792031739811,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5746874496149854,
+            "ownMode": 0.5746874496149854,
+            "ownActorSmoothed": 0.24176451745214922,
+            "personalMixture": 0.2509148782084548,
+            "personalBest": 0.24176451745214922,
+            "mixtureCalibrated": 0.2186674913141958,
+            "controlForest": 0.46570700171674945,
+            "profileForest": 0.47028218209490225,
+            "recallProfileForest": 0.47028218209490225
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 105,
+      "start": 1792048732189,
+      "end": 1792048887819,
+      "wonOn": 1,
+      "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792048695084,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4762344828622777,
+            "ownMode": 0.4762344828622777,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.23496106108465029,
+            "personalBest": 0.23496106108465029,
+            "mixtureCalibrated": 0.42289943390861084,
+            "controlForest": 0.4762344828622777,
+            "profileForest": 0.4762344828622777,
+            "recallProfileForest": 0.4762344828622777
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792048695084,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4762344828622777,
+            "ownMode": 0.4762344828622777,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.23496106108465029,
+            "personalBest": 0.23496106108465029,
+            "mixtureCalibrated": 0.42289943390861084,
+            "controlForest": 0.4762344828622777,
+            "profileForest": 0.4762344828622777,
+            "recallProfileForest": 0.4762344828622777
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 106,
+      "start": 1792048898439,
+      "end": 1792236553041,
+      "wonOn": 3,
+      "board": "33fd9645d44638d5fbdaac955a8a633b6f41aade6a9204d3c06ebc2d78a300d4",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792048887819,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.506236059442222,
+            "ownMode": 0.506236059442222,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.22429985495741972,
+            "personalBest": 0.22429985495741972,
+            "mixtureCalibrated": 0.45647269916322025,
+            "controlForest": 0.506236059442222,
+            "profileForest": 0.506236059442222,
+            "recallProfileForest": 0.506236059442222
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792048887819,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.506236059442222,
+            "ownMode": 0.506236059442222,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.22429985495741972,
+            "personalBest": 0.22429985495741972,
+            "mixtureCalibrated": 0.45647269916322025,
+            "controlForest": 0.506236059442222,
+            "profileForest": 0.506236059442222,
+            "recallProfileForest": 0.506236059442222
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 42,
+      "start": 1792077236210,
+      "end": 1792077775153,
+      "wonOn": 2,
+      "board": "6c0af07e9d139e65f14e8b4440dfc37e2d92b2c6870f01f9b468bfbe022f0ce2",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792077231883,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.44436866476919284,
+            "ownMode": 0.39907768238311514,
+            "ownActorSmoothed": 0.1543222752017336,
+            "personalMixture": 0.1507348161545777,
+            "personalBest": 0.17103425626037425,
+            "mixtureCalibrated": 0.1968113610135463,
+            "controlForest": 0.2655968346943686,
+            "profileForest": 0.2000064122024945,
+            "recallProfileForest": 0.2000064122024945
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792077231883,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.44436866476919284,
+            "ownMode": 0.39907768238311514,
+            "ownActorSmoothed": 0.1543222752017336,
+            "personalMixture": 0.1507348161545777,
+            "personalBest": 0.17103425626037425,
+            "mixtureCalibrated": 0.1968113610135463,
+            "controlForest": 0.2655968346943686,
+            "profileForest": 0.2000064122024945,
+            "recallProfileForest": 0.2000064122024945
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 43,
+      "start": 1792077779174,
+      "end": 1792078152166,
+      "wonOn": 2,
+      "board": "21727cf176fdb9786a8f1620fb6175504b03803cf11bfee5c1b83e83fe7d04d7",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792077775153,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.40074401054532904,
+            "ownMode": 0.3774260770884397,
+            "ownActorSmoothed": 0.14906120733118589,
+            "personalMixture": 0.14571398968440227,
+            "personalBest": 0.14571398968440227,
+            "mixtureCalibrated": 0.16976487884541205,
+            "controlForest": 0.25288404245653967,
+            "profileForest": 0.19168601434278315,
+            "recallProfileForest": 0.19168601434278315
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792077775153,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.40074401054532904,
+            "ownMode": 0.3774260770884397,
+            "ownActorSmoothed": 0.14906120733118589,
+            "personalMixture": 0.14571398968440227,
+            "personalBest": 0.14571398968440227,
+            "mixtureCalibrated": 0.16976487884541205,
+            "controlForest": 0.25288404245653967,
+            "profileForest": 0.19168601434278315,
+            "recallProfileForest": 0.19168601434278315
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 44,
+      "start": 1792078155465,
+      "end": 1792078692796,
+      "wonOn": 2,
+      "board": "802e7f173fcab5605d378e1b0cf64e8cc90ec19b7c6a4688d1729aee28be02ea",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792078152166,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.37898081623851215,
+            "ownMode": 0.3572244150287745,
+            "ownActorSmoothed": 0.14415245743725058,
+            "personalMixture": 0.14102939294294725,
+            "personalBest": 0.14102939294294725,
+            "mixtureCalibrated": 0.16346966600596435,
+            "controlForest": 0.31678277719782644,
+            "profileForest": 0.2596829979506946,
+            "recallProfileForest": 0.2596829979506946
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792078152166,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.37898081623851215,
+            "ownMode": 0.3572244150287745,
+            "ownActorSmoothed": 0.14415245743725058,
+            "personalMixture": 0.14102939294294725,
+            "personalBest": 0.14102939294294725,
+            "mixtureCalibrated": 0.16346966600596435,
+            "controlForest": 0.31678277719782644,
+            "profileForest": 0.2596829979506946,
+            "recallProfileForest": 0.2596829979506946
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 45,
+      "start": 1792078697711,
+      "end": 1792079207605,
+      "wonOn": 3,
+      "board": "0485b2523e7e195ee7cfa95508f2e1870c596d55d329397fc331c79729f01f4c",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792078692796,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.35867503794902605,
+            "ownMode": 0.3383755978432295,
+            "ownActorSmoothed": 0.13957243183900614,
+            "personalMixture": 0.13665850963112391,
+            "personalBest": 0.13665850963112391,
+            "mixtureCalibrated": 0.15759602473801362,
+            "controlForest": 0.3574623575004726,
+            "profileForest": 0.22842619033969555,
+            "recallProfileForest": 0.22842619033969555
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792078692796,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.35867503794902605,
+            "ownMode": 0.3383755978432295,
+            "ownActorSmoothed": 0.13957243183900614,
+            "personalMixture": 0.13665850963112391,
+            "personalBest": 0.13665850963112391,
+            "mixtureCalibrated": 0.15759602473801362,
+            "controlForest": 0.3574623575004726,
+            "profileForest": 0.22842619033969555,
+            "recallProfileForest": 0.22842619033969555
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 44,
+      "start": 1792078889406,
+      "end": 1792079407530,
+      "wonOn": 1,
+      "board": "d673c28d46c390946030a420f6d936d958f686d8bbd9bc82abaa86b420e2579e",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792075954614,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5412757835518741,
+            "ownMode": 0.5412757835518741,
+            "ownActorSmoothed": 0.23064770420477737,
+            "personalMixture": 0.23918529267487423,
+            "personalBest": 0.23064770420477737,
+            "mixtureCalibrated": 0.2848576061254132,
+            "controlForest": 0.4395934302303618,
+            "profileForest": 0.44386222446541024,
+            "recallProfileForest": 0.44386222446541024
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792075954614,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5412757835518741,
+            "ownMode": 0.5412757835518741,
+            "ownActorSmoothed": 0.23064770420477737,
+            "personalMixture": 0.23918529267487423,
+            "personalBest": 0.23064770420477737,
+            "mixtureCalibrated": 0.2848576061254132,
+            "controlForest": 0.4395934302303618,
+            "profileForest": 0.44386222446541024,
+            "recallProfileForest": 0.44386222446541024
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 45,
+      "start": 1792079446450,
+      "end": 1792079970880,
+      "wonOn": 1,
+      "board": "683e1b54c0a140ac7735ff1eff0382d813546bf35bab12387fed0395f4a0671b",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792079407530,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5858617861265147,
+            "ownMode": 0.5858617861265147,
+            "ownActorSmoothed": 0.22027535068422602,
+            "personalMixture": 0.22824120239499066,
+            "personalBest": 0.22027535068422602,
+            "mixtureCalibrated": 0.27085497764415384,
+            "controlForest": 0.49098879582044147,
+            "profileForest": 0.49497172167582376,
+            "recallProfileForest": 0.49497172167582376
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792079407530,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5858617861265147,
+            "ownMode": 0.5858617861265147,
+            "ownActorSmoothed": 0.22027535068422602,
+            "personalMixture": 0.22824120239499066,
+            "personalBest": 0.22027535068422602,
+            "mixtureCalibrated": 0.27085497764415384,
+            "controlForest": 0.49098879582044147,
+            "profileForest": 0.49497172167582376,
+            "recallProfileForest": 0.49497172167582376
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 46,
+      "start": 1792079848122,
+      "end": 1792080047378,
+      "wonOn": 1,
+      "board": "3a9683b514b2954dc2ef3eca388aed2201705dee67a178e4fdf099d272d51bbd",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792079207605,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.32078902955766997,
+            "ownMode": 0.32078902955766997,
+            "ownActorSmoothed": 0.11635906952532737,
+            "personalMixture": 0.11364028397060148,
+            "personalBest": 0.11364028397060148,
+            "mixtureCalibrated": 0.1331756763261299,
+            "controlForest": 0.31965755869097806,
+            "profileForest": 0.21820260495694824,
+            "recallProfileForest": 0.21820260495694824
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792079207605,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.32078902955766997,
+            "ownMode": 0.32078902955766997,
+            "ownActorSmoothed": 0.11635906952532737,
+            "personalMixture": 0.11364028397060148,
+            "personalBest": 0.11364028397060148,
+            "mixtureCalibrated": 0.1331756763261299,
+            "controlForest": 0.31965755869097806,
+            "profileForest": 0.21820260495694824,
+            "recallProfileForest": 0.21820260495694824
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 46,
+      "start": 1792079998136,
+      "end": 1792081533361,
+      "wonOn": 4,
+      "board": "e449e56a005ed7aa3366a338fa9749fd60addffe56ace2cb52fbf5c91e18b722",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792079970880,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6274619974893996,
+            "ownMode": 0.6274619974893996,
+            "ownActorSmoothed": 0.21059760264966867,
+            "personalMixture": 0.218030005101502,
+            "personalBest": 0.21059760264966867,
+            "mixtureCalibrated": 0.3335502526166401,
+            "controlForest": 0.5389423675280816,
+            "profileForest": 0.4668983794402638,
+            "recallProfileForest": 0.4668983794402638
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792079970880,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6274619974893996,
+            "ownMode": 0.6274619974893996,
+            "ownActorSmoothed": 0.21059760264966867,
+            "personalMixture": 0.218030005101502,
+            "personalBest": 0.21059760264966867,
+            "mixtureCalibrated": 0.3335502526166401,
+            "controlForest": 0.5389423675280816,
+            "profileForest": 0.4668983794402638,
+            "recallProfileForest": 0.4668983794402638
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 47,
+      "start": 1792080050551,
+      "end": 1792080271405,
+      "wonOn": 1,
+      "board": "ab39fa77735d2c53f770c112299e412fdf8f36add2df32061b8cd77fe14636a0",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792080047378,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.3801403704530624,
+            "ownMode": 0.3801403704530624,
+            "ownActorSmoothed": 0.11364028397060148,
+            "personalMixture": 0.11110356735112852,
+            "personalBest": 0.11110356735112852,
+            "mixtureCalibrated": 0.12933073292145247,
+            "controlForest": 0.3790846708054761,
+            "profileForest": 0.28442385181678587,
+            "recallProfileForest": 0.28442385181678587
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792080047378,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.3801403704530624,
+            "ownMode": 0.3801403704530624,
+            "ownActorSmoothed": 0.11364028397060148,
+            "personalMixture": 0.11110356735112852,
+            "personalBest": 0.11110356735112852,
+            "mixtureCalibrated": 0.12933073292145247,
+            "controlForest": 0.3790846708054761,
+            "profileForest": 0.28442385181678587,
+            "recallProfileForest": 0.28442385181678587
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 47,
+      "start": 1792081570535,
+      "end": 1792082167114,
+      "wonOn": 1,
+      "board": "727e2f83b69ea4b721d56ddf961a13c12fd37d15bd3595c3d9aec618ff90cbda",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792081533361,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.590516177832141,
+            "ownMode": 0.590516177832141,
+            "ownActorSmoothed": 0.20156794444964615,
+            "personalMixture": 0.28426281045732,
+            "personalBest": 0.20156794444964615,
+            "mixtureCalibrated": 0.39204701257944186,
+            "controlForest": 0.4889843953511678,
+            "profileForest": 0.4217649776233491,
+            "recallProfileForest": 0.4217649776233491
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792081533361,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.590516177832141,
+            "ownMode": 0.590516177832141,
+            "ownActorSmoothed": 0.20156794444964615,
+            "personalMixture": 0.28426281045732,
+            "personalBest": 0.20156794444964615,
+            "mixtureCalibrated": 0.39204701257944186,
+            "controlForest": 0.4889843953511678,
+            "profileForest": 0.4217649776233491,
+            "recallProfileForest": 0.4217649776233491
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 90,
+      "start": 1792083395933,
+      "end": 1792083630482,
+      "wonOn": 1,
+      "board": "4fd0a7e0af351a655d6db41004ca8ea60ebc0b0f9f3a525f95bd97a38610e1ab",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792083385949,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4676227688446861,
+            "ownMode": 0.4676227688446861,
+            "ownActorSmoothed": 0.3127638423123739,
+            "personalMixture": 0.27216496210078084,
+            "personalBest": 0.3127638423123739,
+            "mixtureCalibrated": 0.3636156003653662,
+            "controlForest": 0.3594505066124248,
+            "profileForest": 0.3501347934660097,
+            "recallProfileForest": 0.3501347934660097
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 10,
+          "availableThrough": 1792083385949,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4157041871438583,
+            "ownMode": 0.4157041871438583,
+            "ownActorSmoothed": 0.16224675910282146,
+            "personalMixture": 0.10563719042540202,
+            "personalBest": 0.16224675910282146,
+            "mixtureCalibrated": 0.1803339641206984,
+            "controlForest": 0.26487280765964216,
+            "profileForest": 0.2611358057118451,
+            "recallProfileForest": 0.2611358057118451
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 91,
+      "start": 1792083635769,
+      "end": 1792173649391,
+      "wonOn": 21,
+      "board": "320e53c5644e27b66a9421605c304eb3f4666e960d89fae76c520f9ff99c4e8d",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792083630482,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4982010461501291,
+            "ownMode": 0.4982010461501291,
+            "ownActorSmoothed": 0.2779523693477729,
+            "personalMixture": 0.24007227469090572,
+            "personalBest": 0.2779523693477729,
+            "mixtureCalibrated": 0.40115892660259655,
+            "controlForest": 0.3972727567182583,
+            "profileForest": 0.38858088901295984,
+            "recallProfileForest": 0.38858088901295984
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 11,
+          "availableThrough": 1792083630482,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4754637889680578,
+            "ownMode": 0.4754637889680578,
+            "ownActorSmoothed": 0.15050625659408134,
+            "personalMixture": 0.10033750439605423,
+            "personalBest": 0.15050625659408134,
+            "mixtureCalibrated": 0.26687307419101025,
+            "controlForest": 0.3417934170182256,
+            "profileForest": 0.3384815966128996,
+            "recallProfileForest": 0.3384815966128996
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 48,
+      "start": 1792084600541,
+      "end": 1792084833594,
+      "wonOn": 1,
+      "board": "91fdf3804f38a91e25531a38849f352998ac209ef8a92d1c452949f8122e5c84",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792080271405,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.43551712960041133,
+            "ownMode": 0.43551712960041133,
+            "ownActorSmoothed": 0.11110356735112852,
+            "personalMixture": 0.10873672705498054,
+            "personalBest": 0.10873672705498054,
+            "mixtureCalibrated": 0.20150346318803092,
+            "controlForest": 0.3587719376863251,
+            "profileForest": 0.2704502705639833,
+            "recallProfileForest": 0.2704502705639833
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792080271405,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.43551712960041133,
+            "ownMode": 0.43551712960041133,
+            "ownActorSmoothed": 0.11110356735112852,
+            "personalMixture": 0.10873672705498054,
+            "personalBest": 0.10873672705498054,
+            "mixtureCalibrated": 0.20150346318803092,
+            "controlForest": 0.3587719376863251,
+            "profileForest": 0.2704502705639833,
+            "recallProfileForest": 0.2704502705639833
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 49,
+      "start": 1792084839692,
+      "end": 1792085008067,
+      "wonOn": 1,
+      "board": "554c38899b0b19d3366b7737b43b8a420b0b00f66198038dbae11dadfa8acec2",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792084833594,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.48718547284927544,
+            "ownMode": 0.48718547284927544,
+            "ownActorSmoothed": 0.10873672705498054,
+            "personalMixture": 0.1065283869729757,
+            "personalBest": 0.1065283869729757,
+            "mixtureCalibrated": 0.2688430016160357,
+            "controlForest": 0.3398194875378749,
+            "profileForest": 0.33317264755893256,
+            "recallProfileForest": 0.33317264755893256
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792084833594,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.48718547284927544,
+            "ownMode": 0.48718547284927544,
+            "ownActorSmoothed": 0.10873672705498054,
+            "personalMixture": 0.1065283869729757,
+            "personalBest": 0.1065283869729757,
+            "mixtureCalibrated": 0.2688430016160357,
+            "controlForest": 0.3398194875378749,
+            "profileForest": 0.33317264755893256,
+            "recallProfileForest": 0.33317264755893256
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 50,
+      "start": 1792085063827,
+      "end": 1792085610934,
+      "wonOn": 2,
+      "board": "6acab72ecfdca76eba147b6a440621ad4d69d6242321be33cc8e63e3bf84df3f",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792085008067,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5353937417185137,
+            "ownMode": 0.5353937417185137,
+            "ownActorSmoothed": 0.1065283869729757,
+            "personalMixture": 0.10446793281993211,
+            "personalBest": 0.10446793281993211,
+            "mixtureCalibrated": 0.2559128232904904,
+            "controlForest": 0.39789641559264854,
+            "profileForest": 0.3916946946028294,
+            "recallProfileForest": 0.3916946946028294
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792085008067,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5353937417185137,
+            "ownMode": 0.5353937417185137,
+            "ownActorSmoothed": 0.1065283869729757,
+            "personalMixture": 0.10446793281993211,
+            "personalBest": 0.10446793281993211,
+            "mixtureCalibrated": 0.2559128232904904,
+            "controlForest": 0.39789641559264854,
+            "profileForest": 0.3916946946028294,
+            "recallProfileForest": 0.3916946946028294
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 51,
+      "start": 1792093661933,
+      "end": 1792096721603,
+      "wonOn": 17,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792085610934,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4856734103962221,
+            "ownMode": 0.4856734103962221,
+            "ownActorSmoothed": 0.10446793281993211,
+            "personalMixture": 0.1025454611175934,
+            "personalBest": 0.1025454611175934,
+            "mixtureCalibrated": 0.24384854032630254,
+            "controlForest": 0.3763239162011275,
+            "profileForest": 0.3705375059133201,
+            "recallProfileForest": 0.3705375059133201
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 6,
+          "availableThrough": 1792085610934,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6176835395867513,
+            "ownMode": 0.6176835395867513,
+            "ownActorSmoothed": 0.14122695974544314,
+            "personalMixture": 0.14122695974544314,
+            "personalBest": 0.14122695974544314,
+            "mixtureCalibrated": 0.3788841055877795,
+            "controlForest": 0.3800263937444149,
+            "profileForest": 0.5029716031034095,
+            "recallProfileForest": 0.5029716031034095
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 52,
+      "start": 1792096748424,
+      "end": 1792096979385,
+      "wonOn": 1,
+      "board": "232ec33c8b8d51d359b52faae3872cba59676900e299b18c814afa07bbd6e26c",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792096721603,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.45822274825081655,
+            "ownMode": 0.45822274825081655,
+            "ownActorSmoothed": 0.1025454611175934,
+            "personalMixture": 0.10075173159401546,
+            "personalBest": 0.10075173159401546,
+            "mixtureCalibrated": 0.2325921663014798,
+            "controlForest": 0.3561960625589307,
+            "profileForest": 0.35079715085783836,
+            "recallProfileForest": 0.35079715085783836
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 7,
+          "availableThrough": 1792096721603,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5358489203454301,
+            "ownMode": 0.5358489203454301,
+            "ownActorSmoothed": 0.12918970328926782,
+            "personalMixture": 0.12918970328926782,
+            "personalBest": 0.12918970328926782,
+            "mixtureCalibrated": 0.33203183611957965,
+            "controlForest": 0.3330067875151183,
+            "profileForest": 0.43794143359637716,
+            "recallProfileForest": 0.43794143359637716
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 48,
+      "start": 1792097612195,
+      "end": 1792098036834,
+      "wonOn": 1,
+      "board": "250dd4793af6305b635c53ba74cd0001470a2e79ef0416181a3afdf8b64a1620",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792082167114,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6128646511778506,
+            "ownMode": 0.6128646511778506,
+            "ownActorSmoothed": 0.19314297544672426,
+            "personalMixture": 0.2703000136625997,
+            "personalBest": 0.19314297544672426,
+            "mixtureCalibrated": 0.37086623020901094,
+            "controlForest": 0.5370721957619972,
+            "profileForest": 0.4743542613500483,
+            "recallProfileForest": 0.4743542613500483
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792082167114,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6128646511778506,
+            "ownMode": 0.6128646511778506,
+            "ownActorSmoothed": 0.19314297544672426,
+            "personalMixture": 0.2703000136625997,
+            "personalBest": 0.19314297544672426,
+            "mixtureCalibrated": 0.37086623020901094,
+            "controlForest": 0.5370721957619972,
+            "profileForest": 0.4743542613500483,
+            "recallProfileForest": 0.4743542613500483
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 49,
+      "start": 1792098056466,
+      "end": 1792137863715,
+      "wonOn": 3,
+      "board": "112ea4c54b325088ff1a875f656a763ea8726c556d3bb596106074598f3dbc6d",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792098036834,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6337165141198786,
+            "ownMode": 0.6337165141198786,
+            "ownActorSmoothed": 0.16634215408588965,
+            "personalMixture": 0.2383322162705676,
+            "personalBest": 0.16634215408588965,
+            "mixtureCalibrated": 0.33216381414240403,
+            "controlForest": 0.5819397000357385,
+            "profileForest": 0.5234217980683484,
+            "recallProfileForest": 0.5234217980683484
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792098036834,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6337165141198786,
+            "ownMode": 0.6337165141198786,
+            "ownActorSmoothed": 0.16634215408588965,
+            "personalMixture": 0.2383322162705676,
+            "personalBest": 0.16634215408588965,
+            "mixtureCalibrated": 0.33216381414240403,
+            "controlForest": 0.5819397000357385,
+            "profileForest": 0.5234217980683484,
+            "recallProfileForest": 0.5234217980683484
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 50,
+      "start": 1792137899571,
+      "end": 1792138372678,
+      "wonOn": 1,
+      "board": "a6c639da85d34f65a680f153f9276249074f1a8ce18af8bcfea3f3b2e8e629a6",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792137863715,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5774118008660601,
+            "ownMode": 0.5774118008660601,
+            "ownActorSmoothed": 0.1602761508843801,
+            "personalMixture": 0.227445253965471,
+            "personalBest": 0.1602761508843801,
+            "mixtureCalibrated": 0.3149932304285093,
+            "controlForest": 0.5291023251288897,
+            "profileForest": 0.49344323932623174,
+            "recallProfileForest": 0.49344323932623174
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792137863715,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5774118008660601,
+            "ownMode": 0.5774118008660601,
+            "ownActorSmoothed": 0.1602761508843801,
+            "personalMixture": 0.227445253965471,
+            "personalBest": 0.1602761508843801,
+            "mixtureCalibrated": 0.3149932304285093,
+            "controlForest": 0.5291023251288897,
+            "profileForest": 0.49344323932623174,
+            "recallProfileForest": 0.49344323932623174
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 51,
+      "start": 1792138391388,
+      "end": 1792138633616,
+      "wonOn": 1,
+      "board": "0144f15e2a214d776026d6ffae471af801a2bfeb08f1b019a780f05ca1eba258",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792138372678,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6195778824633957,
+            "ownMode": 0.6195778824633957,
+            "ownActorSmoothed": 0.1546163697706038,
+            "personalMixture": 0.21728735895719822,
+            "personalBest": 0.1546163697706038,
+            "mixtureCalibrated": 0.2989725093395008,
+            "controlForest": 0.5745035477967688,
+            "profileForest": 0.5412324442948471,
+            "recallProfileForest": 0.5412324442948471
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 6,
+          "availableThrough": 1792138372678,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6199736062555852,
+            "ownMode": 0.6199736062555852,
+            "ownActorSmoothed": 0.14122695974544314,
+            "personalMixture": 0.24825698100747576,
+            "personalBest": 0.14122695974544314,
+            "mixtureCalibrated": 0.34811952192983814,
+            "controlForest": 0.6199736062555852,
+            "profileForest": 0.5201110653332227,
+            "recallProfileForest": 0.5201110653332227
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 53,
+      "start": 1792166705549,
+      "end": 1792167022746,
+      "wonOn": 1,
+      "board": "eefae6e74eab8436943a0ccba6fd8e46ec322c956b97aeddcdcd840133e6e9e4",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792096979385,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4894305168149234,
+            "ownMode": 0.4894305168149234,
+            "ownActorSmoothed": 0.10075173159401546,
+            "personalMixture": 0.09907812277062363,
+            "personalBest": 0.09907812277062363,
+            "mixtureCalibrated": 0.2978497872849766,
+            "controlForest": 0.3942362530472376,
+            "profileForest": 0.4081389376401579,
+            "recallProfileForest": 0.4081389376401579
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 8,
+          "availableThrough": 1792096979385,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5908205214211842,
+            "ownMode": 0.5908205214211842,
+            "ownActorSmoothed": 0.11967266399079211,
+            "personalMixture": 0.11967266399079211,
+            "personalBest": 0.11967266399079211,
+            "mixtureCalibrated": 0.4146615998967705,
+            "controlForest": 0.415504249505998,
+            "profileForest": 0.506199169190636,
+            "recallProfileForest": 0.506199169190636
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 54,
+      "start": 1792167038374,
+      "end": 1792167266894,
+      "wonOn": 1,
+      "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792167022746,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5185483944774804,
+            "ownMode": 0.5185483944774804,
+            "ownActorSmoothed": 0.09907812277062363,
+            "personalMixture": 0.09751659052347196,
+            "personalBest": 0.09751659052347196,
+            "mixtureCalibrated": 0.28297711129804937,
+            "controlForest": 0.42972900577717266,
+            "profileForest": 0.36694047985956335,
+            "recallProfileForest": 0.36694047985956335
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792078692796,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.35867503794902605,
+            "ownMode": 0.3383755978432295,
+            "ownActorSmoothed": 0.13957243183900614,
+            "personalMixture": 0.13665850963112391,
+            "personalBest": 0.13665850963112391,
+            "mixtureCalibrated": 0.15759602473801362,
+            "controlForest": 0.3574623575004726,
+            "profileForest": 0.22842619033969555,
+            "recallProfileForest": 0.22842619033969555
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 55,
+      "start": 1792167284004,
+      "end": 1792167530353,
+      "wonOn": 1,
+      "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792167266894,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5646563823086123,
+            "ownMode": 0.5646563823086123,
+            "ownActorSmoothed": 0.09751659052347196,
+            "personalMixture": 0.09605962941953085,
+            "personalBest": 0.09605962941953085,
+            "mixtureCalibrated": 0.3448606032435433,
+            "controlForest": 0.4817849623630936,
+            "profileForest": 0.4232011961920003,
+            "recallProfileForest": 0.4232011961920003
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792167266894,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.3965492188714043,
+            "ownMode": 0.3965492188714043,
+            "ownActorSmoothed": 0.11635906952532737,
+            "personalMixture": 0.11364028397060148,
+            "personalBest": 0.11364028397060148,
+            "mixtureCalibrated": 0.20893586563986422,
+            "controlForest": 0.3954177480047123,
+            "profileForest": 0.29396279427068256,
+            "recallProfileForest": 0.29396279427068256
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 56,
+      "start": 1792167538665,
+      "end": 1792170385332,
+      "wonOn": 2,
+      "board": "e5eecb7f05223aa125c9c3bbfe8067c097948ad1102a3a61a705f4586390d0e0",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792167530353,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.607676656128436,
+            "ownMode": 0.607676656128436,
+            "ownActorSmoothed": 0.09605962941953085,
+            "personalMixture": 0.07576018931373432,
+            "personalBest": 0.07576018931373432,
+            "mixtureCalibrated": 0.3268397535464572,
+            "controlForest": 0.5303548872637656,
+            "profileForest": 0.47569430065765766,
+            "recallProfileForest": 0.47569430065765766
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 9,
+          "availableThrough": 1792167022746,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.635276774988764,
+            "ownMode": 0.635276774988764,
+            "ownActorSmoothed": 0.11197610969755607,
+            "personalMixture": 0.11197610969755607,
+            "personalBest": 0.11197610969755607,
+            "mixtureCalibrated": 0.36950926208910045,
+            "controlForest": 0.4822210272089841,
+            "profileForest": 0.4494239840094586,
+            "recallProfileForest": 0.4494239840094586
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 57,
+      "start": 1792170422833,
+      "end": 1792170853487,
+      "wonOn": 2,
+      "board": "14ec2debe925513ec377e5e1eda3c8eb45f4a2a1813d323abc5920410887f090",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792170385332,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5720558015935444,
+            "ownMode": 0.5720558015935444,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.07576018931373432,
+            "personalBest": 0.07576018931373432,
+            "mixtureCalibrated": 0.31002570624354975,
+            "controlForest": 0.49991204027882336,
+            "profileForest": 0.44891190963856975,
+            "recallProfileForest": 0.44891190963856975
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 10,
+          "availableThrough": 1792170385332,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.566253969620706,
+            "ownMode": 0.566253969620706,
+            "ownActorSmoothed": 0.10563719042540202,
+            "personalMixture": 0.10563719042540202,
+            "personalBest": 0.10563719042540202,
+            "mixtureCalibrated": 0.33232157869116935,
+            "controlForest": 0.43153209698479217,
+            "profileForest": 0.4026636674037063,
+            "recallProfileForest": 0.4026636674037063
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 58,
+      "start": 1792170857134,
+      "end": 1792171110536,
+      "wonOn": 1,
+      "board": "97efa877d0b07620cad96fe453fe564a728aa77ddb84f612972ed010f2b1b620",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792170853487,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5198803217973235,
+            "ownMode": 0.5198803217973235,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.07576018931373432,
+            "personalBest": 0.07576018931373432,
+            "mixtureCalibrated": 0.2943376453886766,
+            "controlForest": 0.4525678123571319,
+            "profileForest": 0.40498300789708797,
+            "recallProfileForest": 0.40498300789708797
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 11,
+          "availableThrough": 1792170853487,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5085470985263867,
+            "ownMode": 0.5085470985263867,
+            "ownActorSmoothed": 0.10033750439605423,
+            "personalMixture": 0.10033750439605423,
+            "personalBest": 0.10033750439605423,
+            "mixtureCalibrated": 0.30123062490136776,
+            "controlForest": 0.3891533564111725,
+            "profileForest": 0.36356946443254673,
+            "recallProfileForest": 0.36356946443254673
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 59,
+      "start": 1792171113962,
+      "end": 1792171629658,
+      "wonOn": 3,
+      "board": "4dcdf9289212568fd3cd578ea5d47831092fb768b4ff47542c72e7b357132248",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792171110536,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5658991144403549,
+            "ownMode": 0.5658991144403549,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.07576018931373432,
+            "personalBest": 0.07576018931373432,
+            "mixtureCalibrated": 0.27970016703784284,
+            "controlForest": 0.5030943223895235,
+            "profileForest": 0.45869612993247477,
+            "recallProfileForest": 0.45869612993247477
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 12,
+          "availableThrough": 1792171110536,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5555435342055902,
+            "ownMode": 0.5555435342055902,
+            "ownActorSmoothed": 0.09585081396930517,
+            "personalMixture": 0.09585081396930517,
+            "personalBest": 0.09585081396930517,
+            "mixtureCalibrated": 0.2749091628459322,
+            "controlForest": 0.44912651865235426,
+            "profileForest": 0.4263233014789243,
+            "recallProfileForest": 0.4263233014789243
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 60,
+      "start": 1792171635042,
+      "end": 1792172069516,
+      "wonOn": 2,
+      "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792171629658,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5330759768932605,
+            "ownMode": 0.5330759768932605,
+            "ownActorSmoothed": 0.15152037862746864,
+            "personalMixture": 0.15152037862746864,
+            "personalBest": 0.15152037862746864,
+            "mixtureCalibrated": 0.26604291682360914,
+            "controlForest": 0.47447703388322615,
+            "profileForest": 0.4330520555561989,
+            "recallProfileForest": 0.4330520555561989
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 13,
+          "availableThrough": 1792171629658,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5037424042154891,
+            "ownMode": 0.5037424042154891,
+            "ownActorSmoothed": 0.1840238775625327,
+            "personalMixture": 0.1840238775625327,
+            "personalBest": 0.1840238775625327,
+            "mixtureCalibrated": 0.25238815114539204,
+            "controlForest": 0.4084284577137183,
+            "profileForest": 0.3880044248611029,
+            "recallProfileForest": 0.3880044248611029
+          }
+        }
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 61,
+      "start": 1792172079918,
+      "end": 1792172826685,
+      "wonOn": 3,
+      "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 2,
+        "mechanicsRecent20": 2
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "controlForest",
+        "mechanicsRecent20": "controlForest"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792172069516,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4835108593476372,
+            "ownMode": 0.4835108593476372,
+            "ownActorSmoothed": 0.14644694538852274,
+            "personalMixture": 0.14644694538852274,
+            "personalBest": 0.14644694538852274,
+            "mixtureCalibrated": 0.253300251800056,
+            "controlForest": 0.5235363488922579,
+            "profileForest": 0.4091252881257099,
+            "recallProfileForest": 0.4091252881257099
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 14,
+          "availableThrough": 1792172069516,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4590172783587014,
+            "ownMode": 0.4590172783587014,
+            "ownActorSmoothed": 0.17145510040931525,
+            "personalMixture": 0.17145510040931525,
+            "personalBest": 0.17145510040931525,
+            "mixtureCalibrated": 0.23294349650327661,
+            "controlForest": 0.4619871798581683,
+            "profileForest": 0.35491988443215333,
+            "recallProfileForest": 0.35491988443215333
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 92,
+      "start": 1792173667131,
+      "end": 1792218825933,
+      "wonOn": 2,
+      "board": "b036311749c913edcd2c7c3f3e468285f1b5ea36f67b76384b7b8648c8d775ce",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792173649391,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.469911445715168,
+            "ownMode": 0.469911445715168,
+            "ownActorSmoothed": 0.26441216391624206,
+            "personalMixture": 0.22906878587884788,
+            "personalBest": 0.26441216391624206,
+            "mixtureCalibrated": 0.3793679466086611,
+            "controlForest": 0.3757420218958568,
+            "profileForest": 0.36763222256874,
+            "recallProfileForest": 0.36763222256874
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 12,
+          "availableThrough": 1792173649391,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4302051859195885,
+            "ownMode": 0.4302051859195885,
+            "ownActorSmoothed": 0.14056679981881456,
+            "personalMixture": 0.09585081396930517,
+            "personalBest": 0.14056679981881456,
+            "mixtureCalibrated": 0.24428588273476046,
+            "controlForest": 0.31106324599224044,
+            "profileForest": 0.30811138237410374,
+            "recallProfileForest": 0.30811138237410374
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 52,
+      "start": 1792174210433,
+      "end": 1792174483508,
+      "wonOn": 1,
+      "board": "e79a42da72628cb240e0b52c6f68a0ee325a12fb445e762dd535d9894516ca89",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792138633616,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6589202277175427,
+            "ownMode": 0.6589202277175427,
+            "ownActorSmoothed": 0.2250957965803079,
+            "personalMixture": 0.283569897103647,
+            "personalBest": 0.14933560726657358,
+            "mixtureCalibrated": 0.3597848373289808,
+            "controlForest": 0.6168643864020086,
+            "profileForest": 0.5668813018414464,
+            "recallProfileForest": 0.5668813018414464
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 7,
+          "availableThrough": 1792138633616,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.6669932124848815,
+            "ownMode": 0.6669932124848815,
+            "ownActorSmoothed": 0.25837940657853564,
+            "personalMixture": 0.3497303218338549,
+            "personalBest": 0.12918970328926782,
+            "mixtureCalibrated": 0.43496373957415085,
+            "controlForest": 0.6669932124848815,
+            "profileForest": 0.5817597947445856,
+            "recallProfileForest": 0.5817597947445856
+          }
+        }
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 53,
+      "start": 1792174506087,
+      "end": 1792243130063,
+      "wonOn": 15,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792174483508,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.6766878864756598,
+            "ownMode": 0.6766878864756598,
+            "ownActorSmoothed": 0.2908554270183656,
+            "personalMixture": 0.34541369195708066,
+            "personalBest": 0.2201686709435772,
+            "mixtureCalibrated": 0.4165247456353228,
+            "controlForest": 0.6563884463698634,
+            "profileForest": 0.6097525794560847,
+            "recallProfileForest": 0.6097525794560847
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 8,
+          "availableThrough": 1792174483508,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.7041684144847937,
+            "ownMode": 0.7041684144847937,
+            "ownActorSmoothed": 0.35100387167009217,
+            "personalMixture": 0.42995838508965056,
+            "personalBest": 0.23934532798158423,
+            "mixtureCalibrated": 0.503625550940834,
+            "controlForest": 0.7041684144847937,
+            "profileForest": 0.6305012486336102,
+            "recallProfileForest": 0.6305012486336102
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 93,
+      "start": 1792218827820,
+      "end": 1792219006623,
+      "wonOn": 2,
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792218825933,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4245762678635216,
+            "ownMode": 0.4245762678635216,
+            "ownActorSmoothed": 0.23283865820800437,
+            "personalMixture": 0.19986212046675814,
+            "personalBest": 0.23283865820800437,
+            "mixtureCalibrated": 0.34009619602796726,
+            "controlForest": 0.3367130886460921,
+            "profileForest": 0.3291463783191493,
+            "recallProfileForest": 0.3291463783191493
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 13,
+          "availableThrough": 1792218825933,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.3914812910744618,
+            "ownMode": 0.3914812910744618,
+            "ownActorSmoothed": 0.1320624613492663,
+            "personalMixture": 0.09201193878126634,
+            "personalBest": 0.1320624613492663,
+            "mixtureCalibrated": 0.22495996527633053,
+            "controlForest": 0.2847700811301125,
+            "profileForest": 0.28212620158212,
+            "recallProfileForest": 0.28212620158212
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 94,
+      "start": 1792219008645,
+      "end": 1792219375551,
+      "wonOn": 5,
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792219006623,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4012170985791803,
+            "ownMode": 0.4012170985791803,
+            "ownActorSmoothed": 0.20337953572374284,
+            "personalMixture": 0.17261133806450146,
+            "personalBest": 0.20337953572374284,
+            "mixtureCalibrated": 0.3034543571007751,
+            "controlForest": 0.31923785362800755,
+            "profileForest": 0.3121778632555675,
+            "recallProfileForest": 0.3121778632555675
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 14,
+          "availableThrough": 1792219006623,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.3580470576717491,
+            "ownMode": 0.3580470576717491,
+            "ownActorSmoothed": 0.12471981055280777,
+            "personalMixture": 0.08869745170412449,
+            "personalBest": 0.12471981055280777,
+            "mixtureCalibrated": 0.20827395686702863,
+            "controlForest": 0.26206854724742196,
+            "profileForest": 0.25969058132528505,
+            "recallProfileForest": 0.25969058132528505
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 95,
+      "start": 1792219379250,
+      "end": 1792219620219,
+      "wonOn": 2,
+      "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792219375551,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.3604821756535631,
+            "ownMode": 0.3604821756535631,
+            "ownActorSmoothed": 0.1948332498726367,
+            "personalMixture": 0.16612550636643894,
+            "personalBest": 0.1948332498726367,
+            "mixtureCalibrated": 0.2882063598395607,
+            "controlForest": 0.2839928354928416,
+            "profileForest": 0.27740563155542286,
+            "recallProfileForest": 0.27740563155542286
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 15,
+          "availableThrough": 1792219375551,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.328953380996786,
+            "ownMode": 0.328953380996786,
+            "ownActorSmoothed": 0.11833041003519366,
+            "personalMixture": 0.08581326368628633,
+            "personalBest": 0.11833041003519366,
+            "mixtureCalibrated": 0.19375418822724416,
+            "controlForest": 0.24231421105991638,
+            "profileForest": 0.24016763686615925,
+            "recallProfileForest": 0.24016763686615925
+          }
+        }
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 96,
+      "start": 1792219621915,
+      "end": 1792219872499,
+      "wonOn": 5,
+      "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792219620219,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.3414151959846868,
+            "ownMode": 0.3414151959846868,
+            "ownActorSmoothed": 0.1679192358900169,
+            "personalMixture": 0.1411339640861578,
+            "personalBest": 0.1679192358900169,
+            "mixtureCalibrated": 0.2550394280115513,
+            "controlForest": 0.2700481181138523,
+            "profileForest": 0.2449619921898259,
+            "recallProfileForest": 0.2449619921898259
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 16,
+          "availableThrough": 1792219620219,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.3034640459375022,
+            "ownMode": 0.3034640459375022,
+            "ownActorSmoothed": 0.11273257609894248,
+            "personalMixture": 0.08328639038725384,
+            "personalBest": 0.11273257609894248,
+            "mixtureCalibrated": 0.18103323679929206,
+            "controlForest": 0.22500718934580002,
+            "profileForest": 0.22306334034764172,
+            "recallProfileForest": 0.22306334034764172
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 107,
+      "start": 1792236558549,
+      "end": 1792236707250,
+      "wonOn": 1,
+      "board": "967ff719207784bb402983e61f9caf68912a844bbe46baf0d033aaadd0388d0d",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 3,
+        "mechanicsRecent20": 3
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "mixtureCalibrated",
+        "mechanicsRecent20": "mixtureCalibrated"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792236553041,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.45846833087569394,
+            "ownMode": 0.45846833087569394,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.19541255058270565,
+            "personalBest": 0.19541255058270565,
+            "mixtureCalibrated": 0.4877976632793873,
+            "controlForest": 0.45846833087569394,
+            "profileForest": 0.45846833087569394,
+            "recallProfileForest": 0.45846833087569394
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792236553041,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.45846833087569394,
+            "ownMode": 0.45846833087569394,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.19541255058270565,
+            "personalBest": 0.19541255058270565,
+            "mixtureCalibrated": 0.4877976632793873,
+            "controlForest": 0.45846833087569394,
+            "profileForest": 0.45846833087569394,
+            "recallProfileForest": 0.45846833087569394
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 108,
+      "start": 1792236711656,
+      "end": 1792237001865,
+      "wonOn": 2,
+      "board": "9ce01b4a2c3845ea24d2f149b4290986bec974e250d3e831e829405d461edf7b",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792236707250,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5085997008345159,
+            "ownMode": 0.5085997008345159,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.1873997898929655,
+            "personalBest": 0.1873997898929655,
+            "mixtureCalibrated": 0.46020474627317687,
+            "controlForest": 0.5085997008345159,
+            "profileForest": 0.4328395115207815,
+            "recallProfileForest": 0.4328395115207815
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792236707250,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5085997008345159,
+            "ownMode": 0.5085997008345159,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.1873997898929655,
+            "personalBest": 0.1873997898929655,
+            "mixtureCalibrated": 0.46020474627317687,
+            "controlForest": 0.5085997008345159,
+            "profileForest": 0.4328395115207815,
+            "recallProfileForest": 0.4328395115207815
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 109,
+      "start": 1792237007560,
+      "end": 1792237319200,
+      "wonOn": 4,
+      "board": "df4be479a9ae3655e3edc4fbe389ae1961b112494a65e7950e98ba17d46506cd",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237001865,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.47961373360329945,
+            "ownMode": 0.47961373360329945,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.17992361981614866,
+            "personalBest": 0.17992361981614866,
+            "mixtureCalibrated": 0.43445964437364554,
+            "controlForest": 0.47961373360329945,
+            "profileForest": 0.4089269775285111,
+            "recallProfileForest": 0.4089269775285111
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237001865,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.47961373360329945,
+            "ownMode": 0.47961373360329945,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.17992361981614866,
+            "personalBest": 0.17992361981614866,
+            "mixtureCalibrated": 0.43445964437364554,
+            "controlForest": 0.47961373360329945,
+            "profileForest": 0.4089269775285111,
+            "recallProfileForest": 0.4089269775285111
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 110,
+      "start": 1792237324237,
+      "end": 1792237443928,
+      "wonOn": 1,
+      "board": "79e03ed202f8ac314e212d14cb7876493f245051dd543db7712396f1181dce29",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237319200,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4525688698849698,
+            "ownMode": 0.4525688698849698,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.17294810648413833,
+            "personalBest": 0.24870829579787262,
+            "mixtureCalibrated": 0.41043861493090583,
+            "controlForest": 0.4525688698849698,
+            "profileForest": 0.38661579440247734,
+            "recallProfileForest": 0.38661579440247734
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237319200,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4525688698849698,
+            "ownMode": 0.4525688698849698,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.17294810648413833,
+            "personalBest": 0.24870829579787262,
+            "mixtureCalibrated": 0.41043861493090583,
+            "controlForest": 0.4525688698849698,
+            "profileForest": 0.38661579440247734,
+            "recallProfileForest": 0.38661579440247734
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 111,
+      "start": 1792237449745,
+      "end": 1792237761997,
+      "wonOn": 3,
+      "board": "734de8ea4726b4395e633297684868883b4c0a00349812dbfa39212a3104d8c6",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "alwaysFirst",
+        "mechanicsRecent20": "alwaysFirst"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237443928,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4841552617694523,
+            "ownMode": 0.4841552617694523,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.22325986439776857,
+            "personalBest": 0.29394662047255693,
+            "mixtureCalibrated": 0.4448463439554536,
+            "controlForest": 0.40839507245571793,
+            "profileForest": 0.42261886645096947,
+            "recallProfileForest": 0.42261886645096947
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237443928,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4841552617694523,
+            "ownMode": 0.4841552617694523,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.22325986439776857,
+            "personalBest": 0.29394662047255693,
+            "mixtureCalibrated": 0.4448463439554536,
+            "controlForest": 0.40839507245571793,
+            "profileForest": 0.42261886645096947,
+            "recallProfileForest": 0.42261886645096947
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 112,
+      "start": 1792237765230,
+      "end": 1792237899448,
+      "wonOn": 1,
+      "board": "6feaedf11b69c2d75c2fa7f0cc90d2a3ec2ac78f20997f7fcb5211f2cc44c28c",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "profileForest",
+        "mechanicsRecent20": "profileForest"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237761997,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4378662181675504,
+            "ownMode": 0.4378662181675504,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2133822524080979,
+            "personalBest": 0.27933532789059035,
+            "mixtureCalibrated": 0.42012974831391436,
+            "controlForest": 0.36717946209276203,
+            "profileForest": 0.45621092046888917,
+            "recallProfileForest": 0.45621092046888917
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237761997,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4378662181675504,
+            "ownMode": 0.4378662181675504,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2133822524080979,
+            "personalBest": 0.27933532789059035,
+            "mixtureCalibrated": 0.42012974831391436,
+            "controlForest": 0.36717946209276203,
+            "profileForest": 0.45621092046888917,
+            "recallProfileForest": 0.45621092046888917
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 113,
+      "start": 1792237901717,
+      "end": 1792238139919,
+      "wonOn": 1,
+      "board": "a4afad79446ee57a8cd17f673f6f92c16ee6b5d4188e42794a0f734a0494e312",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "profileForest",
+        "mechanicsRecent20": "profileForest"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237899448,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.48937724998245813,
+            "ownMode": 0.48937724998245813,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.18522606721570203,
+            "personalBest": 0.24676246253418477,
+            "mixtureCalibrated": 0.47282853845561773,
+            "controlForest": 0.34766398518623143,
+            "profileForest": 0.5064934624495284,
+            "recallProfileForest": 0.5064934624495284
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792237899448,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.48937724998245813,
+            "ownMode": 0.48937724998245813,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.18522606721570203,
+            "personalBest": 0.24676246253418477,
+            "mixtureCalibrated": 0.47282853845561773,
+            "controlForest": 0.34766398518623143,
+            "profileForest": 0.5064934624495284,
+            "recallProfileForest": 0.5064934624495284
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 114,
+      "start": 1792238142501,
+      "end": 1792238271414,
+      "wonOn": 1,
+      "board": "ffa756e3f8d74e9575ef7beb14d36edce38118c0a5634aaa150e72aba6bdbebe",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "profileForest",
+        "mechanicsRecent20": "profileForest"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792238139919,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5184986947654356,
+            "ownMode": 0.5184986947654356,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.17789546484381014,
+            "personalBest": 0.23531095185620574,
+            "mixtureCalibrated": 0.5219982482719017,
+            "controlForest": 0.3862755433721645,
+            "profileForest": 0.5344686856873658,
+            "recallProfileForest": 0.5344686856873658
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792238139919,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5184986947654356,
+            "ownMode": 0.5184986947654356,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.17789546484381014,
+            "personalBest": 0.23531095185620574,
+            "mixtureCalibrated": 0.5219982482719017,
+            "controlForest": 0.3862755433721645,
+            "profileForest": 0.5344686856873658,
+            "recallProfileForest": 0.5344686856873658
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 115,
+      "start": 1792238277298,
+      "end": 1792238809487,
+      "wonOn": 4,
+      "board": "72a93edadec31d72ac45905618b70b4806785e3bf55e7865e2259f705ad11f4e",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 5,
+        "mechanicsRecent20": 5
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "mixtureCalibrated",
+        "mechanicsRecent20": "mixtureCalibrated"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792238271414,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5456699635091711,
+            "ownMode": 0.5456699635091711,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2468159602967314,
+            "personalBest": 0.30038650390444954,
+            "mixtureCalibrated": 0.5678752097147857,
+            "controlForest": 0.4223014010142831,
+            "profileForest": 0.5605704919138752,
+            "recallProfileForest": 0.5605704919138752
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792238271414,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5456699635091711,
+            "ownMode": 0.5456699635091711,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2468159602967314,
+            "personalBest": 0.30038650390444954,
+            "mixtureCalibrated": 0.5678752097147857,
+            "controlForest": 0.4223014010142831,
+            "profileForest": 0.5605704919138752,
+            "recallProfileForest": 0.5605704919138752
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 116,
+      "start": 1792238811966,
+      "end": 1792239199390,
+      "wonOn": 2,
+      "board": "a16edc4d92039a124f5971a7ed4e512abe55f0ea3450746faa07190be65b7927",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "profileForest",
+        "mechanicsRecent20": "profileForest"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792238809487,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5142015116836883,
+            "ownMode": 0.5142015116836883,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2353608670336351,
+            "personalBest": 0.28534395159419734,
+            "mixtureCalibrated": 0.5917398809640251,
+            "controlForest": 0.39909457275748744,
+            "profileForest": 0.6038643855903431,
+            "recallProfileForest": 0.6038643855903431
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792238809487,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5142015116836883,
+            "ownMode": 0.5142015116836883,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2353608670336351,
+            "personalBest": 0.28534395159419734,
+            "mixtureCalibrated": 0.5917398809640251,
+            "controlForest": 0.39909457275748744,
+            "profileForest": 0.6038643855903431,
+            "recallProfileForest": 0.6038643855903431
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 117,
+      "start": 1792239201873,
+      "end": 1792239391544,
+      "wonOn": 1,
+      "board": "c54931303d4e9df9c80ac1f032fc7bdc44a5dc08c957bc4b804555ec9f3ce29f",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "mixtureCalibrated",
+        "mechanicsRecent20": "mixtureCalibrated"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792239199390,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.4659003606094927,
+            "ownMode": 0.4659003606094927,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2246728870980352,
+            "personalBest": 0.2713087540118138,
+            "mixtureCalibrated": 0.5571862645864446,
+            "controlForest": 0.35850178903653485,
+            "profileForest": 0.5495587800804062,
+            "recallProfileForest": 0.5495587800804062
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792239199390,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.4659003606094927,
+            "ownMode": 0.4659003606094927,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.2246728870980352,
+            "personalBest": 0.2713087540118138,
+            "mixtureCalibrated": 0.5571862645864446,
+            "controlForest": 0.35850178903653485,
+            "profileForest": 0.5495587800804062,
+            "recallProfileForest": 0.5495587800804062
+          }
+        }
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 118,
+      "start": 1792239395598,
+      "end": 1792243573524,
+      "wonOn": 3,
+      "board": "9270e848a74474092952aa52c4e050deb893997a476e277b9a2a38b6abb37d7a",
+      "predictions": {
+        "fixedBeforeTest": 1,
+        "recent20": 1,
+        "mechanicsRecent20": 1
+      },
+      "selectedMethods": {
+        "fixedBeforeTest": "alwaysFirst",
+        "recent20": "mixtureCalibrated",
+        "mechanicsRecent20": "mixtureCalibrated"
+      },
+      "selectionAvailability": {
+        "recent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792239391544,
+          "matchedMechanics": false,
+          "scores": {
+            "alwaysFirst": 0.5155340297702325,
+            "ownMode": 0.5155340297702325,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.21470064920523713,
+            "personalBest": 0.25821345162471243,
+            "mixtureCalibrated": 0.6007067898429896,
+            "controlForest": 0.4153276192487358,
+            "profileForest": 0.59359009515642,
+            "recallProfileForest": 0.59359009515642
+          }
+        },
+        "mechanicsRecent20": {
+          "pastEpisodes": 20,
+          "availableThrough": 1792239391544,
+          "matchedMechanics": true,
+          "scores": {
+            "alwaysFirst": 0.5155340297702325,
+            "ownMode": 0.5155340297702325,
+            "ownActorSmoothed": 0.07576018931373432,
+            "personalMixture": 0.21470064920523713,
+            "personalBest": 0.25821345162471243,
+            "mixtureCalibrated": 0.6007067898429896,
+            "controlForest": 0.4153276192487358,
+            "profileForest": 0.59359009515642,
+            "recallProfileForest": 0.59359009515642
+          }
+        }
+      }
+    }
+  ],
+  "note": "Method selection uses only earlier completed own first-clear games, with a twenty-game window and ten-game half-life. Mechanics matching uses clock/key presence when six earlier comparable games exist. No replay wins, other players, target results or later held-game outcomes select a target method. Historical online selection is not new prospective proof; original numeric ledgers and misses are unchanged."
+}

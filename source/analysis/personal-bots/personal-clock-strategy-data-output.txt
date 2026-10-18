@@ -1,0 +1,1 @@
+{"output":"C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\policy-clock-strategy-prefix-data.json","pilot":false,"prefixes":398,"milliseconds":109904,"totals":{"nodes":954085,"boundaries":3180,"calls":33543,"clockCalls":1111}}

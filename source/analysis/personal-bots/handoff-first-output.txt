@@ -1,0 +1,44 @@
+{
+  "resultControls": 29,
+  "computationCaps": 0,
+  "summaries": {
+    "Dennisisdebeste": {
+      "handoffZero": {
+        "runs": 736,
+        "wins": 75,
+        "failures": {
+          "clock": 331,
+          "tray": 330
+        },
+        "computationCaps": 0
+      },
+      "handoff": {
+        "runs": 736,
+        "wins": 71,
+        "failures": {
+          "clock": 350,
+          "tray": 315
+        },
+        "computationCaps": 0
+      }
+    },
+    "Gerda": {
+      "handoffZero": {
+        "runs": 192,
+        "wins": 46,
+        "failures": {
+          "tray": 146
+        },
+        "computationCaps": 0
+      },
+      "handoff": {
+        "runs": 192,
+        "wins": 44,
+        "failures": {
+          "tray": 148
+        },
+        "computationCaps": 0
+      }
+    }
+  }
+}

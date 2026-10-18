@@ -1,0 +1,34 @@
+'use strict';
+const assert = require('assert/strict');
+const Hard = require('../../../www/hard.js'), L = require('../../../www/layouts.js');
+const { retryMemory } = require('./personal_retry_memory.js');
+const { reconstruct } = require('./personal_prefix_data.js');
+const previous = { aid: 'observed', campaign: 1, board: 'same', t: 10, availableAt: 20, seen: [1, 0, 2, 0], moves: 2 };
+const target = { name: 'Dennis', campaign: 1, board: 'same', t: 30 };
+assert.deepEqual(Array.from(retryMemory([previous], target, 'full', 4).memory), [1, 0, 1, 0]);
+for (const changed of [{ campaign: 2 }, { board: 'different' }, { availableAt: 30 }, { t: 31 }]) {
+  assert.deepEqual(Array.from(retryMemory([{ ...previous, ...changed }], target, 'full', 4).memory), [0, 0, 0, 0]);
+}
+assert.deepEqual(retryMemory([previous], { ...target, campaign: undefined }, 'full', 4).sources, []);
+assert.deepEqual(retryMemory([previous], target, 'full', 4).sources, [{ aid: 'observed', availableAt: 20 }]);
+const sampled = retryMemory([previous], target, 'configured', 4);
+assert.deepEqual(sampled.memory, retryMemory([previous], { ...target, t: 40 }, 'configured', 4).memory);
+assert.equal(sampled.memory[1], 0);
+assert.equal(sampled.memory[3], 0);
+assert.throws(() => retryMemory([previous], { ...target, t: NaN }, 'full', 4));
+assert.throws(() => retryMemory([{ ...previous, availableAt: NaN }], target, 'full', 4));
+assert.throws(() => retryMemory([previous], target, 'invented', 4));
+const tiles = Array.from({ length: 4 }, (_, index) => ({ x: index * 8, y: 0, z: 0 }));
+const game = { tiles, nb: L.neighbors(tiles), faces: [0, 0, 1, 1], down: [1, 0, 0, 0] };
+const state = { ...game, follow: [-1, 1, 0], physicalLog: [], log: [], logMatches: true };
+Hard.play(state, { ...Hard.P, physicalFlips: true, peek: 0, end: 0, plan: 0, forceMatches: false }, 1);
+const actions = state.physicalLog.map((frame, index) => ({ ...frame, followEnd: index === 0 ? 1 : 3, time: index * 100, settled: false }));
+const recording = { g: game, take: [-1, 1, 0], actions, aid: 'retry', manualChoices: 2, physicalRemovals: 2 };
+const plain = reconstruct(recording), recalled = reconstruct(recording, false, Uint8Array.from([1, 0, 0, 0]));
+assert.deepEqual(recalled.state.physicalLog, plain.state.physicalLog);
+assert.deepEqual(recalled.prefix.reconstructed, plain.prefix.reconstructed);
+assert.equal(plain.prefix.decisions[0].F[plain.prefix.decisions[0].k][65], 0);
+assert.equal(recalled.prefix.decisions[0].F[recalled.prefix.decisions[0].k][65], 1);
+assert.equal(plain.prefix.decisions[0].F[plain.prefix.decisions[0].k][67], 0);
+assert.equal(recalled.prefix.decisions[0].F[recalled.prefix.decisions[0].k][67], 1);
+console.log('PASS retry-memory reconstruction: observed earlier sources, strict availability, exact board/campaign and unchanged real taps');

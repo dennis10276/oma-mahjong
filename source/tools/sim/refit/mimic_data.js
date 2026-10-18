@@ -40,7 +40,8 @@ for (const [aid, ch] of Object.entries(R)) {
   const g = { tiles, nb, faces: st.f.slice(), down, rules, clock, follow: take, log: [] };
   const res = Hard.play(g, Hard.P, 1);
   const t = rows[0].t || null;
-  games.push({ aid, key: init.key, at: init.at, t, end, n, found: g.found || 0, missed: g.missed || 0, moves: take.length, decisions: g.log.map(d => ({ F: d.F, k: d.k, tray: d.tray, moves: d.moves, freeDown: d.freeDown, looked: d.looked, flip: !!d.flip })) });
+  const availableAt = Math.max(...rows.map(row => row.t || 0));
+  games.push({ aid, key: init.key, at: init.at, t, availableAt, end, n, found: g.found || 0, missed: g.missed || 0, moves: take.length, decisions: g.log.map(d => ({ F: d.F, k: d.k, tray: d.tray, moves: d.moves, freeDown: d.freeDown, looked: d.looked, flip: !!d.flip })) });
 }
 games.sort((a, b) => (a.t || 0) - (b.t || 0));
 const nd = games.reduce((s, g) => s + g.decisions.length, 0), miss = games.reduce((s, g) => s + g.decisions.filter(d => d.k < 0).length, 0);

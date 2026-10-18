@@ -1,0 +1,50 @@
+{
+  "made": "2026-10-18T00:15:20.088Z",
+  "evidence": "descriptive-available-retry-knowledge-not-forecast-accuracy",
+  "prefixFingerprint": "21a745c5479ce35ea0002329ea63f4cc076c7fa6f0250ae0d6d88fefa69f565b",
+  "prefixDataSha256": "967533b4c6d5a3502829fba789a769aa9ecc1e17f1d8afc0b23dbb1aa8fdb15e",
+  "sourceSha256": "a989d3b46408cc875afa02aed59c0b7c05fff06b6cc1fc7f831d5e7bb153b637",
+  "players": {
+    "Dennisisdebeste": {
+      "candidatePrefixes": 74,
+      "prefixes": 74,
+      "unmappedPrefixes": 0,
+      "earlierAvailableSameCampaignPrefixes": 36,
+      "decisions": 7835,
+      "previouslyObservedDownChoices": 1375,
+      "flipsModelCallsUnknown": 355,
+      "takesModelCallsBlind": 55
+    },
+    "Mrs. Doubtfire": {
+      "candidatePrefixes": 65,
+      "prefixes": 65,
+      "unmappedPrefixes": 0,
+      "earlierAvailableSameCampaignPrefixes": 50,
+      "decisions": 5198,
+      "previouslyObservedDownChoices": 1825,
+      "flipsModelCallsUnknown": 598,
+      "takesModelCallsBlind": 77
+    },
+    "PUK": {
+      "candidatePrefixes": 57,
+      "prefixes": 57,
+      "unmappedPrefixes": 0,
+      "earlierAvailableSameCampaignPrefixes": 26,
+      "decisions": 4771,
+      "previouslyObservedDownChoices": 804,
+      "flipsModelCallsUnknown": 414,
+      "takesModelCallsBlind": 33
+    },
+    "Gerda": {
+      "candidatePrefixes": 202,
+      "prefixes": 164,
+      "unmappedPrefixes": 38,
+      "earlierAvailableSameCampaignPrefixes": 110,
+      "decisions": 13988,
+      "previouslyObservedDownChoices": 4120,
+      "flipsModelCallsUnknown": 1376,
+      "takesModelCallsBlind": 326
+    }
+  },
+  "note": "Only pictures actually observed in earlier uploaded natural prefixes of the same campaign and exact board. This identifies missing candidate memory, not proof that the human remembered every picture. No cross-campaign replay memory, future upload, hidden initial face or target winning count is used."
+}

@@ -1,0 +1,615 @@
+{
+  "evaluatedAt": "2026-10-17T03:12:15.630455+00:00",
+  "evidence": "historical-exploratory",
+  "experiment": "match",
+  "controlLabel": "clock-corrected context actor",
+  "candidateLabel": "personal fatal error despite known tray match",
+  "measurementFingerprint": "2337060fdd0cd27f5891b77e3785b8229b588fef260fd3bf61cd4f03e9ba4d41",
+  "simulationRuns": 64,
+  "comparison": "Same 80 episodes as the previous count report; later L53 completion is not added to this test window.",
+  "coverage": {
+    "episodes": 245,
+    "heldOutEpisodes": 80,
+    "contextActiveInHeldOut": 50
+  },
+  "heldOut": {
+    "alwaysFirst": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.575
+    },
+    "ownMode": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.575
+    },
+    "controlRaw": {
+      "n": 80,
+      "correct": 38,
+      "accuracy": 0.475,
+      "exactAccuracy": 0.4625,
+      "wilson95": [
+        0.3692454986165162,
+        0.5830454881967124
+      ],
+      "meanAbsoluteError": 2.2625
+    },
+    "controlCalibrated": {
+      "n": 80,
+      "correct": 37,
+      "accuracy": 0.4625,
+      "exactAccuracy": 0.4625,
+      "wilson95": [
+        0.3574781238878701,
+        0.5709583563319731
+      ],
+      "meanAbsoluteError": 1.95
+    },
+    "controlForest": {
+      "n": 80,
+      "correct": 43,
+      "accuracy": 0.5375,
+      "exactAccuracy": 0.5375,
+      "wilson95": [
+        0.4290416436680269,
+        0.6425218761121299
+      ],
+      "meanAbsoluteError": 1.55
+    },
+    "contextRaw": {
+      "n": 80,
+      "correct": 37,
+      "accuracy": 0.4625,
+      "exactAccuracy": 0.45,
+      "wilson95": [
+        0.3574781238878701,
+        0.5709583563319731
+      ],
+      "meanAbsoluteError": 2.225
+    },
+    "contextCalibrated": {
+      "n": 80,
+      "correct": 37,
+      "accuracy": 0.4625,
+      "exactAccuracy": 0.4625,
+      "wilson95": [
+        0.3574781238878701,
+        0.5709583563319731
+      ],
+      "meanAbsoluteError": 2.0875
+    },
+    "contextForest": {
+      "n": 80,
+      "correct": 43,
+      "accuracy": 0.5375,
+      "exactAccuracy": 0.5375,
+      "wilson95": [
+        0.4290416436680269,
+        0.6425218761121299
+      ],
+      "meanAbsoluteError": 1.6
+    }
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 11,
+        "accuracy": 0.55,
+        "exactAccuracy": 0.55,
+        "wilson95": [
+          0.3420820083075997,
+          0.7418049791429071
+        ],
+        "meanAbsoluteError": 0.9
+      },
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "controlRaw": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 3.05
+        },
+        "controlCalibrated": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.15
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.8
+        },
+        "contextRaw": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.3,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 3.15
+        },
+        "contextCalibrated": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.15
+        },
+        "contextForest": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.85
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "selectedBeforeTest": "controlRaw",
+      "selectedScore": {
+        "n": 20,
+        "correct": 8,
+        "accuracy": 0.4,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.21880396741419272,
+          0.613422057684794
+        ],
+        "meanAbsoluteError": 4.05
+      },
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "controlRaw": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 4.05
+        },
+        "controlCalibrated": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "contextRaw": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 4.05
+        },
+        "contextCalibrated": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 3.4
+        },
+        "contextForest": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 3.6
+        }
+      }
+    },
+    "PUK": {
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 14,
+        "accuracy": 0.7,
+        "exactAccuracy": 0.7,
+        "wilson95": [
+          0.4810232237710206,
+          0.854524726031006
+        ],
+        "meanAbsoluteError": 0.5
+      },
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "controlRaw": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.7
+        },
+        "controlCalibrated": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 1.5
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "contextRaw": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.55
+        },
+        "contextCalibrated": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 1.35
+        },
+        "contextForest": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        }
+      }
+    },
+    "Gerda": {
+      "selectedBeforeTest": "controlRaw",
+      "selectedScore": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.25
+      },
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "controlRaw": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.25
+        },
+        "controlCalibrated": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.7
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "contextRaw": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 1.15
+        },
+        "contextCalibrated": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 2.45
+        },
+        "contextForest": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        }
+      }
+    }
+  },
+  "contextAvailablePeriod": {
+    "alwaysFirst": {
+      "n": 50,
+      "correct": 29,
+      "accuracy": 0.58,
+      "exactAccuracy": 0.58,
+      "wilson95": [
+        0.4423319668777783,
+        0.7062520276543307
+      ],
+      "meanAbsoluteError": 1.32
+    },
+    "ownMode": {
+      "n": 50,
+      "correct": 29,
+      "accuracy": 0.58,
+      "exactAccuracy": 0.58,
+      "wilson95": [
+        0.4423319668777783,
+        0.7062520276543307
+      ],
+      "meanAbsoluteError": 1.32
+    },
+    "controlRaw": {
+      "n": 50,
+      "correct": 27,
+      "accuracy": 0.54,
+      "exactAccuracy": 0.52,
+      "wilson95": [
+        0.40398634328388083,
+        0.6703056539821737
+      ],
+      "meanAbsoluteError": 1.46
+    },
+    "controlCalibrated": {
+      "n": 50,
+      "correct": 26,
+      "accuracy": 0.52,
+      "exactAccuracy": 0.52,
+      "wilson95": [
+        0.3851151225880844,
+        0.6520308760449429
+      ],
+      "meanAbsoluteError": 1.58
+    },
+    "controlForest": {
+      "n": 50,
+      "correct": 28,
+      "accuracy": 0.56,
+      "exactAccuracy": 0.56,
+      "wilson95": [
+        0.4230578680014353,
+        0.6883801278976466
+      ],
+      "meanAbsoluteError": 1.3
+    },
+    "contextRaw": {
+      "n": 50,
+      "correct": 26,
+      "accuracy": 0.52,
+      "exactAccuracy": 0.5,
+      "wilson95": [
+        0.3851151225880844,
+        0.6520308760449429
+      ],
+      "meanAbsoluteError": 1.4
+    },
+    "contextCalibrated": {
+      "n": 50,
+      "correct": 26,
+      "accuracy": 0.52,
+      "exactAccuracy": 0.52,
+      "wilson95": [
+        0.3851151225880844,
+        0.6520308760449429
+      ],
+      "meanAbsoluteError": 1.8
+    },
+    "contextForest": {
+      "n": 50,
+      "correct": 29,
+      "accuracy": 0.58,
+      "exactAccuracy": 0.58,
+      "wilson95": [
+        0.4423319668777783,
+        0.7062520276543307
+      ],
+      "meanAbsoluteError": 1.3
+    }
+  },
+  "targetMet": false,
+  "note": "Visible-match error rates use earlier human physical choices, excluding automatic actions and unknown matching pictures. Historical accuracy cannot establish the frozen prospective goal."
+}

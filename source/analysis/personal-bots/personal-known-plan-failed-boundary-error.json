@@ -1,0 +1,11 @@
+{
+  "evidence": "verified-instrumentation-assertion-failure",
+  "targetMet": false,
+  "job": 43248,
+  "processId": 25164,
+  "failure": "audit counted both the initial full reconstruction and the retained-prefix reconstruction at a historical physics boundary",
+  "actualPlanningCallbackCalls": 162,
+  "expectedRetainedDecisions": 62,
+  "source": "personal_known_plan_data.js:59",
+  "disposition": "Stopped the remaining worker only after the assertion was observed and the exact parent process was confirmed live. No canonical full feature data or fitted model was produced. Preserve matching sources before correcting retained-prefix instrumentation."
+}

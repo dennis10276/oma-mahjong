@@ -1,0 +1,10 @@
+{
+  "runRoot": "analysis/archive/personal-bots/runs/known-plan-2026-10-18T10-47-22-831Z",
+  "sourceSnapshot": "analysis/archive/personal-bots/runs/known-plan-2026-10-18T10-47-22-831Z/analysis/archive/personal-bots/experiments/personal-known-plan-count-scored-2026-10-18T15-09-37-493Z",
+  "snapshot": "analysis/archive/personal-bots/experiments/personal-known-plan-count-scored-2026-10-18T15-09-37-493Z",
+  "manifestSha256": "d093f32610ffaa037cee5df4beb1a074a02f7d52a4bf5214a11d7128a7ca6160",
+  "files": 286,
+  "dependencies": 36,
+  "originalScoringRule": "actual-tolerance-v1",
+  "note": "Completed count data/control proof/scored predictions copied without changing any frozen source. Legacy metric retained for252 numeric control checks; current8+ rescoring is a separate report, never an overwritten old forecast."
+}

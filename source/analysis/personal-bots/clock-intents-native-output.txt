@@ -1,0 +1,13 @@
+{
+  "made": "2026-10-18T20:08:52.046122+00:00",
+  "targetMet": false,
+  "evidence": "native-persistent-intent-reference-only",
+  "dataSha256": "3d3c3d903f2deb1395a1a4e308cb671eb224cd8cbfff7c32fc625729e20115f5",
+  "modelsSha256": "afdd1c5a747a94722ba8f194f01fa90f346083cc0dd11258136f1e44ea92e645",
+  "dataFile": "analysis/archive/personal-bots/experiments/personal-fresh-clock-actions-2026-10-18T16-30-12-344Z/analysis/archive/personal-bots/personal-fresh-clock-prefixes.json",
+  "actorFile": "analysis/archive/personal-bots/experiments/personal-fresh-own-fits-2026-10-18T15-59-12-900Z/analysis/archive/personal-bots/personal-fresh-own-models.json",
+  "actorSha256": "dffe93e21abed8a1e41ac079ae50be22d5ec0958ea9de65eb23f1fd94032f1fe",
+  "prefixes": 445,
+  "decisions": 39268,
+  "note": "Training-prefix forward-filter references only, not winning-count accuracy or actual past forecast evidence."
+}

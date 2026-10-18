@@ -1,0 +1,12 @@
+Captured 25 / 276 pre-tap opening feature sets
+Captured 50 / 276 pre-tap opening feature sets
+Captured 75 / 276 pre-tap opening feature sets
+Captured 100 / 276 pre-tap opening feature sets
+Captured 125 / 276 pre-tap opening feature sets
+Captured 150 / 276 pre-tap opening feature sets
+Captured 175 / 276 pre-tap opening feature sets
+Captured 200 / 276 pre-tap opening feature sets
+Captured 225 / 276 pre-tap opening feature sets
+Captured 250 / 276 pre-tap opening feature sets
+Captured 275 / 276 pre-tap opening feature sets
+Saved 276 opening probes without executing a move

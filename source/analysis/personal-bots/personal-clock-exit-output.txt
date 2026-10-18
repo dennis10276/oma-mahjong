@@ -1,0 +1,134 @@
+{
+  "Dennisisdebeste": {
+    "autonomous": {
+      "simulations": 80,
+      "clockSimulations": 80,
+      "clockBoards": 20,
+      "wins": 14,
+      "clockExits": 79,
+      "clockPhaseTaps": 551,
+      "plannedClockDecisions": 489,
+      "plannedShare": 0.8874773139745916,
+      "exitTrayCounts": {
+        "0": 5,
+        "1": 17,
+        "2": 36,
+        "3": 21,
+        "4": 0
+      },
+      "trayFailuresWithinTwoMoves": 1,
+      "identicalClockRoutesAcrossSeeds": 15
+    },
+    "human": {
+      "boards": 20,
+      "observedClockExits": 16,
+      "exitTrayCounts": {
+        "0": 2,
+        "1": 5,
+        "2": 4,
+        "3": 5,
+        "4": 0
+      },
+      "unavailableOrCensoredWithoutExit": 1
+    }
+  },
+  "Mrs. Doubtfire": {
+    "autonomous": {
+      "simulations": 80,
+      "clockSimulations": 80,
+      "clockBoards": 20,
+      "wins": 7,
+      "clockExits": 78,
+      "clockPhaseTaps": 650,
+      "plannedClockDecisions": 543,
+      "plannedShare": 0.8353846153846154,
+      "exitTrayCounts": {
+        "0": 8,
+        "1": 5,
+        "2": 50,
+        "3": 15,
+        "4": 0
+      },
+      "trayFailuresWithinTwoMoves": 12,
+      "identicalClockRoutesAcrossSeeds": 15
+    },
+    "human": {
+      "boards": 20,
+      "observedClockExits": 11,
+      "exitTrayCounts": {
+        "0": 1,
+        "1": 0,
+        "2": 7,
+        "3": 3,
+        "4": 0
+      },
+      "unavailableOrCensoredWithoutExit": 6
+    }
+  },
+  "PUK": {
+    "autonomous": {
+      "simulations": 80,
+      "clockSimulations": 0,
+      "clockBoards": 0,
+      "wins": 16,
+      "clockExits": 0,
+      "clockPhaseTaps": 0,
+      "plannedClockDecisions": 0,
+      "plannedShare": null,
+      "exitTrayCounts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "trayFailuresWithinTwoMoves": 0,
+      "identicalClockRoutesAcrossSeeds": 0
+    },
+    "human": {
+      "boards": 20,
+      "observedClockExits": 0,
+      "exitTrayCounts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "unavailableOrCensoredWithoutExit": 0
+    }
+  },
+  "Gerda": {
+    "autonomous": {
+      "simulations": 80,
+      "clockSimulations": 0,
+      "clockBoards": 0,
+      "wins": 4,
+      "clockExits": 0,
+      "clockPhaseTaps": 0,
+      "plannedClockDecisions": 0,
+      "plannedShare": null,
+      "exitTrayCounts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "trayFailuresWithinTwoMoves": 0,
+      "identicalClockRoutesAcrossSeeds": 0
+    },
+    "human": {
+      "boards": 20,
+      "observedClockExits": 0,
+      "exitTrayCounts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "unavailableOrCensoredWithoutExit": 0
+    }
+  }
+}

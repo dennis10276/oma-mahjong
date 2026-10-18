@@ -1,0 +1,53 @@
+{
+  "made": "2026-10-17T15:21:15.732Z",
+  "evidence": "single-tap-versus-anticipated-followup-diagnostic",
+  "physicalSingleStep": true,
+  "prefixFingerprint": "f03e51f2913e5bfde1107e6ba290454997b4d8ee7a5ce1c3336e42bb53cc113e",
+  "prefixDataSha256": "03aa9dfcdc16afd7bfa0aadbe1fba94f7a91e02532c769efaee15c1a0eb42ec3",
+  "sourceHash": "91b4fad135e90e1725756e122dbad72792048deb23d9c4fba87de73dd2b53657",
+  "players": {
+    "Dennisisdebeste": {
+      "takes": 1971,
+      "trayScoringDifferent": 0,
+      "hypotheticalClockCredit": 0,
+      "hypotheticalKeyCredit": 0,
+      "skipped": [],
+      "examples": []
+    },
+    "Mrs. Doubtfire": {
+      "takes": 1259,
+      "trayScoringDifferent": 0,
+      "hypotheticalClockCredit": 0,
+      "hypotheticalKeyCredit": 0,
+      "skipped": [],
+      "examples": []
+    },
+    "PUK": {
+      "takes": 2729,
+      "trayScoringDifferent": 0,
+      "hypotheticalClockCredit": 0,
+      "hypotheticalKeyCredit": 0,
+      "skipped": [
+        {
+          "aid": "a74c895d-085c-4d87-aef0-9f41987f793a",
+          "reason": "unmatched-physical-choice-sequence"
+        }
+      ],
+      "examples": []
+    },
+    "Gerda": {
+      "takes": 8383,
+      "trayScoringDifferent": 0,
+      "hypotheticalClockCredit": 0,
+      "hypotheticalKeyCredit": 0,
+      "skipped": [
+        {
+          "aid": "eecdcb84-da32-4388-9b3b-85f366eee110",
+          "reason": "unmatched-physical-choice-sequence"
+        }
+      ],
+      "examples": []
+    }
+  },
+  "note": "The default score anticipates up to six known tray matches; optional single-step scoring does not. This audit compares the chosen feature state with the actual single-tap result; a difference is not automatically an illegal transition or human mistake. Mandatory physical twins are preserved. It changes no training weights, count scores or numeric forecasts."
+}

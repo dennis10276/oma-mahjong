@@ -1,0 +1,128 @@
+{
+  "made": "2026-10-18T10:26:59.702Z",
+  "evidence": "known-plan-native-javascript-probability-parity",
+  "targetMet": false,
+  "fingerprint": "f1987f2395f49abf8d7d98611658fdb6dfcec8cdd99796b7fb75a419fb6d0a2f",
+  "fingerprintFiles": [
+    "www/hard.js",
+    "www/layouts.js",
+    "tools/sim/refit/known_tray_plan.js",
+    "tools/sim/refit/personal_known_plan_data.js",
+    "tools/sim/refit/personal_prefix_data.js",
+    "tools/sim/refit/personal_context_runtime_audit.js",
+    "tools/sim/refit/mimic_games.js",
+    "tools/sim/refit/personal_followthrough.js",
+    "tools/sim/refit/personal_pair_followthrough.js",
+    "tools/sim/refit/personal_retry_memory.js",
+    "tools/sim/refit/personal_tray_goal.js",
+    "tools/sim/refit/attempt_campaigns.js",
+    "tools/sim/refit/personal_model.js",
+    "analysis/archive/realdata/plays.json",
+    "analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/policy-value-prefix-data.json",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/analysis/archive/personal-bots/policy-known-plan-prefix-data.json",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/www/hard.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/www/layouts.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/known_tray_plan.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_known_plan_data.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_prefix_data.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_context_runtime_audit.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/mimic_games.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_followthrough.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_pair_followthrough.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_retry_memory.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_tray_goal.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/attempt_campaigns.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/tools/sim/refit/personal_model.js",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/analysis/archive/realdata/plays.json",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/personal-bots/experiments/personal-known-plan-actions-2026-10-18T07-00-31-837Z/analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "analysis/archive/personal-bots/policy-known-plan-prefix-data.json",
+    "tools/sim/refit/known_plan_reference.js",
+    "tools/sim/refit/personal_known_plan_bits_audit.js",
+    "tools/sim/refit/known_tray_plan_bits.js",
+    "analysis/personal-bots/personal-known-plan-bits-runtime-audit.json",
+    "analysis/archive/personal-bots/personal-known-plan-models.json",
+    "analysis/personal-bots/personal-known-plan-action-evaluation.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-count-requests.json",
+    "analysis/archive/personal-bots/experiments/personal-episode-actions-2026-10-18T05-33-43-593Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-episode-actions-2026-10-18T05-33-43-593Z/analysis/personal-bots/personal-plan-action-evaluation.json",
+    "tools/sim/refit/personal_known_plan_fit.py",
+    "tools/sim/refit/personal_known_plan.py",
+    "tools/sim/refit/personal_full_choice_fit.py",
+    "tools/sim/refit/personal_kind_fit.py",
+    "tools/sim/refit/personal_policy_fit.py",
+    "tools/sim/refit/personal_known_plan_snapshot.py",
+    "tools/sim/refit/personal_plan_fit.py",
+    "tools/sim/refit/personal_value_fit.py",
+    "tools/sim/refit/personal_known_plan_runtime_audit.js",
+    "tools/sim/refit/personal_known_plan_choice.js",
+    "tools/sim/refit/known_tray_plan_cache.js",
+    "tools/sim/refit/personal_context_choice.js"
+  ],
+  "referenceFeatureFingerprint": "2b13538f9f7b466d97e49bad179cf8cd6d94e2386a86bca9a7c7198334c3ef1c",
+  "optimizedFeatureProofSha256": "019e871d7ff265a2c9d300989762f05c97c83917a8829df529b77239cd9bffd1",
+  "prefixes": 197,
+  "probabilityDecisions": 38028,
+  "models": 138,
+  "players": {
+    "Dennisisdebeste": {
+      "control": {
+        "decisions": 4508,
+        "jointLogLoss": 1.6764329646088145,
+        "topActionAccuracy": 0.41282165039929014
+      },
+      "knownPlan": {
+        "decisions": 4508,
+        "jointLogLoss": 1.6696086996205137,
+        "topActionAccuracy": 0.410603371783496
+      }
+    },
+    "Mrs. Doubtfire": {
+      "control": {
+        "decisions": 4567,
+        "jointLogLoss": 1.8439602992690514,
+        "topActionAccuracy": 0.35844098970878036
+      },
+      "knownPlan": {
+        "decisions": 4567,
+        "jointLogLoss": 1.842381429307671,
+        "topActionAccuracy": 0.3608495730238669
+      }
+    },
+    "PUK": {
+      "control": {
+        "decisions": 3401,
+        "jointLogLoss": 1.7840041239514548,
+        "topActionAccuracy": 0.4201705380770362
+      },
+      "knownPlan": {
+        "decisions": 3401,
+        "jointLogLoss": 1.7775357137258903,
+        "topActionAccuracy": 0.42957953543075567
+      }
+    },
+    "Gerda": {
+      "control": {
+        "decisions": 6538,
+        "jointLogLoss": 2.0646693185600893,
+        "topActionAccuracy": 0.28433771795656165
+      },
+      "knownPlan": {
+        "decisions": 6538,
+        "jointLogLoss": 2.0662538183688177,
+        "topActionAccuracy": 0.2821963903334353
+      }
+    }
+  },
+  "note": "All held initial/retry action-control and personal known-plan likelihoods match frozen Python outputs to1e-12. Own-person membership, pre-campaign availability and target exclusions remain exact. This audit supplies observed human feature sequences only for numerical parity, never autonomous winning-try prediction. Full generation separately preserved all398/33,543 physical/feature controls; cached inference is exact public-state memoization, not learned hidden knowledge. No winning-count improvement or future80% success is established."
+}

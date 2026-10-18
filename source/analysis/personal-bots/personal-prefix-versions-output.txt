@@ -1,0 +1,38 @@
+{
+  "Dennisisdebeste": {
+    "versions": 113,
+    "attempts": 113,
+    "strictProspectiveAttempts": 113,
+    "futureActorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+    "availableThrough": 1792337025929,
+    "inputObservedThrough": 1792338235700,
+    "updatedAttempts": []
+  },
+  "Mrs. Doubtfire": {
+    "versions": 65,
+    "attempts": 65,
+    "strictProspectiveAttempts": 65,
+    "futureActorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+    "availableThrough": 1792264148974,
+    "inputObservedThrough": 1792288513885,
+    "updatedAttempts": []
+  },
+  "PUK": {
+    "versions": 57,
+    "attempts": 57,
+    "strictProspectiveAttempts": 57,
+    "futureActorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+    "availableThrough": 1792243130063,
+    "inputObservedThrough": 1792288513885,
+    "updatedAttempts": []
+  },
+  "Gerda": {
+    "versions": 210,
+    "attempts": 210,
+    "strictProspectiveAttempts": 210,
+    "futureActorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+    "availableThrough": 1792309731625,
+    "inputObservedThrough": 1792338235700,
+    "updatedAttempts": []
+  }
+}

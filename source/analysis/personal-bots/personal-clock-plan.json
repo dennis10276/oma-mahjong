@@ -1,0 +1,77 @@
+{
+  "made": "2026-10-17T02:57:00.663Z",
+  "measurementFingerprint": "933ea3e0af4e5252108f06043500d3636bc3efcc41f1a1c9bb18e001e36ad567",
+  "runs": 64,
+  "horizons": [
+    0,
+    4,
+    8,
+    10,
+    14
+  ],
+  "players": {
+    "Dennisisdebeste": {
+      "recordedClockGames": 20,
+      "fitted": {
+        "horizon": 10,
+        "ownGames": 15,
+        "ownAvailableThrough": 1792174831215,
+        "familyAvailableThrough": 1792173759333,
+        "cutoff": 1792174835467,
+        "scores": {
+          "0": 29.776592771642328,
+          "4": 19.23732953597095,
+          "8": 18.502403444222217,
+          "10": 18.502403444222217,
+          "14": 18.502403444222217
+        },
+        "available": true
+      },
+      "baseline": {
+        "games": 5,
+        "clockFailures": 1,
+        "binaryLogLoss": 0.7677601184203637
+      },
+      "personal": {
+        "games": 5,
+        "clockFailures": 1,
+        "binaryLogLoss": 0.7677601184203637
+      }
+    },
+    "Mrs. Doubtfire": {
+      "recordedClockGames": 28,
+      "fitted": {
+        "horizon": 4,
+        "ownGames": 21,
+        "ownAvailableThrough": 1792173078076,
+        "familyAvailableThrough": 1792048887818,
+        "cutoff": 1792173079220,
+        "scores": {
+          "0": 28.217795839901886,
+          "4": 18.044537111000192,
+          "8": 21.05247592103875,
+          "10": 21.05247592103875,
+          "14": 21.05247592103875
+        },
+        "available": true
+      },
+      "baseline": {
+        "games": 7,
+        "clockFailures": 0,
+        "binaryLogLoss": 1.0058687029635647
+      },
+      "personal": {
+        "games": 7,
+        "clockFailures": 0,
+        "binaryLogLoss": 1.0952552600727665
+      }
+    },
+    "PUK": {
+      "recordedClockGames": 0
+    },
+    "Gerda": {
+      "recordedClockGames": 0
+    }
+  },
+  "note": "Historical clock-cause diagnostic, not winning-attempt accuracy. Planning onset is fitted from strictly earlier available complete unassisted regular recordings, with twenty-game decay and a two-observation equal-person family prior. The default ten-move planner wins ties. Simulations start without prior-retry picture memory; this is a mechanism diagnostic, not a complete retry fit."
+}

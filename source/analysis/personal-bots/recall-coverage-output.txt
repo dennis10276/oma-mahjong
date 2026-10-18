@@ -1,0 +1,566 @@
+{"name":"Dennisisdebeste","prefixes":113,"campaignUnmapped":0}
+{"name":"Mrs. Doubtfire","prefixes":65,"campaignUnmapped":0}
+{"name":"PUK","prefixes":57,"campaignUnmapped":0}
+{"name":"Gerda","prefixes":210,"campaignUnmapped":38}
+{
+  "physicalControls": 445,
+  "nativeControls": 445,
+  "decisionsControlled": 39268,
+  "summaries": {
+    "Dennisisdebeste": {
+      "prefixes": 113,
+      "campaignUnmapped": 0,
+      "unmappedAids": [],
+      "coverage": {
+        "configured": {
+          "prefixes": 113,
+          "decisions": 12363,
+          "prefixesWithMemory": 51,
+          "changedDecisions": 3080,
+          "reopeningsRecognized": 335,
+          "rememberedInspectionsNowTakes": 39,
+          "blindFeaturesResolved": 5,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 4
+        },
+        "full": {
+          "prefixes": 113,
+          "decisions": 12363,
+          "prefixesWithMemory": 51,
+          "changedDecisions": 3226,
+          "reopeningsRecognized": 457,
+          "rememberedInspectionsNowTakes": 49,
+          "blindFeaturesResolved": 5,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 5
+        }
+      },
+      "trainingOnlyScores": {
+        "none": {
+          "prefixes": 113,
+          "decisions": 12363,
+          "jointLogLoss": 1.6811618451896495,
+          "topActionAccuracy": 0.41001375070775703
+        },
+        "configured": {
+          "prefixes": 113,
+          "decisions": 12363,
+          "jointLogLoss": 1.689460388200701,
+          "topActionAccuracy": 0.4075062687050069
+        },
+        "full": {
+          "prefixes": 113,
+          "decisions": 12363,
+          "jointLogLoss": 1.692519913406712,
+          "topActionAccuracy": 0.40556499231578097
+        }
+      },
+      "initialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 49,
+          "decisions": 5590,
+          "jointLogLoss": 1.667568836392243,
+          "topActionAccuracy": 0.41967799642218245
+        },
+        "configured": {
+          "prefixes": 49,
+          "decisions": 5590,
+          "jointLogLoss": 1.667568836392243,
+          "topActionAccuracy": 0.41967799642218245
+        },
+        "full": {
+          "prefixes": 49,
+          "decisions": 5590,
+          "jointLogLoss": 1.667568836392243,
+          "topActionAccuracy": 0.41967799642218245
+        }
+      },
+      "nonInitialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 64,
+          "decisions": 6773,
+          "jointLogLoss": 1.692380643237412,
+          "topActionAccuracy": 0.40203750184556325
+        },
+        "configured": {
+          "prefixes": 64,
+          "decisions": 6773,
+          "jointLogLoss": 1.7075282716510585,
+          "topActionAccuracy": 0.39746050494610957
+        },
+        "full": {
+          "prefixes": 64,
+          "decisions": 6773,
+          "jointLogLoss": 1.7131129328236436,
+          "topActionAccuracy": 0.39391702347556473
+        }
+      },
+      "recentEarlierOwnConditionalScores": {
+        "none": {
+          "prefixes": 35,
+          "decisions": 4316,
+          "jointLogLoss": 1.6857158805248698,
+          "topActionAccuracy": 0.40963855421686746
+        },
+        "configured": {
+          "prefixes": 35,
+          "decisions": 4316,
+          "jointLogLoss": 1.695554332524253,
+          "topActionAccuracy": 0.4052363299351251
+        },
+        "full": {
+          "prefixes": 35,
+          "decisions": 4316,
+          "jointLogLoss": 1.7002383072656786,
+          "topActionAccuracy": 0.40245597775718256
+        }
+      },
+      "latest20TrainingOnlyScores": {
+        "none": {
+          "prefixes": 20,
+          "decisions": 2756,
+          "jointLogLoss": 1.669089772637532,
+          "topActionAccuracy": 0.4172714078374456
+        },
+        "configured": {
+          "prefixes": 20,
+          "decisions": 2756,
+          "jointLogLoss": 1.6806542807117768,
+          "topActionAccuracy": 0.41545718432510886
+        },
+        "full": {
+          "prefixes": 20,
+          "decisions": 2756,
+          "jointLogLoss": 1.6879190275085671,
+          "topActionAccuracy": 0.41219158200290273
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "prefixes": 65,
+      "campaignUnmapped": 0,
+      "unmappedAids": [],
+      "coverage": {
+        "configured": {
+          "prefixes": 65,
+          "decisions": 5198,
+          "prefixesWithMemory": 50,
+          "changedDecisions": 2874,
+          "reopeningsRecognized": 463,
+          "rememberedInspectionsNowTakes": 47,
+          "blindFeaturesResolved": 0,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 14
+        },
+        "full": {
+          "prefixes": 65,
+          "decisions": 5198,
+          "prefixesWithMemory": 50,
+          "changedDecisions": 2903,
+          "reopeningsRecognized": 541,
+          "rememberedInspectionsNowTakes": 57,
+          "blindFeaturesResolved": 1,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 17
+        }
+      },
+      "trainingOnlyScores": {
+        "none": {
+          "prefixes": 65,
+          "decisions": 5198,
+          "jointLogLoss": 1.8014740646827236,
+          "topActionAccuracy": 0.3712966525586764
+        },
+        "configured": {
+          "prefixes": 65,
+          "decisions": 5198,
+          "jointLogLoss": 1.8524184191914375,
+          "topActionAccuracy": 0.35455944594074645
+        },
+        "full": {
+          "prefixes": 65,
+          "decisions": 5198,
+          "jointLogLoss": 1.8627046489837795,
+          "topActionAccuracy": 0.3522508657175837
+        }
+      },
+      "initialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8129990846178181,
+          "topActionAccuracy": 0.3596549435965494
+        },
+        "configured": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8129990846178181,
+          "topActionAccuracy": 0.3596549435965494
+        },
+        "full": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8129990846178181,
+          "topActionAccuracy": 0.3596549435965494
+        }
+      },
+      "nonInitialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 51,
+          "decisions": 3691,
+          "jointLogLoss": 1.7967685092662553,
+          "topActionAccuracy": 0.3760498509888919
+        },
+        "configured": {
+          "prefixes": 51,
+          "decisions": 3691,
+          "jointLogLoss": 1.8685129564990632,
+          "topActionAccuracy": 0.35247900298022217
+        },
+        "full": {
+          "prefixes": 51,
+          "decisions": 3691,
+          "jointLogLoss": 1.8829989555401327,
+          "topActionAccuracy": 0.3492278515307505
+        }
+      },
+      "recentEarlierOwnConditionalScores": {
+        "none": {
+          "prefixes": 0,
+          "decisions": 0,
+          "jointLogLoss": null,
+          "topActionAccuracy": null
+        },
+        "configured": {
+          "prefixes": 0,
+          "decisions": 0,
+          "jointLogLoss": null,
+          "topActionAccuracy": null
+        },
+        "full": {
+          "prefixes": 0,
+          "decisions": 0,
+          "jointLogLoss": null,
+          "topActionAccuracy": null
+        }
+      },
+      "latest20TrainingOnlyScores": {
+        "none": {
+          "prefixes": 20,
+          "decisions": 2084,
+          "jointLogLoss": 1.797061518760101,
+          "topActionAccuracy": 0.3666026871401152
+        },
+        "configured": {
+          "prefixes": 20,
+          "decisions": 2084,
+          "jointLogLoss": 1.8247661045622228,
+          "topActionAccuracy": 0.3574856046065259
+        },
+        "full": {
+          "prefixes": 20,
+          "decisions": 2084,
+          "jointLogLoss": 1.8314089099744615,
+          "topActionAccuracy": 0.3555662188099808
+        }
+      }
+    },
+    "PUK": {
+      "prefixes": 57,
+      "campaignUnmapped": 0,
+      "unmappedAids": [],
+      "coverage": {
+        "configured": {
+          "prefixes": 57,
+          "decisions": 4771,
+          "prefixesWithMemory": 26,
+          "changedDecisions": 1710,
+          "reopeningsRecognized": 282,
+          "rememberedInspectionsNowTakes": 47,
+          "blindFeaturesResolved": 2,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 12
+        },
+        "full": {
+          "prefixes": 57,
+          "decisions": 4771,
+          "prefixesWithMemory": 26,
+          "changedDecisions": 1777,
+          "reopeningsRecognized": 355,
+          "rememberedInspectionsNowTakes": 59,
+          "blindFeaturesResolved": 2,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 16
+        }
+      },
+      "trainingOnlyScores": {
+        "none": {
+          "prefixes": 57,
+          "decisions": 4771,
+          "jointLogLoss": 1.6073233388872217,
+          "topActionAccuracy": 0.4722280444351289
+        },
+        "configured": {
+          "prefixes": 57,
+          "decisions": 4771,
+          "jointLogLoss": 1.6494576429166838,
+          "topActionAccuracy": 0.4590232655627751
+        },
+        "full": {
+          "prefixes": 57,
+          "decisions": 4771,
+          "jointLogLoss": 1.6594150147819409,
+          "topActionAccuracy": 0.4562984699224481
+        }
+      },
+      "initialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 31,
+          "decisions": 2800,
+          "jointLogLoss": 1.6176402459388786,
+          "topActionAccuracy": 0.4757142857142857
+        },
+        "configured": {
+          "prefixes": 31,
+          "decisions": 2800,
+          "jointLogLoss": 1.6176402459388786,
+          "topActionAccuracy": 0.4757142857142857
+        },
+        "full": {
+          "prefixes": 31,
+          "decisions": 2800,
+          "jointLogLoss": 1.6176402459388786,
+          "topActionAccuracy": 0.4757142857142857
+        }
+      },
+      "nonInitialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 26,
+          "decisions": 1971,
+          "jointLogLoss": 1.5926671543389508,
+          "topActionAccuracy": 0.4672754946727549
+        },
+        "configured": {
+          "prefixes": 26,
+          "decisions": 1971,
+          "jointLogLoss": 1.6946573950921542,
+          "topActionAccuracy": 0.4353120243531202
+        },
+        "full": {
+          "prefixes": 26,
+          "decisions": 1971,
+          "jointLogLoss": 1.7187601962941539,
+          "topActionAccuracy": 0.4287163876204972
+        }
+      },
+      "recentEarlierOwnConditionalScores": {
+        "none": {
+          "prefixes": 0,
+          "decisions": 0,
+          "jointLogLoss": null,
+          "topActionAccuracy": null
+        },
+        "configured": {
+          "prefixes": 0,
+          "decisions": 0,
+          "jointLogLoss": null,
+          "topActionAccuracy": null
+        },
+        "full": {
+          "prefixes": 0,
+          "decisions": 0,
+          "jointLogLoss": null,
+          "topActionAccuracy": null
+        }
+      },
+      "latest20TrainingOnlyScores": {
+        "none": {
+          "prefixes": 20,
+          "decisions": 1418,
+          "jointLogLoss": 1.6692137102673523,
+          "topActionAccuracy": 0.4400564174894217
+        },
+        "configured": {
+          "prefixes": 20,
+          "decisions": 1418,
+          "jointLogLoss": 1.759290674893221,
+          "topActionAccuracy": 0.4090267983074753
+        },
+        "full": {
+          "prefixes": 20,
+          "decisions": 1418,
+          "jointLogLoss": 1.7657159346046043,
+          "topActionAccuracy": 0.40409026798307474
+        }
+      }
+    },
+    "Gerda": {
+      "prefixes": 210,
+      "campaignUnmapped": 38,
+      "unmappedAids": [
+        "52e5cb50-9ece-40fc-aa60-bee6005fedd5",
+        "29a110b6-d4f9-40e8-baf2-7502a369701f",
+        "a73ad918-5422-4935-ab55-7dc970ed6ffc",
+        "18e78dc5-c33a-431a-a54a-20513f06ccd0",
+        "da655c00-ed56-413a-8237-50740f36f9e1",
+        "501ae7e2-e099-4fd8-8bbb-416886c72e12",
+        "e5a5b46b-d8e2-452c-a534-81f456007df5",
+        "268380b7-1551-4a5b-9ed1-fc37e6fefb07",
+        "47035804-9ae3-4df7-89f8-1ccd596511a0",
+        "a41ee6f6-3813-4a77-b9b0-052bcc9e7b51",
+        "080ac1cc-a59f-4557-94e5-a703e8931e5a",
+        "19b4ad0b-982c-4255-ab6a-891010c8931f",
+        "a2169a35-b6de-4e7f-abf0-4e185866f4f7",
+        "86fe85f2-5479-4aa7-ac19-a494f4e4aed6",
+        "dd993485-d088-4e07-821e-e0cbbad9651b",
+        "5796527f-6929-484a-8420-f8fb91b99254",
+        "41740253-5f3d-4248-91c4-15ae6fa341ae",
+        "14c4f672-070b-468e-8ad5-386d462501ce",
+        "fd520f54-ba30-4898-9568-bbd608252c94",
+        "07ec671b-253f-4200-9891-edd84cdb7e84",
+        "411d856f-6041-445e-9354-39cca85b86e0",
+        "3e78b81e-6758-4e9f-8268-7501b8f8535d",
+        "c699ed0f-ada5-4e59-95b6-2e35fd534060",
+        "68f38091-7f80-4a16-8297-6abd766e1cf8",
+        "aa1c2848-cacc-43fd-b5ab-057b954827f9",
+        "92464a36-7f8a-40b4-8a73-bb273b7ca7fb",
+        "877e7811-33d8-4613-9b03-fe656216d184",
+        "36f2a2d7-3277-4266-b6c5-0382281432dd",
+        "334b831e-087a-4b25-b22d-363bc88f88b8",
+        "70df1344-6174-417e-a7cf-6b2ef7254529",
+        "d7e12705-358a-4f9f-9848-4a075626de39",
+        "7f779395-2f86-4d94-9276-11cd816d2977",
+        "eebbf1a6-0cb8-40c2-8f6e-77331ff49317",
+        "1995bfc7-d970-4610-84c1-8e58ccc2dc8f",
+        "ffb7b72e-8dbc-4b5b-82d0-6b27a8310073",
+        "42a2af1d-d384-4d87-9185-d5ef7e406203",
+        "646c57f3-96fe-44ff-86fa-2c61a70ceb5f",
+        "9e62c12e-7e31-436f-8027-93e635b3726f"
+      ],
+      "coverage": {
+        "configured": {
+          "prefixes": 210,
+          "decisions": 16936,
+          "prefixesWithMemory": 112,
+          "changedDecisions": 7423,
+          "reopeningsRecognized": 1113,
+          "rememberedInspectionsNowTakes": 100,
+          "blindFeaturesResolved": 13,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 30
+        },
+        "full": {
+          "prefixes": 210,
+          "decisions": 16936,
+          "prefixesWithMemory": 112,
+          "changedDecisions": 7639,
+          "reopeningsRecognized": 1312,
+          "rememberedInspectionsNowTakes": 115,
+          "blindFeaturesResolved": 14,
+          "fatalLabelsResolved": 0,
+          "pairKindsRestored": 38
+        }
+      },
+      "trainingOnlyScores": {
+        "none": {
+          "prefixes": 210,
+          "decisions": 16936,
+          "jointLogLoss": 1.971155925640183,
+          "topActionAccuracy": 0.3367973547472839
+        },
+        "configured": {
+          "prefixes": 210,
+          "decisions": 16936,
+          "jointLogLoss": 2.0299625987440266,
+          "topActionAccuracy": 0.32463391591875296
+        },
+        "full": {
+          "prefixes": 210,
+          "decisions": 16936,
+          "jointLogLoss": 2.0379212598746577,
+          "topActionAccuracy": 0.322094945677846
+        }
+      },
+      "initialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 67,
+          "decisions": 6798,
+          "jointLogLoss": 1.9311160918330685,
+          "topActionAccuracy": 0.3305383936451898
+        },
+        "configured": {
+          "prefixes": 67,
+          "decisions": 6798,
+          "jointLogLoss": 1.9311160918330685,
+          "topActionAccuracy": 0.3305383936451898
+        },
+        "full": {
+          "prefixes": 67,
+          "decisions": 6798,
+          "jointLogLoss": 1.9311160918330685,
+          "topActionAccuracy": 0.3305383936451898
+        }
+      },
+      "nonInitialNewTrainingOnlyScores": {
+        "none": {
+          "prefixes": 143,
+          "decisions": 10138,
+          "jointLogLoss": 1.998004494413192,
+          "topActionAccuracy": 0.34099427895048334
+        },
+        "configured": {
+          "prefixes": 143,
+          "decisions": 10138,
+          "jointLogLoss": 2.0962437739246043,
+          "topActionAccuracy": 0.320674689287828
+        },
+        "full": {
+          "prefixes": 143,
+          "decisions": 10138,
+          "jointLogLoss": 2.1095390870937076,
+          "topActionAccuracy": 0.3164332215427106
+        }
+      },
+      "recentEarlierOwnConditionalScores": {
+        "none": {
+          "prefixes": 8,
+          "decisions": 1197,
+          "jointLogLoss": 1.8370650999393048,
+          "topActionAccuracy": 0.3266499582289056
+        },
+        "configured": {
+          "prefixes": 8,
+          "decisions": 1197,
+          "jointLogLoss": 1.8584824032296063,
+          "topActionAccuracy": 0.3266499582289056
+        },
+        "full": {
+          "prefixes": 8,
+          "decisions": 1197,
+          "jointLogLoss": 1.863724235608199,
+          "topActionAccuracy": 0.3241436925647452
+        }
+      },
+      "latest20TrainingOnlyScores": {
+        "none": {
+          "prefixes": 20,
+          "decisions": 2278,
+          "jointLogLoss": 2.08105064101609,
+          "topActionAccuracy": 0.2967515364354697
+        },
+        "configured": {
+          "prefixes": 20,
+          "decisions": 2278,
+          "jointLogLoss": 2.1302179439240887,
+          "topActionAccuracy": 0.2835820895522388
+        },
+        "full": {
+          "prefixes": 20,
+          "decisions": 2278,
+          "jointLogLoss": 2.133937804878455,
+          "topActionAccuracy": 0.28314310798946446
+        }
+      }
+    }
+  }
+}

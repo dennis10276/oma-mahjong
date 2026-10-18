@@ -1,0 +1,25 @@
+{
+  "made": "2026-10-18T16:24:35.562Z",
+  "targetMet": false,
+  "evidence": "fresh-clock-native-runtime-parity-only",
+  "prefixes": 445,
+  "decisions": 39268,
+  "clockDecisions": 1378,
+  "maximumDifference": 1.1102230246251565e-15,
+  "dataSha256": "3d3c3d903f2deb1395a1a4e308cb671eb224cd8cbfff7c32fc625729e20115f5",
+  "modelsSha256": "d8f868d08b366005fa04fa7141e4d162461c48d6957d3e0ff18d453bdf935fa2",
+  "nativeSha256": "11eba778641a675a459e79c7ddf7ace6512e202eed0d40b05c363b01581c99f0",
+  "sourceHashes": {
+    "tools/sim/refit/personal_fresh_clock_runtime_audit.js": "1588f07967269a595023241876bf33bb53197a133b7f8018de1ffcf1dfb00182",
+    "tools/sim/refit/personal_clock_strategy_choice.js": "9dd83e112bc51205fc91d478770a24e52dd52a17379c166569f8eab7dfc887f3",
+    "tools/sim/refit/known_clock_strategy.js": "84edc19c72293d784f6d5d429fa3f849d1775e230b59ba77f5520ce02f62827d",
+    "tools/sim/refit/known_tray_plan.js": "e8cc62a1e52c7824ab4031b5702d5231ab05a51a260c203e9fabb48c3eed505a",
+    "www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "tools/sim/refit/known_clock_dig.js": "aa041eaa6813311fb0aabe2cc1fd502fea70760733a7246b6b745012b9045735",
+    "tools/sim/refit/known_clock_plan.js": "ceedda69596e61148d29c7024a622cf891b0f02712b8d8951cf1ebdb106bc850",
+    "tools/sim/refit/known_tray_plan_cache.js": "3ded5f1a8896940cc103b9325c0df70f2ed3bedd3b2bf0d3983b057a8e89dfb9",
+    "tools/sim/refit/known_tray_plan_bits.js": "55b232c9439c1e05423b3983a3e7da8d45b1179b16cf84d4964ad0c6232b2c06",
+    "tools/sim/refit/personal_context_choice.js": "67b3e9fdb661ae92f1df6c2060d616182108583af53c1d74e5452546788f0523"
+  },
+  "note": "All445 training prefixes use causal runtime updates and match native probabilities/posteriors within1e-12. This verifies implementation, not winning-count accuracy, availability of historical forecasts or80% success."
+}

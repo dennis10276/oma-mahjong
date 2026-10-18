@@ -1,0 +1,13 @@
+{
+  "output": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\personal-bots\\personal-known-plan-throughput-audit.json",
+  "pilot": true,
+  "prefixes": 8,
+  "milliseconds": 9508,
+  "totals": {
+    "nodes": 175010,
+    "boundaries": 5502,
+    "calls": 712,
+    "checked": 712,
+    "uncertainJoker": 0
+  }
+}

@@ -1,0 +1,277 @@
+{"made": "2026-10-18T05:25:51.099915+00:00", "inputHashes": {"analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/policy-value-prefix-data.json": "f859cee9b0244211cad658f20f3fa1908b321106b156168c308548f5202c75ab", "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json": "2a3ad9dfebc5b0afe469a82887e3f8a6b819393723977692a25e2d8cad9b07b2", "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-count-requests.json": "dae9c763d2a0dc03e1b1564ec4ce493c3fea6edc7b3decc5f6d5c0a0a19b53d9", "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-count-data.json": "97b09aa54ce0e5d9424b5ccf456e801788a7a51329fa7e76e24417c200d5025c", "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/personal-bots/personal-memory-action-evaluation.json": "83174b1af8071900ba6f0b77f97506cb5cec680a0b855db270b6e512638fda43"}, "fitSourceHashes": {"personal_plan_fit.py": "e2b552c8ba46cfd89efba41438628150b3c9ec5395c36c9eb0f7ee23e119a316", "personal_plan.py": "f795b366bb27f8d26d2834f20b99ab56ef6d4d949de4ab96438b525ee0740892", "personal_full_choice_fit.py": "f830b849f07d517e1e05dc64f0393fe461064b136c2255b5bb32eef7324b0096", "personal_kind_fit.py": "c8a9fd59e0d4d6942a1e9b17c648a5b3aec05376a6a14091b9866312e43c66bf", "personal_policy_fit.py": "989884f4851967e89fdc393b7b478d96509e22e17b01759c11a4c3f6ccae52c7", "personal_value.py": "06c06a7c8cfd63ca3b333dca8f3327cae3008dcb4bbcc0de940dc8be2a5f8fa1", "personal_value_fit.py": "b8b63433ef8f85db35f9d6e145614a84b22c84f18e98d451ee671b26dba5227d", "physical_policy_bank.py": "3f57d1ce2fc6f9d527c491848af651a68c8a7e62c08baa8c06d1d384d8045e0f"}, "plannedModels": 276}
+{"made": "2026-10-18T05:26:01.913859+00:00", "completed": 1, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 0, "trainingChoices": 0, "retryLinks": 0}
+{"made": "2026-10-18T05:26:01.913859+00:00", "completed": 2, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 0, "trainingChoices": 0, "retryLinks": 0}
+{"made": "2026-10-18T05:26:01.914859+00:00", "completed": 3, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 0, "trainingChoices": 0, "retryLinks": 0}
+{"made": "2026-10-18T05:26:01.914859+00:00", "completed": 4, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 0, "trainingChoices": 0, "retryLinks": 0}
+{"made": "2026-10-18T05:26:01.915858+00:00", "completed": 5, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 0, "trainingChoices": 0, "retryLinks": 0}
+{"made": "2026-10-18T05:26:01.915858+00:00", "completed": 6, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 0, "trainingChoices": 0, "retryLinks": 0}
+{"made": "2026-10-18T05:26:01.970862+00:00", "completed": 7, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 3, "trainingChoices": 210, "retryLinks": 2}
+{"made": "2026-10-18T05:26:01.971863+00:00", "completed": 8, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 3, "trainingChoices": 210, "retryLinks": 2}
+{"made": "2026-10-18T05:26:02.059396+00:00", "completed": 9, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 4, "trainingChoices": 339, "retryLinks": 2}
+{"made": "2026-10-18T05:26:02.060402+00:00", "completed": 10, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 4, "trainingChoices": 339, "retryLinks": 2}
+{"made": "2026-10-18T05:26:02.239809+00:00", "completed": 11, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 6, "trainingChoices": 581, "retryLinks": 3}
+{"made": "2026-10-18T05:26:02.240826+00:00", "completed": 12, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 6, "trainingChoices": 581, "retryLinks": 3}
+{"made": "2026-10-18T05:26:02.468900+00:00", "completed": 13, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 7, "trainingChoices": 753, "retryLinks": 3}
+{"made": "2026-10-18T05:26:02.470906+00:00", "completed": 14, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 7, "trainingChoices": 753, "retryLinks": 3}
+{"made": "2026-10-18T05:26:02.505269+00:00", "completed": 15, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 2, "trainingChoices": 130, "retryLinks": 1}
+{"made": "2026-10-18T05:26:02.506410+00:00", "completed": 16, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 2, "trainingChoices": 130, "retryLinks": 1}
+{"made": "2026-10-18T05:26:02.571823+00:00", "completed": 17, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 4, "trainingChoices": 244, "retryLinks": 2}
+{"made": "2026-10-18T05:26:02.572825+00:00", "completed": 18, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 4, "trainingChoices": 244, "retryLinks": 2}
+{"made": "2026-10-18T05:26:02.700153+00:00", "completed": 19, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 6, "trainingChoices": 400, "retryLinks": 3}
+{"made": "2026-10-18T05:26:02.703154+00:00", "completed": 20, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 6, "trainingChoices": 400, "retryLinks": 3}
+{"made": "2026-10-18T05:26:02.876136+00:00", "completed": 21, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 8, "trainingChoices": 554, "retryLinks": 4}
+{"made": "2026-10-18T05:26:02.879150+00:00", "completed": 22, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 8, "trainingChoices": 554, "retryLinks": 4}
+{"made": "2026-10-18T05:26:03.087018+00:00", "completed": 23, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 9, "trainingChoices": 659, "retryLinks": 4}
+{"made": "2026-10-18T05:26:03.089026+00:00", "completed": 24, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 9, "trainingChoices": 659, "retryLinks": 4}
+{"made": "2026-10-18T05:26:03.322413+00:00", "completed": 25, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 10, "trainingChoices": 745, "retryLinks": 4}
+{"made": "2026-10-18T05:26:03.326413+00:00", "completed": 26, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 10, "trainingChoices": 745, "retryLinks": 4}
+{"made": "2026-10-18T05:26:03.588395+00:00", "completed": 27, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 11, "trainingChoices": 847, "retryLinks": 4}
+{"made": "2026-10-18T05:26:03.595395+00:00", "completed": 28, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 11, "trainingChoices": 847, "retryLinks": 4}
+{"made": "2026-10-18T05:26:03.909724+00:00", "completed": 29, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 13, "trainingChoices": 1009, "retryLinks": 5}
+{"made": "2026-10-18T05:26:03.918728+00:00", "completed": 30, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 13, "trainingChoices": 1009, "retryLinks": 5}
+{"made": "2026-10-18T05:26:04.273996+00:00", "completed": 31, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 15, "trainingChoices": 1162, "retryLinks": 6}
+{"made": "2026-10-18T05:26:04.288009+00:00", "completed": 32, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 15, "trainingChoices": 1162, "retryLinks": 6}
+{"made": "2026-10-18T05:26:04.813891+00:00", "completed": 33, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 38, "trainingChoices": 1743, "retryLinks": 0}
+{"made": "2026-10-18T05:26:04.833885+00:00", "completed": 34, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 38, "trainingChoices": 1743, "retryLinks": 0}
+{"made": "2026-10-18T05:26:05.449441+00:00", "completed": 35, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 43, "trainingChoices": 2010, "retryLinks": 4}
+{"made": "2026-10-18T05:26:05.475441+00:00", "completed": 36, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 43, "trainingChoices": 2010, "retryLinks": 4}
+{"made": "2026-10-18T05:26:06.103202+00:00", "completed": 37, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 44, "trainingChoices": 2098, "retryLinks": 4}
+{"made": "2026-10-18T05:26:06.141216+00:00", "completed": 38, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 44, "trainingChoices": 2098, "retryLinks": 4}
+{"made": "2026-10-18T05:26:06.777812+00:00", "completed": 39, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 45, "trainingChoices": 2181, "retryLinks": 4}
+{"made": "2026-10-18T05:26:06.815034+00:00", "completed": 40, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 45, "trainingChoices": 2181, "retryLinks": 4}
+{"made": "2026-10-18T05:26:07.493195+00:00", "completed": 41, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 47, "trainingChoices": 2323, "retryLinks": 5}
+{"made": "2026-10-18T05:26:07.540692+00:00", "completed": 42, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 47, "trainingChoices": 2323, "retryLinks": 5}
+{"made": "2026-10-18T05:26:08.226286+00:00", "completed": 43, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 48, "trainingChoices": 2406, "retryLinks": 5}
+{"made": "2026-10-18T05:26:08.286568+00:00", "completed": 44, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 48, "trainingChoices": 2406, "retryLinks": 5}
+{"made": "2026-10-18T05:26:09.010493+00:00", "completed": 45, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 50, "trainingChoices": 2549, "retryLinks": 6}
+{"made": "2026-10-18T05:26:09.083499+00:00", "completed": 46, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 50, "trainingChoices": 2549, "retryLinks": 6}
+{"made": "2026-10-18T05:26:09.851906+00:00", "completed": 47, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 54, "trainingChoices": 2703, "retryLinks": 8}
+{"made": "2026-10-18T05:26:09.931606+00:00", "completed": 48, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 54, "trainingChoices": 2703, "retryLinks": 8}
+{"made": "2026-10-18T05:26:10.746872+00:00", "completed": 49, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 56, "trainingChoices": 2864, "retryLinks": 9}
+{"made": "2026-10-18T05:26:10.828508+00:00", "completed": 50, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 56, "trainingChoices": 2864, "retryLinks": 9}
+{"made": "2026-10-18T05:26:11.683601+00:00", "completed": 51, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 58, "trainingChoices": 2975, "retryLinks": 10}
+{"made": "2026-10-18T05:26:11.767573+00:00", "completed": 52, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 58, "trainingChoices": 2975, "retryLinks": 10}
+{"made": "2026-10-18T05:26:12.679916+00:00", "completed": 53, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 60, "trainingChoices": 3156, "retryLinks": 11}
+{"made": "2026-10-18T05:26:12.772863+00:00", "completed": 54, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 60, "trainingChoices": 3156, "retryLinks": 11}
+{"made": "2026-10-18T05:26:13.733534+00:00", "completed": 55, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 62, "trainingChoices": 3293, "retryLinks": 12}
+{"made": "2026-10-18T05:26:13.841626+00:00", "completed": 56, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 62, "trainingChoices": 3293, "retryLinks": 12}
+{"made": "2026-10-18T05:26:14.830851+00:00", "completed": 57, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 63, "trainingChoices": 3395, "retryLinks": 12}
+{"made": "2026-10-18T05:26:14.940866+00:00", "completed": 58, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 63, "trainingChoices": 3395, "retryLinks": 12}
+{"made": "2026-10-18T05:26:15.963447+00:00", "completed": 59, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 64, "trainingChoices": 3501, "retryLinks": 12}
+{"made": "2026-10-18T05:26:16.084443+00:00", "completed": 60, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 64, "trainingChoices": 3501, "retryLinks": 12}
+{"made": "2026-10-18T05:26:17.199997+00:00", "completed": 61, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 69, "trainingChoices": 3720, "retryLinks": 14}
+{"made": "2026-10-18T05:26:17.327750+00:00", "completed": 62, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 69, "trainingChoices": 3720, "retryLinks": 14}
+{"made": "2026-10-18T05:26:18.465741+00:00", "completed": 63, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 71, "trainingChoices": 3898, "retryLinks": 15}
+{"made": "2026-10-18T05:26:18.606262+00:00", "completed": 64, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 71, "trainingChoices": 3898, "retryLinks": 15}
+{"made": "2026-10-18T05:26:19.778939+00:00", "completed": 65, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 72, "trainingChoices": 4016, "retryLinks": 15}
+{"made": "2026-10-18T05:26:19.933468+00:00", "completed": 66, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 72, "trainingChoices": 4016, "retryLinks": 15}
+{"made": "2026-10-18T05:26:21.162512+00:00", "completed": 67, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 77, "trainingChoices": 4221, "retryLinks": 17}
+{"made": "2026-10-18T05:26:21.327321+00:00", "completed": 68, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 77, "trainingChoices": 4221, "retryLinks": 17}
+{"made": "2026-10-18T05:26:22.588211+00:00", "completed": 69, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 80, "trainingChoices": 4335, "retryLinks": 19}
+{"made": "2026-10-18T05:26:22.756047+00:00", "completed": 70, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 80, "trainingChoices": 4335, "retryLinks": 19}
+{"made": "2026-10-18T05:26:24.131347+00:00", "completed": 71, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 90, "trainingChoices": 4800, "retryLinks": 26}
+{"made": "2026-10-18T05:26:24.313499+00:00", "completed": 72, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 90, "trainingChoices": 4800, "retryLinks": 26}
+{"made": "2026-10-18T05:26:25.769164+00:00", "completed": 73, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 93, "trainingChoices": 5006, "retryLinks": 28}
+{"made": "2026-10-18T05:26:25.951937+00:00", "completed": 74, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 93, "trainingChoices": 5006, "retryLinks": 28}
+{"made": "2026-10-18T05:26:27.404475+00:00", "completed": 75, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 94, "trainingChoices": 5089, "retryLinks": 28}
+{"made": "2026-10-18T05:26:27.639839+00:00", "completed": 76, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 94, "trainingChoices": 5089, "retryLinks": 28}
+{"made": "2026-10-18T05:26:27.809359+00:00", "completed": 77, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 16, "trainingChoices": 1251, "retryLinks": 6}
+{"made": "2026-10-18T05:26:28.036681+00:00", "completed": 78, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 16, "trainingChoices": 1251, "retryLinks": 6}
+{"made": "2026-10-18T05:26:28.241985+00:00", "completed": 79, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 17, "trainingChoices": 1361, "retryLinks": 6}
+{"made": "2026-10-18T05:26:28.470110+00:00", "completed": 80, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 17, "trainingChoices": 1361, "retryLinks": 6}
+{"made": "2026-10-18T05:26:28.709496+00:00", "completed": 81, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 18, "trainingChoices": 1423, "retryLinks": 6}
+{"made": "2026-10-18T05:26:28.948100+00:00", "completed": 82, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 18, "trainingChoices": 1423, "retryLinks": 6}
+{"made": "2026-10-18T05:26:29.207765+00:00", "completed": 83, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 19, "trainingChoices": 1528, "retryLinks": 6}
+{"made": "2026-10-18T05:26:29.439521+00:00", "completed": 84, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 19, "trainingChoices": 1528, "retryLinks": 6}
+{"made": "2026-10-18T05:26:29.741285+00:00", "completed": 85, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 20, "trainingChoices": 1630, "retryLinks": 6}
+{"made": "2026-10-18T05:26:29.961938+00:00", "completed": 86, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 20, "trainingChoices": 1630, "retryLinks": 6}
+{"made": "2026-10-18T05:26:30.294028+00:00", "completed": 87, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 21, "trainingChoices": 1715, "retryLinks": 6}
+{"made": "2026-10-18T05:26:30.525459+00:00", "completed": 88, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 21, "trainingChoices": 1715, "retryLinks": 6}
+{"made": "2026-10-18T05:26:32.032311+00:00", "completed": 89, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 99, "trainingChoices": 5312, "retryLinks": 31}
+{"made": "2026-10-18T05:26:32.274626+00:00", "completed": 90, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 99, "trainingChoices": 5312, "retryLinks": 31}
+{"made": "2026-10-18T05:26:33.819442+00:00", "completed": 91, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 100, "trainingChoices": 5445, "retryLinks": 31}
+{"made": "2026-10-18T05:26:34.124448+00:00", "completed": 92, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 100, "trainingChoices": 5445, "retryLinks": 31}
+{"made": "2026-10-18T05:26:35.772513+00:00", "completed": 93, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 101, "trainingChoices": 5562, "retryLinks": 31}
+{"made": "2026-10-18T05:26:36.082440+00:00", "completed": 94, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 101, "trainingChoices": 5562, "retryLinks": 31}
+{"made": "2026-10-18T05:26:37.881350+00:00", "completed": 95, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 104, "trainingChoices": 5895, "retryLinks": 33}
+{"made": "2026-10-18T05:26:38.233014+00:00", "completed": 96, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 104, "trainingChoices": 5895, "retryLinks": 33}
+{"made": "2026-10-18T05:26:40.146774+00:00", "completed": 97, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 113, "trainingChoices": 6505, "retryLinks": 41}
+{"made": "2026-10-18T05:26:40.493685+00:00", "completed": 98, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 113, "trainingChoices": 6505, "retryLinks": 41}
+{"made": "2026-10-18T05:26:40.756420+00:00", "completed": 99, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 22, "trainingChoices": 1842, "retryLinks": 6}
+{"made": "2026-10-18T05:26:41.094878+00:00", "completed": 100, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 22, "trainingChoices": 1842, "retryLinks": 6}
+{"made": "2026-10-18T05:26:41.413187+00:00", "completed": 101, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 24, "trainingChoices": 2024, "retryLinks": 7}
+{"made": "2026-10-18T05:26:41.761939+00:00", "completed": 102, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 24, "trainingChoices": 2024, "retryLinks": 7}
+{"made": "2026-10-18T05:26:42.098828+00:00", "completed": 103, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 25, "trainingChoices": 2120, "retryLinks": 7}
+{"made": "2026-10-18T05:26:42.458321+00:00", "completed": 104, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 25, "trainingChoices": 2120, "retryLinks": 7}
+{"made": "2026-10-18T05:26:42.817956+00:00", "completed": 105, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 26, "trainingChoices": 2177, "retryLinks": 7}
+{"made": "2026-10-18T05:26:43.207471+00:00", "completed": 106, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 26, "trainingChoices": 2177, "retryLinks": 7}
+{"made": "2026-10-18T05:26:43.686720+00:00", "completed": 107, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 28, "trainingChoices": 2373, "retryLinks": 8}
+{"made": "2026-10-18T05:26:44.005758+00:00", "completed": 108, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 11, "trainingChoices": 1001, "retryLinks": 3}
+{"made": "2026-10-18T05:26:44.095067+00:00", "completed": 109, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 28, "trainingChoices": 2373, "retryLinks": 8}
+{"made": "2026-10-18T05:26:44.319850+00:00", "completed": 110, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 11, "trainingChoices": 1001, "retryLinks": 3}
+{"made": "2026-10-18T05:26:44.496248+00:00", "completed": 111, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 12, "trainingChoices": 1146, "retryLinks": 3}
+{"made": "2026-10-18T05:26:44.815272+00:00", "completed": 112, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 12, "trainingChoices": 1146, "retryLinks": 3}
+{"made": "2026-10-18T05:26:47.770494+00:00", "completed": 113, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 132, "trainingChoices": 7975, "retryLinks": 58}
+{"made": "2026-10-18T05:26:47.993995+00:00", "completed": 114, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 132, "trainingChoices": 7975, "retryLinks": 58}
+{"made": "2026-10-18T05:26:51.385659+00:00", "completed": 115, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 133, "trainingChoices": 8087, "retryLinks": 58}
+{"made": "2026-10-18T05:26:51.641837+00:00", "completed": 116, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 133, "trainingChoices": 8087, "retryLinks": 58}
+{"made": "2026-10-18T05:26:54.950557+00:00", "completed": 117, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 135, "trainingChoices": 8375, "retryLinks": 59}
+{"made": "2026-10-18T05:26:55.210515+00:00", "completed": 118, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 135, "trainingChoices": 8375, "retryLinks": 59}
+{"made": "2026-10-18T05:26:58.515770+00:00", "completed": 119, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 137, "trainingChoices": 8580, "retryLinks": 60}
+{"made": "2026-10-18T05:26:58.872592+00:00", "completed": 120, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 137, "trainingChoices": 8580, "retryLinks": 60}
+{"made": "2026-10-18T05:27:02.104441+00:00", "completed": 121, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 138, "trainingChoices": 8695, "retryLinks": 60}
+{"made": "2026-10-18T05:27:02.502761+00:00", "completed": 122, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 138, "trainingChoices": 8695, "retryLinks": 60}
+{"made": "2026-10-18T05:27:05.800637+00:00", "completed": 123, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 139, "trainingChoices": 8856, "retryLinks": 60}
+{"made": "2026-10-18T05:27:06.148995+00:00", "completed": 124, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 139, "trainingChoices": 8856, "retryLinks": 60}
+{"made": "2026-10-18T05:27:09.614498+00:00", "completed": 125, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 141, "trainingChoices": 9165, "retryLinks": 61}
+{"made": "2026-10-18T05:27:10.071464+00:00", "completed": 126, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 141, "trainingChoices": 9165, "retryLinks": 61}
+{"made": "2026-10-18T05:27:13.654466+00:00", "completed": 127, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 143, "trainingChoices": 9410, "retryLinks": 62}
+{"made": "2026-10-18T05:27:14.027163+00:00", "completed": 128, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 143, "trainingChoices": 9410, "retryLinks": 62}
+{"made": "2026-10-18T05:27:18.168506+00:00", "completed": 129, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 145, "trainingChoices": 9609, "retryLinks": 63}
+{"made": "2026-10-18T05:27:18.470611+00:00", "completed": 130, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 145, "trainingChoices": 9609, "retryLinks": 63}
+{"made": "2026-10-18T05:27:19.128789+00:00", "completed": 131, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 31, "trainingChoices": 2705, "retryLinks": 10}
+{"made": "2026-10-18T05:27:19.459485+00:00", "completed": 132, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 31, "trainingChoices": 2705, "retryLinks": 10}
+{"made": "2026-10-18T05:27:20.215861+00:00", "completed": 133, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 32, "trainingChoices": 2830, "retryLinks": 10}
+{"made": "2026-10-18T05:27:20.476698+00:00", "completed": 134, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 32, "trainingChoices": 2830, "retryLinks": 10}
+{"made": "2026-10-18T05:27:24.776100+00:00", "completed": 135, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 148, "trainingChoices": 9915, "retryLinks": 64}
+{"made": "2026-10-18T05:27:25.034817+00:00", "completed": 136, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 148, "trainingChoices": 9915, "retryLinks": 64}
+{"made": "2026-10-18T05:27:25.814062+00:00", "completed": 137, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 33, "trainingChoices": 2973, "retryLinks": 10}
+{"made": "2026-10-18T05:27:26.055981+00:00", "completed": 138, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 33, "trainingChoices": 2973, "retryLinks": 10}
+{"made": "2026-10-18T05:27:30.411643+00:00", "completed": 139, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 149, "trainingChoices": 10076, "retryLinks": 64}
+{"made": "2026-10-18T05:27:30.837839+00:00", "completed": 140, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 149, "trainingChoices": 10076, "retryLinks": 64}
+{"made": "2026-10-18T05:27:31.664578+00:00", "completed": 141, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 36, "trainingChoices": 3224, "retryLinks": 11}
+{"made": "2026-10-18T05:27:31.895905+00:00", "completed": 142, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 11, "trainingChoices": 631, "retryLinks": 9}
+{"made": "2026-10-18T05:27:31.974661+00:00", "completed": 143, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 36, "trainingChoices": 3224, "retryLinks": 11}
+{"made": "2026-10-18T05:27:32.145449+00:00", "completed": 144, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 11, "trainingChoices": 631, "retryLinks": 9}
+{"made": "2026-10-18T05:27:32.320831+00:00", "completed": 145, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 12, "trainingChoices": 836, "retryLinks": 9}
+{"made": "2026-10-18T05:27:32.470101+00:00", "completed": 146, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 12, "trainingChoices": 836, "retryLinks": 9}
+{"made": "2026-10-18T05:27:37.246223+00:00", "completed": 147, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 150, "trainingChoices": 10169, "retryLinks": 64}
+{"made": "2026-10-18T05:27:37.443732+00:00", "completed": 148, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 150, "trainingChoices": 10169, "retryLinks": 64}
+{"made": "2026-10-18T05:27:41.737469+00:00", "completed": 149, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 151, "trainingChoices": 10332, "retryLinks": 64}
+{"made": "2026-10-18T05:27:41.861556+00:00", "completed": 150, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 151, "trainingChoices": 10332, "retryLinks": 64}
+{"made": "2026-10-18T05:27:46.288356+00:00", "completed": 151, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 152, "trainingChoices": 10448, "retryLinks": 64}
+{"made": "2026-10-18T05:27:46.302862+00:00", "completed": 152, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 152, "trainingChoices": 10448, "retryLinks": 64}
+{"made": "2026-10-18T05:27:50.885023+00:00", "completed": 153, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 154, "trainingChoices": 10807, "retryLinks": 65}
+{"made": "2026-10-18T05:27:50.947557+00:00", "completed": 154, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 154, "trainingChoices": 10807, "retryLinks": 65}
+{"made": "2026-10-18T05:27:55.864650+00:00", "completed": 155, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 171, "trainingChoices": 11728, "retryLinks": 81}
+{"made": "2026-10-18T05:27:55.932903+00:00", "completed": 156, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 171, "trainingChoices": 11728, "retryLinks": 81}
+{"made": "2026-10-18T05:27:56.979058+00:00", "completed": 157, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 37, "trainingChoices": 3337, "retryLinks": 11}
+{"made": "2026-10-18T05:27:57.063324+00:00", "completed": 158, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 37, "trainingChoices": 3337, "retryLinks": 11}
+{"made": "2026-10-18T05:27:58.137732+00:00", "completed": 159, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 38, "trainingChoices": 3460, "retryLinks": 11}
+{"made": "2026-10-18T05:27:58.244926+00:00", "completed": 160, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 38, "trainingChoices": 3460, "retryLinks": 11}
+{"made": "2026-10-18T05:27:59.349760+00:00", "completed": 161, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 40, "trainingChoices": 3642, "retryLinks": 12}
+{"made": "2026-10-18T05:27:59.486561+00:00", "completed": 162, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 40, "trainingChoices": 3642, "retryLinks": 12}
+{"made": "2026-10-18T05:28:00.586307+00:00", "completed": 163, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 41, "trainingChoices": 3761, "retryLinks": 12}
+{"made": "2026-10-18T05:28:00.754919+00:00", "completed": 164, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 41, "trainingChoices": 3761, "retryLinks": 12}
+{"made": "2026-10-18T05:28:05.658545+00:00", "completed": 165, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 172, "trainingChoices": 11889, "retryLinks": 81}
+{"made": "2026-10-18T05:28:05.779095+00:00", "completed": 166, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 172, "trainingChoices": 11889, "retryLinks": 81}
+{"made": "2026-10-18T05:28:10.767513+00:00", "completed": 167, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 173, "trainingChoices": 12095, "retryLinks": 81}
+{"made": "2026-10-18T05:28:10.825786+00:00", "completed": 168, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 173, "trainingChoices": 12095, "retryLinks": 81}
+{"made": "2026-10-18T05:28:15.927677+00:00", "completed": 169, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 174, "trainingChoices": 12235, "retryLinks": 81}
+{"made": "2026-10-18T05:28:15.976675+00:00", "completed": 170, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 174, "trainingChoices": 12235, "retryLinks": 81}
+{"made": "2026-10-18T05:28:21.050671+00:00", "completed": 171, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 175, "trainingChoices": 12422, "retryLinks": 81}
+{"made": "2026-10-18T05:28:21.183019+00:00", "completed": 172, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 175, "trainingChoices": 12422, "retryLinks": 81}
+{"made": "2026-10-18T05:28:26.450516+00:00", "completed": 173, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 177, "trainingChoices": 12767, "retryLinks": 81}
+{"made": "2026-10-18T05:28:26.518763+00:00", "completed": 174, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 177, "trainingChoices": 12767, "retryLinks": 81}
+{"made": "2026-10-18T05:28:32.166616+00:00", "completed": 175, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 179, "trainingChoices": 13016, "retryLinks": 82}
+{"made": "2026-10-18T05:28:32.260646+00:00", "completed": 176, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 179, "trainingChoices": 13016, "retryLinks": 82}
+{"made": "2026-10-18T05:28:37.792334+00:00", "completed": 177, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 180, "trainingChoices": 13223, "retryLinks": 82}
+{"made": "2026-10-18T05:28:37.896767+00:00", "completed": 178, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 180, "trainingChoices": 13223, "retryLinks": 82}
+{"made": "2026-10-18T05:28:43.485168+00:00", "completed": 179, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 183, "trainingChoices": 13558, "retryLinks": 84}
+{"made": "2026-10-18T05:28:43.615480+00:00", "completed": 180, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 183, "trainingChoices": 13558, "retryLinks": 84}
+{"made": "2026-10-18T05:28:49.421457+00:00", "completed": 181, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 185, "trainingChoices": 13902, "retryLinks": 85}
+{"made": "2026-10-18T05:28:49.810414+00:00", "completed": 182, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 185, "trainingChoices": 13902, "retryLinks": 85}
+{"made": "2026-10-18T05:28:55.354959+00:00", "completed": 183, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 188, "trainingChoices": 14299, "retryLinks": 87}
+{"made": "2026-10-18T05:28:55.901872+00:00", "completed": 184, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 188, "trainingChoices": 14299, "retryLinks": 87}
+{"made": "2026-10-18T05:28:56.034753+00:00", "completed": 185, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 33, "trainingChoices": 2033, "retryLinks": 28}
+{"made": "2026-10-18T05:28:56.503774+00:00", "completed": 186, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 17, "trainingChoices": 1527, "retryLinks": 7}
+{"made": "2026-10-18T05:28:56.555773+00:00", "completed": 187, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 33, "trainingChoices": 2033, "retryLinks": 28}
+{"made": "2026-10-18T05:28:56.978521+00:00", "completed": 188, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 17, "trainingChoices": 1527, "retryLinks": 7}
+{"made": "2026-10-18T05:28:57.841590+00:00", "completed": 189, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 42, "trainingChoices": 3857, "retryLinks": 12}
+{"made": "2026-10-18T05:28:58.262677+00:00", "completed": 190, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 42, "trainingChoices": 3857, "retryLinks": 12}
+{"made": "2026-10-18T05:28:58.382350+00:00", "completed": 191, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 18, "trainingChoices": 1723, "retryLinks": 7}
+{"made": "2026-10-18T05:28:58.807018+00:00", "completed": 192, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 18, "trainingChoices": 1723, "retryLinks": 7}
+{"made": "2026-10-18T05:28:59.709816+00:00", "completed": 193, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 43, "trainingChoices": 3939, "retryLinks": 12}
+{"made": "2026-10-18T05:29:00.116253+00:00", "completed": 194, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 43, "trainingChoices": 3939, "retryLinks": 12}
+{"made": "2026-10-18T05:29:00.315714+00:00", "completed": 195, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 19, "trainingChoices": 1930, "retryLinks": 7}
+{"made": "2026-10-18T05:29:00.718182+00:00", "completed": 196, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 19, "trainingChoices": 1930, "retryLinks": 7}
+{"made": "2026-10-18T05:29:00.969076+00:00", "completed": 197, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 21, "trainingChoices": 2084, "retryLinks": 8}
+{"made": "2026-10-18T05:29:01.374954+00:00", "completed": 198, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 21, "trainingChoices": 2084, "retryLinks": 8}
+{"made": "2026-10-18T05:29:01.703836+00:00", "completed": 199, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 22, "trainingChoices": 2283, "retryLinks": 8}
+{"made": "2026-10-18T05:29:02.098372+00:00", "completed": 200, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 22, "trainingChoices": 2283, "retryLinks": 8}
+{"made": "2026-10-18T05:29:02.495870+00:00", "completed": 201, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 26, "trainingChoices": 2516, "retryLinks": 11}
+{"made": "2026-10-18T05:29:02.887564+00:00", "completed": 202, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 26, "trainingChoices": 2516, "retryLinks": 11}
+{"made": "2026-10-18T05:29:03.338662+00:00", "completed": 203, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 27, "trainingChoices": 2685, "retryLinks": 11}
+{"made": "2026-10-18T05:29:03.722321+00:00", "completed": 204, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 27, "trainingChoices": 2685, "retryLinks": 11}
+{"made": "2026-10-18T05:29:04.081302+00:00", "completed": 205, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 35, "trainingChoices": 2308, "retryLinks": 29}
+{"made": "2026-10-18T05:29:04.464434+00:00", "completed": 206, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 35, "trainingChoices": 2308, "retryLinks": 29}
+{"made": "2026-10-18T05:29:04.878167+00:00", "completed": 207, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 37, "trainingChoices": 2486, "retryLinks": 30}
+{"made": "2026-10-18T05:29:05.275397+00:00", "completed": 208, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 37, "trainingChoices": 2486, "retryLinks": 30}
+{"made": "2026-10-18T05:29:05.786907+00:00", "completed": 209, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 42, "trainingChoices": 2814, "retryLinks": 34}
+{"made": "2026-10-18T05:29:06.186448+00:00", "completed": 210, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 42, "trainingChoices": 2814, "retryLinks": 34}
+{"made": "2026-10-18T05:29:06.802955+00:00", "completed": 211, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 44, "trainingChoices": 3088, "retryLinks": 35}
+{"made": "2026-10-18T05:29:07.208504+00:00", "completed": 212, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 44, "trainingChoices": 3088, "retryLinks": 35}
+{"made": "2026-10-18T05:29:07.865705+00:00", "completed": 213, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 49, "trainingChoices": 3333, "retryLinks": 39}
+{"made": "2026-10-18T05:29:08.281240+00:00", "completed": 214, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 49, "trainingChoices": 3333, "retryLinks": 39}
+{"made": "2026-10-18T05:29:08.795359+00:00", "completed": 215, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 30, "trainingChoices": 2944, "retryLinks": 12}
+{"made": "2026-10-18T05:29:09.215229+00:00", "completed": 216, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 30, "trainingChoices": 2944, "retryLinks": 12}
+{"made": "2026-10-18T05:29:09.796331+00:00", "completed": 217, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 31, "trainingChoices": 3075, "retryLinks": 12}
+{"made": "2026-10-18T05:29:10.197439+00:00", "completed": 218, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 31, "trainingChoices": 3075, "retryLinks": 12}
+{"made": "2026-10-18T05:29:10.841349+00:00", "completed": 219, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 33, "trainingChoices": 3296, "retryLinks": 13}
+{"made": "2026-10-18T05:29:11.227243+00:00", "completed": 220, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 33, "trainingChoices": 3296, "retryLinks": 13}
+{"made": "2026-10-18T05:29:11.964614+00:00", "completed": 221, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 37, "trainingChoices": 3554, "retryLinks": 16}
+{"made": "2026-10-18T05:29:12.342674+00:00", "completed": 222, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 37, "trainingChoices": 3554, "retryLinks": 16}
+{"made": "2026-10-18T05:29:13.139624+00:00", "completed": 223, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 38, "trainingChoices": 3676, "retryLinks": 16}
+{"made": "2026-10-18T05:29:13.508790+00:00", "completed": 224, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 38, "trainingChoices": 3676, "retryLinks": 16}
+{"made": "2026-10-18T05:29:14.412018+00:00", "completed": 225, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 41, "trainingChoices": 4011, "retryLinks": 18}
+{"made": "2026-10-18T05:29:14.785928+00:00", "completed": 226, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 41, "trainingChoices": 4011, "retryLinks": 18}
+{"made": "2026-10-18T05:29:15.739035+00:00", "completed": 227, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 42, "trainingChoices": 4168, "retryLinks": 18}
+{"made": "2026-10-18T05:29:16.106414+00:00", "completed": 228, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 42, "trainingChoices": 4168, "retryLinks": 18}
+{"made": "2026-10-18T05:29:17.125251+00:00", "completed": 229, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 43, "trainingChoices": 4337, "retryLinks": 18}
+{"made": "2026-10-18T05:29:17.493880+00:00", "completed": 230, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 43, "trainingChoices": 4337, "retryLinks": 18}
+{"made": "2026-10-18T05:29:18.590354+00:00", "completed": 231, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 44, "trainingChoices": 4463, "retryLinks": 18}
+{"made": "2026-10-18T05:29:18.942205+00:00", "completed": 232, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 44, "trainingChoices": 4463, "retryLinks": 18}
+{"made": "2026-10-18T05:29:20.150466+00:00", "completed": 233, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 48, "trainingChoices": 4909, "retryLinks": 21}
+{"made": "2026-10-18T05:29:20.498907+00:00", "completed": 234, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 48, "trainingChoices": 4909, "retryLinks": 21}
+{"made": "2026-10-18T05:29:21.853170+00:00", "completed": 235, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 50, "trainingChoices": 5275, "retryLinks": 22}
+{"made": "2026-10-18T05:29:22.184736+00:00", "completed": 236, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 50, "trainingChoices": 5275, "retryLinks": 22}
+{"made": "2026-10-18T05:29:23.594161+00:00", "completed": 237, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 51, "trainingChoices": 5428, "retryLinks": 22}
+{"made": "2026-10-18T05:29:23.918975+00:00", "completed": 238, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 51, "trainingChoices": 5428, "retryLinks": 22}
+{"made": "2026-10-18T05:29:25.414447+00:00", "completed": 239, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 54, "trainingChoices": 5667, "retryLinks": 24}
+{"made": "2026-10-18T05:29:25.722408+00:00", "completed": 240, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 54, "trainingChoices": 5667, "retryLinks": 24}
+{"made": "2026-10-18T05:29:27.410769+00:00", "completed": 241, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 56, "trainingChoices": 6050, "retryLinks": 24}
+{"made": "2026-10-18T05:29:27.684136+00:00", "completed": 242, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 56, "trainingChoices": 6050, "retryLinks": 24}
+{"made": "2026-10-18T05:29:29.473451+00:00", "completed": 243, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 59, "trainingChoices": 6256, "retryLinks": 26}
+{"made": "2026-10-18T05:29:29.749871+00:00", "completed": 244, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 59, "trainingChoices": 6256, "retryLinks": 26}
+{"made": "2026-10-18T05:29:31.595768+00:00", "completed": 245, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 63, "trainingChoices": 6495, "retryLinks": 29}
+{"made": "2026-10-18T05:29:31.873423+00:00", "completed": 246, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 63, "trainingChoices": 6495, "retryLinks": 29}
+{"made": "2026-10-18T05:29:33.782988+00:00", "completed": 247, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 67, "trainingChoices": 6620, "retryLinks": 32}
+{"made": "2026-10-18T05:29:33.998035+00:00", "completed": 248, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 67, "trainingChoices": 6620, "retryLinks": 32}
+{"made": "2026-10-18T05:29:36.118656+00:00", "completed": 249, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 68, "trainingChoices": 6820, "retryLinks": 32}
+{"made": "2026-10-18T05:29:36.290352+00:00", "completed": 250, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 68, "trainingChoices": 6820, "retryLinks": 32}
+{"made": "2026-10-18T05:29:38.664969+00:00", "completed": 251, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 71, "trainingChoices": 7392, "retryLinks": 34}
+{"made": "2026-10-18T05:29:38.798672+00:00", "completed": 252, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 71, "trainingChoices": 7392, "retryLinks": 34}
+{"made": "2026-10-18T05:29:39.809827+00:00", "completed": 253, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 50, "trainingChoices": 3512, "retryLinks": 39}
+{"made": "2026-10-18T05:29:39.917033+00:00", "completed": 254, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 50, "trainingChoices": 3512, "retryLinks": 39}
+{"made": "2026-10-18T05:29:41.025054+00:00", "completed": 255, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 52, "trainingChoices": 3823, "retryLinks": 40}
+{"made": "2026-10-18T05:29:41.147595+00:00", "completed": 256, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 52, "trainingChoices": 3823, "retryLinks": 40}
+{"made": "2026-10-18T05:29:42.389446+00:00", "completed": 257, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 57, "trainingChoices": 4266, "retryLinks": 44}
+{"made": "2026-10-18T05:29:42.515401+00:00", "completed": 258, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 57, "trainingChoices": 4266, "retryLinks": 44}
+{"made": "2026-10-18T05:29:43.824616+00:00", "completed": 259, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 58, "trainingChoices": 4482, "retryLinks": 44}
+{"made": "2026-10-18T05:29:43.954974+00:00", "completed": 260, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 58, "trainingChoices": 4482, "retryLinks": 44}
+{"made": "2026-10-18T05:29:45.384101+00:00", "completed": 261, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 63, "trainingChoices": 4807, "retryLinks": 48}
+{"made": "2026-10-18T05:29:45.517603+00:00", "completed": 262, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 63, "trainingChoices": 4807, "retryLinks": 48}
+{"made": "2026-10-18T05:29:47.020538+00:00", "completed": 263, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 64, "trainingChoices": 5009, "retryLinks": 48}
+{"made": "2026-10-18T05:29:47.140689+00:00", "completed": 264, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 64, "trainingChoices": 5009, "retryLinks": 48}
+{"made": "2026-10-18T05:29:49.536665+00:00", "completed": 265, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 72, "trainingChoices": 7499, "retryLinks": 34}
+{"made": "2026-10-18T05:29:49.666801+00:00", "completed": 266, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 72, "trainingChoices": 7499, "retryLinks": 34}
+{"made": "2026-10-18T05:29:52.184549+00:00", "completed": 267, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 73, "trainingChoices": 7719, "retryLinks": 34}
+{"made": "2026-10-18T05:29:52.295326+00:00", "completed": 268, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 73, "trainingChoices": 7719, "retryLinks": 34}
+{"made": "2026-10-18T05:29:54.856114+00:00", "completed": 269, "total": 276, "name": "Dennisisdebeste", "scope": "ownAll", "trainingGames": 74, "trainingChoices": 7835, "retryLinks": 34}
+{"made": "2026-10-18T05:29:54.954121+00:00", "completed": 270, "total": 276, "name": "Dennisisdebeste", "scope": "ownCarryAll", "trainingGames": 74, "trainingChoices": 7835, "retryLinks": 34}
+{"made": "2026-10-18T05:29:56.541859+00:00", "completed": 271, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownAll", "trainingGames": 65, "trainingChoices": 5198, "retryLinks": 48}
+{"made": "2026-10-18T05:29:56.628855+00:00", "completed": 272, "total": 276, "name": "Mrs. Doubtfire", "scope": "ownCarryAll", "trainingGames": 65, "trainingChoices": 5198, "retryLinks": 48}
+{"made": "2026-10-18T05:29:58.137755+00:00", "completed": 273, "total": 276, "name": "PUK", "scope": "ownAll", "trainingGames": 57, "trainingChoices": 4754, "retryLinks": 24}
+{"made": "2026-10-18T05:29:58.212539+00:00", "completed": 274, "total": 276, "name": "PUK", "scope": "ownCarryAll", "trainingGames": 57, "trainingChoices": 4754, "retryLinks": 24}
+{"made": "2026-10-18T05:30:04.909669+00:00", "completed": 275, "total": 276, "name": "Gerda", "scope": "ownAll", "trainingGames": 202, "trainingChoices": 15697, "retryLinks": 100}
+{"made": "2026-10-18T05:30:05.088980+00:00", "completed": 276, "total": 276, "name": "Gerda", "scope": "ownCarryAll", "trainingGames": 202, "trainingChoices": 15697, "retryLinks": 100}

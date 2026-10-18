@@ -1,0 +1,12 @@
+{
+  "output": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\policy-clock-route-prefix-data.json",
+  "pilot": false,
+  "prefixes": 398,
+  "milliseconds": 84232,
+  "totals": {
+    "nodes": 637700,
+    "boundaries": 1402,
+    "calls": 33543,
+    "clockCalls": 1111
+  }
+}

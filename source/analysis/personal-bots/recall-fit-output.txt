@@ -1,0 +1,40 @@
+Own recall-consistent fits 2 /24 Dennisisdebeste none
+Own recall-consistent fits 4 /24 Mrs. Doubtfire none
+Own recall-consistent fits 6 /24 PUK none
+Own recall-consistent fits 8 /24 Gerda none
+Own recall-consistent fits 10 /24 Dennisisdebeste configured
+Own recall-consistent fits 12 /24 Mrs. Doubtfire configured
+Own recall-consistent fits 14 /24 PUK configured
+Own recall-consistent fits 16 /24 Gerda configured
+Own recall-consistent fits 18 /24 Dennisisdebeste full
+Own recall-consistent fits 20 /24 Mrs. Doubtfire full
+Own recall-consistent fits 22 /24 PUK full
+Own recall-consistent fits 24 /24 Gerda full
+{
+  "models": 24,
+  "selectedRecallMode": {
+    "Dennisisdebeste": "none",
+    "Mrs. Doubtfire": "none",
+    "PUK": "none",
+    "Gerda": "none"
+  },
+  "originalStaticControls": {
+    "Dennisisdebeste": {
+      "maximumWeightDifference": 0.0,
+      "trainingGames": 113
+    },
+    "Mrs. Doubtfire": {
+      "maximumWeightDifference": 0.0,
+      "trainingGames": 65
+    },
+    "PUK": {
+      "maximumWeightDifference": 0.0,
+      "trainingGames": 57
+    },
+    "Gerda": {
+      "maximumWeightDifference": 0.0,
+      "trainingGames": 210
+    }
+  },
+  "modelsSha256": "f887d4103cfbbbd0cb857733361150a6009ca1ef3c9e0d2749d7914878a07539"
+}

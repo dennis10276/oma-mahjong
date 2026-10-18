@@ -1,0 +1,107 @@
+{
+  "made": "2026-10-18T00:29:40.955Z",
+  "evidence": "memory-feature-reconstruction-not-winning-try-accuracy",
+  "prefixFingerprint": "903384fd1d7cf7192d1cc0db9c2acde0365db5e1d7703f16e15c43452c7ad14e",
+  "prefixDataSha256": "9498b39085a2a2679849ae4d0ec5220e569ec39f04638e15470a424b82307fba",
+  "previousPrefixSha256": "967533b4c6d5a3502829fba789a769aa9ecc1e17f1d8afc0b23dbb1aa8fdb15e",
+  "sourceSha256": "def2c36358b90f7d18470b3e60c139cdd7a755b19e36f7fbe5a55344e37d907d",
+  "players": {
+    "Dennisisdebeste": {
+      "configured": {
+        "prefixes": 74,
+        "decisions": 7835,
+        "prefixesWithMemory": 36,
+        "changedDecisions": 2023,
+        "reopeningsRecognized": 243,
+        "rememberedInspectionsNowTakes": 21,
+        "blindFeaturesResolved": 5,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 4
+      },
+      "full": {
+        "prefixes": 74,
+        "decisions": 7835,
+        "prefixesWithMemory": 36,
+        "changedDecisions": 2078,
+        "reopeningsRecognized": 328,
+        "rememberedInspectionsNowTakes": 27,
+        "blindFeaturesResolved": 5,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 4
+      }
+    },
+    "Mrs. Doubtfire": {
+      "configured": {
+        "prefixes": 65,
+        "decisions": 5198,
+        "prefixesWithMemory": 50,
+        "changedDecisions": 2874,
+        "reopeningsRecognized": 462,
+        "rememberedInspectionsNowTakes": 47,
+        "blindFeaturesResolved": 0,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 14
+      },
+      "full": {
+        "prefixes": 65,
+        "decisions": 5198,
+        "prefixesWithMemory": 50,
+        "changedDecisions": 2892,
+        "reopeningsRecognized": 541,
+        "rememberedInspectionsNowTakes": 57,
+        "blindFeaturesResolved": 1,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 17
+      }
+    },
+    "PUK": {
+      "configured": {
+        "prefixes": 57,
+        "decisions": 4771,
+        "prefixesWithMemory": 26,
+        "changedDecisions": 1724,
+        "reopeningsRecognized": 286,
+        "rememberedInspectionsNowTakes": 48,
+        "blindFeaturesResolved": 2,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 12
+      },
+      "full": {
+        "prefixes": 57,
+        "decisions": 4771,
+        "prefixesWithMemory": 26,
+        "changedDecisions": 1777,
+        "reopeningsRecognized": 355,
+        "rememberedInspectionsNowTakes": 59,
+        "blindFeaturesResolved": 2,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 16
+      }
+    },
+    "Gerda": {
+      "configured": {
+        "prefixes": 202,
+        "decisions": 15739,
+        "prefixesWithMemory": 110,
+        "changedDecisions": 7138,
+        "reopeningsRecognized": 1085,
+        "rememberedInspectionsNowTakes": 97,
+        "blindFeaturesResolved": 13,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 30
+      },
+      "full": {
+        "prefixes": 202,
+        "decisions": 15739,
+        "prefixesWithMemory": 110,
+        "changedDecisions": 7369,
+        "reopeningsRecognized": 1264,
+        "rememberedInspectionsNowTakes": 112,
+        "blindFeaturesResolved": 14,
+        "fatalLabelsResolved": 0,
+        "pairKindsRestored": 38
+      }
+    }
+  },
+  "note": "All original controls, physical reconstructions and choices are retained. Configured phase recall and full recall are declared alternative assumptions, not proof of human recall. Only prior actually observed same-campaign, exact-board pictures uploaded before the retry enter features. No target outcome enters reconstruction."
+}

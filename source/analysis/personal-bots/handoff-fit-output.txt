@@ -1,0 +1,39 @@
+Own conditional handoffs 1 / 33
+Own conditional handoffs 2 / 33
+Own conditional handoffs 3 / 33
+Own conditional handoffs 4 / 33
+Own conditional handoffs 5 / 33
+Own conditional handoffs 6 / 33
+Own conditional handoffs 7 / 33
+Own conditional handoffs 8 / 33
+Own conditional handoffs 9 / 33
+Own conditional handoffs 10 / 33
+Own conditional handoffs 11 / 33
+Own conditional handoffs 12 / 33
+Own conditional handoffs 13 / 33
+Own conditional handoffs 14 / 33
+Own conditional handoffs 15 / 33
+Own conditional handoffs 16 / 33
+Own conditional handoffs 17 / 33
+Own conditional handoffs 18 / 33
+Own conditional handoffs 19 / 33
+Own conditional handoffs 20 / 33
+Own conditional handoffs 21 / 33
+Own conditional handoffs 22 / 33
+Own conditional handoffs 23 / 33
+Own conditional handoffs 24 / 33
+Own conditional handoffs 25 / 33
+Own conditional handoffs 26 / 33
+Own conditional handoffs 27 / 33
+Own conditional handoffs 28 / 33
+Own conditional handoffs 29 / 33
+Own conditional handoffs 30 / 33
+Own conditional handoffs 31 / 33
+Own conditional handoffs 32 / 33
+Own conditional handoffs 33 / 33
+{
+  "models": 33,
+  "baseOffsetControls": 39268,
+  "targetMet": false,
+  "modelsSha256": "c33d1fdd812d02bd14b05fbcdf588340fed28b215d3739c252ef0ef902abdfd6"
+}

@@ -1,0 +1,90 @@
+{
+  "Dennisisdebeste": {
+    "ownAll": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.709515242537463,
+      "topActionAccuracy": 0.4102787456445993,
+      "followThroughOpportunities": 197,
+      "followThroughLogLoss": 0.4622357106571968,
+      "pairFollowThroughOpportunities": 196,
+      "pairFollowThroughLogLoss": 0.6988149869339605
+    },
+    "ownNovel": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.7512364260151236,
+      "topActionAccuracy": 0.39198606271777003,
+      "followThroughOpportunities": 197,
+      "followThroughLogLoss": 0.47795696151588046,
+      "pairFollowThroughOpportunities": 196,
+      "pairFollowThroughLogLoss": 0.7137393518799493
+    }
+  },
+  "Mrs. Doubtfire": {
+    "ownAll": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.8796504107288818,
+      "topActionAccuracy": 0.3351028533510285,
+      "followThroughOpportunities": 127,
+      "followThroughLogLoss": 0.5011678506613161,
+      "pairFollowThroughOpportunities": 156,
+      "pairFollowThroughLogLoss": 0.705615006839979
+    },
+    "ownNovel": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.9454151443976446,
+      "topActionAccuracy": 0.3134054546795091,
+      "followThroughOpportunities": 127,
+      "followThroughLogLoss": 0.5134095547308056,
+      "pairFollowThroughOpportunities": 156,
+      "pairFollowThroughLogLoss": 0.7085354629724449
+    }
+  },
+  "PUK": {
+    "ownAll": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7771649734399049,
+      "topActionAccuracy": 0.4296714579055442,
+      "followThroughOpportunities": 147,
+      "followThroughLogLoss": 0.3424344511148834,
+      "pairFollowThroughOpportunities": 49,
+      "pairFollowThroughLogLoss": 0.6362734036269523
+    },
+    "ownNovel": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7845220311001695,
+      "topActionAccuracy": 0.4204312114989733,
+      "followThroughOpportunities": 147,
+      "followThroughLogLoss": 0.32761943610929994,
+      "pairFollowThroughOpportunities": 49,
+      "pairFollowThroughLogLoss": 0.6273909569737545
+    }
+  },
+  "Gerda": {
+    "ownAll": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.002004307846316,
+      "topActionAccuracy": 0.29559971611071684,
+      "followThroughOpportunities": 326,
+      "followThroughLogLoss": 0.4772322050687954,
+      "pairFollowThroughOpportunities": 273,
+      "pairFollowThroughLogLoss": 0.7109530171603905
+    },
+    "ownNovel": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.0041467048839205,
+      "topActionAccuracy": 0.2913413768630234,
+      "followThroughOpportunities": 326,
+      "followThroughLogLoss": 0.47098157045980077,
+      "pairFollowThroughOpportunities": 273,
+      "pairFollowThroughLogLoss": 0.6990834742906491
+    }
+  }
+}

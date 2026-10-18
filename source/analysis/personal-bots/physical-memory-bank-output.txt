@@ -1,0 +1,544 @@
+Fitting 542 strictly earlier-available physical models for 280 openings
+1 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 0}
+2 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 0}
+3 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 0}
+4 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 0}
+5 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 0}
+6 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 0}
+7 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 0}
+8 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 0}
+9 / 542 PUK ownAll {'PUK': 0}
+10 / 542 PUK ownNovel {'PUK': 0}
+11 / 542 PUK ownCarryAll {'PUK': 0}
+12 / 542 PUK ownRecallAll {'PUK': 0}
+13 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 3}
+14 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 1}
+15 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 3}
+16 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 3}
+17 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 2}
+18 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 4}
+19 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 4}
+20 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 4}
+21 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 3}
+22 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 6}
+23 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 6}
+24 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 6}
+25 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 4}
+26 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 7}
+27 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 7}
+28 / 542 PUK ownAll {'PUK': 2}
+29 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 7}
+30 / 542 PUK ownNovel {'PUK': 1}
+31 / 542 PUK ownCarryAll {'PUK': 2}
+32 / 542 PUK ownRecallAll {'PUK': 2}
+33 / 542 PUK ownNovel {'PUK': 2}
+34 / 542 PUK ownAll {'PUK': 4}
+35 / 542 PUK ownCarryAll {'PUK': 4}
+36 / 542 PUK ownRecallAll {'PUK': 4}
+37 / 542 PUK ownNovel {'PUK': 3}
+38 / 542 PUK ownAll {'PUK': 6}
+39 / 542 PUK ownCarryAll {'PUK': 6}
+40 / 542 PUK ownRecallAll {'PUK': 6}
+41 / 542 PUK ownNovel {'PUK': 4}
+42 / 542 PUK ownAll {'PUK': 8}
+43 / 542 PUK ownCarryAll {'PUK': 8}
+44 / 542 PUK ownRecallAll {'PUK': 8}
+45 / 542 PUK ownNovel {'PUK': 5}
+46 / 542 PUK ownAll {'PUK': 9}
+47 / 542 PUK ownCarryAll {'PUK': 9}
+48 / 542 PUK ownRecallAll {'PUK': 9}
+49 / 542 PUK ownNovel {'PUK': 6}
+50 / 542 PUK ownAll {'PUK': 10}
+51 / 542 PUK ownCarryAll {'PUK': 10}
+52 / 542 PUK ownRecallAll {'PUK': 10}
+53 / 542 PUK ownNovel {'PUK': 7}
+54 / 542 PUK ownAll {'PUK': 11}
+55 / 542 PUK ownCarryAll {'PUK': 11}
+56 / 542 PUK ownRecallAll {'PUK': 11}
+57 / 542 PUK ownNovel {'PUK': 8}
+58 / 542 PUK ownAll {'PUK': 13}
+59 / 542 PUK ownCarryAll {'PUK': 13}
+60 / 542 PUK ownRecallAll {'PUK': 13}
+61 / 542 PUK ownNovel {'PUK': 9}
+62 / 542 PUK ownAll {'PUK': 15}
+63 / 542 PUK ownCarryAll {'PUK': 15}
+64 / 542 PUK ownRecallAll {'PUK': 15}
+65 / 542 Gerda ownNovel {'Gerda': 8}
+66 / 542 Gerda ownAll {'Gerda': 38}
+67 / 542 Gerda ownCarryAll {'Gerda': 38}
+68 / 542 Gerda ownRecallAll {'Gerda': 38}
+69 / 542 Gerda ownNovel {'Gerda': 9}
+70 / 542 Gerda ownAll {'Gerda': 43}
+71 / 542 Gerda ownCarryAll {'Gerda': 43}
+72 / 542 Gerda ownRecallAll {'Gerda': 43}
+73 / 542 Gerda ownNovel {'Gerda': 10}
+74 / 542 Gerda ownAll {'Gerda': 44}
+75 / 542 Gerda ownCarryAll {'Gerda': 44}
+76 / 542 Gerda ownRecallAll {'Gerda': 44}
+77 / 542 Gerda ownNovel {'Gerda': 11}
+78 / 542 Gerda ownAll {'Gerda': 45}
+79 / 542 Gerda ownCarryAll {'Gerda': 45}
+80 / 542 Gerda ownRecallAll {'Gerda': 45}
+81 / 542 Gerda ownNovel {'Gerda': 12}
+82 / 542 Gerda ownAll {'Gerda': 47}
+83 / 542 Gerda ownCarryAll {'Gerda': 47}
+84 / 542 Gerda ownRecallAll {'Gerda': 47}
+85 / 542 Gerda ownNovel {'Gerda': 13}
+86 / 542 Gerda ownAll {'Gerda': 48}
+87 / 542 Gerda ownCarryAll {'Gerda': 48}
+88 / 542 Gerda ownRecallAll {'Gerda': 48}
+89 / 542 Gerda ownNovel {'Gerda': 14}
+90 / 542 Gerda ownAll {'Gerda': 50}
+91 / 542 Gerda ownCarryAll {'Gerda': 50}
+92 / 542 Gerda ownRecallAll {'Gerda': 50}
+93 / 542 Gerda ownNovel {'Gerda': 15}
+94 / 542 Gerda ownAll {'Gerda': 54}
+95 / 542 Gerda ownCarryAll {'Gerda': 54}
+96 / 542 Gerda ownRecallAll {'Gerda': 54}
+97 / 542 Gerda ownNovel {'Gerda': 16}
+98 / 542 Gerda ownAll {'Gerda': 56}
+99 / 542 Gerda ownCarryAll {'Gerda': 56}
+100 / 542 Gerda ownRecallAll {'Gerda': 56}
+101 / 542 Gerda ownNovel {'Gerda': 17}
+102 / 542 Gerda ownAll {'Gerda': 58}
+103 / 542 Gerda ownCarryAll {'Gerda': 58}
+104 / 542 Gerda ownRecallAll {'Gerda': 58}
+105 / 542 Gerda ownNovel {'Gerda': 18}
+106 / 542 Gerda ownAll {'Gerda': 60}
+107 / 542 Gerda ownCarryAll {'Gerda': 60}
+108 / 542 Gerda ownRecallAll {'Gerda': 60}
+109 / 542 Gerda ownNovel {'Gerda': 19}
+110 / 542 Gerda ownAll {'Gerda': 62}
+111 / 542 Gerda ownCarryAll {'Gerda': 62}
+112 / 542 Gerda ownRecallAll {'Gerda': 62}
+113 / 542 Gerda ownNovel {'Gerda': 20}
+114 / 542 Gerda ownAll {'Gerda': 63}
+115 / 542 Gerda ownCarryAll {'Gerda': 63}
+116 / 542 Gerda ownRecallAll {'Gerda': 63}
+117 / 542 Gerda ownNovel {'Gerda': 21}
+118 / 542 Gerda ownAll {'Gerda': 64}
+119 / 542 Gerda ownCarryAll {'Gerda': 64}
+120 / 542 Gerda ownRecallAll {'Gerda': 64}
+121 / 542 Gerda ownNovel {'Gerda': 22}
+122 / 542 Gerda ownAll {'Gerda': 69}
+123 / 542 Gerda ownCarryAll {'Gerda': 69}
+124 / 542 Gerda ownRecallAll {'Gerda': 69}
+125 / 542 Gerda ownNovel {'Gerda': 23}
+126 / 542 Gerda ownAll {'Gerda': 71}
+127 / 542 Gerda ownCarryAll {'Gerda': 71}
+128 / 542 Gerda ownRecallAll {'Gerda': 71}
+129 / 542 Gerda ownNovel {'Gerda': 24}
+130 / 542 Gerda ownAll {'Gerda': 72}
+131 / 542 Gerda ownCarryAll {'Gerda': 72}
+132 / 542 Gerda ownRecallAll {'Gerda': 72}
+133 / 542 Gerda ownNovel {'Gerda': 25}
+134 / 542 Gerda ownAll {'Gerda': 77}
+135 / 542 Gerda ownCarryAll {'Gerda': 77}
+136 / 542 Gerda ownRecallAll {'Gerda': 77}
+137 / 542 Gerda ownNovel {'Gerda': 26}
+138 / 542 Gerda ownAll {'Gerda': 80}
+139 / 542 Gerda ownCarryAll {'Gerda': 80}
+140 / 542 Gerda ownRecallAll {'Gerda': 80}
+141 / 542 Gerda ownNovel {'Gerda': 27}
+142 / 542 Gerda ownAll {'Gerda': 90}
+143 / 542 Gerda ownCarryAll {'Gerda': 90}
+144 / 542 Gerda ownRecallAll {'Gerda': 90}
+145 / 542 Gerda ownNovel {'Gerda': 28}
+146 / 542 Gerda ownAll {'Gerda': 93}
+147 / 542 Gerda ownCarryAll {'Gerda': 93}
+148 / 542 Gerda ownRecallAll {'Gerda': 93}
+149 / 542 Gerda ownNovel {'Gerda': 29}
+150 / 542 Gerda ownAll {'Gerda': 94}
+151 / 542 Gerda ownCarryAll {'Gerda': 94}
+152 / 542 PUK ownAll {'PUK': 16}
+153 / 542 Gerda ownRecallAll {'Gerda': 94}
+154 / 542 PUK ownNovel {'PUK': 10}
+155 / 542 PUK ownCarryAll {'PUK': 16}
+156 / 542 PUK ownRecallAll {'PUK': 16}
+157 / 542 PUK ownNovel {'PUK': 11}
+158 / 542 PUK ownAll {'PUK': 17}
+159 / 542 PUK ownCarryAll {'PUK': 17}
+160 / 542 PUK ownRecallAll {'PUK': 17}
+161 / 542 PUK ownNovel {'PUK': 12}
+162 / 542 PUK ownAll {'PUK': 18}
+163 / 542 PUK ownCarryAll {'PUK': 18}
+164 / 542 PUK ownRecallAll {'PUK': 18}
+165 / 542 PUK ownNovel {'PUK': 13}
+166 / 542 PUK ownAll {'PUK': 19}
+167 / 542 PUK ownCarryAll {'PUK': 19}
+168 / 542 PUK ownRecallAll {'PUK': 19}
+169 / 542 PUK ownNovel {'PUK': 14}
+170 / 542 PUK ownAll {'PUK': 20}
+171 / 542 PUK ownCarryAll {'PUK': 20}
+172 / 542 PUK ownRecallAll {'PUK': 20}
+173 / 542 PUK ownNovel {'PUK': 15}
+174 / 542 PUK ownAll {'PUK': 21}
+175 / 542 PUK ownCarryAll {'PUK': 21}
+176 / 542 PUK ownRecallAll {'PUK': 21}
+177 / 542 Gerda ownNovel {'Gerda': 30}
+178 / 542 Gerda ownAll {'Gerda': 99}
+179 / 542 Gerda ownCarryAll {'Gerda': 99}
+180 / 542 Gerda ownRecallAll {'Gerda': 99}
+181 / 542 Gerda ownAll {'Gerda': 100}
+182 / 542 Gerda ownNovel {'Gerda': 31}
+183 / 542 Gerda ownCarryAll {'Gerda': 100}
+184 / 542 Gerda ownRecallAll {'Gerda': 100}
+185 / 542 Gerda ownNovel {'Gerda': 32}
+186 / 542 Gerda ownAll {'Gerda': 101}
+187 / 542 Gerda ownCarryAll {'Gerda': 101}
+188 / 542 Gerda ownRecallAll {'Gerda': 101}
+189 / 542 Gerda ownNovel {'Gerda': 33}
+190 / 542 Gerda ownAll {'Gerda': 104}
+191 / 542 Gerda ownCarryAll {'Gerda': 104}
+192 / 542 Gerda ownRecallAll {'Gerda': 104}
+193 / 542 Gerda ownNovel {'Gerda': 34}
+194 / 542 Gerda ownAll {'Gerda': 113}
+195 / 542 Gerda ownCarryAll {'Gerda': 113}
+196 / 542 PUK ownAll {'PUK': 22}
+197 / 542 PUK ownNovel {'PUK': 16}
+198 / 542 PUK ownCarryAll {'PUK': 22}
+199 / 542 Gerda ownRecallAll {'Gerda': 113}
+200 / 542 PUK ownRecallAll {'PUK': 22}
+201 / 542 PUK ownAll {'PUK': 24}
+202 / 542 PUK ownNovel {'PUK': 17}
+203 / 542 PUK ownCarryAll {'PUK': 24}
+204 / 542 PUK ownRecallAll {'PUK': 24}
+205 / 542 PUK ownAll {'PUK': 25}
+206 / 542 PUK ownNovel {'PUK': 18}
+207 / 542 PUK ownCarryAll {'PUK': 25}
+208 / 542 PUK ownRecallAll {'PUK': 25}
+209 / 542 PUK ownNovel {'PUK': 19}
+210 / 542 PUK ownAll {'PUK': 26}
+211 / 542 PUK ownCarryAll {'PUK': 26}
+212 / 542 PUK ownRecallAll {'PUK': 26}
+213 / 542 PUK ownNovel {'PUK': 20}
+214 / 542 PUK ownAll {'PUK': 28}
+215 / 542 PUK ownCarryAll {'PUK': 28}
+216 / 542 PUK ownRecallAll {'PUK': 28}
+217 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 5}
+218 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 11}
+219 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 11}
+220 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 11}
+221 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 6}
+222 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 12}
+223 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 12}
+224 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 12}
+225 / 542 Gerda ownNovel {'Gerda': 35}
+226 / 542 Gerda ownAll {'Gerda': 132}
+227 / 542 Gerda ownCarryAll {'Gerda': 132}
+228 / 542 Gerda ownRecallAll {'Gerda': 132}
+229 / 542 Gerda ownAll {'Gerda': 133}
+230 / 542 Gerda ownNovel {'Gerda': 36}
+231 / 542 Gerda ownCarryAll {'Gerda': 133}
+232 / 542 Gerda ownRecallAll {'Gerda': 133}
+233 / 542 Gerda ownNovel {'Gerda': 37}
+234 / 542 Gerda ownAll {'Gerda': 135}
+235 / 542 Gerda ownCarryAll {'Gerda': 135}
+236 / 542 Gerda ownRecallAll {'Gerda': 135}
+237 / 542 Gerda ownAll {'Gerda': 137}
+238 / 542 Gerda ownNovel {'Gerda': 38}
+239 / 542 Gerda ownCarryAll {'Gerda': 137}
+240 / 542 Gerda ownRecallAll {'Gerda': 137}
+241 / 542 Gerda ownNovel {'Gerda': 39}
+242 / 542 Gerda ownAll {'Gerda': 138}
+243 / 542 Gerda ownCarryAll {'Gerda': 138}
+244 / 542 Gerda ownRecallAll {'Gerda': 138}
+245 / 542 Gerda ownNovel {'Gerda': 40}
+246 / 542 Gerda ownAll {'Gerda': 139}
+247 / 542 Gerda ownCarryAll {'Gerda': 139}
+248 / 542 Gerda ownRecallAll {'Gerda': 139}
+249 / 542 Gerda ownNovel {'Gerda': 41}
+250 / 542 Gerda ownAll {'Gerda': 141}
+251 / 542 Gerda ownCarryAll {'Gerda': 141}
+252 / 542 Gerda ownRecallAll {'Gerda': 141}
+253 / 542 Gerda ownAll {'Gerda': 143}
+254 / 542 Gerda ownNovel {'Gerda': 42}
+255 / 542 Gerda ownCarryAll {'Gerda': 143}
+256 / 542 Gerda ownRecallAll {'Gerda': 143}
+257 / 542 Gerda ownNovel {'Gerda': 43}
+258 / 542 Gerda ownAll {'Gerda': 145}
+259 / 542 Gerda ownCarryAll {'Gerda': 145}
+260 / 542 PUK ownAll {'PUK': 31}
+261 / 542 PUK ownNovel {'PUK': 21}
+262 / 542 PUK ownCarryAll {'PUK': 31}
+263 / 542 Gerda ownRecallAll {'Gerda': 145}
+264 / 542 PUK ownRecallAll {'PUK': 31}
+265 / 542 PUK ownNovel {'PUK': 22}
+266 / 542 PUK ownAll {'PUK': 32}
+267 / 542 PUK ownCarryAll {'PUK': 32}
+268 / 542 PUK ownRecallAll {'PUK': 32}
+269 / 542 Gerda ownNovel {'Gerda': 44}
+270 / 542 Gerda ownAll {'Gerda': 148}
+271 / 542 Gerda ownCarryAll {'Gerda': 148}
+272 / 542 PUK ownAll {'PUK': 33}
+273 / 542 PUK ownNovel {'PUK': 23}
+274 / 542 PUK ownCarryAll {'PUK': 33}
+275 / 542 Gerda ownRecallAll {'Gerda': 148}
+276 / 542 PUK ownRecallAll {'PUK': 33}
+277 / 542 Gerda ownNovel {'Gerda': 45}
+278 / 542 Gerda ownAll {'Gerda': 149}
+279 / 542 Gerda ownCarryAll {'Gerda': 149}
+280 / 542 PUK ownAll {'PUK': 36}
+281 / 542 PUK ownNovel {'PUK': 24}
+282 / 542 Gerda ownRecallAll {'Gerda': 149}
+283 / 542 PUK ownCarryAll {'PUK': 36}
+284 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 11}
+285 / 542 PUK ownRecallAll {'PUK': 36}
+286 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 11}
+287 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 11}
+288 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 1}
+289 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 12}
+290 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 12}
+291 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 12}
+292 / 542 Gerda ownNovel {'Gerda': 46}
+293 / 542 Gerda ownAll {'Gerda': 150}
+294 / 542 Gerda ownCarryAll {'Gerda': 150}
+295 / 542 Gerda ownRecallAll {'Gerda': 150}
+296 / 542 Gerda ownAll {'Gerda': 151}
+297 / 542 Gerda ownNovel {'Gerda': 47}
+298 / 542 Gerda ownCarryAll {'Gerda': 151}
+299 / 542 Gerda ownRecallAll {'Gerda': 151}
+300 / 542 Gerda ownNovel {'Gerda': 48}
+301 / 542 Gerda ownAll {'Gerda': 152}
+302 / 542 Gerda ownCarryAll {'Gerda': 152}
+303 / 542 Gerda ownRecallAll {'Gerda': 152}
+304 / 542 Gerda ownNovel {'Gerda': 49}
+305 / 542 Gerda ownAll {'Gerda': 154}
+306 / 542 Gerda ownCarryAll {'Gerda': 154}
+307 / 542 Gerda ownRecallAll {'Gerda': 154}
+308 / 542 Gerda ownNovel {'Gerda': 50}
+309 / 542 Gerda ownAll {'Gerda': 171}
+310 / 542 Gerda ownCarryAll {'Gerda': 171}
+311 / 542 PUK ownAll {'PUK': 37}
+312 / 542 PUK ownNovel {'PUK': 25}
+313 / 542 PUK ownCarryAll {'PUK': 37}
+314 / 542 Gerda ownRecallAll {'Gerda': 171}
+315 / 542 PUK ownRecallAll {'PUK': 37}
+316 / 542 PUK ownAll {'PUK': 38}
+317 / 542 PUK ownNovel {'PUK': 26}
+318 / 542 PUK ownCarryAll {'PUK': 38}
+319 / 542 PUK ownRecallAll {'PUK': 38}
+320 / 542 PUK ownAll {'PUK': 40}
+321 / 542 PUK ownNovel {'PUK': 27}
+322 / 542 PUK ownCarryAll {'PUK': 40}
+323 / 542 PUK ownRecallAll {'PUK': 40}
+324 / 542 PUK ownNovel {'PUK': 28}
+325 / 542 PUK ownAll {'PUK': 41}
+326 / 542 PUK ownCarryAll {'PUK': 41}
+327 / 542 PUK ownRecallAll {'PUK': 41}
+328 / 542 Gerda ownNovel {'Gerda': 51}
+329 / 542 Gerda ownAll {'Gerda': 172}
+330 / 542 Gerda ownCarryAll {'Gerda': 172}
+331 / 542 Gerda ownRecallAll {'Gerda': 172}
+332 / 542 Gerda ownAll {'Gerda': 173}
+333 / 542 Gerda ownNovel {'Gerda': 52}
+334 / 542 Gerda ownRecallAll {'Gerda': 173}
+335 / 542 Gerda ownCarryAll {'Gerda': 173}
+336 / 542 Gerda ownNovel {'Gerda': 53}
+337 / 542 Gerda ownAll {'Gerda': 174}
+338 / 542 Gerda ownCarryAll {'Gerda': 174}
+339 / 542 Gerda ownRecallAll {'Gerda': 174}
+340 / 542 Gerda ownAll {'Gerda': 175}
+341 / 542 Gerda ownNovel {'Gerda': 54}
+342 / 542 Gerda ownRecallAll {'Gerda': 175}
+343 / 542 Gerda ownCarryAll {'Gerda': 175}
+344 / 542 Gerda ownNovel {'Gerda': 55}
+345 / 542 Gerda ownAll {'Gerda': 177}
+346 / 542 Gerda ownCarryAll {'Gerda': 177}
+347 / 542 Gerda ownRecallAll {'Gerda': 177}
+348 / 542 Gerda ownAll {'Gerda': 179}
+349 / 542 Gerda ownNovel {'Gerda': 56}
+350 / 542 Gerda ownCarryAll {'Gerda': 179}
+351 / 542 Gerda ownRecallAll {'Gerda': 179}
+352 / 542 Gerda ownNovel {'Gerda': 57}
+353 / 542 Gerda ownAll {'Gerda': 180}
+354 / 542 Gerda ownCarryAll {'Gerda': 180}
+355 / 542 Gerda ownRecallAll {'Gerda': 180}
+356 / 542 Gerda ownNovel {'Gerda': 58}
+357 / 542 Gerda ownAll {'Gerda': 183}
+358 / 542 Gerda ownRecallAll {'Gerda': 183}
+359 / 542 Gerda ownCarryAll {'Gerda': 183}
+360 / 542 Gerda ownNovel {'Gerda': 59}
+361 / 542 Gerda ownAll {'Gerda': 185}
+362 / 542 Gerda ownCarryAll {'Gerda': 185}
+363 / 542 Gerda ownRecallAll {'Gerda': 185}
+364 / 542 Gerda ownAll {'Gerda': 188}
+365 / 542 Gerda ownNovel {'Gerda': 60}
+366 / 542 Gerda ownCarryAll {'Gerda': 188}
+367 / 542 Gerda ownRecallAll {'Gerda': 188}
+368 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 2}
+369 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 33}
+370 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 33}
+371 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 33}
+372 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 17}
+373 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 17}
+374 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 17}
+375 / 542 PUK ownNovel {'PUK': 29}
+376 / 542 PUK ownAll {'PUK': 42}
+377 / 542 PUK ownCarryAll {'PUK': 42}
+378 / 542 PUK ownRecallAll {'PUK': 42}
+379 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 18}
+380 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 18}
+381 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 18}
+382 / 542 PUK ownNovel {'PUK': 30}
+383 / 542 PUK ownAll {'PUK': 43}
+384 / 542 PUK ownCarryAll {'PUK': 43}
+385 / 542 PUK ownRecallAll {'PUK': 43}
+386 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 19}
+387 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 19}
+388 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 19}
+389 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 21}
+390 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 21}
+391 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 21}
+392 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 22}
+393 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 22}
+394 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 22}
+395 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 26}
+396 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 26}
+397 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 26}
+398 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 27}
+399 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 27}
+400 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 27}
+401 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 3}
+402 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 35}
+403 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 35}
+404 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 35}
+405 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 4}
+406 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 37}
+407 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 37}
+408 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 37}
+409 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 5}
+410 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 42}
+411 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 42}
+412 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 42}
+413 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 6}
+414 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 44}
+415 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 44}
+416 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 44}
+417 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 7}
+418 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 49}
+419 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 49}
+420 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 49}
+421 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 30}
+422 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 30}
+423 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 30}
+424 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 7}
+425 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 31}
+426 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 31}
+427 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 31}
+428 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 8}
+429 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 33}
+430 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 33}
+431 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 33}
+432 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 9}
+433 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 37}
+434 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 37}
+435 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 37}
+436 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 10}
+437 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 38}
+438 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 38}
+439 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 38}
+440 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 11}
+441 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 41}
+442 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 41}
+443 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 41}
+444 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 12}
+445 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 42}
+446 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 42}
+447 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 42}
+448 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 13}
+449 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 43}
+450 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 43}
+451 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 43}
+452 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 14}
+453 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 44}
+454 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 44}
+455 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 44}
+456 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 15}
+457 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 48}
+458 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 48}
+459 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 48}
+460 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 16}
+461 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 50}
+462 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 50}
+463 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 50}
+464 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 17}
+465 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 51}
+466 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 51}
+467 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 51}
+468 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 18}
+469 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 54}
+470 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 54}
+471 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 54}
+472 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 56}
+473 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 56}
+474 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 56}
+475 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 19}
+476 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 59}
+477 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 59}
+478 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 59}
+479 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 20}
+480 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 63}
+481 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 63}
+482 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 63}
+483 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 21}
+484 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 67}
+485 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 67}
+486 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 67}
+487 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 22}
+488 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 68}
+489 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 68}
+490 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 68}
+491 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 23}
+492 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 71}
+493 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 71}
+494 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 71}
+495 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 8}
+496 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 50}
+497 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 50}
+498 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 50}
+499 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 9}
+500 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 52}
+501 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 52}
+502 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 52}
+503 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 10}
+504 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 57}
+505 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 57}
+506 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 57}
+507 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 11}
+508 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 58}
+509 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 58}
+510 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 58}
+511 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 12}
+512 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 63}
+513 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 63}
+514 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 63}
+515 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 13}
+516 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 64}
+517 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 64}
+518 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 64}
+519 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 24}
+520 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 72}
+521 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 72}
+522 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 72}
+523 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 25}
+524 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 73}
+525 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 73}
+526 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 73}
+527 / 542 Dennisisdebeste ownNovel {'Dennisisdebeste': 26}
+528 / 542 Dennisisdebeste ownAll {'Dennisisdebeste': 74}
+529 / 542 Dennisisdebeste ownCarryAll {'Dennisisdebeste': 74}
+530 / 542 Dennisisdebeste ownRecallAll {'Dennisisdebeste': 74}
+531 / 542 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 65}
+532 / 542 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 14}
+533 / 542 Mrs. Doubtfire ownCarryAll {'Mrs. Doubtfire': 65}
+534 / 542 Mrs. Doubtfire ownRecallAll {'Mrs. Doubtfire': 65}
+535 / 542 PUK ownNovel {'PUK': 31}
+536 / 542 PUK ownAll {'PUK': 57}
+537 / 542 PUK ownCarryAll {'PUK': 57}
+538 / 542 PUK ownRecallAll {'PUK': 57}
+539 / 542 Gerda ownNovel {'Gerda': 61}
+540 / 542 Gerda ownAll {'Gerda': 202}
+541 / 542 Gerda ownCarryAll {'Gerda': 202}
+542 / 542 Gerda ownRecallAll {'Gerda': 202}
+Saved physical policy bank 542

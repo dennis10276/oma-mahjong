@@ -1,0 +1,16 @@
+{
+  "made": "2026-10-18T21:11:02.462171+00:00",
+  "targetMet": false,
+  "evidence": "native-personal-handoff-reference-only",
+  "dataFile": "analysis/archive/personal-bots/experiments/personal-tray-intents-features-2026-10-18T20-24-17-195Z/analysis/archive/personal-bots/personal-tray-intents-prefixes.json",
+  "baseFile": "analysis/archive/personal-bots/experiments/personal-joint-intents-first-2026-10-18T20-50-31-269Z/analysis/archive/personal-bots/personal-tray-intents-models.json",
+  "actorFile": "analysis/archive/personal-bots/experiments/personal-fresh-own-fits-2026-10-18T15-59-12-900Z/analysis/archive/personal-bots/personal-fresh-own-models.json",
+  "dataSha256": "dfe204139c13aa91fca92fcffe77e73b578491ead0b7ecf758bc46f417e499e3",
+  "baseSha256": "626ba93f18f31dabf784dd6e818d9dd68fabb9b7bcb36c5a65d6c56f33dde06f",
+  "actorSha256": "dffe93e21abed8a1e41ac079ae50be22d5ec0958ea9de65eb23f1fd94032f1fe",
+  "modelsSha256": "c33d1fdd812d02bd14b05fbcdf588340fed28b215d3739c252ef0ef902abdfd6",
+  "prefixes": 445,
+  "decisions": 39268,
+  "cueOpportunities": 11560,
+  "note": "Training-prefix numerical probabilities only. previousAfter stores the last action\u2019s pre-action public descriptor. No hidden target or future winning label enters autonomous history; this does not prove80% winning-count accuracy."
+}

@@ -1,0 +1,57 @@
+{
+  "resultControls": 29,
+  "clockPrefixPairs": 736,
+  "caps": 0,
+  "summaries": {
+    "Dennisisdebeste": {
+      "clockOnly": {
+        "runs": 736,
+        "wins": 53,
+        "failures": {
+          "clock": 331,
+          "tray": 352
+        },
+        "computationCaps": 0,
+        "skippedKnownTrayMatch": 1426,
+        "knownNonPairReinspections": 19935,
+        "trayLossesWithPreActionKnownMatch": 33
+      },
+      "clockAndTray": {
+        "runs": 736,
+        "wins": 75,
+        "failures": {
+          "clock": 331,
+          "tray": 330
+        },
+        "computationCaps": 0,
+        "skippedKnownTrayMatch": 1164,
+        "knownNonPairReinspections": 19993,
+        "trayLossesWithPreActionKnownMatch": 20
+      }
+    },
+    "Gerda": {
+      "clockOnly": {
+        "runs": 192,
+        "wins": 39,
+        "failures": {
+          "tray": 153
+        },
+        "computationCaps": 0,
+        "skippedKnownTrayMatch": 1864,
+        "knownNonPairReinspections": 6411,
+        "trayLossesWithPreActionKnownMatch": 36
+      },
+      "clockAndTray": {
+        "runs": 192,
+        "wins": 46,
+        "failures": {
+          "tray": 146
+        },
+        "computationCaps": 0,
+        "skippedKnownTrayMatch": 1354,
+        "knownNonPairReinspections": 5673,
+        "trayLossesWithPreActionKnownMatch": 25
+      }
+    }
+  }
+}

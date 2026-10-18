@@ -1,0 +1,91 @@
+Known-plan worker 1 5/199
+Known-plan worker 0 5/199
+Known-plan worker 1 10/199
+Known-plan worker 0 10/199
+Known-plan worker 0 15/199
+Known-plan worker 1 15/199
+Known-plan worker 0 20/199
+Known-plan worker 0 25/199
+Known-plan worker 1 20/199
+Known-plan worker 1 25/199
+Known-plan worker 0 30/199
+Known-plan worker 1 30/199
+Known-plan worker 0 35/199
+Known-plan worker 1 35/199
+Known-plan worker 0 40/199
+Known-plan worker 1 40/199
+Known-plan worker 0 45/199
+Known-plan worker 1 45/199
+Known-plan worker 1 50/199
+Known-plan worker 0 50/199
+Known-plan worker 1 55/199
+Known-plan worker 0 55/199
+Known-plan worker 1 60/199
+Known-plan worker 0 60/199
+Known-plan worker 1 65/199
+Known-plan worker 0 65/199
+Known-plan worker 1 70/199
+Known-plan worker 0 70/199
+Known-plan worker 1 75/199
+Known-plan worker 0 75/199
+Known-plan worker 1 80/199
+Known-plan worker 1 85/199
+Known-plan worker 0 80/199
+Known-plan worker 1 90/199
+Known-plan worker 1 95/199
+Known-plan worker 0 85/199
+Known-plan worker 0 90/199
+Known-plan worker 0 95/199
+Known-plan worker 1 100/199
+Known-plan worker 0 100/199
+Known-plan worker 1 105/199
+Known-plan worker 0 105/199
+Known-plan worker 1 110/199
+Known-plan worker 0 110/199
+Known-plan worker 1 115/199
+Known-plan worker 0 115/199
+Known-plan worker 1 120/199
+Known-plan worker 1 125/199
+Known-plan worker 0 120/199
+Known-plan worker 1 130/199
+Known-plan worker 0 125/199
+Known-plan worker 1 135/199
+Known-plan worker 1 140/199
+Known-plan worker 1 145/199
+Known-plan worker 0 130/199
+Known-plan worker 0 135/199
+Known-plan worker 0 140/199
+Known-plan worker 0 145/199
+Known-plan worker 1 150/199
+Known-plan worker 1 155/199
+Known-plan worker 0 150/199
+Known-plan worker 0 155/199
+Known-plan worker 1 160/199
+Known-plan worker 0 160/199
+Known-plan worker 1 165/199
+Known-plan worker 0 165/199
+Known-plan worker 1 170/199
+Known-plan worker 0 170/199
+Known-plan worker 1 175/199
+Known-plan worker 1 180/199
+Known-plan worker 0 175/199
+Known-plan worker 0 180/199
+Known-plan worker 0 185/199
+Known-plan worker 1 185/199
+Known-plan worker 1 190/199
+Known-plan worker 1 195/199
+Known-plan worker 0 190/199
+Known-plan worker 0 195/199
+{
+  "output": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\policy-known-plan-prefix-data.json",
+  "pilot": false,
+  "prefixes": 398,
+  "milliseconds": 541416,
+  "totals": {
+    "nodes": 12148494,
+    "boundaries": 299034,
+    "calls": 33543,
+    "checked": 33503,
+    "uncertainJoker": 40
+  }
+}

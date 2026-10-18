@@ -3,24 +3,33 @@
    the way the game makes it for their screen shape. */
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm');
+const { tableVersion } = require('./board_versions.js');
 const ROOT = path.join(__dirname, '..', '..', '..');
-const L = require(path.join(ROOT, 'www', 'layouts.js'));
+const layoutContext = { module: { exports: {} }, Date: { now: () => 0 } };
+vm.createContext(layoutContext);
+vm.runInContext(fs.readFileSync(path.join(ROOT, 'www', 'layouts.js'), 'utf8'), layoutContext);
+const L = layoutContext.module.exports;
 const TABLES = process.env.TABLES || path.join(__dirname, 'tables');
 const ctxs = {};
 function tableCtx(v) {
+  v = tableVersion(v);
   if (ctxs[v]) return ctxs[v];
   const f = path.join(TABLES, `levels-${v}.js`), h = path.join(TABLES, `hard-${v}.js`);
   if (!fs.existsSync(f) || !fs.existsSync(h)) return (ctxs[v] = null);
   const ctx = { console, Layouts: L }; vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(h, 'utf8').replace("typeof module !== 'undefined'", 'false') + ';this.Hard = Hard;', ctx);
   vm.runInContext(fs.readFileSync(f, 'utf8') + ';this.HL = HARD_LEVELS;', ctx);
+  const early = path.join(TABLES, `early-${v}.js`);
+  if (fs.existsSync(early)) vm.runInContext(fs.readFileSync(early, 'utf8'), ctx);
   return (ctxs[v] = ctx);
 }
 const rulesOf = (tiles, ob) => ob && (Object.keys(ob.ice || {}).length || (ob.keys || []).length) ? { iceNb: L.iceNeighbors(tiles), ice: ob.ice || {}, locks: (ob.keys || []).length ? new Set(ob.locks) : null, keys: ob.keys || [] } : null;
 // a game for the test player from a designed level
 function designed(v, lv) {
-  const c = tableCtx(v); if (!c || lv < c.HL.from) return null;
-  const d = c.Hard.get(lv), tiles = d.tiles.map(([x, y, z]) => ({ x, y, z })), nb = L.neighbors(tiles), n = tiles.length;
+  const c = tableCtx(v); if (!c) return null;
+  const d = lv >= c.HL.from ? c.Hard.get(lv) : tableVersion(v) === '1.55' && c.Hard.appliesEarly(lv, '') ? c.Hard.earlySpec(lv).made : null;
+  if (!d) return null;
+  const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z })), nb = L.neighbors(tiles), n = tiles.length;
   const down = new Uint8Array(n); d.down.forEach(i => down[i] = 1);
   return { key: `t${v}:${lv}`, tiles, nb, faces: d.faces, down, rules: rulesOf(tiles, d.obst), clock: d.clock || null };
 }

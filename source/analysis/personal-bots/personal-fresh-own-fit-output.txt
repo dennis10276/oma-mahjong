@@ -1,0 +1,98 @@
+{
+  "Dennisisdebeste": {
+    "trainingGames": 113,
+    "previousTrainingGames": 74,
+    "newOwnAttempts": 39,
+    "availableThrough": 1792337025929,
+    "inputObservedThrough": 1792338235700,
+    "unchangedMembershipControlMatched": false,
+    "maximumStaticWeightChange": 0.34736796951978466,
+    "naturalOutcomeCounts": {
+      "0": 51,
+      "1": 61
+    },
+    "censoredOutcomePrefixes": 1,
+    "initialRetryPriors": [
+      [
+        0.32626266356032924,
+        0.6737373364396707
+      ],
+      [
+        0.4776330499986242,
+        0.5223669500013758
+      ]
+    ]
+  },
+  "Mrs. Doubtfire": {
+    "trainingGames": 65,
+    "previousTrainingGames": 65,
+    "newOwnAttempts": 0,
+    "availableThrough": 1792264148974,
+    "inputObservedThrough": 1792288513885,
+    "unchangedMembershipControlMatched": true,
+    "maximumStaticWeightChange": 0.0,
+    "naturalOutcomeCounts": {
+      "0": 48,
+      "1": 15
+    },
+    "censoredOutcomePrefixes": 2,
+    "initialRetryPriors": [
+      [
+        0.5663996879627851,
+        0.433600312037215
+      ],
+      [
+        0.7175744427869394,
+        0.28242555721306056
+      ]
+    ]
+  },
+  "PUK": {
+    "trainingGames": 57,
+    "previousTrainingGames": 57,
+    "newOwnAttempts": 0,
+    "availableThrough": 1792243130063,
+    "inputObservedThrough": 1792288513885,
+    "unchangedMembershipControlMatched": true,
+    "maximumStaticWeightChange": 0.0,
+    "naturalOutcomeCounts": {
+      "0": 28,
+      "1": 26
+    },
+    "censoredOutcomePrefixes": 3,
+    "initialRetryPriors": [
+      [
+        0.4520539394089059,
+        0.547946060591094
+      ],
+      [
+        0.7333737776609079,
+        0.26662622233909195
+      ]
+    ]
+  },
+  "Gerda": {
+    "trainingGames": 210,
+    "previousTrainingGames": 202,
+    "newOwnAttempts": 8,
+    "availableThrough": 1792309731625,
+    "inputObservedThrough": 1792338235700,
+    "unchangedMembershipControlMatched": false,
+    "maximumStaticWeightChange": 0.24430013020574753,
+    "naturalOutcomeCounts": {
+      "0": 134,
+      "1": 59
+    },
+    "censoredOutcomePrefixes": 17,
+    "initialRetryPriors": [
+      [
+        0.5612942929041942,
+        0.43870570709580575
+      ],
+      [
+        0.6877481127035974,
+        0.31225188729640263
+      ]
+    ]
+  }
+}

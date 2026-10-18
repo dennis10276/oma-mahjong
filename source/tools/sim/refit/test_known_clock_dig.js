@@ -1,0 +1,28 @@
+'use strict';
+const assert = require('assert/strict');
+const L = require('../../../www/layouts.js');
+const { featuresOf, FEATURES } = require('./known_clock_dig.js');
+const tiles = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 6, y: 0, z: 0 }];
+const game = { tiles, nb: L.neighbors(tiles), rules: null, clock: { i: 0, n: 4 } };
+const state = { alive: [1, 1, 1], pictures: [null, null, 2], down: [0, 1, 0],
+  tray: [], moves: 0, openPeek: -1, relieved: false, arriving: [] };
+const actions = [{ index: 1, inspect: true }, { index: 2, inspect: false }];
+const result = featuresOf(game, state, actions);
+assert.equal(FEATURES.length, 9);
+assert.equal(result.features[0][5], 1);
+assert.equal(result.features[1][5], 0);
+assert.equal(result.features[0][0], 0);
+assert.equal(result.features[0][3], 1);
+const pressured = featuresOf(game, { ...state, moves: 2, tray: [3, 4, 5] }, actions);
+assert.equal(pressured.features[0][6], 0.5);
+assert.equal(pressured.features[0][7], 1);
+assert.equal(pressured.features[1][6], 0);
+assert.equal(pressured.features[1][7], 0);
+const known = featuresOf(game, { ...state, pictures: [0, 1, 2], down: [0, 0, 0] }, actions);
+assert.equal(known.features[0][4], 0.25);
+assert.equal(known.features[0][5], 0);
+assert.equal(known.features[0][0], 1);
+assert.deepEqual(featuresOf({ ...game, clock: null }, state, actions).features, actions.map(() => FEATURES.map(() => 0)));
+assert.deepEqual(featuresOf(game, state, actions.slice().reverse()).features, result.features.slice().reverse());
+assert.deepEqual(featuresOf({ ...game, faces: [98, 97, 96] }, state, actions), result);
+console.log('PASS clock digging distinguishes initial public probes, learned validity evidence and later pressure without hidden pictures');

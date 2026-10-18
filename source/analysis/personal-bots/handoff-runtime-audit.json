@@ -1,0 +1,32 @@
+{
+  "made": "2026-10-18T21:11:07.108Z",
+  "targetMet": false,
+  "evidence": "personal-handoff-native-runtime-parity-only",
+  "prefixes": 445,
+  "decisions": 39268,
+  "cueOpportunities": 11560,
+  "maximumDifference": 8.881784197001252e-16,
+  "modelsSha256": "c33d1fdd812d02bd14b05fbcdf588340fed28b215d3739c252ef0ef902abdfd6",
+  "nativeSha256": "5f306e4d23e36481efe031fce0d4158210c20d35462585f2295598aac4e80628",
+  "dataSha256": "dfe204139c13aa91fca92fcffe77e73b578491ead0b7ecf758bc46f417e499e3",
+  "baseSha256": "626ba93f18f31dabf784dd6e818d9dd68fabb9b7bcb36c5a65d6c56f33dde06f",
+  "actorSha256": "dffe93e21abed8a1e41ac079ae50be22d5ec0958ea9de65eb23f1fd94032f1fe",
+  "sourceHashes": {
+    "tools/sim/refit/personal_handoff_runtime_audit.js": "da80304588588a5b6f008adfd84de04b49f1d44a2f688108d2612b660441c2ce",
+    "tools/sim/refit/personal_handoff_choice.js": "aa36a03a569817360ede314e5886d7898b191800e396523e4f1392a2c3d42087",
+    "tools/sim/refit/personal_handoff_cues.js": "2dd67c19c11f044b047f82f6d1b2cb04d4b2fe360cc453acf76ab5964dc31e96",
+    "tools/sim/refit/personal_joint_intents_choice.js": "b038a203fa74ed5cb456b8d29fe9e5b4a77978e9d8fde1c013788dacb4dc5e4b",
+    "tools/sim/refit/known_clock_strategy.js": "84edc19c72293d784f6d5d429fa3f849d1775e230b59ba77f5520ce02f62827d",
+    "tools/sim/refit/known_tray_plan.js": "e8cc62a1e52c7824ab4031b5702d5231ab05a51a260c203e9fabb48c3eed505a",
+    "www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "tools/sim/refit/known_clock_dig.js": "aa041eaa6813311fb0aabe2cc1fd502fea70760733a7246b6b745012b9045735",
+    "tools/sim/refit/known_clock_plan.js": "ceedda69596e61148d29c7024a622cf891b0f02712b8d8951cf1ebdb106bc850",
+    "tools/sim/refit/known_tray_plan_bits.js": "55b232c9439c1e05423b3983a3e7da8d45b1179b16cf84d4964ad0c6232b2c06",
+    "tools/sim/refit/known_tray_plan_cache.js": "3ded5f1a8896940cc103b9325c0df70f2ed3bedd3b2bf0d3983b057a8e89dfb9",
+    "tools/sim/refit/personal_clock_intents_choice.js": "b8ef6a3d153d4300af1b44fae5cfba2536b3ba5623e52f2e7971d8e18cb234c4",
+    "tools/sim/refit/personal_clock_strategy_choice.js": "9dd83e112bc51205fc91d478770a24e52dd52a17379c166569f8eab7dfc887f3",
+    "tools/sim/refit/personal_context_choice.js": "67b3e9fdb661ae92f1df6c2060d616182108583af53c1d74e5452546788f0523",
+    "tools/sim/refit/personal_tray_intents_choice.js": "619041809e586b84aa2ee7d1a1a6aaa6f95328d35aa56c98c733643bae7e6901"
+  },
+  "note": "All445 training prefixes match native probabilities, causal base posteriors and previous-action descriptors within1e-12. This is numerical implementation evidence, not actual pre-opening winning-try accuracy or80% success."
+}

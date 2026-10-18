@@ -1,0 +1,110 @@
+{
+  "evidence": "descriptive-recorded-actions-not-forecast-accuracy",
+  "prefixFingerprint": "9cc63c3fe1c94e444659de2f96e368312141b7b9c6f8b73c2e9ee0c0b35d67c0",
+  "players": {
+    "Dennisisdebeste": [
+      {
+        "opportunities": 594,
+        "prepared": 163,
+        "otherFlip": 310,
+        "otherTake": 121
+      },
+      {
+        "opportunities": 813,
+        "prepared": 180,
+        "otherFlip": 419,
+        "otherTake": 214
+      },
+      {
+        "opportunities": 377,
+        "prepared": 81,
+        "otherFlip": 146,
+        "otherTake": 150
+      },
+      {
+        "opportunities": 112,
+        "prepared": 25,
+        "otherFlip": 41,
+        "otherTake": 46
+      }
+    ],
+    "Mrs. Doubtfire": [
+      {
+        "opportunities": 193,
+        "prepared": 52,
+        "otherFlip": 94,
+        "otherTake": 47
+      },
+      {
+        "opportunities": 448,
+        "prepared": 97,
+        "otherFlip": 245,
+        "otherTake": 106
+      },
+      {
+        "opportunities": 386,
+        "prepared": 82,
+        "otherFlip": 207,
+        "otherTake": 97
+      },
+      {
+        "opportunities": 160,
+        "prepared": 33,
+        "otherFlip": 86,
+        "otherTake": 41
+      }
+    ],
+    "PUK": [
+      {
+        "opportunities": 442,
+        "prepared": 99,
+        "otherFlip": 150,
+        "otherTake": 193
+      },
+      {
+        "opportunities": 524,
+        "prepared": 89,
+        "otherFlip": 165,
+        "otherTake": 270
+      },
+      {
+        "opportunities": 299,
+        "prepared": 48,
+        "otherFlip": 87,
+        "otherTake": 164
+      },
+      {
+        "opportunities": 74,
+        "prepared": 8,
+        "otherFlip": 11,
+        "otherTake": 55
+      }
+    ],
+    "Gerda": [
+      {
+        "opportunities": 1401,
+        "prepared": 366,
+        "otherFlip": 659,
+        "otherTake": 376
+      },
+      {
+        "opportunities": 1840,
+        "prepared": 388,
+        "otherFlip": 741,
+        "otherTake": 711
+      },
+      {
+        "opportunities": 1290,
+        "prepared": 244,
+        "otherFlip": 468,
+        "otherTake": 578
+      },
+      {
+        "opportunities": 275,
+        "prepared": 28,
+        "otherFlip": 57,
+        "otherTake": 190
+      }
+    ]
+  }
+}

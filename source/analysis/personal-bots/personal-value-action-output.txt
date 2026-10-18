@@ -1,0 +1,178 @@
+Measured own cross-fitted value preference Dennisisdebeste ownAll
+Measured own cross-fitted value preference Dennisisdebeste ownCarryAll
+Measured own cross-fitted value preference Mrs. Doubtfire ownAll
+Measured own cross-fitted value preference Mrs. Doubtfire ownCarryAll
+Measured own cross-fitted value preference PUK ownAll
+Measured own cross-fitted value preference PUK ownCarryAll
+Measured own cross-fitted value preference Gerda ownAll
+Measured own cross-fitted value preference Gerda ownCarryAll
+{
+  "Dennisisdebeste": {
+    "ownAll": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7095152425374631,
+        "topActionAccuracy": 0.4102787456445993
+      },
+      "personalValue": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7104397291546625,
+        "topActionAccuracy": 0.4098432055749129
+      },
+      "fixedPositiveValue": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7067401458345695,
+        "topActionAccuracy": 0.4124564459930314
+      }
+    },
+    "ownCarryAll": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7089175961665852,
+        "topActionAccuracy": 0.4133275261324042
+      },
+      "personalValue": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7092326394087123,
+        "topActionAccuracy": 0.4124564459930314
+      },
+      "fixedPositiveValue": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7104667651958463,
+        "topActionAccuracy": 0.40897212543554007
+      }
+    }
+  },
+  "Mrs. Doubtfire": {
+    "ownAll": {
+      "control": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.8796504107288818,
+        "topActionAccuracy": 0.3351028533510285
+      },
+      "personalValue": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.8800241349916165,
+        "topActionAccuracy": 0.3344392833443928
+      },
+      "fixedPositiveValue": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.8894916051117638,
+        "topActionAccuracy": 0.3284671532846715
+      }
+    },
+    "ownCarryAll": {
+      "control": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.9026663307262175,
+        "topActionAccuracy": 0.3238221632382216
+      },
+      "personalValue": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.9067987528143793,
+        "topActionAccuracy": 0.32116788321167883
+      },
+      "fixedPositiveValue": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.9215787769334125,
+        "topActionAccuracy": 0.31984074319840744
+      }
+    }
+  },
+  "PUK": {
+    "ownAll": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7771649734399046,
+        "topActionAccuracy": 0.4296714579055442
+      },
+      "personalValue": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7750057249816338,
+        "topActionAccuracy": 0.4337782340862423
+      },
+      "fixedPositiveValue": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7841588917211009,
+        "topActionAccuracy": 0.4317248459958932
+      }
+    },
+    "ownCarryAll": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7762185494099625,
+        "topActionAccuracy": 0.43018480492813144
+      },
+      "personalValue": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.773829451292244,
+        "topActionAccuracy": 0.43634496919917864
+      },
+      "fixedPositiveValue": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7885242581094165,
+        "topActionAccuracy": 0.4342915811088296
+      }
+    }
+  },
+  "Gerda": {
+    "ownAll": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.002004307846316,
+        "topActionAccuracy": 0.29559971611071684
+      },
+      "personalValue": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.000681607021799,
+        "topActionAccuracy": 0.29595457771469125
+      },
+      "fixedPositiveValue": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.00308074172941,
+        "topActionAccuracy": 0.29418026969481903
+      }
+    },
+    "ownCarryAll": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.0178225924408366,
+        "topActionAccuracy": 0.28459900638750885
+      },
+      "personalValue": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.018287237166347,
+        "topActionAccuracy": 0.2835344215755855
+      },
+      "fixedPositiveValue": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.03523592742033,
+        "topActionAccuracy": 0.2750177430801987
+      }
+    }
+  }
+}

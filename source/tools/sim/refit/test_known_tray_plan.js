@@ -1,0 +1,81 @@
+'use strict';
+const assert = require('assert/strict');
+const Hard = require('../../../www/hard.js'), L = require('../../../www/layouts.js');
+const { advance, featuresOf, legal } = require('./known_tray_plan.js');
+const make = (pictures, changes = {}) => {
+  const tiles = pictures.map((face, index) => ({ x: index * 4, y: 0, z: 0 }));
+  return { tiles, nb: L.neighbors(tiles), ...changes };
+};
+const position = (pictures, changes = {}) => ({ alive: pictures.map(() => 1), pictures,
+  down: pictures.map(() => 0), tray: [], moves: 0, openPeek: -1, relieved: false, arriving: [], ...changes });
+const pictures = [0, 0, 1, 1];
+const game = make(pictures), state = position(pictures);
+assert.deepEqual(featuresOf(game, state, [{ index: 0 }]).features[0].slice(0, 3), [1, 1, 0]);
+const first = advance(game, state, 0);
+assert.deepEqual(first.state.tray, [0]);
+assert.equal(first.removed, 1);
+const second = advance(game, first.state, 1);
+assert.deepEqual(second.state.tray, []);
+assert.equal(second.removed, 1);
+const down = position(pictures, { down: [1, 0, 0, 0] });
+const inspected = advance(game, down, 0);
+assert.equal(inspected.removed, 0);
+assert.equal(inspected.state.openPeek, 0);
+assert.equal(advance(game, inspected.state, 1).removed, 2);
+const full = position(pictures, { tray: [2, 3, 4] });
+assert.equal(advance(game, full, 0).lost, true);
+assert.equal(featuresOf(game, full, [{ index: 0 }]).features[0][2], 1);
+const uncertain = position([null, 0, 1, 1], { down: [1, 0, 0, 0], tray: [2, 3, 4] });
+assert.deepEqual(advance(game, uncertain, 0), { uncertain: true, reason: 'unseenPicture' });
+assert.deepEqual(featuresOf(game, uncertain, [{ index: 0 }]).features[0], [0, 0, 0, 1, 0]);
+assert.equal(uncertain.pictures[0], null);
+const pending = position([101, 0, 0, 1], { tray: [101], alive: [0, 1, 1, 1] });
+assert.deepEqual(advance(game, pending, 1), { uncertain: true, reason: 'automaticJokerTwin' });
+assert.deepEqual(advance(game, { ...pending, arriving: [101] }, 1).state.tray, [101, 0]);
+const finaleGame = make([101]);
+const finale = advance(finaleGame, position([101]), 0);
+assert.equal(finale.state.moves, 0);
+assert.equal(finale.removed, 1);
+assert.equal(finale.win, true);
+const clock = { ...game, clock: { i: 3, n: 1 } };
+assert.equal(advance(clock, state, 0).lost, true);
+assert.equal(advance(clock, state, 3).lost, false);
+assert.deepEqual(featuresOf(clock, state, [{ index: 0 }]).features[0], [0, 0, 0, 0, 0]);
+const relief = make(pictures, { rules: { ice: {}, iceNb: [], locks: new Set([0, 1, 2, 3]), keys: [0, 1] } });
+assert.equal(legal(relief, state).relieved, true);
+assert.deepEqual(legal(relief, state).free, [0, 1, 2, 3]);
+const limited = featuresOf(game, state, [{ index: 0 }], { taps: 1 });
+assert.equal(limited.features[0][4], 1);
+assert.equal(limited.features[0][2], 0);
+const reordered = featuresOf(game, state, [{ index: 3 }, { index: 1 }, { index: 0 }]);
+assert.deepEqual(reordered.features, featuresOf(game, state, [{ index: 0 }, { index: 3 }, { index: 1 }]).features
+  .map((row, index, rows) => rows[[1, 2, 0][index]]));
+const pointlessInspections = position([0, 1, 2, 3], { down: [1, 1, 1, 1], tray: [5, 6, 7] });
+const trapped = featuresOf(game, pointlessInspections, [{ index: 0 }]);
+assert.equal(trapped.features[0][0], 0);
+assert.equal(trapped.features[0][2], 1);
+assert.equal(trapped.features[0][4], 0);
+const canAbandon = position([0, 1, 1, 0], { down: [1, 1, 1, 1], openPeek: 0 });
+assert.equal(featuresOf(game, canAbandon, [{ index: 1 }]).features[0][0], 1);
+const actor = { ...Hard.P, physicalFlips: true, allMoves: true, flips: true, peek: 0, end: 0, plan: 0, forceMatches: false };
+const actualFinale = Hard.play({ ...finaleGame, faces: [101], down: [0], follow: [0], log: [], logMatches: true }, actor, 1);
+assert.equal(actualFinale.moves, finale.state.moves);
+assert.equal(actualFinale.win, finale.win);
+for (const downFlags of [[0, 0, 0, 0], [1, 0, 0, 0], [1, 1, 0, 0]]) {
+  const physical = { ...game, faces: pictures, down: downFlags, follow: [-1, 1, 2, 3], log: [], logMatches: true, physicalLog: [] };
+  if (!downFlags[0]) physical.follow = [0, 1, 2, 3];
+  Hard.play(physical, actor, 1);
+  let simulated = position(pictures, { down: downFlags });
+  for (const frame of physical.physicalLog) {
+    const moved = advance(game, simulated, frame.index);
+    assert(!moved.uncertain);
+    simulated = moved.state;
+    assert.deepEqual(simulated.alive, frame.alive);
+    assert.deepEqual(simulated.tray, frame.tray);
+    assert.equal(simulated.moves, frame.moves);
+    assert.equal(simulated.openPeek, frame.openPeek);
+  }
+}
+assert.throws(() => featuresOf(game, { ...state, openPeek: 4 }, [{ index: 0 }]), /Invalid/);
+assert.throws(() => featuresOf(game, state, [{ index: 0 }], { nodes: 0 }), /Invalid/);
+console.log('PASS known-only tray planning respects physical flips, atomic pairs, clock, relief, bounded uncertainty and original state');

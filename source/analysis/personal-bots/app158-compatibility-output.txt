@@ -1,0 +1,1 @@
+{"folder":"C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\app-reference-0514e550c7a77e8ecba19e7a41228e1ceb396266","commit":"0514e550c7a77e8ecba19e7a41228e1ceb396266","version":"1.58","fixedLevelsChecked":218}

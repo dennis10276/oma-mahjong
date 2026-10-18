@@ -1,0 +1,28 @@
+'use strict';
+const assert = require('assert/strict');
+const L = require('../../../www/layouts.js');
+const { featuresOf } = require('./known_clock_plan.js');
+const tiles = [0, 4, 8].map(coordinate => ({ x: coordinate, y: 0, z: 0 }));
+const game = { tiles, nb: L.neighbors(tiles), rules: null, clock: { i: 0, n: 2 } };
+const state = { alive: [1, 1, 1], pictures: [0, 1, 2], down: [0, 0, 0],
+  tray: [], moves: 0, openPeek: -1, relieved: false, arriving: [] };
+const actions = [0, 1, 2].map(index => ({ index }));
+const result = featuresOf(game, state, actions);
+assert.deepEqual(result.features[0], [1, 0.75, 0, 0, 0]);
+assert.deepEqual(result.features[1], [1, 0.5, 0, 0, 0]);
+assert.deepEqual(featuresOf({ ...game, clock: { i: 0, n: 1 } }, state, actions).features[1], [0, 0, 1, 0, 0]);
+assert.deepEqual(featuresOf(game, { ...state, pictures: [null, 1, 2], down: [1, 0, 0] }, actions).features[0], [0, 0, 0, 1, 0]);
+assert.deepEqual(featuresOf(game, { ...state, pictures: [null, 1, 2], down: [1, 0, 0] }, actions).features[1], [0, 0, 0, 1, 0]);
+assert.deepEqual(featuresOf({ ...game, clock: null }, state, actions).features, actions.map(() => [0, 0, 0, 0, 0]));
+assert.deepEqual(featuresOf(game, state, actions.slice().reverse()).features, result.features.slice().reverse());
+assert.equal(featuresOf(game, state, actions, { taps: 1, nodes: 256 }).features[1][4], 1);
+assert.equal(featuresOf(game, state, actions, { taps: 1, nodes: 256 }).features[1][2], 0);
+assert.deepEqual(featuresOf(game, { ...state, tray: [3, 4, 5] }, actions).features[0], [0, 0, 1, 0, 0]);
+const before = JSON.stringify({ game, state, actions });
+featuresOf(game, state, actions);
+assert.equal(JSON.stringify({ game, state, actions }), before);
+assert.throws(() => featuresOf(game, state, actions, { taps: 0 }), /budget/);
+assert.throws(() => featuresOf(game, state, [{ index: 9 }]), /actions/);
+const down = { ...state, down: [1, 1, 0], pictures: [0, 0, 2] };
+assert.equal(featuresOf(game, down, actions).features[1][0], 1);
+console.log('PASS public clock routes distinguish known support, unknown pictures, physical trap and bounded uncertainty');

@@ -1,0 +1,12 @@
+'use strict';
+const assert = require('assert/strict');
+const L = require('../../../www/layouts.js');
+const { visibleButUnrecorded } = require('./personal_terminal_observation_audit.js');
+const tiles = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 4, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }];
+const game = { tiles, nb: L.neighbors(tiles), down: [0, 0, 1, 0] };
+assert.deepEqual(visibleButUnrecorded(game, [1, 1, 1, 1], [0, 1, 0, 0]), [3]);
+assert.deepEqual(visibleButUnrecorded(game, [1, 0, 1, 0], [0, 1, 0, 1]), [0]);
+assert.deepEqual(visibleButUnrecorded(game, [1, 0, 1, 1], [1, 1, 0, 1]), []);
+assert.deepEqual(visibleButUnrecorded({ ...game, faces: [7, 8, 9, 10] }, [1, 0, 1, 0], [0, 1, 0, 1]), [0]);
+assert.throws(() => visibleButUnrecorded(game, [1], [0]), /AssertionError/);
+console.log('PASS terminal observation audit excludes covered, down, already seen and removed pictures');

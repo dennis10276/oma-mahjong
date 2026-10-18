@@ -1,0 +1,3987 @@
+{
+  "made": "2026-10-18T01:06:17.895278+00:00",
+  "evidence": "historical-exploratory-goal-feasibility",
+  "targetMet": false,
+  "prefixFingerprint": "64a708543257b971d4ab41f5e991356f4454df5a8d8c980f3bbe52d9c1cdca60",
+  "prefixDataSha256": "c0370f6118286ee260f1abed5ebe54fcbaf3c29f04b81957a9d4d6562a2735a1",
+  "fitSourceHashes": {
+    "personal_goal_feasibility.py": "a91190a0838ddbbfb89fdfe58be0235ba4cde40a83096d8262ba15ebf10fc7ea",
+    "personal_tray_goal_fit.py": "89b43967b1007ee1c1324e56d740ca0ee2cd8d3699d2de8798b909e30bb25e94",
+    "personal_action_evaluation.py": "4dae206c063398d64ae45a1733301774560527548928d509727dfe50daf57879",
+    "personal_full_choice_fit.py": "f830b849f07d517e1e05dc64f0393fe461064b136c2255b5bb32eef7324b0096",
+    "personal_kind_fit.py": "c8a9fd59e0d4d6942a1e9b17c648a5b3aec05376a6a14091b9866312e43c66bf",
+    "personal_policy_fit.py": "989884f4851967e89fdc393b7b478d96509e22e17b01759c11a4c3f6ccae52c7",
+    "physical_policy_bank.py": "3f57d1ce2fc6f9d527c491848af651a68c8a7e62c08baa8c06d1d384d8045e0f"
+  },
+  "goalModelsSha256": "7f11a8138191f72af569a81dbe541d91ea6adf048997d51682974e17145f7bfc",
+  "pinnedControlHashes": {
+    "prefix": "9498b39085a2a2679849ae4d0ec5220e569ec39f04638e15470a424b82307fba",
+    "bank": "2a3ad9dfebc5b0afe469a82887e3f8a6b819393723977692a25e2d8cad9b07b2",
+    "requests": "dae9c763d2a0dc03e1b1564ec4ce493c3fea6edc7b3decc5f6d5c0a0a19b53d9"
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "decisions": 2296,
+          "prefixes": 20,
+          "jointLogLoss": 1.709515242537463,
+          "topActionAccuracy": 0.4102787456445993,
+          "trayGoalOpportunities": 93,
+          "trayGoalBaseLogLoss": 0.29376984793005295,
+          "trayGoalLogLoss": 0.3036853892034633,
+          "trayGoalAdjustedJointLogLoss": 1.7099168737824224
+        },
+        "ownNovel": {
+          "decisions": 2296,
+          "prefixes": 20,
+          "jointLogLoss": 1.7512364260151236,
+          "topActionAccuracy": 0.39198606271777003,
+          "trayGoalOpportunities": 93,
+          "trayGoalBaseLogLoss": 0.3135239459918867,
+          "trayGoalLogLoss": 0.3143928099632498,
+          "trayGoalAdjustedJointLogLoss": 1.7512716195470641
+        },
+        "ownCarryAll": {
+          "decisions": 2296,
+          "prefixes": 20,
+          "jointLogLoss": 1.7089175961665852,
+          "topActionAccuracy": 0.4133275261324042,
+          "trayGoalOpportunities": 93,
+          "trayGoalBaseLogLoss": 0.2899432551858609,
+          "trayGoalLogLoss": 0.3039328957000208,
+          "trayGoalAdjustedJointLogLoss": 1.7094842497239968
+        },
+        "ownRecallAll": {
+          "decisions": 2296,
+          "prefixes": 20,
+          "jointLogLoss": 1.7085943765471912,
+          "topActionAccuracy": 0.4133275261324042,
+          "trayGoalOpportunities": 93,
+          "trayGoalBaseLogLoss": 0.289609752100097,
+          "trayGoalLogLoss": 0.2985940890834461,
+          "trayGoalAdjustedJointLogLoss": 1.7089582891514816
+        }
+      },
+      "rows": [
+        {
+          "aid": "cf8b410c-ea52-4086-af9b-34c87f90d99d",
+          "level": 107,
+          "opening": 1792236558549,
+          "scores": {
+            "ownAll": {
+              "decisions": 131,
+              "jointLogLoss": 1.4418665423675174,
+              "topActionAccuracy": 0.48854961832061067,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.9261456588400548,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.08350564566722013,
+              "trayGoalLogLoss": 0.08794567216621897,
+              "trayGoalAdjustedJointLogLoss": 1.4421376890239448
+            },
+            "ownNovel": {
+              "decisions": 131,
+              "jointLogLoss": 1.6539431621988996,
+              "topActionAccuracy": 0.37404580152671757,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 1.22987280399926,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.12101855187319753,
+              "trayGoalLogLoss": 0.14381699804791842,
+              "trayGoalAdjustedJointLogLoss": 1.65533543372102
+            },
+            "ownCarryAll": {
+              "decisions": 131,
+              "jointLogLoss": 1.4328870243564502,
+              "topActionAccuracy": 0.4961832061068702,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.9176082644317726,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.08122460963387593,
+              "trayGoalLogLoss": 0.08644096630442502,
+              "trayGoalAdjustedJointLogLoss": 1.433205580489003
+            },
+            "ownRecallAll": {
+              "decisions": 131,
+              "jointLogLoss": 1.432400821995474,
+              "topActionAccuracy": 0.4961832061068702,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.9193783231863536,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.08107455196033121,
+              "trayGoalLogLoss": 0.08603256752890093,
+              "trayGoalAdjustedJointLogLoss": 1.4327036015721806
+            }
+          }
+        },
+        {
+          "aid": "5d9cdde1-8175-4614-b6c4-65450bbee997",
+          "level": 108,
+          "opening": 1792236711656,
+          "scores": {
+            "ownAll": {
+              "decisions": 95,
+              "jointLogLoss": 1.8715249430888161,
+              "topActionAccuracy": 0.3157894736842105,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8143487187417756,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.4638436532931336,
+              "trayGoalLogLoss": 0.4558265838536551,
+              "trayGoalAdjustedJointLogLoss": 1.871271772474938
+            },
+            "ownNovel": {
+              "decisions": 95,
+              "jointLogLoss": 1.843161935170794,
+              "topActionAccuracy": 0.30526315789473685,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8810956054546111,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.4388266044286482,
+              "trayGoalLogLoss": 0.41856949879175853,
+              "trayGoalAdjustedJointLogLoss": 1.84252223709805
+            },
+            "ownCarryAll": {
+              "decisions": 95,
+              "jointLogLoss": 1.8729610147313407,
+              "topActionAccuracy": 0.3157894736842105,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8087619713954227,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.46157784096878257,
+              "trayGoalLogLoss": 0.45287330909169715,
+              "trayGoalAdjustedJointLogLoss": 1.8726861347773274
+            },
+            "ownRecallAll": {
+              "decisions": 95,
+              "jointLogLoss": 1.8744943245007424,
+              "topActionAccuracy": 0.3157894736842105,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8103743983149689,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.46237353981924595,
+              "trayGoalLogLoss": 0.45386114482918466,
+              "trayGoalAdjustedJointLogLoss": 1.874225512027372
+            }
+          }
+        },
+        {
+          "aid": "7f00a2e4-bb0e-4ad9-8e76-e3d05e38616e",
+          "level": 109,
+          "opening": 1792237007560,
+          "scores": {
+            "ownAll": {
+              "decisions": 51,
+              "jointLogLoss": 1.475722461619807,
+              "topActionAccuracy": 0.5098039215686274,
+              "knownMatchChoices": 7,
+              "knownMatchLogLoss": 0.5746455081568006,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.8308561245740225,
+              "trayGoalLogLoss": 0.8929720574648917,
+              "trayGoalAdjustedJointLogLoss": 1.4769404210882555
+            },
+            "ownNovel": {
+              "decisions": 51,
+              "jointLogLoss": 1.5271773194436977,
+              "topActionAccuracy": 0.49019607843137253,
+              "knownMatchChoices": 7,
+              "knownMatchLogLoss": 0.6479719563053502,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.9630714375801788,
+              "trayGoalLogLoss": 1.0753808378094267,
+              "trayGoalAdjustedJointLogLoss": 1.529379464546232
+            },
+            "ownCarryAll": {
+              "decisions": 51,
+              "jointLogLoss": 1.4710022468698885,
+              "topActionAccuracy": 0.5098039215686274,
+              "knownMatchChoices": 7,
+              "knownMatchLogLoss": 0.562503393494857,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.8763456676466596,
+              "trayGoalLogLoss": 0.9450417917062744,
+              "trayGoalAdjustedJointLogLoss": 1.4723492296945868
+            },
+            "ownRecallAll": {
+              "decisions": 51,
+              "jointLogLoss": 1.4660942456493564,
+              "topActionAccuracy": 0.5098039215686274,
+              "knownMatchChoices": 7,
+              "knownMatchLogLoss": 0.5577662602275418,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.8822691167663764,
+              "trayGoalLogLoss": 0.9485979024182081,
+              "trayGoalAdjustedJointLogLoss": 1.467394810073902
+            }
+          }
+        },
+        {
+          "aid": "a00f695e-fe99-4e8b-9a46-8173045107dd",
+          "level": 110,
+          "opening": 1792237324237,
+          "scores": {
+            "ownAll": {
+              "decisions": 122,
+              "jointLogLoss": 1.607896862602825,
+              "topActionAccuracy": 0.5245901639344263,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.7437597282429501,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.607896862602825
+            },
+            "ownNovel": {
+              "decisions": 122,
+              "jointLogLoss": 1.6962701493172436,
+              "topActionAccuracy": 0.47540983606557374,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.8520310619967761,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.6962701493172436
+            },
+            "ownCarryAll": {
+              "decisions": 122,
+              "jointLogLoss": 1.6017471800074874,
+              "topActionAccuracy": 0.5245901639344263,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.7504392590154132,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.6017471800074874
+            },
+            "ownRecallAll": {
+              "decisions": 122,
+              "jointLogLoss": 1.6011060110708353,
+              "topActionAccuracy": 0.5245901639344263,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.7492592400352818,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.6011060110708353
+            }
+          }
+        },
+        {
+          "aid": "5ae9f572-0f2c-43c5-9ca5-a702dadcd3b7",
+          "level": 111,
+          "opening": 1792237449745,
+          "scores": {
+            "ownAll": {
+              "decisions": 100,
+              "jointLogLoss": 1.633329178353156,
+              "topActionAccuracy": 0.41,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.5220827819756051,
+              "trayGoalOpportunities": 24,
+              "trayGoalBaseLogLoss": 0.026445859863995985,
+              "trayGoalLogLoss": 0.031855121414084635,
+              "trayGoalAdjustedJointLogLoss": 1.6346274011251773
+            },
+            "ownNovel": {
+              "decisions": 100,
+              "jointLogLoss": 1.6821034174949034,
+              "topActionAccuracy": 0.37,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.5609354478070874,
+              "trayGoalOpportunities": 24,
+              "trayGoalBaseLogLoss": 0.037151886518984774,
+              "trayGoalLogLoss": 0.03139571361661859,
+              "trayGoalAdjustedJointLogLoss": 1.6807219359983356
+            },
+            "ownCarryAll": {
+              "decisions": 100,
+              "jointLogLoss": 1.633982260185776,
+              "topActionAccuracy": 0.41,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.5127875279115114,
+              "trayGoalOpportunities": 24,
+              "trayGoalBaseLogLoss": 0.02664672297972875,
+              "trayGoalLogLoss": 0.03355205387691982,
+              "trayGoalAdjustedJointLogLoss": 1.6356395396011019
+            },
+            "ownRecallAll": {
+              "decisions": 100,
+              "jointLogLoss": 1.6323111346581467,
+              "topActionAccuracy": 0.4,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.5116948696615201,
+              "trayGoalOpportunities": 24,
+              "trayGoalBaseLogLoss": 0.026903652629002083,
+              "trayGoalLogLoss": 0.030776110935789813,
+              "trayGoalAdjustedJointLogLoss": 1.6332405246517758
+            }
+          }
+        },
+        {
+          "aid": "70633ed7-a7ed-408e-8194-f7d6e1e7a7df",
+          "level": 112,
+          "opening": 1792237765230,
+          "scores": {
+            "ownAll": {
+              "decisions": 157,
+              "jointLogLoss": 1.731029608028183,
+              "topActionAccuracy": 0.42038216560509556,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6272548239849011,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.718339885613698,
+              "trayGoalLogLoss": 0.7100294958076838,
+              "trayGoalAdjustedJointLogLoss": 1.7309237431898898
+            },
+            "ownNovel": {
+              "decisions": 157,
+              "jointLogLoss": 1.7665661621654383,
+              "topActionAccuracy": 0.40764331210191085,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6356422487108537,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.5863204620652706,
+              "trayGoalLogLoss": 0.7028243061919426,
+              "trayGoalAdjustedJointLogLoss": 1.7680502875683257
+            },
+            "ownCarryAll": {
+              "decisions": 157,
+              "jointLogLoss": 1.738537875215615,
+              "topActionAccuracy": 0.4267515923566879,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6240115012681743,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.7327469249631153,
+              "trayGoalLogLoss": 0.7312162089865673,
+              "trayGoalAdjustedJointLogLoss": 1.7385183756490348
+            },
+            "ownRecallAll": {
+              "decisions": 157,
+              "jointLogLoss": 1.7372937040613095,
+              "topActionAccuracy": 0.4267515923566879,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6262580555819515,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.7327341059238893,
+              "trayGoalLogLoss": 0.7443245054706815,
+              "trayGoalAdjustedJointLogLoss": 1.7374413524631793
+            }
+          }
+        },
+        {
+          "aid": "6004da1b-844c-4eba-922e-6f1a4e90c7a6",
+          "level": 113,
+          "opening": 1792237901717,
+          "scores": {
+            "ownAll": {
+              "decisions": 169,
+              "jointLogLoss": 1.5792110130445745,
+              "topActionAccuracy": 0.41420118343195267,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.6778203081287005,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.7098715525107233,
+              "trayGoalLogLoss": 0.7483301835271761,
+              "trayGoalAdjustedJointLogLoss": 1.5826245010046147
+            },
+            "ownNovel": {
+              "decisions": 169,
+              "jointLogLoss": 1.664085516803016,
+              "topActionAccuracy": 0.40828402366863903,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.768901814463682,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.8273050898902561,
+              "trayGoalLogLoss": 0.7632534959257006,
+              "trayGoalAdjustedJointLogLoss": 1.6584004640842684
+            },
+            "ownCarryAll": {
+              "decisions": 169,
+              "jointLogLoss": 1.566658633178666,
+              "topActionAccuracy": 0.4437869822485207,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.6533674448784984,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.6772548600665134,
+              "trayGoalLogLoss": 0.7205711076992624,
+              "trayGoalAdjustedJointLogLoss": 1.5705032705425195
+            },
+            "ownRecallAll": {
+              "decisions": 169,
+              "jointLogLoss": 1.565410201351789,
+              "topActionAccuracy": 0.4437869822485207,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.6530541410155043,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.6789788878682309,
+              "trayGoalLogLoss": 0.6997727661577479,
+              "trayGoalAdjustedJointLogLoss": 1.5672558118508586
+            }
+          }
+        },
+        {
+          "aid": "cb7b9713-024b-4bad-9d58-c5169a6ba86d",
+          "level": 114,
+          "opening": 1792238142501,
+          "scores": {
+            "ownAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.479603500963405,
+              "topActionAccuracy": 0.5079365079365079,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.6033477632260098,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5654280257985322,
+              "trayGoalLogLoss": 0.5654400740163755,
+              "trayGoalAdjustedJointLogLoss": 1.4796037878257347
+            },
+            "ownNovel": {
+              "decisions": 126,
+              "jointLogLoss": 1.5222083895198568,
+              "topActionAccuracy": 0.4603174603174603,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.6031908952545315,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5559484699654175,
+              "trayGoalLogLoss": 0.5471692924976198,
+              "trayGoalAdjustedJointLogLoss": 1.5219993614849092
+            },
+            "ownCarryAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.471636050544998,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.5920940824407531,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5710012036637043,
+              "trayGoalLogLoss": 0.5643529504660352,
+              "trayGoalAdjustedJointLogLoss": 1.4714777588021963
+            },
+            "ownRecallAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.471990897312194,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.5910327111997749,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5714894022599138,
+              "trayGoalLogLoss": 0.5678485677014677,
+              "trayGoalAdjustedJointLogLoss": 1.4719042107750882
+            }
+          }
+        },
+        {
+          "aid": "12d958f6-91c1-4fad-a757-d93382a17b0a",
+          "level": 115,
+          "opening": 1792238277298,
+          "scores": {
+            "ownAll": {
+              "decisions": 15,
+              "jointLogLoss": 1.4901429948840321,
+              "topActionAccuracy": 0.6666666666666666,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 0.08059632458830267,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4901429948840321
+            },
+            "ownNovel": {
+              "decisions": 15,
+              "jointLogLoss": 1.7199151675911517,
+              "topActionAccuracy": 0.5333333333333333,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 0.08529335708939088,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7199151675911517
+            },
+            "ownCarryAll": {
+              "decisions": 15,
+              "jointLogLoss": 1.4650492484512618,
+              "topActionAccuracy": 0.6,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 0.07151235550968499,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4650492484512618
+            },
+            "ownRecallAll": {
+              "decisions": 15,
+              "jointLogLoss": 1.4463423495169896,
+              "topActionAccuracy": 0.6,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 0.07028711026783485,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4463423495169896
+            }
+          }
+        },
+        {
+          "aid": "4a7600f2-13f6-401b-9da2-03109a0b7b86",
+          "level": 116,
+          "opening": 1792238811966,
+          "scores": {
+            "ownAll": {
+              "decisions": 183,
+              "jointLogLoss": 1.938983766523254,
+              "topActionAccuracy": 0.33879781420765026,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.5213970901179709,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.3277178923648582,
+              "trayGoalLogLoss": 0.32690325829339434,
+              "trayGoalAdjustedJointLogLoss": 1.9389481541048295
+            },
+            "ownNovel": {
+              "decisions": 183,
+              "jointLogLoss": 1.9762271122669344,
+              "topActionAccuracy": 0.3333333333333333,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.5010330488227926,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.32645118622432673,
+              "trayGoalLogLoss": 0.3404329597966572,
+              "trayGoalAdjustedJointLogLoss": 1.9768383373411347
+            },
+            "ownCarryAll": {
+              "decisions": 183,
+              "jointLogLoss": 1.9428278975428956,
+              "topActionAccuracy": 0.3333333333333333,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.5219587010662706,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.3280208034836296,
+              "trayGoalLogLoss": 0.33150819971988466,
+              "trayGoalAdjustedJointLogLoss": 1.942980352023169
+            },
+            "ownRecallAll": {
+              "decisions": 183,
+              "jointLogLoss": 1.947002772655918,
+              "topActionAccuracy": 0.3333333333333333,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.5215707245489779,
+              "trayGoalOpportunities": 8,
+              "trayGoalBaseLogLoss": 0.32636844737898396,
+              "trayGoalLogLoss": 0.3276973307880865,
+              "trayGoalAdjustedJointLogLoss": 1.947060865919704
+            }
+          }
+        },
+        {
+          "aid": "784c1381-9c98-44d7-b1a5-a62615c71280",
+          "level": 117,
+          "opening": 1792239201873,
+          "scores": {
+            "ownAll": {
+              "decisions": 153,
+              "jointLogLoss": 1.4443209142578297,
+              "topActionAccuracy": 0.46405228758169936,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.6730964943003727,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.2667505196337179,
+              "trayGoalLogLoss": 0.25135216427320584,
+              "trayGoalAdjustedJointLogLoss": 1.4441196285668427
+            },
+            "ownNovel": {
+              "decisions": 153,
+              "jointLogLoss": 1.4641591584545235,
+              "topActionAccuracy": 0.46405228758169936,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.668581229205486,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.2581984628819351,
+              "trayGoalLogLoss": 0.30511850806862667,
+              "trayGoalAdjustedJointLogLoss": 1.4647724923785326
+            },
+            "ownCarryAll": {
+              "decisions": 153,
+              "jointLogLoss": 1.4378802714000918,
+              "topActionAccuracy": 0.46405228758169936,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.6618682654450486,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.2773469400263931,
+              "trayGoalLogLoss": 0.25728929912534915,
+              "trayGoalAdjustedJointLogLoss": 1.4376180800157643
+            },
+            "ownRecallAll": {
+              "decisions": 153,
+              "jointLogLoss": 1.437810031096142,
+              "topActionAccuracy": 0.47058823529411764,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.6584456448965937,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.27055770713063665,
+              "trayGoalLogLoss": 0.24751727440261356,
+              "trayGoalAdjustedJointLogLoss": 1.4375088489689782
+            }
+          }
+        },
+        {
+          "aid": "a776a740-a11f-449d-844e-402db9b05d83",
+          "level": 118,
+          "opening": 1792239395598,
+          "scores": {
+            "ownAll": {
+              "decisions": 101,
+              "jointLogLoss": 1.737322393311309,
+              "topActionAccuracy": 0.32673267326732675,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6473463183807634,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.737322393311309
+            },
+            "ownNovel": {
+              "decisions": 101,
+              "jointLogLoss": 1.7458754879209333,
+              "topActionAccuracy": 0.3564356435643564,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6388721321812042,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7458754879209333
+            },
+            "ownCarryAll": {
+              "decisions": 101,
+              "jointLogLoss": 1.740025022935999,
+              "topActionAccuracy": 0.33663366336633666,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6435265289316189,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.740025022935999
+            },
+            "ownRecallAll": {
+              "decisions": 101,
+              "jointLogLoss": 1.7407236680897478,
+              "topActionAccuracy": 0.3465346534653465,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6406669484461526,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7407236680897478
+            }
+          }
+        },
+        {
+          "aid": "4bd549f0-5e86-4617-97d9-b1878806d505",
+          "level": 120,
+          "opening": 1792256114462,
+          "scores": {
+            "ownAll": {
+              "decisions": 10,
+              "jointLogLoss": 2.584555482175225,
+              "topActionAccuracy": 0.2,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.33587798617321796,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.584555482175225
+            },
+            "ownNovel": {
+              "decisions": 10,
+              "jointLogLoss": 2.5401202757568977,
+              "topActionAccuracy": 0.2,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.4025536148409824,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.5401202757568977
+            },
+            "ownCarryAll": {
+              "decisions": 10,
+              "jointLogLoss": 2.580574224685308,
+              "topActionAccuracy": 0.2,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.3475138688918152,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.580574224685308
+            },
+            "ownRecallAll": {
+              "decisions": 10,
+              "jointLogLoss": 2.5637192336902737,
+              "topActionAccuracy": 0.2,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.3239509398116203,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.5637192336902737
+            }
+          }
+        },
+        {
+          "aid": "5fff03dd-90e6-4cb7-a6e8-03b8029f6c35",
+          "level": 121,
+          "opening": 1792256342328,
+          "scores": {
+            "ownAll": {
+              "decisions": 12,
+              "jointLogLoss": 1.0998288722655,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.17537482637135804,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.0998288722655
+            },
+            "ownNovel": {
+              "decisions": 12,
+              "jointLogLoss": 1.090375450741177,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.18701493364260208,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.090375450741177
+            },
+            "ownCarryAll": {
+              "decisions": 12,
+              "jointLogLoss": 1.0965263900233184,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.15900326057399977,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.0965263900233184
+            },
+            "ownRecallAll": {
+              "decisions": 12,
+              "jointLogLoss": 1.0950668729921016,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.152671995377051,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.0950668729921016
+            }
+          }
+        },
+        {
+          "aid": "fa97ed27-36cf-4efb-b594-38df3defdebb",
+          "level": 122,
+          "opening": 1792258037360,
+          "scores": {
+            "ownAll": {
+              "decisions": 7,
+              "jointLogLoss": 1.7738140503573,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.3759800030024985,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7738140503573
+            },
+            "ownNovel": {
+              "decisions": 7,
+              "jointLogLoss": 2.0045460440151746,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.5336048355967964,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0045460440151746
+            },
+            "ownCarryAll": {
+              "decisions": 7,
+              "jointLogLoss": 1.7645814060502913,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.3909978065155208,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7645814060502913
+            },
+            "ownRecallAll": {
+              "decisions": 7,
+              "jointLogLoss": 1.7503783488377131,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.39120551130744075,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7503783488377131
+            }
+          }
+        },
+        {
+          "aid": "a0d459e2-bc7b-49ec-92f1-744eb1720bbb",
+          "level": 123,
+          "opening": 1792258252689,
+          "scores": {
+            "ownAll": {
+              "decisions": 200,
+              "jointLogLoss": 1.935465106583049,
+              "topActionAccuracy": 0.335,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.575901992805513,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.4663191160507913,
+              "trayGoalLogLoss": 0.43925013590071244,
+              "trayGoalAdjustedJointLogLoss": 1.9351944167815482
+            },
+            "ownNovel": {
+              "decisions": 200,
+              "jointLogLoss": 1.949536674028716,
+              "topActionAccuracy": 0.35,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6683907304978742,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.4868300443836736,
+              "trayGoalLogLoss": 0.5261451129226605,
+              "trayGoalAdjustedJointLogLoss": 1.949929824714106
+            },
+            "ownCarryAll": {
+              "decisions": 200,
+              "jointLogLoss": 1.9348150817260374,
+              "topActionAccuracy": 0.34,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.5772754572221451,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.47426565526821407,
+              "trayGoalLogLoss": 0.4420986795687131,
+              "trayGoalAdjustedJointLogLoss": 1.9344934119690425
+            },
+            "ownRecallAll": {
+              "decisions": 200,
+              "jointLogLoss": 1.9367939327143164,
+              "topActionAccuracy": 0.335,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.5766020985091651,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.4692585629482758,
+              "trayGoalLogLoss": 0.43770243046633284,
+              "trayGoalAdjustedJointLogLoss": 1.936478371389497
+            }
+          }
+        },
+        {
+          "aid": "47baa64c-3758-4bf9-a3c7-26287232a6ad",
+          "level": 124,
+          "opening": 1792258657069,
+          "scores": {
+            "ownAll": {
+              "decisions": 221,
+              "jointLogLoss": 1.84097256346316,
+              "topActionAccuracy": 0.3438914027149321,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.595138474040886,
+              "trayGoalOpportunities": 5,
+              "trayGoalBaseLogLoss": 0.244274662498011,
+              "trayGoalLogLoss": 0.2490929550574615,
+              "trayGoalAdjustedJointLogLoss": 1.841081574607039
+            },
+            "ownNovel": {
+              "decisions": 221,
+              "jointLogLoss": 1.8424849144811317,
+              "topActionAccuracy": 0.3393665158371041,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.6917739170055733,
+              "trayGoalOpportunities": 5,
+              "trayGoalBaseLogLoss": 0.2475891179785953,
+              "trayGoalLogLoss": 0.24141043990273872,
+              "trayGoalAdjustedJointLogLoss": 1.842345125384393
+            },
+            "ownCarryAll": {
+              "decisions": 221,
+              "jointLogLoss": 1.843015107370907,
+              "topActionAccuracy": 0.3438914027149321,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.5969743172412788,
+              "trayGoalOpportunities": 5,
+              "trayGoalBaseLogLoss": 0.24721315705853897,
+              "trayGoalLogLoss": 0.24716345477699359,
+              "trayGoalAdjustedJointLogLoss": 1.843013982884899
+            },
+            "ownRecallAll": {
+              "decisions": 221,
+              "jointLogLoss": 1.841904625474236,
+              "topActionAccuracy": 0.3438914027149321,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.5994517988934281,
+              "trayGoalOpportunities": 5,
+              "trayGoalBaseLogLoss": 0.24601807619885246,
+              "trayGoalLogLoss": 0.24674645827318692,
+              "trayGoalAdjustedJointLogLoss": 1.841921104706687
+            }
+          }
+        },
+        {
+          "aid": "2b1d1212-dee2-4b6a-ba23-9d2195cc5c2c",
+          "level": 125,
+          "opening": 1792261397034,
+          "scores": {
+            "ownAll": {
+              "decisions": 107,
+              "jointLogLoss": 1.4098595153243627,
+              "topActionAccuracy": 0.5233644859813084,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.5419885151155255,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4098595153243627
+            },
+            "ownNovel": {
+              "decisions": 107,
+              "jointLogLoss": 1.4313666146478414,
+              "topActionAccuracy": 0.514018691588785,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.5369490545693839,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4313666146478414
+            },
+            "ownCarryAll": {
+              "decisions": 107,
+              "jointLogLoss": 1.4190554951939938,
+              "topActionAccuracy": 0.5233644859813084,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.5390524310992663,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4190554951939938
+            },
+            "ownRecallAll": {
+              "decisions": 107,
+              "jointLogLoss": 1.4166844711098865,
+              "topActionAccuracy": 0.5233644859813084,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.5378686765391945,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4166844711098865
+            }
+          }
+        },
+        {
+          "aid": "1c291f5a-591e-4369-89b9-83ff643a8845",
+          "level": 126,
+          "opening": 1792264518693,
+          "scores": {
+            "ownAll": {
+              "decisions": 220,
+              "jointLogLoss": 2.075731538507824,
+              "topActionAccuracy": 0.35,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.5981147601041559,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.24205714146858928,
+              "trayGoalLogLoss": 0.25863104162345457,
+              "trayGoalAdjustedJointLogLoss": 2.076710905335157
+            },
+            "ownNovel": {
+              "decisions": 220,
+              "jointLogLoss": 2.0952914620370366,
+              "topActionAccuracy": 0.33636363636363636,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.652099700007823,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.2276337317348682,
+              "trayGoalLogLoss": 0.26194964143917854,
+              "trayGoalAdjustedJointLogLoss": 2.097319220337746
+            },
+            "ownCarryAll": {
+              "decisions": 220,
+              "jointLogLoss": 2.0786308929955157,
+              "topActionAccuracy": 0.35454545454545455,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.5933081247664651,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.2432987525578472,
+              "trayGoalLogLoss": 0.27598115433654274,
+              "trayGoalAdjustedJointLogLoss": 2.080562125827893
+            },
+            "ownRecallAll": {
+              "decisions": 220,
+              "jointLogLoss": 2.0798148649666937,
+              "topActionAccuracy": 0.35454545454545455,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.5930684129350878,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.24315917705654588,
+              "trayGoalLogLoss": 0.2718153594474123,
+              "trayGoalAdjustedJointLogLoss": 2.081508184835245
+            }
+          }
+        },
+        {
+          "aid": "873cd1ff-0abd-49ea-aff8-f024c6779a0d",
+          "level": 127,
+          "opening": 1792264825227,
+          "scores": {
+            "ownAll": {
+              "decisions": 116,
+              "jointLogLoss": 1.482415335542017,
+              "topActionAccuracy": 0.47413793103448276,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.4941565332035797,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.2226324675449133,
+              "trayGoalLogLoss": 0.22411002085272913,
+              "trayGoalAdjustedJointLogLoss": 1.4825044982416267
+            },
+            "ownNovel": {
+              "decisions": 116,
+              "jointLogLoss": 1.5010216424659597,
+              "topActionAccuracy": 0.4396551724137931,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.5462271929453729,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.2099241065407708,
+              "trayGoalLogLoss": 0.21558021341060443,
+              "trayGoalAdjustedJointLogLoss": 1.501362959259829
+            },
+            "ownCarryAll": {
+              "decisions": 116,
+              "jointLogLoss": 1.4921227478227084,
+              "topActionAccuracy": 0.47413793103448276,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.4982325644737259,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.22152339488993622,
+              "trayGoalLogLoss": 0.23240697676738423,
+              "trayGoalAdjustedJointLogLoss": 1.4927795156946233
+            },
+            "ownRecallAll": {
+              "decisions": 116,
+              "jointLogLoss": 1.48883232300906,
+              "topActionAccuracy": 0.47413793103448276,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.49733680487240184,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.21766765596230891,
+              "trayGoalLogLoss": 0.22629221693252907,
+              "trayGoalAdjustedJointLogLoss": 1.4893527706538148
+            }
+          }
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "candidatePrefixes": 14,
+      "models": {
+        "ownAll": {
+          "decisions": 1507,
+          "prefixes": 14,
+          "jointLogLoss": 1.8796504107288818,
+          "topActionAccuracy": 0.3351028533510285,
+          "trayGoalOpportunities": 90,
+          "trayGoalBaseLogLoss": 0.5452384049983774,
+          "trayGoalLogLoss": 0.5175450488114789,
+          "trayGoalAdjustedJointLogLoss": 1.8779965274794979
+        },
+        "ownNovel": {
+          "decisions": 1507,
+          "prefixes": 14,
+          "jointLogLoss": 1.9454151443976446,
+          "topActionAccuracy": 0.3134054546795091,
+          "trayGoalOpportunities": 90,
+          "trayGoalBaseLogLoss": 0.5448683452258916,
+          "trayGoalLogLoss": 0.5202220087995493,
+          "trayGoalAdjustedJointLogLoss": 1.9439432331313073
+        },
+        "ownCarryAll": {
+          "decisions": 1507,
+          "prefixes": 14,
+          "jointLogLoss": 1.9026663307262182,
+          "topActionAccuracy": 0.3238221632382216,
+          "trayGoalOpportunities": 90,
+          "trayGoalBaseLogLoss": 0.5706086034293629,
+          "trayGoalLogLoss": 0.5410919702838579,
+          "trayGoalAdjustedJointLogLoss": 1.9009035590055179
+        },
+        "ownRecallAll": {
+          "decisions": 1507,
+          "prefixes": 14,
+          "jointLogLoss": 1.9138653691506795,
+          "topActionAccuracy": 0.3231585932315859,
+          "trayGoalOpportunities": 90,
+          "trayGoalBaseLogLoss": 0.5863766054203736,
+          "trayGoalLogLoss": 0.552772510086606,
+          "trayGoalAdjustedJointLogLoss": 1.9118584888719543
+        }
+      },
+      "rows": [
+        {
+          "aid": "40ec9181-90db-40a6-b4a0-e09e0476b63f",
+          "level": 90,
+          "opening": 1792083395933,
+          "scores": {
+            "ownAll": {
+              "decisions": 205,
+              "jointLogLoss": 2.217115776599117,
+              "topActionAccuracy": 0.21951219512195122,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 1.248911589273932,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.9686148145447837,
+              "trayGoalLogLoss": 0.9402283662676303,
+              "trayGoalAdjustedJointLogLoss": 2.215592601325709
+            },
+            "ownNovel": {
+              "decisions": 205,
+              "jointLogLoss": 2.514429036058737,
+              "topActionAccuracy": 0.18683912293668392,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 1.5235768600807709,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.7839969314458457,
+              "trayGoalLogLoss": 0.7839969314458455,
+              "trayGoalAdjustedJointLogLoss": 2.514429036058737
+            },
+            "ownCarryAll": {
+              "decisions": 205,
+              "jointLogLoss": 2.2720000805594793,
+              "topActionAccuracy": 0.2048780487804878,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 1.3266962852851472,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.9132434677645858,
+              "trayGoalLogLoss": 0.9135954040966798,
+              "trayGoalAdjustedJointLogLoss": 2.272018964948031
+            },
+            "ownRecallAll": {
+              "decisions": 205,
+              "jointLogLoss": 2.28039023329846,
+              "topActionAccuracy": 0.2048780487804878,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 1.3640706755624885,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.9235373497578397,
+              "trayGoalLogLoss": 0.888278136290015,
+              "trayGoalAdjustedJointLogLoss": 2.2784982755026255
+            }
+          }
+        },
+        {
+          "aid": "496ae0a1-30a2-48b2-beb3-10c1442c3964",
+          "level": 91,
+          "opening": 1792083635769,
+          "scores": {
+            "ownAll": {
+              "decisions": 88,
+              "jointLogLoss": 1.9188978798218796,
+              "topActionAccuracy": 0.3522727272727273,
+              "knownMatchChoices": 11,
+              "knownMatchLogLoss": 0.6303931318433246,
+              "trayGoalOpportunities": 9,
+              "trayGoalBaseLogLoss": 0.27001775729710015,
+              "trayGoalLogLoss": 0.29162063786246606,
+              "trayGoalAdjustedJointLogLoss": 1.9211072653342467
+            },
+            "ownNovel": {
+              "decisions": 88,
+              "jointLogLoss": 2.0030252102231074,
+              "topActionAccuracy": 0.29545454545454547,
+              "knownMatchChoices": 11,
+              "knownMatchLogLoss": 0.7570529344639336,
+              "trayGoalOpportunities": 9,
+              "trayGoalBaseLogLoss": 0.31580623119002144,
+              "trayGoalLogLoss": 0.3111029061737543,
+              "trayGoalAdjustedJointLogLoss": 2.0025441883464437
+            },
+            "ownCarryAll": {
+              "decisions": 88,
+              "jointLogLoss": 1.9689886887674448,
+              "topActionAccuracy": 0.2840909090909091,
+              "knownMatchChoices": 11,
+              "knownMatchLogLoss": 0.6390706878143931,
+              "trayGoalOpportunities": 9,
+              "trayGoalBaseLogLoss": 0.30619205181989145,
+              "trayGoalLogLoss": 0.3103294709948433,
+              "trayGoalAdjustedJointLogLoss": 1.9694118339103377
+            },
+            "ownRecallAll": {
+              "decisions": 88,
+              "jointLogLoss": 1.9930812501614499,
+              "topActionAccuracy": 0.26136363636363635,
+              "knownMatchChoices": 11,
+              "knownMatchLogLoss": 0.6575892168459351,
+              "trayGoalOpportunities": 9,
+              "trayGoalBaseLogLoss": 0.3154268895898128,
+              "trayGoalLogLoss": 0.3224775838154854,
+              "trayGoalAdjustedJointLogLoss": 1.9938023438890755
+            }
+          }
+        },
+        {
+          "aid": "4fdd41cd-dc23-451a-a2a5-e476ea8cbc6c",
+          "level": 92,
+          "opening": 1792173667131,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.1822617604585544,
+              "topActionAccuracy": 0.2702702702702703,
+              "knownMatchChoices": 13,
+              "knownMatchLogLoss": 0.44604396355001874,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.4972839646527412,
+              "trayGoalLogLoss": 0.42196000754431756,
+              "trayGoalAdjustedJointLogLoss": 2.1747972241685303
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 2.1773980690667405,
+              "topActionAccuracy": 0.25225225225225223,
+              "knownMatchChoices": 13,
+              "knownMatchLogLoss": 0.8103588181176852,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.47430715048867533,
+              "trayGoalLogLoss": 0.43547613912626276,
+              "trayGoalAdjustedJointLogLoss": 2.1735499508236185
+            },
+            "ownCarryAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.1900413441094657,
+              "topActionAccuracy": 0.25225225225225223,
+              "knownMatchChoices": 13,
+              "knownMatchLogLoss": 0.46854677220265434,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.5812747916927224,
+              "trayGoalLogLoss": 0.4906723793534528,
+              "trayGoalAdjustedJointLogLoss": 2.181062726670439
+            },
+            "ownRecallAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.2113635378961303,
+              "topActionAccuracy": 0.27927927927927926,
+              "knownMatchChoices": 13,
+              "knownMatchLogLoss": 0.49042489900261105,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.6226671782461121,
+              "trayGoalLogLoss": 0.5277696195324606,
+              "trayGoalAdjustedJointLogLoss": 2.2019592753209034
+            }
+          }
+        },
+        {
+          "aid": "310d321c-a36c-49bb-92c4-7850414e3e38",
+          "level": 93,
+          "opening": 1792218827820,
+          "scores": {
+            "ownAll": {
+              "decisions": 9,
+              "jointLogLoss": 1.328420034861055,
+              "topActionAccuracy": 0.5555555555555556,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.11857240204819448,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.328420034861055
+            },
+            "ownNovel": {
+              "decisions": 9,
+              "jointLogLoss": 1.507885928599337,
+              "topActionAccuracy": 0.4444444444444444,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.42095689265921327,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.507885928599337
+            },
+            "ownCarryAll": {
+              "decisions": 9,
+              "jointLogLoss": 1.292604324890097,
+              "topActionAccuracy": 0.5555555555555556,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.10770751691542203,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.292604324890097
+            },
+            "ownRecallAll": {
+              "decisions": 9,
+              "jointLogLoss": 1.2906315443030747,
+              "topActionAccuracy": 0.5555555555555556,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.10412176810871991,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.2906315443030747
+            }
+          }
+        },
+        {
+          "aid": "6a159ce0-33ec-4bd7-9f01-bdb0a7fd1035",
+          "level": 94,
+          "opening": 1792219008645,
+          "scores": {
+            "ownAll": {
+              "decisions": 7,
+              "jointLogLoss": 2.7835473442576446,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.544870412716818,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.7835473442576446
+            },
+            "ownNovel": {
+              "decisions": 7,
+              "jointLogLoss": 2.207182184157925,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.3371710844344716,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.207182184157925
+            },
+            "ownCarryAll": {
+              "decisions": 7,
+              "jointLogLoss": 2.9070829137951013,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.6916399906813707,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.9070829137951013
+            },
+            "ownRecallAll": {
+              "decisions": 7,
+              "jointLogLoss": 2.844223641291125,
+              "topActionAccuracy": 0.14285714285714285,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.7196327118466382,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.844223641291125
+            }
+          }
+        },
+        {
+          "aid": "c046e698-f3d8-4588-bc9a-63003f8607ee",
+          "level": 95,
+          "opening": 1792219379250,
+          "scores": {
+            "ownAll": {
+              "decisions": 113,
+              "jointLogLoss": 1.9773761713042624,
+              "topActionAccuracy": 0.2831858407079646,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.5967450768711842,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5488238808699667,
+              "trayGoalLogLoss": 0.6221849507488333,
+              "trayGoalAdjustedJointLogLoss": 1.9793238103275952
+            },
+            "ownNovel": {
+              "decisions": 113,
+              "jointLogLoss": 2.0138947131225877,
+              "topActionAccuracy": 0.2831858407079646,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.9253005571267282,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5022041080910133,
+              "trayGoalLogLoss": 0.517722880895304,
+              "trayGoalAdjustedJointLogLoss": 2.0143067159404007
+            },
+            "ownCarryAll": {
+              "decisions": 113,
+              "jointLogLoss": 1.9801269147939358,
+              "topActionAccuracy": 0.2743362831858407,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.684713925164217,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5185564945110626,
+              "trayGoalLogLoss": 0.5522491242046498,
+              "trayGoalAdjustedJointLogLoss": 1.9810214093875709
+            },
+            "ownRecallAll": {
+              "decisions": 113,
+              "jointLogLoss": 1.9938125007277878,
+              "topActionAccuracy": 0.2831858407079646,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.7223718476421371,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5258578193839015,
+              "trayGoalLogLoss": 0.5632393109452949,
+              "trayGoalAdjustedJointLogLoss": 1.9948049297072938
+            }
+          }
+        },
+        {
+          "aid": "071bc6a8-2f96-4e0a-be4f-8b1e3bb01cd5",
+          "level": 96,
+          "opening": 1792219621915,
+          "scores": {
+            "ownAll": {
+              "decisions": 26,
+              "jointLogLoss": 1.8780237857095794,
+              "topActionAccuracy": 0.3076923076923077,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.3333191193828238,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8780237857095794
+            },
+            "ownNovel": {
+              "decisions": 26,
+              "jointLogLoss": 1.8794335783836122,
+              "topActionAccuracy": 0.23076923076923078,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.5208567454353007,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8794335783836122
+            },
+            "ownCarryAll": {
+              "decisions": 26,
+              "jointLogLoss": 2.0393291316559528,
+              "topActionAccuracy": 0.23076923076923078,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.3240635911414809,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0393291316559528
+            },
+            "ownRecallAll": {
+              "decisions": 26,
+              "jointLogLoss": 2.040199205355545,
+              "topActionAccuracy": 0.2692307692307692,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.3256167616572207,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.040199205355545
+            }
+          }
+        },
+        {
+          "aid": "502362b1-48c0-4bad-9411-3c93b41de051",
+          "level": 97,
+          "opening": 1792219886790,
+          "scores": {
+            "ownAll": {
+              "decisions": 179,
+              "jointLogLoss": 1.8938095190232391,
+              "topActionAccuracy": 0.2681564245810056,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.7623083498233423,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.7370259472304517,
+              "trayGoalLogLoss": 0.6856131535339699,
+              "trayGoalAdjustedJointLogLoss": 1.8895011843559362
+            },
+            "ownNovel": {
+              "decisions": 179,
+              "jointLogLoss": 1.9764448193230086,
+              "topActionAccuracy": 0.2569832402234637,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 1.2505173910846055,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.8430191997864925,
+              "trayGoalLogLoss": 0.8103978950691645,
+              "trayGoalAdjustedJointLogLoss": 1.9737111904360818
+            },
+            "ownCarryAll": {
+              "decisions": 179,
+              "jointLogLoss": 1.936851314465948,
+              "topActionAccuracy": 0.26256983240223464,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.8575937574958945,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.8651124460836568,
+              "trayGoalLogLoss": 0.8182959042474796,
+              "trayGoalAdjustedJointLogLoss": 1.9329281405690617
+            },
+            "ownRecallAll": {
+              "decisions": 179,
+              "jointLogLoss": 1.981360852030452,
+              "topActionAccuracy": 0.26256983240223464,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.9666099572623333,
+              "trayGoalOpportunities": 15,
+              "trayGoalBaseLogLoss": 0.9299080029672734,
+              "trayGoalLogLoss": 0.8849950344504909,
+              "trayGoalAdjustedJointLogLoss": 1.9775971954508333
+            }
+          }
+        },
+        {
+          "aid": "19190b31-1593-4dd7-8a92-d57d973a7553",
+          "level": 98,
+          "opening": 1792262199013,
+          "scores": {
+            "ownAll": {
+              "decisions": 136,
+              "jointLogLoss": 1.7507015296055704,
+              "topActionAccuracy": 0.4411764705882353,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8260900809042984,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.19568827699089353,
+              "trayGoalLogLoss": 0.26581994906126166,
+              "trayGoalAdjustedJointLogLoss": 1.7517328777242522
+            },
+            "ownNovel": {
+              "decisions": 136,
+              "jointLogLoss": 1.7790679780294112,
+              "topActionAccuracy": 0.4117647058823529,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.9820113822036389,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.2612217989373204,
+              "trayGoalLogLoss": 0.34965525922963336,
+              "trayGoalAdjustedJointLogLoss": 1.7803684700925335
+            },
+            "ownCarryAll": {
+              "decisions": 136,
+              "jointLogLoss": 1.7548946068895503,
+              "topActionAccuracy": 0.4264705882352941,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8715095684144366,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.1916900770311632,
+              "trayGoalLogLoss": 0.24910385280255765,
+              "trayGoalAdjustedJointLogLoss": 1.7557389271214827
+            },
+            "ownRecallAll": {
+              "decisions": 136,
+              "jointLogLoss": 1.7307617555312038,
+              "topActionAccuracy": 0.4264705882352941,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8697198628534315,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.1875237369671927,
+              "trayGoalLogLoss": 0.2419652315482086,
+              "trayGoalAdjustedJointLogLoss": 1.7315623657456305
+            }
+          }
+        },
+        {
+          "aid": "afff27aa-24f1-4661-afaa-10b6448aadfd",
+          "level": 99,
+          "opening": 1792262565093,
+          "scores": {
+            "ownAll": {
+              "decisions": 11,
+              "jointLogLoss": 1.9896915441623042,
+              "topActionAccuracy": 0.45454545454545453,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.28806925787401516,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9896915441623042
+            },
+            "ownNovel": {
+              "decisions": 11,
+              "jointLogLoss": 1.9502423578020454,
+              "topActionAccuracy": 0.45454545454545453,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.4032455174639633,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9502423578020454
+            },
+            "ownCarryAll": {
+              "decisions": 11,
+              "jointLogLoss": 1.9356743175096995,
+              "topActionAccuracy": 0.45454545454545453,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.3041937941771624,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9356743175096995
+            },
+            "ownRecallAll": {
+              "decisions": 11,
+              "jointLogLoss": 1.9376631627142011,
+              "topActionAccuracy": 0.45454545454545453,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.29863626060176296,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9376631627142011
+            }
+          }
+        },
+        {
+          "aid": "2a67889d-7fd4-4a89-b586-a2f5aa69e6f2",
+          "level": 100,
+          "opening": 1792263071225,
+          "scores": {
+            "ownAll": {
+              "decisions": 216,
+              "jointLogLoss": 1.655513714006746,
+              "topActionAccuracy": 0.375,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.621602654296836,
+              "trayGoalOpportunities": 20,
+              "trayGoalBaseLogLoss": 0.27570762013366457,
+              "trayGoalLogLoss": 0.26818952193901546,
+              "trayGoalAdjustedJointLogLoss": 1.6548175938035377
+            },
+            "ownNovel": {
+              "decisions": 216,
+              "jointLogLoss": 1.6770374562863293,
+              "topActionAccuracy": 0.38425925925925924,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.7721837171704657,
+              "trayGoalOpportunities": 20,
+              "trayGoalBaseLogLoss": 0.32118088665742917,
+              "trayGoalLogLoss": 0.3094195580020043,
+              "trayGoalAdjustedJointLogLoss": 1.67594844437379
+            },
+            "ownCarryAll": {
+              "decisions": 216,
+              "jointLogLoss": 1.6675146459510382,
+              "topActionAccuracy": 0.4027777777777778,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.6498897719162643,
+              "trayGoalOpportunities": 20,
+              "trayGoalBaseLogLoss": 0.2857268339126892,
+              "trayGoalLogLoss": 0.2801302358333873,
+              "trayGoalAdjustedJointLogLoss": 1.6669964424251769
+            },
+            "ownRecallAll": {
+              "decisions": 216,
+              "jointLogLoss": 1.67410866612492,
+              "topActionAccuracy": 0.39814814814814814,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.66228535670393,
+              "trayGoalOpportunities": 20,
+              "trayGoalBaseLogLoss": 0.2799296278002119,
+              "trayGoalLogLoss": 0.2742116826898612,
+              "trayGoalAdjustedJointLogLoss": 1.6735792267628504
+            }
+          }
+        },
+        {
+          "aid": "81e7a42d-33f1-4230-961a-dff82cdbb171",
+          "level": 101,
+          "opening": 1792263326840,
+          "scores": {
+            "ownAll": {
+              "decisions": 15,
+              "jointLogLoss": 1.5595184915955385,
+              "topActionAccuracy": 0.6,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.2967635932593582,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.26809795838288103,
+              "trayGoalLogLoss": 0.37549478789780183,
+              "trayGoalAdjustedJointLogLoss": 1.5666782802298664
+            },
+            "ownNovel": {
+              "decisions": 15,
+              "jointLogLoss": 1.6962229578848096,
+              "topActionAccuracy": 0.5333333333333333,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.4234898971608434,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.2652663938779977,
+              "trayGoalLogLoss": 0.37102384416252154,
+              "trayGoalAdjustedJointLogLoss": 1.7032734545704444
+            },
+            "ownCarryAll": {
+              "decisions": 15,
+              "jointLogLoss": 1.5145141982686872,
+              "topActionAccuracy": 0.5333333333333333,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.37102647859952637,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.27432290432418643,
+              "trayGoalLogLoss": 0.402346359014339,
+              "trayGoalAdjustedJointLogLoss": 1.5230490952480307
+            },
+            "ownRecallAll": {
+              "decisions": 15,
+              "jointLogLoss": 1.511119153522922,
+              "topActionAccuracy": 0.5333333333333333,
+              "knownMatchChoices": 2,
+              "knownMatchLogLoss": 0.38872558783427585,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.24988082697060457,
+              "trayGoalLogLoss": 0.37235940821929564,
+              "trayGoalAdjustedJointLogLoss": 1.5192843922728347
+            }
+          }
+        },
+        {
+          "aid": "955f8b28-343b-4d82-8347-62004d3c432d",
+          "level": 102,
+          "opening": 1792263743318,
+          "scores": {
+            "ownAll": {
+              "decisions": 202,
+              "jointLogLoss": 1.7981053046715667,
+              "topActionAccuracy": 0.32673267326732675,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.8203520462406132,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.5243151759701414,
+              "trayGoalLogLoss": 0.4590172838364173,
+              "trayGoalAdjustedJointLogLoss": 1.7958425064293089
+            },
+            "ownNovel": {
+              "decisions": 202,
+              "jointLogLoss": 1.8001165327493855,
+              "topActionAccuracy": 0.32673267326732675,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 1.0081700810727934,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.5725987206326397,
+              "trayGoalLogLoss": 0.48302193489246953,
+              "trayGoalAdjustedJointLogLoss": 1.7970123867088845
+            },
+            "ownCarryAll": {
+              "decisions": 202,
+              "jointLogLoss": 1.8259667711964658,
+              "topActionAccuracy": 0.3118811881188119,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.889627058154592,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.5457497245993407,
+              "trayGoalLogLoss": 0.4693332345479315,
+              "trayGoalAdjustedJointLogLoss": 1.8233186750065655
+            },
+            "ownRecallAll": {
+              "decisions": 202,
+              "jointLogLoss": 1.832268259565052,
+              "topActionAccuracy": 0.30198019801980197,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.92402714625188,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.54825126237543,
+              "trayGoalLogLoss": 0.46887673108212996,
+              "trayGoalAdjustedJointLogLoss": 1.829517656995482
+            }
+          }
+        },
+        {
+          "aid": "d82fe10e-2495-4511-9ff3-7a7ba8ef2883",
+          "level": 103,
+          "opening": 1792263948381,
+          "scores": {
+            "ownAll": {
+              "decisions": 189,
+              "jointLogLoss": 1.6938767109028965,
+              "topActionAccuracy": 0.43915343915343913,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6438923734991229,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.7246105513737882,
+              "trayGoalLogLoss": 0.6668725703116247,
+              "trayGoalAdjustedJointLogLoss": 1.690516299306686
+            },
+            "ownNovel": {
+              "decisions": 189,
+              "jointLogLoss": 1.7162546753106147,
+              "topActionAccuracy": 0.38095238095238093,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.7522017380428946,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.6348300907218352,
+              "trayGoalLogLoss": 0.5688031567699923,
+              "trayGoalAdjustedJointLogLoss": 1.712411837884846
+            },
+            "ownCarryAll": {
+              "decisions": 189,
+              "jointLogLoss": 1.6827089860664264,
+              "topActionAccuracy": 0.42857142857142855,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6540209014218817,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.6758637276917753,
+              "trayGoalLogLoss": 0.6126081008357537,
+              "trayGoalAdjustedJointLogLoss": 1.6790274416462347
+            },
+            "ownRecallAll": {
+              "decisions": 189,
+              "jointLogLoss": 1.6943779670922987,
+              "topActionAccuracy": 0.42857142857142855,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6724431492750699,
+              "trayGoalOpportunities": 11,
+              "trayGoalBaseLogLoss": 0.6672117706621636,
+              "trayGoalLogLoss": 0.607581658829712,
+              "trayGoalAdjustedJointLogLoss": 1.6909074314830026
+            }
+          }
+        }
+      ]
+    },
+    "PUK": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "decisions": 1948,
+          "prefixes": 20,
+          "jointLogLoss": 1.7771649734399049,
+          "topActionAccuracy": 0.4296714579055442,
+          "trayGoalOpportunities": 54,
+          "trayGoalBaseLogLoss": 0.4941105839525399,
+          "trayGoalLogLoss": 0.4913872682466287,
+          "trayGoalAdjustedJointLogLoss": 1.7770894811154085
+        },
+        "ownNovel": {
+          "decisions": 1948,
+          "prefixes": 20,
+          "jointLogLoss": 1.7845220311001695,
+          "topActionAccuracy": 0.4204312114989733,
+          "trayGoalOpportunities": 54,
+          "trayGoalBaseLogLoss": 0.49573733735698355,
+          "trayGoalLogLoss": 0.5050123437793355,
+          "trayGoalAdjustedJointLogLoss": 1.7847791411344647
+        },
+        "ownCarryAll": {
+          "decisions": 1948,
+          "prefixes": 20,
+          "jointLogLoss": 1.7762185494099625,
+          "topActionAccuracy": 0.43018480492813144,
+          "trayGoalOpportunities": 54,
+          "trayGoalBaseLogLoss": 0.4917736035278256,
+          "trayGoalLogLoss": 0.4926388153298582,
+          "trayGoalAdjustedJointLogLoss": 1.7762425337206968
+        },
+        "ownRecallAll": {
+          "decisions": 1948,
+          "prefixes": 20,
+          "jointLogLoss": 1.775770648900851,
+          "topActionAccuracy": 0.4296714579055442,
+          "trayGoalOpportunities": 54,
+          "trayGoalBaseLogLoss": 0.49388847101602695,
+          "trayGoalLogLoss": 0.49137215332808604,
+          "trayGoalAdjustedJointLogLoss": 1.7757008947144297
+        }
+      },
+      "rows": [
+        {
+          "aid": "a74c895d-085c-4d87-aef0-9f41987f793a",
+          "level": 34,
+          "opening": 1791993467593,
+          "scores": {
+            "ownAll": {
+              "decisions": 62,
+              "jointLogLoss": 1.8164873911306096,
+              "topActionAccuracy": 0.41935483870967744,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 0.5465048658005082,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8164873911306096
+            },
+            "ownNovel": {
+              "decisions": 62,
+              "jointLogLoss": 1.8868887583674572,
+              "topActionAccuracy": 0.43548387096774194,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 0.6782609876436825,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8868887583674572
+            },
+            "ownCarryAll": {
+              "decisions": 62,
+              "jointLogLoss": 1.8084940551111892,
+              "topActionAccuracy": 0.41935483870967744,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 0.5421889261433374,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8084940551111892
+            },
+            "ownRecallAll": {
+              "decisions": 62,
+              "jointLogLoss": 1.7821931695332154,
+              "topActionAccuracy": 0.4032258064516129,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 0.5201545988137598,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7821931695332154
+            }
+          }
+        },
+        {
+          "aid": "79530e8a-9279-44e3-b75c-9d8e05548401",
+          "level": 35,
+          "opening": 1791993866872,
+          "scores": {
+            "ownAll": {
+              "decisions": 106,
+              "jointLogLoss": 1.4018874424878838,
+              "topActionAccuracy": 0.4811320754716981,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.3055755460447768,
+              "trayGoalOpportunities": 19,
+              "trayGoalBaseLogLoss": 0.3876676239117499,
+              "trayGoalLogLoss": 0.3881847318025105,
+              "trayGoalAdjustedJointLogLoss": 1.4019801316381144
+            },
+            "ownNovel": {
+              "decisions": 106,
+              "jointLogLoss": 1.4068956761111897,
+              "topActionAccuracy": 0.4811320754716981,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.34693608452629143,
+              "trayGoalOpportunities": 19,
+              "trayGoalBaseLogLoss": 0.3860278064223527,
+              "trayGoalLogLoss": 0.40551590893873674,
+              "trayGoalAdjustedJointLogLoss": 1.4103888265622397
+            },
+            "ownCarryAll": {
+              "decisions": 106,
+              "jointLogLoss": 1.4108639035475443,
+              "topActionAccuracy": 0.49056603773584906,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.3316510459143384,
+              "trayGoalOpportunities": 19,
+              "trayGoalBaseLogLoss": 0.37835810543613296,
+              "trayGoalLogLoss": 0.3842674906774903,
+              "trayGoalAdjustedJointLogLoss": 1.411923132977599
+            },
+            "ownRecallAll": {
+              "decisions": 106,
+              "jointLogLoss": 1.4070948883476588,
+              "topActionAccuracy": 0.49056603773584906,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.3309310181025324,
+              "trayGoalOpportunities": 19,
+              "trayGoalBaseLogLoss": 0.37911048282504584,
+              "trayGoalLogLoss": 0.3797076249614736,
+              "trayGoalAdjustedJointLogLoss": 1.4072019232589053
+            }
+          }
+        },
+        {
+          "aid": "bd9ea179-b735-4b9c-83ca-ea5f08a2621e",
+          "level": 36,
+          "opening": 1791994331125,
+          "scores": {
+            "ownAll": {
+              "decisions": 103,
+              "jointLogLoss": 1.4521426114297897,
+              "topActionAccuracy": 0.5631067961165048,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.28329931760064114,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4521426114297897
+            },
+            "ownNovel": {
+              "decisions": 103,
+              "jointLogLoss": 1.4646246488181718,
+              "topActionAccuracy": 0.5533980582524272,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.32611596350855104,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4646246488181718
+            },
+            "ownCarryAll": {
+              "decisions": 103,
+              "jointLogLoss": 1.4569341801748772,
+              "topActionAccuracy": 0.5533980582524272,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.3100281427992163,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4569341801748772
+            },
+            "ownRecallAll": {
+              "decisions": 103,
+              "jointLogLoss": 1.4563984116157336,
+              "topActionAccuracy": 0.5533980582524272,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.3099825853042649,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.4563984116157336
+            }
+          }
+        },
+        {
+          "aid": "13f81deb-c4b1-4fe9-957e-8a57ba6f7e88",
+          "level": 37,
+          "opening": 1791994730739,
+          "scores": {
+            "ownAll": {
+              "decisions": 85,
+              "jointLogLoss": 2.2556107634035696,
+              "topActionAccuracy": 0.2235294117647059,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4549161878167106,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.2556107634035696
+            },
+            "ownNovel": {
+              "decisions": 85,
+              "jointLogLoss": 2.2287285005279833,
+              "topActionAccuracy": 0.2235294117647059,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.47272760403166947,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.2287285005279833
+            },
+            "ownCarryAll": {
+              "decisions": 85,
+              "jointLogLoss": 2.262290095079198,
+              "topActionAccuracy": 0.23529411764705882,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4858704211942477,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.262290095079198
+            },
+            "ownRecallAll": {
+              "decisions": 85,
+              "jointLogLoss": 2.2680152479947404,
+              "topActionAccuracy": 0.23529411764705882,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.48818859742490706,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.2680152479947404
+            }
+          }
+        },
+        {
+          "aid": "3d34e678-c824-4b62-8ab6-a7e37276a444",
+          "level": 38,
+          "opening": 1791995772536,
+          "scores": {
+            "ownAll": {
+              "decisions": 127,
+              "jointLogLoss": 2.0578796238622936,
+              "topActionAccuracy": 0.3543307086614173,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.5080826887876891,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0578796238622936
+            },
+            "ownNovel": {
+              "decisions": 127,
+              "jointLogLoss": 2.0331815494386105,
+              "topActionAccuracy": 0.3543307086614173,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.5515721706810925,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0331815494386105
+            },
+            "ownCarryAll": {
+              "decisions": 127,
+              "jointLogLoss": 2.040434660297728,
+              "topActionAccuracy": 0.3543307086614173,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.5174447859396675,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.040434660297728
+            },
+            "ownRecallAll": {
+              "decisions": 127,
+              "jointLogLoss": 2.0450691137804835,
+              "topActionAccuracy": 0.3543307086614173,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.5156597239238155,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0450691137804835
+            }
+          }
+        },
+        {
+          "aid": "c8d3ead3-7f90-41c4-8cb2-df96164b26e3",
+          "level": 39,
+          "opening": 1792013300819,
+          "scores": {
+            "ownAll": {
+              "decisions": 76,
+              "jointLogLoss": 1.779257251811215,
+              "topActionAccuracy": 0.47368421052631576,
+              "knownMatchChoices": 26,
+              "knownMatchLogLoss": 0.30468098105004404,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.779257251811215
+            },
+            "ownNovel": {
+              "decisions": 76,
+              "jointLogLoss": 1.7743637401232872,
+              "topActionAccuracy": 0.47368421052631576,
+              "knownMatchChoices": 26,
+              "knownMatchLogLoss": 0.32841301768496894,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7743637401232872
+            },
+            "ownCarryAll": {
+              "decisions": 76,
+              "jointLogLoss": 1.7764011274241056,
+              "topActionAccuracy": 0.4605263157894737,
+              "knownMatchChoices": 26,
+              "knownMatchLogLoss": 0.32229164646133934,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7764011274241056
+            },
+            "ownRecallAll": {
+              "decisions": 76,
+              "jointLogLoss": 1.7831070560033517,
+              "topActionAccuracy": 0.47368421052631576,
+              "knownMatchChoices": 26,
+              "knownMatchLogLoss": 0.3247806946097706,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7831070560033517
+            }
+          }
+        },
+        {
+          "aid": "c72be715-2bc6-4471-82cb-298eef7d8db8",
+          "level": 40,
+          "opening": 1792014233172,
+          "scores": {
+            "ownAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.8486610566055193,
+              "topActionAccuracy": 0.3958333333333333,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.39555459280849214,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8486610566055193
+            },
+            "ownNovel": {
+              "decisions": 96,
+              "jointLogLoss": 1.857239913036116,
+              "topActionAccuracy": 0.40625,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.4271057878434301,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.857239913036116
+            },
+            "ownCarryAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.841928911699864,
+              "topActionAccuracy": 0.3958333333333333,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.3961242726522858,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.841928911699864
+            },
+            "ownRecallAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.8411281522853322,
+              "topActionAccuracy": 0.3854166666666667,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.39187687508347613,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8411281522853322
+            }
+          }
+        },
+        {
+          "aid": "35673774-df3a-49e3-b79d-b89cea05f729",
+          "level": 41,
+          "opening": 1792014797696,
+          "scores": {
+            "ownAll": {
+              "decisions": 57,
+              "jointLogLoss": 1.9147782871022887,
+              "topActionAccuracy": 0.3508771929824561,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4469866635842975,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9147782871022887
+            },
+            "ownNovel": {
+              "decisions": 57,
+              "jointLogLoss": 1.9163458411341499,
+              "topActionAccuracy": 0.3684210526315789,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.47757040344318985,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9163458411341499
+            },
+            "ownCarryAll": {
+              "decisions": 57,
+              "jointLogLoss": 1.9137471575453402,
+              "topActionAccuracy": 0.3684210526315789,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.46294244010475394,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9137471575453402
+            },
+            "ownRecallAll": {
+              "decisions": 57,
+              "jointLogLoss": 1.9097303399825258,
+              "topActionAccuracy": 0.3684210526315789,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4577853349519893,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9097303399825258
+            }
+          }
+        },
+        {
+          "aid": "26aa951a-e30a-4464-8237-e986553ad747",
+          "level": 42,
+          "opening": 1792031107788,
+          "scores": {
+            "ownAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.8928400369299672,
+              "topActionAccuracy": 0.4805194805194805,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 1.057112538078771,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8928400369299672
+            },
+            "ownNovel": {
+              "decisions": 77,
+              "jointLogLoss": 1.9108317284329925,
+              "topActionAccuracy": 0.4935064935064935,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 1.1284550213262683,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9108317284329925
+            },
+            "ownCarryAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.8761045714218785,
+              "topActionAccuracy": 0.4805194805194805,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 1.0466223002776711,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8761045714218785
+            },
+            "ownRecallAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.8718749920110425,
+              "topActionAccuracy": 0.4935064935064935,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 1.0487337363481686,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8718749920110425
+            }
+          }
+        },
+        {
+          "aid": "010a1b23-ff83-4cce-b486-5b95229b92f0",
+          "level": 43,
+          "opening": 1792031786444,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.0004900568313073,
+              "topActionAccuracy": 0.3783783783783784,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.4078084054663215,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0004900568313073
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 1.989498413684142,
+              "topActionAccuracy": 0.3783783783783784,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.43159241531522097,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.989498413684142
+            },
+            "ownCarryAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.0030154517512284,
+              "topActionAccuracy": 0.38738738738738737,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.42555792699874767,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0030154517512284
+            },
+            "ownRecallAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.0034236684619238,
+              "topActionAccuracy": 0.3963963963963964,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.42905047767829113,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0034236684619238
+            }
+          }
+        },
+        {
+          "aid": "8e40d7c7-cdd3-4a98-896c-d722706491f7",
+          "level": 44,
+          "opening": 1792078889406,
+          "scores": {
+            "ownAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.7271797872628867,
+              "topActionAccuracy": 0.4126984126984127,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.41351802287365164,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7271797872628867
+            },
+            "ownNovel": {
+              "decisions": 126,
+              "jointLogLoss": 1.744859020713201,
+              "topActionAccuracy": 0.3888888888888889,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.4529072940801871,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.744859020713201
+            },
+            "ownCarryAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.7180904492003681,
+              "topActionAccuracy": 0.40476190476190477,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.41688959558241306,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7180904492003681
+            },
+            "ownRecallAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.7185257798305564,
+              "topActionAccuracy": 0.4126984126984127,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.41951493908116844,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7185257798305564
+            }
+          }
+        },
+        {
+          "aid": "a7c03165-f257-4a3b-9f90-04329b0bd93d",
+          "level": 45,
+          "opening": 1792079446450,
+          "scores": {
+            "ownAll": {
+              "decisions": 143,
+              "jointLogLoss": 2.0681275286362246,
+              "topActionAccuracy": 0.3986013986013986,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.4443648665773131,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0681275286362246
+            },
+            "ownNovel": {
+              "decisions": 143,
+              "jointLogLoss": 2.1005480366253146,
+              "topActionAccuracy": 0.38461538461538464,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.5005612620921072,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.1005480366253146
+            },
+            "ownCarryAll": {
+              "decisions": 143,
+              "jointLogLoss": 2.0784226871691485,
+              "topActionAccuracy": 0.3916083916083916,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.4702396215133627,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0784226871691485
+            },
+            "ownRecallAll": {
+              "decisions": 143,
+              "jointLogLoss": 2.0767436541039586,
+              "topActionAccuracy": 0.38461538461538464,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.47185620927182936,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.0767436541039586
+            }
+          }
+        },
+        {
+          "aid": "a08d1a20-78d1-4827-8e04-67565352c8c1",
+          "level": 46,
+          "opening": 1792079998136,
+          "scores": {
+            "ownAll": {
+              "decisions": 94,
+              "jointLogLoss": 1.737538103698917,
+              "topActionAccuracy": 0.39361702127659576,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 0.4166671603478598,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.737538103698917
+            },
+            "ownNovel": {
+              "decisions": 94,
+              "jointLogLoss": 1.7354159757107346,
+              "topActionAccuracy": 0.3829787234042553,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 0.4353451384826701,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7354159757107346
+            },
+            "ownCarryAll": {
+              "decisions": 94,
+              "jointLogLoss": 1.7333579298271797,
+              "topActionAccuracy": 0.40425531914893614,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 0.42747901176527897,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7333579298271797
+            },
+            "ownRecallAll": {
+              "decisions": 94,
+              "jointLogLoss": 1.7258065988142475,
+              "topActionAccuracy": 0.40425531914893614,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 0.42954034806679475,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7258065988142475
+            }
+          }
+        },
+        {
+          "aid": "9bed8001-4327-4454-8793-01fbb998aa57",
+          "level": 47,
+          "opening": 1792081570535,
+          "scores": {
+            "ownAll": {
+              "decisions": 114,
+              "jointLogLoss": 1.7619552667288534,
+              "topActionAccuracy": 0.4298245614035088,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.43511622661579186,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7619552667288534
+            },
+            "ownNovel": {
+              "decisions": 114,
+              "jointLogLoss": 1.7509241020690003,
+              "topActionAccuracy": 0.43859649122807015,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.44431313530826166,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7509241020690003
+            },
+            "ownCarryAll": {
+              "decisions": 114,
+              "jointLogLoss": 1.7662585035883278,
+              "topActionAccuracy": 0.43859649122807015,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.43705198875483464,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7662585035883278
+            },
+            "ownRecallAll": {
+              "decisions": 114,
+              "jointLogLoss": 1.7544485343111385,
+              "topActionAccuracy": 0.4298245614035088,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.4465655657603016,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.7544485343111385
+            }
+          }
+        },
+        {
+          "aid": "911cd273-e39a-48f4-97f1-912d4098267b",
+          "level": 48,
+          "opening": 1792097612195,
+          "scores": {
+            "ownAll": {
+              "decisions": 124,
+              "jointLogLoss": 1.4587230221588174,
+              "topActionAccuracy": 0.5080645161290323,
+              "knownMatchChoices": 36,
+              "knownMatchLogLoss": 0.3855385125490808,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.03916249006233956,
+              "trayGoalLogLoss": 0.044705321951240704,
+              "trayGoalAdjustedJointLogLoss": 1.458767722415986
+            },
+            "ownNovel": {
+              "decisions": 124,
+              "jointLogLoss": 1.4656623667316775,
+              "topActionAccuracy": 0.4838709677419355,
+              "knownMatchChoices": 36,
+              "knownMatchLogLoss": 0.4104963075442821,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.06333179640660547,
+              "trayGoalLogLoss": 0.06369123042474048,
+              "trayGoalAdjustedJointLogLoss": 1.4656652653931141
+            },
+            "ownCarryAll": {
+              "decisions": 124,
+              "jointLogLoss": 1.4582713666163705,
+              "topActionAccuracy": 0.5161290322580645,
+              "knownMatchChoices": 36,
+              "knownMatchLogLoss": 0.3925647788586995,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.03986288413676337,
+              "trayGoalLogLoss": 0.043133183719890944,
+              "trayGoalAdjustedJointLogLoss": 1.4582977400001054
+            },
+            "ownRecallAll": {
+              "decisions": 124,
+              "jointLogLoss": 1.461122866060509,
+              "topActionAccuracy": 0.5161290322580645,
+              "knownMatchChoices": 36,
+              "knownMatchLogLoss": 0.40474164163880905,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.040143482260129405,
+              "trayGoalLogLoss": 0.044892057809992746,
+              "trayGoalAdjustedJointLogLoss": 1.4611611610246207
+            }
+          }
+        },
+        {
+          "aid": "85a34136-6637-4584-b8ec-7201886288e3",
+          "level": 49,
+          "opening": 1792098056466,
+          "scores": {
+            "ownAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.8796674429277953,
+              "topActionAccuracy": 0.4025974025974026,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.32519110689239067,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.7026322041954235,
+              "trayGoalLogLoss": 0.6686646714724684,
+              "trayGoalAdjustedJointLogLoss": 1.8739326646758678
+            },
+            "ownNovel": {
+              "decisions": 77,
+              "jointLogLoss": 1.891841654116566,
+              "topActionAccuracy": 0.36363636363636365,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.35143191615720226,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.7116845951108787,
+              "trayGoalLogLoss": 0.7077575233817063,
+              "trayGoalAdjustedJointLogLoss": 1.8911786420064458
+            },
+            "ownCarryAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.8764523917499967,
+              "topActionAccuracy": 0.42857142857142855,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.32621227551670745,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.6982659474555265,
+              "trayGoalLogLoss": 0.6750675813524961,
+              "trayGoalAdjustedJointLogLoss": 1.8725357844858488
+            },
+            "ownRecallAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.8861974238258177,
+              "topActionAccuracy": 0.44155844155844154,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.3393231223546504,
+              "trayGoalOpportunities": 13,
+              "trayGoalBaseLogLoss": 0.7003334678713349,
+              "trayGoalLogLoss": 0.6699988129688902,
+              "trayGoalAdjustedJointLogLoss": 1.8810759885825479
+            }
+          }
+        },
+        {
+          "aid": "b3e8cf6e-31db-4646-9d8d-a003295ca9f6",
+          "level": 50,
+          "opening": 1792137899571,
+          "scores": {
+            "ownAll": {
+              "decisions": 119,
+              "jointLogLoss": 1.4092387390464833,
+              "topActionAccuracy": 0.5210084033613446,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.3807103401320854,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.4542069205379842,
+              "trayGoalLogLoss": 0.3848853747227295,
+              "trayGoalAdjustedJointLogLoss": 1.4051610010573508
+            },
+            "ownNovel": {
+              "decisions": 119,
+              "jointLogLoss": 1.4367695102610922,
+              "topActionAccuracy": 0.47058823529411764,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.410551495253201,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.46551669438350424,
+              "trayGoalLogLoss": 0.41170980255926054,
+              "trayGoalAdjustedJointLogLoss": 1.4336043989773133
+            },
+            "ownCarryAll": {
+              "decisions": 119,
+              "jointLogLoss": 1.4116679597765223,
+              "topActionAccuracy": 0.5042016806722689,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.3932609202851071,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.46666658182537424,
+              "trayGoalLogLoss": 0.3948275421236048,
+              "trayGoalAdjustedJointLogLoss": 1.4074421339117122
+            },
+            "ownRecallAll": {
+              "decisions": 119,
+              "jointLogLoss": 1.4143717901035515,
+              "topActionAccuracy": 0.5042016806722689,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.406481215134197,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.4700868547890595,
+              "trayGoalLogLoss": 0.3952238847843432,
+              "trayGoalAdjustedJointLogLoss": 1.409968085985627
+            }
+          }
+        },
+        {
+          "aid": "155cb84b-3d63-4d5b-9b7b-7daf1b673c7b",
+          "level": 51,
+          "opening": 1792138391388,
+          "scores": {
+            "ownAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.8089432299580943,
+              "topActionAccuracy": 0.4583333333333333,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.3858319198778678,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5596037082700738,
+              "trayGoalLogLoss": 0.7116134237557356,
+              "trayGoalAdjustedJointLogLoss": 1.8136935335670212
+            },
+            "ownNovel": {
+              "decisions": 96,
+              "jointLogLoss": 1.7984680651014215,
+              "topActionAccuracy": 0.4375,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.39193009881545315,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5423656976950784,
+              "trayGoalLogLoss": 0.6466476365890257,
+              "trayGoalAdjustedJointLogLoss": 1.8017268756918574
+            },
+            "ownCarryAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.811756449938492,
+              "topActionAccuracy": 0.4375,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.3963364049168111,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5671055637281213,
+              "trayGoalLogLoss": 0.7166694512535324,
+              "trayGoalAdjustedJointLogLoss": 1.816430321423661
+            },
+            "ownRecallAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.815773410899671,
+              "topActionAccuracy": 0.4270833333333333,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.399982433005726,
+              "trayGoalOpportunities": 3,
+              "trayGoalBaseLogLoss": 0.5722357843179273,
+              "trayGoalLogLoss": 0.7293439246212756,
+              "trayGoalAdjustedJointLogLoss": 1.8206830402841507
+            }
+          }
+        },
+        {
+          "aid": "c8162ff9-76ce-45a2-8fbf-939346bbd6fa",
+          "level": 52,
+          "opening": 1792174210433,
+          "scores": {
+            "ownAll": {
+              "decisions": 82,
+              "jointLogLoss": 1.6380748618067498,
+              "topActionAccuracy": 0.47560975609756095,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.3309919904504309,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.3244347006426643,
+              "trayGoalLogLoss": 0.28107418085391467,
+              "trayGoalAdjustedJointLogLoss": 1.6343733540199052
+            },
+            "ownNovel": {
+              "decisions": 82,
+              "jointLogLoss": 1.6608119937321464,
+              "topActionAccuracy": 0.45121951219512196,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.35145750439312745,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.3327163133739638,
+              "trayGoalLogLoss": 0.30728629165799193,
+              "trayGoalAdjustedJointLogLoss": 1.6586411382198074
+            },
+            "ownCarryAll": {
+              "decisions": 82,
+              "jointLogLoss": 1.6440934372743172,
+              "topActionAccuracy": 0.4634146341463415,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.3448377584142117,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.3271934011104164,
+              "trayGoalLogLoss": 0.2855425997760555,
+              "trayGoalAdjustedJointLogLoss": 1.6405378810628475
+            },
+            "ownRecallAll": {
+              "decisions": 82,
+              "jointLogLoss": 1.652900083759139,
+              "topActionAccuracy": 0.45121951219512196,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.3580628482542548,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.3323400134935856,
+              "trayGoalLogLoss": 0.2875944951400348,
+              "trayGoalAdjustedJointLogLoss": 1.6490803443874944
+            }
+          }
+        },
+        {
+          "aid": "ed6d1a22-d6ba-44ba-8067-f0df742edd22",
+          "level": 53,
+          "opening": 1792174506087,
+          "scores": {
+            "ownAll": {
+              "decisions": 73,
+              "jointLogLoss": 1.7746820881213166,
+              "topActionAccuracy": 0.4246575342465753,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.425751957555124,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7534007653590746,
+              "trayGoalLogLoss": 0.9063748424183008,
+              "trayGoalAdjustedJointLogLoss": 1.7830642293300414
+            },
+            "ownNovel": {
+              "decisions": 73,
+              "jointLogLoss": 1.7955851012663024,
+              "topActionAccuracy": 0.4246575342465753,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.47845214873886704,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7263320537542163,
+              "trayGoalLogLoss": 0.8321024226433377,
+              "trayGoalAdjustedJointLogLoss": 1.801380737917761
+            },
+            "ownCarryAll": {
+              "decisions": 73,
+              "jointLogLoss": 1.7693592419494508,
+              "topActionAccuracy": 0.4383561643835616,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.40952305427105523,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7478284536056377,
+              "trayGoalLogLoss": 0.8924506541448662,
+              "trayGoalAdjustedJointLogLoss": 1.7772837460885866
+            },
+            "ownRecallAll": {
+              "decisions": 73,
+              "jointLogLoss": 1.7682922090345279,
+              "topActionAccuracy": 0.4383561643835616,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4103522003518071,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7471760664174505,
+              "trayGoalLogLoss": 0.8992535864271518,
+              "trayGoalAdjustedJointLogLoss": 1.77662522382958
+            }
+          }
+        }
+      ]
+    },
+    "Gerda": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "decisions": 2818,
+          "prefixes": 20,
+          "jointLogLoss": 2.002004307846316,
+          "topActionAccuracy": 0.29559971611071684,
+          "trayGoalOpportunities": 75,
+          "trayGoalBaseLogLoss": 0.5197110931530091,
+          "trayGoalLogLoss": 0.5172651860490621,
+          "trayGoalAdjustedJointLogLoss": 2.0019392109574596
+        },
+        "ownNovel": {
+          "decisions": 2818,
+          "prefixes": 20,
+          "jointLogLoss": 2.0041467048839205,
+          "topActionAccuracy": 0.2913413768630234,
+          "trayGoalOpportunities": 75,
+          "trayGoalBaseLogLoss": 0.5272873478360609,
+          "trayGoalLogLoss": 0.5291729553190107,
+          "trayGoalAdjustedJointLogLoss": 2.0041968896111104
+        },
+        "ownCarryAll": {
+          "decisions": 2818,
+          "prefixes": 20,
+          "jointLogLoss": 2.0178225924408366,
+          "topActionAccuracy": 0.28459900638750885,
+          "trayGoalOpportunities": 75,
+          "trayGoalBaseLogLoss": 0.5176933190055099,
+          "trayGoalLogLoss": 0.5186938216576419,
+          "trayGoalAdjustedJointLogLoss": 2.01784922043903
+        },
+        "ownRecallAll": {
+          "decisions": 2818,
+          "prefixes": 20,
+          "jointLogLoss": 2.019581229096011,
+          "topActionAccuracy": 0.2863733144073811,
+          "trayGoalOpportunities": 75,
+          "trayGoalBaseLogLoss": 0.520873584028347,
+          "trayGoalLogLoss": 0.522891956890792,
+          "trayGoalAdjustedJointLogLoss": 2.0196349473233646
+        }
+      },
+      "rows": [
+        {
+          "aid": "2e39da0a-b62f-4cf2-a3df-562b82813a2d",
+          "level": 43,
+          "opening": 1792077779174,
+          "scores": {
+            "ownAll": {
+              "decisions": 129,
+              "jointLogLoss": 1.9550889713395891,
+              "topActionAccuracy": 0.3643410852713178,
+              "knownMatchChoices": 28,
+              "knownMatchLogLoss": 0.9345512743787595,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9550889713395891
+            },
+            "ownNovel": {
+              "decisions": 129,
+              "jointLogLoss": 1.932429521715471,
+              "topActionAccuracy": 0.35658914728682173,
+              "knownMatchChoices": 28,
+              "knownMatchLogLoss": 0.9488131961337355,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.932429521715471
+            },
+            "ownCarryAll": {
+              "decisions": 129,
+              "jointLogLoss": 1.9677769312593791,
+              "topActionAccuracy": 0.35658914728682173,
+              "knownMatchChoices": 28,
+              "knownMatchLogLoss": 0.9734787229316252,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9677769312593791
+            },
+            "ownRecallAll": {
+              "decisions": 129,
+              "jointLogLoss": 1.9700944503040891,
+              "topActionAccuracy": 0.35658914728682173,
+              "knownMatchChoices": 28,
+              "knownMatchLogLoss": 0.9755021304163497,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9700944503040891
+            }
+          }
+        },
+        {
+          "aid": "fab20d55-05c3-4ffc-a845-c601938efc9a",
+          "level": 44,
+          "opening": 1792078155465,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.9403339899551018,
+              "topActionAccuracy": 0.36036036036036034,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.7495078603320852,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9403339899551018
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 1.9722398622743051,
+              "topActionAccuracy": 0.3063063063063063,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.8327130843731826,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9722398622743051
+            },
+            "ownCarryAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.9420707126076964,
+              "topActionAccuracy": 0.34234234234234234,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.8025375650525443,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9420707126076964
+            },
+            "ownRecallAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.9486864579232561,
+              "topActionAccuracy": 0.36036036036036034,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.805954803292266,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9486864579232561
+            }
+          }
+        },
+        {
+          "aid": "821a5dd9-6aea-4dda-8e20-3956eb6e67e0",
+          "level": 45,
+          "opening": 1792078697711,
+          "scores": {
+            "ownAll": {
+              "decisions": 84,
+              "jointLogLoss": 1.9119221613270057,
+              "topActionAccuracy": 0.2619047619047619,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.8453116830488637,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9119221613270057
+            },
+            "ownNovel": {
+              "decisions": 84,
+              "jointLogLoss": 1.9402317434233254,
+              "topActionAccuracy": 0.2619047619047619,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.8652449589541727,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9402317434233254
+            },
+            "ownCarryAll": {
+              "decisions": 84,
+              "jointLogLoss": 1.949436741416542,
+              "topActionAccuracy": 0.23809523809523808,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.8705831138485799,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.949436741416542
+            },
+            "ownRecallAll": {
+              "decisions": 84,
+              "jointLogLoss": 1.9456946301206033,
+              "topActionAccuracy": 0.25,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.8826068109697448,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.9456946301206033
+            }
+          }
+        },
+        {
+          "aid": "6086fde3-85af-45f0-8e43-3dda57eb45d9",
+          "level": 46,
+          "opening": 1792079848122,
+          "scores": {
+            "ownAll": {
+              "decisions": 163,
+              "jointLogLoss": 2.1008773851653357,
+              "topActionAccuracy": 0.25766871165644173,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.9750395244710387,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.1008773851653357
+            },
+            "ownNovel": {
+              "decisions": 163,
+              "jointLogLoss": 2.134716821924962,
+              "topActionAccuracy": 0.25766871165644173,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 1.0014376617509804,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.134716821924962
+            },
+            "ownCarryAll": {
+              "decisions": 163,
+              "jointLogLoss": 2.108385063042956,
+              "topActionAccuracy": 0.27607361963190186,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 1.002816816565317,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.108385063042956
+            },
+            "ownRecallAll": {
+              "decisions": 163,
+              "jointLogLoss": 2.1065930582106303,
+              "topActionAccuracy": 0.27607361963190186,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 1.011766920651483,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 2.1065930582106303
+            }
+          }
+        },
+        {
+          "aid": "c0fda5c8-ab6d-4c4e-b8d9-e10d8a0c0d11",
+          "level": 47,
+          "opening": 1792080050551,
+          "scores": {
+            "ownAll": {
+              "decisions": 93,
+              "jointLogLoss": 1.8879372663048497,
+              "topActionAccuracy": 0.34408602150537637,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8313508568525403,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8879372663048497
+            },
+            "ownNovel": {
+              "decisions": 93,
+              "jointLogLoss": 1.8729748760133464,
+              "topActionAccuracy": 0.2903225806451613,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.7463877488066822,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.8729748760133464
+            },
+            "ownCarryAll": {
+              "decisions": 93,
+              "jointLogLoss": 1.897401410355624,
+              "topActionAccuracy": 0.3010752688172043,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8213107944421245,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.897401410355624
+            },
+            "ownRecallAll": {
+              "decisions": 93,
+              "jointLogLoss": 1.904549808003881,
+              "topActionAccuracy": 0.3010752688172043,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8248209183846544,
+              "trayGoalOpportunities": 0,
+              "trayGoalBaseLogLoss": null,
+              "trayGoalLogLoss": null,
+              "trayGoalAdjustedJointLogLoss": 1.904549808003881
+            }
+          }
+        },
+        {
+          "aid": "0ac5bc8e-2a21-448e-bac1-13744a02efe6",
+          "level": 48,
+          "opening": 1792084600541,
+          "scores": {
+            "ownAll": {
+              "decisions": 165,
+              "jointLogLoss": 1.7369531442528914,
+              "topActionAccuracy": 0.4484848484848485,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.8088409311123271,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7756694255196156,
+              "trayGoalLogLoss": 0.7610968350888766,
+              "trayGoalAdjustedJointLogLoss": 1.7365998693333584
+            },
+            "ownNovel": {
+              "decisions": 165,
+              "jointLogLoss": 1.7198112069371236,
+              "topActionAccuracy": 0.4303030303030303,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.7755099557967847,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.691860796648331,
+              "trayGoalLogLoss": 0.7207669905696713,
+              "trayGoalAdjustedJointLogLoss": 1.7205119631533985
+            },
+            "ownCarryAll": {
+              "decisions": 165,
+              "jointLogLoss": 1.732057558671022,
+              "topActionAccuracy": 0.4484848484848485,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.8273124226577501,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7189074198534128,
+              "trayGoalLogLoss": 0.7233811917175108,
+              "trayGoalAdjustedJointLogLoss": 1.7321660137465154
+            },
+            "ownRecallAll": {
+              "decisions": 165,
+              "jointLogLoss": 1.740904921180207,
+              "topActionAccuracy": 0.4484848484848485,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.8343611612148905,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7317035935574234,
+              "trayGoalLogLoss": 0.739056870769008,
+              "trayGoalAdjustedJointLogLoss": 1.7410831824459423
+            }
+          }
+        },
+        {
+          "aid": "1ca24284-d9d6-4110-a2dc-b6023168fa79",
+          "level": 49,
+          "opening": 1792084839692,
+          "scores": {
+            "ownAll": {
+              "decisions": 116,
+              "jointLogLoss": 1.6824206599511446,
+              "topActionAccuracy": 0.3620689655172414,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.9284635160007534,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.633116203542706,
+              "trayGoalLogLoss": 0.6083272419143786,
+              "trayGoalAdjustedJointLogLoss": 1.6815658681708574
+            },
+            "ownNovel": {
+              "decisions": 116,
+              "jointLogLoss": 1.702477779482534,
+              "topActionAccuracy": 0.3275862068965517,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.9029368557547444,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6384841780278214,
+              "trayGoalLogLoss": 0.6291908373069395,
+              "trayGoalAdjustedJointLogLoss": 1.702157319457676
+            },
+            "ownCarryAll": {
+              "decisions": 116,
+              "jointLogLoss": 1.6709925705123183,
+              "topActionAccuracy": 0.3706896551724138,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.8849108075279064,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6952069048569207,
+              "trayGoalLogLoss": 0.6748210474489897,
+              "trayGoalAdjustedJointLogLoss": 1.6702896099120448
+            },
+            "ownRecallAll": {
+              "decisions": 116,
+              "jointLogLoss": 1.6771876112096598,
+              "topActionAccuracy": 0.3793103448275862,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.8899342268294111,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.7030482342706019,
+              "trayGoalLogLoss": 0.6866619721006637,
+              "trayGoalAdjustedJointLogLoss": 1.6766225676865585
+            }
+          }
+        },
+        {
+          "aid": "0520d88e-5f12-4ca5-9b6a-9c202713e3b0",
+          "level": 50,
+          "opening": 1792085063827,
+          "scores": {
+            "ownAll": {
+              "decisions": 174,
+              "jointLogLoss": 2.209591750572497,
+              "topActionAccuracy": 0.27586206896551724,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.6679136668333553,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.3790932904042332,
+              "trayGoalLogLoss": 0.39034301454863746,
+              "trayGoalAdjustedJointLogLoss": 2.209979672094718
+            },
+            "ownNovel": {
+              "decisions": 174,
+              "jointLogLoss": 2.207276879956391,
+              "topActionAccuracy": 0.27011494252873564,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.6739237952625212,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.3717768457779513,
+              "trayGoalLogLoss": 0.375603893891683,
+              "trayGoalAdjustedJointLogLoss": 2.2074088471327267
+            },
+            "ownCarryAll": {
+              "decisions": 174,
+              "jointLogLoss": 2.226451807408092,
+              "topActionAccuracy": 0.27586206896551724,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.6845177789824061,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.37908588487219586,
+              "trayGoalLogLoss": 0.3947856579321722,
+              "trayGoalAdjustedJointLogLoss": 2.2269931788929185
+            },
+            "ownRecallAll": {
+              "decisions": 174,
+              "jointLogLoss": 2.232762736472594,
+              "topActionAccuracy": 0.27011494252873564,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.6807342954569371,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.3827301905227218,
+              "trayGoalLogLoss": 0.40120086410080263,
+              "trayGoalAdjustedJointLogLoss": 2.233399656251149
+            }
+          }
+        },
+        {
+          "aid": "628d7c5e-6bf8-4cf8-938b-0ee6888e62d2",
+          "level": 51,
+          "opening": 1792093661933,
+          "scores": {
+            "ownAll": {
+              "decisions": 91,
+              "jointLogLoss": 1.819402290468502,
+              "topActionAccuracy": 0.31868131868131866,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.7111171442524788,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.7613158172816519,
+              "trayGoalLogLoss": 0.7969036887037034,
+              "trayGoalAdjustedJointLogLoss": 1.8221398190394291
+            },
+            "ownNovel": {
+              "decisions": 91,
+              "jointLogLoss": 1.8607628813970685,
+              "topActionAccuracy": 0.32967032967032966,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6848926169434252,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.7677602131773172,
+              "trayGoalLogLoss": 0.7836542749333534,
+              "trayGoalAdjustedJointLogLoss": 1.8619855015321483
+            },
+            "ownCarryAll": {
+              "decisions": 91,
+              "jointLogLoss": 1.8324986898696471,
+              "topActionAccuracy": 0.34065934065934067,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.711052970584075,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.733155686750215,
+              "trayGoalLogLoss": 0.7681853566549871,
+              "trayGoalAdjustedJointLogLoss": 1.8351932798623218
+            },
+            "ownRecallAll": {
+              "decisions": 91,
+              "jointLogLoss": 1.8300336411858074,
+              "topActionAccuracy": 0.32967032967032966,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.7138679378673618,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.7367709735898484,
+              "trayGoalLogLoss": 0.7736077853607044,
+              "trayGoalAdjustedJointLogLoss": 1.8328672420912577
+            }
+          }
+        },
+        {
+          "aid": "e3441a3d-4296-4ebc-80fd-5cccc17000cd",
+          "level": 52,
+          "opening": 1792096748424,
+          "scores": {
+            "ownAll": {
+              "decisions": 161,
+              "jointLogLoss": 2.2063730263483445,
+              "topActionAccuracy": 0.21739130434782608,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 1.1271134696715297,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.6477329251214397,
+              "trayGoalLogLoss": 0.6087796232231852,
+              "trayGoalAdjustedJointLogLoss": 2.204679404526681
+            },
+            "ownNovel": {
+              "decisions": 161,
+              "jointLogLoss": 2.2155466795250325,
+              "topActionAccuracy": 0.21739130434782608,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 1.0910291844108029,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.6152080627996381,
+              "trayGoalLogLoss": 0.6011740395199344,
+              "trayGoalAdjustedJointLogLoss": 2.214936504599828
+            },
+            "ownCarryAll": {
+              "decisions": 161,
+              "jointLogLoss": 2.232323706287773,
+              "topActionAccuracy": 0.20496894409937888,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 1.1187800138881443,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.6071592548437436,
+              "trayGoalLogLoss": 0.5652875779515248,
+              "trayGoalAdjustedJointLogLoss": 2.230503198596807
+            },
+            "ownRecallAll": {
+              "decisions": 161,
+              "jointLogLoss": 2.230627807336938,
+              "topActionAccuracy": 0.19875776397515527,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 1.128596715797806,
+              "trayGoalOpportunities": 7,
+              "trayGoalBaseLogLoss": 0.6120381020937716,
+              "trayGoalLogLoss": 0.5719248499326705,
+              "trayGoalAdjustedJointLogLoss": 2.228883752895151
+            }
+          }
+        },
+        {
+          "aid": "92d8c897-640f-4ce7-80ad-60386ef26922",
+          "level": 53,
+          "opening": 1792166705549,
+          "scores": {
+            "ownAll": {
+              "decisions": 206,
+              "jointLogLoss": 1.7556268964669766,
+              "topActionAccuracy": 0.32524271844660196,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.8809368976079578,
+              "trayGoalOpportunities": 16,
+              "trayGoalBaseLogLoss": 0.4541628145663746,
+              "trayGoalLogLoss": 0.45775791447169184,
+              "trayGoalAdjustedJointLogLoss": 1.7559061275275838
+            },
+            "ownNovel": {
+              "decisions": 206,
+              "jointLogLoss": 1.769834820126856,
+              "topActionAccuracy": 0.3300970873786408,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.8762463832975546,
+              "trayGoalOpportunities": 16,
+              "trayGoalBaseLogLoss": 0.4615245809891349,
+              "trayGoalLogLoss": 0.46498241989790284,
+              "trayGoalAdjustedJointLogLoss": 1.7701033901391874
+            },
+            "ownCarryAll": {
+              "decisions": 206,
+              "jointLogLoss": 1.7879126650783927,
+              "topActionAccuracy": 0.28640776699029125,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.9184253929807413,
+              "trayGoalOpportunities": 16,
+              "trayGoalBaseLogLoss": 0.4638652951618026,
+              "trayGoalLogLoss": 0.4816661634291065,
+              "trayGoalAdjustedJointLogLoss": 1.7892952567884746
+            },
+            "ownRecallAll": {
+              "decisions": 206,
+              "jointLogLoss": 1.792088382327239,
+              "topActionAccuracy": 0.2912621359223301,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.9224465327694442,
+              "trayGoalOpportunities": 16,
+              "trayGoalBaseLogLoss": 0.46632157919544825,
+              "trayGoalLogLoss": 0.4844846455938971,
+              "trayGoalAdjustedJointLogLoss": 1.7934991059310021
+            }
+          }
+        },
+        {
+          "aid": "7c023b22-2c78-4996-9e79-4e1deb1ab4b5",
+          "level": 54,
+          "opening": 1792167038374,
+          "scores": {
+            "ownAll": {
+              "decisions": 140,
+              "jointLogLoss": 1.732776041848425,
+              "topActionAccuracy": 0.3357142857142857,
+              "knownMatchChoices": 33,
+              "knownMatchLogLoss": 0.7836604504182183,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.11075973059137884,
+              "trayGoalLogLoss": 0.12403693135121097,
+              "trayGoalAdjustedJointLogLoss": 1.732965716144994
+            },
+            "ownNovel": {
+              "decisions": 140,
+              "jointLogLoss": 1.731667846531704,
+              "topActionAccuracy": 0.3357142857142857,
+              "knownMatchChoices": 33,
+              "knownMatchLogLoss": 0.7680968199150041,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.11145138250411511,
+              "trayGoalLogLoss": 0.13189438491752295,
+              "trayGoalAdjustedJointLogLoss": 1.7319598894233241
+            },
+            "ownCarryAll": {
+              "decisions": 140,
+              "jointLogLoss": 1.7484860867892213,
+              "topActionAccuracy": 0.32142857142857145,
+              "knownMatchChoices": 33,
+              "knownMatchLogLoss": 0.8008898327791157,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.10606190015506695,
+              "trayGoalLogLoss": 0.10716103726230006,
+              "trayGoalAdjustedJointLogLoss": 1.7485017887478962
+            },
+            "ownRecallAll": {
+              "decisions": 140,
+              "jointLogLoss": 1.749714436938215,
+              "topActionAccuracy": 0.32142857142857145,
+              "knownMatchChoices": 33,
+              "knownMatchLogLoss": 0.8082394856143119,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.10476642477963971,
+              "trayGoalLogLoss": 0.10534744404640353,
+              "trayGoalAdjustedJointLogLoss": 1.7497227372134545
+            }
+          }
+        },
+        {
+          "aid": "15bcad8f-2cf3-4f47-b52d-9ffa7fe93ca2",
+          "level": 55,
+          "opening": 1792167284004,
+          "scores": {
+            "ownAll": {
+              "decisions": 187,
+              "jointLogLoss": 2.1738294691952023,
+              "topActionAccuracy": 0.24064171122994651,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.8147061170611811,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.6160169175216602,
+              "trayGoalLogLoss": 0.6116197892978118,
+              "trayGoalAdjustedJointLogLoss": 2.173688384867164
+            },
+            "ownNovel": {
+              "decisions": 187,
+              "jointLogLoss": 2.1681888202293282,
+              "topActionAccuracy": 0.24598930481283424,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.7687350368908966,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.6329635704438179,
+              "trayGoalLogLoss": 0.6291534693318412,
+              "trayGoalAdjustedJointLogLoss": 2.168066570995789
+            },
+            "ownCarryAll": {
+              "decisions": 187,
+              "jointLogLoss": 2.2022918245053016,
+              "topActionAccuracy": 0.25133689839572193,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.8271198361429746,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.632182083640744,
+              "trayGoalLogLoss": 0.6262702310077238,
+              "trayGoalAdjustedJointLogLoss": 2.2021021393940816
+            },
+            "ownRecallAll": {
+              "decisions": 187,
+              "jointLogLoss": 2.199278882739182,
+              "topActionAccuracy": 0.25668449197860965,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.8369609851973494,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.6315365006264363,
+              "trayGoalLogLoss": 0.6255458525547033,
+              "trayGoalAdjustedJointLogLoss": 2.1990866694320674
+            }
+          }
+        },
+        {
+          "aid": "ee903f05-ce73-465e-8c7b-587dd21816b5",
+          "level": 56,
+          "opening": 1792167538665,
+          "scores": {
+            "ownAll": {
+              "decisions": 131,
+              "jointLogLoss": 2.690426951822708,
+              "topActionAccuracy": 0.16793893129770993,
+              "knownMatchChoices": 21,
+              "knownMatchLogLoss": 0.7641103293329156,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.42500540658590297,
+              "trayGoalLogLoss": 0.4541001578920366,
+              "trayGoalAdjustedJointLogLoss": 2.690649049160923
+            },
+            "ownNovel": {
+              "decisions": 131,
+              "jointLogLoss": 2.6554971219709085,
+              "topActionAccuracy": 0.22137404580152673,
+              "knownMatchChoices": 21,
+              "knownMatchLogLoss": 0.7033571448165902,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.4332808833294403,
+              "trayGoalLogLoss": 0.4994247891796678,
+              "trayGoalAdjustedJointLogLoss": 2.656002037282742
+            },
+            "ownCarryAll": {
+              "decisions": 131,
+              "jointLogLoss": 2.723579538771847,
+              "topActionAccuracy": 0.17557251908396945,
+              "knownMatchChoices": 21,
+              "knownMatchLogLoss": 0.8491208095888316,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.47312082756100987,
+              "trayGoalLogLoss": 0.4421316717374117,
+              "trayGoalAdjustedJointLogLoss": 2.7233429803304454
+            },
+            "ownRecallAll": {
+              "decisions": 131,
+              "jointLogLoss": 2.727120359326141,
+              "topActionAccuracy": 0.183206106870229,
+              "knownMatchChoices": 21,
+              "knownMatchLogLoss": 0.8515856694384359,
+              "trayGoalOpportunities": 1,
+              "trayGoalBaseLogLoss": 0.4699462430266621,
+              "trayGoalLogLoss": 0.4388910105157294,
+              "trayGoalAdjustedJointLogLoss": 2.726883296482546
+            }
+          }
+        },
+        {
+          "aid": "73174618-7044-4419-a37c-d403677c85a7",
+          "level": 57,
+          "opening": 1792170422833,
+          "scores": {
+            "ownAll": {
+              "decisions": 71,
+              "jointLogLoss": 1.5510629923098298,
+              "topActionAccuracy": 0.43661971830985913,
+              "knownMatchChoices": 17,
+              "knownMatchLogLoss": 0.8741514562929514,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.1448747766530343,
+              "trayGoalLogLoss": 0.15608567598624523,
+              "trayGoalAdjustedJointLogLoss": 1.551378792291047
+            },
+            "ownNovel": {
+              "decisions": 71,
+              "jointLogLoss": 1.5605029804419335,
+              "topActionAccuracy": 0.4084507042253521,
+              "knownMatchChoices": 17,
+              "knownMatchLogLoss": 0.8974218419488971,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.17169696079189553,
+              "trayGoalLogLoss": 0.19090007154287436,
+              "trayGoalAdjustedJointLogLoss": 1.561043913139144
+            },
+            "ownCarryAll": {
+              "decisions": 71,
+              "jointLogLoss": 1.5799083388285482,
+              "topActionAccuracy": 0.43661971830985913,
+              "knownMatchChoices": 17,
+              "knownMatchLogLoss": 0.9041620170296631,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.15877120403036254,
+              "trayGoalLogLoss": 0.15713315093763572,
+              "trayGoalAdjustedJointLogLoss": 1.579862196487908
+            },
+            "ownRecallAll": {
+              "decisions": 71,
+              "jointLogLoss": 1.5828082207338878,
+              "topActionAccuracy": 0.43661971830985913,
+              "knownMatchChoices": 17,
+              "knownMatchLogLoss": 0.911204519697267,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.1580409414182154,
+              "trayGoalLogLoss": 0.15552072048254173,
+              "trayGoalAdjustedJointLogLoss": 1.5827372285948547
+            }
+          }
+        },
+        {
+          "aid": "2dfe15db-c7af-42ff-ab01-f601e2390623",
+          "level": 58,
+          "opening": 1792170857134,
+          "scores": {
+            "ownAll": {
+              "decisions": 207,
+              "jointLogLoss": 1.847781309195229,
+              "topActionAccuracy": 0.30917874396135264,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.7687828939034593,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.3438153989414497,
+              "trayGoalLogLoss": 0.318397530966153,
+              "trayGoalAdjustedJointLogLoss": 1.8470445593988436
+            },
+            "ownNovel": {
+              "decisions": 207,
+              "jointLogLoss": 1.8652746325219816,
+              "topActionAccuracy": 0.3285024154589372,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.7820465436598925,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.403263146808061,
+              "trayGoalLogLoss": 0.3804428041145993,
+              "trayGoalAdjustedJointLogLoss": 1.8646131733134754
+            },
+            "ownCarryAll": {
+              "decisions": 207,
+              "jointLogLoss": 1.8593372684162364,
+              "topActionAccuracy": 0.2946859903381642,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.7594078957635944,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.33876007610185427,
+              "trayGoalLogLoss": 0.3158524871412355,
+              "trayGoalAdjustedJointLogLoss": 1.8586732803304213
+            },
+            "ownRecallAll": {
+              "decisions": 207,
+              "jointLogLoss": 1.8630687867274767,
+              "topActionAccuracy": 0.30434782608695654,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.7707128879075033,
+              "trayGoalOpportunities": 6,
+              "trayGoalBaseLogLoss": 0.3376938618310798,
+              "trayGoalLogLoss": 0.3159905661817963,
+              "trayGoalAdjustedJointLogLoss": 1.8624397056941642
+            }
+          }
+        },
+        {
+          "aid": "386437ff-0fc7-452d-b1a3-311aff29a719",
+          "level": 59,
+          "opening": 1792171113962,
+          "scores": {
+            "ownAll": {
+              "decisions": 136,
+              "jointLogLoss": 1.931009012628989,
+              "topActionAccuracy": 0.29411764705882354,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.9789850215794202,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.38660595667388914,
+              "trayGoalLogLoss": 0.36361834164306667,
+              "trayGoalAdjustedJointLogLoss": 1.930332906304553
+            },
+            "ownNovel": {
+              "decisions": 136,
+              "jointLogLoss": 1.9351104064552198,
+              "topActionAccuracy": 0.27205882352941174,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.9639020360829276,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.4365288473320535,
+              "trayGoalLogLoss": 0.39805933156695866,
+              "trayGoalAdjustedJointLogLoss": 1.9339789501091875
+            },
+            "ownCarryAll": {
+              "decisions": 136,
+              "jointLogLoss": 1.9563560282997519,
+              "topActionAccuracy": 0.25735294117647056,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 1.0057735280148699,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.409004768983108,
+              "trayGoalLogLoss": 0.4109927897691946,
+              "trayGoalAdjustedJointLogLoss": 1.9564144994993427
+            },
+            "ownRecallAll": {
+              "decisions": 136,
+              "jointLogLoss": 1.9510505103548204,
+              "topActionAccuracy": 0.2647058823529412,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 1.019437984877316,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.4122538562627808,
+              "trayGoalLogLoss": 0.4145514087102905,
+              "trayGoalAdjustedJointLogLoss": 1.951118085426806
+            }
+          }
+        },
+        {
+          "aid": "ef40df03-4f8b-4844-b33f-6cd4f95c83b7",
+          "level": 60,
+          "opening": 1792171635042,
+          "scores": {
+            "ownAll": {
+              "decisions": 156,
+              "jointLogLoss": 2.235205486279451,
+              "topActionAccuracy": 0.22435897435897437,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 1.0785743059555872,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6383023818205456,
+              "trayGoalLogLoss": 0.6671196493455457,
+              "trayGoalAdjustedJointLogLoss": 2.235944390574964
+            },
+            "ownNovel": {
+              "decisions": 156,
+              "jointLogLoss": 2.214154199807272,
+              "topActionAccuracy": 0.23076923076923078,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 1.0407286720648115,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6275303926986986,
+              "trayGoalLogLoss": 0.6774984397021189,
+              "trayGoalAdjustedJointLogLoss": 2.2154354317817186
+            },
+            "ownCarryAll": {
+              "decisions": 156,
+              "jointLogLoss": 2.2385459902120366,
+              "topActionAccuracy": 0.19230769230769232,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 1.0383763450362022,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6359121739979479,
+              "trayGoalLogLoss": 0.6443798680910986,
+              "trayGoalAdjustedJointLogLoss": 2.2387631105733994
+            },
+            "ownRecallAll": {
+              "decisions": 156,
+              "jointLogLoss": 2.23573486352372,
+              "topActionAccuracy": 0.1858974358974359,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 1.0555406598878048,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6370637225470253,
+              "trayGoalLogLoss": 0.6459493245093447,
+              "trayGoalAdjustedJointLogLoss": 2.2359626994714716
+            }
+          }
+        },
+        {
+          "aid": "805dcd6e-b06b-4710-aa4c-df09e57f8b6b",
+          "level": 61,
+          "opening": 1792172079918,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.886258266008621,
+              "topActionAccuracy": 0.3153153153153153,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.8896205057202243,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.30351945621247195,
+              "trayGoalLogLoss": 0.33870970143756746,
+              "trayGoalAdjustedJointLogLoss": 1.886892324481145
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 1.8627867095797372,
+              "topActionAccuracy": 0.32432432432432434,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.8160460449382348,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.35308400181675365,
+              "trayGoalLogLoss": 0.3768810600486905,
+              "trayGoalAdjustedJointLogLoss": 1.8632154854037362
+            },
+            "ownCarryAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.8952440550686684,
+              "topActionAccuracy": 0.3153153153153153,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.9204591675269501,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.30054708504435534,
+              "trayGoalLogLoss": 0.30334274990598326,
+              "trayGoalAdjustedJointLogLoss": 1.8952944274085175
+            },
+            "ownRecallAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.8997725271135286,
+              "topActionAccuracy": 0.3063063063063063,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.9329414128767328,
+              "trayGoalOpportunities": 2,
+              "trayGoalBaseLogLoss": 0.30359860690255536,
+              "trayGoalLogLoss": 0.30547960711356553,
+              "trayGoalAdjustedJointLogLoss": 1.8998064190092225
+            }
+          }
+        },
+        {
+          "aid": "180c2671-2deb-43f7-ad26-ef5296647527",
+          "level": 62,
+          "opening": 1792172831970,
+          "scores": {
+            "ownAll": {
+              "decisions": 186,
+              "jointLogLoss": 2.322168129420304,
+              "topActionAccuracy": 0.1935483870967742,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.732844270623467,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6341857279153216,
+              "trayGoalLogLoss": 0.6041010205897979,
+              "trayGoalAdjustedJointLogLoss": 2.3215211464670666
+            },
+            "ownNovel": {
+              "decisions": 186,
+              "jointLogLoss": 2.3139928150249136,
+              "topActionAccuracy": 0.1774193548387097,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.7216280259104435,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6874990123695398,
+              "trayGoalLogLoss": 0.6606038766442537,
+              "trayGoalAdjustedJointLogLoss": 2.313414425009316
+            },
+            "ownCarryAll": {
+              "decisions": 186,
+              "jointLogLoss": 2.34044580234934,
+              "topActionAccuracy": 0.16129032258064516,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.7310691721873094,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6206937667979453,
+              "trayGoalLogLoss": 0.6119780186671598,
+              "trayGoalAdjustedJointLogLoss": 2.3402583669056676
+            },
+            "ownRecallAll": {
+              "decisions": 186,
+              "jointLogLoss": 2.3395398737291364,
+              "topActionAccuracy": 0.16129032258064516,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.7359646360263479,
+              "trayGoalOpportunities": 4,
+              "trayGoalBaseLogLoss": 0.6279777178883185,
+              "trayGoalLogLoss": 0.6183813587679092,
+              "trayGoalAdjustedJointLogLoss": 2.339333500414719
+            }
+          }
+        }
+      ]
+    }
+  },
+  "note": "Pinned personal actors and exact control features/membership are unchanged. Goal residuals fit only their earlier own prefixes; target winning counts are unused. This measures held natural-action likelihood, not winning-try accuracy or prospective success. No forecast is created or overwritten."
+}

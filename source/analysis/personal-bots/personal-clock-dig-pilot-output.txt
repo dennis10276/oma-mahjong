@@ -1,0 +1,2 @@
+{"prefixes":8,"calls":712,"clockCalls":39,"nodes":11651,"boundaries":7,"distinctDigChoices":39}
+PASS clock digging distinguishes initial public probes, learned validity evidence and later pressure without hidden pictures

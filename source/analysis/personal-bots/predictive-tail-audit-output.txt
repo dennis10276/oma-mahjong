@@ -1,0 +1,10 @@
+{
+  "analyticNumericControlsMatched": 1008,
+  "changes": 0,
+  "selectedCorrectOf20": {
+    "Dennisisdebeste": 9,
+    "Mrs. Doubtfire": 7,
+    "PUK": 13,
+    "Gerda": 9
+  }
+}

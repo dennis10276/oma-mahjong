@@ -1,0 +1,122 @@
+{
+  "Dennisisdebeste": {
+    "initialModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.7095152425374631,
+        "topActionAccuracy": 0.4102787456445993
+      },
+      "outcomeStyles": {
+        "prefixes": 20,
+        "decisions": 2296,
+        "jointLogLoss": 1.6943233128647595,
+        "topActionAccuracy": 0.41289198606271776
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 22,
+        "decisions": 2212,
+        "jointLogLoss": 1.6420943976449,
+        "topActionAccuracy": 0.4154611211573237
+      },
+      "outcomeStyles": {
+        "prefixes": 22,
+        "decisions": 2212,
+        "jointLogLoss": 1.632978781976929,
+        "topActionAccuracy": 0.4154611211573237
+      }
+    }
+  },
+  "Mrs. Doubtfire": {
+    "initialModels": {
+      "control": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.8796504107288818,
+        "topActionAccuracy": 0.3351028533510285
+      },
+      "outcomeStyles": {
+        "prefixes": 14,
+        "decisions": 1507,
+        "jointLogLoss": 1.868771852101697,
+        "topActionAccuracy": 0.34372926343729265
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 40,
+        "decisions": 3060,
+        "jointLogLoss": 1.8263835025468405,
+        "topActionAccuracy": 0.36993464052287583
+      },
+      "outcomeStyles": {
+        "prefixes": 40,
+        "decisions": 3060,
+        "jointLogLoss": 1.8119842652782565,
+        "topActionAccuracy": 0.3738562091503268
+      }
+    }
+  },
+  "PUK": {
+    "initialModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7771649734399046,
+        "topActionAccuracy": 0.4296714579055442
+      },
+      "outcomeStyles": {
+        "prefixes": 20,
+        "decisions": 1948,
+        "jointLogLoss": 1.7847992308274447,
+        "topActionAccuracy": 0.4296714579055442
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 1453,
+        "jointLogLoss": 1.793173198415667,
+        "topActionAccuracy": 0.4074328974535444
+      },
+      "outcomeStyles": {
+        "prefixes": 20,
+        "decisions": 1453,
+        "jointLogLoss": 1.8003249332493991,
+        "topActionAccuracy": 0.40674466620784583
+      }
+    }
+  },
+  "Gerda": {
+    "initialModels": {
+      "control": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.0020043078463154,
+        "topActionAccuracy": 0.29559971611071684
+      },
+      "outcomeStyles": {
+        "prefixes": 20,
+        "decisions": 2818,
+        "jointLogLoss": 2.000341048922116,
+        "topActionAccuracy": 0.2977288857345635
+      }
+    },
+    "retryModels": {
+      "control": {
+        "prefixes": 41,
+        "decisions": 3720,
+        "jointLogLoss": 2.112139748719071,
+        "topActionAccuracy": 0.27580645161290324
+      },
+      "outcomeStyles": {
+        "prefixes": 41,
+        "decisions": 3720,
+        "jointLogLoss": 2.1084848432446486,
+        "topActionAccuracy": 0.2817204301075269
+      }
+    }
+  }
+}

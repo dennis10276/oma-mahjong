@@ -1,0 +1,8 @@
+{
+  "made": "2026-10-18T16:14:50.096179+00:00",
+  "targetMet": false,
+  "run": "source/analysis/archive/personal-bots/runs/fresh-count-2026-10-18T16-12-34-747Z",
+  "measurementScorerSha256": "be4be6be6f8441001dedc91999e7af0606d9209bfa61d603b3618cfa71c65e71",
+  "correctedScorerSha256": "23b993077200013d03adf16885b943e4fd3db807037419d68c7d62f0f04ba23d",
+  "correction": "Retain Gerda56 changed-board target in all80 fixed diagnostic IDs; exclude changed-board episodes only from training and selector. Initial scoring smoke-test reported79/80, so this audit fixes denominator retention, not outcome-based method selection. Raw count runtime and original pre-pilot source remain immutable. Corrected scorer is separately pinned before full count results."
+}

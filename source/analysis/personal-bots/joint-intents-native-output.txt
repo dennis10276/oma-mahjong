@@ -1,0 +1,13 @@
+{
+  "made": "2026-10-18T20:31:44.821459+00:00",
+  "targetMet": false,
+  "evidence": "native-joint-intent-reference-only",
+  "dataFile": "analysis/archive/personal-bots/personal-tray-intents-prefixes.json",
+  "dataSha256": "dfe204139c13aa91fca92fcffe77e73b578491ead0b7ecf758bc46f417e499e3",
+  "actorFile": "analysis/archive/personal-bots/experiments/personal-fresh-own-fits-2026-10-18T15-59-12-900Z/analysis/archive/personal-bots/personal-fresh-own-models.json",
+  "actorSha256": "dffe93e21abed8a1e41ac079ae50be22d5ec0958ea9de65eb23f1fd94032f1fe",
+  "modelsSha256": "626ba93f18f31dabf784dd6e818d9dd68fabb9b7bcb36c5a65d6c56f33dde06f",
+  "prefixes": 445,
+  "decisions": 39268,
+  "note": "Training-prefix probabilities and two isolated causal state vectors, not held count accuracy or future forecasts."
+}

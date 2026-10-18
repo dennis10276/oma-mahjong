@@ -1,0 +1,268 @@
+Fitting 266 strictly earlier-available physical models for 280 openings
+1 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 0}
+2 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 0}
+3 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 0}
+4 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 0}
+5 / 266 PUK ownAll {'PUK': 0}
+6 / 266 PUK ownNovel {'PUK': 0}
+7 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 1}
+8 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 3}
+9 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 2}
+10 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 4}
+11 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 3}
+12 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 6}
+13 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 4}
+14 / 266 PUK ownNovel {'PUK': 1}
+15 / 266 PUK ownAll {'PUK': 2}
+16 / 266 PUK ownNovel {'PUK': 2}
+17 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 7}
+18 / 266 PUK ownAll {'PUK': 4}
+19 / 266 PUK ownNovel {'PUK': 3}
+20 / 266 PUK ownAll {'PUK': 6}
+21 / 266 PUK ownNovel {'PUK': 4}
+22 / 266 PUK ownAll {'PUK': 8}
+23 / 266 PUK ownNovel {'PUK': 5}
+24 / 266 PUK ownAll {'PUK': 9}
+25 / 266 PUK ownNovel {'PUK': 6}
+26 / 266 PUK ownAll {'PUK': 10}
+27 / 266 PUK ownNovel {'PUK': 7}
+28 / 266 PUK ownAll {'PUK': 11}
+29 / 266 PUK ownNovel {'PUK': 8}
+30 / 266 PUK ownAll {'PUK': 13}
+31 / 266 PUK ownAll {'PUK': 15}
+32 / 266 PUK ownNovel {'PUK': 9}
+33 / 266 Gerda ownNovel {'Gerda': 8}
+34 / 266 Gerda ownNovel {'Gerda': 9}
+35 / 266 Gerda ownAll {'Gerda': 38}
+36 / 266 Gerda ownNovel {'Gerda': 10}
+37 / 266 Gerda ownAll {'Gerda': 43}
+38 / 266 Gerda ownNovel {'Gerda': 11}
+39 / 266 Gerda ownAll {'Gerda': 45}
+40 / 266 Gerda ownNovel {'Gerda': 12}
+41 / 266 Gerda ownAll {'Gerda': 47}
+42 / 266 Gerda ownNovel {'Gerda': 13}
+43 / 266 Gerda ownAll {'Gerda': 44}
+44 / 266 Gerda ownNovel {'Gerda': 14}
+45 / 266 Gerda ownAll {'Gerda': 48}
+46 / 266 Gerda ownNovel {'Gerda': 15}
+47 / 266 Gerda ownAll {'Gerda': 50}
+48 / 266 Gerda ownNovel {'Gerda': 16}
+49 / 266 Gerda ownAll {'Gerda': 54}
+50 / 266 Gerda ownNovel {'Gerda': 17}
+51 / 266 Gerda ownAll {'Gerda': 60}
+52 / 266 Gerda ownAll {'Gerda': 56}
+53 / 266 Gerda ownNovel {'Gerda': 18}
+54 / 266 Gerda ownAll {'Gerda': 58}
+55 / 266 Gerda ownNovel {'Gerda': 19}
+56 / 266 Gerda ownNovel {'Gerda': 20}
+57 / 266 Gerda ownAll {'Gerda': 62}
+58 / 266 Gerda ownNovel {'Gerda': 21}
+59 / 266 Gerda ownAll {'Gerda': 63}
+60 / 266 Gerda ownNovel {'Gerda': 22}
+61 / 266 Gerda ownAll {'Gerda': 64}
+62 / 266 Gerda ownNovel {'Gerda': 23}
+63 / 266 Gerda ownAll {'Gerda': 69}
+64 / 266 Gerda ownNovel {'Gerda': 24}
+65 / 266 Gerda ownAll {'Gerda': 71}
+66 / 266 Gerda ownNovel {'Gerda': 25}
+67 / 266 Gerda ownAll {'Gerda': 72}
+68 / 266 Gerda ownNovel {'Gerda': 26}
+69 / 266 Gerda ownAll {'Gerda': 77}
+70 / 266 Gerda ownAll {'Gerda': 80}
+71 / 266 Gerda ownNovel {'Gerda': 27}
+72 / 266 Gerda ownNovel {'Gerda': 28}
+73 / 266 Gerda ownAll {'Gerda': 90}
+74 / 266 Gerda ownNovel {'Gerda': 29}
+75 / 266 Gerda ownAll {'Gerda': 93}
+76 / 266 PUK ownAll {'PUK': 16}
+77 / 266 PUK ownNovel {'PUK': 10}
+78 / 266 PUK ownNovel {'PUK': 11}
+79 / 266 PUK ownAll {'PUK': 17}
+80 / 266 Gerda ownAll {'Gerda': 94}
+81 / 266 PUK ownNovel {'PUK': 12}
+82 / 266 PUK ownAll {'PUK': 18}
+83 / 266 PUK ownNovel {'PUK': 13}
+84 / 266 PUK ownAll {'PUK': 19}
+85 / 266 PUK ownAll {'PUK': 20}
+86 / 266 PUK ownNovel {'PUK': 14}
+87 / 266 PUK ownAll {'PUK': 21}
+88 / 266 PUK ownNovel {'PUK': 15}
+89 / 266 Gerda ownNovel {'Gerda': 30}
+90 / 266 Gerda ownNovel {'Gerda': 31}
+91 / 266 Gerda ownAll {'Gerda': 99}
+92 / 266 Gerda ownAll {'Gerda': 100}
+93 / 266 Gerda ownNovel {'Gerda': 32}
+94 / 266 Gerda ownAll {'Gerda': 101}
+95 / 266 Gerda ownNovel {'Gerda': 33}
+96 / 266 Gerda ownNovel {'Gerda': 34}
+97 / 266 PUK ownAll {'PUK': 22}
+98 / 266 Gerda ownAll {'Gerda': 104}
+99 / 266 PUK ownNovel {'PUK': 16}
+100 / 266 PUK ownAll {'PUK': 24}
+101 / 266 PUK ownNovel {'PUK': 17}
+102 / 266 Gerda ownAll {'Gerda': 113}
+103 / 266 PUK ownNovel {'PUK': 18}
+104 / 266 PUK ownAll {'PUK': 25}
+105 / 266 PUK ownNovel {'PUK': 19}
+106 / 266 PUK ownAll {'PUK': 26}
+107 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 11}
+108 / 266 PUK ownAll {'PUK': 28}
+109 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 5}
+110 / 266 PUK ownNovel {'PUK': 20}
+111 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 6}
+112 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 12}
+113 / 266 Gerda ownNovel {'Gerda': 35}
+114 / 266 Gerda ownNovel {'Gerda': 36}
+115 / 266 Gerda ownAll {'Gerda': 132}
+116 / 266 Gerda ownAll {'Gerda': 133}
+117 / 266 Gerda ownNovel {'Gerda': 37}
+118 / 266 Gerda ownAll {'Gerda': 135}
+119 / 266 Gerda ownNovel {'Gerda': 38}
+120 / 266 Gerda ownNovel {'Gerda': 39}
+121 / 266 Gerda ownAll {'Gerda': 137}
+122 / 266 Gerda ownNovel {'Gerda': 40}
+123 / 266 Gerda ownAll {'Gerda': 138}
+124 / 266 Gerda ownNovel {'Gerda': 41}
+125 / 266 Gerda ownAll {'Gerda': 139}
+126 / 266 Gerda ownNovel {'Gerda': 42}
+127 / 266 Gerda ownAll {'Gerda': 141}
+128 / 266 Gerda ownNovel {'Gerda': 43}
+129 / 266 Gerda ownAll {'Gerda': 143}
+130 / 266 PUK ownAll {'PUK': 31}
+131 / 266 PUK ownNovel {'PUK': 21}
+132 / 266 PUK ownNovel {'PUK': 22}
+133 / 266 PUK ownAll {'PUK': 32}
+134 / 266 Gerda ownAll {'Gerda': 145}
+135 / 266 PUK ownAll {'PUK': 33}
+136 / 266 Gerda ownNovel {'Gerda': 44}
+137 / 266 PUK ownNovel {'PUK': 23}
+138 / 266 Gerda ownNovel {'Gerda': 45}
+139 / 266 Gerda ownAll {'Gerda': 148}
+140 / 266 PUK ownAll {'PUK': 36}
+141 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 11}
+142 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 12}
+143 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 1}
+144 / 266 PUK ownNovel {'PUK': 24}
+145 / 266 Gerda ownAll {'Gerda': 149}
+146 / 266 Gerda ownNovel {'Gerda': 46}
+147 / 266 Gerda ownNovel {'Gerda': 47}
+148 / 266 Gerda ownAll {'Gerda': 150}
+149 / 266 Gerda ownAll {'Gerda': 151}
+150 / 266 Gerda ownNovel {'Gerda': 48}
+151 / 266 Gerda ownAll {'Gerda': 152}
+152 / 266 Gerda ownNovel {'Gerda': 49}
+153 / 266 Gerda ownNovel {'Gerda': 50}
+154 / 266 Gerda ownAll {'Gerda': 154}
+155 / 266 PUK ownAll {'PUK': 37}
+156 / 266 PUK ownNovel {'PUK': 25}
+157 / 266 PUK ownNovel {'PUK': 26}
+158 / 266 PUK ownAll {'PUK': 38}
+159 / 266 PUK ownAll {'PUK': 40}
+160 / 266 PUK ownNovel {'PUK': 27}
+161 / 266 Gerda ownAll {'Gerda': 171}
+162 / 266 PUK ownNovel {'PUK': 28}
+163 / 266 PUK ownAll {'PUK': 41}
+164 / 266 Gerda ownNovel {'Gerda': 51}
+165 / 266 Gerda ownNovel {'Gerda': 52}
+166 / 266 Gerda ownAll {'Gerda': 172}
+167 / 266 Gerda ownAll {'Gerda': 173}
+168 / 266 Gerda ownNovel {'Gerda': 53}
+169 / 266 Gerda ownNovel {'Gerda': 54}
+170 / 266 Gerda ownAll {'Gerda': 174}
+171 / 266 Gerda ownAll {'Gerda': 175}
+172 / 266 Gerda ownNovel {'Gerda': 55}
+173 / 266 Gerda ownNovel {'Gerda': 56}
+174 / 266 Gerda ownAll {'Gerda': 177}
+175 / 266 Gerda ownNovel {'Gerda': 57}
+176 / 266 Gerda ownAll {'Gerda': 179}
+177 / 266 Gerda ownNovel {'Gerda': 58}
+178 / 266 Gerda ownAll {'Gerda': 180}
+179 / 266 Gerda ownNovel {'Gerda': 59}
+180 / 266 Gerda ownAll {'Gerda': 183}
+181 / 266 Gerda ownNovel {'Gerda': 60}
+182 / 266 Gerda ownAll {'Gerda': 185}
+183 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 2}
+184 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 33}
+185 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 17}
+186 / 266 PUK ownNovel {'PUK': 29}
+187 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 18}
+188 / 266 PUK ownAll {'PUK': 42}
+189 / 266 Gerda ownAll {'Gerda': 188}
+190 / 266 PUK ownNovel {'PUK': 30}
+191 / 266 PUK ownAll {'PUK': 43}
+192 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 19}
+193 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 21}
+194 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 22}
+195 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 26}
+196 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 27}
+197 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 3}
+198 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 4}
+199 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 35}
+200 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 5}
+201 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 37}
+202 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 6}
+203 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 42}
+204 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 7}
+205 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 44}
+206 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 49}
+207 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 30}
+208 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 7}
+209 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 8}
+210 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 31}
+211 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 9}
+212 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 33}
+213 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 10}
+214 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 37}
+215 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 38}
+216 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 11}
+217 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 12}
+218 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 41}
+219 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 42}
+220 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 13}
+221 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 14}
+222 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 43}
+223 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 15}
+224 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 44}
+225 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 16}
+226 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 48}
+227 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 17}
+228 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 50}
+229 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 18}
+230 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 51}
+231 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 54}
+232 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 19}
+233 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 56}
+234 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 59}
+235 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 20}
+236 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 21}
+237 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 63}
+238 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 67}
+239 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 22}
+240 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 23}
+241 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 68}
+242 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 8}
+243 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 50}
+244 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 9}
+245 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 52}
+246 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 71}
+247 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 10}
+248 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 11}
+249 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 57}
+250 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 12}
+251 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 58}
+252 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 13}
+253 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 63}
+254 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 24}
+255 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 64}
+256 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 25}
+257 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 72}
+258 / 266 Dennisisdebeste ownNovel {'Dennisisdebeste': 26}
+259 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 73}
+260 / 266 Mrs. Doubtfire ownNovel {'Mrs. Doubtfire': 14}
+261 / 266 Dennisisdebeste ownAll {'Dennisisdebeste': 74}
+262 / 266 Mrs. Doubtfire ownAll {'Mrs. Doubtfire': 65}
+263 / 266 PUK ownNovel {'PUK': 31}
+264 / 266 PUK ownAll {'PUK': 57}
+265 / 266 Gerda ownNovel {'Gerda': 61}
+266 / 266 Gerda ownAll {'Gerda': 202}
+Saved physical policy bank 266

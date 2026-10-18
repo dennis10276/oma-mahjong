@@ -1,0 +1,106 @@
+{
+  "Dennisisdebeste": {
+    "ownAll": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.709515242537463,
+      "topActionAccuracy": 0.4102787456445993
+    },
+    "ownNovel": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.7512364260151236,
+      "topActionAccuracy": 0.39198606271777003
+    },
+    "ownCarryAll": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.7089175961665852,
+      "topActionAccuracy": 0.4133275261324042
+    },
+    "ownRecallAll": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.7085943765471912,
+      "topActionAccuracy": 0.4133275261324042
+    }
+  },
+  "Mrs. Doubtfire": {
+    "ownAll": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.8796504107288818,
+      "topActionAccuracy": 0.3351028533510285
+    },
+    "ownNovel": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.9454151443976446,
+      "topActionAccuracy": 0.3134054546795091
+    },
+    "ownCarryAll": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.9026663307262182,
+      "topActionAccuracy": 0.3238221632382216
+    },
+    "ownRecallAll": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.9138653691506795,
+      "topActionAccuracy": 0.3231585932315859
+    }
+  },
+  "PUK": {
+    "ownAll": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7771649734399049,
+      "topActionAccuracy": 0.4296714579055442
+    },
+    "ownNovel": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7845220311001695,
+      "topActionAccuracy": 0.4204312114989733
+    },
+    "ownCarryAll": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7762185494099625,
+      "topActionAccuracy": 0.43018480492813144
+    },
+    "ownRecallAll": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.775770648900851,
+      "topActionAccuracy": 0.4296714579055442
+    }
+  },
+  "Gerda": {
+    "ownAll": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.002004307846316,
+      "topActionAccuracy": 0.29559971611071684
+    },
+    "ownNovel": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.0041467048839205,
+      "topActionAccuracy": 0.2913413768630234
+    },
+    "ownCarryAll": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.0178225924408366,
+      "topActionAccuracy": 0.28459900638750885
+    },
+    "ownRecallAll": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.019581229096011,
+      "topActionAccuracy": 0.2863733144073811
+    }
+  }
+}

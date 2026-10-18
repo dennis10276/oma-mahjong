@@ -3,6 +3,7 @@
 'use strict';
 const fs = require('fs'), path = require('path');
 const B = require('./boards.js');
+const { tableVersion, fixedEarlyLevel } = require('./board_versions.js');
 const DATA = process.env.DATA || path.join(__dirname, '..', '..', '..', 'analysis', 'archive', 'realdata');
 const plays = JSON.parse(fs.readFileSync(path.join(DATA, 'plays.json'), 'utf8'));
 const scores = JSON.parse(fs.readFileSync(path.join(DATA, 'scores.json'), 'utf8'));
@@ -10,8 +11,10 @@ const ver = s => (s || '0').split('.').map(Number).reduce((a, x) => a * 100 + x,
 const TABLE_VERSIONS = ['1.44', '1.45', '1.46', '1.47', '1.48', '1.49', '1.50', '1.51', '1.52', '1.53', '1.54', '1.55'];
 const SKIP = new Set(['pmuxw2uqkzcnbgx']);                      // DennisTEST
 const out = [], notes = {};
-for (const [pid, ev] of Object.entries(plays)) {
+for (const [pid, entries] of Object.entries(plays)) {
   if (SKIP.has(pid)) continue;
+  if (!scores[pid]) continue;
+  const ev = Object.values(entries || {}).filter(event => event && typeof event === 'object').sort((left, right) => left.t - right.t);
   const name = (scores[pid] || {}).name || (ev.find(e => e.name) || {}).name || pid;
   const ends = ev.filter(e => e.k === 'end' && e.m !== 'd' && !e.tk && e.lv >= 10);
   // the screen shape for classic levels: the one that reproduces the tile counts they logged
@@ -28,8 +31,8 @@ for (const [pid, ev] of Object.entries(plays)) {
     let r = e.r === 'win' ? 'win' : e.r === 'stuck' ? (e.ck ? 'clock' : 'tray') : e.r === 'restart' && (e.dur || 0) >= 30 ? 'gaveup' : null;
     if (!r) continue;
     let board = null;
-    if (e.lv >= 70 && TABLE_VERSIONS.includes(e.v)) board = { v: e.v, lv: e.lv, kind: 'table' };
-    else if (e.lv < 70 && ver(e.v) >= ver('1.31') && aspect) {
+    if ((e.lv >= 70 || fixedEarlyLevel(e.v, e.lv)) && TABLE_VERSIONS.includes(tableVersion(e.v))) board = { v: e.v, lv: e.lv, kind: 'table' };
+    else if (e.lv < 70 && !fixedEarlyLevel(e.v, e.lv) && ver(e.v) >= ver('1.31') && aspect) {
       // their usual shape, or (a player can change phones: Gerda 1.4, then 1.6) the shape that
       // gives the tile count they logged for this try
       let a = aspect;
@@ -38,7 +41,8 @@ for (const [pid, ev] of Object.entries(plays)) {
     }
     else if (e.lv >= 70 && ver(e.v) < ver('1.43') && ver(e.v) >= ver('1.31') && aspect) board = { aspect, lv: e.lv, kind: 'classic' };
     if (!board) continue;
-    out.push({ pid, name, lv: e.lv, v: e.v, at: e.at || 1, r, n: e.n, t: e.t, dur: e.dur, board });
+    const start = e.aid && ev.find(event => event.k === 'start' && event.aid === e.aid);
+    out.push({ pid, name, aid: e.aid, lv: e.lv, v: e.v, at: e.at || 1, r, n: e.n, t: e.t, startedAt: start ? start.t : e.t - (e.dur || 0) * 1000, dur: e.dur, board });
   }
 }
 // check the tile counts against the rebuilt boards

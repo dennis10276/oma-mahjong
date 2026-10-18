@@ -1,0 +1,470 @@
+Fitting 276 independent own-person episode-style models
+Fitted 25 / 276 personal coherent episode models
+Fitted 50 / 276 personal coherent episode models
+Fitted 75 / 276 personal coherent episode models
+Fitted 100 / 276 personal coherent episode models
+Fitted 125 / 276 personal coherent episode models
+Fitted 150 / 276 personal coherent episode models
+Fitted 175 / 276 personal coherent episode models
+Fitted 200 / 276 personal coherent episode models
+Fitted 225 / 276 personal coherent episode models
+Fitted 250 / 276 personal coherent episode models
+Fitted 275 / 276 personal coherent episode models
+{
+  "Dennisisdebeste": {
+    "initial": {
+      "ownAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.709515242537463,
+          "topActionAccuracy": 0.4102787456445993
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.7008581806137162,
+          "topActionAccuracy": 0.4189895470383275
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.6908900119070303,
+          "topActionAccuracy": 0.42073170731707316
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.6908900119070303,
+          "topActionAccuracy": 0.42073170731707316
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.7089175961665852,
+          "topActionAccuracy": 0.4133275261324042
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.7002557531373028,
+          "topActionAccuracy": 0.41986062717770034
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.691665133068703,
+          "topActionAccuracy": 0.4202961672473868
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 2296,
+          "jointLogLoss": 1.691665133068703,
+          "topActionAccuracy": 0.4202961672473868
+        }
+      }
+    },
+    "retries": {
+      "ownAll": {
+        "control": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6420943976449005,
+          "topActionAccuracy": 0.4154611211573237
+        },
+        "independentStep": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6350188038182165,
+          "topActionAccuracy": 0.41455696202531644
+        },
+        "fixedEpisode": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6317507084464111,
+          "topActionAccuracy": 0.41365280289330925
+        },
+        "adaptiveEpisode": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6321519968711147,
+          "topActionAccuracy": 0.4132007233273056
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6617102402200745,
+          "topActionAccuracy": 0.40596745027124775
+        },
+        "independentStep": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.6555489946120594,
+          "topActionAccuracy": 0.4104882459312839
+        },
+        "fixedEpisode": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.650945943022301,
+          "topActionAccuracy": 0.4055153707052441
+        },
+        "adaptiveEpisode": {
+          "prefixes": 22,
+          "decisions": 2212,
+          "jointLogLoss": 1.651429951724563,
+          "topActionAccuracy": 0.40687160940325495
+        }
+      }
+    },
+    "transitionApplications": {
+      "ownAll": 22,
+      "ownCarryAll": 22
+    }
+  },
+  "Mrs. Doubtfire": {
+    "initial": {
+      "ownAll": {
+        "control": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8796504107288818,
+          "topActionAccuracy": 0.3351028533510285
+        },
+        "independentStep": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8708821284637633,
+          "topActionAccuracy": 0.33908427339084274
+        },
+        "fixedEpisode": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8590590557765247,
+          "topActionAccuracy": 0.34638354346383543
+        },
+        "adaptiveEpisode": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8590590557765247,
+          "topActionAccuracy": 0.34638354346383543
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.9026663307262182,
+          "topActionAccuracy": 0.3238221632382216
+        },
+        "independentStep": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8922637404350071,
+          "topActionAccuracy": 0.3357664233576642
+        },
+        "fixedEpisode": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8858691852204406,
+          "topActionAccuracy": 0.33709356337093566
+        },
+        "adaptiveEpisode": {
+          "prefixes": 14,
+          "decisions": 1507,
+          "jointLogLoss": 1.8858691852204406,
+          "topActionAccuracy": 0.33709356337093566
+        }
+      }
+    },
+    "retries": {
+      "ownAll": {
+        "control": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8263835025468405,
+          "topActionAccuracy": 0.36993464052287583
+        },
+        "independentStep": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8164959872781272,
+          "topActionAccuracy": 0.37287581699346406
+        },
+        "fixedEpisode": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8048295629052291,
+          "topActionAccuracy": 0.3758169934640523
+        },
+        "adaptiveEpisode": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8034039841889118,
+          "topActionAccuracy": 0.3758169934640523
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8922829237411516,
+          "topActionAccuracy": 0.34477124183006536
+        },
+        "independentStep": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8843684308513906,
+          "topActionAccuracy": 0.35784313725490197
+        },
+        "fixedEpisode": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8709966651640313,
+          "topActionAccuracy": 0.3535947712418301
+        },
+        "adaptiveEpisode": {
+          "prefixes": 40,
+          "decisions": 3060,
+          "jointLogLoss": 1.8707032537612707,
+          "topActionAccuracy": 0.35326797385620917
+        }
+      }
+    },
+    "transitionApplications": {
+      "ownAll": 39,
+      "ownCarryAll": 39
+    }
+  },
+  "PUK": {
+    "initial": {
+      "ownAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7771649734399049,
+          "topActionAccuracy": 0.4296714579055442
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7813288029945973,
+          "topActionAccuracy": 0.43121149897330596
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7658411757946013,
+          "topActionAccuracy": 0.42659137577002054
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7658411757946013,
+          "topActionAccuracy": 0.42659137577002054
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7762185494099625,
+          "topActionAccuracy": 0.43018480492813144
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7779620197166768,
+          "topActionAccuracy": 0.4286447638603696
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7649049279153544,
+          "topActionAccuracy": 0.4240246406570842
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 1948,
+          "jointLogLoss": 1.7649049279153544,
+          "topActionAccuracy": 0.4240246406570842
+        }
+      }
+    },
+    "retries": {
+      "ownAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.7931731984156674,
+          "topActionAccuracy": 0.4074328974535444
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.8002997311077455,
+          "topActionAccuracy": 0.40949759119064005
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.7891981822264895,
+          "topActionAccuracy": 0.40674466620784583
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.7880707289635913,
+          "topActionAccuracy": 0.4039917412250516
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.864170919649026,
+          "topActionAccuracy": 0.3860977288368892
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.8762236907173102,
+          "topActionAccuracy": 0.3860977288368892
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.863627537709456,
+          "topActionAccuracy": 0.383344803854095
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 1453,
+          "jointLogLoss": 1.8629724636198568,
+          "topActionAccuracy": 0.3826565726083964
+        }
+      }
+    },
+    "transitionApplications": {
+      "ownAll": 18,
+      "ownCarryAll": 18
+    }
+  },
+  "Gerda": {
+    "initial": {
+      "ownAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 2.002004307846316,
+          "topActionAccuracy": 0.29559971611071684
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 1.993742410475933,
+          "topActionAccuracy": 0.2984386089425124
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 1.9900795477570314,
+          "topActionAccuracy": 0.301277501774308
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 1.9900795477570314,
+          "topActionAccuracy": 0.301277501774308
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 2.0178225924408366,
+          "topActionAccuracy": 0.28459900638750885
+        },
+        "independentStep": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 2.010072721724854,
+          "topActionAccuracy": 0.29559971611071684
+        },
+        "fixedEpisode": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 2.0074457478284398,
+          "topActionAccuracy": 0.2998580553584102
+        },
+        "adaptiveEpisode": {
+          "prefixes": 20,
+          "decisions": 2818,
+          "jointLogLoss": 2.0074457478284398,
+          "topActionAccuracy": 0.2998580553584102
+        }
+      }
+    },
+    "retries": {
+      "ownAll": {
+        "control": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.112139748719071,
+          "topActionAccuracy": 0.27580645161290324
+        },
+        "independentStep": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.1143124368097137,
+          "topActionAccuracy": 0.278494623655914
+        },
+        "fixedEpisode": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.1014650174720804,
+          "topActionAccuracy": 0.2830645161290323
+        },
+        "adaptiveEpisode": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.1016347891720204,
+          "topActionAccuracy": 0.2817204301075269
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.164819093299198,
+          "topActionAccuracy": 0.267741935483871
+        },
+        "independentStep": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.1664598335869196,
+          "topActionAccuracy": 0.2685483870967742
+        },
+        "fixedEpisode": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.154024444380561,
+          "topActionAccuracy": 0.26505376344086023
+        },
+        "adaptiveEpisode": {
+          "prefixes": 41,
+          "decisions": 3720,
+          "jointLogLoss": 2.1542849968474265,
+          "topActionAccuracy": 0.26586021505376345
+        }
+      }
+    },
+    "transitionApplications": {
+      "ownAll": 39,
+      "ownCarryAll": 39
+    }
+  }
+}

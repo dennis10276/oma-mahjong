@@ -1,0 +1,3855 @@
+{
+  "made": "2026-10-18T01:48:12.841Z",
+  "evidence": "human-restart-state-diagnostic-only",
+  "targetMet": false,
+  "runs": 16,
+  "fingerprint": "372ce51165e2d083c424cac0ccb9ccfd2bdda03482ce9db9bafab8be428bce09",
+  "fingerprintFiles": [
+    "www/hard.js",
+    "www/layouts.js",
+    "tools/sim/refit/personal_restart_audit.js",
+    "tools/sim/refit/personal_prefix_data.js",
+    "tools/sim/refit/physical_handoff_audit.js",
+    "tools/sim/refit/physical_count_data.js",
+    "tools/sim/refit/mimic_games.js",
+    "tools/sim/refit/personal_model.js",
+    "tools/sim/refit/personal_retry_memory.js",
+    "tools/sim/refit/attempt_campaigns.js",
+    "analysis/archive/realdata/plays.json",
+    "analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/replays/pmv6yhzz3x9oxs8.json"
+  ],
+  "pinnedActorBankSha256": "2a3ad9dfebc5b0afe469a82887e3f8a6b819393723977692a25e2d8cad9b07b2",
+  "pinnedRequestsSha256": "dae9c763d2a0dc03e1b1564ec4ce493c3fea6edc7b3decc5f6d5c0a0a19b53d9",
+  "players": {
+    "Dennisisdebeste": {
+      "naturalRestarts": 11,
+      "measured": 11,
+      "unsupported": [],
+      "observedMeanMoves": 24.545454545454547,
+      "profiles": {
+        "ownAll": {
+          "runs": 176,
+          "wins": 0,
+          "clock": 0,
+          "tray": 176,
+          "successFraction": 0
+        },
+        "ownAllPlan8": {
+          "runs": 176,
+          "wins": 0,
+          "clock": 0,
+          "tray": 176,
+          "successFraction": 0
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "naturalRestarts": 5,
+      "measured": 5,
+      "unsupported": [],
+      "observedMeanMoves": 27.6,
+      "profiles": {
+        "ownAll": {
+          "runs": 80,
+          "wins": 3,
+          "clock": 0,
+          "tray": 77,
+          "successFraction": 0.0375
+        },
+        "ownAllPlan8": {
+          "runs": 80,
+          "wins": 3,
+          "clock": 0,
+          "tray": 77,
+          "successFraction": 0.0375
+        }
+      }
+    },
+    "PUK": {
+      "naturalRestarts": 1,
+      "measured": 1,
+      "unsupported": [],
+      "observedMeanMoves": 53,
+      "profiles": {
+        "ownAll": {
+          "runs": 16,
+          "wins": 15,
+          "clock": 0,
+          "tray": 1,
+          "successFraction": 0.9375
+        },
+        "ownAllPlan8": {
+          "runs": 16,
+          "wins": 15,
+          "clock": 0,
+          "tray": 1,
+          "successFraction": 0.9375
+        }
+      }
+    },
+    "Gerda": {
+      "naturalRestarts": 0,
+      "measured": 0,
+      "unsupported": [],
+      "observedMeanMoves": null,
+      "profiles": {
+        "ownAll": {
+          "runs": 0,
+          "wins": 0,
+          "clock": 0,
+          "tray": 0,
+          "successFraction": null
+        },
+        "ownAllPlan8": {
+          "runs": 0,
+          "wins": 0,
+          "clock": 0,
+          "tray": 0,
+          "successFraction": null
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "name": "Dennisisdebeste",
+      "aid": "a887524e-f200-4bf2-bbce-6079101d596b",
+      "level": 100,
+      "moves": 9,
+      "choices": 16,
+      "initialNewLevel": true,
+      "availableAt": 1791910662596,
+      "status": "measured-human-state",
+      "opening": 1791910612845,
+      "observedTray": [
+        9,
+        25,
+        16
+      ],
+      "observedLeft": 87,
+      "actor": {
+        "id": "66499ae8be85f3e44a258a8df28805001382970887dd067082ea0ed4759d0f14",
+        "trainingCut": 0,
+        "availableThrough": null
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 40,
+            "left": 56
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 78,
+            "left": 18
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 40,
+            "left": 56
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 10,
+            "left": 86
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 54,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 62,
+            "left": 34
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 16,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 64
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 44,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 58
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 60
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 58
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 64
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 44,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 44,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 46
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 40,
+            "left": 56
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 78,
+            "left": 18
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 40,
+            "left": 56
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 10,
+            "left": 86
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 54,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 62,
+            "left": 34
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 16,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 64
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 44,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 58
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 60
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 58
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 64
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 44,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 44,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 46
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "cb69ccd6-2352-441a-a68a-8cf22cccb4ec",
+      "level": 102,
+      "moves": 5,
+      "choices": 11,
+      "initialNewLevel": true,
+      "availableAt": 1791911787818,
+      "status": "measured-human-state",
+      "opening": 1791911749246,
+      "observedTray": [
+        11,
+        27,
+        32
+      ],
+      "observedLeft": 81,
+      "actor": {
+        "id": "8573d912e9886730b2bb1b3a6a620454faa937a4e1ed97e6d6c2bfb05267a2ef",
+        "trainingCut": 1791911740340,
+        "availableThrough": 1791911740339
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 6,
+            "left": 80
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "20b95c3a-0375-4f37-a3b5-9344ae3bf987",
+      "level": 104,
+      "moves": 19,
+      "choices": 77,
+      "initialNewLevel": false,
+      "availableAt": 1791914994288,
+      "status": "measured-human-state",
+      "opening": 1791914835209,
+      "observedTray": [
+        18,
+        13,
+        33
+      ],
+      "observedLeft": 53,
+      "actor": {
+        "id": "b1720774cfdbc65931acf452959b9977e4c59c92513af31ed779fcc1b39d4630",
+        "trainingCut": 1791912364577,
+        "availableThrough": 1791912364576
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 20,
+            "left": 52
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "54f44b84-3f90-4058-ad71-b71fe3c03f43",
+      "level": 91,
+      "moves": 34,
+      "choices": 68,
+      "initialNewLevel": false,
+      "availableAt": 1792173734236,
+      "status": "measured-human-state",
+      "opening": 1792173656313,
+      "observedTray": [
+        30,
+        32
+      ],
+      "observedLeft": 46,
+      "actor": {
+        "id": "60f017c0422789ceb1cced40d7c070caa56763cbb69c32eafb78ef93420b8eea",
+        "trainingCut": 1792048887819,
+        "availableThrough": 1792048887818
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 40,
+            "left": 40
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 46,
+            "left": 34
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 46,
+            "left": 34
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 40,
+            "left": 40
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 46,
+            "left": 34
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 46,
+            "left": 34
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 42
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "f6c7691b-38df-4a58-9800-239a11f45fb9",
+      "level": 91,
+      "moves": 25,
+      "choices": 64,
+      "initialNewLevel": false,
+      "availableAt": 1792173968195,
+      "status": "measured-human-state",
+      "opening": 1792173656313,
+      "observedTray": [
+        11,
+        26,
+        12
+      ],
+      "observedLeft": 55,
+      "actor": {
+        "id": "60f017c0422789ceb1cced40d7c070caa56763cbb69c32eafb78ef93420b8eea",
+        "trainingCut": 1792048887819,
+        "availableThrough": 1792048887818
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "dae865c3-a245-4b76-a541-386f3228d1c8",
+      "level": 96,
+      "moves": 11,
+      "choices": 32,
+      "initialNewLevel": false,
+      "availableAt": 1792175128771,
+      "status": "measured-human-state",
+      "opening": 1792175045491,
+      "observedTray": [
+        29,
+        27,
+        32
+      ],
+      "observedLeft": 75,
+      "actor": {
+        "id": "2c2da1d1189a712345b8d10bd8b72e3e7be3c61f376f50ba7e63252e28d469dc",
+        "trainingCut": 1792175038351,
+        "availableThrough": 1792175038350
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 12,
+            "left": 74
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "5ae9f572-0f2c-43c5-9ca5-a702dadcd3b7",
+      "level": 111,
+      "moves": 35,
+      "choices": 100,
+      "initialNewLevel": true,
+      "availableAt": 1792237555099,
+      "status": "measured-human-state",
+      "opening": 1792237449745,
+      "observedTray": [
+        8,
+        6,
+        17
+      ],
+      "observedLeft": 39,
+      "actor": {
+        "id": "648fde3d70926f2b76b37f6cf769493ec014b4bdac7ea38acf0c329fdf8f1284",
+        "trainingCut": 1792237443929,
+        "availableThrough": 1792237443928
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 38
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "19154d14-1cab-44bb-afec-744716566416",
+      "level": 115,
+      "moves": 51,
+      "choices": 132,
+      "initialNewLevel": false,
+      "availableAt": 1792238636728,
+      "status": "measured-human-state",
+      "opening": 1792238277298,
+      "observedTray": [
+        29,
+        0,
+        26
+      ],
+      "observedLeft": 29,
+      "actor": {
+        "id": "1b5fcc490423ba4029329ba54fa0b2535f4beb90c9ee8cf0e92bc4f77e45c1a0",
+        "trainingCut": 1792238271415,
+        "availableThrough": 1792238271414
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "a776a740-a11f-449d-844e-402db9b05d83",
+      "level": 118,
+      "moves": 31,
+      "choices": 101,
+      "initialNewLevel": true,
+      "availableAt": 1792243436780,
+      "status": "measured-human-state",
+      "opening": 1792239395598,
+      "observedTray": [
+        2,
+        30,
+        21
+      ],
+      "observedLeft": 45,
+      "actor": {
+        "id": "cebf0848133ff7d8cd5a645651f60ed82c02903c5d0c93c89b0e26370da6318d",
+        "trainingCut": 1792239391544,
+        "availableThrough": 1792239391543
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 32,
+            "left": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "8db405af-b43c-45cc-9584-bd25e3a1f265",
+      "level": 121,
+      "moves": 13,
+      "choices": 22,
+      "initialNewLevel": false,
+      "availableAt": 1792257746844,
+      "status": "measured-human-state",
+      "opening": 1792256342328,
+      "observedTray": [
+        0,
+        24,
+        19
+      ],
+      "observedLeft": 69,
+      "actor": {
+        "id": "9f4c9c1c293619ec0a029a18311693e08b179f354b577b133e440edec4db2f2b",
+        "trainingCut": 1792256338659,
+        "availableThrough": 1792256338658
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 14,
+            "left": 68
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "241f2afd-e4d5-4970-9b27-1f1d57009c38",
+      "level": 124,
+      "moves": 37,
+      "choices": 145,
+      "initialNewLevel": false,
+      "availableAt": 1792261151852,
+      "status": "measured-human-state",
+      "opening": 1792258657069,
+      "observedTray": [
+        18,
+        23,
+        3
+      ],
+      "observedLeft": 37,
+      "actor": {
+        "id": "c1fb8e817d4213880982f017529906153352aa19d9e7e247c1f338595ae32053",
+        "trainingCut": 1792258537658,
+        "availableThrough": 1792258537657
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 38,
+            "left": 36
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "641431a4-1043-4fee-9d83-8a846c91caa8",
+      "level": 91,
+      "moves": 25,
+      "choices": 55,
+      "initialNewLevel": false,
+      "availableAt": 1792129538107,
+      "status": "measured-human-state",
+      "opening": 1792083635769,
+      "observedTray": [
+        26,
+        12,
+        32
+      ],
+      "observedLeft": 55,
+      "actor": {
+        "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+        "trainingCut": 1792083630483,
+        "availableThrough": 1792083630482
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 26,
+            "left": 54
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "2df8244b-f96e-464d-8212-5714bfe4ca89",
+      "level": 91,
+      "moves": 44,
+      "choices": 95,
+      "initialNewLevel": false,
+      "availableAt": 1792129672420,
+      "status": "measured-human-state",
+      "opening": 1792083635769,
+      "observedTray": [
+        30,
+        12
+      ],
+      "observedLeft": 36,
+      "actor": {
+        "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+        "trainingCut": 1792083630483,
+        "availableThrough": 1792083630482
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": true,
+            "why": "win",
+            "moves": 80,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 54,
+            "left": 26
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 80,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 56,
+            "left": 24
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 56,
+            "left": 24
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 48,
+            "left": 32
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 48,
+            "left": 32
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 46,
+            "left": 34
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 80,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": true,
+            "why": "win",
+            "moves": 80,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 54,
+            "left": 26
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 80,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 56,
+            "left": 24
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 56,
+            "left": 24
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 52,
+            "left": 28
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 48,
+            "left": 32
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 48,
+            "left": 32
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 46,
+            "left": 34
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 80,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 50,
+            "left": 30
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "2ec424b1-28f7-4b1c-961e-88ec39346c98",
+      "level": 91,
+      "moves": 35,
+      "choices": 52,
+      "initialNewLevel": false,
+      "availableAt": 1792129750613,
+      "status": "measured-human-state",
+      "opening": 1792083635769,
+      "observedTray": [
+        30,
+        32,
+        12
+      ],
+      "observedLeft": 45,
+      "actor": {
+        "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+        "trainingCut": 1792083630483,
+        "availableThrough": 1792083630482
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 36,
+            "left": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "58aff72f-96a6-43b0-bd92-9b6ea4159193",
+      "level": 91,
+      "moves": 27,
+      "choices": 52,
+      "initialNewLevel": false,
+      "availableAt": 1792130008181,
+      "status": "measured-human-state",
+      "opening": 1792083635769,
+      "observedTray": [
+        32,
+        12,
+        8
+      ],
+      "observedLeft": 53,
+      "actor": {
+        "id": "a1d7b3052952620c38a89ff96d33db1192d546af6f63aa84d861bd7af25b9e47",
+        "trainingCut": 1792083630483,
+        "availableThrough": 1792083630482
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 28,
+            "left": 52
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 30,
+            "left": 50
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "81e7a42d-33f1-4230-961a-dff82cdbb171",
+      "level": 101,
+      "moves": 7,
+      "choices": 15,
+      "initialNewLevel": true,
+      "availableAt": 1792263357057,
+      "status": "measured-human-state",
+      "opening": 1792263326840,
+      "observedTray": [
+        31,
+        25,
+        18
+      ],
+      "observedLeft": 73,
+      "actor": {
+        "id": "07908d21582df3ce39f95cbfeec79b1a87bba504359a2c06b9030343fadc32c9",
+        "trainingCut": 1792263314932,
+        "availableThrough": 1792263314931
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 8,
+            "left": 72
+          }
+        ]
+      }
+    },
+    {
+      "name": "PUK",
+      "aid": "6848d264-e65d-4756-85bf-03fde640deff",
+      "level": 53,
+      "moves": 53,
+      "choices": 127,
+      "initialNewLevel": false,
+      "availableAt": 1792242408715,
+      "status": "measured-human-state",
+      "opening": 1792174506087,
+      "observedTray": [
+        8
+      ],
+      "observedLeft": 23,
+      "actor": {
+        "id": "832c10cf3f916bf612fd75968fb0e4f5f3d7482e036d48b28bb2d17c1748f771",
+        "trainingCut": 1792174483508,
+        "availableThrough": 1792174483507
+      },
+      "simulations": {
+        "ownAll": [
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 58,
+            "left": 18
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          }
+        ],
+        "ownAllPlan8": [
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": false,
+            "why": "tray",
+            "moves": 58,
+            "left": 18
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          },
+          {
+            "win": true,
+            "why": "win",
+            "moves": 76,
+            "left": 0
+          }
+        ]
+      }
+    }
+  ],
+  "note": "Voluntary natural restarts are observed failures, not missing data or automatic bot restarts. Human prefix states are supplied only to diagnose the missing restart behavior; this is not autonomous prediction, counterfactual human success, training data or winning-try accuracy. Older personal actors exclude the entire target campaign. Every observed restart remains in the denominator; unsupported wildcard/physical states and missing models are explicit. All original count cohorts and frozen numeric forecasts are unchanged."
+}

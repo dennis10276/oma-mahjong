@@ -1,0 +1,682 @@
+{
+  "evaluatedAt": "2026-10-17T16:16:13.033364+00:00",
+  "evidence": "historical-exploratory",
+  "targetMet": false,
+  "comparisonScope": "recent-first-clear-own-pair-preparation-development-v1",
+  "measurementFingerprint": "ed020b8d249da7e16d3485147c8ba295f56e869fe6d37361ed3a890e797a6a67",
+  "dataSha256": "6f7bb0c17a8aa737f21704d47669ec9058b090d036e9f356801530abe02a98c4",
+  "personalOnly": true,
+  "strategyCandidates": [
+    "ownAll",
+    "ownAllPlan8",
+    "ownNovelPlan8",
+    "ownAllKey14",
+    "ownNovelKey14SafeExit"
+  ],
+  "simulationRuns": 32,
+  "simulatedAttempts": 32,
+  "profiles": {
+    "baseline": {
+      "scope": "legacy",
+      "memory": [
+        0.75,
+        0.5,
+        0.75
+      ]
+    },
+    "ownAll": {
+      "scope": "ownAll",
+      "memory": [
+        0.75,
+        0.5,
+        0.75
+      ],
+      "learnFromLoss": true
+    },
+    "ownAllPlan8": {
+      "scope": "ownAll",
+      "memory": [
+        0.75,
+        0.5,
+        0.75
+      ],
+      "learnFromLoss": true,
+      "physicalPlan": 8
+    },
+    "ownNovelPlan8": {
+      "scope": "ownNovel",
+      "memory": [
+        0.75,
+        0.5,
+        0.75
+      ],
+      "learnFromLoss": true,
+      "physicalPlan": 8
+    },
+    "ownAllKey14": {
+      "scope": "ownAll",
+      "memory": [
+        0.75,
+        0.5,
+        0.75
+      ],
+      "learnFromLoss": true,
+      "physicalPlan": 8,
+      "physicalKeyPlan": 14
+    },
+    "ownNovelKey14SafeExit": {
+      "scope": "ownNovel",
+      "memory": [
+        0.75,
+        0.5,
+        0.75
+      ],
+      "learnFromLoss": true,
+      "physicalPlan": 8,
+      "physicalKeyPlan": 14,
+      "physicalKeySafeExit": true
+    }
+  },
+  "coverage": {
+    "episodes": 259,
+    "heldOutEpisodes": 80,
+    "heldOutAssisted": 8,
+    "heldWithRecordedOpening": 66,
+    "heldBoardSources": {
+      "recorded": 66,
+      "table": 14
+    }
+  },
+  "heldOut": {
+    "alwaysFirst": {
+      "n": 80,
+      "correct": 38,
+      "accuracy": 0.475,
+      "exactAccuracy": 0.475,
+      "wilson95": [
+        0.3692454986165162,
+        0.5830454881967124
+      ],
+      "meanAbsoluteError": 1.8625
+    },
+    "ownMode": {
+      "n": 80,
+      "correct": 38,
+      "accuracy": 0.475,
+      "exactAccuracy": 0.475,
+      "wilson95": [
+        0.3692454986165162,
+        0.5830454881967124
+      ],
+      "meanAbsoluteError": 1.8625
+    },
+    "ownActorSmoothed": {
+      "n": 80,
+      "correct": 9,
+      "accuracy": 0.1125,
+      "exactAccuracy": 0.1125,
+      "wilson95": [
+        0.06032618694827016,
+        0.20018410865677552
+      ],
+      "meanAbsoluteError": 5.4625
+    },
+    "personalMixture": {
+      "n": 80,
+      "correct": 13,
+      "accuracy": 0.1625,
+      "exactAccuracy": 0.1375,
+      "wilson95": [
+        0.09749727334375492,
+        0.2584310486348333
+      ],
+      "meanAbsoluteError": 4.5
+    },
+    "personalBest": {
+      "n": 80,
+      "correct": 13,
+      "accuracy": 0.1625,
+      "exactAccuracy": 0.1375,
+      "wilson95": [
+        0.09749727334375492,
+        0.2584310486348333
+      ],
+      "meanAbsoluteError": 4.625
+    },
+    "mixtureCalibrated": {
+      "n": 80,
+      "correct": 27,
+      "accuracy": 0.3375,
+      "exactAccuracy": 0.3,
+      "wilson95": [
+        0.24345459812221978,
+        0.44643681616376707
+      ],
+      "meanAbsoluteError": 2.45
+    },
+    "controlForest": {
+      "n": 80,
+      "correct": 35,
+      "accuracy": 0.4375,
+      "exactAccuracy": 0.4375,
+      "wilson95": [
+        0.3341368457196415,
+        0.5465906213134304
+      ],
+      "meanAbsoluteError": 1.9
+    },
+    "profileForest": {
+      "n": 80,
+      "correct": 34,
+      "accuracy": 0.425,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.32256388014807325,
+        0.534309080291613
+      ],
+      "meanAbsoluteError": 1.9
+    },
+    "recallProfileForest": {
+      "n": 80,
+      "correct": 34,
+      "accuracy": 0.425,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.32256388014807325,
+        0.534309080291613
+      ],
+      "meanAbsoluteError": 1.9
+    }
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.05
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.05
+        },
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 0,
+          "accuracy": 0.0,
+          "exactAccuracy": 0.0,
+          "wilson95": [
+            -1.3877787807814457e-17,
+            0.16113012549493322
+          ],
+          "meanAbsoluteError": 7.45
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 4.1
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 4.4
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 1.15
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 1.2
+        },
+        "profileForest": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "recallProfileForest": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 0.9
+        }
+      },
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.05
+      },
+      "selectedProfiles": {
+        "ownAll": 0,
+        "ownAllPlan8": 2,
+        "ownNovelPlan8": 0,
+        "ownAllKey14": 0,
+        "ownNovelKey14SafeExit": 18
+      }
+    },
+    "Mrs. Doubtfire": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 3.75
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 3.75
+        },
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 8.85
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 7.8
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 7.7
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 4.75
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.25,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 3.9
+        },
+        "profileForest": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 4.0
+        },
+        "recallProfileForest": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 4.0
+        }
+      },
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 7,
+        "accuracy": 0.35,
+        "exactAccuracy": 0.35,
+        "wilson95": [
+          0.18118954786794464,
+          0.5671494897805354
+        ],
+        "meanAbsoluteError": 3.75
+      },
+      "selectedProfiles": {
+        "ownAll": 16,
+        "ownAllPlan8": 0,
+        "ownNovelPlan8": 4,
+        "ownAllKey14": 0,
+        "ownNovelKey14SafeExit": 0
+      }
+    },
+    "PUK": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 13,
+          "accuracy": 0.65,
+          "exactAccuracy": 0.65,
+          "wilson95": [
+            0.43285051021946463,
+            0.8188104521320554
+          ],
+          "meanAbsoluteError": 1.2
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 13,
+          "accuracy": 0.65,
+          "exactAccuracy": 0.65,
+          "wilson95": [
+            0.43285051021946463,
+            0.8188104521320554
+          ],
+          "meanAbsoluteError": 1.2
+        },
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 2.0
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 2.4
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 2.75
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.3,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 1.8
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 13,
+          "accuracy": 0.65,
+          "exactAccuracy": 0.65,
+          "wilson95": [
+            0.43285051021946463,
+            0.8188104521320554
+          ],
+          "meanAbsoluteError": 1.2
+        },
+        "profileForest": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 1.25
+        },
+        "recallProfileForest": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 1.25
+        }
+      },
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 13,
+        "accuracy": 0.65,
+        "exactAccuracy": 0.65,
+        "wilson95": [
+          0.43285051021946463,
+          0.8188104521320554
+        ],
+        "meanAbsoluteError": 1.2
+      },
+      "selectedProfiles": {
+        "ownAll": 12,
+        "ownAllPlan8": 0,
+        "ownNovelPlan8": 7,
+        "ownAllKey14": 0,
+        "ownNovelKey14SafeExit": 1
+      }
+    },
+    "Gerda": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "ownActorSmoothed": {
+          "n": 20,
+          "correct": 2,
+          "accuracy": 0.1,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.027865893984153206,
+            0.30103820641179335
+          ],
+          "meanAbsoluteError": 3.55
+        },
+        "personalMixture": {
+          "n": 20,
+          "correct": 2,
+          "accuracy": 0.1,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.027865893984153206,
+            0.30103820641179335
+          ],
+          "meanAbsoluteError": 3.7
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 2,
+          "accuracy": 0.1,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.027865893984153206,
+            0.30103820641179335
+          ],
+          "meanAbsoluteError": 3.65
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 2.1
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 1.3
+        },
+        "profileForest": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "recallProfileForest": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        }
+      },
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.45
+      },
+      "selectedProfiles": {
+        "ownAll": 12,
+        "ownAllPlan8": 0,
+        "ownNovelPlan8": 7,
+        "ownAllKey14": 1,
+        "ownNovelKey14SafeExit": 0
+      }
+    }
+  },
+  "note": "Personal profile weights optimize earlier first-clear likelihood including censored failures, not target outcomes or hit tolerance. Unassisted past episodes train natural-actor profiles; all completed held episodes including assisted wins remain scored. Own-only mode fits strategy likelihood, count forests, calibration and recall independently per person with equal strategy priors. Jeffreys smoothing uses measured simulation win/reach counts; unobserved hazards and the analytic tail reuse the last sampled hazard. Thirty-two simulated attempts are extended analytically to 128, with remaining probability reported, never invented observed wins. Availability is enforced against exported opening timestamps; historical inferred starts are not proof of a pre-start forecast. Repeatedly inspected historical games do not establish the frozen prospective goal."
+}

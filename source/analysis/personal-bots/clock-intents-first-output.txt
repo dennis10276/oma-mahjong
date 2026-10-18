@@ -1,0 +1,44 @@
+{
+  "controls": 29,
+  "caps": 0,
+  "summaries": {
+    "Dennisisdebeste": {
+      "ownIntentZero": {
+        "runs": 736,
+        "wins": 31,
+        "failures": {
+          "clock": 531,
+          "tray": 174
+        },
+        "computationCaps": 0
+      },
+      "ownClockIntents": {
+        "runs": 736,
+        "wins": 53,
+        "failures": {
+          "clock": 331,
+          "tray": 352
+        },
+        "computationCaps": 0
+      }
+    },
+    "Gerda": {
+      "ownIntentZero": {
+        "runs": 192,
+        "wins": 39,
+        "failures": {
+          "tray": 153
+        },
+        "computationCaps": 0
+      },
+      "ownClockIntents": {
+        "runs": 192,
+        "wins": 39,
+        "failures": {
+          "tray": 153
+        },
+        "computationCaps": 0
+      }
+    }
+  }
+}

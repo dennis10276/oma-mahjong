@@ -1,0 +1,106 @@
+{
+  "made": "2026-10-18T20:46:46.669Z",
+  "evidence": "descriptive-training-prefix-handoff-gap",
+  "targetMet": false,
+  "dataSha256": "dfe204139c13aa91fca92fcffe77e73b578491ead0b7ecf758bc46f417e499e3",
+  "nativeSha256": "8c6836b7c50af062a789797762345c92f90f5bbe4c0441bfc2d07bb8a9dbb845",
+  "players": {
+    "Dennisisdebeste": {
+      "newTrayMate.clock": {
+        "samples": 227,
+        "followed": 177,
+        "modelProbabilityTotal": 136.63002904017893,
+        "observedFollowRate": 0.7797356828193832,
+        "meanModelProbability": 0.6018944010580569
+      },
+      "peekPair.clock": {
+        "samples": 24,
+        "followed": 13,
+        "modelProbabilityTotal": 12.132425767943248,
+        "observedFollowRate": 0.5416666666666666,
+        "meanModelProbability": 0.5055177403309686
+      },
+      "peekPair.tray": {
+        "samples": 1747,
+        "followed": 1121,
+        "modelProbabilityTotal": 1195.078593160952,
+        "observedFollowRate": 0.6416714367487121,
+        "meanModelProbability": 0.6840747528110773
+      },
+      "newTrayMate.tray": {
+        "samples": 886,
+        "followed": 868,
+        "modelProbabilityTotal": 597.7230704424093,
+        "observedFollowRate": 0.9796839729119639,
+        "meanModelProbability": 0.674631005014006
+      }
+    },
+    "Mrs. Doubtfire": {
+      "newTrayMate.clock": {
+        "samples": 154,
+        "followed": 138,
+        "modelProbabilityTotal": 96.37277772839877,
+        "observedFollowRate": 0.8961038961038961,
+        "meanModelProbability": 0.6257972579766155
+      },
+      "peekPair.tray": {
+        "samples": 742,
+        "followed": 408,
+        "modelProbabilityTotal": 420.8634158504536,
+        "observedFollowRate": 0.5498652291105122,
+        "meanModelProbability": 0.5672013690706922
+      },
+      "newTrayMate.tray": {
+        "samples": 363,
+        "followed": 332,
+        "modelProbabilityTotal": 239.19882245128468,
+        "observedFollowRate": 0.9146005509641874,
+        "meanModelProbability": 0.6589499241082223
+      },
+      "peekPair.clock": {
+        "samples": 15,
+        "followed": 8,
+        "modelProbabilityTotal": 9.828981862949972,
+        "observedFollowRate": 0.5333333333333333,
+        "meanModelProbability": 0.6552654575299981
+      }
+    },
+    "PUK": {
+      "newTrayMate.tray": {
+        "samples": 872,
+        "followed": 845,
+        "modelProbabilityTotal": 669.7146143718946,
+        "observedFollowRate": 0.9690366972477065,
+        "meanModelProbability": 0.7680213467567599
+      },
+      "peekPair.tray": {
+        "samples": 723,
+        "followed": 553,
+        "modelProbabilityTotal": 555.9788437765047,
+        "observedFollowRate": 0.7648686030428768,
+        "meanModelProbability": 0.7689887189163275
+      }
+    },
+    "Gerda": {
+      "newTrayMate.tray": {
+        "samples": 3395,
+        "followed": 3161,
+        "modelProbabilityTotal": 2139.8233966226167,
+        "observedFollowRate": 0.9310751104565538,
+        "meanModelProbability": 0.6302867147636574
+      },
+      "peekPair.tray": {
+        "samples": 2412,
+        "followed": 798,
+        "modelProbabilityTotal": 859.2250567628219,
+        "observedFollowRate": 0.3308457711442786,
+        "meanModelProbability": 0.3562292938485994
+      }
+    }
+  },
+  "sourceHashes": {
+    "tools/sim/refit/personal_handoff_audit.js": "7d09236c0431e6b3fc5cd2881b400d538de168e1e9324e8ed7658f681b83e433",
+    "tools/sim/refit/personal_handoff_cues.js": "2dd67c19c11f044b047f82f6d1b2cb04d4b2fe360cc453acf76ab5964dc31e96"
+  },
+  "note": "Cue membership uses previous actual public choice and current known options only. No hidden mate is invented. Human labels and baseline probabilities describe existing training prefixes; this is not held action/count accuracy. Completing a newly started tray pair differs from taking any visible pair. Same-tile continuation is not assumed. All winning-try forecasts/misses remain unchanged; no80% claim."
+}

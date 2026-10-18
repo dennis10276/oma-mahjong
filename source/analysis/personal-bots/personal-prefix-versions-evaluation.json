@@ -1,0 +1,80 @@
+{
+  "made": "2026-10-18T15:47:45.419053+00:00",
+  "evidence": "immutable-multi-version-natural-prefixes",
+  "targetMet": false,
+  "bankSha256": "c34a3ab05c4a23faf823ae18d9b5ca346a92c628138a4ece94acc6afe22e182e",
+  "inputHashes": {
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/mimic_games.js": "72cca6b6fe8e79a2e4227e8d875d44499619e64d8b7653d4628012403fe1f7d4",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/policy-value-prefix-data.json": "f859cee9b0244211cad658f20f3fa1908b321106b156168c308548f5202c75ab",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmv2gaa0g00eq3q.json": "2a51f579112876d8b4299dd3e1d543f03a62b61a308231c1a726396ac10f0832",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmv6yhzz3x9oxs8.json": "cde6e4e3c84e847933e033b7974c6925430d37a1d2a3ff4f7ded4ad322966af1",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/www/hard.js": "42e61ae3b2e802eeebd9efcad4e956647656d349c7f6d89a731ce2511eda777b",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/manifest.json": "93cb2f4e51277096c2f969e8f1cc935624a29f30fcf3f7f01d9a969353f5f2bd",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/realdata/plays.json": "fa73ef795b173534c983af2fe4986a9ea1a7e5502422a1d25ca777aa25c6f3b1",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmuy78xu6tsths9.json": "7144e2de2731de9105e858946b177c5e299f9ba8d76d19a16914357452d5a5d6",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/personal_model.js": "50cd26a2dbd38d8c70ce3babad808b80b072f11f05557cdb5cc7d87beebd9d6b",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/personal_retry_memory.js": "d27cf68ed085eec7ea63d9b3bbd245eba15351ea5aefb19252cdb7a2223e4c82",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/replays/pmv16kj3jr35750.json": "01a5c6be5f285be2476e14afcf6befd721e843fa4f6a8f6734059a804f3bbf6a",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/attempt_campaigns.js": "a3718edde77c191682aae9209e46af4f6e92faf8a2318d9ea14c193dc7567565",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/tools/sim/refit/personal_prefix_data.js": "ce3af304654a9f96aa1228a356af3565db19644f8f697b78e0ae954364ae8bfc",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/personal_model.js": "50cd26a2dbd38d8c70ce3babad808b80b072f11f05557cdb5cc7d87beebd9d6b",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmv6yhzz3x9oxs8.json": "9046a98784950c86990fc550e0b4df0463d69c1452df6150751fb3b7bfd60950",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/www/hard.js": "5c1561bcbeda185510ed418c99478a32c7b85a34d4cac9a3b7b8949fc7fc8e89",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/personal_prefix_data.js": "7bbc5b0fbf933fa60faf6bb272b3a0e04abc20cb21ff9e3b906f7e826e49c2a7",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/mimic_games.js": "72cca6b6fe8e79a2e4227e8d875d44499619e64d8b7653d4628012403fe1f7d4",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmv2gaa0g00eq3q.json": "2a51f579112876d8b4299dd3e1d543f03a62b61a308231c1a726396ac10f0832",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/realdata/plays.json": "befd7cc83e6026773d9b2a86d3fc8d92ea026a92f64e18a275c4fbdb223e2328",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/attempt_campaigns.js": "a3718edde77c191682aae9209e46af4f6e92faf8a2318d9ea14c193dc7567565",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmuy78xu6tsths9.json": "8656ae8fdecc90f8c48eb46a97862621c7299ff466736afd3594ba6579436abd",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/personal-bots/policy-value-prefix-data.json": "9e9d499836bb1003ec104c38adf7b0f0da6ce233fae74c9fee6e43b444bcaff0",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/analysis/archive/replays/pmv16kj3jr35750.json": "01a5c6be5f285be2476e14afcf6befd721e843fa4f6a8f6734059a804f3bbf6a",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/tools/sim/refit/personal_retry_memory.js": "d27cf68ed085eec7ea63d9b3bbd245eba15351ea5aefb19252cdb7a2223e4c82",
+    "analysis/archive/personal-bots/experiments/personal-fresh-prefixes-2026-10-18T15-43-51-962Z/manifest.json": "27b18a5bed132022be57a57cfb2868336506a4b604a6c049d6adbded0aa02f71"
+  },
+  "sourceHashes": {
+    "personal_prefix_versions_build.py": "6c1bcc1c1cbc006f23f449d858bf4fe21da1aceb586ab8561cdb36e95fb3b822",
+    "personal_prefix_versions.py": "e6096cac60dc0ba7bced2f8900b08708f69d661dff292390fbcd97177e4ef652",
+    "public_plan_reference.py": "c9f60d7c7b1296d57c033fa2d5c4ee87922d5341702c1cdaf7a7703635e1af7b"
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "versions": 113,
+      "attempts": 113,
+      "strictProspectiveAttempts": 113,
+      "futureActorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "availableThrough": 1792337025929,
+      "inputObservedThrough": 1792338235700,
+      "updatedAttempts": []
+    },
+    "Mrs. Doubtfire": {
+      "versions": 65,
+      "attempts": 65,
+      "strictProspectiveAttempts": 65,
+      "futureActorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "availableThrough": 1792264148974,
+      "inputObservedThrough": 1792288513885,
+      "updatedAttempts": []
+    },
+    "PUK": {
+      "versions": 57,
+      "attempts": 57,
+      "strictProspectiveAttempts": 57,
+      "futureActorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "availableThrough": 1792243130063,
+      "inputObservedThrough": 1792288513885,
+      "updatedAttempts": []
+    },
+    "Gerda": {
+      "versions": 210,
+      "attempts": 210,
+      "strictProspectiveAttempts": 210,
+      "futureActorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "availableThrough": 1792309731625,
+      "inputObservedThrough": 1792338235700,
+      "updatedAttempts": []
+    }
+  },
+  "note": "Immutable old/fresh versions coexist. A request selects one latest available own version perAID. Strict prospective selection also requires that a saved source snapshot was actually observed before the request. Client chunk t is local queue creation, not verified server upload; historical client-time-only selection is explicitly exploratory and cannot establish genuine pre-start availability. Earlier actor banks and forecast ledgers remain unchanged."
+}

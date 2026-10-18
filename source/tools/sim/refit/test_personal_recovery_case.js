@@ -1,0 +1,28 @@
+'use strict';
+const assert = require('assert/strict');
+const { replayTaps } = require('./personal_recovery_case.js');
+const fixture = require('./fixtures/recovery-level150.json');
+const game = { ...fixture.game, rules: fixture.game.rules ? { ...fixture.game.rules, locks: new Set(fixture.game.rules.locks) } : null };
+const before = JSON.stringify(fixture), actual = replayTaps(game, fixture.taps);
+assert.equal(actual.physicalFrameControls, 209);
+assert.equal(fixture.taps[188].index, 28); assert.equal(fixture.taps[188].time, 272415);
+assert.equal(actual.frames[188].tray.length, 2);
+assert.equal(fixture.taps[201].index, 31);
+const taps = fixture.taps.flatMap((tap, index) => index === 188 ? []
+  : index === 201 ? [tap, { index: 28, time: tap.time + 1, originalStep: null, deferredBee: true }] : [tap]);
+const deferred = replayTaps(game, taps);
+assert.equal(deferred.physicalFrameControls, 209);
+assert.deepEqual(deferred.state.alive, actual.state.alive);
+assert.deepEqual(deferred.state.tray, actual.state.tray);
+assert.equal(deferred.state.moves, actual.state.moves);
+assert.equal(deferred.result.left, 6);
+const window = deferred.frames.filter(frame => frame.originalStep >= 189 && frame.originalStep <= 202 || frame.deferredBee);
+assert.equal(Math.max(...actual.frames.slice(188, 202).map(frame => frame.tray.length)), 3);
+assert.equal(Math.max(...window.map(frame => frame.tray.length)), 2);
+const inserted = deferred.frames.findIndex(frame => frame.deferredBee);
+assert.equal(deferred.frames[inserted - 1].index, 31);
+assert.equal(deferred.frames[inserted - 1].kind, 'flip');
+assert.equal(deferred.frames[inserted - 1].openPeek, 31);
+assert.equal(deferred.frames[inserted].alive.filter(Boolean).length, deferred.frames[inserted - 1].alive.filter(Boolean).length - 2);
+assert.equal(JSON.stringify(fixture), before);
+console.log('PASS level150 bee deferral preserves all209 real-physics taps and final state while avoiding third-slot pressure in the late window');

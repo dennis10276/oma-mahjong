@@ -1,0 +1,36 @@
+'use strict';
+const assert = require('assert/strict');
+const { descriptorOf, cueOf, contextOf, shiftGroup } = require('./personal_handoff_cues.js');
+const feature = (picture, position, flags = {}) => {
+  const values = new Array(76).fill(0);
+  [values[21], values[22], values[26]] = position;
+  if (picture !== null) values[27 + picture] = 1;
+  for (const [index, value] of Object.entries(flags)) values[Number(index)] = value;
+  return values;
+};
+const previousDecision = { F: [feature(5, [.1, .2, .3])], kindContext: [0, 1, 0, 0, ...new Array(22).fill(0)] };
+const previous = descriptorOf(previousDecision, 0);
+const next = { F: [feature(5, [.4, .2, .3], { 64: 1 }), feature(6, [.8, .2, .3], { 64: 1 })],
+  kindContext: [0, 0, 1, 0, ...new Array(22).fill(0)] };
+const cue = cueOf(next, previous);
+assert.equal(cue.type, 'newTrayMate'); assert.deepEqual(cue.indices, [0]);
+assert.deepEqual(cueOf({ ...next, k: 999 }, previous), cue);
+assert.deepEqual(contextOf({ ...next, k: 999 }, cue), contextOf(next, cue));
+const inspected = { ...previous, inspect: true, knownReopen: true };
+const peekState = { ...next, F: [feature(5, previous.position), feature(5, [.4, .2, .3], { 66: 1 })] };
+assert.deepEqual(cueOf(peekState, inspected).indices, [1]);
+assert.equal(cueOf({ ...peekState, F: [peekState.F[1]] }, inspected), null);
+const ambiguous = { ...peekState, F: [...peekState.F, feature(5, previous.position)] };
+assert.equal(cueOf(ambiguous, inspected), null);
+const original = [.2, .3, .5], raised = shiftGroup(original, [1], 2), lowered = shiftGroup(original, [1], -2);
+assert(raised[1] > original[1]); assert(lowered[1] < original[1]);
+assert(Math.abs(raised.reduce((sum, value) => sum + value, 0) - 1) < 1e-12);
+assert(Math.abs(raised[0] / raised[2] - original[0] / original[2]) < 1e-12);
+assert.deepEqual(shiftGroup(original, [1], 0), original);
+assert.deepEqual(shiftGroup([1, 0], [0], 4), [1, 0]);
+assert.throws(() => shiftGroup(original, [1, 1], 1));
+assert.throws(() => shiftGroup(original, [1], NaN));
+const bee = require('./fixtures/handoff-bee150.json');
+assert.equal(cueOf(bee.next, bee.previous), null);
+assert.equal(cueOf({ ...bee.next, hiddenPictures: { 31: 1 }, k: 999 }, bee.previous), null);
+console.log('PASS handoff cues use observed target identity, preserve optional ordinary choices and never invent the bee’s unseen mate');

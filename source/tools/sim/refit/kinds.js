@@ -1,7 +1,7 @@
 /* A person's habits at a moment in time: what kind of move they make per situation (turn a tile over,
    pair, single, fatal 4th), from their recorded decisions before that moment, newest games weighted
    (half-life in games), pulled towards the family's rates (PRIOR decisions' worth).
-   Before their first recording: their first HALF recorded games (habits only, never results).
+   Before their first recording: only earlier family recordings, otherwise the engine defaults.
      const { kindsAt } = require('./kinds.js'); kindsAt('Gerda', Date.now()) */
 'use strict';
 const fs = require('fs'), path = require('path');
@@ -20,12 +20,11 @@ for (const [n, f] of Object.entries(FILES)) {
       const key = 't' + t + (ks.includes('pair') ? 'p' : 'n') + (ks.includes('flip') ? '' : '-');
       const r = tab[key] || (tab[key] = { n: 0 }); r.n++; const c = ks[dc.k]; r[c] = (r[c] || 0) + 1;
     }
-    return { t: g.t, tab };
+    return { t: g.availableAt || g.t, tab };
   }).sort((a, b) => a.t - b.t);
 }
 function table(n, t, half) {
-  let G = D[n].filter(g => g.t < t);
-  if (!G.length) G = D[n].slice(0, Math.max(1, Math.round(half)));
+  const G = D[n].filter(g => g.t < t);
   const N = G.length, tab = {};
   G.forEach((g, i) => { const rw = half ? 0.5 ** ((N - 1 - i) / half) : 1; for (const [k, r] of Object.entries(g.tab)) { const a = tab[k] || (tab[k] = { n: 0 }); a.n += rw * r.n; for (const c of KINDS) a[c] = (a[c] || 0) + rw * (r[c] || 0); } });
   return tab;

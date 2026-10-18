@@ -1,0 +1,121 @@
+{
+  "made": "2026-10-18T15:18:01.983Z",
+  "evidence": "personal-clock-reconsider-native-javascript-parity",
+  "targetMet": false,
+  "fingerprint": "776170ba9e6d83d4eacba2aeaa6d1f3b5e1f9e5919f4eee7f2550c481ae9d32b",
+  "fingerprintFiles": [
+    "analysis/archive/personal-bots/personal-clock-reconsider-models.json",
+    "analysis/personal-bots/personal-clock-reconsider-action-evaluation.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_tray_goal.js",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/policy-value-prefix-data.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_known_plan_data.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/known_clock_plan.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/realdata/plays.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_context_runtime_audit.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_retry_memory.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/attempt_campaigns.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/known_tray_plan.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/known_clock_dig.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_clock_strategy_data.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/physical_tray_audit.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/mimic_games.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/www/hard.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_followthrough.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_model.js",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_pair_followthrough.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/known_clock_strategy.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_context_choice.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/tools/sim/refit/personal_prefix_data.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/www/layouts.js",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/personal-bots/policy-clock-strategy-prefix-data.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-count-requests.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/personal-bots/personal-clock-strategy-models.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/personal-bots/personal-clock-strategy-action-evaluation.json",
+    "tools/sim/refit/personal_clock_reconsider_fit.py",
+    "tools/sim/refit/personal_clock_reconsider.py",
+    "tools/sim/refit/personal_clock_strategy.py",
+    "tools/sim/refit/public_plan_reference.py",
+    "tools/sim/refit/personal_known_plan_fit.py",
+    "tools/sim/refit/personal_full_choice_fit.py",
+    "tools/sim/refit/personal_known_plan.py",
+    "tools/sim/refit/personal_plan_fit.py",
+    "tools/sim/refit/personal_value_fit.py",
+    "tools/sim/refit/personal_policy_fit.py",
+    "tools/sim/refit/personal_kind_fit.py",
+    "tools/sim/refit/attempt_count_fit.py",
+    "tools/sim/refit/known_clock_dig.js",
+    "tools/sim/refit/known_clock_plan.js",
+    "tools/sim/refit/known_clock_strategy.js",
+    "tools/sim/refit/known_tray_plan.js",
+    "tools/sim/refit/known_tray_plan_bits.js",
+    "tools/sim/refit/known_tray_plan_cache.js",
+    "tools/sim/refit/personal_clock_reconsider_choice.js",
+    "tools/sim/refit/personal_clock_reconsider_runtime_audit.js",
+    "tools/sim/refit/personal_clock_strategy_choice.js",
+    "tools/sim/refit/personal_context_choice.js",
+    "www/layouts.js"
+  ],
+  "featureFingerprint": "13e6394ff23c64f8284883ffbdfb21f6cd3033997f45f4e16e66cb51b150d58b",
+  "prefixes": 197,
+  "probabilityDecisions": 38028,
+  "models": 138,
+  "players": {
+    "Dennisisdebeste": {
+      "control": {
+        "decisions": 4508,
+        "jointLogLoss": 1.6688045119697814,
+        "topActionAccuracy": 0.4139307897071872
+      },
+      "reconsider": {
+        "decisions": 4508,
+        "jointLogLoss": 1.6688045119697814,
+        "topActionAccuracy": 0.4139307897071872
+      }
+    },
+    "Mrs. Doubtfire": {
+      "control": {
+        "decisions": 4567,
+        "jointLogLoss": 1.8363710284819617,
+        "topActionAccuracy": 0.36063061090431353
+      },
+      "reconsider": {
+        "decisions": 4567,
+        "jointLogLoss": 1.8363710284819617,
+        "topActionAccuracy": 0.36063061090431353
+      }
+    },
+    "PUK": {
+      "control": {
+        "decisions": 3401,
+        "jointLogLoss": 1.7840041239514548,
+        "topActionAccuracy": 0.4201705380770362
+      },
+      "reconsider": {
+        "decisions": 3401,
+        "jointLogLoss": 1.7840041239514548,
+        "topActionAccuracy": 0.4201705380770362
+      }
+    },
+    "Gerda": {
+      "control": {
+        "decisions": 6538,
+        "jointLogLoss": 2.0646693185600893,
+        "topActionAccuracy": 0.28433771795656165
+      },
+      "reconsider": {
+        "decisions": 6538,
+        "jointLogLoss": 2.0646693185600893,
+        "topActionAccuracy": 0.28433771795656165
+      }
+    }
+  },
+  "note": "All197 held auxiliary-policy and own-person reconsideration scores match native scoring to1e-12. Selective transfer uses public bad clock proposals and known acceptable immediate pairs; unrelated safe choices remain unchanged. The auxiliary strategy filter uses past choices only; no newly identified latent generative strategy is claimed. Own memberships, pre-campaign availability and target exclusions remain exact. Human action sequences appear only in numerical next-action evaluation, not autonomous prediction. No winning-count improvement, prospective promotion or80% claim is established."
+}

@@ -1,0 +1,114 @@
+{
+  "made": "2026-10-18T11:45:16.635Z",
+  "evidence": "personal-clock-crowding-native-javascript-parity",
+  "targetMet": false,
+  "fingerprint": "fb797b3237e169265f21923fcb8b72a760c41fc98ab1e5091df16bf329fc2b3c",
+  "fingerprintFiles": [
+    "tools/sim/refit/attempt_campaigns.js",
+    "tools/sim/refit/known_clock_dig.js",
+    "tools/sim/refit/known_clock_plan.js",
+    "tools/sim/refit/known_clock_strategy.js",
+    "tools/sim/refit/known_tray_plan.js",
+    "tools/sim/refit/mimic_games.js",
+    "tools/sim/refit/personal_clock_strategy_data.js",
+    "tools/sim/refit/personal_context_choice.js",
+    "tools/sim/refit/personal_context_runtime_audit.js",
+    "tools/sim/refit/personal_followthrough.js",
+    "tools/sim/refit/personal_known_plan_data.js",
+    "tools/sim/refit/personal_model.js",
+    "tools/sim/refit/personal_pair_followthrough.js",
+    "tools/sim/refit/personal_prefix_data.js",
+    "tools/sim/refit/personal_retry_memory.js",
+    "tools/sim/refit/personal_tray_goal.js",
+    "tools/sim/refit/physical_tray_audit.js",
+    "www/hard.js",
+    "www/layouts.js",
+    "analysis/archive/realdata/plays.json",
+    "analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z/analysis/archive/personal-bots/policy-value-prefix-data.json",
+    "analysis/archive/personal-bots/policy-clock-strategy-prefix-data.json",
+    "analysis/archive/personal-bots/personal-clock-crowding-models.json",
+    "analysis/personal-bots/personal-clock-crowding-action-evaluation.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-count-requests.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/manifest.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/archive/personal-bots/personal-clock-strategy-models.json",
+    "analysis/archive/personal-bots/experiments/personal-clock-strategy-actions-2026-10-18T11-30-12-648Z/analysis/personal-bots/personal-clock-strategy-action-evaluation.json",
+    "tools/sim/refit/personal_clock_crowding_fit.py",
+    "tools/sim/refit/personal_clock_crowding.py",
+    "tools/sim/refit/personal_clock_strategy.py",
+    "tools/sim/refit/personal_clock_strategy_fit.py",
+    "tools/sim/refit/personal_known_plan_fit.py",
+    "tools/sim/refit/personal_full_choice_fit.py",
+    "tools/sim/refit/personal_known_plan.py",
+    "tools/sim/refit/personal_plan_fit.py",
+    "tools/sim/refit/personal_value_fit.py",
+    "tools/sim/refit/personal_policy_fit.py",
+    "tools/sim/refit/personal_kind_fit.py",
+    "tools/sim/refit/known_tray_plan_bits.js",
+    "tools/sim/refit/known_tray_plan_cache.js",
+    "tools/sim/refit/personal_clock_crowding_choice.js",
+    "tools/sim/refit/personal_clock_crowding_runtime_audit.js",
+    "tools/sim/refit/personal_clock_strategy_choice.js"
+  ],
+  "featureFingerprint": "13e6394ff23c64f8284883ffbdfb21f6cd3033997f45f4e16e66cb51b150d58b",
+  "prefixes": 197,
+  "probabilityDecisions": 38028,
+  "models": 138,
+  "players": {
+    "Dennisisdebeste": {
+      "control": {
+        "decisions": 4508,
+        "jointLogLoss": 1.6688045119697814,
+        "topActionAccuracy": 0.4139307897071872
+      },
+      "crowdingCue": {
+        "decisions": 4508,
+        "jointLogLoss": 1.6697429029130586,
+        "topActionAccuracy": 0.4134871339840284
+      }
+    },
+    "Mrs. Doubtfire": {
+      "control": {
+        "decisions": 4567,
+        "jointLogLoss": 1.8363710284819617,
+        "topActionAccuracy": 0.36063061090431353
+      },
+      "crowdingCue": {
+        "decisions": 4567,
+        "jointLogLoss": 1.8381608479113918,
+        "topActionAccuracy": 0.36041164878476023
+      }
+    },
+    "PUK": {
+      "control": {
+        "decisions": 3401,
+        "jointLogLoss": 1.7840041239514548,
+        "topActionAccuracy": 0.4201705380770362
+      },
+      "crowdingCue": {
+        "decisions": 3401,
+        "jointLogLoss": 1.7840041239514548,
+        "topActionAccuracy": 0.4201705380770362
+      }
+    },
+    "Gerda": {
+      "control": {
+        "decisions": 6538,
+        "jointLogLoss": 2.0646693185600893,
+        "topActionAccuracy": 0.28433771795656165
+      },
+      "crowdingCue": {
+        "decisions": 6538,
+        "jointLogLoss": 2.0646693185600893,
+        "topActionAccuracy": 0.28433771795656165
+      }
+    }
+  },
+  "note": "All197 held auxiliary-policy and own-person crowding-cue scores match native scoring to1e-12. The cue uses public current/forecast tray crowding and known immediate pair/clock-exit support. The auxiliary strategy filter uses past choices only; no newly identified latent generative strategy is claimed. Own memberships, pre-campaign availability and target exclusions remain exact. Human action sequences appear only in numerical next-action evaluation, not autonomous prediction. No winning-count improvement, prospective promotion or80% claim is established."
+}

@@ -1,0 +1,2891 @@
+[
+  {
+    "frozenAt": 1792192258640,
+    "inputsFrozenAt": 1792192158555,
+    "fingerprint": "3e734494fb3951cf4f4e46dd175f2ece61fd2add8e68504cde1e986ef25f7a85",
+    "model": "honestContextForest-v1",
+    "note": "Separate predeclared repaired-bot cohort. All primary forecasts use the same context-feature forest. Local counts are scored conservatively; displayed predictions are also frozen now, not rebased after outcomes.",
+    "forecasts": [
+      {
+        "name": "Dennisisdebeste",
+        "lv": 55,
+        "version": "1.55",
+        "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5681471633197552,
+          "2": 0.2576577236433497,
+          "3": 0.05821109150171185,
+          "4": 0.09992038939736687,
+          "5": 0.00911133419853618,
+          "6": 0.0017446940373598194,
+          "7": 0.00044014084507042255,
+          "9": 0.00018601190476190475,
+          "10": 0.0008991228070175439,
+          "12": 0.000625,
+          "13": 0.0030573283450704225,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 56,
+        "version": "1.55",
+        "board": "2040743fb27e1621f679dac916da5ad52833eb23cd3c299ec03c04f2fde0b608",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7223330992499788,
+          "2": 0.11880161219091537,
+          "3": 0.10200303349013581,
+          "4": 0.03809411867887834,
+          "5": 0.01129495133554927,
+          "6": 0.0021050178575105207,
+          "7": 0.00108918749130808,
+          "9": 0.00032296745813016744,
+          "10": 0.0012897478070175439,
+          "12": 0.000625,
+          "13": 0.0020412644405760406,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 57,
+        "version": "1.55",
+        "board": "14ec2debe925513ec377e5e1eda3c8eb45f4a2a1813d323abc5920410887f090",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7053187227951655,
+          "2": 0.1267369521435375,
+          "3": 0.08928514207353236,
+          "4": 0.02614493154965494,
+          "5": 0.029059856675363545,
+          "6": 0.007396411430865039,
+          "7": 0.00436411648418383,
+          "9": 0.0013368302400850547,
+          "10": 0.004729512299771167,
+          "12": 0.0,
+          "13": 0.005627524307841027,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 58,
+        "version": "1.55",
+        "board": "97efa877d0b07620cad96fe453fe564a728aa77ddb84f612972ed010f2b1b620",
+        "priorCounter": 4,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 5,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6167386794360256,
+          "2": 0.18972604135489304,
+          "3": 0.112621960514672,
+          "4": 0.03740475337576046,
+          "5": 0.012550624497756603,
+          "6": 0.011722253883586543,
+          "7": 0.004585910057041232,
+          "9": 0.003043904387696872,
+          "10": 0.003165098758694694,
+          "12": 0.0007948369565217391,
+          "13": 0.005953700213341631,
+          "17": 0.00048828125,
+          "20": 0.0012039553140096618
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 59,
+        "version": "1.55",
+        "board": "4dcdf9289212568fd3cd578ea5d47831092fb768b4ff47542c72e7b357132248",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7816458438692575,
+          "2": 0.08516138303793441,
+          "3": 0.08112215503409775,
+          "4": 0.02707226805024098,
+          "5": 0.014446264359537076,
+          "6": 0.0018842298140322594,
+          "7": 0.0019115559123607116,
+          "9": 0.0005867460082791248,
+          "10": 0.0035032894736842105,
+          "12": 0.000625,
+          "13": 0.0020412644405760406,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 60,
+        "version": "1.55",
+        "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7879245704184642,
+          "2": 0.09223268392650835,
+          "3": 0.0560701140282935,
+          "4": 0.029893600479803658,
+          "5": 0.01225260482395409,
+          "6": 0.002394061888243381,
+          "7": 0.0017688565220409407,
+          "9": 0.0005089793628920722,
+          "10": 0.00535483350441707,
+          "12": 0.000625,
+          "13": 0.010280250600938531,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 61,
+        "version": "1.55",
+        "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7729219648693862,
+          "2": 0.09460699172323149,
+          "3": 0.04145933618625854,
+          "4": 0.06899628930504882,
+          "5": 0.012060100727108274,
+          "6": 0.0017086680162794504,
+          "7": 0.0009136256935552711,
+          "9": 0.00014740566037735848,
+          "10": 0.0035032894736842105,
+          "12": 0.000625,
+          "13": 0.0030573283450704225,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 62,
+        "version": "1.55",
+        "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.49863377507838486,
+          "2": 0.20608101357303654,
+          "3": 0.10698194058127203,
+          "4": 0.029374290697123273,
+          "5": 0.042712430074596686,
+          "6": 0.018711001096518538,
+          "7": 0.0380974933297123,
+          "9": 0.0017346905980143324,
+          "10": 0.013346150345996283,
+          "12": 0.01204791577425573,
+          "13": 0.015048512546062815,
+          "17": 0.004425800492610837,
+          "20": 0.01280498581241592
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 63,
+        "version": "1.55",
+        "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.8183935555206924,
+          "2": 0.06957050609113591,
+          "3": 0.05746498500670414,
+          "4": 0.0373361982751087,
+          "5": 0.00903368636034223,
+          "6": 0.0017143928575105204,
+          "7": 0.00108918749130808,
+          "9": 0.00017556179775280898,
+          "10": 0.0008991228070175439,
+          "12": 0.000625,
+          "13": 0.0036978037924278923,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 64,
+        "version": "1.55",
+        "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7179059323526081,
+          "2": 0.12574244763526293,
+          "3": 0.07905965883780608,
+          "4": 0.023008235698615886,
+          "5": 0.01350225153896514,
+          "6": 0.0029520976025290955,
+          "7": 0.009174088351614876,
+          "9": 0.001685667403078179,
+          "10": 0.012244925534136761,
+          "12": 0.000625,
+          "13": 0.013405250600938532,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 65,
+        "version": "1.55",
+        "board": "e9413bac05ebb393ab989d27542153a30200c748c0a05d52be7dd0267727649a",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7118030483383766,
+          "2": 0.15241513683180463,
+          "3": 0.0769993965478251,
+          "4": 0.03423688734667543,
+          "5": 0.01278312543752521,
+          "6": 0.003176973238588942,
+          "7": 0.0012953716735560922,
+          "9": 0.00036157370251471374,
+          "10": 0.0015787918377504044,
+          "12": 0.000625,
+          "13": 0.004030250600938531,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 66,
+        "version": "1.55",
+        "board": "e60dad526eb6b66a292f0441cfb36a7029aa3d28419b0864fea5838a87df36fd",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7939619746746377,
+          "2": 0.09708847537514137,
+          "3": 0.06265218062358727,
+          "4": 0.02751251501392544,
+          "5": 0.010397773661929531,
+          "6": 0.0017143928575105204,
+          "7": 0.00108918749130808,
+          "9": 0.00036157370251471374,
+          "10": 0.0008991228070175439,
+          "12": 0.000625,
+          "13": 0.0036978037924278923,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 67,
+        "version": "1.55",
+        "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7896681880741698,
+          "2": 0.11309903216397497,
+          "3": 0.052543049193490725,
+          "4": 0.027436546607261143,
+          "5": 0.008752627620231766,
+          "6": 0.0019202558351126284,
+          "7": 0.0006157026428232316,
+          "9": 0.0007426712634903235,
+          "10": 0.0008991228070175439,
+          "12": 0.000625,
+          "13": 0.0036978037924278923,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 68,
+        "version": "1.55",
+        "board": "037cdceb767780b89ba0f36effc40e7d4c11ef37cf4645bf616e36a041158d8a",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.599313818394106,
+          "2": 0.1859706086650897,
+          "3": 0.10740339921624388,
+          "4": 0.02345738645806028,
+          "5": 0.027913803226407432,
+          "6": 0.010882132648015769,
+          "7": 0.011444049711338571,
+          "9": 0.0012263095492797034,
+          "10": 0.021441121153082603,
+          "12": 0.000625,
+          "13": 0.009002926533931652,
+          "17": 0.000625,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 69,
+        "version": "1.55",
+        "board": "ca9d38515e25c9d90f2d37cabcacea5b842dd6529a931b3422fe804a634295cb",
+        "priorCounter": 2,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 3,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5401636672794445,
+          "2": 0.20650761429678507,
+          "3": 0.07727387751442798,
+          "4": 0.03736889731511715,
+          "5": 0.03637173229961575,
+          "6": 0.01986827370169173,
+          "7": 0.0276842607289797,
+          "9": 0.002633058667811981,
+          "10": 0.00777086625508719,
+          "12": 0.013784026885366842,
+          "13": 0.009937652630515399,
+          "17": 0.011448172651701748,
+          "20": 0.009187899773454881
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 70,
+        "version": "1.55",
+        "board": "6f67ecbeae1fcf29ccf970ae1a14300b74bae42ccfd515395b4268703391dc07",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7581581420237431,
+          "2": 0.11026652766087508,
+          "3": 0.05922142602759705,
+          "4": 0.03109435486302005,
+          "5": 0.015453012534060076,
+          "6": 0.004077078227190027,
+          "7": 0.001706555884082408,
+          "9": 0.0011152492296320929,
+          "10": 0.00730795850441707,
+          "12": 0.000625,
+          "13": 0.010280250600938531,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 71,
+        "version": "1.55",
+        "board": "9918709e81dbdd4f2cf85d674301e268c7f7431e7ed76ca2d1979cd3e590775f",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7533931768025123,
+          "2": 0.11858149601055896,
+          "3": 0.05365419945584019,
+          "4": 0.057156359259289136,
+          "5": 0.007765755797264269,
+          "6": 0.0019294560597577118,
+          "7": 0.0025267329810046636,
+          "9": 0.00018601190476190475,
+          "10": 0.0012897478070175439,
+          "12": 0.000625,
+          "13": 0.0028920639219934996,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 72,
+        "version": "1.55",
+        "board": "372cdc6a0aff68bd2b6be1d29ef6f6ac39a63711bf9efd00672fd4e72ee91863",
+        "priorCounter": 3,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 4,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7066910323335454,
+          "2": 0.1124135920576575,
+          "3": 0.11143261367997698,
+          "4": 0.034580938450884974,
+          "5": 0.012339098160946096,
+          "6": 0.003342722602529096,
+          "7": 0.002591224943093572,
+          "9": 0.000920163573418388,
+          "10": 0.005745458504417071,
+          "12": 0.000625,
+          "13": 0.00862371124908668,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 73,
+        "version": "1.55",
+        "board": "3da6e19549140c14a7fb8368a91647312731eaa4199845ed1badf14b3f1aadb2",
+        "priorCounter": 2,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 3,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6503774839694944,
+          "2": 0.14827202939274273,
+          "3": 0.04984383916946438,
+          "4": 0.10128522431966343,
+          "5": 0.027525975353860158,
+          "6": 0.006785861161438976,
+          "7": 0.003095552294086523,
+          "9": 0.000248015873015873,
+          "10": 0.00588142349244323,
+          "12": 0.0013352272727272727,
+          "13": 0.005349367701063267,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 74,
+        "version": "1.55",
+        "board": "ce6a4fe2c655982a8468b537cc7201a1f14e251213071ab22b6ac620a9602d92",
+        "priorCounter": 2,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 3,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.7484090224006543,
+          "2": 0.12258868942901698,
+          "3": 0.061245132619917785,
+          "4": 0.026201678095343277,
+          "5": 0.01628161101890856,
+          "6": 0.004077078227190027,
+          "7": 0.001706555884082408,
+          "9": 0.0011152492296320929,
+          "10": 0.0060650607771443425,
+          "12": 0.0013352272727272727,
+          "13": 0.010280250600938531,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 75,
+        "version": "1.55",
+        "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+        "priorCounter": 12,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 13,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5910621928365262,
+          "2": 0.18506273998568873,
+          "3": 0.12197814549728292,
+          "4": 0.051270225628399654,
+          "5": 0.030063504408709134,
+          "6": 0.006372265330472985,
+          "7": 0.003793148020016649,
+          "9": 0.0007341516686564832,
+          "10": 0.0026796441104776775,
+          "12": 0.0013352272727272727,
+          "13": 0.004494751973068579,
+          "17": 0.0,
+          "20": 0.0011540032679738562
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 76,
+        "version": "1.55",
+        "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+        "priorCounter": 2,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 3,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6059604284960587,
+          "2": 0.18705135025529396,
+          "3": 0.10304799568032272,
+          "4": 0.04116949233925527,
+          "5": 0.021095618616000383,
+          "6": 0.007333738273828266,
+          "7": 0.002907894207492266,
+          "9": 0.000998100104821803,
+          "10": 0.013107582162128543,
+          "12": 0.006960227272727273,
+          "13": 0.01036757259207112,
+          "17": 0.0,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 77,
+        "version": "1.55",
+        "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5916307252535133,
+          "2": 0.21370941435303997,
+          "3": 0.10101218248416466,
+          "4": 0.03284688861869092,
+          "5": 0.022029012898189877,
+          "6": 0.010131819208388178,
+          "7": 0.004561387067897654,
+          "9": 0.003978359857464278,
+          "10": 0.010125326031421966,
+          "12": 0.0032888908677268128,
+          "13": 0.004146810772765591,
+          "17": 0.000625,
+          "20": 0.0019141825867369346
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Dennisisdebeste",
+        "lv": 78,
+        "version": "1.55",
+        "board": "b8515e26acc7b671fdfefea9f4e3a3a75975ba73b8b297a2a24f59af022f2cee",
+        "priorCounter": 1,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6150790928353098,
+          "2": 0.1725399789504159,
+          "3": 0.1038771212121469,
+          "4": 0.034642356923300636,
+          "5": 0.023360139328532703,
+          "6": 0.010832105539993503,
+          "7": 0.009742907664696735,
+          "9": 0.0007040650191057772,
+          "10": 0.013385033603231301,
+          "12": 0.0013352272727272727,
+          "13": 0.013807527206095255,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 93,
+        "version": "1.55",
+        "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6069515482625484,
+          "2": 0.12437862069142314,
+          "3": 0.08461236056723796,
+          "4": 0.021910250832727535,
+          "5": 0.06478009860579327,
+          "6": 0.003007968744469222,
+          "7": 0.012697707742181177,
+          "9": 0.0025475172393078574,
+          "10": 0.017018676461611246,
+          "12": 0.009479223256109464,
+          "13": 0.010853982533670032,
+          "17": 0.007543467722192038,
+          "20": 0.03421857734072846
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 94,
+        "version": "1.55",
+        "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5395073895915696,
+          "2": 0.1468920592962884,
+          "3": 0.12193372055985637,
+          "4": 0.025811371774867937,
+          "5": 0.07875325851330076,
+          "6": 0.003420704960651782,
+          "7": 0.009802917824463653,
+          "9": 0.004570609608785768,
+          "10": 0.020065370088277378,
+          "12": 0.005840890402806853,
+          "13": 0.012152432146073134,
+          "17": 0.007971295103144418,
+          "20": 0.023277980129913896
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 95,
+        "version": "1.55",
+        "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5402707980150254,
+          "2": 0.13158970535647072,
+          "3": 0.08964618267781739,
+          "4": 0.04581708484844367,
+          "5": 0.08928388725195162,
+          "6": 0.004029555089850749,
+          "7": 0.01756873948821292,
+          "9": 0.0032199993961472546,
+          "10": 0.015500580267310231,
+          "12": 0.013089714327538037,
+          "13": 0.011335753367003366,
+          "17": 0.004846295103144419,
+          "20": 0.033801704811084195
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 96,
+        "version": "1.55",
+        "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.47546451094804515,
+          "2": 0.14374606727305803,
+          "3": 0.09842622506094238,
+          "4": 0.0658380697801894,
+          "5": 0.10105968436606878,
+          "6": 0.009598554888501708,
+          "7": 0.021669824516523294,
+          "9": 0.0046708922532901105,
+          "10": 0.026877254957562505,
+          "12": 0.0074163862188651,
+          "13": 0.021422842896580235,
+          "17": 0.00813979040095006,
+          "20": 0.015669896439423323
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 2
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 97,
+        "version": "1.55",
+        "board": "75e2f5b1ed2213098af63340cc00df9e9b3148a8bdf6bc61c9cef8feb4970114",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4846231990029431,
+          "2": 0.1232998069781964,
+          "3": 0.12858301239711223,
+          "4": 0.05845319192589293,
+          "5": 0.09135793115050539,
+          "6": 0.006456353569490925,
+          "7": 0.02059761742885427,
+          "9": 0.003149202908994633,
+          "10": 0.013465663945709127,
+          "12": 0.005152629233511586,
+          "13": 0.037737930741578746,
+          "17": 0.011758877383877386,
+          "20": 0.015364583333333334
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 2
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 98,
+        "version": "1.55",
+        "board": "6dc7d96dfc85b59f14927cf8cdc773f37e34ffdc0e22afabeebd1f6c703a3f83",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4360208017246585,
+          "2": 0.10578561498811476,
+          "3": 0.11421540567150226,
+          "4": 0.09594538043227278,
+          "5": 0.10225532347686327,
+          "6": 0.009843645326280499,
+          "7": 0.03494360385476378,
+          "9": 0.005825569926246086,
+          "10": 0.015367114242162947,
+          "12": 0.009507092626814935,
+          "13": 0.05316008510856586,
+          "17": 0.0034614635907739355,
+          "20": 0.013668899030980303
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 99,
+        "version": "1.55",
+        "board": "d5c6f77d55920ea382613bf810233b9f65cbc7fcb25b93576b1a0b54e0e429e3",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4359680403683615,
+          "2": 0.1836601478335789,
+          "3": 0.14574047729424242,
+          "4": 0.04416838191488388,
+          "5": 0.08468332439930752,
+          "6": 0.005134345857098536,
+          "7": 0.017117106569148083,
+          "9": 0.002066725586623445,
+          "10": 0.011989145247505124,
+          "12": 0.011948688387376213,
+          "13": 0.0230439006412593,
+          "17": 0.00940031640462675,
+          "20": 0.02507939949598844
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 100,
+        "version": "1.55",
+        "board": "cce5df71523b594c4979c2242d2075654837d78508adf19665ed1a2c40531fd7",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5058319597927484,
+          "2": 0.1263866363532159,
+          "3": 0.12361440661888246,
+          "4": 0.05288863915957406,
+          "5": 0.10109734080359771,
+          "6": 0.006721266758404591,
+          "7": 0.015627970217827747,
+          "9": 0.002242287384376254,
+          "10": 0.024033134244619118,
+          "12": 0.01117371759716422,
+          "13": 0.012568863996542178,
+          "17": 0.004825396461556122,
+          "20": 0.012988380611491294
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 3
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 101,
+        "version": "1.55",
+        "board": "9c3c5e33a245120e57f297761acad229adebbefc3dbdd9994e7ce68289d621e4",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5503830387612377,
+          "2": 0.12012644945214848,
+          "3": 0.1116972315777268,
+          "4": 0.03941634343064414,
+          "5": 0.06524248190261334,
+          "6": 0.004118909991051833,
+          "7": 0.01321190357306999,
+          "9": 0.004932183311300482,
+          "10": 0.018082895247505122,
+          "12": 0.005590386596268564,
+          "13": 0.04539561966357226,
+          "17": 0.002882009388858704,
+          "20": 0.018920547104002615
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 102,
+        "version": "1.55",
+        "board": "8075dfe9993e5daa0862a3ec5474864949ceb5b70fddabcf13d1e2fd1becfabf",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.3981656892214086,
+          "2": 0.17233330637475586,
+          "3": 0.09215245613850663,
+          "4": 0.04960683239597865,
+          "5": 0.12087671680493199,
+          "6": 0.00595784966349416,
+          "7": 0.029301844247964934,
+          "9": 0.0016528001480269534,
+          "10": 0.03013150635861623,
+          "12": 0.005074118666682937,
+          "13": 0.03936629143232528,
+          "17": 0.0205072146433743,
+          "20": 0.03487337390393343
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 103,
+        "version": "1.55",
+        "board": "0e95c0df50d367a85de23366248b273303f1e524505f28fe247d5537024a9bbe",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.3952158425557894,
+          "2": 0.16003512932688777,
+          "3": 0.1015549679537736,
+          "4": 0.05523826593561754,
+          "5": 0.12390418839718435,
+          "6": 0.014268332096167605,
+          "7": 0.025826612394924092,
+          "9": 0.003945449039025592,
+          "10": 0.03044984860794611,
+          "12": 0.006466781710161198,
+          "13": 0.04270454738077207,
+          "17": 0.01915169516285482,
+          "20": 0.021238339438895772
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 2,
+          "controlRaw": 3
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 104,
+        "version": "1.55",
+        "board": "2b98b55b6a326b80402c8a5525fe4468d84349b021d7a1c699482f79c0f7ad9c",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4696940600658969,
+          "2": 0.12045400710102781,
+          "3": 0.10663720643754748,
+          "4": 0.044177070361864704,
+          "5": 0.09513725180411489,
+          "6": 0.009692468078079748,
+          "7": 0.026447888147120673,
+          "9": 0.004878842006224992,
+          "10": 0.02723704838603326,
+          "12": 0.006379683506255129,
+          "13": 0.050836466492085855,
+          "17": 0.017798881310040968,
+          "20": 0.020629126303707574
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 3
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 105,
+        "version": "1.55",
+        "board": "1d009ba83032f1729b6722523211f46b54908674ab81fcf2e514038e1b4244ff",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4487924242458189,
+          "2": 0.15840776458321365,
+          "3": 0.10587519377357307,
+          "4": 0.04296048979609089,
+          "5": 0.12548932153466774,
+          "6": 0.0029693486590038317,
+          "7": 0.015946070120131987,
+          "9": 0.001293633217145533,
+          "10": 0.013330738107975217,
+          "12": 0.01592004255404288,
+          "13": 0.029275145598991945,
+          "17": 0.00510344140462675,
+          "20": 0.034636386404717674
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 106,
+        "version": "1.55",
+        "board": "ebeb210a7d3d535617aca9a3daa6c40041bedb65a43b1a75fe766a408a142d13",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.3871164871956555,
+          "2": 0.13976080063052937,
+          "3": 0.08879786700719494,
+          "4": 0.06152225765021681,
+          "5": 0.12236953450550579,
+          "6": 0.01770143008985075,
+          "7": 0.04144751574330725,
+          "9": 0.001710986592912753,
+          "10": 0.028976934791617337,
+          "12": 0.004512800389372012,
+          "13": 0.05557793548917283,
+          "17": 0.019324178929088585,
+          "20": 0.03118127098557609
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 3
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 107,
+        "version": "1.55",
+        "board": "967ff719207784bb402983e61f9caf68912a844bbe46baf0d033aaadd0388d0d",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.512868287558573,
+          "2": 0.11101556038547403,
+          "3": 0.13181530614385992,
+          "4": 0.028496795257613082,
+          "5": 0.09093165649168121,
+          "6": 0.007684667637743468,
+          "7": 0.023633437460478975,
+          "9": 0.0029040888338091116,
+          "10": 0.015070742469727344,
+          "12": 0.009558562816599957,
+          "13": 0.03258705858285474,
+          "17": 0.00904888131004097,
+          "20": 0.024384955051543995
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 108,
+        "version": "1.55",
+        "board": "9ce01b4a2c3845ea24d2f149b4290986bec974e250d3e831e829405d461edf7b",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4124376217017457,
+          "2": 0.1355475735158917,
+          "3": 0.13727626240244206,
+          "4": 0.02177970591065554,
+          "5": 0.1254415477247547,
+          "6": 0.015109515430741946,
+          "7": 0.018639022153563667,
+          "9": 0.002066725586623445,
+          "10": 0.025897762671747544,
+          "12": 0.011049067175255,
+          "13": 0.047280011752370406,
+          "17": 0.00677247549553584,
+          "20": 0.04070270847867242
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 109,
+        "version": "1.55",
+        "board": "df4be479a9ae3655e3edc4fbe389ae1961b112494a65e7950e98ba17d46506cd",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.46562234054668244,
+          "2": 0.09509710347622738,
+          "3": 0.1451326520295238,
+          "4": 0.041261034307648846,
+          "5": 0.1040066402541776,
+          "6": 0.01580357918919086,
+          "7": 0.0242594862712188,
+          "9": 0.0049397696791809685,
+          "10": 0.019746969020953895,
+          "12": 0.0060753003893720126,
+          "13": 0.054031932178360366,
+          "17": 0.007246933258092917,
+          "20": 0.01677625939937008
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 3
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 110,
+        "version": "1.55",
+        "board": "79e03ed202f8ac314e212d14cb7876493f245051dd543db7712396f1181dce29",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4476744220314036,
+          "2": 0.11744764644386657,
+          "3": 0.169089189881768,
+          "4": 0.06033527305335404,
+          "5": 0.09209965973664574,
+          "6": 0.010091555660627005,
+          "7": 0.017956327500798598,
+          "9": 0.002066725586623445,
+          "10": 0.008747858312540862,
+          "12": 0.010122622929845237,
+          "13": 0.04670847330451154,
+          "17": 0.001499883504193849,
+          "20": 0.016160362053821573
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 2,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 111,
+        "version": "1.55",
+        "board": "734de8ea4726b4395e633297684868883b4c0a00349812dbfa39212a3104d8c6",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.42120068230573693,
+          "2": 0.12006690803488027,
+          "3": 0.11690420750518912,
+          "4": 0.06084678867338443,
+          "5": 0.09979063871337714,
+          "6": 0.01597523961366027,
+          "7": 0.03920565109387218,
+          "9": 0.004337474688150848,
+          "10": 0.016931988862223742,
+          "12": 0.004512800389372012,
+          "13": 0.05742833274449966,
+          "17": 0.009218659448569108,
+          "20": 0.0335806279270842
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 112,
+        "version": "1.55",
+        "board": "6feaedf11b69c2d75c2fa7f0cc90d2a3ec2ac78f20997f7fcb5211f2cc44c28c",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.46022763878970013,
+          "2": 0.11750869187832538,
+          "3": 0.10056186047685566,
+          "4": 0.0767081885692064,
+          "5": 0.10271688677350414,
+          "6": 0.007668658554270225,
+          "7": 0.027731708493441025,
+          "9": 0.0020948817239988954,
+          "10": 0.022776537966220513,
+          "12": 0.004512800389372012,
+          "13": 0.054951049825419186,
+          "17": 0.004406024167183827,
+          "20": 0.0181350723925025
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 2,
+          "controlRaw": 2
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 113,
+        "version": "1.55",
+        "board": "a4afad79446ee57a8cd17f673f6f92c16ee6b5d4188e42794a0f734a0494e312",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.46241280225646514,
+          "2": 0.1052283548514594,
+          "3": 0.1423946287167253,
+          "4": 0.04090942540401127,
+          "5": 0.11142397863494675,
+          "6": 0.007684667637743468,
+          "7": 0.02828035304489456,
+          "9": 0.002066725586623445,
+          "10": 0.021320742469727344,
+          "12": 0.008138108271145411,
+          "13": 0.04196205858285474,
+          "17": 0.005923881310040971,
+          "20": 0.02225427323336218
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 114,
+        "version": "1.55",
+        "board": "ffa756e3f8d74e9575ef7beb14d36edce38118c0a5634aaa150e72aba6bdbebe",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4481414145435274,
+          "2": 0.12661518597526955,
+          "3": 0.0718262297290638,
+          "4": 0.03310066590283172,
+          "5": 0.14414462470218536,
+          "6": 0.0034078729590286093,
+          "7": 0.015930287291849157,
+          "9": 0.0012963744452157086,
+          "10": 0.028793230033039813,
+          "12": 0.026535334530835335,
+          "13": 0.03613133772862157,
+          "17": 0.009848732500517163,
+          "20": 0.05422870965801476
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 2
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 115,
+        "version": "1.55",
+        "board": "72a93edadec31d72ac45905618b70b4806785e3bf55e7865e2259f705ad11f4e",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4069660401951314,
+          "2": 0.13504696890803447,
+          "3": 0.0944572985196557,
+          "4": 0.027976926895858845,
+          "5": 0.12601416487382194,
+          "6": 0.007719389859965691,
+          "7": 0.040271920505212014,
+          "9": 0.0019193199262460864,
+          "10": 0.02526532219555707,
+          "12": 0.008733346366383506,
+          "13": 0.053106870674358014,
+          "17": 0.018312274167183826,
+          "20": 0.05421015691259144
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 3
+        }
+      },
+      {
+        "name": "Mrs. Doubtfire",
+        "lv": 116,
+        "version": "1.55",
+        "board": "a16edc4d92039a124f5971a7ed4e512abe55f0ea3450746faa07190be65b7927",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.3536367148794145,
+          "2": 0.13736505764372922,
+          "3": 0.09471229401282043,
+          "4": 0.024906539228829253,
+          "5": 0.1681712086805065,
+          "6": 0.012413300469179956,
+          "7": 0.03294935833057745,
+          "9": 0.001354560890101508,
+          "10": 0.028446007810817592,
+          "12": 0.027873234955616853,
+          "13": 0.03716534508156275,
+          "17": 0.014461827738612399,
+          "20": 0.06654455027823157
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 54,
+        "version": "1.55",
+        "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5494591237943289,
+          "2": 0.2876123395484992,
+          "3": 0.10039459385409563,
+          "4": 0.019742772535896836,
+          "5": 0.02864344919187928,
+          "6": 0.004630500120223798,
+          "7": 0.0021534010555216442,
+          "9": 0.003749553448819921,
+          "10": 0.0019657971490475755,
+          "12": 0.00016276041666666666,
+          "13": 0.0007912644405760406,
+          "17": 0.0,
+          "20": 0.0006944444444444445
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 55,
+        "version": "1.55",
+        "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.48495106656274384,
+          "2": 0.32512718283009123,
+          "3": 0.09441592077400607,
+          "4": 0.05458915249422367,
+          "5": 0.009982304712297161,
+          "6": 0.01967271340148379,
+          "7": 0.0027983025782321556,
+          "9": 0.002109936157195525,
+          "10": 0.0019888756828880514,
+          "12": 0.00033259737318840576,
+          "13": 0.0010651408450704225,
+          "17": 0.0011946694563882065,
+          "20": 0.00177213713219148
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 56,
+        "version": "1.55",
+        "board": "2040743fb27e1621f679dac916da5ad52833eb23cd3c299ec03c04f2fde0b608",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5055986496928067,
+          "2": 0.3145122640252423,
+          "3": 0.10117897645830869,
+          "4": 0.024659093809070873,
+          "5": 0.02555133787010473,
+          "6": 0.0006982356509370816,
+          "7": 0.007536986714975845,
+          "9": 0.0014060380517850945,
+          "10": 0.006576313885561652,
+          "12": 0.004982159767316017,
+          "13": 0.0,
+          "17": 0.004678622159090909,
+          "20": 0.0026213219148001755
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 57,
+        "version": "1.55",
+        "board": "14ec2debe925513ec377e5e1eda3c8eb45f4a2a1813d323abc5920410887f090",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5503367567844404,
+          "2": 0.22482225973560482,
+          "3": 0.12668997791510211,
+          "4": 0.038482192433116784,
+          "5": 0.02262836276056954,
+          "6": 0.0018542075921993493,
+          "7": 0.007677833414193133,
+          "9": 0.00231561900067662,
+          "10": 0.007526380137937686,
+          "12": 0.0024997634690788165,
+          "13": 0.001264749289060889,
+          "17": 0.011182790638858704,
+          "20": 0.002719106829161177
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 58,
+        "version": "1.55",
+        "board": "97efa877d0b07620cad96fe453fe564a728aa77ddb84f612972ed010f2b1b620",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6174847947351149,
+          "2": 0.20128782664735373,
+          "3": 0.11650735234511593,
+          "4": 0.027342229156412327,
+          "5": 0.012528187532888419,
+          "6": 0.002817749258866016,
+          "7": 0.006049824873820463,
+          "9": 0.003309086356172277,
+          "10": 0.003775140058572608,
+          "12": 0.001104674183364531,
+          "13": 0.0031918326223942224,
+          "17": 0.001882195400763466,
+          "20": 0.002719106829161177
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 59,
+        "version": "1.55",
+        "board": "4dcdf9289212568fd3cd578ea5d47831092fb768b4ff47542c72e7b357132248",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5715280955397233,
+          "2": 0.24959663856794675,
+          "3": 0.11194087905815472,
+          "4": 0.022880643033088614,
+          "5": 0.013595238306383784,
+          "6": 0.0086103990245956,
+          "7": 0.009577112862814686,
+          "9": 0.0017426621033705767,
+          "10": 0.0042369536276588736,
+          "12": 0.0009348372268427918,
+          "13": 0.001264749289060889,
+          "17": 0.001882195400763466,
+          "20": 0.0022095959595959595
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 60,
+        "version": "1.55",
+        "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5966669298183521,
+          "2": 0.2237368779787569,
+          "3": 0.09955452784090423,
+          "4": 0.02706018831073302,
+          "5": 0.019032223516748846,
+          "6": 0.001296171877913635,
+          "7": 0.0034131968410888187,
+          "9": 0.002563634873692493,
+          "10": 0.008067505679063228,
+          "12": 0.005312034363506969,
+          "13": 0.0007912644405760406,
+          "17": 0.009221210552278617,
+          "20": 0.0032842339063850283
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 61,
+        "version": "1.55",
+        "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.577831354610086,
+          "2": 0.2331990016012016,
+          "3": 0.09710879308120418,
+          "4": 0.055078850662213324,
+          "5": 0.022201145358576372,
+          "6": 0.002278329017715231,
+          "7": 0.0012337916387212162,
+          "9": 0.0034201380180127207,
+          "10": 0.005010696328815177,
+          "12": 0.00016276041666666666,
+          "13": 0.00044014084507042255,
+          "17": 0.0007723721590909091,
+          "20": 0.0012626262626262625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 62,
+        "version": "1.55",
+        "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.42470188974071255,
+          "2": 0.27319121300535815,
+          "3": 0.07389054419267443,
+          "4": 0.026408856235122805,
+          "5": 0.062373705371269024,
+          "6": 0.008865926039956212,
+          "7": 0.04980962450570574,
+          "9": 0.001926404411163779,
+          "10": 0.017971807681445053,
+          "12": 0.013622773806549106,
+          "13": 0.001392602495543672,
+          "17": 0.027077380495349242,
+          "20": 0.018767272019150214
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 63,
+        "version": "1.55",
+        "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5741782273624864,
+          "2": 0.2535805013891707,
+          "3": 0.10008609885260056,
+          "4": 0.029396829425124,
+          "5": 0.013714388846400399,
+          "6": 0.002668468179223744,
+          "7": 0.0035184531651922956,
+          "9": 0.0020430797044695068,
+          "10": 0.006497976999054585,
+          "12": 0.0003768015125570776,
+          "13": 0.0004734848484848485,
+          "17": 0.009897398103466168,
+          "20": 0.0035682916117698725
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 64,
+        "version": "1.55",
+        "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6173377015770031,
+          "2": 0.19131606707409457,
+          "3": 0.11229797733627599,
+          "4": 0.02396648864234961,
+          "5": 0.009499062393699059,
+          "6": 0.0018542075921993493,
+          "7": 0.010505214366574086,
+          "9": 0.003973979973193554,
+          "10": 0.00509107534226055,
+          "12": 0.001104674183364531,
+          "13": 0.001264749289060889,
+          "17": 0.019069695400763465,
+          "20": 0.002719106829161177
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 65,
+        "version": "1.55",
+        "board": "e9413bac05ebb393ab989d27542153a30200c748c0a05d52be7dd0267727649a",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.652151596422234,
+          "2": 0.16273410943291403,
+          "3": 0.10882786120762179,
+          "4": 0.030873328207363254,
+          "5": 0.02004813143497488,
+          "6": 0.013378686797752809,
+          "7": 0.002383379410499999,
+          "9": 0.0016431368438372229,
+          "10": 0.0022294571734695423,
+          "12": 0.0007278726708074534,
+          "13": 0.001889749289060889,
+          "17": 0.0009617660984848485,
+          "20": 0.002150925010979359
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 66,
+        "version": "1.55",
+        "board": "e60dad526eb6b66a292f0441cfb36a7029aa3d28419b0864fea5838a87df36fd",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6017260397426512,
+          "2": 0.21963907685178416,
+          "3": 0.0943872562182187,
+          "4": 0.040353456628111524,
+          "5": 0.012916260227384431,
+          "6": 0.0022840538589463007,
+          "7": 0.0035091558080155272,
+          "9": 0.003309086356172277,
+          "10": 0.00850080380972978,
+          "12": 0.00033259737318840576,
+          "13": 0.001264749289060889,
+          "17": 0.009058357007575757,
+          "20": 0.002719106829161177
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 67,
+        "version": "1.55",
+        "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5334242757589435,
+          "2": 0.2664264848362456,
+          "3": 0.11481264666000025,
+          "4": 0.014920163126602078,
+          "5": 0.02985701433926378,
+          "6": 0.0033093367071730987,
+          "7": 0.010637554852175442,
+          "9": 0.002637143631003309,
+          "10": 0.006604729949235738,
+          "12": 0.00089063308747412,
+          "13": 0.0007912644405760406,
+          "17": 0.014484797297297299,
+          "20": 0.0012039553140096618
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 68,
+        "version": "1.55",
+        "board": "037cdceb767780b89ba0f36effc40e7d4c11ef37cf4645bf616e36a041158d8a",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5873504609104252,
+          "2": 0.2572192169264045,
+          "3": 0.08945573338551255,
+          "4": 0.023915831282312377,
+          "5": 0.008883384318150883,
+          "6": 0.012507549924083067,
+          "7": 0.0063802413888226234,
+          "9": 0.00369214927060644,
+          "10": 0.003516414409221959,
+          "12": 0.0014680462763877868,
+          "13": 0.0,
+          "17": 0.0024801391237071887,
+          "20": 0.003130832784365393
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 69,
+        "version": "1.55",
+        "board": "ca9d38515e25c9d90f2d37cabcacea5b842dd6529a931b3422fe804a634295cb",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4293203821107664,
+          "2": 0.2734807965416124,
+          "3": 0.07557465604055645,
+          "4": 0.0317922924907504,
+          "5": 0.06833300759518353,
+          "6": 0.010352388371870452,
+          "7": 0.030309936525675017,
+          "9": 0.001745711964828573,
+          "10": 0.012031289141769107,
+          "12": 0.01682010467019396,
+          "13": 0.001392602495543672,
+          "17": 0.02856746325790632,
+          "20": 0.02027936879334376
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 3,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 70,
+        "version": "1.55",
+        "board": "6f67ecbeae1fcf29ccf970ae1a14300b74bae42ccfd515395b4268703391dc07",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5991121302158076,
+          "2": 0.25329046859980114,
+          "3": 0.07836932860583208,
+          "4": 0.0251374184202992,
+          "5": 0.007954357336592527,
+          "6": 0.012683111721835876,
+          "7": 0.0033555931544528737,
+          "9": 0.004852096014595938,
+          "10": 0.002672185355435782,
+          "12": 0.0012982093198660477,
+          "13": 0.0007912644405760406,
+          "17": 0.009221210552278617,
+          "20": 0.0012626262626262625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 71,
+        "version": "1.55",
+        "board": "9918709e81dbdd4f2cf85d674301e268c7f7431e7ed76ca2d1979cd3e590775f",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.657069567547406,
+          "2": 0.20314727901712906,
+          "3": 0.06905256578366026,
+          "4": 0.028773528521538052,
+          "5": 0.02310247522276645,
+          "6": 0.007104232068112633,
+          "7": 0.0011985472778189604,
+          "9": 0.0014278925064018743,
+          "10": 0.0010705466395590083,
+          "12": 0.001104674183364531,
+          "13": 0.0010651408450704225,
+          "17": 0.00411141325498132,
+          "20": 0.00177213713219148
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 72,
+        "version": "1.55",
+        "board": "372cdc6a0aff68bd2b6be1d29ef6f6ac39a63711bf9efd00672fd4e72ee91863",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5955438490627762,
+          "2": 0.25397562125848344,
+          "3": 0.07842171773000842,
+          "4": 0.029941898510505084,
+          "5": 0.016376484850224866,
+          "6": 0.0030124627976190477,
+          "7": 0.00798738424596548,
+          "9": 0.0024681553096363757,
+          "10": 0.002794927270189639,
+          "12": 0.005151996723837756,
+          "13": 0.0,
+          "17": 0.0011946694563882065,
+          "20": 0.003130832784365393
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 73,
+        "version": "1.55",
+        "board": "3da6e19549140c14a7fb8368a91647312731eaa4199845ed1badf14b3f1aadb2",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6213916314972578,
+          "2": 0.18990832249485404,
+          "3": 0.08773864382454287,
+          "4": 0.06853124197474196,
+          "5": 0.010478130818448892,
+          "6": 0.0072924850801608255,
+          "7": 0.003474709504639082,
+          "9": 0.0017149815977569424,
+          "10": 0.004314907368398556,
+          "12": 0.0003768015125570776,
+          "13": 0.001538625693555271,
+          "17": 0.0015981044916725568,
+          "20": 0.0016414141414141416
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 74,
+        "version": "1.55",
+        "board": "ce6a4fe2c655982a8468b537cc7201a1f14e251213071ab22b6ac620a9602d92",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.6092829776406827,
+          "2": 0.21026799708662558,
+          "3": 0.10949261371412666,
+          "4": 0.028121084251687238,
+          "5": 0.00595175046710628,
+          "6": 0.0038638572758714447,
+          "7": 0.0033555931544528737,
+          "9": 0.004080018708550271,
+          "10": 0.00817048618285895,
+          "12": 0.0003768015125570776,
+          "13": 0.007041264440576041,
+          "17": 0.008732929302278617,
+          "20": 0.0012626262626262625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 75,
+        "version": "1.55",
+        "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5384092763713035,
+          "2": 0.2339538199139175,
+          "3": 0.1355911646900587,
+          "4": 0.03480908579376395,
+          "5": 0.029713021811227997,
+          "6": 0.002219813031889462,
+          "7": 0.005845306441523547,
+          "9": 0.0026385691076857157,
+          "10": 0.0032791083125408623,
+          "12": 0.00089063308747412,
+          "13": 0.0033196858288770054,
+          "17": 0.004793154304873055,
+          "20": 0.004537361304864501
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 76,
+        "version": "1.55",
+        "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5712212891289817,
+          "2": 0.22615546871293052,
+          "3": 0.1186374396231914,
+          "4": 0.04397171892356335,
+          "5": 0.008532064055934221,
+          "6": 0.0019753109348616808,
+          "7": 0.004253263679932388,
+          "9": 0.003280930218796827,
+          "10": 0.008792892773693745,
+          "12": 0.0005466384690788167,
+          "13": 0.0009136256935552711,
+          "17": 0.009694695400763466,
+          "20": 0.0020246623847167324
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "PUK",
+        "lv": 77,
+        "version": "1.55",
+        "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5745885612417618,
+          "2": 0.23936310766496988,
+          "3": 0.10890987794673644,
+          "4": 0.030971092014064724,
+          "5": 0.017426707254236187,
+          "6": 0.0018537648754216034,
+          "7": 0.005289377315148704,
+          "9": 0.001637302135033201,
+          "10": 0.004275131094143463,
+          "12": 0.0029486410344523027,
+          "13": 0.0004734848484848485,
+          "17": 0.008031748972192037,
+          "20": 0.004231203603354725
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 8,
+          "controlRaw": 3
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 63,
+        "version": "1.55",
+        "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5349778128418491,
+          "2": 0.1271375142742294,
+          "3": 0.13728204641548875,
+          "4": 0.06387518065554806,
+          "5": 0.06002545815051789,
+          "6": 0.009946003254627344,
+          "7": 0.015421463742188984,
+          "9": 0.0029356022174294514,
+          "10": 0.02812330898268398,
+          "12": 0.0,
+          "13": 0.014948904919982508,
+          "17": 0.0004734848484848485,
+          "20": 0.004853219696969697
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 64,
+        "version": "1.55",
+        "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5875617047988789,
+          "2": 0.15079015828306164,
+          "3": 0.10952448099758676,
+          "4": 0.04266907038347442,
+          "5": 0.048526125029835325,
+          "6": 0.002805310143298808,
+          "7": 0.006628415224546399,
+          "9": 0.006064928542651702,
+          "10": 0.021886703067077098,
+          "12": 0.0005466384690788167,
+          "13": 0.00908343506182648,
+          "17": 0.008550299432148746,
+          "20": 0.005362730566534914
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 65,
+        "version": "1.55",
+        "board": "e9413bac05ebb393ab989d27542153a30200c748c0a05d52be7dd0267727649a",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4834399225029668,
+          "2": 0.17045076788925215,
+          "3": 0.16965344666290177,
+          "4": 0.05595951751883626,
+          "5": 0.06610122069180212,
+          "6": 0.006724038012707282,
+          "7": 0.005153606599331839,
+          "9": 0.002932476105096776,
+          "10": 0.023429153868438173,
+          "12": 0.0,
+          "13": 0.008597002746069464,
+          "17": 0.0027056277056277055,
+          "20": 0.004853219696969697
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 66,
+        "version": "1.55",
+        "board": "e60dad526eb6b66a292f0441cfb36a7029aa3d28419b0864fea5838a87df36fd",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.48128585166727683,
+          "2": 0.1813967310593758,
+          "3": 0.1266217080920807,
+          "4": 0.04549176771859565,
+          "5": 0.05705874011784177,
+          "6": 0.007303465096040616,
+          "7": 0.013472058980284219,
+          "9": 0.007183773214849768,
+          "10": 0.05272146015498789,
+          "12": 0.00016276041666666666,
+          "13": 0.011930336079402797,
+          "17": 0.010518127705627706,
+          "20": 0.004853219696969697
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 67,
+        "version": "1.55",
+        "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5666634118678674,
+          "2": 0.15280659478538147,
+          "3": 0.14162549940101254,
+          "4": 0.040304711799777716,
+          "5": 0.06308315748700011,
+          "6": 0.0036122661985529543,
+          "7": 0.001692197070381489,
+          "9": 0.001355416361529539,
+          "10": 0.0175943515704154,
+          "12": 0.0,
+          "13": 0.009030250600938532,
+          "17": 0.002232142857142857,
+          "20": 0.0
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 68,
+        "version": "1.55",
+        "board": "037cdceb767780b89ba0f36effc40e7d4c11ef37cf4645bf616e36a041158d8a",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5087273724300004,
+          "2": 0.2563784485712196,
+          "3": 0.10685580781051911,
+          "4": 0.02959048405778427,
+          "5": 0.0360931470666047,
+          "6": 0.009912127152399098,
+          "7": 0.007098785041133321,
+          "9": 0.007603400821430531,
+          "10": 0.010681698519319903,
+          "12": 0.0005466384690788167,
+          "13": 0.015771408546674966,
+          "17": 0.0057567388260881406,
+          "20": 0.004983942687747035
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 69,
+        "version": "1.55",
+        "board": "ca9d38515e25c9d90f2d37cabcacea5b842dd6529a931b3422fe804a634295cb",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.454694094508418,
+          "2": 0.21285897505248186,
+          "3": 0.09323314071467033,
+          "4": 0.02897782873638697,
+          "5": 0.0643638294382082,
+          "6": 0.02008411220436954,
+          "7": 0.03355429288610591,
+          "9": 0.005862553583977992,
+          "10": 0.014777392941005479,
+          "12": 0.012837008372720572,
+          "13": 0.00919327400382294,
+          "17": 0.026620495893374303,
+          "20": 0.022943001664457934
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 70,
+        "version": "1.55",
+        "board": "6f67ecbeae1fcf29ccf970ae1a14300b74bae42ccfd515395b4268703391dc07",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4691260063251812,
+          "2": 0.2087284864880978,
+          "3": 0.1263582057006995,
+          "4": 0.053758017235398775,
+          "5": 0.04998954313217376,
+          "6": 0.009283467780048306,
+          "7": 0.008264733061522131,
+          "9": 0.010173117161671122,
+          "10": 0.03336565296138963,
+          "12": 0.00016276041666666666,
+          "13": 0.01423495021334163,
+          "17": 0.012648809523809524,
+          "20": 0.00390625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 71,
+        "version": "1.55",
+        "board": "9918709e81dbdd4f2cf85d674301e268c7f7431e7ed76ca2d1979cd3e590775f",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5000677641524727,
+          "2": 0.1672687715058538,
+          "3": 0.13506865553913758,
+          "4": 0.05614542682089267,
+          "5": 0.08299272342916356,
+          "6": 0.007271548023465112,
+          "7": 0.00355717365611382,
+          "9": 0.00180994461037427,
+          "10": 0.02698129764664578,
+          "12": 0.0,
+          "13": 0.012698301758737785,
+          "17": 0.002232142857142857,
+          "20": 0.00390625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 72,
+        "version": "1.55",
+        "board": "372cdc6a0aff68bd2b6be1d29ef6f6ac39a63711bf9efd00672fd4e72ee91863",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.48460599473221405,
+          "2": 0.21974271255111577,
+          "3": 0.17444201961044725,
+          "4": 0.027434951616245914,
+          "5": 0.0448167134928093,
+          "6": 0.005637148010862092,
+          "7": 0.009649872045345325,
+          "9": 0.003080839906888839,
+          "10": 0.010786399519655066,
+          "12": 0.004261363636363636,
+          "13": 0.006799425354243402,
+          "17": 0.004836309523809524,
+          "20": 0.00390625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 73,
+        "version": "1.55",
+        "board": "3da6e19549140c14a7fb8368a91647312731eaa4199845ed1badf14b3f1aadb2",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5452370230460057,
+          "2": 0.1609505802475736,
+          "3": 0.09542147888406803,
+          "4": 0.10878325389087148,
+          "5": 0.0405605910809881,
+          "6": 0.00586583351228185,
+          "7": 0.0053598510344490926,
+          "9": 0.005499447724219489,
+          "10": 0.00911339024245184,
+          "12": 0.0008729876893939394,
+          "13": 0.011750251281135679,
+          "17": 0.005732091669591669,
+          "20": 0.004853219696969697
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 74,
+        "version": "1.55",
+        "board": "ce6a4fe2c655982a8468b537cc7201a1f14e251213071ab22b6ac620a9602d92",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5087860611891901,
+          "2": 0.21591681390981152,
+          "3": 0.10974866916993603,
+          "4": 0.04753317661204585,
+          "5": 0.03193789994349289,
+          "6": 0.006158467780048306,
+          "7": 0.006811244689429108,
+          "9": 0.009756239417665718,
+          "10": 0.03316917114090515,
+          "12": 0.0008729876893939394,
+          "13": 0.012754208934271864,
+          "17": 0.012648809523809524,
+          "20": 0.00390625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 75,
+        "version": "1.55",
+        "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.45568194560049985,
+          "2": 0.2558040386365723,
+          "3": 0.12285119997677227,
+          "4": 0.04440478372601214,
+          "5": 0.0579990335179956,
+          "6": 0.001759575796579553,
+          "7": 0.014234247710815155,
+          "9": 0.004359589315548029,
+          "10": 0.014822726596711473,
+          "12": 0.004632212987459193,
+          "13": 0.0071360952113950485,
+          "17": 0.006242764321293417,
+          "20": 0.010071786602346134
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 76,
+        "version": "1.55",
+        "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4925148021693454,
+          "2": 0.2508763773720555,
+          "3": 0.0926151130752018,
+          "4": 0.06402502638556024,
+          "5": 0.03170435337654459,
+          "6": 0.011215535065318779,
+          "7": 0.013387986704530185,
+          "9": 0.006993579575073038,
+          "10": 0.011084052291596442,
+          "12": 0.0008729876893939394,
+          "13": 0.013499874928818878,
+          "17": 0.00635709166959167,
+          "20": 0.004853219696969697
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 77,
+        "version": "1.55",
+        "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5179891720038065,
+          "2": 0.2563517632584478,
+          "3": 0.09137768795505553,
+          "4": 0.03351659700580877,
+          "5": 0.03320845581352081,
+          "6": 0.0018635041370083712,
+          "7": 0.01107535861896327,
+          "9": 0.005946890902849616,
+          "10": 0.014016675009409887,
+          "12": 0.0020666664062579166,
+          "13": 0.0069440988127398,
+          "17": 0.016569695400763463,
+          "20": 0.009073434675368447
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 78,
+        "version": "1.55",
+        "board": "b8515e26acc7b671fdfefea9f4e3a3a75975ba73b8b297a2a24f59af022f2cee",
+        "priorCounter": 0,
+        "predictedAttempt": 2,
+        "predictedDisplayedAttempt": 2,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.38054217875917073,
+          "2": 0.3840645076019007,
+          "3": 0.10748881928571828,
+          "4": 0.03185255471306472,
+          "5": 0.048987209927404816,
+          "6": 0.006806416779148621,
+          "7": 0.006811244689429108,
+          "9": 0.003745854294836757,
+          "10": 0.01350664866624023,
+          "12": 0.0034771543560606056,
+          "13": 0.006206994260358821,
+          "17": 0.0026041666666666665,
+          "20": 0.00390625
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 79,
+        "version": "1.55",
+        "board": "b034c4d69055af5729b6ec99160de9d4fd58df051610bcc81d6276ef3ce273f5",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5351725959790121,
+          "2": 0.2159260347637531,
+          "3": 0.11136651991496846,
+          "4": 0.04475633373566599,
+          "5": 0.03863773732628789,
+          "6": 0.005615888295712111,
+          "7": 0.0073817602007707865,
+          "9": 0.008403585681990169,
+          "10": 0.009306901441397822,
+          "12": 0.0012568657418060897,
+          "13": 0.00790154562125044,
+          "17": 0.008343318912668228,
+          "20": 0.005930912384716732
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 80,
+        "version": "1.55",
+        "board": "cb0dd1bdca577d926a5f3396ed049b76860561ad5e768ef47bf88f6cd7e7b096",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.48924975355112976,
+          "2": 0.1822846126593993,
+          "3": 0.05563400525514734,
+          "4": 0.008391175333163251,
+          "5": 0.09539685796093607,
+          "6": 0.011817831412889302,
+          "7": 0.02699349287711357,
+          "9": 0.002375886398474714,
+          "10": 0.01671936639667618,
+          "12": 0.04154536075429493,
+          "13": 0.0047343949553001275,
+          "17": 0.046205468212721625,
+          "20": 0.018651794232753753
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 11,
+          "controlRaw": 8
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 81,
+        "version": "1.55",
+        "board": "5f8079b8f1cf82ee69cb46c8e3bcd47ba01b3b2c34ba089d3fba9aa2e882fa18",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5211527571072496,
+          "2": 0.1480280891485008,
+          "3": 0.1436257832639597,
+          "4": 0.048195148548932046,
+          "5": 0.06132703506655266,
+          "6": 0.008703506020048329,
+          "7": 0.004742005788794858,
+          "9": 0.004209898769238191,
+          "10": 0.032953970806818944,
+          "12": 0.0007102272727272727,
+          "13": 0.0183044495545801,
+          "17": 0.0031939089556277055,
+          "20": 0.004853219696969697
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 1,
+          "controlRaw": 1
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 82,
+        "version": "1.55",
+        "board": "27e3edfd73fd1c47c21d088c9ea561be0228a839bdf0e861cf7e60a7795955fa",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.5045198726487701,
+          "2": 0.22605867614461217,
+          "3": 0.08102821116189433,
+          "4": 0.03860280868233856,
+          "5": 0.0535674240237981,
+          "6": 0.0007401736055803334,
+          "7": 0.015422875993996684,
+          "9": 0.003672010540351144,
+          "10": 0.010624939989749772,
+          "12": 0.01126431367637286,
+          "13": 0.007103559950843799,
+          "17": 0.03762496017908858,
+          "20": 0.00977017340260351
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 8,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 83,
+        "version": "1.55",
+        "board": "7b4cb74eecba9fb19068310c584d693e2748c94d77abef020ae44d3e5004d829",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.4889312803763684,
+          "2": 0.21008244663508577,
+          "3": 0.09935171589724696,
+          "4": 0.04580431406505693,
+          "5": 0.06176425552896377,
+          "6": 0.0003768015125570776,
+          "7": 0.014470495041615733,
+          "9": 0.003140068374641546,
+          "10": 0.01386675172319142,
+          "12": 0.0051717749166829375,
+          "13": 0.007103559950843799,
+          "17": 0.03554162684575525,
+          "20": 0.014394909131990404
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 8,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 84,
+        "version": "1.55",
+        "board": "4490d717ab07e3cf189225167d76e7c4dd812b15861c3192093f019cb705beaa",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.3362453633411895,
+          "2": 0.23841139874242273,
+          "3": 0.05056172128467075,
+          "4": 0.010219926247045928,
+          "5": 0.1249813097202883,
+          "6": 0.0003768015125570776,
+          "7": 0.048805812501933186,
+          "9": 0.0030552342245616705,
+          "10": 0.0369371694269792,
+          "12": 0.009149047643955664,
+          "13": 0.017006201563044235,
+          "17": 0.08373731136956476,
+          "20": 0.040512702421786936
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 10,
+          "controlRaw": 6
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 85,
+        "version": "1.55",
+        "board": "5990d9f6b6669d64f31896b097b680b37cd8cee585e50cedb476d989ca9f12b2",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.3928855490101171,
+          "2": 0.2409501782943382,
+          "3": 0.06862976215392691,
+          "4": 0.0331685051326219,
+          "5": 0.11878560512322864,
+          "6": 0.011667442950818428,
+          "7": 0.024890881946377636,
+          "9": 0.002789811837071205,
+          "10": 0.024311640885752994,
+          "12": 0.016092223825413095,
+          "13": 0.00812888674822942,
+          "17": 0.028175555417183827,
+          "20": 0.029523956674920613
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 5,
+          "controlRaw": 5
+        }
+      },
+      {
+        "name": "Gerda",
+        "lv": 86,
+        "version": "1.55",
+        "board": "d17c137dec323400b97054451fefe2104832edd9c38b180610ebdd18e1a8a336",
+        "priorCounter": 0,
+        "predictedAttempt": 1,
+        "predictedDisplayedAttempt": 1,
+        "selectedModel": "honestContextForest-v1",
+        "distribution": {
+          "1": 0.49097882587458264,
+          "2": 0.17195548880668834,
+          "3": 0.06368529648605126,
+          "4": 0.017822144527486365,
+          "5": 0.11623270956598764,
+          "6": 0.005041698903199381,
+          "7": 0.028860375993996684,
+          "9": 0.0017749248600131752,
+          "10": 0.009285654275464059,
+          "12": 0.015956463973991905,
+          "13": 0.011715196272038944,
+          "17": 0.042339006855451444,
+          "20": 0.024352213605048124
+        },
+        "alternatives": {
+          "alwaysFirst": 1,
+          "contextRaw": 9,
+          "controlRaw": 8
+        }
+      }
+    ]
+  }
+]

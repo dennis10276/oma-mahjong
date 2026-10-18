@@ -1,0 +1,154 @@
+PASS clock annotations preserve semantic actions and availability without changing version identities
+PASS personal bots: clock annotations preserve exact prefix choices and availability
+PASS fresh numeric freezing excludes opened/resumed/replayed targets and never counts daily starts or duplicate coverage
+PASS personal bots: fresh numeric forecasts exclude existing openings and duplicate future coverage
+PASS board transport retains locks, keys, ice, down flags and exact simulation while rejecting lossy JSON shapes
+PASS personal bots: exact board transport preserves locks and typed orientation flags
+PASS level150 bee deferral preserves all209 real-physics taps and final state while avoiding third-slot pressure in the late window
+PASS personal bots: delaying the level150 bee preserves exact physics without future-picture choice or extra taps
+PASS public recovery graph retains inspection detours, verifies witnesses and refuses unknown/bounded uniqueness claims
+PASS personal bots: recovery graphs distinguish constructive escapes from unknown or bounded uniqueness claims
+PASS clock crowding diagnosis uses public pair support, not unseen pictures or future observed results
+PASS personal bots: crowding diagnostics distinguish public clock/pair support from hidden outcomes
+PASS clock strategy distinguishes pair-first within budget, two-slot exits, ready tray matches and unresolved public probes
+PASS personal bots: clock strategy models pairing before the clock and known tray escape within the real budget
+PASS clock digging distinguishes initial public probes, learned validity evidence and later pressure without hidden pictures
+PASS personal bots: clock digging distinguishes public probing and changing tray pressure without forced priorities
+PASS public clock routes distinguish known support, unknown pictures, physical trap and bounded uncertainty
+PASS personal bots: public clock route support is bounded, physical and never a forced greedy preference
+PASS clock exit distinguishes controller decisions, actual taps and censored human observations
+PASS personal bots: clock exit diagnosis separates generic controller decisions and censored human openings
+PASS importing worker helpers cannot run unrelated simulations or post task rows
+PASS personal bots: imported worker helpers cannot execute a different task or post unrelated rows
+PASS optimized planning preserves all features, node counts and boundaries across randomized public states, ice/locks, peeks and Joker finale
+PASS bitset planning preserves unsigned lanes beyond 32/64/96 tiles
+PASS personal bots: bitset planning preserves geometry, unsigned tile lanes and exact bounded-search behavior
+PASS optimized planning preserves all features, node counts and boundaries across randomized public states, ice/locks, peeks and Joker finale
+PASS personal bots: optimized known-only search preserves exact physical planning features and budgets
+PASS bounded planning cache keys only public state and candidate order, isolates boards/knowledge and never shares mutable feature arrays
+PASS personal bots: public planning cache preserves exact features across isolated boards, knowledge and candidate masks
+PASS known-plan instrumentation visits only validated retained choices and preserves historical physics boundaries
+PASS personal bots: known-plan instrumentation excludes discarded suffixes without dropping retained boundary prefixes
+PASS personal known-plan coefficients can prefer, ignore or reject route progress without enforcing greed
+PASS personal bots: own-person known-plan preferences can oppose route progress without forced greed
+PASS known-only tray planning respects physical flips, atomic pairs, clock, relief, bounded uncertainty and original state
+PASS personal bots: known-only tray plans preserve physical mechanics and distinguish bounded uncertainty from traps
+PASS known-only runtime masks unknown pictures and orientation, freezes public inputs and preserves original seeded/followed behavior
+PASS personal bots: tray planning receives frozen public knowledge without covered picture or orientation leaks
+PASS terminal retry memory records exposed face-up pictures without peeking at unseen or covered tiles
+PASS personal bots: terminal retry memory retains actual face-up exposure without inspecting unknown pictures
+PASS terminal observation audit excludes covered, down, already seen and removed pictures
+PASS personal bots: terminal observation audit excludes unseen pictures and removed tiles
+PASS failure stage observes prior real taps only, never the final reveal
+PASS personal bots: failure stage uses observations before the final tap rather than its reveal
+PASS episode runtime: once-per-attempt seeded components, natural-failure transitions, run resets, untouched controls/follow, metadata isolation and hidden-picture invariance
+PASS personal bots: episode components initialize once per attempt without leaking states or reusing unrelated runs
+PASS contextual runtime: hierarchical type normalization, physical flip selection, hidden-picture invariance, exact followed controls and strict validation
+PASS personal bots: contextual runtime sees only physical known features and preserves followed controls
+PASS restart state audit keeps unsupported observations and empty players explicit, never counts them as wins
+PASS personal bots: restart diagnostics retain unsupported states and do not invent empty-player accuracy
+PASS value features: actual-tap consequences, unchanged controls, hidden-picture invariance and pre-action opening capture
+PASS personal bots: route-value features use actual taps without revealing unknown future pictures
+PASS tray-goal observations: persistent ages, dropout, safe preparation, frozen knowledge, censoring and hidden-picture invariance
+PASS personal bots: persistent tray-target observations preserve clock priority and actual knowledge
+PASS late-memory audit distinguishes observed event time from later telemetry availability
+PASS personal bots: earlier confirmed endings can establish observed memory without hiding late telemetry availability
+PASS memory reconstruction audit preserves physical outcomes and rejects future sources
+PASS personal bots: memory-feature audits retain actual choices and reject future observation dependencies
+PASS retry-memory reconstruction: observed earlier sources, strict availability, exact board/campaign and unchanged real taps
+PASS personal bots: retry training inherits only earlier available observations on the exact campaign board
+PASS retry knowledge audit distinguishes available observed pictures from claimed human memory
+PASS personal bots: retry memory diagnostics separate earlier observed pictures from assumed human recall
+PASS fixed-board versions: verified aliases, early tables and refusal to assume future compatibility
+PASS personal bots: verified board-equivalent releases retain new-level coverage without guessing future versions
+PASS pair follow-through samples: actual known setup, consecutive completion, censoring, clock and legal frozen knowledge
+PASS personal bots: pair-plan follow-through is measured from consecutive observed legal actions
+PASS relational features: known free twins, frozen hidden pictures, locks/ice, actual separate taps and default compatibility
+PASS personal bots: learned pair-preparation observations distinguish free known twins without forcing greed
+PASS personal follow-through: empirical cues, per-context matching/nonmatching choices, no global greed and honest physical transitions
+PASS personal bots: personal follow-through models only observed known-match cues, not global greed
+PASS single-step scoring: actual tray/goal credit, mandatory physical twins and unchanged followed actions
+PASS personal bots: single-step features remove unexecuted followups without removing real automatic twins
+PASS scoring audit identifies anticipated followup credit without mislabeling the actual physical tap
+PASS personal bots: physical scoring audit distinguishes actual taps from heuristic followup credit
+PASS retry diagnostics distinguish route changes, actual state revisits and repeated terminal actions
+PASS personal bots: retry diagnostics separate repeated openings from repeated terminal decisions
+PASS physical key planning: separate legal taps, unseen-key inspection, urgent clock priority and hidden-picture invariance
+PASS personal bots: physical key routes respect actual taps, inspection and clock priority
+PASS joint personal choice: cross-kind values, learned flip position, hidden-picture invariance and unchanged follow
+PASS personal bots: joint actors compare all physical taps with personal context and goal values
+PASS handoff diagnostics preserve physical observed state and never add future inspections
+PASS personal bots: human-state handoffs are validated diagnostic states, never forecast evidence
+PASS campaign opening, missing ends, resumed duplicates, replay counters and interleaving
+PASS personal bots: campaigns retain initial openings and deduplicate resumed failures
+PASS physical finishing: known matches, separate pair taps, novel full-tray inspections, clock priority, wildcard timing and no closed-tile fatal shortcut
+PASS personal bots: physical finishing uses legal known matches and inspections without hidden-picture shortcuts
+PASS physical tray audit: pre-action knowledge, hidden-picture invariance, known exits and explicit wildcard exclusions
+PASS personal bots: tray failure diagnostics use pre-action knowledge, not later pictures
+PASS physical clock planning: legal single taps, blind reveals, mandatory auto-matches, atomic deadlines, hidden-picture invariance and unchanged follow/defaults
+PASS personal bots: physical clock planning uses legal taps without a macro or hidden pictures
+PASS physical failure audit: explicit denominators, endings and empty sample
+PASS personal bots: failure audits preserve explicit denominators and empty samples
+PASS personal bots: a retry policy changes only attempts after the initial loss
+PASS personal bots: physical count actors reject future and target-trajectory models
+PASS personal bots: progression follows saved level 106, not recent replays of 53 and 54
+PASS physical taps: mandatory tray/open-twin matches, one peek, known reopens, full tray, clock atomicity and hidden-picture invariance
+PASS personal bots: the physical-tap actor obeys inspection, open-twin and terminal tray rules
+PASS natural prefixes: assistance boundaries, restarts, incomplete recordings, availability and chunk integrity
+PASS personal bots: natural-prefix training retains restarts but excludes post-help and missing chunks
+PASS personal bots: full-choice instrumentation learns a visible tray match without changing defaults
+PASS personal bots: a blind automatic match is one unknown choice, not a second observed decision
+PASS personal bots: a full-choice actor can choose against a visible match without changing the original actor
+PASS personal bots: automatic Joker twins prefer geometric freedom even through ice
+PASS personal bots: disabling search cannot draw randomness based on unseen pictures
+PASS personal bots: known Jokers rescue a three-tile tray instead of being classified fatal
+PASS personal bots: Joker target, automatic twin and terminal bonus match the game rules
+PASS personal bots: hypothetical Joker effects cannot inspect the location of an unseen twin
+PASS personal bots: a known Joker is not a nonmatching match-error candidate
+PASS profile forecast coverage: actual current target, fixed replay boards and daily exclusion
+PASS personal bots: future profile coverage includes hard replays and ignores daily progress
+PASS personal bots: clock planning inspects a free unknown blocker using geometry, not its picture
+PASS personal bots: a clock plan can expose an unknown clock without using its hidden picture
+PASS personal bots: a clock route can reveal successive unknown blockers without assuming their pictures
+PASS personal bots: exposing a face-down clock still requires a real inspection
+PASS personal bots: learned visible-match errors can fail despite a known exit without using unseen faces
+PASS personal bots: visible-match errors are disabled at zero and during active clock planning
+PASS visible-match error fit: physical choices, clock phase, hidden matches and availability
+PASS personal bots: visible-match error profiles use physical human choices available before opening
+PASS personal clock onset: default ties, completed availability and earlier family observations
+PASS personal bots: clock-planning depth learns from strictly earlier own and family recordings
+PASS failed-tap diagnostic: pre-action exits, clock mechanism, hidden pictures and assistance
+PASS personal bots: failure diagnostics distinguish known exits from clock losses without peeking
+PASS personal bots: every actual inspection is available to retry recall, even before an early stop
+PASS personal bots: before-match inspection uses only novel free tiles, not their hidden pictures
+PASS personal bots: zero inspection rate preserves seeded play and active clocks suppress the experiment
+PASS inspection profile: strict availability, family balance and chronological decay
+PASS personal bots: personal inspection profiles reject future and unfinished later chunks
+PASS personal bots: retry memory makes a remembered hidden tray match immediately usable
+PASS personal bots: following a remembered reopening does not invent a new inspection decision
+PASS personal bots: an urgent known match on the clock itself remains a safe follow-up
+PASS personal bots: move scoring does not force tray matches past a clock deadline
+PASS personal bots: a fitted visible-key preference can choose the key pair first
+PASS personal bots: zero goal weights preserve every seeded move and retry result
+PASS personal bots: goal features do not reward a key hidden behind an unseen tile
+PASS personal bots: prospective coverage includes an opening before its first end event
+PASS personal bots: clock planning cannot use the picture of an unseen clock tile
+PASS personal bots: move-type context is unchanged when unseen pictures swap positions
+PASS personal bots: contextual move-type probabilities mask unavailable actions
+PASS personal bots: an unseen tile cannot be classified as a safe tray match
+PASS personal bots: rebuilding features preserves all profiles and replaces stale values
+PASS personal bots: history is ordered by completion and cannot inspect the target outcome
+PASS personal bots: limited picture memory makes a forgotten picture an observable flip again
+PASS personal bots: limited memory cannot get stuck endlessly reopening tiles
+PASS personal bots: a remembered fatal decision is avoided on the same visible state
+PASS personal bots: key planning respects the actual lock and key rules
+PASS personal bots: policy instrumentation preserves replay and never encodes unseen pictures
+PASS personal bots: learned spatial choice can steer a visible move
+PASS personal bots: retained app counters preserve exact winning-try labels on replays
+PASS personal bots: offline classic boards ignore wall-clock deadlines
+PASS personal bots: future and unfinished recordings cannot supply habits
+PASS personal bots: board identity includes clock, ice, keys and locks
+PASS personal bots: versions and restarted attempts stay in separate episodes
+PASS personal bots: retries retain exact conditional probabilities beyond four tries
+PASS personal bots: current target follows actual play instead of highest saved level
+PASS personal bots: corrections learn individual rates and keep unseen boards neutral

@@ -1,0 +1,4 @@
+Dennisisdebeste {"games":54,"decisions":5667,"stops":{"restart":9,"stuck":17,"auto":27,"incomplete":1}}
+Mrs. Doubtfire {"games":49,"decisions":3333,"stops":{"stuck":35,"incomplete":2,"auto":8,"restart":4}}
+PUK {"games":57,"decisions":4771,"stops":{"stuck":27,"win":22,"historicalPhysicsBoundary":1,"shuffle":2,"auto":4,"restart":1}}
+Gerda {"games":196,"decisions":15130,"stops":{"win":41,"stuck":126,"shuffle":14,"conflictingChunk":2,"historicalPhysicsBoundary":1,"auto":12}}

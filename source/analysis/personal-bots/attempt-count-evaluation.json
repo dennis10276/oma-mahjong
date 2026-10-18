@@ -1,0 +1,3139 @@
+{
+  "made": "2026-10-16T20:19:30.279Z",
+  "evaluatedAt": "2026-10-16T22:51:45.559148+00:00",
+  "evidence": "historical-exploratory",
+  "goal": {
+    "winningAttemptAccuracy": 0.8,
+    "minimumTestLevelsPerPerson": 20,
+    "toleranceByActualAttempt": {
+      "1-3": 0,
+      "4-5": 1,
+      "6+": 2
+    }
+  },
+  "testStartsAt": 1791749492782,
+  "playerTestStartsAt": {
+    "Dennisisdebeste": 1791844235247,
+    "Mrs. Doubtfire": 1791749492782,
+    "PUK": 1791993082923,
+    "Gerda": 1792077236210
+  },
+  "selectedBeforeTest": "contextualHazards",
+  "coverage": {
+    "measuredEpisodes": 244,
+    "completedFromFirstTry": 231,
+    "censored": 6,
+    "missingOpening": 7,
+    "assistedCompleted": 27
+  },
+  "development": {
+    "alwaysFirst": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "ownMode": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "personalHazards": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7333333333333333
+    },
+    "contextualHazards": {
+      "n": 60,
+      "correct": 42,
+      "accuracy": 0.7,
+      "exactAccuracy": 0.6666666666666666,
+      "wilson95": [
+        0.5749105303360957,
+        0.801019897472731
+      ],
+      "meanAbsoluteError": 0.5666666666666667
+    },
+    "policy_prior": {
+      "n": 60,
+      "correct": 40,
+      "accuracy": 0.6666666666666666,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.540566298666634,
+        0.7727090578407216
+      ],
+      "meanAbsoluteError": 0.6833333333333333
+    },
+    "policy_strong": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.8666666666666667
+    },
+    "policy_learned": {
+      "n": 60,
+      "correct": 40,
+      "accuracy": 0.6666666666666666,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.540566298666634,
+        0.7727090578407216
+      ],
+      "meanAbsoluteError": 0.6833333333333333
+    },
+    "retry_learn": {
+      "n": 60,
+      "correct": 40,
+      "accuracy": 0.6666666666666666,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.540566298666634,
+        0.7727090578407216
+      ],
+      "meanAbsoluteError": 0.6833333333333333
+    },
+    "retry_keys": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "retry_earlyPlan": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "retry_lowPictureMemory": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "memory_twoPictures": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "memory_fourPictures": {
+      "n": 60,
+      "correct": 38,
+      "accuracy": 0.6333333333333333,
+      "exactAccuracy": 0.6333333333333333,
+      "wilson95": [
+        0.5068276736679673,
+        0.7437926115379172
+      ],
+      "meanAbsoluteError": 0.7833333333333333
+    },
+    "memory_eightPictures": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "memory_fourPicturesNoRetryRecall": {
+      "n": 60,
+      "correct": 38,
+      "accuracy": 0.6333333333333333,
+      "exactAccuracy": 0.6333333333333333,
+      "wilson95": [
+        0.5068276736679673,
+        0.7437926115379172
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "memory_fourPicturesMediumRetryRecall": {
+      "n": 60,
+      "correct": 38,
+      "accuracy": 0.6333333333333333,
+      "exactAccuracy": 0.6333333333333333,
+      "wilson95": [
+        0.5068276736679673,
+        0.7437926115379172
+      ],
+      "meanAbsoluteError": 0.8166666666666667
+    },
+    "forest": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "extraTrees": {
+      "n": 60,
+      "correct": 38,
+      "accuracy": 0.6333333333333333,
+      "exactAccuracy": 0.6333333333333333,
+      "wilson95": [
+        0.5068276736679673,
+        0.7437926115379172
+      ],
+      "meanAbsoluteError": 0.8
+    },
+    "logistic": {
+      "n": 60,
+      "correct": 34,
+      "accuracy": 0.5666666666666667,
+      "exactAccuracy": 0.5666666666666667,
+      "wilson95": [
+        0.44103214654694856,
+        0.6842779960559936
+      ],
+      "meanAbsoluteError": 0.8666666666666667
+    },
+    "boosted": {
+      "n": 60,
+      "correct": 37,
+      "accuracy": 0.6166666666666667,
+      "exactAccuracy": 0.6166666666666667,
+      "wilson95": [
+        0.4901736454040315,
+        0.7291191041511176
+      ],
+      "meanAbsoluteError": 0.7333333333333333
+    },
+    "ensemble": {
+      "n": 60,
+      "correct": 38,
+      "accuracy": 0.6333333333333333,
+      "exactAccuracy": 0.6333333333333333,
+      "wilson95": [
+        0.5068276736679673,
+        0.7437926115379172
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "survivalLogistic": {
+      "n": 60,
+      "correct": 36,
+      "accuracy": 0.6,
+      "exactAccuracy": 0.5833333333333334,
+      "wilson95": [
+        0.47365824394206846,
+        0.714306969962345
+      ],
+      "meanAbsoluteError": 0.7833333333333333
+    },
+    "survivalBoosted": {
+      "n": 60,
+      "correct": 36,
+      "accuracy": 0.6,
+      "exactAccuracy": 0.6,
+      "wilson95": [
+        0.47365824394206846,
+        0.714306969962345
+      ],
+      "meanAbsoluteError": 0.8
+    },
+    "survivalTrees": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.65,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.7666666666666667
+    },
+    "onlineSelection": {
+      "n": 60,
+      "correct": 39,
+      "accuracy": 0.65,
+      "exactAccuracy": 0.6166666666666667,
+      "wilson95": [
+        0.5236238380947751,
+        0.7583239827618451
+      ],
+      "meanAbsoluteError": 0.6833333333333333
+    }
+  },
+  "heldOut": {
+    "alwaysFirst": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.575
+    },
+    "ownMode": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.575
+    },
+    "personalHazards": {
+      "n": 80,
+      "correct": 43,
+      "accuracy": 0.5375,
+      "exactAccuracy": 0.5375,
+      "wilson95": [
+        0.4290416436680269,
+        0.6425218761121299
+      ],
+      "meanAbsoluteError": 1.525
+    },
+    "contextualHazards": {
+      "n": 80,
+      "correct": 40,
+      "accuracy": 0.5,
+      "exactAccuracy": 0.475,
+      "wilson95": [
+        0.392972274311075,
+        0.607027725688925
+      ],
+      "meanAbsoluteError": 1.7625
+    },
+    "policy_prior": {
+      "n": 80,
+      "correct": 36,
+      "accuracy": 0.45,
+      "exactAccuracy": 0.4375,
+      "wilson95": [
+        0.3457751037437976,
+        0.5588068698826599
+      ],
+      "meanAbsoluteError": 3.4625
+    },
+    "policy_strong": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.5375,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.4125
+    },
+    "policy_learned": {
+      "n": 80,
+      "correct": 35,
+      "accuracy": 0.4375,
+      "exactAccuracy": 0.425,
+      "wilson95": [
+        0.3341368457196415,
+        0.5465906213134304
+      ],
+      "meanAbsoluteError": 3.475
+    },
+    "retry_learn": {
+      "n": 80,
+      "correct": 34,
+      "accuracy": 0.425,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.32256388014807325,
+        0.534309080291613
+      ],
+      "meanAbsoluteError": 3.0
+    },
+    "retry_keys": {
+      "n": 80,
+      "correct": 33,
+      "accuracy": 0.4125,
+      "exactAccuracy": 0.4,
+      "wilson95": [
+        0.31105686511513087,
+        0.5219615887311697
+      ],
+      "meanAbsoluteError": 3.45
+    },
+    "retry_earlyPlan": {
+      "n": 80,
+      "correct": 33,
+      "accuracy": 0.4125,
+      "exactAccuracy": 0.4,
+      "wilson95": [
+        0.31105686511513087,
+        0.5219615887311697
+      ],
+      "meanAbsoluteError": 3.4625
+    },
+    "retry_lowPictureMemory": {
+      "n": 80,
+      "correct": 34,
+      "accuracy": 0.425,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.32256388014807325,
+        0.534309080291613
+      ],
+      "meanAbsoluteError": 3.6625
+    },
+    "memory_twoPictures": {
+      "n": 80,
+      "correct": 34,
+      "accuracy": 0.425,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.32256388014807325,
+        0.534309080291613
+      ],
+      "meanAbsoluteError": 3.7875
+    },
+    "memory_fourPictures": {
+      "n": 80,
+      "correct": 35,
+      "accuracy": 0.4375,
+      "exactAccuracy": 0.425,
+      "wilson95": [
+        0.3341368457196415,
+        0.5465906213134304
+      ],
+      "meanAbsoluteError": 3.5375
+    },
+    "memory_eightPictures": {
+      "n": 80,
+      "correct": 34,
+      "accuracy": 0.425,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.32256388014807325,
+        0.534309080291613
+      ],
+      "meanAbsoluteError": 3.4
+    },
+    "memory_fourPicturesNoRetryRecall": {
+      "n": 80,
+      "correct": 35,
+      "accuracy": 0.4375,
+      "exactAccuracy": 0.4125,
+      "wilson95": [
+        0.3341368457196415,
+        0.5465906213134304
+      ],
+      "meanAbsoluteError": 4.1
+    },
+    "memory_fourPicturesMediumRetryRecall": {
+      "n": 80,
+      "correct": 35,
+      "accuracy": 0.4375,
+      "exactAccuracy": 0.425,
+      "wilson95": [
+        0.3341368457196415,
+        0.5465906213134304
+      ],
+      "meanAbsoluteError": 3.525
+    },
+    "forest": {
+      "n": 80,
+      "correct": 45,
+      "accuracy": 0.5625,
+      "exactAccuracy": 0.5625,
+      "wilson95": [
+        0.4534093786865696,
+        0.6658631542803586
+      ],
+      "meanAbsoluteError": 1.55
+    },
+    "extraTrees": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.55
+    },
+    "logistic": {
+      "n": 80,
+      "correct": 37,
+      "accuracy": 0.4625,
+      "exactAccuracy": 0.4625,
+      "wilson95": [
+        0.3574781238878701,
+        0.5709583563319731
+      ],
+      "meanAbsoluteError": 1.7
+    },
+    "boosted": {
+      "n": 80,
+      "correct": 35,
+      "accuracy": 0.4375,
+      "exactAccuracy": 0.4375,
+      "wilson95": [
+        0.3341368457196415,
+        0.5465906213134304
+      ],
+      "meanAbsoluteError": 1.6875
+    },
+    "ensemble": {
+      "n": 80,
+      "correct": 42,
+      "accuracy": 0.525,
+      "exactAccuracy": 0.525,
+      "wilson95": [
+        0.41695451180328746,
+        0.6307545013834838
+      ],
+      "meanAbsoluteError": 1.6625
+    },
+    "survivalLogistic": {
+      "n": 80,
+      "correct": 40,
+      "accuracy": 0.5,
+      "exactAccuracy": 0.5,
+      "wilson95": [
+        0.392972274311075,
+        0.607027725688925
+      ],
+      "meanAbsoluteError": 1.5875
+    },
+    "survivalBoosted": {
+      "n": 80,
+      "correct": 40,
+      "accuracy": 0.5,
+      "exactAccuracy": 0.5,
+      "wilson95": [
+        0.392972274311075,
+        0.607027725688925
+      ],
+      "meanAbsoluteError": 1.5375
+    },
+    "survivalTrees": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.575
+    },
+    "onlineSelection": {
+      "n": 80,
+      "correct": 45,
+      "accuracy": 0.5625,
+      "exactAccuracy": 0.525,
+      "wilson95": [
+        0.4534093786865696,
+        0.6658631542803586
+      ],
+      "meanAbsoluteError": 1.275
+    }
+  },
+  "rolling": {
+    "alwaysFirst": {
+      "n": 207,
+      "correct": 122,
+      "accuracy": 0.5893719806763285,
+      "exactAccuracy": 0.5893719806763285,
+      "wilson95": [
+        0.5213192177544215,
+        0.6541679726292597
+      ],
+      "meanAbsoluteError": 1.1111111111111112
+    },
+    "ownMode": {
+      "n": 207,
+      "correct": 121,
+      "accuracy": 0.5845410628019324,
+      "exactAccuracy": 0.5845410628019324,
+      "wilson95": [
+        0.5164632878233986,
+        0.6495381084854894
+      ],
+      "meanAbsoluteError": 1.1159420289855073
+    },
+    "personalHazards": {
+      "n": 207,
+      "correct": 121,
+      "accuracy": 0.5845410628019324,
+      "exactAccuracy": 0.5845410628019324,
+      "wilson95": [
+        0.5164632878233986,
+        0.6495381084854894
+      ],
+      "meanAbsoluteError": 1.0821256038647342
+    },
+    "contextualHazards": {
+      "n": 207,
+      "correct": 119,
+      "accuracy": 0.5748792270531401,
+      "exactAccuracy": 0.5555555555555556,
+      "wilson95": [
+        0.5067707639459569,
+        0.6402590442133438
+      ],
+      "meanAbsoluteError": 1.1690821256038648
+    },
+    "policy_prior": {
+      "n": 207,
+      "correct": 110,
+      "accuracy": 0.5314009661835749,
+      "exactAccuracy": 0.5217391304347826,
+      "wilson95": [
+        0.4634683078230578,
+        0.5981893536631006
+      ],
+      "meanAbsoluteError": 2.536231884057971
+    },
+    "policy_strong": {
+      "n": 207,
+      "correct": 122,
+      "accuracy": 0.5893719806763285,
+      "exactAccuracy": 0.5845410628019324,
+      "wilson95": [
+        0.5213192177544215,
+        0.6541679726292597
+      ],
+      "meanAbsoluteError": 1.0724637681159421
+    },
+    "policy_learned": {
+      "n": 207,
+      "correct": 109,
+      "accuracy": 0.5265700483091788,
+      "exactAccuracy": 0.5169082125603864,
+      "wilson95": [
+        0.45868823542700876,
+        0.5934836319843559
+      ],
+      "meanAbsoluteError": 2.5410628019323673
+    },
+    "retry_learn": {
+      "n": 207,
+      "correct": 108,
+      "accuracy": 0.5217391304347826,
+      "exactAccuracy": 0.5120772946859904,
+      "wilson95": [
+        0.4539143745806135,
+        0.5887716987559575
+      ],
+      "meanAbsoluteError": 2.0531400966183573
+    },
+    "retry_keys": {
+      "n": 207,
+      "correct": 105,
+      "accuracy": 0.5072463768115942,
+      "exactAccuracy": 0.5024154589371981,
+      "wilson95": [
+        0.4396299844141236,
+        0.5745987066980669
+      ],
+      "meanAbsoluteError": 2.251207729468599
+    },
+    "retry_earlyPlan": {
+      "n": 207,
+      "correct": 106,
+      "accuracy": 0.5120772946859904,
+      "exactAccuracy": 0.5072463768115942,
+      "wilson95": [
+        0.44438525504553317,
+        0.579329230141451
+      ],
+      "meanAbsoluteError": 2.251207729468599
+    },
+    "retry_lowPictureMemory": {
+      "n": 207,
+      "correct": 106,
+      "accuracy": 0.5120772946859904,
+      "exactAccuracy": 0.5072463768115942,
+      "wilson95": [
+        0.44438525504553317,
+        0.579329230141451
+      ],
+      "meanAbsoluteError": 2.3526570048309177
+    },
+    "memory_twoPictures": {
+      "n": 207,
+      "correct": 107,
+      "accuracy": 0.5169082125603864,
+      "exactAccuracy": 0.5120772946859904,
+      "wilson95": [
+        0.44914671672982526,
+        0.5840535625319523
+      ],
+      "meanAbsoluteError": 2.4009661835748792
+    },
+    "memory_fourPictures": {
+      "n": 207,
+      "correct": 105,
+      "accuracy": 0.5072463768115942,
+      "exactAccuracy": 0.5024154589371981,
+      "wilson95": [
+        0.4396299844141236,
+        0.5745987066980669
+      ],
+      "meanAbsoluteError": 2.2946859903381642
+    },
+    "memory_eightPictures": {
+      "n": 207,
+      "correct": 106,
+      "accuracy": 0.5120772946859904,
+      "exactAccuracy": 0.5072463768115942,
+      "wilson95": [
+        0.44438525504553317,
+        0.579329230141451
+      ],
+      "meanAbsoluteError": 2.246376811594203
+    },
+    "memory_fourPicturesNoRetryRecall": {
+      "n": 207,
+      "correct": 106,
+      "accuracy": 0.5120772946859904,
+      "exactAccuracy": 0.5024154589371981,
+      "wilson95": [
+        0.44438525504553317,
+        0.579329230141451
+      ],
+      "meanAbsoluteError": 2.63768115942029
+    },
+    "memory_fourPicturesMediumRetryRecall": {
+      "n": 207,
+      "correct": 105,
+      "accuracy": 0.5072463768115942,
+      "exactAccuracy": 0.5024154589371981,
+      "wilson95": [
+        0.4396299844141236,
+        0.5745987066980669
+      ],
+      "meanAbsoluteError": 2.318840579710145
+    },
+    "forest": {
+      "n": 207,
+      "correct": 123,
+      "accuracy": 0.5942028985507246,
+      "exactAccuracy": 0.5942028985507246,
+      "wilson95": [
+        0.5261816363376706,
+        0.6587913481208043
+      ],
+      "meanAbsoluteError": 1.1014492753623188
+    },
+    "extraTrees": {
+      "n": 207,
+      "correct": 120,
+      "accuracy": 0.5797101449275363,
+      "exactAccuracy": 0.5797101449275363,
+      "wilson95": [
+        0.5116138135289605,
+        0.6449017887051338
+      ],
+      "meanAbsoluteError": 1.1111111111111112
+    },
+    "logistic": {
+      "n": 207,
+      "correct": 103,
+      "accuracy": 0.4975845410628019,
+      "exactAccuracy": 0.4975845410628019,
+      "wilson95": [
+        0.4301380043930306,
+        0.5651190985695725
+      ],
+      "meanAbsoluteError": 1.2077294685990339
+    },
+    "boosted": {
+      "n": 207,
+      "correct": 106,
+      "accuracy": 0.5120772946859904,
+      "exactAccuracy": 0.5120772946859904,
+      "wilson95": [
+        0.44438525504553317,
+        0.579329230141451
+      ],
+      "meanAbsoluteError": 1.173913043478261
+    },
+    "ensemble": {
+      "n": 207,
+      "correct": 117,
+      "accuracy": 0.5652173913043478,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.49710382539078835,
+        0.630954394618925
+      ],
+      "meanAbsoluteError": 1.1545893719806763
+    },
+    "survivalLogistic": {
+      "n": 207,
+      "correct": 115,
+      "accuracy": 0.5555555555555556,
+      "exactAccuracy": 0.5507246376811594,
+      "wilson95": [
+        0.48746226488712163,
+        0.6216243669730046
+      ],
+      "meanAbsoluteError": 1.144927536231884
+    },
+    "survivalBoosted": {
+      "n": 207,
+      "correct": 114,
+      "accuracy": 0.5507246376811594,
+      "exactAccuracy": 0.5507246376811594,
+      "wilson95": [
+        0.48265094509055495,
+        0.6169498926947778
+      ],
+      "meanAbsoluteError": 1.1207729468599035
+    },
+    "survivalTrees": {
+      "n": 207,
+      "correct": 122,
+      "accuracy": 0.5893719806763285,
+      "exactAccuracy": 0.5893719806763285,
+      "wilson95": [
+        0.5213192177544215,
+        0.6541679726292597
+      ],
+      "meanAbsoluteError": 1.1111111111111112
+    },
+    "onlineSelection": {
+      "n": 207,
+      "correct": 120,
+      "accuracy": 0.5797101449275363,
+      "exactAccuracy": 0.5555555555555556,
+      "wilson95": [
+        0.5116138135289605,
+        0.6449017887051338
+      ],
+      "meanAbsoluteError": 0.9903381642512077
+    }
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "selectedBeforeTest": "alwaysFirst",
+      "heldOut": {
+        "n": 20,
+        "correct": 11,
+        "accuracy": 0.55,
+        "exactAccuracy": 0.55,
+        "wilson95": [
+          0.3420820083075997,
+          0.7418049791429071
+        ],
+        "meanAbsoluteError": 0.9
+      },
+      "allMethodsHeldOut": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "personalHazards": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "contextualHazards": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 1.8
+        },
+        "policy_prior": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.25,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 6.45
+        },
+        "policy_strong": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 1.0
+        },
+        "policy_learned": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.25,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 6.3
+        },
+        "retry_learn": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 6.0
+        },
+        "retry_keys": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 6.85
+        },
+        "retry_earlyPlan": {
+          "n": 20,
+          "correct": 3,
+          "accuracy": 0.15,
+          "exactAccuracy": 0.1,
+          "wilson95": [
+            0.05236779195949584,
+            0.36042329588695743
+          ],
+          "meanAbsoluteError": 6.85
+        },
+        "retry_lowPictureMemory": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 7.8
+        },
+        "memory_twoPictures": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 7.25
+        },
+        "memory_fourPictures": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 7.25
+        },
+        "memory_eightPictures": {
+          "n": 20,
+          "correct": 4,
+          "accuracy": 0.2,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.0806563532712,
+            0.41602172202575993
+          ],
+          "meanAbsoluteError": 6.65
+        },
+        "memory_fourPicturesNoRetryRecall": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.15,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 9.05
+        },
+        "memory_fourPicturesMediumRetryRecall": {
+          "n": 20,
+          "correct": 5,
+          "accuracy": 0.25,
+          "exactAccuracy": 0.2,
+          "wilson95": [
+            0.11186005278940309,
+            0.4687050099580636
+          ],
+          "meanAbsoluteError": 7.2
+        },
+        "forest": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.85
+        },
+        "extraTrees": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.85
+        },
+        "logistic": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.95
+        },
+        "boosted": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 0.95
+        },
+        "ensemble": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.85
+        },
+        "survivalLogistic": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.85
+        },
+        "survivalBoosted": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 1.05
+        },
+        "survivalTrees": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "onlineSelection": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "selectedBeforeTest": "contextualHazards",
+      "heldOut": {
+        "n": 20,
+        "correct": 10,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.2992949144298199,
+          0.7007050855701801
+        ],
+        "meanAbsoluteError": 2.95
+      },
+      "allMethodsHeldOut": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "personalHazards": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 3.25
+        },
+        "contextualHazards": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 2.95
+        },
+        "policy_prior": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 6.15
+        },
+        "policy_strong": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.4
+        },
+        "policy_learned": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 6.15
+        },
+        "retry_learn": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 4.55
+        },
+        "retry_keys": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 5.0
+        },
+        "retry_earlyPlan": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 5.05
+        },
+        "retry_lowPictureMemory": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 4.9
+        },
+        "memory_twoPictures": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 5.05
+        },
+        "memory_fourPictures": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 4.95
+        },
+        "memory_eightPictures": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 5.0
+        },
+        "memory_fourPicturesNoRetryRecall": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 5.4
+        },
+        "memory_fourPicturesMediumRetryRecall": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 4.95
+        },
+        "forest": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "extraTrees": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.4
+        },
+        "logistic": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 3.65
+        },
+        "boosted": {
+          "n": 20,
+          "correct": 6,
+          "accuracy": 0.3,
+          "exactAccuracy": 0.3,
+          "wilson95": [
+            0.14547527396899385,
+            0.5189767762289793
+          ],
+          "meanAbsoluteError": 3.7
+        },
+        "ensemble": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 3.85
+        },
+        "survivalLogistic": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 3.55
+        },
+        "survivalBoosted": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 3.15
+        },
+        "survivalTrees": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "onlineSelection": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 2.95
+        }
+      }
+    },
+    "PUK": {
+      "selectedBeforeTest": "alwaysFirst",
+      "heldOut": {
+        "n": 20,
+        "correct": 14,
+        "accuracy": 0.7,
+        "exactAccuracy": 0.7,
+        "wilson95": [
+          0.4810232237710206,
+          0.854524726031006
+        ],
+        "meanAbsoluteError": 0.5
+      },
+      "allMethodsHeldOut": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "personalHazards": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "contextualHazards": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.6
+        },
+        "policy_prior": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "policy_strong": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "policy_learned": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "retry_learn": {
+          "n": 20,
+          "correct": 13,
+          "accuracy": 0.65,
+          "exactAccuracy": 0.65,
+          "wilson95": [
+            0.43285051021946463,
+            0.8188104521320554
+          ],
+          "meanAbsoluteError": 0.7
+        },
+        "retry_keys": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "retry_earlyPlan": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "retry_lowPictureMemory": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "memory_twoPictures": {
+          "n": 20,
+          "correct": 13,
+          "accuracy": 0.65,
+          "exactAccuracy": 0.65,
+          "wilson95": [
+            0.43285051021946463,
+            0.8188104521320554
+          ],
+          "meanAbsoluteError": 1.4
+        },
+        "memory_fourPictures": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "memory_eightPictures": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "memory_fourPicturesNoRetryRecall": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "memory_fourPicturesMediumRetryRecall": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "forest": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "extraTrees": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "logistic": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.6
+        },
+        "boosted": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.6
+        },
+        "ensemble": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "survivalLogistic": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "survivalBoosted": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "survivalTrees": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "onlineSelection": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        }
+      }
+    },
+    "Gerda": {
+      "selectedBeforeTest": "policy_prior",
+      "heldOut": {
+        "n": 20,
+        "correct": 10,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.2992949144298199,
+          0.7007050855701801
+        ],
+        "meanAbsoluteError": 0.75
+      },
+      "allMethodsHeldOut": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "ownMode": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "personalHazards": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "contextualHazards": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 1.7
+        },
+        "policy_prior": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 0.75
+        },
+        "policy_strong": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 0.75
+        },
+        "policy_learned": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 0.95
+        },
+        "retry_learn": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 0.75
+        },
+        "retry_keys": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "retry_earlyPlan": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "retry_lowPictureMemory": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "memory_twoPictures": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "memory_fourPictures": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "memory_eightPictures": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "memory_fourPicturesNoRetryRecall": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "memory_fourPicturesMediumRetryRecall": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "forest": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.4
+        },
+        "extraTrees": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "logistic": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 1.6
+        },
+        "boosted": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.35,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 1.5
+        },
+        "ensemble": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "survivalLogistic": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "survivalBoosted": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "survivalTrees": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "onlineSelection": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 0.75
+        }
+      }
+    }
+  },
+  "difficultyBands": {
+    "hard": {
+      "alwaysFirst": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 6.375
+      },
+      "ownMode": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 6.375
+      },
+      "personalHazards": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 5.875
+      },
+      "contextualHazards": {
+        "n": 8,
+        "correct": 2,
+        "accuracy": 0.25,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "meanAbsoluteError": 6.875
+      },
+      "policy_prior": {
+        "n": 8,
+        "correct": 2,
+        "accuracy": 0.25,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "meanAbsoluteError": 6.0
+      },
+      "policy_strong": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.0,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 4.75
+      },
+      "policy_learned": {
+        "n": 8,
+        "correct": 2,
+        "accuracy": 0.25,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "meanAbsoluteError": 6.0
+      },
+      "retry_learn": {
+        "n": 8,
+        "correct": 2,
+        "accuracy": 0.25,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "meanAbsoluteError": 6.375
+      },
+      "retry_keys": {
+        "n": 8,
+        "correct": 0,
+        "accuracy": 0.0,
+        "exactAccuracy": 0.0,
+        "wilson95": [
+          0.0,
+          0.3244156195108769
+        ],
+        "meanAbsoluteError": 8.25
+      },
+      "retry_earlyPlan": {
+        "n": 8,
+        "correct": 0,
+        "accuracy": 0.0,
+        "exactAccuracy": 0.0,
+        "wilson95": [
+          0.0,
+          0.3244156195108769
+        ],
+        "meanAbsoluteError": 8.375
+      },
+      "retry_lowPictureMemory": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 8.375
+      },
+      "memory_twoPictures": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 9.875
+      },
+      "memory_fourPictures": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 9.75
+      },
+      "memory_eightPictures": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 8.375
+      },
+      "memory_fourPicturesNoRetryRecall": {
+        "n": 8,
+        "correct": 2,
+        "accuracy": 0.25,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "meanAbsoluteError": 9.25
+      },
+      "memory_fourPicturesMediumRetryRecall": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 9.625
+      },
+      "forest": {
+        "n": 8,
+        "correct": 2,
+        "accuracy": 0.25,
+        "exactAccuracy": 0.25,
+        "wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "meanAbsoluteError": 6.125
+      },
+      "extraTrees": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 6.25
+      },
+      "logistic": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 5.375
+      },
+      "boosted": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 5.625
+      },
+      "ensemble": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 6.125
+      },
+      "survivalLogistic": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 5.375
+      },
+      "survivalBoosted": {
+        "n": 8,
+        "correct": 0,
+        "accuracy": 0.0,
+        "exactAccuracy": 0.0,
+        "wilson95": [
+          0.0,
+          0.3244156195108769
+        ],
+        "meanAbsoluteError": 4.875
+      },
+      "survivalTrees": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.02241690886329617,
+          0.4708948057698615
+        ],
+        "meanAbsoluteError": 6.375
+      },
+      "onlineSelection": {
+        "n": 8,
+        "correct": 3,
+        "accuracy": 0.375,
+        "exactAccuracy": 0.125,
+        "wilson95": [
+          0.13684175946152105,
+          0.6942621454161981
+        ],
+        "meanAbsoluteError": 3.125
+      }
+    },
+    "medium": {
+      "alwaysFirst": {
+        "n": 22,
+        "correct": 12,
+        "accuracy": 0.5454545454545454,
+        "exactAccuracy": 0.5454545454545454,
+        "wilson95": [
+          0.34659473289041554,
+          0.7307998556799515
+        ],
+        "meanAbsoluteError": 1.9545454545454546
+      },
+      "ownMode": {
+        "n": 22,
+        "correct": 12,
+        "accuracy": 0.5454545454545454,
+        "exactAccuracy": 0.5454545454545454,
+        "wilson95": [
+          0.34659473289041554,
+          0.7307998556799515
+        ],
+        "meanAbsoluteError": 1.9545454545454546
+      },
+      "personalHazards": {
+        "n": 22,
+        "correct": 11,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.5,
+        "wilson95": [
+          0.3072180469247956,
+          0.6927819530752044
+        ],
+        "meanAbsoluteError": 1.9545454545454546
+      },
+      "contextualHazards": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 2.3636363636363638
+      },
+      "policy_prior": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 6.136363636363637
+      },
+      "policy_strong": {
+        "n": 22,
+        "correct": 12,
+        "accuracy": 0.5454545454545454,
+        "exactAccuracy": 0.5454545454545454,
+        "wilson95": [
+          0.34659473289041554,
+          0.7307998556799515
+        ],
+        "meanAbsoluteError": 1.9545454545454546
+      },
+      "policy_learned": {
+        "n": 22,
+        "correct": 7,
+        "accuracy": 0.3181818181818182,
+        "exactAccuracy": 0.3181818181818182,
+        "wilson95": [
+          0.1636038735469248,
+          0.5268177721716065
+        ],
+        "meanAbsoluteError": 6.318181818181818
+      },
+      "retry_learn": {
+        "n": 22,
+        "correct": 6,
+        "accuracy": 0.2727272727272727,
+        "exactAccuracy": 0.2727272727272727,
+        "wilson95": [
+          0.1315058201581444,
+          0.4815212369900198
+        ],
+        "meanAbsoluteError": 4.590909090909091
+      },
+      "retry_keys": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 4.363636363636363
+      },
+      "retry_earlyPlan": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 4.363636363636363
+      },
+      "retry_lowPictureMemory": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 4.363636363636363
+      },
+      "memory_twoPictures": {
+        "n": 22,
+        "correct": 7,
+        "accuracy": 0.3181818181818182,
+        "exactAccuracy": 0.3181818181818182,
+        "wilson95": [
+          0.1636038735469248,
+          0.5268177721716065
+        ],
+        "meanAbsoluteError": 5.181818181818182
+      },
+      "memory_fourPictures": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 4.318181818181818
+      },
+      "memory_eightPictures": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 4.363636363636363
+      },
+      "memory_fourPicturesNoRetryRecall": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 4.909090909090909
+      },
+      "memory_fourPicturesMediumRetryRecall": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 4.363636363636363
+      },
+      "forest": {
+        "n": 22,
+        "correct": 12,
+        "accuracy": 0.5454545454545454,
+        "exactAccuracy": 0.5454545454545454,
+        "wilson95": [
+          0.34659473289041554,
+          0.7307998556799515
+        ],
+        "meanAbsoluteError": 1.9545454545454546
+      },
+      "extraTrees": {
+        "n": 22,
+        "correct": 12,
+        "accuracy": 0.5454545454545454,
+        "exactAccuracy": 0.5454545454545454,
+        "wilson95": [
+          0.34659473289041554,
+          0.7307998556799515
+        ],
+        "meanAbsoluteError": 1.9090909090909092
+      },
+      "logistic": {
+        "n": 22,
+        "correct": 8,
+        "accuracy": 0.36363636363636365,
+        "exactAccuracy": 0.36363636363636365,
+        "wilson95": [
+          0.19732972772607899,
+          0.5704865065628195
+        ],
+        "meanAbsoluteError": 2.6363636363636362
+      },
+      "boosted": {
+        "n": 22,
+        "correct": 10,
+        "accuracy": 0.45454545454545453,
+        "exactAccuracy": 0.45454545454545453,
+        "wilson95": [
+          0.26920014432004846,
+          0.6534052671095845
+        ],
+        "meanAbsoluteError": 2.272727272727273
+      },
+      "ensemble": {
+        "n": 22,
+        "correct": 11,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.5,
+        "wilson95": [
+          0.3072180469247956,
+          0.6927819530752044
+        ],
+        "meanAbsoluteError": 2.3181818181818183
+      },
+      "survivalLogistic": {
+        "n": 22,
+        "correct": 9,
+        "accuracy": 0.4090909090909091,
+        "exactAccuracy": 0.4090909090909091,
+        "wilson95": [
+          0.23255559668820378,
+          0.6126552261710619
+        ],
+        "meanAbsoluteError": 2.3636363636363638
+      },
+      "survivalBoosted": {
+        "n": 22,
+        "correct": 10,
+        "accuracy": 0.45454545454545453,
+        "exactAccuracy": 0.45454545454545453,
+        "wilson95": [
+          0.26920014432004846,
+          0.6534052671095845
+        ],
+        "meanAbsoluteError": 2.272727272727273
+      },
+      "survivalTrees": {
+        "n": 22,
+        "correct": 12,
+        "accuracy": 0.5454545454545454,
+        "exactAccuracy": 0.5454545454545454,
+        "wilson95": [
+          0.34659473289041554,
+          0.7307998556799515
+        ],
+        "meanAbsoluteError": 1.9545454545454546
+      },
+      "onlineSelection": {
+        "n": 22,
+        "correct": 10,
+        "accuracy": 0.45454545454545453,
+        "exactAccuracy": 0.45454545454545453,
+        "wilson95": [
+          0.26920014432004846,
+          0.6534052671095845
+        ],
+        "meanAbsoluteError": 2.1363636363636362
+      }
+    },
+    "easy": {
+      "alwaysFirst": {
+        "n": 50,
+        "correct": 31,
+        "accuracy": 0.62,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.4815019502239357,
+          0.7413740415742278
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "ownMode": {
+        "n": 50,
+        "correct": 31,
+        "accuracy": 0.62,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.4815019502239357,
+          0.7413740415742278
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "personalHazards": {
+        "n": 50,
+        "correct": 31,
+        "accuracy": 0.62,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.4815019502239357,
+          0.7413740415742278
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "contextualHazards": {
+        "n": 50,
+        "correct": 30,
+        "accuracy": 0.6,
+        "exactAccuracy": 0.58,
+        "wilson95": [
+          0.4618118910275937,
+          0.7239181021375425
+        ],
+        "meanAbsoluteError": 0.68
+      },
+      "policy_prior": {
+        "n": 50,
+        "correct": 26,
+        "accuracy": 0.52,
+        "exactAccuracy": 0.52,
+        "wilson95": [
+          0.3851151225880844,
+          0.6520308760449429
+        ],
+        "meanAbsoluteError": 1.88
+      },
+      "policy_strong": {
+        "n": 50,
+        "correct": 31,
+        "accuracy": 0.62,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.4815019502239357,
+          0.7413740415742278
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "policy_learned": {
+        "n": 50,
+        "correct": 26,
+        "accuracy": 0.52,
+        "exactAccuracy": 0.52,
+        "wilson95": [
+          0.3851151225880844,
+          0.6520308760449429
+        ],
+        "meanAbsoluteError": 1.82
+      },
+      "retry_learn": {
+        "n": 50,
+        "correct": 26,
+        "accuracy": 0.52,
+        "exactAccuracy": 0.52,
+        "wilson95": [
+          0.3851151225880844,
+          0.6520308760449429
+        ],
+        "meanAbsoluteError": 1.76
+      },
+      "retry_keys": {
+        "n": 50,
+        "correct": 25,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.48,
+        "wilson95": [
+          0.36644286412332855,
+          0.6335571358766714
+        ],
+        "meanAbsoluteError": 2.28
+      },
+      "retry_earlyPlan": {
+        "n": 50,
+        "correct": 25,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.48,
+        "wilson95": [
+          0.36644286412332855,
+          0.6335571358766714
+        ],
+        "meanAbsoluteError": 2.28
+      },
+      "retry_lowPictureMemory": {
+        "n": 50,
+        "correct": 25,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.48,
+        "wilson95": [
+          0.36644286412332855,
+          0.6335571358766714
+        ],
+        "meanAbsoluteError": 2.6
+      },
+      "memory_twoPictures": {
+        "n": 50,
+        "correct": 26,
+        "accuracy": 0.52,
+        "exactAccuracy": 0.5,
+        "wilson95": [
+          0.3851151225880844,
+          0.6520308760449429
+        ],
+        "meanAbsoluteError": 2.2
+      },
+      "memory_fourPictures": {
+        "n": 50,
+        "correct": 26,
+        "accuracy": 0.52,
+        "exactAccuracy": 0.5,
+        "wilson95": [
+          0.3851151225880844,
+          0.6520308760449429
+        ],
+        "meanAbsoluteError": 2.2
+      },
+      "memory_eightPictures": {
+        "n": 50,
+        "correct": 25,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.48,
+        "wilson95": [
+          0.36644286412332855,
+          0.6335571358766714
+        ],
+        "meanAbsoluteError": 2.18
+      },
+      "memory_fourPicturesNoRetryRecall": {
+        "n": 50,
+        "correct": 25,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.48,
+        "wilson95": [
+          0.36644286412332855,
+          0.6335571358766714
+        ],
+        "meanAbsoluteError": 2.92
+      },
+      "memory_fourPicturesMediumRetryRecall": {
+        "n": 50,
+        "correct": 26,
+        "accuracy": 0.52,
+        "exactAccuracy": 0.5,
+        "wilson95": [
+          0.3851151225880844,
+          0.6520308760449429
+        ],
+        "meanAbsoluteError": 2.18
+      },
+      "forest": {
+        "n": 50,
+        "correct": 31,
+        "accuracy": 0.62,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.4815019502239357,
+          0.7413740415742278
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "extraTrees": {
+        "n": 50,
+        "correct": 31,
+        "accuracy": 0.62,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.4815019502239357,
+          0.7413740415742278
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "logistic": {
+        "n": 50,
+        "correct": 28,
+        "accuracy": 0.56,
+        "exactAccuracy": 0.56,
+        "wilson95": [
+          0.4230578680014353,
+          0.6883801278976466
+        ],
+        "meanAbsoluteError": 0.7
+      },
+      "boosted": {
+        "n": 50,
+        "correct": 24,
+        "accuracy": 0.48,
+        "exactAccuracy": 0.48,
+        "wilson95": [
+          0.3479691239550571,
+          0.6148848774119157
+        ],
+        "meanAbsoluteError": 0.8
+      },
+      "ensemble": {
+        "n": 50,
+        "correct": 30,
+        "accuracy": 0.6,
+        "exactAccuracy": 0.6,
+        "wilson95": [
+          0.4618118910275937,
+          0.7239181021375425
+        ],
+        "meanAbsoluteError": 0.66
+      },
+      "survivalLogistic": {
+        "n": 50,
+        "correct": 30,
+        "accuracy": 0.6,
+        "exactAccuracy": 0.6,
+        "wilson95": [
+          0.4618118910275937,
+          0.7239181021375425
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "survivalBoosted": {
+        "n": 50,
+        "correct": 30,
+        "accuracy": 0.6,
+        "exactAccuracy": 0.6,
+        "wilson95": [
+          0.4618118910275937,
+          0.7239181021375425
+        ],
+        "meanAbsoluteError": 0.68
+      },
+      "survivalTrees": {
+        "n": 50,
+        "correct": 31,
+        "accuracy": 0.62,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.4815019502239357,
+          0.7413740415742278
+        ],
+        "meanAbsoluteError": 0.64
+      },
+      "onlineSelection": {
+        "n": 50,
+        "correct": 32,
+        "accuracy": 0.64,
+        "exactAccuracy": 0.62,
+        "wilson95": [
+          0.5014076201030195,
+          0.7586143703281711
+        ],
+        "meanAbsoluteError": 0.6
+      }
+    }
+  },
+  "learnedPolicyPeriod": {
+    "alwaysFirst": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.2608695652173914
+    },
+    "ownMode": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.2608695652173914
+    },
+    "personalHazards": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.2608695652173914
+    },
+    "contextualHazards": {
+      "n": 23,
+      "correct": 13,
+      "accuracy": 0.5652173913043478,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.3681104930501695,
+        0.7436563166780135
+      ],
+      "meanAbsoluteError": 1.391304347826087
+    },
+    "policy_prior": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 0.8260869565217391
+    },
+    "policy_strong": {
+      "n": 23,
+      "correct": 15,
+      "accuracy": 0.6521739130434783,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4488997690689164,
+        0.8118894536301776
+      ],
+      "meanAbsoluteError": 0.6521739130434783
+    },
+    "policy_learned": {
+      "n": 23,
+      "correct": 13,
+      "accuracy": 0.5652173913043478,
+      "exactAccuracy": 0.5217391304347826,
+      "wilson95": [
+        0.3681104930501695,
+        0.7436563166780135
+      ],
+      "meanAbsoluteError": 0.8695652173913043
+    },
+    "retry_learn": {
+      "n": 23,
+      "correct": 13,
+      "accuracy": 0.5652173913043478,
+      "exactAccuracy": 0.5217391304347826,
+      "wilson95": [
+        0.3681104930501695,
+        0.7436563166780135
+      ],
+      "meanAbsoluteError": 0.9130434782608695
+    },
+    "retry_keys": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.4782608695652173
+    },
+    "retry_earlyPlan": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.4782608695652173
+    },
+    "retry_lowPictureMemory": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.7826086956521738
+    },
+    "memory_twoPictures": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.3478260869565217
+    },
+    "memory_fourPictures": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.3478260869565217
+    },
+    "memory_eightPictures": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.3478260869565217
+    },
+    "memory_fourPicturesNoRetryRecall": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.565217391304348
+    },
+    "memory_fourPicturesMediumRetryRecall": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.3043478260869565
+    },
+    "forest": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.2173913043478262
+    },
+    "extraTrees": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.2608695652173914
+    },
+    "logistic": {
+      "n": 23,
+      "correct": 12,
+      "accuracy": 0.5217391304347826,
+      "exactAccuracy": 0.5217391304347826,
+      "wilson95": [
+        0.3296242986421849,
+        0.7076313046005427
+      ],
+      "meanAbsoluteError": 1.3478260869565217
+    },
+    "boosted": {
+      "n": 23,
+      "correct": 12,
+      "accuracy": 0.5217391304347826,
+      "exactAccuracy": 0.5217391304347826,
+      "wilson95": [
+        0.3296242986421849,
+        0.7076313046005427
+      ],
+      "meanAbsoluteError": 1.3043478260869565
+    },
+    "ensemble": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.2173913043478262
+    },
+    "survivalLogistic": {
+      "n": 23,
+      "correct": 13,
+      "accuracy": 0.5652173913043478,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.3681104930501695,
+        0.7436563166780135
+      ],
+      "meanAbsoluteError": 1.2608695652173914
+    },
+    "survivalBoosted": {
+      "n": 23,
+      "correct": 13,
+      "accuracy": 0.5652173913043478,
+      "exactAccuracy": 0.5652173913043478,
+      "wilson95": [
+        0.3681104930501695,
+        0.7436563166780135
+      ],
+      "meanAbsoluteError": 1.2608695652173914
+    },
+    "survivalTrees": {
+      "n": 23,
+      "correct": 14,
+      "accuracy": 0.6086956521739131,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4078517960374599,
+        0.7784262201761787
+      ],
+      "meanAbsoluteError": 1.2608695652173914
+    },
+    "onlineSelection": {
+      "n": 23,
+      "correct": 15,
+      "accuracy": 0.6521739130434783,
+      "exactAccuracy": 0.6086956521739131,
+      "wilson95": [
+        0.4488997690689164,
+        0.8118894536301776
+      ],
+      "meanAbsoluteError": 0.6521739130434783
+    }
+  },
+  "historicalThresholdMet": false,
+  "targetMet": false,
+  "note": "Each historical prediction uses only observations completed before the level starts. This is an offline chronological reconstruction, not a timestamped prospective forecast. Assisted wins remain in the labels. Models are chosen on earlier completed development levels. These data were previously inspected; prospective validation is still needed."
+}

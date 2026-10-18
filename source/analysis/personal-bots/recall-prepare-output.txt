@@ -1,0 +1,5 @@
+{"name":"Dennisisdebeste","variants":{"configured":51,"full":51}}
+{"name":"Mrs. Doubtfire","variants":{"configured":50,"full":50}}
+{"name":"PUK","variants":{"configured":26,"full":26}}
+{"name":"Gerda","variants":{"configured":112,"full":112}}
+{"physicalControls":445,"decisionsControlled":39268,"alternativePrefixes":478,"sha256":"1c3d52cf78c8d85fa775761b1ae37834fbe4eac2f37bca4ab48245d689673f60"}

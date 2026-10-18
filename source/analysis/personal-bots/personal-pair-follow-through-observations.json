@@ -1,0 +1,96 @@
+{
+  "made": "2026-10-18T00:14:23.224Z",
+  "evidence": "descriptive-recorded-actions-not-winning-try-accuracy",
+  "prefixFingerprint": "21a745c5479ce35ea0002329ea63f4cc076c7fa6f0250ae0d6d88fefa69f565b",
+  "players": {
+    "Dennisisdebeste": [
+      {
+        "n": 249,
+        "followed": 157,
+        "completedImmediately": 152
+      },
+      {
+        "n": 234,
+        "followed": 150,
+        "completedImmediately": 149
+      },
+      {
+        "n": 114,
+        "followed": 87,
+        "completedImmediately": 87
+      },
+      {
+        "n": 31,
+        "followed": 19,
+        "completedImmediately": 18
+      }
+    ],
+    "Mrs. Doubtfire": [
+      {
+        "n": 95,
+        "followed": 51,
+        "completedImmediately": 51
+      },
+      {
+        "n": 187,
+        "followed": 101,
+        "completedImmediately": 100
+      },
+      {
+        "n": 105,
+        "followed": 59,
+        "completedImmediately": 55
+      },
+      {
+        "n": 38,
+        "followed": 25,
+        "completedImmediately": 23
+      }
+    ],
+    "PUK": [
+      {
+        "n": 54,
+        "followed": 41,
+        "completedImmediately": 40
+      },
+      {
+        "n": 44,
+        "followed": 34,
+        "completedImmediately": 31
+      },
+      {
+        "n": 18,
+        "followed": 13,
+        "completedImmediately": 13
+      },
+      {
+        "n": 3,
+        "followed": 1,
+        "completedImmediately": 1
+      }
+    ],
+    "Gerda": [
+      {
+        "n": 293,
+        "followed": 137,
+        "completedImmediately": 81
+      },
+      {
+        "n": 291,
+        "followed": 149,
+        "completedImmediately": 79
+      },
+      {
+        "n": 188,
+        "followed": 102,
+        "completedImmediately": 61
+      },
+      {
+        "n": 25,
+        "followed": 12,
+        "completedImmediately": 6
+      }
+    ]
+  },
+  "note": "Only actually known legal pair setup. Followed means the next tap stays on that picture; taking the opened member can be a fatal mistake with a full tray, not safe completion. Immediate automatic completion is separate; missing next actions are censored."
+}

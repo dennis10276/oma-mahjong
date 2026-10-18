@@ -1,0 +1,180 @@
+Fitted 50 own goal residuals against pinned actors
+Fitted 100 own goal residuals against pinned actors
+Fitted 150 own goal residuals against pinned actors
+Fitted 200 own goal residuals against pinned actors
+Fitted 250 own goal residuals against pinned actors
+Fitted 300 own goal residuals against pinned actors
+Fitted 350 own goal residuals against pinned actors
+Fitted 400 own goal residuals against pinned actors
+Fitted 450 own goal residuals against pinned actors
+Fitted 500 own goal residuals against pinned actors
+{
+  "Dennisisdebeste": {
+    "ownAll": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.709515242537463,
+      "topActionAccuracy": 0.4102787456445993,
+      "trayGoalOpportunities": 93,
+      "trayGoalBaseLogLoss": 0.29376984793005295,
+      "trayGoalLogLoss": 0.3036853892034633,
+      "trayGoalAdjustedJointLogLoss": 1.7099168737824224
+    },
+    "ownNovel": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.7512364260151236,
+      "topActionAccuracy": 0.39198606271777003,
+      "trayGoalOpportunities": 93,
+      "trayGoalBaseLogLoss": 0.3135239459918867,
+      "trayGoalLogLoss": 0.3143928099632498,
+      "trayGoalAdjustedJointLogLoss": 1.7512716195470641
+    },
+    "ownCarryAll": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.7089175961665852,
+      "topActionAccuracy": 0.4133275261324042,
+      "trayGoalOpportunities": 93,
+      "trayGoalBaseLogLoss": 0.2899432551858609,
+      "trayGoalLogLoss": 0.3039328957000208,
+      "trayGoalAdjustedJointLogLoss": 1.7094842497239968
+    },
+    "ownRecallAll": {
+      "decisions": 2296,
+      "prefixes": 20,
+      "jointLogLoss": 1.7085943765471912,
+      "topActionAccuracy": 0.4133275261324042,
+      "trayGoalOpportunities": 93,
+      "trayGoalBaseLogLoss": 0.289609752100097,
+      "trayGoalLogLoss": 0.2985940890834461,
+      "trayGoalAdjustedJointLogLoss": 1.7089582891514816
+    }
+  },
+  "Mrs. Doubtfire": {
+    "ownAll": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.8796504107288818,
+      "topActionAccuracy": 0.3351028533510285,
+      "trayGoalOpportunities": 90,
+      "trayGoalBaseLogLoss": 0.5452384049983774,
+      "trayGoalLogLoss": 0.5175450488114789,
+      "trayGoalAdjustedJointLogLoss": 1.8779965274794979
+    },
+    "ownNovel": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.9454151443976446,
+      "topActionAccuracy": 0.3134054546795091,
+      "trayGoalOpportunities": 90,
+      "trayGoalBaseLogLoss": 0.5448683452258916,
+      "trayGoalLogLoss": 0.5202220087995493,
+      "trayGoalAdjustedJointLogLoss": 1.9439432331313073
+    },
+    "ownCarryAll": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.9026663307262182,
+      "topActionAccuracy": 0.3238221632382216,
+      "trayGoalOpportunities": 90,
+      "trayGoalBaseLogLoss": 0.5706086034293629,
+      "trayGoalLogLoss": 0.5410919702838579,
+      "trayGoalAdjustedJointLogLoss": 1.9009035590055179
+    },
+    "ownRecallAll": {
+      "decisions": 1507,
+      "prefixes": 14,
+      "jointLogLoss": 1.9138653691506795,
+      "topActionAccuracy": 0.3231585932315859,
+      "trayGoalOpportunities": 90,
+      "trayGoalBaseLogLoss": 0.5863766054203736,
+      "trayGoalLogLoss": 0.552772510086606,
+      "trayGoalAdjustedJointLogLoss": 1.9118584888719543
+    }
+  },
+  "PUK": {
+    "ownAll": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7771649734399049,
+      "topActionAccuracy": 0.4296714579055442,
+      "trayGoalOpportunities": 54,
+      "trayGoalBaseLogLoss": 0.4941105839525399,
+      "trayGoalLogLoss": 0.4913872682466287,
+      "trayGoalAdjustedJointLogLoss": 1.7770894811154085
+    },
+    "ownNovel": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7845220311001695,
+      "topActionAccuracy": 0.4204312114989733,
+      "trayGoalOpportunities": 54,
+      "trayGoalBaseLogLoss": 0.49573733735698355,
+      "trayGoalLogLoss": 0.5050123437793355,
+      "trayGoalAdjustedJointLogLoss": 1.7847791411344647
+    },
+    "ownCarryAll": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.7762185494099625,
+      "topActionAccuracy": 0.43018480492813144,
+      "trayGoalOpportunities": 54,
+      "trayGoalBaseLogLoss": 0.4917736035278256,
+      "trayGoalLogLoss": 0.4926388153298582,
+      "trayGoalAdjustedJointLogLoss": 1.7762425337206968
+    },
+    "ownRecallAll": {
+      "decisions": 1948,
+      "prefixes": 20,
+      "jointLogLoss": 1.775770648900851,
+      "topActionAccuracy": 0.4296714579055442,
+      "trayGoalOpportunities": 54,
+      "trayGoalBaseLogLoss": 0.49388847101602695,
+      "trayGoalLogLoss": 0.49137215332808604,
+      "trayGoalAdjustedJointLogLoss": 1.7757008947144297
+    }
+  },
+  "Gerda": {
+    "ownAll": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.002004307846316,
+      "topActionAccuracy": 0.29559971611071684,
+      "trayGoalOpportunities": 75,
+      "trayGoalBaseLogLoss": 0.5197110931530091,
+      "trayGoalLogLoss": 0.5172651860490621,
+      "trayGoalAdjustedJointLogLoss": 2.0019392109574596
+    },
+    "ownNovel": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.0041467048839205,
+      "topActionAccuracy": 0.2913413768630234,
+      "trayGoalOpportunities": 75,
+      "trayGoalBaseLogLoss": 0.5272873478360609,
+      "trayGoalLogLoss": 0.5291729553190107,
+      "trayGoalAdjustedJointLogLoss": 2.0041968896111104
+    },
+    "ownCarryAll": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.0178225924408366,
+      "topActionAccuracy": 0.28459900638750885,
+      "trayGoalOpportunities": 75,
+      "trayGoalBaseLogLoss": 0.5176933190055099,
+      "trayGoalLogLoss": 0.5186938216576419,
+      "trayGoalAdjustedJointLogLoss": 2.01784922043903
+    },
+    "ownRecallAll": {
+      "decisions": 2818,
+      "prefixes": 20,
+      "jointLogLoss": 2.019581229096011,
+      "topActionAccuracy": 0.2863733144073811,
+      "trayGoalOpportunities": 75,
+      "trayGoalBaseLogLoss": 0.520873584028347,
+      "trayGoalLogLoss": 0.522891956890792,
+      "trayGoalAdjustedJointLogLoss": 2.0196349473233646
+    }
+  }
+}

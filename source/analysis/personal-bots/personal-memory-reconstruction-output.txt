@@ -1,0 +1,98 @@
+{
+  "Dennisisdebeste": {
+    "configured": {
+      "prefixes": 74,
+      "decisions": 7835,
+      "prefixesWithMemory": 36,
+      "changedDecisions": 2023,
+      "reopeningsRecognized": 243,
+      "rememberedInspectionsNowTakes": 21,
+      "blindFeaturesResolved": 5,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 4
+    },
+    "full": {
+      "prefixes": 74,
+      "decisions": 7835,
+      "prefixesWithMemory": 36,
+      "changedDecisions": 2078,
+      "reopeningsRecognized": 328,
+      "rememberedInspectionsNowTakes": 27,
+      "blindFeaturesResolved": 5,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 4
+    }
+  },
+  "Mrs. Doubtfire": {
+    "configured": {
+      "prefixes": 65,
+      "decisions": 5198,
+      "prefixesWithMemory": 50,
+      "changedDecisions": 2874,
+      "reopeningsRecognized": 462,
+      "rememberedInspectionsNowTakes": 47,
+      "blindFeaturesResolved": 0,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 14
+    },
+    "full": {
+      "prefixes": 65,
+      "decisions": 5198,
+      "prefixesWithMemory": 50,
+      "changedDecisions": 2892,
+      "reopeningsRecognized": 541,
+      "rememberedInspectionsNowTakes": 57,
+      "blindFeaturesResolved": 1,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 17
+    }
+  },
+  "PUK": {
+    "configured": {
+      "prefixes": 57,
+      "decisions": 4771,
+      "prefixesWithMemory": 26,
+      "changedDecisions": 1724,
+      "reopeningsRecognized": 286,
+      "rememberedInspectionsNowTakes": 48,
+      "blindFeaturesResolved": 2,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 12
+    },
+    "full": {
+      "prefixes": 57,
+      "decisions": 4771,
+      "prefixesWithMemory": 26,
+      "changedDecisions": 1777,
+      "reopeningsRecognized": 355,
+      "rememberedInspectionsNowTakes": 59,
+      "blindFeaturesResolved": 2,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 16
+    }
+  },
+  "Gerda": {
+    "configured": {
+      "prefixes": 202,
+      "decisions": 15739,
+      "prefixesWithMemory": 110,
+      "changedDecisions": 7138,
+      "reopeningsRecognized": 1085,
+      "rememberedInspectionsNowTakes": 97,
+      "blindFeaturesResolved": 13,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 30
+    },
+    "full": {
+      "prefixes": 202,
+      "decisions": 15739,
+      "prefixesWithMemory": 110,
+      "changedDecisions": 7369,
+      "reopeningsRecognized": 1264,
+      "rememberedInspectionsNowTakes": 112,
+      "blindFeaturesResolved": 14,
+      "fatalLabelsResolved": 0,
+      "pairKindsRestored": 38
+    }
+  }
+}

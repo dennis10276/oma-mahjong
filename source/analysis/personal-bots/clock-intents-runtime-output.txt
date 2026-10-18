@@ -1,0 +1,27 @@
+{
+  "made": "2026-10-18T20:08:55.576Z",
+  "targetMet": false,
+  "evidence": "persistent-clock-intent-native-runtime-parity-only",
+  "prefixes": 445,
+  "decisions": 39268,
+  "clockDecisions": 1378,
+  "maximumDifference": 8.881784197001252e-16,
+  "modelsSha256": "afdd1c5a747a94722ba8f194f01fa90f346083cc0dd11258136f1e44ea92e645",
+  "nativeSha256": "82443b865c6fc27359635e492193edf0768cf303426d7610a597dd12d88ce1ac",
+  "dataSha256": "3d3c3d903f2deb1395a1a4e308cb671eb224cd8cbfff7c32fc625729e20115f5",
+  "actorSha256": "dffe93e21abed8a1e41ac079ae50be22d5ec0958ea9de65eb23f1fd94032f1fe",
+  "sourceHashes": {
+    "tools/sim/refit/personal_clock_intents_runtime_audit.js": "42e8981b1654b8a14c013e8c5194990ea65c0ff4a4ab6bb242554c4c7db660d3",
+    "tools/sim/refit/personal_clock_intents_choice.js": "b8ef6a3d153d4300af1b44fae5cfba2536b3ba5623e52f2e7971d8e18cb234c4",
+    "tools/sim/refit/known_clock_strategy.js": "84edc19c72293d784f6d5d429fa3f849d1775e230b59ba77f5520ce02f62827d",
+    "tools/sim/refit/known_tray_plan.js": "e8cc62a1e52c7824ab4031b5702d5231ab05a51a260c203e9fabb48c3eed505a",
+    "www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "tools/sim/refit/known_clock_dig.js": "aa041eaa6813311fb0aabe2cc1fd502fea70760733a7246b6b745012b9045735",
+    "tools/sim/refit/known_clock_plan.js": "ceedda69596e61148d29c7024a622cf891b0f02712b8d8951cf1ebdb106bc850",
+    "tools/sim/refit/personal_clock_strategy_choice.js": "9dd83e112bc51205fc91d478770a24e52dd52a17379c166569f8eab7dfc887f3",
+    "tools/sim/refit/known_tray_plan_cache.js": "3ded5f1a8896940cc103b9325c0df70f2ed3bedd3b2bf0d3983b057a8e89dfb9",
+    "tools/sim/refit/known_tray_plan_bits.js": "55b232c9439c1e05423b3983a3e7da8d45b1179b16cf84d4964ad0c6232b2c06",
+    "tools/sim/refit/personal_context_choice.js": "67b3e9fdb661ae92f1df6c2060d616182108583af53c1d74e5452546788f0523"
+  },
+  "note": "Causal probability/posterior parity on all training prefixes. No future target actions enter autonomous intent state. This is not held winning-attempt accuracy and does not establish80% success."
+}

@@ -1,0 +1,4 @@
+warning: in the working copy of 'source/tools/sim/refit/mimic/Dennisisdebeste.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'source/tools/sim/refit/mimic/Gerda.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'source/tools/sim/refit/mimic/Mrs_Doubtfire.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'source/tools/sim/refit/mimic/PUK.json', LF will be replaced by CRLF the next time Git touches it

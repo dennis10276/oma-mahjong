@@ -1,0 +1,14 @@
+{
+  "experiment": "personal-outcome-styles",
+  "runRoot": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\known-plan-2026-10-18T15-26-08-976Z",
+  "snapshot": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\experiments\\personal-outcome-styles-actions-2026-10-18T15-26-03-459Z",
+  "pilotCommand": [
+    "node",
+    "tools/sim/refit/personal_outcome_styles_count_data.js",
+    "pilot"
+  ],
+  "fullCommand": [
+    "node",
+    "tools/sim/refit/personal_outcome_styles_count_data.js"
+  ]
+}

@@ -1,0 +1,41 @@
+'use strict';
+const assert = require('assert/strict');
+const Hard = require('../../../www/hard.js'), L = require('../../../www/layouts.js');
+const { compareFrame } = require('./physical_scoring_audit.js');
+const actor = { ...Hard.P, physicalFlips: true, physicalSingleStep: true, peek: 0, end: 0, plan: 0, forceMatches: false };
+const boardOf = (faces, changes = {}) => {
+  const tiles = faces.map((face, index) => ({ x: index * 4, y: 0, z: 0 }));
+  return { tiles, nb: L.neighbors(tiles), faces, down: faces.map(() => 0), physicalLog: [], log: [], policyLog: [], logMatches: true, ...changes };
+};
+const actual = boardOf([0, 1, 0, 1], { start: [0], follow: [1], clock: { i: 2, n: 5 } });
+const anticipated = structuredClone(actual);
+const result = Hard.play(actual, actor, 1);
+assert.deepEqual(result, Hard.play(anticipated, { ...actor, physicalSingleStep: false }, 1));
+assert.deepEqual(actual.physicalLog, anticipated.physicalLog);
+const decision = actual.policyLog[0], feature = decision.F[decision.k].concat(decision.goals[decision.k]);
+const compared = compareFrame(actual, actual.physicalLog[0], actual.physicalLog[1], feature);
+assert.equal(compared.actualTray, 2);
+assert.equal(compared.scoredTray, 2);
+assert.equal(compared.trayDifferent, false);
+assert.equal(compared.scoredClock, 0);
+const paired = boardOf([0, 1, 2, 3, 3, 0, 1, 2], { start: [0, 1, 2], down: [0, 0, 0, 1, 0, 0, 0, 0],
+  openPeekAtStart: 3, follow: [4], clock: { i: 3, n: 4 } });
+const pairedResult = Hard.play(paired, actor, 1);
+assert.equal(pairedResult.moves, 5);
+assert.deepEqual(pairedResult.tray, [0, 1, 2]);
+assert.equal(pairedResult.at[3], 4);
+const pairedDecision = paired.policyLog[0];
+assert.equal(pairedDecision.F[pairedDecision.k][2], 1);
+assert.equal(pairedDecision.F[pairedDecision.k][14], 1);
+assert.equal(pairedDecision.F[pairedDecision.k][18], 0);
+assert.equal(pairedDecision.goals[pairedDecision.k][Hard.GOAL_FEAT.indexOf('clockTaken')], 1);
+const hiddenFeatures = [[0, 1, 0, 1, 2, 2], [0, 2, 0, 1, 1, 2]].map(faces => {
+  const board = boardOf(faces, { down: [0, 1, 0, 0, 1, 0], start: [0], follow: [2] });
+  Hard.play(board, actor, 1);
+  return board.policyLog[0].F;
+});
+assert.deepEqual(hiddenFeatures[0], hiddenFeatures[1]);
+const { actorOf } = require('./physical_count_data.js');
+const modeled = actorOf({ physicalSingleStep: true, withinWeights: Array(Hard.POLICY_FEAT.length + Hard.GOAL_FEAT.length).fill(0), kindModel: {} });
+assert.equal(modeled.physicalSingleStep, true);
+console.log('PASS single-step scoring: actual tray/goal credit, mandatory physical twins and unchanged followed actions');

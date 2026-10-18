@@ -1,0 +1,3251 @@
+{
+  "made": "2026-10-18T01:53:53.709878+00:00",
+  "evidence": "historical-exploratory-personal-context-actions",
+  "targetMet": false,
+  "personalOnly": true,
+  "prefixFingerprint": "46e56971268b46fdedf6afc866270e1e2e46c4bb2f6ac52bd9bcf7d77668beef",
+  "inputHashes": {
+    "analysis/archive/personal-bots/policy-value-prefix-data.json": "f859cee9b0244211cad658f20f3fa1908b321106b156168c308548f5202c75ab",
+    "analysis/archive/personal-bots/experiments/personal-value-2026-10-18T01-27-33-959Z/analysis/archive/personal-bots/policy-value-prefix-data.json": "f859cee9b0244211cad658f20f3fa1908b321106b156168c308548f5202c75ab",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-memory-policy-bank.json": "2a3ad9dfebc5b0afe469a82887e3f8a6b819393723977692a25e2d8cad9b07b2",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/archive/personal-bots/physical-count-requests.json": "dae9c763d2a0dc03e1b1564ec4ce493c3fea6edc7b3decc5f6d5c0a0a19b53d9",
+    "analysis/archive/personal-bots/experiments/personal-memory-2026-10-18T00-43-24-647Z/analysis/personal-bots/personal-memory-action-evaluation.json": "83174b1af8071900ba6f0b77f97506cb5cec680a0b855db270b6e512638fda43"
+  },
+  "fitSourceHashes": {
+    "personal_context_fit.py": "9f04b48de0f7c66f5683f839b5a38bff9764766c11eaf4d87a40b59290dabc34",
+    "personal_context.py": "cefb8d4b141db8cfbed3e9606452b355de873f251d9ced6d87d62b06ee438350",
+    "personal_value.py": "06c06a7c8cfd63ca3b333dca8f3327cae3008dcb4bbcc0de940dc8be2a5f8fa1",
+    "personal_value_fit.py": "b8b63433ef8f85db35f9d6e145614a84b22c84f18e98d451ee671b26dba5227d",
+    "personal_full_choice_fit.py": "f830b849f07d517e1e05dc64f0393fe461064b136c2255b5bb32eef7324b0096",
+    "personal_kind_fit.py": "c8a9fd59e0d4d6942a1e9b17c648a5b3aec05376a6a14091b9866312e43c66bf",
+    "personal_policy_fit.py": "989884f4851967e89fdc393b7b478d96509e22e17b01759c11a4c3f6ccae52c7",
+    "physical_policy_bank.py": "3f57d1ce2fc6f9d527c491848af651a68c8a7e62c08baa8c06d1d384d8045e0f"
+  },
+  "modelsSha256": "ec3fdcbc3c99ec08e31527838cd894e5442ee977defec9448846d4e9cf36f5bc",
+  "players": {
+    "Dennisisdebeste": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "control": {
+            "prefixes": 20,
+            "decisions": 2296,
+            "jointLogLoss": 1.7095152425374627,
+            "topActionAccuracy": 0.4102787456445993
+          },
+          "context8": {
+            "prefixes": 20,
+            "decisions": 2296,
+            "jointLogLoss": 1.7005218500011903,
+            "topActionAccuracy": 0.4094076655052265
+          },
+          "context24": {
+            "prefixes": 20,
+            "decisions": 2296,
+            "jointLogLoss": 1.6990545299375528,
+            "topActionAccuracy": 0.4063588850174216
+          }
+        },
+        "ownCarryAll": {
+          "control": {
+            "prefixes": 20,
+            "decisions": 2296,
+            "jointLogLoss": 1.7089175961665852,
+            "topActionAccuracy": 0.4133275261324042
+          },
+          "context8": {
+            "prefixes": 20,
+            "decisions": 2296,
+            "jointLogLoss": 1.699820122434733,
+            "topActionAccuracy": 0.41114982578397213
+          },
+          "context24": {
+            "prefixes": 20,
+            "decisions": 2296,
+            "jointLogLoss": 1.6994629361233506,
+            "topActionAccuracy": 0.4107142857142857
+          }
+        }
+      },
+      "rows": [
+        {
+          "aid": "cf8b410c-ea52-4086-af9b-34c87f90d99d",
+          "level": 107,
+          "opening": 1792236558549,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 131,
+                "jointLogLoss": 1.4418665423675174,
+                "topActionAccuracy": 0.48854961832061067
+              },
+              "context8": {
+                "decisions": 131,
+                "jointLogLoss": 1.4452251407022814,
+                "topActionAccuracy": 0.4580152671755725
+              },
+              "context24": {
+                "decisions": 131,
+                "jointLogLoss": 1.457377280675369,
+                "topActionAccuracy": 0.42748091603053434
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 131,
+                "jointLogLoss": 1.43288702435645,
+                "topActionAccuracy": 0.4961832061068702
+              },
+              "context8": {
+                "decisions": 131,
+                "jointLogLoss": 1.4435719091074026,
+                "topActionAccuracy": 0.4580152671755725
+              },
+              "context24": {
+                "decisions": 131,
+                "jointLogLoss": 1.4538255183168198,
+                "topActionAccuracy": 0.45038167938931295
+              }
+            }
+          }
+        },
+        {
+          "aid": "5d9cdde1-8175-4614-b6c4-65450bbee997",
+          "level": 108,
+          "opening": 1792236711656,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 95,
+                "jointLogLoss": 1.8715249430888161,
+                "topActionAccuracy": 0.3157894736842105
+              },
+              "context8": {
+                "decisions": 95,
+                "jointLogLoss": 1.8719406597681942,
+                "topActionAccuracy": 0.3263157894736842
+              },
+              "context24": {
+                "decisions": 95,
+                "jointLogLoss": 1.8677645196574384,
+                "topActionAccuracy": 0.3263157894736842
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 95,
+                "jointLogLoss": 1.8729610147313407,
+                "topActionAccuracy": 0.3157894736842105
+              },
+              "context8": {
+                "decisions": 95,
+                "jointLogLoss": 1.8643017455886495,
+                "topActionAccuracy": 0.3263157894736842
+              },
+              "context24": {
+                "decisions": 95,
+                "jointLogLoss": 1.8685976542202163,
+                "topActionAccuracy": 0.3368421052631579
+              }
+            }
+          }
+        },
+        {
+          "aid": "7f00a2e4-bb0e-4ad9-8e76-e3d05e38616e",
+          "level": 109,
+          "opening": 1792237007560,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 51,
+                "jointLogLoss": 1.4757224616198072,
+                "topActionAccuracy": 0.5098039215686274
+              },
+              "context8": {
+                "decisions": 51,
+                "jointLogLoss": 1.4531031747973706,
+                "topActionAccuracy": 0.5098039215686274
+              },
+              "context24": {
+                "decisions": 51,
+                "jointLogLoss": 1.4156743448063767,
+                "topActionAccuracy": 0.5098039215686274
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 51,
+                "jointLogLoss": 1.4710022468698885,
+                "topActionAccuracy": 0.5098039215686274
+              },
+              "context8": {
+                "decisions": 51,
+                "jointLogLoss": 1.4598478539052562,
+                "topActionAccuracy": 0.5098039215686274
+              },
+              "context24": {
+                "decisions": 51,
+                "jointLogLoss": 1.4238027204225392,
+                "topActionAccuracy": 0.5294117647058824
+              }
+            }
+          }
+        },
+        {
+          "aid": "a00f695e-fe99-4e8b-9a46-8173045107dd",
+          "level": 110,
+          "opening": 1792237324237,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 122,
+                "jointLogLoss": 1.6078968626028252,
+                "topActionAccuracy": 0.5245901639344263
+              },
+              "context8": {
+                "decisions": 122,
+                "jointLogLoss": 1.5963711392522772,
+                "topActionAccuracy": 0.5327868852459017
+              },
+              "context24": {
+                "decisions": 122,
+                "jointLogLoss": 1.590804147307305,
+                "topActionAccuracy": 0.5245901639344263
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 122,
+                "jointLogLoss": 1.6017471800074874,
+                "topActionAccuracy": 0.5245901639344263
+              },
+              "context8": {
+                "decisions": 122,
+                "jointLogLoss": 1.5795518987103043,
+                "topActionAccuracy": 0.5327868852459017
+              },
+              "context24": {
+                "decisions": 122,
+                "jointLogLoss": 1.5873227623579946,
+                "topActionAccuracy": 0.5573770491803278
+              }
+            }
+          }
+        },
+        {
+          "aid": "5ae9f572-0f2c-43c5-9ca5-a702dadcd3b7",
+          "level": 111,
+          "opening": 1792237449745,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 100,
+                "jointLogLoss": 1.633329178353156,
+                "topActionAccuracy": 0.41
+              },
+              "context8": {
+                "decisions": 100,
+                "jointLogLoss": 1.6178517140036717,
+                "topActionAccuracy": 0.41
+              },
+              "context24": {
+                "decisions": 100,
+                "jointLogLoss": 1.6114427583326036,
+                "topActionAccuracy": 0.39
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 100,
+                "jointLogLoss": 1.633982260185776,
+                "topActionAccuracy": 0.41
+              },
+              "context8": {
+                "decisions": 100,
+                "jointLogLoss": 1.6175664948206148,
+                "topActionAccuracy": 0.41
+              },
+              "context24": {
+                "decisions": 100,
+                "jointLogLoss": 1.6110108273502362,
+                "topActionAccuracy": 0.4
+              }
+            }
+          }
+        },
+        {
+          "aid": "70633ed7-a7ed-408e-8194-f7d6e1e7a7df",
+          "level": 112,
+          "opening": 1792237765230,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 157,
+                "jointLogLoss": 1.731029608028183,
+                "topActionAccuracy": 0.42038216560509556
+              },
+              "context8": {
+                "decisions": 157,
+                "jointLogLoss": 1.7260756529266412,
+                "topActionAccuracy": 0.42038216560509556
+              },
+              "context24": {
+                "decisions": 157,
+                "jointLogLoss": 1.7184210797629096,
+                "topActionAccuracy": 0.4140127388535032
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 157,
+                "jointLogLoss": 1.738537875215615,
+                "topActionAccuracy": 0.4267515923566879
+              },
+              "context8": {
+                "decisions": 157,
+                "jointLogLoss": 1.7370868730046705,
+                "topActionAccuracy": 0.42038216560509556
+              },
+              "context24": {
+                "decisions": 157,
+                "jointLogLoss": 1.7296854595814068,
+                "topActionAccuracy": 0.4140127388535032
+              }
+            }
+          }
+        },
+        {
+          "aid": "6004da1b-844c-4eba-922e-6f1a4e90c7a6",
+          "level": 113,
+          "opening": 1792237901717,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 169,
+                "jointLogLoss": 1.5792110130445745,
+                "topActionAccuracy": 0.41420118343195267
+              },
+              "context8": {
+                "decisions": 169,
+                "jointLogLoss": 1.5681513174106398,
+                "topActionAccuracy": 0.4260355029585799
+              },
+              "context24": {
+                "decisions": 169,
+                "jointLogLoss": 1.554978996642187,
+                "topActionAccuracy": 0.4319526627218935
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 169,
+                "jointLogLoss": 1.566658633178666,
+                "topActionAccuracy": 0.4437869822485207
+              },
+              "context8": {
+                "decisions": 169,
+                "jointLogLoss": 1.548958865925475,
+                "topActionAccuracy": 0.44970414201183434
+              },
+              "context24": {
+                "decisions": 169,
+                "jointLogLoss": 1.5390578438090894,
+                "topActionAccuracy": 0.4437869822485207
+              }
+            }
+          }
+        },
+        {
+          "aid": "cb7b9713-024b-4bad-9d58-c5169a6ba86d",
+          "level": 114,
+          "opening": 1792238142501,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 126,
+                "jointLogLoss": 1.479603500963405,
+                "topActionAccuracy": 0.5079365079365079
+              },
+              "context8": {
+                "decisions": 126,
+                "jointLogLoss": 1.4739445106535327,
+                "topActionAccuracy": 0.5
+              },
+              "context24": {
+                "decisions": 126,
+                "jointLogLoss": 1.478505822307698,
+                "topActionAccuracy": 0.5079365079365079
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 126,
+                "jointLogLoss": 1.471636050544998,
+                "topActionAccuracy": 0.5
+              },
+              "context8": {
+                "decisions": 126,
+                "jointLogLoss": 1.4662371301214863,
+                "topActionAccuracy": 0.49206349206349204
+              },
+              "context24": {
+                "decisions": 126,
+                "jointLogLoss": 1.4711302208724086,
+                "topActionAccuracy": 0.5
+              }
+            }
+          }
+        },
+        {
+          "aid": "12d958f6-91c1-4fad-a757-d93382a17b0a",
+          "level": 115,
+          "opening": 1792238277298,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 15,
+                "jointLogLoss": 1.4901429948840321,
+                "topActionAccuracy": 0.6666666666666666
+              },
+              "context8": {
+                "decisions": 15,
+                "jointLogLoss": 1.413817673616667,
+                "topActionAccuracy": 0.6666666666666666
+              },
+              "context24": {
+                "decisions": 15,
+                "jointLogLoss": 1.3983544946656468,
+                "topActionAccuracy": 0.6666666666666666
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 15,
+                "jointLogLoss": 1.4650492484512618,
+                "topActionAccuracy": 0.6
+              },
+              "context8": {
+                "decisions": 15,
+                "jointLogLoss": 1.4033619912833517,
+                "topActionAccuracy": 0.6666666666666666
+              },
+              "context24": {
+                "decisions": 15,
+                "jointLogLoss": 1.3772768381327702,
+                "topActionAccuracy": 0.6666666666666666
+              }
+            }
+          }
+        },
+        {
+          "aid": "4a7600f2-13f6-401b-9da2-03109a0b7b86",
+          "level": 116,
+          "opening": 1792238811966,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 183,
+                "jointLogLoss": 1.938983766523254,
+                "topActionAccuracy": 0.33879781420765026
+              },
+              "context8": {
+                "decisions": 183,
+                "jointLogLoss": 1.959502077951364,
+                "topActionAccuracy": 0.31693989071038253
+              },
+              "context24": {
+                "decisions": 183,
+                "jointLogLoss": 2.0037464014127537,
+                "topActionAccuracy": 0.3114754098360656
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 183,
+                "jointLogLoss": 1.9428278975428956,
+                "topActionAccuracy": 0.3333333333333333
+              },
+              "context8": {
+                "decisions": 183,
+                "jointLogLoss": 1.9635386467966294,
+                "topActionAccuracy": 0.3224043715846995
+              },
+              "context24": {
+                "decisions": 183,
+                "jointLogLoss": 2.0051034724373573,
+                "topActionAccuracy": 0.29508196721311475
+              }
+            }
+          }
+        },
+        {
+          "aid": "784c1381-9c98-44d7-b1a5-a62615c71280",
+          "level": 117,
+          "opening": 1792239201873,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 153,
+                "jointLogLoss": 1.4443209142578297,
+                "topActionAccuracy": 0.46405228758169936
+              },
+              "context8": {
+                "decisions": 153,
+                "jointLogLoss": 1.4510643944236514,
+                "topActionAccuracy": 0.46405228758169936
+              },
+              "context24": {
+                "decisions": 153,
+                "jointLogLoss": 1.4430995544308165,
+                "topActionAccuracy": 0.46405228758169936
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 153,
+                "jointLogLoss": 1.4378802714000918,
+                "topActionAccuracy": 0.46405228758169936
+              },
+              "context8": {
+                "decisions": 153,
+                "jointLogLoss": 1.4414980514368851,
+                "topActionAccuracy": 0.47058823529411764
+              },
+              "context24": {
+                "decisions": 153,
+                "jointLogLoss": 1.4307673710536581,
+                "topActionAccuracy": 0.47058823529411764
+              }
+            }
+          }
+        },
+        {
+          "aid": "a776a740-a11f-449d-844e-402db9b05d83",
+          "level": 118,
+          "opening": 1792239395598,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 101,
+                "jointLogLoss": 1.7373223933113087,
+                "topActionAccuracy": 0.32673267326732675
+              },
+              "context8": {
+                "decisions": 101,
+                "jointLogLoss": 1.7395120831325768,
+                "topActionAccuracy": 0.32673267326732675
+              },
+              "context24": {
+                "decisions": 101,
+                "jointLogLoss": 1.7477896201923364,
+                "topActionAccuracy": 0.32673267326732675
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 101,
+                "jointLogLoss": 1.740025022935999,
+                "topActionAccuracy": 0.33663366336633666
+              },
+              "context8": {
+                "decisions": 101,
+                "jointLogLoss": 1.738797270970894,
+                "topActionAccuracy": 0.33663366336633666
+              },
+              "context24": {
+                "decisions": 101,
+                "jointLogLoss": 1.7525581505159769,
+                "topActionAccuracy": 0.33663366336633666
+              }
+            }
+          }
+        },
+        {
+          "aid": "4bd549f0-5e86-4617-97d9-b1878806d505",
+          "level": 120,
+          "opening": 1792256114462,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 10,
+                "jointLogLoss": 2.584555482175225,
+                "topActionAccuracy": 0.2
+              },
+              "context8": {
+                "decisions": 10,
+                "jointLogLoss": 2.1345492310353533,
+                "topActionAccuracy": 0.1
+              },
+              "context24": {
+                "decisions": 10,
+                "jointLogLoss": 1.9828121928898146,
+                "topActionAccuracy": 0.2
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 10,
+                "jointLogLoss": 2.580574224685308,
+                "topActionAccuracy": 0.2
+              },
+              "context8": {
+                "decisions": 10,
+                "jointLogLoss": 2.350453799012187,
+                "topActionAccuracy": 0.1
+              },
+              "context24": {
+                "decisions": 10,
+                "jointLogLoss": 2.052222370050617,
+                "topActionAccuracy": 0.2
+              }
+            }
+          }
+        },
+        {
+          "aid": "5fff03dd-90e6-4cb7-a6e8-03b8029f6c35",
+          "level": 121,
+          "opening": 1792256342328,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 12,
+                "jointLogLoss": 1.0998288722655,
+                "topActionAccuracy": 0.5
+              },
+              "context8": {
+                "decisions": 12,
+                "jointLogLoss": 1.0195221355085131,
+                "topActionAccuracy": 0.5833333333333334
+              },
+              "context24": {
+                "decisions": 12,
+                "jointLogLoss": 0.9832680839177974,
+                "topActionAccuracy": 0.5833333333333334
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 12,
+                "jointLogLoss": 1.0965263900233184,
+                "topActionAccuracy": 0.5
+              },
+              "context8": {
+                "decisions": 12,
+                "jointLogLoss": 0.9809506622323444,
+                "topActionAccuracy": 0.5833333333333334
+              },
+              "context24": {
+                "decisions": 12,
+                "jointLogLoss": 0.9449351262057881,
+                "topActionAccuracy": 0.5833333333333334
+              }
+            }
+          }
+        },
+        {
+          "aid": "fa97ed27-36cf-4efb-b594-38df3defdebb",
+          "level": 122,
+          "opening": 1792258037360,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 7,
+                "jointLogLoss": 1.7738140503572997,
+                "topActionAccuracy": 0.2857142857142857
+              },
+              "context8": {
+                "decisions": 7,
+                "jointLogLoss": 1.5767262645865,
+                "topActionAccuracy": 0.42857142857142855
+              },
+              "context24": {
+                "decisions": 7,
+                "jointLogLoss": 1.5749582490811007,
+                "topActionAccuracy": 0.42857142857142855
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 7,
+                "jointLogLoss": 1.7645814060502913,
+                "topActionAccuracy": 0.2857142857142857
+              },
+              "context8": {
+                "decisions": 7,
+                "jointLogLoss": 1.565188599305692,
+                "topActionAccuracy": 0.42857142857142855
+              },
+              "context24": {
+                "decisions": 7,
+                "jointLogLoss": 1.567747247986938,
+                "topActionAccuracy": 0.42857142857142855
+              }
+            }
+          }
+        },
+        {
+          "aid": "a0d459e2-bc7b-49ec-92f1-744eb1720bbb",
+          "level": 123,
+          "opening": 1792258252689,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 200,
+                "jointLogLoss": 1.935465106583049,
+                "topActionAccuracy": 0.335
+              },
+              "context8": {
+                "decisions": 200,
+                "jointLogLoss": 1.9300999835623471,
+                "topActionAccuracy": 0.36
+              },
+              "context24": {
+                "decisions": 200,
+                "jointLogLoss": 1.9277136225048779,
+                "topActionAccuracy": 0.365
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 200,
+                "jointLogLoss": 1.9348150817260374,
+                "topActionAccuracy": 0.34
+              },
+              "context8": {
+                "decisions": 200,
+                "jointLogLoss": 1.9271895346516374,
+                "topActionAccuracy": 0.365
+              },
+              "context24": {
+                "decisions": 200,
+                "jointLogLoss": 1.924032898989538,
+                "topActionAccuracy": 0.37
+              }
+            }
+          }
+        },
+        {
+          "aid": "47baa64c-3758-4bf9-a3c7-26287232a6ad",
+          "level": 124,
+          "opening": 1792258657069,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 221,
+                "jointLogLoss": 1.8409725634631597,
+                "topActionAccuracy": 0.3438914027149321
+              },
+              "context8": {
+                "decisions": 221,
+                "jointLogLoss": 1.8196661817069741,
+                "topActionAccuracy": 0.334841628959276
+              },
+              "context24": {
+                "decisions": 221,
+                "jointLogLoss": 1.8166558903086536,
+                "topActionAccuracy": 0.3257918552036199
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 221,
+                "jointLogLoss": 1.843015107370907,
+                "topActionAccuracy": 0.3438914027149321
+              },
+              "context8": {
+                "decisions": 221,
+                "jointLogLoss": 1.8270802125187866,
+                "topActionAccuracy": 0.3212669683257919
+              },
+              "context24": {
+                "decisions": 221,
+                "jointLogLoss": 1.8275836529016274,
+                "topActionAccuracy": 0.3257918552036199
+              }
+            }
+          }
+        },
+        {
+          "aid": "2b1d1212-dee2-4b6a-ba23-9d2195cc5c2c",
+          "level": 125,
+          "opening": 1792261397034,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 107,
+                "jointLogLoss": 1.4098595153243627,
+                "topActionAccuracy": 0.5233644859813084
+              },
+              "context8": {
+                "decisions": 107,
+                "jointLogLoss": 1.3914957830320178,
+                "topActionAccuracy": 0.5420560747663551
+              },
+              "context24": {
+                "decisions": 107,
+                "jointLogLoss": 1.3925872018152095,
+                "topActionAccuracy": 0.5420560747663551
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 107,
+                "jointLogLoss": 1.4190554951939938,
+                "topActionAccuracy": 0.5233644859813084
+              },
+              "context8": {
+                "decisions": 107,
+                "jointLogLoss": 1.3972422821601234,
+                "topActionAccuracy": 0.5233644859813084
+              },
+              "context24": {
+                "decisions": 107,
+                "jointLogLoss": 1.4015052794932563,
+                "topActionAccuracy": 0.5327102803738317
+              }
+            }
+          }
+        },
+        {
+          "aid": "1c291f5a-591e-4369-89b9-83ff643a8845",
+          "level": 126,
+          "opening": 1792264518693,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 220,
+                "jointLogLoss": 2.075731538507824,
+                "topActionAccuracy": 0.35
+              },
+              "context8": {
+                "decisions": 220,
+                "jointLogLoss": 2.0697585560638734,
+                "topActionAccuracy": 0.3409090909090909
+              },
+              "context24": {
+                "decisions": 220,
+                "jointLogLoss": 2.06031560051867,
+                "topActionAccuracy": 0.33636363636363636
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 220,
+                "jointLogLoss": 2.0786308929955157,
+                "topActionAccuracy": 0.35454545454545455
+              },
+              "context8": {
+                "decisions": 220,
+                "jointLogLoss": 2.072367849212389,
+                "topActionAccuracy": 0.34545454545454546
+              },
+              "context24": {
+                "decisions": 220,
+                "jointLogLoss": 2.064704233746279,
+                "topActionAccuracy": 0.33636363636363636
+              }
+            }
+          }
+        },
+        {
+          "aid": "873cd1ff-0abd-49ea-aff8-f024c6779a0d",
+          "level": 127,
+          "opening": 1792264825227,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 116,
+                "jointLogLoss": 1.482415335542017,
+                "topActionAccuracy": 0.47413793103448276
+              },
+              "context8": {
+                "decisions": 116,
+                "jointLogLoss": 1.4684519552190547,
+                "topActionAccuracy": 0.46551724137931033
+              },
+              "context24": {
+                "decisions": 116,
+                "jointLogLoss": 1.4607258849299611,
+                "topActionAccuracy": 0.47413793103448276
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 116,
+                "jointLogLoss": 1.4921227478227086,
+                "topActionAccuracy": 0.47413793103448276
+              },
+              "context8": {
+                "decisions": 116,
+                "jointLogLoss": 1.4740271396206714,
+                "topActionAccuracy": 0.47413793103448276
+              },
+              "context24": {
+                "decisions": 116,
+                "jointLogLoss": 1.4686523607348108,
+                "topActionAccuracy": 0.47413793103448276
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "candidatePrefixes": 14,
+      "models": {
+        "ownAll": {
+          "control": {
+            "prefixes": 14,
+            "decisions": 1507,
+            "jointLogLoss": 1.8796504107288818,
+            "topActionAccuracy": 0.3351028533510285
+          },
+          "context8": {
+            "prefixes": 14,
+            "decisions": 1507,
+            "jointLogLoss": 1.8715125317496508,
+            "topActionAccuracy": 0.3404114134041141
+          },
+          "context24": {
+            "prefixes": 14,
+            "decisions": 1507,
+            "jointLogLoss": 1.8697800685732975,
+            "topActionAccuracy": 0.34439283344392835
+          }
+        },
+        "ownCarryAll": {
+          "control": {
+            "prefixes": 14,
+            "decisions": 1507,
+            "jointLogLoss": 1.9026663307262182,
+            "topActionAccuracy": 0.3238221632382216
+          },
+          "context8": {
+            "prefixes": 14,
+            "decisions": 1507,
+            "jointLogLoss": 1.9007980678503236,
+            "topActionAccuracy": 0.32581287325812874
+          },
+          "context24": {
+            "prefixes": 14,
+            "decisions": 1507,
+            "jointLogLoss": 1.9010904338269468,
+            "topActionAccuracy": 0.32050431320504313
+          }
+        }
+      },
+      "rows": [
+        {
+          "aid": "40ec9181-90db-40a6-b4a0-e09e0476b63f",
+          "level": 90,
+          "opening": 1792083395933,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 205,
+                "jointLogLoss": 2.217115776599117,
+                "topActionAccuracy": 0.21951219512195122
+              },
+              "context8": {
+                "decisions": 205,
+                "jointLogLoss": 2.191296209609549,
+                "topActionAccuracy": 0.23902439024390243
+              },
+              "context24": {
+                "decisions": 205,
+                "jointLogLoss": 2.2006753075237167,
+                "topActionAccuracy": 0.23902439024390243
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 205,
+                "jointLogLoss": 2.2720000805594793,
+                "topActionAccuracy": 0.2048780487804878
+              },
+              "context8": {
+                "decisions": 205,
+                "jointLogLoss": 2.273880433758554,
+                "topActionAccuracy": 0.1902439024390244
+              },
+              "context24": {
+                "decisions": 205,
+                "jointLogLoss": 2.298320699720517,
+                "topActionAccuracy": 0.1902439024390244
+              }
+            }
+          }
+        },
+        {
+          "aid": "496ae0a1-30a2-48b2-beb3-10c1442c3964",
+          "level": 91,
+          "opening": 1792083635769,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 88,
+                "jointLogLoss": 1.9188978798218796,
+                "topActionAccuracy": 0.3522727272727273
+              },
+              "context8": {
+                "decisions": 88,
+                "jointLogLoss": 1.906852005633104,
+                "topActionAccuracy": 0.3409090909090909
+              },
+              "context24": {
+                "decisions": 88,
+                "jointLogLoss": 1.9009648027332489,
+                "topActionAccuracy": 0.3409090909090909
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 88,
+                "jointLogLoss": 1.9689886887674448,
+                "topActionAccuracy": 0.2840909090909091
+              },
+              "context8": {
+                "decisions": 88,
+                "jointLogLoss": 1.9510356429614555,
+                "topActionAccuracy": 0.29545454545454547
+              },
+              "context24": {
+                "decisions": 88,
+                "jointLogLoss": 1.9863642669141706,
+                "topActionAccuracy": 0.2727272727272727
+              }
+            }
+          }
+        },
+        {
+          "aid": "4fdd41cd-dc23-451a-a2a5-e476ea8cbc6c",
+          "level": 92,
+          "opening": 1792173667131,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 2.1822617604585544,
+                "topActionAccuracy": 0.2702702702702703
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 2.152659032778718,
+                "topActionAccuracy": 0.2702702702702703
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 2.1352697304167942,
+                "topActionAccuracy": 0.27927927927927926
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 2.1900413441094657,
+                "topActionAccuracy": 0.25225225225225223
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 2.201266570865748,
+                "topActionAccuracy": 0.22522522522522523
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 2.1858467038165217,
+                "topActionAccuracy": 0.22522522522522523
+              }
+            }
+          }
+        },
+        {
+          "aid": "310d321c-a36c-49bb-92c4-7850414e3e38",
+          "level": 93,
+          "opening": 1792218827820,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 9,
+                "jointLogLoss": 1.328420034861055,
+                "topActionAccuracy": 0.5555555555555556
+              },
+              "context8": {
+                "decisions": 9,
+                "jointLogLoss": 1.1328843726272264,
+                "topActionAccuracy": 0.6666666666666666
+              },
+              "context24": {
+                "decisions": 9,
+                "jointLogLoss": 1.0830541783691703,
+                "topActionAccuracy": 0.6666666666666666
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 9,
+                "jointLogLoss": 1.292604324890097,
+                "topActionAccuracy": 0.5555555555555556
+              },
+              "context8": {
+                "decisions": 9,
+                "jointLogLoss": 1.1121015031061716,
+                "topActionAccuracy": 0.6666666666666666
+              },
+              "context24": {
+                "decisions": 9,
+                "jointLogLoss": 1.0544144023797695,
+                "topActionAccuracy": 0.6666666666666666
+              }
+            }
+          }
+        },
+        {
+          "aid": "6a159ce0-33ec-4bd7-9f01-bdb0a7fd1035",
+          "level": 94,
+          "opening": 1792219008645,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 7,
+                "jointLogLoss": 2.7835473442576446,
+                "topActionAccuracy": 0.2857142857142857
+              },
+              "context8": {
+                "decisions": 7,
+                "jointLogLoss": 2.919115482740728,
+                "topActionAccuracy": 0.2857142857142857
+              },
+              "context24": {
+                "decisions": 7,
+                "jointLogLoss": 3.0958017380947958,
+                "topActionAccuracy": 0.2857142857142857
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 7,
+                "jointLogLoss": 2.907082913795101,
+                "topActionAccuracy": 0.2857142857142857
+              },
+              "context8": {
+                "decisions": 7,
+                "jointLogLoss": 3.33376996695931,
+                "topActionAccuracy": 0.14285714285714285
+              },
+              "context24": {
+                "decisions": 7,
+                "jointLogLoss": 3.674262304044841,
+                "topActionAccuracy": 0.14285714285714285
+              }
+            }
+          }
+        },
+        {
+          "aid": "c046e698-f3d8-4588-bc9a-63003f8607ee",
+          "level": 95,
+          "opening": 1792219379250,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 113,
+                "jointLogLoss": 1.9773761713042624,
+                "topActionAccuracy": 0.2831858407079646
+              },
+              "context8": {
+                "decisions": 113,
+                "jointLogLoss": 2.0026430992413995,
+                "topActionAccuracy": 0.2831858407079646
+              },
+              "context24": {
+                "decisions": 113,
+                "jointLogLoss": 1.9941901756348441,
+                "topActionAccuracy": 0.2743362831858407
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 113,
+                "jointLogLoss": 1.9801269147939358,
+                "topActionAccuracy": 0.2743362831858407
+              },
+              "context8": {
+                "decisions": 113,
+                "jointLogLoss": 1.9931118618560322,
+                "topActionAccuracy": 0.2920353982300885
+              },
+              "context24": {
+                "decisions": 113,
+                "jointLogLoss": 1.9814887287536689,
+                "topActionAccuracy": 0.2920353982300885
+              }
+            }
+          }
+        },
+        {
+          "aid": "071bc6a8-2f96-4e0a-be4f-8b1e3bb01cd5",
+          "level": 96,
+          "opening": 1792219621915,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 26,
+                "jointLogLoss": 1.8780237857095794,
+                "topActionAccuracy": 0.3076923076923077
+              },
+              "context8": {
+                "decisions": 26,
+                "jointLogLoss": 1.7278666233098574,
+                "topActionAccuracy": 0.34615384615384615
+              },
+              "context24": {
+                "decisions": 26,
+                "jointLogLoss": 1.689661554960033,
+                "topActionAccuracy": 0.34615384615384615
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 26,
+                "jointLogLoss": 2.0393291316559528,
+                "topActionAccuracy": 0.23076923076923078
+              },
+              "context8": {
+                "decisions": 26,
+                "jointLogLoss": 1.873820573181727,
+                "topActionAccuracy": 0.3076923076923077
+              },
+              "context24": {
+                "decisions": 26,
+                "jointLogLoss": 1.7998107518457616,
+                "topActionAccuracy": 0.2692307692307692
+              }
+            }
+          }
+        },
+        {
+          "aid": "502362b1-48c0-4bad-9411-3c93b41de051",
+          "level": 97,
+          "opening": 1792219886790,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 179,
+                "jointLogLoss": 1.8938095190232391,
+                "topActionAccuracy": 0.2681564245810056
+              },
+              "context8": {
+                "decisions": 179,
+                "jointLogLoss": 1.8822804884075492,
+                "topActionAccuracy": 0.2849162011173184
+              },
+              "context24": {
+                "decisions": 179,
+                "jointLogLoss": 1.8594686345871931,
+                "topActionAccuracy": 0.329608938547486
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 179,
+                "jointLogLoss": 1.936851314465948,
+                "topActionAccuracy": 0.26256983240223464
+              },
+              "context8": {
+                "decisions": 179,
+                "jointLogLoss": 1.924062994901166,
+                "topActionAccuracy": 0.27932960893854747
+              },
+              "context24": {
+                "decisions": 179,
+                "jointLogLoss": 1.9025635589161602,
+                "topActionAccuracy": 0.27932960893854747
+              }
+            }
+          }
+        },
+        {
+          "aid": "19190b31-1593-4dd7-8a92-d57d973a7553",
+          "level": 98,
+          "opening": 1792262199013,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 136,
+                "jointLogLoss": 1.7507015296055704,
+                "topActionAccuracy": 0.4411764705882353
+              },
+              "context8": {
+                "decisions": 136,
+                "jointLogLoss": 1.7598620849799076,
+                "topActionAccuracy": 0.4264705882352941
+              },
+              "context24": {
+                "decisions": 136,
+                "jointLogLoss": 1.7740490043854091,
+                "topActionAccuracy": 0.41911764705882354
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 136,
+                "jointLogLoss": 1.7548946068895503,
+                "topActionAccuracy": 0.4264705882352941
+              },
+              "context8": {
+                "decisions": 136,
+                "jointLogLoss": 1.7652340087060996,
+                "topActionAccuracy": 0.4264705882352941
+              },
+              "context24": {
+                "decisions": 136,
+                "jointLogLoss": 1.7551633949290633,
+                "topActionAccuracy": 0.4338235294117647
+              }
+            }
+          }
+        },
+        {
+          "aid": "afff27aa-24f1-4661-afaa-10b6448aadfd",
+          "level": 99,
+          "opening": 1792262565093,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 11,
+                "jointLogLoss": 1.9896915441623042,
+                "topActionAccuracy": 0.45454545454545453
+              },
+              "context8": {
+                "decisions": 11,
+                "jointLogLoss": 2.396265599910354,
+                "topActionAccuracy": 0.36363636363636365
+              },
+              "context24": {
+                "decisions": 11,
+                "jointLogLoss": 2.601557806278994,
+                "topActionAccuracy": 0.36363636363636365
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 11,
+                "jointLogLoss": 1.9356743175096995,
+                "topActionAccuracy": 0.45454545454545453
+              },
+              "context8": {
+                "decisions": 11,
+                "jointLogLoss": 2.3902805188819713,
+                "topActionAccuracy": 0.36363636363636365
+              },
+              "context24": {
+                "decisions": 11,
+                "jointLogLoss": 2.617777862788665,
+                "topActionAccuracy": 0.36363636363636365
+              }
+            }
+          }
+        },
+        {
+          "aid": "2a67889d-7fd4-4a89-b586-a2f5aa69e6f2",
+          "level": 100,
+          "opening": 1792263071225,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 216,
+                "jointLogLoss": 1.655513714006746,
+                "topActionAccuracy": 0.375
+              },
+              "context8": {
+                "decisions": 216,
+                "jointLogLoss": 1.6476328588600726,
+                "topActionAccuracy": 0.37962962962962965
+              },
+              "context24": {
+                "decisions": 216,
+                "jointLogLoss": 1.6430055999968534,
+                "topActionAccuracy": 0.38425925925925924
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 216,
+                "jointLogLoss": 1.6675146459510382,
+                "topActionAccuracy": 0.4027777777777778
+              },
+              "context8": {
+                "decisions": 216,
+                "jointLogLoss": 1.6601528421083553,
+                "topActionAccuracy": 0.4027777777777778
+              },
+              "context24": {
+                "decisions": 216,
+                "jointLogLoss": 1.6541022287028075,
+                "topActionAccuracy": 0.39814814814814814
+              }
+            }
+          }
+        },
+        {
+          "aid": "81e7a42d-33f1-4230-961a-dff82cdbb171",
+          "level": 101,
+          "opening": 1792263326840,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 15,
+                "jointLogLoss": 1.5595184915955385,
+                "topActionAccuracy": 0.6
+              },
+              "context8": {
+                "decisions": 15,
+                "jointLogLoss": 1.3934757847505415,
+                "topActionAccuracy": 0.6666666666666666
+              },
+              "context24": {
+                "decisions": 15,
+                "jointLogLoss": 1.3675939867585807,
+                "topActionAccuracy": 0.6
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 15,
+                "jointLogLoss": 1.5145141982686872,
+                "topActionAccuracy": 0.5333333333333333
+              },
+              "context8": {
+                "decisions": 15,
+                "jointLogLoss": 1.3198017823073953,
+                "topActionAccuracy": 0.6
+              },
+              "context24": {
+                "decisions": 15,
+                "jointLogLoss": 1.3342712696832135,
+                "topActionAccuracy": 0.6
+              }
+            }
+          }
+        },
+        {
+          "aid": "955f8b28-343b-4d82-8347-62004d3c432d",
+          "level": 102,
+          "opening": 1792263743318,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 202,
+                "jointLogLoss": 1.7981053046715667,
+                "topActionAccuracy": 0.32673267326732675
+              },
+              "context8": {
+                "decisions": 202,
+                "jointLogLoss": 1.7963073250627615,
+                "topActionAccuracy": 0.3316831683168317
+              },
+              "context24": {
+                "decisions": 202,
+                "jointLogLoss": 1.7912120246344632,
+                "topActionAccuracy": 0.33663366336633666
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 202,
+                "jointLogLoss": 1.8259667711964653,
+                "topActionAccuracy": 0.3118811881188119
+              },
+              "context8": {
+                "decisions": 202,
+                "jointLogLoss": 1.8224814086508652,
+                "topActionAccuracy": 0.31683168316831684
+              },
+              "context24": {
+                "decisions": 202,
+                "jointLogLoss": 1.8177185051077138,
+                "topActionAccuracy": 0.3316831683168317
+              }
+            }
+          }
+        },
+        {
+          "aid": "d82fe10e-2495-4511-9ff3-7a7ba8ef2883",
+          "level": 103,
+          "opening": 1792263948381,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 189,
+                "jointLogLoss": 1.693876710902897,
+                "topActionAccuracy": 0.43915343915343913
+              },
+              "context8": {
+                "decisions": 189,
+                "jointLogLoss": 1.6945993468809866,
+                "topActionAccuracy": 0.43915343915343913
+              },
+              "context24": {
+                "decisions": 189,
+                "jointLogLoss": 1.701941048146404,
+                "topActionAccuracy": 0.42857142857142855
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 189,
+                "jointLogLoss": 1.6827089860664268,
+                "topActionAccuracy": 0.42857142857142855
+              },
+              "context8": {
+                "decisions": 189,
+                "jointLogLoss": 1.6811413896167713,
+                "topActionAccuracy": 0.42857142857142855
+              },
+              "context24": {
+                "decisions": 189,
+                "jointLogLoss": 1.6820618272576826,
+                "topActionAccuracy": 0.3862433862433862
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PUK": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "control": {
+            "prefixes": 20,
+            "decisions": 1948,
+            "jointLogLoss": 1.7771649734399046,
+            "topActionAccuracy": 0.4296714579055442
+          },
+          "context8": {
+            "prefixes": 20,
+            "decisions": 1948,
+            "jointLogLoss": 1.7274178615006859,
+            "topActionAccuracy": 0.43788501026694043
+          },
+          "context24": {
+            "prefixes": 20,
+            "decisions": 1948,
+            "jointLogLoss": 1.6945556228306988,
+            "topActionAccuracy": 0.4491786447638604
+          }
+        },
+        "ownCarryAll": {
+          "control": {
+            "prefixes": 20,
+            "decisions": 1948,
+            "jointLogLoss": 1.7762185494099627,
+            "topActionAccuracy": 0.43018480492813144
+          },
+          "context8": {
+            "prefixes": 20,
+            "decisions": 1948,
+            "jointLogLoss": 1.7290008293962338,
+            "topActionAccuracy": 0.43788501026694043
+          },
+          "context24": {
+            "prefixes": 20,
+            "decisions": 1948,
+            "jointLogLoss": 1.7004916167708646,
+            "topActionAccuracy": 0.44969199178644764
+          }
+        }
+      },
+      "rows": [
+        {
+          "aid": "a74c895d-085c-4d87-aef0-9f41987f793a",
+          "level": 34,
+          "opening": 1791993467593,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 62,
+                "jointLogLoss": 1.8164873911306096,
+                "topActionAccuracy": 0.41935483870967744
+              },
+              "context8": {
+                "decisions": 62,
+                "jointLogLoss": 1.691148485987982,
+                "topActionAccuracy": 0.43548387096774194
+              },
+              "context24": {
+                "decisions": 62,
+                "jointLogLoss": 1.615325843864082,
+                "topActionAccuracy": 0.45161290322580644
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 62,
+                "jointLogLoss": 1.8084940551111894,
+                "topActionAccuracy": 0.41935483870967744
+              },
+              "context8": {
+                "decisions": 62,
+                "jointLogLoss": 1.6853715112695813,
+                "topActionAccuracy": 0.45161290322580644
+              },
+              "context24": {
+                "decisions": 62,
+                "jointLogLoss": 1.6107702010629021,
+                "topActionAccuracy": 0.46774193548387094
+              }
+            }
+          }
+        },
+        {
+          "aid": "79530e8a-9279-44e3-b75c-9d8e05548401",
+          "level": 35,
+          "opening": 1791993866872,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 106,
+                "jointLogLoss": 1.4018874424878838,
+                "topActionAccuracy": 0.4811320754716981
+              },
+              "context8": {
+                "decisions": 106,
+                "jointLogLoss": 1.3992251727772644,
+                "topActionAccuracy": 0.49056603773584906
+              },
+              "context24": {
+                "decisions": 106,
+                "jointLogLoss": 1.383633915590115,
+                "topActionAccuracy": 0.5
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 106,
+                "jointLogLoss": 1.4108639035475443,
+                "topActionAccuracy": 0.49056603773584906
+              },
+              "context8": {
+                "decisions": 106,
+                "jointLogLoss": 1.4110498053692513,
+                "topActionAccuracy": 0.5
+              },
+              "context24": {
+                "decisions": 106,
+                "jointLogLoss": 1.4058609682090857,
+                "topActionAccuracy": 0.4811320754716981
+              }
+            }
+          }
+        },
+        {
+          "aid": "bd9ea179-b735-4b9c-83ca-ea5f08a2621e",
+          "level": 36,
+          "opening": 1791994331125,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 103,
+                "jointLogLoss": 1.4521426114297897,
+                "topActionAccuracy": 0.5631067961165048
+              },
+              "context8": {
+                "decisions": 103,
+                "jointLogLoss": 1.3715055794221234,
+                "topActionAccuracy": 0.5825242718446602
+              },
+              "context24": {
+                "decisions": 103,
+                "jointLogLoss": 1.2951794938845282,
+                "topActionAccuracy": 0.5922330097087378
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 103,
+                "jointLogLoss": 1.4569341801748774,
+                "topActionAccuracy": 0.5533980582524272
+              },
+              "context8": {
+                "decisions": 103,
+                "jointLogLoss": 1.3836792417534867,
+                "topActionAccuracy": 0.5728155339805825
+              },
+              "context24": {
+                "decisions": 103,
+                "jointLogLoss": 1.312145642907002,
+                "topActionAccuracy": 0.6116504854368932
+              }
+            }
+          }
+        },
+        {
+          "aid": "13f81deb-c4b1-4fe9-957e-8a57ba6f7e88",
+          "level": 37,
+          "opening": 1791994730739,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 85,
+                "jointLogLoss": 2.2556107634035696,
+                "topActionAccuracy": 0.2235294117647059
+              },
+              "context8": {
+                "decisions": 85,
+                "jointLogLoss": 2.270486869724253,
+                "topActionAccuracy": 0.25882352941176473
+              },
+              "context24": {
+                "decisions": 85,
+                "jointLogLoss": 2.313725547828065,
+                "topActionAccuracy": 0.25882352941176473
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 85,
+                "jointLogLoss": 2.2622900950791984,
+                "topActionAccuracy": 0.23529411764705882
+              },
+              "context8": {
+                "decisions": 85,
+                "jointLogLoss": 2.2759830918479116,
+                "topActionAccuracy": 0.27058823529411763
+              },
+              "context24": {
+                "decisions": 85,
+                "jointLogLoss": 2.3053270423873005,
+                "topActionAccuracy": 0.25882352941176473
+              }
+            }
+          }
+        },
+        {
+          "aid": "3d34e678-c824-4b62-8ab6-a7e37276a444",
+          "level": 38,
+          "opening": 1791995772536,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 127,
+                "jointLogLoss": 2.057879623862293,
+                "topActionAccuracy": 0.3543307086614173
+              },
+              "context8": {
+                "decisions": 127,
+                "jointLogLoss": 2.061256065726958,
+                "topActionAccuracy": 0.36220472440944884
+              },
+              "context24": {
+                "decisions": 127,
+                "jointLogLoss": 2.0831782122953375,
+                "topActionAccuracy": 0.3700787401574803
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 127,
+                "jointLogLoss": 2.040434660297728,
+                "topActionAccuracy": 0.3543307086614173
+              },
+              "context8": {
+                "decisions": 127,
+                "jointLogLoss": 2.072451547290359,
+                "topActionAccuracy": 0.3700787401574803
+              },
+              "context24": {
+                "decisions": 127,
+                "jointLogLoss": 2.071164659346225,
+                "topActionAccuracy": 0.4015748031496063
+              }
+            }
+          }
+        },
+        {
+          "aid": "c8d3ead3-7f90-41c4-8cb2-df96164b26e3",
+          "level": 39,
+          "opening": 1792013300819,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 76,
+                "jointLogLoss": 1.7792572518112155,
+                "topActionAccuracy": 0.47368421052631576
+              },
+              "context8": {
+                "decisions": 76,
+                "jointLogLoss": 1.7734528067927116,
+                "topActionAccuracy": 0.4605263157894737
+              },
+              "context24": {
+                "decisions": 76,
+                "jointLogLoss": 1.7830454972846483,
+                "topActionAccuracy": 0.4605263157894737
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 76,
+                "jointLogLoss": 1.7764011274241056,
+                "topActionAccuracy": 0.4605263157894737
+              },
+              "context8": {
+                "decisions": 76,
+                "jointLogLoss": 1.7563452822162642,
+                "topActionAccuracy": 0.4473684210526316
+              },
+              "context24": {
+                "decisions": 76,
+                "jointLogLoss": 1.7953682740045533,
+                "topActionAccuracy": 0.4473684210526316
+              }
+            }
+          }
+        },
+        {
+          "aid": "c72be715-2bc6-4471-82cb-298eef7d8db8",
+          "level": 40,
+          "opening": 1792014233172,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 96,
+                "jointLogLoss": 1.8486610566055193,
+                "topActionAccuracy": 0.3958333333333333
+              },
+              "context8": {
+                "decisions": 96,
+                "jointLogLoss": 1.8684313994559023,
+                "topActionAccuracy": 0.40625
+              },
+              "context24": {
+                "decisions": 96,
+                "jointLogLoss": 1.8463371107540656,
+                "topActionAccuracy": 0.4166666666666667
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 96,
+                "jointLogLoss": 1.841928911699864,
+                "topActionAccuracy": 0.3958333333333333
+              },
+              "context8": {
+                "decisions": 96,
+                "jointLogLoss": 1.873646469389031,
+                "topActionAccuracy": 0.40625
+              },
+              "context24": {
+                "decisions": 96,
+                "jointLogLoss": 1.8443523749995503,
+                "topActionAccuracy": 0.4166666666666667
+              }
+            }
+          }
+        },
+        {
+          "aid": "35673774-df3a-49e3-b79d-b89cea05f729",
+          "level": 41,
+          "opening": 1792014797696,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 57,
+                "jointLogLoss": 1.9147782871022887,
+                "topActionAccuracy": 0.3508771929824561
+              },
+              "context8": {
+                "decisions": 57,
+                "jointLogLoss": 1.8830963265222411,
+                "topActionAccuracy": 0.3684210526315789
+              },
+              "context24": {
+                "decisions": 57,
+                "jointLogLoss": 1.8744796157893118,
+                "topActionAccuracy": 0.3508771929824561
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 57,
+                "jointLogLoss": 1.9137471575453406,
+                "topActionAccuracy": 0.3684210526315789
+              },
+              "context8": {
+                "decisions": 57,
+                "jointLogLoss": 1.9580010936606633,
+                "topActionAccuracy": 0.3508771929824561
+              },
+              "context24": {
+                "decisions": 57,
+                "jointLogLoss": 1.9058227139649475,
+                "topActionAccuracy": 0.3684210526315789
+              }
+            }
+          }
+        },
+        {
+          "aid": "26aa951a-e30a-4464-8237-e986553ad747",
+          "level": 42,
+          "opening": 1792031107788,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 77,
+                "jointLogLoss": 1.8928400369299672,
+                "topActionAccuracy": 0.4805194805194805
+              },
+              "context8": {
+                "decisions": 77,
+                "jointLogLoss": 1.6866427332339309,
+                "topActionAccuracy": 0.4675324675324675
+              },
+              "context24": {
+                "decisions": 77,
+                "jointLogLoss": 1.5710509598104154,
+                "topActionAccuracy": 0.5454545454545454
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 77,
+                "jointLogLoss": 1.8761045714218785,
+                "topActionAccuracy": 0.4805194805194805
+              },
+              "context8": {
+                "decisions": 77,
+                "jointLogLoss": 1.6647613703882806,
+                "topActionAccuracy": 0.4935064935064935
+              },
+              "context24": {
+                "decisions": 77,
+                "jointLogLoss": 1.57485107996555,
+                "topActionAccuracy": 0.5454545454545454
+              }
+            }
+          }
+        },
+        {
+          "aid": "010a1b23-ff83-4cce-b486-5b95229b92f0",
+          "level": 43,
+          "opening": 1792031786444,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 2.0004900568313078,
+                "topActionAccuracy": 0.3783783783783784
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 1.9029214502605243,
+                "topActionAccuracy": 0.38738738738738737
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 1.837579359435695,
+                "topActionAccuracy": 0.42342342342342343
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 2.0030154517512284,
+                "topActionAccuracy": 0.38738738738738737
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 1.9043919434086936,
+                "topActionAccuracy": 0.38738738738738737
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 1.844582092875131,
+                "topActionAccuracy": 0.3963963963963964
+              }
+            }
+          }
+        },
+        {
+          "aid": "8e40d7c7-cdd3-4a98-896c-d722706491f7",
+          "level": 44,
+          "opening": 1792078889406,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 126,
+                "jointLogLoss": 1.7271797872628867,
+                "topActionAccuracy": 0.4126984126984127
+              },
+              "context8": {
+                "decisions": 126,
+                "jointLogLoss": 1.595883180937153,
+                "topActionAccuracy": 0.4523809523809524
+              },
+              "context24": {
+                "decisions": 126,
+                "jointLogLoss": 1.5222391253362426,
+                "topActionAccuracy": 0.46825396825396826
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 126,
+                "jointLogLoss": 1.7180904492003681,
+                "topActionAccuracy": 0.40476190476190477
+              },
+              "context8": {
+                "decisions": 126,
+                "jointLogLoss": 1.5959403589668755,
+                "topActionAccuracy": 0.4365079365079365
+              },
+              "context24": {
+                "decisions": 126,
+                "jointLogLoss": 1.52589612903804,
+                "topActionAccuracy": 0.47619047619047616
+              }
+            }
+          }
+        },
+        {
+          "aid": "a7c03165-f257-4a3b-9f90-04329b0bd93d",
+          "level": 45,
+          "opening": 1792079446450,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 143,
+                "jointLogLoss": 2.0681275286362246,
+                "topActionAccuracy": 0.3986013986013986
+              },
+              "context8": {
+                "decisions": 143,
+                "jointLogLoss": 2.021997506025258,
+                "topActionAccuracy": 0.3776223776223776
+              },
+              "context24": {
+                "decisions": 143,
+                "jointLogLoss": 1.9573370337046896,
+                "topActionAccuracy": 0.3986013986013986
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 143,
+                "jointLogLoss": 2.0784226871691485,
+                "topActionAccuracy": 0.3916083916083916
+              },
+              "context8": {
+                "decisions": 143,
+                "jointLogLoss": 2.018899240419253,
+                "topActionAccuracy": 0.3706293706293706
+              },
+              "context24": {
+                "decisions": 143,
+                "jointLogLoss": 1.9822614525577515,
+                "topActionAccuracy": 0.38461538461538464
+              }
+            }
+          }
+        },
+        {
+          "aid": "a08d1a20-78d1-4827-8e04-67565352c8c1",
+          "level": 46,
+          "opening": 1792079998136,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 94,
+                "jointLogLoss": 1.737538103698917,
+                "topActionAccuracy": 0.39361702127659576
+              },
+              "context8": {
+                "decisions": 94,
+                "jointLogLoss": 1.680050428181566,
+                "topActionAccuracy": 0.4148936170212766
+              },
+              "context24": {
+                "decisions": 94,
+                "jointLogLoss": 1.6519625566601697,
+                "topActionAccuracy": 0.4148936170212766
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 94,
+                "jointLogLoss": 1.7333579298271797,
+                "topActionAccuracy": 0.40425531914893614
+              },
+              "context8": {
+                "decisions": 94,
+                "jointLogLoss": 1.677069146678092,
+                "topActionAccuracy": 0.4148936170212766
+              },
+              "context24": {
+                "decisions": 94,
+                "jointLogLoss": 1.662185971334512,
+                "topActionAccuracy": 0.40425531914893614
+              }
+            }
+          }
+        },
+        {
+          "aid": "9bed8001-4327-4454-8793-01fbb998aa57",
+          "level": 47,
+          "opening": 1792081570535,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 114,
+                "jointLogLoss": 1.7619552667288534,
+                "topActionAccuracy": 0.4298245614035088
+              },
+              "context8": {
+                "decisions": 114,
+                "jointLogLoss": 1.766760186721031,
+                "topActionAccuracy": 0.45614035087719296
+              },
+              "context24": {
+                "decisions": 114,
+                "jointLogLoss": 1.7689284475747915,
+                "topActionAccuracy": 0.4473684210526316
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 114,
+                "jointLogLoss": 1.7662585035883278,
+                "topActionAccuracy": 0.43859649122807015
+              },
+              "context8": {
+                "decisions": 114,
+                "jointLogLoss": 1.7587368390804228,
+                "topActionAccuracy": 0.45614035087719296
+              },
+              "context24": {
+                "decisions": 114,
+                "jointLogLoss": 1.7654251416459685,
+                "topActionAccuracy": 0.4649122807017544
+              }
+            }
+          }
+        },
+        {
+          "aid": "911cd273-e39a-48f4-97f1-912d4098267b",
+          "level": 48,
+          "opening": 1792097612195,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 124,
+                "jointLogLoss": 1.4587230221588172,
+                "topActionAccuracy": 0.5080645161290323
+              },
+              "context8": {
+                "decisions": 124,
+                "jointLogLoss": 1.4020977032090234,
+                "topActionAccuracy": 0.5241935483870968
+              },
+              "context24": {
+                "decisions": 124,
+                "jointLogLoss": 1.3626838711563545,
+                "topActionAccuracy": 0.5241935483870968
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 124,
+                "jointLogLoss": 1.4582713666163705,
+                "topActionAccuracy": 0.5161290322580645
+              },
+              "context8": {
+                "decisions": 124,
+                "jointLogLoss": 1.3990388519578272,
+                "topActionAccuracy": 0.5241935483870968
+              },
+              "context24": {
+                "decisions": 124,
+                "jointLogLoss": 1.3669540310606578,
+                "topActionAccuracy": 0.5080645161290323
+              }
+            }
+          }
+        },
+        {
+          "aid": "85a34136-6637-4584-b8ec-7201886288e3",
+          "level": 49,
+          "opening": 1792098056466,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 77,
+                "jointLogLoss": 1.8796674429277953,
+                "topActionAccuracy": 0.4025974025974026
+              },
+              "context8": {
+                "decisions": 77,
+                "jointLogLoss": 1.8479218525315828,
+                "topActionAccuracy": 0.37662337662337664
+              },
+              "context24": {
+                "decisions": 77,
+                "jointLogLoss": 1.8147814857212257,
+                "topActionAccuracy": 0.4025974025974026
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 77,
+                "jointLogLoss": 1.8764523917499967,
+                "topActionAccuracy": 0.42857142857142855
+              },
+              "context8": {
+                "decisions": 77,
+                "jointLogLoss": 1.8434825627119316,
+                "topActionAccuracy": 0.4155844155844156
+              },
+              "context24": {
+                "decisions": 77,
+                "jointLogLoss": 1.824749446423228,
+                "topActionAccuracy": 0.44155844155844154
+              }
+            }
+          }
+        },
+        {
+          "aid": "b3e8cf6e-31db-4646-9d8d-a003295ca9f6",
+          "level": 50,
+          "opening": 1792137899571,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 119,
+                "jointLogLoss": 1.4092387390464833,
+                "topActionAccuracy": 0.5210084033613446
+              },
+              "context8": {
+                "decisions": 119,
+                "jointLogLoss": 1.3736249152216249,
+                "topActionAccuracy": 0.5294117647058824
+              },
+              "context24": {
+                "decisions": 119,
+                "jointLogLoss": 1.347186615035357,
+                "topActionAccuracy": 0.5210084033613446
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 119,
+                "jointLogLoss": 1.4116679597765223,
+                "topActionAccuracy": 0.5042016806722689
+              },
+              "context8": {
+                "decisions": 119,
+                "jointLogLoss": 1.3752840364951857,
+                "topActionAccuracy": 0.5126050420168067
+              },
+              "context24": {
+                "decisions": 119,
+                "jointLogLoss": 1.3515002537612484,
+                "topActionAccuracy": 0.5210084033613446
+              }
+            }
+          }
+        },
+        {
+          "aid": "155cb84b-3d63-4d5b-9b7b-7daf1b673c7b",
+          "level": 51,
+          "opening": 1792138391388,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 96,
+                "jointLogLoss": 1.8089432299580943,
+                "topActionAccuracy": 0.4583333333333333
+              },
+              "context8": {
+                "decisions": 96,
+                "jointLogLoss": 1.7376072300751237,
+                "topActionAccuracy": 0.4375
+              },
+              "context24": {
+                "decisions": 96,
+                "jointLogLoss": 1.7197969157971442,
+                "topActionAccuracy": 0.4479166666666667
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 96,
+                "jointLogLoss": 1.811756449938492,
+                "topActionAccuracy": 0.4375
+              },
+              "context8": {
+                "decisions": 96,
+                "jointLogLoss": 1.7314228578912438,
+                "topActionAccuracy": 0.4270833333333333
+              },
+              "context24": {
+                "decisions": 96,
+                "jointLogLoss": 1.715648275349512,
+                "topActionAccuracy": 0.4375
+              }
+            }
+          }
+        },
+        {
+          "aid": "c8162ff9-76ce-45a2-8fbf-939346bbd6fa",
+          "level": 52,
+          "opening": 1792174210433,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 82,
+                "jointLogLoss": 1.6380748618067498,
+                "topActionAccuracy": 0.47560975609756095
+              },
+              "context8": {
+                "decisions": 82,
+                "jointLogLoss": 1.6240124508929539,
+                "topActionAccuracy": 0.4634146341463415
+              },
+              "context24": {
+                "decisions": 82,
+                "jointLogLoss": 1.594601459218513,
+                "topActionAccuracy": 0.4878048780487805
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 82,
+                "jointLogLoss": 1.6440934372743172,
+                "topActionAccuracy": 0.4634146341463415
+              },
+              "context8": {
+                "decisions": 82,
+                "jointLogLoss": 1.6287885178218344,
+                "topActionAccuracy": 0.4634146341463415
+              },
+              "context24": {
+                "decisions": 82,
+                "jointLogLoss": 1.6033628533544027,
+                "topActionAccuracy": 0.4634146341463415
+              }
+            }
+          }
+        },
+        {
+          "aid": "ed6d1a22-d6ba-44ba-8067-f0df742edd22",
+          "level": 53,
+          "opening": 1792174506087,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 73,
+                "jointLogLoss": 1.7746820881213166,
+                "topActionAccuracy": 0.4246575342465753
+              },
+              "context8": {
+                "decisions": 73,
+                "jointLogLoss": 1.6995581860273956,
+                "topActionAccuracy": 0.4520547945205479
+              },
+              "context24": {
+                "decisions": 73,
+                "jointLogLoss": 1.6639742195754106,
+                "topActionAccuracy": 0.4520547945205479
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 73,
+                "jointLogLoss": 1.7693592419494508,
+                "topActionAccuracy": 0.4383561643835616
+              },
+              "context8": {
+                "decisions": 73,
+                "jointLogLoss": 1.6920730288985328,
+                "topActionAccuracy": 0.4520547945205479
+              },
+              "context24": {
+                "decisions": 73,
+                "jointLogLoss": 1.6593467475003898,
+                "topActionAccuracy": 0.4657534246575342
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Gerda": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "control": {
+            "prefixes": 20,
+            "decisions": 2818,
+            "jointLogLoss": 2.002004307846316,
+            "topActionAccuracy": 0.29559971611071684
+          },
+          "context8": {
+            "prefixes": 20,
+            "decisions": 2818,
+            "jointLogLoss": 1.9984703510423925,
+            "topActionAccuracy": 0.2913413768630234
+          },
+          "context24": {
+            "prefixes": 20,
+            "decisions": 2818,
+            "jointLogLoss": 1.9975560879107974,
+            "topActionAccuracy": 0.2895670688431512
+          }
+        },
+        "ownCarryAll": {
+          "control": {
+            "prefixes": 20,
+            "decisions": 2818,
+            "jointLogLoss": 2.0178225924408366,
+            "topActionAccuracy": 0.28459900638750885
+          },
+          "context8": {
+            "prefixes": 20,
+            "decisions": 2818,
+            "jointLogLoss": 2.016761498028222,
+            "topActionAccuracy": 0.2817601135557133
+          },
+          "context24": {
+            "prefixes": 20,
+            "decisions": 2818,
+            "jointLogLoss": 2.0209047862296385,
+            "topActionAccuracy": 0.2831795599716111
+          }
+        }
+      },
+      "rows": [
+        {
+          "aid": "2e39da0a-b62f-4cf2-a3df-562b82813a2d",
+          "level": 43,
+          "opening": 1792077779174,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 129,
+                "jointLogLoss": 1.9550889713395891,
+                "topActionAccuracy": 0.3643410852713178
+              },
+              "context8": {
+                "decisions": 129,
+                "jointLogLoss": 1.9419478285737544,
+                "topActionAccuracy": 0.35658914728682173
+              },
+              "context24": {
+                "decisions": 129,
+                "jointLogLoss": 1.9251694015464866,
+                "topActionAccuracy": 0.35658914728682173
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 129,
+                "jointLogLoss": 1.9677769312593791,
+                "topActionAccuracy": 0.35658914728682173
+              },
+              "context8": {
+                "decisions": 129,
+                "jointLogLoss": 1.959723440439681,
+                "topActionAccuracy": 0.3333333333333333
+              },
+              "context24": {
+                "decisions": 129,
+                "jointLogLoss": 1.9502462024967981,
+                "topActionAccuracy": 0.3643410852713178
+              }
+            }
+          }
+        },
+        {
+          "aid": "fab20d55-05c3-4ffc-a845-c601938efc9a",
+          "level": 44,
+          "opening": 1792078155465,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 1.9403339899551015,
+                "topActionAccuracy": 0.36036036036036034
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 1.9415665030990645,
+                "topActionAccuracy": 0.36036036036036034
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 1.9476776556643745,
+                "topActionAccuracy": 0.36036036036036034
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 1.9420707126076964,
+                "topActionAccuracy": 0.34234234234234234
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 1.9377135587518326,
+                "topActionAccuracy": 0.34234234234234234
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 1.985782860704519,
+                "topActionAccuracy": 0.35135135135135137
+              }
+            }
+          }
+        },
+        {
+          "aid": "821a5dd9-6aea-4dda-8e20-3956eb6e67e0",
+          "level": 45,
+          "opening": 1792078697711,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 84,
+                "jointLogLoss": 1.9119221613270057,
+                "topActionAccuracy": 0.2619047619047619
+              },
+              "context8": {
+                "decisions": 84,
+                "jointLogLoss": 1.8993443140884956,
+                "topActionAccuracy": 0.2619047619047619
+              },
+              "context24": {
+                "decisions": 84,
+                "jointLogLoss": 1.8951931138007705,
+                "topActionAccuracy": 0.2857142857142857
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 84,
+                "jointLogLoss": 1.949436741416542,
+                "topActionAccuracy": 0.23809523809523808
+              },
+              "context8": {
+                "decisions": 84,
+                "jointLogLoss": 1.885901730831592,
+                "topActionAccuracy": 0.2857142857142857
+              },
+              "context24": {
+                "decisions": 84,
+                "jointLogLoss": 1.91104216924214,
+                "topActionAccuracy": 0.25
+              }
+            }
+          }
+        },
+        {
+          "aid": "6086fde3-85af-45f0-8e43-3dda57eb45d9",
+          "level": 46,
+          "opening": 1792079848122,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 163,
+                "jointLogLoss": 2.1008773851653357,
+                "topActionAccuracy": 0.25766871165644173
+              },
+              "context8": {
+                "decisions": 163,
+                "jointLogLoss": 2.06360651065803,
+                "topActionAccuracy": 0.26380368098159507
+              },
+              "context24": {
+                "decisions": 163,
+                "jointLogLoss": 2.045901610795444,
+                "topActionAccuracy": 0.25153374233128833
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 163,
+                "jointLogLoss": 2.108385063042956,
+                "topActionAccuracy": 0.27607361963190186
+              },
+              "context8": {
+                "decisions": 163,
+                "jointLogLoss": 2.0761361024882476,
+                "topActionAccuracy": 0.2822085889570552
+              },
+              "context24": {
+                "decisions": 163,
+                "jointLogLoss": 2.068259115122865,
+                "topActionAccuracy": 0.2822085889570552
+              }
+            }
+          }
+        },
+        {
+          "aid": "c0fda5c8-ab6d-4c4e-b8d9-e10d8a0c0d11",
+          "level": 47,
+          "opening": 1792080050551,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 93,
+                "jointLogLoss": 1.88793726630485,
+                "topActionAccuracy": 0.34408602150537637
+              },
+              "context8": {
+                "decisions": 93,
+                "jointLogLoss": 1.8770009498048477,
+                "topActionAccuracy": 0.3333333333333333
+              },
+              "context24": {
+                "decisions": 93,
+                "jointLogLoss": 1.8648449407573202,
+                "topActionAccuracy": 0.3333333333333333
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 93,
+                "jointLogLoss": 1.897401410355624,
+                "topActionAccuracy": 0.3010752688172043
+              },
+              "context8": {
+                "decisions": 93,
+                "jointLogLoss": 1.8781018999904049,
+                "topActionAccuracy": 0.3010752688172043
+              },
+              "context24": {
+                "decisions": 93,
+                "jointLogLoss": 1.858244701762429,
+                "topActionAccuracy": 0.3225806451612903
+              }
+            }
+          }
+        },
+        {
+          "aid": "0ac5bc8e-2a21-448e-bac1-13744a02efe6",
+          "level": 48,
+          "opening": 1792084600541,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 165,
+                "jointLogLoss": 1.7369531442528914,
+                "topActionAccuracy": 0.4484848484848485
+              },
+              "context8": {
+                "decisions": 165,
+                "jointLogLoss": 1.701906768375675,
+                "topActionAccuracy": 0.44242424242424244
+              },
+              "context24": {
+                "decisions": 165,
+                "jointLogLoss": 1.6885668184173435,
+                "topActionAccuracy": 0.43636363636363634
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 165,
+                "jointLogLoss": 1.732057558671022,
+                "topActionAccuracy": 0.4484848484848485
+              },
+              "context8": {
+                "decisions": 165,
+                "jointLogLoss": 1.704248396489534,
+                "topActionAccuracy": 0.45454545454545453
+              },
+              "context24": {
+                "decisions": 165,
+                "jointLogLoss": 1.6928378844629806,
+                "topActionAccuracy": 0.46060606060606063
+              }
+            }
+          }
+        },
+        {
+          "aid": "1ca24284-d9d6-4110-a2dc-b6023168fa79",
+          "level": 49,
+          "opening": 1792084839692,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 116,
+                "jointLogLoss": 1.6824206599511446,
+                "topActionAccuracy": 0.3620689655172414
+              },
+              "context8": {
+                "decisions": 116,
+                "jointLogLoss": 1.6370372999124325,
+                "topActionAccuracy": 0.35344827586206895
+              },
+              "context24": {
+                "decisions": 116,
+                "jointLogLoss": 1.5980585418020348,
+                "topActionAccuracy": 0.3879310344827586
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 116,
+                "jointLogLoss": 1.6709925705123183,
+                "topActionAccuracy": 0.3706896551724138
+              },
+              "context8": {
+                "decisions": 116,
+                "jointLogLoss": 1.6282555836950805,
+                "topActionAccuracy": 0.4051724137931034
+              },
+              "context24": {
+                "decisions": 116,
+                "jointLogLoss": 1.6122928171970399,
+                "topActionAccuracy": 0.4051724137931034
+              }
+            }
+          }
+        },
+        {
+          "aid": "0520d88e-5f12-4ca5-9b6a-9c202713e3b0",
+          "level": 50,
+          "opening": 1792085063827,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 174,
+                "jointLogLoss": 2.209591750572497,
+                "topActionAccuracy": 0.27586206896551724
+              },
+              "context8": {
+                "decisions": 174,
+                "jointLogLoss": 2.2085679968048284,
+                "topActionAccuracy": 0.27011494252873564
+              },
+              "context24": {
+                "decisions": 174,
+                "jointLogLoss": 2.2150273133616056,
+                "topActionAccuracy": 0.25862068965517243
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 174,
+                "jointLogLoss": 2.2264518074080915,
+                "topActionAccuracy": 0.27586206896551724
+              },
+              "context8": {
+                "decisions": 174,
+                "jointLogLoss": 2.2166136815425626,
+                "topActionAccuracy": 0.27011494252873564
+              },
+              "context24": {
+                "decisions": 174,
+                "jointLogLoss": 2.217161632701247,
+                "topActionAccuracy": 0.25862068965517243
+              }
+            }
+          }
+        },
+        {
+          "aid": "628d7c5e-6bf8-4cf8-938b-0ee6888e62d2",
+          "level": 51,
+          "opening": 1792093661933,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 91,
+                "jointLogLoss": 1.819402290468502,
+                "topActionAccuracy": 0.31868131868131866
+              },
+              "context8": {
+                "decisions": 91,
+                "jointLogLoss": 1.8629378434045392,
+                "topActionAccuracy": 0.31868131868131866
+              },
+              "context24": {
+                "decisions": 91,
+                "jointLogLoss": 1.892964770027415,
+                "topActionAccuracy": 0.3626373626373626
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 91,
+                "jointLogLoss": 1.8324986898696471,
+                "topActionAccuracy": 0.34065934065934067
+              },
+              "context8": {
+                "decisions": 91,
+                "jointLogLoss": 1.87782947690499,
+                "topActionAccuracy": 0.31868131868131866
+              },
+              "context24": {
+                "decisions": 91,
+                "jointLogLoss": 1.8979017375840852,
+                "topActionAccuracy": 0.31868131868131866
+              }
+            }
+          }
+        },
+        {
+          "aid": "e3441a3d-4296-4ebc-80fd-5cccc17000cd",
+          "level": 52,
+          "opening": 1792096748424,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 161,
+                "jointLogLoss": 2.2063730263483445,
+                "topActionAccuracy": 0.21739130434782608
+              },
+              "context8": {
+                "decisions": 161,
+                "jointLogLoss": 2.2132211371406263,
+                "topActionAccuracy": 0.21739130434782608
+              },
+              "context24": {
+                "decisions": 161,
+                "jointLogLoss": 2.211858065958276,
+                "topActionAccuracy": 0.21739130434782608
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 161,
+                "jointLogLoss": 2.232323706287773,
+                "topActionAccuracy": 0.20496894409937888
+              },
+              "context8": {
+                "decisions": 161,
+                "jointLogLoss": 2.2411388969595514,
+                "topActionAccuracy": 0.19875776397515527
+              },
+              "context24": {
+                "decisions": 161,
+                "jointLogLoss": 2.235286212617765,
+                "topActionAccuracy": 0.2111801242236025
+              }
+            }
+          }
+        },
+        {
+          "aid": "92d8c897-640f-4ce7-80ad-60386ef26922",
+          "level": 53,
+          "opening": 1792166705549,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 206,
+                "jointLogLoss": 1.7556268964669766,
+                "topActionAccuracy": 0.32524271844660196
+              },
+              "context8": {
+                "decisions": 206,
+                "jointLogLoss": 1.7603687320588153,
+                "topActionAccuracy": 0.32524271844660196
+              },
+              "context24": {
+                "decisions": 206,
+                "jointLogLoss": 1.764318720622131,
+                "topActionAccuracy": 0.32038834951456313
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 206,
+                "jointLogLoss": 1.7879126650783927,
+                "topActionAccuracy": 0.28640776699029125
+              },
+              "context8": {
+                "decisions": 206,
+                "jointLogLoss": 1.7958055414843557,
+                "topActionAccuracy": 0.2961165048543689
+              },
+              "context24": {
+                "decisions": 206,
+                "jointLogLoss": 1.7920104226671405,
+                "topActionAccuracy": 0.2815533980582524
+              }
+            }
+          }
+        },
+        {
+          "aid": "7c023b22-2c78-4996-9e79-4e1deb1ab4b5",
+          "level": 54,
+          "opening": 1792167038374,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 140,
+                "jointLogLoss": 1.7327760418484253,
+                "topActionAccuracy": 0.3357142857142857
+              },
+              "context8": {
+                "decisions": 140,
+                "jointLogLoss": 1.7345592621344812,
+                "topActionAccuracy": 0.32857142857142857
+              },
+              "context24": {
+                "decisions": 140,
+                "jointLogLoss": 1.7311775417577053,
+                "topActionAccuracy": 0.32142857142857145
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 140,
+                "jointLogLoss": 1.7484860867892213,
+                "topActionAccuracy": 0.32142857142857145
+              },
+              "context8": {
+                "decisions": 140,
+                "jointLogLoss": 1.7457777470969018,
+                "topActionAccuracy": 0.32857142857142857
+              },
+              "context24": {
+                "decisions": 140,
+                "jointLogLoss": 1.7484903099222455,
+                "topActionAccuracy": 0.30714285714285716
+              }
+            }
+          }
+        },
+        {
+          "aid": "15bcad8f-2cf3-4f47-b52d-9ffa7fe93ca2",
+          "level": 55,
+          "opening": 1792167284004,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 187,
+                "jointLogLoss": 2.1738294691952023,
+                "topActionAccuracy": 0.24064171122994651
+              },
+              "context8": {
+                "decisions": 187,
+                "jointLogLoss": 2.1733797959719148,
+                "topActionAccuracy": 0.24064171122994651
+              },
+              "context24": {
+                "decisions": 187,
+                "jointLogLoss": 2.1823553803620213,
+                "topActionAccuracy": 0.25133689839572193
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 187,
+                "jointLogLoss": 2.2022918245053016,
+                "topActionAccuracy": 0.25133689839572193
+              },
+              "context8": {
+                "decisions": 187,
+                "jointLogLoss": 2.211420232426513,
+                "topActionAccuracy": 0.24064171122994651
+              },
+              "context24": {
+                "decisions": 187,
+                "jointLogLoss": 2.216242102236618,
+                "topActionAccuracy": 0.2727272727272727
+              }
+            }
+          }
+        },
+        {
+          "aid": "ee903f05-ce73-465e-8c7b-587dd21816b5",
+          "level": 56,
+          "opening": 1792167538665,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 131,
+                "jointLogLoss": 2.690426951822708,
+                "topActionAccuracy": 0.16793893129770993
+              },
+              "context8": {
+                "decisions": 131,
+                "jointLogLoss": 2.682832576092221,
+                "topActionAccuracy": 0.17557251908396945
+              },
+              "context24": {
+                "decisions": 131,
+                "jointLogLoss": 2.6844820341940747,
+                "topActionAccuracy": 0.183206106870229
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 131,
+                "jointLogLoss": 2.723579538771847,
+                "topActionAccuracy": 0.17557251908396945
+              },
+              "context8": {
+                "decisions": 131,
+                "jointLogLoss": 2.7180465281513793,
+                "topActionAccuracy": 0.16030534351145037
+              },
+              "context24": {
+                "decisions": 131,
+                "jointLogLoss": 2.7332771361604,
+                "topActionAccuracy": 0.16030534351145037
+              }
+            }
+          }
+        },
+        {
+          "aid": "73174618-7044-4419-a37c-d403677c85a7",
+          "level": 57,
+          "opening": 1792170422833,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 71,
+                "jointLogLoss": 1.55106299230983,
+                "topActionAccuracy": 0.43661971830985913
+              },
+              "context8": {
+                "decisions": 71,
+                "jointLogLoss": 1.5498677109377232,
+                "topActionAccuracy": 0.43661971830985913
+              },
+              "context24": {
+                "decisions": 71,
+                "jointLogLoss": 1.5440174900515657,
+                "topActionAccuracy": 0.4084507042253521
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 71,
+                "jointLogLoss": 1.5799083388285482,
+                "topActionAccuracy": 0.43661971830985913
+              },
+              "context8": {
+                "decisions": 71,
+                "jointLogLoss": 1.5840734899350626,
+                "topActionAccuracy": 0.43661971830985913
+              },
+              "context24": {
+                "decisions": 71,
+                "jointLogLoss": 1.578978833990012,
+                "topActionAccuracy": 0.4225352112676056
+              }
+            }
+          }
+        },
+        {
+          "aid": "2dfe15db-c7af-42ff-ab01-f601e2390623",
+          "level": 58,
+          "opening": 1792170857134,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 207,
+                "jointLogLoss": 1.847781309195229,
+                "topActionAccuracy": 0.30917874396135264
+              },
+              "context8": {
+                "decisions": 207,
+                "jointLogLoss": 1.8597646389265663,
+                "topActionAccuracy": 0.30434782608695654
+              },
+              "context24": {
+                "decisions": 207,
+                "jointLogLoss": 1.8617564101513957,
+                "topActionAccuracy": 0.2753623188405797
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 207,
+                "jointLogLoss": 1.8593372684162364,
+                "topActionAccuracy": 0.2946859903381642
+              },
+              "context8": {
+                "decisions": 207,
+                "jointLogLoss": 1.8615327727521018,
+                "topActionAccuracy": 0.28502415458937197
+              },
+              "context24": {
+                "decisions": 207,
+                "jointLogLoss": 1.863650942859829,
+                "topActionAccuracy": 0.28019323671497587
+              }
+            }
+          }
+        },
+        {
+          "aid": "386437ff-0fc7-452d-b1a3-311aff29a719",
+          "level": 59,
+          "opening": 1792171113962,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 136,
+                "jointLogLoss": 1.931009012628989,
+                "topActionAccuracy": 0.29411764705882354
+              },
+              "context8": {
+                "decisions": 136,
+                "jointLogLoss": 1.9595429933497486,
+                "topActionAccuracy": 0.2647058823529412
+              },
+              "context24": {
+                "decisions": 136,
+                "jointLogLoss": 1.9738997621347618,
+                "topActionAccuracy": 0.25735294117647056
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 136,
+                "jointLogLoss": 1.9563560282997519,
+                "topActionAccuracy": 0.25735294117647056
+              },
+              "context8": {
+                "decisions": 136,
+                "jointLogLoss": 2.07570856928528,
+                "topActionAccuracy": 0.23529411764705882
+              },
+              "context24": {
+                "decisions": 136,
+                "jointLogLoss": 2.130519629078099,
+                "topActionAccuracy": 0.22058823529411764
+              }
+            }
+          }
+        },
+        {
+          "aid": "ef40df03-4f8b-4844-b33f-6cd4f95c83b7",
+          "level": 60,
+          "opening": 1792171635042,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 156,
+                "jointLogLoss": 2.235205486279451,
+                "topActionAccuracy": 0.22435897435897437
+              },
+              "context8": {
+                "decisions": 156,
+                "jointLogLoss": 2.2309708403155084,
+                "topActionAccuracy": 0.20512820512820512
+              },
+              "context24": {
+                "decisions": 156,
+                "jointLogLoss": 2.2638457643984453,
+                "topActionAccuracy": 0.22435897435897437
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 156,
+                "jointLogLoss": 2.2385459902120366,
+                "topActionAccuracy": 0.19230769230769232
+              },
+              "context8": {
+                "decisions": 156,
+                "jointLogLoss": 2.2240513332299274,
+                "topActionAccuracy": 0.1858974358974359
+              },
+              "context24": {
+                "decisions": 156,
+                "jointLogLoss": 2.2429512612420375,
+                "topActionAccuracy": 0.1794871794871795
+              }
+            }
+          }
+        },
+        {
+          "aid": "805dcd6e-b06b-4710-aa4c-df09e57f8b6b",
+          "level": 61,
+          "opening": 1792172079918,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 1.886258266008621,
+                "topActionAccuracy": 0.3153153153153153
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 1.8793165495478505,
+                "topActionAccuracy": 0.3063063063063063
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 1.8701581168639918,
+                "topActionAccuracy": 0.2882882882882883
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 111,
+                "jointLogLoss": 1.8952440550686684,
+                "topActionAccuracy": 0.3153153153153153
+              },
+              "context8": {
+                "decisions": 111,
+                "jointLogLoss": 1.893347637842089,
+                "topActionAccuracy": 0.2882882882882883
+              },
+              "context24": {
+                "decisions": 111,
+                "jointLogLoss": 1.8966826625040127,
+                "topActionAccuracy": 0.2972972972972973
+              }
+            }
+          }
+        },
+        {
+          "aid": "180c2671-2deb-43f7-ad26-ef5296647527",
+          "level": 62,
+          "opening": 1792172831970,
+          "scores": {
+            "ownAll": {
+              "control": {
+                "decisions": 186,
+                "jointLogLoss": 2.322168129420304,
+                "topActionAccuracy": 0.1935483870967742
+              },
+              "context8": {
+                "decisions": 186,
+                "jointLogLoss": 2.327096967595913,
+                "topActionAccuracy": 0.1989247311827957
+              },
+              "context24": {
+                "decisions": 186,
+                "jointLogLoss": 2.3166904138477937,
+                "topActionAccuracy": 0.1827956989247312
+              }
+            },
+            "ownCarryAll": {
+              "control": {
+                "decisions": 186,
+                "jointLogLoss": 2.34044580234934,
+                "topActionAccuracy": 0.16129032258064516
+              },
+              "context8": {
+                "decisions": 186,
+                "jointLogLoss": 2.339880320112989,
+                "topActionAccuracy": 0.15591397849462366
+              },
+              "context24": {
+                "decisions": 186,
+                "jointLogLoss": 2.3290836659746037,
+                "topActionAccuracy": 0.17204301075268819
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "models": 276,
+  "note": "Nonlinear own-person choice residuals against unchanged pinned personal actors. Actual one-tap features, frozen picture knowledge, older availability and target exclusions remain intact. Eight/twenty-four trees are declared diagnostics, not selected from held results. No outcome labels or other people fit these preferences. All original held action prefixes remain accounted for. Action likelihood is not winning-try accuracy, an autonomous policy promotion or a new frozen forecast."
+}

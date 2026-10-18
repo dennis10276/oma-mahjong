@@ -1,0 +1,22 @@
+'use strict';
+const assert = require('assert/strict');
+const L = require('../../../www/layouts.js');
+const { rowOf } = require('./personal_clock_crowding_audit.js');
+const tiles = [0, 4, 8].map(coordinate => ({ x: coordinate, y: 0, z: 0 }));
+const game = { tiles, nb: L.neighbors(tiles), rules: null, clock: { i: 0, n: 4 } };
+const state = { alive: [1, 1, 1], pictures: [null, 1, 2], down: [1, 0, 0], tray: [1, 3, 4],
+  moves: 1, openPeek: -1, relieved: false, arriving: [] };
+const actions = [0, 1, 2].map(index => ({ index }));
+const decision = { k: 1, knownPlan: Array.from({ length: 3 }, () => Array(12).fill(0)) };
+decision.knownPlan[1][1] = 1;
+const result = rowOf(game, state, actions, decision);
+assert.equal(result.clockPictureUnknown, true);
+assert.equal(result.knownPairAvailable, true);
+assert.equal(result.pairWithExitTwoAvailable, true);
+assert.equal(result.selectedKnownPair, true);
+assert.equal(result.selectedPairBeforeClock, true);
+assert.equal(result.selectedDirectClock, false);
+assert.equal(result.selectedUncertain, false);
+assert.equal(rowOf(game, state, actions, { ...decision, k: 0 }).selectedUncertain, true);
+assert.deepEqual(rowOf({ ...game, faces: [98, 97, 96] }, state, actions, decision), result);
+console.log('PASS clock crowding diagnosis uses public pair support, not unseen pictures or future observed results');

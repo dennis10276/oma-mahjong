@@ -1,0 +1,90 @@
+{
+  "Dennisisdebeste": {
+    "naturalRestarts": 11,
+    "measured": 11,
+    "unsupported": [],
+    "observedMeanMoves": 24.545454545454547,
+    "profiles": {
+      "ownAll": {
+        "runs": 176,
+        "wins": 0,
+        "clock": 0,
+        "tray": 176,
+        "successFraction": 0
+      },
+      "ownAllPlan8": {
+        "runs": 176,
+        "wins": 0,
+        "clock": 0,
+        "tray": 176,
+        "successFraction": 0
+      }
+    }
+  },
+  "Mrs. Doubtfire": {
+    "naturalRestarts": 5,
+    "measured": 5,
+    "unsupported": [],
+    "observedMeanMoves": 27.6,
+    "profiles": {
+      "ownAll": {
+        "runs": 80,
+        "wins": 3,
+        "clock": 0,
+        "tray": 77,
+        "successFraction": 0.0375
+      },
+      "ownAllPlan8": {
+        "runs": 80,
+        "wins": 3,
+        "clock": 0,
+        "tray": 77,
+        "successFraction": 0.0375
+      }
+    }
+  },
+  "PUK": {
+    "naturalRestarts": 1,
+    "measured": 1,
+    "unsupported": [],
+    "observedMeanMoves": 53,
+    "profiles": {
+      "ownAll": {
+        "runs": 16,
+        "wins": 15,
+        "clock": 0,
+        "tray": 1,
+        "successFraction": 0.9375
+      },
+      "ownAllPlan8": {
+        "runs": 16,
+        "wins": 15,
+        "clock": 0,
+        "tray": 1,
+        "successFraction": 0.9375
+      }
+    }
+  },
+  "Gerda": {
+    "naturalRestarts": 0,
+    "measured": 0,
+    "unsupported": [],
+    "observedMeanMoves": null,
+    "profiles": {
+      "ownAll": {
+        "runs": 0,
+        "wins": 0,
+        "clock": 0,
+        "tray": 0,
+        "successFraction": null
+      },
+      "ownAllPlan8": {
+        "runs": 0,
+        "wins": 0,
+        "clock": 0,
+        "tray": 0,
+        "successFraction": null
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+screen shapes {"OmaHanny":{"aspect":1,"classicChecked":21,"matched":1},"Dennisisdebeste":{"aspect":1.5,"classicChecked":34,"matched":33},"Rashmiisookdebeste":{"aspect":1.2,"classicChecked":24,"matched":19},"Mama":{"aspect":1.4,"classicChecked":29,"matched":29},"Mrs. Doubtfire":{"aspect":1.6,"classicChecked":40,"matched":40},"PUK":{"aspect":1,"classicChecked":40,"matched":24},"Gerda":{"aspect":1.6,"classicChecked":40,"matched":40}}
+attempts: 671, board matches 665, mismatches 6
+OmaHanny attempts 1 wins 1 levels 1 range 50 - 50
+Dennisisdebeste attempts 206 wins 135 levels 109 range 42 - 150
+Rashmiisookdebeste attempts 22 wins 19 levels 19 range 33 - 53
+Mama attempts 12 wins 12 levels 12 range 16 - 44
+Mrs. Doubtfire attempts 191 wins 66 levels 67 range 34 - 103
+PUK attempts 72 wins 36 levels 38 range 10 - 53
+Gerda attempts 161 wins 51 levels 56 range 10 - 68

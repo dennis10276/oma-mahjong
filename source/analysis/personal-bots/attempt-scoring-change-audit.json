@@ -1,0 +1,363 @@
+{
+  "made": "2026-10-18T15:07:39.487145+00:00",
+  "evidence": "user-authorized-score-rule-change",
+  "scoringRule": {
+    "id": "attempt-tolerance-and-8plus-v2",
+    "toleranceByActualAttempt": {
+      "1-3": 0,
+      "4-5": 1,
+      "6+": 2
+    },
+    "sharedSuccessBucketMinimum": 8,
+    "combination": "within-tolerance-or-both-8plus"
+  },
+  "targetMet": false,
+  "beforeSnapshot": "analysis/archive/personal-bots/experiments/prospective-score-2026-10-18T11-52-16-715Z",
+  "sourceHashes": {
+    "analysis/archive/personal-bots/experiments/prospective-score-2026-10-18T11-52-16-715Z/manifest.json": "c077d49f08a908d53f9ff7f4e22e8344af6c84d2597351d2d4c4b17a303eae67",
+    "analysis/personal-bots/prospective-forecasts.json": "58de3c411ba779071e6c7f7d30c360cce7f69986465948e0543a044003f13057",
+    "analysis/personal-bots/prospective-results.json": "ac2ab5188b84132a0b65c1fd100045aa22cc9b61810f5a304c4e9843058470bd",
+    "analysis/archive/personal-bots/experiments/prospective-score-2026-10-18T11-52-16-715Z/analysis/personal-bots/prospective-results.json": "85d658a681d0bc5ea1c48d58078e475ee4d3d621895b4e719151bd150e2fb345",
+    "analysis/personal-bots/kind-prospective-forecasts.json": "98b8409ede1146938e8495b598706d07fba424ec31dc9b4017081bf61988cd27",
+    "analysis/personal-bots/kind-prospective-results.json": "b188797dc28f6c6321199aa3eb94a35e380c0925722eb7857b8920b6e3bd64a1",
+    "analysis/archive/personal-bots/experiments/prospective-score-2026-10-18T11-52-16-715Z/analysis/personal-bots/kind-prospective-results.json": "fedccd8e25a275a3f8cb352b907f0a3fa0bcf180c97ffd5464394a482c9796f2",
+    "analysis/personal-bots/count-profile-prospective-forecasts.json": "1e3bd3ba0ae3780aee63791128d4e6a5f031ff073ba8bcddc4599f041de2db62",
+    "analysis/personal-bots/count-profile-prospective-results.json": "537da437866ade9a528299fbe5c356fec9cf2db5142bee65b7bc0ed60f79738a",
+    "analysis/archive/personal-bots/experiments/prospective-score-2026-10-18T11-52-16-715Z/analysis/personal-bots/count-profile-prospective-results.json": "c1931d94b3c7582490a110c971c73bd0a64994bdd836f3b5121d8c90a83fcd6e",
+    "analysis/personal-bots/progression-prospective-forecasts.json": "e98206e69c55013ffd54544ad8320e2b54d5040b752041941849d98d99e09938",
+    "analysis/personal-bots/progression-prospective-results.json": "6f3c2421d13a0b111a972ee33d891dd16f9b5f3fe34ec6a8c38de67ab0ae23dd",
+    "analysis/archive/personal-bots/experiments/prospective-score-2026-10-18T11-52-16-715Z/analysis/personal-bots/progression-prospective-results.json": "2339fe1a9c97932b9defee2f0055a1cef86e1e808fecf1d5a8a034a25dccb440",
+    "tools/sim/refit/attempt_scoring_change_audit.py": "046c6875cfac33eeac512c229496c09792de5811857c3d03958ab1e1105f1e41",
+    "tools/sim/refit/attempt_count_fit.py": "cc367f6e5c92f34be7652ee0affa2a2f60a349045dad843b78e8fa40625eff60",
+    "tools/sim/refit/prospective.py": "e4a9141418eda04e1a3f8c31e69ebce7f94d3e04672fcfe1277129defc61f7e9",
+    "tools/sim/refit/progression_score.py": "3dfa4581f5ebe37beabda62486a025891230561244e811b21ab03864dd10564b",
+    "tools/sim/refit/progression_forecasts.py": "b8a1261db2cd2f597fd4b2ff123eb2e251a6acfed8074089448b5e371b1f9d82"
+  },
+  "comparisons": {
+    "prospective": {
+      "scoredCampaignsUnchanged": 6,
+      "additionalCorrect8plusPairs": [],
+      "beforeCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 18,
+          "eligibleFrozenForecasts": 1,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 2,
+          "missingForecastsOrOpening": 19
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 3,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 8
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 3,
+          "correct": 1,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 3
+        }
+      },
+      "afterCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 18,
+          "eligibleFrozenForecasts": 1,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 2,
+          "missingForecastsOrOpening": 19
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 3,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 8
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 3,
+          "correct": 1,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 3
+        }
+      },
+      "targetMet": false
+    },
+    "kind-prospective": {
+      "scoredCampaignsUnchanged": 17,
+      "additionalCorrect8plusPairs": [],
+      "beforeCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 19,
+          "eligibleFrozenForecasts": 2,
+          "correct": 1,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 18
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 11,
+          "correct": 4,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 6,
+          "correct": 3,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 0
+        }
+      },
+      "afterCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 19,
+          "eligibleFrozenForecasts": 2,
+          "correct": 1,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 18
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 11,
+          "correct": 4,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 6,
+          "correct": 3,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 0
+        }
+      },
+      "targetMet": false
+    },
+    "count-profile-prospective": {
+      "scoredCampaignsUnchanged": 18,
+      "additionalCorrect8plusPairs": [],
+      "beforeCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 19,
+          "eligibleFrozenForecasts": 2,
+          "correct": 1,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 18
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 11,
+          "correct": 2,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 6,
+          "correct": 3,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 0
+        }
+      },
+      "afterCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 19,
+          "eligibleFrozenForecasts": 2,
+          "correct": 1,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 18
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 11,
+          "correct": 2,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 6,
+          "correct": 3,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 0
+        }
+      },
+      "targetMet": false
+    },
+    "progression-prospective": {
+      "scoredCampaignsUnchanged": 50,
+      "additionalCorrect8plusPairs": [],
+      "beforeCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 20,
+          "eligibleFrozenForecasts": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 11,
+          "correct": 2,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 6,
+          "correct": 3,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 0
+        }
+      },
+      "afterCohort": {
+        "Dennisisdebeste": {
+          "opened": 20,
+          "completed": 20,
+          "eligibleFrozenForecasts": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Mrs. Doubtfire": {
+          "opened": 11,
+          "completed": 11,
+          "eligibleFrozenForecasts": 11,
+          "correct": 2,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "PUK": {
+          "opened": 0,
+          "completed": 0,
+          "eligibleFrozenForecasts": 0,
+          "correct": 0,
+          "accuracy": null,
+          "pending": 0,
+          "missingForecastsOrOpening": 0
+        },
+        "Gerda": {
+          "opened": 6,
+          "completed": 5,
+          "eligibleFrozenForecasts": 6,
+          "correct": 3,
+          "accuracy": null,
+          "pending": 1,
+          "missingForecastsOrOpening": 0
+        }
+      },
+      "targetMet": false
+    }
+  },
+  "note": "User explicitly added shared8+ success (e.g. prediction9, actual12) after the original forecasts. The original reports/rule remain pinned. Numeric forecasts, actual local winning tries, cohort anchors, all misses/openings/missing forecasts and every ledger are retained. Only correctness is rescored; this is not a retroactive new forecast or a claim that the original metric was8+."
+}

@@ -1,0 +1,90 @@
+{
+  "made": "2026-10-17T02:40:11.903Z",
+  "players": {
+    "Dennisisdebeste": {
+      "fitted": {
+        "probability": 0.10457167520908102,
+        "prior": 0.10466652916623276,
+        "own": {
+          "games": 22,
+          "novel": 9.922765255812635,
+          "matched": 84.97772747758353,
+          "availableThrough": 1792174831215
+        },
+        "familyAvailableThrough": 1792174483507,
+        "cutoff": 1792174835467,
+        "halfLife": 20,
+        "pull": 12
+      },
+      "testingGames": 8,
+      "novel": 16,
+      "matched": 27,
+      "observedProbability": 0.37209302325581395,
+      "binaryLogLoss": 0.9094966183353733
+    },
+    "Mrs. Doubtfire": {
+      "fitted": {
+        "probability": 0.16339054579144946,
+        "prior": 0.11129799144056779,
+        "own": {
+          "games": 26,
+          "novel": 13.015398756421233,
+          "matched": 62.816945423550656,
+          "availableThrough": 1792162769238
+        },
+        "familyAvailableThrough": 1792138633616,
+        "cutoff": 1792162770361,
+        "halfLife": 20,
+        "pull": 12
+      },
+      "testingGames": 9,
+      "novel": 3,
+      "matched": 38,
+      "observedProbability": 0.07317073170731707,
+      "binaryLogLoss": 0.2979013854990419
+    },
+    "PUK": {
+      "fitted": {
+        "probability": 0.01896830683472034,
+        "prior": 0.16593447537041042,
+        "own": {
+          "games": 22,
+          "novel": 3.553353522948484,
+          "matched": 276.7535600938438,
+          "availableThrough": 1792138372677
+        },
+        "familyAvailableThrough": 1792130058303,
+        "cutoff": 1792138391388,
+        "halfLife": 20,
+        "pull": 12
+      },
+      "testingGames": 8,
+      "novel": 3,
+      "matched": 53,
+      "observedProbability": 0.05357142857142857,
+      "binaryLogLoss": 0.23053454370659168
+    },
+    "Gerda": {
+      "fitted": {
+        "probability": 0.11631798592443306,
+        "prior": 0.14628506447613723,
+        "own": {
+          "games": 129,
+          "novel": 53.05987352808946,
+          "matched": 406.19393873628655,
+          "availableThrough": 1792085008066
+        },
+        "familyAvailableThrough": 1792083750779,
+        "cutoff": 1792085063826,
+        "halfLife": 20,
+        "pull": 12
+      },
+      "testingGames": 44,
+      "novel": 107,
+      "matched": 454,
+      "observedProbability": 0.19073083778966132,
+      "binaryLogLoss": 0.5104161857490439
+    }
+  },
+  "note": "Historical conditional inspection diagnostic only. Counts new free inspections versus visible tray matches when novel inspection was possible and the clock was absent or cleared. Reopens and competing other actions are not treated as forgetting. Each target uses strictly earlier available chunks and a leave-person-out family prior, not later recordings."
+}

@@ -1,0 +1,128 @@
+{
+  "Mrs. Doubtfire": {
+    "boards": 20,
+    "simulations": 80,
+    "wins": 7,
+    "failures": 73,
+    "byCause": {
+      "tray": 72,
+      "clock": 1
+    },
+    "beforeFinalTap": {
+      "8": {
+        "remainingAtMost": 1,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      },
+      "12": {
+        "remainingAtMost": 1,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      },
+      "16": {
+        "remainingAtMost": 1,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      },
+      "24": {
+        "remainingAtMost": 3,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      }
+    }
+  },
+  "PUK": {
+    "boards": 20,
+    "simulations": 80,
+    "wins": 16,
+    "failures": 64,
+    "byCause": {
+      "tray": 64
+    },
+    "beforeFinalTap": {
+      "8": {
+        "remainingAtMost": 2,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      },
+      "12": {
+        "remainingAtMost": 2,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      },
+      "16": {
+        "remainingAtMost": 3,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      },
+      "24": {
+        "remainingAtMost": 8,
+        "allRemainingKnown": 1,
+        "allRemainingKnownClockOff": 1
+      }
+    }
+  },
+  "Gerda": {
+    "boards": 20,
+    "simulations": 80,
+    "wins": 4,
+    "failures": 76,
+    "byCause": {
+      "tray": 76
+    },
+    "beforeFinalTap": {
+      "8": {
+        "remainingAtMost": 0,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      },
+      "12": {
+        "remainingAtMost": 0,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      },
+      "16": {
+        "remainingAtMost": 0,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      },
+      "24": {
+        "remainingAtMost": 1,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      }
+    }
+  },
+  "Dennisisdebeste": {
+    "boards": 20,
+    "simulations": 80,
+    "wins": 14,
+    "failures": 66,
+    "byCause": {
+      "tray": 65,
+      "clock": 1
+    },
+    "beforeFinalTap": {
+      "8": {
+        "remainingAtMost": 1,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      },
+      "12": {
+        "remainingAtMost": 1,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      },
+      "16": {
+        "remainingAtMost": 8,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      },
+      "24": {
+        "remainingAtMost": 15,
+        "allRemainingKnown": 0,
+        "allRemainingKnownClockOff": 0
+      }
+    }
+  }
+}

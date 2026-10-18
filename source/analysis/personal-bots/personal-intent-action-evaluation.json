@@ -1,0 +1,1729 @@
+{
+  "made": "2026-10-17T15:57:03.394055+00:00",
+  "evidence": "historical-exploratory-action-likelihood",
+  "inputSha256": {
+    "prefix": "d324467c5096aa4db1cd4e6af27251e029c6a5b9df9f580e0d627685b74617b6",
+    "bank": "9090179cb15e570feca1b4764d2490508667b508fba6a40c050560fe77aa439e",
+    "requests": "12a197dfffa191681b9a28acdf4b40002036a802041daafdb00618884a3eaaf8"
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "candidatePrefixes": 18,
+      "models": {
+        "ownAll": {
+          "decisions": 1884,
+          "prefixes": 18,
+          "jointLogLoss": 1.6709160351349779,
+          "topActionAccuracy": 0.4068913658881812,
+          "followThroughOpportunities": 201,
+          "followThroughLogLoss": 0.54693103171175
+        },
+        "ownNovel": {
+          "decisions": 1884,
+          "prefixes": 18,
+          "jointLogLoss": 1.7507447177670563,
+          "topActionAccuracy": 0.37132873319179055,
+          "followThroughOpportunities": 201,
+          "followThroughLogLoss": 0.563267348403412
+        }
+      },
+      "rows": [
+        {
+          "aid": "a887524e-f200-4bf2-bbce-6079101d596b",
+          "level": 100,
+          "opening": 1791910612845,
+          "scores": {
+            "ownAll": {
+              "decisions": 16,
+              "jointLogLoss": 1.2739817810830403,
+              "topActionAccuracy": 0.41145833333333337,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.7336262956471139,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 16,
+              "jointLogLoss": 1.2739817810830403,
+              "topActionAccuracy": 0.41145833333333337,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.7336262956471139,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "5dbaac9c-31b8-4ed5-859f-93df7b6a7c07",
+          "level": 101,
+          "opening": 1791911568306,
+          "scores": {
+            "ownAll": {
+              "decisions": 129,
+              "jointLogLoss": 1.6851942498829602,
+              "topActionAccuracy": 0.3333333333333333,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.9303082148102417,
+              "followThroughOpportunities": 25,
+              "followThroughLogLoss": 0.7255147840694072
+            },
+            "ownNovel": {
+              "decisions": 129,
+              "jointLogLoss": 2.046976821304646,
+              "topActionAccuracy": 0.23255813953488372,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 1.3991908488864693,
+              "followThroughOpportunities": 25,
+              "followThroughLogLoss": 0.6931471805599452
+            }
+          }
+        },
+        {
+          "aid": "cb69ccd6-2352-441a-a68a-8cf22cccb4ec",
+          "level": 102,
+          "opening": 1791911749246,
+          "scores": {
+            "ownAll": {
+              "decisions": 11,
+              "jointLogLoss": 1.0964725843623606,
+              "topActionAccuracy": 0.7272727272727273,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.1679430574853766,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 11,
+              "jointLogLoss": 0.8467911124900884,
+              "topActionAccuracy": 0.7272727272727273,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.14374369613020183,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "978a8ebe-523e-439e-9cb8-100c99ae3e32",
+          "level": 103,
+          "opening": 1791912126978,
+          "scores": {
+            "ownAll": {
+              "decisions": 172,
+              "jointLogLoss": 1.7628110556303802,
+              "topActionAccuracy": 0.3546511627906977,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.6789362577005302,
+              "followThroughOpportunities": 20,
+              "followThroughLogLoss": 0.4126181595486015
+            },
+            "ownNovel": {
+              "decisions": 172,
+              "jointLogLoss": 1.8751317148571716,
+              "topActionAccuracy": 0.28488372093023256,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.7670087359382737,
+              "followThroughOpportunities": 20,
+              "followThroughLogLoss": 0.5885021747700737
+            }
+          }
+        },
+        {
+          "aid": "2f88f4df-a19b-4081-b8f3-f8055f69f1ee",
+          "level": 104,
+          "opening": 1791914835209,
+          "scores": {
+            "ownAll": {
+              "decisions": 8,
+              "jointLogLoss": 2.1108388682283583,
+              "topActionAccuracy": 0.25,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 1.6032509165945872,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 8,
+              "jointLogLoss": 2.7603482282775813,
+              "topActionAccuracy": 0.25,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 2.090834854153129,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "c5c8435e-b0d4-4348-8525-7667b4b7c219",
+          "level": 105,
+          "opening": 1792048732189,
+          "scores": {
+            "ownAll": {
+              "decisions": 145,
+              "jointLogLoss": 1.8748110684102322,
+              "topActionAccuracy": 0.3586206896551724,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.576150008395864,
+              "followThroughOpportunities": 23,
+              "followThroughLogLoss": 1.1756436702014676
+            },
+            "ownNovel": {
+              "decisions": 145,
+              "jointLogLoss": 1.8834031775902413,
+              "topActionAccuracy": 0.3310344827586207,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.6964228619542405,
+              "followThroughOpportunities": 23,
+              "followThroughLogLoss": 0.9966884246915135
+            }
+          }
+        },
+        {
+          "aid": "cf8b410c-ea52-4086-af9b-34c87f90d99d",
+          "level": 107,
+          "opening": 1792236558549,
+          "scores": {
+            "ownAll": {
+              "decisions": 131,
+              "jointLogLoss": 1.454623345150834,
+              "topActionAccuracy": 0.4580152671755725,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.9399094759651253,
+              "followThroughOpportunities": 21,
+              "followThroughLogLoss": 0.6562982042376355
+            },
+            "ownNovel": {
+              "decisions": 131,
+              "jointLogLoss": 1.6558142379003251,
+              "topActionAccuracy": 0.366412213740458,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 1.229479432146971,
+              "followThroughOpportunities": 21,
+              "followThroughLogLoss": 0.6778563491110168
+            }
+          }
+        },
+        {
+          "aid": "5d9cdde1-8175-4614-b6c4-65450bbee997",
+          "level": 108,
+          "opening": 1792236711656,
+          "scores": {
+            "ownAll": {
+              "decisions": 95,
+              "jointLogLoss": 1.861893598346425,
+              "topActionAccuracy": 0.3157894736842105,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8162838688928223,
+              "followThroughOpportunities": 7,
+              "followThroughLogLoss": 0.33810885756622905
+            },
+            "ownNovel": {
+              "decisions": 95,
+              "jointLogLoss": 1.835616093359552,
+              "topActionAccuracy": 0.29473684210526313,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.8826734854512556,
+              "followThroughOpportunities": 7,
+              "followThroughLogLoss": 0.5085672332275536
+            }
+          }
+        },
+        {
+          "aid": "7f00a2e4-bb0e-4ad9-8e76-e3d05e38616e",
+          "level": 109,
+          "opening": 1792237007560,
+          "scores": {
+            "ownAll": {
+              "decisions": 51,
+              "jointLogLoss": 1.469292680903978,
+              "topActionAccuracy": 0.5098039215686274,
+              "knownMatchChoices": 7,
+              "knownMatchLogLoss": 0.5792394317129378,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.7287174213389237
+            },
+            "ownNovel": {
+              "decisions": 51,
+              "jointLogLoss": 1.5171761856600463,
+              "topActionAccuracy": 0.5098039215686274,
+              "knownMatchChoices": 7,
+              "knownMatchLogLoss": 0.647528707179225,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.6443033610288591
+            }
+          }
+        },
+        {
+          "aid": "a00f695e-fe99-4e8b-9a46-8173045107dd",
+          "level": 110,
+          "opening": 1792237324237,
+          "scores": {
+            "ownAll": {
+              "decisions": 122,
+              "jointLogLoss": 1.6208804034621627,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.746812134044806,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.3933675345988939
+            },
+            "ownNovel": {
+              "decisions": 122,
+              "jointLogLoss": 1.7046355528337798,
+              "topActionAccuracy": 0.4672131147540984,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.8501502161197131,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.5144342037891118
+            }
+          }
+        },
+        {
+          "aid": "5ae9f572-0f2c-43c5-9ca5-a702dadcd3b7",
+          "level": 111,
+          "opening": 1792237449745,
+          "scores": {
+            "ownAll": {
+              "decisions": 100,
+              "jointLogLoss": 1.6525656246654499,
+              "topActionAccuracy": 0.4,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.5294510697310144,
+              "followThroughOpportunities": 5,
+              "followThroughLogLoss": 0.3281578144395911
+            },
+            "ownNovel": {
+              "decisions": 100,
+              "jointLogLoss": 1.700632219639974,
+              "topActionAccuracy": 0.35,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.5632838323623607,
+              "followThroughOpportunities": 5,
+              "followThroughLogLoss": 0.4097838126864491
+            }
+          }
+        },
+        {
+          "aid": "70633ed7-a7ed-408e-8194-f7d6e1e7a7df",
+          "level": 112,
+          "opening": 1792237765230,
+          "scores": {
+            "ownAll": {
+              "decisions": 157,
+              "jointLogLoss": 1.74275445880126,
+              "topActionAccuracy": 0.43312101910828027,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6247847152316729,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.35875636927147814
+            },
+            "ownNovel": {
+              "decisions": 157,
+              "jointLogLoss": 1.7787764558694183,
+              "topActionAccuracy": 0.42038216560509556,
+              "knownMatchChoices": 35,
+              "knownMatchLogLoss": 0.6333973421929026,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.3929250355934314
+            }
+          }
+        },
+        {
+          "aid": "6004da1b-844c-4eba-922e-6f1a4e90c7a6",
+          "level": 113,
+          "opening": 1792237901717,
+          "scores": {
+            "ownAll": {
+              "decisions": 169,
+              "jointLogLoss": 1.578418462380511,
+              "topActionAccuracy": 0.42011834319526625,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.6851308498651577,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.3347647815181451
+            },
+            "ownNovel": {
+              "decisions": 169,
+              "jointLogLoss": 1.6612968740588445,
+              "topActionAccuracy": 0.40828402366863903,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.7731997782696189,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.34655192468083773
+            }
+          }
+        },
+        {
+          "aid": "cb7b9713-024b-4bad-9d58-c5169a6ba86d",
+          "level": 114,
+          "opening": 1792238142501,
+          "scores": {
+            "ownAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.493944888083905,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.6043638103351102,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.4336414112232209
+            },
+            "ownNovel": {
+              "decisions": 126,
+              "jointLogLoss": 1.5407815315694182,
+              "topActionAccuracy": 0.46825396825396826,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.6040443671935875,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.4308138700947292
+            }
+          }
+        },
+        {
+          "aid": "12d958f6-91c1-4fad-a757-d93382a17b0a",
+          "level": 115,
+          "opening": 1792238277298,
+          "scores": {
+            "ownAll": {
+              "decisions": 15,
+              "jointLogLoss": 1.5015440632284354,
+              "topActionAccuracy": 0.6666666666666666,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 0.08290949266110456,
+              "followThroughOpportunities": 2,
+              "followThroughLogLoss": 0.09854390558423862
+            },
+            "ownNovel": {
+              "decisions": 15,
+              "jointLogLoss": 1.7308852048268895,
+              "topActionAccuracy": 0.4666666666666667,
+              "knownMatchChoices": 4,
+              "knownMatchLogLoss": 0.0846275268422205,
+              "followThroughOpportunities": 2,
+              "followThroughLogLoss": 0.1677574038400201
+            }
+          }
+        },
+        {
+          "aid": "4a7600f2-13f6-401b-9da2-03109a0b7b86",
+          "level": 116,
+          "opening": 1792238811966,
+          "scores": {
+            "ownAll": {
+              "decisions": 183,
+              "jointLogLoss": 1.9287542987511552,
+              "topActionAccuracy": 0.31693989071038253,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.5238873999851221,
+              "followThroughOpportunities": 12,
+              "followThroughLogLoss": 0.3907387430971576
+            },
+            "ownNovel": {
+              "decisions": 183,
+              "jointLogLoss": 1.9645541876213595,
+              "topActionAccuracy": 0.30601092896174864,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.5010928553998828,
+              "followThroughOpportunities": 12,
+              "followThroughLogLoss": 0.4167871794549929
+            }
+          }
+        },
+        {
+          "aid": "784c1381-9c98-44d7-b1a5-a62615c71280",
+          "level": 117,
+          "opening": 1792239201873,
+          "scores": {
+            "ownAll": {
+              "decisions": 153,
+              "jointLogLoss": 1.4486793073907565,
+              "topActionAccuracy": 0.47058823529411764,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.6754482479801749,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.4129862807948323
+            },
+            "ownNovel": {
+              "decisions": 153,
+              "jointLogLoss": 1.4679887680636516,
+              "topActionAccuracy": 0.43790849673202614,
+              "knownMatchChoices": 27,
+              "knownMatchLogLoss": 0.667738855481594,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.4076189408774008
+            }
+          }
+        },
+        {
+          "aid": "a776a740-a11f-449d-844e-402db9b05d83",
+          "level": 118,
+          "opening": 1792239395598,
+          "scores": {
+            "ownAll": {
+              "decisions": 101,
+              "jointLogLoss": 1.7339031822207416,
+              "topActionAccuracy": 0.3465346534653465,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6353986788525283,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.17608366662268762
+            },
+            "ownNovel": {
+              "decisions": 101,
+              "jointLogLoss": 1.7425867619738045,
+              "topActionAccuracy": 0.37623762376237624,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6324119773749249,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.20490383676769855
+            }
+          }
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "candidatePrefixes": 7,
+      "models": {
+        "ownAll": {
+          "decisions": 559,
+          "prefixes": 7,
+          "jointLogLoss": 2.0910905142626413,
+          "topActionAccuracy": 0.2772808586762075,
+          "followThroughOpportunities": 43,
+          "followThroughLogLoss": 0.7067714506278274
+        },
+        "ownNovel": {
+          "decisions": 559,
+          "prefixes": 7,
+          "jointLogLoss": 2.2144885022299072,
+          "topActionAccuracy": 0.2456207874812526,
+          "followThroughOpportunities": 43,
+          "followThroughLogLoss": 0.6747295568283896
+        }
+      },
+      "rows": [
+        {
+          "aid": "40ec9181-90db-40a6-b4a0-e09e0476b63f",
+          "level": 90,
+          "opening": 1792083395933,
+          "scores": {
+            "ownAll": {
+              "decisions": 205,
+              "jointLogLoss": 2.196850345516223,
+              "topActionAccuracy": 0.24390243902439024,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 1.236203746181078,
+              "followThroughOpportunities": 22,
+              "followThroughLogLoss": 0.6912285756154368
+            },
+            "ownNovel": {
+              "decisions": 205,
+              "jointLogLoss": 2.514429036058737,
+              "topActionAccuracy": 0.18683912293668392,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 1.5235768600807709,
+              "followThroughOpportunities": 22,
+              "followThroughLogLoss": 0.6931471805599453
+            }
+          }
+        },
+        {
+          "aid": "496ae0a1-30a2-48b2-beb3-10c1442c3964",
+          "level": 91,
+          "opening": 1792083635769,
+          "scores": {
+            "ownAll": {
+              "decisions": 88,
+              "jointLogLoss": 1.9175691442665497,
+              "topActionAccuracy": 0.3522727272727273,
+              "knownMatchChoices": 11,
+              "knownMatchLogLoss": 0.6322036729776456,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.7026434722344546
+            },
+            "ownNovel": {
+              "decisions": 88,
+              "jointLogLoss": 2.0025379773425063,
+              "topActionAccuracy": 0.2840909090909091,
+              "knownMatchChoices": 11,
+              "knownMatchLogLoss": 0.759346326611388,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.6373612927313929
+            }
+          }
+        },
+        {
+          "aid": "4fdd41cd-dc23-451a-a2a5-e476ea8cbc6c",
+          "level": 92,
+          "opening": 1792173667131,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.1928757250807003,
+              "topActionAccuracy": 0.25225225225225223,
+              "knownMatchChoices": 13,
+              "knownMatchLogLoss": 0.4446149436936817,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.28071628945255456
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 2.1740847723406787,
+              "topActionAccuracy": 0.2702702702702703,
+              "knownMatchChoices": 13,
+              "knownMatchLogLoss": 0.8087752164986746,
+              "followThroughOpportunities": 4,
+              "followThroughLogLoss": 0.506239965190484
+            }
+          }
+        },
+        {
+          "aid": "310d321c-a36c-49bb-92c4-7850414e3e38",
+          "level": 93,
+          "opening": 1792218827820,
+          "scores": {
+            "ownAll": {
+              "decisions": 9,
+              "jointLogLoss": 1.3105904216020956,
+              "topActionAccuracy": 0.5555555555555556,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.11405843052349773,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 9,
+              "jointLogLoss": 1.5088614177538484,
+              "topActionAccuracy": 0.4444444444444444,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.4217365760596549,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "6a159ce0-33ec-4bd7-9f01-bdb0a7fd1035",
+          "level": 94,
+          "opening": 1792219008645,
+          "scores": {
+            "ownAll": {
+              "decisions": 7,
+              "jointLogLoss": 2.736834453311153,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.49988310626781235,
+              "followThroughOpportunities": 1,
+              "followThroughLogLoss": 1.7053474759744003
+            },
+            "ownNovel": {
+              "decisions": 7,
+              "jointLogLoss": 2.2098386744036205,
+              "topActionAccuracy": 0.2857142857142857,
+              "knownMatchChoices": 1,
+              "knownMatchLogLoss": 0.33846644978290774,
+              "followThroughOpportunities": 1,
+              "followThroughLogLoss": 1.2001978763252037
+            }
+          }
+        },
+        {
+          "aid": "c046e698-f3d8-4588-bc9a-63003f8607ee",
+          "level": 95,
+          "opening": 1792219379250,
+          "scores": {
+            "ownAll": {
+              "decisions": 113,
+              "jointLogLoss": 2.0046935335001246,
+              "topActionAccuracy": 0.2831858407079646,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.5956267027123503,
+              "followThroughOpportunities": 12,
+              "followThroughLogLoss": 0.7954464325612114
+            },
+            "ownNovel": {
+              "decisions": 113,
+              "jointLogLoss": 2.0092701205763945,
+              "topActionAccuracy": 0.2831858407079646,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.9237665760367799,
+              "followThroughOpportunities": 12,
+              "followThroughLogLoss": 0.6657941719407707
+            }
+          }
+        },
+        {
+          "aid": "071bc6a8-2f96-4e0a-be4f-8b1e3bb01cd5",
+          "level": 96,
+          "opening": 1792219621915,
+          "scores": {
+            "ownAll": {
+              "decisions": 26,
+              "jointLogLoss": 1.881787008056361,
+              "topActionAccuracy": 0.2692307692307692,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.3375981546212577,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 26,
+              "jointLogLoss": 1.8768546735684142,
+              "topActionAccuracy": 0.23076923076923078,
+              "knownMatchChoices": 3,
+              "knownMatchLogLoss": 0.5198674908000515,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        }
+      ]
+    },
+    "PUK": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "decisions": 1948,
+          "prefixes": 20,
+          "jointLogLoss": 1.778776020799382,
+          "topActionAccuracy": 0.4260780287474333,
+          "followThroughOpportunities": 147,
+          "followThroughLogLoss": 0.3424344511148834
+        },
+        "ownNovel": {
+          "decisions": 1948,
+          "prefixes": 20,
+          "jointLogLoss": 1.786239547926462,
+          "topActionAccuracy": 0.41581108829568786,
+          "followThroughOpportunities": 147,
+          "followThroughLogLoss": 0.32761943610929994
+        }
+      },
+      "rows": [
+        {
+          "aid": "a74c895d-085c-4d87-aef0-9f41987f793a",
+          "level": 34,
+          "opening": 1791993467593,
+          "scores": {
+            "ownAll": {
+              "decisions": 62,
+              "jointLogLoss": 1.809743630454089,
+              "topActionAccuracy": 0.41935483870967744,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 0.5452461502259436,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 62,
+              "jointLogLoss": 1.878670351619841,
+              "topActionAccuracy": 0.43548387096774194,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 0.6788074955173146,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "79530e8a-9279-44e3-b75c-9d8e05548401",
+          "level": 35,
+          "opening": 1791993866872,
+          "scores": {
+            "ownAll": {
+              "decisions": 106,
+              "jointLogLoss": 1.4033222711964493,
+              "topActionAccuracy": 0.4811320754716981,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.30643848779459415,
+              "followThroughOpportunities": 25,
+              "followThroughLogLoss": 0.44971097039436503
+            },
+            "ownNovel": {
+              "decisions": 106,
+              "jointLogLoss": 1.4048683425336652,
+              "topActionAccuracy": 0.4811320754716981,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.34605565332483196,
+              "followThroughOpportunities": 25,
+              "followThroughLogLoss": 0.4396154483652041
+            }
+          }
+        },
+        {
+          "aid": "bd9ea179-b735-4b9c-83ca-ea5f08a2621e",
+          "level": 36,
+          "opening": 1791994331125,
+          "scores": {
+            "ownAll": {
+              "decisions": 103,
+              "jointLogLoss": 1.4535571313834528,
+              "topActionAccuracy": 0.5436893203883495,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.28456188677212285,
+              "followThroughOpportunities": 22,
+              "followThroughLogLoss": 0.13880617963387362
+            },
+            "ownNovel": {
+              "decisions": 103,
+              "jointLogLoss": 1.4670150011630347,
+              "topActionAccuracy": 0.5533980582524272,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.327142577235573,
+              "followThroughOpportunities": 22,
+              "followThroughLogLoss": 0.12061217628242359
+            }
+          }
+        },
+        {
+          "aid": "13f81deb-c4b1-4fe9-957e-8a57ba6f7e88",
+          "level": 37,
+          "opening": 1791994730739,
+          "scores": {
+            "ownAll": {
+              "decisions": 85,
+              "jointLogLoss": 2.255359421526023,
+              "topActionAccuracy": 0.23529411764705882,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4556742928733431,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 85,
+              "jointLogLoss": 2.2307082439963097,
+              "topActionAccuracy": 0.2235294117647059,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4715797655754961,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "3d34e678-c824-4b62-8ab6-a7e37276a444",
+          "level": 38,
+          "opening": 1791995772536,
+          "scores": {
+            "ownAll": {
+              "decisions": 127,
+              "jointLogLoss": 2.062573577541374,
+              "topActionAccuracy": 0.3464566929133858,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.5058267372036924,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 127,
+              "jointLogLoss": 2.041556516540552,
+              "topActionAccuracy": 0.33858267716535434,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.5513126400163121,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "c8d3ead3-7f90-41c4-8cb2-df96164b26e3",
+          "level": 39,
+          "opening": 1792013300819,
+          "scores": {
+            "ownAll": {
+              "decisions": 76,
+              "jointLogLoss": 1.7845565480469403,
+              "topActionAccuracy": 0.47368421052631576,
+              "knownMatchChoices": 26,
+              "knownMatchLogLoss": 0.3047635643249044,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 76,
+              "jointLogLoss": 1.7820388578270845,
+              "topActionAccuracy": 0.47368421052631576,
+              "knownMatchChoices": 26,
+              "knownMatchLogLoss": 0.3304596953637586,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "c72be715-2bc6-4471-82cb-298eef7d8db8",
+          "level": 40,
+          "opening": 1792014233172,
+          "scores": {
+            "ownAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.8365470027920285,
+              "topActionAccuracy": 0.3958333333333333,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.3948831099794642,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 96,
+              "jointLogLoss": 1.843184628303404,
+              "topActionAccuracy": 0.3854166666666667,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.42760001250576996,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "35673774-df3a-49e3-b79d-b89cea05f729",
+          "level": 41,
+          "opening": 1792014797696,
+          "scores": {
+            "ownAll": {
+              "decisions": 57,
+              "jointLogLoss": 1.9127040010071434,
+              "topActionAccuracy": 0.3684210526315789,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.44645769699924,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 57,
+              "jointLogLoss": 1.9113696860904534,
+              "topActionAccuracy": 0.3508771929824561,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4788734504544141,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "26aa951a-e30a-4464-8237-e986553ad747",
+          "level": 42,
+          "opening": 1792031107788,
+          "scores": {
+            "ownAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.89164261163315,
+              "topActionAccuracy": 0.4675324675324675,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 1.0554399401861485,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 77,
+              "jointLogLoss": 1.910530991459913,
+              "topActionAccuracy": 0.4805194805194805,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 1.1256951089866107,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "010a1b23-ff83-4cce-b486-5b95229b92f0",
+          "level": 43,
+          "opening": 1792031786444,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 2.0098194161908958,
+              "topActionAccuracy": 0.3783783783783784,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.40825325553420716,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 2.0035812762634135,
+              "topActionAccuracy": 0.36036036036036034,
+              "knownMatchChoices": 30,
+              "knownMatchLogLoss": 0.4315501317572379,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "8e40d7c7-cdd3-4a98-896c-d722706491f7",
+          "level": 44,
+          "opening": 1792078889406,
+          "scores": {
+            "ownAll": {
+              "decisions": 126,
+              "jointLogLoss": 1.735697985308041,
+              "topActionAccuracy": 0.4126984126984127,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.41293816833391245,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 126,
+              "jointLogLoss": 1.7542888328486435,
+              "topActionAccuracy": 0.3888888888888889,
+              "knownMatchChoices": 39,
+              "knownMatchLogLoss": 0.45007764571071635,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "a7c03165-f257-4a3b-9f90-04329b0bd93d",
+          "level": 45,
+          "opening": 1792079446450,
+          "scores": {
+            "ownAll": {
+              "decisions": 143,
+              "jointLogLoss": 2.071156990193612,
+              "topActionAccuracy": 0.38461538461538464,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.44301614326867095,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 143,
+              "jointLogLoss": 2.1054546147950437,
+              "topActionAccuracy": 0.3776223776223776,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.4961481211962468,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "a08d1a20-78d1-4827-8e04-67565352c8c1",
+          "level": 46,
+          "opening": 1792079998136,
+          "scores": {
+            "ownAll": {
+              "decisions": 94,
+              "jointLogLoss": 1.7514215409660137,
+              "topActionAccuracy": 0.3829787234042553,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 0.417667116959442,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 94,
+              "jointLogLoss": 1.749281410417554,
+              "topActionAccuracy": 0.3617021276595745,
+              "knownMatchChoices": 25,
+              "knownMatchLogLoss": 0.4354578393045184,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "9bed8001-4327-4454-8793-01fbb998aa57",
+          "level": 47,
+          "opening": 1792081570535,
+          "scores": {
+            "ownAll": {
+              "decisions": 114,
+              "jointLogLoss": 1.7673226482421789,
+              "topActionAccuracy": 0.4298245614035088,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.433187889331148,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 114,
+              "jointLogLoss": 1.75600124308626,
+              "topActionAccuracy": 0.4298245614035088,
+              "knownMatchChoices": 38,
+              "knownMatchLogLoss": 0.44131703654195004,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "911cd273-e39a-48f4-97f1-912d4098267b",
+          "level": 48,
+          "opening": 1792097612195,
+          "scores": {
+            "ownAll": {
+              "decisions": 124,
+              "jointLogLoss": 1.4542174730275188,
+              "topActionAccuracy": 0.5,
+              "knownMatchChoices": 36,
+              "knownMatchLogLoss": 0.3811736578859228,
+              "followThroughOpportunities": 26,
+              "followThroughLogLoss": 0.4280168414330842
+            },
+            "ownNovel": {
+              "decisions": 124,
+              "jointLogLoss": 1.4590188158501622,
+              "topActionAccuracy": 0.4838709677419355,
+              "knownMatchChoices": 36,
+              "knownMatchLogLoss": 0.40396574194483653,
+              "followThroughOpportunities": 26,
+              "followThroughLogLoss": 0.401921880256872
+            }
+          }
+        },
+        {
+          "aid": "85a34136-6637-4584-b8ec-7201886288e3",
+          "level": 49,
+          "opening": 1792098056466,
+          "scores": {
+            "ownAll": {
+              "decisions": 77,
+              "jointLogLoss": 1.8761478703317132,
+              "topActionAccuracy": 0.42857142857142855,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.3242388321234189,
+              "followThroughOpportunities": 11,
+              "followThroughLogLoss": 0.14201187250201616
+            },
+            "ownNovel": {
+              "decisions": 77,
+              "jointLogLoss": 1.8880902220239684,
+              "topActionAccuracy": 0.38961038961038963,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.3475029146389121,
+              "followThroughOpportunities": 11,
+              "followThroughLogLoss": 0.17187678751274635
+            }
+          }
+        },
+        {
+          "aid": "b3e8cf6e-31db-4646-9d8d-a003295ca9f6",
+          "level": 50,
+          "opening": 1792137899571,
+          "scores": {
+            "ownAll": {
+              "decisions": 119,
+              "jointLogLoss": 1.4071119006970607,
+              "topActionAccuracy": 0.5126050420168067,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.3818151919207161,
+              "followThroughOpportunities": 20,
+              "followThroughLogLoss": 0.325160264624602
+            },
+            "ownNovel": {
+              "decisions": 119,
+              "jointLogLoss": 1.4326156039734232,
+              "topActionAccuracy": 0.4789915966386555,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.4109861267803586,
+              "followThroughOpportunities": 20,
+              "followThroughLogLoss": 0.35782236613997026
+            }
+          }
+        },
+        {
+          "aid": "155cb84b-3d63-4d5b-9b7b-7daf1b673c7b",
+          "level": 51,
+          "opening": 1792138391388,
+          "scores": {
+            "ownAll": {
+              "decisions": 96,
+              "jointLogLoss": 1.813266263389675,
+              "topActionAccuracy": 0.4583333333333333,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.39198735714678246,
+              "followThroughOpportunities": 17,
+              "followThroughLogLoss": 0.36586829325453196
+            },
+            "ownNovel": {
+              "decisions": 96,
+              "jointLogLoss": 1.8008275441429842,
+              "topActionAccuracy": 0.4270833333333333,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.40078557502006523,
+              "followThroughOpportunities": 17,
+              "followThroughLogLoss": 0.32106629656392704
+            }
+          }
+        },
+        {
+          "aid": "c8162ff9-76ce-45a2-8fbf-939346bbd6fa",
+          "level": 52,
+          "opening": 1792174210433,
+          "scores": {
+            "ownAll": {
+              "decisions": 82,
+              "jointLogLoss": 1.6392232478993818,
+              "topActionAccuracy": 0.4634146341463415,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.3295727942461699,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.11354258918492367
+            },
+            "ownNovel": {
+              "decisions": 82,
+              "jointLogLoss": 1.6599075952942441,
+              "topActionAccuracy": 0.45121951219512196,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.3497025103364914,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.1200069034849023
+            }
+          }
+        },
+        {
+          "aid": "ed6d1a22-d6ba-44ba-8067-f0df742edd22",
+          "level": 53,
+          "opening": 1792174506087,
+          "scores": {
+            "ownAll": {
+              "decisions": 73,
+              "jointLogLoss": 1.7715195854565613,
+              "topActionAccuracy": 0.410958904109589,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.4247567415251566,
+              "followThroughOpportunities": 11,
+              "followThroughLogLoss": 0.8113345919734735
+            },
+            "ownNovel": {
+              "decisions": 73,
+              "jointLogLoss": 1.7926308333310332,
+              "topActionAccuracy": 0.4383561643835616,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.47694924019268453,
+              "followThroughOpportunities": 11,
+              "followThroughLogLoss": 0.7055374140677348
+            }
+          }
+        }
+      ]
+    },
+    "Gerda": {
+      "candidatePrefixes": 20,
+      "models": {
+        "ownAll": {
+          "decisions": 2818,
+          "prefixes": 20,
+          "jointLogLoss": 2.0040188056378674,
+          "topActionAccuracy": 0.2867281760113556,
+          "followThroughOpportunities": 326,
+          "followThroughLogLoss": 0.4772322050687954
+        },
+        "ownNovel": {
+          "decisions": 2818,
+          "prefixes": 20,
+          "jointLogLoss": 2.005937945349912,
+          "topActionAccuracy": 0.28601845280340665,
+          "followThroughOpportunities": 326,
+          "followThroughLogLoss": 0.47098157045980077
+        }
+      },
+      "rows": [
+        {
+          "aid": "2e39da0a-b62f-4cf2-a3df-562b82813a2d",
+          "level": 43,
+          "opening": 1792077779174,
+          "scores": {
+            "ownAll": {
+              "decisions": 129,
+              "jointLogLoss": 1.9534447437716358,
+              "topActionAccuracy": 0.35658914728682173,
+              "knownMatchChoices": 28,
+              "knownMatchLogLoss": 0.9343357591698828,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 129,
+              "jointLogLoss": 1.9313356280841447,
+              "topActionAccuracy": 0.34108527131782945,
+              "knownMatchChoices": 28,
+              "knownMatchLogLoss": 0.9485488393903763,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "fab20d55-05c3-4ffc-a845-c601938efc9a",
+          "level": 44,
+          "opening": 1792078155465,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.9456635341505122,
+              "topActionAccuracy": 0.3333333333333333,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.75168297674114,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 1.9794859994884904,
+              "topActionAccuracy": 0.3063063063063063,
+              "knownMatchChoices": 29,
+              "knownMatchLogLoss": 0.8371383651536992,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "821a5dd9-6aea-4dda-8e20-3956eb6e67e0",
+          "level": 45,
+          "opening": 1792078697711,
+          "scores": {
+            "ownAll": {
+              "decisions": 84,
+              "jointLogLoss": 1.9051605312953215,
+              "topActionAccuracy": 0.2619047619047619,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.848412736633896,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 84,
+              "jointLogLoss": 1.9313392711792843,
+              "topActionAccuracy": 0.23809523809523808,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.8737463348029579,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "6086fde3-85af-45f0-8e43-3dda57eb45d9",
+          "level": 46,
+          "opening": 1792079848122,
+          "scores": {
+            "ownAll": {
+              "decisions": 163,
+              "jointLogLoss": 2.100334816653737,
+              "topActionAccuracy": 0.25766871165644173,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 0.977346839088233,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 163,
+              "jointLogLoss": 2.1333733154877406,
+              "topActionAccuracy": 0.26380368098159507,
+              "knownMatchChoices": 41,
+              "knownMatchLogLoss": 1.0056661736456987,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "c0fda5c8-ab6d-4c4e-b8d9-e10d8a0c0d11",
+          "level": 47,
+          "opening": 1792080050551,
+          "scores": {
+            "ownAll": {
+              "decisions": 93,
+              "jointLogLoss": 1.886353826565785,
+              "topActionAccuracy": 0.3333333333333333,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.834383790710301,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            },
+            "ownNovel": {
+              "decisions": 93,
+              "jointLogLoss": 1.8706097199806864,
+              "topActionAccuracy": 0.3010752688172043,
+              "knownMatchChoices": 18,
+              "knownMatchLogLoss": 0.7548949266910681,
+              "followThroughOpportunities": 0,
+              "followThroughLogLoss": null
+            }
+          }
+        },
+        {
+          "aid": "0ac5bc8e-2a21-448e-bac1-13744a02efe6",
+          "level": 48,
+          "opening": 1792084600541,
+          "scores": {
+            "ownAll": {
+              "decisions": 165,
+              "jointLogLoss": 1.7346104334309647,
+              "topActionAccuracy": 0.44242424242424244,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.8110461207144581,
+              "followThroughOpportunities": 29,
+              "followThroughLogLoss": 0.30664659793033056
+            },
+            "ownNovel": {
+              "decisions": 165,
+              "jointLogLoss": 1.7167228650120756,
+              "topActionAccuracy": 0.4484848484848485,
+              "knownMatchChoices": 40,
+              "knownMatchLogLoss": 0.7800716111256859,
+              "followThroughOpportunities": 29,
+              "followThroughLogLoss": 0.23691895931929627
+            }
+          }
+        },
+        {
+          "aid": "1ca24284-d9d6-4110-a2dc-b6023168fa79",
+          "level": 49,
+          "opening": 1792084839692,
+          "scores": {
+            "ownAll": {
+              "decisions": 116,
+              "jointLogLoss": 1.6844466276473198,
+              "topActionAccuracy": 0.3448275862068966,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.9286164414719453,
+              "followThroughOpportunities": 36,
+              "followThroughLogLoss": 0.6673061292025416
+            },
+            "ownNovel": {
+              "decisions": 116,
+              "jointLogLoss": 1.7069305369173149,
+              "topActionAccuracy": 0.3103448275862069,
+              "knownMatchChoices": 37,
+              "knownMatchLogLoss": 0.9054240852794514,
+              "followThroughOpportunities": 36,
+              "followThroughLogLoss": 0.7218978634755273
+            }
+          }
+        },
+        {
+          "aid": "0520d88e-5f12-4ca5-9b6a-9c202713e3b0",
+          "level": 50,
+          "opening": 1792085063827,
+          "scores": {
+            "ownAll": {
+              "decisions": 174,
+              "jointLogLoss": 2.214557569133571,
+              "topActionAccuracy": 0.26436781609195403,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.6700112724709706,
+              "followThroughOpportunities": 19,
+              "followThroughLogLoss": 0.29516763395457124
+            },
+            "ownNovel": {
+              "decisions": 174,
+              "jointLogLoss": 2.2144709288825437,
+              "topActionAccuracy": 0.26436781609195403,
+              "knownMatchChoices": 31,
+              "knownMatchLogLoss": 0.6798568760289506,
+              "followThroughOpportunities": 19,
+              "followThroughLogLoss": 0.27320465803886207
+            }
+          }
+        },
+        {
+          "aid": "628d7c5e-6bf8-4cf8-938b-0ee6888e62d2",
+          "level": 51,
+          "opening": 1792093661933,
+          "scores": {
+            "ownAll": {
+              "decisions": 91,
+              "jointLogLoss": 1.822933520369946,
+              "topActionAccuracy": 0.31868131868131866,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.7200365079806668,
+              "followThroughOpportunities": 14,
+              "followThroughLogLoss": 0.7572688893818073
+            },
+            "ownNovel": {
+              "decisions": 91,
+              "jointLogLoss": 1.8631723738629375,
+              "topActionAccuracy": 0.3076923076923077,
+              "knownMatchChoices": 14,
+              "knownMatchLogLoss": 0.6958087038847198,
+              "followThroughOpportunities": 14,
+              "followThroughLogLoss": 0.7911561966412713
+            }
+          }
+        },
+        {
+          "aid": "e3441a3d-4296-4ebc-80fd-5cccc17000cd",
+          "level": 52,
+          "opening": 1792096748424,
+          "scores": {
+            "ownAll": {
+              "decisions": 161,
+              "jointLogLoss": 2.2067679938668494,
+              "topActionAccuracy": 0.18012422360248448,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 1.09823421651496,
+              "followThroughOpportunities": 28,
+              "followThroughLogLoss": 0.5514539581221264
+            },
+            "ownNovel": {
+              "decisions": 161,
+              "jointLogLoss": 2.2150468955571117,
+              "topActionAccuracy": 0.20496894409937888,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 1.0661404347371661,
+              "followThroughOpportunities": 28,
+              "followThroughLogLoss": 0.5629627824981634
+            }
+          }
+        },
+        {
+          "aid": "92d8c897-640f-4ce7-80ad-60386ef26922",
+          "level": 53,
+          "opening": 1792166705549,
+          "scores": {
+            "ownAll": {
+              "decisions": 206,
+              "jointLogLoss": 1.76080831688848,
+              "topActionAccuracy": 0.3155339805825243,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.8962207821308912,
+              "followThroughOpportunities": 35,
+              "followThroughLogLoss": 0.5805467112294451
+            },
+            "ownNovel": {
+              "decisions": 206,
+              "jointLogLoss": 1.7732382674055995,
+              "topActionAccuracy": 0.32524271844660196,
+              "knownMatchChoices": 34,
+              "knownMatchLogLoss": 0.8925241135236881,
+              "followThroughOpportunities": 35,
+              "followThroughLogLoss": 0.5888952724475753
+            }
+          }
+        },
+        {
+          "aid": "7c023b22-2c78-4996-9e79-4e1deb1ab4b5",
+          "level": 54,
+          "opening": 1792167038374,
+          "scores": {
+            "ownAll": {
+              "decisions": 140,
+              "jointLogLoss": 1.7465452767657066,
+              "topActionAccuracy": 0.32857142857142857,
+              "knownMatchChoices": 33,
+              "knownMatchLogLoss": 0.7846092065454611,
+              "followThroughOpportunities": 24,
+              "followThroughLogLoss": 0.37423684118303613
+            },
+            "ownNovel": {
+              "decisions": 140,
+              "jointLogLoss": 1.7449011855609788,
+              "topActionAccuracy": 0.34285714285714286,
+              "knownMatchChoices": 33,
+              "knownMatchLogLoss": 0.7728539056914921,
+              "followThroughOpportunities": 24,
+              "followThroughLogLoss": 0.36242360396461737
+            }
+          }
+        },
+        {
+          "aid": "15bcad8f-2cf3-4f47-b52d-9ffa7fe93ca2",
+          "level": 55,
+          "opening": 1792167284004,
+          "scores": {
+            "ownAll": {
+              "decisions": 187,
+              "jointLogLoss": 2.1803115921437106,
+              "topActionAccuracy": 0.24064171122994651,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.8043034719804426,
+              "followThroughOpportunities": 27,
+              "followThroughLogLoss": 0.5053772732979077
+            },
+            "ownNovel": {
+              "decisions": 187,
+              "jointLogLoss": 2.171892218087981,
+              "topActionAccuracy": 0.25133689839572193,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.7617782974071889,
+              "followThroughOpportunities": 27,
+              "followThroughLogLoss": 0.4655233563242562
+            }
+          }
+        },
+        {
+          "aid": "ee903f05-ce73-465e-8c7b-587dd21816b5",
+          "level": 56,
+          "opening": 1792167538665,
+          "scores": {
+            "ownAll": {
+              "decisions": 131,
+              "jointLogLoss": 2.710615699458568,
+              "topActionAccuracy": 0.183206106870229,
+              "knownMatchChoices": 21,
+              "knownMatchLogLoss": 0.7637351304111045,
+              "followThroughOpportunities": 14,
+              "followThroughLogLoss": 0.3723998595335357
+            },
+            "ownNovel": {
+              "decisions": 131,
+              "jointLogLoss": 2.6706561433809606,
+              "topActionAccuracy": 0.21374045801526717,
+              "knownMatchChoices": 21,
+              "knownMatchLogLoss": 0.7038947331103005,
+              "followThroughOpportunities": 14,
+              "followThroughLogLoss": 0.37278689683747973
+            }
+          }
+        },
+        {
+          "aid": "73174618-7044-4419-a37c-d403677c85a7",
+          "level": 57,
+          "opening": 1792170422833,
+          "scores": {
+            "ownAll": {
+              "decisions": 71,
+              "jointLogLoss": 1.5605391677906522,
+              "topActionAccuracy": 0.38028169014084506,
+              "knownMatchChoices": 17,
+              "knownMatchLogLoss": 0.8825981261357798,
+              "followThroughOpportunities": 13,
+              "followThroughLogLoss": 0.4861142339064266
+            },
+            "ownNovel": {
+              "decisions": 71,
+              "jointLogLoss": 1.5698184408706166,
+              "topActionAccuracy": 0.38028169014084506,
+              "knownMatchChoices": 17,
+              "knownMatchLogLoss": 0.9045407759151256,
+              "followThroughOpportunities": 13,
+              "followThroughLogLoss": 0.5592216313962757
+            }
+          }
+        },
+        {
+          "aid": "2dfe15db-c7af-42ff-ab01-f601e2390623",
+          "level": 58,
+          "opening": 1792170857134,
+          "scores": {
+            "ownAll": {
+              "decisions": 207,
+              "jointLogLoss": 1.8616683599399744,
+              "topActionAccuracy": 0.2898550724637681,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.7873238919957037,
+              "followThroughOpportunities": 26,
+              "followThroughLogLoss": 0.34030435514885016
+            },
+            "ownNovel": {
+              "decisions": 207,
+              "jointLogLoss": 1.8786480686704805,
+              "topActionAccuracy": 0.30917874396135264,
+              "knownMatchChoices": 32,
+              "knownMatchLogLoss": 0.8083294781320439,
+              "followThroughOpportunities": 26,
+              "followThroughLogLoss": 0.29392899988216037
+            }
+          }
+        },
+        {
+          "aid": "386437ff-0fc7-452d-b1a3-311aff29a719",
+          "level": 59,
+          "opening": 1792171113962,
+          "scores": {
+            "ownAll": {
+              "decisions": 136,
+              "jointLogLoss": 1.9261022967245718,
+              "topActionAccuracy": 0.29411764705882354,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 1.0106427133864988,
+              "followThroughOpportunities": 13,
+              "followThroughLogLoss": 0.7130369416043748
+            },
+            "ownNovel": {
+              "decisions": 136,
+              "jointLogLoss": 1.9303485700964829,
+              "topActionAccuracy": 0.27205882352941174,
+              "knownMatchChoices": 15,
+              "knownMatchLogLoss": 0.9928041528362309,
+              "followThroughOpportunities": 13,
+              "followThroughLogLoss": 0.684723963175657
+            }
+          }
+        },
+        {
+          "aid": "ef40df03-4f8b-4844-b33f-6cd4f95c83b7",
+          "level": 60,
+          "opening": 1792171635042,
+          "scores": {
+            "ownAll": {
+              "decisions": 156,
+              "jointLogLoss": 2.2241124493101867,
+              "topActionAccuracy": 0.19230769230769232,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 1.0324146395926446,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.36651550188380677
+            },
+            "ownNovel": {
+              "decisions": 156,
+              "jointLogLoss": 2.2053849727471717,
+              "topActionAccuracy": 0.20512820512820512,
+              "knownMatchChoices": 22,
+              "knownMatchLogLoss": 0.9984467456972048,
+              "followThroughOpportunities": 15,
+              "followThroughLogLoss": 0.3577762042374646
+            }
+          }
+        },
+        {
+          "aid": "805dcd6e-b06b-4710-aa4c-df09e57f8b6b",
+          "level": 61,
+          "opening": 1792172079918,
+          "scores": {
+            "ownAll": {
+              "decisions": 111,
+              "jointLogLoss": 1.8840590114070321,
+              "topActionAccuracy": 0.34234234234234234,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.8936130460491761,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.3506479649494194
+            },
+            "ownNovel": {
+              "decisions": 111,
+              "jointLogLoss": 1.8627649907254644,
+              "topActionAccuracy": 0.3153153153153153,
+              "knownMatchChoices": 24,
+              "knownMatchLogLoss": 0.8200894388652823,
+              "followThroughOpportunities": 16,
+              "followThroughLogLoss": 0.318417632182959
+            }
+          }
+        },
+        {
+          "aid": "180c2671-2deb-43f7-ad26-ef5296647527",
+          "level": 62,
+          "opening": 1792172831970,
+          "scores": {
+            "ownAll": {
+              "decisions": 186,
+              "jointLogLoss": 2.307362619342021,
+              "topActionAccuracy": 0.20430107526881722,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.7283676040400792,
+              "followThroughOpportunities": 17,
+              "followThroughLogLoss": 0.42980497413880864
+            },
+            "ownNovel": {
+              "decisions": 186,
+              "jointLogLoss": 2.300708379724535,
+              "topActionAccuracy": 0.1881720430107527,
+              "knownMatchChoices": 19,
+              "knownMatchLogLoss": 0.7107080456050645,
+              "followThroughOpportunities": 17,
+              "followThroughLogLoss": 0.4281509286291474
+            }
+          }
+        }
+      ]
+    }
+  },
+  "note": "Latest available new-level first-try natural prefixes, with every actor fitted strictly before campaign opening. Base per-tap action likelihood and optional separate follow-through cue likelihood only: neither is winning-attempt accuracy or evidence of the 80% goal. Missing campaign models remain explicit."
+}

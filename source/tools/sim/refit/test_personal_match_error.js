@@ -1,0 +1,26 @@
+'use strict';
+const assert = require('assert/strict');
+const { matchErrors, matchErrorAt } = require('./personal_match_error.js');
+const tiles = Array.from({ length: 6 }, (_, index) => [index * 4, 0, 0]);
+const initial = { a: [0, 0, 0, 1, 1, 1], d: [0, 0, 0, 0, 0, 1], f: [0, 1, 2, 0, 3, 1], tr: [0, 1, 2], p: -1, m: 3, ob: null, ck: null };
+const record = (state, clicked, after) => [{ seq: 0, t: 10, data: JSON.stringify({ init: { key: 'L53', at: 1, tiles, state },
+  events: [[0, 'tap', [clicked, 0, '']], [1, 'state', { a: [[clicked, 0]], tr: after, m: 4 }], [2, 'end', { r: 'stuck' }]] }) }];
+const fatal = matchErrors(record(initial, 4, [0, 1, 2, 4]));
+assert.equal(fatal.opportunities, 1);
+assert.equal(fatal.fatal, 1);
+assert.equal(matchErrors(record(initial, 3, [1, 2])).fatal, 0);
+assert.equal(matchErrors(record({ ...initial, ck: { i: 3, n: 8 } }, 4, [0, 1, 2, 4])).opportunities, 0);
+assert.equal(matchErrors(record({ ...initial, d: [0, 0, 0, 1, 0, 1] }, 4, [0, 1, 2, 4])).opportunities, 0);
+const auto = record(initial, 3, [1, 2]), part = JSON.parse(auto[0].data);
+part.events.splice(2, 0, [1, 'auto', {}]);
+auto[0].data = JSON.stringify(part);
+assert.equal(matchErrors(auto).opportunities, 1);
+part.events.unshift([0, 'auto', {}]);
+auto[0].data = JSON.stringify(part);
+assert.equal(matchErrors(auto).opportunities, 0);
+const fitted = matchErrorAt({ Dennis: [fatal], Gerda: [] }, 'Dennis', 11);
+assert.equal(fitted.own.fatal, 1);
+assert.equal(fitted.probability, 1 / 13);
+assert.deepEqual(matchErrorAt({ Dennis: [fatal, { ...fatal, availableAt: 11, fatal: 0 }], Gerda: [] }, 'Dennis', 11), fitted);
+assert.equal(matchErrorAt({ Dennis: [fatal], Gerda: [] }, 'Dennis', 10).probability, 0);
+console.log('PASS visible-match error fit: physical choices, clock phase, hidden matches and availability');

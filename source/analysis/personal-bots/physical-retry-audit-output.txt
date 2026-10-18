@@ -1,0 +1,190 @@
+{
+  "Dennisisdebeste": {
+    "all": {
+      "pairs": 25,
+      "sameFirstTake": 14,
+      "firstTakePairs": 25,
+      "shareFourOpeningTakes": 8,
+      "meanSharedOpeningTakes": 2.2,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 9,
+        "tray": 16,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstClear": {
+      "pairs": 20,
+      "sameFirstTake": 12,
+      "firstTakePairs": 20,
+      "shareFourOpeningTakes": 7,
+      "meanSharedOpeningTakes": 2.4,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 6,
+        "tray": 14,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstRetry": {
+      "pairs": 9,
+      "sameFirstTake": 3,
+      "firstTakePairs": 9,
+      "shareFourOpeningTakes": 1,
+      "meanSharedOpeningTakes": 0.8888888888888888,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 3,
+        "tray": 6,
+        "other": 0,
+        "restart": 0
+      }
+    }
+  },
+  "Mrs. Doubtfire": {
+    "all": {
+      "pairs": 43,
+      "sameFirstTake": 19,
+      "firstTakePairs": 43,
+      "shareFourOpeningTakes": 7,
+      "meanSharedOpeningTakes": 1.3953488372093024,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 10,
+        "tray": 33,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstClear": {
+      "pairs": 43,
+      "sameFirstTake": 19,
+      "firstTakePairs": 43,
+      "shareFourOpeningTakes": 7,
+      "meanSharedOpeningTakes": 1.3953488372093024,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 10,
+        "tray": 33,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstRetry": {
+      "pairs": 7,
+      "sameFirstTake": 2,
+      "firstTakePairs": 7,
+      "shareFourOpeningTakes": 0,
+      "meanSharedOpeningTakes": 0.42857142857142855,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 2,
+        "tray": 5,
+        "other": 0,
+        "restart": 0
+      }
+    }
+  },
+  "PUK": {
+    "all": {
+      "pairs": 23,
+      "sameFirstTake": 13,
+      "firstTakePairs": 23,
+      "shareFourOpeningTakes": 3,
+      "meanSharedOpeningTakes": 1.6956521739130435,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 0,
+        "tray": 23,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstClear": {
+      "pairs": 23,
+      "sameFirstTake": 13,
+      "firstTakePairs": 23,
+      "shareFourOpeningTakes": 3,
+      "meanSharedOpeningTakes": 1.6956521739130435,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 0,
+        "tray": 23,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstRetry": {
+      "pairs": 12,
+      "sameFirstTake": 8,
+      "firstTakePairs": 12,
+      "shareFourOpeningTakes": 2,
+      "meanSharedOpeningTakes": 2.3333333333333335,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 0,
+        "tray": 12,
+        "other": 0,
+        "restart": 0
+      }
+    }
+  },
+  "Gerda": {
+    "all": {
+      "pairs": 100,
+      "sameFirstTake": 20,
+      "firstTakePairs": 100,
+      "shareFourOpeningTakes": 4,
+      "meanSharedOpeningTakes": 0.5,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 0,
+        "tray": 100,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstClear": {
+      "pairs": 100,
+      "sameFirstTake": 20,
+      "firstTakePairs": 100,
+      "shareFourOpeningTakes": 4,
+      "meanSharedOpeningTakes": 0.5,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 0,
+        "tray": 100,
+        "other": 0,
+        "restart": 0
+      }
+    },
+    "firstRetry": {
+      "pairs": 27,
+      "sameFirstTake": 6,
+      "firstTakePairs": 27,
+      "shareFourOpeningTakes": 1,
+      "meanSharedOpeningTakes": 0.5185185185185185,
+      "terminalStateRevisited": 0,
+      "terminalActionRepeated": 0,
+      "priorFailures": {
+        "clock": 0,
+        "tray": 27,
+        "other": 0,
+        "restart": 0
+      }
+    }
+  }
+}

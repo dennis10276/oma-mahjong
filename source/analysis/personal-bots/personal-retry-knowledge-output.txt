@@ -1,0 +1,42 @@
+{
+  "Dennisisdebeste": {
+    "candidatePrefixes": 74,
+    "prefixes": 74,
+    "unmappedPrefixes": 0,
+    "earlierAvailableSameCampaignPrefixes": 36,
+    "decisions": 7835,
+    "previouslyObservedDownChoices": 1375,
+    "flipsModelCallsUnknown": 355,
+    "takesModelCallsBlind": 55
+  },
+  "Mrs. Doubtfire": {
+    "candidatePrefixes": 65,
+    "prefixes": 65,
+    "unmappedPrefixes": 0,
+    "earlierAvailableSameCampaignPrefixes": 50,
+    "decisions": 5198,
+    "previouslyObservedDownChoices": 1825,
+    "flipsModelCallsUnknown": 598,
+    "takesModelCallsBlind": 77
+  },
+  "PUK": {
+    "candidatePrefixes": 57,
+    "prefixes": 57,
+    "unmappedPrefixes": 0,
+    "earlierAvailableSameCampaignPrefixes": 26,
+    "decisions": 4771,
+    "previouslyObservedDownChoices": 804,
+    "flipsModelCallsUnknown": 414,
+    "takesModelCallsBlind": 33
+  },
+  "Gerda": {
+    "candidatePrefixes": 202,
+    "prefixes": 164,
+    "unmappedPrefixes": 38,
+    "earlierAvailableSameCampaignPrefixes": 110,
+    "decisions": 13988,
+    "previouslyObservedDownChoices": 4120,
+    "flipsModelCallsUnknown": 1376,
+    "takesModelCallsBlind": 326
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "made": "2026-10-18T00:33:35.691Z",
+  "evidence": "causal-observation-coverage-audit-not-forecast-accuracy",
+  "prefixFingerprint": "903384fd1d7cf7192d1cc0db9c2acde0365db5e1d7703f16e15c43452c7ad14e",
+  "prefixDataSha256": "9498b39085a2a2679849ae4d0ec5220e569ec39f04638e15470a424b82307fba",
+  "sourceSha256": "814242e5c1301d1755edaf36499dbb0f7792232bd8fa390e8953decf0a1904e8",
+  "players": {
+    "Dennisisdebeste": {
+      "prefixes": 74,
+      "prefixesWithLateObservedSources": 0,
+      "lateSources": 0,
+      "additionalObservedPictures": 0,
+      "extraPreviouslyObservedDownChoices": 0,
+      "extraUnknownInspectionLabels": 0
+    },
+    "Mrs. Doubtfire": {
+      "prefixes": 65,
+      "prefixesWithLateObservedSources": 0,
+      "lateSources": 0,
+      "additionalObservedPictures": 0,
+      "extraPreviouslyObservedDownChoices": 0,
+      "extraUnknownInspectionLabels": 0
+    },
+    "PUK": {
+      "prefixes": 57,
+      "prefixesWithLateObservedSources": 0,
+      "lateSources": 0,
+      "additionalObservedPictures": 0,
+      "extraPreviouslyObservedDownChoices": 0,
+      "extraUnknownInspectionLabels": 0
+    },
+    "Gerda": {
+      "prefixes": 202,
+      "prefixesWithLateObservedSources": 0,
+      "lateSources": 0,
+      "additionalObservedPictures": 0,
+      "extraPreviouslyObservedDownChoices": 0,
+      "extraUnknownInspectionLabels": 0
+    }
+  },
+  "note": "A confirmed earlier attempt ending proves its natural prefix was observed before the retry even when its telemetry chunk timestamp is later. This audit measures the conservative upload-before-retry restriction; any expanded training must raise feature availability to every source timestamp and retain target-source exclusions. It does not modify the running experiment or assume perfect human recall."
+}

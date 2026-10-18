@@ -1,0 +1,465 @@
+{
+  "evaluatedAt": "2026-10-17T02:48:58.143402+00:00",
+  "evidence": "historical-exploratory",
+  "measurementFingerprint": "122f6b5248713d7d3f7a8458e6f33f636618c689bd85597e31a78d1e38db56ec",
+  "dataSha256": "ded2b7b6a25b8027a8ec90dca3b3425b41aa210c96c0ad9f72712a68b1c40861",
+  "baselineScoresSha256": "fd07ff754d2e152cf522c51c49dd8314c29339015d0ec2ba38a8bc873d47c591",
+  "heldOut": {
+    "alwaysFirst": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.575
+    },
+    "controlForest": {
+      "n": 80,
+      "correct": 43,
+      "accuracy": 0.5375,
+      "exactAccuracy": 0.5375,
+      "wilson95": [
+        0.4290416436680269,
+        0.6425218761121299
+      ],
+      "meanAbsoluteError": 1.55
+    },
+    "boardRecall_alwaysFirst": {
+      "n": 80,
+      "correct": 45,
+      "accuracy": 0.5625,
+      "exactAccuracy": 0.55,
+      "wilson95": [
+        0.4534093786865696,
+        0.6658631542803586
+      ],
+      "meanAbsoluteError": 1.5375
+    },
+    "boardRecall_controlForest": {
+      "n": 80,
+      "correct": 44,
+      "accuracy": 0.55,
+      "exactAccuracy": 0.5375,
+      "wilson95": [
+        0.4411931301173402,
+        0.6542248962562025
+      ],
+      "meanAbsoluteError": 1.525
+    }
+  },
+  "players": {
+    "Dennisisdebeste": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 11,
+          "accuracy": 0.55,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3420820083075997,
+            0.7418049791429071
+          ],
+          "meanAbsoluteError": 0.9
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.8
+        },
+        "boardRecall_alwaysFirst": {
+          "n": 20,
+          "correct": 12,
+          "accuracy": 0.6,
+          "exactAccuracy": 0.55,
+          "wilson95": [
+            0.3865779423152061,
+            0.7811960325858074
+          ],
+          "meanAbsoluteError": 0.75
+        },
+        "boardRecall_controlForest": {
+          "n": 20,
+          "correct": 13,
+          "accuracy": 0.65,
+          "exactAccuracy": 0.6,
+          "wilson95": [
+            0.43285051021946463,
+            0.8188104521320554
+          ],
+          "meanAbsoluteError": 0.7
+        }
+      },
+      "ownBoardAvailable": 6,
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 11,
+        "accuracy": 0.55,
+        "exactAccuracy": 0.55,
+        "wilson95": [
+          0.3420820083075997,
+          0.7418049791429071
+        ],
+        "meanAbsoluteError": 0.9
+      }
+    },
+    "Mrs. Doubtfire": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "boardRecall_alwaysFirst": {
+          "n": 20,
+          "correct": 10,
+          "accuracy": 0.5,
+          "exactAccuracy": 0.5,
+          "wilson95": [
+            0.2992949144298199,
+            0.7007050855701801
+          ],
+          "meanAbsoluteError": 3.45
+        },
+        "boardRecall_controlForest": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 3.45
+        }
+      },
+      "ownBoardAvailable": 0,
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 10,
+        "accuracy": 0.5,
+        "exactAccuracy": 0.5,
+        "wilson95": [
+          0.2992949144298199,
+          0.7007050855701801
+        ],
+        "meanAbsoluteError": 3.45
+      }
+    },
+    "PUK": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "boardRecall_alwaysFirst": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        },
+        "boardRecall_controlForest": {
+          "n": 20,
+          "correct": 14,
+          "accuracy": 0.7,
+          "exactAccuracy": 0.7,
+          "wilson95": [
+            0.4810232237710206,
+            0.854524726031006
+          ],
+          "meanAbsoluteError": 0.5
+        }
+      },
+      "ownBoardAvailable": 0,
+      "selectedBeforeTest": "alwaysFirst",
+      "selectedScore": {
+        "n": 20,
+        "correct": 14,
+        "accuracy": 0.7,
+        "exactAccuracy": 0.7,
+        "wilson95": [
+          0.4810232237710206,
+          0.854524726031006
+        ],
+        "meanAbsoluteError": 0.5
+      }
+    },
+    "Gerda": {
+      "methods": {
+        "alwaysFirst": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "controlForest": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "boardRecall_alwaysFirst": {
+          "n": 20,
+          "correct": 9,
+          "accuracy": 0.45,
+          "exactAccuracy": 0.45,
+          "wilson95": [
+            0.25819502085709295,
+            0.6579179916924003
+          ],
+          "meanAbsoluteError": 1.45
+        },
+        "boardRecall_controlForest": {
+          "n": 20,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.4,
+          "wilson95": [
+            0.21880396741419272,
+            0.613422057684794
+          ],
+          "meanAbsoluteError": 1.45
+        }
+      },
+      "ownBoardAvailable": 0,
+      "selectedBeforeTest": "controlForest",
+      "selectedScore": {
+        "n": 20,
+        "correct": 8,
+        "accuracy": 0.4,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.21880396741419272,
+          0.613422057684794
+        ],
+        "meanAbsoluteError": 1.45
+      }
+    }
+  },
+  "recalledEpisodes": [
+    {
+      "name": "Dennisisdebeste",
+      "lv": 91,
+      "start": 1792173656313,
+      "end": 1792174117933,
+      "wonOn": 5,
+      "board": "320e53c5644e27b66a9421605c304eb3f4666e960d89fae76c520f9ff99c4e8d",
+      "modelAvailable": true,
+      "predictions": {
+        "alwaysFirst": 1,
+        "controlForest": 2,
+        "boardRecall_alwaysFirst": 4,
+        "boardRecall_controlForest": 4
+      },
+      "beyond20": {
+        "control": 1.773455539652555e-08,
+        "context": 3.4564556978589437e-07
+      },
+      "earlierOwnBoard": [
+        {
+          "start": 1791843821233,
+          "end": 1791844226037,
+          "lv": 92,
+          "wonOn": 5
+        }
+      ]
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 92,
+      "start": 1792174127418,
+      "end": 1792174445352,
+      "wonOn": 1,
+      "board": "b036311749c913edcd2c7c3f3e468285f1b5ea36f67b76384b7b8648c8d775ce",
+      "modelAvailable": true,
+      "predictions": {
+        "alwaysFirst": 1,
+        "controlForest": 1,
+        "boardRecall_alwaysFirst": 1,
+        "boardRecall_controlForest": 1
+      },
+      "beyond20": {
+        "control": 8.341704345178483e-19,
+        "context": 2.0902185336942806e-16
+      },
+      "earlierOwnBoard": [
+        {
+          "start": 1791843657432,
+          "end": 1791843819432,
+          "lv": 91,
+          "wonOn": 1
+        }
+      ]
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 93,
+      "start": 1792174447777,
+      "end": 1792174666589,
+      "wonOn": 1,
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "modelAvailable": true,
+      "predictions": {
+        "alwaysFirst": 1,
+        "controlForest": 1,
+        "boardRecall_alwaysFirst": 1,
+        "boardRecall_controlForest": 1
+      },
+      "beyond20": {
+        "control": 0.7030113792001503,
+        "context": 0.7056924645844918
+      },
+      "earlierOwnBoard": [
+        {
+          "start": 1791911568306,
+          "end": 1791911740340,
+          "lv": 101,
+          "wonOn": 1
+        }
+      ]
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 94,
+      "start": 1792174671192,
+      "end": 1792174831216,
+      "wonOn": 2,
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "modelAvailable": true,
+      "predictions": {
+        "alwaysFirst": 1,
+        "controlForest": 1,
+        "boardRecall_alwaysFirst": 1,
+        "boardRecall_controlForest": 1
+      },
+      "beyond20": {
+        "control": 6.623670280353691e-16,
+        "context": 1.7414163088978277e-12
+      },
+      "earlierOwnBoard": [
+        {
+          "start": 1791912126978,
+          "end": 1791912364576,
+          "lv": 103,
+          "wonOn": 1
+        }
+      ]
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 95,
+      "start": 1792174835469,
+      "end": 1792175038351,
+      "wonOn": 1,
+      "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+      "modelAvailable": true,
+      "predictions": {
+        "alwaysFirst": 1,
+        "controlForest": 1,
+        "boardRecall_alwaysFirst": 1,
+        "boardRecall_controlForest": 1
+      },
+      "beyond20": {
+        "control": 4.446626983679967e-10,
+        "context": 1.7915231138394496e-08
+      },
+      "earlierOwnBoard": [
+        {
+          "start": 1791844390360,
+          "end": 1791844581360,
+          "lv": 94,
+          "wonOn": 1
+        }
+      ]
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 96,
+      "start": 1792175045491,
+      "end": 1792175303596,
+      "wonOn": 4,
+      "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+      "modelAvailable": true,
+      "predictions": {
+        "alwaysFirst": 1,
+        "controlForest": 1,
+        "boardRecall_alwaysFirst": 1,
+        "boardRecall_controlForest": 1
+      },
+      "beyond20": {
+        "control": 3.612870178948051e-17,
+        "context": 1.1651012176371822e-14
+      },
+      "earlierOwnBoard": [
+        {
+          "start": 1792048732189,
+          "end": 1792048887819,
+          "lv": 105,
+          "wonOn": 1
+        }
+      ]
+    }
+  ],
+  "targetMet": false,
+  "note": "Explicit personal effort retrieval on exactly matching complete board hashes, across reordered level numbers. Uses only earlier completed unassisted own episodes and local winning counts, with twenty-game decay. No target outcome, other person, retained displayed counter or future episode may enter retrieval. These repeatedly inspected historical games do not prove the frozen prospective goal; no cohort forecasts change."
+}

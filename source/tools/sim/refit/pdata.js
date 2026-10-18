@@ -1,5 +1,5 @@
 /* Every try of a person (attempts.json: first tries and retries, no help used) with the exact board:
-   the recorded board when one of their recordings has that level, otherwise the board rebuilt the way
+   the recorded board when the attempt ID matches, otherwise the board rebuilt the way
    the game makes it (designed levels: that version's table; classic levels: their screen shape, with
    gold, jokers, ice and locks as specials.js / board.js).
      const { triesOf } = require('./pdata.js'); triesOf('Gerda') -> [{ lv, at, t, won, why, src, g }] */
@@ -28,15 +28,15 @@ function classic(lv, aspect) {
 const cache = {};
 function triesOf(name) {
   if (cache[name]) return cache[name];
-  const rec = {}; for (const x of gamesOf(name)) if (!rec[x.lv]) rec[x.lv] = x.g;   // (every try of a level: the same board)
+  const rec = new Map(gamesOf(name).map(game => [game.aid, game.g]));
   const out = [];
   for (const a of ATT.filter(a => a.name === name && a.t)) {
     let g = null, src = null;
-    if (rec[a.lv] && ver(a.v) >= ver('1.50')) { g = rec[a.lv]; src = 'recorded'; }   // (recordings exist from 1.50)
+    if (a.aid && rec.has(a.aid) && ver(a.v) >= ver('1.50')) { g = rec.get(a.aid); src = 'recorded'; }
     else if (a.board.kind === 'table') { g = B.designed(a.board.v, a.lv); src = 'table'; }
     else if (a.board.kind === 'classic') { g = classic(a.lv, a.board.aspect); src = 'classic'; }
     if (!g) continue;
-    out.push({ lv: a.lv, at: a.at, t: a.t, won: a.r === 'win', why: a.r, src, key: a.key, g });
+    out.push({ aid: a.aid, v: a.v, lv: a.lv, at: a.at, t: a.t, startedAt: a.startedAt || a.t - (a.dur || 0) * 1000, won: a.r === 'win', why: a.r, src, key: a.key, g });
   }
   return (cache[name] = out.sort((a, b) => a.t - b.t));
 }

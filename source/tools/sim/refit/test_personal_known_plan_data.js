@@ -1,0 +1,30 @@
+'use strict';
+const assert = require('assert/strict');
+const Hard = require('../../../www/hard.js'), L = require('../../../www/layouts.js');
+const { reconstruct } = require('./personal_prefix_data.js');
+const { auditFrames, retainedInput } = require('./personal_known_plan_data.js');
+const { featuresOf } = require('./known_tray_plan.js');
+const tiles = [0, 0, 1, 1].map((face, index) => ({ x: index * 4, y: 0, z: 0 }));
+const game = { tiles, nb: L.neighbors(tiles), faces: [0, 0, 1, 1], down: [0, 0, 0, 0] };
+const actor = { ...Hard.P, physicalFlips: true, allMoves: true, flips: true, peek: 0, end: 0, plan: 0, forceMatches: false };
+const state = { ...game, follow: [0, 1, 2, 3], log: [], logMatches: true, physicalLog: [] };
+Hard.play(state, actor, 1);
+const actions = state.physicalLog.map((frame, index) => ({ ...frame, followEnd: index + 1, time: (index + 1) * 1000, settled: false }));
+assert.deepEqual(auditFrames(game, state.physicalLog, actions), { checked: 4, uncertainJoker: 0 });
+actions[2] = { ...actions[2], moves: 999 };
+const recorded = { g: game, aid: 'boundary-fixture', t: 100, availableAt: 200, take: [0, 1, 2, 3], actionTimes: [1000, 2000, 3000, 4000],
+  actions, manualChoices: 4, physicalRemovals: 4, complete: true, ending: 'win', stopReason: 'end' };
+const control = reconstruct(recorded, false, null, true);
+assert.equal(control.prefix.stopReason, 'historicalPhysicsBoundary');
+assert.equal(control.prefix.decisions.length, 2);
+let calls = 0;
+const planned = reconstruct(retainedInput(recorded, control), false, null, true, (publicGame, position, candidates) => {
+  calls++;
+  return featuresOf(publicGame, position, candidates);
+});
+assert.equal(calls, 2);
+assert.deepEqual({ ...planned.prefix, decisions: planned.prefix.decisions.map(({ knownPlan, ...decision }) => decision) }, control.prefix);
+assert.deepEqual(planned.result, control.result);
+assert.deepEqual(planned.state.physicalLog, control.state.physicalLog);
+assert.throws(() => auditFrames(game, actions, actions), /AssertionError/);
+console.log('PASS known-plan instrumentation visits only validated retained choices and preserves historical physics boundaries');

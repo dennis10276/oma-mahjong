@@ -1,0 +1,11 @@
+{
+  "runRoot": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\known-plan-2026-10-18T10-47-22-831Z",
+  "snapshot": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\experiments\\personal-known-plan-count-pilot-2026-10-18T10-45-39-669Z",
+  "environment": {
+    "TABLES": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\known-plan-2026-10-18T10-47-22-831Z\\tools\\sim\\refit\\tables"
+  },
+  "command": [
+    "node",
+    "tools/sim/refit/personal_known_plan_count_data.js"
+  ]
+}

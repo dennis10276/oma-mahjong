@@ -1,0 +1,12 @@
+{
+  "output": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\personal-bots\\personal-clock-route-throughput-audit.json",
+  "pilot": true,
+  "prefixes": 8,
+  "milliseconds": 6741,
+  "totals": {
+    "nodes": 11651,
+    "boundaries": 7,
+    "calls": 712,
+    "clockCalls": 39
+  }
+}

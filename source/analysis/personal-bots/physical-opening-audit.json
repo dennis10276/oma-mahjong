@@ -1,0 +1,5672 @@
+{
+  "made": "2026-10-17T10:19:22.431Z",
+  "evidence": "opening-mechanism-diagnostic",
+  "pinned": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\experiments\\physical-finish-2026-10-17T10-14-33-957Z",
+  "runs": 32,
+  "sourceHash": "cecca87bafd8ee751f6652471018172c64b5d11cd532e0575c7995ed96aca0cb",
+  "measurementFingerprint": "aba49d5e2cfe34291204821dbd532321b4d9d61b9ad9d104fcc894467595be0b",
+  "players": {
+    "Dennisisdebeste": {
+      "recordedFirstTries": 6,
+      "actualClockCleared": 5,
+      "actualClockTray": {
+        "0": 0,
+        "1": 1,
+        "2": 0,
+        "3": 4
+      },
+      "profiles": {
+        "physicalNovelPlan14": {
+          "runs": 192,
+          "clockCleared": 192,
+          "firstTapSame": 32,
+          "clockTray": {
+            "0": 0,
+            "1": 0,
+            "2": 128,
+            "3": 64
+          },
+          "wins": 19
+        },
+        "physicalFinish95": {
+          "runs": 192,
+          "clockCleared": 192,
+          "firstTapSame": 32,
+          "clockTray": {
+            "0": 0,
+            "1": 0,
+            "2": 128,
+            "3": 64
+          },
+          "wins": 16
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "recordedFirstTries": 6,
+      "actualClockCleared": 4,
+      "actualClockTray": {
+        "0": 0,
+        "1": 0,
+        "2": 2,
+        "3": 2
+      },
+      "profiles": {
+        "physicalNovelPlan14": {
+          "runs": 192,
+          "clockCleared": 192,
+          "firstTapSame": 96,
+          "clockTray": {
+            "0": 0,
+            "1": 0,
+            "2": 128,
+            "3": 64
+          },
+          "wins": 18
+        },
+        "physicalFinish95": {
+          "runs": 192,
+          "clockCleared": 192,
+          "firstTapSame": 96,
+          "clockTray": {
+            "0": 0,
+            "1": 0,
+            "2": 128,
+            "3": 64
+          },
+          "wins": 31
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "name": "Dennisisdebeste",
+      "lv": 100,
+      "aid": "a887524e-f200-4bf2-bbce-6079101d596b",
+      "start": 1791910612845,
+      "ending": "restart",
+      "stopReason": "end",
+      "firstTap": 94,
+      "clockTray": 3,
+      "clockMoves": 7,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 94,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 101,
+      "aid": "5dbaac9c-31b8-4ed5-859f-93df7b6a7c07",
+      "start": 1791911568306,
+      "ending": null,
+      "stopReason": "auto",
+      "firstTap": 77,
+      "clockTray": 1,
+      "clockMoves": 5,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 102,
+      "aid": "cb69ccd6-2352-441a-a68a-8cf22cccb4ec",
+      "start": 1791911749246,
+      "ending": "restart",
+      "stopReason": "end",
+      "firstTap": 78,
+      "clockTray": 3,
+      "clockMoves": 5,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 3,
+            "clockMoves": 5
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 103,
+      "aid": "978a8ebe-523e-439e-9cb8-100c99ae3e32",
+      "start": 1791912126978,
+      "ending": null,
+      "stopReason": "auto",
+      "firstTap": 34,
+      "clockTray": 3,
+      "clockMoves": 7,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 104,
+      "aid": "2f88f4df-a19b-4081-b8f3-f8055f69f1ee",
+      "start": 1791914835209,
+      "ending": "stuck",
+      "stopReason": "end",
+      "firstTap": 69,
+      "clockTray": null,
+      "clockMoves": null,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 71,
+            "clockTray": 2,
+            "clockMoves": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 105,
+      "aid": "c5c8435e-b0d4-4348-8525-7667b4b7c219",
+      "start": 1792048732189,
+      "ending": null,
+      "stopReason": "auto",
+      "firstTap": 81,
+      "clockTray": 3,
+      "clockMoves": 13,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 90,
+      "aid": "40ec9181-90db-40a6-b4a0-e09e0476b63f",
+      "start": 1792083395933,
+      "ending": null,
+      "stopReason": "auto",
+      "firstTap": 95,
+      "clockTray": 2,
+      "clockMoves": 8,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 95,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 92,
+      "aid": "4fdd41cd-dc23-451a-a2a5-e476ea8cbc6c",
+      "start": 1792173667131,
+      "ending": "stuck",
+      "stopReason": "end",
+      "firstTap": 65,
+      "clockTray": 2,
+      "clockMoves": 6,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 59,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 93,
+      "aid": "310d321c-a36c-49bb-92c4-7850414e3e38",
+      "start": 1792218827820,
+      "ending": "stuck",
+      "stopReason": "end",
+      "firstTap": 62,
+      "clockTray": null,
+      "clockMoves": null,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "win",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 32,
+            "clockTray": 2,
+            "clockMoves": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 94,
+      "aid": "6a159ce0-33ec-4bd7-9f01-bdb0a7fd1035",
+      "start": 1792219008645,
+      "ending": "stuck",
+      "stopReason": "end",
+      "firstTap": 81,
+      "clockTray": 3,
+      "clockMoves": 5,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "win",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 81,
+            "clockTray": 2,
+            "clockMoves": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 95,
+      "aid": "c046e698-f3d8-4588-bc9a-63003f8607ee",
+      "start": 1792219379250,
+      "ending": "stuck",
+      "stopReason": "end",
+      "firstTap": 54,
+      "clockTray": 3,
+      "clockMoves": 7,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          },
+          {
+            "why": "tray",
+            "firstTapSame": false,
+            "firstTap": 86,
+            "clockTray": 3,
+            "clockMoves": 3
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 96,
+      "aid": "071bc6a8-2f96-4e0a-be4f-8b1e3bb01cd5",
+      "start": 1792219621915,
+      "ending": "stuck",
+      "stopReason": "end",
+      "firstTap": 82,
+      "clockTray": null,
+      "clockMoves": null,
+      "simulations": {
+        "physicalNovelPlan14": [
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          }
+        ],
+        "physicalFinish95": [
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          },
+          {
+            "why": "tray",
+            "firstTapSame": true,
+            "firstTap": 82,
+            "clockTray": 3,
+            "clockMoves": 9
+          }
+        ]
+      }
+    }
+  ],
+  "missing": [
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 91,
+      "aid": "496ae0a1-30a2-48b2-beb3-10c1442c3964"
+    }
+  ],
+  "note": "Natural first-clear first-attempt clock prefixes, including restarts/incomplete/assisted-ending prefixes before help. The frozen actor starts from the initial board and never receives the human tap sequence. Actual clock-tray state is compared only after simulation. First-tap agreement is not winning-attempt accuracy, and different openings can be equally valid. No forecasts or count scores change."
+}

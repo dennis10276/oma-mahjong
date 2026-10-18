@@ -1,0 +1,78 @@
+{
+  "made": "2026-10-17T03:04:14.030Z",
+  "players": {
+    "Dennisisdebeste": {
+      "fitted": {
+        "probability": 0.00849781233112731,
+        "own": {
+          "games": 15,
+          "opportunities": 25.6242344268543,
+          "fatal": 0,
+          "availableThrough": 1792174831215
+        },
+        "prior": 0.026643640271812263,
+        "cutoff": 1792174835467,
+        "familyAvailableThrough": 1792174483507
+      },
+      "testingGames": 6,
+      "opportunities": 9,
+      "fatal": 0,
+      "observedProbability": 0
+    },
+    "Mrs. Doubtfire": {
+      "fitted": {
+        "probability": 0.01985150210685931,
+        "own": {
+          "games": 21,
+          "opportunities": 24.358208536447425,
+          "fatal": 0.5,
+          "availableThrough": 1792173078076
+        },
+        "prior": 0.018480421113576343,
+        "cutoff": 1792173079220,
+        "familyAvailableThrough": 1792172826684
+      },
+      "testingGames": 7,
+      "opportunities": 9,
+      "fatal": 0,
+      "observedProbability": 0
+    },
+    "PUK": {
+      "fitted": {
+        "probability": 0.017119820617190886,
+        "own": {
+          "games": 23,
+          "opportunities": 36.553201162364424,
+          "fatal": 0.5743491774985174,
+          "availableThrough": 1792174483507
+        },
+        "prior": 0.021406076399295457,
+        "cutoff": 1792174506087,
+        "familyAvailableThrough": 1792174445352
+      },
+      "testingGames": 8,
+      "opportunities": 11,
+      "fatal": 0,
+      "observedProbability": 0
+    },
+    "Gerda": {
+      "fitted": {
+        "probability": 0.04974760879101692,
+        "own": {
+          "games": 121,
+          "opportunities": 112.07452454099524,
+          "fatal": 5.957943294675834,
+          "availableThrough": 1792093959817
+        },
+        "prior": 0.017872301093418756,
+        "cutoff": 1792093961074,
+        "familyAvailableThrough": 1792083630482
+      },
+      "testingGames": 41,
+      "opportunities": 132,
+      "fatal": 6,
+      "observedProbability": 0.045454545454545456
+    }
+  },
+  "note": "Historical mechanism diagnostic, not count accuracy. Physical human choices before auto-finish, at three waiting tiles with an immediately visible takeable tray match, after the clock is cleared or absent. Fits use earlier complete unassisted regular recordings, twenty-game decay and twelve-choice leave-person-out family shrinkage. Auto-finished wins contribute their earlier human choices, never automatic actions. A fatal choice despite a visible match is observed; its psychological cause is not inferred. Applying this rate to recalled matches is a separate actor hypothesis."
+}

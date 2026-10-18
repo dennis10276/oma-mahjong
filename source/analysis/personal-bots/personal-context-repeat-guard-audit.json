@@ -1,0 +1,1180 @@
+{
+  "made": "2026-10-18T01:59:55.814Z",
+  "evidence": "context-runtime-parity-diagnostic",
+  "targetMet": false,
+  "fingerprint": "5446c2fd6c6116a0970dc710d81825a7b0965e39c2df1907a3d5891eae588689",
+  "fingerprintFiles": [
+    "www/hard.js",
+    "www/layouts.js",
+    "tools/sim/refit/personal_prefix_data.js",
+    "tools/sim/refit/mimic_games.js",
+    "analysis/archive/realdata/plays.json",
+    "analysis/archive/replays/pmuy78xu6tsths9.json",
+    "analysis/archive/replays/pmv16kj3jr35750.json",
+    "analysis/archive/replays/pmv2gaa0g00eq3q.json",
+    "analysis/archive/replays/pmv6yhzz3x9oxs8.json",
+    "tools/sim/refit/personal_retry_memory.js",
+    "tools/sim/refit/attempt_campaigns.js",
+    "tools/sim/refit/personal_model.js",
+    "tools/sim/refit/personal_context_runtime_audit.js",
+    "tools/sim/refit/personal_context_choice.js",
+    "tools/sim/refit/physical_count_data.js"
+  ],
+  "controlPrefixes": 398,
+  "controlDecisions": 33543,
+  "runtimePrefixes": 255,
+  "runtimeDecisions": 22590,
+  "maskedInspectionRows": 1534,
+  "unsupported": [
+    {
+      "name": "Dennisisdebeste",
+      "aid": "7ef48654-d458-4e7e-8da0-7decb45af780",
+      "level": 100,
+      "decision": 74,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "5dbaac9c-31b8-4ed5-859f-93df7b6a7c07",
+      "level": 101,
+      "decision": 30,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "cb69ccd6-2352-441a-a68a-8cf22cccb4ec",
+      "level": 102,
+      "decision": 7,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "ba6b7a32-9433-4890-82b0-8c8f74a89883",
+      "level": 102,
+      "decision": 12,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "978a8ebe-523e-439e-9cb8-100c99ae3e32",
+      "level": 103,
+      "decision": 102,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "20b95c3a-0375-4f37-a3b5-9344ae3bf987",
+      "level": 104,
+      "decision": 17,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "b3e30944-962e-4ef1-b506-6fcd47daa51b",
+      "level": 104,
+      "decision": 20,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "c5c8435e-b0d4-4348-8525-7667b4b7c219",
+      "level": 105,
+      "decision": 63,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "a5e6a3f2-9a33-4f5a-b3d6-a22fe3cc1842",
+      "level": 91,
+      "decision": 26,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "f6c7691b-38df-4a58-9800-239a11f45fb9",
+      "level": 91,
+      "decision": 40,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "2b75a7f6-aae5-4921-99eb-1cbbe20c479f",
+      "level": 91,
+      "decision": 26,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "0f125e66-79e1-44a6-8dd1-7ed5ad945c67",
+      "level": 92,
+      "decision": 36,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "199fb1f5-ba56-407b-a380-350decdcaa05",
+      "level": 93,
+      "decision": 32,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "f47869cb-1742-4940-941c-cf5c1bc25b21",
+      "level": 94,
+      "decision": 73,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "62717d86-0912-49cb-8a90-3fe51ee75dc3",
+      "level": 95,
+      "decision": 75,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "d6e50127-7d0f-4f62-84aa-0e025520bc63",
+      "level": 96,
+      "decision": 16,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "dae865c3-a245-4b76-a541-386f3228d1c8",
+      "level": 96,
+      "decision": 13,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "955e2e64-b449-46bf-b02d-262c4b0238e4",
+      "level": 96,
+      "decision": 9,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "2aec33a6-9b2d-4bc8-a0e2-1ee3bf9266cc",
+      "level": 96,
+      "decision": 6,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "ab3b7830-f6db-484c-b3bb-c92cb0ec99b4",
+      "level": 97,
+      "decision": 95,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "e1c0294d-46f4-4e28-bf0b-8a003ab7547c",
+      "level": 53,
+      "decision": 58,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "cf8b410c-ea52-4086-af9b-34c87f90d99d",
+      "level": 107,
+      "decision": 49,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "5d9cdde1-8175-4614-b6c4-65450bbee997",
+      "level": 108,
+      "decision": 66,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "05f89784-b684-4c7e-b15e-7f0e67e183c7",
+      "level": 108,
+      "decision": 106,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "7f00a2e4-bb0e-4ad9-8e76-e3d05e38616e",
+      "level": 109,
+      "decision": 36,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "5ae9f572-0f2c-43c5-9ca5-a702dadcd3b7",
+      "level": 111,
+      "decision": 41,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "9f0c7d9a-9e2d-4d19-9cf3-6b2e559a5ea8",
+      "level": 111,
+      "decision": 27,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "88bee9ab-065b-43ee-8bdf-657ad8447fb4",
+      "level": 111,
+      "decision": 38,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "70633ed7-a7ed-408e-8194-f7d6e1e7a7df",
+      "level": 112,
+      "decision": 58,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "6004da1b-844c-4eba-922e-6f1a4e90c7a6",
+      "level": 113,
+      "decision": 60,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "abcb5c7f-2dbb-4c13-9dd6-3a99c4d54182",
+      "level": 115,
+      "decision": 27,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "19154d14-1cab-44bb-afec-744716566416",
+      "level": 115,
+      "decision": 62,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "407f90c0-8e24-4b62-8269-571cc0ebe7b2",
+      "level": 115,
+      "decision": 24,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "4a7600f2-13f6-401b-9da2-03109a0b7b86",
+      "level": 116,
+      "decision": 34,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "6b891e2e-868a-49ff-bce1-a7c7097b98f0",
+      "level": 116,
+      "decision": 85,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "784c1381-9c98-44d7-b1a5-a62615c71280",
+      "level": 117,
+      "decision": 54,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "a776a740-a11f-449d-844e-402db9b05d83",
+      "level": 118,
+      "decision": 61,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "41736fc9-2019-4ce7-8c31-79e1591a55f0",
+      "level": 62,
+      "decision": 67,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "71d4b020-4416-4a6e-83bb-82bd9737be95",
+      "level": 119,
+      "decision": 85,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "f2332425-1d8f-4064-9385-a7cee62f1055",
+      "level": 120,
+      "decision": 92,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "5d70f797-c5f4-41b4-baa0-b1e097767868",
+      "level": 121,
+      "decision": 35,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "b8f5fa3a-cd05-4d6b-9190-509aee65ee2f",
+      "level": 121,
+      "decision": 37,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "a0d459e2-bc7b-49ec-92f1-744eb1720bbb",
+      "level": 123,
+      "decision": 65,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "47baa64c-3758-4bf9-a3c7-26287232a6ad",
+      "level": 124,
+      "decision": 87,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "241f2afd-e4d5-4970-9b27-1f1d57009c38",
+      "level": 124,
+      "decision": 49,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "1e60eb59-75b1-4cec-9d0c-d1be4eec2102",
+      "level": 124,
+      "decision": 33,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "1c291f5a-591e-4369-89b9-83ff643a8845",
+      "level": 126,
+      "decision": 21,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Dennisisdebeste",
+      "aid": "873cd1ff-0abd-49ea-aff8-f024c6779a0d",
+      "level": 127,
+      "decision": 67,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "ef98784e-fd3b-4b76-bbf7-db1af84d96b8",
+      "level": 89,
+      "decision": 46,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "4ff0d7f1-d811-4438-b8e9-edcc23c01822",
+      "level": 89,
+      "decision": 101,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "f94a4d9e-cd95-4506-9c4c-33f09d080cc6",
+      "level": 89,
+      "decision": 62,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "40ec9181-90db-40a6-b4a0-e09e0476b63f",
+      "level": 90,
+      "decision": 63,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "496ae0a1-30a2-48b2-beb3-10c1442c3964",
+      "level": 91,
+      "decision": 50,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "6c7d3224-7d15-4155-95aa-e36a68507ca1",
+      "level": 91,
+      "decision": 41,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "2df8244b-f96e-464d-8212-5714bfe4ca89",
+      "level": 91,
+      "decision": 38,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "fa8567ba-5fbd-46b0-9a04-4b8f6ee64db4",
+      "level": 91,
+      "decision": 23,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "fbf1118f-19be-4550-bf08-839a5a055857",
+      "level": 91,
+      "decision": 34,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "970a2f78-dd00-424b-a647-ff7b1eee501d",
+      "level": 91,
+      "decision": 67,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "dd582979-eedb-478a-9e11-b6d7129eaddc",
+      "level": 91,
+      "decision": 34,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "9acaca29-f086-433b-861a-75c409b2d8ae",
+      "level": 91,
+      "decision": 54,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "5022f286-5a17-4d6f-a5cb-29e98ba2dd0e",
+      "level": 91,
+      "decision": 108,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "4fdd41cd-dc23-451a-a2a5-e476ea8cbc6c",
+      "level": 92,
+      "decision": 37,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "324dc1d4-d460-4521-ac0b-52d2a9f7656f",
+      "level": 92,
+      "decision": 11,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "86998407-4cfa-4271-b0f2-d6a7cb921f5f",
+      "level": 93,
+      "decision": 93,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "e0372a0d-4ea5-4b63-8706-b4b39db77fa2",
+      "level": 94,
+      "decision": 61,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "f9aea09d-738b-42e1-9e7b-3191bf682aaf",
+      "level": 94,
+      "decision": 31,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "c046e698-f3d8-4588-bc9a-63003f8607ee",
+      "level": 95,
+      "decision": 91,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "b8fb799f-8dac-40a0-b776-473e5228c920",
+      "level": 95,
+      "decision": 70,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "e7a97a2c-263c-4e9d-9ce8-1cbf56b77cf3",
+      "level": 96,
+      "decision": 12,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "c4c957ab-554a-413b-a19c-9b3d990c2f80",
+      "level": 96,
+      "decision": 77,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "502362b1-48c0-4bad-9411-3c93b41de051",
+      "level": 97,
+      "decision": 74,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "19190b31-1593-4dd7-8a92-d57d973a7553",
+      "level": 98,
+      "decision": 15,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "a614c26d-9359-4473-b445-d70c1bf02b82",
+      "level": 98,
+      "decision": 63,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "0970e01e-038a-4024-8088-fef11019c0a2",
+      "level": 99,
+      "decision": 86,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "1ee36661-7913-4a58-9f57-3ea6af7ed230",
+      "level": 99,
+      "decision": 58,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "1947ce59-fdd0-45ed-831b-fce0ae93d277",
+      "level": 99,
+      "decision": 117,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "2a67889d-7fd4-4a89-b586-a2f5aa69e6f2",
+      "level": 100,
+      "decision": 111,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "f2457a7a-8d3c-4459-ae12-b0cb8af5891d",
+      "level": 101,
+      "decision": 26,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "8676a5bf-25ed-4e73-89b6-a262e8462202",
+      "level": 101,
+      "decision": 129,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "955f8b28-343b-4d82-8347-62004d3c432d",
+      "level": 102,
+      "decision": 33,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "aid": "d82fe10e-2495-4511-9ff3-7a7ba8ef2883",
+      "level": 103,
+      "decision": 54,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "13f81deb-c4b1-4fe9-957e-8a57ba6f7e88",
+      "level": 37,
+      "decision": 53,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "c72be715-2bc6-4471-82cb-298eef7d8db8",
+      "level": 40,
+      "decision": 42,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "a7c03165-f257-4a3b-9f90-04329b0bd93d",
+      "level": 45,
+      "decision": 79,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "911cd273-e39a-48f4-97f1-912d4098267b",
+      "level": 48,
+      "decision": 97,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "85a34136-6637-4584-b8ec-7201886288e3",
+      "level": 49,
+      "decision": 30,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "1d68f281-750b-4526-9f41-cdbae64fac83",
+      "level": 53,
+      "decision": 63,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "6848d264-e65d-4756-85bf-03fde640deff",
+      "level": 53,
+      "decision": 11,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "PUK",
+      "aid": "a0ad6c3a-e48b-4882-90da-e31f1b96f94c",
+      "level": 53,
+      "decision": 25,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "533eee7f-409c-4f24-909e-1c511cfa58e8",
+      "level": 11,
+      "decision": 45,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "9ace8f09-c206-48f9-82cf-cb6928823e32",
+      "level": 19,
+      "decision": 73,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "a895ad21-45f0-4159-9ad7-fbf655c8e372",
+      "level": 22,
+      "decision": 28,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "d13ad27d-218c-4081-9bf4-c547f1f392ae",
+      "level": 23,
+      "decision": 18,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "11025e5d-7117-4e7a-aef3-087e8ccdef83",
+      "level": 27,
+      "decision": 24,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "b67b8cd7-c750-487a-b1c0-baf83f4a2d51",
+      "level": 28,
+      "decision": 24,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "6ee2e988-834b-430c-b1cc-4473e8854b66",
+      "level": 29,
+      "decision": 96,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "18a61e0b-342e-47e8-978f-2c1350feea14",
+      "level": 32,
+      "decision": 65,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "7190c867-82b8-4ddf-9e81-a8f413aed1e5",
+      "level": 36,
+      "decision": 83,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "edc16af3-d594-4b24-bcd6-1f648adbca8a",
+      "level": 36,
+      "decision": 32,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "b2c9cefd-f611-412b-9bce-ed51743058be",
+      "level": 36,
+      "decision": 47,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "4fe5055f-6ab6-4fa5-b1c0-c686d9f8dd11",
+      "level": 36,
+      "decision": 97,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "25d95f1c-d4e2-4f09-aa39-fd82311bc431",
+      "level": 36,
+      "decision": 104,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "9891755e-6853-4934-89d6-f7796754bd03",
+      "level": 36,
+      "decision": 38,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "350fb212-b93f-4806-bb5a-c753aecf6168",
+      "level": 36,
+      "decision": 85,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "f06599fe-547d-44de-939d-1144116cef0a",
+      "level": 38,
+      "decision": 108,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "0fd093bb-ef11-4491-97ef-ad0e43d82d6e",
+      "level": 38,
+      "decision": 49,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "0e8aa910-64ea-4fce-bc78-4164ae5bd5c0",
+      "level": 42,
+      "decision": 82,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "2e39da0a-b62f-4cf2-a3df-562b82813a2d",
+      "level": 43,
+      "decision": 41,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "8c4d4092-abc2-4cb9-96ad-757d9a057de6",
+      "level": 43,
+      "decision": 36,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "821a5dd9-6aea-4dda-8e20-3956eb6e67e0",
+      "level": 45,
+      "decision": 45,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "f7a039e9-5460-4c60-b3f6-d4d37d58098c",
+      "level": 45,
+      "decision": 31,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "c0fda5c8-ab6d-4c4e-b8d9-e10d8a0c0d11",
+      "level": 47,
+      "decision": 69,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "0ac5bc8e-2a21-448e-bac1-13744a02efe6",
+      "level": 48,
+      "decision": 93,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "0520d88e-5f12-4ca5-9b6a-9c202713e3b0",
+      "level": 50,
+      "decision": 24,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "f6c83a56-3366-4ea3-8143-9cdaf06b0f65",
+      "level": 50,
+      "decision": 15,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "628d7c5e-6bf8-4cf8-938b-0ee6888e62d2",
+      "level": 51,
+      "decision": 20,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "2fa77dab-c846-4250-a6ed-1cc369ded4e7",
+      "level": 51,
+      "decision": 26,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "7c6160b7-6a1a-4b2b-8457-dcf898c61852",
+      "level": 51,
+      "decision": 58,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "90ad1661-9545-416f-a7c6-304fcbe25b9b",
+      "level": 51,
+      "decision": 45,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "67725a48-2151-4e96-8285-2f60afdde0c9",
+      "level": 51,
+      "decision": 25,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "e3441a3d-4296-4ebc-80fd-5cccc17000cd",
+      "level": 52,
+      "decision": 70,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "92d8c897-640f-4ce7-80ad-60386ef26922",
+      "level": 53,
+      "decision": 13,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "7c023b22-2c78-4996-9e79-4e1deb1ab4b5",
+      "level": 54,
+      "decision": 44,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "15bcad8f-2cf3-4f47-b52d-9ffa7fe93ca2",
+      "level": 55,
+      "decision": 36,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "ee903f05-ce73-465e-8c7b-587dd21816b5",
+      "level": 56,
+      "decision": 54,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "37c9053f-30fd-4086-944d-557bbf908017",
+      "level": 56,
+      "decision": 24,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "73174618-7044-4419-a37c-d403677c85a7",
+      "level": 57,
+      "decision": 15,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "e7810058-f333-4954-96c5-6869d3f76e48",
+      "level": 57,
+      "decision": 65,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "2dfe15db-c7af-42ff-ab01-f601e2390623",
+      "level": 58,
+      "decision": 73,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "386437ff-0fc7-452d-b1a3-311aff29a719",
+      "level": 59,
+      "decision": 13,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "580c3c00-4a3b-48ec-9980-b6204069df9a",
+      "level": 59,
+      "decision": 7,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "ef40df03-4f8b-4844-b33f-6cd4f95c83b7",
+      "level": 60,
+      "decision": 97,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "805dcd6e-b06b-4710-aa4c-df09e57f8b6b",
+      "level": 61,
+      "decision": 14,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "89845d51-60f2-4f45-a6b6-b35f6de2b617",
+      "level": 61,
+      "decision": 63,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "180c2671-2deb-43f7-ad26-ef5296647527",
+      "level": 62,
+      "decision": 20,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "3bf3a5e8-ad3b-4f58-8665-30d698cdc76e",
+      "level": 62,
+      "decision": 53,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "4f22899a-bd54-4529-92c4-47a6ed63af08",
+      "level": 62,
+      "decision": 43,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "10810509-33cb-47a6-8a8d-c6873a263fb5",
+      "level": 62,
+      "decision": 103,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "dd010714-e454-41b9-b26d-db489ea1e53b",
+      "level": 62,
+      "decision": 61,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "1e93bf36-7771-49e6-996d-262d1da304ba",
+      "level": 62,
+      "decision": 26,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "4c95dda9-a526-4ca3-aa7c-30803b214756",
+      "level": 62,
+      "decision": 29,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "bddd27f6-5cad-48d7-8e2b-1af45032e9f7",
+      "level": 62,
+      "decision": 34,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    },
+    {
+      "name": "Gerda",
+      "aid": "78bc53a4-833e-47cb-9f9d-4659be982c6a",
+      "level": 62,
+      "decision": 61,
+      "reason": "recorded-repeat-exceeds-existing-runtime-inspection-safeguard"
+    }
+  ],
+  "probabilityDecisions": 51414,
+  "measured": {
+    "Dennisisdebeste": {
+      "ownAll": {
+        "control": {
+          "decisions": 2296,
+          "jointLogLoss": 1.7095152425374611,
+          "topActionAccuracy": 0.4102787456445993
+        },
+        "context8": {
+          "decisions": 2296,
+          "jointLogLoss": 1.7005218500011896,
+          "topActionAccuracy": 0.4094076655052265
+        },
+        "context24": {
+          "decisions": 2296,
+          "jointLogLoss": 1.6990545299375517,
+          "topActionAccuracy": 0.4063588850174216
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 2296,
+          "jointLogLoss": 1.708917596166584,
+          "topActionAccuracy": 0.4133275261324042
+        },
+        "context8": {
+          "decisions": 2296,
+          "jointLogLoss": 1.699820122434731,
+          "topActionAccuracy": 0.41114982578397213
+        },
+        "context24": {
+          "decisions": 2296,
+          "jointLogLoss": 1.6994629361233493,
+          "topActionAccuracy": 0.4107142857142857
+        }
+      }
+    },
+    "Mrs. Doubtfire": {
+      "ownAll": {
+        "control": {
+          "decisions": 1507,
+          "jointLogLoss": 1.879650410728878,
+          "topActionAccuracy": 0.3351028533510285
+        },
+        "context8": {
+          "decisions": 1507,
+          "jointLogLoss": 1.8715125317496506,
+          "topActionAccuracy": 0.3404114134041141
+        },
+        "context24": {
+          "decisions": 1507,
+          "jointLogLoss": 1.8697800685732995,
+          "topActionAccuracy": 0.34439283344392835
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 1507,
+          "jointLogLoss": 1.9026663307262173,
+          "topActionAccuracy": 0.3238221632382216
+        },
+        "context8": {
+          "decisions": 1507,
+          "jointLogLoss": 1.9007980678503202,
+          "topActionAccuracy": 0.32581287325812874
+        },
+        "context24": {
+          "decisions": 1507,
+          "jointLogLoss": 1.9010904338269479,
+          "topActionAccuracy": 0.32050431320504313
+        }
+      }
+    },
+    "PUK": {
+      "ownAll": {
+        "control": {
+          "decisions": 1948,
+          "jointLogLoss": 1.777164973439908,
+          "topActionAccuracy": 0.4296714579055442
+        },
+        "context8": {
+          "decisions": 1948,
+          "jointLogLoss": 1.727417861500686,
+          "topActionAccuracy": 0.43788501026694043
+        },
+        "context24": {
+          "decisions": 1948,
+          "jointLogLoss": 1.694555622830702,
+          "topActionAccuracy": 0.4491786447638604
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 1948,
+          "jointLogLoss": 1.7762185494099625,
+          "topActionAccuracy": 0.43018480492813144
+        },
+        "context8": {
+          "decisions": 1948,
+          "jointLogLoss": 1.7290008293962285,
+          "topActionAccuracy": 0.43788501026694043
+        },
+        "context24": {
+          "decisions": 1948,
+          "jointLogLoss": 1.700491616770864,
+          "topActionAccuracy": 0.44969199178644764
+        }
+      }
+    },
+    "Gerda": {
+      "ownAll": {
+        "control": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0020043078463194,
+          "topActionAccuracy": 0.29559971611071684
+        },
+        "context8": {
+          "decisions": 2818,
+          "jointLogLoss": 1.9984703510423956,
+          "topActionAccuracy": 0.2913413768630234
+        },
+        "context24": {
+          "decisions": 2818,
+          "jointLogLoss": 1.997556087910792,
+          "topActionAccuracy": 0.2895670688431512
+        }
+      },
+      "ownCarryAll": {
+        "control": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0178225924408353,
+          "topActionAccuracy": 0.28459900638750885
+        },
+        "context8": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0167614980282256,
+          "topActionAccuracy": 0.2817601135557133
+        },
+        "context24": {
+          "decisions": 2818,
+          "jointLogLoss": 2.0209047862296363,
+          "topActionAccuracy": 0.2831795599716111
+        }
+      }
+    }
+  },
+  "pinnedActionExperiment": "analysis/archive/personal-bots/experiments/personal-context-actions-2026-10-18T01-55-11-704Z",
+  "note": "Every original zero-memory natural prefix matches unchanged followed features/physical outcomes. Runtime replay compares the common options exactly, accounting explicitly for the pre-existing two-reinspection safeguard; records exceeding that safeguard are listed, never silently discarded or counted as successes. All held zero/configured-memory control/context probability summaries match Python to1e-12, including the explicit float32 boundary unit test. Human indices are supplied only for parity diagnostics, never autonomous forecast evidence. Full autonomous count cohorts remain separate and unchanged; no winning-count accuracy or new forecast is claimed."
+}

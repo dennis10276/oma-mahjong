@@ -1,0 +1,17 @@
+'use strict';
+const assert = require('assert/strict');
+const { scorePrefix, aggregate } = require('./personal_recall_coverage.js');
+const weights = Array(76).fill(0), context = Array(26).fill(0), immediate = Array(29).fill(0);
+const actor = { withinWeights: weights, kindModel: { weights: Object.fromEntries(['flip', 'pair', 'single', 'fatal'].map(kind => [kind, context])) } };
+const inspected = weights.slice(); inspected[19] = 1;
+const decision = { F: [inspected, weights.slice()], immediate: [immediate, immediate], kindContext: context, k: 0 };
+const result = scorePrefix({ decisions: [decision, { ...decision, k: -1 }, { ...decision, k: 1 }] }, actor);
+assert.equal(result.decisions, 2);
+assert.equal(result.jointLogLoss, Math.log(2));
+assert.equal(result.topActionAccuracy, .5);
+const rows = [{ scores: { none: result } }, { scores: { none: { decisions: 6, jointLogLoss: 2, topActionAccuracy: .25 } } }];
+assert.deepEqual(aggregate(rows, 'none'), { prefixes: 2, decisions: 8, jointLogLoss: (2 * Math.log(2) + 12) / 8, topActionAccuracy: 2.5 / 8 });
+assert.deepEqual(aggregate([], 'none'), { prefixes: 0, decisions: 0, jointLogLoss: null, topActionAccuracy: null });
+assert.equal(scorePrefix({ decisions: [{ ...decision, wonOn: 9, futureMemory: [1, 1], hiddenPictures: [7, 7] }] }, actor).jointLogLoss, Math.log(2));
+assert.throws(() => scorePrefix({ decisions: [{ ...decision, F: [Array(75).fill(0)] }] }, actor));
+console.log('PASS recall scoring keeps exact physical-option likelihood, sample weighting and empty per-person coverage distinct from count accuracy');

@@ -1,0 +1,42 @@
+{
+  "Dennisisdebeste": {
+    "prefixes": 74,
+    "affected": 7,
+    "missingVisiblePictures": 7,
+    "initialNewAffected": 3,
+    "byTerminal": {
+      "clock/end": 1,
+      "tray/end": 6
+    }
+  },
+  "Mrs. Doubtfire": {
+    "prefixes": 65,
+    "affected": 11,
+    "missingVisiblePictures": 11,
+    "initialNewAffected": 2,
+    "byTerminal": {
+      "clock/end": 4,
+      "tray/end": 7
+    }
+  },
+  "PUK": {
+    "prefixes": 57,
+    "affected": 2,
+    "missingVisiblePictures": 2,
+    "initialNewAffected": 1,
+    "byTerminal": {
+      "tray/end": 2
+    }
+  },
+  "Gerda": {
+    "prefixes": 202,
+    "affected": 18,
+    "missingVisiblePictures": 18,
+    "initialNewAffected": 5,
+    "byTerminal": {
+      "tray/end": 15,
+      "stopped/shuffle": 2,
+      "stopped/conflictingChunk": 1
+    }
+  }
+}

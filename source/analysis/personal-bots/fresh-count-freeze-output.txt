@@ -1,0 +1,74 @@
+{
+  "frozenAt": 1792340324191,
+  "forecasts": 95,
+  "next": {
+    "Dennisisdebeste": [
+      {
+        "lv": 151,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 152,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 153,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      }
+    ],
+    "Mrs. Doubtfire": [
+      {
+        "lv": 104,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 105,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 106,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      }
+    ],
+    "PUK": [
+      {
+        "lv": 54,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 55,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 56,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      }
+    ],
+    "Gerda": [
+      {
+        "lv": 69,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 70,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      },
+      {
+        "lv": 71,
+        "predictedAttempt": 1,
+        "selectedMethod": "alwaysFirst"
+      }
+    ]
+  }
+}

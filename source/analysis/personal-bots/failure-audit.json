@@ -1,0 +1,5207 @@
+{
+  "made": "2026-10-17T02:53:51.890Z",
+  "fingerprint": "d90c99e806614b791269fbe20bdeaf949d3f2056100bc3b1063eda9a9f61a563",
+  "players": {
+    "Dennisisdebeste": {
+      "all": {
+        "failures": 7,
+        "clock": 4,
+        "tray": 3,
+        "unclassified": 0,
+        "trayAfterClockCleared": 3,
+        "exits": {
+          "visibleSafeExit": 2,
+          "previouslySeenSafeExit": 0,
+          "uninspectedFreePictures": 0,
+          "noKnownSafeExitOrNovelFlip": 1
+        }
+      },
+      "recent": {
+        "failures": 7,
+        "clock": 4,
+        "tray": 3,
+        "unclassified": 0,
+        "trayAfterClockCleared": 3,
+        "exits": {
+          "visibleSafeExit": 2,
+          "previouslySeenSafeExit": 0,
+          "uninspectedFreePictures": 0,
+          "noKnownSafeExitOrNovelFlip": 1
+        }
+      },
+      "failures": [
+        {
+          "aid": "fd052b4f-d801-4a4d-8f90-d242609e75e7",
+          "t": 1791910662603,
+          "availableAt": 1791910683743,
+          "lv": 100,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 62,
+            "tray": 3,
+            "moves": 7,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              68
+            ],
+            "rememberedMatches": [
+              68
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              69,
+              75,
+              76
+            ],
+            "free": 10
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "2f88f4df-a19b-4081-b8f3-f8055f69f1ee",
+          "t": 1791914835208,
+          "availableAt": 1791914848132,
+          "lv": 104,
+          "at": 1,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 62,
+            "tray": 1,
+            "moves": 7,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              62
+            ],
+            "rememberedMatches": [
+              62
+            ],
+            "visiblePairs": [
+              [
+                43,
+                59
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                43,
+                59
+              ]
+            ],
+            "novelFlips": [
+              60,
+              61
+            ],
+            "free": 10
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "dc420c02-efac-47ff-b8db-fdc06c6d6ec1",
+          "t": 1792173656312,
+          "availableAt": 1792173662738,
+          "lv": 91,
+          "at": 2,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 77,
+            "tray": 0,
+            "moves": 6,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "novelFlips": [
+              1,
+              2
+            ],
+            "free": 8
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "a5e6a3f2-9a33-4f5a-b3d6-a22fe3cc1842",
+          "t": 1792173734243,
+          "availableAt": 1792173864644,
+          "lv": 91,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 66,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "7da175ae-66d9-4023-9ac9-b4cbe65917bd",
+          "t": 1792174671191,
+          "availableAt": 1792174681004,
+          "lv": 94,
+          "at": 2,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 58,
+            "tray": 0,
+            "moves": 6,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                37,
+                80
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                37,
+                80
+              ]
+            ],
+            "novelFlips": [
+              35,
+              57
+            ],
+            "free": 8
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "d6e50127-7d0f-4f62-84aa-0e025520bc63",
+          "t": 1792175045491,
+          "availableAt": 1792175070843,
+          "lv": 96,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 18,
+            "tray": 3,
+            "moves": 9,
+            "activeClock": true,
+            "clockBudget": 4,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              40
+            ],
+            "rememberedMatches": [
+              40
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              41
+            ],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "955e2e64-b449-46bf-b02d-262c4b0238e4",
+          "t": 1792175128775,
+          "availableAt": 1792175156847,
+          "lv": 96,
+          "at": 4,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 61,
+            "tray": 1,
+            "moves": 11,
+            "activeClock": true,
+            "clockBudget": 2,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                54,
+                61
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                54,
+                61
+              ]
+            ],
+            "novelFlips": [
+              36,
+              37,
+              41,
+              80
+            ],
+            "free": 12
+          },
+          "exitClass": null
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "all": {
+        "failures": 25,
+        "clock": 5,
+        "tray": 20,
+        "unclassified": 0,
+        "trayAfterClockCleared": 20,
+        "exits": {
+          "visibleSafeExit": 4,
+          "previouslySeenSafeExit": 6,
+          "uninspectedFreePictures": 5,
+          "noKnownSafeExitOrNovelFlip": 5
+        }
+      },
+      "recent": {
+        "failures": 15,
+        "clock": 2,
+        "tray": 13,
+        "unclassified": 0,
+        "trayAfterClockCleared": 13,
+        "exits": {
+          "visibleSafeExit": 0,
+          "previouslySeenSafeExit": 5,
+          "uninspectedFreePictures": 5,
+          "noKnownSafeExitOrNovelFlip": 3
+        }
+      },
+      "failures": [
+        {
+          "aid": "aade8e39-77e0-4ca0-b176-62739d248b6b",
+          "t": 1791928896265,
+          "availableAt": 1791928980723,
+          "lv": 89,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 48,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              35
+            ],
+            "rememberedMatches": [
+              35
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                11,
+                52
+              ],
+              [
+                45,
+                48
+              ]
+            ],
+            "novelFlips": [
+              49
+            ],
+            "free": 13
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "ef98784e-fd3b-4b76-bbf7-db1af84d96b8",
+          "t": 1791928984892,
+          "availableAt": 1791929090344,
+          "lv": 89,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 27,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [
+              2
+            ],
+            "visiblePairs": [
+              [
+                11,
+                52
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                6,
+                53
+              ],
+              [
+                11,
+                52
+              ]
+            ],
+            "novelFlips": [],
+            "free": 14
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "4ff0d7f1-d811-4438-b8e9-edcc23c01822",
+          "t": 1791929092679,
+          "availableAt": 1791929248860,
+          "lv": 89,
+          "at": 5,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 33,
+            "tray": 3,
+            "moves": 49,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                1,
+                31
+              ],
+              [
+                33,
+                57
+              ]
+            ],
+            "novelFlips": [
+              25
+            ],
+            "free": 12
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "4d4164c2-7bd7-496b-80be-e80b3db8c865",
+          "t": 1791929250950,
+          "availableAt": 1791929310021,
+          "lv": 89,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 64,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 10
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "f6c44fa8-9a77-4f3f-98e9-84778f722a0f",
+          "t": 1791929312413,
+          "availableAt": 1791929409605,
+          "lv": 89,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 33,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                11,
+                52
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                11,
+                52
+              ]
+            ],
+            "novelFlips": [
+              49
+            ],
+            "free": 13
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "588b199d-41c5-4115-a013-15cb835257a5",
+          "t": 1791929412698,
+          "availableAt": 1791929488657,
+          "lv": 89,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 33,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                11,
+                52
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                11,
+                52
+              ]
+            ],
+            "novelFlips": [],
+            "free": 13
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "00eace97-2e83-4fab-9e6a-b6998cd82524",
+          "t": 1791929490118,
+          "availableAt": 1791929517913,
+          "lv": 89,
+          "at": 9,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 61,
+            "tray": 1,
+            "moves": 7,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                37,
+                76
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                37,
+                76
+              ]
+            ],
+            "novelFlips": [
+              70
+            ],
+            "free": 13
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "f94a4d9e-cd95-4506-9c4c-33f09d080cc6",
+          "t": 1792082203560,
+          "availableAt": 1792082310080,
+          "lv": 89,
+          "at": 11,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 12,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 10
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "98cd2fe0-dcbd-45a0-8ca6-97e54ed26cb2",
+          "t": 1792082311107,
+          "availableAt": 1792082385978,
+          "lv": 89,
+          "at": 12,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 37,
+            "tray": 1,
+            "moves": 7,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                37,
+                76
+              ],
+              [
+                71,
+                73
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                37,
+                76
+              ],
+              [
+                71,
+                73
+              ]
+            ],
+            "novelFlips": [
+              1
+            ],
+            "free": 10
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "e6686c50-df17-4202-ada2-fdc0fdb33e22",
+          "t": 1792129309387,
+          "availableAt": 1792129318660,
+          "lv": 91,
+          "at": 2,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 73,
+            "tray": 0,
+            "moves": 6,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "novelFlips": [
+              1,
+              2
+            ],
+            "free": 8
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "6c7d3224-7d15-4155-95aa-e36a68507ca1",
+          "t": 1792129320288,
+          "availableAt": 1792129458538,
+          "lv": 91,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 59,
+            "tray": 3,
+            "moves": 47,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "65b6bfcc-641b-4701-a82d-721cd10663b9",
+          "t": 1792129750616,
+          "availableAt": 1792129832923,
+          "lv": 91,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 66,
+            "tray": 3,
+            "moves": 37,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "5bb3d343-fd5b-4ae9-a450-967706eb37b6",
+          "t": 1792129867699,
+          "availableAt": 1792129876704,
+          "lv": 91,
+          "at": 8,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 75,
+            "tray": 0,
+            "moves": 6,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "novelFlips": [
+              1,
+              2
+            ],
+            "free": 8
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "fa8567ba-5fbd-46b0-9a04-4b8f6ee64db4",
+          "t": 1792129877986,
+          "availableAt": 1792129934171,
+          "lv": 91,
+          "at": 9,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 27,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                52,
+                64
+              ]
+            ],
+            "novelFlips": [],
+            "free": 13
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "a26bc167-9c17-4af3-98de-b7309775264f",
+          "t": 1792130008185,
+          "availableAt": 1792130013997,
+          "lv": 91,
+          "at": 11,
+          "mechanism": "clock",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 75,
+            "tray": 0,
+            "moves": 6,
+            "activeClock": true,
+            "clockBudget": 1,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                73,
+                75
+              ],
+              [
+                77,
+                78
+              ]
+            ],
+            "novelFlips": [
+              1,
+              2
+            ],
+            "free": 8
+          },
+          "exitClass": null
+        },
+        {
+          "aid": "0abe9988-900d-4875-badd-4caeca687176",
+          "t": 1792130015309,
+          "availableAt": 1792130058303,
+          "lv": 91,
+          "at": 12,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 67,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              2,
+              25,
+              52,
+              63,
+              64
+            ],
+            "free": 14
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "351b7ffd-f558-4f5a-aaf2-8e831e9535c3",
+          "t": 1792161683354,
+          "availableAt": 1792162703405,
+          "lv": 91,
+          "at": 13,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 63,
+            "tray": 3,
+            "moves": 23,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                1,
+                66
+              ]
+            ],
+            "novelFlips": [],
+            "free": 13
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "fc197908-9d20-46e4-bbe9-3a79fd598e2d",
+          "t": 1792162704419,
+          "availableAt": 1792162769238,
+          "lv": 91,
+          "at": 14,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 67,
+            "tray": 3,
+            "moves": 27,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                1,
+                66
+              ]
+            ],
+            "novelFlips": [
+              26,
+              45
+            ],
+            "free": 12
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "fbf1118f-19be-4550-bf08-839a5a055857",
+          "t": 1792162770361,
+          "availableAt": 1792173078076,
+          "lv": 91,
+          "at": 15,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 55,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                45,
+                51
+              ]
+            ],
+            "novelFlips": [
+              13
+            ],
+            "free": 12
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "970a2f78-dd00-424b-a647-ff7b1eee501d",
+          "t": 1792173079220,
+          "availableAt": 1792173207640,
+          "lv": 91,
+          "at": 16,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 56,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              32
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "6525d2e1-115b-4316-b061-39a96ce0cb4c",
+          "t": 1792173209671,
+          "availableAt": 1792173254744,
+          "lv": 91,
+          "at": 17,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 44,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              5,
+              6
+            ],
+            "free": 14
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "dd582979-eedb-478a-9e11-b6d7129eaddc",
+          "t": 1792173255990,
+          "availableAt": 1792173359975,
+          "lv": 91,
+          "at": 18,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 40,
+            "tray": 3,
+            "moves": 37,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              46,
+              54,
+              60
+            ],
+            "free": 13
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "9acaca29-f086-433b-861a-75c409b2d8ae",
+          "t": 1792173361023,
+          "availableAt": 1792173469047,
+          "lv": 91,
+          "at": 19,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 8,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 13
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "16f8a0a9-54d2-4472-88b7-2b78130cbfd2",
+          "t": 1792173470135,
+          "availableAt": 1792173507020,
+          "lv": 91,
+          "at": 20,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 19,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              25,
+              26,
+              59
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "4fdd41cd-dc23-451a-a2a5-e476ea8cbc6c",
+          "t": 1792173667131,
+          "availableAt": 1792173759333,
+          "lv": 92,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": true,
+          "lastTake": {
+            "clicked": 9,
+            "tray": 3,
+            "moves": 33,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                9,
+                44
+              ],
+              [
+                31,
+                54
+              ]
+            ],
+            "novelFlips": [
+              48
+            ],
+            "free": 13
+          },
+          "exitClass": "previouslySeenSafeExit"
+        }
+      ]
+    },
+    "PUK": {
+      "all": {
+        "failures": 16,
+        "clock": 0,
+        "tray": 16,
+        "unclassified": 0,
+        "trayAfterClockCleared": 0,
+        "exits": {
+          "visibleSafeExit": 2,
+          "previouslySeenSafeExit": 1,
+          "uninspectedFreePictures": 8,
+          "noKnownSafeExitOrNovelFlip": 5
+        }
+      },
+      "recent": {
+        "failures": 15,
+        "clock": 0,
+        "tray": 15,
+        "unclassified": 0,
+        "trayAfterClockCleared": 0,
+        "exits": {
+          "visibleSafeExit": 2,
+          "previouslySeenSafeExit": 1,
+          "uninspectedFreePictures": 7,
+          "noKnownSafeExitOrNovelFlip": 5
+        }
+      },
+      "failures": [
+        {
+          "aid": "51bba53d-aff7-4354-801c-3ba1bf23660d",
+          "t": 1791971427413,
+          "availableAt": 1791971621653,
+          "lv": 23,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 35,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              0,
+              1,
+              10,
+              21,
+              45,
+              47,
+              64
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "6f5b7640-7928-4408-bd14-16a884af714c",
+          "t": 1791972046022,
+          "availableAt": 1791972202573,
+          "lv": 24,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 67,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              6,
+              14,
+              22,
+              37,
+              39,
+              54,
+              56,
+              71,
+              72
+            ],
+            "free": 16
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "1f909952-1b78-4486-8cdb-34a31d009312",
+          "t": 1791972604147,
+          "availableAt": 1791972902290,
+          "lv": 25,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 21,
+            "tray": 3,
+            "moves": 65,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              30,
+              60
+            ],
+            "free": 7
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "861b981a-ebc3-4ee5-a542-dc734aaa7f4a",
+          "t": 1791973252051,
+          "availableAt": 1791973663268,
+          "lv": 26,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 26,
+            "tray": 3,
+            "moves": 69,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              15
+            ],
+            "rememberedMatches": [
+              15
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 6
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "5ab8e363-dd99-482c-a7eb-66edca59b47b",
+          "t": 1791979370602,
+          "availableAt": 1791979697437,
+          "lv": 30,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 53,
+            "tray": 3,
+            "moves": 67,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              26
+            ],
+            "free": 4
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "9427a119-1c51-46dc-ad86-d0c8adfc8265",
+          "t": 1791981355999,
+          "availableAt": 1791981752446,
+          "lv": 31,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 53,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              55
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "85a34136-6637-4584-b8ec-7201886288e3",
+          "t": 1792098056466,
+          "availableAt": 1792098410343,
+          "lv": 49,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 41,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "71761e06-cc9a-41d2-af50-93338b275bc3",
+          "t": 1792137205722,
+          "availableAt": 1792137468821,
+          "lv": 49,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 36,
+            "tray": 3,
+            "moves": 71,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                5,
+                65
+              ]
+            ],
+            "novelFlips": [
+              37
+            ],
+            "free": 7
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "ed6d1a22-d6ba-44ba-8067-f0df742edd22",
+          "t": 1792174506087,
+          "availableAt": 1792174992535,
+          "lv": 53,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 30,
+            "tray": 3,
+            "moves": 43,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 8
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "45a21abb-6b1c-43c4-a79b-1ad8f6529a9f",
+          "t": 1792174995014,
+          "availableAt": 1792175277078,
+          "lv": 53,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 47,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "f0e073e5-4a17-4d2c-84d8-8c3c4d4a5814",
+          "t": 1792175281199,
+          "availableAt": 1792175554129,
+          "lv": 53,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 31,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "9ba644eb-804a-4502-a7ce-39e1b250786b",
+          "t": 1792175572676,
+          "availableAt": 1792175727798,
+          "lv": 53,
+          "at": 5,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                14,
+                30
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                14,
+                30
+              ]
+            ],
+            "novelFlips": [
+              8,
+              36,
+              43
+            ],
+            "free": 10
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "93779101-e352-4e9d-93ca-3b5580ce5f21",
+          "t": 1792175729574,
+          "availableAt": 1792194560483,
+          "lv": 53,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 64,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              50,
+              71
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "4fe4ab02-bd6f-412e-947a-0dc8ab4d3612",
+          "t": 1792194562113,
+          "availableAt": 1792194825711,
+          "lv": 53,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 44,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 10
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "8599dc0d-cebd-4c4a-99c6-9c4b3db39547",
+          "t": 1792194827483,
+          "availableAt": 1792195447800,
+          "lv": 53,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 21,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              53,
+              54,
+              61
+            ],
+            "free": 9
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "4b7a8511-c6ab-4889-913f-d8fa4682b9a8",
+          "t": 1792196370058,
+          "availableAt": 1792196571799,
+          "lv": 53,
+          "at": 9,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 38,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              69
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        }
+      ]
+    },
+    "Gerda": {
+      "all": {
+        "failures": 120,
+        "clock": 0,
+        "tray": 120,
+        "unclassified": 0,
+        "trayAfterClockCleared": 0,
+        "exits": {
+          "visibleSafeExit": 39,
+          "previouslySeenSafeExit": 15,
+          "uninspectedFreePictures": 43,
+          "noKnownSafeExitOrNovelFlip": 23
+        }
+      },
+      "recent": {
+        "failures": 15,
+        "clock": 0,
+        "tray": 15,
+        "unclassified": 0,
+        "trayAfterClockCleared": 0,
+        "exits": {
+          "visibleSafeExit": 7,
+          "previouslySeenSafeExit": 5,
+          "uninspectedFreePictures": 1,
+          "noKnownSafeExitOrNovelFlip": 2
+        }
+      },
+      "failures": [
+        {
+          "aid": "18e78dc5-c33a-431a-a54a-20513f06ccd0",
+          "t": 1791977049142,
+          "availableAt": 1791977114211,
+          "lv": 5,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 50,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 9
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "da655c00-ed56-413a-8237-50740f36f9e1",
+          "t": 1791977115874,
+          "availableAt": 1791977195854,
+          "lv": 5,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 18,
+            "tray": 3,
+            "moves": 43,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "501ae7e2-e099-4fd8-8bbb-416886c72e12",
+          "t": 1791977197310,
+          "availableAt": 1791977315392,
+          "lv": 5,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 36,
+            "tray": 3,
+            "moves": 45,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "e5a5b46b-d8e2-452c-a534-81f456007df5",
+          "t": 1791977316690,
+          "availableAt": 1791977360530,
+          "lv": 5,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 43,
+            "tray": 3,
+            "moves": 7,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              41
+            ],
+            "rememberedMatches": [
+              41
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              23
+            ],
+            "free": 15
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "268380b7-1551-4a5b-9ed1-fc37e6fefb07",
+          "t": 1791977361813,
+          "availableAt": 1791977458230,
+          "lv": 5,
+          "at": 5,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 25,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "47035804-9ae3-4df7-89f8-1ccd596511a0",
+          "t": 1791977459567,
+          "availableAt": 1791977479301,
+          "lv": 5,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 63,
+            "tray": 3,
+            "moves": 5,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              23
+            ],
+            "free": 14
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "a41ee6f6-3813-4a77-b9b0-052bcc9e7b51",
+          "t": 1791977480482,
+          "availableAt": 1791977607940,
+          "lv": 5,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 27,
+            "tray": 3,
+            "moves": 45,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 9
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "080ac1cc-a59f-4557-94e5-a703e8931e5a",
+          "t": 1791977609184,
+          "availableAt": 1791977687826,
+          "lv": 5,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 36,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "19b4ad0b-982c-4255-ab6a-891010c8931f",
+          "t": 1791977689063,
+          "availableAt": 1791977695656,
+          "lv": 5,
+          "at": 9,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 42,
+            "tray": 3,
+            "moves": 5,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              40,
+              60
+            ],
+            "rememberedMatches": [
+              40,
+              60
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              23
+            ],
+            "free": 18
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "a2169a35-b6de-4e7f-abf0-4e185866f4f7",
+          "t": 1791977696931,
+          "availableAt": 1791977800016,
+          "lv": 5,
+          "at": 10,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 13,
+            "tray": 3,
+            "moves": 55,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33
+            ],
+            "free": 7
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "86fe85f2-5479-4aa7-ac19-a494f4e4aed6",
+          "t": 1791977801255,
+          "availableAt": 1791977922577,
+          "lv": 5,
+          "at": 11,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 44,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "dd993485-d088-4e07-821e-e0cbbad9651b",
+          "t": 1791977923815,
+          "availableAt": 1791978050551,
+          "lv": 5,
+          "at": 12,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 55,
+            "tray": 3,
+            "moves": 45,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "5796527f-6929-484a-8420-f8fb91b99254",
+          "t": 1791978051729,
+          "availableAt": 1791978149405,
+          "lv": 5,
+          "at": 13,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 7,
+            "tray": 3,
+            "moves": 43,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 9
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "41740253-5f3d-4248-91c4-15ae6fa341ae",
+          "t": 1791978150534,
+          "availableAt": 1791978265518,
+          "lv": 5,
+          "at": 14,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 53,
+            "tray": 3,
+            "moves": 49,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              33
+            ],
+            "free": 9
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "14c4f672-070b-468e-8ad5-386d462501ce",
+          "t": 1791978266831,
+          "availableAt": 1791978352983,
+          "lv": 5,
+          "at": 15,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 36,
+            "tray": 3,
+            "moves": 43,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "fd520f54-ba30-4898-9568-bbd608252c94",
+          "t": 1791978354099,
+          "availableAt": 1791978460068,
+          "lv": 5,
+          "at": 16,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 28,
+            "tray": 3,
+            "moves": 53,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 7
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "07ec671b-253f-4200-9891-edd84cdb7e84",
+          "t": 1791978461383,
+          "availableAt": 1791978533813,
+          "lv": 5,
+          "at": 17,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 50,
+            "tray": 3,
+            "moves": 45,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "411d856f-6041-445e-9354-39cca85b86e0",
+          "t": 1791978535069,
+          "availableAt": 1791978625396,
+          "lv": 5,
+          "at": 18,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 36,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "3e78b81e-6758-4e9f-8268-7501b8f8535d",
+          "t": 1791978626715,
+          "availableAt": 1791978710880,
+          "lv": 5,
+          "at": 19,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 27,
+            "tray": 3,
+            "moves": 47,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "c699ed0f-ada5-4e59-95b6-2e35fd534060",
+          "t": 1791978712193,
+          "availableAt": 1791978774536,
+          "lv": 5,
+          "at": 20,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 28,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "68f38091-7f80-4a16-8297-6abd766e1cf8",
+          "t": 1791978776627,
+          "availableAt": 1791978871015,
+          "lv": 5,
+          "at": 21,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 25,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "aa1c2848-cacc-43fd-b5ab-057b954827f9",
+          "t": 1791978872233,
+          "availableAt": 1791978964040,
+          "lv": 5,
+          "at": 22,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 28,
+            "tray": 3,
+            "moves": 53,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 7
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "92464a36-7f8a-40b4-8a73-bb273b7ca7fb",
+          "t": 1791978965185,
+          "availableAt": 1791979018916,
+          "lv": 5,
+          "at": 23,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 26,
+            "tray": 3,
+            "moves": 37,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "877e7811-33d8-4613-9b03-fe656216d184",
+          "t": 1791979020496,
+          "availableAt": 1791979158705,
+          "lv": 5,
+          "at": 24,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 28,
+            "tray": 3,
+            "moves": 53,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 9
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "36f2a2d7-3277-4266-b6c5-0382281432dd",
+          "t": 1791979159939,
+          "availableAt": 1791979261903,
+          "lv": 5,
+          "at": 25,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 57,
+            "tray": 3,
+            "moves": 45,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "334b831e-087a-4b25-b22d-363bc88f88b8",
+          "t": 1791979263377,
+          "availableAt": 1791979350617,
+          "lv": 5,
+          "at": 26,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 39,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14,
+              23,
+              30,
+              33,
+              34
+            ],
+            "free": 11
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "70df1344-6174-417e-a7cf-6b2ef7254529",
+          "t": 1791979351914,
+          "availableAt": 1791979370987,
+          "lv": 5,
+          "at": 27,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 16,
+            "tray": 3,
+            "moves": 5,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              23
+            ],
+            "free": 16
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "7f779395-2f86-4d94-9276-11cd816d2977",
+          "t": 1791979471090,
+          "availableAt": 1791979513765,
+          "lv": 6,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 61,
+            "tray": 3,
+            "moves": 19,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 8
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "42a2af1d-d384-4d87-9185-d5ef7e406203",
+          "t": 1791980016527,
+          "availableAt": 1791980120467,
+          "lv": 9,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 11,
+            "tray": 3,
+            "moves": 55,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              17
+            ],
+            "rememberedMatches": [
+              17
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 7
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "646c57f3-96fe-44ff-86fa-2c61a70ceb5f",
+          "t": 1791980122071,
+          "availableAt": 1791980213678,
+          "lv": 9,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 33,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 8
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "1f75f3f0-0c52-452a-b33d-1435b084ab44",
+          "t": 1791982562312,
+          "availableAt": 1791982682100,
+          "lv": 10,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 54,
+            "tray": 3,
+            "moves": 53,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 7
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "5a714924-5942-460e-87dc-d4d5a7b15eb6",
+          "t": 1791982685435,
+          "availableAt": 1791982775262,
+          "lv": 10,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 34,
+            "tray": 3,
+            "moves": 51,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              14
+            ],
+            "rememberedMatches": [
+              14
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              33
+            ],
+            "free": 10
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "b995f187-614a-4948-8123-7fa70655a0c1",
+          "t": 1791982776852,
+          "availableAt": 1791982825111,
+          "lv": 10,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 25,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              52
+            ],
+            "rememberedMatches": [
+              52
+            ],
+            "visiblePairs": [
+              [
+                25,
+                30
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                25,
+                30
+              ]
+            ],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "46126f69-04ae-4cd7-b665-a6ccad11156d",
+          "t": 1791982825833,
+          "availableAt": 1791982870276,
+          "lv": 10,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 61,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              1
+            ],
+            "rememberedMatches": [
+              1
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 17
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "cd7c6684-940e-4091-86d5-bc7d71033cdd",
+          "t": 1791983433202,
+          "availableAt": 1791983582991,
+          "lv": 13,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 19,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 9
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "15cc54b3-3449-4445-bc82-ba90f63753b1",
+          "t": 1791983806996,
+          "availableAt": 1791983931371,
+          "lv": 15,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 23,
+            "tray": 3,
+            "moves": 35,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              51
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "3af7ed4e-d606-4374-8c62-0aab0c008e27",
+          "t": 1791984151257,
+          "availableAt": 1791984205277,
+          "lv": 16,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 11,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                11,
+                31
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                11,
+                31
+              ]
+            ],
+            "novelFlips": [
+              59
+            ],
+            "free": 9
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "20f5f9ea-4106-4635-aa96-edb2d92906d2",
+          "t": 1791984206592,
+          "availableAt": 1791984252027,
+          "lv": 16,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 15,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "cedd5cc3-e8d4-4ef7-8c35-9f26bc969558",
+          "t": 1791984528874,
+          "availableAt": 1791984620289,
+          "lv": 17,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 8,
+            "tray": 3,
+            "moves": 49,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              28
+            ],
+            "rememberedMatches": [
+              28
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "f07f5399-3066-4af0-a96b-c439425c066c",
+          "t": 1791984779454,
+          "availableAt": 1791984916655,
+          "lv": 18,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 48,
+            "tray": 3,
+            "moves": 27,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 16
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "9ace8f09-c206-48f9-82cf-cb6928823e32",
+          "t": 1791985105630,
+          "availableAt": 1791985257709,
+          "lv": 19,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 45,
+            "tray": 3,
+            "moves": 53,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                19,
+                55
+              ]
+            ],
+            "novelFlips": [],
+            "free": 8
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "8ec7a952-c408-4d50-b1a6-4a3e53e2e770",
+          "t": 1791985420241,
+          "availableAt": 1791985530132,
+          "lv": 20,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                38,
+                52
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                0,
+                44
+              ],
+              [
+                21,
+                47
+              ],
+              [
+                38,
+                52
+              ]
+            ],
+            "novelFlips": [
+              15
+            ],
+            "free": 21
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "5357e6b9-d852-454b-bfe7-62ad3569bfa8",
+          "t": 1791989069127,
+          "availableAt": 1791989196843,
+          "lv": 23,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 55,
+            "tray": 3,
+            "moves": 37,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                30,
+                45
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                30,
+                45
+              ]
+            ],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "5c641bc4-3e1d-409a-9682-1813eb008074",
+          "t": 1791989198009,
+          "availableAt": 1791989244423,
+          "lv": 23,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 43,
+            "tray": 3,
+            "moves": 17,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              56
+            ],
+            "rememberedMatches": [
+              56
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "c64aa8bf-5b1d-4275-a66d-cb679febdfb1",
+          "t": 1791989398679,
+          "availableAt": 1791989523305,
+          "lv": 24,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 33,
+            "tray": 3,
+            "moves": 59,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              18
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "d881b05a-0e55-41b2-8470-25826d0d7ca0",
+          "t": 1791990367149,
+          "availableAt": 1791990401188,
+          "lv": 26,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 64,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              44
+            ],
+            "rememberedMatches": [
+              44
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              65,
+              74
+            ],
+            "free": 13
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "09d4eb00-dfc3-431a-ac3f-b369363134f7",
+          "t": 1791990403890,
+          "availableAt": 1791990474248,
+          "lv": 26,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 28,
+            "tray": 3,
+            "moves": 23,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                28,
+                37
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                28,
+                37
+              ]
+            ],
+            "novelFlips": [
+              57
+            ],
+            "free": 10
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "11025e5d-7117-4e7a-aef3-087e8ccdef83",
+          "t": 1791990639166,
+          "availableAt": 1791990717143,
+          "lv": 27,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 67,
+            "tray": 3,
+            "moves": 15,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              26
+            ],
+            "rememberedMatches": [
+              26
+            ],
+            "visiblePairs": [
+              [
+                59,
+                67
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                59,
+                67
+              ]
+            ],
+            "novelFlips": [
+              7
+            ],
+            "free": 13
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "56a19d6f-a2c5-47fd-a199-3033f034fb21",
+          "t": 1791990718295,
+          "availableAt": 1791990837745,
+          "lv": 27,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 73,
+            "tray": 3,
+            "moves": 27,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "b42d87e0-e51f-4e39-ae17-4ecf19cbbe9a",
+          "t": 1791991138113,
+          "availableAt": 1791991260625,
+          "lv": 28,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 18,
+            "tray": 3,
+            "moves": 59,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              58
+            ],
+            "rememberedMatches": [
+              58
+            ],
+            "visiblePairs": [
+              [
+                18,
+                49
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                18,
+                49
+              ]
+            ],
+            "novelFlips": [],
+            "free": 7
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "4ef258f7-d379-47ee-8683-1801233dbfb4",
+          "t": 1791991261838,
+          "availableAt": 1791991403109,
+          "lv": 28,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 46,
+            "tray": 3,
+            "moves": 65,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 5
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "c33c73c4-352f-4583-a2aa-bb2db816edf9",
+          "t": 1791991404340,
+          "availableAt": 1791991495372,
+          "lv": 28,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 74,
+            "tray": 3,
+            "moves": 23,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              62
+            ],
+            "rememberedMatches": [
+              62
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                10,
+                48
+              ]
+            ],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "ca694336-543a-43d4-a9d3-af14381c0c30",
+          "t": 1791991572302,
+          "availableAt": 1791991637145,
+          "lv": 28,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 4,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              1,
+              17,
+              43,
+              44,
+              60,
+              64
+            ],
+            "free": 13
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "2bf88cf4-5ff0-442c-90fe-0927675ae76f",
+          "t": 1791991638273,
+          "availableAt": 1791991683732,
+          "lv": 28,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 60,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                4,
+                60
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                4,
+                60
+              ]
+            ],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "66143cd2-adbc-454f-b32d-44ca8d5003c9",
+          "t": 1791991685363,
+          "availableAt": 1791991708806,
+          "lv": 28,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 61,
+            "tray": 3,
+            "moves": 5,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              78
+            ],
+            "rememberedMatches": [
+              78
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              1,
+              60
+            ],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "98104883-c62c-4e83-a34f-3c58ca964566",
+          "t": 1791991710024,
+          "availableAt": 1791991742888,
+          "lv": 28,
+          "at": 9,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 79,
+            "tray": 3,
+            "moves": 11,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              78
+            ],
+            "rememberedMatches": [
+              78
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              60
+            ],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "07d7de05-d01c-47aa-b9fe-cef0c991ae0b",
+          "t": 1791991932950,
+          "availableAt": 1791991988806,
+          "lv": 29,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 66,
+            "tray": 3,
+            "moves": 17,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                0,
+                80
+              ]
+            ],
+            "novelFlips": [
+              10
+            ],
+            "free": 14
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "c4dff8ce-2047-47d1-8187-4c12ecdf9d3a",
+          "t": 1791991990171,
+          "availableAt": 1791992097320,
+          "lv": 29,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 57,
+            "tray": 3,
+            "moves": 27,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 14
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "5f515678-a7c8-4cc2-8738-8de3d63d977f",
+          "t": 1791992608922,
+          "availableAt": 1791992639818,
+          "lv": 31,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              30,
+              55
+            ],
+            "free": 14
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "574b8735-4e49-4364-89dc-6be8ce7fb02a",
+          "t": 1791992640930,
+          "availableAt": 1791999586767,
+          "lv": 31,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 13,
+            "tray": 3,
+            "moves": 23,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              6
+            ],
+            "free": 13
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "98359114-2a04-45fe-b6e0-ece801eb10bf",
+          "t": 1791999593416,
+          "availableAt": 1791999639828,
+          "lv": 31,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 78,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              6,
+              30
+            ],
+            "free": 14
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "5ef2b72e-e2bb-4f42-afcf-8180044d2ff7",
+          "t": 1791999643064,
+          "availableAt": 1791999737942,
+          "lv": 31,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 53,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              6,
+              18
+            ],
+            "free": 15
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "4862fec7-d045-47b4-bbf3-fbe8c4d4d098",
+          "t": 1792003564942,
+          "availableAt": 1792003684881,
+          "lv": 35,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 57,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [
+              81
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              5
+            ],
+            "free": 12
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "22811cf7-9f16-4296-b956-da50bbcc4200",
+          "t": 1792003686097,
+          "availableAt": 1792003961155,
+          "lv": 35,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 44,
+            "tray": 3,
+            "moves": 75,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                37,
+                44
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                14,
+                30
+              ],
+              [
+                37,
+                44
+              ]
+            ],
+            "novelFlips": [
+              17,
+              23
+            ],
+            "free": 7
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "3d2d8b46-255e-4ebf-b672-921394debc33",
+          "t": 1792003962476,
+          "availableAt": 1792004110593,
+          "lv": 35,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 70,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              43,
+              61
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "1c2189f9-88be-4950-b427-afe10f47aa13",
+          "t": 1792004111814,
+          "availableAt": 1792004402140,
+          "lv": 35,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 55,
+            "tray": 3,
+            "moves": 75,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              23
+            ],
+            "free": 6
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "8befa55f-406d-4279-a379-15e433dc08f6",
+          "t": 1792004403621,
+          "availableAt": 1792004482167,
+          "lv": 35,
+          "at": 5,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 58,
+            "tray": 3,
+            "moves": 19,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                1,
+                5
+              ]
+            ],
+            "novelFlips": [],
+            "free": 15
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "302651b9-c4d6-4c02-b18c-9984a1143a6d",
+          "t": 1792004484401,
+          "availableAt": 1792004682769,
+          "lv": 35,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 7,
+            "tray": 3,
+            "moves": 45,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [
+              33
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "1a136940-6e7d-4240-a51e-e1809a141e48",
+          "t": 1792004684048,
+          "availableAt": 1792004853537,
+          "lv": 35,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 7,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              12
+            ],
+            "rememberedMatches": [
+              12
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              46,
+              79
+            ],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "03318c03-18ac-419d-b500-b75c89c99c59",
+          "t": 1792004854779,
+          "availableAt": 1792004926329,
+          "lv": 35,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 76,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 10
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "7190c867-82b8-4ddf-9e81-a8f413aed1e5",
+          "t": 1792005193023,
+          "availableAt": 1792005392020,
+          "lv": 36,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 10,
+            "tray": 3,
+            "moves": 59,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 9
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "69316542-a220-438d-a787-7e7811330646",
+          "t": 1792005393391,
+          "availableAt": 1792005463560,
+          "lv": 36,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 61,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                56,
+                60
+              ]
+            ],
+            "novelFlips": [
+              39,
+              59,
+              75
+            ],
+            "free": 14
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "c4f14ccb-c493-44ca-a9f8-e44875b20361",
+          "t": 1792005464987,
+          "availableAt": 1792005527153,
+          "lv": 36,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 47,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              68,
+              77
+            ],
+            "rememberedMatches": [
+              68,
+              77
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              1,
+              20,
+              46
+            ],
+            "free": 15
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "edc16af3-d594-4b24-bcd6-1f648adbca8a",
+          "t": 1792005528493,
+          "availableAt": 1792005796171,
+          "lv": 36,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 41,
+            "tray": 3,
+            "moves": 65,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              49
+            ],
+            "free": 6
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "b2c9cefd-f611-412b-9bce-ed51743058be",
+          "t": 1792005798022,
+          "availableAt": 1792071498228,
+          "lv": 36,
+          "at": 5,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 19,
+            "tray": 3,
+            "moves": 65,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 8
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "4fe5055f-6ab6-4fa5-b1c0-c686d9f8dd11",
+          "t": 1792071499895,
+          "availableAt": 1792071639226,
+          "lv": 36,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 32,
+            "tray": 3,
+            "moves": 55,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                32,
+                45
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                32,
+                45
+              ]
+            ],
+            "novelFlips": [],
+            "free": 10
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "61d64d96-0ca5-47de-aa4f-701688a888d1",
+          "t": 1792071640316,
+          "availableAt": 1792071805090,
+          "lv": 36,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 65,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              11,
+              30,
+              41
+            ],
+            "rememberedMatches": [
+              11,
+              30,
+              41
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 8
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "4f5b1a4b-d6ac-4713-b2f9-0b7d2b5e200e",
+          "t": 1792071806202,
+          "availableAt": 1792071969489,
+          "lv": 36,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 55,
+            "tray": 3,
+            "moves": 59,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                20,
+                30
+              ]
+            ],
+            "novelFlips": [],
+            "free": 10
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "8fc29cd3-2492-4da3-88e4-d92412cd34e6",
+          "t": 1792071970625,
+          "availableAt": 1792072611768,
+          "lv": 36,
+          "at": 9,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 37,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [
+              81
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                8,
+                54
+              ]
+            ],
+            "novelFlips": [
+              20,
+              46,
+              75
+            ],
+            "free": 13
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "0e50f1f1-8fd5-4dc2-a485-b3ec33234bde",
+          "t": 1792072612905,
+          "availableAt": 1792073689040,
+          "lv": 36,
+          "at": 10,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 77,
+            "tray": 3,
+            "moves": 17,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              2
+            ],
+            "rememberedMatches": [
+              2
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              56,
+              59,
+              81
+            ],
+            "free": 18
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "19b2f910-24d3-42ed-8849-a3da2319768c",
+          "t": 1792073691553,
+          "availableAt": 1792073783083,
+          "lv": 36,
+          "at": 11,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 47,
+            "tray": 3,
+            "moves": 51,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [
+              1
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                20,
+                30
+              ]
+            ],
+            "novelFlips": [
+              9,
+              48
+            ],
+            "free": 12
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "25d95f1c-d4e2-4f09-aa39-fd82311bc431",
+          "t": 1792073783747,
+          "availableAt": 1792073977345,
+          "lv": 36,
+          "at": 12,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 15,
+            "tray": 3,
+            "moves": 67,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              49
+            ],
+            "free": 8
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "9e703ad3-e7bc-40e6-8e7b-2e0b8390afc1",
+          "t": 1792073978559,
+          "availableAt": 1792074036557,
+          "lv": 36,
+          "at": 13,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 70,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                1,
+                3
+              ]
+            ],
+            "novelFlips": [
+              40,
+              56,
+              75
+            ],
+            "free": 16
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "4dd6ce04-aa16-4c6e-95b5-c9e69118facc",
+          "t": 1792074037773,
+          "availableAt": 1792074119445,
+          "lv": 36,
+          "at": 14,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 61,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              68
+            ],
+            "rememberedMatches": [
+              68
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              46,
+              49
+            ],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "bb486852-cfef-4bfa-a3dd-9da7a4418a0f",
+          "t": 1792074120726,
+          "availableAt": 1792074208191,
+          "lv": 36,
+          "at": 15,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 54,
+            "tray": 3,
+            "moves": 41,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              36
+            ],
+            "rememberedMatches": [
+              36
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              48,
+              56
+            ],
+            "free": 13
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "a6b781c6-13f3-4ae9-8b36-38f9ab7a4939",
+          "t": 1792074209278,
+          "availableAt": 1792074266216,
+          "lv": 36,
+          "at": 16,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 73,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              33,
+              38
+            ],
+            "rememberedMatches": [
+              33,
+              38
+            ],
+            "visiblePairs": [
+              [
+                66,
+                73
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                66,
+                73
+              ]
+            ],
+            "novelFlips": [
+              56,
+              59
+            ],
+            "free": 16
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "a6fe1fba-cd91-4a1c-9892-2c899417b235",
+          "t": 1792074267432,
+          "availableAt": 1792074315555,
+          "lv": 36,
+          "at": 17,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 80,
+            "tray": 3,
+            "moves": 21,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              1,
+              56
+            ],
+            "free": 16
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "9891755e-6853-4934-89d6-f7796754bd03",
+          "t": 1792074316740,
+          "availableAt": 1792074478130,
+          "lv": 36,
+          "at": 18,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 40,
+            "tray": 3,
+            "moves": 57,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                40,
+                51
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                40,
+                51
+              ]
+            ],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "0520d88e-5f12-4ca5-9b6a-9c202713e3b0",
+          "t": 1792085063826,
+          "availableAt": 1792085312509,
+          "lv": 50,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 66,
+            "tray": 3,
+            "moves": 65,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              26
+            ],
+            "free": 7
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "628d7c5e-6bf8-4cf8-938b-0ee6888e62d2",
+          "t": 1792093661932,
+          "availableAt": 1792093959817,
+          "lv": 51,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              8
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "2fa77dab-c846-4250-a6ed-1cc369ded4e7",
+          "t": 1792093961074,
+          "availableAt": 1792094190595,
+          "lv": 51,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 40,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [
+              7
+            ],
+            "rememberedMatches": [
+              7
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "7c6160b7-6a1a-4b2b-8457-dcf898c61852",
+          "t": 1792094191977,
+          "availableAt": 1792094844320,
+          "lv": 51,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "7dcffc0d-54c8-4469-a3d3-8db3f9599abc",
+          "t": 1792094845512,
+          "availableAt": 1792094898187,
+          "lv": 51,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 44,
+            "tray": 3,
+            "moves": 9,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              59,
+              61,
+              64,
+              69,
+              71
+            ],
+            "free": 10
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "90ad1661-9545-416f-a7c6-304fcbe25b9b",
+          "t": 1792094899492,
+          "availableAt": 1792095134207,
+          "lv": 51,
+          "at": 5,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 31,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "2f59e246-f70d-41f8-bf09-3c668f2dc590",
+          "t": 1792095135420,
+          "availableAt": 1792095302601,
+          "lv": 51,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 40,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "541a726c-4524-4407-8f5e-e2af5c9330c7",
+          "t": 1792095303839,
+          "availableAt": 1792095484878,
+          "lv": 51,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "1229ed49-aabd-4b72-9e5a-fa144e0d9512",
+          "t": 1792095486076,
+          "availableAt": 1792095647569,
+          "lv": 51,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 35,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "e7db3e29-05d6-4237-bdf8-b5ae3f57eea8",
+          "t": 1792095648812,
+          "availableAt": 1792095731331,
+          "lv": 51,
+          "at": 9,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 44,
+            "tray": 3,
+            "moves": 11,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 9
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "6fee0e52-11f1-438a-9e95-354ff45a52a4",
+          "t": 1792095732545,
+          "availableAt": 1792095897347,
+          "lv": 51,
+          "at": 10,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 12
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "67725a48-2151-4e96-8285-2f60afdde0c9",
+          "t": 1792095898529,
+          "availableAt": 1792096071582,
+          "lv": 51,
+          "at": 11,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 49,
+            "tray": 3,
+            "moves": 27,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 10
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "4e06e521-19f9-44c2-be76-8927fd0bd748",
+          "t": 1792096072796,
+          "availableAt": 1792096215281,
+          "lv": 51,
+          "at": 12,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 57,
+            "tray": 3,
+            "moves": 29,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              8,
+              14,
+              59
+            ],
+            "free": 12
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "052f66f9-82bd-4dc7-9046-1b1198feea5e",
+          "t": 1792096217302,
+          "availableAt": 1792096256293,
+          "lv": 51,
+          "at": 13,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 75,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [
+              7
+            ],
+            "rememberedMatches": [
+              7,
+              71
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 9
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "6f2b1f56-3952-4516-a0b9-76a6af29ee0e",
+          "t": 1792096257521,
+          "availableAt": 1792096370684,
+          "lv": 51,
+          "at": 14,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 15,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              14
+            ],
+            "free": 14
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "f534e50b-8c77-4153-a010-168df70245c4",
+          "t": 1792096371889,
+          "availableAt": 1792096424655,
+          "lv": 51,
+          "at": 15,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 62,
+            "tray": 3,
+            "moves": 13,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [
+              7
+            ],
+            "rememberedMatches": [
+              7,
+              71
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              0,
+              59
+            ],
+            "free": 12
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "d5974636-1d18-4aef-8218-f3c8d2132854",
+          "t": 1792096425906,
+          "availableAt": 1792096534784,
+          "lv": 51,
+          "at": 16,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 30,
+            "tray": 3,
+            "moves": 31,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 13
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "ee903f05-ce73-465e-8c7b-587dd21816b5",
+          "t": 1792167538665,
+          "availableAt": 1792167735271,
+          "lv": 56,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 3,
+            "tray": 3,
+            "moves": 47,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                3,
+                29
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                3,
+                29
+              ],
+              [
+                48,
+                63
+              ],
+              [
+                49,
+                71
+              ]
+            ],
+            "novelFlips": [
+              16,
+              17,
+              74
+            ],
+            "free": 20
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "73174618-7044-4419-a37c-d403677c85a7",
+          "t": 1792170422832,
+          "availableAt": 1792170578228,
+          "lv": 57,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 9,
+            "tray": 3,
+            "moves": 39,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                9,
+                33
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                9,
+                33
+              ]
+            ],
+            "novelFlips": [
+              6,
+              45
+            ],
+            "free": 15
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "386437ff-0fc7-452d-b1a3-311aff29a719",
+          "t": 1792171113962,
+          "availableAt": 1792171351285,
+          "lv": 59,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 46,
+            "tray": 3,
+            "moves": 33,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 18
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "f1407a9f-a5c1-4ef6-a395-a2770427e288",
+          "t": 1792171352551,
+          "availableAt": 1792171415056,
+          "lv": 59,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 52,
+            "tray": 3,
+            "moves": 15,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 1,
+            "visibleMatches": [
+              0
+            ],
+            "rememberedMatches": [
+              0
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                2,
+                61
+              ],
+              [
+                39,
+                74
+              ],
+              [
+                45,
+                58
+              ]
+            ],
+            "novelFlips": [
+              36
+            ],
+            "free": 21
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "ef40df03-4f8b-4844-b33f-6cd4f95c83b7",
+          "t": 1792171635041,
+          "availableAt": 1792171830971,
+          "lv": 60,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 75,
+            "tray": 3,
+            "moves": 47,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                44,
+                92
+              ]
+            ],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "805dcd6e-b06b-4710-aa4c-df09e57f8b6b",
+          "t": 1792172079918,
+          "availableAt": 1792172216352,
+          "lv": 61,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 59,
+            "tray": 3,
+            "moves": 55,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                48,
+                72
+              ]
+            ],
+            "novelFlips": [],
+            "free": 11
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "89845d51-60f2-4f45-a6b6-b35f6de2b617",
+          "t": 1792172217518,
+          "availableAt": 1792172621579,
+          "lv": 61,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 46,
+            "tray": 3,
+            "moves": 43,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 13
+          },
+          "exitClass": "noKnownSafeExitOrNovelFlip"
+        },
+        {
+          "aid": "180c2671-2deb-43f7-ad26-ef5296647527",
+          "t": 1792172831970,
+          "availableAt": 1792173096209,
+          "lv": 62,
+          "at": 1,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 40,
+            "tray": 3,
+            "moves": 43,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [
+              48
+            ],
+            "visiblePairs": [
+              [
+                40,
+                57
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                14,
+                47
+              ],
+              [
+                40,
+                57
+              ]
+            ],
+            "novelFlips": [
+              18
+            ],
+            "free": 17
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "3bf3a5e8-ad3b-4f58-8665-30d698cdc76e",
+          "t": 1792173097383,
+          "availableAt": 1792173293511,
+          "lv": 62,
+          "at": 2,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 34,
+            "tray": 3,
+            "moves": 51,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [
+              [
+                7,
+                34
+              ]
+            ],
+            "rememberedPairs": [
+              [
+                5,
+                17
+              ],
+              [
+                7,
+                34
+              ],
+              [
+                33,
+                41
+              ]
+            ],
+            "novelFlips": [],
+            "free": 14
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "026e3886-6e68-490d-b464-7afc82f00037",
+          "t": 1792173294654,
+          "availableAt": 1792173324619,
+          "lv": 62,
+          "at": 3,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 60,
+            "tray": 3,
+            "moves": 7,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 2,
+            "visibleMatches": [
+              64
+            ],
+            "rememberedMatches": [
+              64
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              0,
+              5,
+              43,
+              46,
+              72
+            ],
+            "free": 22
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "4f22899a-bd54-4529-92c4-47a6ed63af08",
+          "t": 1792173325828,
+          "availableAt": 1792173476393,
+          "lv": 62,
+          "at": 4,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 47,
+            "tray": 3,
+            "moves": 25,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                14,
+                47
+              ],
+              [
+                35,
+                46
+              ],
+              [
+                48,
+                63
+              ]
+            ],
+            "novelFlips": [],
+            "free": 19
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "10810509-33cb-47a6-8a8d-c6873a263fb5",
+          "t": 1792173477585,
+          "availableAt": 1792173645669,
+          "lv": 62,
+          "at": 5,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 69,
+            "tray": 3,
+            "moves": 33,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                35,
+                46
+              ],
+              [
+                48,
+                63
+              ]
+            ],
+            "novelFlips": [],
+            "free": 18
+          },
+          "exitClass": "previouslySeenSafeExit"
+        },
+        {
+          "aid": "285adab2-d2b7-4187-a5d5-1fbadc276a5b",
+          "t": 1792173647473,
+          "availableAt": 1792173702347,
+          "lv": 62,
+          "at": 6,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 32,
+            "tray": 3,
+            "moves": 23,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [
+              46,
+              47,
+              48,
+              69,
+              70
+            ],
+            "free": 22
+          },
+          "exitClass": "uninspectedFreePictures"
+        },
+        {
+          "aid": "dd010714-e454-41b9-b26d-db489ea1e53b",
+          "t": 1792173703570,
+          "availableAt": 1792173905629,
+          "lv": 62,
+          "at": 7,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 25,
+            "tray": 3,
+            "moves": 45,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [
+              11
+            ],
+            "rememberedMatches": [
+              11
+            ],
+            "visiblePairs": [],
+            "rememberedPairs": [],
+            "novelFlips": [],
+            "free": 14
+          },
+          "exitClass": "visibleSafeExit"
+        },
+        {
+          "aid": "6ba4a9be-185c-431d-86d0-23108b1e34b6",
+          "t": 1792173906727,
+          "availableAt": 1792174044325,
+          "lv": 62,
+          "at": 8,
+          "mechanism": "tray",
+          "afterClockCleared": false,
+          "lastTake": {
+            "clicked": 59,
+            "tray": 3,
+            "moves": 37,
+            "activeClock": false,
+            "clockBudget": null,
+            "keysRemaining": 0,
+            "visibleMatches": [],
+            "rememberedMatches": [],
+            "visiblePairs": [],
+            "rememberedPairs": [
+              [
+                14,
+                47
+              ]
+            ],
+            "novelFlips": [],
+            "free": 18
+          },
+          "exitClass": "previouslySeenSafeExit"
+        }
+      ]
+    }
+  },
+  "note": "Complete unassisted recorded regular failures only. Safe exits use currently visible or previously inspected pictures, never unseen picture locations. Previously inspected does not prove human recall. No-known-exit is a local observation, not proof that every earlier choice was forced. Mechanism comes from the recorded clock flag and final state, not the presence of a clock on the board. This diagnostic is not forecast accuracy."
+}

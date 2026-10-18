@@ -1,0 +1,42 @@
+{
+  "targetMet": false,
+  "observedAt": "2026-10-18T20:09:32.475Z",
+  "cohort": {
+    "Dennisisdebeste": {
+      "opened": 1,
+      "completed": 0,
+      "eligibleFrozenForecasts": 1,
+      "correct": 0,
+      "accuracy": null,
+      "pending": 1,
+      "missingForecastsOrOpening": 0
+    },
+    "Mrs. Doubtfire": {
+      "opened": 2,
+      "completed": 2,
+      "eligibleFrozenForecasts": 2,
+      "correct": 1,
+      "accuracy": null,
+      "pending": 0,
+      "missingForecastsOrOpening": 0
+    },
+    "PUK": {
+      "opened": 0,
+      "completed": 0,
+      "eligibleFrozenForecasts": 0,
+      "correct": 0,
+      "accuracy": null,
+      "pending": 0,
+      "missingForecastsOrOpening": 0
+    },
+    "Gerda": {
+      "opened": 0,
+      "completed": 0,
+      "eligibleFrozenForecasts": 0,
+      "correct": 0,
+      "accuracy": null,
+      "pending": 0,
+      "missingForecastsOrOpening": 0
+    }
+  }
+}

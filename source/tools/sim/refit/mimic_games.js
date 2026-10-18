@@ -15,7 +15,7 @@ const boardOf = init => {
 function gamesOf(name) {
   const R = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'analysis', 'archive', 'replays', PIDS[name] + '.json'), 'utf8'));
   const games = [];
-  for (const ch of Object.values(R)) {
+  for (const [aid, ch] of Object.entries(R)) {
     const rows = Object.values(ch).filter(r => r && r.data).sort((a, b) => a.seq - b.seq);
     let init = null; const ev = [];
     for (const r of rows) { const d = JSON.parse(r.data); if (d.init) init = d.init; ev.push(...d.events); }
@@ -27,7 +27,7 @@ function gamesOf(name) {
     // the tiles they took (and turned over), in order: for following their game
     const take = [];
     for (const [, kind, data] of ev) { if (kind === 'state' && data.p !== undefined && data.p >= 0) take.push(-(data.p + 1)); if (kind === 'state' && data.a) for (const [i, v] of data.a) if (v === 0) take.push(i); }
-    games.push({ key: init.key, lv: +init.key.slice(1), at: init.at, t: rows[0].t, won: r === 'win', why: r, take, g: boardOf(init) });
+    games.push({ aid, key: init.key, lv: +init.key.slice(1), at: init.at, t: rows[0].t, availableAt: Math.max(...rows.map(row => row.t || 0)), won: r === 'win', why: r, take, g: boardOf(init) });
   }
   return games.sort((a, b) => a.t - b.t);
 }
