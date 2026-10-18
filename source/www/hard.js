@@ -308,12 +308,14 @@ const Hard = (() => {
     return null;
   }
   // salt: another try at the same level (when a measurement says it missed)
-  function* make(level, aspect, scale = 1, salt = 0) {
+  // opt.tiles: a ready-made pile (tools/sim/variety: a new shape per level; offline only)
+  function* make(level, aspect, scale = 1, salt = 0, opt = {}) {
     const c = cfg(), hard = level >= c.from, T = target(level), TS = target(level, 'strong');
     const seed = level * 7919 + 13 + salt * 100003, r = L.rng(seed + 4242);
     const eff = L.effLevel(level), diff = L.difficultyFor(eff);
     let tiles;
-    if (hard && c.pile !== 'classic') {
+    if (opt.tiles) tiles = opt.tiles.map(t => ({ x: t.x, y: t.y, z: t.z }));
+    else if (hard && c.pile !== 'classic') {
       const o = c.pile === 'semi' ? { baseFrac: 0.27 + r() * 0.04, keep: [0.68, 0.85], stack: 0.25 + r() * 0.2, noBrick: true, shapes: TOWER }
         : { baseFrac: 0.19 + r() * 0.06, keep: [0.85, 0.96], stack: 0.85 + r() * 0.15, noBrick: r() < 0.7, shapes: TOWER };
       tiles = L.buildPiles(seed, size(level, scale), c.pile === 'semi' ? 5 : r() < 0.5 ? 5 : 6, aspect, level, o).tiles;
@@ -467,7 +469,7 @@ const Hard = (() => {
     }
   }
   // the whole design at once (tests, tools; the game prefers the steps in between taps)
-  const makeNow = (level, aspect, scale = 1, salt = 0) => drain(make(level, aspect, scale, salt));
+  const makeNow = (level, aspect, scale = 1, salt = 0, opt = {}) => drain(make(level, aspect, scale, salt, opt));
 
   /* ---------- in the game: the levels are made in advance ----------
      Designing takes seconds, so it is done once, on the computer (tools/sim/build_levels.js), for
@@ -497,8 +499,11 @@ const Hard = (() => {
   }
   const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);
   // Reordering 92+ must not discard a saved game on an unchanged earlier board.
+  // designVersions [[from, version], ...] (the variety remake): a level keeps the version of the range
+  // it is in, so only the levels with a new board start a saved game fresh
   const designVersion = level => {
     const T = table();
+    if (T && T.designVersions) { let v = GENV; for (const [from, ver] of T.designVersions) if (level >= from) v = ver; return v; }
     return T && T.reorderFrom && level < T.reorderFrom ? T.previousVersion : GENV;
   };
   // Packed chances travel with each board, including their original calibration model.
