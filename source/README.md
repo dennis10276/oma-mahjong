@@ -300,6 +300,7 @@ sooner when she struggles or the level already went wrong once (×0.7), based on
 | `t_lang` | every text in both languages, the language switch, Mama starts in English, equal layout |
 | `t_village` | news for grandma and DennisTEST only, dashboard settings per player, 80/20 news/stories, memory question, Het krantje, 💬, the helper's pace, the news filter |
 | `t_finish` | auto-finish: the exact check, the end playing itself from level 50, speed |
+| `t_smooth` | the pile as pictures in layer groups, glowing tiles above it, sparkles on the graphics chip, lessons that move instead of redrawing |
 | `t_update` | self-update from an old 1.5 app and the current one; a broken update is thrown away |
 | `t_online` | (with `--online`) a heart and the play log through the real database |
 

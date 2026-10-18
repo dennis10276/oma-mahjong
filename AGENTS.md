@@ -100,6 +100,16 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - A single first try stays close to a coin flip for this family (rolling test: first tries tell won
   from lost with AUC ~0.65); the chances are honest on average, not a promise per level.
 
+## Drawing the board and the lessons (from 1.58, branch `wip/smooth-play`)
+
+- Board tiles live in one group per layer (`#board > .lyr > .tile`); `G.tiles[i].el` is the tile. A
+  tile only rises above tiles of its own group: use `glow(i, 'lucky'|'nudge', on)` to show one above
+  the pile. Classic faces on the board are shared pictures (`Tiles.boardFace`), not live SVG.
+- Build the pile with `renderBoard` (positions first, one insertion); do not measure the page in
+  code that runs on every tap. Sparkles are `FX.burst`/`FX.emoji` (graphics chip, `fx.js`).
+- Lessons: `LESSON_SCENES` / `LESSON_STEPS` in `specials.js`. Findings and numbers:
+  `source/analysis/smooth-1.58.md`; `tests/perf_probe.js` and `tests/perf_trace.js` measure.
+
 ## Firebase
 
 - The database rules are `source/firebase/rules.json`. Dennis publishes them in the Firebase

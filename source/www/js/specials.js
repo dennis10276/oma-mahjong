@@ -131,7 +131,14 @@ function crackFx(i) {
 }
 function unlockAll() {
   G.ob.unlocked = true;
-  G.ob.locks.forEach(i => { decorate(i); if (G.alive[i]) { const c = centerOf(G.tiles[i].el); FX.emoji(c.x, c.y, ['🔓', '✨'], 6); } });
+  G.ob.locks.forEach(i => {
+    decorate(i);
+    if (!G.alive[i]) return;
+    // the lock springs open on the tile itself (1.58), so it is clear which tiles are free now
+    const el = G.tiles[i].el, o = document.createElement('div'); o.className = 'ob-open'; o.textContent = '🔓';
+    el.appendChild(o); setTimeout(() => o.remove(), 1100);
+    const c = centerOf(el); FX.emoji(c.x, c.y, ['🔓', '✨'], 6);
+  });
   G.ob.keys.forEach(decorate);
   praise(tx('locksOpen')); Sound.unlock(); bumpStat('unlocks');
 }
@@ -194,18 +201,30 @@ const NEW_TILES = {
   joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏' },
   trayPair: { has: () => G.down.some(Boolean), first: () => G.o.mode === 'level' && G.o.level === 50, ico: '🀄' },
 };
-// Small, local demonstrations: no download, sound or changes to the real board.
-let lessonTimer = null;
-function stopLessonDemo() { clearInterval(lessonTimer); lessonTimer = null; }
-const lessonTile = (face, badge = '', cls = '') => `<span class="lesson-tile ${cls}"><span class="lesson-face">${Tiles.faceHTML('classic', face)}</span>${badge ? `<b class="lesson-badge">${badge}</b>` : ''}</span>`;
-const lessonTray = faces => `<div class="lesson-tray">${[0, 1, 2, 3].map(i => `<span class="lesson-slot">${i < faces.length ? lessonTile(faces[i]) : ''}</span>`).join('')}</div>`;
-function lessonFrame(kind, step) {
-  const tile = lessonTile;
-  const gone = (yes, leaving) => yes ? (leaving ? 'lesson-leaving' : 'lesson-gone') : '';
-  if (kind === 'ice') return `<div class="lesson-board lesson-ice-board">${tile(4, '', gone(step > 0, step === 1))}${tile(31, step < 2 ? (step ? '❄️' : '❄️❄️') : '', step < 2 ? 'lesson-ice' : step === 3 ? 'lesson-focus' : '')}${tile(8, '', gone(step > 1, step === 2))}</div>`;
-  if (kind === 'lock') return `<div class="lesson-board">${tile(4, '🔑', gone(step > 0, step === 1))}${tile(31, step < 2 ? '🔒' : '🔓', step === 3 ? 'lesson-focus' : '')}${tile(4, '🔑', gone(step > 1, step === 2))}${tile(8, step < 2 ? '🔒' : '🔓')}</div>${lessonTray(step === 1 ? [4] : [])}`;
-  if (kind === 'clock') return `<div class="lesson-board"><strong class="lesson-counter">⏰ ${step === 0 ? '3' : step === 3 ? '✓' : '2'}</strong>${tile(31, '⏰', gone(step === 3, step === 3))}${tile(4, '', gone(step > 0, step === 1))}${tile(8, '', step < 2 ? 'lesson-back' : step === 2 ? 'lesson-focus' : '')}</div>${lessonTray(step === 3 ? [4, 31] : step ? [4] : [])}`;
-  return `${lessonTray([4, 8, 12])}<div class="lesson-board">${tile(31, '', step === 0 ? 'lesson-back lesson-focus' : step === 3 ? 'lesson-leaving' : step === 1 ? 'lesson-focus' : '')}${tile(31, '', step === 3 ? 'lesson-leaving' : step === 2 ? 'lesson-focus' : '')}</div>`;
+/* ---------- the animated lessons (1.58) ----------
+   Small, local demonstrations: no download, sound or changes to the real board. The little scene is
+   built once and each step only moves what changes: a hand taps a tile, which glides into the tray
+   as in the game; a key pair pops, the locks spring open; the clock's number counts down on its own
+   tile. Locks, keys, ice and the clock look like they do on the board. (Before 1.58 the whole
+   picture was drawn again every step, every tile popping in anew, and the clock's number stood
+   apart from its tile: it looked jumpy and was hard to follow.) One step every 2.4 s, 4 steps. */
+let lessonTimer = null, lessonJobs = [];
+function stopLessonDemo() { clearInterval(lessonTimer); lessonTimer = null; lessonJobs.forEach(clearTimeout); lessonJobs = []; }
+const LZ_STEP_MS = 2400;
+const LESSON_SCENES = {
+  // [id, face, kind of tile]
+  ice: { tiles: [['a', 4], ['ice', 31, 'ice2'], ['b', 8]], board: 'lesson-ice-board' },
+  lock: { tiles: [['k1', 4, 'key'], ['l1', 31, 'lock'], ['k2', 4, 'key'], ['l2', 8, 'lock']], tray: [] },
+  clock: { tiles: [['ck', 31, 'clock'], ['a', 4], ['d', 8, 'down']], tray: [] },
+  trayPair: { tiles: [['d', 31, 'down'], ['t', 31]], tray: [4, 8, 12], trayFirst: true },
+};
+const lzTile = (id, face, kind = '') => `<span class="lesson-tile${kind === 'down' ? ' lesson-back' : kind ? ' lz-' + kind : ''}" data-id="${id}"><span class="lesson-face">${Tiles.faceHTML('classic', face)}</span>` +
+  (kind === 'key' ? '<b class="lz-badge lz-keyb">🔑</b>' : kind === 'lock' ? '<b class="lz-badge lz-lockb">🔒</b>' : kind === 'ice2' ? '<b class="lz-badge lz-iceb">❄️❄️</b>' : kind === 'clock' ? '<b class="lz-ck">⏰<i>3</i></b>' : '') + '</span>';
+const lzTray = faces => `<div class="lesson-tray">${[0, 1, 2, 3].map(i => `<span class="lesson-slot">${i < faces.length ? lzTile('s' + i, faces[i]) : ''}</span>`).join('')}</div>`;
+function lessonSceneHTML(kind) {
+  const sc = LESSON_SCENES[kind], tray = sc.tray ? lzTray(sc.tray) : '';
+  const board = `<div class="lesson-board${sc.board ? ' ' + sc.board : ''}">${sc.tiles.map(t => lzTile(...t)).join('')}</div>`;
+  return (sc.trayFirst ? tray + board : board + tray) + '<span class="lz-hand"><i>👆</i></span>';
 }
 function lessonDemoHTML(kind) {
   return `<div class="lesson-demo" data-lesson="${kind}">
@@ -214,34 +233,165 @@ function lessonDemoHTML(kind) {
     <div class="lesson-controls"><span>${tx('lessonExample')}</span><button type="button" class="lesson-toggle"></button><button type="button" class="lesson-replay">↺ ${tx('lessonReplay')}</button></div>
   </div>`;
 }
+// what the hand and the tiles can do in a scene (positions from the layout, so a pop-up that is
+// still growing open does not throw them off)
+function lessonActor(scene) {
+  const later = (ms, fn) => { const id = setTimeout(() => { lessonJobs = lessonJobs.filter(j => j !== id); if (scene.isConnected) fn(); }, ms); lessonJobs.push(id); };
+  const el = id => scene.querySelector(`.lesson-tile[data-id="${id}"]`);
+  const at = e => { let x = e.offsetWidth / 2, y = e.offsetHeight / 2; for (; e && e !== scene; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return { x, y }; };
+  const hand = scene.querySelector('.lz-hand');
+  const slot = k => scene.querySelectorAll('.lesson-slot')[k];
+  const sparkle = (x, y, chars) => {
+    for (let k = 0; k < 6; k++) {
+      const s = document.createElement('span'); s.className = 'lz-spark'; s.textContent = chars[k % chars.length];
+      s.style.left = x + 'px'; s.style.top = y + 'px'; scene.appendChild(s);
+      const a = -Math.PI / 2 + (k - 2.5) * 0.55, d = 26 + (k % 2) * 10;
+      const an = s.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 1 }, { transform: `translate(calc(-50% + ${(Math.cos(a) * d).toFixed(1)}px), calc(-50% + ${(Math.sin(a) * d).toFixed(1)}px)) scale(1)`, opacity: 0 }], { duration: 650, easing: 'cubic-bezier(.2,.7,.3,1)' });
+      an.onfinish = () => s.remove();
+    }
+  };
+  return {
+    later, el, sparkle, at,
+    // the hand glides to a tile and taps it (or only points at it)
+    tap(id, then, press = true) {
+      const t = el(id); if (!t) return;
+      const c = at(t);
+      hand.classList.add('lz-on'); hand.classList.remove('lz-press');
+      hand.style.transform = `translate(${(c.x - 11).toFixed(1)}px, ${(c.y - 2).toFixed(1)}px)`;
+      if (!press) return;
+      later(470, () => {
+        hand.classList.add('lz-press');
+        const r = document.createElement('span'); r.className = 'lz-ripple'; r.style.left = c.x + 'px'; r.style.top = c.y + 'px';
+        scene.appendChild(r); later(500, () => r.remove());
+        later(150, () => { hand.classList.remove('lz-press'); if (then) then(t); });
+        later(800, () => hand.classList.remove('lz-on'));          // the hand steps aside once the tile is taken
+      });
+    },
+    hideHand() { hand.classList.remove('lz-on'); },
+    // the tile glides into a slot of the tray, as in the game
+    toTray(id, k) {
+      const t = el(id), s = slot(k); if (!t || !s) return;
+      const a = at(t), b = at(s), sc = Math.min(s.offsetWidth / t.offsetWidth, s.offsetHeight / t.offsetHeight) * 0.9;
+      t.classList.add('lz-moving');
+      t.dataset.to = `translate(${(b.x - a.x).toFixed(1)}px, ${(b.y - a.y).toFixed(1)}px) scale(${sc.toFixed(3)})`;
+      t.style.transform = t.dataset.to;
+    },
+    // a pair is made: both tiles grow a little and vanish
+    pop(ids, chars = ['✨']) {
+      let c = null;
+      for (const id of ids) {
+        const t = el(id); if (!t) continue;
+        t.classList.add('lz-moving'); t.style.transform = (t.dataset.to || '') + ' scale(1.3)'; t.style.opacity = '0';
+        const p = at(t); c = c || p;
+      }
+      if (c) { const t = el(ids[0]), m = t.dataset.to && /translate\(([-\d.]+)px, ([-\d.]+)px\)/.exec(t.dataset.to); sparkle(c.x + (m ? +m[1] : 0), c.y + (m ? +m[2] : 0), chars); }
+    },
+    // the tile is taken off the board (no tray in this lesson)
+    leave(id) { const t = el(id); if (!t) return; t.classList.add('lz-moving'); t.style.transform = 'translateY(-16px) scale(.7)'; t.style.opacity = '0'; },
+    // a face-down tile is turned over
+    flip(id) {
+      const t = el(id); if (!t) return;
+      try { t.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(.08)', offset: .5 }, { transform: 'scaleX(1)' }], { duration: 320, easing: 'ease-in-out' }); } catch (e) { }
+      later(160, () => t.classList.remove('lesson-back'));
+    },
+    // a little text rises from a tile (a move used)
+    float(id, text) {
+      const t = el(id); if (!t) return;
+      const c = at(t), f = document.createElement('span'); f.className = 'lz-float'; f.textContent = text;
+      f.style.left = (c.x + t.offsetWidth * 0.5 + 24) + 'px'; f.style.top = (c.y - t.offsetHeight * 0.25) + 'px'; scene.appendChild(f);
+      later(900, () => f.remove());
+    },
+    // a badge changes (the number on the clock, ice getting thinner)
+    badge(id, sel, html, cls = '') {
+      const b = el(id) && el(id).querySelector(sel); if (!b) return;
+      b.innerHTML = html; if (cls) b.classList.add(cls);
+      b.classList.remove('lz-tick'); void b.offsetWidth; b.classList.add('lz-tick');
+    },
+  };
+}
+// the story of each lesson: what happens at the start of step 1, 2 and 3 (step 0 is the starting picture)
+const LESSON_STEPS = {
+  lock: [
+    A => { A.el('k1').classList.add('lz-glow'); A.el('k2').classList.add('lz-glow'); },
+    A => A.tap('k1', t => { t.classList.remove('lz-glow'); A.toTray('k1', 0);
+      A.later(420, () => ['l1', 'l2'].forEach(id => A.el(id).classList.add('lz-shut'))); }),   // one key: the locks only rattle
+    A => A.tap('k2', () => {
+      A.toTray('k2', 0);
+      A.later(380, () => {
+        A.pop(['k1', 'k2'], ['🔑', '✨']);
+        A.later(260, () => ['l1', 'l2'].forEach(id => { const t = A.el(id); t.classList.remove('lz-shut'); t.classList.add('lz-open'); t.querySelector('.lz-lockb').textContent = '🔓'; const c = A.at(t); A.sparkle(c.x, c.y, ['✨']); }));
+      });
+    }),
+    A => A.tap('l1', () => A.toTray('l1', 0)),
+  ],
+  clock: [
+    A => A.el('ck').classList.add('lz-glow'),
+    A => A.tap('a', () => { A.toTray('a', 0); A.later(300, () => { A.badge('ck', '.lz-ck', '⏰<i>2</i>'); A.float('ck', '−1'); }); }),
+    A => A.tap('d', () => { A.flip('d'); A.later(380, () => A.el('ck').querySelector('.lz-ck').classList.add('lz-same')); }),
+    A => A.tap('ck', () => { A.badge('ck', '.lz-ck', '✓', 'lz-done'); A.toTray('ck', 1); const c = A.at(A.el('ck')); A.sparkle(c.x, c.y, ['⏰', '✨', '🎉']); }),
+  ],
+  ice: [
+    A => A.el('ice').classList.add('lz-glow'),
+    A => A.tap('a', () => { A.leave('a'); A.later(250, () => { const t = A.el('ice'); t.classList.remove('lz-ice2'); t.classList.add('lz-ice1'); A.badge('ice', '.lz-iceb', '❄️'); A.sparkle(A.at(t).x, A.at(t).y - 14, ['❄️', '✨']); }); }),
+    A => A.tap('b', () => { A.leave('b'); A.later(250, () => { const t = A.el('ice'); t.classList.remove('lz-ice1', 'lz-glow'); t.classList.add('lz-melted'); A.sparkle(A.at(t).x, A.at(t).y, ['💧', '✨']); }); }),
+    A => A.tap('ice', t => t.classList.add('lz-picked')),
+  ],
+  trayPair: [
+    A => A.tap('d', null, false),
+    A => A.tap('d', () => A.flip('d')),
+    A => A.tap('t', null, false),
+    A => A.tap('t', () => {
+      // the two tiles meet above the board and go together: the tray keeps its three tiles
+      const d = A.el('d'), t = A.el('t'), a = A.at(d), b = A.at(t), mx = (a.x + b.x) / 2, my = Math.min(a.y, b.y) - 10;
+      for (const [e, p] of [[d, a], [t, b]]) { e.classList.add('lz-moving'); e.dataset.to = `translate(${(mx - p.x).toFixed(1)}px, ${(my - p.y).toFixed(1)}px)`; e.style.transform = e.dataset.to; }
+      A.later(340, () => { A.pop(['d', 't']); A.hideHand(); A.el('s0').closest('.lesson-tray').classList.add('lz-ok'); });
+    }),
+  ],
+};
 function startLessonDemo() {
   stopLessonDemo();
   const demo = $('#modalBox .lesson-demo');
   if (!demo) return;
   const kind = demo.dataset.lesson, prefix = { ice: 'Ice', lock: 'Lock', clock: 'Clock', trayPair: 'Pair' }[kind];
-  let step = 0, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scene = demo.querySelector('.lesson-scene');
+  let step = 0, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches, actor = null;
   const toggle = demo.querySelector('.lesson-toggle');
-  const paint = () => {
-    const changed = demo.dataset.step !== String(step);
-    demo.dataset.step = step;
+  const controls = () => {
     demo.classList.toggle('lesson-paused', !playing);
-    if (changed) demo.querySelector('.lesson-scene').innerHTML = lessonFrame(kind, step);
-    demo.querySelector('.lesson-caption').textContent = tx('lesson' + prefix + step);
     toggle.textContent = tx(playing ? 'lessonPause' : 'lessonPlay');
     toggle.setAttribute('aria-pressed', String(playing));
   };
+  // the starting picture: built fresh (gently faded in when the lesson starts over)
+  const fresh = fade => {
+    lessonJobs.forEach(clearTimeout); lessonJobs = [];
+    const build = () => {
+      scene.innerHTML = lessonSceneHTML(kind);
+      actor = lessonActor(scene);
+      scene.classList.remove('lz-fade');
+      LESSON_STEPS[kind][0](actor);
+    };
+    if (fade && scene.childElementCount) { scene.classList.add('lz-fade'); actor.later(180, build); } else build();
+  };
+  const paint = () => {
+    demo.dataset.step = step;
+    demo.querySelector('.lesson-caption').textContent = tx('lesson' + prefix + step);
+  };
+  const next = () => {
+    step = (step + 1) % 4; paint();
+    if (step === 0) fresh(true); else LESSON_STEPS[kind][step](actor);
+  };
   const run = () => {
-    stopLessonDemo();
+    clearInterval(lessonTimer); lessonTimer = null;
     if (playing) lessonTimer = setInterval(() => {
       if (!demo.isConnected || modalFree()) { stopLessonDemo(); return; }
       if (document.hidden) return;
-      step = (step + 1) % 4; paint();
-    }, 2400);
-    paint();
+      next();
+    }, LZ_STEP_MS);
+    controls();
   };
   toggle.onclick = () => { playing = !playing; run(); };
-  demo.querySelector('.lesson-replay').onclick = () => { step = 0; playing = true; run(); };
-  run();
+  demo.querySelector('.lesson-replay').onclick = () => { step = 0; playing = true; paint(); fresh(true); run(); };
+  paint(); fresh(false); run();
 }
 function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_' + kind)}</h2>

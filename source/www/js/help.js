@@ -131,7 +131,7 @@ function startNudge(pair, wait) {
   let turned = 0;
   for (const i of pair) {
     if (G.down[i]) { G.down[i] = 0; if (G.peek === i) G.peek = -1; else turn(i, false); turned++; }
-    G.tiles[i].el.classList.add('nudge');
+    glow(i, 'nudge', true);
   }
   markTrayNudge();
   Sound.hint(); buzz(12);
@@ -140,7 +140,7 @@ function startNudge(pair, wait) {
 }
 function updateNudge() {
   if (!G || !G.nudge) return;
-  G.nudge.filter(i => !G.alive[i]).forEach(i => G.tiles[i].el.classList.remove('nudge'));
+  G.nudge.filter(i => !G.alive[i]).forEach(i => glow(i, 'nudge', false));
   G.nudge = G.nudge.filter(i => G.alive[i]);
   // done when the pair is matched (nothing left, or nothing left to match it with)
   if (!G.nudge.length || !(trayHas(faceOf(G.nudge[0])) || G.nudge.length > 1)) clearNudge();
@@ -152,7 +152,7 @@ function markTrayNudge() {
 }
 function clearNudge() {
   if (!G) return;
-  (G.nudge || []).forEach(i => G.tiles[i].el && G.tiles[i].el.classList.remove('nudge'));
+  (G.nudge || []).forEach(i => glow(i, 'nudge', false));
   G.nudge = null; G.lastMove = performance.now();
   [...$('#tray').children].forEach(s => s.classList.remove('nudge'));
 }
