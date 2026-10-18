@@ -7,6 +7,11 @@
   python3 release.py --dashboard-only --deploy  publish dashboard changes without a game release
 
   --no-apk                           skip the APK (only for quick tests)
+
+The APK is signed with the key in android/keystore/ (never in git). Where that key is not present
+(a fresh Claude or Codex session), the release still goes out, and GitHub builds and signs the APK
+right after the push (workflow "APK", tools/apk.yml, with the key in the repository secrets
+OMA_KEYSTORE and OMA_KEYSTORE_PASSWORD); it is on the download page a few minutes later.
   --no-tests                         skip the test suite (tests/run.js), which otherwise must pass first
 
 What it does:
@@ -137,21 +142,28 @@ def main():
     # the tiny file the app checks every minute
     json.dump({'v': v}, open(os.path.join(play, 'version.json'), 'w'))
 
+    built = False
     if apk:
         man = os.path.join(ROOT, 'android', 'AndroidManifest.xml')
         code = int(re.search(r'android:versionCode="(\d+)"', open(man).read()).group(1)) + 1
         sub(man, r'android:versionCode="\d+"', f'android:versionCode="{code}"')
         sub(man, r'android:versionName="[^"]*"', f'android:versionName="{v}"')
-        if os.name == 'nt':
-            subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'build_apk.py')], check=True)
-        else:
-            subprocess.run(['bash', os.path.join(ROOT, 'android', 'build.sh')], check=True)
-        shutil.copy(os.path.join(ROOT, 'android', 'build', 'OmasMahjong.apk'), os.path.join(SITE, 'OmasMahjong.apk'))
         sub(os.path.join(SITE, 'index.html'), r'Versie [0-9.]+ ·', f'Versie {v} ·')
-        print(f'APK built: version {v} (code {code})')
+        keys = [os.path.join(ROOT, 'android', 'keystore', f) for f in ('oma-mahjong.jks', 'password.txt')]
+        if all(os.path.exists(k) for k in keys):
+            if os.name == 'nt':
+                subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'build_apk.py')], check=True)
+            else:
+                subprocess.run(['bash', os.path.join(ROOT, 'android', 'build.sh')], check=True)
+            shutil.copy(os.path.join(ROOT, 'android', 'build', 'OmasMahjong.apk'), os.path.join(SITE, 'OmasMahjong.apk'))
+            built = True
+            print(f'APK built: version {v} (code {code})')
+        else:
+            print(f'no signing key here: GitHub builds and signs APK {v} (code {code}) right after the push '
+                  '(workflow "APK"); it is on the download page a few minutes later')
 
     if deploy:
-        for f in ['index.html', 'OmasMahjong.apk', 'favicon.png']:
+        for f in ['index.html', 'favicon.png'] + (['OmasMahjong.apk'] if built else []):
             shutil.copy(os.path.join(SITE, f), os.path.join(REPO, f))
         shutil.rmtree(os.path.join(REPO, 'play'), ignore_errors=True)
         shutil.copytree(play, os.path.join(REPO, 'play'))
@@ -170,10 +182,12 @@ def main():
         os.makedirs(os.path.join(REPO, '.github', 'workflows'), exist_ok=True)
         shutil.copy(os.path.join(ROOT, 'tools', 'news.yml'), os.path.join(REPO, '.github', 'workflows', 'news.yml'))
         shutil.copy(os.path.join(ROOT, 'tools', 'replay-retention.yml'), os.path.join(REPO, '.github', 'workflows', 'replay-retention.yml'))
+        shutil.copy(os.path.join(ROOT, 'tools', 'apk.yml'), os.path.join(REPO, '.github', 'workflows', 'apk.yml'))
         if not IN_REPO:
             shutil.rmtree(os.path.join(REPO, 'source', 'tests'), ignore_errors=True)
             shutil.copytree(os.path.join(ROOT, 'tests'), os.path.join(REPO, 'source', 'tests'), ignore=shutil.ignore_patterns('node_modules'))
-        msg = f'Version {v}' + (' (game update + fresh APK on the download page)' if apk else ' (game update only)')
+        msg = f'Version {v}' + (' (game update + fresh APK on the download page)' if built else
+                                ' (game update; GitHub signs the APK)' if apk else ' (game update only)')
         subprocess.run(['git', '-C', REPO, 'add', '-A'], check=True)
         trailer = os.environ.get('COMMIT_TRAILER', '').strip()
         subprocess.run(['git', '-C', REPO, 'commit', '-q', '-m', msg + ('\n\n' + trailer if trailer else '')], check=True)

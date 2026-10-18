@@ -27,8 +27,13 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 2. Small commits with a clear message. Never force-push `main`.
 3. Release: `python3 source/release.py <version> --deploy` from the checkout. The full test suite
    must pass (`node source/tests/run.js`).
-4. The APK signing key (`source/android/keystore`) is local only and never committed. Keep the same
-   key, or installed apps cannot update.
+4. The APK signing key (`source/android/keystore`) is never committed. Keep the same key, or
+   installed apps cannot update (`android/build.sh` refuses any other certificate). Without the key
+   on your computer (a fresh Claude or Codex session) just release as usual: `release.py` publishes
+   the game, and GitHub builds and signs the APK right after the push (workflow "APK",
+   `source/tools/apk.yml`, key in the repository secrets `OMA_KEYSTORE` and
+   `OMA_KEYSTORE_PASSWORD`, added by Dennis). The Android tools are fetched by
+   `source/tools/android_sdk.sh` when missing. Never copy the key into a session.
 5. Write findings and plans to `source/analysis/`. Raw player exports go to
    `source/analysis/archive/` (ignored by git). Player data from the app is not secret: reading it
    from Firebase for analysis is fine.
