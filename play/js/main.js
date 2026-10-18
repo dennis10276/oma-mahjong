@@ -123,6 +123,7 @@ if (IS_IOS && !standalone && location.protocol === 'https:' && !S.iosTip) setTim
 // this version started fine: forget earlier failed starts
 try { const c = JSON.parse(localStorage.getItem(CODE_KEY) || 'null'); if (c && c.v === window.__mjCode && c.fail) { c.fail = 0; localStorage.setItem(CODE_KEY, JSON.stringify(c)); } } catch (e) { }
 setTimeout(checkUpdate, 2500);
+setTimeout(() => { try { Tiles.warm(S.theme); } catch (e) { } }, 1200);   // the tile pictures, before the first level (tiles.js)
 setInterval(checkUpdate, 60 * 1000);          // every minute while the app is open
 // just updated between two levels: continue with the next level
 if (S.afterUpdate) { const a = S.afterUpdate; S.afterUpdate = null; save(); setTimeout(() => { if (a.level) startLevel(a.level); else if (a.show && a.show !== 'home') show(a.show); toast(tx('updatedTo', APP_VERSION), 2200); }, 300); }

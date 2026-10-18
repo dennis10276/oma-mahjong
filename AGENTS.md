@@ -81,6 +81,9 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - Release 1.57 adds actual help-message events to Live verloop; boards and
   prediction numbers are unchanged. The 1.56 file is archived as
   `predict-1.56.json`, and both 1.55 and 1.56 remain comparable on all levels.
+- Release 1.58 only makes starting, matching and the lessons smoother; boards and prediction
+  numbers are unchanged. The 1.57 file is archived as `predict-1.57.json`; 1.55-1.57 stay
+  comparable on all levels.
 
 - `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, the prediction for
   their next 60 levels: first try, within 2 and within 4 tries. The dashboard shows it in the card
@@ -100,7 +103,7 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - A single first try stays close to a coin flip for this family (rolling test: first tries tell won
   from lost with AUC ~0.65); the chances are honest on average, not a promise per level.
 
-## Drawing the board and the lessons (from 1.58, branch `wip/smooth-play`)
+## Drawing the board and the lessons (from 1.58)
 
 - Board tiles live in one group per layer (`#board > .lyr > .tile`); `G.tiles[i].el` is the tile. A
   tile only rises above tiles of its own group: use `glow(i, 'lucky'|'nudge', on)` to show one above

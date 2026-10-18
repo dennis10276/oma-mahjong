@@ -104,15 +104,15 @@ function maybeLucky() {
   const i = cand[Math.floor(Math.random() * cand.length)];
   G.lucky = { i, until: Date.now() + LUCKY_MS }; G.luckyN = (G.luckyN || 0) + 1;
   replayMark('lucky', [i, LUCKY_MS]);
-  G.tiles[i].el.classList.add('lucky');
+  glow(i, 'lucky', true);
   toast(tx('lucky'), 4000);
   Sound.hint();
-  setTimeout(() => { if (G && G.lucky && G.lucky.i === i) { G.tiles[i].el.classList.remove('lucky'); G.lucky = null; } }, LUCKY_MS);
+  setTimeout(() => { if (G && G.lucky && G.lucky.i === i) { glow(i, 'lucky', false); G.lucky = null; } }, LUCKY_MS);
 }
 function luckyTaken(i) {
   if (!G.lucky || G.lucky.i !== i) return;
   const ok = Date.now() <= G.lucky.until;
-  G.tiles[i].el.classList.remove('lucky');
+  glow(i, 'lucky', false);
   G.lucky = null;
   if (!ok) return;
   const pts = RULES.score.lucky, c = centerOf(G.tiles[i].el);

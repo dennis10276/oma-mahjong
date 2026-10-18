@@ -38,6 +38,31 @@ async function flushLog() {
 const lvInfo = () => G ? (G.mode === 'level' ? { lv: G.level } : { m: 'd', d: G.date, lv: S.level }) : { lv: S.level };
 // something happened in the level being played: which level, which try, after how long, tiles left
 function logLvl(k, extra = {}) { syncClock(); logEvt(k, { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ...extra }); }
+// Record the actual explanation shown, not a guess from a player's failures.
+// Firebase permits strings of at most 40 characters; preserve the full text in pieces.
+let helpMessageSeq = 0;
+function recordHelpMessage(topic, why) {
+  const playing = typeof curScreen !== 'undefined' && curScreen === 'game' && G;
+  const box = $('#modalBox');
+  const meta = { mid: SES + '-' + (++helpMessageSeq).toString(36), topic, why, lang: isEn() ? 'en' : 'nl',
+    title: box.querySelector('h2')?.textContent || topic, scr: curScreen,
+    ...(playing ? { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, fails: S.fails[G.key] || 0 } : { lv: S.level }) };
+  const text = [...box.querySelectorAll('p:not(.lesson-reminder)')].map(p => p.innerText.trim()).filter(Boolean).join('\n\n');
+  const parts = []; let part = '';
+  for (const ch of text) {
+    if (part.length + ch.length > 40) { parts.push(part); part = ''; }
+    part += ch;
+  }
+  if (part) parts.push(part);
+  const body = Object.fromEntries(parts.map((value, i) => ['m' + i, value]));
+  logEvt('help_msg', { ...meta, action: 'shown', ...body });
+  let closed = false;
+  return action => {
+    if (closed) return;
+    closed = true;
+    logEvt('help_msg', { ...meta, action });
+  };
+}
 function endLevel(r, extra = {}) {
   if (!G || G.logged) return;
   G.logged = true; syncClock();
@@ -72,7 +97,7 @@ function replayBegin(cur, resumed) {
       const id = replayId();
       G.rp = { v: REPLAY.version, id, owner: S.pid, born: Date.now(), seq: 0, chars: 0, cut: false, events: [], last: replayState(),
         init: { partial: resumed, key: G.key, at: G.attempt, track: G.o.track || '', ez: G.ez || 0,
-          gen: Hard.GENV, tiles: G.tiles.map(t => [t.x, t.y, t.z]), gold: [...G.gold], state: replayState(),
+          gen: G.o.mode === 'level' ? Hard.designVersion(G.o.level) : Hard.GENV, tiles: G.tiles.map(t => [t.x, t.y, t.z]), gold: [...G.gold], state: replayState(),
           help: JSON.parse(JSON.stringify(help())), cfg: { ...S.cfg }, aspect: G.o.aspect,
           seenClock: !!S.seenSp.clockMoves } };
     }
@@ -119,7 +144,7 @@ function replayView() {
     if (!G || !G.rp) return;
     const w = $('#boardWrap'), br = $('#board').getBoundingClientRect();
     const view = [innerWidth, innerHeight, w.clientWidth, w.clientHeight, Math.round((G.tw || 0) * 10) / 10,
-      S.theme, !!S.nums, !!S.contrast, !!S.highlight, !!S.bigTiles, !toolsGone(), help(), [Math.round(br.left), Math.round(br.top)]];
+      S.theme, !!S.nums, !!S.contrast, !!S.highlight, false, !toolsGone(), help(), [Math.round(br.left), Math.round(br.top)]];
     const key = JSON.stringify(view);
     if (key !== G.rp.view) { G.rp.view = key; replayMark('view', view); }
   } catch (e) { }
