@@ -1,0 +1,4077 @@
+{
+  "made": "2026-10-18T23:40:06.668483+00:00",
+  "protocol": "causal-3bucket-physical-factor-v1",
+  "scoringRule": {
+    "id": "attempt-tolerance-and-8plus-v2",
+    "toleranceByActualAttempt": {
+      "1-3": 0,
+      "4-5": 1,
+      "6+": 2
+    },
+    "sharedSuccessBucketMinimum": 8,
+    "combination": "within-tolerance-or-both-8plus"
+  },
+  "personalOnly": true,
+  "publicOpeningOnly": true,
+  "heldBenchmarkTargetMet": true,
+  "archiveValidation": {
+    "archiveSha256": "f203ef1a2a1a884bcdea4b4af605459ee596f023f6338eafdb7547649f6e7f2e",
+    "parentDataSha256": "bb6135fe7cd78ae899db3cd9fe3c55da2c0d2e6ae48adee49485e7f8eba64f3a",
+    "byStartCount": 305,
+    "byLevelBoardCount": 394,
+    "rawFeatureCount": 26
+  },
+  "devPlayers": {
+    "Dennisisdebeste": {
+      "ownCausalFactor3Bucket": {
+        "n": 25,
+        "correct": 17,
+        "accuracy": 0.68,
+        "exactAccuracy": 0.68,
+        "wilson95": [
+          0.48409913734576715,
+          0.8279501248310887
+        ],
+        "meanAbsoluteError": 0.52
+      },
+      "alwaysFirst": {
+        "n": 25,
+        "correct": 14,
+        "accuracy": 0.56,
+        "exactAccuracy": 0.56,
+        "wilson95": [
+          0.37067017019564436,
+          0.7333462505299744
+        ],
+        "meanAbsoluteError": 0.8
+      }
+    },
+    "Mrs. Doubtfire": {
+      "ownCausalFactor3Bucket": {
+        "n": 25,
+        "correct": 17,
+        "accuracy": 0.68,
+        "exactAccuracy": 0.56,
+        "wilson95": [
+          0.48409913734576715,
+          0.8279501248310887
+        ],
+        "meanAbsoluteError": 0.92
+      },
+      "alwaysFirst": {
+        "n": 25,
+        "correct": 15,
+        "accuracy": 0.6,
+        "exactAccuracy": 0.6,
+        "wilson95": [
+          0.40739127785127344,
+          0.7659694233580909
+        ],
+        "meanAbsoluteError": 1.48
+      }
+    },
+    "PUK": {
+      "ownCausalFactor3Bucket": {
+        "n": 17,
+        "correct": 11,
+        "accuracy": 0.6470588235294118,
+        "exactAccuracy": 0.6470588235294118,
+        "wilson95": [
+          0.4129996672121182,
+          0.826905138560951
+        ],
+        "meanAbsoluteError": 0.4117647058823529
+      },
+      "alwaysFirst": {
+        "n": 17,
+        "correct": 11,
+        "accuracy": 0.6470588235294118,
+        "exactAccuracy": 0.6470588235294118,
+        "wilson95": [
+          0.4129996672121182,
+          0.826905138560951
+        ],
+        "meanAbsoluteError": 0.35294117647058826
+      }
+    },
+    "Gerda": {
+      "ownCausalFactor3Bucket": {
+        "n": 25,
+        "correct": 14,
+        "accuracy": 0.56,
+        "exactAccuracy": 0.52,
+        "wilson95": [
+          0.37067017019564436,
+          0.7333462505299744
+        ],
+        "meanAbsoluteError": 1.88
+      },
+      "alwaysFirst": {
+        "n": 25,
+        "correct": 9,
+        "accuracy": 0.36,
+        "exactAccuracy": 0.36,
+        "wilson95": [
+          0.20247656431735636,
+          0.5548184539895337
+        ],
+        "meanAbsoluteError": 2.4
+      }
+    }
+  },
+  "heldPlayers": {
+    "Dennisisdebeste": {
+      "ownCausalFactor3Bucket": {
+        "n": 20,
+        "correct": 20,
+        "accuracy": 1.0,
+        "exactAccuracy": 0.8,
+        "wilson95": [
+          0.8388698745050667,
+          1.0
+        ],
+        "meanAbsoluteError": 0.2
+      },
+      "alwaysFirst": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 1.15
+      }
+    },
+    "Mrs. Doubtfire": {
+      "ownCausalFactor3Bucket": {
+        "n": 20,
+        "correct": 18,
+        "accuracy": 0.9,
+        "exactAccuracy": 0.75,
+        "wilson95": [
+          0.6989617935882066,
+          0.9721341060158468
+        ],
+        "meanAbsoluteError": 1.25
+      },
+      "alwaysFirst": {
+        "n": 20,
+        "correct": 7,
+        "accuracy": 0.35,
+        "exactAccuracy": 0.35,
+        "wilson95": [
+          0.18118954786794464,
+          0.5671494897805354
+        ],
+        "meanAbsoluteError": 3.45
+      }
+    },
+    "PUK": {
+      "ownCausalFactor3Bucket": {
+        "n": 20,
+        "correct": 19,
+        "accuracy": 0.95,
+        "exactAccuracy": 0.85,
+        "wilson95": [
+          0.7638641064874331,
+          0.9911187805671268
+        ],
+        "meanAbsoluteError": 0.5
+      },
+      "alwaysFirst": {
+        "n": 20,
+        "correct": 13,
+        "accuracy": 0.65,
+        "exactAccuracy": 0.65,
+        "wilson95": [
+          0.43285051021946463,
+          0.8188104521320554
+        ],
+        "meanAbsoluteError": 1.2
+      }
+    },
+    "Gerda": {
+      "ownCausalFactor3Bucket": {
+        "n": 20,
+        "correct": 20,
+        "accuracy": 1.0,
+        "exactAccuracy": 0.9,
+        "wilson95": [
+          0.8388698745050667,
+          1.0
+        ],
+        "meanAbsoluteError": 0.75
+      },
+      "alwaysFirst": {
+        "n": 20,
+        "correct": 9,
+        "accuracy": 0.45,
+        "exactAccuracy": 0.45,
+        "wilson95": [
+          0.25819502085709295,
+          0.6579179916924003
+        ],
+        "meanAbsoluteError": 2.05
+      }
+    }
+  },
+  "recentPlayers": {
+    "Dennisisdebeste": {
+      "ownCausalFactor3Bucket": {
+        "n": 23,
+        "correct": 19,
+        "accuracy": 0.8260869565217391,
+        "exactAccuracy": 0.8260869565217391,
+        "wilson95": [
+          0.6286194521470433,
+          0.9302145964938723
+        ],
+        "meanAbsoluteError": 0.34782608695652173
+      },
+      "alwaysFirst": {
+        "n": 23,
+        "correct": 16,
+        "accuracy": 0.6956521739130435,
+        "exactAccuracy": 0.6956521739130435,
+        "wilson95": [
+          0.49133870939427393,
+          0.8439617197902755
+        ],
+        "meanAbsoluteError": 0.5217391304347826
+      }
+    },
+    "Mrs. Doubtfire": {
+      "ownCausalFactor3Bucket": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "alwaysFirst": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      }
+    },
+    "PUK": {
+      "ownCausalFactor3Bucket": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "alwaysFirst": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      }
+    },
+    "Gerda": {
+      "ownCausalFactor3Bucket": {
+        "n": 5,
+        "correct": 4,
+        "accuracy": 0.8,
+        "exactAccuracy": 0.8,
+        "wilson95": [
+          0.3755282641185388,
+          0.9637768390302125
+        ],
+        "meanAbsoluteError": 0.2
+      },
+      "alwaysFirst": {
+        "n": 5,
+        "correct": 3,
+        "accuracy": 0.6,
+        "exactAccuracy": 0.6,
+        "wilson95": [
+          0.23071993220883708,
+          0.8823817688407467
+        ],
+        "meanAbsoluteError": 0.4
+      }
+    }
+  },
+  "prospectiveCompletedPlayers": {
+    "Dennisisdebeste": {
+      "ownCausalFactor3Bucket": {
+        "n": 5,
+        "correct": 5,
+        "accuracy": 1.0,
+        "exactAccuracy": 1.0,
+        "wilson95": [
+          0.5655085052479191,
+          1.0000000000000002
+        ],
+        "meanAbsoluteError": 0.0
+      },
+      "alwaysFirst": {
+        "n": 5,
+        "correct": 2,
+        "accuracy": 0.4,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.1176182311592533,
+          0.769280067791163
+        ],
+        "meanAbsoluteError": 0.8
+      }
+    },
+    "Mrs. Doubtfire": {
+      "ownCausalFactor3Bucket": {
+        "n": 3,
+        "correct": 3,
+        "accuracy": 1.0,
+        "exactAccuracy": 1.0,
+        "wilson95": [
+          0.43849391955098227,
+          1.0
+        ],
+        "meanAbsoluteError": 0.0
+      },
+      "alwaysFirst": {
+        "n": 3,
+        "correct": 1,
+        "accuracy": 0.3333333333333333,
+        "exactAccuracy": 0.3333333333333333,
+        "wilson95": [
+          0.0614903152761605,
+          0.7923450448735121
+        ],
+        "meanAbsoluteError": 0.6666666666666666
+      }
+    },
+    "PUK": {
+      "ownCausalFactor3Bucket": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "alwaysFirst": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      }
+    },
+    "Gerda": {
+      "ownCausalFactor3Bucket": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "alwaysFirst": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      }
+    }
+  },
+  "heldEpisodes": [
+    {
+      "name": "Dennisisdebeste",
+      "lv": 108,
+      "start": 1792236711656,
+      "end": 1792237001865,
+      "board": "9ce01b4a2c3845ea24d2f149b4290986bec974e250d3e831e829405d461edf7b",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 109,
+      "start": 1792237007560,
+      "end": 1792237319200,
+      "board": "df4be479a9ae3655e3edc4fbe389ae1961b112494a65e7950e98ba17d46506cd",
+      "wonOn": 4,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 110,
+      "start": 1792237324237,
+      "end": 1792237443928,
+      "board": "79e03ed202f8ac314e212d14cb7876493f245051dd543db7712396f1181dce29",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 111,
+      "start": 1792237449745,
+      "end": 1792237761997,
+      "board": "734de8ea4726b4395e633297684868883b4c0a00349812dbfa39212a3104d8c6",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 112,
+      "start": 1792237765230,
+      "end": 1792237899448,
+      "board": "6feaedf11b69c2d75c2fa7f0cc90d2a3ec2ac78f20997f7fcb5211f2cc44c28c",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 113,
+      "start": 1792237901717,
+      "end": 1792238139919,
+      "board": "a4afad79446ee57a8cd17f673f6f92c16ee6b5d4188e42794a0f734a0494e312",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 114,
+      "start": 1792238142501,
+      "end": 1792238271414,
+      "board": "ffa756e3f8d74e9575ef7beb14d36edce38118c0a5634aaa150e72aba6bdbebe",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 115,
+      "start": 1792238277298,
+      "end": 1792238809487,
+      "board": "72a93edadec31d72ac45905618b70b4806785e3bf55e7865e2259f705ad11f4e",
+      "wonOn": 4,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 116,
+      "start": 1792238811966,
+      "end": 1792239199390,
+      "board": "a16edc4d92039a124f5971a7ed4e512abe55f0ea3450746faa07190be65b7927",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 117,
+      "start": 1792239201873,
+      "end": 1792239391544,
+      "board": "c54931303d4e9df9c80ac1f032fc7bdc44a5dc08c957bc4b804555ec9f3ce29f",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 118,
+      "start": 1792239395598,
+      "end": 1792243573524,
+      "board": "9270e848a74474092952aa52c4e050deb893997a476e277b9a2a38b6abb37d7a",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 119,
+      "start": 1792243578185,
+      "end": 1792256108434,
+      "board": "0d449a10ad31e6cadf9dc0797b642a19869b9b1a6a956baaa7245b12bf02896e",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 120,
+      "start": 1792256114462,
+      "end": 1792256338659,
+      "board": "4029553f9b77e7a17233e5aa8808c7267d4e16ad52a5bce9eaf7bda65ae19577",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 121,
+      "start": 1792256342328,
+      "end": 1792258031983,
+      "board": "1411743adcac720eac5553f7e8ea87edb375d07fdd6bcf16c7ae0dd830f4aaa4",
+      "wonOn": 4,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 122,
+      "start": 1792258037360,
+      "end": 1792258245827,
+      "board": "d5f4f7110a2e982ef412aab8d202f2e5e9e06d01a1251049058125469e8a1f36",
+      "wonOn": 4,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 123,
+      "start": 1792258252689,
+      "end": 1792258537657,
+      "board": "6843946d1b7c5a05bf30360ada8a964260e44c9c7704683f62d7047d9eb25d14",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 124,
+      "start": 1792258657069,
+      "end": 1792261391988,
+      "board": "05b046def6653509b81fb4b5c49c6867627be434769fa216853785cee08718e5",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 125,
+      "start": 1792261397034,
+      "end": 1792264513309,
+      "board": "3f0f892fe9b782e9f2e8eb6291f665ebb2a163ba9985a559f98b769a60a72574",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 126,
+      "start": 1792264518693,
+      "end": 1792264823724,
+      "board": "3905f0d9417d9d36949dd18ff90dcc00f58518b786cd11405bdf00cb11094a6d",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 127,
+      "start": 1792264825227,
+      "end": 1792264953535,
+      "board": "77479623b0c96bf4477225e63b5c2e4b7cded080a59489723f215e5184a82a90",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 84,
+      "start": 1791829826286,
+      "end": 1791830648840,
+      "board": "4490d717ab07e3cf189225167d76e7c4dd812b15861c3192093f019cb705beaa",
+      "wonOn": 10,
+      "predictions": {
+        "ownCausalFactor3Bucket": 8,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 85,
+      "start": 1791830660440,
+      "end": 1791834090511,
+      "board": "5990d9f6b6669d64f31896b097b680b37cd8cee585e50cedb476d989ca9f12b2",
+      "wonOn": 5,
+      "predictions": {
+        "ownCausalFactor3Bucket": 5,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 86,
+      "start": 1791834095552,
+      "end": 1791834266736,
+      "board": "d17c137dec323400b97054451fefe2104832edd9c38b180610ebdd18e1a8a336",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 87,
+      "start": 1791834271571,
+      "end": 1791834626428,
+      "board": "d0aed6becb28c43665c69a3ca9634485ce0922a73916a971a9cbbfeb6c13e684",
+      "wonOn": 5,
+      "predictions": {
+        "ownCausalFactor3Bucket": 5,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 88,
+      "start": 1791834629701,
+      "end": 1791834815476,
+      "board": "b2ee0d6c7780b6722b4a2eb4ee88c49c2f6b212de55f852a629f13345948ac84",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 89,
+      "start": 1791834825129,
+      "end": 1792083385949,
+      "board": "4fc1e6d2c9d6d481f550ed8a184e3af44e0ad34b2209979fb6593e41216e75ec",
+      "wonOn": 13,
+      "predictions": {
+        "ownCausalFactor3Bucket": 8,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 90,
+      "start": 1792083395933,
+      "end": 1792083630482,
+      "board": "4fd0a7e0af351a655d6db41004ca8ea60ebc0b0f9f3a525f95bd97a38610e1ab",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 91,
+      "start": 1792083635769,
+      "end": 1792173649391,
+      "board": "320e53c5644e27b66a9421605c304eb3f4666e960d89fae76c520f9ff99c4e8d",
+      "wonOn": 21,
+      "predictions": {
+        "ownCausalFactor3Bucket": 8,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 92,
+      "start": 1792173667131,
+      "end": 1792218825933,
+      "board": "b036311749c913edcd2c7c3f3e468285f1b5ea36f67b76384b7b8648c8d775ce",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 93,
+      "start": 1792218827820,
+      "end": 1792219006623,
+      "board": "784e0fc94ebe8569884671e6c1da63f1e889bfbba2ba8ed4936b2b17273bd19b",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 94,
+      "start": 1792219008645,
+      "end": 1792219375551,
+      "board": "3e5c5b3ade1161b9f57303cde3e596c72ed078914e68eedaafd6a0bf1e1de183",
+      "wonOn": 5,
+      "predictions": {
+        "ownCausalFactor3Bucket": 5,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 95,
+      "start": 1792219379250,
+      "end": 1792219620219,
+      "board": "bfa65d597482d7b257bf944c700a7b175bb132f445555665183fc214e0682b2f",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 96,
+      "start": 1792219621915,
+      "end": 1792219872499,
+      "board": "7b3666e16bfa6a0651b94a66fcf4c58b15b8b1453cc283357d00a9bd4dfa483f",
+      "wonOn": 5,
+      "predictions": {
+        "ownCausalFactor3Bucket": 5,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 97,
+      "start": 1792219886790,
+      "end": 1792262192949,
+      "board": "75e2f5b1ed2213098af63340cc00df9e9b3148a8bdf6bc61c9cef8feb4970114",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 98,
+      "start": 1792262199013,
+      "end": 1792262554318,
+      "board": "6dc7d96dfc85b59f14927cf8cdc773f37e34ffdc0e22afabeebd1f6c703a3f83",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 99,
+      "start": 1792262565093,
+      "end": 1792263067217,
+      "board": "d5c6f77d55920ea382613bf810233b9f65cbc7fcb25b93576b1a0b54e0e429e3",
+      "wonOn": 5,
+      "predictions": {
+        "ownCausalFactor3Bucket": 5,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 100,
+      "start": 1792263071225,
+      "end": 1792263314932,
+      "board": "cce5df71523b594c4979c2242d2075654837d78508adf19665ed1a2c40531fd7",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 101,
+      "start": 1792263326840,
+      "end": 1792263705368,
+      "board": "9c3c5e33a245120e57f297761acad229adebbefc3dbdd9994e7ce68289d621e4",
+      "wonOn": 5,
+      "predictions": {
+        "ownCausalFactor3Bucket": 5,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 102,
+      "start": 1792263743318,
+      "end": 1792263942883,
+      "board": "8075dfe9993e5daa0862a3ec5474864949ceb5b70fddabcf13d1e2fd1becfabf",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 5,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 103,
+      "start": 1792263948381,
+      "end": 1792264148974,
+      "board": "0e95c0df50d367a85de23366248b273303f1e524505f28fe247d5537024a9bbe",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 34,
+      "start": 1791993467593,
+      "end": 1791993853775,
+      "board": "d00d7b6154ea810c303f28f93e2d977d1096a7e512f31225271d01aa7b8e96bd",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 35,
+      "start": 1791993866872,
+      "end": 1791994314139,
+      "board": "8e3855f33489fe651bc48405e2ae9880b33d7a4cb9782f31f107688265c998a8",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 36,
+      "start": 1791994331125,
+      "end": 1791994708934,
+      "board": "ca374d69285fb48e2d819b92f613ed5c2cb8806bfebc19179a8373f606956870",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 37,
+      "start": 1791994730739,
+      "end": 1791995759101,
+      "board": "104e5c483b51fa671a91808e5bfb689cb9902a2fbaaa02c2dda63a9360cafa44",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 38,
+      "start": 1791995772536,
+      "end": 1791996321876,
+      "board": "7027b72409400eef9578cf1f86b5954219c5b74403350762fb1f7f59ea3ce229",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 39,
+      "start": 1792013300819,
+      "end": 1792014203948,
+      "board": "c9997948be06fdd8006b2b7cf0f447c4bad9a788c7e6134cd209d486ea6ac725",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 40,
+      "start": 1792014233172,
+      "end": 1792014784836,
+      "board": "d034789dcb770067e42f39b5b9d8c35633cc940739123e3c74926e4f86360676",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 41,
+      "start": 1792014797696,
+      "end": 1792015241559,
+      "board": "54a0eeedfa0e6800472aa4f05fe4ea6c6d866a41f84ea76ceaf7b875b0651ef3",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 42,
+      "start": 1792031107788,
+      "end": 1792031739811,
+      "board": "511decd059e925a9289e9c441ce516d102c27e2f45d520497bd5a725fd334563",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 43,
+      "start": 1792031786444,
+      "end": 1792075954614,
+      "board": "5800e4a30fea3c1cecf813ac550dbcecd369fd7bf217f6de23cf399a6d52b74b",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 44,
+      "start": 1792078889406,
+      "end": 1792079407530,
+      "board": "d673c28d46c390946030a420f6d936d958f686d8bbd9bc82abaa86b420e2579e",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 45,
+      "start": 1792079446450,
+      "end": 1792079970880,
+      "board": "683e1b54c0a140ac7735ff1eff0382d813546bf35bab12387fed0395f4a0671b",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 46,
+      "start": 1792079998136,
+      "end": 1792081533361,
+      "board": "e449e56a005ed7aa3366a338fa9749fd60addffe56ace2cb52fbf5c91e18b722",
+      "wonOn": 4,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 47,
+      "start": 1792081570535,
+      "end": 1792082167114,
+      "board": "727e2f83b69ea4b721d56ddf961a13c12fd37d15bd3595c3d9aec618ff90cbda",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 48,
+      "start": 1792097612195,
+      "end": 1792098036834,
+      "board": "250dd4793af6305b635c53ba74cd0001470a2e79ef0416181a3afdf8b64a1620",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 49,
+      "start": 1792098056466,
+      "end": 1792137863715,
+      "board": "112ea4c54b325088ff1a875f656a763ea8726c556d3bb596106074598f3dbc6d",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "PUK",
+      "lv": 50,
+      "start": 1792137899571,
+      "end": 1792138372678,
+      "board": "a6c639da85d34f65a680f153f9276249074f1a8ce18af8bcfea3f3b2e8e629a6",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 51,
+      "start": 1792138391388,
+      "end": 1792138633616,
+      "board": "0144f15e2a214d776026d6ffae471af801a2bfeb08f1b019a780f05ca1eba258",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 52,
+      "start": 1792174210433,
+      "end": 1792174483508,
+      "board": "e79a42da72628cb240e0b52c6f68a0ee325a12fb445e762dd535d9894516ca89",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "PUK",
+      "lv": 53,
+      "start": 1792174506087,
+      "end": 1792243130063,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "wonOn": 15,
+      "predictions": {
+        "ownCausalFactor3Bucket": 8,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 43,
+      "start": 1792077779174,
+      "end": 1792078152166,
+      "board": "21727cf176fdb9786a8f1620fb6175504b03803cf11bfee5c1b83e83fe7d04d7",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 44,
+      "start": 1792078155465,
+      "end": 1792078692796,
+      "board": "802e7f173fcab5605d378e1b0cf64e8cc90ec19b7c6a4688d1729aee28be02ea",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 45,
+      "start": 1792078697711,
+      "end": 1792079207605,
+      "board": "0485b2523e7e195ee7cfa95508f2e1870c596d55d329397fc331c79729f01f4c",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 46,
+      "start": 1792079848122,
+      "end": 1792080047378,
+      "board": "3a9683b514b2954dc2ef3eca388aed2201705dee67a178e4fdf099d272d51bbd",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 47,
+      "start": 1792080050551,
+      "end": 1792080271405,
+      "board": "ab39fa77735d2c53f770c112299e412fdf8f36add2df32061b8cd77fe14636a0",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 48,
+      "start": 1792084600541,
+      "end": 1792084833594,
+      "board": "91fdf3804f38a91e25531a38849f352998ac209ef8a92d1c452949f8122e5c84",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 49,
+      "start": 1792084839692,
+      "end": 1792085008067,
+      "board": "554c38899b0b19d3366b7737b43b8a420b0b00f66198038dbae11dadfa8acec2",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 50,
+      "start": 1792085063827,
+      "end": 1792085610934,
+      "board": "6acab72ecfdca76eba147b6a440621ad4d69d6242321be33cc8e63e3bf84df3f",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 51,
+      "start": 1792093661933,
+      "end": 1792096721603,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "wonOn": 17,
+      "predictions": {
+        "ownCausalFactor3Bucket": 8,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 52,
+      "start": 1792096748424,
+      "end": 1792096979385,
+      "board": "232ec33c8b8d51d359b52faae3872cba59676900e299b18c814afa07bbd6e26c",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 53,
+      "start": 1792166705549,
+      "end": 1792167022746,
+      "board": "eefae6e74eab8436943a0ccba6fd8e46ec322c956b97aeddcdcd840133e6e9e4",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 54,
+      "start": 1792167038374,
+      "end": 1792167266894,
+      "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 55,
+      "start": 1792167284004,
+      "end": 1792167530353,
+      "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 56,
+      "start": 1792167538665,
+      "end": 1792170385332,
+      "board": "e5eecb7f05223aa125c9c3bbfe8067c097948ad1102a3a61a705f4586390d0e0",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 57,
+      "start": 1792170422833,
+      "end": 1792170853487,
+      "board": "14ec2debe925513ec377e5e1eda3c8eb45f4a2a1813d323abc5920410887f090",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 58,
+      "start": 1792170857134,
+      "end": 1792171110536,
+      "board": "97efa877d0b07620cad96fe453fe564a728aa77ddb84f612972ed010f2b1b620",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 59,
+      "start": 1792171113962,
+      "end": 1792171629658,
+      "board": "4dcdf9289212568fd3cd578ea5d47831092fb768b4ff47542c72e7b357132248",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 60,
+      "start": 1792171635042,
+      "end": 1792172069516,
+      "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 61,
+      "start": 1792172079918,
+      "end": 1792172826685,
+      "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 62,
+      "start": 1792172831970,
+      "end": 1792253400186,
+      "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+      "wonOn": 14,
+      "predictions": {
+        "ownCausalFactor3Bucket": 8,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    }
+  ],
+  "recentEpisodes": [
+    {
+      "name": "Dennisisdebeste",
+      "lv": 128,
+      "start": 1792264956498,
+      "end": 1792290114119,
+      "board": "0613ce326f2c91984dc804a4ac28c0ee541ff4a40b94b9566c03da9d32850272",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 129,
+      "start": 1792290117177,
+      "end": 1792290294659,
+      "board": "ab561b44c1d1f32d7e3b1bab153df30f5bf30e13ad5d4278251ef2aee180ce1a",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 130,
+      "start": 1792290296962,
+      "end": 1792290508027,
+      "board": "c8bafd0bd39cca68226e5ea926426623ef6c9ee88b0a2ff5b8879f8879a36023",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 131,
+      "start": 1792290510168,
+      "end": 1792290752709,
+      "board": "ee271b160d14d94ea3657186fc74e90ca69b5d0d5c8737dc084db509f888b633",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 132,
+      "start": 1792290754399,
+      "end": 1792291072806,
+      "board": "d615a151404ac3d190191e788fbb2b7defffc970b8a9e5d7cb1eb2ebd9e3db31",
+      "wonOn": 4,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 133,
+      "start": 1792291075042,
+      "end": 1792291220616,
+      "board": "a4408ed7b2c3faa6a99a862de6f615800f4af3cd934fee13f93a4fcaa060fbe5",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 134,
+      "start": 1792291222805,
+      "end": 1792291349885,
+      "board": "37fb26031e16d5042f38f5cf52456fad6bb6dbc9998c892d82808cc1b2c3505a",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 135,
+      "start": 1792291353478,
+      "end": 1792291533006,
+      "board": "f6769a9d33a940a4220c4da01f234b7ef5b24a7c181da2a12f953f52cb673abd",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 136,
+      "start": 1792291535895,
+      "end": 1792291698896,
+      "board": "ce1ab20dc21c965beeeac37bfc587a62f028142d8cb1375a80b7ec72c6677707",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 137,
+      "start": 1792291700350,
+      "end": 1792291979414,
+      "board": "27808b801d1894db04021499b5a9b455076c257d6c23da647a8443380f4aa728",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 138,
+      "start": 1792291980822,
+      "end": 1792292183066,
+      "board": "7e1a6b34f05ce2cbc4225d739de16585d7c38eba94f4d88a66bd0358ef96d39a",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 139,
+      "start": 1792292185413,
+      "end": 1792292658778,
+      "board": "220f3ad3402af58aa6a396e4c590bb80d3de126544af884650ff825113530b1a",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 140,
+      "start": 1792292666968,
+      "end": 1792292910200,
+      "board": "e0c2d502f027498e15fb8cceb9f956917cededd7406e7438c15dee7c50f478c8",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 141,
+      "start": 1792330520862,
+      "end": 1792330652567,
+      "board": "21d8d6b10d7d9da759bb625064cc9c218e2ba2dca230a9fed441f6f9a2a276a0",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 142,
+      "start": 1792330656422,
+      "end": 1792330802610,
+      "board": "0f7bc340d36f66d7b9c00f53702e6f16ca862933692ac92dbcef254eb28828eb",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 143,
+      "start": 1792330804088,
+      "end": 1792331055440,
+      "board": "1c2a073ddd5999c85c265bfa7cee1aa8c77ef2b55ce49b4cbda985242d6653d2",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 144,
+      "start": 1792331056975,
+      "end": 1792331269994,
+      "board": "67b7fcd49dbf717efd74d3fa0a89e8d48d131459e83e0b3e557e40b6a819397b",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 145,
+      "start": 1792331272950,
+      "end": 1792331438938,
+      "board": "324478232e819d9522220757d6bd59f87cda4c2bd1d088e38e04fc136da5e449",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 146,
+      "start": 1792331440418,
+      "end": 1792331633928,
+      "board": "686e3603966fa22d0733eb150f010f54914e46d858ea3de01acd86967d9601d8",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 147,
+      "start": 1792331635289,
+      "end": 1792331817239,
+      "board": "6fd5bfa0016ef10cd1c3c6a700d40ad85a41d4dbc0aa57f56a8e59248494efaf",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 148,
+      "start": 1792335667471,
+      "end": 1792335900585,
+      "board": "4037e065a3cc58ee016b26ffda836c32d561a794f6b178940cff25f45c8d6f9e",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 149,
+      "start": 1792335904809,
+      "end": 1792336368281,
+      "board": "a1b494520bf783ae4aba085ee7ea0c8e2a28fbcbeed82deb377f39229de7304b",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 150,
+      "start": 1792336372510,
+      "end": 1792337025929,
+      "board": "611ba5caa68a67752f8b384970a951ac7fe221ba1dce263b676abb45351b56af",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 63,
+      "start": 1792307673823,
+      "end": 1792308108310,
+      "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": false
+    },
+    {
+      "name": "Gerda",
+      "lv": 64,
+      "start": 1792308111778,
+      "end": 1792308301483,
+      "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 65,
+      "start": 1792308310641,
+      "end": 1792308557608,
+      "board": "e9413bac05ebb393ab989d27542153a30200c748c0a05d52be7dd0267727649a",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 66,
+      "start": 1792309097846,
+      "end": 1792309311156,
+      "board": "e60dad526eb6b66a292f0441cfb36a7029aa3d28419b0864fea5838a87df36fd",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Gerda",
+      "lv": 67,
+      "start": 1792309333093,
+      "end": 1792309534907,
+      "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    }
+  ],
+  "prospectiveCompletedEpisodes": [
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 104,
+      "start": 1792352334440,
+      "end": 1792352528116,
+      "board": "2b98b55b6a326b80402c8a5525fe4468d84349b021d7a1c699482f79c0f7ad9c",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 105,
+      "start": 1792352533258,
+      "end": 1792353078815,
+      "board": "1d009ba83032f1729b6722523211f46b54908674ab81fcf2e514038e1b4244ff",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 151,
+      "start": 1792354104259,
+      "end": 1792354338206,
+      "board": "cf91690dbe4f8925167163d9731a38342f798e519a11b961b54287977293f407",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 152,
+      "start": 1792354342078,
+      "end": 1792354700530,
+      "board": "55a9b426e6002a0cd281641bf194a26f5a150586acadaa168a8885e668ca5cc7",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 153,
+      "start": 1792354709012,
+      "end": 1792354908606,
+      "board": "daa2dc0fd9f28bf76e8897febeaadb0f4231ff1bf96cb0a2a195a538ae10b09c",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 154,
+      "start": 1792354915612,
+      "end": 1792355287209,
+      "board": "e7a9b16b47669c323d832cf4f4157c2123c63de03531758765e14c5c60fcbc5a",
+      "wonOn": 3,
+      "predictions": {
+        "ownCausalFactor3Bucket": 3,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 155,
+      "start": 1792355348443,
+      "end": 1792355653435,
+      "board": "3986b7d4b85e93c071f2604d0fb297f31ab6e2a663ab9bd9b45ea490b1155569",
+      "wonOn": 1,
+      "predictions": {
+        "ownCausalFactor3Bucket": 1,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 106,
+      "start": 1792356796585,
+      "end": 1792357021353,
+      "board": "ebeb210a7d3d535617aca9a3daa6c40041bedb65a43b1a75fe766a408a142d13",
+      "wonOn": 2,
+      "predictions": {
+        "ownCausalFactor3Bucket": 2,
+        "alwaysFirst": 1
+      },
+      "correct": true
+    }
+  ],
+  "frozenFutureForecasts": [
+    {
+      "name": "Dennisisdebeste",
+      "lv": 151,
+      "version": "1.55",
+      "board": "cf91690dbe4f8925167163d9731a38342f798e519a11b961b54287977293f407",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 2,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.2712,
+        "sf14_surv": -2.1199,
+        "mem_surv": -0.8319,
+        "base_solv": -0.9127,
+        "retry_jump": -1.0808,
+        "open_trap": 0.1536,
+        "shallow_large": -1.5896,
+        "buried_mate": 0.5332,
+        "clock_tight": 1.7426,
+        "p8_dec": 0.0468
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 152,
+      "version": "1.55",
+      "board": "55a9b426e6002a0cd281641bf194a26f5a150586acadaa168a8885e668ca5cc7",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 2,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.5273,
+        "sf14_surv": 0.6118,
+        "mem_surv": 0.5461,
+        "base_solv": -0.4455,
+        "retry_jump": 0.2465,
+        "open_trap": 1.3117,
+        "shallow_large": -0.084,
+        "buried_mate": -0.4901,
+        "clock_tight": 1.5946,
+        "p8_dec": 0.2086
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 153,
+      "version": "1.55",
+      "board": "daa2dc0fd9f28bf76e8897febeaadb0f4231ff1bf96cb0a2a195a538ae10b09c",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.8634,
+        "sf14_surv": 0.8566,
+        "mem_surv": 0.9044,
+        "base_solv": -1.5711,
+        "retry_jump": 0.9874,
+        "open_trap": -0.1976,
+        "shallow_large": -0.8511,
+        "buried_mate": 1.1996,
+        "clock_tight": -1.2555,
+        "p8_dec": 0.644
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 154,
+      "version": "1.55",
+      "board": "e7a9b16b47669c323d832cf4f4157c2123c63de03531758765e14c5c60fcbc5a",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 3,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.8891,
+        "sf14_surv": -0.9585,
+        "mem_surv": -0.8842,
+        "base_solv": -0.0912,
+        "retry_jump": -0.8133,
+        "open_trap": -1.8113,
+        "shallow_large": -2.0265,
+        "buried_mate": 2.8736,
+        "clock_tight": 0.8543,
+        "p8_dec": -0.1792
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 155,
+      "version": "1.55",
+      "board": "3986b7d4b85e93c071f2604d0fb297f31ab6e2a663ab9bd9b45ea490b1155569",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.5355,
+        "sf14_surv": 0.1434,
+        "mem_surv": 0.6481,
+        "base_solv": -1.1385,
+        "retry_jump": 0.082,
+        "open_trap": -1.4601,
+        "shallow_large": -0.4102,
+        "buried_mate": 0.7988,
+        "clock_tight": 1.5946,
+        "p8_dec": -0.5435
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 156,
+      "version": "1.55",
+      "board": "74d6fddefbcad78454e7494cdd3d2a8834dc994ad3a83e8c0da0301bf17365bc",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.3504,
+        "sf14_surv": -2.1734,
+        "mem_surv": -0.9558,
+        "base_solv": -0.8198,
+        "retry_jump": -1.1838,
+        "open_trap": -0.6023,
+        "shallow_large": -1.7891,
+        "buried_mate": 1.4594,
+        "clock_tight": -0.2709,
+        "p8_dec": -0.576
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 157,
+      "version": "1.55",
+      "board": "5fcdef40507ed8504a3b510467e66d9a6e3018c1ad1594895e78ec6cec70e8b9",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.4865,
+        "sf14_surv": -1.8614,
+        "mem_surv": 0.0886,
+        "base_solv": 1.1696,
+        "retry_jump": -0.3914,
+        "open_trap": -0.6023,
+        "shallow_large": 1.1424,
+        "buried_mate": -0.7322,
+        "clock_tight": 1.7426,
+        "p8_dec": 0.2935
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 158,
+      "version": "1.55",
+      "board": "5ba101fc78113cf5979149e3150f4d4bf66f6bfed555eedb8d4696a2d4ba3290",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.6454,
+        "sf14_surv": -0.8896,
+        "mem_surv": -0.6031,
+        "base_solv": -0.2382,
+        "retry_jump": -0.1754,
+        "open_trap": -0.7881,
+        "shallow_large": -1.3411,
+        "buried_mate": 1.4308,
+        "clock_tight": 1.7426,
+        "p8_dec": 0.474
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 159,
+      "version": "1.55",
+      "board": "a716e63a66ae526e4b0a25d6940f8bb4b694cfcfb7be9c1389d30e3de3ea8672",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 3,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -1.9446,
+        "sf14_surv": -2.6123,
+        "mem_surv": -1.6668,
+        "base_solv": -1.4082,
+        "retry_jump": -1.1838,
+        "open_trap": -0.302,
+        "shallow_large": -0.0432,
+        "buried_mate": 0.2354,
+        "clock_tight": -1.8107,
+        "p8_dec": 0.3689
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 160,
+      "version": "1.55",
+      "board": "1a1769743d38d6069e15bb9c2b9f0e46763f8a28d9267f3d178d4e58144a1dff",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.9663,
+        "sf14_surv": 1.2969,
+        "mem_surv": 1.0587,
+        "base_solv": -0.4906,
+        "retry_jump": 1.3064,
+        "open_trap": -0.7881,
+        "shallow_large": -0.1712,
+        "buried_mate": 1.6561,
+        "clock_tight": 0.8543,
+        "p8_dec": 0.9128
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 161,
+      "version": "1.55",
+      "board": "e02e626383dcb68c97e1ccaa10edc1c729e454193b294df542e60d93a86d2cc2",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -1.8424,
+        "sf14_surv": -2.7467,
+        "mem_surv": -1.5401,
+        "base_solv": -1.231,
+        "retry_jump": -1.1838,
+        "open_trap": -1.1394,
+        "shallow_large": 1.2488,
+        "buried_mate": 0.3823,
+        "clock_tight": -1.2555,
+        "p8_dec": -1.5317
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 162,
+      "version": "1.55",
+      "board": "951153d7b292be6f1de2dc3f5add09a21f76fe589d4f5a5579b241fade30f69a",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.3936,
+        "sf14_surv": 0.6689,
+        "mem_surv": 0.3174,
+        "base_solv": -1.1423,
+        "retry_jump": 0.2365,
+        "open_trap": -1.4601,
+        "shallow_large": -2.6144,
+        "buried_mate": 3.5355,
+        "clock_tight": 0.5582,
+        "p8_dec": 0.6123
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 163,
+      "version": "1.55",
+      "board": "369233fbf919d5ad5d32659c76a6ead2a9f064d7fa7a56763092ba19dfafa299",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.7277,
+        "sf14_surv": -0.5709,
+        "mem_surv": -0.7547,
+        "base_solv": -0.6485,
+        "retry_jump": -0.4944,
+        "open_trap": -0.7881,
+        "shallow_large": -1.7527,
+        "buried_mate": 0.311,
+        "clock_tight": -1.8107,
+        "p8_dec": 0.5239
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 164,
+      "version": "1.55",
+      "board": "ea527232951d9a2338ad51b12533ac0e3ab054282a86417cb14399532b88a79c",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.5686,
+        "sf14_surv": 0.5858,
+        "mem_surv": 0.6977,
+        "base_solv": -0.3327,
+        "retry_jump": 0.082,
+        "open_trap": -1.2743,
+        "shallow_large": -1.2375,
+        "buried_mate": 1.4867,
+        "clock_tight": 1.0764,
+        "p8_dec": -0.4519
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 165,
+      "version": "1.55",
+      "board": "783c2caf783163256f8793fb65c75be7933e4ac9319a6fc0035e48602a29e42e",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": 0.863,
+        "sf14_surv": 1.3811,
+        "mem_surv": 0.9319,
+        "base_solv": -0.5942,
+        "retry_jump": 0.9874,
+        "open_trap": 0.986,
+        "shallow_large": 0.8755,
+        "buried_mate": 0.0766,
+        "clock_tight": -0.9224,
+        "p8_dec": 1.4836
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 166,
+      "version": "1.55",
+      "board": "3d41c1a3e3940d7d93e9efc18e7e48afaec9081cfb7e185210f689a294eb308b",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.2904,
+        "sf14_surv": -0.3034,
+        "mem_surv": 0.7004,
+        "base_solv": 0.7557,
+        "retry_jump": 0.3495,
+        "open_trap": -0.7881,
+        "shallow_large": 0.1848,
+        "buried_mate": -0.6466,
+        "clock_tight": -0.1328,
+        "p8_dec": 0.6393
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 167,
+      "version": "1.55",
+      "board": "06f868350160d853aab569d8adc2d3859d59ce955bb5ec638bf790f63690e43a",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.1348,
+        "sf14_surv": -1.568,
+        "mem_surv": -1.0578,
+        "base_solv": -0.018,
+        "retry_jump": -1.1838,
+        "open_trap": -0.9231,
+        "shallow_large": -2.384,
+        "buried_mate": 0.5504,
+        "clock_tight": 0.8543,
+        "p8_dec": -1.3998
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 168,
+      "version": "1.55",
+      "board": "25b16d3c9d3c444b4e669375d23cb94998fd28b2f2763823e6729ce87558f5b0",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.1633,
+        "sf14_surv": -1.7335,
+        "mem_surv": -0.8263,
+        "base_solv": 0.0616,
+        "retry_jump": -1.0808,
+        "open_trap": -0.3834,
+        "shallow_large": -0.4031,
+        "buried_mate": 1.0974,
+        "clock_tight": -0.4782,
+        "p8_dec": 0.9362
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 169,
+      "version": "1.55",
+      "board": "6beb8e859498e1f1b72813d93d71a62ee9456dc45f5500d72df304a41c56c919",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 3,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.7839,
+        "sf14_surv": -2.3044,
+        "mem_surv": -1.5649,
+        "base_solv": 0.0365,
+        "retry_jump": -1.1323,
+        "open_trap": -0.307,
+        "shallow_large": 1.1228,
+        "buried_mate": -1.2291,
+        "clock_tight": 0.8543,
+        "p8_dec": 0.1787
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 170,
+      "version": "1.55",
+      "board": "52fefa33261a31f55357717d8b2c56f8695f122634249052442cdef6cab12634",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 3,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.7553,
+        "sf14_surv": -2.3656,
+        "mem_surv": -1.4657,
+        "base_solv": -0.0192,
+        "retry_jump": -1.1838,
+        "open_trap": -0.2511,
+        "shallow_large": 2.0327,
+        "buried_mate": -0.4025,
+        "clock_tight": 0.2991,
+        "p8_dec": 0.0965
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 171,
+      "version": "1.55",
+      "board": "88492a022885c5e394a53cdc0934afe99e7899b73f3f431e81751bf6188dfedd",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -0.5485,
+        "sf14_surv": -0.6133,
+        "mem_surv": -0.5756,
+        "base_solv": -1.4226,
+        "retry_jump": -0.7619,
+        "open_trap": 0.3395,
+        "shallow_large": -0.0471,
+        "buried_mate": -0.6239,
+        "clock_tight": -0.4782,
+        "p8_dec": 0.3094
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 172,
+      "version": "1.55",
+      "board": "88e9c685f4d0250ebbf5950af5303412b479f75fd23ecb76f52e879f956baee5",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.9,
+        "sf14_surv": 0.0061,
+        "mem_surv": -1.7688,
+        "base_solv": -0.058,
+        "retry_jump": -1.1838,
+        "open_trap": 0.3395,
+        "shallow_large": -0.9911,
+        "buried_mate": -0.171,
+        "clock_tight": -0.4782,
+        "p8_dec": -2.5
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 173,
+      "version": "1.55",
+      "board": "dda542c20cdf728df0ea2e341b05bd0fe9aa8b12cc9c6732d25ea30efb1eb43f",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.0885,
+        "sf14_surv": -2.843,
+        "mem_surv": 1.0063,
+        "base_solv": -0.6446,
+        "retry_jump": 1.2549,
+        "open_trap": 0.3395,
+        "shallow_large": 0.9968,
+        "buried_mate": -0.4985,
+        "clock_tight": -0.0341,
+        "p8_dec": 0.7217
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 174,
+      "version": "1.55",
+      "board": "996f245718eaae978bfcf3afa999239d90a8a7d309cb09f355243b0d0f95ed03",
+      "modelId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.4042,
+        "sf14_surv": -1.5427,
+        "mem_surv": 0.0611,
+        "base_solv": 1.5706,
+        "retry_jump": 0.298,
+        "open_trap": -0.6532,
+        "shallow_large": -1.2425,
+        "buried_mate": 1.5282,
+        "clock_tight": -0.4782,
+        "p8_dec": 0.0231
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 69,
+      "version": "1.55",
+      "board": "ca9d38515e25c9d90f2d37cabcacea5b842dd6529a931b3422fe804a634295cb",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.2167,
+        "sf14_surv": -2.7798,
+        "mem_surv": -2.0772,
+        "base_solv": -1.6338,
+        "retry_jump": -1.2171,
+        "open_trap": 0.2631,
+        "shallow_large": 0.2525,
+        "buried_mate": -0.715,
+        "clock_tight": -0.0,
+        "p8_dec": -0.2355
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 70,
+      "version": "1.55",
+      "board": "6f67ecbeae1fcf29ccf970ae1a14300b74bae42ccfd515395b4268703391dc07",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.2079,
+        "sf14_surv": 0.116,
+        "mem_surv": 0.1318,
+        "base_solv": 0.4259,
+        "retry_jump": 0.0834,
+        "open_trap": -1.1712,
+        "shallow_large": -0.4873,
+        "buried_mate": 1.6589,
+        "clock_tight": -0.0,
+        "p8_dec": 0.5752
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 71,
+      "version": "1.55",
+      "board": "9918709e81dbdd4f2cf85d674301e268c7f7431e7ed76ca2d1979cd3e590775f",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.7053,
+        "sf14_surv": 1.3463,
+        "mem_surv": 0.7761,
+        "base_solv": 0.9347,
+        "retry_jump": 0.6862,
+        "open_trap": 0.7146,
+        "shallow_large": -1.3905,
+        "buried_mate": 0.3577,
+        "clock_tight": -0.0,
+        "p8_dec": 1.4349
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 72,
+      "version": "1.55",
+      "board": "372cdc6a0aff68bd2b6be1d29ef6f6ac39a63711bf9efd00672fd4e72ee91863",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.434,
+        "sf14_surv": 0.8641,
+        "mem_surv": 0.3692,
+        "base_solv": 0.1678,
+        "retry_jump": -0.377,
+        "open_trap": 0.0315,
+        "shallow_large": 0.7155,
+        "buried_mate": -0.3407,
+        "clock_tight": -0.0,
+        "p8_dec": 1.1234
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 73,
+      "version": "1.55",
+      "board": "3da6e19549140c14a7fb8368a91647312731eaa4199845ed1badf14b3f1aadb2",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.6601,
+        "sf14_surv": 1.1386,
+        "mem_surv": 0.7082,
+        "base_solv": 0.7411,
+        "retry_jump": 0.1783,
+        "open_trap": -0.9396,
+        "shallow_large": -2.3621,
+        "buried_mate": 1.9919,
+        "clock_tight": -0.0,
+        "p8_dec": 1.7618
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 74,
+      "version": "1.55",
+      "board": "ce6a4fe2c655982a8468b537cc7201a1f14e251213071ab22b6ac620a9602d92",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.1292,
+        "sf14_surv": -0.6023,
+        "mem_surv": -0.2242,
+        "base_solv": 0.1563,
+        "retry_jump": -0.1942,
+        "open_trap": -0.9396,
+        "shallow_large": -0.2968,
+        "buried_mate": 0.7982,
+        "clock_tight": -0.0,
+        "p8_dec": 0.3019
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 75,
+      "version": "1.55",
+      "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.7317,
+        "sf14_surv": -1.0353,
+        "mem_surv": -1.8859,
+        "base_solv": -1.7408,
+        "retry_jump": -1.4948,
+        "open_trap": 2.4446,
+        "shallow_large": 0.5036,
+        "buried_mate": -1.6286,
+        "clock_tight": -0.0,
+        "p8_dec": 1.2729
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 76,
+      "version": "1.55",
+      "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.7618,
+        "sf14_surv": 1.0213,
+        "mem_surv": 0.8609,
+        "base_solv": 0.1257,
+        "retry_jump": 0.4086,
+        "open_trap": 0.2631,
+        "shallow_large": 0.4642,
+        "buried_mate": -1.5892,
+        "clock_tight": -0.0,
+        "p8_dec": 0.7704
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 77,
+      "version": "1.55",
+      "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.4787,
+        "sf14_surv": -2.2751,
+        "mem_surv": -1.072,
+        "base_solv": -1.186,
+        "retry_jump": -1.3524,
+        "open_trap": 0.9803,
+        "shallow_large": -0.2958,
+        "buried_mate": -0.8292,
+        "clock_tight": -0.0,
+        "p8_dec": 1.5568
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 78,
+      "version": "1.55",
+      "board": "b8515e26acc7b671fdfefea9f4e3a3a75975ba73b8b297a2a24f59af022f2cee",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.8413,
+        "sf14_surv": -0.1517,
+        "mem_surv": -1.3264,
+        "base_solv": 0.0071,
+        "retry_jump": -1.1696,
+        "open_trap": 1.4642,
+        "shallow_large": 0.7241,
+        "buried_mate": -0.4639,
+        "clock_tight": -0.0,
+        "p8_dec": 1.3699
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 79,
+      "version": "1.55",
+      "board": "b034c4d69055af5729b6ec99160de9d4fd58df051610bcc81d6276ef3ce273f5",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.6639,
+        "sf14_surv": -1.6858,
+        "mem_surv": -1.852,
+        "base_solv": -0.0148,
+        "retry_jump": -1.1696,
+        "open_trap": 0.2512,
+        "shallow_large": -0.3511,
+        "buried_mate": -0.2913,
+        "clock_tight": -0.0,
+        "p8_dec": 1.3488
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 80,
+      "version": "1.55",
+      "board": "cb0dd1bdca577d926a5f3396ed049b76860561ad5e768ef47bf88f6cd7e7b096",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.348,
+        "sf14_surv": 0.0583,
+        "mem_surv": -2.0385,
+        "base_solv": -2.2294,
+        "retry_jump": -1.4473,
+        "open_trap": 2.0509,
+        "shallow_large": 2.2006,
+        "buried_mate": -1.2277,
+        "clock_tight": 2.5,
+        "p8_dec": -1.0673
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 81,
+      "version": "1.55",
+      "board": "5f8079b8f1cf82ee69cb46c8e3bcd47ba01b3b2c34ba089d3fba9aa2e882fa18",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.8292,
+        "sf14_surv": -2.7056,
+        "mem_surv": -1.5638,
+        "base_solv": 0.3649,
+        "retry_jump": -0.9394,
+        "open_trap": 0.0315,
+        "shallow_large": -0.1541,
+        "buried_mate": -0.8757,
+        "clock_tight": 2.5,
+        "p8_dec": 0.3311
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 82,
+      "version": "1.55",
+      "board": "27e3edfd73fd1c47c21d088c9ea561be0228a839bdf0e861cf7e60a7795955fa",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.3876,
+        "sf14_surv": -3.75,
+        "mem_surv": -2.3315,
+        "base_solv": -2.4175,
+        "retry_jump": -1.4948,
+        "open_trap": 0.7486,
+        "shallow_large": -0.3126,
+        "buried_mate": -0.751,
+        "clock_tight": 2.5,
+        "p8_dec": -2.1953
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 83,
+      "version": "1.55",
+      "board": "7b4cb74eecba9fb19068310c584d693e2748c94d77abef020ae44d3e5004d829",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.2746,
+        "sf14_surv": -3.512,
+        "mem_surv": -2.1619,
+        "base_solv": -1.7777,
+        "retry_jump": -1.2171,
+        "open_trap": 0.7589,
+        "shallow_large": 1.3076,
+        "buried_mate": -1.208,
+        "clock_tight": 2.5,
+        "p8_dec": -0.5171
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 84,
+      "version": "1.55",
+      "board": "4490d717ab07e3cf189225167d76e7c4dd812b15861c3192093f019cb705beaa",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -2.3876,
+        "sf14_surv": -3.75,
+        "mem_surv": -2.3315,
+        "base_solv": -2.1649,
+        "retry_jump": -1.4948,
+        "open_trap": 0.7486,
+        "shallow_large": 0.632,
+        "buried_mate": -0.8839,
+        "clock_tight": 2.5,
+        "p8_dec": -1.2311
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 85,
+      "version": "1.55",
+      "board": "5990d9f6b6669d64f31896b097b680b37cd8cee585e50cedb476d989ca9f12b2",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.3876,
+        "sf14_surv": -3.0644,
+        "mem_surv": -2.3315,
+        "base_solv": -1.9981,
+        "retry_jump": -1.4948,
+        "open_trap": -0.6857,
+        "shallow_large": 0.5898,
+        "buried_mate": -0.5705,
+        "clock_tight": 2.5,
+        "p8_dec": -0.8601
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 86,
+      "version": "1.55",
+      "board": "d17c137dec323400b97054451fefe2104832edd9c38b180610ebdd18e1a8a336",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.525,
+        "sf14_surv": -0.9362,
+        "mem_surv": -1.903,
+        "base_solv": -2.5,
+        "retry_jump": -1.2171,
+        "open_trap": 1.2104,
+        "shallow_large": 0.2943,
+        "buried_mate": -0.6694,
+        "clock_tight": 2.5,
+        "p8_dec": 0.7059
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 87,
+      "version": "1.55",
+      "board": "d0aed6becb28c43665c69a3ca9634485ce0922a73916a971a9cbbfeb6c13e684",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.685,
+        "sf14_surv": 1.0015,
+        "mem_surv": -1.3094,
+        "base_solv": -2.0328,
+        "retry_jump": -1.1222,
+        "open_trap": 2.256,
+        "shallow_large": 0.658,
+        "buried_mate": -1.3619,
+        "clock_tight": 2.5,
+        "p8_dec": -0.0594
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 88,
+      "version": "1.55",
+      "board": "b2ee0d6c7780b6722b4a2eb4ee88c49c2f6b212de55f852a629f13345948ac84",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.9477,
+        "sf14_surv": -2.1852,
+        "mem_surv": -2.1619,
+        "base_solv": -2.2759,
+        "retry_jump": -1.4473,
+        "open_trap": 0.5051,
+        "shallow_large": -1.5333,
+        "buried_mate": -0.0129,
+        "clock_tight": 2.5,
+        "p8_dec": 0.4278
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 89,
+      "version": "1.55",
+      "board": "4fc1e6d2c9d6d481f550ed8a184e3af44e0ad34b2209979fb6593e41216e75ec",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -1.8519,
+        "sf14_surv": -1.2703,
+        "mem_surv": -2.3315,
+        "base_solv": -2.3034,
+        "retry_jump": -1.4948,
+        "open_trap": 0.7146,
+        "shallow_large": -0.7587,
+        "buried_mate": -0.6366,
+        "clock_tight": 2.5,
+        "p8_dec": 0.2185
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 90,
+      "version": "1.55",
+      "board": "4fd0a7e0af351a655d6db41004ca8ea60ebc0b0f9f3a525f95bd97a38610e1ab",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.57,
+        "sf14_surv": 0.5918,
+        "mem_surv": -1.0211,
+        "base_solv": -0.183,
+        "retry_jump": -1.1222,
+        "open_trap": 0.7486,
+        "shallow_large": 2.0233,
+        "buried_mate": -1.8847,
+        "clock_tight": 2.5,
+        "p8_dec": -0.3434
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 91,
+      "version": "1.55",
+      "board": "320e53c5644e27b66a9421605c304eb3f4666e960d89fae76c520f9ff99c4e8d",
+      "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -1.9889,
+        "sf14_surv": -3.2424,
+        "mem_surv": -1.7333,
+        "base_solv": -2.4175,
+        "retry_jump": -1.1696,
+        "open_trap": 0.9906,
+        "shallow_large": 0.4652,
+        "buried_mate": -1.5595,
+        "clock_tight": 2.5,
+        "p8_dec": -0.3483
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 104,
+      "version": "1.55",
+      "board": "2b98b55b6a326b80402c8a5525fe4468d84349b021d7a1c699482f79c0f7ad9c",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 1,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 1.3793,
+        "sf14_surv": 2.0387,
+        "mem_surv": 1.3629,
+        "base_solv": -0.1598,
+        "retry_jump": 1.2556,
+        "open_trap": -0.6888,
+        "shallow_large": -0.7784,
+        "buried_mate": 1.6951,
+        "clock_tight": 1.6833,
+        "p8_dec": 0.9662
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 105,
+      "version": "1.55",
+      "board": "1d009ba83032f1729b6722523211f46b54908674ab81fcf2e514038e1b4244ff",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 1.5452,
+        "sf14_surv": 2.2858,
+        "mem_surv": 1.6117,
+        "base_solv": 0.914,
+        "retry_jump": 0.1698,
+        "open_trap": 1.7397,
+        "shallow_large": -0.1385,
+        "buried_mate": 0.6049,
+        "clock_tight": 0.6444,
+        "p8_dec": 2.1287
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 106,
+      "version": "1.55",
+      "board": "ebeb210a7d3d535617aca9a3daa6c40041bedb65a43b1a75fe766a408a142d13",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": true,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.3266,
+        "sf14_surv": 0.3446,
+        "mem_surv": 0.3467,
+        "base_solv": -1.2917,
+        "retry_jump": -0.6446,
+        "open_trap": -0.1307,
+        "shallow_large": -0.1174,
+        "buried_mate": 0.2498,
+        "clock_tight": 0.9907,
+        "p8_dec": 0.2496
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 107,
+      "version": "1.55",
+      "board": "967ff719207784bb402983e61f9caf68912a844bbe46baf0d033aaadd0388d0d",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 5,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -1.1529,
+        "sf14_surv": -1.3619,
+        "mem_surv": -1.177,
+        "base_solv": -1.2931,
+        "retry_jump": -0.9451,
+        "open_trap": -0.7061,
+        "shallow_large": -1.3306,
+        "buried_mate": 0.438,
+        "clock_tight": 0.1992,
+        "p8_dec": 0.0194
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 108,
+      "version": "1.55",
+      "board": "9ce01b4a2c3845ea24d2f149b4290986bec974e250d3e831e829405d461edf7b",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 5,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 1.0028,
+        "sf14_surv": 1.5102,
+        "mem_surv": 0.9342,
+        "base_solv": -1.544,
+        "retry_jump": 0.8983,
+        "open_trap": 1.4733,
+        "shallow_large": 0.6218,
+        "buried_mate": -0.6282,
+        "clock_tight": -2.5,
+        "p8_dec": 0.9431
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 109,
+      "version": "1.55",
+      "board": "df4be479a9ae3655e3edc4fbe389ae1961b112494a65e7950e98ba17d46506cd",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.1658,
+        "sf14_surv": -0.0872,
+        "mem_surv": -0.3463,
+        "base_solv": -0.8051,
+        "retry_jump": -0.3592,
+        "open_trap": -0.9103,
+        "shallow_large": -0.3816,
+        "buried_mate": 1.3088,
+        "clock_tight": 0.1992,
+        "p8_dec": -0.3728
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 110,
+      "version": "1.55",
+      "board": "79e03ed202f8ac314e212d14cb7876493f245051dd543db7712396f1181dce29",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 5,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 1.47,
+        "sf14_surv": 1.9,
+        "mem_surv": 1.5217,
+        "base_solv": -0.5864,
+        "retry_jump": 2.1312,
+        "open_trap": 1.7921,
+        "shallow_large": 0.9871,
+        "buried_mate": -0.7033,
+        "clock_tight": 2.3759,
+        "p8_dec": 1.3515
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 111,
+      "version": "1.55",
+      "board": "734de8ea4726b4395e633297684868883b4c0a00349812dbfa39212a3104d8c6",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.1831,
+        "sf14_surv": -1.3324,
+        "mem_surv": -1.2458,
+        "base_solv": -0.9208,
+        "retry_jump": -0.9451,
+        "open_trap": -0.2901,
+        "shallow_large": -2.0588,
+        "buried_mate": 1.4264,
+        "clock_tight": -0.3945,
+        "p8_dec": -0.4124
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 112,
+      "version": "1.55",
+      "board": "6feaedf11b69c2d75c2fa7f0cc90d2a3ec2ac78f20997f7fcb5211f2cc44c28c",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.1704,
+        "sf14_surv": -0.0043,
+        "mem_surv": -0.3518,
+        "base_solv": -0.641,
+        "retry_jump": -0.5877,
+        "open_trap": -0.2279,
+        "shallow_large": -0.792,
+        "buried_mate": 0.3988,
+        "clock_tight": -0.3945,
+        "p8_dec": -0.0826
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 113,
+      "version": "1.55",
+      "board": "a4afad79446ee57a8cd17f673f6f92c16ee6b5d4188e42794a0f734a0494e312",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.0032,
+        "sf14_surv": 0.5256,
+        "mem_surv": -0.3041,
+        "base_solv": -0.6812,
+        "retry_jump": -0.3163,
+        "open_trap": -0.5467,
+        "shallow_large": 0.2145,
+        "buried_mate": 0.187,
+        "clock_tight": -0.9881,
+        "p8_dec": 0.5309
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 114,
+      "version": "1.55",
+      "board": "ffa756e3f8d74e9575ef7beb14d36edce38118c0a5634aaa150e72aba6bdbebe",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.4765,
+        "sf14_surv": 1.5014,
+        "mem_surv": 0.1668,
+        "base_solv": 1.4296,
+        "retry_jump": 0.2695,
+        "open_trap": 0.4371,
+        "shallow_large": 0.6116,
+        "buried_mate": -0.0673,
+        "clock_tight": -0.0167,
+        "p8_dec": 0.974
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 115,
+      "version": "1.55",
+      "board": "72a93edadec31d72ac45905618b70b4806785e3bf55e7865e2259f705ad11f4e",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.213,
+        "sf14_surv": -1.1674,
+        "mem_surv": -1.2458,
+        "base_solv": -1.4206,
+        "retry_jump": -0.9451,
+        "open_trap": -0.2727,
+        "shallow_large": -0.7567,
+        "buried_mate": 0.2615,
+        "clock_tight": -1.7796,
+        "p8_dec": -0.5047
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 116,
+      "version": "1.55",
+      "board": "a16edc4d92039a124f5971a7ed4e512abe55f0ea3450746faa07190be65b7927",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.6642,
+        "sf14_surv": 0.0006,
+        "mem_surv": -1.0026,
+        "base_solv": -2.0445,
+        "retry_jump": -0.9021,
+        "open_trap": 0.1183,
+        "shallow_large": -0.3813,
+        "buried_mate": -0.1297,
+        "clock_tight": -0.3945,
+        "p8_dec": -0.6722
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 117,
+      "version": "1.55",
+      "board": "c54931303d4e9df9c80ac1f032fc7bdc44a5dc08c957bc4b804555ec9f3ce29f",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.0509,
+        "sf14_surv": 0.3686,
+        "mem_surv": -0.1297,
+        "base_solv": -0.5531,
+        "retry_jump": -0.0878,
+        "open_trap": -1.2117,
+        "shallow_large": -1.728,
+        "buried_mate": 1.9677,
+        "clock_tight": 0.1992,
+        "p8_dec": 1.317
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 118,
+      "version": "1.55",
+      "board": "9270e848a74474092952aa52c4e050deb893997a476e277b9a2a38b6abb37d7a",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 5,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.369,
+        "sf14_surv": 2.0276,
+        "mem_surv": -0.1297,
+        "base_solv": -1.2653,
+        "retry_jump": -0.5448,
+        "open_trap": 0.5343,
+        "shallow_large": -0.1834,
+        "buried_mate": -0.4644,
+        "clock_tight": 0.9907,
+        "p8_dec": 0.4389
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 119,
+      "version": "1.55",
+      "board": "0d449a10ad31e6cadf9dc0797b642a19869b9b1a6a956baaa7245b12bf02896e",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 5,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -0.0189,
+        "sf14_surv": 0.9209,
+        "mem_surv": -0.3518,
+        "base_solv": -1.2078,
+        "retry_jump": -0.5448,
+        "open_trap": 2.4098,
+        "shallow_large": 1.0087,
+        "buried_mate": -1.3211,
+        "clock_tight": -0.3945,
+        "p8_dec": 1.1315
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 120,
+      "version": "1.55",
+      "board": "4029553f9b77e7a17233e5aa8808c7267d4e16ad52a5bce9eaf7bda65ae19577",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 5,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 1.1816,
+        "sf14_surv": 2.2003,
+        "mem_surv": 1.0664,
+        "base_solv": 0.5422,
+        "retry_jump": 0.6268,
+        "open_trap": 1.7694,
+        "shallow_large": 1.2018,
+        "buried_mate": -0.7194,
+        "clock_tight": 0.9907,
+        "p8_dec": 1.3964
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 121,
+      "version": "1.55",
+      "board": "1411743adcac720eac5553f7e8ea87edb375d07fdd6bcf16c7ae0dd830f4aaa4",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.844,
+        "sf14_surv": -1.3581,
+        "mem_surv": -0.6695,
+        "base_solv": -1.2339,
+        "retry_jump": -0.8592,
+        "open_trap": -1.0523,
+        "shallow_large": -0.911,
+        "buried_mate": 2.4387,
+        "clock_tight": 2.5,
+        "p8_dec": -0.1576
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 122,
+      "version": "1.55",
+      "board": "d5f4f7110a2e982ef412aab8d202f2e5e9e06d01a1251049058125469e8a1f36",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 1.0913,
+        "sf14_surv": 2.07,
+        "mem_surv": 0.9764,
+        "base_solv": 1.4968,
+        "retry_jump": 0.9412,
+        "open_trap": -0.1658,
+        "shallow_large": -3.0013,
+        "buried_mate": 1.0995,
+        "clock_tight": 2.5,
+        "p8_dec": 1.1308
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 123,
+      "version": "1.55",
+      "board": "6843946d1b7c5a05bf30360ada8a964260e44c9c7704683f62d7047d9eb25d14",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 5,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.0386,
+        "sf14_surv": 1.2361,
+        "mem_surv": -0.3096,
+        "base_solv": -0.9866,
+        "retry_jump": -0.5877,
+        "open_trap": 1.7694,
+        "shallow_large": 0.0027,
+        "buried_mate": 0.9087,
+        "clock_tight": -0.3945,
+        "p8_dec": 1.0386
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 124,
+      "version": "1.55",
+      "board": "05b046def6653509b81fb4b5c49c6867627be434769fa216853785cee08718e5",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 5,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.9897,
+        "sf14_surv": -0.5463,
+        "mem_surv": -1.2458,
+        "base_solv": -0.9541,
+        "retry_jump": -0.9451,
+        "open_trap": 1.1044,
+        "shallow_large": -0.4704,
+        "buried_mate": 0.4805,
+        "clock_tight": 2.3759,
+        "p8_dec": 0.8502
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 125,
+      "version": "1.55",
+      "board": "3f0f892fe9b782e9f2e8eb6291f665ebb2a163ba9985a559f98b769a60a72574",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 1.0605,
+        "sf14_surv": 1.7412,
+        "mem_surv": 0.9076,
+        "base_solv": -1.6906,
+        "retry_jump": 0.0839,
+        "open_trap": 0.8083,
+        "shallow_large": -0.1738,
+        "buried_mate": -0.5966,
+        "clock_tight": -0.3945,
+        "p8_dec": -0.4377
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 126,
+      "version": "1.55",
+      "board": "3905f0d9417d9d36949dd18ff90dcc00f58518b786cd11405bdf00cb11094a6d",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 2,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.0258,
+        "sf14_surv": 1.5834,
+        "mem_surv": -0.6217,
+        "base_solv": -0.9926,
+        "retry_jump": -0.9021,
+        "open_trap": 0.8477,
+        "shallow_large": -1.0875,
+        "buried_mate": 0.6075,
+        "clock_tight": 0.0673,
+        "p8_dec": -0.3543
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 127,
+      "version": "1.55",
+      "board": "77479623b0c96bf4477225e63b5c2e4b7cded080a59489723f215e5184a82a90",
+      "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 5,
+      "bucket3Action": 5,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.6763,
+        "sf14_surv": -0.4535,
+        "mem_surv": -0.775,
+        "base_solv": -1.3821,
+        "retry_jump": -0.5448,
+        "open_trap": -0.2901,
+        "shallow_large": -0.3161,
+        "buried_mate": 0.2498,
+        "clock_tight": 0.9907,
+        "p8_dec": -0.2604
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 54,
+      "version": "1.55",
+      "board": "155301ffb83b5f2fbf615d92f4cc9c11932387e57144a18b95153cf891419957",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.1526,
+        "sf14_surv": 0.5499,
+        "mem_surv": 0.049,
+        "base_solv": 0.2389,
+        "retry_jump": 0.1046,
+        "open_trap": -1.133,
+        "shallow_large": -2.1436,
+        "buried_mate": 2.286,
+        "clock_tight": -0.0,
+        "p8_dec": -0.2635
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 55,
+      "version": "1.55",
+      "board": "2e100bff3230874ef9c879bbeea4f01dad5995d802008d42fe9e6955a8aaa60e",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.7232,
+        "sf14_surv": -0.1315,
+        "mem_surv": -1.2647,
+        "base_solv": -0.454,
+        "retry_jump": -1.7647,
+        "open_trap": -0.127,
+        "shallow_large": -1.585,
+        "buried_mate": -0.1547,
+        "clock_tight": -0.0,
+        "p8_dec": -0.5484
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 56,
+      "version": "1.55",
+      "board": "2040743fb27e1621f679dac916da5ad52833eb23cd3c299ec03c04f2fde0b608",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.591,
+        "sf14_surv": 0.5011,
+        "mem_surv": 0.7065,
+        "base_solv": -0.2363,
+        "retry_jump": 1.8648,
+        "open_trap": 0.5991,
+        "shallow_large": 0.9704,
+        "buried_mate": 0.0674,
+        "clock_tight": -0.0,
+        "p8_dec": -0.469
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 57,
+      "version": "1.55",
+      "board": "14ec2debe925513ec377e5e1eda3c8eb45f4a2a1813d323abc5920410887f090",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.5,
+        "sf14_surv": -3.3768,
+        "mem_surv": -2.5,
+        "base_solv": -1.6975,
+        "retry_jump": -2.0925,
+        "open_trap": -0.127,
+        "shallow_large": 1.5583,
+        "buried_mate": -0.3906,
+        "clock_tight": -0.0,
+        "p8_dec": -0.4089
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 58,
+      "version": "1.55",
+      "board": "97efa877d0b07620cad96fe453fe564a728aa77ddb84f612972ed010f2b1b620",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.5,
+        "sf14_surv": -3.75,
+        "mem_surv": -2.5,
+        "base_solv": -1.1233,
+        "retry_jump": -2.3116,
+        "open_trap": 0.1257,
+        "shallow_large": -0.118,
+        "buried_mate": 0.8437,
+        "clock_tight": -0.0,
+        "p8_dec": -1.1776
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 59,
+      "version": "1.55",
+      "board": "4dcdf9289212568fd3cd578ea5d47831092fb768b4ff47542c72e7b357132248",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.591,
+        "sf14_surv": 0.3131,
+        "mem_surv": 0.7065,
+        "base_solv": -0.1573,
+        "retry_jump": 0.9559,
+        "open_trap": -0.8338,
+        "shallow_large": -1.7942,
+        "buried_mate": 2.1862,
+        "clock_tight": -0.0,
+        "p8_dec": -0.3848
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 60,
+      "version": "1.55",
+      "board": "20ce908c91bad941ef88a83376b8dcfde2f1af64fb0b5690762269ad310675ab",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.8526,
+        "sf14_surv": -1.4476,
+        "mem_surv": -2.5,
+        "base_solv": -0.0863,
+        "retry_jump": -2.035,
+        "open_trap": -0.7253,
+        "shallow_large": 2.1639,
+        "buried_mate": -0.84,
+        "clock_tight": -0.0,
+        "p8_dec": 0.125
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 61,
+      "version": "1.55",
+      "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.5053,
+        "sf14_surv": -1.2092,
+        "mem_surv": -0.9379,
+        "base_solv": -0.01,
+        "retry_jump": -1.2068,
+        "open_trap": -0.8338,
+        "shallow_large": 1.6319,
+        "buried_mate": 1.5653,
+        "clock_tight": -0.0,
+        "p8_dec": -1.3304
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 62,
+      "version": "1.55",
+      "board": "4062fbf78e781e26c6fad7390f88f8e61d6eb084348b0fc5c30cb68b6d74804a",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 8,
+      "bucket3Action": 3,
+      "severeTrap": true,
+      "factors": {
+        "bot_surv": -1.5591,
+        "sf14_surv": -2.4921,
+        "mem_surv": -1.9521,
+        "base_solv": -2.5,
+        "retry_jump": -2.1329,
+        "open_trap": 0.5798,
+        "shallow_large": 1.2666,
+        "buried_mate": -1.0401,
+        "clock_tight": -0.0,
+        "p8_dec": -0.1996
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 63,
+      "version": "1.55",
+      "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.2038,
+        "sf14_surv": -0.4392,
+        "mem_surv": 0.2835,
+        "base_solv": -0.7222,
+        "retry_jump": -0.2233,
+        "open_trap": -0.5347,
+        "shallow_large": -0.719,
+        "buried_mate": 1.4447,
+        "clock_tight": -0.0,
+        "p8_dec": -0.2925
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 64,
+      "version": "1.55",
+      "board": "da566551d26fc6da9e19304bc9923fe764929f626f410d791d136d0505da81c5",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.2973,
+        "sf14_surv": -2.4061,
+        "mem_surv": -1.4518,
+        "base_solv": -0.8921,
+        "retry_jump": -0.7811,
+        "open_trap": -0.7253,
+        "shallow_large": -0.4609,
+        "buried_mate": -0.84,
+        "clock_tight": -0.0,
+        "p8_dec": 0.0095
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 65,
+      "version": "1.55",
+      "board": "e9413bac05ebb393ab989d27542153a30200c748c0a05d52be7dd0267727649a",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.2755,
+        "sf14_surv": -0.1219,
+        "mem_surv": 0.2835,
+        "base_solv": -0.0223,
+        "retry_jump": 0.7431,
+        "open_trap": 0.3234,
+        "shallow_large": -0.4038,
+        "buried_mate": -0.3583,
+        "clock_tight": -0.0,
+        "p8_dec": -0.9236
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 66,
+      "version": "1.55",
+      "board": "e60dad526eb6b66a292f0441cfb36a7029aa3d28419b0864fea5838a87df36fd",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.7857,
+        "sf14_surv": -0.6497,
+        "mem_surv": -2.5,
+        "base_solv": 0.1965,
+        "retry_jump": -2.0925,
+        "open_trap": -0.4262,
+        "shallow_large": 0.3917,
+        "buried_mate": 0.0424,
+        "clock_tight": -0.0,
+        "p8_dec": -0.4396
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 67,
+      "version": "1.55",
+      "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.591,
+        "sf14_surv": 0.279,
+        "mem_surv": 0.7065,
+        "base_solv": 0.3276,
+        "retry_jump": 0.4556,
+        "open_trap": -0.7253,
+        "shallow_large": -1.9032,
+        "buried_mate": 0.8429,
+        "clock_tight": -0.0,
+        "p8_dec": 0.8244
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 68,
+      "version": "1.55",
+      "board": "037cdceb767780b89ba0f36effc40e7d4c11ef37cf4645bf616e36a041158d8a",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.9408,
+        "sf14_surv": -0.8949,
+        "mem_surv": -1.125,
+        "base_solv": -0.9695,
+        "retry_jump": -1.3218,
+        "open_trap": 0.2806,
+        "shallow_large": -0.3061,
+        "buried_mate": -1.0459,
+        "clock_tight": -0.0,
+        "p8_dec": 0.3206
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 69,
+      "version": "1.55",
+      "board": "ca9d38515e25c9d90f2d37cabcacea5b842dd6529a931b3422fe804a634295cb",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.5,
+        "sf14_surv": -3.75,
+        "mem_surv": -2.5,
+        "base_solv": -2.5,
+        "retry_jump": -2.3116,
+        "open_trap": 0.2806,
+        "shallow_large": 0.637,
+        "buried_mate": -0.9517,
+        "clock_tight": -0.0,
+        "p8_dec": -1.1483
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 70,
+      "version": "1.55",
+      "board": "6f67ecbeae1fcf29ccf970ae1a14300b74bae42ccfd515395b4268703391dc07",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.6624,
+        "sf14_surv": -1.6377,
+        "mem_surv": -2.3652,
+        "base_solv": -0.0519,
+        "retry_jump": -1.9775,
+        "open_trap": -1.133,
+        "shallow_large": -0.0062,
+        "buried_mate": 1.8457,
+        "clock_tight": -0.0,
+        "p8_dec": -1.5909
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 71,
+      "version": "1.55",
+      "board": "9918709e81dbdd4f2cf85d674301e268c7f7431e7ed76ca2d1979cd3e590775f",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.497,
+        "sf14_surv": 0.4242,
+        "mem_surv": 0.5655,
+        "base_solv": 0.4212,
+        "retry_jump": -0.7236,
+        "open_trap": 0.5333,
+        "shallow_large": -1.5762,
+        "buried_mate": 0.3025,
+        "clock_tight": -0.0,
+        "p8_dec": 0.4186
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 72,
+      "version": "1.55",
+      "board": "372cdc6a0aff68bd2b6be1d29ef6f6ac39a63711bf9efd00672fd4e72ee91863",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.0586,
+        "sf14_surv": -0.0934,
+        "mem_surv": -0.092,
+        "base_solv": -0.8508,
+        "retry_jump": 0.5706,
+        "open_trap": -0.0185,
+        "shallow_large": 1.3403,
+        "buried_mate": -0.534,
+        "clock_tight": -0.0,
+        "p8_dec": 0.2472
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 73,
+      "version": "1.55",
+      "board": "3da6e19549140c14a7fb8368a91647312731eaa4199845ed1badf14b3f1aadb2",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -0.0372,
+        "sf14_surv": 0.1539,
+        "mem_surv": -0.1855,
+        "base_solv": -0.0627,
+        "retry_jump": -0.2404,
+        "open_trap": -0.8338,
+        "shallow_large": -2.4865,
+        "buried_mate": 2.0456,
+        "clock_tight": -0.0,
+        "p8_dec": 0.4218
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 74,
+      "version": "1.55",
+      "board": "ce6a4fe2c655982a8468b537cc7201a1f14e251213071ab22b6ac620a9602d92",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -1.0878,
+        "sf14_surv": -1.4923,
+        "mem_surv": -1.4531,
+        "base_solv": -0.7449,
+        "retry_jump": -1.8625,
+        "open_trap": -0.8338,
+        "shallow_large": 0.156,
+        "buried_mate": 0.723,
+        "clock_tight": -0.0,
+        "p8_dec": -1.1736
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 75,
+      "version": "1.55",
+      "board": "9a355c206979bc66c873e5d2af9fe43c8aefade5b8300b72910193b1f121dad0",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 3,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.4941,
+        "sf14_surv": -2.6624,
+        "mem_surv": -2.5,
+        "base_solv": -1.2598,
+        "retry_jump": -2.0988,
+        "open_trap": 2.1639,
+        "shallow_large": 0.8147,
+        "buried_mate": -1.9622,
+        "clock_tight": -0.0,
+        "p8_dec": 0.4858
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 76,
+      "version": "1.55",
+      "board": "13257c386a00af418f49e02c5055ff327148abd521ae159d7a6ba480f053937a",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": 0.215,
+        "sf14_surv": 0.4344,
+        "mem_surv": 0.1426,
+        "base_solv": -0.0036,
+        "retry_jump": -0.6258,
+        "open_trap": 0.2806,
+        "shallow_large": 0.7747,
+        "buried_mate": -1.9222,
+        "clock_tight": -0.0,
+        "p8_dec": -0.8278
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 77,
+      "version": "1.55",
+      "board": "df55214004dccfa2dd7968ee2e41fb6169f348b63c882c4ee5a202b4517ace38",
+      "modelId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "alreadyCompletedInProspective": false,
+      "predictedAttempt": 1,
+      "bucket3Action": 3,
+      "severeTrap": false,
+      "factors": {
+        "bot_surv": -2.4951,
+        "sf14_surv": -3.417,
+        "mem_surv": -2.4927,
+        "base_solv": -1.9294,
+        "retry_jump": -1.7072,
+        "open_trap": 0.9874,
+        "shallow_large": 0.002,
+        "buried_mate": -1.1495,
+        "clock_tight": -0.0,
+        "p8_dec": 0.7115
+      }
+    }
+  ]
+}

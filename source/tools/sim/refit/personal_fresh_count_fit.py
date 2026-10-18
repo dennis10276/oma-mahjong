@@ -7,13 +7,14 @@ from pathlib import Path
 import numpy as np
 
 from attempt_count_fit import FACTORIES, NAMES, SCORING_RULE, accuracy, best_prediction, best_prediction_with_tail, is_correct, own_mode
+from personal_causal_factor_head import predict_causal_3bucket
 from personal_count_fit import distribution_of, hazards_of, predictive_distribution
 
 
 ROOT = Path(__file__).resolve().parents[3]
 PROFILES = ('ownOutcomeBase0', 'ownOutcomeStyles0')
 METHODS = ('alwaysFirst', 'ownRecentMode', 'ownBaseSmoothed', 'ownStylesSmoothed',
-           'ownMixtureSmoothed', 'ownBoardForest', 'ownBotForest')
+           'ownMixtureSmoothed', 'ownBoardForest', 'ownBotForest', 'ownCausalFactor3Bucket')
 PROTOCOL = 'fresh-own-first-clear-prequential-v1'
 
 
@@ -89,6 +90,7 @@ def predict(rows, target, runs, prepared_features, forest_cache):
         probabilities = model.predict_proba([prepared_features[target['name'], target['start']][index]])[0]
         predictions[method] = best_prediction({int(attempt): float(probability)
             for attempt, probability in zip(model.classes_, probabilities)})
+    predictions['ownCausalFactor3Bucket'] = predict_causal_3bucket(before, target)
     return predictions, {'trainingEpisodes': len(before), 'trainingAvailableThrough': max((row['end'] for row in before), default=None),
         'profileWeights': weights, 'profileAvailability': availability, 'beyond128': tail}
 
@@ -151,7 +153,7 @@ def main(data_file, output_file):
     report.update({'made': datetime.now(timezone.utc).isoformat(), 'dataSha256': hashlib.sha256(data_bytes).hexdigest(),
                    'measurementFingerprint': json.loads(data_bytes)['fingerprint'],
                    'scoringSourceHashes': {name: hashlib.sha256((Path(__file__).parent / name).read_bytes()).hexdigest()
-                       for name in ('personal_fresh_count_fit.py', 'personal_count_fit.py', 'attempt_count_fit.py', 'attempt_hazard.py', 'board_recall_eval.py')}})
+                       for name in ('personal_fresh_count_fit.py', 'personal_causal_factor_head.py', 'personal_count_fit.py', 'attempt_count_fit.py', 'attempt_hazard.py', 'board_recall_eval.py')}})
     output_file.parent.mkdir(parents=True, exist_ok=True)
     output_file.write_text(json.dumps(report, indent=2), encoding='utf-8')
     print(json.dumps({key: value for key, value in report.items() if key not in ('scored', 'future')}, indent=2))
