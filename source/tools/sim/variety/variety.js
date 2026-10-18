@@ -115,21 +115,22 @@ function buildLevel(job) {
     if (piles.length >= 3) break;
   }
   if (!piles.length) return { lv, status: 'failed', reason: 'no new pile fits', log };
-  // 2. design on each pile: several designs (other deals and clock tiles), screened quickly; the one
-  //    closest to the target is tuned. A level that had a clock keeps one.
-  const SCREEN = 120, DESIGNS = 6;
-  for (const [pi, pl] of piles.entries()) {
-    let b = null, bd = Infinity;
-    for (let k = 0; k < DESIGNS; k++) {
-      const x = Hard.makeNow(lv, 1.6, 1, pi * DESIGNS + k, { tiles: pl.tiles });
-      if (!x.solution || !valid(x) || (P.clock && !x.clock)) continue;
-      const c = { tiles: x.tiles, faces: x.faces.slice(), down: x.down.slice(), gold: (x.gold || []).slice(), obst: x.obst, clock: x.clock ? { ...x.clock } : null, solution: x.solution.slice() };
-      const dc = dist(measure(c, SCREEN, 31 + lv));
-      if (dc < bd) { b = c; bd = dc; }
-    }
-    if (!b) { log.push(`pile ${pi} ${pl.shape}: designer gave no valid board`); continue; }
-    log.push(`pile ${pi} ${pl.shape}: best of ${DESIGNS} designs off ${bd.toFixed(3)}`);
-    const r = (s => () => (s = (s * 16807) % 2147483647) / 2147483647)(lv * 9973 + pi);
+  // 2. designs on every pile (other deals and clock tiles), all screened quickly; only the closest
+  //    ones are tuned (a design that starts far off rarely gets there). A level that had a clock keeps one.
+  const SCREEN = 120, DESIGNS = 4, TUNE = 3, T0 = Date.now(), MAX_MIN = 25;
+  const designs = [];
+  for (const [pi, pl] of piles.entries()) for (let k = 0; k < DESIGNS; k++) {
+    const x = Hard.makeNow(lv, 1.6, 1, pi * DESIGNS + k, { tiles: pl.tiles });
+    if (!x.solution || !valid(x) || (P.clock && !x.clock)) continue;
+    const c = { tiles: x.tiles, faces: x.faces.slice(), down: x.down.slice(), gold: (x.gold || []).slice(), obst: x.obst, clock: x.clock ? { ...x.clock } : null, solution: x.solution.slice() };
+    designs.push({ pi, pl, b: c, d: dist(measure(c, SCREEN, 31 + lv)) });
+  }
+  designs.sort((a, b2) => a.d - b2.d);
+  log.push(`${designs.length} designs on ${piles.length} piles, closest off ${designs.map(x => x.d.toFixed(2)).slice(0, 4).join(', ')}`);
+  if (!designs.length) return { lv, status: 'failed', reason: 'designer gave no valid board', log };
+  for (const [di, ds] of designs.slice(0, TUNE).entries()) {
+    const pi = ds.pi, pl = ds.pl; let b = ds.b;
+    const r = (s => () => (s = (s * 16807) % 2147483647) / 2147483647)(lv * 9973 + di);
     const n = b.tiles.length, al = new Uint8Array(n).fill(1), nb0 = L.neighbors(tilesOf(b));
     const ob = b.obst || {}, banned = new Set([...(b.gold || []), ...Object.keys(ob.ice || {}).map(Number), ...(ob.locks || []), ...(ob.keys || []), ...(b.clock ? [b.clock.i] : [])]);
     const downOK = i => !banned.has(i) && !L.isFree(i, al, nb0);
@@ -150,8 +151,9 @@ function buildLevel(job) {
       return valid(c) ? c : null;
     };
     let seed = 17011 + lv * 101 + pi * 7, m = measure(b, SEARCH.runs, seed), dd = dist(m), evals = 1;
-    for (let it = 0; it < 60; it++) {
-      if (it === 30 && dd > 0.3) break;   // far off half way: another pile
+    for (let it = 0; it < 40; it++) {
+      if (it === 20 && dd > 0.25) break;   // far off half way: another pile
+      if ((Date.now() - T0) / 60000 > MAX_MIN) { log.push(`stopped after ${MAX_MIN} minutes`); return { lv, status: 'failed', reason: 'time limit', log }; }
       const dir = gap(m), far = dd > 0.25;
       if (within(m, false)) {
         const mf = measure(b, FINAL.runs, FINAL.seed + lv * 101);
@@ -162,8 +164,9 @@ function buildLevel(job) {
       }
       if (it && it % 9 === 0) { seed += 1000003; m = measure(b, SEARCH.runs, seed); dd = dist(m); evals++; }   // fresh games now and then (no tuning to one sample)
       let best = null;
-      for (let q = 0; q < 4; q++) { const c = propose(dir, far); if (!c) continue; const mc = measure(c, SEARCH.runs, seed); evals++; const dc = dist(mc); if (!best || dc < best.d) best = { c, m: mc, d: dc }; }
-      if (best && best.d < dd) { b = best.c; m = best.m; dd = best.d; }
+      // each change first with a quick look (SCREEN games), the best one measured properly
+      for (let q = 0; q < 4; q++) { const c = propose(dir, far); if (!c) continue; const mc = measure(c, SCREEN, seed); evals += SCREEN / SEARCH.runs; const dc = dist(mc); if (!best || dc < best.d) best = { c, d: dc }; }
+      if (best && best.d < dd + 0.05) { const mc = measure(best.c, SEARCH.runs, seed); evals++; const dc = dist(mc); if (dc < dd) { b = best.c; m = mc; dd = dc; } }
     }
     log.push(`pile ${pi} ${pl.shape}: no match (off ${dd.toFixed(3)}, ${gap(m) > 0 ? 'too easy' : 'too hard'})`);
   }
