@@ -89,12 +89,12 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tbl-wrap th { position: static; }
 .tbl-wrap th:last-child { width: 19%; }
 #tbl { overflow-x: auto; }
-#tbl table { table-layout: auto; min-width: 960px; }
+#tbl table { table-layout: auto; min-width: 1060px; }
 #tbl th, #tbl td { white-space: nowrap; overflow-wrap: normal; padding: 7px 8px; }
 #tbl th:first-child { width: 116px; }
 #tbl th:nth-child(2) { width: 240px; }
-#tbl th:nth-child(8) { width: 72px; }
-#tbl td:nth-child(8) { white-space: nowrap; overflow-wrap: normal; }
+#tbl th:nth-child(9) { width: 72px; }
+#tbl td:nth-child(9) { white-space: nowrap; overflow-wrap: normal; }
 #tbl th:last-child { width: auto; }
 /* Narrow columns show the same fields as labelled rows, without sideways scrolling. */
 @container (max-width: 560px) {
@@ -528,7 +528,15 @@ function render() {
     }).join('');
     return legacy || recorded ? `<div class="attempt-results">${legacy}${recorded}</div>` : '';
   };
-  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
+  // the own test player's chance for the level: first try (and within 2 / within 4 for a prediction
+  // made before the level was reached); the first event of the level decides which board it was
+  const predCell = l => {
+    const first = ev.find(e => e.lv === l.lv && e.m !== 'd' && !e.tk && (e.k === 'start' || e.k === 'end') && lvlKey(e) === l.k);
+    const o = first && ownOdds(sel, first);
+    if (!o || o.first == null) return '–';
+    return o.four != null ? `<span title="eigen testspeler: in één keer · binnen 2 · binnen 4 pogingen">${o.first}% · ${o.two}% · ${o.four}%</span>` : `<span title="eigen testspeler, vooraf voorspeld: in één keer">${o.first}%</span>`;
+  };
+  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Voorspeld</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${predCell(l)}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
 
   $('#tbl').onclick = event => {
     const button = event.target.closest('button[data-aid]');
@@ -543,7 +551,7 @@ function render() {
       case 'open': return ['📱', `App geopend (versie ${esc(e.v)})`];
       case 'show': return ['👀', 'Terug in de app'];
       case 'hide': return ['💤', `App weggelegd${e.fg ? ` na ${mmss(e.fg)}` : ''}${e.lv && e.scr === 'game' ? ` (midden in ${lvlName(e).toLowerCase()})` : ''}`];
-      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez >= 2 && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}${e.pr != null && e.at === 1 && !e.res ? ` · testspeler haalt hem ${Math.round(e.pr * 100)}% in één keer` : ''}${e.ck && e.at === 1 && !e.res ? ` · ⏰ ${e.ck} zetten` : ''}${e.tl === 1 && e.at === 1 && !e.res ? ' · 💡🔀 verdiend' : e.tl === 0 && e.at === 1 && !e.res ? ' · zonder 💡🔀 (nog niet alles 3 sterren)' : ''}`];
+      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez >= 2 && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}${(() => { if (e.res) return ''; const o = ownOdds(sel, e); if (o) { const at = e.at || 1, q = o.tryPct(at); return at === 1 ? ` · eigen testspeler: ${o.first}% in één keer${o.four != null ? `, ${o.four}% binnen 4 pogingen` : ''}` : q != null ? ` · kans deze poging ${q}% (eigen testspeler)` : ''; } return e.pr > 0 && (e.at || 1) === 1 ? ` · testspeler haalt hem ${Math.round(e.pr * 100)}% in één keer` : ''; })()}${e.ck && e.at === 1 && !e.res ? ` · ⏰ ${e.ck} zetten` : ''}${e.tl === 1 && e.at === 1 && !e.res ? ' · 💡🔀 verdiend' : e.tl === 0 && e.at === 1 && !e.res ? ' · zonder 💡🔀 (nog niet alles 3 sterren)' : ''}`];
       case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${noTime(e) ? '? (tijd onbekend)' : mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''} · ${e.sc} punten${e.rb ? ' · met ↩ terugleggen' : ''}`]
         : e.r === 'stuck' && e.ck ? ['⏰', `${lvlName(e)}: de wekker ging af na ${mmss(e.dur || 0)} (${e.left} stenen over)`]
         : e.r === 'stuck' ? ['❌', `${lvlName(e)}: vastgelopen na ${mmss(e.dur || 0)} (${e.left} stenen over${e.rb ? ', al teruggelegd' : ''})`]
@@ -709,6 +717,27 @@ async function loadPred() {
     }));
   } catch (e) { }
 }
+// The player's own test player for one level and try. Levels played before the prediction was made:
+// the chance the rolling test gave before each try (history). Newer tries: the prediction for the
+// board they play (their app version, or an older version with the same board).
+function tryChance([a, b, c], at) {
+  const w1 = a / 100, w2 = b / 100, w4 = c / 100;
+  if (at <= 1) return a;
+  if (at === 2) return w1 < 1 ? Math.round((w2 - w1) / (1 - w1) * 100) : 100;
+  return w2 < 1 ? Math.round((1 - Math.sqrt(Math.max(0, (1 - w4) / (1 - w2)))) * 100) : 100;
+}
+function ownOdds(pid, e) {
+  const lv = e && e.m !== 'd' && !e.tk ? e.lv : 0;
+  if (!lv || !PRED || !PRED.players || !PRED.players[pid]) return null;
+  const me = PRED.players[pid], h = me.history && me.history[lv];
+  if (h && (!PRED.madeAt || e.t < PRED.madeAt)) return { first: h[0], tryPct: at => h[Math.min(at, h.length) - 1] ?? null, before: true };
+  const sameBoard = p => p.version === e.v || (p.comparable || []).some(c => c.version === e.v && c.levels.some(([a, b]) => lv >= a && lv <= b));
+  const p = [...PRED_BY_VERSION.values()].find(p => p.model === 'move' && sameBoard(p) && p.players && p.players[pid] && p.players[pid].levels[lv]);
+  if (!p) return null;
+  const odds = p.players[pid].levels[lv];
+  return { first: odds[0], two: odds[1], four: odds[2], tryPct: at => tryChance(odds, at) };
+}
+
 function renderPred(levels, curLv) {
   const el = $('#pred'); if (!el) return;
   const ev = events(sel), lastVersion = [...ev].reverse().find(e => e.v);
