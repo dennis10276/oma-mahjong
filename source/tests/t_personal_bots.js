@@ -7,6 +7,11 @@ const game = () => ({ tiles: [{ x: 0, y: 0, z: 0 }, { x: 2, y: 0, z: 0 }], faces
 
 module.exports = [
   {
+    name: 'personal bots: public opening causal features ignore face-down and covered pictures',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_causal_factor_sim.js'); },
+  },
+  {
     name: 'personal bots: recall diagnostics score real options without target outcomes or pooled-person accuracy',
     cpu: true,
     async run() { require('../tools/sim/refit/test_personal_recall_coverage.js'); },

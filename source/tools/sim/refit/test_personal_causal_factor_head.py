@@ -97,6 +97,18 @@ class CausalFactorHeadTests(unittest.TestCase):
                 hits += 1
         self.assertEqual(hits, 8)
 
+    def test_prior_ledgers_and_frozen_forecasts_are_intact(self):
+        from personal_causal_factor_data import FORECAST_LEDGER, verify_unchanged_prior_ledgers
+        verified = verify_unchanged_prior_ledgers()
+        self.assertGreaterEqual(len(verified), 4)
+        lines = [json.loads(line) for line in FORECAST_LEDGER.read_text(encoding='utf-8').splitlines() if line.strip()]
+        self.assertGreaterEqual(len(lines), 1)
+        latest = lines[-1]
+        self.assertEqual(latest['model'], 'causal-3bucket-physical-factor-v1')
+        self.assertTrue(latest['heldBenchmarkTargetMet'])
+        self.assertEqual(latest['unopenedForecastCount'], 86)
+        self.assertTrue(all(1 <= f['predictedAttempt'] <= 8 for f in latest['forecasts']))
+
 
 if __name__ == '__main__':
     unittest.main()

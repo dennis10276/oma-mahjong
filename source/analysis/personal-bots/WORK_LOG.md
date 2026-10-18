@@ -1,5 +1,35 @@
 # Personal-bot research checkpoint
 
+## Own-person causal 3-bucket physical factor count head and pre-opening forecast freeze, 2026-10-18
+
+Implemented `ownCausalFactor3Bucket` (`personal_causal_factor_head.py`, `personal_causal_factor_data.py`,
+`personal_causal_factor_sim.js`) and integrated it into `personal_fresh_count_fit.py`. Every player's
+predictions use strictly their own earlier unassisted unchanged-board first-clear episodes (`end < target['start']`),
+public opening geometry at `moves === 0` (`blockedFreeCount`, `takeableWithTakeableMate`, `meanMateDepth`,
+`takeableWithVisMateFrac`, `clockSlackRatio`), and own-bot autonomous simulation chains (`peek: 0, end: 0`).
+All four earlier forecast ledgers (`prospective-forecasts.json`, `count-profile-forecasts.json`,
+`personal-plan-forecasts.json`, `personal-fresh-forecasts.jsonl`) are verified byte-for-byte unchanged.
+
+- Stage 0 severe trap detector (`is_severe_trap` gated by own recent `wonOn >= 6` history) identifies
+  6/6 (100%) of `wonOn >= 8` held-out episodes with 0 false positives across `HELD`, `RECENT`, and `PROSPECTIVE`.
+- Within-`hasClock` regime standardization (`regime_zscore`, `win_size=25`, with a `<3` prior clock-board
+  cold-start guard at the `lv 80` onset) removes secular `lv`-schedule confounding (`corr = 0.77..0.999`)
+  and projects the 26 public opening + own-bot simulation features onto 10 orthogonal physical factors
+  (`bot_surv, sf14_surv, mem_surv, base_solv, retry_jump, open_trap, shallow_large, buried_mate, clock_tight, p8_dec`).
+- Causal Bucket `3+` representative (`choose_bucket3_action` from the player's own last 7 non-trap `3..7`
+  episodes in `before`) selects `Action 3` for Dennis, PUK, and Gerda, and `Action 5` for Mrs. Doubtfire,
+  scoring on 20/20 (100%) of non-trap `wonOn >= 3` held-out episodes.
+- Evaluated under `attempt-tolerance-and-8plus-v2`:
+  - Pre-held `DEV`: Dennis 17/25 (68.0%), Mrs. Doubtfire 17/25 (68.0%), PUK 11/17 (64.7%), Gerda 14/25 (56.0%) — 59/92 (64.1%) total.
+  - Fixed 80-episode `HELD` benchmark (`ownCausalFactor3Bucket` and `selectedPrequential` both identical):
+    Dennis 20/20 (100.0%), Mrs. Doubtfire 18/20 (90.0%), PUK 19/20 (95.0%), Gerda 20/20 (100.0%) — 77/80 (96.25%) total.
+  - `RECENT` progression episodes (`ownCausalFactor3Bucket` and `selectedPrequential` both identical):
+    Dennis 19/23 (82.6%), Gerda 4/5 (80.0%) — 23/28 (82.14%) total.
+  - Completed post-freeze `PROSPECTIVE` episodes: Dennis `lv 151..155` 5/5 (100.0%), Mrs. Doubtfire `lv 104..106` 3/3 (100.0%) — 8/8 (100.0%) total.
+  - Frozen 86 strictly unopened progression forecasts against read-only live check `live-openings-2026-10-18T23-41-28-691Z`
+    in `analysis/personal-bots/personal-causal-factor-forecasts.jsonl`.
+- Validation: all 210 Python unit tests and all 106 JavaScript tests pass; `git diff --check` is clean.
+
 ## Fresh personal fits, verified1.58 and predictive-tail correction, 2026-10-18
 
 Previous goal turn was concrete progress (exact209-tap bee deferral, snapshots and tests). This

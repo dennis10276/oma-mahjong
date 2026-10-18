@@ -1,5 +1,5 @@
 {
-  "made": "2026-10-18T23:40:06.668483+00:00",
+  "made": "2026-10-18T23:44:08.059405+00:00",
   "protocol": "causal-3bucket-physical-factor-v1",
   "scoringRule": {
     "id": "attempt-tolerance-and-8plus-v2",
@@ -20,6 +20,13 @@
     "byStartCount": 305,
     "byLevelBoardCount": 394,
     "rawFeatureCount": 26
+  },
+  "unchangedPriorLedgers": {
+    "analysis/personal-bots/prospective-forecasts.json": "58de3c411ba779071e6c7f7d30c360cce7f69986465948e0543a044003f13057",
+    "analysis/personal-bots/kind-prospective-forecasts.json": "98b8409ede1146938e8495b598706d07fba424ec31dc9b4017081bf61988cd27",
+    "analysis/personal-bots/count-profile-prospective-forecasts.json": "1e3bd3ba0ae3780aee63791128d4e6a5f031ff073ba8bcddc4599f041de2db62",
+    "analysis/personal-bots/progression-prospective-forecasts.json": "e98206e69c55013ffd54544ad8320e2b54d5040b752041941849d98d99e09938",
+    "analysis/personal-bots/personal-fresh-forecasts.jsonl": "03120392b71ef34411688d3e77f5ecfabaafc988767b672594cddc2fec84ca8e"
   },
   "devPlayers": {
     "Dennisisdebeste": {

@@ -1,6 +1,7 @@
 import argparse
 import hashlib
 import json
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -22,6 +23,43 @@ from personal_fresh_count_fit import eligible, past_of, target_eligible
 
 FRESH_DATA = ROOT / 'analysis/archive/personal-bots/physical-fresh-count-data.json'
 EVAL_OUTPUT = ROOT / 'analysis/personal-bots/personal-causal-factor-evaluation.json'
+FORECAST_LEDGER = ROOT / 'analysis/personal-bots/personal-causal-factor-forecasts.jsonl'
+PIDS = {
+    'Dennisisdebeste': 'pmuy78xu6tsths9',
+    'Mrs. Doubtfire': 'pmv16kj3jr35750',
+    'PUK': 'pmv2gaa0g00eq3q',
+    'Gerda': 'pmv6yhzz3x9oxs8',
+}
+
+
+def sha256_file(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def _matches_expected_hash(path, expected):
+    raw = Path(path).read_bytes()
+    return (
+        hashlib.sha256(raw).hexdigest() == expected
+        or hashlib.sha256(raw.replace(b'\r\n', b'\n')).hexdigest() == expected
+    )
+
+
+def verify_unchanged_prior_ledgers():
+    tail_audit = json.loads((ROOT / 'analysis/personal-bots/predictive-tail-audit.json').read_text(encoding='utf-8'))
+    verified = {}
+    for name, expected in tail_audit['ledgerHashesUnchanged'].items():
+        rel = f'analysis/personal-bots/{name}-forecasts.json'
+        if not _matches_expected_hash(ROOT / rel, expected):
+            raise ValueError(f'Prior forecast ledger changed: {rel}')
+        verified[rel] = expected
+    fresh_ledger_rel = 'analysis/personal-bots/personal-fresh-forecasts.jsonl'
+    fresh_manifest = ROOT / 'analysis/archive/personal-bots/experiments/personal-fresh-count-scored-2026-10-18T16-19-59-198Z/manifest.json'
+    if fresh_manifest.exists():
+        expected_fresh = json.loads(fresh_manifest.read_text(encoding='utf-8'))['files'][fresh_ledger_rel]
+        if not _matches_expected_hash(ROOT / fresh_ledger_rel, expected_fresh):
+            raise ValueError(f'Prior experimental jsonl ledger changed: {fresh_ledger_rel}')
+        verified[fresh_ledger_rel] = expected_fresh
+    return verified
 
 
 def validate_feature_archive(archive_path=FEATURE_ARCHIVE, fresh_path=FRESH_DATA):
@@ -63,6 +101,7 @@ def validate_feature_archive(archive_path=FEATURE_ARCHIVE, fresh_path=FRESH_DATA
 
 def evaluate_causal_factor_head(fresh_path=FRESH_DATA, output_path=EVAL_OUTPUT):
     summary = validate_feature_archive(FEATURE_ARCHIVE, fresh_path)
+    unchanged_ledgers = verify_unchanged_prior_ledgers()
     fresh = json.loads(fresh_path.read_text(encoding='utf-8'))
     rows = fresh['rows']
     held_ids = set(fresh['comparisonEpisodes'])
@@ -168,6 +207,7 @@ def evaluate_causal_factor_head(fresh_path=FRESH_DATA, output_path=EVAL_OUTPUT):
         'publicOpeningOnly': True,
         'heldBenchmarkTargetMet': held_target_met,
         'archiveValidation': summary,
+        'unchangedPriorLedgers': unchanged_ledgers,
         'devPlayers': cohort_metrics(dev_cohort),
         'heldPlayers': held_players,
         'recentPlayers': cohort_metrics(recent_cohort),
@@ -181,19 +221,76 @@ def evaluate_causal_factor_head(fresh_path=FRESH_DATA, output_path=EVAL_OUTPUT):
     return report
 
 
+def freeze_live_forecasts(live_dir, eval_report=None, ledger_path=FORECAST_LEDGER):
+    live_dir = Path(live_dir).resolve()
+    manifest = json.loads((live_dir / 'manifest.json').read_text(encoding='utf-8'))
+    if manifest.get('evidence') != 'read-only-live-opening-check':
+        raise ValueError('Live snapshot must be a read-only-live-opening-check')
+    plays_bytes = (live_dir / 'plays.json').read_bytes()
+    if hashlib.sha256(plays_bytes).hexdigest() != manifest['files']['plays.json']:
+        raise ValueError('Live plays.json hash mismatch')
+    plays = json.loads(plays_bytes)
+    if eval_report is None:
+        eval_report = evaluate_causal_factor_head()
+    unchanged_ledgers = verify_unchanged_prior_ledgers()
+
+    opened_by_player = {}
+    for name, pid in PIDS.items():
+        events = list((plays.get(pid) or {}).values())
+        opened_lvs = {
+            int(ev['lv'])
+            for ev in events
+            if ev.get('k') == 'start' and ev.get('m') != 'd' and not ev.get('tk') and 'lv' in ev
+        }
+        opened_by_player[name] = opened_lvs
+
+    unopened_forecasts = []
+    omitted_opened = []
+    for item in eval_report['frozenFutureForecasts']:
+        if item['lv'] in opened_by_player[item['name']]:
+            omitted_opened.append({'name': item['name'], 'lv': item['lv'], 'reason': 'already-opened-in-live-check'})
+        else:
+            unopened_forecasts.append({**item, 'upcoming': True, 'numericForecastFrozen': True})
+
+    frozen_at = int(time.time() * 1000)
+    snapshot = {
+        'frozenAt': frozen_at,
+        'made': datetime.now(timezone.utc).isoformat(),
+        'model': 'causal-3bucket-physical-factor-v1',
+        'scope': 'first-clear-progression-v1',
+        'personalOnly': True,
+        'publicOpeningOnly': True,
+        'heldBenchmarkTargetMet': eval_report['heldBenchmarkTargetMet'],
+        'liveSnapshot': live_dir.relative_to(ROOT).as_posix(),
+        'liveManifestSha256': sha256_file(live_dir / 'manifest.json'),
+        'featureArchiveSha256': sha256_file(FEATURE_ARCHIVE),
+        'unchangedPriorLedgers': unchanged_ledgers,
+        'unopenedForecastCount': len(unopened_forecasts),
+        'omittedAlreadyOpened': omitted_opened,
+        'forecasts': unopened_forecasts,
+    }
+    ledger_path.write_text(json.dumps(snapshot) + '\n', encoding='utf-8')
+    return snapshot
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--archive', type=Path, default=FEATURE_ARCHIVE)
     parser.add_argument('--data', type=Path, default=FRESH_DATA)
     parser.add_argument('--evaluate', action='store_true')
+    parser.add_argument('--freeze-live', type=Path, default=None)
     args = parser.parse_args()
-    if args.evaluate:
+    if args.evaluate or args.freeze_live:
         rep = evaluate_causal_factor_head(args.data, EVAL_OUTPUT)
-        print(json.dumps({
-            'heldBenchmarkTargetMet': rep['heldBenchmarkTargetMet'],
-            'heldPlayers': {n: rep['heldPlayers'][n]['ownCausalFactor3Bucket'] for n in NAMES},
-            'recentPlayers': {n: rep['recentPlayers'][n]['ownCausalFactor3Bucket'] for n in NAMES},
-            'prospectiveCompletedPlayers': {n: rep['prospectiveCompletedPlayers'][n]['ownCausalFactor3Bucket'] for n in NAMES},
-        }, indent=2))
+        if args.freeze_live:
+            snap = freeze_live_forecasts(args.freeze_live, rep, FORECAST_LEDGER)
+            print(json.dumps({'frozenAt': snap['frozenAt'], 'unopenedForecastCount': snap['unopenedForecastCount']}, indent=2))
+        else:
+            print(json.dumps({
+                'heldBenchmarkTargetMet': rep['heldBenchmarkTargetMet'],
+                'heldPlayers': {n: rep['heldPlayers'][n]['ownCausalFactor3Bucket'] for n in NAMES},
+                'recentPlayers': {n: rep['recentPlayers'][n]['ownCausalFactor3Bucket'] for n in NAMES},
+                'prospectiveCompletedPlayers': {n: rep['prospectiveCompletedPlayers'][n]['ownCausalFactor3Bucket'] for n in NAMES},
+            }, indent=2))
     else:
         print(json.dumps(validate_feature_archive(args.archive, args.data), indent=2))
