@@ -113,7 +113,7 @@ function buildLevel(job) {
     }
     found.sort((a, b) => Math.abs(a.free - P.free) - Math.abs(b.free - P.free) || a.alike.pos - b.alike.pos);
     if (found.length) piles.push(found[0]);
-    if (piles.length >= 3) break;
+    if (piles.length >= 6) break;
   }
   if (!piles.length) return { lv, status: 'failed', reason: 'no new pile fits', log };
   // 2. designs on every pile (other deals and clock tiles), all screened quickly; only the closest
@@ -165,10 +165,14 @@ function buildLevel(job) {
       if ((Date.now() - T0) / 60000 > MAX_MIN) { log.push(`stopped after ${MAX_MIN} minutes`); return { lv, status: 'failed', reason: 'time limit', log }; }
       const dir = gap(m), far = dd > 0.25;
       if (within(m, false, 0.8)) {
+        // first fresh games of the same size (tuning fits itself to the games it was tuned on)
+        const mc = measure(b, SEARCH.runs, seed + 7777777); evals++;
+        if (!within(mc, false)) { seed += 1000003; m = mc; dd = dist(mc); log.push(`design ${di} ${pl.shape}: near, not on fresh games`); continue; }
         const mf = measure(b, FINAL.runs, FINAL.seed + lv * 101);
         evals += 4;
         if (within(mf, true)) return { lv, status: 'done', shape: pl.shape, pileBase: pl.base, alike: pl.alike, free: pl.free, board: b, search: m, final: mf, evals, log };
-        log.push(`pile ${pi} ${pl.shape}: final check missed after ${it} steps (${NAMES.map(x => mf[x].first.toFixed(2)).join('/')} vs ${NAMES.map(x => P.target[x].first.toFixed(2)).join('/')})`);
+        const miss = NAMES.flatMap(x => ['first', 'two', 'four'].filter(k => Math.abs(mf[x][k] - P.target[x][k]) > TOL[k]).map(k => `${x.slice(0, 4)} ${k} ${mf[x][k].toFixed(2)} vs ${P.target[x][k].toFixed(2)}`).concat(Math.abs(ease(mf[x]) - ease(P.target[x])) > TOL.ease ? [`${x.slice(0, 4)} ease`] : []));
+        log.push(`design ${di} ${pl.shape}: final check missed after ${it} steps (${miss.join(', ')})`);
         seed += 1000003; m = measure(b, SEARCH.runs, seed); dd = dist(m); evals++;   // other games, keep tuning
       }
       if (it && it % 9 === 0) { seed += 1000003; m = measure(b, SEARCH.runs, seed); dd = dist(m); evals++; }   // fresh games now and then (no tuning to one sample)
@@ -177,7 +181,7 @@ function buildLevel(job) {
       for (let q = 0; q < 4; q++) { const c = propose(dir, far); if (!c) continue; const mc = measure(c, SCREEN, seed); evals += SCREEN / SEARCH.runs; const dc = dist(mc); if (!best || dc < best.d) best = { c, d: dc }; }
       if (best && best.d < dd + 0.05) { const mc = measure(best.c, SEARCH.runs, seed); evals++; const dc = dist(mc); if (dc < dd) { b = best.c; m = mc; dd = dc; } }
     }
-    log.push(`pile ${pi} ${pl.shape}: no match (off ${dd.toFixed(3)}, ${gap(m) > 0 ? 'too easy' : 'too hard'})`);
+    log.push(`design ${di} ${pl.shape}: no match (off ${dd.toFixed(3)}, ${gap(m) > 0 ? 'too easy' : 'too hard'})`);
   }
   return { lv, status: 'failed', reason: 'difficulty not matched', log };
 }
