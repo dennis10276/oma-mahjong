@@ -86,7 +86,8 @@ function buildLevel(job) {
   const measure = (b, runs, seed) => { const g = obsGame(b), out = {}; for (const n of NAMES) { const p = { ...H2.P, ...profiles[n].persona }; const r = H2.rateChain(g, runs, seed, p, p.memory, 4); out[n] = { first: r.first, two: r.within[1], four: r.within[3] }; } return out; };
   const ease = m => 0.5 * m.first + 0.25 * m.two + 0.25 * m.four;
   const dist = m => NAMES.reduce((s, n) => s + Math.abs(m[n].first - P.target[n].first) + 0.5 * Math.abs(m[n].two - P.target[n].two) + 0.5 * Math.abs(m[n].four - P.target[n].four), 0);
-  const within = (m, ez) => NAMES.every(n => Math.abs(m[n].first - P.target[n].first) <= TOL.first && Math.abs(m[n].two - P.target[n].two) <= TOL.two && Math.abs(m[n].four - P.target[n].four) <= TOL.four && (!ez || Math.abs(ease(m[n]) - ease(P.target[n])) <= TOL.ease));
+  // f: the search aims a little tighter than the final check, so that check passes more often
+  const within = (m, ez, f = 1) => NAMES.every(n => Math.abs(m[n].first - P.target[n].first) <= TOL.first * f && Math.abs(m[n].two - P.target[n].two) <= TOL.two * f && Math.abs(m[n].four - P.target[n].four) <= TOL.four * f && (!ez || Math.abs(ease(m[n]) - ease(P.target[n])) <= TOL.ease * f));
   // validity, as the game's boards: the stored way through works (ice, locks, tray, clock) and no
   // face-down tile is free at the start (the designer's "never the only way out" rule is about its
   // own dealing order, not the stored way through: today's boards do not keep it there either)
@@ -143,11 +144,19 @@ function buildLevel(job) {
     const propose = (dir, far) => {
       const c = { ...b, faces: b.faces.slice(), down: b.down.slice(), clock: b.clock ? { ...b.clock } : null };
       const k = r();
-      if (k < 0.55) { for (let s = 0; s < (far ? 1 + Math.floor(r() * 3) : 1); s++) { const a = Math.floor(r() * n), z = Math.floor(r() * n); if (c.faces[a] !== c.faces[z]) [c.faces[a], c.faces[z]] = [c.faces[z], c.faces[a]]; } }
+      if (k < 0.3) {
+        // the designer's own lever: a tile right under its twin (it has to go to the tray first) makes
+        // a level harder; taking such a pair apart makes it easier
+        const d = Math.floor(r() * n), ups = nb0.above[d]; if (!ups.length) return null;
+        const u = ups[Math.floor(r() * ups.length)];
+        if (dir > 0) { if (c.faces[d] === c.faces[u]) return null; const xs = []; for (let x = 0; x < n; x++) if (x !== u && x !== d && c.faces[x] === c.faces[u]) xs.push(x); if (!xs.length) return null; const x = xs[Math.floor(r() * xs.length)]; [c.faces[d], c.faces[x]] = [c.faces[x], c.faces[d]]; }
+        else { if (c.faces[d] !== c.faces[u]) return null; const x = Math.floor(r() * n); if (c.faces[x] === c.faces[d]) return null; [c.faces[d], c.faces[x]] = [c.faces[x], c.faces[d]]; }
+      }
+      else if (k < 0.55) { for (let s = 0; s < (far ? 1 + Math.floor(r() * 3) : 1); s++) { const a = Math.floor(r() * n), z = Math.floor(r() * n); if (c.faces[a] !== c.faces[z]) [c.faces[a], c.faces[z]] = [c.faces[z], c.faces[a]]; } }
       else if (k < 0.7 && c.clock) { const nn = c.clock.n + (dir > 0 ? -1 : 1); if (nn < base + 1 || nn > base + 4) return null; c.clock.n = nn; }
       else if (k < 0.82) { const f = free(c); if (!f.length) return null; c.down[Math.floor(r() * c.down.length)] = f[Math.floor(r() * f.length)]; }
-      else if (dir > 0) { if (c.down.length >= d0 + 4) return null; const f = free(c); if (!f.length) return null; c.down.push(f[Math.floor(r() * f.length)]); }
-      else { if (c.down.length <= d0 - 4) return null; c.down.splice(Math.floor(r() * c.down.length), 1); }
+      else if (dir > 0) { if (c.down.length >= d0 + 8) return null; const f = free(c); if (!f.length) return null; c.down.push(f[Math.floor(r() * f.length)]); }
+      else { if (c.down.length <= d0 - 8) return null; c.down.splice(Math.floor(r() * c.down.length), 1); }
       return valid(c) ? c : null;
     };
     let seed = 17011 + lv * 101 + pi * 7, m = measure(b, SEARCH.runs, seed), dd = dist(m), evals = 1;
@@ -155,7 +164,7 @@ function buildLevel(job) {
       if (it === 20 && dd > 0.25) break;   // far off half way: another pile
       if ((Date.now() - T0) / 60000 > MAX_MIN) { log.push(`stopped after ${MAX_MIN} minutes`); return { lv, status: 'failed', reason: 'time limit', log }; }
       const dir = gap(m), far = dd > 0.25;
-      if (within(m, false)) {
+      if (within(m, false, 0.8)) {
         const mf = measure(b, FINAL.runs, FINAL.seed + lv * 101);
         evals += 4;
         if (within(mf, true)) return { lv, status: 'done', shape: pl.shape, pileBase: pl.base, alike: pl.alike, free: pl.free, board: b, search: m, final: mf, evals, log };
