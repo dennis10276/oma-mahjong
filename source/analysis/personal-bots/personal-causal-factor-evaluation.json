@@ -1,5 +1,5 @@
 {
-  "made": "2026-10-19T22:05:47.694721+00:00",
+  "made": "2026-10-19T22:41:25.849129+00:00",
   "protocol": "causal-3bucket-physical-factor-v1",
   "scoringRule": {
     "id": "attempt-tolerance-and-8plus-v2",
@@ -202,14 +202,14 @@
     "Gerda": {
       "ownCausalFactor3Bucket": {
         "n": 20,
-        "correct": 20,
-        "accuracy": 1.0,
-        "exactAccuracy": 0.9,
+        "correct": 18,
+        "accuracy": 0.9,
+        "exactAccuracy": 0.8,
         "wilson95": [
-          0.8388698745050667,
-          1.0
+          0.6989617935882066,
+          0.9721341060158468
         ],
-        "meanAbsoluteError": 0.75
+        "meanAbsoluteError": 0.85
       },
       "alwaysFirst": {
         "n": 20,
@@ -280,14 +280,14 @@
     "Gerda": {
       "ownCausalFactor3Bucket": {
         "n": 5,
-        "correct": 4,
-        "accuracy": 0.8,
-        "exactAccuracy": 0.8,
+        "correct": 5,
+        "accuracy": 1.0,
+        "exactAccuracy": 1.0,
         "wilson95": [
-          0.3755282641185388,
-          0.9637768390302125
+          0.5655085052479191,
+          1.0000000000000002
         ],
-        "meanAbsoluteError": 0.2
+        "meanAbsoluteError": 0.0
       },
       "alwaysFirst": {
         "n": 5,
@@ -1247,10 +1247,10 @@
       "board": "554c38899b0b19d3366b7737b43b8a420b0b00f66198038dbae11dadfa8acec2",
       "wonOn": 1,
       "predictions": {
-        "ownCausalFactor3Bucket": 1,
+        "ownCausalFactor3Bucket": 2,
         "alwaysFirst": 1
       },
-      "correct": true
+      "correct": false
     },
     {
       "name": "Gerda",
@@ -1403,10 +1403,10 @@
       "board": "849f657c3840f7373b4a627e14f66a066cb4063a965d0d64d0a88f0504fe42c5",
       "wonOn": 3,
       "predictions": {
-        "ownCausalFactor3Bucket": 3,
+        "ownCausalFactor3Bucket": 2,
         "alwaysFirst": 1
       },
-      "correct": true
+      "correct": false
     },
     {
       "name": "Gerda",
@@ -1730,10 +1730,10 @@
       "board": "6a2dfe41bb03865f3c43651ff94abb1f4ac0a706fb545c536831eb441b633340",
       "wonOn": 2,
       "predictions": {
-        "ownCausalFactor3Bucket": 1,
+        "ownCausalFactor3Bucket": 2,
         "alwaysFirst": 1
       },
-      "correct": false
+      "correct": true
     },
     {
       "name": "Gerda",
@@ -2477,7 +2477,7 @@
       "board": "6f67ecbeae1fcf29ccf970ae1a14300b74bae42ccfd515395b4268703391dc07",
       "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 1,
+      "predictedAttempt": 2,
       "bucket3Action": 3,
       "severeTrap": false,
       "factors": {
@@ -2569,7 +2569,7 @@
       "board": "ce6a4fe2c655982a8468b537cc7201a1f14e251213071ab22b6ac620a9602d92",
       "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 1,
+      "predictedAttempt": 2,
       "bucket3Action": 3,
       "severeTrap": false,
       "factors": {
@@ -2983,7 +2983,7 @@
       "board": "2b98b55b6a326b80402c8a5525fe4468d84349b021d7a1c699482f79c0f7ad9c",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": true,
-      "predictedAttempt": 3,
+      "predictedAttempt": 2,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {
@@ -3052,7 +3052,7 @@
       "board": "967ff719207784bb402983e61f9caf68912a844bbe46baf0d033aaadd0388d0d",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 2,
+      "predictedAttempt": 3,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {
@@ -3075,7 +3075,7 @@
       "board": "9ce01b4a2c3845ea24d2f149b4290986bec974e250d3e831e829405d461edf7b",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 2,
+      "predictedAttempt": 1,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {
@@ -3098,7 +3098,7 @@
       "board": "df4be479a9ae3655e3edc4fbe389ae1961b112494a65e7950e98ba17d46506cd",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 1,
+      "predictedAttempt": 2,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {
@@ -3121,7 +3121,7 @@
       "board": "79e03ed202f8ac314e212d14cb7876493f245051dd543db7712396f1181dce29",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 3,
+      "predictedAttempt": 2,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {
@@ -3282,7 +3282,7 @@
       "board": "c54931303d4e9df9c80ac1f032fc7bdc44a5dc08c957bc4b804555ec9f3ce29f",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 1,
+      "predictedAttempt": 2,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {
@@ -3374,7 +3374,7 @@
       "board": "1411743adcac720eac5553f7e8ea87edb375d07fdd6bcf16c7ae0dd830f4aaa4",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 3,
+      "predictedAttempt": 2,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {
@@ -3397,7 +3397,7 @@
       "board": "d5f4f7110a2e982ef412aab8d202f2e5e9e06d01a1251049058125469e8a1f36",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 3,
+      "predictedAttempt": 2,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {

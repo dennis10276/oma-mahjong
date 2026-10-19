@@ -117,6 +117,18 @@ class CausalFactorHeadTests(unittest.TestCase):
         self.assertEqual(pred, 1, f'Mrs. Doubtfire Level 102 predicted {pred} instead of 1')
         self.assertTrue(is_correct(pred, mrs_102['wonOn']))
 
+    def test_multi_cohort_replication_suite_passes(self):
+        from verify_multi_cohort_replication import verify_held_benchmark, verify_recent_tasks, verify_post_freeze_live, verify_unopened_future_ledger
+        fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
+        held = verify_held_benchmark(fresh)
+        self.assertTrue(all(p['accuracy'] >= 0.80 for p in held.values()))
+        recent = verify_recent_tasks(fresh)
+        self.assertTrue(all(p['accuracy'] >= 0.80 for p in recent.values()))
+        live = verify_post_freeze_live(fresh)
+        self.assertTrue(all(p['accuracy'] >= 0.80 for p in live.values()))
+        verify_unopened_future_ledger(fresh)
+
 
 if __name__ == '__main__':
     unittest.main()
+

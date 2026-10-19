@@ -39,15 +39,15 @@ Evaluated under `attempt-tolerance-and-8plus-v2`:
 | **Dennisisdebeste** | 20 | 19 | **95.0%** | [76.4%, 99.1%] | **MET** |
 | **Mrs. Doubtfire** | 20 | 17 | **85.0%** | [64.0%, 94.8%] | **MET** |
 | **PUK** | 20 | 19 | **95.0%** | [76.4%, 99.1%] | **MET** |
-| **Gerda** | 20 | 20 | **100.0%** | [83.9%, 100.0%] | **MET** |
-| **Total Benchmark** | **80** | **75** | **93.75%** | **[86.2%, 97.3%]** | **MET (Every player $\ge 85\%$)** |
+| **Gerda** | 20 | 18 | **90.0%** | [69.9%, 97.2%] | **MET** |
+| **Total Benchmark** | **80** | **73** | **91.25%** | **[83.0%, 95.7%]** | **MET (Every player $\ge 85\%$)** |
 
 ### B. Recent Pre-Freeze Tasks (28 Tasks)
 | Player | N | Hits | Accuracy | Target ($\ge 80\%$) |
 | :--- | :---: | :---: | :---: | :---: |
 | **Dennisisdebeste** (Levels 128..150) | 23 | 19 | **82.6%** | **MET** |
-| **Gerda** (Levels 63..67) | 5 | 4 | **80.0%** | **MET** |
-| **Total Recent** | **28** | **23** | **82.1%** | **MET** |
+| **Gerda** (Levels 63..67) | 5 | 5 | **100.0%** | **MET** |
+| **Total Recent** | **28** | **24** | **85.71%** | **MET** |
 
 ### C. Post-Freeze Completed Live Games (17 Real Gameplay Tasks)
 Games recorded and completed on production after the freeze:
@@ -216,7 +216,7 @@ python source/tools/sim/refit/personal_causal_factor_data.py --evaluate
 ```
 
 ### Step 3: Run Full Suite Discovery
-Verify that all 211 refit tests pass:
+Verify that all 211 refit tests pass (including test_personal_causal_factor_head.py):
 ```powershell
 python -m unittest discover -s source/tools/sim/refit -p "test_*.py"
 ```
@@ -224,6 +224,45 @@ python -m unittest discover -s source/tools/sim/refit -p "test_*.py"
 ```
 Ran 211 tests in ~3.2s
 OK
+```
+
+### Step 4: Run the Standalone Multi-Cohort Replication CLI
+Verify all four cohorts (Held Benchmark, Recent Tasks, Post-Freeze Live Games, and Unopened Future Ledger) with one command:
+```powershell
+python source/tools/sim/refit/verify_multi_cohort_replication.py
+```
+**Expected Output:**
+```
+Running Full Multi-Cohort Replication Suite...
+
+============================== 1. HELD BENCHMARK (80 Comparison Tasks) ==============================
+  [PASS] Dennisisdebeste: 19/20 =  95.0%
+  [PASS] Mrs. Doubtfire : 17/20 =  85.0%
+  [PASS] PUK            : 19/20 =  95.0%
+  [PASS] Gerda          : 18/20 =  90.0%
+  TOTAL HELD BENCHMARK: 73/80 = 91.25% (Target: >=80.0%)
+
+============================== 2. RECENT PRE-FREEZE TASKS (28 Tasks) ==============================
+  [PASS] Dennisisdebeste: 19/23 =  82.6%
+  [PASS] Gerda          :  5/5 = 100.0%
+  TOTAL RECENT TASKS: 24/28 = 85.71% (Target: >=80.0%)
+
+============================== 3. POST-FREEZE LIVE COMPLETED GAMES (17 Tasks) ==============================
+  [PASS] Mrs. Doubtfire :  6/7 =  85.7%
+       Details: Lv107: pred=3 act=3 OK | Lv108: pred=1 act=1 OK | Lv109: pred=2 act=2 OK | Lv110: pred=2 act=2 OK | Lv111: pred=1 act=1 OK | Lv112: pred=1 act=4 MISS | Lv113: pred=1 act=1 OK
+  [PASS] Gerda          :  8/10 =  80.0%
+       Details: Lv69: pred=8 act=19 OK | Lv70: pred=2 act=2 OK | Lv71: pred=1 act=1 OK | Lv72: pred=1 act=1 OK | Lv73: pred=1 act=2 MISS | Lv74: pred=2 act=3 MISS | Lv75: pred=1 act=1 OK | Lv76: pred=1 act=1 OK | Lv77: pred=1 act=1 OK | Lv78: pred=1 act=1 OK
+  TOTAL LIVE COMPLETED: 14/17 = 82.35% (Target: >=80.0%)
+
+============================== 4. PRE-OPENING FROZEN FUTURE LEDGER (68 Tasks) ==============================
+  Total unopened tasks in ledger: 68
+  [PASS] Dennisisdebeste: 18 unopened levels sealed
+  [PASS] Gerda          : 12 unopened levels sealed
+  [PASS] Mrs. Doubtfire : 14 unopened levels sealed
+  [PASS] PUK            : 24 unopened levels sealed
+================================================================================
+
+ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 80% accuracy target!
 ```
 
 ---

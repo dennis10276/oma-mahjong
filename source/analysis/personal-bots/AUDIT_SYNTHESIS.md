@@ -171,8 +171,8 @@ To eliminate the defects identified in Codex's audit (retrospective recomputatio
 
 | Cohort | Description | Total Score | Player Breakdown | Accuracy | Target ($\ge 80\%$) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Held Benchmark** | 80 Comparison Tasks (20/player) | **75 / 80** | Dennis: 19/20 (95%), Mrs. Doubtfire: 17/20 (85%), PUK: 19/20 (95%), Gerda: 20/20 (100%) | **93.75%** | **MET** (all players $\ge 85\%$) |
-| **Recent Tasks** | Pre-Freeze Held-Out Tasks (N=28) | **23 / 28** | Dennis: 19/23 (82.6%), Gerda: 4/5 (80.0%) | **82.14%** | **MET** (both players $\ge 80\%$) |
+| **Held Benchmark** | 80 Comparison Tasks (20/player) | **73 / 80** | Dennis: 19/20 (95%), Mrs. Doubtfire: 17/20 (85%), PUK: 19/20 (95%), Gerda: 18/20 (90%) | **91.25%** | **MET** (all players $\ge 85\%$) |
+| **Recent Tasks** | Pre-Freeze Held-Out Tasks (N=28) | **24 / 28** | Dennis: 19/23 (82.6%), Gerda: 5/5 (100.0%) | **85.71%** | **MET** (both players $\ge 80\%$) |
 | **Post-Freeze Live** | Real games completed after freeze (N=17) | **14 / 17** | Mrs. Doubtfire (107–113): 6/7 (85.7%), Gerda (69–78): 8/10 (80.0%) | **82.35%** | **MET** (both players $\ge 80\%$) |
 
 ### Pre-Opening Frozen Future Ledger (68 Genuinely Unopened Progression Levels)
