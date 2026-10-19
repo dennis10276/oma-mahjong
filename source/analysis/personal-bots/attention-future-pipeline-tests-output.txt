@@ -1,0 +1,72 @@
+{
+..........
+  "predictions": 96,
+  "file": "C:\\Users\\den_k\\AppData\\Local\\Temp\\tmpht2snbww\\archive\\runs\\future-fixture\\analysis\\personal-bots\\personal-attention-future-predictions.json",
+  "targetMet": false
+}
+{
+  "frozenAt": 1792377199725,
+  "forecasts": 95,
+  "next": {
+    "Dennisisdebeste": [
+      {
+        "lv": 102,
+        "predictedAttempt": 1
+      },
+      {
+        "lv": 103,
+        "predictedAttempt": 1
+      },
+      {
+        "lv": 104,
+        "predictedAttempt": 1
+      }
+    ],
+    "Mrs. Doubtfire": [
+      {
+        "lv": 101,
+        "predictedAttempt": 1
+      },
+      {
+        "lv": 102,
+        "predictedAttempt": 1
+      },
+      {
+----------------------------------------------------------------------
+        "lv": 103,
+Ran 10 tests in 0.190s
+        "predictedAttempt": 1
+
+      }
+OK
+    ],
+    "PUK": [
+      {
+        "lv": 101,
+        "predictedAttempt": 1
+      },
+      {
+        "lv": 102,
+        "predictedAttempt": 1
+      },
+      {
+        "lv": 103,
+        "predictedAttempt": 1
+      }
+    ],
+    "Gerda": [
+      {
+        "lv": 101,
+        "predictedAttempt": 1
+      },
+      {
+        "lv": 102,
+        "predictedAttempt": 1
+      },
+      {
+        "lv": 103,
+        "predictedAttempt": 1
+      }
+    ]
+  }
+}

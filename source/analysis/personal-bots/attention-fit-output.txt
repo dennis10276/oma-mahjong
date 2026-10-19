@@ -1,0 +1,4 @@
+{"name": "Dennisisdebeste", "weights": [-0.6626165923712061, 0.07267469615834868], "opportunities": 5512, "regularizedNllGain": 41.13827744598666}
+{"name": "Mrs. Doubtfire", "weights": [-0.9387742073818617, 0.06706448281874547], "opportunities": 2303, "regularizedNllGain": 51.61840131421286}
+{"name": "PUK", "weights": [-0.4575952618404159, 0.0], "opportunities": 915, "regularizedNllGain": 4.462316432924126}
+{"name": "Gerda", "weights": [-0.4326144694958195, 0.0], "opportunities": 4869, "regularizedNllGain": 15.33850603662222}

@@ -1,0 +1,30 @@
+{
+  "runRoot": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\personal-attention-count-2026-10-19T02-05-48-052Z",
+  "entries": 80,
+  "controllerIds": {
+    "Dennisisdebeste": {
+      "id": "e55ba60a7a4532df39b8a5c008aa7a6dbb90228c3983320145db15ac3ac46e16",
+      "name": "Dennisisdebeste",
+      "staticActorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "definition": "{\"name\":\"Dennisisdebeste\",\"staticActorId\":\"d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7\",\"staticSha256\":\"77d4314f673fb38630722572e335ac1292f3d270204392a512975356aa3ed1d5\",\"jointSha256\":\"88292c041089dab07e299ac9750b19c77c39943b31054f6c751544f9233f0462\",\"attentionSha256\":\"3d9965f81dd4db8d173d027ce6b1cebaf04e06482d5b2f6d8245b4d33f1f25b8\"}"
+    },
+    "Mrs. Doubtfire": {
+      "id": "5c4e91e9809cd82d4a2bca676c0f495c5d411ed76c18b5b39a594cc04a24b2fe",
+      "name": "Mrs. Doubtfire",
+      "staticActorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "definition": "{\"name\":\"Mrs. Doubtfire\",\"staticActorId\":\"27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7\",\"staticSha256\":\"3f7fe0742cf2a319a379802817b78c32e15c22990ba0e9266d08042361028fcb\",\"jointSha256\":\"808cdce39bb0b748e55f1d6c22c40ae11aa60d9423aae189244c018593ba0172\",\"attentionSha256\":\"15aab78c9eaf0805be847b63328fef15fd7dfa7eb996db2dda9097ecbb2537c6\"}"
+    },
+    "PUK": {
+      "id": "2e43ec0cd52535a88154d133d2e955886323ca44a8c68b97f47542dce1751f70",
+      "name": "PUK",
+      "staticActorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "definition": "{\"name\":\"PUK\",\"staticActorId\":\"8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe\",\"staticSha256\":\"9e7369317369194ff0e68bcb595c0792e866a0f3a1c08ae5779e28d82c109d11\",\"jointSha256\":\"52b1f5ec3ed23c1183f16ef252b2bdb1598f6f37bb18a86d849d863563525a82\",\"attentionSha256\":\"ded797eb9d4998e9c446aaa8491a6fa89aa66cde3a09ae95bb472dac870aa0fb\"}"
+    },
+    "Gerda": {
+      "id": "661b2f3d7b09af33ef3fb7b919cd50b8b5399843aafe771ffa45aef618247cc4",
+      "name": "Gerda",
+      "staticActorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "definition": "{\"name\":\"Gerda\",\"staticActorId\":\"390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68\",\"staticSha256\":\"849bf595695df54bf5c0f3a008793e8b41a68eda9b0e72bfb06b9d74d6bb0656\",\"jointSha256\":\"2eb47f75b808c1d482e747c8eaa8bd28c4215ec36794e89d65149e602eeeae97\",\"attentionSha256\":\"1ef80e98f0b90c28502209fa73ee6153c98df29b3cf9f299abe5222a0dacf6aa\"}"
+    }
+  }
+}

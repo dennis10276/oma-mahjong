@@ -1,0 +1,16 @@
+'use strict';
+const assert = require('assert/strict');
+const { publicSignature, summarize } = require('./personal_temperature_cycle_audit.js');
+const decision = { F: [[1, 2]], kindContext: [3], knownPlan: [[4]] };
+const frame = { moves: 1, alive: [1, 0], tray: [2], openPeek: 0 };
+assert.equal(publicSignature(decision, frame), publicSignature({ ...decision, wonOn: 99, unseenPicture: 100 }, frame));
+assert.notEqual(publicSignature(decision, frame), publicSignature(decision, { ...frame, alive: [0, 0] }));
+const decisions = Array.from({ length: 128 }, (unused, index) => ({ publicVisits: index + 1, inspection: true, knownReopen: true }));
+const frames = Array.from({ length: 128 }, () => ({ ...frame }));
+const report = summarize(decisions, frames);
+assert.equal(report.maximumIdenticalDecisionVisits, 128);
+assert.equal(report.tailKnownReinspections, 128);
+assert(report.tailSameProgress);
+assert(!summarize(decisions, [{ ...frame, alive: [1, 1] }, ...frames.slice(1)]).tailSameProgress);
+assert.throws(() => summarize(decisions, []));
+console.log('PASS bounded temperature cycle evidence requires repeated public decisions and physical stagnation without target labels');

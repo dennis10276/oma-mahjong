@@ -1,0 +1,8 @@
+{"name":"Dennisisdebeste","lv":150,"temperature":0.25,"baseline":"contextChoiceLimit","attention":"tray","baselineCaps":1,"attentionCaps":0,"maximumAttentionVisits":26}
+{"name":"Dennisisdebeste","lv":150,"temperature":1,"baseline":"clock","attention":"clock","baselineCaps":0,"attentionCaps":0,"maximumAttentionVisits":1}
+{"name":"Mrs. Doubtfire","lv":103,"temperature":0.25,"baseline":"contextChoiceLimit","attention":"tray","baselineCaps":1,"attentionCaps":0,"maximumAttentionVisits":4}
+{"name":"Mrs. Doubtfire","lv":103,"temperature":1,"baseline":"clock","attention":"clock","baselineCaps":0,"attentionCaps":0,"maximumAttentionVisits":1}
+{"name":"PUK","lv":53,"temperature":0.25,"baseline":"contextChoiceLimit","attention":"tray","baselineCaps":1,"attentionCaps":0,"maximumAttentionVisits":40}
+{"name":"PUK","lv":53,"temperature":1,"baseline":"tray","attention":"tray","baselineCaps":0,"attentionCaps":0,"maximumAttentionVisits":1}
+{"name":"Gerda","lv":67,"temperature":0.25,"baseline":"contextChoiceLimit","attention":"contextChoiceLimit","baselineCaps":1,"attentionCaps":1,"maximumAttentionVisits":87}
+{"name":"Gerda","lv":67,"temperature":1,"baseline":"tray","attention":"tray","baselineCaps":0,"attentionCaps":0,"maximumAttentionVisits":1}

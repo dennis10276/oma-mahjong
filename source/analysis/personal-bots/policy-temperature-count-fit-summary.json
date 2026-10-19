@@ -1,0 +1,73 @@
+{
+  "made": "2026-10-19T02:11:47.793821+00:00",
+  "evidence": "completed-own-policy-count-calibration-training-only-summary",
+  "targetMet": false,
+  "modelFile": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\personal-policy-temperature-models.json",
+  "modelSha256": "7f7852facf3b65d3df0d7536445bc1cf259bb8367890549349dae2b50c4ffd98",
+  "dataFile": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\personal-temperature-2026-10-19T01-21-59-569Z\\analysis\\archive\\personal-bots\\personal-policy-temperature-data.json",
+  "dataSha256": "8cad3dbd7bd8f4a81ecda33cdd8ee129889b6ccccf896e32b081f8045c1d5b07",
+  "runs": 8,
+  "attempts": 8,
+  "boards": 80,
+  "computationCapsByProfile": {
+    "confidence025": 3659,
+    "confidence050": 8,
+    "confidence100": 0,
+    "confidence150": 0
+  },
+  "selected": {
+    "Dennisisdebeste": {
+      "temperature": 1,
+      "selectedProfile": "confidence100",
+      "calibrationEpisodes": 20,
+      "weightedCountLogLoss": {
+        "confidence100": 3.154122471575728,
+        "confidence150": 3.71801982701331
+      },
+      "computationCensoredCandidates": [
+        "confidence025",
+        "confidence050"
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "temperature": 1,
+      "selectedProfile": "confidence100",
+      "calibrationEpisodes": 20,
+      "weightedCountLogLoss": {
+        "confidence100": 2.9302307185728096,
+        "confidence150": 3.7667667776600613
+      },
+      "computationCensoredCandidates": [
+        "confidence025",
+        "confidence050"
+      ]
+    },
+    "PUK": {
+      "temperature": 0.5,
+      "selectedProfile": "confidence050",
+      "calibrationEpisodes": 20,
+      "weightedCountLogLoss": {
+        "confidence050": 0.9159301150561386,
+        "confidence100": 1.6213059866147983,
+        "confidence150": 2.9108389164019766
+      },
+      "computationCensoredCandidates": [
+        "confidence025"
+      ]
+    },
+    "Gerda": {
+      "temperature": 0.5,
+      "selectedProfile": "confidence050",
+      "calibrationEpisodes": 20,
+      "weightedCountLogLoss": {
+        "confidence050": 1.7212371619469549,
+        "confidence100": 2.0348983274108936,
+        "confidence150": 3.2303247011309666
+      },
+      "computationCensoredCandidates": [
+        "confidence025"
+      ]
+    }
+  },
+  "note": "Selected only from each person\u2019s own prior first-clear likelihood. Censored candidates are rejected, not human8+ outcomes. This no-attention controller is different from the current attention candidate; no held/prospective80% claim."
+}

@@ -1,0 +1,718 @@
+{
+  "made": "2026-10-19T02:44:44.814598+00:00",
+  "targetMet": false,
+  "evidence": "own-prior-count-hazard-calibration-probe-development-only",
+  "players": {
+    "Dennisisdebeste": {
+      "weights": [
+        1.0727372531472696,
+        -0.9324681971005729
+      ],
+      "rows": 20,
+      "baseCensoredCountLoss": 1.9564804718230409,
+      "leaveOneLevelOutCensoredCountLoss": 2.1674893674964233,
+      "baseConservative8TryPointCorrect": 9,
+      "leaveOneLevelOutConservative8TryPointCorrect": 9,
+      "comparisons": [
+        {
+          "lv": 131,
+          "actual": 3,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 5.609715965617133,
+          "ownLoss": 7.660854468552401
+        },
+        {
+          "lv": 132,
+          "actual": 4,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 7.689157507296969,
+          "ownLoss": 11.36050987405682
+        },
+        {
+          "lv": 133,
+          "actual": 1,
+          "base": 2,
+          "own": 1,
+          "baseLoss": 0.9808292530117264,
+          "ownLoss": 0.48853042744936326
+        },
+        {
+          "lv": 134,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.9808292530117264,
+          "ownLoss": 0.48853042744936326
+        },
+        {
+          "lv": 135,
+          "actual": 1,
+          "base": 2,
+          "own": 2,
+          "baseLoss": 2.0794415416798357,
+          "ownLoss": 1.350233164675343
+        },
+        {
+          "lv": 136,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.06453852113757118,
+          "ownLoss": 0.022877138945991148
+        },
+        {
+          "lv": 137,
+          "actual": 2,
+          "base": 2,
+          "own": 1,
+          "baseLoss": 0.6931471805599454,
+          "ownLoss": 1.025328707684967
+        },
+        {
+          "lv": 138,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.04884153678240852
+        },
+        {
+          "lv": 139,
+          "actual": 3,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 4.223421604497243,
+          "ownLoss": 6.246430806812539
+        },
+        {
+          "lv": 140,
+          "actual": 1,
+          "base": 2,
+          "own": 2,
+          "baseLoss": 2.772588722239781,
+          "ownLoss": 2.024753473687912
+        },
+        {
+          "lv": 141,
+          "actual": 1,
+          "base": 3,
+          "own": 3,
+          "baseLoss": 2.772588722239781,
+          "ownLoss": 2.024753473687912
+        },
+        {
+          "lv": 142,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.04871604997462646
+        },
+        {
+          "lv": 143,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.06453852113757118,
+          "ownLoss": 0.022866929743099177
+        },
+        {
+          "lv": 144,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.4700036292457356,
+          "ownLoss": 0.19728402851311524
+        },
+        {
+          "lv": 145,
+          "actual": 1,
+          "base": 8,
+          "own": 8,
+          "baseLoss": 2.0794415416798357,
+          "ownLoss": 1.3939384322461297
+        },
+        {
+          "lv": 146,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.4700036292457356,
+          "ownLoss": 0.19619354628055163
+        },
+        {
+          "lv": 147,
+          "actual": 1,
+          "base": 6,
+          "own": 2,
+          "baseLoss": 2.0794415416798357,
+          "ownLoss": 1.3987672708031758
+        },
+        {
+          "lv": 148,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.6931471805599453,
+          "ownLoss": 0.31510723529801055
+        },
+        {
+          "lv": 149,
+          "actual": 2,
+          "base": 8,
+          "own": 1,
+          "baseLoss": 3.060270794691562,
+          "ownLoss": 3.5215447346954423
+        },
+        {
+          "lv": 150,
+          "actual": 3,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 2.0794415416798357,
+          "ownLoss": 3.5137256225892983
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "weights": [
+        -0.5616158143942297,
+        -2.0790891545083894
+      ],
+      "rows": 20,
+      "baseCensoredCountLoss": 4.663721793359634,
+      "leaveOneLevelOutCensoredCountLoss": 2.6625508399938673,
+      "baseConservative8TryPointCorrect": 4,
+      "leaveOneLevelOutConservative8TryPointCorrect": 6,
+      "comparisons": [
+        {
+          "lv": 84,
+          "actual": 10,
+          "base": 2,
+          "own": 8,
+          "baseLoss": 4.981107306194759,
+          "ownLoss": 0.4101962567401859
+        },
+        {
+          "lv": 85,
+          "actual": 5,
+          "base": 3,
+          "own": 8,
+          "baseLoss": 4.916568785057188,
+          "ownLoss": 6.967008741102209
+        },
+        {
+          "lv": 86,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.4700036292457356,
+          "ownLoss": 0.7682044353725053
+        },
+        {
+          "lv": 87,
+          "actual": 5,
+          "base": 2,
+          "own": 5,
+          "baseLoss": 4.287960125634814,
+          "ownLoss": 2.3302705081940163
+        },
+        {
+          "lv": 88,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.4700036292457356,
+          "ownLoss": 0.7714492130097165
+        },
+        {
+          "lv": 89,
+          "actual": 13,
+          "base": 2,
+          "own": 3,
+          "baseLoss": 15.249237972318797,
+          "ownLoss": 2.4823223506820375
+        },
+        {
+          "lv": 90,
+          "actual": 1,
+          "base": 1,
+          "own": 2,
+          "baseLoss": 0.6931471805599453,
+          "ownLoss": 1.0984165978263463
+        },
+        {
+          "lv": 91,
+          "actual": 21,
+          "base": 3,
+          "own": 3,
+          "baseLoss": 14.556090791758852,
+          "ownLoss": 2.2179027641139046
+        },
+        {
+          "lv": 92,
+          "actual": 2,
+          "base": 8,
+          "own": 8,
+          "baseLoss": 2.8371272433773522,
+          "ownLoss": 4.843247064700835
+        },
+        {
+          "lv": 93,
+          "actual": 2,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 1.4508328822574617,
+          "ownLoss": 1.4585731166859488
+        },
+        {
+          "lv": 94,
+          "actual": 5,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 9.07545186841686,
+          "ownLoss": 4.251068102967538
+        },
+        {
+          "lv": 95,
+          "actual": 2,
+          "base": 1,
+          "own": 2,
+          "baseLoss": 0.7576857016975165,
+          "ownLoss": 0.8675140275329545
+        },
+        {
+          "lv": 96,
+          "actual": 5,
+          "base": 3,
+          "own": 3,
+          "baseLoss": 6.302863146177078,
+          "ownLoss": 2.767884891906508
+        },
+        {
+          "lv": 97,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.4700036292457356,
+          "ownLoss": 0.796139894348815
+        },
+        {
+          "lv": 98,
+          "actual": 2,
+          "base": 8,
+          "own": 8,
+          "baseLoss": 2.079441541679836,
+          "ownLoss": 3.9900478732424745
+        },
+        {
+          "lv": 99,
+          "actual": 5,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 9.768599048976805,
+          "ownLoss": 4.995153022516203
+        },
+        {
+          "lv": 100,
+          "actual": 1,
+          "base": 3,
+          "own": 8,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 2.051500081739331
+        },
+        {
+          "lv": 101,
+          "actual": 5,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 9.768599048976805,
+          "ownLoss": 5.021688174697667
+        },
+        {
+          "lv": 102,
+          "actual": 1,
+          "base": 2,
+          "own": 5,
+          "baseLoss": 0.9808292530117264,
+          "ownLoss": 1.5580941160657167
+        },
+        {
+          "lv": 103,
+          "actual": 1,
+          "base": 3,
+          "own": 8,
+          "baseLoss": 2.772588722239781,
+          "ownLoss": 3.604335566432432
+        }
+      ]
+    },
+    "PUK": {
+      "weights": [
+        0.755864321584664,
+        -0.4893580937568878
+      ],
+      "rows": 20,
+      "baseCensoredCountLoss": 0.7964608568522684,
+      "leaveOneLevelOutCensoredCountLoss": 0.8647368261215215,
+      "baseConservative8TryPointCorrect": 13,
+      "leaveOneLevelOutConservative8TryPointCorrect": 13,
+      "comparisons": [
+        {
+          "lv": 29,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.06569490904090222
+        },
+        {
+          "lv": 30,
+          "actual": 2,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 2.8371272433773522,
+          "ownLoss": 3.72075237019604
+        },
+        {
+          "lv": 31,
+          "actual": 2,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 1.4508328822574617,
+          "ownLoss": 2.1906224787984
+        },
+        {
+          "lv": 32,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.0665666997064481
+        },
+        {
+          "lv": 33,
+          "actual": 1,
+          "base": 2,
+          "own": 1,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 0.9663086661831594
+        },
+        {
+          "lv": 34,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.4700036292457356,
+          "ownLoss": 0.2614340364463182
+        },
+        {
+          "lv": 35,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.06453852113757118,
+          "ownLoss": 0.031211858821392227
+        },
+        {
+          "lv": 36,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.06624052745560656
+        },
+        {
+          "lv": 38,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.06453852113757118,
+          "ownLoss": 0.031203237154633117
+        },
+        {
+          "lv": 39,
+          "actual": 2,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 1.9328805041769919
+        },
+        {
+          "lv": 42,
+          "actual": 2,
+          "base": 2,
+          "own": 1,
+          "baseLoss": 0.9808292530117262,
+          "ownLoss": 1.0958873429434774
+        },
+        {
+          "lv": 43,
+          "actual": 3,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 2.0747315458537505
+        },
+        {
+          "lv": 44,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.2876820724517809,
+          "ownLoss": 0.15378137382129448
+        },
+        {
+          "lv": 45,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.06733769963411805
+        },
+        {
+          "lv": 47,
+          "actual": 1,
+          "base": 5,
+          "own": 5,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 1.0051375022126507
+        },
+        {
+          "lv": 48,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.6931471805599453,
+          "ownLoss": 0.42453793998358796
+        },
+        {
+          "lv": 50,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.4700036292457356,
+          "ownLoss": 0.26717977352756045
+        },
+        {
+          "lv": 51,
+          "actual": 1,
+          "base": 2,
+          "own": 2,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 1.0099312051080789
+        },
+        {
+          "lv": 52,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.6931471805599453,
+          "ownLoss": 0.42382171194041146
+        },
+        {
+          "lv": 53,
+          "actual": 15,
+          "base": 8,
+          "own": 8,
+          "baseLoss": 0.4517696479629983,
+          "ownLoss": 1.4394751394256087
+        }
+      ]
+    },
+    "Gerda": {
+      "weights": [
+        0.08957954794857166,
+        -2.325951025022938
+      ],
+      "rows": 20,
+      "baseCensoredCountLoss": 2.0252725001808463,
+      "leaveOneLevelOutCensoredCountLoss": 2.24346478396521,
+      "baseConservative8TryPointCorrect": 9,
+      "leaveOneLevelOutConservative8TryPointCorrect": 8,
+      "comparisons": [
+        {
+          "lv": 46,
+          "actual": 1,
+          "base": 3,
+          "own": 8,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 1.407835318985669
+        },
+        {
+          "lv": 48,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.2876820724517809,
+          "ownLoss": 0.27429692770773045
+        },
+        {
+          "lv": 49,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.2876820724517809,
+          "ownLoss": 0.27429692770773045
+        },
+        {
+          "lv": 50,
+          "actual": 2,
+          "base": 3,
+          "own": 8,
+          "baseLoss": 0.9808292530117263,
+          "ownLoss": 2.187626270171588
+        },
+        {
+          "lv": 51,
+          "actual": 17,
+          "base": 8,
+          "own": 8,
+          "baseLoss": 0.5207625194499498,
+          "ownLoss": 0.10548618341600255
+        },
+        {
+          "lv": 52,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.2876820724517809,
+          "ownLoss": 0.27472240519157265
+        },
+        {
+          "lv": 53,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.6931471805599453,
+          "ownLoss": 0.6915060433213134
+        },
+        {
+          "lv": 54,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.12397843415361658
+        },
+        {
+          "lv": 55,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.2876820724517809,
+          "ownLoss": 0.2745178100437016
+        },
+        {
+          "lv": 57,
+          "actual": 2,
+          "base": 8,
+          "own": 8,
+          "baseLoss": 2.906120114864304,
+          "ownLoss": 4.51713865606691
+        },
+        {
+          "lv": 58,
+          "actual": 1,
+          "base": 1,
+          "own": 8,
+          "baseLoss": 0.9808292530117264,
+          "ownLoss": 1.0004657963798145
+        },
+        {
+          "lv": 59,
+          "actual": 3,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 4.223421604497243,
+          "ownLoss": 3.795220514154806
+        },
+        {
+          "lv": 60,
+          "actual": 2,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 2.079441541679836,
+          "ownLoss": 3.469793323219579
+        },
+        {
+          "lv": 61,
+          "actual": 3,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 2.143980062817407,
+          "ownLoss": 2.14292300169772
+        },
+        {
+          "lv": 62,
+          "actual": 14,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 17.616361586450413,
+          "ownLoss": 17.701099575184436
+        },
+        {
+          "lv": 63,
+          "actual": 2,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 1.0453677741492973,
+          "ownLoss": 1.394031841267315
+        },
+        {
+          "lv": 64,
+          "actual": 1,
+          "base": 2,
+          "own": 5,
+          "baseLoss": 1.3862943611198906,
+          "ownLoss": 1.4789558215819683
+        },
+        {
+          "lv": 65,
+          "actual": 2,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 1.0453677741492973,
+          "ownLoss": 1.401777970181733
+        },
+        {
+          "lv": 66,
+          "actual": 1,
+          "base": 3,
+          "own": 8,
+          "baseLoss": 2.0794415416798357,
+          "ownLoss": 2.227175182617617
+        },
+        {
+          "lv": 67,
+          "actual": 1,
+          "base": 1,
+          "own": 1,
+          "baseLoss": 0.13353139262452263,
+          "ownLoss": 0.12644767625338144
+        }
+      ]
+    }
+  },
+  "modelSha256": "f41325979c44a55adb65be451a207fec6eab9fad35f1bc6be7b4cb34c6e7eee9",
+  "dataSha256": "cd5d4f4f9179fc9f79f662174a9042e9ac0b5a0446a74291343f7633a607e5cc",
+  "sourceSha256": "7fc5d7b78f5d5145c810ab08c821125774c09bc0a163d625337648ceab5f7a3e",
+  "sourceHashes": {
+    "personal_attention_hazard_probe.py": "7fc5d7b78f5d5145c810ab08c821125774c09bc0a163d625337648ceab5f7a3e",
+    "attempt_count_fit.py": "7f8582dd327bd62334086ad779dbeefb7cb0b61733497ae439ab8a43ad1b7a55",
+    "personal_value_fit.py": "b8b63433ef8f85db35f9d6e145614a84b22c84f18e98d451ee671b26dba5227d"
+  },
+  "parameters": {
+    "l2": 0.25,
+    "interceptBound": 6,
+    "logAttemptSlopeBound": 3,
+    "hazardClip": [
+      0.0625,
+      0.9375
+    ],
+    "prefixRecencyHalfLife": 20
+  },
+  "note": "Proper first-seven-event/8+ censored likelihood; intercept and retry slope are fitted independently per person. LOO is reused prior-training model-selection evidence, NOT independent held/pre-opening accuracy: the confidence policy itself was selected from these20 known outcomes. Eight-try conservative point diagnostics do not replace required exact1..9/10+ future measurement or any original frozen forecast."
+}

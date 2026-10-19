@@ -1298,3 +1298,130 @@ as-of chains cannot substitute. Censored candidates are retained as rejected,
 not human losses. This fitter is implemented/tested but has not yet received real
 calibration data or produced new fitted policies/forecasts. Genuine future32x32
 predictions and pre-opening scoring remain required for the80% goal.
+
+`personal_policy_temperature_data.js prepare` now restores20 exact earlier
+first-clear boards per person from immutable recorded/fixed-table sources and
+copies a self-contained runtime/input closure into a unique ignored run folder.
+It uses the SAME current own static/clock/tray actor for each person's20 boards,
+never their old as-of actors or another person's controller. Older verified
+fixed-table counts without recorded start events remain training-only; they
+cannot prove a pre-opening prediction. The first prepared run contains Dennis
+131..150, Mrs84..103,20 eligible PUK boards29..53 and20 Gerda boards46..67.
+
+Run `node tools/sim/refit/personal_policy_temperature_data.js pilot` from that
+frozen run root, then `full`. The four-board2x3 pilot checks temperature1 against
+a freshly paired untempered retry lifecycle. Full8x8 reruns all16 frozen candidate
+pilot chains before the corresponding full measurements. Each cap is retained
+as computational censoring. The predeclared four temperatures are not changed
+after pilot results. A person/profile with any cap cannot be selected by the
+count fitter; a censored chain is never interpreted as a human8+ result.
+Completed outputs and progress files refuse overwrite/restart. Inspect an owned
+live process/session before doing anything with an existing progress file.
+
+`personal_policy_temperature_fit.py <full-data-path>` validates the frozen run's
+source closure before own-person count-likelihood fitting. Neither pilot nor
+training accuracy is a future80% claim. New selected-policy full predictions,
+readiness/source-bound numeric freezes and real later outcomes are still needed.
+
+`personal_public_opening.js` adopts independently verified public geometry from
+the Gemini hypothesis with explicit pair-equivalent units, exact lock transport,
+hidden-picture invariance and documented heuristic/sentinel meanings. The audit
+reproduces six fields on124 exact boards, but does not certify the remaining
+simulation features or tuned thresholds. `personal_causal_handoff_audit.py`
+preserves and scores Gemini's original numeric ledger rather than recomputing
+past predictions. See `analysis/personal-bots/GEMINI_AUDIT.md` for provenance,
+forecast drift and the genuine post-freeze cohort.
+
+`personal_public_count_data.js` independently reconstructs opening-only geometry
+for220 exact historical boards;85 older un-restored boards remain explicit, not
+filled with proxy measurements. `personal_public_count_fit.py` compares own prior,
+raw-public and own-clock-regime forests. All80 fixed reused held targets remain
+scored, including cold-start, assisted and board-changing targets; assistance and
+changed boards never train normal own habits. This is reused development data,
+not independent held evidence. Geometry alone does not solve the count problem:
+selected35/80, and Dennis16/23 on recent progression. This head is NOT promoted.
+Its1..9/10+ classes preserve the user's scoring exactly for predictions1..8;
+blindly treating all8+ mass as actual8 would wrongly credit forecasts6/7.
+
+`personal_temperature_cycle_audit.js` diagnoses the sharp.25 candidate on four
+declared own training boards, first attempt/run0, explicit512-choice diagnostic
+boundary. All four stall with128 consecutive known reinspections and no physical
+progress. This does not imply ordinary necessary blocker reinspection is wrong.
+
+`personal_attention.py` / `personal_attention_choice.js` learn a SOFT repeated-
+known-inspection preference independently for each person from actual own prefixes.
+The counter resets after physical progress. A first inspection in that window,
+novel picture, ready tray match or peek match gets no cost; other actions retain
+support. Positive as well as negative coefficients are allowed, not a forced
+universal finishing rule. Latent controller observations follow actual choices;
+attention counters reset at each fresh selector/attempt. Current fits are future-
+only: no fabricated historical as-of membership or winning labels are used.
+
+`personal_attention_fit.py` retains445 own prefixes and39268 native base offsets.
+`personal_attention_runtime_audit.js` verifies every native feature/probability
+and base causal posterior. `personal_attention_first_audit.js` checks eight
+complete zero-attention physical-path controls before bounded changed-policy
+diagnostics. The learned adjustment stops.25 stalling for Dennis/Mrs in the four-
+board probe, but PUK/Gerda still hit512, and NO player wins these selected probes.
+This is not better winning-attempt accuracy or a promotion. Fresh whole-count
+calibration is needed for this DIFFERENT controller; existing live temperature
+chains cannot be reused for it. `personal_attention_snapshot.py` preserves the
+completed action/parity/diagnostic closure without falsely including live counts.
+
+The separately versioned `personalInspectionAttentionLog-v2` removes the arbitrary
+strength3 saturation; it keeps the same personally fitted logarithmic cost beyond
+that point. All39268 observed human-prefix probability vectors remain EXACTLY
+unchanged (maximum observed strengths1.61..2.20). Behavior at much higher repeats
+is explicitly extrapolation, not newly observed human data. Old clipped models,
+native references and their failed probes remain preserved in their own snapshot.
+Use `personal_attention_fit.py --variant log`, then runtime/first audits with `log`.
+Never overwrite an old fit or treat modified source as the old model's readiness.
+
+`personal_attention_count_data.js prepare <original-run-root>` creates a NEW
+immutable80-board calibration closure with separate static/joint/attention SHA-
+bound controller IDs. Run `pilot`, then `full` from that new root. Default4096
+pilot boundaries are unchanged; all16 revised-policy pilot chains now have zero
+caps. Every full row independently recomputes paired zero-attention/untempered8x8
+controls, so a separately live original job does not block meaningful new work.
+Only a genuinely completed original report can provide an additional optional
+crosscheck. Partial progress/pilots never substitute for full chains. Completed
+pilot/source bytes are pinned; a different controller cannot inherit old chains.
+`personal_attention_count_fit.py <full-data>` verifies these identities before
+fitting each person's own count likelihood. Existing forecasts remain untouched.
+
+`personal_attention_future_head.py` predeclares32 runs x9 attempts for later
+forecast measurement. Its exact1..9 plus unresolved10+ classes preserve every
+user scoring distinction for predictions1..8, including asymmetric tolerances on
+actual8/9. Therefore simulation beyond9 is unnecessary for this point-decision
+metric; the10+ tail is NOT an invented win on10 or an exact8 lump credited to6/7.
+This is implemented/tested head logic only: future measurements, selected-policy
+readiness, numeric freezes and genuine new-game scoring are still required.
+
+The revised attention calibration has now completed all80 boards with ZERO
+caps; all80 fresh zero/untempered8x8 controls also reproduce the separately
+completed original baseline exactly. Own count likelihood selects temperature.25
+for Dennis/Mrs and.5 for PUK/Gerda. This is not proof of accurate winning tries:
+the conservative8-try TRAINING point diagnostic is only9/20,5/20,13/20,10/20.
+Those diagnostics neither replace required32x9 future points nor establish80%.
+
+`personal_attention_future_data.js prepare <new-live-folder>` implements a separate
+immutable future runtime after actual count-model readiness. Its `pilot` and
+`full` modes retain every prepared target and paired zero/selected-policy controls.
+`personal_attention_future.py predict <run>` creates a source-bound numeric draft;
+`freeze <run> <new-live-folder>` excludes all real openings and appends original
+points without replacing older numbers/frontiers. `score <separate-outcomes>`
+uses only those actual frozen points. Unknown app versions, missing controls,
+censoring, incomplete coverage, changed drafts/runtime and stale opening checks
+are refused. Real openings after the last GET still require independent later
+timestamp eligibility. No new-family ledger is created by unit-test fixtures.
+
+This future pipeline is implemented/tested but the weak raw count head is NOT
+promoted or frozen. `personal_attention_hazard_probe.py` tests separate own
+intercept/retry-slope corrections against prior20 counts. Its reused-training LOO
+loss improves only Mrs, not the other three people; it is not a universal fix or
+independent held score. Strong negative retry slopes suggest investigating
+person-specific incoming-picture recall/learning settings, not declaring people
+forgetful or imposing one shared greed/recall rule. Existing zero-recall results
+from a different earlier controller cannot validate the current policy.
+`personal_attention_count_snapshot.py` preserves the complete calibration and
+failed correction while verifying all five original ledger hashes unchanged.

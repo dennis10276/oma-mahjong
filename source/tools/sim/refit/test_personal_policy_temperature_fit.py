@@ -1,8 +1,11 @@
 import copy
 import math
+import tempfile
 import unittest
+from pathlib import Path
 
-from personal_policy_temperature_fit import TEMPERATURES, count_loss, select_temperatures
+from personal_policy_temperature_fit import TEMPERATURES, count_loss, select_temperatures, validate_sources
+from personal_value_fit import digest
 
 
 def fixture():
@@ -57,6 +60,35 @@ class DirectPolicyCountCalibrationTests(unittest.TestCase):
         data['rows'][0]['modelId'] = 'older-asof-controller'
         with self.assertRaises(ValueError):
             select_temperatures(data, 1000)
+
+    def test_frozen_run_sources_are_checked_in_the_actual_data_closure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            source_root = workspace / 'frozen-run'
+            source_root.mkdir()
+            source = source_root / 'actor.json'
+            source.write_text('original own actor', encoding='utf-8')
+            filename = source_root / 'counts.json'
+            filename.write_text('{}', encoding='utf-8')
+            data = {'sourceRoot': str(source_root), 'sourceHashes': {'actor.json': digest(source)}}
+            self.assertEqual(validate_sources(data, filename, workspace), source_root.resolve())
+            with self.assertRaises(ValueError):
+                validate_sources(data, workspace / 'unrelated-counts.json', workspace)
+            source.write_text('changed actor', encoding='utf-8')
+            with self.assertRaises(ValueError):
+                validate_sources(data, filename, workspace)
+
+    def test_source_validation_rejects_parent_paths_and_other_workspaces(self):
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory) / 'workspace'
+            workspace.mkdir()
+            outside = Path(directory) / 'outside.json'
+            outside.write_text('{}', encoding='utf-8')
+            with self.assertRaises(ValueError):
+                validate_sources({'sourceRoot': str(outside.parent), 'sourceHashes': {}}, outside, workspace)
+            data = {'sourceRoot': str(workspace), 'sourceHashes': {'../outside.json': digest(outside)}}
+            with self.assertRaises(ValueError):
+                validate_sources(data, workspace / 'counts.json', workspace)
 
 
 if __name__ == '__main__':

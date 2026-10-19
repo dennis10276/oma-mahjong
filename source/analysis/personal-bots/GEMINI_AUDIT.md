@@ -86,3 +86,29 @@ units explicit and reject missing provenance instead of fabricating substitute
 measurements. Freeze immutable, source-bound candidate forecasts only for unopened
 levels; score the actual numeric ledger with original misses and cohort frontiers
 intact. Keep model fitting separate from final future evaluation for each person.
+
+## Independently implemented and measured follow-up
+
+`personal_causal_handoff_audit.py` preserves the handoff and original opening
+snapshot in a new immutable audit bundle, then scores the **numeric ledger**
+through the existing progression scorer. Current recomputation is diagnostic
+only. Tests cover changed forecasts, late/equal freezes, replay exclusion,
+pending/unresolved/unforecasted episodes, individual 20-game gates and changed
+audit/live inputs. The original ledger is never rewritten.
+
+At the separate live observation `2026-10-19T01:16:15.712Z`, the actual causal
+ledger has **0 opened, 0 completed post-freeze primary games for every person**.
+Thus the genuinely prospective score is **0/0**, not the handoff's 8/8. The
+new scorer also finds two additional changed current projections: Gerda84
+frozen8/current1, and Mrs109 frozen2/current1. Mrs107 remains frozen8/current2.
+All original numbers remain the prospective points.
+
+`personal_public_opening.js` implements the verified geometry with explicit
+pair-equivalent units and strict encoded-board decoding, including lock Sets.
+`public-opening-geometry-audit.json` reproduces all six table fields on all
+124 exact boards with **zero differences**. Hidden-down-picture invariance is
+checked across every board; focused tests also check covered pictures, ice,
+locks, fractional support units, input immutability and malformed transport.
+This adopts a verified useful component, not the unverified simulation table
+producer or the hand-tuned prediction head. Depth/slack remain heuristics, and
+the no-visible-mate depth sentinel is explicitly diagnosed.

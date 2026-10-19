@@ -1,3 +1,4 @@
+import argparse
 import json
 import math
 from datetime import datetime, timezone
@@ -66,18 +67,27 @@ def select_temperatures(data, cutoff):
     return output
 
 
-def main():
-    filename = ARCHIVE / 'personal-policy-temperature-data.json'
-    data = json.loads(filename.read_bytes())
+def validate_sources(data, filename, workspace=ROOT):
+    source_root = Path(data.get('sourceRoot', workspace)).resolve()
+    if not source_root.is_relative_to(workspace.resolve()) or not filename.resolve().is_relative_to(source_root):
+        raise ValueError('Policy calibration data and its source closure must stay in this workspace')
     for name, expected in data['sourceHashes'].items():
-        if digest(ROOT / name) != expected:
+        source = (source_root / name).resolve()
+        if not source.is_relative_to(source_root) or digest(source) != expected:
             raise ValueError('Direct policy-calibration source/input changed: ' + name)
+    return source_root
+
+
+def main(filename):
+    data = json.loads(filename.read_bytes())
+    source_root = validate_sources(data, filename)
     cutoff = int(datetime.now(timezone.utc).timestamp() * 1000)
     if datetime.fromisoformat(data['made'].replace('Z', '+00:00')).timestamp() * 1000 >= cutoff:
         raise ValueError('Count calibration computation must finish before fitting request')
     selected = select_temperatures(data, cutoff)
     report = {'made': datetime.now(timezone.utc).isoformat(), 'actualFitRequest': cutoff, 'targetMet': False,
         'evidence': 'own-future-policy-confidence-fit-to-first-clear-counts-training-only', 'personalOnly': True,
+        'dataFile': str(filename.resolve()), 'dataSourceRoot': str(source_root),
         'dataSha256': digest(filename), 'sourceHashes': {Path(__file__).name: digest(Path(__file__))}, 'selected': selected,
         'note': 'Own last20 unassisted first-clear boards only; no family fit or universal greedy finish. '
                 'Temperature adjusts confidence in that person’s learned preferences, preserving option order and impossible-action support. '
@@ -91,4 +101,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('data', nargs='?', type=Path, default=ARCHIVE / 'personal-policy-temperature-data.json')
+    main(parser.parse_args().data)

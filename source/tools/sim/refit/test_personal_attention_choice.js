@@ -1,0 +1,40 @@
+'use strict';
+const assert = require('assert/strict');
+const { FEATURES, attentionState, attentionSelector, attentionFactory } = require('./personal_attention_choice.js');
+const feature = Array(76).fill(0); feature[19] = 1; feature[21] = .5; feature[22] = .25; feature[26] = 1; feature[65] = 1;
+const other = feature.slice(); other[21] = .75;
+const context = Array(26).fill(0); context[9] = 1; context[11] = 1;
+const decision = { F: [feature, other], kindContext: context };
+const state = attentionState();
+assert.deepEqual(state.features(decision), [[0, 0], [0, 0]]);
+state.observe(decision, 0);
+assert.equal(state.features(decision)[0][0], Math.log(2));
+assert.deepEqual(state.features({ ...decision, kindContext: context.map((value, index) => index === 9 ? .9 : value) }), [[0, 0], [0, 0]]);
+for (const marker of [64, 66]) {
+  const changed = { ...decision, F: [feature.map((value, index) => index === marker ? 1 : value), other] };
+  assert.equal(state.features(changed)[0][0], 0);
+}
+let delegated = 0, observations = 0;
+const base = (input, draw) => { delegated++; observations++; return draw < .5 ? 0 : 1; };
+base.probabilities = () => [.5, .5];
+base.observe = () => observations++;
+base.posterior = () => [observations];
+const disabled = attentionSelector(base, { type: 'personalInspectionAttention-v1', features: FEATURES, weights: [0, 0] });
+assert.equal(disabled(decision, .1), 0); assert.equal(delegated, 1); assert.equal(observations, 1);
+assert.deepEqual(disabled.probabilities(decision), [.5, .5]);
+const enabled = attentionSelector(base, { type: 'personalInspectionAttention-v1', features: FEATURES, weights: [-1, 0] });
+enabled.observe(decision, 0);
+assert(Math.abs(enabled.probabilities(decision)[0] - 1 / 3) < 1e-12);
+assert(enabled.probabilities(decision)[0] > 0);
+enabled(decision, .9); assert.equal(observations, 3); assert.equal(delegated, 1);
+assert.throws(() => attentionFactory({ id: 'Dennis', name: 'Dennis' }, { id: 'Other', name: 'Other' }, {}));
+const clipped = attentionState(), logarithmic = attentionState(null);
+for (let index = 0; index < 100; index++) { clipped.observe(decision, index % 2); logarithmic.observe(decision, index % 2); }
+assert.equal(clipped.features(decision)[0][0], 3);
+assert.equal(logarithmic.features(decision)[0][0], Math.log(51));
+assert.throws(() => attentionSelector(base, { type: 'personalInspectionAttentionLog-v2', features: FEATURES, weights: [-1, 0] }));
+assert.throws(() => attentionSelector(base, { type: 'personalInspectionAttention-v1', strengthLimit: null, features: FEATURES, weights: [-1, 0] }));
+const logSelector = attentionSelector(base, { type: 'personalInspectionAttentionLog-v2', strengthLimit: null, features: FEATURES, weights: [-1, 0] });
+logSelector.observe(decision, 0);
+assert(Math.abs(logSelector.probabilities(decision)[0] - 1 / 3) < 1e-12);
+console.log('PASS own attention is a soft observed-history preference, preserves productive/necessary openings and zero controls, and forbids cross-person actors');

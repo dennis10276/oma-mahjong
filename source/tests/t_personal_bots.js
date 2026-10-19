@@ -7,6 +7,41 @@ const game = () => ({ tiles: [{ x: 0, y: 0, z: 0 }, { x: 2, y: 0, z: 0 }], faces
 
 module.exports = [
   {
+    name: 'personal bots: selected own future policies exclude real openings and replay counters',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_attention_future_data.js'); },
+  },
+  {
+    name: 'personal bots: attention count calibration binds the exact own changed controller',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_attention_count_data.js'); },
+  },
+  {
+    name: 'personal bots: own public count features cannot consume target outcomes or other-person predictions',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_count_data.js'); },
+  },
+  {
+    name: 'personal bots: bounded cycle diagnosis requires public repeats and no physical progress',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_temperature_cycle_audit.js'); },
+  },
+  {
+    name: 'personal bots: learned inspection attention stays personal and preserves first openings and immediate matches',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_attention_choice.js'); },
+  },
+  {
+    name: 'personal bots: public opening difficulty preserves hidden-picture boundaries and physical lock transport',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_opening.js'); },
+  },
+  {
+    name: 'personal bots: count calibration uses exact own prior boards rather than replay or other-person chains',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_policy_temperature_data.js'); },
+  },
+  {
     name: 'personal bots: count-calibrated temperature remains personal rather than forcing generic greedy finishing',
     cpu: true,
     async run() { require('../tools/sim/refit/test_personal_tempered_choice.js'); },

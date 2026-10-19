@@ -3168,3 +3168,275 @@ The human-confirmed wip/personal-bots branch remains in personal-bot-review.
 Fresh validation:211 Python tests, the full personal JavaScript suite and
 git diff--check all pass. The temperature count fitter remains uncalibrated;
 80% genuinely future per-person prediction accuracy remains unmet.
+
+## 2026-10-19 Original Numeric-Ledger Scoring And Own Count Calibration Started
+
+Previous goal turn was PROGRESS: committed696bbd7 on the confirmed branch,
+independently reproduced the handoff evaluation and discovered the exact public
+geometry unit discrepancy. It was not a no-progress or blocker turn.
+
+New independent audit preserves Gemini's exact ledger, table, head, evaluator,
+JS and original frozen opening snapshot in
+gemini-handoff-audit-2026-10-19T01-18-32-369Z. A separate read-only GET observation
+live-openings-2026-10-19T01-16-15-712Z yields323 campaigns/four unresolved boards.
+The actual causal numeric ledger has ZERO newly opened eligible primary games
+per person, hence0/0 genuinely prospective, not the handoff's recomputed8/8.
+Three numeric projections have drifted: Gerda84 frozen8/current1, Mrs107
+frozen8/current2 and Mrs109 frozen2/current1. No original forecast was replaced.
+The scorer derives permanent frontiers from original plays and keeps pending,
+unresolved, unforecasted and hard campaigns in the first20 per-person gate.
+
+Verified useful handoff work is now implemented in personal_public_opening.js.
+Explicit half-supported-tile units resolve the apparent fractional-count issue.
+Six fields reproduce on124 exact boards with zero differences. All124 retain
+hidden-down-picture invariance; unit tests also check covered pictures, encoded
+ice/locks, input immutability and malformed transport. No uncertified simulation
+feature producer or hand-tuned historical head is promoted. Asked the user for
+Gemini's missing producer while continuing independent work; this is not a block.
+
+New own-policy count calibration restores80 exact earlier first-clear boards,
+20/person, with the same CURRENT own static/clock/tray actor across each person's
+boards. Immutable runtime/input closure:
+runs/personal-temperature-2026-10-19T01-21-59-569Z. Dennis131..150, Mrs84..103,
+20 eligible PUK29..53 and Gerda46..67. This is TRAINING ONLY, not held/pre-start
+accuracy. Older verified fixed-table counts without recorded opening events
+remain training-only and cannot enter prospective proof. The declared
+confidence grid[.25,.5,1,1.5], own20-board count-likelihood objective, physical
+rules, default4096 computation boundary and earlier fixed recall stay unchanged.
+
+Pilot84586 is terminal:4 boards/16 candidate2x3 chains plus4 exact untempered
+temperature1 lifecycle controls. The sharpest.25 setting has21 computational
+caps; all three other settings have zero pilot caps. These are rejected/censored
+candidate behavior, NOT human losses or evidence of8+ real attempts. No tuning
+grid change or forecast promotion follows this pilot. Full59597 started
+2026-10-19T01:23:14.823Z and is LIVE in the frozen run, with actual node process
+30400 confirmed. It measures80boards x4profiles x8runs x8attempts, rerunning all
+16 frozen pilots. Existing source/input bytes are not edited during that run.
+Some full.50 caps also appear on Dennis136; the fitter rejects any censored
+person/profile rather than converting a computation boundary into a count label.
+No fitted temperature model or new numeric forecast exists yet.
+
+Added isolated-run source validation to the count fitter and nine independent
+ledger audit tests. Full suite before the final two audit tests:220 Python and
+the full personal JS suite passed; final audit subset9/9 passed. Full final
+validation is recorded separately after all source changes. Goal80 remains active.
+
+Final follow-up validation is terminal0:222 Python tests,109 named personal JS
+tests and git diff--check pass. Logs are handoff-followup-python-tests-output.txt
+and handoff-followup-js-tests-output.txt. Full59597 was re-polled and remains
+LIVE; no restart or completion is inferred from an observation timeout.
+
+## 2026-10-19 Verified Geometry Tested And A Personal Attention Failure Isolated
+
+Previous goal turn was PROGRESS, not a blocker/status turn: original numeric-
+ledger scorer,124-board public-feature reproduction and an immutable80-board
+own-policy calibration were implemented and executed. Owned59597 was re-polled
+and actual node30400 confirmed LIVE. Gemini checkout remains clean6628eab; the
+requested missing simulation producer has not appeared. Work continues without
+treating that request or the live computation as an external blocker.
+
+The verified public geometry was actually integrated into a strictly own-history
+count head, not just left as a compatible helper. Public-count data restores220
+exact boards;85 older missing boards remain explicit. All80 fixed reused held
+targets have verified geometry and remain scored, including cold-start and
+assisted/board-changing targets; only clean earlier own history trains the model.
+The initial diagnostic excluded nine targets under a minimum-history/assistance
+filter; that output is retained as personal-public-count-initial-evaluation.json.
+The corrected denominator is80. This was a coverage correction, not tuned model
+parameters or a changed success rule. Selected own geometry head35/80 vs naive
+first38/80; Dennis16/23 recent, Gerda2/5. No future numeric points are frozen for
+this weak candidate and it is NOT promoted. Geometry/regime normalization alone
+is insufficient to reproduce Gemini's claimed high count performance.
+
+New exact scoring class1..9/10+ preserves the user's utility for every predicted
+1..8 and all actual1..100 (property-tested). Collapsing unknown8+ onto actual8
+would improperly credit forecasts6/7 on actual10+, so this head does not do that.
+Development normalization and training use strictly earlier own observations;
+other-person and target labels cannot change the fitted prediction.
+
+The sharp-confidence computation caps now have a concrete public-state cause.
+temperature-cycle-audit.json: four selected prior training boards150/103/53/67,
+one fixed first-attempt seed, explicit512 diagnostic boundary. Every.25 policy
+revisits identical public decisions223..252 times, with128 final known tile
+reinspections and NO physical progress. The unchanged1 policy has no diagnostic
+cap. This is stronger evidence than merely seeing a slow simulation, but does
+not justify banning ordinary necessary clock/blocker reopenings.
+
+New personal attention fits learn soft repeated-known-inspection preference from
+actual own behavior, without human winning labels or family pooling. Every
+person's coefficients are fitted independently; positive preferences are allowed.
+The counter uses remaining physical tiles, resets on progress/attempt changes,
+and gives first inspections, novel pictures and immediately matching tray/peek
+actions zero cost. Ordinary necessary blocker inspection remains possible.
+Training opportunities: Dennis5512, Mrs2303, PUK915, Gerda4869. Common/clock-extra
+weights: Dennis[-.6626165924,.0726746962], Mrs[-.9387742074,.0670644828],
+PUK[-.4575952618,0], Gerda[-.4326144695,0]. Regularized own action-loss gains
+41.1383/51.6184/4.4623/15.3385 are TRAINING evidence, not winning-count accuracy.
+
+Attention fit1255 is terminal0. Runtime parity reproduces all445 prefixes,
+39268 base/changed probability vectors and causal posteriors,13599 repeat-cue
+opportunities, maximum difference8.88e-16. Model SHA
+7eaef1a415e73cb730f53060cdd814a752dbe2ceaa91b71bd96942f6401126a2;
+native SHA9ba98ccc12e02e36f2b33b4eedb2123f32f599182e6f01ace0ec1be23adfa123.
+Eight zero-attention controls reproduce COMPLETE diagnostic physical paths.
+Changed.25 attention avoids512 stalls for Dennis/Mrs, but PUK/Gerda still cap,
+and none of the selected single-seed probes wins. No claim that termination or
+action loss fixes first-clear prediction. Attention is not promoted and cannot
+inherit calibration from ongoing59597, which measures a DIFFERENT controller.
+All original future numeric forecasts, misses, physics and live raw inputs remain.
+
+Final attention/public-count suite is terminal0:231 Python tests,112 named
+personal JS tests and git diff--check pass. Model/runtime action evidence is
+preserved separately; no whole-count stage is implied by these green tests.
+
+Completed attention closure is preserved at
+experiments/personal-attention-first-2026-10-19T01-51-30-917Z (437 copied files,
+one pinned actor dependency). Manifest SHA
+6a49dc0548d8229f1a7c914392da17fb67b9383efd9d3a417e796d406f751017.
+wholeCountMeasurementIncluded=false. Snapshot2855 is terminal0.
+Old-controller full59597 remains verifiably LIVE/node30400:58/80 boards completed
+(Dennis20, Mrs20, PUK16, Gerda2). Do not restart it, fit partial counts or silently
+use it for the changed attention controller. Next attention hypothesis should
+address the remaining PUK/Gerda saturation/cycling with separately versioned
+own fits and whole-chain controls, not a blanket ban on necessary reopening.
+
+## 2026-10-19 Unsaturated Own Attention And Fresh Count Controls
+
+Previous goal turn was PROGRESS: all80 public-geometry development targets were
+honestly scored, a concrete controller stalling cause was isolated, four personal
+attention models were fitted and445-prefix numerical/eight-path zero controls
+were executed and preserved. This is not a repeated blocker/status-only turn.
+
+Old59597/node30400 has now actually completed:80 boards x4policies x8runs x8tries.
+It reports3667 computation caps (3659 at.25,8 at.50; none at1/1.5). Censoring is
+retained and rejected by person/profile, not converted into human8+ labels.
+Separate completed calibration fit at2026-10-19T02:09:22.464571Z selects Dennis1,
+Mrs1, PUK.5, Gerda.5 from each person's own proper count likelihood. This is
+training-only and a DIFFERENT no-attention controller; no future80% claim or
+calibration transfer to changed attention is allowed. Full-data SHA
+8cad3dbd7bd8f4a81ecda33cdd8ee129889b6ccccf896e32b081f8045c1d5b07.
+
+The clipped attention cost stopped growing after about20 reinspections, despite
+no training support for that saturation. New separately versioned log-v2 keeps
+the learned logarithmic cost growing. The four fitted weights are unchanged:
+all39268 observed prefix probability vectors match v1 EXACTLY; actual maximum
+feature strengths are Dennis2.1972, Mrs1.6094, PUK1.6094, Gerda1.7918. Higher-repeat
+behavior is explicitly an extrapolation of the learned own preference, not added
+human evidence. Old models/references/probes remain in their immutable snapshot.
+Fresh log runtime parity retains all445/39268 controls. New native SHA
+07aa96491cb18b4bd21bac2220104bff2e701ce7b89d08b56e1c01692ffdb2ff.
+The bounded512 first-path probe stops.25 stalling for Dennis/Mrs/PUK; Gerda still
+hits that diagnostic boundary. None of those probes wins. The actual unchanged-
+4096 four-board2x3 retry pilot has ZERO caps across all16 candidate chains.
+
+First log count pilot15289 is terminal0 in
+runs/personal-attention-count-2026-10-19T01-59-08-409Z. That run is not changed.
+A revised workflow avoids an unnecessary dependency on the still-running old
+controller: every full row now freshly pairs complete zero/untempered8x8 controls.
+Only a completed old report may supplement that independent control; no partial
+old/pilot sample is used as full evidence. New immutable run
+runs/personal-attention-count-2026-10-19T02-05-48-052Z reran its four-board pilot
+with zero caps and is now LIVE full8352/node35244 on all80 boards/four temperatures.
+All early full candidate records have zero caps. Static/joint/attention parameters
+jointly define a new own controller ID, preventing reuse of old actor-only chains.
+Full measurement and own count-temperature fit are still incomplete; no numeric
+future forecast is frozen for this changed candidate yet.
+
+New future head predeclares32x9 measurements, retaining exact1..9 and unresolved
+10+ mass. Property tests verify that every actual1..100 scores identically after
+10+ compression for all predicted1..8. This preserves the FULL user's metric,
+including actual8 matching6 and actual9 matching7, without simulating unnecessary
+later retries or pretending every tail outcome is actual8. Capped, pilot,
+non-sampled and wrong-horizon chains are rejected. Actual future measurement,
+readiness-bound numeric freezes and genuine later first20/person evidence remain.
+
+Final log-attention/count/future-head suite is terminal0:240 Python tests,113
+named personal JavaScript tests and git diff--check pass. Full8352 is re-polled
+and remains verifiably LIVE; its output is not fitted or called completed yet.
+
+Log attention action/parity/first-path closure is preserved at
+experiments/personal-attention-log-first-2026-10-19T02-13-13-023Z (444 files,
+one pinned dependency), manifest SHA
+93af3d2ac52d5767d053676f8bce7270697c5c2f62d114f4235edceebb6c5276.
+Attention wholeCountMeasurementIncluded=false. Live8352/node35244 has29/80
+completed boards (Dennis20, Mrs9), ZERO candidate caps so far. Keep observing the
+same job, then fit only its actual completed data. Next required stage is new
+selected-controller32x9 future measurement and immutable pre-opening numeric
+freezes, not recomputed past predictions or a reset of any old forecast cohort.
+
+## 2026-10-19 Complete Counts, Honest Forecast Pipeline And Rejected Scalar Fix
+
+Previous goal turn was PROGRESS: separately versioned log attention, exact445-
+prefix invariance, four-person uncensored pilots and source-bound controller
+count calibration were implemented/executed. Not a no-progress/blocker turn.
+
+Full8352/node35244 is now actually terminal0:all80 boards/four temperatures8x8,
+ZERO computation caps,16 freshly reproduced candidate pilots and80 complete
+fresh zero/untempered8x8 controls. An independent comparison also matches all80
+zero baseline chains to the actual completed original full controller, with the
+same static actor IDs/boards/seed lifecycle. The old data is a control, not
+attention-candidate training. No live process or partial result was restarted.
+Actual count fit2026-10-19T02:35:27.695645Z selects Dennis.25, Mrs.25, PUK.5,
+Gerda.5, independently on20 own prior outcomes. This improves proper own count
+likelihood, but is NOT80%:conservative8-try raw point TRAINING diagnostics are
+9/20,5/20,13/20,10/20 (always-first14/20,7/20,14/20,11/20). The different9+ tail
+resolution remains explicit; no prototype number is called an actual future
+forecast or independent held score. The raw head is not promoted/frozen.
+
+Implemented a complete future measurement->numeric draft->pre-opening freeze->
+actual ledger scorer path in personal_attention_future_data.js/.py. Future inputs
+require real own-count model readiness, source-bound selected controllers, exact
+fixed boards, a new read-only live opening snapshot and at least20 unopened
+targets/person. Pilot/full data have explicit2x3/32x9 stages. Every prepared target
+remains and every cap invalidates numeric freezing; hard levels are not filtered.
+The numeric draft must retain the declared quantitative source and measured board/
+controller. The freezer requires another fresh live check AFTER numeric prediction,
+refuses already opened/replayed/previously frozen levels and unsupported new app
+versions, uses an exclusive append/fsync lock and preserves every old byte/value/
+frontier. Actual later opening timestamps independently determine eligibility.
+The first20/person cohort retains pending, unforecasted and unknown-board episodes.
+
+Ten focused Python pipeline tests include a full temporary-directory source-pinned
+prediction/freezing sequence, a start BETWEEN numeric prediction and freeze,
+changed-draft/runtime refusal, unknown app versions even on daily play, duplicate/
+backdated/overwriting append refusal, permanent frontier and exclusive-lock
+controls. Test ledgers are temporary only:actual personal-attention-forecasts.jsonl
+does NOT exist, and no new-family real numeric forecast has been frozen. The
+earlier full suite is250 Python/114 named JS, all passing; three further
+hazard-probe tests also pass. Final suite recorded after all changes.
+
+Actual scalar calibration probe tests own intercept/retry slope on the completed
+prior20 counts, without changing any physical controller. Reused-training LOO
+censored log loss: Dennis1.9565->2.1675 (worse), Mrs4.6637->2.6626, PUK.7965->.8647
+(worse), Gerda2.0253->2.2435 (worse). Corresponding conservative point probes
+9->9,4->6,13->13,9->8. Temperature selection used these known outcomes, so the LOO
+diagnostic is explicitly NOT independent held/pre-start evidence. No scalar fix
+is promoted and no80% claim is established. The fitted strong negative retry
+slopes are evidence to TEST (not assert) a mismatch in the shared incoming-picture
+recall/learning assumption. Next useful direction is per-person complete-count
+retry-memory calibration under this changed, now non-stalling controller, retaining
+all loss avoidance and actual first-try controls. Earlier zero-memory experiments
+on a different weaker controller cannot substitute as evidence for this one.
+
+Final full validation after the pipeline/scalar experiment is terminal0:253
+Python tests,114 named personal JS tests and git diff--check pass. All owned
+count jobs are terminal; no new future simulation or real numeric freeze is
+silently inferred from these tests. The goal remains active and unmet.
+
+Completed calibration, exact original baseline comparison, failed scalar probe,
+future-pipeline source/tests and unchanged older numeric ledgers are preserved at
+experiments/personal-attention-count-complete-2026-10-19T02-51-01-931Z:
+450 copied files,48 pinned actual-run dependencies, manifest SHA
+fcf05e847b08de4c36b4bd95283d80cdc742ff0881223f506a94850fbe891578.
+All five original ledger hashes are verified byte-for-byte unchanged. This is
+whole-count TRAINING evidence, not a new frozen forecast or80% success. There
+are no active owned count jobs left and the new-family ledger remains absent.
+
+## User-requested branch checkpoint
+
+The user confirmed `wip/personal-bots` for the local work. The existing checkout
+on that branch is `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`;
+the parent OmasMahjong directory is not itself a Git checkout. Re-ran all253
+Python tests, the personal JavaScript suite and git diff--check successfully
+before this commit. This checkpoint preserves the research and tests without
+claiming80% accuracy or changing the older forecast ledgers. Nothing is pushed.

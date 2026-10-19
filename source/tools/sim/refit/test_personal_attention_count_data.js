@@ -1,0 +1,16 @@
+'use strict';
+const assert = require('assert/strict');
+const { controllerIdentity } = require('./personal_attention_count_data.js');
+const actor = { id: 'Dennis-static', name: 'Dennis', weights: [1] };
+const base = { id: actor.id, name: actor.name, weights: [2] };
+const attention = { id: actor.id, name: actor.name, weights: [3] };
+const original = controllerIdentity(actor, base, attention);
+assert.equal(original.staticActorId, actor.id);
+assert.notEqual(original.id, actor.id);
+assert.notEqual(controllerIdentity({ ...actor, weights: [4] }, base, attention).id, original.id);
+assert.notEqual(controllerIdentity(actor, { ...base, weights: [4] }, attention).id, original.id);
+assert.notEqual(controllerIdentity(actor, base, { ...attention, weights: [4] }).id, original.id);
+assert.deepEqual(controllerIdentity(actor, base, attention), original);
+assert.throws(() => controllerIdentity(actor, { ...base, name: 'Other' }, attention));
+assert.throws(() => controllerIdentity(actor, base, { ...attention, id: 'Other' }));
+console.log('PASS count calibration binds each own static, latent-intent and attention controller, not merely its old actor ID');

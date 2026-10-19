@@ -1,0 +1,28 @@
+{
+  "made": "2026-10-19T01:24:56.845Z",
+  "evidence": "independent-exact-board-public-opening-geometry-reproduction",
+  "targetMet": false,
+  "schema": "public-opening-geometry-pair-equivalents-v1",
+  "boards": 124,
+  "fields": {
+    "n": 124,
+    "blockedFreeCount": 124,
+    "takeableWithVisMateFrac": 124,
+    "takeableWithTakeableMate": 124,
+    "meanMateDepth": 124,
+    "clockSlackRatio": 124
+  },
+  "differences": [],
+  "inputSha256": "e9968c817ebe64b49a02a9ac6eac702014d0f2f1023e02141f2133d22c66c835",
+  "tableFile": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\gemini-handoff-audit-2026-10-19T01-18-32-369Z\\analysis\\personal-bots\\personal-causal-factor-features.json",
+  "tableSha256": "f203ef1a2a1a884bcdea4b4af605459ee596f023f6338eafdb7547649f6e7f2e",
+  "sourceHashes": {
+    "tools/sim/refit/personal_public_opening_audit.js": "9ba1ff7c06fea25e3425ea9cfa2d7528800b65267e559a2334ee2d6f52839e0d",
+    "tools/sim/refit/personal_public_opening.js": "4672cd9bc5112505d79d0dc41dae44871f9743886c95e847ee744f9faba88a69",
+    "www/hard.js": "5c1561bcbeda185510ed418c99478a32c7b85a34d4cac9a3b7b8949fc7fc8e89",
+    "www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "tools/sim/refit/personal_game_io.js": "a0cff17088b7ec5b0b1c9ae0bc655faa51c2b1964fefc273556636ae8b5f86eb",
+    "tools/sim/refit/personal_model.js": "50cd26a2dbd38d8c70ce3babad808b80b072f11f05557cdb5cc7d87beebd9d6b"
+  },
+  "note": "Reproduces six archived fields with explicit half-supported-tile units on124 exact boards. Checks hidden-down-picture invariance; unit tests also check covered pictures and encoded ice/locks. Does not certify unreproduced simulation fields, fitted thresholds or future prediction accuracy."
+}

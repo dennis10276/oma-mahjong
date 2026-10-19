@@ -1,0 +1,15 @@
+{
+  "evidence": "own-attention-log-versus-clipped-observed-prefix-comparison",
+  "targetMet": false,
+  "oldNativeSha256": "9ba98ccc12e02e36f2b33b4eedb2123f32f599182e6f01ace0ec1be23adfa123",
+  "newNativeSha256": "07aa96491cb18b4bd21bac2220104bff2e701ce7b89d08b56e1c01692ffdb2ff",
+  "comparedVectors": 39268,
+  "maximumObservedFeature": {
+    "Dennisisdebeste": 2.1972245773362196,
+    "Mrs. Doubtfire": 1.6094379124341003,
+    "PUK": 1.6094379124341003,
+    "Gerda": 1.791759469228055
+  },
+  "maximumProbabilityDifference": 0,
+  "note": "Observed human-prefix behavior is unchanged. Unsaturated behavior beyond these observed repeat counts is an explicitly tested extrapolation, not additional human training evidence or winning-count accuracy."
+}

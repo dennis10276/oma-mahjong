@@ -1,0 +1,46 @@
+{
+  "Dennisisdebeste": {
+    "weights": [
+      1.0727372531472696,
+      -0.9324681971005729
+    ],
+    "rows": 20,
+    "baseCensoredCountLoss": 1.9564804718230409,
+    "leaveOneLevelOutCensoredCountLoss": 2.1674893674964233,
+    "baseConservative8TryPointCorrect": 9,
+    "leaveOneLevelOutConservative8TryPointCorrect": 9
+  },
+  "Mrs. Doubtfire": {
+    "weights": [
+      -0.5616158143942297,
+      -2.0790891545083894
+    ],
+    "rows": 20,
+    "baseCensoredCountLoss": 4.663721793359634,
+    "leaveOneLevelOutCensoredCountLoss": 2.6625508399938673,
+    "baseConservative8TryPointCorrect": 4,
+    "leaveOneLevelOutConservative8TryPointCorrect": 6
+  },
+  "PUK": {
+    "weights": [
+      0.755864321584664,
+      -0.4893580937568878
+    ],
+    "rows": 20,
+    "baseCensoredCountLoss": 0.7964608568522684,
+    "leaveOneLevelOutCensoredCountLoss": 0.8647368261215215,
+    "baseConservative8TryPointCorrect": 13,
+    "leaveOneLevelOutConservative8TryPointCorrect": 13
+  },
+  "Gerda": {
+    "weights": [
+      0.08957954794857166,
+      -2.325951025022938
+    ],
+    "rows": 20,
+    "baseCensoredCountLoss": 2.0252725001808463,
+    "leaveOneLevelOutCensoredCountLoss": 2.24346478396521,
+    "baseConservative8TryPointCorrect": 9,
+    "leaveOneLevelOutConservative8TryPointCorrect": 8
+  }
+}

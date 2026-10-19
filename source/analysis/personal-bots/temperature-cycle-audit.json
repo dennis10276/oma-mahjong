@@ -1,0 +1,2144 @@
+{
+  "made": "2026-10-19T01:38:49.676Z",
+  "evidence": "bounded-personal-temperature-public-cycle-diagnostic-only",
+  "targetMet": false,
+  "inputSha256": "86dff3c8b80e11873c998c5861b537a28005aa2bba97f2da1e8311af43df7fcb",
+  "runManifestSha256": "58daf24012bef621bb4a3fd4f8acff9a24b7d0c1ab809592fb4609f5aca6d34f",
+  "sourceHashes": {
+    "tools/sim/refit/personal_temperature_cycle_audit.js": "e379c5a6a31f5f28f2eaac468bcb522da038524bc1c19de347f9003fd44676ad",
+    "www/hard.js": "5c1561bcbeda185510ed418c99478a32c7b85a34d4cac9a3b7b8949fc7fc8e89",
+    "www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "tools/sim/refit/personal_model.js": "50cd26a2dbd38d8c70ce3babad808b80b072f11f05557cdb5cc7d87beebd9d6b",
+    "tools/sim/refit/personal_game_io.js": "a0cff17088b7ec5b0b1c9ae0bc655faa51c2b1964fefc273556636ae8b5f86eb",
+    "tools/sim/refit/personal_physical_actor.js": "8ee9badfab48b62f275d4bd0a096f4242ae3717099bd10df625a81776dfb1e58",
+    "tools/sim/refit/personal_tempered_choice.js": "038826956d48a02736d2378fb00b4db3e0a6bfa09e26c55ec8f220ffa71ae1ba",
+    "tools/sim/refit/personal_joint_intents_choice.js": "b038a203fa74ed5cb456b8d29fe9e5b4a77978e9d8fde1c013788dacb4dc5e4b",
+    "tools/sim/refit/known_clock_strategy.js": "84edc19c72293d784f6d5d429fa3f849d1775e230b59ba77f5520ce02f62827d",
+    "tools/sim/refit/known_tray_plan.js": "e8cc62a1e52c7824ab4031b5702d5231ab05a51a260c203e9fabb48c3eed505a",
+    "tools/sim/refit/known_clock_dig.js": "aa041eaa6813311fb0aabe2cc1fd502fea70760733a7246b6b745012b9045735",
+    "tools/sim/refit/known_clock_plan.js": "ceedda69596e61148d29c7024a622cf891b0f02712b8d8951cf1ebdb106bc850",
+    "tools/sim/refit/known_tray_plan_bits.js": "55b232c9439c1e05423b3983a3e7da8d45b1179b16cf84d4964ad0c6232b2c06",
+    "tools/sim/refit/known_tray_plan_cache.js": "3ded5f1a8896940cc103b9325c0df70f2ed3bedd3b2bf0d3983b057a8e89dfb9",
+    "tools/sim/refit/personal_clock_intents_choice.js": "b8ef6a3d153d4300af1b44fae5cfba2536b3ba5623e52f2e7971d8e18cb234c4",
+    "tools/sim/refit/personal_clock_strategy_choice.js": "9dd83e112bc51205fc91d478770a24e52dd52a17379c166569f8eab7dfc887f3",
+    "tools/sim/refit/personal_context_choice.js": "67b3e9fdb661ae92f1df6c2060d616182108583af53c1d74e5452546788f0523",
+    "tools/sim/refit/personal_tray_intents_choice.js": "619041809e586b84aa2ee7d1a1a6aaa6f95328d35aa56c98c733643bae7e6901",
+    "tools/sim/refit/personal_joint_planning_fast.js": "8ac6920a99d3fa9e6d7d764993d9a1de9d175d89f497e6480250b0504cd55cd3",
+    "tools/sim/refit/known_clock_strategy_fast.js": "47714bbb5468dc5e74e08a04fc462c681db698f016092b0dca849c1c7bd46175"
+  },
+  "rows": [
+    {
+      "name": "Dennisisdebeste",
+      "lv": 150,
+      "board": "611ba5caa68a67752f8b384970a951ac7fe221ba1dce263b676abb45351b56af",
+      "actorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "temperature": 0.25,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "contextChoiceLimit",
+        "left": 85,
+        "moves": 11
+      },
+      "computationCaps": 1,
+      "decisions": 512,
+      "maximumIdenticalDecisionVisits": 250,
+      "tailChoices": 128,
+      "tailKnownReinspections": 128,
+      "tailSameProgress": true,
+      "first": [
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.6,
+            0.8571428571428571,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.9245332868859905,
+          "choices": 6
+        },
+        {
+          "selected": 1,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.2857142857142857,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.5941620075425209,
+          "choices": 6
+        },
+        {
+          "selected": 7,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.3,
+            0.6428571428571429,
+            1
+          ],
+          "selectedProbability": 0.9965414280728214,
+          "choices": 11
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.7142857142857143,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.9999999763142827,
+          "choices": 11
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.1,
+            0.7857142857142857,
+            0.3333333333333333
+          ],
+          "selectedProbability": 0.9748776913198742,
+          "choices": 12
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0,
+            0.8571428571428571,
+            0
+          ],
+          "selectedProbability": 0.9999787815140425,
+          "choices": 12
+        },
+        {
+          "selected": 10,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.4,
+            0.7142857142857143,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.620654348409929,
+          "choices": 11
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.8,
+            0.2857142857142857,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.9992923566444254,
+          "choices": 11
+        }
+      ],
+      "last": [
+        {
+          "selected": 9,
+          "publicVisits": 246,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0.14285714285714285,
+            0
+          ],
+          "selectedProbability": 0.9999972062693364,
+          "choices": 10
+        },
+        {
+          "selected": 9,
+          "publicVisits": 247,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.7,
+            0.9285714285714286,
+            0.3333333333333333
+          ],
+          "selectedProbability": 0.9999938141944972,
+          "choices": 10
+        },
+        {
+          "selected": 9,
+          "publicVisits": 247,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0.14285714285714285,
+            0
+          ],
+          "selectedProbability": 0.9999972062693364,
+          "choices": 10
+        },
+        {
+          "selected": 9,
+          "publicVisits": 248,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.7,
+            0.9285714285714286,
+            0.3333333333333333
+          ],
+          "selectedProbability": 0.9999938141944972,
+          "choices": 10
+        },
+        {
+          "selected": 9,
+          "publicVisits": 248,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0.14285714285714285,
+            0
+          ],
+          "selectedProbability": 0.9999972062693364,
+          "choices": 10
+        },
+        {
+          "selected": 9,
+          "publicVisits": 249,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.7,
+            0.9285714285714286,
+            0.3333333333333333
+          ],
+          "selectedProbability": 0.9999938141944972,
+          "choices": 10
+        },
+        {
+          "selected": 9,
+          "publicVisits": 249,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0.14285714285714285,
+            0
+          ],
+          "selectedProbability": 0.9999972062693364,
+          "choices": 10
+        },
+        {
+          "selected": 9,
+          "publicVisits": 250,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.7,
+            0.9285714285714286,
+            0.3333333333333333
+          ],
+          "selectedProbability": 0.9999938141944972,
+          "choices": 10
+        }
+      ]
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 150,
+      "board": "611ba5caa68a67752f8b384970a951ac7fe221ba1dce263b676abb45351b56af",
+      "actorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "temperature": 1,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "clock",
+        "left": 88,
+        "moves": 8
+      },
+      "computationCaps": 0,
+      "decisions": 9,
+      "maximumIdenticalDecisionVisits": 1,
+      "tailChoices": 9,
+      "tailKnownReinspections": 0,
+      "tailSameProgress": false,
+      "first": [
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.3,
+            0.5,
+            1
+          ],
+          "selectedProbability": 0.16215135241661155,
+          "choices": 6
+        },
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.6,
+            0.8571428571428571,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.2786250929173172,
+          "choices": 6
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.2857142857142857,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.6861013321845676,
+          "choices": 6
+        },
+        {
+          "selected": 7,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.3,
+            0.6428571428571429,
+            1
+          ],
+          "selectedProbability": 0.7004615606343318,
+          "choices": 11
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.7142857142857143,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.9801288834048472,
+          "choices": 12
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.42857142857142855,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.2882788205885517,
+          "choices": 13
+        },
+        {
+          "selected": 9,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.7,
+            0.9285714285714286,
+            0.3333333333333333
+          ],
+          "selectedProbability": 0.17209641536244802,
+          "choices": 14
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.5714285714285714,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.04220169398429878,
+          "choices": 14
+        }
+      ],
+      "last": [
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.6,
+            0.8571428571428571,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.2786250929173172,
+          "choices": 6
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.2857142857142857,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.6861013321845676,
+          "choices": 6
+        },
+        {
+          "selected": 7,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.3,
+            0.6428571428571429,
+            1
+          ],
+          "selectedProbability": 0.7004615606343318,
+          "choices": 11
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.7142857142857143,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.9801288834048472,
+          "choices": 12
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.42857142857142855,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.2882788205885517,
+          "choices": 13
+        },
+        {
+          "selected": 9,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.7,
+            0.9285714285714286,
+            0.3333333333333333
+          ],
+          "selectedProbability": 0.17209641536244802,
+          "choices": 14
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.2,
+            0.5714285714285714,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.04220169398429878,
+          "choices": 14
+        },
+        {
+          "selected": 12,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.4,
+            0.7142857142857143,
+            0.6666666666666666
+          ],
+          "selectedProbability": 0.2716736921096198,
+          "choices": 14
+        }
+      ]
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 103,
+      "board": "0e95c0df50d367a85de23366248b273303f1e524505f28fe247d5537024a9bbe",
+      "actorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "temperature": 0.25,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "contextChoiceLimit",
+        "left": 82,
+        "moves": 6
+      },
+      "computationCaps": 1,
+      "decisions": 512,
+      "maximumIdenticalDecisionVisits": 252,
+      "tailChoices": 128,
+      "tailKnownReinspections": 128,
+      "tailSameProgress": true,
+      "first": [
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.7,
+            0.35714285714285715,
+            0.6
+          ],
+          "selectedProbability": 0.995359774415337,
+          "choices": 4
+        },
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.8,
+            0.42857142857142855,
+            0.4
+          ],
+          "selectedProbability": 0.8306331119968784,
+          "choices": 5
+        },
+        {
+          "selected": 1,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.8,
+            0.42857142857142855,
+            0.4
+          ],
+          "selectedProbability": 0.9999986284443192,
+          "choices": 5
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.9,
+            0.5,
+            0.2
+          ],
+          "selectedProbability": 0.9978584257459595,
+          "choices": 5
+        },
+        {
+          "selected": 1,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.8,
+            0.2857142857142857,
+            0.4
+          ],
+          "selectedProbability": 0.9517275977272484,
+          "choices": 5
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.9,
+            0.35714285714285715,
+            0.2
+          ],
+          "selectedProbability": 0.9999998871323835,
+          "choices": 6
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            1,
+            0.42857142857142855,
+            0
+          ],
+          "selectedProbability": 0.999584657524958,
+          "choices": 6
+        },
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9,
+            0.21428571428571427,
+            0.2
+          ],
+          "selectedProbability": 0.6119389883414229,
+          "choices": 5
+        }
+      ],
+      "last": [
+        {
+          "selected": 4,
+          "publicVisits": 248,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.5714285714285714,
+            0
+          ],
+          "selectedProbability": 0.9986770239008838,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 249,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9,
+            0.21428571428571427,
+            0.2
+          ],
+          "selectedProbability": 0.9998033428276661,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 249,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.5714285714285714,
+            0
+          ],
+          "selectedProbability": 0.9986770239008838,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 250,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9,
+            0.21428571428571427,
+            0.2
+          ],
+          "selectedProbability": 0.9998033428276661,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 250,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.5714285714285714,
+            0
+          ],
+          "selectedProbability": 0.9986770239008838,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 251,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9,
+            0.21428571428571427,
+            0.2
+          ],
+          "selectedProbability": 0.9998033428276661,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 251,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.5714285714285714,
+            0
+          ],
+          "selectedProbability": 0.9986770239008838,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 252,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9,
+            0.21428571428571427,
+            0.2
+          ],
+          "selectedProbability": 0.9998033428276661,
+          "choices": 5
+        }
+      ]
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 103,
+      "board": "0e95c0df50d367a85de23366248b273303f1e524505f28fe247d5537024a9bbe",
+      "actorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "temperature": 1,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "clock",
+        "left": 80,
+        "moves": 8
+      },
+      "computationCaps": 0,
+      "decisions": 10,
+      "maximumIdenticalDecisionVisits": 1,
+      "tailChoices": 10,
+      "tailKnownReinspections": 0,
+      "tailSameProgress": false,
+      "first": [
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.7,
+            0.35714285714285715,
+            0.6
+          ],
+          "selectedProbability": 0.7124761175149761,
+          "choices": 4
+        },
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.8,
+            0.42857142857142855,
+            0.4
+          ],
+          "selectedProbability": 0.5307401165274727,
+          "choices": 5
+        },
+        {
+          "selected": 1,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.8,
+            0.42857142857142855,
+            0.4
+          ],
+          "selectedProbability": 0.9599111946731969,
+          "choices": 5
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.9,
+            0.5,
+            0.2
+          ],
+          "selectedProbability": 0.8200932866181343,
+          "choices": 5
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.5,
+            0.9285714285714286,
+            0.2
+          ],
+          "selectedProbability": 0.0020615338049104295,
+          "choices": 5
+        },
+        {
+          "selected": 5,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.6,
+            1,
+            0
+          ],
+          "selectedProbability": 0.12043547067627874,
+          "choices": 6
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            1,
+            0.5714285714285714,
+            0
+          ],
+          "selectedProbability": 0.21912597758894142,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.4,
+            1,
+            0
+          ],
+          "selectedProbability": 0.4875469086667321,
+          "choices": 5
+        }
+      ],
+      "last": [
+        {
+          "selected": 1,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.8,
+            0.42857142857142855,
+            0.4
+          ],
+          "selectedProbability": 0.9599111946731969,
+          "choices": 5
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.9,
+            0.5,
+            0.2
+          ],
+          "selectedProbability": 0.8200932866181343,
+          "choices": 5
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.5,
+            0.9285714285714286,
+            0.2
+          ],
+          "selectedProbability": 0.0020615338049104295,
+          "choices": 5
+        },
+        {
+          "selected": 5,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.6,
+            1,
+            0
+          ],
+          "selectedProbability": 0.12043547067627874,
+          "choices": 6
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            1,
+            0.5714285714285714,
+            0
+          ],
+          "selectedProbability": 0.21912597758894142,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.4,
+            1,
+            0
+          ],
+          "selectedProbability": 0.4875469086667321,
+          "choices": 5
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.3,
+            0.35714285714285715,
+            0.6
+          ],
+          "selectedProbability": 0.4653597711661474,
+          "choices": 5
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": true,
+          "position": [
+            0.8,
+            0.2857142857142857,
+            0.4
+          ],
+          "selectedProbability": 0.3216190962322637,
+          "choices": 5
+        }
+      ]
+    },
+    {
+      "name": "PUK",
+      "lv": 53,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "actorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "temperature": 0.25,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "contextChoiceLimit",
+        "left": 50,
+        "moves": 26
+      },
+      "computationCaps": 1,
+      "decisions": 512,
+      "maximumIdenticalDecisionVisits": 223,
+      "tailChoices": 128,
+      "tailKnownReinspections": 128,
+      "tailSameProgress": true,
+      "first": [
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.8571428571428571,
+            1
+          ],
+          "selectedProbability": 0.9272105144815473,
+          "choices": 9
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.42857142857142855,
+            1
+          ],
+          "selectedProbability": 0.9999999814150528,
+          "choices": 9
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.9285714285714286,
+            0.5
+          ],
+          "selectedProbability": 0.531384197266272,
+          "choices": 8
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.2857142857142857,
+            1
+          ],
+          "selectedProbability": 0.9999528254095854,
+          "choices": 8
+        },
+        {
+          "selected": 5,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.35714285714285715,
+            0.5
+          ],
+          "selectedProbability": 0.018109913008463718,
+          "choices": 10
+        },
+        {
+          "selected": 5,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            1,
+            0
+          ],
+          "selectedProbability": 0.7114227681425793,
+          "choices": 10
+        },
+        {
+          "selected": 8,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.7142857142857143,
+            1
+          ],
+          "selectedProbability": 0.5543040661642519,
+          "choices": 10
+        },
+        {
+          "selected": 1,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.21428571428571427,
+            0.5
+          ],
+          "selectedProbability": 0.9999876411676704,
+          "choices": 10
+        }
+      ],
+      "last": [
+        {
+          "selected": 9,
+          "publicVisits": 220,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "selectedProbability": 0.279949875248371,
+          "choices": 12
+        },
+        {
+          "selected": 10,
+          "publicVisits": 72,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.8571428571428571,
+            0
+          ],
+          "selectedProbability": 0.8557336049239854,
+          "choices": 12
+        },
+        {
+          "selected": 10,
+          "publicVisits": 221,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.16666666666666666,
+            0.14285714285714285,
+            0
+          ],
+          "selectedProbability": 0.3160280943889765,
+          "choices": 12
+        },
+        {
+          "selected": 10,
+          "publicVisits": 91,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.8571428571428571,
+            0
+          ],
+          "selectedProbability": 0.8619708163858665,
+          "choices": 12
+        },
+        {
+          "selected": 11,
+          "publicVisits": 222,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.35714285714285715,
+            0.5
+          ],
+          "selectedProbability": 0.4038937121252528,
+          "choices": 12
+        },
+        {
+          "selected": 11,
+          "publicVisits": 90,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.8571428571428571,
+            0
+          ],
+          "selectedProbability": 0.8775304922301455,
+          "choices": 12
+        },
+        {
+          "selected": 9,
+          "publicVisits": 223,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "selectedProbability": 0.27994987524837117,
+          "choices": 12
+        },
+        {
+          "selected": 10,
+          "publicVisits": 73,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.8571428571428571,
+            0
+          ],
+          "selectedProbability": 0.8557336049239854,
+          "choices": 12
+        }
+      ]
+    },
+    {
+      "name": "PUK",
+      "lv": 53,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "actorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "temperature": 1,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "tray",
+        "left": 28,
+        "moves": 48
+      },
+      "computationCaps": 0,
+      "decisions": 93,
+      "maximumIdenticalDecisionVisits": 4,
+      "tailChoices": 93,
+      "tailKnownReinspections": 36,
+      "tailSameProgress": false,
+      "first": [
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.8571428571428571,
+            1
+          ],
+          "selectedProbability": 0.5760752664013213,
+          "choices": 9
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.42857142857142855,
+            1
+          ],
+          "selectedProbability": 0.9594719023636091,
+          "choices": 9
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.9285714285714286,
+            0.5
+          ],
+          "selectedProbability": 0.22167827557117145,
+          "choices": 8
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.2857142857142857,
+            1
+          ],
+          "selectedProbability": 0.8707649385273115,
+          "choices": 8
+        },
+        {
+          "selected": 7,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.7142857142857143,
+            1
+          ],
+          "selectedProbability": 0.10756662422836663,
+          "choices": 10
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.8571428571428571,
+            1
+          ],
+          "selectedProbability": 0.8763867497554668,
+          "choices": 10
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.9285714285714286,
+            0.5
+          ],
+          "selectedProbability": 0.40344474358846927,
+          "choices": 10
+        },
+        {
+          "selected": 4,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.2857142857142857,
+            1
+          ],
+          "selectedProbability": 0.9540316092497699,
+          "choices": 11
+        }
+      ],
+      "last": [
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "selectedProbability": 0.3742754404541811,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 2,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.35714285714285715,
+            0.5
+          ],
+          "selectedProbability": 0.29690167969422815,
+          "choices": 5
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "selectedProbability": 0.2801898491939613,
+          "choices": 5
+        },
+        {
+          "selected": 3,
+          "publicVisits": 3,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.7142857142857143,
+            0
+          ],
+          "selectedProbability": 0.48756656124306114,
+          "choices": 5
+        },
+        {
+          "selected": 3,
+          "publicVisits": 2,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "selectedProbability": 0.374275440454181,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 4,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.35714285714285715,
+            0.5
+          ],
+          "selectedProbability": 0.29690167969422815,
+          "choices": 5
+        },
+        {
+          "selected": 4,
+          "publicVisits": 2,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.7142857142857143,
+            0
+          ],
+          "selectedProbability": 0.5042783917433281,
+          "choices": 5
+        },
+        {
+          "selected": 2,
+          "publicVisits": 3,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.4166666666666667,
+            0.9285714285714286,
+            0.5
+          ],
+          "selectedProbability": 0.17987142050870913,
+          "choices": 5
+        }
+      ]
+    },
+    {
+      "name": "Gerda",
+      "lv": 67,
+      "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+      "actorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "temperature": 0.25,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "contextChoiceLimit",
+        "left": 44,
+        "moves": 34
+      },
+      "computationCaps": 1,
+      "decisions": 512,
+      "maximumIdenticalDecisionVisits": 229,
+      "tailChoices": 128,
+      "tailKnownReinspections": 128,
+      "tailSameProgress": true,
+      "first": [
+        {
+          "selected": 5,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.6259571089727123,
+          "choices": 14
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.75,
+            0
+          ],
+          "selectedProbability": 0.9999978957498784,
+          "choices": 15
+        },
+        {
+          "selected": 6,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.25,
+            0.8125,
+            0.5
+          ],
+          "selectedProbability": 0.8614238605120542,
+          "choices": 14
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.3333333333333333,
+            0,
+            0
+          ],
+          "selectedProbability": 0.9999998529286441,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.75,
+            0.8125,
+            0.5
+          ],
+          "selectedProbability": 0.37309667368059113,
+          "choices": 14
+        },
+        {
+          "selected": 12,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.3125,
+            0.5
+          ],
+          "selectedProbability": 0.3916158090763254,
+          "choices": 14
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.16666666666666666,
+            0.875,
+            0
+          ],
+          "selectedProbability": 0.17167851545576385,
+          "choices": 14
+        },
+        {
+          "selected": 5,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.3125,
+            0.5
+          ],
+          "selectedProbability": 0.9226593126084608,
+          "choices": 14
+        }
+      ],
+      "last": [
+        {
+          "selected": 13,
+          "publicVisits": 226,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.16666666666666666,
+            0.75,
+            0
+          ],
+          "selectedProbability": 0.9999967977176984,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 226,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.4166666666666667,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.9999966947355348,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 227,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.16666666666666666,
+            0.75,
+            0
+          ],
+          "selectedProbability": 0.9999967977176984,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 227,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.4166666666666667,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.9999966947355348,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 228,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.16666666666666666,
+            0.75,
+            0
+          ],
+          "selectedProbability": 0.9999967977176984,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 228,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.4166666666666667,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.9999966947355348,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 229,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.16666666666666666,
+            0.75,
+            0
+          ],
+          "selectedProbability": 0.9999967977176984,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 229,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.4166666666666667,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.9999966947355348,
+          "choices": 14
+        }
+      ]
+    },
+    {
+      "name": "Gerda",
+      "lv": 67,
+      "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+      "actorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "temperature": 1,
+      "explicitDiagnosticChoiceLimit": 512,
+      "outcome": {
+        "win": false,
+        "why": "tray",
+        "left": 68,
+        "moves": 10
+      },
+      "computationCaps": 0,
+      "decisions": 21,
+      "maximumIdenticalDecisionVisits": 2,
+      "tailChoices": 21,
+      "tailKnownReinspections": 6,
+      "tailSameProgress": false,
+      "first": [
+        {
+          "selected": 5,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.3190088265875453,
+          "choices": 14
+        },
+        {
+          "selected": 0,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.3333333333333333,
+            0,
+            0
+          ],
+          "selectedProbability": 0.018611678820497468,
+          "choices": 15
+        },
+        {
+          "selected": 1,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            1,
+            0.75,
+            0
+          ],
+          "selectedProbability": 0.4805590356587398,
+          "choices": 15
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.3125,
+            0.5
+          ],
+          "selectedProbability": 0.0228180457577299,
+          "choices": 14
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.8333333333333334,
+            0.125,
+            0
+          ],
+          "selectedProbability": 0.06813293685679846,
+          "choices": 14
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.3125,
+            0.5
+          ],
+          "selectedProbability": 0.1057626554025621,
+          "choices": 14
+        },
+        {
+          "selected": 6,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.25,
+            0.8125,
+            0.5
+          ],
+          "selectedProbability": 0.5377581877726761,
+          "choices": 14
+        },
+        {
+          "selected": 12,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.16131851350742454,
+          "choices": 14
+        }
+      ],
+      "last": [
+        {
+          "selected": 12,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.135756494388929,
+          "choices": 14
+        },
+        {
+          "selected": 13,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.75,
+            0.8125,
+            0.5
+          ],
+          "selectedProbability": 0.2140593383229982,
+          "choices": 14
+        },
+        {
+          "selected": 12,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.3125,
+            0.5
+          ],
+          "selectedProbability": 0.18939938563326214,
+          "choices": 14
+        },
+        {
+          "selected": 3,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.3333333333333333,
+            1,
+            0
+          ],
+          "selectedProbability": 0.010192178077847133,
+          "choices": 14
+        },
+        {
+          "selected": 2,
+          "publicVisits": 1,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.3333333333333333,
+            0.875,
+            0
+          ],
+          "selectedProbability": 0.0154943220415825,
+          "choices": 13
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.08333333333333333,
+            0.6875,
+            0.5
+          ],
+          "selectedProbability": 0.14923061153507627,
+          "choices": 13
+        },
+        {
+          "selected": 11,
+          "publicVisits": 1,
+          "inspection": true,
+          "knownReopen": true,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0.9166666666666666,
+            0.3125,
+            0.5
+          ],
+          "selectedProbability": 0.17665255406013902,
+          "choices": 13
+        },
+        {
+          "selected": 1,
+          "publicVisits": 2,
+          "inspection": false,
+          "knownReopen": false,
+          "pairPreparation": false,
+          "activeClock": false,
+          "position": [
+            0,
+            0.25,
+            0
+          ],
+          "selectedProbability": 0.011719206104518475,
+          "choices": 13
+        }
+      ]
+    }
+  ],
+  "note": "One declared seed, first attempt only, four explicitly selected prior training boards and two current-own policies. 512 is a diagnostic computation cap, not a human loss or count forecast. Actual human winning counts are not read. Exact public decision revisits plus128-tap physical stagnation diagnose behavior without banning ordinary necessary blocker reopenings. No default4096 engine boundary, ongoing calibration, person model, old numeric forecast or cohort is changed."
+}

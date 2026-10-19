@@ -1,0 +1,8 @@
+{"name":"Dennisisdebeste","lv":150,"temperature":0.25,"why":"contextChoiceLimit","decisions":512,"maximumVisits":250,"tailSameProgress":true,"tailKnownReinspections":128}
+{"name":"Dennisisdebeste","lv":150,"temperature":1,"why":"clock","decisions":9,"maximumVisits":1,"tailSameProgress":false,"tailKnownReinspections":0}
+{"name":"Mrs. Doubtfire","lv":103,"temperature":0.25,"why":"contextChoiceLimit","decisions":512,"maximumVisits":252,"tailSameProgress":true,"tailKnownReinspections":128}
+{"name":"Mrs. Doubtfire","lv":103,"temperature":1,"why":"clock","decisions":10,"maximumVisits":1,"tailSameProgress":false,"tailKnownReinspections":0}
+{"name":"PUK","lv":53,"temperature":0.25,"why":"contextChoiceLimit","decisions":512,"maximumVisits":223,"tailSameProgress":true,"tailKnownReinspections":128}
+{"name":"PUK","lv":53,"temperature":1,"why":"tray","decisions":93,"maximumVisits":4,"tailSameProgress":false,"tailKnownReinspections":36}
+{"name":"Gerda","lv":67,"temperature":0.25,"why":"contextChoiceLimit","decisions":512,"maximumVisits":229,"tailSameProgress":true,"tailKnownReinspections":128}
+{"name":"Gerda","lv":67,"temperature":1,"why":"tray","decisions":21,"maximumVisits":2,"tailSameProgress":false,"tailKnownReinspections":6}

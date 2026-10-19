@@ -1,0 +1,13 @@
+'use strict';
+const assert = require('assert/strict');
+const Layouts = require('../../../www/layouts.js');
+const { encodeGame } = require('./personal_game_io.js');
+const { publicFeatures } = require('./personal_public_count_data.js');
+const tiles = [{ x: 0, y: 0, z: 0 }, { x: 4, y: 0, z: 0 }];
+const game = encodeGame({ tiles, nb: Layouts.neighbors(tiles), faces: [1, 1], down: new Uint8Array(2), rules: null, clock: { i: 0, n: 5 } });
+const features = publicFeatures(game);
+assert.equal(features.hasClock, 1); assert.equal(features.clockBudget, 5);
+assert.equal(features.mateSamples, 2);
+assert.deepEqual(publicFeatures({ ...game, wonOn: 15, predictions: { otherPerson: 1 } }), features);
+assert.equal(publicFeatures({ ...game, clock: null }).hasClock, 0);
+console.log('PASS public count features use measured geometry and clock metadata, never outcomes or another person’s predictions');

@@ -1,0 +1,704 @@
+{
+  "evidence": "own-attention-count-fit-and-retrospective-training-diagnostic-only",
+  "targetMet": false,
+  "exactCompletedOriginalBaselineCrosschecks": 80,
+  "perPerson": {
+    "Dennisisdebeste": {
+      "temperature": 0.25,
+      "ownCountLogLoss": {
+        "confidence025": 1.9411090461355311,
+        "confidence050": 2.3711695450837476,
+        "confidence100": 2.8959374564130274,
+        "confidence150": 3.7175777601602786
+      },
+      "trainingOnlyConservative8TryPointCorrect": 9,
+      "n": 20,
+      "alwaysFirst": 14,
+      "points": [
+        {
+          "lv": 131,
+          "actual": 3,
+          "predicted": 1,
+          "first": 1,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 134,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.375,
+          "within8": 0.75,
+          "correct": true
+        },
+        {
+          "lv": 137,
+          "actual": 2,
+          "predicted": 2,
+          "first": 0.25,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 140,
+          "actual": 1,
+          "predicted": 2,
+          "first": 0,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 143,
+          "actual": 1,
+          "predicted": 1,
+          "first": 1,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 146,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 149,
+          "actual": 2,
+          "predicted": 8,
+          "first": 0.25,
+          "within8": 0.375,
+          "correct": false
+        },
+        {
+          "lv": 132,
+          "actual": 4,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 135,
+          "actual": 1,
+          "predicted": 2,
+          "first": 0.125,
+          "within8": 0.875,
+          "correct": false
+        },
+        {
+          "lv": 138,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 141,
+          "actual": 1,
+          "predicted": 3,
+          "first": 0,
+          "within8": 0.75,
+          "correct": false
+        },
+        {
+          "lv": 144,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 0.875,
+          "correct": true
+        },
+        {
+          "lv": 147,
+          "actual": 1,
+          "predicted": 6,
+          "first": 0.125,
+          "within8": 0.875,
+          "correct": false
+        },
+        {
+          "lv": 150,
+          "actual": 3,
+          "predicted": 1,
+          "first": 0.375,
+          "within8": 0.75,
+          "correct": false
+        },
+        {
+          "lv": 133,
+          "actual": 1,
+          "predicted": 2,
+          "first": 0.375,
+          "within8": 0.875,
+          "correct": false
+        },
+        {
+          "lv": 136,
+          "actual": 1,
+          "predicted": 1,
+          "first": 1,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 139,
+          "actual": 3,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 142,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 145,
+          "actual": 1,
+          "predicted": 8,
+          "first": 0.125,
+          "within8": 0.5,
+          "correct": false
+        },
+        {
+          "lv": 148,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 0.875,
+          "correct": true
+        }
+      ]
+    },
+    "Mrs. Doubtfire": {
+      "temperature": 0.25,
+      "ownCountLogLoss": {
+        "confidence025": 2.79990424351418,
+        "confidence050": 2.937838425804585,
+        "confidence100": 3.1067372058492633,
+        "confidence150": 3.7667667776600613
+      },
+      "trainingOnlyConservative8TryPointCorrect": 5,
+      "n": 20,
+      "alwaysFirst": 7,
+      "points": [
+        {
+          "lv": 85,
+          "actual": 5,
+          "predicted": 3,
+          "first": 0,
+          "within8": 0.875,
+          "correct": false
+        },
+        {
+          "lv": 88,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 91,
+          "actual": 21,
+          "predicted": 3,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 94,
+          "actual": 5,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 97,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 100,
+          "actual": 1,
+          "predicted": 3,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 103,
+          "actual": 1,
+          "predicted": 2,
+          "first": 0,
+          "within8": 0.75,
+          "correct": false
+        },
+        {
+          "lv": 86,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 89,
+          "actual": 13,
+          "predicted": 1,
+          "first": 0.375,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 92,
+          "actual": 2,
+          "predicted": 8,
+          "first": 0,
+          "within8": 0.125,
+          "correct": false
+        },
+        {
+          "lv": 95,
+          "actual": 2,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 98,
+          "actual": 2,
+          "predicted": 8,
+          "first": 0.125,
+          "within8": 0.75,
+          "correct": false
+        },
+        {
+          "lv": 101,
+          "actual": 5,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 84,
+          "actual": 10,
+          "predicted": 2,
+          "first": 0.125,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 87,
+          "actual": 5,
+          "predicted": 2,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 90,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 93,
+          "actual": 2,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 96,
+          "actual": 5,
+          "predicted": 3,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 99,
+          "actual": 5,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 102,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.375,
+          "within8": 1,
+          "correct": true
+        }
+      ]
+    },
+    "PUK": {
+      "temperature": 0.5,
+      "ownCountLogLoss": {
+        "confidence025": 0.9561582384508055,
+        "confidence050": 0.8737704568130801,
+        "confidence100": 1.481820051652856,
+        "confidence150": 2.7835547832004304
+      },
+      "trainingOnlyConservative8TryPointCorrect": 13,
+      "n": 20,
+      "alwaysFirst": 14,
+      "points": [
+        {
+          "lv": 31,
+          "actual": 2,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 34,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 38,
+          "actual": 1,
+          "predicted": 1,
+          "first": 1,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 43,
+          "actual": 3,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 47,
+          "actual": 1,
+          "predicted": 5,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 51,
+          "actual": 1,
+          "predicted": 2,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 29,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 32,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 35,
+          "actual": 1,
+          "predicted": 1,
+          "first": 1,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 39,
+          "actual": 2,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 44,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 48,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 52,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 30,
+          "actual": 2,
+          "predicted": 1,
+          "first": 1,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 33,
+          "actual": 1,
+          "predicted": 2,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 36,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 42,
+          "actual": 2,
+          "predicted": 2,
+          "first": 0.25,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 45,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 50,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 53,
+          "actual": 15,
+          "predicted": 8,
+          "first": 0,
+          "within8": 0,
+          "correct": true
+        }
+      ]
+    },
+    "Gerda": {
+      "temperature": 0.5,
+      "ownCountLogLoss": {
+        "confidence025": 1.5774644361604104,
+        "confidence050": 1.5309343120577443,
+        "confidence100": 2.1676101424652847,
+        "confidence150": 3.2683285442959615
+      },
+      "trainingOnlyConservative8TryPointCorrect": 10,
+      "n": 20,
+      "alwaysFirst": 11,
+      "points": [
+        {
+          "lv": 46,
+          "actual": 1,
+          "predicted": 3,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 50,
+          "actual": 2,
+          "predicted": 2,
+          "first": 0.125,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 53,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.5,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 57,
+          "actual": 2,
+          "predicted": 8,
+          "first": 0.125,
+          "within8": 0.75,
+          "correct": false
+        },
+        {
+          "lv": 60,
+          "actual": 2,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 63,
+          "actual": 2,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 66,
+          "actual": 1,
+          "predicted": 3,
+          "first": 0.125,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 48,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 51,
+          "actual": 17,
+          "predicted": 8,
+          "first": 0,
+          "within8": 0.125,
+          "correct": true
+        },
+        {
+          "lv": 54,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 58,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.375,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 61,
+          "actual": 3,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 64,
+          "actual": 1,
+          "predicted": 2,
+          "first": 0.25,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 67,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.875,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 49,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 52,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 55,
+          "actual": 1,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": true
+        },
+        {
+          "lv": 59,
+          "actual": 3,
+          "predicted": 1,
+          "first": 0.75,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 62,
+          "actual": 14,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": false
+        },
+        {
+          "lv": 65,
+          "actual": 2,
+          "predicted": 1,
+          "first": 0.625,
+          "within8": 1,
+          "correct": false
+        }
+      ]
+    }
+  },
+  "note": "Twenty own calibration boards/person, not held or prospective accuracy. Conservative8-try point diagnostic treats the unresolved9+ tail as10+ for lower-bound utility; exact9 data is still required for real numeric future forecasts. No human win on10 is invented."
+}

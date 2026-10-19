@@ -1,0 +1,172 @@
+{
+  "made": "2026-10-19T01:29:54.538726+00:00",
+  "evidence": "own-count-calibration-immutable-preparation-and-completed-pilot-only",
+  "targetMet": false,
+  "runRoot": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\personal-temperature-2026-10-19T01-21-59-569Z",
+  "runManifestSha256": "58daf24012bef621bb4a3fd4f8acff9a24b7d0c1ab809592fb4609f5aca6d34f",
+  "inputSha256": "86dff3c8b80e11873c998c5861b537a28005aa2bba97f2da1e8311af43df7fcb",
+  "verifiedCopiedSources": 35,
+  "entries": 80,
+  "perPerson": {
+    "Dennisisdebeste": {
+      "actorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "entries": 20,
+      "levels": [
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150
+      ],
+      "missingRecordedStartsTrainingOnly": 0
+    },
+    "Mrs. Doubtfire": {
+      "actorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "entries": 20,
+      "levels": [
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103
+      ],
+      "missingRecordedStartsTrainingOnly": 6
+    },
+    "PUK": {
+      "actorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "entries": 20,
+      "levels": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42,
+        43,
+        44,
+        45,
+        47,
+        48,
+        50,
+        51,
+        52,
+        53
+      ],
+      "missingRecordedStartsTrainingOnly": 0
+    },
+    "Gerda": {
+      "actorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "entries": 20,
+      "levels": [
+        46,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "missingRecordedStartsTrainingOnly": 0
+    }
+  },
+  "pilotFile": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\personal-temperature-2026-10-19T01-21-59-569Z\\analysis\\archive\\personal-bots\\personal-policy-temperature-pilot.json",
+  "pilotSha256": "b8ed58c22da790322d46d4858b37283973a0d3a5d31094bcb1c8e078b39d869c",
+  "pilot": {
+    "runs": 2,
+    "attempts": 3,
+    "exactBaselineControls": 4,
+    "computationCaps": 21
+  },
+  "pilotCapsByPerson": {
+    "Dennisisdebeste": {
+      "confidence025": 5,
+      "confidence050": 0,
+      "confidence100": 0,
+      "confidence150": 0
+    },
+    "Gerda": {
+      "confidence025": 6,
+      "confidence050": 0,
+      "confidence100": 0,
+      "confidence150": 0
+    },
+    "Mrs. Doubtfire": {
+      "confidence025": 4,
+      "confidence050": 0,
+      "confidence100": 0,
+      "confidence150": 0
+    },
+    "PUK": {
+      "confidence025": 6,
+      "confidence050": 0,
+      "confidence100": 0,
+      "confidence150": 0
+    }
+  },
+  "fullProgressObserved": {
+    "started": "2026-10-19T01:23:14.823Z",
+    "completedBoards": 15,
+    "progressFile": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\archive\\personal-bots\\runs\\personal-temperature-2026-10-19T01-21-59-569Z\\analysis\\archive\\personal-bots\\personal-policy-temperature-full-progress.jsonl",
+    "ownerSession": 59597,
+    "last": {
+      "made": "2026-10-19T01:29:52.717Z",
+      "name": "Dennisisdebeste",
+      "lv": 143,
+      "caps": {
+        "confidence025": 64,
+        "confidence050": 0,
+        "confidence100": 0,
+        "confidence150": 0
+      }
+    }
+  },
+  "note": "Progress observation is not full completion or accuracy evidence. Inspect the actual owned session/process again before any restart. No fitted temperature or new numeric forecast yet; computation-censored candidates cannot be selected."
+}

@@ -1,0 +1,279 @@
+{
+  "made": "2026-10-19T01:35:44.017816+00:00",
+  "targetMet": false,
+  "missingBoards": 85,
+  "scores": {
+    "Dennisisdebeste": {
+      "allDevelopment": {
+        "ownRecent": [
+          37,
+          68
+        ],
+        "ownPublicForest": [
+          35,
+          68
+        ],
+        "ownRegimeForest": [
+          32,
+          68
+        ],
+        "selectedOwnPrequential": [
+          37,
+          68
+        ],
+        "alwaysFirst": [
+          40,
+          68
+        ]
+      },
+      "reusedHeldDevelopment": {
+        "ownRecent": [
+          6,
+          20
+        ],
+        "ownPublicForest": [
+          8,
+          20
+        ],
+        "ownRegimeForest": [
+          6,
+          20
+        ],
+        "selectedOwnPrequential": [
+          6,
+          20
+        ],
+        "alwaysFirst": [
+          9,
+          20
+        ]
+      },
+      "recentDevelopment": {
+        "ownRecent": [
+          16,
+          23
+        ],
+        "ownPublicForest": [
+          15,
+          23
+        ],
+        "ownRegimeForest": [
+          14,
+          23
+        ],
+        "selectedOwnPrequential": [
+          16,
+          23
+        ],
+        "alwaysFirst": [
+          16,
+          23
+        ]
+      }
+    },
+    "Mrs. Doubtfire": {
+      "allDevelopment": {
+        "ownRecent": [
+          9,
+          24
+        ],
+        "ownPublicForest": [
+          8,
+          24
+        ],
+        "ownRegimeForest": [
+          9,
+          24
+        ],
+        "selectedOwnPrequential": [
+          9,
+          24
+        ],
+        "alwaysFirst": [
+          9,
+          24
+        ]
+      },
+      "reusedHeldDevelopment": {
+        "ownRecent": [
+          7,
+          20
+        ],
+        "ownPublicForest": [
+          6,
+          20
+        ],
+        "ownRegimeForest": [
+          7,
+          20
+        ],
+        "selectedOwnPrequential": [
+          7,
+          20
+        ],
+        "alwaysFirst": [
+          7,
+          20
+        ]
+      },
+      "recentDevelopment": {
+        "ownRecent": [
+          0,
+          0
+        ],
+        "ownPublicForest": [
+          0,
+          0
+        ],
+        "ownRegimeForest": [
+          0,
+          0
+        ],
+        "selectedOwnPrequential": [
+          0,
+          0
+        ],
+        "alwaysFirst": [
+          0,
+          0
+        ]
+      }
+    },
+    "PUK": {
+      "allDevelopment": {
+        "ownRecent": [
+          12,
+          20
+        ],
+        "ownPublicForest": [
+          11,
+          20
+        ],
+        "ownRegimeForest": [
+          12,
+          20
+        ],
+        "selectedOwnPrequential": [
+          13,
+          20
+        ],
+        "alwaysFirst": [
+          14,
+          20
+        ]
+      },
+      "reusedHeldDevelopment": {
+        "ownRecent": [
+          10,
+          15
+        ],
+        "ownPublicForest": [
+          9,
+          15
+        ],
+        "ownRegimeForest": [
+          10,
+          15
+        ],
+        "selectedOwnPrequential": [
+          11,
+          15
+        ],
+        "alwaysFirst": [
+          11,
+          15
+        ]
+      },
+      "recentDevelopment": {
+        "ownRecent": [
+          0,
+          0
+        ],
+        "ownPublicForest": [
+          0,
+          0
+        ],
+        "ownRegimeForest": [
+          0,
+          0
+        ],
+        "selectedOwnPrequential": [
+          0,
+          0
+        ],
+        "alwaysFirst": [
+          0,
+          0
+        ]
+      }
+    },
+    "Gerda": {
+      "allDevelopment": {
+        "ownRecent": [
+          15,
+          39
+        ],
+        "ownPublicForest": [
+          15,
+          39
+        ],
+        "ownRegimeForest": [
+          15,
+          39
+        ],
+        "selectedOwnPrequential": [
+          16,
+          39
+        ],
+        "alwaysFirst": [
+          18,
+          39
+        ]
+      },
+      "reusedHeldDevelopment": {
+        "ownRecent": [
+          7,
+          16
+        ],
+        "ownPublicForest": [
+          7,
+          16
+        ],
+        "ownRegimeForest": [
+          7,
+          16
+        ],
+        "selectedOwnPrequential": [
+          7,
+          16
+        ],
+        "alwaysFirst": [
+          8,
+          16
+        ]
+      },
+      "recentDevelopment": {
+        "ownRecent": [
+          3,
+          5
+        ],
+        "ownPublicForest": [
+          2,
+          5
+        ],
+        "ownRegimeForest": [
+          2,
+          5
+        ],
+        "selectedOwnPrequential": [
+          2,
+          5
+        ],
+        "alwaysFirst": [
+          3,
+          5
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+'use strict';
+const assert = require('assert/strict');
+const Layouts = require('../../../www/layouts.js');
+const { encodeGame } = require('./personal_game_io.js');
+const { openingFeatures, SCHEMA } = require('./personal_public_opening.js');
+const tiles = [0, 4, 8, 12].map(position => ({ x: position, y: 0, z: 0 }));
+const game = { tiles, nb: Layouts.neighbors(tiles), faces: [1, 1, 2, 2], down: Uint8Array.from([0, 0, 0, 0]), rules: null, clock: null };
+const encoded = encodeGame(game), before = JSON.stringify(encoded), result = openingFeatures(encoded);
+assert.equal(result.schema, SCHEMA);
+assert.deepEqual(result.features, { n: 4, blockedFreeCount: 0, takeableWithVisMateFrac: 1,
+  takeableWithTakeableMate: 2, meanMateDepth: 0, clockSlackRatio: 1 });
+assert.equal(JSON.stringify(encoded), before);
+assert.equal(result.diagnostics.takeableMateTileCount, 4);
+const triple = openingFeatures({ ...encoded, faces: [1, 1, 1, 2] });
+assert.equal(triple.features.takeableWithTakeableMate, 1.5);
+const hidden = { ...encoded, down: [0, 0, 1, 1] };
+assert.deepEqual(openingFeatures(hidden), openingFeatures({ ...hidden, faces: [1, 1, 101, 1] }));
+const stackedTiles = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 6, y: 0, z: 0 }, { x: 10, y: 0, z: 0 }];
+const covered = encodeGame({ ...game, tiles: stackedTiles, nb: Layouts.neighbors(stackedTiles) });
+assert.deepEqual(openingFeatures(covered), openingFeatures({ ...covered, faces: [101, 1, 2, 2] }));
+const constrained = encodeGame({ ...game, rules: { ice: { 1: 1 }, iceNb: Layouts.iceNeighbors(tiles), locks: new Set([0]), keys: [3] }, clock: { i: 0, n: 4 } });
+const constrainedBefore = JSON.stringify(constrained), constrainedResult = openingFeatures(constrained);
+assert.equal(constrainedResult.features.blockedFreeCount, 2);
+assert.equal(constrainedResult.features.clockSlackRatio, .5);
+assert.equal(JSON.stringify(constrained), constrainedBefore);
+assert.deepEqual(openingFeatures({ ...constrained, targetWinningAttempt: 99 }), constrainedResult);
+assert.throws(() => openingFeatures({ ...encoded, down: { 0: 0, 1: 0, 2: 0, 3: 0 } }));
+console.log('PASS public opening geometry uses visible pictures only, explicit pair-equivalent units and exact encoded locks/ice without modifying inputs');

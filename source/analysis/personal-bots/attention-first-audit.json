@@ -1,0 +1,1685 @@
+{
+  "made": "2026-10-19T01:48:19.339Z",
+  "targetMet": false,
+  "evidence": "bounded-personal-attention-first-path-diagnostic-only",
+  "modelsSha256": "7eaef1a415e73cb730f53060cdd814a752dbe2ceaa91b71bd96942f6401126a2",
+  "runtimeAuditSha256": "f1edcecd6f70d773c9f0e20cd6caa4ba202f060cb353f1b8c0979b9fc2a6991b",
+  "inputSha256": "86dff3c8b80e11873c998c5861b537a28005aa2bba97f2da1e8311af43df7fcb",
+  "rows": [
+    {
+      "name": "Dennisisdebeste",
+      "lv": 150,
+      "board": "611ba5caa68a67752f8b384970a951ac7fe221ba1dce263b676abb45351b56af",
+      "actorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "temperature": 0.25,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "contextChoiceLimit",
+          "left": 85,
+          "moves": 11
+        },
+        "computationCaps": 1,
+        "decisions": 512,
+        "maximumIdenticalDecisionVisits": 250,
+        "tailChoices": 128,
+        "tailKnownReinspections": 128,
+        "tailSameProgress": true,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 246,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 247,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 247,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 248,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 248,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 249,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 249,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 250,
+            "inspection": true,
+            "knownReopen": true
+          }
+        ],
+        "physicalPathSha256": "1b4127c2b33de45e2f4a4b38f355938a78d37fed1eed7ee32c343cabaafd97b4"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "tray",
+          "left": 44,
+          "moves": 52
+        },
+        "computationCaps": 0,
+        "decisions": 455,
+        "maximumIdenticalDecisionVisits": 26,
+        "tailChoices": 128,
+        "tailKnownReinspections": 116,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 8,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 12,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 16,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 15,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 17,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 9,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 8,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 7,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "3e276292254fbae5d3ba832e28cf40179497542c3809752d47bfad95ff97d8da"
+      }
+    },
+    {
+      "name": "Dennisisdebeste",
+      "lv": 150,
+      "board": "611ba5caa68a67752f8b384970a951ac7fe221ba1dce263b676abb45351b56af",
+      "actorId": "d8ba12756975c20d3d8cbd40b54492bdb3eee51e78d13fa37b142264f2784bd7",
+      "temperature": 1,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "clock",
+          "left": 88,
+          "moves": 8
+        },
+        "computationCaps": 0,
+        "decisions": 9,
+        "maximumIdenticalDecisionVisits": 1,
+        "tailChoices": 9,
+        "tailKnownReinspections": 0,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "fe19299290609d281346ab33712496f4e9b4eae8052750cf70644785304ffe05"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "clock",
+          "left": 88,
+          "moves": 8
+        },
+        "computationCaps": 0,
+        "decisions": 9,
+        "maximumIdenticalDecisionVisits": 1,
+        "tailChoices": 9,
+        "tailKnownReinspections": 0,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "fe19299290609d281346ab33712496f4e9b4eae8052750cf70644785304ffe05"
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 103,
+      "board": "0e95c0df50d367a85de23366248b273303f1e524505f28fe247d5537024a9bbe",
+      "actorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "temperature": 0.25,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "contextChoiceLimit",
+          "left": 82,
+          "moves": 6
+        },
+        "computationCaps": 1,
+        "decisions": 512,
+        "maximumIdenticalDecisionVisits": 252,
+        "tailChoices": 128,
+        "tailKnownReinspections": 128,
+        "tailSameProgress": true,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 248,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 249,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 249,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 250,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 250,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 251,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 251,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 252,
+            "inspection": true,
+            "knownReopen": true
+          }
+        ],
+        "physicalPathSha256": "70f957357190227837262edea4880a8e6035479f92ff70359ed82739a4f5dfc3"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "tray",
+          "left": 78,
+          "moves": 10
+        },
+        "computationCaps": 0,
+        "decisions": 31,
+        "maximumIdenticalDecisionVisits": 4,
+        "tailChoices": 31,
+        "tailKnownReinspections": 15,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "68d18bf7ca431388a135ff1d251ee8aa94e8111e882845013c1c5ea8a5bf927d"
+      }
+    },
+    {
+      "name": "Mrs. Doubtfire",
+      "lv": 103,
+      "board": "0e95c0df50d367a85de23366248b273303f1e524505f28fe247d5537024a9bbe",
+      "actorId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
+      "temperature": 1,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "clock",
+          "left": 80,
+          "moves": 8
+        },
+        "computationCaps": 0,
+        "decisions": 10,
+        "maximumIdenticalDecisionVisits": 1,
+        "tailChoices": 10,
+        "tailKnownReinspections": 0,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "f519362309b95ba3dd3be7a9e37370913b7c5b6af70180a9b5f6373d8519f624"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "clock",
+          "left": 80,
+          "moves": 8
+        },
+        "computationCaps": 0,
+        "decisions": 10,
+        "maximumIdenticalDecisionVisits": 1,
+        "tailChoices": 10,
+        "tailKnownReinspections": 0,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "f519362309b95ba3dd3be7a9e37370913b7c5b6af70180a9b5f6373d8519f624"
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 53,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "actorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "temperature": 0.25,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "contextChoiceLimit",
+          "left": 50,
+          "moves": 26
+        },
+        "computationCaps": 1,
+        "decisions": 512,
+        "maximumIdenticalDecisionVisits": 223,
+        "tailChoices": 128,
+        "tailKnownReinspections": 128,
+        "tailSameProgress": true,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 220,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 72,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 221,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 91,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 222,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 90,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 223,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 73,
+            "inspection": true,
+            "knownReopen": true
+          }
+        ],
+        "physicalPathSha256": "03fc65979c01315ef14c1d7bb345b97783c8a3642ac1a56842dda18b24c9cd90"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "contextChoiceLimit",
+          "left": 29,
+          "moves": 47
+        },
+        "computationCaps": 1,
+        "decisions": 512,
+        "maximumIdenticalDecisionVisits": 65,
+        "tailChoices": 128,
+        "tailKnownReinspections": 123,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 3,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 3,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 4,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          }
+        ],
+        "physicalPathSha256": "f5f0053d4956af9bb8e8e1205a7b481de78293a3adfd83c63fc5798464391082"
+      }
+    },
+    {
+      "name": "PUK",
+      "lv": 53,
+      "board": "6732fb99fbd9f01462c85df06a890bba4864f26faed0a6f3fcf50aa749e80e7b",
+      "actorId": "8b4347f3684bc0927dccd8bd9435770ef5168fe422beb5b913002c8dccb26ebe",
+      "temperature": 1,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "tray",
+          "left": 28,
+          "moves": 48
+        },
+        "computationCaps": 0,
+        "decisions": 93,
+        "maximumIdenticalDecisionVisits": 4,
+        "tailChoices": 93,
+        "tailKnownReinspections": 36,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 3,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 4,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 3,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "52eebf9daab6ca922c7638c67d3a211413a0c7907e4f492f42a4a5504b960396"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "tray",
+          "left": 46,
+          "moves": 30
+        },
+        "computationCaps": 0,
+        "decisions": 57,
+        "maximumIdenticalDecisionVisits": 1,
+        "tailChoices": 57,
+        "tailKnownReinspections": 17,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "654aa72ad22341a6fe54270875b735b2a65659d343c135e9ecb3f86aab7403f8"
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 67,
+      "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+      "actorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "temperature": 0.25,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "contextChoiceLimit",
+          "left": 44,
+          "moves": 34
+        },
+        "computationCaps": 1,
+        "decisions": 512,
+        "maximumIdenticalDecisionVisits": 229,
+        "tailChoices": 128,
+        "tailKnownReinspections": 128,
+        "tailSameProgress": true,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 226,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 226,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 227,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 227,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 228,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 228,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 229,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 229,
+            "inspection": true,
+            "knownReopen": true
+          }
+        ],
+        "physicalPathSha256": "22ff3d54a13a25a0d8ffcbfb9d5255c28c9f6c4c89e8398e5900f6c3424620d6"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "contextChoiceLimit",
+          "left": 44,
+          "moves": 34
+        },
+        "computationCaps": 1,
+        "decisions": 512,
+        "maximumIdenticalDecisionVisits": 231,
+        "tailChoices": 128,
+        "tailKnownReinspections": 128,
+        "tailSameProgress": true,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 228,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 228,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 229,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 229,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 230,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 230,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 231,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 231,
+            "inspection": true,
+            "knownReopen": true
+          }
+        ],
+        "physicalPathSha256": "02735b284c5210eae99d59a8de6e791ee3546b24a744479d11bb7e9cb66cf7e0"
+      }
+    },
+    {
+      "name": "Gerda",
+      "lv": 67,
+      "board": "d415e770de43229e1698cce526dad57bae4a473793c2a74d2f5e100ce8be50d4",
+      "actorId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
+      "temperature": 1,
+      "exactZeroControl": true,
+      "baseline": {
+        "outcome": {
+          "win": false,
+          "why": "tray",
+          "left": 68,
+          "moves": 10
+        },
+        "computationCaps": 0,
+        "decisions": 21,
+        "maximumIdenticalDecisionVisits": 2,
+        "tailChoices": 21,
+        "tailKnownReinspections": 6,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 2,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "548c60db6955f2720fc28f3e98f02f65cd69f7eee811aa76233c944eb1de4a27"
+      },
+      "attention": {
+        "outcome": {
+          "win": false,
+          "why": "tray",
+          "left": 62,
+          "moves": 16
+        },
+        "computationCaps": 0,
+        "decisions": 29,
+        "maximumIdenticalDecisionVisits": 1,
+        "tailChoices": 29,
+        "tailKnownReinspections": 8,
+        "tailSameProgress": false,
+        "first": [
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          }
+        ],
+        "last": [
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          },
+          {
+            "publicVisits": 1,
+            "inspection": true,
+            "knownReopen": true
+          },
+          {
+            "publicVisits": 1,
+            "inspection": false,
+            "knownReopen": false
+          }
+        ],
+        "physicalPathSha256": "d1dc9261fe628c6cd4c0844d9ca966903cecc5cb30170900e6edad8849b6be6d"
+      }
+    }
+  ],
+  "explicitDiagnosticChoiceLimit": 512,
+  "exactZeroPhysicalPathControls": 8,
+  "sourceHashes": {
+    "tools/sim/refit/personal_attention_first_audit.js": "5594bcd5f8a7624480217e6cd029e1bc9bb5ed182599bc20e8823c72b230dad8",
+    "www/hard.js": "5c1561bcbeda185510ed418c99478a32c7b85a34d4cac9a3b7b8949fc7fc8e89",
+    "www/layouts.js": "b02b6fb98a9509c99a79456679e62261f967d835aa021d575fcc6b4246bd4db1",
+    "tools/sim/refit/personal_model.js": "50cd26a2dbd38d8c70ce3babad808b80b072f11f05557cdb5cc7d87beebd9d6b",
+    "tools/sim/refit/personal_game_io.js": "a0cff17088b7ec5b0b1c9ae0bc655faa51c2b1964fefc273556636ae8b5f86eb",
+    "tools/sim/refit/personal_physical_actor.js": "8ee9badfab48b62f275d4bd0a096f4242ae3717099bd10df625a81776dfb1e58",
+    "tools/sim/refit/personal_tempered_choice.js": "038826956d48a02736d2378fb00b4db3e0a6bfa09e26c55ec8f220ffa71ae1ba",
+    "tools/sim/refit/personal_joint_intents_choice.js": "b038a203fa74ed5cb456b8d29fe9e5b4a77978e9d8fde1c013788dacb4dc5e4b",
+    "tools/sim/refit/known_clock_strategy.js": "84edc19c72293d784f6d5d429fa3f849d1775e230b59ba77f5520ce02f62827d",
+    "tools/sim/refit/known_tray_plan.js": "e8cc62a1e52c7824ab4031b5702d5231ab05a51a260c203e9fabb48c3eed505a",
+    "tools/sim/refit/known_clock_dig.js": "aa041eaa6813311fb0aabe2cc1fd502fea70760733a7246b6b745012b9045735",
+    "tools/sim/refit/known_clock_plan.js": "ceedda69596e61148d29c7024a622cf891b0f02712b8d8951cf1ebdb106bc850",
+    "tools/sim/refit/known_tray_plan_bits.js": "55b232c9439c1e05423b3983a3e7da8d45b1179b16cf84d4964ad0c6232b2c06",
+    "tools/sim/refit/known_tray_plan_cache.js": "3ded5f1a8896940cc103b9325c0df70f2ed3bedd3b2bf0d3983b057a8e89dfb9",
+    "tools/sim/refit/personal_clock_intents_choice.js": "b8ef6a3d153d4300af1b44fae5cfba2536b3ba5623e52f2e7971d8e18cb234c4",
+    "tools/sim/refit/personal_clock_strategy_choice.js": "9dd83e112bc51205fc91d478770a24e52dd52a17379c166569f8eab7dfc887f3",
+    "tools/sim/refit/personal_context_choice.js": "67b3e9fdb661ae92f1df6c2060d616182108583af53c1d74e5452546788f0523",
+    "tools/sim/refit/personal_tray_intents_choice.js": "619041809e586b84aa2ee7d1a1a6aaa6f95328d35aa56c98c733643bae7e6901",
+    "tools/sim/refit/personal_joint_planning_fast.js": "8ac6920a99d3fa9e6d7d764993d9a1de9d175d89f497e6480250b0504cd55cd3",
+    "tools/sim/refit/known_clock_strategy_fast.js": "47714bbb5468dc5e74e08a04fc462c681db698f016092b0dca849c1c7bd46175",
+    "tools/sim/refit/personal_attention_choice.js": "80d44d6f2d2ba6051e17c3d33aedd351f5ada66b3c6abead139239f4e0087d24",
+    "tools/sim/refit/personal_temperature_cycle_audit.js": "e379c5a6a31f5f28f2eaac468bcb522da038524bc1c19de347f9003fd44676ad"
+  },
+  "note": "One first-attempt seed on four selected prior training boards. Zero attention reproduces whole physical paths exactly. 512 boundaries are diagnostics, not human losses or winning-count forecasts. Human winning labels are not read. The changed policy needs new full autonomous count calibration and genuine future freezes; old temperature chains cannot substitute."
+}
