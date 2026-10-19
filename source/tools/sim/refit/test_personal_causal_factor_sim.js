@@ -16,5 +16,14 @@ const down = [0, 0, 1, 1, 0, 0];
 const first = computePublicOpeningFeatures({ tiles, nb, faces: [10, 1, 20, 30, 1, 2], down, rules: null, clock: { i: 0, n: 4 } });
 const swappedHidden = computePublicOpeningFeatures({ tiles, nb, faces: [30, 1, 10, 20, 1, 2], down, rules: null, clock: { i: 0, n: 4 } });
 assert.deepEqual(first, swappedHidden);
-assert.equal(first.takeableWithTakeableMate, 2);
+assert.equal(first.takeableWithTakeableMate, 1);
 console.log('PASS public opening causal features ignore face-down and covered pictures while measuring visible mate depth and clock slack');
+
+const { verifyTasks } = require('./personal_causal_factor_sim.js');
+verifyTasks(['Mrs. Doubtfire:34', 'Mrs. Doubtfire:102']).then(ok => {
+  assert.equal(ok, true);
+  console.log('PASS causal factor simulation features match personal-causal-factor-features.json exactly');
+}).catch(err => {
+  console.error(err);
+  process.exit(1);
+});

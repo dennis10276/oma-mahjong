@@ -98,6 +98,7 @@ Copy-Item "$src\source\analysis\personal-bots\personal-causal-factor-features.js
 Copy-Item "$src\source\analysis\personal-bots\personal-causal-factor-features.json" "$dst\source\analysis\archive\personal-bots\" -Force
 Copy-Item "$src\source\analysis\personal-bots\personal-causal-factor-evaluation.json" "$dst\source\analysis\personal-bots\" -Force
 Copy-Item "$src\source\analysis\personal-bots\personal-causal-factor-forecasts.jsonl" "$dst\source\analysis\personal-bots\" -Force
+Copy-Item "$src\source\analysis\archive\personal-bots\personal-all-games-cache.json" "$dst\source\analysis\archive\personal-bots\" -Force
 
 # Dashboard files and prediction JSONs
 Copy-Item "$src\source\site\dash\index.html" "$dst\source\site\dash\" -Force
@@ -119,5 +120,120 @@ After integrating, run:
 python -m unittest discover -s source/tools/sim/refit -p "test_*.py"
 python source/tools/sim/refit/personal_fresh_count_fit.py
 python source/tools/sim/refit/personal_causal_factor_data.py --evaluate
+node source/tools/sim/refit/test_personal_causal_factor_sim.js
+node source/tools/sim/refit/personal_causal_factor_sim.js --verify benchmark
 $env:CHROME="C:\Program Files\Google\Chrome\Application\chrome.exe"; $env:NODE_PATH="C:\Users\den_k\Idea\OmasMahjong\oma-mahjong\tests\node_modules"; node source/tests/run.js t_dash t_dash_prediction_versions t_dash_layout t_dash_watch
 ```
+
+---
+
+## 5. Simulation Feature Generator, Profiles & Seeds Reference
+
+The simulation features in `personal-causal-factor-features.json` are generated and verified by [`source/tools/sim/refit/personal_causal_factor_sim.js`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/tools/sim/refit/personal_causal_factor_sim.js).
+
+### A. Seeds & RNG Stream Initialization
+- **Master Simulation Seed**: `MASTER_SEED = 20261028` (fixed across all refit chain runs).
+- **Reference Rate Seed**: `REFERENCE_SEED = 20261019` (used for `str` strong and `avg` average win rates).
+- **Trial Seed Formula**:
+  $$\text{trialSeed} = \text{seed} \times 7919 + k \times 104729 + t \times 15485863$$
+  for run index $k \in [0, \text{runs}-1]$ and attempt index $t \in [0, \text{maxT}-1]$.
+- **Memory RNG Initialization**:
+  $$\text{const } r = L.\text{rng}(\text{seed} \times 31 + 11)$$
+
+### B. Pre-Opening Model Bank & Actor Resolution
+1. **Historical Tasks** ($N=276$):
+   - Loaded from `source/analysis/archive/personal-bots/physical-memory-policy-bank.json` via `selectModels(bank, task).ownAll`.
+   - Converted to personal actor using `actorOf(m)` with player's fitted weights, follow-through (`m.followThrough`), and pair follow-through (`m.pairFollowThrough`).
+2. **Recent & Future Tasks** ($N=124$, 38 recent + 86 future):
+   - Loaded from `source/analysis/archive/personal-bots/personal-fresh-own-models.json` and `personal-fresh-recent-models.json` via `actors.get(task.modelId)`.
+   - Converted to physical actor using `baseActor = physicalActor(actor)`.
+   - For autonomous multi-try chains (`pFull14`), wrapped with `choiceFactory = styleAttemptFactory(actor, actor.outcomeStyles, true, true)`.
+
+### C. Simulation Profiles (32 Runs $\times$ 32 Attempts)
+1. **`ownStylePlan8` (`pPlan8`)**:
+   ```javascript
+   {
+     ...baseActor,
+     memory: CONFIG.memory, // [0.75, 0.50, 0.75]
+     learnFromLoss: true,
+     physicalPlan: 8,
+     physicalFollowThrough: actor.followThrough?.probabilities || m.followThrough,
+     physicalPairFollowThrough: actor.pairFollowThrough?.probabilities || m.pairFollowThrough,
+   }
+   ```
+2. **`ownStyleFull14` (`pFull14`)**:
+   ```javascript
+   {
+     ...baseActor,
+     ...(choiceFactory ? { physicalChoiceForAttempt: choiceFactory } : {}),
+     physicalPlan: 14,
+     physicalClockSafeExit: true,
+     physicalKeyPlan: 14,
+     physicalKeySafeExit: true,
+     physicalSafety: 0.95,
+     physicalFollowThrough: actor.followThrough?.probabilities || m.followThrough,
+     physicalPairFollowThrough: actor.pairFollowThrough?.probabilities || m.pairFollowThrough,
+     physicalNoPairReinspect: true,
+     memory: CONFIG.memory,
+     learnFromLoss: true,
+   }
+   ```
+3. **`pSafe` (`safe14` diagnostics)**:
+   ```javascript
+   {
+     ...baseActor,
+     memory: CONFIG.memory,
+     learnFromLoss: true,
+     physicalPlan: 14,
+     physicalKeyPlan: 14,
+     physicalSafety: 0.90,
+     physicalFollowThrough: actor.followThrough?.probabilities || m.followThrough,
+     physicalPairFollowThrough: actor.pairFollowThrough?.probabilities || m.pairFollowThrough,
+   }
+   ```
+4. **`pLegacyBase` (Baseline planner)**:
+   ```javascript
+   {
+     ...Hard.P,
+     allMoves: true,
+     flips: true,
+     peek: 0,
+     end: 12,
+     plan: 10,
+     memory: CONFIG.memory,
+     kinds: { ...DEFAULT_KINDS, ...kindsAt(task.name, task.start) },
+     w: [...Hard.weightsOf({ ...Hard.persona('strong'), temp: CONFIG.care })],
+   }
+   ```
+5. **Variant Profiles** (`np8`, `ab8`, `ap8`, `kp8`, `kz8`, `ce8`):
+   - `ownNovelPairPlan8`: `{ scope: 'ownNovel', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8, physicalPairFollowThrough: 'fitted' }`
+   - `ownAllBothPlan8`: `{ scope: 'ownAll', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8, physicalFollowThrough: 'fitted', physicalPairFollowThrough: 'fitted' }`
+   - `ownAllPairPlan8`: `{ scope: 'ownAll', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8, physicalPairFollowThrough: 'fitted' }`
+   - `ownKnownPlan8`: `{ scope: 'ownKnown', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8 }`
+   - `ownKnownZeroPlan8`: `{ scope: 'ownKnownZero', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8 }`
+   - `ownCarryEpisodePlan8`: `{ scope: 'ownCarryEpisode', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8 }`
+
+### D. Simulation Feature Derivations
+- `sf14_w3`, `sf14_w5`, `sf14_w8`: `cFull14.within[2]`, `cFull14.within[4]`, `cFull14.within[7]` from `Hard.rateChain(game, 32, MASTER_SEED, pFull14, CONFIG.memory, 32)`.
+- `s14_t1Left`: `t1LeftSum / runs` from `runDetailedChain(game, pSafe, 32, MASTER_SEED, 8)`.
+- `p8_t1Dec`: `t1DecSum / runs` from `runDetailedChain(game, pPlan8, 32, MASTER_SEED, 8)`.
+- `np8_w8`: `cNovelPairPlan8.within[7]`.
+- `kp8_w8`: `cKnownPlan8.within[7]`.
+- `ab8_w5`: `cAllBothPlan8.within[4]`.
+- `kz8_w5`: `cKnownZeroPlan8.within[4]`.
+- `ce8_w5`: `cCarryEpisodePlan8.within[4]`.
+- `np8_j2`, `np8_j3`: 2nd and 3rd attempt jumps over 1st attempt: `within[1] - first`, `within[2] - first`.
+- `kp8_j2`, `ap8_j2`: 2nd attempt jump over 1st attempt: `within[1] - first`.
+- `base_t1`, `base_w2`: 1st attempt and within 2 win rates under `pLegacyBase`.
+
+### E. Live Verification CLI
+Codex can verify that live simulations produce identical features ($\text{diff} = 0.00$) against `personal-causal-factor-features.json`:
+```powershell
+# Verify standard benchmark tasks (Mrs. Doubtfire 34, 84, 102, 107)
+node source/tools/sim/refit/personal_causal_factor_sim.js --verify benchmark
+
+# Verify specific task
+node source/tools/sim/refit/personal_causal_factor_sim.js --verify "Mrs. Doubtfire:102"
+node source/tools/sim/refit/personal_causal_factor_sim.js --verify "Mrs. Doubtfire:107"
+```
+
