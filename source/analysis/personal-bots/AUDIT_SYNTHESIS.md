@@ -89,13 +89,12 @@ While Codex's audit of Gemini's ledger discipline was rigorous and correct, Code
    - **Why?** The simulation bots play substantially worse than the human players. The bots suffer frequent tray overflows on boards that human players solve easily, causing bot-based Monte Carlo simulations to wildly overestimate the number of attempts needed.
 3. **Over-Optimization on Micro-Action NLL:**
    - Codex repeatedly prioritized minor decreases in 1-tap action negative log-likelihood (e.g. initial NLL decreasing from 1.709 to 1.701) over macroscopic attempt-count predictions. In game after game, a 0.008 improvement in action NLL had zero correlation with attempt count accuracy.
-4. **Ignoring Game Assistance & Care Mode Mechanics:**
-   - Neither agent accounted for the game rules defined in `play/js/rules.js` and `www/js/rules.js`:
-     - `HELP.care` vs `HELP.normal`
-     - `rescue: true` (which automatically clears tray overflows once per level)
-     - `nudge` (which causes matching pairs to glow when the player is stuck)
-     - `lucky` tiles and `easierAfterFails: 3`
-   - Mrs. Doubtfire is an older player ("Oma") who receives gentler care mechanics. This explains why she cleared levels 107–113 in `[3, 1, 2, 2, 1, 4, 1]` attempts and never reached 5 or 8 attempts. Both bots treated the boards as if played in cold isolation with standard rules.
+4. **Misunderstanding Human Strategic Competence vs. Simulation Bot Incompetence:**
+   - Mrs. Doubtfire plays under standard rules (`HELP.normal`, `rescue: false`, no tray overflow resets, no hints `h: false`, no shuffles `sh: false`). Her telemetry proves that when she gets stuck (`tm: 4`), the attempt simply terminates with `r: 'stuck'`.
+   - Yet she cleared levels 107–113 in `[3, 1, 2, 2, 1, 4, 1]` attempts (average 2.0 attempts) and never exceeded 4 attempts.
+   - Her telemetry shows she spends 2 to 3+ minutes per attempt (e.g. 137s on L107, 184s on L108, 144s on L109), planning pairs carefully and avoiding tray congestion.
+   - In contrast, the simulation bots (which both Gemini's feature-fit and Codex's Monte Carlo rely on) make quick, myopic decisions that constantly jam the 4-slot tray. The models wrongly assumed that whenever a board looked geometrically congested to a myopic bot (`sf14_surv < -0.35`, `open_trap > 1.0`), Mrs. Doubtfire would also fail 5 to 8+ times.
+
 
 ---
 
@@ -136,11 +135,11 @@ While Codex's audit of Gemini's ledger discipline was rigorous and correct, Code
 
 To achieve $\ge 80\%$ accuracy without ledger controversy or post-hoc tuning:
 
-1. **Incorporate Player Care & Assistance Metadata:**
-   - Extract player-specific rules from `rules.js`:
-     - `hasCareMode`: true for Mrs. Doubtfire / OmaHanny, false for Dennis.
-     - `hasRescue`: true prevents tray losses on single-mistake boards.
-     - `hasNudge`: alters the probability of finding buried/hidden pairs.
+1. **Model Human Deliberation & Lookahead vs. Myopic Bot Play:**
+   - Account for actual human lookahead rather than myopic 1-tap bot heuristics:
+     - Mrs. Doubtfire plays slowly and deliberately (130–180s per game), actively managing tray headroom.
+     - Bot-derived congestion metrics (`open_trap`, `sf14_surv`) measure how easily an unthinking bot gets stuck, NOT human error rate.
+
 2. **Player-Specific Attempt Ceilings & Bimodal Distributions:**
    - **Mrs. Doubtfire:** Model must constrain maximum predictions to $\le 4$ unless an extreme multi-clock trap is present. Her baseline mode is 1–2 attempts.
    - **Gerda:** Model must use a hazard-rate trigger. Gerda is bimodal: if no severe hazard is present, predict 1; if a hazard exceeds threshold, predict $\ge 8$.
