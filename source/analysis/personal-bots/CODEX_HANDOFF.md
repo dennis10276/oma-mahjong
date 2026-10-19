@@ -76,7 +76,7 @@ Codex can bring the entire implementation, feature table, tests, and evaluation 
 Run from `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`:
 ```powershell
 git fetch "C:/Users/den_k/Idea/OmasMahjong/agy-personal-bots" wip/agy-personal-bots
-git cherry-pick 94d7d0e d4b1d84 d7f90f0 78a9dd5 6628eab 05e48e0
+git cherry-pick 94d7d0e d4b1d84 d7f90f0 78a9dd5 6628eab 05e48e0 2d1e579
 ```
 
 ### Option B: Direct File Copy (Without Touching Git History)
