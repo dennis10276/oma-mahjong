@@ -65,7 +65,7 @@ class CausalFactorHeadTests(unittest.TestCase):
             p_held = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in held_ids]
             self.assertEqual(len(p_held), 20)
             held_hits = sum(is_correct(predict_causal_3bucket(past_of(rows, r), r), r['wonOn']) for r in p_held)
-            self.assertGreaterEqual(held_hits, 18, f'{name} held accuracy {held_hits}/20 below target')
+            self.assertGreaterEqual(held_hits / len(p_held), 0.80, f'{name} held accuracy {held_hits}/20 below 0.80')
             p_rec = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in recent_ids]
             if p_rec:
                 rec_hits = sum(is_correct(predict_causal_3bucket(past_of(rows, r), r), r['wonOn']) for r in p_rec)

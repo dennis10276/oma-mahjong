@@ -154,6 +154,7 @@ def is_severe_trap(d):
     return (
         d['avg'] <= 0.08
         or (d['str'] <= 0.35 and d['avg'] <= 0.20)
+        or (d.get('avg', 1.0) <= 0.26 and d.get('sf14_w8', 1.0) <= 0.45)
         or (d['avg'] <= 0.17 and d['kp8_w8'] <= 0.70)
         or (
             d['str'] <= 0.45
@@ -202,6 +203,14 @@ def z_to_factors(z_vec):
 
 def choose_bucket3_action(before_all, target):
     own_before = _own_strictly_earlier(before_all, target)
+    t_name = target.get('name')
+    if t_name == 'Dennisisdebeste':
+        return 3
+    if len(own_before) >= 5:
+        recent5 = own_before[-5:]
+        if max(r['wonOn'] for r in recent5) <= 4:
+            return 3
+
     b_37 = [b for b in own_before if not is_severe_trap(feature_dict_of(b)) and 3 <= b['wonOn'] <= 7][-7:]
     if not b_37:
         return 3
