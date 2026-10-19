@@ -184,18 +184,41 @@ function loadModelContext(rootPath = REPO_ROOT) {
   const recentModels = JSON.parse(fs.readFileSync(path.join(modelFolder, 'analysis/archive/personal-bots/personal-fresh-recent-models.json'), 'utf8'));
   const actorsMap = new Map([...futureModels.models, ...recentModels.models].map(a => [a.id, a]));
 
-  return { bank, freshInput, actorsMap };
+  const latestBankModel = {};
+  for (const m of bank.models) {
+    if (m.scope === 'ownAll') {
+      if (!latestBankModel[m.name] || m.trainingCut > latestBankModel[m.name].trainingCut) latestBankModel[m.name] = m;
+    }
+  }
+
+  const seqPath = path.join(rootPath, 'source/analysis/archive/personal-bots/physical-sequence-count-data.json');
+  const kpPath = path.join(rootPath, 'source/analysis/archive/personal-bots/experiments/personal-known-plan-count-scored-2026-10-18T15-09-37-493Z/analysis/archive/personal-bots/physical-known-plan-count-data.json');
+  const stylesBank = {};
+  if (fs.existsSync(seqPath)) {
+    const seqData = JSON.parse(fs.readFileSync(seqPath, 'utf8'));
+    for (const r of seqData.rows) stylesBank[r.name + '|' + r.start] = { ...r.chains };
+  }
+  if (fs.existsSync(kpPath)) {
+    const kpData = JSON.parse(fs.readFileSync(kpPath, 'utf8'));
+    for (const r of kpData.rows) {
+      const k = r.name + '|' + r.start;
+      stylesBank[k] = Object.assign(stylesBank[k] || {}, r.chains);
+    }
+  }
+
+  return { bank, freshInput, actorsMap, latestBankModel, stylesBank };
 }
 
-function buildTaskProfiles(task, bank, actorsMap) {
+function buildTaskProfiles(task, bank, actorsMap, latestBankModel = null) {
   let baseActor, followThrough, pairFollowThrough, choiceFactory = null;
 
   if (task.modelId && actorsMap.has(task.modelId)) {
     const actor = actorsMap.get(task.modelId);
     baseActor = physicalActor(actor);
     choiceFactory = styleAttemptFactory(actor, actor.outcomeStyles, true, true);
-    followThrough = actor.followThrough?.probabilities;
-    pairFollowThrough = actor.pairFollowThrough?.probabilities;
+    const bm = latestBankModel ? latestBankModel[task.name] : null;
+    followThrough = bm?.followThrough || actor.followThrough?.probabilities;
+    pairFollowThrough = bm?.pairFollowThrough || actor.pairFollowThrough?.probabilities;
   } else {
     const m = selectModels(bank, task).ownAll;
     baseActor = actorOf(m);
@@ -203,8 +226,18 @@ function buildTaskProfiles(task, bank, actorsMap) {
     pairFollowThrough = m.pairFollowThrough;
   }
 
-  const pPlan8 = {
+  const pPlan8Diag = {
     ...baseActor,
+    memory: CONFIG.memory,
+    learnFromLoss: true,
+    physicalPlan: 8,
+    physicalFollowThrough: followThrough,
+    physicalPairFollowThrough: pairFollowThrough,
+  };
+
+  const pPlan8Chain = {
+    ...baseActor,
+    ...(choiceFactory ? { physicalChoiceForAttempt: choiceFactory } : {}),
     memory: CONFIG.memory,
     learnFromLoss: true,
     physicalPlan: 8,
@@ -250,20 +283,95 @@ function buildTaskProfiles(task, bank, actorsMap) {
     w: [...Hard.weightsOf({ ...Hard.persona('strong'), temp: CONFIG.care })],
   };
 
-  return { pPlan8, pSafe, pFull14, pLegacyBase, baseActor };
+  return {
+    pPlan8: pPlan8Diag,
+    pPlan8Diag,
+    pPlan8Chain,
+    pSafe,
+    pFull14,
+    pLegacyBase,
+    baseActor,
+  };
 }
 
-function simulateTaskFeatures(game, profiles, runs = 32, seed = MASTER_SEED) {
-  const diagPlan8 = runDetailedChain(game, profiles.pPlan8, runs, seed, 8);
-  const diagSafe = runDetailedChain(game, profiles.pSafe, runs, seed, 8);
-  const cFull14 = Hard.rateChain(game, runs, seed, profiles.pFull14, CONFIG.memory, 32);
+function simulateTaskFeatures(game, profiles, task = null, runs = 32, seed = MASTER_SEED, stylesBank = {}) {
+  const g = game && game.tiles ? game : decodeGame(game);
+  const diagPlan8 = runDetailedChain(g, profiles.pPlan8Diag || profiles.pPlan8, runs, seed, 8);
+  const diagSafe = runDetailedChain(g, profiles.pSafe, runs, seed, 8);
+  const cFull14 = Hard.rateChain(g, runs, seed, profiles.pFull14, CONFIG.memory, 32);
+  const cPlan8 = Hard.rateChain(g, runs, seed, profiles.pPlan8Chain || profiles.pPlan8, CONFIG.memory, 32);
+
+  const startKey = task ? `${task.name}|${task.start}` : null;
+  const stChains = (startKey && stylesBank[startKey]) || {};
+
+  let c_base = stChains.baseline;
+  if (!c_base && profiles.pLegacyBase) {
+    c_base = Hard.rateChain(g, runs, seed, profiles.pLegacyBase, CONFIG.memory, 8);
+  } else if (!c_base) {
+    c_base = cFull14;
+  }
+
+  const c_sp8 = cPlan8;
+  const c_np8 = stChains.ownNovelPairPlan8 || c_sp8;
+  const c_ab8 = stChains.ownAllBothPlan8 || c_sp8;
+  const c_ap8 = stChains.ownAllPairPlan8 || c_sp8;
+  const c_kp8 = stChains.ownKnownPlan8 || c_sp8;
+  const c_kz8 = stChains.ownKnownZeroPlan8 || c_sp8;
+  const c_ce8 = stChains.ownCarryEpisodePlan8 || c_sp8;
 
   return {
+    // 5 primary simulation features:
     sf14_w3: cFull14.within[2],
     sf14_w5: cFull14.within[4],
     sf14_w8: cFull14.within[7],
     s14_t1Left: diagSafe.t1Left,
     p8_t1Dec: diagPlan8.t1Dec,
+
+    // 11 secondary simulation & variant chain features:
+    np8_w8: c_np8.within[7],
+    kp8_w8: c_kp8.within[7],
+    ab8_w5: c_ab8.within[4],
+    kz8_w5: c_kz8.within[4],
+    ce8_w5: c_ce8.within[4],
+    np8_j2: c_np8.within[1] - c_np8.first,
+    np8_j3: c_np8.within[2] - c_np8.first,
+    kp8_j2: c_kp8.within[1] - c_kp8.first,
+    ap8_j2: c_ap8.within[1] - c_ap8.first,
+    base_t1: c_base.first,
+    base_w2: c_base.within[1],
+  };
+}
+
+function assembleTaskRecord(task, game, profiles, stylesBank = {}, runs = 32, seed = MASTER_SEED) {
+  const g = game && game.tiles ? game : decodeGame(game);
+  const openGeom = computePublicOpeningFeatures(g);
+  const sim16 = simulateTaskFeatures(g, profiles, task, runs, seed, stylesBank);
+  const phys = task.physical || [];
+  const ref = task.reference || {};
+  const str = ref.strong !== undefined ? ref.strong : (Hard.rate(g, 32, REFERENCE_SEED, Hard.persona('strong')).rate);
+  const avg = ref.average !== undefined ? ref.average : (Hard.rate(g, 32, REFERENCE_SEED, Hard.persona('average')).rate);
+  const hasClock = g.clock ? 1.0 : (phys[6] !== undefined ? phys[6] : 0.0);
+  const n = g.tiles.length;
+
+  return {
+    name: task.name,
+    lv: task.lv,
+    start: task.start,
+    board: task.board,
+    kind: task.kind || (task.modelId ? 'recent' : 'historical'),
+    features: {
+      str: Number(str),
+      avg: Number(avg),
+      hasClock: Number(hasClock),
+      n: Number(n),
+      openPairs: Number(phys[4] !== undefined ? phys[4] : openGeom.takeableWithTakeableMate),
+      blockedFreeCount: openGeom.blockedFreeCount,
+      takeableWithTakeableMate: openGeom.takeableWithTakeableMate,
+      meanMateDepth: openGeom.meanMateDepth,
+      takeableWithVisMateFrac: openGeom.takeableWithVisMateFrac,
+      clockSlackRatio: openGeom.clockSlackRatio,
+      ...sim16,
+    }
   };
 }
 
@@ -276,31 +384,29 @@ function loadAllGames(rootPath = REPO_ROOT) {
   return tasksOf().map(x => ({ ...x, game: encodeGame(x.game) }));
 }
 
-async function verifyTasks(targets = ['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 'Mrs. Doubtfire:102', 'Mrs. Doubtfire:107']) {
-  const { bank, freshInput, actorsMap } = loadModelContext();
+async function verifyTasks(targets = ['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 'Mrs. Doubtfire:102', 'Mrs. Doubtfire:107', 'Dennisisdebeste:128']) {
+  const { bank, freshInput, actorsMap, latestBankModel, stylesBank } = loadModelContext();
   const allHistoricalGames = loadAllGames();
   const featJsonPath = path.join(REPO_ROOT, 'source/analysis/personal-bots/personal-causal-factor-features.json');
   const featJson = JSON.parse(fs.readFileSync(featJsonPath, 'utf8'));
 
-  console.log(`Verifying ${targets.length} target task simulations against ${featJsonPath}...`);
+  console.log(`Verifying all 16 simulation fields for ${targets.length} target tasks against ${featJsonPath}...`);
   let passCount = 0;
 
   for (const target of targets) {
     const [tName, tLvStr] = target.split(':');
     const tLv = parseInt(tLvStr, 10);
 
-    let task = allHistoricalGames.find(t => t.name === tName && t.lv === tLv);
-    if (!task) {
-      task = [...freshInput.recent, ...freshInput.future].find(t => t.name === tName && t.lv === tLv);
-    }
+    let task = [...freshInput.recent, ...freshInput.future].find(t => t.name === tName && t.lv === tLv);
+    if (!task) task = allHistoricalGames.find(t => t.name === tName && t.lv === tLv);
     if (!task) {
       console.error(`Task ${target} not found!`);
       continue;
     }
 
     const g = decodeGame(task.game);
-    const profiles = buildTaskProfiles(task, bank, actorsMap);
-    const sim = simulateTaskFeatures(g, profiles, 32, MASTER_SEED);
+    const profiles = buildTaskProfiles(task, bank, actorsMap, latestBankModel);
+    const sim16 = simulateTaskFeatures(g, profiles, task, 32, MASTER_SEED, stylesBank);
     const openGeom = computePublicOpeningFeatures(g);
 
     const keyByBoard = `${task.name}|lv=${task.lv}|${task.board}`;
@@ -313,16 +419,32 @@ async function verifyTasks(targets = ['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 
     const f = targetRec.features;
 
     const diffs = {
+      // 5 public opening features:
       blockedFreeCount: Math.abs(openGeom.blockedFreeCount - f.blockedFreeCount),
       takeableWithTakeableMate: Math.abs(openGeom.takeableWithTakeableMate - f.takeableWithTakeableMate),
       meanMateDepth: Math.abs(openGeom.meanMateDepth - f.meanMateDepth),
       takeableWithVisMateFrac: Math.abs(openGeom.takeableWithVisMateFrac - f.takeableWithVisMateFrac),
       clockSlackRatio: Math.abs(openGeom.clockSlackRatio - f.clockSlackRatio),
-      sf14_w3: Math.abs(sim.sf14_w3 - f.sf14_w3),
-      sf14_w5: Math.abs(sim.sf14_w5 - f.sf14_w5),
-      sf14_w8: Math.abs(sim.sf14_w8 - f.sf14_w8),
-      s14_t1Left: Math.abs(sim.s14_t1Left - f.s14_t1Left),
-      p8_t1Dec: Math.abs(sim.p8_t1Dec - f.p8_t1Dec),
+
+      // 5 primary simulation features:
+      sf14_w3: Math.abs(sim16.sf14_w3 - f.sf14_w3),
+      sf14_w5: Math.abs(sim16.sf14_w5 - f.sf14_w5),
+      sf14_w8: Math.abs(sim16.sf14_w8 - f.sf14_w8),
+      s14_t1Left: Math.abs(sim16.s14_t1Left - f.s14_t1Left),
+      p8_t1Dec: Math.abs(sim16.p8_t1Dec - f.p8_t1Dec),
+
+      // 11 secondary simulation & variant chain features:
+      np8_w8: Math.abs(sim16.np8_w8 - f.np8_w8),
+      kp8_w8: Math.abs(sim16.kp8_w8 - f.kp8_w8),
+      ab8_w5: Math.abs(sim16.ab8_w5 - f.ab8_w5),
+      kz8_w5: Math.abs(sim16.kz8_w5 - f.kz8_w5),
+      ce8_w5: Math.abs(sim16.ce8_w5 - f.ce8_w5),
+      np8_j2: Math.abs(sim16.np8_j2 - f.np8_j2),
+      np8_j3: Math.abs(sim16.np8_j3 - f.np8_j3),
+      kp8_j2: Math.abs(sim16.kp8_j2 - f.kp8_j2),
+      ap8_j2: Math.abs(sim16.ap8_j2 - f.ap8_j2),
+      base_t1: Math.abs(sim16.base_t1 - f.base_t1),
+      base_w2: Math.abs(sim16.base_w2 - f.base_w2),
     };
 
     const maxDiff = Math.max(...Object.values(diffs));
@@ -330,7 +452,7 @@ async function verifyTasks(targets = ['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 
       console.error(`FAIL: ${target} max difference ${maxDiff}`);
       console.log('Diffs:', diffs);
     } else {
-      console.log(`PASS: ${target} [sf14_w8=${sim.sf14_w8.toFixed(4)}, s14_t1Left=${sim.s14_t1Left.toFixed(4)}, p8_t1Dec=${sim.p8_t1Dec.toFixed(4)}] max error = ${maxDiff.toExponential(2)}`);
+      console.log(`PASS: ${target} [all 16 sim + 5 opening fields verified] max error = ${maxDiff.toExponential(2)}`);
       passCount++;
     }
   }
@@ -344,7 +466,7 @@ if (require.main === module) {
   if (args.includes('--verify')) {
     const idx = args.indexOf('--verify');
     const filter = args[idx + 1];
-    let targets = ['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 'Mrs. Doubtfire:102', 'Mrs. Doubtfire:107'];
+    let targets = ['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 'Mrs. Doubtfire:102', 'Mrs. Doubtfire:107', 'Dennisisdebeste:128'];
     if (filter && filter !== 'benchmark' && filter !== 'all') {
       targets = [filter];
     }
@@ -355,7 +477,7 @@ if (require.main === module) {
       process.exit(1);
     });
   } else {
-    verifyTasks(['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 'Mrs. Doubtfire:102', 'Mrs. Doubtfire:107']).then(ok => {
+    verifyTasks(['Mrs. Doubtfire:34', 'Mrs. Doubtfire:84', 'Mrs. Doubtfire:102', 'Mrs. Doubtfire:107', 'Dennisisdebeste:128']).then(ok => {
       process.exit(ok ? 0 : 1);
     });
   }
@@ -370,6 +492,7 @@ module.exports = {
   loadModelContext,
   buildTaskProfiles,
   simulateTaskFeatures,
+  assembleTaskRecord,
   loadAllGames,
   verifyTasks,
 };

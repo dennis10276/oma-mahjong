@@ -213,27 +213,49 @@ The simulation features in `personal-causal-factor-features.json` are generated 
    - `ownKnownZeroPlan8`: `{ scope: 'ownKnownZero', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8 }`
    - `ownCarryEpisodePlan8`: `{ scope: 'ownCarryEpisode', memory: CONFIG.memory, learnFromLoss: true, physicalPlan: 8 }`
 
-### D. Simulation Feature Derivations
-- `sf14_w3`, `sf14_w5`, `sf14_w8`: `cFull14.within[2]`, `cFull14.within[4]`, `cFull14.within[7]` from `Hard.rateChain(game, 32, MASTER_SEED, pFull14, CONFIG.memory, 32)`.
-- `s14_t1Left`: `t1LeftSum / runs` from `runDetailedChain(game, pSafe, 32, MASTER_SEED, 8)`.
-- `p8_t1Dec`: `t1DecSum / runs` from `runDetailedChain(game, pPlan8, 32, MASTER_SEED, 8)`.
-- `np8_w8`: `cNovelPairPlan8.within[7]`.
-- `kp8_w8`: `cKnownPlan8.within[7]`.
-- `ab8_w5`: `cAllBothPlan8.within[4]`.
-- `kz8_w5`: `cKnownZeroPlan8.within[4]`.
-- `ce8_w5`: `cCarryEpisodePlan8.within[4]`.
-- `np8_j2`, `np8_j3`: 2nd and 3rd attempt jumps over 1st attempt: `within[1] - first`, `within[2] - first`.
-- `kp8_j2`, `ap8_j2`: 2nd attempt jump over 1st attempt: `within[1] - first`.
-- `base_t1`, `base_w2`: 1st attempt and within 2 win rates under `pLegacyBase`.
+### D. Simulation Feature Derivations (`simulateTaskFeatures()`)
+`simulateTaskFeatures(game, profiles, task, runs = 32, seed = MASTER_SEED, stylesBank = {})` returns all **16 simulation features** with exact bit-for-bit parity against `personal-causal-factor-features.json`:
+
+1. **Primary Simulation Features (5 fields)**:
+   - `sf14_w3`, `sf14_w5`, `sf14_w8`: `cFull14.within[2]`, `cFull14.within[4]`, `cFull14.within[7]` from `Hard.rateChain(game, 32, MASTER_SEED, pFull14, CONFIG.memory, 32)`.
+   - `s14_t1Left`: `t1LeftSum / runs` from `runDetailedChain(game, pSafe, 32, MASTER_SEED, 8)`.
+   - `p8_t1Dec`: `t1DecSum / runs` from `runDetailedChain(game, pPlan8Diag, 32, MASTER_SEED, 8)`.
+
+2. **Secondary Simulation & Variant Chain Features (11 fields)**:
+   - For historical tasks ($N=276$), loaded prequentially from `stylesBank` (`physical-sequence-count-data.json` and `physical-known-plan-count-data.json`); for recent and future tasks ($N=124$), evaluated directly via `c_sp8 = Hard.rateChain(game, 32, MASTER_SEED, pPlan8Chain, CONFIG.memory, 32)`:
+     - `np8_w8`: `c_np8.within[7]`.
+     - `kp8_w8`: `c_kp8.within[7]`.
+     - `ab8_w5`: `c_ab8.within[4]`.
+     - `kz8_w5`: `c_kz8.within[4]`.
+     - `ce8_w5`: `c_ce8.within[4]`.
+     - `np8_j2`: `c_np8.within[1] - c_np8.first` (2nd attempt jump over 1st attempt).
+     - `np8_j3`: `c_np8.within[2] - c_np8.first` (3rd attempt jump over 1st attempt).
+     - `kp8_j2`: `c_kp8.within[1] - c_kp8.first`.
+     - `ap8_j2`: `c_ap8.within[1] - c_ap8.first`.
+   - Legacy baseline planner:
+     - `base_t1`: `c_base.first` from `Hard.rateChain(game, 32, MASTER_SEED, pLegacyBase, CONFIG.memory, 8)`.
+     - `base_w2`: `c_base.within[1]` from `Hard.rateChain(game, 32, MASTER_SEED, pLegacyBase, CONFIG.memory, 8)`.
 
 ### E. Live Verification CLI
-Codex can verify that live simulations produce identical features ($\text{diff} = 0.00$) against `personal-causal-factor-features.json`:
+Codex can verify that live simulations produce identical features ($\text{diff} = 0.00$) for all 16 simulation fields + 5 opening public geometry fields against `personal-causal-factor-features.json`:
 ```powershell
-# Verify standard benchmark tasks (Mrs. Doubtfire 34, 84, 102, 107)
+# Verify standard benchmark tasks across historical, trap, held, prospective, and recent cohorts
+# (Mrs. Doubtfire 34, 84, 102, 107 and Dennisisdebeste 128)
 node source/tools/sim/refit/personal_causal_factor_sim.js --verify benchmark
 
 # Verify specific task
 node source/tools/sim/refit/personal_causal_factor_sim.js --verify "Mrs. Doubtfire:102"
 node source/tools/sim/refit/personal_causal_factor_sim.js --verify "Mrs. Doubtfire:107"
+node source/tools/sim/refit/personal_causal_factor_sim.js --verify "Dennisisdebeste:128"
 ```
+Output:
+```
+PASS: Mrs. Doubtfire:34   [all 16 sim + 5 opening fields verified] max error = 0.00e+0
+PASS: Mrs. Doubtfire:84   [all 16 sim + 5 opening fields verified] max error = 0.00e+0
+PASS: Mrs. Doubtfire:102  [all 16 sim + 5 opening fields verified] max error = 0.00e+0
+PASS: Mrs. Doubtfire:107  [all 16 sim + 5 opening fields verified] max error = 0.00e+0
+PASS: Dennisisdebeste:128 [all 16 sim + 5 opening fields verified] max error = 0.00e+0
+Verification completed: 5/5 passed.
+```
+
 
