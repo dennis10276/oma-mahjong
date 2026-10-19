@@ -199,12 +199,12 @@ module.exports = [
       try {
         await p.goto(site.url + 'dash/#pDen'); await sleep(2000);
         const txt = await p.evaluate(() => document.querySelector('#pred').innerText);
-        t.ok(/De komende 10 levels: gemiddeld 40% in één keer, 70% binnen 2 pogingen/.test(txt), 'summary of the next 10 levels', txt.slice(0, 300));
-        t.ok(/26[^\n]*80%[^\n]*gehaald in 1 poging/.test(txt), 'a level played since the prediction shows the real result', txt);
-        t.ok(/verwachtte er 0,8 in één keer, het werden er 1/.test(txt), 'expected against real first tries');
+        t.ok(!txt.includes('%'), 'old percentage chance metrics are completely absent from the Voorspelling card', txt);
+        t.ok(/8\+ pogingen verwacht[\s\S]*Level 30/i.test(txt), '8+ attempt levels are highlighted in the summary', txt.slice(0, 300));
+        t.ok(/26[^\n]*1e poging[^\n]*gehaald in 1 poging/.test(txt), 'a level played since the prediction shows the projected attempt and real result', txt);
         t.ok(/27[^\n]*nog bezig|27[^\n]*begonnen/.test(txt), 'the level being played');
-        t.ok(/Eigen testspeler van Dennis, afgesteld op 74 eerste pogingen en 21 herkansingen \(levels 42–105\); onthoudt bij een herkansing 75%/.test(txt), 'how the test player was made', txt.slice(-300));
-        t.eq(await p.evaluate(() => [...document.querySelectorAll('#pred tr.hard td:first-child')].map(td => td.textContent)), ['30'], 'hard level (under 60% within 4 tries) marked');
+        t.ok(/Eigen persoonlijke bot van Dennis/.test(txt), 'explains the personal attempt-predicting bot', txt.slice(-300));
+        t.eq(await p.evaluate(() => [...document.querySelectorAll('#pred tr.hard td:first-child')].map(td => td.textContent)), ['30'], '8+ / trap level marked');
         await p.evaluate(() => selectPlayer('pOma')); await sleep(300);
         t.ok(/Nog geen eigen testspeler voor OmaHanny/.test(await p.evaluate(() => document.querySelector('#pred').innerText)), 'a player without a test player');
         t.eq(errs, [], 'no errors on the dashboard');

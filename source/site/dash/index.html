@@ -81,9 +81,46 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tbl-wrap { container-type: inline-size; }
 .pred-sum { margin: 0 0 8px; font-size: 14px; }
 .pred-note { margin: 8px 0 0; font-size: 12px; color: var(--ink-3); }
+.pred-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.pred-kpi { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.pred-kpi .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-2); }
+.pred-kpi .val { font-size: 15.5px; font-weight: 800; margin-top: 3px; line-height: 1.25; }
+.pred-kpi .val.bad-ink { color: var(--bad); }
+.pred-kpi .val.good-ink { color: var(--good-ink); }
+.pred-kpi .note { font-size: 11.5px; color: var(--ink-3); margin-top: 3px; line-height: 1.3; }
+.pred-traps { background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; margin-bottom: 10px; }
+.pred-traps-title { font-size: 13px; font-weight: 800; margin: 0 0 7px; color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; }
+.pred-trap-list { display: flex; flex-direction: column; gap: 6px; }
+.pred-trap-item { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 6px 9px; border-radius: 8px; background: var(--surface); border-left: 4px solid var(--bad); font-size: 12.5px; }
+.pred-trap-item.is-trap { border-left-color: var(--warn); }
+.pred-trap-lv { font-weight: 800; min-width: 78px; }
+.pred-trap-why { color: var(--ink-2); flex: 1 1 160px; font-size: 12px; }
+.pred-buckets { display: grid; gap: 3px; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-2); }
+.pred-buckets b { color: var(--ink); }
+.pred-badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 999px; font-size: 11.5px; font-weight: 800; white-space: nowrap; }
+.pred-badge small { font-weight: 600; opacity: .85; }
+.pred-badge.p1 { background: rgba(12, 163, 12, .14); color: var(--good-ink); }
+.pred-badge.p2, .pred-badge.p3 { background: var(--accent-soft); color: var(--ink); }
+.pred-badge.p5 { background: rgba(176, 118, 0, .18); color: var(--warn); }
+.pred-badge.p8 { background: rgba(208, 59, 59, .16); color: var(--bad); }
+.pred-hit { display: inline-block; margin-left: 4px; font-weight: 800; }
+.pred-hit.ok { color: var(--good-ink); }
+.pred-hit.miss { color: var(--bad); }
 #pred td.num, #pred th.num { text-align: right; }
 #pred tr.hard td:first-child::after { content: ' ⚠️'; }
 #pred tr.done td { color: var(--ink-2); }
+#pred .pb-tbl table { table-layout: auto; }
+#pred .pb-tbl th, #pred .pb-tbl td { padding: 6px 5px; vertical-align: middle; }
+#pred .pb-tbl th:last-child { width: auto; }
+@container (max-width: 560px) {
+  #pred .pb-tbl table { display: table; }
+  #pred .pb-tbl thead { display: table-header-group; }
+  #pred .pb-tbl tbody { display: table-row-group; }
+  #pred .pb-tbl tr { display: table-row; padding: 0; }
+  #pred .pb-tbl td { display: table-cell; border-bottom: 1px solid var(--line); padding: 6px 4px; text-align: left; }
+  #pred .pb-tbl td.num { text-align: right; }
+  #pred .pb-tbl td::before { content: none; }
+}
 .tbl-wrap table { table-layout: fixed; }
 .tbl-wrap th, .tbl-wrap td { white-space: normal; overflow-wrap: anywhere; padding: 7px 4px; }
 .tbl-wrap th { position: static; }
@@ -732,37 +769,95 @@ function renderPred(levels, curLv) {
   const version = lastVersion ? lastVersion.v : PRED && PRED.version;
   const prediction = PRED_BY_VERSION.get(version) || (PRED && PRED.version === version ? PRED : null);
   if (PRED && !prediction) { el.innerHTML = `<div class="empty">Geen passende voorspelling voor versie ${esc(version)}. De voorspelling volgt zodra de speler een ondersteunde versie opent.</div>`; return; }
+  const pbRoot = (prediction && prediction.personalBots) || (['1.55', '1.56', '1.57', '1.58'].includes(version) && PRED && PRED.personalBots);
+  const pb = pbRoot && pbRoot.players && pbRoot.players[sel];
   const p = prediction && prediction.players && prediction.players[sel];
-  if (!p) { el.innerHTML = `<div class="empty">Nog geen eigen testspeler voor ${esc(nameOf(sel))}: daarvoor zijn meer pogingen nodig.</div>`; return; }
-  // Old numbered boards must not count as results for their replacements. Through 91 the
-  // immediate previous release has identical boards and its results remain comparable.
-  // comparable: older versions whose boards are the same for some levels ([[from, to], ...])
+  if (!pb && !p) { el.innerHTML = `<div class="empty">Nog geen eigen testspeler voor ${esc(nameOf(sel))}: daarvoor zijn meer pogingen nodig.</div>`; return; }
+
   const sameBoard = e => e.lv && (prediction.comparable || []).some(c => c.version === e.v && c.levels.some(([a, b]) => e.lv >= a && e.lv <= b));
   const matching = ev.filter(e => e.v === prediction.version || sameBoard(e) ||
     (e.lv && e.lv < (prediction.reorderFrom || 0) && e.v === prediction.baseVersion));
   const byLv = new Map(analyse(matching).levels.filter(l => !l.daily).map(l => [l.lv, l]));
-  const all = Object.keys(p.levels).map(Number).sort((a, b) => a - b);
-  const played = all.filter(lv => lv < curLv && byLv.has(lv) && byLv.get(lv).won);
-  const ahead = all.filter(lv => lv >= curLv).slice(0, 15);
-  const pc = x => x + '%';
   const real = lv => { const l = byLv.get(lv); if (!l) return ''; const n = l.ends.length; return l.won ? `gehaald in ${l.winAt || n} ${(l.winAt || n) === 1 ? 'poging' : 'pogingen'}` : n ? `${n} ${n === 1 ? 'poging' : 'pogingen'}, nog bezig` : 'begonnen'; };
-  const row = lv => { const [a, b, c] = p.levels[lv]; return `<tr class="${c < 60 ? 'hard' : ''}${lv < curLv ? ' done' : ''}"><td>${lv}</td><td class="num">${pc(a)}</td><td class="num">${pc(b)}</td><td class="num">${pc(c)}</td><td>${real(lv)}</td></tr>`; };
-  const next = ahead.slice(0, 10), avg = k => next.length ? Math.round(next.reduce((s, lv) => s + p.levels[lv][k], 0) / next.length) : 0;
-  const sum = next.length ? `De komende ${next.length} levels: gemiddeld <b>${avg(0)}%</b> in één keer, <b>${avg(1)}%</b> binnen 2 pogingen, <b>${avg(2)}%</b> binnen 4.` : `${esc(nameOf(sel))} is voorbij de voorspelde levels; er komt een nieuwe voorspelling.`;
-  const exp = played.reduce((s, lv) => s + p.levels[lv][0] / 100, 0), got = played.filter(lv => (byLv.get(lv).winAt || 0) === 1).length;
-  const check = played.length ? ` Sinds de voorspelling ${played.length} ${played.length === 1 ? 'level' : 'levels'} gehaald: de testspeler verwachtte er ${exp.toFixed(1).replace('.', ',')} in één keer, het werden er <b>${got}</b>.` : '';
-  const f = p.fit, mem = Array.isArray(f.memory) ? (f.memory.every(x => x === f.memory[0]) ? f.memory[0] + '%' : f.memory.join('/') + '% (begin/midden/eind)') : f.memory + '%';
-  const runs = prediction.runsByRange ? `Speelt levels t/m ${prediction.reorderFrom - 1} ${prediction.runsByRange.through91} keer en vanaf ${prediction.reorderFrom} ${prediction.runsByRange.from92} keer.` : 'Speelt elk level 150 keer op precies het bord van dat level.';
-  const made = `Gemaakt ${new Date(prediction.made).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} (versie ${esc(prediction.version)}).`;
-  // the move-based test player (fit.model 'move'): their own habits from their recorded games, corrected
-  // for how it has gone lately; fit.test: how it did on earlier levels, predicted before they were played
-  const howMade = f.model === 'move'
-    ? `Eigen testspeler van ${esc(nameOf(sel))}: speelt met de eigen gewoontes uit de opgenomen spellen (wanneer een steen wordt omgedraaid, een paar of een losse steen wordt gepakt, wat er gebeurt met 3 stenen in het bakje) en is bijgesteld op hoe het de laatste tijd ging (${f.tries} pogingen, levels ${f.levels[0]}–${f.levels[1]}). Onthoudt bij een herkansing ${mem} van wat er te zien was. Speelt elk level ${prediction.runs || 60} keer op het echte bord.${f.test ? ` Getoetst op ${f.test.levels} eerdere levels, steeds voorspeld vóór het spelen: verwacht ${String(f.test.expected).replace('.', ',')} keer in één keer, het werden er ${f.test.won}.` : ''} Eén poging blijft een gok: de kansen zijn wat telt.`
-    : `Eigen testspeler van ${esc(nameOf(sel))}, afgesteld op ${f.firstTries} eerste pogingen en ${f.retries} herkansingen (levels ${f.levels[0]}–${f.levels[1]}); onthoudt bij een herkansing ${mem} van wat er te zien was. ${runs}`;
-  el.innerHTML = `<p class="pred-sum">${sum}${check}</p>
-    <div class="tbl-wrap"><table><thead><tr><th scope="col">Level</th><th scope="col" class="num">1e poging</th><th scope="col" class="num">Binnen 2</th><th scope="col" class="num">Binnen 4</th><th scope="col">Echt</th></tr></thead>
-    <tbody>${[...played.slice(-5), ...ahead].map(row).join('')}</tbody></table></div>
-    <p class="pred-note">${howMade} ⚠️ = binnen 4 pogingen minder dan 60%. ${made}</p>`;
+  const hitAttempt = (pred, wonAt) => wonAt <= 3 ? pred === wonAt : wonAt <= 5 ? Math.abs(pred - wonAt) <= 1 : wonAt <= 7 ? Math.abs(pred - wonAt) <= 2 : pred >= 8;
+  const badgeFor = pred => pred >= 8
+    ? '<span class="pred-badge p8">8+ pogingen</span>'
+    : pred === 5 ? '<span class="pred-badge p5">5 pogingen</span>'
+    : pred === 3 ? '<span class="pred-badge p3">3 pogingen</span>'
+    : pred === 2 ? '<span class="pred-badge p2">2 pogingen</span>'
+    : '<span class="pred-badge p1">1e poging</span>';
+  const bandFor = pred => pred >= 8 ? '8 of meer' : pred === 5 ? '4–7 pogingen' : pred === 3 ? '3–4 pogingen' : pred === 2 ? '2 pogingen' : '1 poging';
+
+  // Synthesize level entries if a test fixture only supplies p.levels without personalBots
+  const lvMap = pb ? pb.levels : Object.fromEntries(Object.entries(p.levels).map(([lv, v]) => {
+    const pred = typeof v === 'object' && v && 'pred' in v ? v.pred : Array.isArray(v) ? (v[2] < 60 ? 8 : v[0] < 45 ? 3 : v[0] < 65 ? 2 : 1) : Number(v) || 1;
+    return [lv, { pred, trap: pred >= 8, split: 'future' }];
+  }));
+  const pbAll = Object.keys(lvMap).map(Number).sort((a, b) => a - b);
+  const realPb = (lv, info) => {
+    const base = real(lv); if (!base) return '–';
+    const l = byLv.get(lv);
+    if (!l || !l.won || !info) return base;
+    const wonAt = l.winAt || l.ends.length || 1, ok = hitAttempt(info.pred, wonAt);
+    return `${base}<span class="pred-hit ${ok ? 'ok' : 'miss'}" title="${ok ? 'Voorspelling klopt binnen de marge' : 'Voorspeld: ' + (info.pred >= 8 ? '8+' : info.pred)}">${ok ? '✓' : '✗'}</span>`;
+  };
+
+  const pbPlayed = pbAll.filter(lv => lv < curLv && byLv.has(lv) && byLv.get(lv).won);
+  const pbEvalPlayed = pbPlayed.filter(lv => lvMap[lv] && lvMap[lv].split !== 'dev');
+  const pbEvalHits = pbEvalPlayed.filter(lv => { const l = byLv.get(lv); return hitAttempt(lvMap[lv].pred, l.winAt || l.ends.length || 1); }).length;
+  const maxHorizon = pb && pb.evalMaxLv ? Math.max(pb.evalMaxLv, curLv + 14) : (pbAll[pbAll.length - 1] || curLv);
+  const pbAhead = pbAll.filter(lv => lv >= curLv && lv <= maxHorizon).slice(0, 24);
+  const eightPlus = pbAhead.filter(lv => lvMap[lv].pred >= 8);
+  const trapsCapped = pbAhead.filter(lv => lvMap[lv].pred < 8 && lvMap[lv].trap);
+  const group5 = pbAhead.filter(lv => lvMap[lv].pred === 5);
+  const group23 = pbAhead.filter(lv => lvMap[lv].pred === 2 || lvMap[lv].pred === 3);
+  const group1 = pbAhead.filter(lv => lvMap[lv].pred === 1);
+  const curTargetLv = lvMap[curLv] ? curLv : (pbAhead[0] || curLv);
+  const curInfo = lvMap[curTargetLv] || null;
+
+  const nextKpi = curInfo
+    ? `<div class="pred-kpi"><div class="lbl">Volgend: Level ${curTargetLv}</div><div class="val">${badgeFor(curInfo.pred)}</div><div class="note">Goed bij: ${bandFor(curInfo.pred)}${curInfo.trap && curInfo.pred < 8 ? ' · valstrik-bord' : ''}</div></div>`
+    : `<div class="pred-kpi"><div class="lbl">Volgend level</div><div class="val">–</div><div class="note">Voorbij voorspelde levels</div></div>`;
+  const eightKpi = eightPlus.length
+    ? `<div class="pred-kpi"><div class="lbl">8+ pogingen verwacht</div><div class="val bad-ink">Level ${eightPlus.join(', ')}</div><div class="note">${eightPlus.length} van de komende ${pbAhead.length} levels (t/m ${pbAhead[pbAhead.length - 1]})</div></div>`
+    : `<div class="pred-kpi"><div class="lbl">8+ pogingen verwacht</div><div class="val good-ink">Geen 8+ (${curTargetLv}–${pbAhead[pbAhead.length - 1] || curTargetLv})</div><div class="note">${trapsCapped.length ? `Wel ${trapsCapped.length} valstrik-borden: level ${trapsCapped.join(', ')}` : 'Geen 8+ levels in zicht'}</div></div>`;
+  const heldInfo = pb && pb.held ? pb.held : { correct: pbEvalHits, n: pbEvalPlayed.length || 1 };
+  const accNote = pbEvalPlayed.length
+    ? `Holdout: ${heldInfo.correct} van ${heldInfo.n} goed · Gespeeld: <b>${pbEvalHits} van ${pbEvalPlayed.length}</b> goed`
+    : `Holdout-toets: ${heldInfo.correct} van ${heldInfo.n} levels goed`;
+  const accKpi = `<div class="pred-kpi"><div class="lbl">Score persoonlijke bot</div><div class="val">${heldInfo.correct}/${heldInfo.n} goed</div><div class="note">${accNote}</div></div>`;
+
+  const trapItems = [
+    ...eightPlus.map(lv => `<div class="pred-trap-item"><span class="pred-trap-lv">⚠️ Level ${lv}${lv === curLv ? ' (nu)' : ''}</span>${badgeFor(8)}<span class="pred-trap-why">Telt goed bij 8 of meer pogingen</span></div>`),
+    ...trapsCapped.map(lv => {
+      const info = lvMap[lv];
+      return `<div class="pred-trap-item is-trap"><span class="pred-trap-lv">⚠️ Level ${lv}${lv === curLv ? ' (nu)' : ''}</span>${badgeFor(info.pred)}<span class="pred-trap-why">Valstrik-bord · voor ${esc(nameOf(sel))} verwacht in ${bandFor(info.pred)}</span></div>`;
+    }),
+  ].join('');
+
+  const trapsBox = `<div class="pred-traps">
+    <div class="pred-traps-title"><span>🎯 Komende levels op een rij (${curTargetLv}–${pbAhead[pbAhead.length - 1] || curTargetLv})</span><small style="font-weight:600;color:var(--ink-2)">Bevroren vóór de start</small></div>
+    ${trapItems ? `<div class="pred-trap-list">${trapItems}</div>` : ''}
+    <div class="pred-buckets">
+      <div><b>8+ pogingen:</b> ${eightPlus.length ? 'Level ' + eightPlus.join(', ') : 'geen'}</div>
+      ${group5.length ? `<div><b>5 pogingen (goed bij 4–7):</b> Level ${group5.join(', ')}</div>` : ''}
+      ${group23.length ? `<div><b>2–3 pogingen:</b> ${group23.map(lv => `Level ${lv} (${lvMap[lv].pred}×)`).join(', ')}</div>` : ''}
+      <div><b>In 1e poging:</b> ${group1.length ? `Level ${group1.join(', ')}` : 'geen'}</div>
+    </div>
+  </div>`;
+
+  const pbRow = lv => {
+    const info = lvMap[lv], hard = info.pred >= 8 || info.trap;
+    return `<tr class="${hard ? 'hard' : ''}${lv < curLv ? ' done' : ''}"><td>${lv}</td><td>${badgeFor(info.pred)}</td><td>${bandFor(info.pred)}</td><td>${realPb(lv, info)}</td></tr>`;
+  };
+  const made = `Gemaakt ${new Date((pbRoot && pbRoot.made) || prediction.made).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} (versie ${esc(prediction.version)}).`;
+  const howMadePb = `Eigen persoonlijke bot van ${esc(nameOf(sel))}: voorspelt vóór de start van elk level op welke poging het level wordt gehaald, op basis van de eigen gewoontes uit de opgenomen spellen. Score-regel: exact bij 1–3 pogingen, ±1 bij 4–5, ±2 bij 6–7, en 8+ = 8 of meer pogingen goed. ⚠️ = 8+ pogingen verwacht of valstrik-bord. ${made}`;
+
+  el.innerHTML = `<div class="pred-kpis">${nextKpi}${eightKpi}${accKpi}</div>
+    ${trapsBox}
+    <div class="tbl-wrap pb-tbl"><table><thead><tr><th scope="col">Level</th><th scope="col">Verwacht</th><th scope="col">Telt goed bij</th><th scope="col">Echt</th></tr></thead>
+    <tbody>${[...pbPlayed.slice(-5), ...pbAhead].map(pbRow).join('')}</tbody></table></div>
+    <p class="pred-note">${howMadePb}</p>`;
 }
 
 // ---------- live connection ----------

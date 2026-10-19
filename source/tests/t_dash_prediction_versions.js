@@ -19,20 +19,15 @@ module.exports = [{
     try {
       await p.goto(site.url + 'dash/#' + pid);
       await p.waitForFunction(() => document.querySelector('#pred .pred-note')?.textContent.includes('versie 1.53'));
-      const archived = require('../site/dash/predict-1.53.json').players[pid];
-      t.ok((await row(92).innerText()).includes(archived.levels[92][0] + '%'), 'old app uses its original board prediction');
+      t.ok(!(await content()).includes('%'), 'old percentage metrics are absent from the Voorspelling card');
       t.ok((await row(92).innerText()).includes('gehaald in 1 poging'), 'old app retains old results');
       await event({ k: 'open', v: '1.54', lv: 93, t: now });
       t.ok((await content()).includes('versie 1.54'), 'opening the new app switches predictions immediately');
-      t.ok((await content()).includes('vanaf 92 600 keer'), 'updated simulation sample count');
       t.eq(await row(92).count(), 0, 'old level-92 win is not compared with its replacement');
       t.ok((await row(91).innerText()).includes('gehaald in 1 poging'), 'unchanged level-91 result still comparable');
       await event({ k: 'end', v: '1.54', lv: 92, at: 2, r: 'win', dur: 80, n: 76, left: 0, t: now + 1000 });
       t.ok((await row(92).innerText()).includes('gehaald in 2 pogingen'), 'new board result uses the new attempt, not the old win');
-      const v154 = require('../site/dash/predict-1.54.json').players[pid];
-      t.ok((await row(92).innerText()).includes(v154.levels[92][0] + '%'), 'new board uses the reviewed new prediction');
-      // 1.55: the move-based test players; boards of 1.54 from level 70 on are the same, so a 1.54
-      // result still counts next to the 1.55 prediction
+      // 1.55+: boards of 1.54 from level 70 on are the same, so a 1.54 result still counts next to the prediction
       await event({ k: 'end', v: '1.54', lv: 93, at: 1, r: 'win', dur: 70, n: 76, left: 0, t: now + 1500 }, 'won93');
       await event({ k: 'open', v: '1.55', lv: 94, t: now + 2000 });
       t.ok((await content()).includes('versie 1.55'), 'the 1.55 prediction for a 1.55 app');
@@ -41,7 +36,7 @@ module.exports = [{
       t.eq(v155.version, '1.55', '1.55 predictions are archived for older apps');
       t.eq(current.version, '1.58', 'the current prediction file supports the smoothness release');
       t.eq(current.players, v155.players, 'unchanged boards keep the same prediction values');
-      t.ok((await content()).includes('eigen gewoontes uit de opgenomen spellen'), 'explains the move-based test player');
+      t.ok((await content()).includes('eigen gewoontes uit de opgenomen spellen'), 'explains the personal bot');
       if (current.players[pid].levels[93]) t.ok((await row(93).innerText()).includes('gehaald in 1 poging'), 'a 1.54 result on a board that did not change still counts');
       await event({ k: 'open', v: '1.56', lv: 94, t: now + 3000 });
       t.ok((await content()).includes('versie 1.56'), 'tutorial update keeps predictions available');
@@ -52,10 +47,11 @@ module.exports = [{
       await event({ k: 'open', v: '1.57', lv: 95, t: now + 4000 });
       t.ok((await content()).includes('versie 1.57'), 'message logging update keeps predictions available');
       if (current.players[pid].levels[94]) t.ok((await row(94).innerText()).includes('gehaald in 2 pogingen'), '1.56 results remain comparable in 1.57');
-      await event({ k: 'open', v: '1.58', lv: 95, t: now + 4300 });
+      await event({ k: 'open', v: '1.58', lv: 107, t: now + 4300 });
       t.ok((await content()).includes('versie 1.58'), 'smoothness update keeps predictions available');
-      if (current.players[pid].levels[94]) t.ok((await row(94).innerText()).includes('gehaald in 2 pogingen'), '1.56 results remain comparable in 1.58');
-      await event({ k: 'open', v: '1.59', lv: 95, t: now + 4500 });
+      t.ok((await content()).includes('Level 107, 119'), 'Mrs. Doubtfire upcoming 8+ levels 107 and 119 are displayed');
+      t.ok(!(await content()).includes('%'), 'no percentage chance metrics are shown on 1.58');
+      await event({ k: 'open', v: '1.59', lv: 107, t: now + 4500 });
       t.ok((await content()).includes('Geen passende voorspelling voor versie 1.59'), 'unsupported version never gets another version predictions');
       t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'viewing predictions writes no player data');
       t.eq(errors, [], 'no dashboard errors');
