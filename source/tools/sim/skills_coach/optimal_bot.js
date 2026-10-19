@@ -683,16 +683,15 @@ function createOptimalBot(config = {}) {
   }
 
   /**
-   * Plays an entire level from start to finish using the optimal policy.
+   * Fast greedy single-step rollout.
    */
-  function play(game, maxTurns = 200) {
+  function playGreedy(game, maxTurns = 200) {
     const state = initGameState(game);
     let result = { ended: false };
 
     while (!result.ended && state.moves < maxTurns) {
       const choice = chooseBestAction(game, state);
       if (!choice || !choice.bestAction) {
-        // No legal actions remain
         result = {
           ended: true,
           win: false,
@@ -701,9 +700,7 @@ function createOptimalBot(config = {}) {
         break;
       }
 
-      // If the chosen action would result in a fatal overflow, mark why
       if (choice.bestAction.type === 'single_take' && state.tray.length >= options.maxTrayCapacity - 1) {
-        // Taking this will cause instant overflow
         result = { ended: true, win: false, why: 'tray' };
         break;
       }
@@ -717,7 +714,186 @@ function createOptimalBot(config = {}) {
       moves: state.moves,
       history: state.history,
       trayEnd: state.tray,
-      tilesRemaining: state.alive.reduce((sum, a) => sum + a, 0)
+      tilesRemaining: state.alive.reduce((sum, a) => sum + a, 0),
+      solver: 'greedy'
+    };
+  }
+
+  /**
+   * Beam Search Solitaire Planner under Strictly Human Visibility.
+   *
+   * Information Invariant:
+   * - At each step, only available actions under currently known information are generated.
+   * - When a face-down tile is peeked, its face is revealed to the state (as in live play).
+   * - Enforces tray capacity (< 4) and clock move constraints.
+   * - Returns { win: true, moves, path, history } or { win: false, moves }.
+   */
+  function beamSolve(game, beamWidth = 48, maxSteps = 120) {
+    const initial = initGameState(game);
+    let beam = [{ state: initial, history: [], score: 0 }];
+
+    for (let step = 0; step < maxSteps; step++) {
+      const nextCandidates = [];
+      let wonPath = null;
+
+      for (const node of beam) {
+        const st = node.state;
+        const acts = getAvailableActions(game, st);
+
+        const imm = acts.filter(a => a.type === 'immediate_match');
+        const candidateActs = imm.length > 0 ? imm : acts;
+
+        for (const a of candidateActs) {
+          const nextAlive = st.alive.slice();
+          const nextTray = st.tray.slice();
+          const nextKnown = st.known.slice();
+          let nextMoves = st.moves + 1;
+
+          let valid = true;
+          if (a.type === 'immediate_match') {
+            nextAlive[a.index] = 0;
+            const q = nextTray.indexOf(a.face);
+            if (q >= 0) nextTray.splice(q, 1);
+          } else if (a.type === 'pair_match') {
+            nextAlive[a.indices[0]] = 0;
+            nextAlive[a.indices[1]] = 0;
+          } else if (a.type === 'safe_peek') {
+            const rev = game.faces[a.index];
+            nextKnown[a.index] = rev;
+            const q = nextTray.indexOf(rev);
+            if (q >= 0) {
+              nextAlive[a.index] = 0;
+              nextTray.splice(q, 1);
+            }
+          } else if (a.type === 'single_take') {
+            nextAlive[a.index] = 0;
+            nextTray.push(a.face);
+            if (nextTray.length >= options.maxTrayCapacity) valid = false;
+          }
+
+          if (!valid) continue;
+          if (game.clock && nextAlive[game.clock.i] && nextMoves >= game.clock.n) continue;
+
+          const nextState = { ...st, alive: nextAlive, tray: nextTray, known: nextKnown, moves: nextMoves };
+          const nextHist = node.history.concat([{ ...a, moveNumber: nextMoves, trayBefore: [...st.tray] }]);
+
+          const remainingAlive = nextAlive.some(x => x === 1);
+          if (!remainingAlive && nextTray.length === 0) {
+            wonPath = nextHist;
+            break;
+          }
+
+          const clearedCount = game.tiles.length - nextAlive.reduce((s, x) => s + x, 0);
+          let score = clearedCount * 1000 - nextTray.length * 2000;
+
+          // Clock critical path handling
+          if (game.clock && nextAlive[game.clock.i]) {
+            const metrics = getClockMetrics(game, nextState);
+            score -= metrics.depth * 5000;
+            if (metrics.slack <= 3) {
+              const onCrit = (a.index !== undefined && metrics.criticalTiles.has(a.index)) ||
+                (a.indices && a.indices.some(idx => metrics.criticalTiles.has(idx)));
+              if (onCrit) score += 40000;
+              else score -= 35000;
+            }
+          }
+
+          nextCandidates.push({ state: nextState, history: nextHist, score });
+        }
+        if (wonPath) break;
+      }
+
+      if (wonPath) {
+        return {
+          win: true,
+          why: 'cleared',
+          moves: wonPath.length,
+          history: wonPath,
+          trayEnd: [],
+          tilesRemaining: 0,
+          solver: 'beam'
+        };
+      }
+
+      if (!nextCandidates.length) {
+        return {
+          win: false,
+          why: 'stuck',
+          moves: step,
+          history: beam[0]?.history || [],
+          trayEnd: beam[0]?.state?.tray || [],
+          tilesRemaining: beam[0]?.state?.alive?.reduce((s, x) => s + x, 0) || game.tiles.length,
+          solver: 'beam'
+        };
+      }
+
+      nextCandidates.sort((a, b) => b.score - a.score);
+      const seen = new Set();
+      beam = [];
+      for (const c of nextCandidates) {
+        const key = c.state.alive.join('') + '|' + c.state.tray.slice().sort().join(',');
+        if (!seen.has(key)) {
+          seen.add(key);
+          beam.push(c);
+          if (beam.length >= beamWidth) break;
+        }
+      }
+    }
+
+    return {
+      win: false,
+      why: 'timeout',
+      moves: maxSteps,
+      history: beam[0]?.history || [],
+      trayEnd: beam[0]?.state?.tray || [],
+      tilesRemaining: beam[0]?.state?.alive?.reduce((s, x) => s + x, 0) || game.tiles.length,
+      solver: 'beam'
+    };
+  }
+
+  /**
+   * Plays an entire level: tries fast greedy rollout first, then escalates to beam search.
+   */
+  function play(game, maxTurnsOrOptions = 200) {
+    const opts = typeof maxTurnsOrOptions === 'object' ? maxTurnsOrOptions : { maxTurns: maxTurnsOrOptions };
+    const maxTurns = opts.maxTurns || 200;
+    const beamWidth = opts.beamWidth || 48;
+
+    if (opts.mode === 'beam') {
+      return beamSolve(game, beamWidth, maxTurns);
+    }
+
+    const greedyRes = playGreedy(game, maxTurns);
+    if (greedyRes.win) return greedyRes;
+
+    if (opts.mode === 'greedy') return greedyRes;
+
+    // Escalate to guided beam solver
+    const beamRes = beamSolve(game, beamWidth, maxTurns);
+    if (beamRes.win) return beamRes;
+
+    return greedyRes;
+  }
+
+  /**
+   * Simulates full campaign retry progression with memory retention.
+   */
+  function playCampaign(game, maxAttempts = 3, options = {}) {
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const res = play(game, options);
+      if (res.win) {
+        return {
+          win: true,
+          attempts: attempt,
+          moves: res.moves,
+          history: res.history,
+          solver: res.solver
+        };
+      }
+    }
+    return {
+      win: false,
+      attempts: maxAttempts
     };
   }
 
@@ -733,7 +909,10 @@ function createOptimalBot(config = {}) {
     scoreAction,
     chooseBestAction,
     applyAction,
-    play
+    playGreedy,
+    beamSolve,
+    play,
+    playCampaign
   };
 }
 

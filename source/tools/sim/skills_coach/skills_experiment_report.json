@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-19T23:15:48.230Z",
+  "date": "2026-10-19T23:42:21.600Z",
   "benchmarkLevels": [
     70,
     75,
@@ -11,7 +11,7 @@
     110
   ],
   "optimalBot": {
-    "winRate": 75,
+    "winRate": 100,
     "results": [
       {
         "level": 70,
@@ -36,17 +36,17 @@
       },
       {
         "level": 85,
-        "win": false,
-        "moves": 53,
-        "why": "tray",
-        "tilesRemaining": 13
+        "win": true,
+        "moves": 59,
+        "why": "cleared",
+        "tilesRemaining": 0
       },
       {
         "level": 95,
-        "win": false,
-        "moves": 12,
-        "why": "tray",
-        "tilesRemaining": 57
+        "win": true,
+        "moves": 56,
+        "why": "cleared",
+        "tilesRemaining": 0
       },
       {
         "level": 100,
