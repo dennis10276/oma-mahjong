@@ -138,7 +138,7 @@ function createSkillAnalyzer(config = {}) {
     }
 
     // 3. CLOCK URGENCY DISCREPANCY
-    if (clock.active && clock.slack <= 3) {
+    if (clock.active && clock.slack <= 1) {
       const touchesClock = (playerAction.index === game.clock.i) ||
         (playerAction.indices && playerAction.indices.includes(game.clock.i));
       const onCriticalPath = (playerAction.index !== undefined && clock.criticalTiles.has(playerAction.index)) ||

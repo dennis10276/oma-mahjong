@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-19T23:09:08.004Z",
+  "date": "2026-10-19T23:15:48.230Z",
   "benchmarkLevels": [
     70,
     75,
@@ -65,7 +65,7 @@
       {
         "level": 110,
         "win": true,
-        "moves": 71,
+        "moves": 70,
         "why": "cleared",
         "tilesRemaining": 0
       }
@@ -77,8 +77,8 @@
       "winRate": 88,
       "optimalAgreementRate": 1,
       "scorecard": {
-        "TRAY_HEADROOM": 84,
-        "BURIED_MATE": 100,
+        "TRAY_HEADROOM": 86,
+        "BURIED_MATE": 43,
         "CLOCK_URGENCY": 15,
         "SAFE_PEEKING": 98,
         "FREE_MATCH": 16
@@ -92,7 +92,7 @@
           "index": 28,
           "face": 29,
           "mateDepth": 2,
-          "description": "Player took #28 into tray"
+          "description": "Player took #28 into tray (mate depth=2.0)"
         },
         "trayBefore": [
           8,
@@ -131,34 +131,41 @@
       "winRate": 38,
       "optimalAgreementRate": 0,
       "scorecard": {
-        "TRAY_HEADROOM": 83,
-        "BURIED_MATE": 100,
-        "CLOCK_URGENCY": 21,
+        "TRAY_HEADROOM": 88,
+        "BURIED_MATE": 47,
+        "CLOCK_URGENCY": 22,
         "SAFE_PEEKING": 99,
         "FREE_MATCH": 16
       },
       "criticalBlundersCount": 8,
       "sampleBlunder": {
         "level": 70,
-        "turn": 13,
+        "turn": 14,
         "playerAction": {
           "type": "single_take",
-          "index": 59,
-          "face": 27,
-          "mateDepth": 2,
-          "description": "Player took #59 into tray"
+          "index": 87,
+          "face": 7,
+          "mateDepth": 3,
+          "description": "Player took #87 into tray (mate depth=3.0)"
         },
         "trayBefore": [
           0,
-          24
+          24,
+          27
         ],
         "isOptimal": false,
         "skillDiscrepancies": [
           {
             "skill": "TRAY_HEADROOM",
-            "type": "PREMATURE_TRAY_3_ENTRY",
-            "message": "Put an unconnected tile (#59) into tray slot 3 while partner is depth 2.0. Leaves zero buffer.",
-            "penalty": 60
+            "type": "FATAL_TRAY_OVERFLOW",
+            "message": "Filled the 4th tray slot without an immediate partner, causing an instant tray jam.",
+            "penalty": 100
+          },
+          {
+            "skill": "BURIED_MATE",
+            "type": "DEEP_BURIED_MATE_PICK",
+            "message": "Picked tile with partner buried 3.0 layers deep, while shallower options (0.0 layers) were accessible.",
+            "penalty": 45
           },
           {
             "skill": "FREE_MATCH",
@@ -167,7 +174,7 @@
             "penalty": 50
           }
         ],
-        "severity": "blunder",
+        "severity": "fatal",
         "optimalAction": {
           "type": "pair_match",
           "indices": [
@@ -185,11 +192,11 @@
       "winRate": 38,
       "optimalAgreementRate": 2,
       "scorecard": {
-        "TRAY_HEADROOM": 83,
-        "BURIED_MATE": 100,
-        "CLOCK_URGENCY": 29,
+        "TRAY_HEADROOM": 86,
+        "BURIED_MATE": 61,
+        "CLOCK_URGENCY": 35,
         "SAFE_PEEKING": 96,
-        "FREE_MATCH": 20
+        "FREE_MATCH": 21
       },
       "criticalBlundersCount": 8,
       "sampleBlunder": {
@@ -199,8 +206,8 @@
           "type": "single_take",
           "index": 63,
           "face": 0,
-          "mateDepth": 2,
-          "description": "Player took #63 into tray"
+          "mateDepth": 1,
+          "description": "Player took #63 into tray (mate depth=1.0)"
         },
         "trayBefore": [
           24,
@@ -240,11 +247,11 @@
       "winRate": 0,
       "optimalAgreementRate": 1,
       "scorecard": {
-        "TRAY_HEADROOM": 65,
-        "BURIED_MATE": 100,
-        "CLOCK_URGENCY": 66,
+        "TRAY_HEADROOM": 76,
+        "BURIED_MATE": 75,
+        "CLOCK_URGENCY": 94,
         "SAFE_PEEKING": 86,
-        "FREE_MATCH": 20
+        "FREE_MATCH": 18
       },
       "criticalBlundersCount": 8,
       "sampleBlunder": {
@@ -255,7 +262,7 @@
           "index": 89,
           "face": 22,
           "mateDepth": 2,
-          "description": "Player took #89 into tray"
+          "description": "Player took #89 into tray (mate depth=2.0)"
         },
         "trayBefore": [
           24,
@@ -325,29 +332,29 @@
       "level": 70,
       "popupNl": {
         "skillId": "TRAY_HEADROOM",
-        "severity": "blunder",
-        "turn": 13,
+        "severity": "fatal",
+        "turn": 14,
         "targetTileIndex": 94,
-        "playerTileIndex": 59,
-        "badge": "💡 Ruimtebeheer",
-        "title": "Houd altijd buffer in je tray",
-        "situation": "Je legde de Oostenwind in je 3e tray slot, terwijl de partner nog niet vrij was.",
-        "explanation": "Een 3e steen in je tray laten wachten is heel gevaarlijk: je hebt nu 0 vrije reserve-slots meer over.",
-        "coachAlternative": "De Coach koos ervoor om eerst Karakter 4 om de tray open te houden.",
-        "takeawayTip": "💡 Coach Tip: Probeer je tray zoveel mogelijk op 1 of 2 stenen te houden. Gebruik vrije dichte stenen om matches te zoeken!"
+        "playerTileIndex": 87,
+        "badge": "⚠️ Tray Overvol",
+        "title": "Je tray raakte overvol!",
+        "situation": "Op zet 14 had je al 3 stenen in je tray en pakte je de Bamboe 8.",
+        "explanation": "Omdat je tray maximaal 4 stenen kan bevatten en deze steen niet direct paste, liep het spel direct vast.",
+        "coachAlternative": "De Coach speelde eerst een zet die ruimte vrijmaakte: Match pair of free tiles #94 and #95 (face 12).",
+        "takeawayTip": "💡 Gouden Tip: Met 3 stenen in je tray mag je ALLEEN nog een steen pakken die direct matcht met een wachtende steen!"
       },
       "popupEn": {
         "skillId": "TRAY_HEADROOM",
-        "severity": "blunder",
-        "turn": 13,
+        "severity": "fatal",
+        "turn": 14,
         "targetTileIndex": 94,
-        "playerTileIndex": 59,
-        "badge": "💡 Tray Headroom",
-        "title": "Keep buffer in your tray",
-        "situation": "You placed East Wind into your 3rd tray slot while its twin was not yet free.",
-        "explanation": "Leaving a 3rd tile waiting in your tray leaves zero buffer: any next unmatched tile is fatal.",
-        "coachAlternative": "The Coach opted to peek a face-down tile first to preserve tray headroom.",
-        "takeawayTip": "💡 Coach Tip: Keep your tray at 1 or 2 tiles whenever possible. Use free hidden tiles to find matches without tray cost!"
+        "playerTileIndex": 87,
+        "badge": "⚠️ Tray Overflow",
+        "title": "Your tray overflowed!",
+        "situation": "On move 14, you already had 3 tiles in your tray and took Bamboo 8.",
+        "explanation": "Because the tray holds a maximum of 4 tiles and this tile had no instant match, the game immediately ended.",
+        "coachAlternative": "The Coach instead made a headroom-preserving move: Match pair of free tiles #94 and #95 (face 12).",
+        "takeawayTip": "💡 Golden Rule: With 3 tiles in your tray, ONLY take a tile that immediately pairs with a waiting tile!"
       }
     },
     {

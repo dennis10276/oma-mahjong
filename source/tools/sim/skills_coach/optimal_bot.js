@@ -421,32 +421,46 @@ function createOptimalBot(config = {}) {
 
     // --- CLOCK RULES ---
     if (clock.active) {
-      const touchesClock = (action.index === game.clock.i) ||
+      const isClockTile = (action.index === game.clock.i) ||
         (action.indices && action.indices.includes(game.clock.i));
+      const isClockMatch = isClockTile && (action.type === 'immediate_match' || action.type === 'pair_match');
 
-      if (touchesClock) {
+      if (isClockMatch) {
         score += 100000;
-        reasons.push('CRITICAL_CLOCK_CLEAR (+100000)');
+        reasons.push('CRITICAL_CLOCK_MATCH_CLEAR (+100000)');
+      } else if (isClockTile) {
+        // The clock tile is already free on the board!
+        if (clock.remainingMoves <= 1) {
+          score += 100000;
+          reasons.push('CLOCK_FINAL_DEADLINE_TAKE (+100000)');
+        } else {
+          // Strategic Clock Delay: it is already free on the board!
+          // Delay taking it if the tray already has items to keep tray buffer open
+          if (state.tray.length >= 1) {
+            score -= 6000;
+            reasons.push('STRATEGIC_CLOCK_DELAY_KEEP_TRAY_OPEN (-6000)');
+          } else {
+            score += 10000;
+            reasons.push('SAFE_CLOCK_TAKE (+10000)');
+          }
+        }
       } else {
+        // Clock tile is still buried: must unblock it before moves run out
         const onCriticalPath = (action.index !== undefined && clock.criticalTiles.has(action.index)) ||
           (action.indices && action.indices.some(idx => clock.criticalTiles.has(idx)));
 
-        if (clock.slack <= 4) {
-          // Tight clock margin: MUST prioritize critical path!
+        if (clock.slack <= 3) {
           if (onCriticalPath) {
             score += 35000;
-            reasons.push('CLOCK_CRITICAL_PATH_PRIORITY (+35000)');
+            reasons.push('CLOCK_CRITICAL_UNBLOCKING_PATH (+35000)');
           } else {
-            score -= 25000;
-            reasons.push('CLOCK_SLACK_TIGHT_OFF_PATH_DIVERSION (-25000)');
+            score -= 30000;
+            reasons.push('CLOCK_UNBLOCKING_OFF_PATH_DIVERSION (-30000)');
           }
-        } else if (clock.slack <= 6) {
+        } else if (clock.slack <= 5) {
           if (onCriticalPath) {
             score += 8000;
             reasons.push('CLOCK_PATH_PRIORITY (+8000)');
-          } else {
-            score -= 4000;
-            reasons.push('CLOCK_SLACK_MODERATE_DIVERSION (-4000)');
           }
         }
       }

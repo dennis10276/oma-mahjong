@@ -189,12 +189,19 @@ function runSkillsExperiment() {
                 description: `Player matched #${idx}`
               });
             } else {
+              let closestMateDepth = 3.0;
+              for (let other = 0; other < g.tiles.length; other++) {
+                if (other !== idx && g.faces[other] === g.faces[idx]) {
+                  const mateD = bot.getUnblockingDepth(g, bot.initGameState(g), other);
+                  if (mateD < closestMateDepth) closestMateDepth = mateD;
+                }
+              }
               actionSequence.push({
                 type: 'single_take',
                 index: idx,
                 face: g.faces[idx],
-                mateDepth: 2.0, // estimated
-                description: `Player took #${idx} into tray`
+                mateDepth: closestMateDepth,
+                description: `Player took #${idx} into tray (mate depth=${closestMateDepth.toFixed(1)})`
               });
             }
           }
