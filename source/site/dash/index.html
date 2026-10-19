@@ -79,27 +79,87 @@ th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line
 th { font-size: 12px; color: var(--ink-2); font-weight: 700; position: sticky; top: 0; background: var(--surface); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tbl-wrap { container-type: inline-size; }
+.pred-sum { margin: 0 0 8px; font-size: 14px; }
+.pred-note { margin: 8px 0 0; font-size: 12px; color: var(--ink-3); }
+.pred-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.pred-kpi { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.pred-kpi .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-2); }
+.pred-kpi .val { font-size: 15.5px; font-weight: 800; margin-top: 3px; line-height: 1.25; }
+.pred-kpi .val.bad-ink { color: var(--bad); }
+.pred-kpi .val.good-ink { color: var(--good-ink); }
+.pred-kpi .note { font-size: 11.5px; color: var(--ink-3); margin-top: 3px; line-height: 1.3; }
+.pred-traps { background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; margin-bottom: 10px; }
+.pred-traps-title { font-size: 13px; font-weight: 800; margin: 0 0 7px; color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; }
+.pred-trap-list { display: flex; flex-direction: column; gap: 6px; }
+.pred-trap-item { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 6px 9px; border-radius: 8px; background: var(--surface); border-left: 4px solid var(--bad); font-size: 12.5px; }
+.pred-trap-item.is-trap { border-left-color: var(--warn); }
+.pred-trap-lv { font-weight: 800; min-width: 78px; }
+.pred-trap-why { color: var(--ink-2); flex: 1 1 160px; font-size: 12px; }
+.pred-buckets { display: grid; gap: 3px; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-2); }
+.pred-buckets b { color: var(--ink); }
+.pred-badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 999px; font-size: 11.5px; font-weight: 800; white-space: nowrap; }
+.pred-badge small { font-weight: 600; opacity: .85; }
+.pred-badge.p1 { background: rgba(12, 163, 12, .14); color: var(--good-ink); }
+.pred-badge.p2, .pred-badge.p3 { background: var(--accent-soft); color: var(--ink); }
+.pred-badge.p5 { background: rgba(176, 118, 0, .18); color: var(--warn); }
+.pred-badge.p8 { background: rgba(208, 59, 59, .16); color: var(--bad); }
+.pred-hit { display: inline-block; margin-left: 4px; font-weight: 800; }
+.pred-hit.ok { color: var(--good-ink); }
+.pred-hit.miss { color: var(--bad); }
+#pred td.num, #pred th.num { text-align: right; }
+#pred tr.hard td:first-child::after { content: ' ⚠️'; }
+#pred tr.done td { color: var(--ink-2); }
+#pred .pb-tbl table { table-layout: auto; }
+#pred .pb-tbl th, #pred .pb-tbl td { padding: 6px 5px; vertical-align: middle; }
+#pred .pb-tbl th:last-child { width: auto; }
+@container (max-width: 560px) {
+  #pred .pb-tbl table { display: table; }
+  #pred .pb-tbl thead { display: table-header-group; }
+  #pred .pb-tbl tbody { display: table-row-group; }
+  #pred .pb-tbl tr { display: table-row; padding: 0; }
+  #pred .pb-tbl td { display: table-cell; border-bottom: 1px solid var(--line); padding: 6px 4px; text-align: left; }
+  #pred .pb-tbl td.num { text-align: right; }
+  #pred .pb-tbl td::before { content: none; }
+}
 .tbl-wrap table { table-layout: fixed; }
 .tbl-wrap th, .tbl-wrap td { white-space: normal; overflow-wrap: anywhere; padding: 7px 4px; }
 .tbl-wrap th { position: static; }
 .tbl-wrap th:last-child { width: 19%; }
+#tbl { overflow-x: auto; }
+#tbl table { table-layout: auto; min-width: 960px; }
+#tbl th, #tbl td { white-space: nowrap; overflow-wrap: normal; padding: 7px 8px; }
+#tbl th:first-child { width: 116px; }
+#tbl th:nth-child(2) { width: 240px; }
+#tbl th:nth-child(8) { width: 72px; }
+#tbl td:nth-child(8) { white-space: nowrap; overflow-wrap: normal; }
+#tbl th:last-child { width: auto; }
 /* Narrow columns show the same fields as labelled rows, without sideways scrolling. */
 @container (max-width: 560px) {
+  #tbl table { min-width: 0; }
+  #tbl td { padding: 2px 0; }
   .tbl-wrap table, .tbl-wrap tbody { display: block; }
   .tbl-wrap thead { display: none; }
   .tbl-wrap tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
   .tbl-wrap td { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border: 0; padding: 2px 0; text-align: right; }
   .tbl-wrap td::before { content: attr(data-label); font-size: 12px; font-weight: 600; color: var(--ink-2); text-align: left; letter-spacing: normal; }
-  .tbl-wrap td.res { display: block; }
-  .tbl-wrap td.res::before { float: left; margin-right: 8px; }
+  .tbl-wrap td.res { grid-column: 1 / -1; align-items: flex-start; justify-content: flex-start; }
+  .tbl-wrap td.res::before { flex-shrink: 0; }
   .tbl-wrap td:first-child, .tbl-wrap td:last-child { grid-column: 1 / -1; }
   .tbl-wrap td:first-child { font-weight: 700; }
 }
 .res { font-weight: 700; letter-spacing: 1px; }
 .res .w { color: var(--good-ink); } .res .l { color: var(--bad); } .res .r { color: var(--ink-3); }
+.attempt-results { display: inline-grid; grid-template-columns: repeat(5, max-content); gap: 4px; max-width: 100%; vertical-align: middle; }
+.attempt-result { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; white-space: nowrap; }
+@container (max-width: 320px) { .attempt-results { grid-template-columns: repeat(4, max-content); } }
 .feed { list-style: none; margin: 0; padding: 0; max-height: 460px; overflow: auto; }
 .feed li { display: grid; grid-template-columns: 54px 22px 1fr; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
 .feed .t { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.feed .help-message { min-width: 0; }
+.feed .help-context { display: block; color: var(--ink-3); margin-top: 2px; }
+.feed .help-copy { margin-top: 5px; }
+.feed .help-copy summary { cursor: pointer; color: var(--ink-2); }
+.feed .help-copy p { white-space: pre-wrap; overflow-wrap: anywhere; margin: 6px 0 2px; padding: 8px; border-left: 3px solid var(--line); font-size: 13px; line-height: 1.4; }
 .feed li.day { display: block; font-weight: 800; color: var(--ink-2); padding-top: 12px; border: 0; }
 #tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 600; opacity: 0; transition: opacity .1s; z-index: 10; white-space: nowrap; }
 .empty { color: var(--ink-3); padding: 18px 0; text-align: center; }
@@ -160,11 +220,21 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .analysis-details { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .game-watch { display: flex; flex-direction: column; min-width: 0; min-height: 620px; }
 .game-watch h2 { font-size: 18px; margin-bottom: 4px; }
+.watch-controls { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.watch-controls[hidden], .watch-transport[hidden] { display: none; }
+.watch-transport { margin: 10px 0; }
+.watch-transport input { display: block; width: 100%; margin: 8px 0; cursor: pointer; accent-color: var(--accent); }
+.watch-time { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; font-size: 13px; }
+.watch-controls label { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+.watch-controls select { padding: 6px; }
+.watch-face { transform-box: fill-box; transform-origin: center; }
+.attempt-play { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: inherit; padding: 3px 5px; margin: 0; white-space: nowrap; letter-spacing: normal; }
+.attempt-play:hover, .attempt-play:focus-visible { background: var(--accent-soft); outline: 2px solid var(--accent); }
 .watch-name { font-weight: 700; margin-bottom: 4px; overflow-wrap: anywhere; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
 .watch-status.on { color: var(--good-ink); }
 .watch-status.on::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--good); border-radius: 50%; margin-right: 6px; }
-.watch-screen { flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
+.watch-screen { position: relative; flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
 .watch-screen[hidden], .watch-empty[hidden] { display: none; }
 .watch-board { display: block; width: 100%; height: auto; flex: none; min-height: 0; }
 .watch-board.nonum .cn { display: none; }
@@ -177,6 +247,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 }
 .foot { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
 </style>
+<link rel="stylesheet" href="layout.css?v=c070f6b2d968">
 </head>
 <body>
 <main>
@@ -191,6 +262,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     </div>
     <span class="live" id="live"><span class="dot"></span><span id="liveTxt">verbinden…</span></span>
     <select id="who" aria-label="Kies speler"></select>
+    <button class="btn" id="layoutEdit" aria-expanded="false" aria-controls="layoutEditor">✏️ Indeling aanpassen</button>
     <button class="btn" id="notify" hidden>🔔 Meldingen aan</button>
   </div>
   <section class="card wide" id="cfgBox" hidden></section>
@@ -204,13 +276,25 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
       <h2 id="watchTitle">Meekijken</h2>
       <div class="watch-name" id="watchName">Kies een speler</div>
       <div class="watch-status" id="watchStatus">Buffer opbouwen…</div>
+      <div class="watch-controls" id="watchControls" hidden>
+        <button class="btn" id="watchPause">⏸ Pauze</button>
+        <button class="btn" id="watchBack">−30 s</button>
+        <button class="btn" id="watchForward">+30 s</button>
+        <button class="btn" id="watchRestart">↻ Opnieuw</button>
+        <label>Snelheid <select id="watchSpeed" aria-label="Afspeelsnelheid"><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option></select></label>
+        <button class="btn" id="watchLive">Terug naar live</button>
+      </div>
+      <div class="watch-transport" id="watchTransport" hidden>
+        <input type="range" id="watchSeek" aria-label="Positie in opname" min="0" max="0" step="100" value="0" disabled>
+        <div class="watch-time"><output id="watchPosition" for="watchSeek">0:00</output><span id="watchDuration">0:00</span></div>
+      </div>
       <button class="btn" id="watchReset" hidden>Ga naar 1 min vertraging</button>
       <div class="watch-empty" id="watchEmpty">Het spelbeeld verschijnt hier zodra er een opname beschikbaar is.</div>
       <div class="watch-screen" id="watchScreen" hidden>
         <svg class="watch-board" id="watchBoard" role="img" aria-label="Opgenomen spelscherm"></svg>
       </div>
       <div class="watch-stats" id="watchStats"></div>
-      <p class="watch-note">1 minuut vertraagd, met de oorspronkelijke timing van elke zet. Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Menu’s en niet-opgenomen effecten ontbreken.</p>
+      <p class="watch-note"><span id="watchTiming">Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.</span> Bij late gegevens pauzeert de uitzending zonder zetten over te slaan. Klik op een poging bij Alle levels om een opname terug te kijken. Menu’s en niet-opgenomen effecten ontbreken.</p>
     </section>
     <div class="analysis-details">
       <section class="card"><h2>Wanneer speelt ze? (minuten per uur, laatste 4 weken)</h2><div id="chHeat"></div></section>
@@ -227,6 +311,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     </section>
     <div id="alerts"></div>
     <div id="heartTop" class="wide"></div>
+    <section class="card wide" aria-labelledby="predTitle"><h2 id="predTitle">Voorspelling</h2><div id="pred"></div></section>
     <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
   </aside>
 </main>
@@ -235,9 +320,9 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="../play/js/rules.js"></script>
 <script src="../play/js/stories.js"></script>
 <script src="../play/tiles.js"></script>
-<script src="replay-state.js"></script>
-<script src="playback.js"></script>
-<script src="watch.js"></script>
+<script src="replay-state.js?v=537f6d4c1bc1"></script>
+<script src="playback.js?v=db4d48cfd379"></script>
+<script src="watch.js?v=26f6a2dd4e6b"></script>
 <script>
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
 const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
@@ -422,6 +507,7 @@ function render() {
   $('#live').classList.toggle('on', !!active);
   if (!document.activeElement || !document.activeElement.closest('#heartTop')) renderHeartTop();
   renderCfg();
+  renderPred(levels, curLv);
   $('#liveTxt').textContent = active ? (last && ['start', 'hint', 'shuf'].includes(last.k) ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
   $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
 
@@ -472,19 +558,35 @@ function render() {
 
   // table
   const rows = levels.sort((a, b) => b.last - a.last);
-  const res = l => l.ends.map(e => (e.ez >= 2 ? '<small title="makkelijker gemaakt">🌱</small>' : '') + (e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : '<span class="r">↻</span>') + (e.rb ? '<small title="stenen teruggelegd">↩</small>' : '')).join('');
+  const resultSymbol = e => (e.ez >= 2 ? '<small title="makkelijker gemaakt">🌱</small>' : '') + (e.r === 'win' ? '<span class="w">✓</span>' : e.r === 'stuck' ? '<span class="l">✗</span>' : e.k === 'start' ? '▶' : '<span class="r">↻</span>') + (e.rb ? '<small title="stenen teruggelegd">↩</small>' : '');
+  const res = l => {
+    const attempts = new Map();
+    for (const e of ev) if ((e.k === 'start' || e.k === 'end') && lvlKey(e) === l.k && typeof e.aid === 'string' && /^[A-Za-z0-9_-]{1,40}$/.test(e.aid)) attempts.set(e.aid, e);
+    const legacy = l.ends.filter(e => !attempts.has(e.aid)).map(e => `<span class="attempt-result">${resultSymbol(e)}</span>`).join('');
+    const recorded = [...attempts.values()].map((e, i) => {
+      const number = Number.isInteger(e.at) && e.at > 0 ? e.at : i + 1;
+      const symbol = resultSymbol(e), label = `${l.name} · poging ${number} · ${new Date(e.t).toLocaleString('nl-NL')}`;
+      return e.t >= Date.now() - 30 * 86400000 ? `<button class="attempt-play" data-aid="${esc(e.aid)}" aria-label="${esc('Bekijk opname: ' + label)}" title="${esc('Bekijk opname: ' + label)}">${number} ${symbol}</button>` : `<span class="attempt-result" title="Opname verlopen">${symbol}</span>`;
+    }).join('');
+    return legacy || recorded ? `<div class="attempt-results">${legacy}${recorded}</div>` : '';
+  };
   $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
 
+  $('#tbl').onclick = event => {
+    const button = event.target.closest('button[data-aid]');
+    if (button && DashWatch.playAttempt(button.dataset.aid)) $('.game-watch').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   const headings = [...$('#tbl').querySelectorAll('th')].map(th => th.textContent);
   $('#tbl').querySelectorAll('tbody tr').forEach(row => [...row.cells].forEach((cell, i) => { cell.dataset.label = headings[i]; }));
 
   // live feed
+  const openMessages = new Set([...$('#feed').querySelectorAll('details[data-message][open]')].map(d => d.dataset.message));
   const txt = e => {
     switch (e.k) {
       case 'open': return ['📱', `App geopend (versie ${esc(e.v)})`];
       case 'show': return ['👀', 'Terug in de app'];
       case 'hide': return ['💤', `App weggelegd${e.fg ? ` na ${mmss(e.fg)}` : ''}${e.lv && e.scr === 'game' ? ` (midden in ${lvlName(e).toLowerCase()})` : ''}`];
-      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez >= 2 && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}${e.pr != null && e.at === 1 && !e.res ? ` · testspeler haalt hem ${Math.round(e.pr * 100)}% in één keer` : ''}${e.ck && e.at === 1 && !e.res ? ` · ⏰ ${e.ck} zetten` : ''}${e.tl === 1 && e.at === 1 && !e.res ? ' · 💡🔀 verdiend' : e.tl === 0 && e.at === 1 && !e.res ? ' · zonder 💡🔀 (nog niet alles 3 sterren)' : ''}`];
+      case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez >= 2 && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}${e.pr != null && e.at === 1 && !e.res ? ` · testspeler haalt hem ${Math.round(e.pr * 100)}% in één keer` : ''}${e.ck && e.at === 1 && !e.res ? ` · ⏰ ${e.ck} zetten` : ''}${e.tl === 1 && e.at === 1 && !e.res ? ' · 💡🔀 verdiend' : ''}`];
       case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${noTime(e) ? '? (tijd onbekend)' : mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''} · ${e.sc} punten${e.rb ? ' · met ↩ terugleggen' : ''}`]
         : e.r === 'stuck' && e.ck ? ['⏰', `${lvlName(e)}: de wekker ging af na ${mmss(e.dur || 0)} (${e.left} stenen over)`]
         : e.r === 'stuck' ? ['❌', `${lvlName(e)}: vastgelopen na ${mmss(e.dur || 0)} (${e.left} stenen over${e.rb ? ', al teruggelegd' : ''})`]
@@ -497,6 +599,17 @@ function render() {
       case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
       case 'nudge': return ['✨', `Hulpje: een paar ging oplichten in ${lvlName(e).toLowerCase()}${e.down ? ' (omgedraaide steen voor haar omgekeerd)' : ''}${e.w ? ` · wachtte ~${e.w} s` : ''}`];
       case 'clock': return ['⏰', `${lvlName(e)}: wekkersteen op tijd weg (nog ${e.ml} zetten over)`];
+      case 'help_msg': {
+        const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'] };
+        const [icon, topic] = topics[e.topic] || ['📖', 'Speluitleg'];
+        const reasons = { intro: 'eerste uitleg', retry: `herinnering na ${Number(e.fails) || 3} mislukte pogingen`, manual: 'zelf geopend', timeout: 'na afloop van de wekker' };
+        const actions = { shown: 'Uitleg getoond', ack: 'Uitleg bevestigd', retry: 'Uitleg gesloten · opnieuw proberen', menu: 'Uitleg gesloten · naar menu' };
+        const context = [e.scr === 'game' ? lvlName(e) : 'Menu', e.scr === 'game' && e.at ? `poging ${Number(e.at)}` : '', reasons[e.why] || '', e.lang === 'en' ? 'Engels' : 'Nederlands'].filter(Boolean).join(' · ');
+        const copy = Object.keys(e).filter(k => /^m\d+$/.test(k)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))).map(k => typeof e[k] === 'string' ? e[k] : '').join('');
+        const messageId = String(e.mid || `${e.t}-${e.topic}`);
+        return [icon, `<div class="help-message"><b>${actions[e.action] || 'Speluitleg'}: ${topic}</b><small class="help-context">${esc(context)}</small>${e.action === 'shown' ? `<details class="help-copy" data-message="${esc(messageId)}"${openMessages.has(messageId) ? ' open' : ''}><summary>Bericht: ${esc(e.title || topic)}</summary><p>${esc(copy || 'De berichttekst is niet vastgelegd.')}</p></details>` : ''}</div>`];
+      }
+      case 'passed': return ['🏃', `Ingehaald door ${esc(e.by || '')} (zelf level ${e.lv}, nu ${e.rk}e)`];
       case 'redo': return ['↩️', `Opnieuw vanaf level ${e.from}: sterren en punten vanaf daar gewist`];
       case 'auto': return ['🪄', `${lvlName(e)}: kon niet meer misgaan, de laatste ${e.left} stenen gingen vanzelf`];
       case 'vnews': return ['📰', `Nieuws gelezen: “${esc(e.title)}” <small>(${esc(e.src || '')})</small>`];
@@ -517,7 +630,8 @@ function render() {
     const dk = new Date(e.t).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
     if (dk !== lastDay) { html += `<li class="day">${dk}</li>`; lastDay = dk; }
     const [ico, t] = txt(e);
-    html += `<li><span class="t">${hm(e.t)}</span><span>${ico}</span><span>${t}</span></li>`;
+    const shownTime = e.k === 'help_msg' ? `${hm(e.t)}:${pad(new Date(e.t).getSeconds())}` : hm(e.t);
+    html += `<li><span class="t" title="${esc(new Date(e.t).toLocaleString('nl-NL'))}">${shownTime}</span><span>${ico}</span><span>${t}</span></li>`;
   }
   $('#feed').innerHTML = html || '<li class="empty">Nog niets gebeurd</li>';
 }
@@ -635,6 +749,117 @@ function renderCfg() {
 // a heart can always be sent to the player on screen, not only when she is stuck
 function renderHeartTop() { const el = $('#heartTop'); if (el) el.innerHTML = sel && !stuckStreak(sel) ? heartBox(sel) : ''; }
 
+// ---------- prediction (predict.json: each player's own test player, fitted to their tries) ----------
+let PRED = null;
+const PRED_BY_VERSION = new Map();
+async function loadPred() {
+  try {
+    const stamp = '?t=' + Math.floor(Date.now() / 600000);
+    const r = await fetch('predict.json' + stamp); if (!r.ok) return;
+    PRED = await r.json(); PRED_BY_VERSION.set(PRED.version, PRED);
+    await Promise.all(Object.entries(PRED.previousVersions || {}).map(async ([version, file]) => {
+      if (PRED_BY_VERSION.has(version) || !/^predict-\d+(?:\.\d+)*\.json$/.test(file)) return;
+      try { const old = await fetch(file + stamp); if (old.ok) { const data = await old.json(); if (data.version === version) PRED_BY_VERSION.set(version, data); } } catch (e) { }
+    }));
+  } catch (e) { }
+}
+function renderPred(levels, curLv) {
+  const el = $('#pred'); if (!el) return;
+  const ev = events(sel), lastVersion = [...ev].reverse().find(e => e.v);
+  const version = lastVersion ? lastVersion.v : PRED && PRED.version;
+  const prediction = PRED_BY_VERSION.get(version) || (PRED && PRED.version === version ? PRED : null);
+  if (PRED && !prediction) { el.innerHTML = `<div class="empty">Geen passende voorspelling voor versie ${esc(version)}. De voorspelling volgt zodra de speler een ondersteunde versie opent.</div>`; return; }
+  const pbRoot = (prediction && prediction.personalBots) || (['1.55', '1.56', '1.57', '1.58'].includes(version) && PRED && PRED.personalBots);
+  const pb = pbRoot && pbRoot.players && pbRoot.players[sel];
+  const p = prediction && prediction.players && prediction.players[sel];
+  if (!pb && !p) { el.innerHTML = `<div class="empty">Nog geen eigen testspeler voor ${esc(nameOf(sel))}: daarvoor zijn meer pogingen nodig.</div>`; return; }
+
+  const sameBoard = e => e.lv && (prediction.comparable || []).some(c => c.version === e.v && c.levels.some(([a, b]) => e.lv >= a && e.lv <= b));
+  const matching = ev.filter(e => e.v === prediction.version || sameBoard(e) ||
+    (e.lv && e.lv < (prediction.reorderFrom || 0) && e.v === prediction.baseVersion));
+  const byLv = new Map(analyse(matching).levels.filter(l => !l.daily).map(l => [l.lv, l]));
+  const real = lv => { const l = byLv.get(lv); if (!l) return ''; const n = l.ends.length; return l.won ? `gehaald in ${l.winAt || n} ${(l.winAt || n) === 1 ? 'poging' : 'pogingen'}` : n ? `${n} ${n === 1 ? 'poging' : 'pogingen'}, nog bezig` : 'begonnen'; };
+  const hitAttempt = (pred, wonAt) => wonAt <= 3 ? pred === wonAt : wonAt <= 5 ? Math.abs(pred - wonAt) <= 1 : wonAt <= 7 ? Math.abs(pred - wonAt) <= 2 : pred >= 8;
+  const badgeFor = pred => pred >= 8
+    ? '<span class="pred-badge p8">8+ pogingen</span>'
+    : pred === 5 ? '<span class="pred-badge p5">5 pogingen</span>'
+    : pred === 3 ? '<span class="pred-badge p3">3 pogingen</span>'
+    : pred === 2 ? '<span class="pred-badge p2">2 pogingen</span>'
+    : '<span class="pred-badge p1">1e poging</span>';
+  const bandFor = pred => pred >= 8 ? '8 of meer' : pred === 5 ? '4–7 pogingen' : pred === 3 ? '3–4 pogingen' : pred === 2 ? '2 pogingen' : '1 poging';
+
+  // Synthesize level entries if a test fixture only supplies p.levels without personalBots
+  const lvMap = pb ? pb.levels : Object.fromEntries(Object.entries(p.levels).map(([lv, v]) => {
+    const pred = typeof v === 'object' && v && 'pred' in v ? v.pred : Array.isArray(v) ? (v[2] < 60 ? 8 : v[0] < 45 ? 3 : v[0] < 65 ? 2 : 1) : Number(v) || 1;
+    return [lv, { pred, trap: pred >= 8, split: 'future' }];
+  }));
+  const pbAll = Object.keys(lvMap).map(Number).sort((a, b) => a - b);
+  const realPb = (lv, info) => {
+    const base = real(lv); if (!base) return '–';
+    const l = byLv.get(lv);
+    if (!l || !l.won || !info) return base;
+    const wonAt = l.winAt || l.ends.length || 1, ok = hitAttempt(info.pred, wonAt);
+    return `${base}<span class="pred-hit ${ok ? 'ok' : 'miss'}" title="${ok ? 'Voorspelling klopt binnen de marge' : 'Voorspeld: ' + (info.pred >= 8 ? '8+' : info.pred)}">${ok ? '✓' : '✗'}</span>`;
+  };
+
+  const pbPlayed = pbAll.filter(lv => lv < curLv && byLv.has(lv) && byLv.get(lv).won);
+  const pbEvalPlayed = pbPlayed.filter(lv => lvMap[lv] && lvMap[lv].split !== 'dev');
+  const pbEvalHits = pbEvalPlayed.filter(lv => { const l = byLv.get(lv); return hitAttempt(lvMap[lv].pred, l.winAt || l.ends.length || 1); }).length;
+  const maxHorizon = pb && pb.evalMaxLv ? Math.max(pb.evalMaxLv, curLv + 14) : (pbAll[pbAll.length - 1] || curLv);
+  const pbAhead = pbAll.filter(lv => lv >= curLv && lv <= maxHorizon).slice(0, 24);
+  const eightPlus = pbAhead.filter(lv => lvMap[lv].pred >= 8);
+  const trapsCapped = pbAhead.filter(lv => lvMap[lv].pred < 8 && lvMap[lv].trap);
+  const group5 = pbAhead.filter(lv => lvMap[lv].pred === 5);
+  const group23 = pbAhead.filter(lv => lvMap[lv].pred === 2 || lvMap[lv].pred === 3);
+  const group1 = pbAhead.filter(lv => lvMap[lv].pred === 1);
+  const curTargetLv = lvMap[curLv] ? curLv : (pbAhead[0] || curLv);
+  const curInfo = lvMap[curTargetLv] || null;
+
+  const nextKpi = curInfo
+    ? `<div class="pred-kpi"><div class="lbl">Volgend: Level ${curTargetLv}</div><div class="val">${badgeFor(curInfo.pred)}</div><div class="note">Goed bij: ${bandFor(curInfo.pred)}${curInfo.trap && curInfo.pred < 8 ? ' · valstrik-bord' : ''}</div></div>`
+    : `<div class="pred-kpi"><div class="lbl">Volgend level</div><div class="val">–</div><div class="note">Voorbij voorspelde levels</div></div>`;
+  const eightKpi = eightPlus.length
+    ? `<div class="pred-kpi"><div class="lbl">8+ pogingen verwacht</div><div class="val bad-ink">Level ${eightPlus.join(', ')}</div><div class="note">${eightPlus.length} van de komende ${pbAhead.length} levels (t/m ${pbAhead[pbAhead.length - 1]})</div></div>`
+    : `<div class="pred-kpi"><div class="lbl">8+ pogingen verwacht</div><div class="val good-ink">Geen 8+ (${curTargetLv}–${pbAhead[pbAhead.length - 1] || curTargetLv})</div><div class="note">${trapsCapped.length ? `Wel ${trapsCapped.length} valstrik-borden: level ${trapsCapped.join(', ')}` : 'Geen 8+ levels in zicht'}</div></div>`;
+  const heldInfo = pb && pb.held ? pb.held : { correct: pbEvalHits, n: pbEvalPlayed.length || 1 };
+  const accNote = pbEvalPlayed.length
+    ? `Holdout: ${heldInfo.correct} van ${heldInfo.n} goed · Gespeeld: <b>${pbEvalHits} van ${pbEvalPlayed.length}</b> goed`
+    : `Holdout-toets: ${heldInfo.correct} van ${heldInfo.n} levels goed`;
+  const accKpi = `<div class="pred-kpi"><div class="lbl">Score persoonlijke bot</div><div class="val">${heldInfo.correct}/${heldInfo.n} goed</div><div class="note">${accNote}</div></div>`;
+
+  const trapItems = [
+    ...eightPlus.map(lv => `<div class="pred-trap-item"><span class="pred-trap-lv">⚠️ Level ${lv}${lv === curLv ? ' (nu)' : ''}</span>${badgeFor(8)}<span class="pred-trap-why">Telt goed bij 8 of meer pogingen</span></div>`),
+    ...trapsCapped.map(lv => {
+      const info = lvMap[lv];
+      return `<div class="pred-trap-item is-trap"><span class="pred-trap-lv">⚠️ Level ${lv}${lv === curLv ? ' (nu)' : ''}</span>${badgeFor(info.pred)}<span class="pred-trap-why">Valstrik-bord · voor ${esc(nameOf(sel))} verwacht in ${bandFor(info.pred)}</span></div>`;
+    }),
+  ].join('');
+
+  const trapsBox = `<div class="pred-traps">
+    <div class="pred-traps-title"><span>🎯 Komende levels op een rij (${curTargetLv}–${pbAhead[pbAhead.length - 1] || curTargetLv})</span><small style="font-weight:600;color:var(--ink-2)">Bevroren vóór de start</small></div>
+    ${trapItems ? `<div class="pred-trap-list">${trapItems}</div>` : ''}
+    <div class="pred-buckets">
+      <div><b>8+ pogingen:</b> ${eightPlus.length ? 'Level ' + eightPlus.join(', ') : 'geen'}</div>
+      ${group5.length ? `<div><b>5 pogingen (goed bij 4–7):</b> Level ${group5.join(', ')}</div>` : ''}
+      ${group23.length ? `<div><b>2–3 pogingen:</b> ${group23.map(lv => `Level ${lv} (${lvMap[lv].pred}×)`).join(', ')}</div>` : ''}
+      <div><b>In 1e poging:</b> ${group1.length ? `Level ${group1.join(', ')}` : 'geen'}</div>
+    </div>
+  </div>`;
+
+  const pbRow = lv => {
+    const info = lvMap[lv], hard = info.pred >= 8 || info.trap;
+    return `<tr class="${hard ? 'hard' : ''}${lv < curLv ? ' done' : ''}"><td>${lv}</td><td>${badgeFor(info.pred)}</td><td>${bandFor(info.pred)}</td><td>${realPb(lv, info)}</td></tr>`;
+  };
+  const made = `Gemaakt ${new Date((pbRoot && pbRoot.made) || prediction.made).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} (versie ${esc(prediction.version)}).`;
+  const howMadePb = `Eigen persoonlijke bot van ${esc(nameOf(sel))}: voorspelt vóór de start van elk level op welke poging het level wordt gehaald, op basis van de eigen gewoontes uit de opgenomen spellen. Score-regel: exact bij 1–3 pogingen, ±1 bij 4–5, ±2 bij 6–7, en 8+ = 8 of meer pogingen goed. ⚠️ = 8+ pogingen verwacht of valstrik-bord. ${made}`;
+
+  el.innerHTML = `<div class="pred-kpis">${nextKpi}${eightKpi}${accKpi}</div>
+    ${trapsBox}
+    <div class="tbl-wrap pb-tbl"><table><thead><tr><th scope="col">Level</th><th scope="col">Verwacht</th><th scope="col">Telt goed bij</th><th scope="col">Echt</th></tr></thead>
+    <tbody>${[...pbPlayed.slice(-5), ...pbAhead].map(pbRow).join('')}</tbody></table></div>
+    <p class="pred-note">${howMadePb}</p>`;
+}
+
 // ---------- live connection ----------
 async function loadScores() { try { SCORES = await dbGet('scores') || {}; } catch (e) { } }
 function stream() {
@@ -653,10 +878,13 @@ function stream() {
   es.addEventListener('cancel', () => { $('#notice').innerHTML = '<div class="warnbox">De database staat het lezen van speelgegevens nog niet toe. Publiceer de nieuwe Firebase-regels.</div>'; });
 }
 loadScores().then(() => { fillPicker(); render(); stream(); });
+loadPred().then(render);
+setInterval(() => loadPred().then(render), 600000);
 setInterval(() => loadScores().then(render), 30000);
 setInterval(render, 30000);   // "x min geleden" stays fresh
 setInterval(checkHeartsSeen, 15000);
 let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(render, 200); });
 </script>
+<script src="layout.js?v=ebcd9971c05a"></script>
 </body>
 </html>

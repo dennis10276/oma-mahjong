@@ -1,20 +1,34 @@
-/* Buffered, read-only, 1x replay. Network batches only extend the timeline. */
+/* Buffered, read-only replay with local recording transport controls. Network batches only extend the timeline. */
 (function () {
   'use strict';
   const el = id => document.getElementById(id);
   const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
   const sessions = new Map(), clock = new DashPlayback.Clock();
   let context = { pid: null, name: '', events: [] }, replay = null, current = null, error = '', buffered = false, paintKey = '', generation = 0, lastUi = 0;
+  let recordedAid = null, playbackPaused = false, playbackFinished = false;
+  let playbackSpeed = 1, scrubbing = false, scene = null;
   function close(entry) { entry.generation = ++generation; if (entry.source) entry.source.close(); entry.source = null; entry.connected = false; }
   function empty(message, keepReplay = false) {
     if (!keepReplay) replay = null;
+    scene = null;
     el('watchScreen').hidden = true; el('watchEmpty').hidden = false;
     el('watchEmpty').textContent = message; el('watchStats').textContent = '';
   }
   function status(now = Date.now()) {
     const label = el('watchStatus'); label.classList.remove('on');
     const lag = clock.cursor === null ? 60 : Math.max(60, Math.round((now - clock.cursor) / 1000));
-    el('watchReset').hidden = !context.pid || lag < 65;
+    el('watchReset').hidden = !!recordedAid || !context.pid || lag < 65;
+    el('watchControls').hidden = !recordedAid;
+    el('watchTransport').hidden = !recordedAid;
+    transport();
+    el('watchTiming').textContent = recordedAid ? `Opname op ${playbackSpeed}× snelheid. Sleep de tijdbalk om vooruit of terug te kijken.` : 'Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.';
+    el('watchPause').textContent = playbackFinished ? '▶ Opnieuw' : playbackPaused ? '▶ Verder' : '⏸ Pauze';
+    el('watchPause').disabled = !replay;
+    if (recordedAid) {
+      const issue = current && (current.timeline.timingMissing ? ' · pauzetiming ontbreekt' : current.recording && (current.recording.gap || current.recording.truncated) ? ' · opname onvolledig' : '');
+      label.textContent = error || (!replay ? 'Opname laden…' : `${playbackFinished ? 'Opname afgelopen' : playbackPaused ? 'Afspelen gepauzeerd' : 'Opname afspelen'} · ${playbackSpeed}×${issue || ''}`);
+      return;
+    }
     if (!context.pid) { label.textContent = 'Kies een speler'; return; }
     if (error) { label.textContent = error; return; }
     if (!replay || !replay.initial || !replay.view) { label.textContent = 'Buffer opbouwen · 1 minuut vertraagd'; return; }
@@ -28,8 +42,48 @@
     const text = kind === 101 ? '🃏' : Tiles.THEMES[theme].faces[kind];
     return `<text x="${x + w / 2}" y="${y + h / 2}" text-anchor="middle" dominant-baseline="central" font-size="${w * .85}">${escape(text)}</text>`;
   }
+  function transport() {
+    const frames = current && current.timeline.frames, ready = !!(recordedAid && frames && frames.length);
+    const start = ready ? frames[0].wall : 0, end = ready ? frames[frames.length - 1].wall : 0;
+    const duration = Math.max(0, end - start), position = ready ? Math.max(0, Math.min(duration, clock.cursor - start)) : 0;
+    const time = ms => { const n = Math.floor(ms / 1000); return `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`; };
+    const bar = el('watchSeek'); bar.max = String(duration); bar.disabled = !ready || !duration;
+    if (!scrubbing) bar.value = String(position);
+    bar.setAttribute('aria-valuetext', `${time(position)} van ${time(duration)}`);
+    el('watchPosition').textContent = time(position); el('watchDuration').textContent = time(duration);
+    el('watchBack').disabled = !ready || position <= 0; el('watchForward').disabled = !ready || position >= duration;
+  }
+  function captureTiles() {
+    return new Map([...el('watchBoard').querySelectorAll('.watch-tile, .watch-slot[data-tile]')].map(node => {
+      const m = node.transform.baseVal.consolidate().matrix, rect = node.querySelector('rect');
+      return [Number(node.dataset.tile), { node, x: m.e, y: m.f, scale: m.a, width: Number(rect.getAttribute('width')) * m.a, slot: node.classList.contains('watch-slot') }];
+    }));
+  }
+  function animateMoves(before, previous) {
+    if (!previous || previous.aid !== current.aid || clock.cursor <= previous.wall || clock.cursor - previous.wall > 2500) return;
+    const after = captureTiles(), removed = [...before].filter(([id]) => !after.has(id));
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches, speed = recordedAid ? playbackSpeed : 1;
+    for (const [id, from] of before) {
+      const to = after.get(id), partner = removed.find(([other]) => other !== id && (previous.state.f[other] === previous.state.f[id] || previous.state.f[id] === 101 || previous.state.f[other] === 101));
+      if (to && !from.slot && to.slot || !to) {
+        if (reduced) continue;
+        const destination = to || (partner ? from.slot ? from : partner[1].slot ? partner[1] : { ...from, x: (from.x + partner[1].x) / 2, y: (from.y + partner[1].y) / 2 - from.width * .3 } : from);
+        const ghost = from.node.cloneNode(true); ghost.setAttribute('class', 'watch-flight'); ghost.removeAttribute('data-tile'); ghost.setAttribute('aria-hidden', 'true');
+        el('watchBoard').appendChild(ghost);
+        const transform = (p, scale = 1) => `translate(${p.x}px, ${p.y}px) scale(${from.scale * p.width / from.width * scale})`;
+        const frames = to ? [{ transform: transform(from) }, { transform: transform(destination) }] : [{ transform: transform(from), opacity: 1 }, { transform: transform(destination), opacity: 1, offset: .5 }, { transform: transform(destination, .2), opacity: 0 }];
+        const destinationNode = to && el('watchBoard').querySelector(`.watch-slot[data-tile="${id}"]`);
+        if (destinationNode) destinationNode.style.opacity = '0';
+        ghost.animate(frames, { duration: Math.max(80, (to ? 230 : 460) / speed), easing: 'cubic-bezier(.35,.1,.25,1)' }).onfinish = () => { ghost.remove(); if (destinationNode) destinationNode.style.opacity = ''; };
+      } else if (to && !to.slot && (previous.state.d[id] !== replay.state.d[id] || previous.state.p !== replay.state.p && (previous.state.p === id || replay.state.p === id) || previous.state.f[id] !== replay.state.f[id])) {
+        if (!reduced) el('watchBoard').querySelector(`.watch-tile[data-tile="${id}"] .watch-face`).animate([{ transform: 'scaleX(.1)', opacity: .4 }, { transform: 'scaleX(1)', opacity: 1 }], { duration: Math.max(80, 180 / speed) });
+      }
+    }
+
+  }
   function draw() {
     if (!replay || !replay.initial || !replay.view) { empty('Wachten op het opgenomen spelbeeld…', true); return; }
+    const before = captureTiles(), previous = scene;
     const { initial, state, view } = replay;
     const dimension = (v, fallback) => Number.isFinite(v) && v > 0 && v < 10000 ? v : fallback;
     const vw = dimension(view[0], 390), vh = dimension(view[1], 844), bw = dimension(view[2], vw), bh = dimension(view[3], vh - 180);
@@ -44,7 +98,7 @@
     const tileW = 1 - 1.5 / tw, tileH = 1.24 - 1.5 / tw;
     const level = initial.key.startsWith('L') ? `Level ${initial.key.slice(1)}` : `Dagpuzzel ${initial.key.slice(1)}`;
     const progress = (initial.tiles.length - state.a.reduce((n, a) => n + a, 0) - state.tr.length) / initial.tiles.length;
-    let board = `<defs><linearGradient id="watchBack" x2=".5" y2="1"><stop stop-color="#3dbb90"/><stop offset="1" stop-color="#1b8063"/></linearGradient><pattern id="watchCross" width=".18" height=".18" patternUnits="userSpaceOnUse"><path d="M0 0L.18 .18M.18 0L0 .18" stroke="#ffffff" opacity=".13" stroke-width=".025"/></pattern></defs><rect width="${vw}" height="${vh}" fill="#0b4d3c"/><g aria-label="Spelkop"><rect x="10" y="8" width="44" height="44" rx="14" fill="#fff8e8"/><text x="32" y="38" text-anchor="middle" font-size="24">🏠</text><text x="${vw / 2}" y="28" text-anchor="middle" font-size="19" font-weight="800" fill="white">${escape(level)}</text><rect x="64" y="36" width="${Math.max(1, vw - 128)}" height="10" rx="5" fill="#073b2e"/><rect x="64" y="36" width="${Math.max(0, (vw - 128) * progress)}" height="10" rx="5" fill="#ffc531"/><rect x="${vw - 54}" y="8" width="44" height="44" rx="14" fill="#fff8e8"/><text x="${vw - 32}" y="38" text-anchor="middle" font-size="26">↻</text></g>`;
+    let board = `<defs><linearGradient id="watchTileBack" x2=".5" y2="1"><stop stop-color="#3dbb90"/><stop offset="1" stop-color="#1b8063"/></linearGradient><pattern id="watchCross" width=".18" height=".18" patternUnits="userSpaceOnUse"><path d="M0 0L.18 .18M.18 0L0 .18" stroke="#ffffff" opacity=".13" stroke-width=".025"/></pattern></defs><rect width="${vw}" height="${vh}" fill="#0b4d3c"/><g aria-label="Spelkop"><rect x="10" y="8" width="44" height="44" rx="14" fill="#fff8e8"/><text x="32" y="38" text-anchor="middle" font-size="24">🏠</text><text x="${vw / 2}" y="28" text-anchor="middle" font-size="19" font-weight="800" fill="white">${escape(level)}</text><rect x="64" y="36" width="${Math.max(1, vw - 128)}" height="10" rx="5" fill="#073b2e"/><rect x="64" y="36" width="${Math.max(0, (vw - 128) * progress)}" height="10" rx="5" fill="#ffc531"/><rect x="${vw - 54}" y="8" width="44" height="44" rx="14" fill="#fff8e8"/><text x="${vw - 32}" y="38" text-anchor="middle" font-size="26">↻</text></g>`;
     for (const tile of [...points].sort((a, b) => a.order - b.order)) {
       const i = tile.i; if (!state.a[i]) continue;
       const back = state.d[i] && state.p !== i, gold = initial.gold.includes(i), ob = state.ob;
@@ -54,15 +108,15 @@
       const blocked = live.some(t => t[2] > tz && Math.abs(t[0] - tx) < 2) || live.some(t => t[2] === tz && t[0] === tx - 2) && live.some(t => t[2] === tz && t[0] === tx + 2);
       const hint = replay.hint && clock.cursor - replay.hint.wall < 2500 && Array.isArray(replay.hint.tiles) && replay.hint.tiles.includes(i);
       const nudge = replay.nudge && Array.isArray(replay.nudge.tiles) && replay.nudge.tiles.includes(i);
-      const tap = replay.tapEvent && clock.cursor - replay.tapEvent.wall < 300 && replay.tapEvent.data[0] === i;
-      board += `<g class="watch-tile${back ? ' back' : ''}" data-tile="${i}" transform="translate(${ox + tile.x * tw},${oy + tile.y * tw}) scale(${tw})"><title>${back ? 'Omgedraaide steen' : 'Steen'}</title>` +
-        `<rect x="${depth / tw}" y="${depth / tw}" width="${tileW}" height="${tileH}" rx=".09" fill="#c6af73"/><rect width="${tileW}" height="${tileH}" rx=".09" fill="${back ? 'url(#watchBack)' : gold ? '#ffe89a' : view[7] ? '#fff' : '#fff8e8'}"/>` +
+      const tap = replay.tapEvent && clock.cursor - replay.tapEvent.wall < 600 && replay.tapEvent.data[0] === i;
+      board += `<g class="watch-tile${back ? ' back' : ''}" data-tile="${i}" transform="translate(${ox + tile.x * tw},${oy + tile.y * tw}) scale(${tw})"><title>${back ? 'Omgedraaide steen' : 'Steen'}</title><g class="watch-face">` +
+        `<rect x="${depth / tw}" y="${depth / tw}" width="${tileW}" height="${tileH}" rx=".09" fill="#c6af73"/><rect width="${tileW}" height="${tileH}" rx=".09" fill="${back ? 'url(#watchTileBack)' : gold ? '#ffe89a' : view[7] ? '#fff' : '#fff8e8'}"/>` +
         (back ? theme === 'sunflower' ? `<image href="tile-back-sunflower.png" width="${tileW}" height="${tileH}" preserveAspectRatio="xMidYMid slice"/>` : `<rect width="${tileW}" height="${tileH}" rx=".09" fill="url(#watchCross)"/><circle cx=".49" cy=".61" r=".15" fill="#e8b13a"/><circle cx=".49" cy=".61" r=".1" fill="#ffe08a"/>` : faceMarkup(state.f[i], theme, .06, .07, .86, 1.08)) +
         (view[8] && blocked ? `<rect width="${tileW}" height="${tileH}" rx=".09" fill="${view[7] ? '#000' : '#3c280a'}" opacity="${view[7] ? '.42' : '.30'}"/>` : '') +
         (view[7] ? `<rect width="${tileW}" height="${tileH}" rx=".09" fill="none" stroke="#222" stroke-width="${2 / tw}"/>` : '') +
         (ice ? `<rect width="${tileW}" height="${tileH}" rx=".09" fill="#a9dfff" opacity=".5"/><text x=".49" y=".7" text-anchor="middle" font-size=".48">❄️</text>` : '') +
         (locked || isKey ? `<text x=".72" y="1.07" text-anchor="middle" font-size=".4">${locked ? '🔒' : '🔑'}</text>` : '') +
-        (tap || hint || nudge ? `<rect width="${tileW}" height="${tileH}" rx=".09" fill="none" stroke="${hint || nudge ? '#ffc531' : '#f68a32'}" stroke-width=".065"/>` : '') + '</g>';
+        (tap || hint || nudge ? `<rect width="${tileW}" height="${tileH}" rx=".09" fill="none" stroke="${hint || nudge ? '#ffc531' : '#f68a32'}" stroke-width=".065"/>` : '') + '</g></g>';
     }
     if (state.ck && state.a[state.ck.i]) {
       const tile = points[state.ck.i];
@@ -71,7 +125,7 @@
     board += `<g id="watchTray" role="group" aria-label="De vier vakjes"><rect x="${trayX}" y="${trayY}" width="${trayW}" height="${slotH + 12}" rx="16" fill="${theme === 'sunflower' ? '#cf8c1f' : '#8a5a33'}"/>`;
     for (let slot = 0; slot < 4; slot++) {
       const i = state.tr[slot], x = trayX + 6 + slot * (slotW + 6), y = trayY + 6;
-      board += `<g class="watch-slot${i === undefined ? ' vacant' : ''}" transform="translate(${x},${y})"><rect width="${slotW}" height="${slotH}" rx="10" fill="${i === undefined ? '#57341f' : '#fff8e8'}"/>${i === undefined ? '' : faceMarkup(state.f[i], theme, 3, 3, slotW - 6, slotH - 6)}</g>`;
+      board += `<g class="watch-slot${i === undefined ? ' vacant' : ''}" ${i === undefined ? '' : `data-tile="${i}"`} transform="translate(${x},${y})"><rect width="${slotW}" height="${slotH}" rx="10" fill="${i === undefined ? '#57341f' : '#fff8e8'}"/>${i === undefined ? '' : faceMarkup(state.f[i], theme, 3, 3, slotW - 6, slotH - 6)}</g>`;
     }
     board += '</g>';
     if (view[10] !== false) {
@@ -82,11 +136,13 @@
       }
     }
     const touch = replay.tapEvent && replay.tapEvent.data && replay.tapEvent.data[3];
-    if (Array.isArray(touch) && touch.length === 2 && touch.every(Number.isFinite) && clock.cursor - replay.tapEvent.wall < 300) board += `<circle class="watch-touch" cx="${touch[0]}" cy="${touch[1]}" r="13" fill="#ffc53155" stroke="#ffc531" stroke-width="3"/>`;
+    if (Array.isArray(touch) && touch.length === 2 && touch.every(Number.isFinite) && clock.cursor - replay.tapEvent.wall < 600) board += `<circle class="watch-touch" cx="${touch[0]}" cy="${touch[1]}" r="13" fill="#ffc53155" stroke="#ffc531" stroke-width="3"/>`;
     el('watchBoard').setAttribute('viewBox', `0 0 ${vw} ${vh}`);
     el('watchBoard').setAttribute('aria-label', 'Opgenomen scherm: ' + level);
     el('watchBoard').classList.toggle('nonum', view[6] === false);
     el('watchBoard').innerHTML = board;
+    animateMoves(before, previous);
+    scene = { aid: current.aid, wall: clock.cursor, state: replay.state };
     el('watchScreen').hidden = false; el('watchEmpty').hidden = true;
     stats();
   }
@@ -104,10 +160,10 @@
       }
       entry.recording = DashReplay.read(entry.records, entry.aid);
       entry.timeline = DashPlayback.timeline(entry.recording, context.events, entry.aid);
-      entry.connected = true; entry.error = '';
+      entry.connected = true; entry.received = true; entry.error = '';
       // A first join may have less than a minute of delivered history. Start at the
       // available point once; subsequent uploads never move or reset the clock.
-      if (!entry.started && entry === current && entry.timeline.frames.length) clock.cursor = Math.min(clock.cursor, entry.timeline.coverage);
+      if (!recordedAid && !entry.started && entry === current && entry.timeline.frames.length) clock.cursor = Math.min(clock.cursor, entry.timeline.coverage);
     } catch (e) { entry.error = 'Spelopname is onvolledig of ongeldig'; }
   }
   function connect(entry) {
@@ -124,19 +180,48 @@
   function reconcile() {
     if (!context.pid) return;
     const wanted = new Set(), anchor = anchorAt(clock.cursor);
-    if (valid(anchor)) wanted.add(anchor.aid);
+    if (recordedAid) wanted.add(recordedAid);
+    else if (valid(anchor)) wanted.add(anchor.aid);
     // Prefetch only attempts in the selected player's one-minute broadcast queue.
     // This preserves short retries and level endings instead of switching early.
-    for (const e of context.events) if ((e.k === 'start' || e.k === 'end') && e.t >= clock.cursor && e.t <= Date.now() && valid(e)) wanted.add(e.aid);
+    if (!recordedAid) for (const e of context.events) if ((e.k === 'start' || e.k === 'end') && e.t >= clock.cursor && e.t <= Date.now() && valid(e)) wanted.add(e.aid);
     for (const [aid, entry] of sessions) if (!wanted.has(aid)) { close(entry); sessions.delete(aid); }
     for (const aid of wanted) {
       if (!sessions.has(aid)) sessions.set(aid, { aid, records: {}, recording: null, timeline: { frames: [], coverage: 0 }, source: null, generation: 0, connected: false, error: '' });
       connect(sessions.get(aid));
     }
   }
+  function tickRecorded(now) {
+    const previousMode = `${error}/${playbackFinished}/${!!replay}`;
+    current = sessions.get(recordedAid);
+    if (!current) { reconcile(); return; }
+    if (current.error) { error = current.error; empty('Dit spelbeeld kan niet betrouwbaar worden afgespeeld.'); clock.suspend(now); }
+    else if (!current.timeline.frames.length) {
+      error = current.received ? 'Voor deze poging is geen spelopname beschikbaar.' : '';
+      empty(error || 'Opname laden…'); clock.suspend(now);
+    } else {
+      error = '';
+      const frames = current.timeline.frames, last = frames[frames.length - 1].wall;
+      if (!current.started) { clock.cursor = frames[0].wall; clock.suspend(now); current.started = true; }
+      const elapsed = Math.min(100, Math.max(0, now - clock.lastReal));
+      if (!playbackPaused && !scrubbing) clock.cursor = Math.min(last, clock.cursor + elapsed * playbackSpeed);
+      clock.suspend(now);
+      playbackFinished = clock.cursor >= last;
+      const index = DashPlayback.frameAt(frames, clock.cursor), frame = frames[index];
+      if (frame && frame.view) {
+        replay = { ...current.recording, ...frame, ms: frame.ms + (frame.paused || frame.result ? 0 : Math.max(0, clock.cursor - frame.wall)) };
+        const cue = frame.tapEvent && clock.cursor - frame.tapEvent.wall < 600, hint = frame.hint && clock.cursor - frame.hint.wall < 2500;
+        const stamp = `${current.aid}/${index}/${!!cue}/${!!hint}`;
+        if (stamp !== paintKey) { draw(); paintKey = stamp; }
+        if (now - lastUi >= 200) stats();
+      } else empty('Wachten op de oorspronkelijke weergave…');
+    }
+    if (previousMode !== `${error}/${playbackFinished}/${!!replay}` || now - lastUi >= 200) { status(now); lastUi = now; }
+  }
   function tick() {
     const now = Date.now();
     if (document.hidden || !context.pid) { clock.suspend(now); requestAnimationFrame(tick); return; }
+    if (recordedAid) { tickRecorded(now); requestAnimationFrame(tick); return; }
     const anchor = anchorAt(clock.cursor), entry = valid(anchor) ? sessions.get(anchor.aid) : null;
     let coverage = entry ? entry.timeline.frames.length ? entry.timeline.coverage : clock.cursor : Infinity;
     const next = context.events.find(e => e.k === 'start' && e.t > clock.cursor && e.t <= now - DashPlayback.DELAY);
@@ -162,7 +247,7 @@
       if (frame && frame.view) {
         current.started = true;
         replay = { ...current.recording, ...frame, ms: frame.ms + (frame.paused || frame.result ? 0 : Math.max(0, clock.cursor - frame.wall)) };
-        const cue = frame.tapEvent && clock.cursor - frame.tapEvent.wall < 300, hint = frame.hint && clock.cursor - frame.hint.wall < 2500;
+        const cue = frame.tapEvent && clock.cursor - frame.tapEvent.wall < 600, hint = frame.hint && clock.cursor - frame.hint.wall < 2500;
         const stamp = `${current.aid}/${index}/${!!cue}/${!!hint}`;
         if (stamp !== paintKey) { draw(); paintKey = stamp; }
         if (now - lastUi >= 200) stats();
@@ -177,12 +262,14 @@
   function stats() {
     if (!replay || !replay.initial) return;
     const level = replay.initial.key.startsWith('L') ? `Level ${replay.initial.key.slice(1)}` : `Dagpuzzel ${replay.initial.key.slice(1)}`;
+    if (recordedAid) transport();
     const seconds = Math.floor(replay.ms / 1000);
     el('watchStats').textContent = `${level} · poging ${replay.initial.at || 1} · ${replay.state.a.reduce((n, a) => n + a, 0)} stenen over · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}${replay.initial.partial ? ' · hervatte opname' : ''}`;
   }
   function follow(pid, name, events) {
     if (context.pid !== pid) {
       for (const entry of sessions.values()) close(entry);
+      recordedAid = null; playbackPaused = false; playbackFinished = false; scrubbing = false; scene = null;
       sessions.clear(); current = null; replay = null; paintKey = ''; error = ''; clock.reset(Date.now());
       empty(pid ? 'De uitzending wordt één minuut achter de speler opgebouwd…' : 'Kies een speler om mee te kijken.');
     }
@@ -191,9 +278,49 @@
     for (const entry of sessions.values()) if (entry.recording) entry.timeline = DashPlayback.timeline(entry.recording, events, entry.aid);
     reconcile(); status();
   }
-  el('watchReset').onclick = () => { clock.reset(Date.now()); current = null; paintKey = ''; reconcile(); };
+  function playAttempt(aid) {
+    if (!context.pid || !context.events.some(e => e.aid === aid && (e.k === 'start' || e.k === 'end') && valid(e))) return false;
+    for (const entry of sessions.values()) close(entry);
+    sessions.clear(); recordedAid = aid; playbackPaused = false; playbackFinished = false; scrubbing = false; scene = null;
+    current = null; replay = null; paintKey = ''; error = ''; clock.suspend(Date.now());
+    empty('Opname laden…'); reconcile(); status(); return true;
+  }
+  function seek(position) {
+    if (!recordedAid || !current || !current.timeline.frames.length) return;
+    const frames = current.timeline.frames, start = frames[0].wall, last = frames[frames.length - 1].wall;
+    clock.cursor = Math.max(start, Math.min(last, start + position)); current.started = true;
+    scene = null; paintKey = ''; clock.suspend(Date.now());
+    tickRecorded(Date.now()); status(); transport();
+  }
+  el('watchPause').onclick = () => {
+    if (playbackFinished) { playbackPaused = false; seek(0); } else playbackPaused = !playbackPaused;
+    el('watchScreen').getAnimations({ subtree: true }).forEach(animation => {
+      if (playbackPaused && animation.playState === 'running') animation.pause();
+      else if (!playbackPaused && animation.playState === 'paused') animation.play();
+    });
+    clock.suspend(Date.now()); status();
+  };
+  el('watchRestart').onclick = () => { playbackPaused = false; seek(0); };
+  el('watchBack').onclick = () => seek(clock.cursor - current.timeline.frames[0].wall - 30000);
+  el('watchForward').onclick = () => seek(clock.cursor - current.timeline.frames[0].wall + 30000);
+  el('watchSpeed').onchange = event => {
+    const speed = Number(event.target.value); if ([.5, 1, 1.5, 2, 4, 8].includes(speed)) playbackSpeed = speed;
+    clock.suspend(Date.now()); status();
+  };
+  el('watchSeek').onpointerdown = () => { scrubbing = true; clock.suspend(Date.now()); };
+  el('watchSeek').oninput = event => seek(Number(event.target.value));
+  const finishScrub = () => { scrubbing = false; clock.suspend(Date.now()); };
+  el('watchSeek').onchange = finishScrub;
+  addEventListener('pointerup', finishScrub); addEventListener('pointercancel', finishScrub);
+  el('watchLive').onclick = () => {
+    recordedAid = null; playbackPaused = false; playbackFinished = false; scrubbing = false; scene = null;
+    for (const entry of sessions.values()) close(entry);
+    sessions.clear(); current = null; replay = null; paintKey = ''; error = ''; clock.reset(Date.now());
+    empty('De uitzending wordt één minuut achter de speler opgebouwd…'); reconcile(); status();
+  };
+  el('watchReset').onclick = () => { scene = null; clock.reset(Date.now()); current = null; paintKey = ''; reconcile(); };
   document.addEventListener('visibilitychange', () => { clock.suspend(Date.now()); if (document.hidden) { for (const entry of sessions.values()) close(entry); } else reconcile(); });
   addEventListener('pagehide', () => { for (const entry of sessions.values()) close(entry); });
   requestAnimationFrame(tick);
-  window.DashWatch = { follow };
+  window.DashWatch = { follow, playAttempt };
 })();

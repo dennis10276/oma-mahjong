@@ -184,6 +184,34 @@ module.exports = [
     },
   },
   {
+    name: 'dashboard: prediction from the player\'s own test player, with the real results next to it',
+    async run(t, { serve, FakeDB, browser, sleep, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
+      const data = fixture();
+      for (const es of Object.values(data.plays)) for (const e of Object.values(es)) e.v = '1.53';
+      const db = new FakeDB(data);
+      const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 } });
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const levels = {}; for (let lv = 26; lv < 46; lv++) levels[lv] = [lv === 26 ? 80 : 40, 70, lv === 30 ? 50 : 90, lv >= 30 ? 9 : 0];
+      const pred = { made: '2026-10-16', version: '1.53', players: { pDen: { name: 'Dennis', from: 26, fit: { firstTries: 74, retries: 21, levels: [42, 105], memory: [75, 75, 75], blunder: 15 }, levels } } };
+      await ctx.route(u => /\/dash\/predict\.json/.test(u.pathname), r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(pred) }));
+      const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+      try {
+        await p.goto(site.url + 'dash/#pDen'); await sleep(2000);
+        const txt = await p.evaluate(() => document.querySelector('#pred').innerText);
+        t.ok(!txt.includes('%'), 'old percentage chance metrics are completely absent from the Voorspelling card', txt);
+        t.ok(/8\+ pogingen verwacht[\s\S]*Level 30/i.test(txt), '8+ attempt levels are highlighted in the summary', txt.slice(0, 300));
+        t.ok(/26[^\n]*1e poging[^\n]*gehaald in 1 poging/.test(txt), 'a level played since the prediction shows the projected attempt and real result', txt);
+        t.ok(/27[^\n]*nog bezig|27[^\n]*begonnen/.test(txt), 'the level being played');
+        t.ok(/Eigen persoonlijke bot van Dennis/.test(txt), 'explains the personal attempt-predicting bot', txt.slice(-300));
+        t.eq(await p.evaluate(() => [...document.querySelectorAll('#pred tr.hard td:first-child')].map(td => td.textContent)), ['30'], '8+ / trap level marked');
+        await p.evaluate(() => selectPlayer('pOma')); await sleep(300);
+        t.ok(/Nog geen eigen testspeler voor OmaHanny/.test(await p.evaluate(() => document.querySelector('#pred').innerText)), 'a player without a test player');
+        t.eq(errs, [], 'no errors on the dashboard');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
+  {
     name: 'dashboard: Super-omamodus and each part of it switched per player',
     async run(t, { serve, FakeDB, browser, sleep, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
