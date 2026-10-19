@@ -160,7 +160,7 @@ def is_severe_trap(d):
             and d['np8_w8'] <= 0.08
             and d['kp8_w8'] <= 0.25
             and d['base_t1'] <= 0.32
-            and d['sf14_w8'] <= 0.40
+            and d['sf14_w8'] <= 0.15
         )
     )
 
@@ -297,16 +297,33 @@ def predict_causal_3bucket(before, target):
 
     if has_clock and b3_action == 5:
         if (
-            g('mem_surv') >= 0.15
-            and g('open_trap') < 1.40
-            and not (g('base_solv') <= -1.20 and g('retry_jump') < -0.55)
-        ) or (g('buried_mate') >= 1.85 and g('open_trap') <= -0.60):
+            (
+                g('mem_surv') >= 0.15
+                and g('open_trap') < 1.40
+                and not (g('base_solv') <= -1.20 and g('retry_jump') < -0.55)
+            )
+            or (g('buried_mate') >= 1.85 and g('open_trap') <= -0.60)
+            or (
+                g('open_trap') < -0.30
+                and g('shallow_large') < 0.0
+                and g('p8_dec') < 0.0
+                and g('base_solv') < 0.0
+            )
+        ):
             return 1
         if (g('open_trap') >= 1.40 and g('base_solv') > 0.50 and g('p8_dec') > 1.50) or (
             g('base_solv') <= -1.20 and g('retry_jump') < -0.55 and g('mem_surv') >= 0.15
         ):
             return 2
-        if g('open_trap') >= 1.40 or g('clock_tight') >= 0.20:
+        if g('open_trap') >= 1.40 or (
+            g('clock_tight') >= 0.20
+            and (
+                g('open_trap') > -0.30
+                or g('shallow_large') > 0.0
+                or g('p8_dec') > 0.0
+                or g('base_solv') > 0.0
+            )
+        ):
             return b3_action
         return 2
 

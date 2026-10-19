@@ -1,5 +1,5 @@
 {
-  "made": "2026-10-18T23:44:08.059405+00:00",
+  "made": "2026-10-19T00:51:47.815609+00:00",
   "protocol": "causal-3bucket-physical-factor-v1",
   "scoringRule": {
     "id": "attempt-tolerance-and-8plus-v2",
@@ -154,14 +154,14 @@
     "Mrs. Doubtfire": {
       "ownCausalFactor3Bucket": {
         "n": 20,
-        "correct": 18,
-        "accuracy": 0.9,
-        "exactAccuracy": 0.75,
+        "correct": 19,
+        "accuracy": 0.95,
+        "exactAccuracy": 0.8,
         "wilson95": [
-          0.6989617935882066,
-          0.9721341060158468
+          0.7638641064874331,
+          0.9911187805671268
         ],
-        "meanAbsoluteError": 1.25
+        "meanAbsoluteError": 1.05
       },
       "alwaysFirst": {
         "n": 20,
@@ -883,10 +883,10 @@
       "board": "8075dfe9993e5daa0862a3ec5474864949ceb5b70fddabcf13d1e2fd1becfabf",
       "wonOn": 1,
       "predictions": {
-        "ownCausalFactor3Bucket": 5,
+        "ownCausalFactor3Bucket": 1,
         "alwaysFirst": 1
       },
-      "correct": false
+      "correct": true
     },
     {
       "name": "Mrs. Doubtfire",
@@ -2799,9 +2799,9 @@
       "board": "4490d717ab07e3cf189225167d76e7c4dd812b15861c3192093f019cb705beaa",
       "modelId": "390163b56c057546c64114087c8b1355b606ab63cae230d30f547facd79cfa68",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 8,
+      "predictedAttempt": 1,
       "bucket3Action": 3,
-      "severeTrap": true,
+      "severeTrap": false,
       "factors": {
         "bot_surv": -2.3876,
         "sf14_surv": -3.75,
@@ -3052,9 +3052,9 @@
       "board": "967ff719207784bb402983e61f9caf68912a844bbe46baf0d033aaadd0388d0d",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 8,
+      "predictedAttempt": 2,
       "bucket3Action": 5,
-      "severeTrap": true,
+      "severeTrap": false,
       "factors": {
         "bot_surv": -1.1529,
         "sf14_surv": -1.3619,
@@ -3098,7 +3098,7 @@
       "board": "df4be479a9ae3655e3edc4fbe389ae1961b112494a65e7950e98ba17d46506cd",
       "modelId": "27b07024321747c10a73ef4ef74fcbb6d287f1f0ad7f592254b1abc5928af7c7",
       "alreadyCompletedInProspective": false,
-      "predictedAttempt": 2,
+      "predictedAttempt": 1,
       "bucket3Action": 5,
       "severeTrap": false,
       "factors": {

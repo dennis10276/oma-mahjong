@@ -49,7 +49,7 @@ module.exports = [{
       if (current.players[pid].levels[94]) t.ok((await row(94).innerText()).includes('gehaald in 2 pogingen'), '1.56 results remain comparable in 1.57');
       await event({ k: 'open', v: '1.58', lv: 107, t: now + 4300 });
       t.ok((await content()).includes('versie 1.58'), 'smoothness update keeps predictions available');
-      t.ok((await content()).includes('Level 107, 119'), 'Mrs. Doubtfire upcoming 8+ levels 107 and 119 are displayed');
+      t.ok((await content()).includes('Level 119'), 'Mrs. Doubtfire upcoming 8+ level 119 is displayed');
       t.ok(!(await content()).includes('%'), 'no percentage chance metrics are shown on 1.58');
       await event({ k: 'open', v: '1.59', lv: 107, t: now + 4500 });
       t.ok((await content()).includes('Geen passende voorspelling voor versie 1.59'), 'unsupported version never gets another version predictions');

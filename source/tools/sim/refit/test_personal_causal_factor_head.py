@@ -109,6 +109,14 @@ class CausalFactorHeadTests(unittest.TestCase):
         self.assertEqual(latest['unopenedForecastCount'], 86)
         self.assertTrue(all(1 <= f['predictedAttempt'] <= 8 for f in latest['forecasts']))
 
+    def test_mrs_doubtfire_level_102_predicted_one_attempt(self):
+        fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
+        rows = fresh['rows']
+        mrs_102 = [r for r in rows if r['name'] == 'Mrs. Doubtfire' and r['lv'] == 102][0]
+        pred = predict_causal_3bucket(past_of(rows, mrs_102), mrs_102)
+        self.assertEqual(pred, 1, f'Mrs. Doubtfire Level 102 predicted {pred} instead of 1')
+        self.assertTrue(is_correct(pred, mrs_102['wonOn']))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -754,9 +754,16 @@ let PRED = null;
 const PRED_BY_VERSION = new Map();
 async function loadPred() {
   try {
-    const stamp = '?t=' + Math.floor(Date.now() / 600000);
+    const stamp = '?v=pb-1.58.2&t=' + Math.floor(Date.now() / 60000);
     const r = await fetch('predict.json' + stamp); if (!r.ok) return;
-    PRED = await r.json(); PRED_BY_VERSION.set(PRED.version, PRED);
+    PRED = await r.json();
+    if (PRED && !PRED.personalBots) {
+      try {
+        const freshR = await fetch('predict.json?bust=' + Date.now(), { cache: 'reload' });
+        if (freshR.ok) PRED = await freshR.json();
+      } catch (e) { }
+    }
+    PRED_BY_VERSION.set(PRED.version, PRED);
     await Promise.all(Object.entries(PRED.previousVersions || {}).map(async ([version, file]) => {
       if (PRED_BY_VERSION.has(version) || !/^predict-\d+(?:\.\d+)*\.json$/.test(file)) return;
       try { const old = await fetch(file + stamp); if (old.ok) { const data = await old.json(); if (data.version === version) PRED_BY_VERSION.set(version, data); } } catch (e) { }
@@ -789,8 +796,8 @@ function renderPred(levels, curLv) {
   const bandFor = pred => pred >= 8 ? '8 of meer' : pred === 5 ? '4–7 pogingen' : pred === 3 ? '3–4 pogingen' : pred === 2 ? '2 pogingen' : '1 poging';
 
   // Synthesize level entries if a test fixture only supplies p.levels without personalBots
-  const lvMap = pb ? pb.levels : Object.fromEntries(Object.entries(p.levels).map(([lv, v]) => {
-    const pred = typeof v === 'object' && v && 'pred' in v ? v.pred : Array.isArray(v) ? (v[2] < 60 ? 8 : v[0] < 45 ? 3 : v[0] < 65 ? 2 : 1) : Number(v) || 1;
+  const lvMap = pb ? pb.levels : Object.fromEntries(Object.entries((p && p.levels) || {}).map(([lv, v]) => {
+    const pred = typeof v === 'object' && v && 'pred' in v ? v.pred : Array.isArray(v) ? (v[2] < 60 ? 8 : v[0] >= 65 ? 1 : v[1] >= 80 ? 2 : 3) : Number(v) || 1;
     return [lv, { pred, trap: pred >= 8, split: 'future' }];
   }));
   const pbAll = Object.keys(lvMap).map(Number).sort((a, b) => a - b);
