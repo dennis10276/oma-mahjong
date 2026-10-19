@@ -1,0 +1,414 @@
+{
+  "date": "2026-10-19T23:09:08.004Z",
+  "benchmarkLevels": [
+    70,
+    75,
+    80,
+    85,
+    95,
+    100,
+    105,
+    110
+  ],
+  "optimalBot": {
+    "winRate": 75,
+    "results": [
+      {
+        "level": 70,
+        "win": true,
+        "moves": 90,
+        "why": "cleared",
+        "tilesRemaining": 0
+      },
+      {
+        "level": 75,
+        "win": true,
+        "moves": 81,
+        "why": "cleared",
+        "tilesRemaining": 0
+      },
+      {
+        "level": 80,
+        "win": true,
+        "moves": 72,
+        "why": "cleared",
+        "tilesRemaining": 0
+      },
+      {
+        "level": 85,
+        "win": false,
+        "moves": 53,
+        "why": "tray",
+        "tilesRemaining": 13
+      },
+      {
+        "level": 95,
+        "win": false,
+        "moves": 12,
+        "why": "tray",
+        "tilesRemaining": 57
+      },
+      {
+        "level": 100,
+        "win": true,
+        "moves": 75,
+        "why": "cleared",
+        "tilesRemaining": 0
+      },
+      {
+        "level": 105,
+        "win": true,
+        "moves": 69,
+        "why": "cleared",
+        "tilesRemaining": 0
+      },
+      {
+        "level": 110,
+        "win": true,
+        "moves": 71,
+        "why": "cleared",
+        "tilesRemaining": 0
+      }
+    ]
+  },
+  "playerScorecards": {
+    "Dennisisdebeste": {
+      "name": "Dennisisdebeste",
+      "winRate": 88,
+      "optimalAgreementRate": 1,
+      "scorecard": {
+        "TRAY_HEADROOM": 84,
+        "BURIED_MATE": 100,
+        "CLOCK_URGENCY": 15,
+        "SAFE_PEEKING": 98,
+        "FREE_MATCH": 16
+      },
+      "criticalBlundersCount": 8,
+      "sampleBlunder": {
+        "level": 70,
+        "turn": 15,
+        "playerAction": {
+          "type": "single_take",
+          "index": 28,
+          "face": 29,
+          "mateDepth": 2,
+          "description": "Player took #28 into tray"
+        },
+        "trayBefore": [
+          8,
+          27
+        ],
+        "isOptimal": false,
+        "skillDiscrepancies": [
+          {
+            "skill": "TRAY_HEADROOM",
+            "type": "PREMATURE_TRAY_3_ENTRY",
+            "message": "Put an unconnected tile (#28) into tray slot 3 while partner is depth 2.0. Leaves zero buffer.",
+            "penalty": 60
+          },
+          {
+            "skill": "FREE_MATCH",
+            "type": "MISSED_READY_MATCH",
+            "message": "Took an unmatched single into tray while an immediate match or free board pair was already open.",
+            "penalty": 50
+          }
+        ],
+        "severity": "blunder",
+        "optimalAction": {
+          "type": "pair_match",
+          "indices": [
+            86,
+            90
+          ],
+          "face": 19,
+          "description": "Match pair of free tiles #86 and #90 (face 19)"
+        },
+        "explanation": ""
+      }
+    },
+    "MrsDoubtfire": {
+      "name": "Mrs. Doubtfire",
+      "winRate": 38,
+      "optimalAgreementRate": 0,
+      "scorecard": {
+        "TRAY_HEADROOM": 83,
+        "BURIED_MATE": 100,
+        "CLOCK_URGENCY": 21,
+        "SAFE_PEEKING": 99,
+        "FREE_MATCH": 16
+      },
+      "criticalBlundersCount": 8,
+      "sampleBlunder": {
+        "level": 70,
+        "turn": 13,
+        "playerAction": {
+          "type": "single_take",
+          "index": 59,
+          "face": 27,
+          "mateDepth": 2,
+          "description": "Player took #59 into tray"
+        },
+        "trayBefore": [
+          0,
+          24
+        ],
+        "isOptimal": false,
+        "skillDiscrepancies": [
+          {
+            "skill": "TRAY_HEADROOM",
+            "type": "PREMATURE_TRAY_3_ENTRY",
+            "message": "Put an unconnected tile (#59) into tray slot 3 while partner is depth 2.0. Leaves zero buffer.",
+            "penalty": 60
+          },
+          {
+            "skill": "FREE_MATCH",
+            "type": "MISSED_READY_MATCH",
+            "message": "Took an unmatched single into tray while an immediate match or free board pair was already open.",
+            "penalty": 50
+          }
+        ],
+        "severity": "blunder",
+        "optimalAction": {
+          "type": "pair_match",
+          "indices": [
+            94,
+            95
+          ],
+          "face": 12,
+          "description": "Match pair of free tiles #94 and #95 (face 12)"
+        },
+        "explanation": ""
+      }
+    },
+    "Gerda": {
+      "name": "Gerda",
+      "winRate": 38,
+      "optimalAgreementRate": 2,
+      "scorecard": {
+        "TRAY_HEADROOM": 83,
+        "BURIED_MATE": 100,
+        "CLOCK_URGENCY": 29,
+        "SAFE_PEEKING": 96,
+        "FREE_MATCH": 20
+      },
+      "criticalBlundersCount": 8,
+      "sampleBlunder": {
+        "level": 70,
+        "turn": 10,
+        "playerAction": {
+          "type": "single_take",
+          "index": 63,
+          "face": 0,
+          "mateDepth": 2,
+          "description": "Player took #63 into tray"
+        },
+        "trayBefore": [
+          24,
+          11,
+          27
+        ],
+        "isOptimal": false,
+        "skillDiscrepancies": [
+          {
+            "skill": "TRAY_HEADROOM",
+            "type": "FATAL_TRAY_OVERFLOW",
+            "message": "Filled the 4th tray slot without an immediate partner, causing an instant tray jam.",
+            "penalty": 100
+          },
+          {
+            "skill": "FREE_MATCH",
+            "type": "MISSED_READY_MATCH",
+            "message": "Took an unmatched single into tray while an immediate match or free board pair was already open.",
+            "penalty": 50
+          }
+        ],
+        "severity": "fatal",
+        "optimalAction": {
+          "type": "pair_match",
+          "indices": [
+            86,
+            90
+          ],
+          "face": 19,
+          "description": "Match pair of free tiles #86 and #90 (face 19)"
+        },
+        "explanation": ""
+      }
+    },
+    "PUK": {
+      "name": "PUK",
+      "winRate": 0,
+      "optimalAgreementRate": 1,
+      "scorecard": {
+        "TRAY_HEADROOM": 65,
+        "BURIED_MATE": 100,
+        "CLOCK_URGENCY": 66,
+        "SAFE_PEEKING": 86,
+        "FREE_MATCH": 20
+      },
+      "criticalBlundersCount": 8,
+      "sampleBlunder": {
+        "level": 70,
+        "turn": 4,
+        "playerAction": {
+          "type": "single_take",
+          "index": 89,
+          "face": 22,
+          "mateDepth": 2,
+          "description": "Player took #89 into tray"
+        },
+        "trayBefore": [
+          24,
+          27,
+          11
+        ],
+        "isOptimal": false,
+        "skillDiscrepancies": [
+          {
+            "skill": "TRAY_HEADROOM",
+            "type": "FATAL_TRAY_OVERFLOW",
+            "message": "Filled the 4th tray slot without an immediate partner, causing an instant tray jam.",
+            "penalty": 100
+          },
+          {
+            "skill": "SAFE_PEEKING",
+            "type": "SKIPPED_SAFE_PEEK",
+            "message": "Took a speculative single into the tray when 6 free face-down tile(s) were available to peek safely with zero tray risk.",
+            "penalty": 40
+          }
+        ],
+        "severity": "fatal",
+        "optimalAction": {
+          "type": "safe_peek",
+          "index": 94,
+          "pTrayMatch": 0.07894736842105263,
+          "unblockDegree": 5,
+          "description": "Peek hidden free tile #94 (pMatch=0.08, unblocks=5)"
+        },
+        "explanation": ""
+      }
+    }
+  },
+  "popupExamples": [
+    {
+      "player": "Dennisisdebeste",
+      "level": 70,
+      "popupNl": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "blunder",
+        "turn": 15,
+        "targetTileIndex": 86,
+        "playerTileIndex": 28,
+        "badge": "💡 Ruimtebeheer",
+        "title": "Houd altijd buffer in je tray",
+        "situation": "Je legde de Westenwind in je 3e tray slot, terwijl de partner nog niet vrij was.",
+        "explanation": "Een 3e steen in je tray laten wachten is heel gevaarlijk: je hebt nu 0 vrije reserve-slots meer over.",
+        "coachAlternative": "De Coach koos ervoor om eerst Kring 2 om de tray open te houden.",
+        "takeawayTip": "💡 Coach Tip: Probeer je tray zoveel mogelijk op 1 of 2 stenen te houden. Gebruik vrije dichte stenen om matches te zoeken!"
+      },
+      "popupEn": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "blunder",
+        "turn": 15,
+        "targetTileIndex": 86,
+        "playerTileIndex": 28,
+        "badge": "💡 Tray Headroom",
+        "title": "Keep buffer in your tray",
+        "situation": "You placed West Wind into your 3rd tray slot while its twin was not yet free.",
+        "explanation": "Leaving a 3rd tile waiting in your tray leaves zero buffer: any next unmatched tile is fatal.",
+        "coachAlternative": "The Coach opted to peek a face-down tile first to preserve tray headroom.",
+        "takeawayTip": "💡 Coach Tip: Keep your tray at 1 or 2 tiles whenever possible. Use free hidden tiles to find matches without tray cost!"
+      }
+    },
+    {
+      "player": "Mrs. Doubtfire",
+      "level": 70,
+      "popupNl": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "blunder",
+        "turn": 13,
+        "targetTileIndex": 94,
+        "playerTileIndex": 59,
+        "badge": "💡 Ruimtebeheer",
+        "title": "Houd altijd buffer in je tray",
+        "situation": "Je legde de Oostenwind in je 3e tray slot, terwijl de partner nog niet vrij was.",
+        "explanation": "Een 3e steen in je tray laten wachten is heel gevaarlijk: je hebt nu 0 vrije reserve-slots meer over.",
+        "coachAlternative": "De Coach koos ervoor om eerst Karakter 4 om de tray open te houden.",
+        "takeawayTip": "💡 Coach Tip: Probeer je tray zoveel mogelijk op 1 of 2 stenen te houden. Gebruik vrije dichte stenen om matches te zoeken!"
+      },
+      "popupEn": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "blunder",
+        "turn": 13,
+        "targetTileIndex": 94,
+        "playerTileIndex": 59,
+        "badge": "💡 Tray Headroom",
+        "title": "Keep buffer in your tray",
+        "situation": "You placed East Wind into your 3rd tray slot while its twin was not yet free.",
+        "explanation": "Leaving a 3rd tile waiting in your tray leaves zero buffer: any next unmatched tile is fatal.",
+        "coachAlternative": "The Coach opted to peek a face-down tile first to preserve tray headroom.",
+        "takeawayTip": "💡 Coach Tip: Keep your tray at 1 or 2 tiles whenever possible. Use free hidden tiles to find matches without tray cost!"
+      }
+    },
+    {
+      "player": "Gerda",
+      "level": 70,
+      "popupNl": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "fatal",
+        "turn": 10,
+        "targetTileIndex": 86,
+        "playerTileIndex": 63,
+        "badge": "⚠️ Tray Overvol",
+        "title": "Je tray raakte overvol!",
+        "situation": "Op zet 10 had je al 3 stenen in je tray en pakte je de Bamboe 1 (Vogel).",
+        "explanation": "Omdat je tray maximaal 4 stenen kan bevatten en deze steen niet direct paste, liep het spel direct vast.",
+        "coachAlternative": "De Coach speelde eerst een zet die ruimte vrijmaakte: Match pair of free tiles #86 and #90 (face 19).",
+        "takeawayTip": "💡 Gouden Tip: Met 3 stenen in je tray mag je ALLEEN nog een steen pakken die direct matcht met een wachtende steen!"
+      },
+      "popupEn": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "fatal",
+        "turn": 10,
+        "targetTileIndex": 86,
+        "playerTileIndex": 63,
+        "badge": "⚠️ Tray Overflow",
+        "title": "Your tray overflowed!",
+        "situation": "On move 10, you already had 3 tiles in your tray and took Bamboo 1 (Bird).",
+        "explanation": "Because the tray holds a maximum of 4 tiles and this tile had no instant match, the game immediately ended.",
+        "coachAlternative": "The Coach instead made a headroom-preserving move: Match pair of free tiles #86 and #90 (face 19).",
+        "takeawayTip": "💡 Golden Rule: With 3 tiles in your tray, ONLY take a tile that immediately pairs with a waiting tile!"
+      }
+    },
+    {
+      "player": "PUK",
+      "level": 70,
+      "popupNl": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "fatal",
+        "turn": 4,
+        "targetTileIndex": 94,
+        "playerTileIndex": 89,
+        "badge": "⚠️ Tray Overvol",
+        "title": "Je tray raakte overvol!",
+        "situation": "Op zet 4 had je al 3 stenen in je tray en pakte je de Kring 5.",
+        "explanation": "Omdat je tray maximaal 4 stenen kan bevatten en deze steen niet direct paste, liep het spel direct vast.",
+        "coachAlternative": "De Coach speelde eerst een zet die ruimte vrijmaakte: Peek hidden free tile #94 (pMatch=0.08, unblocks=5).",
+        "takeawayTip": "💡 Gouden Tip: Met 3 stenen in je tray mag je ALLEEN nog een steen pakken die direct matcht met een wachtende steen!"
+      },
+      "popupEn": {
+        "skillId": "TRAY_HEADROOM",
+        "severity": "fatal",
+        "turn": 4,
+        "targetTileIndex": 94,
+        "playerTileIndex": 89,
+        "badge": "⚠️ Tray Overflow",
+        "title": "Your tray overflowed!",
+        "situation": "On move 4, you already had 3 tiles in your tray and took Circle 5.",
+        "explanation": "Because the tray holds a maximum of 4 tiles and this tile had no instant match, the game immediately ended.",
+        "coachAlternative": "The Coach instead made a headroom-preserving move: Peek hidden free tile #94 (pMatch=0.08, unblocks=5).",
+        "takeawayTip": "💡 Golden Rule: With 3 tiles in your tray, ONLY take a tile that immediately pairs with a waiting tile!"
+      }
+    }
+  ]
+}
