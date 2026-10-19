@@ -3043,3 +3043,128 @@ preserve the full/censored result. A consistent no-inherited-picture runtime is 
 possible separately tested hypothesis, not an established human trait or forecast
 promotion. It can retain simulated-loss avoidance while matching the no-memory
 training assumption; compare whole retry chains, not just action likelihood.
+
+## 2026-10-18 Exact Faster Clock Search And Consistent-Retry Whole Counts
+
+Git checkpoint769e6b7 on the human-confirmed wip/personal-bots branch is complete;
+the working directory remains personal-bot-review. Subsequent research changes are
+not part of that commit and are retained separately. The original main checkout
+is untouched. Previous goal turn is PROGRESS (own recall fits,143,412-vector parity,
+and the requested source/report checkpoint), not a blocker/status-only turn.
+
+Bounded retry probe63064 is terminal0. Three slow boards133/138/140, fixed run0,
+up toeight tries, explicit512-choice diagnostic boundary: all six configured/zero
+picture-recall lifecycles have ZERO computation caps. Some known reinspection and
+public-state repeats occur, but this does not establish an infinite loop or that
+such moves are mistakes. Do NOT suppress clock blocker reinspections: opening a
+known face-down blocker can be a necessary first tap before taking it. The cycle
+hypothesis is not a justification to alter the live control. Zero recall is mixed:
+133 clears on7 rather than8;140 configured clears6 while zero does not clear8.
+These tiny selected diagnostic paths are not winning-count accuracy evidence.
+
+New known_clock_strategy_fast.js caches pure legal states and immutable
+alive-key/remaining-tile bookkeeping; it does not memoize search results, change
+traversal, budgets, emission masks or any personal choice. Fast audit85263 is
+terminal0. All445 original human prefixes,39,268 planner calls (1,378 clock-active)
+retain EXACT feature matrices, search-node/boundary counts and physical frames.
+Six paired autonomous retry lifecycles retain their COMPLETE physical tap paths,
+not only outcome records or first/last samples, as well as cue summaries and
+planning-cache/node/boundary counters. No computation caps. Measured concurrent-
+load human-prefix planning time69.832s->13.238s; autonomous six-path time62.321s
+->15.626s. This is computation speedup only, not a new behavioral/accuracy claim.
+
+Consistent recall pilot12345 is terminal0:all29 boards/two2x3 profiles, zero caps.
+Each configured cached-clock/direct-joint pilot exactly matches the original
+handoffZero pilot. No generic greedy finish or changed physics is introduced.
+Final suite38350 is terminal0:207 Python tests/106 named JavaScript tests and
+git diff--check pass, including exact search budget/Joker/relief/atomic-twin cases,
+worker import safety and refusal to score pilot/censored/mismatched count data.
+
+New full candidate session78826 is LIVE. It computes only the fixed zero-inherited-
+picture hypothesis32x32 with the unchanged earlier-own joint actors, default4096
+choice boundary and simulated-loss avoidance. Both paired2x3 pilots rerun, and
+32-seed initial rates must match the immutable baseline. Configured records in
+this NEW report remain explicitly2x3 lifecycle controls, never full-count samples.
+The separate older configured/handoff full session11182 stays LIVE and is not
+restarted, replaced or silently inferred from a pilot. No existing forecast or
+miss changes, and no80% result is established.
+
+The zero-recall hypothesis was calibrated using later recent action data, so its
+historical29-target comparison is explicitly POST-HOC exploratory even though the
+underlying personal actors remain earlier-only. It is not an independent held or
+pre-opening forecast cohort and does not prove zero human memory. On terminal
+78826:score only uncensored32x32 candidate data. Include the old configured full
+comparison only if11182 actually completes uncensored and source/actor/board/
+outcome/initial-rate controls all match. A lone2x3 configured pilot is never scored
+as if it were full. Keep the real prospective80% goal intact.
+
+Session78826 is now terminal0:29 candidate32x32 chains, zero computation caps,
+58 independently reproduced paired pilots,29 original configured pilots and29
+unchanged32-seed initial-rate controls. Raw count scoring retains28 completed
+first-clear campaigns plus pending Gerda68. Dennis empirical/smoothed winning-try
+predictions are BOTH0/23, versus always-first16/23. Gerda2/5 versus always-first3/5.
+These are post-hoc historical diagnostics, not frozen new forecasts. The fitted
+recall consistency hypothesis does NOT fix the trajectory/count problem and is
+NOT promoted. No fabricated Mrs/PUK held coverage or configured full comparison
+is included. Older full11182 remains live; its partial result is not invented.
+
+Completed own recall/parity/fast-planning/pilot bytes are preserved in
+`experiments/personal-consistent-recall-pilot-2026-10-18T21-44-30-126Z` (430 files,
+17 pinned dependencies,5 explicit raw-input aliases). WholeCountMeasurementIncluded
+is false there; a separate full checkpoint follows the actual completed result.
+
+Next direction changes the FITTING OBJECTIVE rather than polishing move likelihood:
+personal_tempered_choice.js preserves the person's own preference order, impossible
+actions and causal mode observation, while varying confidence. Temperature1 delegates
+the base selector exactly. This is not generic greedy finishing; a preferred
+nonmatching move remains preferred. personal_policy_temperature_fit.py defines a
+future-only own20-board confidence fit to PROPER WINNING-TRY likelihood(1..7/8+),
+not maximized win rate, action accuracy or another person's results. Dirichlet.125,
+20-episode recency and fixed[.25,.5,1,1.5] confidence grid are declared in advance.
+The fitter binds the same current actor across all own calibration chains and
+refuses substituting old/as-of-controller chains. Any censored candidate is rejected
+explicitly, never scored as a difficult human level. Tests demonstrate different
+persons selecting different policies to match their counts rather than all picking
+the strongest policy. Future/other-person labels cannot change Dennis's fit.
+
+This new confidence fitter has NOT yet received real calibration simulations and
+has produced no fitted model or numeric forecast. Next safe step:prepare20 exact
+earlier unassisted first-clear boards per person (no replay or guessed board),
+simulate the CURRENT future actors under the four declared confidence settings
+8x8 for TRAINING ONLY, then fit each person's own count likelihood. Current actors
+may have seen those old recordings; do not call this held or historical pre-start
+accuracy. Use original futureActorFile IDs matching the joint bank; the recall
+refit's tagged none IDs have identical weights but are not silently interchangeable.
+Temperature1 must match freshly paired same-current-actor controls, not historical
+as-of chains. Future selected-policy32x32 predictions and genuinely cold numeric
+freezes after new readiness remain necessary; all old forecasts/misses stay.
+
+Final suite7977 is terminal0:211 Python/107 named JavaScript tests and diff--check
+pass. Goal80% is still unproven and contradicted by current real prospective results;
+none of the numerical, speed, pilot or action-calibration checks is a substitute.
+
+## 2026-10-19 Completed Counts, Independent Handoff Audit And Branch Checkpoint
+
+Both previously live whole-count jobs are now terminal0. The original configured/
+handoff32x32 job11182 has zero computation caps and matching paired controls.
+Its full retrospective Dennis count accuracy is configured0/23, handoff1/23,
+versus always-first16/23; Gerda configured3/5, handoff2/5. Including the legitimate
+completed configured baseline in recall scoring gives Dennis zero0/23 versus
+configured0/23; Gerda zero2/5 versus configured3/5. Neither alternative is promoted.
+Completed full recall bytes were preserved separately at
+experiments/personal-consistent-recall-full-2026-10-18T21-53-08-827Z.
+
+Gemini commit6628eab was independently evaluated, reproducing retrospective78/80
+and recomputed8/8. GEMINI_AUDIT.md records why neither proves the future goal:
+current-code recomputation of already played games, a changed Mrs107 forecast
+(frozen8/current2), held-outcome rule refinement, overwriting freezer semantics
+and incomplete simulation-feature provenance. Public geometry was independently
+compared on124 exact boards: five fields match universally; the sixth table
+field is exactly half the supplied JS tile count on every board. That is a unit
+contract mismatch, not evidence of fabricated features. No handoff promotion,
+ledger rewrite, dashboard publish or external write occurred.
+
+The human-confirmed wip/personal-bots branch remains in personal-bot-review.
+Fresh validation:211 Python tests, the full personal JavaScript suite and
+git diff--check all pass. The temperature count fitter remains uncalibrated;
+80% genuinely future per-person prediction accuracy remains unmet.

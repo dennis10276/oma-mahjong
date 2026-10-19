@@ -1,0 +1,1 @@
+{"mode":"pilot","rows":29,"computationCaps":0,"originalConfiguredPilotControls":29,"pairedPilotChainsMatched":0,"firstAttemptRateControls":0}

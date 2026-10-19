@@ -21,7 +21,8 @@ module.exports = async () => {
     'personal_known_plan_fast_audit.js', 'personal_known_plan_bits_audit.js', 'personal_clock_route_data.js',
     'personal_clock_route_count_data.js', 'personal_clock_strategy_data.js', 'personal_outcome_styles_count_data.js',
     'personal_fresh_count_data.js', 'personal_fresh_clock_first.js', 'personal_clock_intents_first.js',
-    'personal_joint_intents_first.js', 'personal_handoff_first.js', 'personal_handoff_count_data.js']) await check(filename);
+    'personal_joint_intents_first.js', 'personal_handoff_first.js', 'personal_handoff_count_data.js',
+    'personal_recall_count_data.js']) await check(filename);
   console.log('PASS importing worker helpers cannot run unrelated simulations or post task rows');
 };
 

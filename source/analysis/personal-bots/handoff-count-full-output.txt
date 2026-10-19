@@ -1,0 +1,1 @@
+{"mode":"full","rows":29,"runs":32,"attempts":32,"computationCaps":0,"pairedPilotChainsMatched":58}

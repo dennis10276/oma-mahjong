@@ -1266,3 +1266,35 @@ training references,240 blocked calibration references and143,412 probability
 vectors/scores. Actual new fit readiness, consistent autonomous retry-chain tests
 and a fresh pre-opening numeric freeze are still required for any new candidate.
 Existing forecasts/misses are not overwritten, and the80% target remains unmet.
+
+`known_clock_strategy_fast.js` caches legal states and immutable bookkeeping while
+preserving the original clock search order, budgets and results. The separate
+`personal_clock_fast_audit.js` checks all445 human prefixes/39,268 calls and six
+complete autonomous retry tap paths, including identical node/boundary/cache
+counters. This is computational parity/speed evidence, not better predictions.
+Do not replace a still-running source-pinned control in place.
+
+`personal_recall_count_data.js pilot` reproduces all29 original configured2x3
+controls and measures the fixed-zero-picture-recall alternative. Its `full` mode
+reruns both pilots but computes only the alternative32x32; configured records
+remain explicitly2x3. `personal_recall_count_score.py` never scores those pilot
+records as full counts. A separately completed configured32x32 baseline can be
+included only with matching runtime/actor/board/outcome and unchanged initial-rate
+checks. These historical recall comparisons are post-hoc exploratory, not a
+pre-opening80% pass. `personal_recall_snapshot.py` preserves completed pilot/full
+or explicitly censored stages without falsely including live output as finished.
+
+The completed fixed-zero recall32x32 diagnostic predicts Dennis's winning attempt
+correctly0/23 (empirical and smoothed) and Gerda2/5. It is not promoted. A better
+recorded-choice fit does not establish a faithful first-clear process.
+
+`personal_tempered_choice.js` supplies an exact-temperature1 control and preserves
+each person's learned option order/zero support while varying confidence. It does
+not impose generic greedy matching. `personal_policy_temperature_fit.py` defines
+future-only own20-board calibration to proper first-clear bucket likelihood1..7/8+,
+not maximized win rate or pooled-person action likelihood. It requires fresh
+same-current-actor8x8 simulations under the four declared settings; historical
+as-of chains cannot substitute. Censored candidates are retained as rejected,
+not human losses. This fitter is implemented/tested but has not yet received real
+calibration data or produced new fitted policies/forecasts. Genuine future32x32
+predictions and pre-opening scoring remain required for the80% goal.

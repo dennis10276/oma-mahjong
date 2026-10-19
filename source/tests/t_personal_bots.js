@@ -7,6 +7,16 @@ const game = () => ({ tiles: [{ x: 0, y: 0, z: 0 }, { x: 2, y: 0, z: 0 }], faces
 
 module.exports = [
   {
+    name: 'personal bots: count-calibrated temperature remains personal rather than forcing generic greedy finishing',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_tempered_choice.js'); },
+  },
+  {
+    name: 'personal bots: cached clock planning preserves exact features and search-budget semantics',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_known_clock_strategy_fast.js'); },
+  },
+  {
     name: 'personal bots: recall diagnostics score real options without target outcomes or pooled-person accuracy',
     cpu: true,
     async run() { require('../tools/sim/refit/test_personal_recall_coverage.js'); },

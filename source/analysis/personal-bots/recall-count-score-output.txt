@@ -1,0 +1,157 @@
+{
+  "targetMet": false,
+  "evidence": "posthoc-historical-exploratory-consistent-recall-count-diagnostic",
+  "scoringRule": {
+    "id": "attempt-tolerance-and-8plus-v2",
+    "toleranceByActualAttempt": {
+      "1-3": 0,
+      "4-5": 1,
+      "6+": 2
+    },
+    "sharedSuccessBucketMinimum": 8,
+    "combination": "within-tolerance-or-both-8plus"
+  },
+  "personalOnly": true,
+  "players": {
+    "Dennisisdebeste": {
+      "alwaysFirst": {
+        "n": 23,
+        "correct": 16,
+        "accuracy": 0.6956521739130435,
+        "exactAccuracy": 0.6956521739130435,
+        "wilson95": [
+          0.49133870939427393,
+          0.8439617197902755
+        ],
+        "meanAbsoluteError": 0.5217391304347826
+      },
+      "consistentZeroEmpirical": {
+        "n": 23,
+        "correct": 0,
+        "accuracy": 0.0,
+        "exactAccuracy": 0.0,
+        "wilson95": [
+          -1.3877787807814457e-17,
+          0.14312112541726274
+        ],
+        "meanAbsoluteError": 5.913043478260869
+      },
+      "consistentZeroSmoothed": {
+        "n": 23,
+        "correct": 0,
+        "accuracy": 0.0,
+        "exactAccuracy": 0.0,
+        "wilson95": [
+          -1.3877787807814457e-17,
+          0.14312112541726274
+        ],
+        "meanAbsoluteError": 5.869565217391305
+      }
+    },
+    "Mrs. Doubtfire": {
+      "alwaysFirst": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "consistentZeroEmpirical": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "consistentZeroSmoothed": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      }
+    },
+    "PUK": {
+      "alwaysFirst": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "consistentZeroEmpirical": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      },
+      "consistentZeroSmoothed": {
+        "n": 0,
+        "correct": 0,
+        "accuracy": null,
+        "wilson95": null
+      }
+    },
+    "Gerda": {
+      "alwaysFirst": {
+        "n": 5,
+        "correct": 3,
+        "accuracy": 0.6,
+        "exactAccuracy": 0.6,
+        "wilson95": [
+          0.23071993220883708,
+          0.8823817688407467
+        ],
+        "meanAbsoluteError": 0.4
+      },
+      "consistentZeroEmpirical": {
+        "n": 5,
+        "correct": 2,
+        "accuracy": 0.4,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.1176182311592533,
+          0.769280067791163
+        ],
+        "meanAbsoluteError": 3.4
+      },
+      "consistentZeroSmoothed": {
+        "n": 5,
+        "correct": 2,
+        "accuracy": 0.4,
+        "exactAccuracy": 0.4,
+        "wilson95": [
+          0.1176182311592533,
+          0.769280067791163
+        ],
+        "meanAbsoluteError": 3.4
+      }
+    }
+  },
+  "configuredFullComparisonIncluded": false,
+  "coverage": {
+    "fixedTargets": 29,
+    "scored": 28,
+    "pending": 1,
+    "ineligibleRetained": 0
+  },
+  "pending": [
+    {
+      "name": "Gerda",
+      "lv": 68,
+      "start": 1792309549247,
+      "observedAttempts": 1
+    }
+  ],
+  "ineligible": [],
+  "note": "Fixed raw empirical/Jeffreys-smoothed first-clear distributions, not a target-fitted count head. The configured2x3 pilot is never scored as a full count distribution. A configured full comparison is included only when its separate completed32x32 run has zero caps, identical own actor/board/outcomes, matching runtime source hashes and unchanged initial rates. All29 targets remain in coverage; incomplete/ineligible campaigns are explicit. Recall choice was calibrated using later recent data, so these raw historical counts remain post-hoc exploratory rather than independently held accuracy. No numeric forecast/miss changes, human-zero-memory conclusion, promotion or80% success follows.",
+  "made": "2026-10-18T21:46:45.621021+00:00",
+  "dataFile": "analysis/archive/personal-bots/personal-recall-count-data.json",
+  "dataSha256": "1f2430dc025b4e3f48bc0d765f2c155a3d833aac042a491a99948e8c0fe58aa7",
+  "baselineFile": null,
+  "baselineSha256": null,
+  "scoringSourceHashes": {
+    "personal_recall_count_score.py": "644a9deb1297ddc9ae16c600dcbb00dbbd28cc32bdfde0236c51864199c2dbc5",
+    "personal_handoff_count_score.py": "3b0cc20546fa44096c9417c8025fd255fe9722975cffd7c58216c77090c63b9e",
+    "attempt_count_fit.py": "7f8582dd327bd62334086ad779dbeefb7cb0b61733497ae439ab8a43ad1b7a55",
+    "personal_count_fit.py": "208bf8f3a4f5c5f26651a3db5211edf6240d63a5e26a7713eabfa738985c8d28",
+    "attempt_hazard.py": "6d716888e622f99b727056eb46e59f27a9923e15516166f6448737f73381152a",
+    "board_recall_eval.py": "167916bf764a1a6801fe67d39e4cb1147b069aa03a6da7d6f6bd3e358369df10"
+  }
+}
