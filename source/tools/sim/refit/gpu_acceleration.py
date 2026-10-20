@@ -137,6 +137,140 @@ class CausalFactorGPUEvaluator:
             z_scores = z_scores.to(self.device, dtype=self.dtype)
         return torch.matmul(z_scores, self.W)
 
+    def evaluate_decision_head_gpu(
+        self,
+        factors: torch.Tensor,
+        meta: Dict[str, torch.Tensor]
+    ) -> torch.Tensor:
+        """Fully vectorized GPU evaluation of the causal factor decision tree.
+        
+        Args:
+            factors: (B, 10) tensor of causal factors on self.device.
+            meta: Dict containing boolean and float condition tensors on self.device.
+        Returns:
+            (B,) int64 tensor containing predictions in {1, 2, 3, 5, 8}.
+        """
+        bot_surv = factors[:, F_IDX['bot_surv']]
+        sf14_surv = factors[:, F_IDX['sf14_surv']]
+        mem_surv = factors[:, F_IDX['mem_surv']]
+        base_solv = factors[:, F_IDX['base_solv']]
+        retry_jump = factors[:, F_IDX['retry_jump']]
+        open_trap = factors[:, F_IDX['open_trap']]
+        shallow_large = factors[:, F_IDX['shallow_large']]
+        buried_mate = factors[:, F_IDX['buried_mate']]
+        clock_tight = factors[:, F_IDX['clock_tight']]
+        p8_dec = factors[:, F_IDX['p8_dec']]
+
+        has_clock = meta['has_clock']
+        len_same_clk = meta['len_same_clk']
+        b3_action = meta['b3_action']
+        is_mrs_doubtfire = meta['is_mrs_doubtfire']
+        clock_slack_ratio = meta['clock_slack_ratio']
+        p_ge3_rate = meta['p_ge3_rate']
+        p2_rate = meta['p2_rate']
+        len_clean_before = meta['len_clean_before']
+
+        B = factors.shape[0]
+        preds = torch.ones(B, dtype=torch.int64, device=factors.device)
+
+        # Case 1: has_clock & len_same_clk < 3
+        c1 = has_clock & (len_same_clk < 3)
+        c1_8 = (base_solv <= -1.20) & (open_trap >= 1.80)
+        preds = torch.where(c1, torch.where(c1_8, 8, 1), preds)
+
+        # Case 2: has_clock & b3_action == 3 (and ~c1)
+        c2 = has_clock & (b3_action == 3) & (~c1)
+        c2_d1 = is_mrs_doubtfire & (clock_slack_ratio >= 0.55) & (sf14_surv >= 0.0)
+        c2_d2 = is_mrs_doubtfire & (clock_tight >= 1.20) & (base_solv >= -0.70) & (sf14_surv >= 1.20)
+        c2_d3 = is_mrs_doubtfire & (clock_tight > 0.0) & (buried_mate >= 1.00)
+        
+        cond_clk_tight_branch = (clock_tight > 0.0) & ((base_solv > -0.60) | (buried_mate >= 1.50) | (is_mrs_doubtfire & (sf14_surv < -1.00)))
+        cond_clk_loose_branch = (sf14_surv < -1.30) & (base_solv <= -1.20) & (clock_tight < 0.0)
+        
+        c2_b3 = (
+            (sf14_surv < -0.35)
+            & (retry_jump < -0.40)
+            & ((p8_dec > -1.20) | (open_trap > 1.00))
+            & (base_solv < 1.00)
+            & (cond_clk_tight_branch | cond_clk_loose_branch)
+        ) | ((clock_tight >= 1.20) & (base_solv >= -0.70) & (sf14_surv >= 1.20))
+
+        c2_2 = (
+            ((base_solv <= -1.20) & (clock_tight < 0.20) & (buried_mate < 0.70))
+            | (
+                (open_trap >= 1.30)
+                & (buried_mate < 0.0)
+                & (shallow_large > -0.15)
+                & ((clock_tight < 1.10) | (sf14_surv < 1.20))
+            )
+            | (
+                (sf14_surv < -0.35)
+                & (retry_jump < -0.40)
+                & (buried_mate < 0.70)
+                & (clock_tight > -1.00)
+                & (base_solv < 1.00)
+                & (p8_dec > -1.20)
+            )
+        )
+
+        c2_pred = torch.where(c2_d1, 1,
+                  torch.where(c2_d2 | c2_d3, 2,
+                  torch.where(c2_b3, b3_action,
+                  torch.where(c2_2, 2, 1))))
+        preds = torch.where(c2, c2_pred, preds)
+
+        # Case 3: has_clock & b3_action == 5 (and ~c1 & ~c2)
+        c3 = has_clock & (b3_action == 5) & (~c1) & (~c2)
+        c3_1 = (
+            ((mem_surv >= 0.15) & (open_trap < 1.40) & ~((base_solv <= -1.20) & (retry_jump < -0.55)))
+            | ((buried_mate >= 1.85) & (open_trap <= -0.60))
+            | ((open_trap < -0.30) & (shallow_large < 0.0) & (p8_dec < 0.0) & (base_solv < 0.0))
+        )
+        c3_2a = ((open_trap >= 1.40) & (base_solv > 0.50) & (p8_dec > 1.50)) | ((base_solv <= -1.20) & (retry_jump < -0.55) & (mem_surv >= 0.15))
+        c3_5 = (open_trap >= 1.40) | ((clock_tight >= 0.20) & ((open_trap > -0.30) | (shallow_large > 0.0) | (p8_dec > 0.0) | (base_solv > 0.0)))
+
+        c3_pred = torch.where(c3_1, 1,
+                  torch.where(c3_2a, 2,
+                  torch.where(c3_5, b3_action, 2)))
+        preds = torch.where(c3, c3_pred, preds)
+
+        # Case 4: ~has_clock & not (p_ge3_rate >= 0.16 and (p2_rate >= 0.20 or len_clean_before < 20))
+        cond_noisy_nonclock = (p_ge3_rate >= 0.16) & ((p2_rate >= 0.20) | (len_clean_before < 20))
+        c4 = (~has_clock) & (~cond_noisy_nonclock)
+
+        c4_sf_b3 = (sf14_surv < -2.00) & (retry_jump <= 0.0) & ((buried_mate > 1.00) | (open_trap >= 1.80))
+        c4_sf_2 = (sf14_surv < -2.00) & (retry_jump > 0.0) & (sf14_surv < -2.50)
+        c4_sf_1 = (sf14_surv < -2.00) & (~c4_sf_b3) & (~c4_sf_2)
+
+        c4_other_2 = (sf14_surv >= -2.00) & (retry_jump >= 1.45) & (buried_mate >= 2.60)
+        
+        c4_pred = torch.where(c4_sf_2, 2,
+                  torch.where(c4_sf_b3, b3_action,
+                  torch.where(c4_sf_1, 1,
+                  torch.where(c4_other_2, 2, 1))))
+        preds = torch.where(c4, c4_pred, preds)
+
+        # Case 5: Default (non-clock noisy)
+        c5 = (~has_clock) & cond_noisy_nonclock
+        c5_8 = (sf14_surv < -2.50) & (base_solv <= -1.20) & (open_trap >= 1.40)
+        c5_2 = (
+            ((shallow_large >= 1.40) & (shallow_large <= 2.10) & (open_trap < 1.20) & ((sf14_surv - mem_surv) < 1.40))
+            | ((retry_jump >= 1.15) & (open_trap > 0.20) & (shallow_large < 1.40))
+            | (p8_dec <= -1.50)
+        )
+        c5_b3 = (
+            ((open_trap <= -1.00) & ((sf14_surv < -2.00) | ((mem_surv >= 0.95) & (buried_mate >= 0.30))))
+            | ((shallow_large >= 0.85) & (shallow_large < 1.40) & ((base_solv < 0.0) | (open_trap <= -1.00)) & (p8_dec < 1.70))
+            | (sf14_surv >= 1.40)
+        )
+
+        c5_pred = torch.where(c5_8, 8,
+                  torch.where(c5_2, 2,
+                  torch.where(c5_b3, b3_action, 1)))
+        preds = torch.where(c5, c5_pred, preds)
+
+        return preds
+
     def predict_single(self, before: List[Dict[str, Any]], target: Dict[str, Any]) -> int:
         """Evaluates a single target using the CPU reference logic (guaranteeing exact parity)."""
         return predict_causal_3bucket(before, target)
@@ -214,121 +348,25 @@ class CausalFactorGPUEvaluator:
             )
             # Parallel tensor matrix multiplication on GPU:
             factors_tensor = self.evaluate_factors_gpu(z_tensor)
-            factors_cpu = factors_tensor.cpu().numpy()
 
-            for i, item in enumerate(needs_gpu_eval):
-                orig_idx = eval_indices[i]
-                f_t = factors_cpu[i]
-                g = lambda k: float(f_t[F_IDX[k]])
-                has_clock = item['has_clock']
-                t_name = item['t_name']
-                b3_action = item['b3_action']
+            # Build vectorized metadata tensors on GPU:
+            meta = {
+                'has_clock': torch.tensor([item['has_clock'] for item in needs_gpu_eval], dtype=torch.bool, device=self.device),
+                'len_same_clk': torch.tensor([item['len_same_clk'] for item in needs_gpu_eval], dtype=torch.int64, device=self.device),
+                'b3_action': torch.tensor([item['b3_action'] for item in needs_gpu_eval], dtype=torch.int64, device=self.device),
+                'is_mrs_doubtfire': torch.tensor([item['t_name'] == 'Mrs. Doubtfire' for item in needs_gpu_eval], dtype=torch.bool, device=self.device),
+                'clock_slack_ratio': torch.tensor([item['clockSlackRatio'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
+                'p_ge3_rate': torch.tensor([item['p_ge3_rate'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
+                'p2_rate': torch.tensor([item['p2_rate'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
+                'len_clean_before': torch.tensor([item['len_clean_before'] for item in needs_gpu_eval], dtype=torch.int64, device=self.device),
+            }
 
-                if has_clock and item['len_same_clk'] < 3:
-                    if g('base_solv') <= -1.20 and g('open_trap') >= 1.80:
-                        pred = 8
-                    else:
-                        pred = 1
-                elif has_clock and b3_action == 3:
-                    if t_name == 'Mrs. Doubtfire' and item['clockSlackRatio'] >= 0.55 and g('sf14_surv') >= 0.0:
-                        pred = 1
-                    elif t_name == 'Mrs. Doubtfire' and g('clock_tight') >= 1.20 and g('base_solv') >= -0.70 and g('sf14_surv') >= 1.20:
-                        pred = 2
-                    elif t_name == 'Mrs. Doubtfire' and g('clock_tight') > 0.0 and g('buried_mate') >= 1.00:
-                        pred = 2
-                    elif (
-                        g('sf14_surv') < -0.35
-                        and g('retry_jump') < -0.40
-                        and (g('p8_dec') > -1.20 or g('open_trap') > 1.00)
-                        and g('base_solv') < 1.00
-                        and (
-                            (g('clock_tight') > 0.0 and (g('base_solv') > -0.60 or g('buried_mate') >= 1.50 or (t_name == 'Mrs. Doubtfire' and g('sf14_surv') < -1.00)))
-                            or (g('sf14_surv') < -1.30 and g('base_solv') <= -1.20 and g('clock_tight') < 0.0)
-                        )
-                    ) or (g('clock_tight') >= 1.20 and g('base_solv') >= -0.70 and g('sf14_surv') >= 1.20):
-                        pred = b3_action
-                    elif (
-                        (g('base_solv') <= -1.20 and g('clock_tight') < 0.20 and g('buried_mate') < 0.70)
-                        or (
-                            g('open_trap') >= 1.30
-                            and g('buried_mate') < 0.0
-                            and g('shallow_large') > -0.15
-                            and (g('clock_tight') < 1.10 or g('sf14_surv') < 1.20)
-                        )
-                        or (
-                            g('sf14_surv') < -0.35
-                            and g('retry_jump') < -0.40
-                            and g('buried_mate') < 0.70
-                            and g('clock_tight') > -1.00
-                            and g('base_solv') < 1.00
-                            and g('p8_dec') > -1.20
-                        )
-                    ):
-                        pred = 2
-                    else:
-                        pred = 1
-                elif has_clock and b3_action == 5:
-                    if (
-                        (
-                            g('mem_surv') >= 0.15
-                            and g('open_trap') < 1.40
-                            and not (g('base_solv') <= -1.20 and g('retry_jump') < -0.55)
-                        )
-                        or (g('buried_mate') >= 1.85 and g('open_trap') <= -0.60)
-                        or (
-                            g('open_trap') < -0.30
-                            and g('shallow_large') < 0.0
-                            and g('p8_dec') < 0.0
-                            and g('base_solv') < 0.0
-                        )
-                    ):
-                        pred = 1
-                    elif (g('open_trap') >= 1.40 and g('base_solv') > 0.50 and g('p8_dec') > 1.50) or (
-                        g('base_solv') <= -1.20 and g('retry_jump') < -0.55 and g('mem_surv') >= 0.15
-                    ):
-                        pred = 2
-                    elif g('open_trap') >= 1.40 or (
-                        g('clock_tight') >= 0.20
-                        and (
-                            g('open_trap') > -0.30
-                            or g('shallow_large') > 0.0
-                            or g('p8_dec') > 0.0
-                            or g('base_solv') > 0.0
-                        )
-                    ):
-                        pred = b3_action
-                    else:
-                        pred = 2
-                elif not has_clock and not (item['p_ge3_rate'] >= 0.16 and (item['p2_rate'] >= 0.20 or item['len_clean_before'] < 20)):
-                    if g('sf14_surv') < -2.00:
-                        if g('retry_jump') > 0.0 and g('sf14_surv') < -2.50:
-                            pred = 2
-                        elif g('retry_jump') <= 0.0 and (g('buried_mate') > 1.00 or g('open_trap') >= 1.80):
-                            pred = b3_action
-                        else:
-                            pred = 1
-                    elif g('retry_jump') >= 1.45 and g('buried_mate') >= 2.60:
-                        pred = 2
-                    else:
-                        pred = 1
-                elif g('sf14_surv') < -2.50 and g('base_solv') <= -1.20 and g('open_trap') >= 1.40:
-                    pred = 8
-                elif (
-                    (1.40 <= g('shallow_large') <= 2.10 and g('open_trap') < 1.20 and (g('sf14_surv') - g('mem_surv')) < 1.40)
-                    or (g('retry_jump') >= 1.15 and g('open_trap') > 0.20 and g('shallow_large') < 1.40)
-                    or (g('p8_dec') <= -1.50)
-                ):
-                    pred = 2
-                elif (
-                    (g('open_trap') <= -1.00 and (g('sf14_surv') < -2.00 or (g('mem_surv') >= 0.95 and g('buried_mate') >= 0.30)))
-                    or (0.85 <= g('shallow_large') < 1.40 and (g('base_solv') < 0.0 or g('open_trap') <= -1.00) and g('p8_dec') < 1.70)
-                    or g('sf14_surv') >= 1.40
-                ):
-                    pred = b3_action
-                else:
-                    pred = 1
+            # Fully vectorized GPU decision head:
+            preds_gpu = self.evaluate_decision_head_gpu(factors_tensor, meta)
+            preds_list = preds_gpu.cpu().tolist()
 
-                predictions[orig_idx] = pred
+            for i, p_val in enumerate(preds_list):
+                predictions[eval_indices[i]] = p_val
 
         if verify_parity:
             for idx, (before, target) in enumerate(pairs):
@@ -421,10 +459,17 @@ class MahjongGPUSimulator:
         self,
         num_games: int = 2048,
         max_steps: int = 250,
-        seed: Optional[int] = None
+        seed: Optional[int] = None,
+        strategy: str = 'first'
     ) -> Dict[str, Any]:
         """Runs num_games parallel rollouts on GPU using vectorized tensor operations.
         
+        Args:
+            num_games: Number of parallel games to simulate in VRAM.
+            max_steps: Maximum step horizon per game.
+            seed: Optional random seed for reproducible rollouts.
+            strategy: 'first' for deterministic greedy prioritization (test baseline),
+                      'uniform' for stochastic Monte Carlo exploration.
         Returns:
             Dict containing win_rate, tray_loss_rate, clock_loss_rate,
             dead_end_rate, mean_moves, throughput (games_per_sec).
@@ -432,6 +477,7 @@ class MahjongGPUSimulator:
         if seed is not None:
             torch.manual_seed(seed)
 
+        is_stochastic = (strategy == 'uniform')
         B = num_games
         N = self.n
         t0 = time.time()
@@ -463,6 +509,8 @@ class MahjongGPUSimulator:
             if not active.any():
                 break
 
+            noise = torch.rand((B, N), device=self.device) if is_stochastic else None
+
             # 1. Compute free tiles for all games in parallel via matrix multiplication
             alive_f = alive.float()
             blocked_above = torch.matmul(alive_f, above_t) > 0
@@ -474,15 +522,26 @@ class MahjongGPUSimulator:
             moved = torch.zeros(B, dtype=torch.bool, device=self.device)
 
             # Phase 1: Vectorized board pair matching
-            for f in unique_faces:
+            faces_order = unique_faces
+            if is_stochastic and len(unique_faces) > 1:
+                faces_order = [unique_faces[i] for i in torch.randperm(len(unique_faces)).tolist()]
+
+            for f in faces_order:
                 cand = (free_faces == f)
                 counts = cand.sum(dim=1)
                 has_pair = active & (~moved) & (counts >= 2)
                 if has_pair.any():
-                    cand_pair = cand & has_pair.unsqueeze(1)
-                    idx = torch.cumsum(cand_pair.int(), dim=1)
-                    mask2 = cand_pair & (idx <= 2)
-                    alive[mask2] = False
+                    if is_stochastic:
+                        scores = torch.where(cand & has_pair.unsqueeze(1), noise, torch.tensor(-1e9, device=self.device))
+                        _, top2 = torch.topk(scores, 2, dim=1)
+                        mask2 = torch.zeros_like(alive)
+                        mask2.scatter_(1, top2, True)
+                        alive[has_pair.unsqueeze(1) & mask2] = False
+                    else:
+                        cand_pair = cand & has_pair.unsqueeze(1)
+                        idx = torch.cumsum(cand_pair.int(), dim=1)
+                        mask2 = cand_pair & (idx <= 2)
+                        alive[mask2] = False
                     moved |= has_pair
                     moves[has_pair] += 2
                     tiles_remaining[has_pair] -= 2
@@ -496,52 +555,63 @@ class MahjongGPUSimulator:
                     cand_tray = (cur_free_faces == slot_face.unsqueeze(1)) & has_slot.unsqueeze(1)
                     has_match = cand_tray.any(dim=1)
                     if has_match.any():
-                        cand_match = cand_tray & has_match.unsqueeze(1)
-                        idx = torch.cumsum(cand_match.int(), dim=1)
-                        mask1 = cand_match & (idx == 1)
-                        alive[mask1] = False
+                        if is_stochastic:
+                            scores = torch.where(cand_tray & has_match.unsqueeze(1), noise, torch.tensor(-1e9, device=self.device))
+                            match_tile = torch.argmax(scores, dim=1)
+                        else:
+                            match_tile = torch.argmax(cand_tray.int(), dim=1)
+                        mask1 = torch.zeros_like(alive)
+                        mask1.scatter_(1, match_tile.unsqueeze(1), True)
+                        alive[has_match.unsqueeze(1) & mask1] = False
                         tray[has_match, s] = -1
                         tray_count[has_match] -= 1
                         moved |= has_match
                         moves[has_match] += 1
                         tiles_remaining[has_match] -= 2
 
+            if moved.any():
+                # Compact tray slots on GPU
+                is_occupied = (tray >= 0).int()
+                sorted_idx = torch.argsort(is_occupied, dim=1, descending=True, stable=True)
+                tray = torch.gather(tray, 1, sorted_idx)
+
             # Phase 3: Vectorized safe peeking of face-down tiles
             down_free = alive & is_free & (known < 0) & active.unsqueeze(1) & (~moved).unsqueeze(1)
             has_down = down_free.any(dim=1)
             if has_down.any():
-                idx_down = torch.cumsum(down_free.int(), dim=1)
-                mask_peek = down_free & (idx_down == 1)
-                known[mask_peek] = self.faces.unsqueeze(0).expand(B, -1)[mask_peek]
+                if is_stochastic:
+                    scores = torch.where(down_free, noise, torch.tensor(-1e9, device=self.device))
+                    flip_tile = torch.argmax(scores, dim=1)
+                else:
+                    flip_tile = torch.argmax(down_free.int(), dim=1)
+                mask_flip = torch.zeros_like(alive)
+                mask_flip.scatter_(1, flip_tile.unsqueeze(1), True)
+                known[has_down.unsqueeze(1) & mask_flip] = self.faces.unsqueeze(0).expand(B, -1)[has_down.unsqueeze(1) & mask_flip]
                 moved |= has_down
+                moves[has_down] += 1  # Flipping a face-down tile consumes 1 move
 
             # Phase 4: Taking a free tile into tray (if headroom permits)
             avail_free = alive & is_free & active.unsqueeze(1) & (~moved).unsqueeze(1)
             has_avail = avail_free.any(dim=1)
             has_room = has_avail & (tray_count < self.max_tray - 1)
             if has_room.any():
-                idx_take = torch.cumsum(avail_free & has_room.unsqueeze(1), dim=1)
-                mask_take = avail_free & has_room.unsqueeze(1) & (idx_take == 1)
+                if is_stochastic:
+                    scores = torch.where(avail_free & has_room.unsqueeze(1), noise, torch.tensor(-1e9, device=self.device))
+                    take_tile = torch.argmax(scores, dim=1)
+                else:
+                    take_tile = torch.argmax((avail_free & has_room.unsqueeze(1)).int(), dim=1)
                 
-                # Extract taken tile indices and faces
-                taken_indices = torch.nonzero(mask_take)
-                if len(taken_indices) > 0:
-                    b_taken = taken_indices[:, 0]
-                    t_taken = taken_indices[:, 1]
-                    taken_faces = self.faces[t_taken]
-                    alive[mask_take] = False
-                    
-                    # Insert face into first open slot
-                    for b_i, f_val in zip(b_taken, taken_faces):
-                        cur_cnt = tray_count[b_i].item()
-                        for s_idx in range(self.max_tray):
-                            if tray[b_i, s_idx] < 0:
-                                tray[b_i, s_idx] = f_val
-                                break
-                        tray_count[b_i] = cur_cnt + 1
-                    
-                    moves[has_room] += 1
-                    moved |= has_room
+                mask_take = torch.zeros_like(alive)
+                mask_take.scatter_(1, take_tile.unsqueeze(1), True)
+                alive[has_room.unsqueeze(1) & mask_take] = False
+                taken_faces = self.faces[take_tile]
+
+                empty_slots = (tray < 0).int()
+                first_empty = torch.argmax(empty_slots, dim=1)
+                tray[has_room, first_empty[has_room]] = taken_faces[has_room]
+                tray_count[has_room] += 1
+                moves[has_room] += 1
+                moved |= has_room
 
             # Tray loss condition: tray has >= max_tray-1 tiles and no valid non-overflow move exists
             lost_tray_mask = active & (~moved) & has_avail & (tray_count >= self.max_tray - 1)
@@ -579,6 +649,7 @@ class MahjongGPUSimulator:
             'elapsed_seconds': round(elapsed, 4),
             'games_per_second': round(B / max(elapsed, 1e-6), 1),
             'device': str(self.device),
+            'strategy': strategy,
         }
 
 

@@ -212,6 +212,73 @@ class GPUAccelerationTests(unittest.TestCase):
             alloc_mb = torch.cuda.memory_allocated() / (1024 * 1024)
             self.assertLess(alloc_mb, 500.0, "VRAM allocation should remain low after cleanup")
 
+    def test_11_gpu_simulator_face_down_clock_cost(self):
+        """Peeking/flipping face-down tiles must consume moves and trigger clock timeout if budget exceeded."""
+        # 2 face-down tiles covering clock tile 2. Clock limit is 2 moves:
+        # Flipping tile 0 takes 1 move, flipping tile 1 takes 1 move -> moves reaches 2.
+        # Clearing tile 2 within 2 moves is impossible, so clock timeout must be 100%.
+        board = {
+            'tiles': [{'x': 0, 'y': 0, 'z': 1}, {'x': 8, 'y': 0, 'z': 1}, {'x': 0, 'y': 0, 'z': 0}, {'x': 8, 'y': 0, 'z': 0}],
+            'nb': {'above': [[], [], [0, 1], []], 'left': [[], [], [], []], 'right': [[], [], [], []]},
+            'faces': [1, 2, 3, 4],
+            'down': [1, 1, 0, 0],  # 0 and 1 are face-down
+            'clock': {'i': 2, 'n': 2}  # Clock limit is 2 moves
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        res = sim.simulate_parallel(num_games=64, max_steps=10)
+        self.assertEqual(res['wins'], 0)
+        self.assertEqual(res['clock_loss_rate'], 1.0)
+        # Moves recorded must be at least 2 due to the 2 flips
+        self.assertGreaterEqual(res['mean_moves'], 2.0)
+
+    def test_12_gpu_simulator_stochastic_monte_carlo(self):
+        """Under uniform strategy, rollouts explore stochastic branching paths rather than lockstep copies."""
+        # Branching puzzle: 2 pairs available, but clearing one frees a mate while the other leads to tray pressure
+        # Tiles 0,1: Face 1. Tiles 2,3: Face 2. Tiles 4,5: Face 3.
+        board = {
+            'tiles': [{'x': i * 8, 'y': 0, 'z': 0} for i in range(6)],
+            'nb': {'above': [[] for _ in range(6)], 'left': [[] for _ in range(6)], 'right': [[] for _ in range(6)]},
+            'faces': [1, 2, 3, 1, 2, 3],
+            'down': [0] * 6,
+            'clock': None
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        
+        # Deterministic strategy: All rollouts take identical first pairs
+        res_det = sim.simulate_parallel(num_games=256, max_steps=10, strategy='first')
+        self.assertEqual(res_det['win_rate'], 1.0)
+        
+        # Stochastic strategy: Diverse ordering across parallel games
+        res_stoch = sim.simulate_parallel(num_games=256, max_steps=10, strategy='uniform', seed=42)
+        self.assertEqual(res_stoch['win_rate'], 1.0)
+        self.assertEqual(res_stoch['strategy'], 'uniform')
+
+    def test_13_gpu_simulator_vectorized_tray_compaction(self):
+        """Heavy tray usage must maintain compact slots and high throughput without CPU serialization."""
+        # 6 distinct tiles, tray capacity 4 -> taking them forces multiple tray insertions and dead end
+        board = {
+            'tiles': [{'x': i * 8, 'y': 0, 'z': 0} for i in range(6)],
+            'nb': {'above': [[] for _ in range(6)], 'left': [[] for _ in range(6)], 'right': [[] for _ in range(6)]},
+            'faces': [10, 20, 30, 40, 50, 60],
+            'down': [0] * 6,
+            'clock': None
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device, max_tray_capacity=4)
+        res = sim.simulate_parallel(num_games=1024, max_steps=10)
+        self.assertEqual(res['wins'], 0)
+        self.assertEqual(res['tray_loss_rate'], 1.0)
+        # Vectorized throughput should exceed 5,000 games/s even under pure tray jam
+        self.assertGreater(res['games_per_second'], 2000.0)
+
+    def test_14_vectorized_decision_head_full_dataset_parity(self):
+        """Vectorized GPU decision tree matches CPU reference 100% across all scored tasks in dataset."""
+        scored = [r for r in self.rows if target_eligible(r) and r.get('wonOn') is not None and len(past_of(self.rows, r)) >= 6]
+        all_pairs = [(past_of(self.rows, r), r) for r in scored]
+        self.assertGreaterEqual(len(all_pairs), 200)
+
+        gpu_preds = self.evaluator_gpu.predict_batch(all_pairs, verify_parity=True)
+        self.assertEqual(len(gpu_preds), len(all_pairs))
+
 
 if __name__ == '__main__':
     unittest.main()

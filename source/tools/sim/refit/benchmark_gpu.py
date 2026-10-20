@@ -137,12 +137,14 @@ def benchmark_gpu_simulator():
     sim = MahjongGPUSimulator(board, device=device)
 
     print(f"\nSimulating games on {device} ({gpu_diagnostics()['device_name']}):")
-    print(f"{'Batch Size':>12} | {'Win Rate':>10} | {'Tray Loss':>10} | {'Clock Loss':>10} | {'Elapsed':>10} | {'Throughput':>16}")
-    print("-" * 80)
-
-    for batch_size in [256, 512, 1024, 2048, 4096]:
-        res = sim.simulate_parallel(num_games=batch_size, max_steps=100, seed=20261028)
-        print(f"{res['num_games']:12d} | {res['win_rate']*100:9.1f}% | {res['tray_loss_rate']*100:9.1f}% | {res['clock_loss_rate']*100:9.1f}% | {res['elapsed_seconds']*1000:8.1f}ms | {res['games_per_second']:11.1f} games/s")
+    for strategy in ['first', 'uniform']:
+        mode_label = "Deterministic (Greedy Baseline)" if strategy == 'first' else "Monte Carlo (Stochastic Rollouts)"
+        print(f"\n[{mode_label}]")
+        print(f"{'Batch Size':>12} | {'Win Rate':>10} | {'Tray Loss':>10} | {'Clock Loss':>10} | {'Elapsed':>10} | {'Throughput':>16}")
+        print("-" * 80)
+        for batch_size in [512, 1024, 2048, 4096]:
+            res = sim.simulate_parallel(num_games=batch_size, max_steps=100, seed=20261028, strategy=strategy)
+            print(f"{res['num_games']:12d} | {res['win_rate']*100:9.1f}% | {res['tray_loss_rate']*100:9.1f}% | {res['clock_loss_rate']*100:9.1f}% | {res['elapsed_seconds']*1000:8.1f}ms | {res['games_per_second']:11.1f} games/s")
 
 
 def main():
