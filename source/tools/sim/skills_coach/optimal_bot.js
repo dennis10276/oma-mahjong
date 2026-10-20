@@ -68,6 +68,7 @@ function createOptimalBot(config = {}) {
       known, // -1 if unknown, >=0 if revealed
       tray: [], // array of faces currently in tray
       moves: 0,
+      tilesRemoved: 0,
       cleared: [],
       history: [],
       totalMultiset,
@@ -202,7 +203,35 @@ function createOptimalBot(config = {}) {
         }
       }
     }
+    // Obstacle ice neighbors if any frontier tile is encased in ice
+    if (game.rules && game.rules.ice) {
+      for (const cur of Array.from(frontier)) {
+        if (game.rules.ice[cur] && game.rules.iceNb && game.rules.iceNb[cur]) {
+          for (const nb of game.rules.iceNb[cur]) {
+            if (state.alive[nb]) frontier.add(nb);
+          }
+        }
+      }
+    }
     return frontier;
+  }
+
+  function getCoveringAncestors(game, state, goal) {
+    const ancestors = new Set();
+    const stack = [goal];
+    while (stack.length > 0) {
+      const cur = stack.pop();
+      const ab = game.nb.above && game.nb.above[cur];
+      if (ab) {
+        for (const up of ab) {
+          if (state.alive[up] && !ancestors.has(up)) {
+            ancestors.add(up);
+            stack.push(up);
+          }
+        }
+      }
+    }
+    return ancestors;
   }
 
   /**
@@ -210,20 +239,23 @@ function createOptimalBot(config = {}) {
    */
   function getClockMetrics(game, state) {
     if (!game.clock || !state.alive[game.clock.i]) {
-      return { active: false, slack: Infinity, depth: 0, criticalTiles: new Set() };
+      return { active: false, slack: Infinity, depth: 0, criticalTiles: new Set(), coveringAncestors: new Set() };
     }
     const clockIdx = game.clock.i;
-    const remainingMoves = game.clock.n - state.moves;
+    const tilesRemoved = state.tilesRemoved !== undefined ? state.tilesRemoved : (game.tiles.length - state.alive.reduce((sum, a) => sum + a, 0));
+    const remainingMoves = game.clock.n - tilesRemoved;
     const depth = getUnblockingDepth(game, state, clockIdx);
     const slack = remainingMoves - depth;
     const criticalTiles = getGoalFrontier(game, state, clockIdx);
+    const coveringAncestors = getCoveringAncestors(game, state, clockIdx);
 
     return {
       active: true,
       remainingMoves,
       depth,
       slack,
-      criticalTiles
+      criticalTiles,
+      coveringAncestors
     };
   }
 
@@ -446,10 +478,11 @@ function createOptimalBot(config = {}) {
         }
       } else {
         // Clock tile is still buried: must unblock it before moves run out
-        const onCriticalPath = (action.index !== undefined && clock.criticalTiles.has(action.index)) ||
-          (action.indices && action.indices.some(idx => clock.criticalTiles.has(idx)));
+        const isAncestorPeek = action.type === 'safe_peek' && clock.coveringAncestors && clock.coveringAncestors.has(action.index);
+        const onCriticalPath = isAncestorPeek || (action.type !== 'safe_peek' && ((action.index !== undefined && clock.criticalTiles.has(action.index)) ||
+          (action.indices && action.indices.some(idx => clock.criticalTiles.has(idx)))));
 
-        if (clock.slack <= 3) {
+        if (clock.slack <= 4 || clock.remainingMoves <= 6) {
           if (onCriticalPath) {
             score += 35000;
             reasons.push('CLOCK_CRITICAL_UNBLOCKING_PATH (+35000)');
@@ -457,7 +490,7 @@ function createOptimalBot(config = {}) {
             score -= 30000;
             reasons.push('CLOCK_UNBLOCKING_OFF_PATH_DIVERSION (-30000)');
           }
-        } else if (clock.slack <= 5) {
+        } else if (clock.slack <= 6) {
           if (onCriticalPath) {
             score += 8000;
             reasons.push('CLOCK_PATH_PRIORITY (+8000)');
@@ -627,6 +660,7 @@ function createOptimalBot(config = {}) {
         // Remove from tray
         const idx = state.tray.indexOf(action.face);
         if (idx >= 0) state.tray.splice(idx, 1);
+        state.tilesRemoved = (state.tilesRemoved || 0) + 1;
         break;
       }
 
@@ -636,6 +670,7 @@ function createOptimalBot(config = {}) {
         state.alive[b] = 0;
         state.cleared.push(action.face);
         state.cleared.push(action.face);
+        state.tilesRemoved = (state.tilesRemoved || 0) + 2;
         break;
       }
 
@@ -654,6 +689,7 @@ function createOptimalBot(config = {}) {
           state.tray.splice(trayIdx, 1);
           state.cleared.push(revealedFace);
           state.cleared.push(revealedFace);
+          state.tilesRemoved = (state.tilesRemoved || 0) + 1;
         }
         break;
       }
@@ -662,6 +698,7 @@ function createOptimalBot(config = {}) {
         const i = action.index;
         state.alive[i] = 0;
         state.tray.push(action.face);
+        state.tilesRemoved = (state.tilesRemoved || 0) + 1;
         break;
       }
     }
@@ -670,7 +707,7 @@ function createOptimalBot(config = {}) {
     if (state.tray.length >= options.maxTrayCapacity) {
       return { ended: true, win: false, why: 'tray' };
     }
-    if (game.clock && state.alive[game.clock.i] && state.moves >= game.clock.n) {
+    if (game.clock && state.alive[game.clock.i] && (state.tilesRemoved || 0) >= game.clock.n) {
       return { ended: true, win: false, why: 'clock' };
     }
 
@@ -738,25 +775,35 @@ function createOptimalBot(config = {}) {
 
       for (const node of beam) {
         const st = node.state;
+        const stMetrics = game.clock && st.alive[game.clock.i] ? getClockMetrics(game, st) : null;
         const acts = getAvailableActions(game, st);
 
+        const clockActs = (game.clock && st.alive[game.clock.i]) ? acts.filter(a => a.index === game.clock.i) : [];
         const imm = acts.filter(a => a.type === 'immediate_match');
-        const candidateActs = imm.length > 0 ? imm : acts;
+        let candidateActs = acts;
+        if (clockActs.length > 0) {
+          candidateActs = clockActs;
+        } else if (imm.length > 0) {
+          candidateActs = imm;
+        }
 
         for (const a of candidateActs) {
           const nextAlive = st.alive.slice();
           const nextTray = st.tray.slice();
           const nextKnown = st.known.slice();
           let nextMoves = st.moves + 1;
+          let removedDelta = 0;
 
           let valid = true;
           if (a.type === 'immediate_match') {
             nextAlive[a.index] = 0;
             const q = nextTray.indexOf(a.face);
             if (q >= 0) nextTray.splice(q, 1);
+            removedDelta = 1;
           } else if (a.type === 'pair_match') {
             nextAlive[a.indices[0]] = 0;
             nextAlive[a.indices[1]] = 0;
+            removedDelta = 2;
           } else if (a.type === 'safe_peek') {
             const rev = game.faces[a.index];
             nextKnown[a.index] = rev;
@@ -764,17 +811,20 @@ function createOptimalBot(config = {}) {
             if (q >= 0) {
               nextAlive[a.index] = 0;
               nextTray.splice(q, 1);
+              removedDelta = 1;
             }
           } else if (a.type === 'single_take') {
             nextAlive[a.index] = 0;
             nextTray.push(a.face);
             if (nextTray.length >= options.maxTrayCapacity) valid = false;
+            removedDelta = 1;
           }
 
           if (!valid) continue;
-          if (game.clock && nextAlive[game.clock.i] && nextMoves >= game.clock.n) continue;
+          const nextTilesRemoved = (st.tilesRemoved || 0) + removedDelta;
+          if (game.clock && nextAlive[game.clock.i] && nextTilesRemoved >= game.clock.n) continue;
 
-          const nextState = { ...st, alive: nextAlive, tray: nextTray, known: nextKnown, moves: nextMoves };
+          const nextState = { ...st, alive: nextAlive, tray: nextTray, known: nextKnown, moves: nextMoves, tilesRemoved: nextTilesRemoved };
           const nextHist = node.history.concat([{ ...a, moveNumber: nextMoves, trayBefore: [...st.tray] }]);
 
           const remainingAlive = nextAlive.some(x => x === 1);
@@ -790,9 +840,10 @@ function createOptimalBot(config = {}) {
           if (game.clock && nextAlive[game.clock.i]) {
             const metrics = getClockMetrics(game, nextState);
             score -= metrics.depth * 5000;
-            if (metrics.slack <= 3) {
-              const onCrit = (a.index !== undefined && metrics.criticalTiles.has(a.index)) ||
-                (a.indices && a.indices.some(idx => metrics.criticalTiles.has(idx)));
+            if (stMetrics && (stMetrics.slack <= 5 || stMetrics.remainingMoves <= 6)) {
+              const isAncestorPeek = a.type === 'safe_peek' && stMetrics.coveringAncestors && stMetrics.coveringAncestors.has(a.index);
+              const onCrit = isAncestorPeek || (a.type !== 'safe_peek' && ((a.index !== undefined && stMetrics.criticalTiles.has(a.index)) ||
+                (a.indices && a.indices.some(idx => stMetrics.criticalTiles.has(idx)))));
               if (onCrit) score += 40000;
               else score -= 35000;
             }
@@ -857,7 +908,7 @@ function createOptimalBot(config = {}) {
   function play(game, maxTurnsOrOptions = 200) {
     const opts = typeof maxTurnsOrOptions === 'object' ? maxTurnsOrOptions : { maxTurns: maxTurnsOrOptions };
     const maxTurns = opts.maxTurns || 200;
-    const beamWidth = opts.beamWidth || 48;
+    const beamWidth = opts.beamWidth || 128;
 
     if (opts.mode === 'beam') {
       return beamSolve(game, beamWidth, maxTurns);
