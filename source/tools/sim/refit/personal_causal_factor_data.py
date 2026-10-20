@@ -195,7 +195,7 @@ def evaluate_causal_factor_head(fresh_path=FRESH_DATA, output_path=EVAL_OUTPUT):
     held_players = cohort_metrics(held_cohort)
     held_target_met = all(
         held_players[name]['ownCausalFactor3Bucket']['n'] == 20
-        and held_players[name]['ownCausalFactor3Bucket']['accuracy'] >= 0.80
+        and held_players[name]['ownCausalFactor3Bucket']['accuracy'] >= 0.95
         for name in NAMES
     )
 

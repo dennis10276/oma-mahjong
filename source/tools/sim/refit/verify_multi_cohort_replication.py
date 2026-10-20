@@ -1,9 +1,9 @@
 """Independent Multi-Cohort Replication and Verification CLI
 
 Verifies the causal 3-bucket physical-factor attempt count model across all four cohorts:
-1. Held Benchmark Cohort (80 tasks, 20 per player) >= 80% per player.
-2. Recent Pre-Freeze Tasks (28 tasks) >= 80% per player.
-3. Post-Freeze Live Completed Games (17 tasks) >= 80% per player.
+1. Held Benchmark Cohort (80 tasks, 20 per player) >= 95% per player.
+2. Recent Pre-Freeze Tasks (28 tasks) >= 95% per player.
+3. Post-Freeze Live Completed Games (17 tasks) >= 95% per player.
 4. Pre-Opening Frozen Future Ledger (68 tasks) sealed ahead of live frontiers.
 """
 
@@ -56,11 +56,11 @@ def verify_held_benchmark(fresh, evaluator=None):
         results[name] = {'hits': hits, 'n': len(p_held), 'accuracy': acc}
         total_hits += hits
         total_count += len(p_held)
-        status = "PASS" if acc >= 0.80 else "FAIL"
+        status = "PASS" if acc >= 0.95 else "FAIL"
         print(f"  [{status}] {name:15s}: {hits:2d}/{len(p_held)} = {acc*100:5.1f}%")
-        assert acc >= 0.80, f"{name} held benchmark below 80%: {hits}/{len(p_held)}"
+        assert acc >= 0.95, f"{name} held benchmark below 95%: {hits}/{len(p_held)}"
     total_acc = total_hits / total_count if total_count else 0.0
-    print(f"  TOTAL HELD BENCHMARK: {total_hits}/{total_count} = {total_acc*100:.2f}% (Target: >=80.0%)")
+    print(f"  TOTAL HELD BENCHMARK: {total_hits}/{total_count} = {total_acc*100:.2f}% (Target: >=95.0%)")
     return results
 
 
@@ -86,11 +86,11 @@ def verify_recent_tasks(fresh, evaluator=None):
         results[name] = {'hits': hits, 'n': len(p_rec), 'accuracy': acc}
         total_hits += hits
         total_count += len(p_rec)
-        status = "PASS" if acc >= 0.80 else "FAIL"
+        status = "PASS" if acc >= 0.95 else "FAIL"
         print(f"  [{status}] {name:15s}: {hits:2d}/{len(p_rec)} = {acc*100:5.1f}%")
-        assert acc >= 0.80, f"{name} recent below 80%: {hits}/{len(p_rec)}"
+        assert acc >= 0.95, f"{name} recent below 95%: {hits}/{len(p_rec)}"
     total_acc = total_hits / total_count if total_count else 0.0
-    print(f"  TOTAL RECENT TASKS: {total_hits}/{total_count} = {total_acc*100:.2f}% (Target: >=80.0%)")
+    print(f"  TOTAL RECENT TASKS: {total_hits}/{total_count} = {total_acc*100:.2f}% (Target: >=95.0%)")
     return results
 
 
@@ -152,12 +152,12 @@ def verify_post_freeze_live(fresh, evaluator=None):
         results[name] = {'hits': hits, 'n': len(outcomes), 'accuracy': acc}
         total_hits += hits
         total_count += len(outcomes)
-        status = "PASS" if acc >= 0.80 else "FAIL"
+        status = "PASS" if acc >= 0.95 else "FAIL"
         print(f"  [{status}] {name:15s}: {hits:2d}/{len(outcomes)} = {acc*100:5.1f}%")
         print(f"       Details: {' | '.join(details)}")
-        assert acc >= 0.80, f"{name} live accuracy below 80%: {hits}/{len(outcomes)}"
+        assert acc >= 0.95, f"{name} live accuracy below 95%: {hits}/{len(outcomes)}"
     total_acc = total_hits / total_count if total_count else 0.0
-    print(f"  TOTAL LIVE COMPLETED: {total_hits}/{total_count} = {total_acc*100:.2f}% (Target: >=80.0%)")
+    print(f"  TOTAL LIVE COMPLETED: {total_hits}/{total_count} = {total_acc*100:.2f}% (Target: >=95.0%)")
     return results
 
 
@@ -212,7 +212,7 @@ def main():
     verify_recent_tasks(fresh, evaluator=evaluator)
     verify_post_freeze_live(fresh, evaluator=evaluator)
     verify_unopened_future_ledger(fresh)
-    print("ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 80% accuracy target!\n")
+    print("ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 95% accuracy target!\n")
 
 
 if __name__ == '__main__':

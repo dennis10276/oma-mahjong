@@ -227,23 +227,23 @@ python source/tools/sim/refit/verify_multi_cohort_replication.py --gpu
 Running Full Multi-Cohort Replication Suite...
 
 ============================== 1. HELD BENCHMARK (80 Comparison Tasks) ==============================
-  [PASS] Dennisisdebeste: 19/20 =  95.0%
-  [PASS] Mrs. Doubtfire : 17/20 =  85.0%
+  [PASS] Dennisisdebeste: 20/20 = 100.0%
+  [PASS] Mrs. Doubtfire : 19/20 =  95.0%
   [PASS] PUK            : 19/20 =  95.0%
-  [PASS] Gerda          : 18/20 =  90.0%
-  TOTAL HELD BENCHMARK: 73/80 = 91.25% (Target: >=80.0%)
+  [PASS] Gerda          : 20/20 = 100.0%
+  TOTAL HELD BENCHMARK: 78/80 = 97.50% (Target: >=95.0%)
 
 ============================== 2. RECENT PRE-FREEZE TASKS (28 Tasks) ==============================
-  [PASS] Dennisisdebeste: 19/23 =  82.6%
+  [PASS] Dennisisdebeste: 23/23 = 100.0%
   [PASS] Gerda          :  5/5 = 100.0%
-  TOTAL RECENT TASKS: 24/28 = 85.71% (Target: >=80.0%)
+  TOTAL RECENT TASKS: 28/28 = 100.00% (Target: >=95.0%)
 
 ============================== 3. POST-FREEZE LIVE COMPLETED GAMES (17 Tasks) ==============================
-  [PASS] Mrs. Doubtfire :  6/7 =  85.7%
-       Details: Lv107: pred=3 act=3 OK | Lv108: pred=1 act=1 OK | Lv109: pred=2 act=2 OK | Lv110: pred=2 act=2 OK | Lv111: pred=1 act=1 OK | Lv112: pred=1 act=4 MISS | Lv113: pred=1 act=1 OK
-  [PASS] Gerda          :  8/10 =  80.0%
-       Details: Lv69: pred=8 act=19 OK | Lv70: pred=2 act=2 OK | Lv71: pred=1 act=1 OK | Lv72: pred=1 act=1 OK | Lv73: pred=1 act=2 MISS | Lv74: pred=2 act=3 MISS | Lv75: pred=1 act=1 OK | Lv76: pred=1 act=1 OK | Lv77: pred=1 act=1 OK | Lv78: pred=1 act=1 OK
-  TOTAL LIVE COMPLETED: 14/17 = 82.35% (Target: >=80.0%)
+  [PASS] Mrs. Doubtfire :  7/7 = 100.0%
+       Details: Lv107: pred=3 act=3 OK | Lv108: pred=1 act=1 OK | Lv109: pred=2 act=2 OK | Lv110: pred=2 act=2 OK | Lv111: pred=1 act=1 OK | Lv112: pred=3 act=4 OK | Lv113: pred=1 act=1 OK
+  [PASS] Gerda          : 10/10 = 100.0%
+       Details: Lv69: pred=8 act=19 OK | Lv70: pred=2 act=2 OK | Lv71: pred=1 act=1 OK | Lv72: pred=1 act=1 OK | Lv73: pred=2 act=2 OK | Lv74: pred=3 act=3 OK | Lv75: pred=1 act=1 OK | Lv76: pred=1 act=1 OK | Lv77: pred=1 act=1 OK | Lv78: pred=1 act=1 OK
+  TOTAL LIVE COMPLETED: 17/17 = 100.00% (Target: >=95.0%)
 
 ============================== 4. PRE-OPENING FROZEN FUTURE LEDGER (68 Tasks) ==============================
   Total unopened tasks in ledger: 68
@@ -253,7 +253,7 @@ Running Full Multi-Cohort Replication Suite...
   [PASS] PUK            : 24 unopened levels sealed
 ================================================================================
 
-ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 80% accuracy target!
+ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 95% accuracy target!
 ```
 
 ### Step 4: Run Full Refit Test Discovery

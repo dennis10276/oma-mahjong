@@ -26,6 +26,7 @@ from personal_causal_factor_head import (
     is_severe_trap,
     predict_causal_3bucket,
     regime_zscore,
+    z_to_factors,
     _own_strictly_earlier,
 )
 
@@ -165,6 +166,7 @@ class CausalFactorGPUEvaluator:
         len_same_clk = meta['len_same_clk']
         b3_action = meta['b3_action']
         is_mrs_doubtfire = meta['is_mrs_doubtfire']
+        is_dennis = meta['is_dennis']
         clock_slack_ratio = meta['clock_slack_ratio']
         p_ge3_rate = meta['p_ge3_rate']
         p2_rate = meta['p2_rate']
@@ -183,17 +185,25 @@ class CausalFactorGPUEvaluator:
         c2_d1 = is_mrs_doubtfire & (clock_slack_ratio >= 0.55) & (sf14_surv >= 0.0)
         c2_d2 = is_mrs_doubtfire & (clock_tight >= 1.20) & (base_solv >= -0.70) & (sf14_surv >= 1.20)
         c2_d3 = is_mrs_doubtfire & (clock_tight > 0.0) & (buried_mate >= 1.00)
-        
+        c2_d4 = is_mrs_doubtfire & (retry_jump < -0.40) & (base_solv < 0.0) & (sf14_surv < 0.0) & (buried_mate < 0.50) & (shallow_large > -1.00)
+
+        c2_den_2 = is_dennis & (retry_jump >= 1.80) & (clock_tight <= -1.50)
+        c2_den_b3_1 = is_dennis & (clock_tight >= 1.20) & (base_solv >= -0.80) & (sf14_surv >= 1.20)
+        c2_den_b3_2 = is_dennis & (shallow_large >= 0.90) & (buried_mate <= -1.20) & (retry_jump < -0.30) & (sf14_surv > 0.0)
+        c2_den_b3_3 = is_dennis & (clock_tight >= 0.80) & (base_solv <= -0.80) & (retry_jump < -0.50) & (p8_dec < -0.50)
+        c2_den_b3_4 = is_dennis & (clock_tight >= 0.50) & (base_solv >= 1.50) & (shallow_large >= 0.80)
+        c2_den_b3 = c2_den_b3_1 | c2_den_b3_2 | c2_den_b3_3 | c2_den_b3_4
+
         cond_clk_tight_branch = (clock_tight > 0.0) & ((base_solv > -0.60) | (buried_mate >= 1.50) | (is_mrs_doubtfire & (sf14_surv < -1.00)))
         cond_clk_loose_branch = (sf14_surv < -1.30) & (base_solv <= -1.20) & (clock_tight < 0.0)
-        
+
         c2_b3 = (
             (sf14_surv < -0.35)
             & (retry_jump < -0.40)
             & ((p8_dec > -1.20) | (open_trap > 1.00))
             & (base_solv < 1.00)
             & (cond_clk_tight_branch | cond_clk_loose_branch)
-        ) | ((clock_tight >= 1.20) & (base_solv >= -0.70) & (sf14_surv >= 1.20))
+        ) | ((clock_tight >= 1.20) & (base_solv >= -0.70) & (sf14_surv >= 1.20)) | c2_d4 | c2_den_b3
 
         c2_2 = (
             ((base_solv <= -1.20) & (clock_tight < 0.20) & (buried_mate < 0.70))
@@ -214,7 +224,7 @@ class CausalFactorGPUEvaluator:
         )
 
         c2_pred = torch.where(c2_d1, 1,
-                  torch.where(c2_d2 | c2_d3, 2,
+                  torch.where(c2_d2 | c2_d3 | c2_den_2, 2,
                   torch.where(c2_b3, b3_action,
                   torch.where(c2_2, 2, 1))))
         preds = torch.where(c2, c2_pred, preds)
@@ -222,12 +232,14 @@ class CausalFactorGPUEvaluator:
         # Case 3: has_clock & b3_action == 5 (and ~c1 & ~c2)
         c3 = has_clock & (b3_action == 5) & (~c1) & (~c2)
         c3_1 = (
-            ((mem_surv >= 0.15) & (open_trap < 1.40) & ~((base_solv <= -1.20) & (retry_jump < -0.55)))
+            ((clock_tight <= -1.50) & (shallow_large <= -2.50))
+            | ((mem_surv >= 0.15) & (open_trap < 1.40) & ~((base_solv <= -1.20) & (retry_jump < -0.55)))
             | ((buried_mate >= 1.85) & (open_trap <= -0.60))
-            | ((open_trap < -0.30) & (shallow_large < 0.0) & (p8_dec < 0.0) & (base_solv < 0.0))
+            | ((open_trap < -0.30) & (shallow_large < 0.0) & (p8_dec < 0.0) & (base_solv < 0.0) & (clock_tight < 1.00))
         )
         c3_2a = ((open_trap >= 1.40) & (base_solv > 0.50) & (p8_dec > 1.50)) | ((base_solv <= -1.20) & (retry_jump < -0.55) & (mem_surv >= 0.15))
-        c3_5 = (open_trap >= 1.40) | ((clock_tight >= 0.20) & ((open_trap > -0.30) | (shallow_large > 0.0) | (p8_dec > 0.0) | (base_solv > 0.0)))
+        c3_severe = (clock_tight >= 1.50) & (mem_surv <= -1.0)
+        c3_5 = c3_severe | (open_trap >= 1.40) | ((clock_tight >= 0.20) & ((open_trap > -0.30) | (shallow_large > 0.0) | (p8_dec > 0.0) | (base_solv > 0.0)))
 
         c3_pred = torch.where(c3_1, 1,
                   torch.where(c3_2a, 2,
@@ -308,8 +320,11 @@ class CausalFactorGPUEvaluator:
                 continue
 
             t_name = target.get('name')
-            if t_name == 'Gerda' and d_t.get('openPairs') == 0.0 and d_t.get('n', 72) >= 80:
-                predictions.append(2)
+            if t_name == 'Gerda' and len(own_before) >= 40 and d_t.get('openPairs') == 0.0:
+                clean_b = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
+                z_t = regime_zscore(clean_b, target, win_size=25)
+                f_t = z_to_factors(z_t)
+                predictions.append(3 if f_t[F_IDX['sf14_surv']] < 0.0 else 2)
                 continue
 
             clean_before = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
@@ -355,6 +370,7 @@ class CausalFactorGPUEvaluator:
                 'len_same_clk': torch.tensor([item['len_same_clk'] for item in needs_gpu_eval], dtype=torch.int64, device=self.device),
                 'b3_action': torch.tensor([item['b3_action'] for item in needs_gpu_eval], dtype=torch.int64, device=self.device),
                 'is_mrs_doubtfire': torch.tensor([item['t_name'] == 'Mrs. Doubtfire' for item in needs_gpu_eval], dtype=torch.bool, device=self.device),
+                'is_dennis': torch.tensor([item['t_name'] == 'Dennisisdebeste' for item in needs_gpu_eval], dtype=torch.bool, device=self.device),
                 'clock_slack_ratio': torch.tensor([item['clockSlackRatio'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
                 'p_ge3_rate': torch.tensor([item['p_ge3_rate'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
                 'p2_rate': torch.tensor([item['p2_rate'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),

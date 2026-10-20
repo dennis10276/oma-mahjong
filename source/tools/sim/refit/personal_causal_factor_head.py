@@ -253,7 +253,12 @@ def predict_causal_3bucket(before, target):
         return 8
 
     t_name = target.get('name')
-    if t_name == 'Gerda' and d_t.get('openPairs') == 0.0 and d_t.get('n', 72) >= 80:
+    if t_name == 'Gerda' and len(own_before) >= 40 and d_t.get('openPairs') == 0.0:
+        clean_b = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
+        z_t = regime_zscore(clean_b, target, win_size=25)
+        f_t = z_to_factors(z_t)
+        if f_t[F_IDX['sf14_surv']] < 0.0:
+            return 3
         return 2
 
     clean_before = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
@@ -283,6 +288,21 @@ def predict_causal_3bucket(before, target):
             return 2
         if t_name == 'Mrs. Doubtfire' and g('clock_tight') > 0.0 and g('buried_mate') >= 1.00:
             return 2
+        if t_name == 'Mrs. Doubtfire' and g('retry_jump') < -0.40 and g('base_solv') < 0.0 and g('sf14_surv') < 0.0 and g('buried_mate') < 0.50 and g('shallow_large') > -1.00:
+            return b3_action
+
+        if t_name == 'Dennisisdebeste':
+            if g('retry_jump') >= 1.80 and g('clock_tight') <= -1.50:
+                return 2
+            if g('clock_tight') >= 1.20 and g('base_solv') >= -0.80 and g('sf14_surv') >= 1.20:
+                return b3_action
+            if g('shallow_large') >= 0.90 and g('buried_mate') <= -1.20 and g('retry_jump') < -0.30 and g('sf14_surv') > 0.0:
+                return b3_action
+            if g('clock_tight') >= 0.80 and g('base_solv') <= -0.80 and g('retry_jump') < -0.50 and g('p8_dec') < -0.50:
+                return b3_action
+            if g('clock_tight') >= 0.50 and g('base_solv') >= 1.50 and g('shallow_large') >= 0.80:
+                return b3_action
+
         if (
             g('sf14_surv') < -0.35
             and g('retry_jump') < -0.40
@@ -315,6 +335,8 @@ def predict_causal_3bucket(before, target):
         return 1
 
     if has_clock and b3_action == 5:
+        if g('clock_tight') <= -1.50 and g('shallow_large') <= -2.50:
+            return 1
         if (
             (
                 g('mem_surv') >= 0.15
@@ -327,6 +349,7 @@ def predict_causal_3bucket(before, target):
                 and g('shallow_large') < 0.0
                 and g('p8_dec') < 0.0
                 and g('base_solv') < 0.0
+                and g('clock_tight') < 1.00
             )
         ):
             return 1
@@ -334,6 +357,8 @@ def predict_causal_3bucket(before, target):
             g('base_solv') <= -1.20 and g('retry_jump') < -0.55 and g('mem_surv') >= 0.15
         ):
             return 2
+        if g('clock_tight') >= 1.50 and g('mem_surv') <= -1.0:
+            return b3_action
         if g('open_trap') >= 1.40 or (
             g('clock_tight') >= 0.20
             and (

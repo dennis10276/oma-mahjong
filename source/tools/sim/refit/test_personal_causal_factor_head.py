@@ -55,7 +55,7 @@ class CausalFactorHeadTests(unittest.TestCase):
         self.assertNotEqual(predict_causal_3bucket(no_8plus_before, trap_target), 8)
         self.assertEqual(predict_causal_3bucket(with_8plus_before, trap_target), 8)
 
-    def test_held_and_recent_cohorts_exceed_eighty_percent_per_player(self):
+    def test_held_and_recent_cohorts_exceed_ninety_five_percent_per_player(self):
         fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
         rows = fresh['rows']
         held_ids = set(fresh['comparisonEpisodes'])
@@ -65,11 +65,11 @@ class CausalFactorHeadTests(unittest.TestCase):
             p_held = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in held_ids]
             self.assertEqual(len(p_held), 20)
             held_hits = sum(is_correct(predict_causal_3bucket(past_of(rows, r), r), r['wonOn']) for r in p_held)
-            self.assertGreaterEqual(held_hits / len(p_held), 0.80, f'{name} held accuracy {held_hits}/20 below 0.80')
+            self.assertGreaterEqual(held_hits / len(p_held), 0.95, f'{name} held accuracy {held_hits}/20 below 0.95')
             p_rec = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in recent_ids]
             if p_rec:
                 rec_hits = sum(is_correct(predict_causal_3bucket(past_of(rows, r), r), r['wonOn']) for r in p_rec)
-                self.assertGreaterEqual(rec_hits / len(p_rec), 0.80, f'{name} recent accuracy {rec_hits}/{len(p_rec)} below 0.80')
+                self.assertGreaterEqual(rec_hits / len(p_rec), 0.95, f'{name} recent accuracy {rec_hits}/{len(p_rec)} below 0.95')
 
     def test_completed_prospective_episodes_score_eight_of_eight(self):
         fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
@@ -121,11 +121,11 @@ class CausalFactorHeadTests(unittest.TestCase):
         from verify_multi_cohort_replication import verify_held_benchmark, verify_recent_tasks, verify_post_freeze_live, verify_unopened_future_ledger
         fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
         held = verify_held_benchmark(fresh)
-        self.assertTrue(all(p['accuracy'] >= 0.80 for p in held.values()))
+        self.assertTrue(all(p['accuracy'] >= 0.95 for p in held.values()))
         recent = verify_recent_tasks(fresh)
-        self.assertTrue(all(p['accuracy'] >= 0.80 for p in recent.values()))
+        self.assertTrue(all(p['accuracy'] >= 0.95 for p in recent.values()))
         live = verify_post_freeze_live(fresh)
-        self.assertTrue(all(p['accuracy'] >= 0.80 for p in live.values()))
+        self.assertTrue(all(p['accuracy'] >= 0.95 for p in live.values()))
         verify_unopened_future_ledger(fresh)
 
 

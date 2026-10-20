@@ -72,10 +72,10 @@ class GPUAccelerationTests(unittest.TestCase):
         # Accuracy check
         hits = sum(is_correct(pred, act) for pred, act in zip(gpu_preds, labels))
         accuracy = hits / len(pairs)
-        self.assertGreaterEqual(accuracy, 0.80, f"Held benchmark accuracy on GPU ({accuracy*100:.1f}%) must be >= 80%")
+        self.assertGreaterEqual(accuracy, 0.95, f"Held benchmark accuracy on GPU ({accuracy*100:.1f}%) must be >= 95%")
 
     def test_03_recent_tasks_parity_and_accuracy(self):
-        """All 28 recent pre-freeze tasks must produce identical predictions on GPU and exceed >=80% accuracy."""
+        """All 28 recent pre-freeze tasks must produce identical predictions on GPU and exceed >=95% accuracy."""
         recent_ids = set(self.fresh['additionalRecentIds'])
         scored = [r for r in self.rows if target_eligible(r) and r.get('wonOn') is not None and len(past_of(self.rows, r)) >= 6]
 
@@ -93,7 +93,7 @@ class GPUAccelerationTests(unittest.TestCase):
 
         hits = sum(is_correct(pred, act) for pred, act in zip(gpu_preds, labels))
         accuracy = hits / len(pairs)
-        self.assertGreaterEqual(accuracy, 0.80, f"Recent tasks accuracy on GPU ({accuracy*100:.1f}%) must be >= 80%")
+        self.assertGreaterEqual(accuracy, 0.95, f"Recent tasks accuracy on GPU ({accuracy*100:.1f}%) must be >= 95%")
 
     def test_04_live_outcomes_parity(self):
         """Post-freeze live completed games must match CPU predictions."""
