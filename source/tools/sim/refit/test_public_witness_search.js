@@ -98,5 +98,40 @@ assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, 
 assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { retryLearning: 2.0 }));
 assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { trayBuffer: 5 }));
 
+// Stochastic memoryDecay with explicit PRNG
+const decayFixture = make([1, 1, 2, 2], [1, 0, 0, 0]);
+// Tile 0 is face-down but its picture 1 was previously known
+assert.equal(decayFixture.state.down[0], 1);
+assert.equal(decayFixture.state.pictures[0], 1);
+// With memoryDecay = 1.0 and RNG always returning 0.0, tile 0 is forgotten
+const forgottenReport = search(decayFixture.game, decayFixture.state, actionsOf(decayFixture.game, decayFixture.state),
+  { memoryDecay: 1.0, rng: () => 0.0 });
+assert.equal(forgottenReport.initialKnown, 3);
+// With memoryDecay = 0.0, tile 0 is retained
+const retainedReport = search(decayFixture.game, decayFixture.state, actionsOf(decayFixture.game, decayFixture.state),
+  { memoryDecay: 0.0, rng: () => 0.0 });
+assert.equal(retainedReport.initialKnown, 4);
+
+// Board-twin enabling: peeling a known face-down tile when its matching twin is open on the board
+// Tray is full (3/4 slots: [10, 20, 30]). Any direct non-matching take loses immediately.
+// Tile 0 is face-down with known face 1. Tile 1 is face-up with face 1 atop a tower of tiles 2, 3, 4 (faces 10, 20, 30).
+// Peeling Tile 0 into openPeek allows Tile 1 to pair with it, clearing both and unblocking the tower to win.
+const towerTiles = [
+  { x: 0, y: 0, z: 0 },
+  { x: 8, y: 0, z: 3 },
+  { x: 8, y: 0, z: 2 },
+  { x: 8, y: 0, z: 1 },
+  { x: 8, y: 0, z: 0 }
+];
+const towerGame = { tiles: towerTiles, nb: Layouts.neighbors(towerTiles), rules: null, clock: null };
+const towerState = { pictures: [1, 1, 10, 20, 30], down: [1, 0, 0, 0, 0], alive: [1, 1, 1, 1, 1], tray: [10, 20, 30], moves: 0, openPeek: -1, relieved: false, arriving: [] };
+const towerAllowed = legal(towerGame, towerState);
+assert.deepEqual(towerAllowed.free, [0, 1]);
+const towerActions = towerAllowed.free.map(index => ({ index, inspect: !!towerState.down[index] && towerState.openPeek !== index }));
+const towerReport = search(towerGame, towerState, towerActions);
+assert(towerReport.knownWin);
+assert.equal(towerReport.path[0], 0);
+assert.deepEqual(towerReport.path, [0, 1, 2, 3, 4]);
+
 console.log('PASS witness search uses public pictures only, constructs separate physical clock-safe taps, stops at unknown reveals, retains bounds, exposes behavioral knobs, and respects actual root restrictions');
 

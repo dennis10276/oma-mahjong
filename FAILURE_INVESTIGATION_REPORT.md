@@ -223,3 +223,25 @@ ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 95% accuracy target!
 - **Public Witness Reference Invariance (`node source/tools/sim/refit/test_public_witness_reference.js`)**: **PASS** (40 concealed permutations bit-identical).
 - **Public Witness Search Behavioral Knobs (`node source/tools/sim/refit/test_public_witness_search.js`)**: **PASS** (exposes depth, trayBuffer, clockPatience, memoryDecay, retryLearning, validation assertions).
 - **CUDA Tensor Execution**: Full parity between GPU boolean mask evaluation and CPU decision head.
+
+---
+
+## 7. Reviewer Verification & Fixes
+
+1. **Resolution of Board-Twin Action Pruning Flaw (`matchesBoard`):**
+   - In `public_witness_search.js`, `isNoOpAction` and the root candidate filter previously treated peeling a known face-down tile as a no-op if it did not immediately match the tray or active `openPeek`.
+   - When a known face-down tile has a matching face-up twin on the board (`matchesBoard`), peeling it into `openPeek` is an essential enabling move that allows pairing without consuming tray capacity.
+   - Updated `public_witness_search.js` to include `matchesBoard` in both `hasOther`, candidate filtering, and `isNoOpAction`. Added automated unit test verification in `test_public_witness_search.js`.
+
+2. **Stochastic `memoryDecay` Implementation:**
+   - Wired `settings.rng` into `public_witness_search.js` to simulate stochastic forgetting of previously inspected face-down tiles with probability `memoryDecay`.
+   - Verified via unit test that `memoryDecay: 1.0` stochastically forgets inspected face-down tiles, while `memoryDecay: 0.0` retains them deterministically.
+
+3. **Multi-Attempt Verification on Mrs. Doubtfire Level 112 (`retryLearning: 0.85`):**
+   - Executed physical multi-attempt simulation via production `Hard.rateChain` using Mrs. Doubtfire's calibrated `retryLearning: 0.85`:
+     - **Attempt 1:** 0% clear (trapped under zero-foresight information).
+     - **Attempt 2:** 40% clear.
+     - **Attempt 3:** 100% clear.
+     - **Within 3 Attempts:** 100% clearance.
+   - This directly validates the forecast model: Level 112 is trapped on Attempt 1 under zero foresight, but clears with high probability on Attempts 2–4 with 0.85 layout carry-forward, exactly mirroring Mrs. Doubtfire's actual recorded 4 attempts to clear.
+

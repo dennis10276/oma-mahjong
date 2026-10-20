@@ -127,18 +127,32 @@ function search(game, state, actions, options = PARAMETERS) {
   assert(typeof memoryDecay === 'number' && memoryDecay >= 0 && memoryDecay <= 1);
   assert(typeof retryLearning === 'number' && retryLearning >= 0 && retryLearning <= 1);
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
+  let activeState = state;
+  if (memoryDecay > 0 && typeof settings.rng === 'function') {
+    let decayedPictures = null;
+    for (let i = 0; i < state.pictures.length; i++) {
+      if (state.alive[i] && state.down[i] && i !== state.openPeek && state.pictures[i] !== null) {
+        if (settings.rng() < memoryDecay) {
+          if (!decayedPictures) decayedPictures = state.pictures.slice();
+          decayedPictures[i] = null;
+        }
+      }
+    }
+    if (decayedPictures) activeState = { ...state, pictures: decayedPictures };
+  }
+
   assert(Array.isArray(actions) && actions.length > 0);
-  const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
+  const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, activeState).free;
   assert([...roots].every(index => initialFree.includes(index)));
-  const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
-  const cone = clocked ? clockCone(game, state) : null;
-  const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
+  const initialLeft = activeState.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && activeState.alive[game.clock.i]);
+  const cone = clocked ? clockCone(game, activeState) : null;
+  const initialKnown = activeState.pictures.filter((picture, index) => activeState.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
-    initialLeft + state.down.filter((value, index) => value && state.alive[index]).length)) : settings.taps;
-  let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
+    initialLeft + activeState.down.filter((value, index) => value && activeState.alive[index]).length)) : settings.taps;
+  let best = null, beam = [{ state: activeState, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
   const provedDeadRoots = new Set();
-  const visited = new Set([keyOf(game, state)]);
+  const visited = new Set([keyOf(game, activeState)]);
 
   const evaluate = (position, path, information = false, targetIndex = -1) => {
     const room = roomOf(game, position), left = position.alive.reduce((sum, value) => sum + value, 0);
@@ -190,9 +204,10 @@ function search(game, state, actions, options = PARAMETERS) {
     return candidate;
   };
 
-  const hasOther = actions.some(a => !a.inspect || state.pictures[a.index] === null
-    || state.tray.includes(state.pictures[a.index])
-    || state.openPeek >= 0 && a.index !== state.openPeek && state.pictures[a.index] === state.pictures[state.openPeek]);
+  const hasOther = actions.some(a => !a.inspect || activeState.pictures[a.index] === null
+    || activeState.tray.includes(activeState.pictures[a.index])
+    || activeState.openPeek >= 0 && a.index !== activeState.openPeek && activeState.pictures[a.index] === activeState.pictures[activeState.openPeek]
+    || activeState.pictures.some((p, i) => i !== a.index && activeState.alive[i] && p === activeState.pictures[a.index]));
 
   for (let depth = 0; depth < tapLimit && beam.length; depth++) {
     const next = [];
@@ -208,7 +223,8 @@ function search(game, state, actions, options = PARAMETERS) {
           if (act && act.inspect && settled.pictures[index] !== null) {
             const matchesTray = settled.tray.includes(settled.pictures[index]);
             const matchesPeek = settled.openPeek >= 0 && index !== settled.openPeek && settled.pictures[index] === settled.pictures[settled.openPeek];
-            if (!matchesTray && !matchesPeek) return false;
+            const matchesBoard = settled.pictures.some((p, i) => i !== index && settled.alive[i] && p === settled.pictures[index]);
+            if (!matchesTray && !matchesPeek && !matchesBoard) return false;
           }
         }
         return true;
@@ -272,19 +288,20 @@ function search(game, state, actions, options = PARAMETERS) {
     const isNoOpAction = action => {
       if (!action.inspect) return false;
       const idx = action.index;
-      if (!state.down[idx] || state.pictures[idx] === null) return false;
-      const matchesTray = state.tray.includes(state.pictures[idx]);
-      const matchesPeek = state.openPeek >= 0 && idx !== state.openPeek && state.pictures[idx] === state.pictures[state.openPeek];
-      return !matchesTray && !matchesPeek;
+      if (!activeState.down[idx] || activeState.pictures[idx] === null) return false;
+      const matchesTray = activeState.tray.includes(activeState.pictures[idx]);
+      const matchesPeek = activeState.openPeek >= 0 && idx !== activeState.openPeek && activeState.pictures[idx] === activeState.pictures[activeState.openPeek];
+      const matchesBoard = activeState.pictures.some((p, i) => i !== idx && activeState.alive[i] && p === activeState.pictures[idx]);
+      return !matchesTray && !matchesPeek && !matchesBoard;
     };
     const validActions = actions.filter(action => !isNoOpAction(action));
     const fallback = (validActions.length ? validActions[0] : actions[0]).index;
     let selected = best || { path: [fallback], goal: 'unresolvedFallback', won: false, safeClockExit: false,
-      clockRoom: 0, progress: 0, information: state.pictures[fallback] === null };
+      clockRoom: 0, progress: 0, information: activeState.pictures[fallback] === null };
     const knownDead = !selected.won && !beam.length && !boundary && !unknown && !unsupported;
     if (knownDead) {
-      const loss = actions.find(action => physical.advance(game, state, action.index).lost);
-      const progress = actions.find(action => { const moved = physical.advance(game, state, action.index); return !moved.uncertain && moved.removed > 0; });
+      const loss = actions.find(action => physical.advance(game, activeState, action.index).lost);
+      const progress = actions.find(action => { const moved = physical.advance(game, activeState, action.index); return !moved.uncertain && moved.removed > 0; });
       selected = { ...selected, path: [loss?.index ?? progress?.index ?? selected.path[0]], goal: 'knownDeadEnd',
         won: false, safeClockExit: false, clockRoom: 0, progress: 0, information: false };
     }
