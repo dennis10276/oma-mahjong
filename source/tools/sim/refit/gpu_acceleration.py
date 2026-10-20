@@ -175,13 +175,25 @@ class CausalFactorGPUEvaluator:
         B = factors.shape[0]
         preds = torch.ones(B, dtype=torch.int64, device=factors.device)
 
+        # Case 0: Gerda mature progression zero-open-pairs conditioning
+        is_gerda = meta.get('is_gerda')
+        if is_gerda is not None:
+            open_pairs = meta['open_pairs']
+            len_own_before = meta['len_own_before']
+            c_gerda = is_gerda & (len_own_before >= 40) & (open_pairs == 0.0)
+            c_gerda_pred = torch.where(sf14_surv < 0.0, 3, 2)
+            preds = torch.where(c_gerda, c_gerda_pred, preds)
+            c_active = ~c_gerda
+        else:
+            c_active = torch.ones(B, dtype=torch.bool, device=factors.device)
+
         # Case 1: has_clock & len_same_clk < 3
-        c1 = has_clock & (len_same_clk < 3)
+        c1 = c_active & has_clock & (len_same_clk < 3)
         c1_8 = (base_solv <= -1.20) & (open_trap >= 1.80)
         preds = torch.where(c1, torch.where(c1_8, 8, 1), preds)
 
         # Case 2: has_clock & b3_action == 3 (and ~c1)
-        c2 = has_clock & (b3_action == 3) & (~c1)
+        c2 = c_active & has_clock & (b3_action == 3) & (~c1)
         c2_d1 = is_mrs_doubtfire & (clock_slack_ratio >= 0.55) & (sf14_surv >= 0.0)
         c2_d2 = is_mrs_doubtfire & (clock_tight >= 1.20) & (base_solv >= -0.70) & (sf14_surv >= 1.20)
         c2_d3 = is_mrs_doubtfire & (clock_tight > 0.0) & (buried_mate >= 1.00)
@@ -230,7 +242,7 @@ class CausalFactorGPUEvaluator:
         preds = torch.where(c2, c2_pred, preds)
 
         # Case 3: has_clock & b3_action == 5 (and ~c1 & ~c2)
-        c3 = has_clock & (b3_action == 5) & (~c1) & (~c2)
+        c3 = c_active & has_clock & (b3_action == 5) & (~c1) & (~c2)
         c3_1 = (
             ((clock_tight <= -1.50) & (shallow_large <= -2.50))
             | ((mem_surv >= 0.15) & (open_trap < 1.40) & ~((base_solv <= -1.20) & (retry_jump < -0.55)))
@@ -248,22 +260,19 @@ class CausalFactorGPUEvaluator:
 
         # Case 4: ~has_clock & not (p_ge3_rate >= 0.16 and (p2_rate >= 0.20 or len_clean_before < 20))
         cond_noisy_nonclock = (p_ge3_rate >= 0.16) & ((p2_rate >= 0.20) | (len_clean_before < 20))
-        c4 = (~has_clock) & (~cond_noisy_nonclock)
+        c4 = c_active & (~has_clock) & (~cond_noisy_nonclock) & (~c1) & (~c2) & (~c3)
 
         c4_sf_b3 = (sf14_surv < -2.00) & (retry_jump <= 0.0) & ((buried_mate > 1.00) | (open_trap >= 1.80))
         c4_sf_2 = (sf14_surv < -2.00) & (retry_jump > 0.0) & (sf14_surv < -2.50)
-        c4_sf_1 = (sf14_surv < -2.00) & (~c4_sf_b3) & (~c4_sf_2)
-
-        c4_other_2 = (sf14_surv >= -2.00) & (retry_jump >= 1.45) & (buried_mate >= 2.60)
+        c4_other_2 = (retry_jump >= 1.45) & (buried_mate >= 2.60)
         
         c4_pred = torch.where(c4_sf_2, 2,
                   torch.where(c4_sf_b3, b3_action,
-                  torch.where(c4_sf_1, 1,
-                  torch.where(c4_other_2, 2, 1))))
+                  torch.where(c4_other_2, 2, 1)))
         preds = torch.where(c4, c4_pred, preds)
 
-        # Case 5: Default (non-clock noisy)
-        c5 = (~has_clock) & cond_noisy_nonclock
+        # Case 5: Default for all remaining configurations
+        c5 = c_active & (~c1) & (~c2) & (~c3) & (~c4)
         c5_8 = (sf14_surv < -2.50) & (base_solv <= -1.20) & (open_trap >= 1.40)
         c5_2 = (
             ((shallow_large >= 1.40) & (shallow_large <= 2.10) & (open_trap < 1.20) & ((sf14_surv - mem_surv) < 1.40))
@@ -314,17 +323,10 @@ class CausalFactorGPUEvaluator:
                 continue
 
             d_t = feature_dict_of(target)
+            t_name = target.get('name')
             has_recent_8plus = any(r['wonOn'] >= 6 for r in own_before[-40:])
             if is_severe_trap(d_t) and has_recent_8plus:
                 predictions.append(8)
-                continue
-
-            t_name = target.get('name')
-            if t_name == 'Gerda' and len(own_before) >= 40 and d_t.get('openPairs') == 0.0:
-                clean_b = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
-                z_t = regime_zscore(clean_b, target, win_size=25)
-                f_t = z_to_factors(z_t)
-                predictions.append(3 if f_t[F_IDX['sf14_surv']] < 0.0 else 2)
                 continue
 
             clean_before = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
@@ -351,6 +353,8 @@ class CausalFactorGPUEvaluator:
                 'p_ge3_rate': p_ge3_rate,
                 'p2_rate': p2_rate,
                 'len_clean_before': len(clean_before),
+                'open_pairs': float(d_t.get('openPairs', 1.0)),
+                'len_own_before': len(own_before),
             })
             eval_indices.append(idx)
             predictions.append(0)  # placeholder
@@ -371,6 +375,9 @@ class CausalFactorGPUEvaluator:
                 'b3_action': torch.tensor([item['b3_action'] for item in needs_gpu_eval], dtype=torch.int64, device=self.device),
                 'is_mrs_doubtfire': torch.tensor([item['t_name'] == 'Mrs. Doubtfire' for item in needs_gpu_eval], dtype=torch.bool, device=self.device),
                 'is_dennis': torch.tensor([item['t_name'] == 'Dennisisdebeste' for item in needs_gpu_eval], dtype=torch.bool, device=self.device),
+                'is_gerda': torch.tensor([item['t_name'] == 'Gerda' for item in needs_gpu_eval], dtype=torch.bool, device=self.device),
+                'open_pairs': torch.tensor([item['open_pairs'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
+                'len_own_before': torch.tensor([item['len_own_before'] for item in needs_gpu_eval], dtype=torch.int64, device=self.device),
                 'clock_slack_ratio': torch.tensor([item['clockSlackRatio'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
                 'p_ge3_rate': torch.tensor([item['p_ge3_rate'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),
                 'p2_rate': torch.tensor([item['p2_rate'] for item in needs_gpu_eval], dtype=torch.float64, device=self.device),

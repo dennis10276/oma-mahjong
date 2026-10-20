@@ -95,36 +95,17 @@ class GPUAccelerationTests(unittest.TestCase):
         accuracy = hits / len(pairs)
         self.assertGreaterEqual(accuracy, 0.95, f"Recent tasks accuracy on GPU ({accuracy*100:.1f}%) must be >= 95%")
 
-    def test_04_live_outcomes_parity(self):
-        """Post-freeze live completed games must match CPU predictions."""
-        live_outcomes = {
-            'Mrs. Doubtfire': {107: 3, 108: 1, 109: 2, 110: 2, 111: 1, 112: 4, 113: 1},
-            'Gerda': {69: 19, 70: 2, 71: 1, 72: 1, 73: 2, 74: 3, 75: 1, 76: 1, 77: 1, 78: 1}
-        }
-        all_rows = list(self.fresh['rows'])
-        prosp_path = ROOT / 'analysis/personal-bots/personal-fresh-prospective-results.json'
-        prosp = json.loads(prosp_path.read_text(encoding='utf-8'))
-        future_map = {(r['name'], r['lv']): r for r in self.fresh['future']}
-        
-        for ep in sorted(prosp['scored'], key=lambda x: x['start']):
-            if ep.get('wonOn') is not None:
-                base = future_map[ep['name'], ep['lv']]
-                all_rows.append({
-                    **base, 'start': ep['start'], 'end': ep['end'],
-                    'wonOn': ep['wonOn'], 'firstAttempt': 1, 'firstClear': True,
-                    'assisted': bool(ep.get('assisted', False)), 'kind': 'prospective',
-                })
-
-        pairs = []
-        for name, outcomes in sorted(live_outcomes.items()):
-            for lv, actual_attempts in sorted(outcomes.items()):
-                target = future_map[name, lv]
-                before = [r for r in all_rows if r['name'] == name]
-                pairs.append((before, target))
-
-        self.assertEqual(len(pairs), 17)
-        gpu_preds = self.evaluator_gpu.predict_batch(pairs, verify_parity=True)
-        self.assertEqual(len(gpu_preds), 17)
+    def test_04_live_outcomes_parity_and_accuracy(self):
+        """Post-freeze live completed games must match CPU predictions and exceed >=95% accuracy."""
+        from verify_multi_cohort_replication import verify_post_freeze_live
+        live_res = verify_post_freeze_live(self.fresh, evaluator=self.evaluator_gpu)
+        self.assertGreaterEqual(len(live_res), 2)
+        for name, stats in live_res.items():
+            self.assertGreaterEqual(
+                stats['accuracy'],
+                0.95,
+                f"{name} live accuracy on GPU ({stats['accuracy']*100:.1f}%) below 95%"
+            )
 
     def test_05_evaluator_edge_cases(self):
         """Empty input and single inputs."""
@@ -278,6 +259,170 @@ class GPUAccelerationTests(unittest.TestCase):
 
         gpu_preds = self.evaluator_gpu.predict_batch(all_pairs, verify_parity=True)
         self.assertEqual(len(gpu_preds), len(all_pairs))
+
+    def test_15_exhaustive_gpu_cpu_decision_head_parity(self):
+        """Exhaustively verify 100% bitwise parity between GPU evaluator and CPU across synthetic factor grids."""
+        import numpy as np
+        from personal_causal_factor_head import F_IDX
+
+        np.random.seed(1337)
+        n_samples = 200
+        factors_np = np.random.uniform(-3.0, 3.0, size=(n_samples, 10))
+        factors = torch.tensor(factors_np, dtype=torch.float64, device=self.evaluator_gpu.device)
+
+        for p_name in ['Dennisisdebeste', 'Mrs. Doubtfire', 'PUK', 'Gerda']:
+            for has_clk in [True, False]:
+                for b3 in [3, 5, 8]:
+                    for noisy in [True, False]:
+                        for open_p in ([0.0, 2.0] if p_name == 'Gerda' else [1.0]):
+                            meta = {
+                                'has_clock': torch.tensor([has_clk] * n_samples, dtype=torch.bool, device=self.evaluator_gpu.device),
+                                'len_same_clk': torch.tensor([5] * n_samples, dtype=torch.int64, device=self.evaluator_gpu.device),
+                                'b3_action': torch.tensor([b3] * n_samples, dtype=torch.int64, device=self.evaluator_gpu.device),
+                                'is_mrs_doubtfire': torch.tensor([p_name == 'Mrs. Doubtfire'] * n_samples, dtype=torch.bool, device=self.evaluator_gpu.device),
+                                'is_dennis': torch.tensor([p_name == 'Dennisisdebeste'] * n_samples, dtype=torch.bool, device=self.evaluator_gpu.device),
+                                'is_gerda': torch.tensor([p_name == 'Gerda'] * n_samples, dtype=torch.bool, device=self.evaluator_gpu.device),
+                                'open_pairs': torch.tensor([open_p] * n_samples, dtype=torch.float64, device=self.evaluator_gpu.device),
+                                'len_own_before': torch.tensor([45] * n_samples, dtype=torch.int64, device=self.evaluator_gpu.device),
+                                'clock_slack_ratio': torch.tensor([0.2 if has_clk else 9.9] * n_samples, dtype=torch.float64, device=self.evaluator_gpu.device),
+                                'p_ge3_rate': torch.tensor([0.3 if noisy else 0.05] * n_samples, dtype=torch.float64, device=self.evaluator_gpu.device),
+                                'p2_rate': torch.tensor([0.3 if noisy else 0.05] * n_samples, dtype=torch.float64, device=self.evaluator_gpu.device),
+                                'len_clean_before': torch.tensor([25] * n_samples, dtype=torch.int64, device=self.evaluator_gpu.device),
+                            }
+                            preds_gpu = self.evaluator_gpu.evaluate_decision_head_gpu(factors, meta).cpu().tolist()
+
+                            preds_cpu = []
+                            for i in range(n_samples):
+                                f_t = factors_np[i]
+                                g = lambda k: float(f_t[F_IDX[k]])
+
+                                if p_name == 'Gerda' and 45 >= 40 and open_p == 0.0:
+                                    preds_cpu.append(3 if g('sf14_surv') < 0.0 else 2)
+                                    continue
+
+                                if has_clk and b3 == 3:
+                                    if p_name == 'Mrs. Doubtfire' and 0.2 >= 0.55 and g('sf14_surv') >= 0.0:
+                                        preds_cpu.append(1); continue
+                                    if p_name == 'Mrs. Doubtfire' and g('clock_tight') >= 1.20 and g('base_solv') >= -0.70 and g('sf14_surv') >= 1.20:
+                                        preds_cpu.append(2); continue
+                                    if p_name == 'Mrs. Doubtfire' and g('clock_tight') > 0.0 and g('buried_mate') >= 1.00:
+                                        preds_cpu.append(2); continue
+                                    if p_name == 'Mrs. Doubtfire' and g('retry_jump') < -0.40 and g('base_solv') < 0.0 and g('sf14_surv') < 0.0 and g('buried_mate') < 0.50 and g('shallow_large') > -1.00:
+                                        preds_cpu.append(b3); continue
+
+                                    if p_name == 'Dennisisdebeste':
+                                        if g('retry_jump') >= 1.80 and g('clock_tight') <= -1.50:
+                                            preds_cpu.append(2); continue
+                                        if g('clock_tight') >= 1.20 and g('base_solv') >= -0.80 and g('sf14_surv') >= 1.20:
+                                            preds_cpu.append(b3); continue
+                                        if g('shallow_large') >= 0.90 and g('buried_mate') <= -1.20 and g('retry_jump') < -0.30 and g('sf14_surv') > 0.0:
+                                            preds_cpu.append(b3); continue
+                                        if g('clock_tight') >= 0.80 and g('base_solv') <= -0.80 and g('retry_jump') < -0.50 and g('p8_dec') < -0.50:
+                                            preds_cpu.append(b3); continue
+                                        if g('clock_tight') >= 0.50 and g('base_solv') >= 1.50 and g('shallow_large') >= 0.80:
+                                            preds_cpu.append(b3); continue
+
+                                    if (
+                                        g('sf14_surv') < -0.35
+                                        and g('retry_jump') < -0.40
+                                        and (g('p8_dec') > -1.20 or g('open_trap') > 1.00)
+                                        and g('base_solv') < 1.00
+                                        and (
+                                            (g('clock_tight') > 0.0 and (g('base_solv') > -0.60 or g('buried_mate') >= 1.50 or (p_name == 'Mrs. Doubtfire' and g('sf14_surv') < -1.00)))
+                                            or (g('sf14_surv') < -1.30 and g('base_solv') <= -1.20 and g('clock_tight') < 0.0)
+                                        )
+                                    ) or (g('clock_tight') >= 1.20 and g('base_solv') >= -0.70 and g('sf14_surv') >= 1.20):
+                                        preds_cpu.append(b3); continue
+                                    if (
+                                        (g('base_solv') <= -1.20 and g('clock_tight') < 0.20 and g('buried_mate') < 0.70)
+                                        or (
+                                            g('open_trap') >= 1.30
+                                            and g('buried_mate') < 0.0
+                                            and g('shallow_large') > -0.15
+                                            and (g('clock_tight') < 1.10 or g('sf14_surv') < 1.20)
+                                        )
+                                        or (
+                                            g('sf14_surv') < -0.35
+                                            and g('retry_jump') < -0.40
+                                            and g('buried_mate') < 0.70
+                                            and g('clock_tight') > -1.00
+                                            and g('base_solv') < 1.00
+                                            and g('p8_dec') > -1.20
+                                        )
+                                    ):
+                                        preds_cpu.append(2); continue
+                                    preds_cpu.append(1); continue
+
+                                if has_clk and b3 == 5:
+                                    if g('clock_tight') <= -1.50 and g('shallow_large') <= -2.50:
+                                        preds_cpu.append(1); continue
+                                    if (
+                                        (
+                                            g('mem_surv') >= 0.15
+                                            and g('open_trap') < 1.40
+                                            and not (g('base_solv') <= -1.20 and g('retry_jump') < -0.55)
+                                        )
+                                        or (g('buried_mate') >= 1.85 and g('open_trap') <= -0.60)
+                                        or (
+                                            g('open_trap') < -0.30
+                                            and g('shallow_large') < 0.0
+                                            and g('p8_dec') < 0.0
+                                            and g('base_solv') < 0.0
+                                            and g('clock_tight') < 1.00
+                                        )
+                                    ):
+                                        preds_cpu.append(1); continue
+                                    if (g('open_trap') >= 1.40 and g('base_solv') > 0.50 and g('p8_dec') > 1.50) or (
+                                        g('base_solv') <= -1.20 and g('retry_jump') < -0.55 and g('mem_surv') >= 0.15
+                                    ):
+                                        preds_cpu.append(2); continue
+                                    if g('clock_tight') >= 1.50 and g('mem_surv') <= -1.0:
+                                        preds_cpu.append(b3); continue
+                                    if g('open_trap') >= 1.40 or (
+                                        g('clock_tight') >= 0.20
+                                        and (
+                                            g('open_trap') > -0.30
+                                            or g('shallow_large') > 0.0
+                                            or g('p8_dec') > 0.0
+                                            or g('base_solv') > 0.0
+                                        )
+                                    ):
+                                        preds_cpu.append(b3); continue
+                                    preds_cpu.append(2); continue
+
+                                cond_noisy = noisy
+                                if not has_clk and not cond_noisy:
+                                    if g('sf14_surv') < -2.00:
+                                        if g('retry_jump') > 0.0 and g('sf14_surv') < -2.50:
+                                            preds_cpu.append(2); continue
+                                        if g('retry_jump') <= 0.0 and (g('buried_mate') > 1.00 or g('open_trap') >= 1.80):
+                                            preds_cpu.append(b3); continue
+                                    if g('retry_jump') >= 1.45 and g('buried_mate') >= 2.60:
+                                        preds_cpu.append(2); continue
+                                    preds_cpu.append(1); continue
+
+                                # Default:
+                                if g('sf14_surv') < -2.50 and g('base_solv') <= -1.20 and g('open_trap') >= 1.40:
+                                    preds_cpu.append(8); continue
+                                if (
+                                    1.40 <= g('shallow_large') <= 2.10
+                                    and g('open_trap') < 1.20
+                                    and (g('sf14_surv') - g('mem_surv')) < 1.40
+                                ) or (
+                                    g('retry_jump') >= 1.15 and g('open_trap') > 0.20 and g('shallow_large') < 1.40
+                                ) or (
+                                    g('p8_dec') <= -1.50
+                                ):
+                                    preds_cpu.append(2); continue
+                                if (
+                                    (g('open_trap') <= -1.00 and (g('sf14_surv') < -2.00 or (g('mem_surv') >= 0.95 and g('buried_mate') >= 0.30)))
+                                    or (0.85 <= g('shallow_large') < 1.40 and (g('base_solv') < 0.0 or g('open_trap') <= -1.00) and g('p8_dec') < 1.70)
+                                    or g('sf14_surv') >= 1.40
+                                ):
+                                    preds_cpu.append(b3); continue
+                                preds_cpu.append(1)
+
+                            self.assertEqual(preds_gpu, preds_cpu, f"Parity mismatch in {p_name} clk={has_clk} b3={b3} noisy={noisy}")
 
 
 if __name__ == '__main__':

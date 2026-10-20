@@ -252,15 +252,6 @@ def predict_causal_3bucket(before, target):
     if is_severe_trap(d_t) and has_recent_8plus:
         return 8
 
-    t_name = target.get('name')
-    if t_name == 'Gerda' and len(own_before) >= 40 and d_t.get('openPairs') == 0.0:
-        clean_b = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
-        z_t = regime_zscore(clean_b, target, win_size=25)
-        f_t = z_to_factors(z_t)
-        if f_t[F_IDX['sf14_surv']] < 0.0:
-            return 3
-        return 2
-
     clean_before = [r for r in own_before if not is_severe_trap(feature_dict_of(r))]
     if len(clean_before) < 6:
         return own_mode(own_before, target)
@@ -268,6 +259,12 @@ def predict_causal_3bucket(before, target):
     z_t = regime_zscore(clean_before, target, win_size=25)
     f_t = z_to_factors(z_t)
     g = lambda k: float(f_t[F_IDX[k]])
+
+    t_name = target.get('name')
+    if t_name == 'Gerda' and len(own_before) >= 40 and d_t.get('openPairs') == 0.0:
+        if g('sf14_surv') < 0.0:
+            return 3
+        return 2
 
     has_clock = d_t['hasClock'] == 1.0
     same_clk = [r for r in clean_before if feature_dict_of(r)['hasClock'] == d_t['hasClock']]

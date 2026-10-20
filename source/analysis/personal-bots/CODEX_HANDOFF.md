@@ -257,13 +257,13 @@ ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 95% accuracy target!
 ```
 
 ### Step 4: Run Full Refit Test Discovery
-Run all 222 tests (including unit tests for GPU acceleration and exact parity) across the modeling subsystem:
+Run all 228 tests (including unit tests for GPU acceleration and exact parity) across the modeling subsystem:
 ```powershell
 python -m unittest discover -s source/tools/sim/refit -p "test_*.py"
 ```
 **Expected Output:**
 ```
-Ran 222 tests in ~3.8s
+Ran 228 tests in ~4.5s
 OK
 ```
 

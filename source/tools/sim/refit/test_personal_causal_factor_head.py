@@ -1,5 +1,11 @@
 import json
+import sys
 import unittest
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
 
 from attempt_count_fit import NAMES, is_correct
 from personal_causal_factor_data import FRESH_DATA, validate_feature_archive
@@ -127,6 +133,25 @@ class CausalFactorHeadTests(unittest.TestCase):
         live = verify_post_freeze_live(fresh)
         self.assertTrue(all(p['accuracy'] >= 0.95 for p in live.values()))
         verify_unopened_future_ledger(fresh)
+
+    def test_causal_factor_evaluation_json_matches_runtime(self):
+        from personal_causal_factor_data import EVAL_OUTPUT
+        self.assertTrue(EVAL_OUTPUT.exists(), "personal-causal-factor-evaluation.json must exist")
+        rep = json.loads(EVAL_OUTPUT.read_text(encoding='utf-8'))
+        self.assertTrue(rep.get('heldBenchmarkTargetMet'), "heldBenchmarkTargetMet must be True")
+        for name in NAMES:
+            self.assertGreaterEqual(
+                rep['heldPlayers'][name]['ownCausalFactor3Bucket']['accuracy'],
+                0.95,
+                f"{name} in evaluation.json must be >= 0.95"
+            )
+            rec = rep['recentPlayers'][name]['ownCausalFactor3Bucket']
+            if rec['n'] > 0:
+                self.assertGreaterEqual(
+                    rec['accuracy'],
+                    0.95,
+                    f"{name} recent in evaluation.json must be >= 0.95"
+                )
 
 
 if __name__ == '__main__':
