@@ -1,0 +1,217 @@
+"""Unit tests for GPU Acceleration (NVIDIA GeForce RTX 3070 / CUDA / PyTorch).
+
+Verifies:
+1. GPU hardware diagnostics and device availability.
+2. 100% numerical and prediction parity between GPU evaluator and CPU reference.
+3. GPU evaluator behavior on edge cases and CPU fallback mode.
+4. GPU Monte Carlo simulator correctness across win, tray loss, and clock timeout cases.
+5. GPU parallel throughput scaling and memory cleanup.
+"""
+
+import json
+import sys
+import unittest
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+
+import torch
+
+from attempt_count_fit import NAMES, is_correct
+from personal_causal_factor_data import FRESH_DATA, FORECAST_LEDGER
+from personal_causal_factor_head import (
+    ROOT,
+    predict_causal_3bucket,
+)
+from personal_fresh_count_fit import past_of, target_eligible
+from gpu_acceleration import (
+    CausalFactorGPUEvaluator,
+    MahjongGPUSimulator,
+    get_gpu_device,
+    gpu_diagnostics,
+)
+
+
+class GPUAccelerationTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
+        cls.rows = cls.fresh['rows']
+        cls.evaluator_gpu = CausalFactorGPUEvaluator(device=get_gpu_device(prefer_gpu=True))
+        cls.evaluator_cpu = CausalFactorGPUEvaluator(device=torch.device('cpu'))
+
+    def test_01_gpu_diagnostics(self):
+        diag = gpu_diagnostics()
+        self.assertTrue(diag['cuda_available'], "CUDA must be available on RTX 3070 system")
+        self.assertIn("RTX 3070", diag['device_name'])
+        self.assertGreaterEqual(diag['total_memory_mb'], 7500.0)
+        self.assertGreaterEqual(diag['multi_processor_count'], 40)
+
+    def test_02_held_benchmark_parity_and_accuracy(self):
+        """All 80 held benchmark tasks must produce identical predictions on GPU and exceed >=80% accuracy."""
+        held_ids = set(self.fresh['comparisonEpisodes'])
+        scored = [r for r in self.rows if target_eligible(r) and r.get('wonOn') is not None and len(past_of(self.rows, r)) >= 6]
+        
+        pairs = []
+        labels = []
+        for name in NAMES:
+            p_held = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in held_ids]
+            self.assertEqual(len(p_held), 20)
+            for r in p_held:
+                pairs.append((past_of(self.rows, r), r))
+                labels.append(r['wonOn'])
+
+        self.assertEqual(len(pairs), 80)
+        
+        # GPU predictions
+        gpu_preds = self.evaluator_gpu.predict_batch(pairs, verify_parity=True)
+        self.assertEqual(len(gpu_preds), 80)
+
+        # Accuracy check
+        hits = sum(is_correct(pred, act) for pred, act in zip(gpu_preds, labels))
+        accuracy = hits / len(pairs)
+        self.assertGreaterEqual(accuracy, 0.80, f"Held benchmark accuracy on GPU ({accuracy*100:.1f}%) must be >= 80%")
+
+    def test_03_recent_tasks_parity_and_accuracy(self):
+        """All 28 recent pre-freeze tasks must produce identical predictions on GPU and exceed >=80% accuracy."""
+        recent_ids = set(self.fresh['additionalRecentIds'])
+        scored = [r for r in self.rows if target_eligible(r) and r.get('wonOn') is not None and len(past_of(self.rows, r)) >= 6]
+
+        pairs = []
+        labels = []
+        for name in NAMES:
+            p_rec = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in recent_ids]
+            for r in p_rec:
+                pairs.append((past_of(self.rows, r), r))
+                labels.append(r['wonOn'])
+
+        self.assertEqual(len(pairs), 28)
+        gpu_preds = self.evaluator_gpu.predict_batch(pairs, verify_parity=True)
+        self.assertEqual(len(gpu_preds), 28)
+
+        hits = sum(is_correct(pred, act) for pred, act in zip(gpu_preds, labels))
+        accuracy = hits / len(pairs)
+        self.assertGreaterEqual(accuracy, 0.80, f"Recent tasks accuracy on GPU ({accuracy*100:.1f}%) must be >= 80%")
+
+    def test_04_live_outcomes_parity(self):
+        """Post-freeze live completed games must match CPU predictions."""
+        live_outcomes = {
+            'Mrs. Doubtfire': {107: 3, 108: 1, 109: 2, 110: 2, 111: 1, 112: 4, 113: 1},
+            'Gerda': {69: 19, 70: 2, 71: 1, 72: 1, 73: 2, 74: 3, 75: 1, 76: 1, 77: 1, 78: 1}
+        }
+        all_rows = list(self.fresh['rows'])
+        prosp_path = ROOT / 'analysis/personal-bots/personal-fresh-prospective-results.json'
+        prosp = json.loads(prosp_path.read_text(encoding='utf-8'))
+        future_map = {(r['name'], r['lv']): r for r in self.fresh['future']}
+        
+        for ep in sorted(prosp['scored'], key=lambda x: x['start']):
+            if ep.get('wonOn') is not None:
+                base = future_map[ep['name'], ep['lv']]
+                all_rows.append({
+                    **base, 'start': ep['start'], 'end': ep['end'],
+                    'wonOn': ep['wonOn'], 'firstAttempt': 1, 'firstClear': True,
+                    'assisted': bool(ep.get('assisted', False)), 'kind': 'prospective',
+                })
+
+        pairs = []
+        for name, outcomes in sorted(live_outcomes.items()):
+            for lv, actual_attempts in sorted(outcomes.items()):
+                target = future_map[name, lv]
+                before = [r for r in all_rows if r['name'] == name]
+                pairs.append((before, target))
+
+        self.assertEqual(len(pairs), 17)
+        gpu_preds = self.evaluator_gpu.predict_batch(pairs, verify_parity=True)
+        self.assertEqual(len(gpu_preds), 17)
+
+    def test_05_evaluator_edge_cases(self):
+        """Empty input and single inputs."""
+        self.assertEqual(self.evaluator_gpu.predict_batch([]), [])
+        
+        # Single element batch
+        held_ids = set(self.fresh['comparisonEpisodes'])
+        r0 = [r for r in self.rows if f"{r['name']}|{r['start']}" in held_ids][0]
+        single_pair = [(past_of(self.rows, r0), r0)]
+        pred = self.evaluator_gpu.predict_batch(single_pair, verify_parity=True)
+        self.assertEqual(len(pred), 1)
+        self.assertIn(pred[0], {1, 2, 3, 5, 8})
+
+    def test_06_cpu_fallback(self):
+        """Evaluator with device='cpu' must work and match GPU predictions identically."""
+        held_ids = set(self.fresh['comparisonEpisodes'])
+        r0 = [r for r in self.rows if f"{r['name']}|{r['start']}" in held_ids][0]
+        single_pair = [(past_of(self.rows, r0), r0)]
+        pred_gpu = self.evaluator_gpu.predict_batch(single_pair)
+        pred_cpu = self.evaluator_cpu.predict_batch(single_pair)
+        self.assertEqual(pred_gpu, pred_cpu)
+
+    def test_07_gpu_simulator_trivial_win(self):
+        """A simple board with 2 free matching tiles must achieve 100% win rate."""
+        board = {
+            'tiles': [{'x': 0, 'y': 0, 'z': 0}, {'x': 8, 'y': 0, 'z': 0}],
+            'nb': {'above': [[], []], 'left': [[], []], 'right': [[], []]},
+            'faces': [1, 1],
+            'down': [0, 0],
+            'clock': None
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        res = sim.simulate_parallel(num_games=128, max_steps=10)
+        self.assertEqual(res['wins'], 128)
+        self.assertEqual(res['win_rate'], 1.0)
+        self.assertEqual(res['mean_tiles_remaining'], 0.0)
+
+    def test_08_gpu_simulator_dead_end_tray_loss(self):
+        """A board with unpairable singles that overfills tray must record 100% tray loss."""
+        # 4 distinct tiles, tray capacity 4 -> taking them fills tray to 4 and jams immediately
+        board = {
+            'tiles': [{'x': 0, 'y': 0, 'z': 0}, {'x': 8, 'y': 0, 'z': 0}, {'x': 16, 'y': 0, 'z': 0}, {'x': 24, 'y': 0, 'z': 0}],
+            'nb': {'above': [[], [], [], []], 'left': [[], [], [], []], 'right': [[], [], [], []]},
+            'faces': [10, 20, 30, 40], # No matches anywhere
+            'down': [0, 0, 0, 0],
+            'clock': None
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device, max_tray_capacity=4)
+        res = sim.simulate_parallel(num_games=128, max_steps=10)
+        self.assertEqual(res['wins'], 0)
+        self.assertEqual(res['tray_loss_rate'], 1.0)
+
+    def test_09_gpu_simulator_clock_timeout(self):
+        """A clock tile that cannot be cleared within move budget must record 100% clock loss."""
+        # Clock tile 2 is blocked above by tile 0 and 1, clock limit is 1 move:
+        board = {
+            'tiles': [{'x': 0, 'y': 0, 'z': 1}, {'x': 8, 'y': 0, 'z': 1}, {'x': 0, 'y': 0, 'z': 0}, {'x': 8, 'y': 0, 'z': 0}],
+            'nb': {'above': [[], [], [0, 1], []], 'left': [[], [], [], []], 'right': [[], [], [], []]},
+            'faces': [1, 2, 3, 4],
+            'down': [0, 0, 0, 0],
+            'clock': {'i': 2, 'n': 1} # tile 2 must be cleared within 1 move
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        res = sim.simulate_parallel(num_games=64, max_steps=10)
+        self.assertEqual(res['wins'], 0)
+        self.assertEqual(res['clock_loss_rate'], 1.0)
+
+    def test_10_gpu_simulator_large_batch_and_vram_cleanup(self):
+        """Simulate 2048 games in parallel and ensure no VRAM leakage."""
+        board = {
+            'tiles': [{'x': i * 8, 'y': 0, 'z': 0} for i in range(8)],
+            'nb': {'above': [[] for _ in range(8)], 'left': [[] for _ in range(8)], 'right': [[] for _ in range(8)]},
+            'faces': [1, 1, 2, 2, 3, 3, 4, 4],
+            'down': [0, 0, 0, 0, 0, 0, 0, 0],
+            'clock': None
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        res = sim.simulate_parallel(num_games=2048, max_steps=20)
+        self.assertEqual(res['num_games'], 2048)
+        self.assertGreater(res['games_per_second'], 1000.0)
+        
+        # Verify GPU memory is sane and no unbounded growth:
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            alloc_mb = torch.cuda.memory_allocated() / (1024 * 1024)
+            self.assertLess(alloc_mb, 500.0, "VRAM allocation should remain low after cleanup")
+
+
+if __name__ == '__main__':
+    unittest.main()

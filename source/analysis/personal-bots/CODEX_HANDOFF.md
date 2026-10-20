@@ -216,9 +216,11 @@ OK
 ```
 
 ### Step 3: Run the Multi-Cohort Replication CLI (All 4 Cohorts)
-Execute the complete, standalone verification suite:
+Execute the complete, standalone verification suite (supports optional `--gpu` for PyTorch CUDA on RTX 3070):
 ```powershell
 python source/tools/sim/refit/verify_multi_cohort_replication.py
+# Or with GPU acceleration:
+python source/tools/sim/refit/verify_multi_cohort_replication.py --gpu
 ```
 **Expected Output:**
 ```
@@ -255,14 +257,21 @@ ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 80% accuracy target!
 ```
 
 ### Step 4: Run Full Refit Test Discovery
-Run all 212 tests across the entire refit modeling subsystem:
+Run all 222 tests (including unit tests for GPU acceleration and exact parity) across the modeling subsystem:
 ```powershell
 python -m unittest discover -s source/tools/sim/refit -p "test_*.py"
 ```
 **Expected Output:**
 ```
-Ran 212 tests in ~3.5s
+Ran 222 tests in ~3.8s
 OK
+```
+
+### Step 5: Run GPU Acceleration Benchmark (RTX 3070)
+Benchmark batched attempt prediction and parallel Mahjong Solitaire Monte Carlo simulations on CUDA:
+```powershell
+python source/tools/sim/refit/benchmark_gpu.py
+```
 ```
 
 ---

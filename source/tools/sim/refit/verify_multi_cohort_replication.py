@@ -36,7 +36,7 @@ LIVE_OUTCOMES = {
 }
 
 
-def verify_held_benchmark(fresh):
+def verify_held_benchmark(fresh, evaluator=None):
     rows = fresh['rows']
     held_ids = set(fresh['comparisonEpisodes'])
     scored = [r for r in rows if target_eligible(r) and r.get('wonOn') is not None and len(past_of(rows, r)) >= 6]
@@ -46,11 +46,12 @@ def verify_held_benchmark(fresh):
     total_count = 0
     for name in NAMES:
         p_held = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in held_ids]
-        hits = 0
-        for r in p_held:
-            pred = predict_causal_3bucket(past_of(rows, r), r)
-            if is_correct(pred, r['wonOn']):
-                hits += 1
+        pairs = [(past_of(rows, r), r) for r in p_held]
+        if evaluator:
+            preds = evaluator.predict_batch(pairs)
+        else:
+            preds = [predict_causal_3bucket(b, t) for b, t in pairs]
+        hits = sum(is_correct(pred, r['wonOn']) for pred, r in zip(preds, p_held))
         acc = hits / len(p_held) if p_held else 0.0
         results[name] = {'hits': hits, 'n': len(p_held), 'accuracy': acc}
         total_hits += hits
@@ -63,7 +64,7 @@ def verify_held_benchmark(fresh):
     return results
 
 
-def verify_recent_tasks(fresh):
+def verify_recent_tasks(fresh, evaluator=None):
     rows = fresh['rows']
     recent_ids = set(fresh['additionalRecentIds'])
     scored = [r for r in rows if target_eligible(r) and r.get('wonOn') is not None and len(past_of(rows, r)) >= 6]
@@ -75,11 +76,12 @@ def verify_recent_tasks(fresh):
         p_rec = [r for r in scored if r['name'] == name and f"{r['name']}|{r['start']}" in recent_ids]
         if not p_rec:
             continue
-        hits = 0
-        for r in p_rec:
-            pred = predict_causal_3bucket(past_of(rows, r), r)
-            if is_correct(pred, r['wonOn']):
-                hits += 1
+        pairs = [(past_of(rows, r), r) for r in p_rec]
+        if evaluator:
+            preds = evaluator.predict_batch(pairs)
+        else:
+            preds = [predict_causal_3bucket(b, t) for b, t in pairs]
+        hits = sum(is_correct(pred, r['wonOn']) for pred, r in zip(preds, p_rec))
         acc = hits / len(p_rec)
         results[name] = {'hits': hits, 'n': len(p_rec), 'accuracy': acc}
         total_hits += hits
@@ -92,7 +94,7 @@ def verify_recent_tasks(fresh):
     return results
 
 
-def verify_post_freeze_live(fresh):
+def verify_post_freeze_live(fresh, evaluator=None):
     rows = list(fresh['rows'])
     future_map = {(r['name'], r['lv']): r for r in fresh['future']}
     
@@ -131,7 +133,7 @@ def verify_post_freeze_live(fresh):
             actual = outcomes[lv]
             f_row = future_map[name, lv]
             target = {**f_row, 'start': float('inf')}
-            pred = predict_causal_3bucket(rows, target)
+            pred = evaluator.predict_batch([(rows, target)])[0] if evaluator else predict_causal_3bucket(rows, target)
             ok = is_correct(pred, actual)
             if ok:
                 hits += 1
@@ -192,11 +194,23 @@ def verify_unopened_future_ledger(fresh):
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Independent Multi-Cohort Replication and Verification CLI")
+    parser.add_argument("--gpu", action="store_true", help="Accelerate evaluation using PyTorch CUDA (RTX 3070)")
+    args = parser.parse_args()
+
+    evaluator = None
+    if args.gpu:
+        from gpu_acceleration import CausalFactorGPUEvaluator, gpu_diagnostics
+        diag = gpu_diagnostics()
+        print(f"[GPU Acceleration Active] Device: {diag.get('device_name', 'CUDA')} (CUDA Available: {diag['cuda_available']})")
+        evaluator = CausalFactorGPUEvaluator()
+
     fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
     print("Running Full Multi-Cohort Replication Suite...")
-    verify_held_benchmark(fresh)
-    verify_recent_tasks(fresh)
-    verify_post_freeze_live(fresh)
+    verify_held_benchmark(fresh, evaluator=evaluator)
+    verify_recent_tasks(fresh, evaluator=evaluator)
+    verify_post_freeze_live(fresh, evaluator=evaluator)
     verify_unopened_future_ledger(fresh)
     print("ALL 4 COHORTS VERIFIED: Every cohort strictly exceeds the 80% accuracy target!\n")
 
