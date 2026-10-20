@@ -73,6 +73,7 @@ function measure(entries, prior, progress = () => {}) {
 async function main(directory) {
   const parent = path.resolve(directory), inputFile = path.join(parent, 'input.json'), bytes = fs.readFileSync(inputFile), data = JSON.parse(bytes);
   assert.equal(Hard.PUBLIC_OBSERVATION_VERSION, 1);
+  assert.equal(hash(Buffer.from(fs.readFileSync(path.join(root, 'source/www/hard.js'), 'utf8').replace(/\r\n/g, '\n'))), data.observation.prototypeEngineSha256);
   const cases = casesOf(data), made = new Date().toISOString();
   const folder = path.join(root, 'source/analysis/archive/personal-bots/runs/witness-reference-' + made.replace(/[:.]/g, '-')); fs.mkdirSync(folder, { recursive: true });
   const sourceHashes = {};

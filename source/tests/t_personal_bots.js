@@ -1075,6 +1075,13 @@ module.exports = [
       assert.throws(() => model.predict(fitted, { name: 'Unknown', at: 1, raw: 0.5, board: 'seen' }));
     },
   },
+  {
+    name: 'personal bots: public witness reference decisions are strictly invariant to concealed pictures before observation',
+    cpu: true,
+    async run() {
+      require('../tools/sim/refit/test_public_witness_reference.js');
+    },
+  },
 ];
 
 if (require.main === module) {
