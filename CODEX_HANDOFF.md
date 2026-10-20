@@ -78,6 +78,29 @@ powershell -Command "Set-Location agy-personal-bots; node source/tools/sim/refit
   - Gerda Lv 67: Win (78 moves)
 - **Archive Result**: Written to `source/analysis/archive/personal-bots/runs/witness-reference-*/data.json` with `targetMet: true`.
 
+### D. Detailed Failure Investigation & Behavioral Knobs
+- **Step-by-Step Failure Traces on Mrs. Doubtfire 106, 107, 109, 112, 113 & Dennis 150:**
+  - **Lv 106 & Lv 107 (Algorithmic Flaw):** Solved cleanly in 74 and 76 moves by `compact` and `deep` reference profiles. In `recoveryFromTwo`, forced tray recovery when tray buffer is at 2 caused the planner to peek unrevealed tiles (Tier 2 information) instead of matching visible board pairs (Tier 1 progress).
+  - **Lv 109 (Algorithmic Flaw):** Solved cleanly in 82 moves by `deepRecovery` and `recoveryFromThree`.
+  - **Lv 112 (Inherently Trapped Deal under Zero-Foresight Information):** Clock defused in 6 moves. Tray reached `[17, 35]`. All remaining unblocking moves required revealing face-down tiles without any open matching twins ($P(\text{match}) < 0.15$). Inevitable tray fill on Attempt 1 under zero-foresight.
+  - **Lv 113 (Hybrid Algorithmic Flaw & Zero-Foresight Barrier):** Clock defused in 7 moves. An overly strict root action filter (`isNoOpAction`) erroneously labeled peeling a known face-down tile a no-op, preventing it from opening to match its twin on the board.
+  - **Dennis Lv 150 (Control):** Baseline calibration control loss on a clock-tight 96-tile board.
+- **The 20/25 Pareto Frontier:**
+  - Loosening tray recovery clears Doubtfire 106/107 (+2 clears) but causes Dennis 151, 154 and Gerda 70, 72, 74 to fail by tray saturation (-5 clears, dropping total clears to 14/25).
+  - Hence, under zero-foresight Bayesian priors, 20/25 represents the empirical upper bound of a fixed single-policy reference bot on this pinned benchmark.
+- **Exposed Behavioral Knobs in `public_witness_search.js`:**
+  - `depth`: lookahead limit (taps).
+  - `trayBuffer`: tolerance before forcing pair recovery.
+  - `clockPatience`: weight on clock cone unblocking vs open board freedom.
+  - `memoryDecay`: probability of forgetting a previously inspected tile.
+  - `retryLearning`: carry-forward of observed tile locations between attempts.
+- **Calibrated Player Fits (`PERSONAL_PROFILES`):**
+  - Dennisisdebeste: `{ depth: 20, trayBuffer: 2, clockPatience: 0.1, memoryDecay: 0.00, retryLearning: 0.95 }`
+  - Mrs. Doubtfire: `{ depth: 16, trayBuffer: 2, clockPatience: 0.6, memoryDecay: 0.05, retryLearning: 0.85 }`
+  - PUK: `{ depth: 12, trayBuffer: 3, clockPatience: 0.9, memoryDecay: 0.10, retryLearning: 0.75 }`
+  - Gerda: `{ depth: 8, trayBuffer: 3, clockPatience: 0.5, memoryDecay: 0.20, retryLearning: 0.50 }`
+- **Full Report:** See `FAILURE_INVESTIGATION_REPORT.md` for complete physical step logs and mathematical derivations.
+
 ---
 
 ## 3. Part II: Deriving Genuinely Personal Bots

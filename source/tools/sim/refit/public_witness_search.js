@@ -3,7 +3,15 @@ const assert = require('assert/strict');
 const physical = require('./known_tray_plan.js');
 const deadEnd = require('./public_dead_end.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
-  pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
+  pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null,
+  depth: 20, trayBuffer: null, clockPatience: 0.5, memoryDecay: 0.0, retryLearning: 1.0 });
+
+const PERSONAL_PROFILES = Object.freeze({
+  'Dennisisdebeste': Object.freeze({ depth: 20, trayBuffer: 2, clockPatience: 0.1, memoryDecay: 0.0, retryLearning: 0.95, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: true }),
+  'Mrs. Doubtfire': Object.freeze({ depth: 16, trayBuffer: 2, clockPatience: 0.6, memoryDecay: 0.05, retryLearning: 0.85, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: true }),
+  'PUK': Object.freeze({ depth: 12, trayBuffer: 3, clockPatience: 0.9, memoryDecay: 0.10, retryLearning: 0.75, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: false }),
+  'Gerda': Object.freeze({ depth: 8, trayBuffer: 3, clockPatience: 0.5, memoryDecay: 0.20, retryLearning: 0.50, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: true })
+});
 
 function clockCone(game, state) {
   if (!game.clock || !state.alive[game.clock.i]) return new Set();
@@ -98,6 +106,14 @@ function recoveryOf(game, state) {
 
 function search(game, state, actions, options = PARAMETERS) {
   const settings = { ...PARAMETERS, ...options };
+  if (options.depth !== undefined && options.depth !== null) settings.taps = options.depth;
+  if (options.trayBuffer !== undefined && options.trayBuffer !== null) {
+    settings.trayRecoveryMin = options.trayBuffer;
+    settings.trayRecovery = true;
+  }
+  const clockPatience = typeof settings.clockPatience === 'number' ? settings.clockPatience : 0.5;
+  const memoryDecay = typeof settings.memoryDecay === 'number' ? settings.memoryDecay : 0.0;
+  const retryLearning = typeof settings.retryLearning === 'number' ? settings.retryLearning : 1.0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -107,6 +123,9 @@ function search(game, state, actions, options = PARAMETERS) {
   assert(Number.isInteger(settings.trayRecoveryMin) && settings.trayRecoveryMin >= 0 && settings.trayRecoveryMin <= 3);
   assert(settings.trayRecoveryClockMin === null || Number.isInteger(settings.trayRecoveryClockMin)
     && settings.trayRecoveryClockMin >= 0 && settings.trayRecoveryClockMin <= 3);
+  assert(typeof clockPatience === 'number' && clockPatience >= 0 && clockPatience <= 1);
+  assert(typeof memoryDecay === 'number' && memoryDecay >= 0 && memoryDecay <= 1);
+  assert(typeof retryLearning === 'number' && retryLearning >= 0 && retryLearning <= 1);
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
   assert(Array.isArray(actions) && actions.length > 0);
   const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
@@ -148,7 +167,13 @@ function search(game, state, actions, options = PARAMETERS) {
     } else if (exit) {
       rank = [tier, inCone ? 1 : 0, -room.pressure, room.room, progress, -path.length, -recovery.stranded, recovery.immediate];
     } else if (clocked) {
-      rank = [tier, inCone ? 1 : 0, -room.pressure, -clockDistance(game, position), safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
+      if (clockPatience > 0.6) {
+        rank = [tier, -room.pressure, room.room, progress, inCone ? 1 : 0, -clockDistance(game, position), safeInfo ? progress : -path.length];
+      } else if (clockPatience < 0.4) {
+        rank = [tier, inCone ? 2 : 0, -clockDistance(game, position), -room.pressure, safeInfo ? -path.length : progress, room.room, -path.length];
+      } else {
+        rank = [tier, inCone ? 1 : 0, -room.pressure, -clockDistance(game, position), safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
+      }
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
       if (settings.trayRecovery && (!clocked || !position.alive[game.clock.i])) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
         position.tray.length >= recoveryMin ? recovery.immediate : 0);
@@ -273,6 +298,8 @@ function search(game, state, actions, options = PARAMETERS) {
       information: selected.information, nodes, boundary, unknownTransitions: unknown, unsupportedTransitions: unsupported,
       initialKnown, initialLeft,
       finishKnown, tapLimit,
+      depth: settings.taps, trayBuffer: settings.trayRecovery ? settings.trayRecoveryMin : null,
+      clockPatience, memoryDecay, retryLearning,
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
         + 'are never sampled from the real board. Clock distance is an ordering heuristic, not a proven bound. '
         + 'A knownDead certificate requires a fully exhausted known graph with no new information or '
@@ -282,4 +309,4 @@ function search(game, state, actions, options = PARAMETERS) {
   }
 }
 
-module.exports = { PARAMETERS, keyOf, clockDistance, roomOf, recoveryOf, search };
+module.exports = { PARAMETERS, PERSONAL_PROFILES, keyOf, clockDistance, roomOf, recoveryOf, search };

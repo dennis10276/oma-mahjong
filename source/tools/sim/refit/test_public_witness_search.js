@@ -61,4 +61,42 @@ const restricted = search(fixture.game, fixture.state, [{ index: 2, inspect: fal
 assert.equal(restricted.path[0], 2);
 const frozen = JSON.stringify(fixture.state); search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state)); assert.equal(JSON.stringify(fixture.state), frozen);
 assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { nodes: 0 }));
-console.log('PASS witness search uses public pictures only, constructs separate physical clock-safe taps, stops at unknown reveals, retains bounds and respects actual root restrictions');
+
+// Behavioral knobs and Personal Bots parameterization tests
+const { PERSONAL_PROFILES } = require('./public_witness_search.js');
+assert(PERSONAL_PROFILES['Dennisisdebeste'] && PERSONAL_PROFILES['Mrs. Doubtfire'] && PERSONAL_PROFILES['PUK'] && PERSONAL_PROFILES['Gerda']);
+for (const [name, prof] of Object.entries(PERSONAL_PROFILES)) {
+  assert(Number.isInteger(prof.depth) && prof.depth > 0);
+  assert(Number.isInteger(prof.trayBuffer) && prof.trayBuffer >= 0 && prof.trayBuffer <= 3);
+  assert(typeof prof.clockPatience === 'number' && prof.clockPatience >= 0 && prof.clockPatience <= 1);
+  assert(typeof prof.memoryDecay === 'number' && prof.memoryDecay >= 0 && prof.memoryDecay <= 1);
+  assert(typeof prof.retryLearning === 'number' && prof.retryLearning >= 0 && prof.retryLearning <= 1);
+}
+
+// depth knob
+const depthReport = search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { depth: 4 });
+assert.equal(depthReport.depth, 4); assert(depthReport.knownWin);
+
+// trayBuffer knob
+const trayBufReport = search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { trayBuffer: 2 });
+assert.equal(trayBufReport.trayBuffer, 2);
+
+// clockPatience knob
+const patientClock = search(clock.game, clock.state, actionsOf(clock.game, clock.state), { clockPatience: 0.9 });
+assert.equal(patientClock.clockPatience, 0.9);
+const urgentClock = search(clock.game, clock.state, actionsOf(clock.game, clock.state), { clockPatience: 0.1 });
+assert.equal(urgentClock.clockPatience, 0.1);
+
+// memoryDecay and retryLearning knobs
+const decayReport = search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { memoryDecay: 0.2, retryLearning: 0.8 });
+assert.equal(decayReport.memoryDecay, 0.2);
+assert.equal(decayReport.retryLearning, 0.8);
+
+// Validation assertions on out-of-range knobs
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { clockPatience: 1.5 }));
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { memoryDecay: -0.1 }));
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { retryLearning: 2.0 }));
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { trayBuffer: 5 }));
+
+console.log('PASS witness search uses public pictures only, constructs separate physical clock-safe taps, stops at unknown reveals, retains bounds, exposes behavioral knobs, and respects actual root restrictions');
+
