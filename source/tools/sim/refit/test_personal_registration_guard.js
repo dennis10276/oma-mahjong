@@ -21,13 +21,24 @@ try {
 // Exercise the actual CLI entry point against the registered candidate. It must
 // refuse before writing calibration or starting a simulation job.
 const root = path.resolve(__dirname, '../../../..');
-const protectedPaths = ['source/analysis/personal-bots/personal-source-bound-causal-forecasts-v3.jsonl',
-  'source/analysis/personal-bots/personal-behavioral-fit.json'].map(p => path.join(root, p));
+const protectedPaths = [
+  'source/analysis/personal-bots/personal-source-bound-causal-forecasts-v3.jsonl',
+  'source/analysis/personal-bots/personal-source-bound-causal-forecasts-v7.jsonl',
+  'source/analysis/personal-bots/personal-behavioral-fit.json'
+].map(p => path.join(root, p));
 const before = protectedPaths.map(p => fs.readFileSync(p));
-const attempt = spawnSync(process.execPath, [path.join(__dirname, 'generate_personal_witness_v3.js')],
+
+const attemptV3 = spawnSync(process.execPath, [path.join(__dirname, 'generate_personal_witness_v3.js')],
   { encoding: 'utf8', timeout: 5000 });
-assert.equal(attempt.status, 1, 'Actual registered v3 CLI must refuse immediately');
-assert.match(attempt.stderr, /Refusing to overwrite registered candidate/);
-assert.doesNotMatch(attempt.stdout, /Calibrating|Dispatching/);
+assert.equal(attemptV3.status, 1, 'Actual registered v3 CLI must refuse immediately');
+assert.match(attemptV3.stderr, /Refusing to overwrite registered candidate/);
+assert.doesNotMatch(attemptV3.stdout, /Calibrating|Dispatching/);
+
+const attemptV7 = spawnSync(process.execPath, [path.join(__dirname, 'generate_personal_witness_v7.js')],
+  { encoding: 'utf8', timeout: 5000 });
+assert.equal(attemptV7.status, 1, 'Actual registered v7 CLI must refuse immediately');
+assert.match(attemptV7.stderr, /Refusing to overwrite registered candidate/);
+assert.doesNotMatch(attemptV7.stdout, /Calibrating|Dispatching/);
+
 protectedPaths.forEach((p, i) => assert.deepEqual(fs.readFileSync(p), before[i]));
-console.log('PASS: actual generator CLI refuses before calibration and worker launch');
+console.log('PASS: actual generator CLI refuses before calibration and worker launch for both v3 and v7');
