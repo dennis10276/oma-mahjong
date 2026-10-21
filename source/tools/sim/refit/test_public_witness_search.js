@@ -61,4 +61,107 @@ const restricted = search(fixture.game, fixture.state, [{ index: 2, inspect: fal
 assert.equal(restricted.path[0], 2);
 const frozen = JSON.stringify(fixture.state); search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state)); assert.equal(JSON.stringify(fixture.state), frozen);
 assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { nodes: 0 }));
+
+// Behavioral knobs: invalid parameter rejection and causal parameter ablation tests
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { hallucinatedOption: true }));
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { depth: 0 }));
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { trayBuffer: 5 }));
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { clockPatience: 1.5 }));
+assert.throws(() => search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { memoryDecay: -0.1 }));
+
+// 1. Depth causal change
+const shallow = search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { depth: 2, finishKnown: false });
+const deep = search(fixture.game, fixture.state, actionsOf(fixture.game, fixture.state), { depth: 4, finishKnown: false });
+assert(!shallow.knownWin, 'shallow depth must not find multi-step win');
+assert(deep.knownWin, 'deep depth must find multi-step win');
+
+// 2. TrayBuffer causal change
+const tGame = {
+  tiles: [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 2 }, { x: 16, y: 0, z: 0 }],
+  nb: { above: [[], [], []], left: [[], [], []], right: [[], []] },
+  rules: null, clock: null
+};
+const tState = {
+  pictures: [3, 4, 3],
+  down: [0, 0, 0],
+  alive: [1, 1, 1],
+  tray: [1],
+  moves: 0,
+  openPeek: -1,
+  relieved: false,
+  arriving: []
+};
+const resBuff2 = search(tGame, tState, [{ index: 0, inspect: false }, { index: 1, inspect: false }], { trayBuffer: 2, depth: 1 });
+const resBuff1 = search(tGame, tState, [{ index: 0, inspect: false }, { index: 1, inspect: false }], { trayBuffer: 1, depth: 1 });
+assert.equal(resBuff2.path[0], 0, 'trayBuffer 2 forces pair recovery to prevent stranded single');
+assert.equal(resBuff1.path[0], 1, 'trayBuffer 1 tolerates tray growth and follows higher z tiebreaker');
+
+// 3. ClockPatience causal change
+const cGame = {
+  tiles: [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 8, y: 0, z: 5 }],
+  nb: {
+    above: [[1], [], []],
+    left: [[], [], []],
+    right: [[], []]
+  },
+  rules: null,
+  clock: { i: 0, n: 5 }
+};
+const cState = {
+  pictures: [1, 2, 3],
+  down: [0, 0, 0],
+  alive: [1, 1, 1],
+  tray: [],
+  moves: 0,
+  openPeek: -1,
+  relieved: false,
+  arriving: []
+};
+const resPatient = search(cGame, cState, [{ index: 1, inspect: false }, { index: 2, inspect: false }], { clockPatience: 0.8, depth: 1 });
+const resImpatient = search(cGame, cState, [{ index: 1, inspect: false }, { index: 2, inspect: false }], { clockPatience: 0.2, depth: 1 });
+assert.equal(resPatient.path[0], 1, 'high clock patience picks in-cone blocker tile 1');
+assert.equal(resImpatient.path[0], 2, 'low clock patience picks open board tile 2');
+
+// 4. MemoryDecay causal change
+const mGame = {
+  tiles: [{ x: 0, y: 0, z: 5 }, { x: 8, y: 0, z: 0 }],
+  nb: { above: [[], []], left: [[], []], right: [[], []] },
+  rules: null, clock: null
+};
+const mState = {
+  pictures: [1, 1],
+  down: [1, 0],
+  alive: [1, 1],
+  tray: [1],
+  moves: 0,
+  openPeek: -1,
+  relieved: false,
+  arriving: []
+};
+const resRetain = search(mGame, mState, [{ index: 0, inspect: false }, { index: 1, inspect: false }], { memoryDecay: 0.0, rng: () => 0.5 });
+const resDecay = search(mGame, mState, [{ index: 0, inspect: false }, { index: 1, inspect: false }], { memoryDecay: 1.0, rng: () => 0.5 });
+assert.equal(resRetain.path[0], 0, 'remembered picture matches tray and wins z-tiebreaker');
+assert.equal(resDecay.path[0], 1, 'forgotten picture loses to known face-up tray match');
+
+// 5. RetryLearning causal change
+const rGame = {
+  tiles: [{ x: 0, y: 0, z: 5 }, { x: 8, y: 0, z: 0 }],
+  nb: { above: [[], []], left: [[], []], right: [[], []] },
+  rules: null, clock: null
+};
+const rState = {
+  pictures: [null, 1],
+  down: [1, 0],
+  alive: [1, 1],
+  tray: [1],
+  moves: 0,
+  openPeek: -1,
+  relieved: false,
+  arriving: []
+};
+const resLearn = search(rGame, rState, [{ index: 0, inspect: false }, { index: 1, inspect: false }], { retryLearning: 1.0, previousAttemptObserved: [1, null], rng: () => 0.5 });
+const resNoLearn = search(rGame, rState, [{ index: 0, inspect: false }, { index: 1, inspect: false }], { retryLearning: 0.0, previousAttemptObserved: [1, null], rng: () => 0.5 });
+assert.equal(resLearn.path[0], 0, 'learned picture matches tray and wins z-tiebreaker');
+assert.equal(resNoLearn.path[0], 1, 'unlearned picture loses to known face-up tray match');
+
 console.log('PASS witness search uses public pictures only, constructs separate physical clock-safe taps, stops at unknown reveals, retains bounds and respects actual root restrictions');

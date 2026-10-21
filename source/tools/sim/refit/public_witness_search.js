@@ -3,8 +3,16 @@ const assert = require('assert/strict');
 const physical = require('./known_tray_plan.js');
 const deadEnd = require('./public_dead_end.js');
 const { guardedSearch } = require('./public_witness_reopen_guard.js');
+const ALLOWED_OPTIONS = new Set([
+  'taps', 'nodes', 'beam', 'progress', 'pruneDead', 'proofNodes',
+  'pairProgress', 'finishKnown', 'trayRecovery', 'trayRecoveryMin', 'trayRecoveryClockMin',
+  'depth', 'trayBuffer', 'clockPatience', 'memoryDecay', 'retryLearning', 'rng', 'previousAttemptObserved'
+]);
+
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
-  pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
+  pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null,
+  depth: null, trayBuffer: null, clockPatience: null, memoryDecay: null, retryLearning: null, rng: null,
+  previousAttemptObserved: null });
 
 function clockCone(game, state) {
   if (!game.clock || !state.alive[game.clock.i]) return new Set();
@@ -108,7 +116,31 @@ function recoveryOf(game, state) {
 }
 
 function searchKnown(game, state, actions, options = PARAMETERS) {
+  for (const key of Object.keys(options)) {
+    assert(ALLOWED_OPTIONS.has(key), `Unsupported search option: ${key}`);
+  }
   const settings = { ...PARAMETERS, ...options };
+  if (settings.depth !== null && settings.depth !== undefined) {
+    assert(Number.isInteger(settings.depth) && settings.depth > 0 && settings.depth <= 96, 'depth must be integer in 1..96');
+    settings.taps = settings.depth;
+  }
+  if (settings.trayBuffer !== null && settings.trayBuffer !== undefined) {
+    assert(Number.isInteger(settings.trayBuffer) && settings.trayBuffer >= 1 && settings.trayBuffer <= 4, 'trayBuffer must be integer in 1..4');
+    settings.trayRecovery = true;
+    settings.trayRecoveryMin = Math.max(0, Math.min(3, 4 - settings.trayBuffer));
+  }
+  if (settings.clockPatience !== null && settings.clockPatience !== undefined) {
+    assert(typeof settings.clockPatience === 'number' && Number.isFinite(settings.clockPatience) && settings.clockPatience >= 0 && settings.clockPatience <= 1, 'clockPatience must be in 0..1');
+  }
+  if (settings.memoryDecay !== null && settings.memoryDecay !== undefined) {
+    assert(typeof settings.memoryDecay === 'number' && Number.isFinite(settings.memoryDecay) && settings.memoryDecay >= 0 && settings.memoryDecay <= 1, 'memoryDecay must be in 0..1');
+  }
+  if (settings.retryLearning !== null && settings.retryLearning !== undefined) {
+    assert(typeof settings.retryLearning === 'number' && Number.isFinite(settings.retryLearning) && settings.retryLearning >= 0 && settings.retryLearning <= 1, 'retryLearning must be in 0..1');
+  }
+  if (settings.rng !== null && settings.rng !== undefined) {
+    assert(typeof settings.rng === 'function', 'rng must be a function');
+  }
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -122,15 +154,45 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert(Array.isArray(actions) && actions.length > 0);
   const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
   assert([...roots].every(index => initialFree.includes(index)));
-  const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
-  const cone = clocked ? clockCone(game, state) : null;
-  const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
+
+  let effectiveState = state;
+  let modifiedPictures = false;
+  let currentPictures = state.pictures;
+  if (settings.memoryDecay !== null && settings.memoryDecay > 0 && settings.rng) {
+    currentPictures = currentPictures.slice();
+    for (let i = 0; i < currentPictures.length; i++) {
+      if (state.down[i] && currentPictures[i] !== null && i !== state.openPeek) {
+        if (settings.rng() < settings.memoryDecay) {
+          currentPictures[i] = null;
+          modifiedPictures = true;
+        }
+      }
+    }
+  }
+  if (settings.retryLearning !== null && settings.previousAttemptObserved && settings.rng) {
+    if (!modifiedPictures) currentPictures = currentPictures.slice();
+    for (let i = 0; i < currentPictures.length; i++) {
+      if (state.down[i] && currentPictures[i] === null && settings.previousAttemptObserved[i] !== null) {
+        if (settings.rng() < settings.retryLearning) {
+          currentPictures[i] = settings.previousAttemptObserved[i];
+          modifiedPictures = true;
+        }
+      }
+    }
+  }
+  if (modifiedPictures) {
+    effectiveState = { ...state, pictures: currentPictures };
+  }
+
+  const initialLeft = effectiveState.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && effectiveState.alive[game.clock.i]);
+  const cone = clocked ? clockCone(game, effectiveState) : null;
+  const initialKnown = effectiveState.pictures.filter((picture, index) => effectiveState.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
-    initialLeft + state.down.filter((value, index) => value && state.alive[index]).length)) : settings.taps;
-  let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
+    initialLeft + effectiveState.down.filter((value, index) => value && effectiveState.alive[index]).length)) : settings.taps;
+  let best = null, beam = [{ state: effectiveState, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
   const provedDeadRoots = new Set();
-  const visited = new Set([keyOf(game, state)]);
+  const visited = new Set([keyOf(game, effectiveState)]);
 
   const evaluate = (position, path, information = false, targetIndex = -1) => {
     const room = roomOf(game, position), left = position.alive.reduce((sum, value) => sum + value, 0);
@@ -159,7 +221,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     } else if (exit) {
       rank = [tier, inCone ? 1 : 0, -room.pressure, room.room, progress, -path.length, -recovery.stranded, recovery.immediate];
     } else if (clocked) {
-      rank = [tier, inCone ? 1 : 0, -room.pressure, -clockDistance(game, position), safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
+      const conePreference = (settings.clockPatience !== null && settings.clockPatience < 0.4) ? (!inCone ? 1 : 0) : (inCone ? 1 : 0);
+      const distWeight = (settings.clockPatience !== null && settings.clockPatience < 0.4) ? 0 : -clockDistance(game, position);
+      rank = [tier, conePreference, -room.pressure, distWeight, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
       if (settings.trayRecovery && (!clocked || !position.alive[game.clock.i])) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
         position.tray.length >= recoveryMin ? recovery.immediate : 0);
@@ -190,7 +254,12 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         if (settled.pictures[index] !== null && settled.tray.includes(settled.pictures[index])) return 0;
         if (game.clock?.i === index) return 1;
         if (settled.openPeek >= 0 && index !== settled.openPeek && settled.pictures[index] === settled.pictures[settled.openPeek]) return 2;
-        if (cone && cone.has(index)) return settled.pictures[index] === null ? 3 : 4;
+        if (cone && cone.has(index)) {
+          if (settings.clockPatience !== null && settings.clockPatience < 0.4) {
+            return settled.pictures[index] === null ? 5 : 6;
+          }
+          return settled.pictures[index] === null ? 3 : 4;
+        }
         if (settled.pictures[index] === null) return 5;
         return 6;
       };
@@ -277,6 +346,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       unknownTransitions: unknown, unsupportedTransitions: unsupported,
       initialKnown, initialLeft,
       finishKnown, tapLimit,
+      parameters: { depth: settings.depth ?? settings.taps, trayBuffer: settings.trayBuffer,
+        clockPatience: settings.clockPatience, memoryDecay: settings.memoryDecay, retryLearning: settings.retryLearning },
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
         + 'are never sampled from the real board. Clock distance is an ordering heuristic, not a proven bound. '
         + 'A knownDead certificate requires a fully exhausted known graph with no new information or '
@@ -289,10 +360,42 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
 
 const guarded = guardedSearch(searchKnown);
 function search(game, state, actions, options = PARAMETERS) {
+  for (const key of Object.keys(options)) {
+    assert(ALLOWED_OPTIONS.has(key), `Unsupported search option: ${key}`);
+  }
+  const settings = { ...PARAMETERS, ...options };
+  let effectiveState = state;
+  let modifiedPictures = false;
+  let currentPictures = state.pictures;
+  if (settings.memoryDecay !== null && settings.memoryDecay > 0 && settings.rng) {
+    currentPictures = currentPictures.slice();
+    for (let i = 0; i < currentPictures.length; i++) {
+      if (state.down[i] && currentPictures[i] !== null && i !== state.openPeek) {
+        if (settings.rng() < settings.memoryDecay) {
+          currentPictures[i] = null;
+          modifiedPictures = true;
+        }
+      }
+    }
+  }
+  if (settings.retryLearning !== null && settings.previousAttemptObserved && settings.rng) {
+    if (!modifiedPictures) currentPictures = currentPictures.slice();
+    for (let i = 0; i < currentPictures.length; i++) {
+      if (state.down[i] && currentPictures[i] === null && settings.previousAttemptObserved[i] !== null) {
+        if (settings.rng() < settings.retryLearning) {
+          currentPictures[i] = settings.previousAttemptObserved[i];
+          modifiedPictures = true;
+        }
+      }
+    }
+  }
+  if (modifiedPictures) {
+    effectiveState = { ...state, pictures: currentPictures };
+  }
   const publicActions = actions.map(action => ({ index: action.index,
-    inspect: !!state.down[action.index] && state.openPeek !== action.index
-      && (state.pictures[action.index] === null || unproductiveReopen(state, action.index)) }));
-  return guarded(game, state, publicActions, options);
+    inspect: !!effectiveState.down[action.index] && effectiveState.openPeek !== action.index
+      && (effectiveState.pictures[action.index] === null || unproductiveReopen(effectiveState, action.index)) }));
+  return guarded(game, effectiveState, publicActions, options);
 }
 
 module.exports = { PARAMETERS, REFERENCE_PARAMETERS, keyOf, clockDistance, roomOf, recoveryOf, search };

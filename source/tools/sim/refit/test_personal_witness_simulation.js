@@ -1,5 +1,5 @@
 'use strict';
-const assert = require('assert');
+const assert = require('assert/strict');
 const { simulatePersonalCampaign } = require('./personal_witness_simulation.js');
 const Layouts = require('../../../www/layouts.js');
 
@@ -26,7 +26,39 @@ assert(resultDennis.cleared, 'Should clear simple board');
 assert.equal(resultDennis.wonOn, 1, 'Should clear simple board on attempt 1');
 assert.equal(resultDennis.parameters.depth, 16);
 
-// 2. Board with face-down tiles requiring retry carry-forward
+// 2. Production physics: Valid two-tile all-down clock deal
+// In production physics, pure inspection costs 0 removal moves, clearing tap clears deal on attempt 1
+const clockTiles = [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }];
+const clockGame = {
+  tiles: clockTiles,
+  nb: Layouts.neighbors(clockTiles),
+  faces: [1, 1],
+  down: new Uint8Array([1, 1]),
+  rules: null,
+  clock: { i: 1, n: 1 }
+};
+const resClock = simulatePersonalCampaign(clockGame, 'Dennisisdebeste', { maxAttempts: 3 });
+assert.equal(resClock.wonOn, 1, 'Two-tile clock deal should clear on attempt 1 in production physics');
+
+// 3. Production physics: Four distinct pictures tray overflow deal
+// Must lose immediately to tray >= 4 and return wonOn = null (never maxAttempts)
+const trayTiles = [
+  { x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }, { x: 16, y: 0, z: 0 }, { x: 24, y: 0, z: 0 },
+  { x: 32, y: 0, z: 0 }, { x: 40, y: 0, z: 0 }
+];
+const trayGame = {
+  tiles: trayTiles,
+  nb: Layouts.neighbors(trayTiles),
+  faces: [1, 2, 3, 4, 5, 6], // no matches possible
+  down: new Uint8Array([0, 0, 0, 0, 0, 0]),
+  rules: null,
+  clock: null
+};
+const resTray = simulatePersonalCampaign(trayGame, 'Mrs. Doubtfire', { maxAttempts: 2 });
+assert.equal(resTray.wonOn, null, 'Unsolvable tray deal should return wonOn = null');
+assert(resTray.history.every(h => h.why === 'tray' || h.status === 'physicalLoss'), 'Should lose to tray');
+
+// 4. Board with face-down tiles requiring retry carry-forward
 // Tower: Tile 0 covers 1; Tile 2 covers 3
 const towerTiles = [
   { x: 0, y: 0, z: 1 },
@@ -47,10 +79,10 @@ const resultTower = simulatePersonalCampaign(towerGame, 'Mrs. Doubtfire', { maxA
 assert(resultTower.totalAttempts >= 1);
 assert(resultTower.parameters.retryLearning > 0);
 
-// 3. Test deterministic reproducibility
+// 5. Test deterministic reproducibility
 const runA = simulatePersonalCampaign(towerGame, 'PUK', { maxAttempts: 2 });
 const runB = simulatePersonalCampaign(towerGame, 'PUK', { maxAttempts: 2 });
 assert.equal(runA.wonOn, runB.wonOn);
 assert.equal(runA.totalAttempts, runB.totalAttempts);
 
-console.log('PASS personal witness simulation: multi-attempt carry-forward, deterministic seeds, and player parameter integration');
+console.log('PASS personal witness simulation: production physics via Hard, two-tile clock clear, tray overflow loss, wonOn null on failure, and multi-attempt retry learning');

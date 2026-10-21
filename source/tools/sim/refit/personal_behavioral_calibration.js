@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Hard = require('../../../www/hard.js');
 const L = require('../../../www/layouts.js');
-const { NAMES } = require('./personal_model.js');
+const { NAMES, boardId } = require('./personal_model.js');
 const { gamesOf } = require('./mimic_games.js');
 
 const ROOT = path.resolve(__dirname, '../../../..');
@@ -25,7 +25,7 @@ const OUTPUT_PATH = path.join(ROOT, 'source', 'analysis', 'personal-bots', 'pers
  */
 function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
   const allGames = gamesOf(name)
-    .filter(g => g.availableAt < cutoffTime)
+    .filter(g => g.availableAt < cutoffTime && g.t < cutoffTime)
     .sort((a, b) => a.t - b.t);
 
   if (allGames.length === 0) {
@@ -36,87 +36,96 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
     };
   }
 
-  // Tray metrics
-  let traySingleCounts = { 0: 0, 1: 0, 2: 0, 3: 0 };
-  let trayTotalOpportunities = { 0: 0, 1: 0, 2: 0, 3: 0 };
-  let weightedTrayRisk = 0;
-  let totalTrayWeight = 0;
+  // Recency-weighted tray metrics
+  let weightedTraySingleCounts = { 0: 0, 1: 0, 2: 0, 3: 0 };
+  let weightedTrayTotalOpportunities = { 0: 0, 1: 0, 2: 0, 3: 0 };
 
-  // Clock metrics
+  // Recency-weighted clock metrics (strictly while clock is alive)
   let weightedClockConeMoves = 0;
   let weightedClockTotalMoves = 0;
 
-  // Memory metrics: tracking re-inspections of already peeked/turned tiles
-  let inspectedTilesSeen = 0;
-  let redundantInspections = 0;
+  // Recency-weighted memory metrics (filtering consecutive state peek duplicates)
+  let weightedInspectionsSeen = 0;
+  let weightedReInspectedTiles = 0;
 
-  // Cross-attempt retry carry-forward: same board/level consecutive attempts
+  // Recency-weighted depth metrics
+  let weightedMovesSum = 0;
+  let weightedGamesSum = 0;
+
+  // Cross-attempt retry carry-forward: exact board ID and campaign ID
   const campaignAttempts = new Map();
 
   allGames.forEach((game, ageFromEnd) => {
     const age = allGames.length - 1 - ageFromEnd;
     const weight = Math.pow(0.5, age / halfLife);
 
-    // Track campaigns for retryLearning
-    const campKey = `${game.key}_${game.lv}`;
+    const movesCount = game.take.filter(x => x >= 0).length;
+    weightedGamesSum += weight;
+    weightedMovesSum += weight * movesCount;
+
+    // Track exact board campaigns for retryLearning
+    const exactBoard = boardId(game.g);
+    const campKey = `${game.key}_${exactBoard}`;
     if (!campaignAttempts.has(campKey)) campaignAttempts.set(campKey, []);
     campaignAttempts.get(campKey).push({ game, weight });
 
-    // Clock cone tracking
+    // Clock cone tracking using nb.above
     const hasClock = !!game.g.clock;
     let clockCone = null;
+    let clockIdx = -1;
     if (hasClock) {
-      const clockIdx = game.g.clock.i;
-      // Dependency cone
-      const tiles = game.g.tiles;
+      clockIdx = game.g.clock.i;
       clockCone = new Set([clockIdx]);
-      let expanded = true;
-      while (expanded) {
-        expanded = false;
-        for (let i = 0; i < tiles.length; i++) {
-          if (!clockCone.has(i)) {
-            // If i is an ancestor/neighbor covering any tile in clockCone
-            const nb = game.g.nb[i];
-            if (nb && nb.some(n => clockCone.has(n) && tiles[i].z > tiles[n].z)) {
-              clockCone.add(i);
-              expanded = true;
-            }
+      const stack = [clockIdx];
+      while (stack.length) {
+        const current = stack.pop();
+        const aboveList = (game.g.nb && game.g.nb.above && game.g.nb.above[current]) || [];
+        for (const above of aboveList) {
+          if (!clockCone.has(above)) {
+            clockCone.add(above);
+            stack.push(above);
           }
         }
       }
     }
 
     // Step-by-step trace
+    let clockAlive = hasClock;
     let tray = [];
-    let seenInspections = new Set();
+    const inspectionCounts = new Map();
+    let lastPeek = -1;
 
     for (let s = 0; s < game.take.length; s++) {
       const tap = game.take[s];
       const trayLen = tray.length;
 
-      if (trayLen <= 3) {
-        trayTotalOpportunities[trayLen]++;
-      }
-
       if (tap < 0) {
-        // Inspection of face-down tile
+        // Inspection of face-down tile; only count new physical inspection events
         const inspectedIdx = -(tap + 1);
-        if (seenInspections.has(inspectedIdx)) {
-          redundantInspections++;
-        } else {
-          seenInspections.add(inspectedIdx);
-          inspectedTilesSeen++;
+        if (inspectedIdx !== lastPeek) {
+          lastPeek = inspectedIdx;
+          inspectionCounts.set(inspectedIdx, (inspectionCounts.get(inspectedIdx) || 0) + 1);
         }
         continue;
       }
 
+      // Removal or physical match tap
+      lastPeek = -1;
       const tileIdx = tap;
       const pic = game.g.faces[tileIdx];
 
-      if (hasClock && clockCone) {
+      if (trayLen <= 3) {
+        weightedTrayTotalOpportunities[trayLen] += weight;
+      }
+
+      // Only count clock moves while clock tile is alive
+      if (clockAlive && clockCone) {
         weightedClockTotalMoves += weight;
         if (clockCone.has(tileIdx)) {
           weightedClockConeMoves += weight;
+        }
+        if (tileIdx === clockIdx) {
+          clockAlive = false;
         }
       }
 
@@ -127,31 +136,34 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
       } else {
         // Single taken into tray
         if (trayLen <= 3) {
-          traySingleCounts[trayLen]++;
+          weightedTraySingleCounts[trayLen] += weight;
         }
         tray.push(pic);
-        if (trayLen >= 2) {
-          weightedTrayRisk += weight * (trayLen === 2 ? 1.0 : 2.5);
-        }
-        totalTrayWeight += weight;
+      }
+    }
+
+    for (const [, count] of inspectionCounts) {
+      weightedInspectionsSeen += weight;
+      if (count > 1) {
+        weightedReInspectedTiles += weight;
       }
     }
   });
 
-  // Calculate empirical retry learning
+  // Calculate empirical retry learning across exact-board consecutive attempts
   let weightedRetryOverlap = 0;
   let weightedRetryTotal = 0;
 
-  for (const [key, attempts] of campaignAttempts.entries()) {
+  for (const [, attempts] of campaignAttempts.entries()) {
     if (attempts.length > 1) {
       for (let i = 1; i < attempts.length; i++) {
         const prev = attempts[i - 1];
         const curr = attempts[i];
-        const prevSet = new Set(prev.game.take.filter(x => x >= 0));
-        const currTakes = curr.game.take.filter(x => x >= 0);
+        const prevTakes = new Set(prev.game.take.map(x => x < 0 ? -(x + 1) : x));
+        const currTakes = curr.game.take.map(x => x < 0 ? -(x + 1) : x);
         let overlap = 0;
         for (const t of currTakes) {
-          if (prevSet.has(t)) overlap++;
+          if (prevTakes.has(t)) overlap++;
         }
         const w = (prev.weight + curr.weight) / 2;
         weightedRetryOverlap += w * overlap;
@@ -160,26 +172,27 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
     }
   }
 
-  // Derive parameters
-  const singleProb3 = traySingleCounts[3] / Math.max(1, trayTotalOpportunities[3]);
-  const singleProb2 = traySingleCounts[2] / Math.max(1, trayTotalOpportunities[2]);
+  // Derive parameters with recency-weighted statistics
+  const singleProb3 = weightedTraySingleCounts[3] / Math.max(0.001, weightedTrayTotalOpportunities[3]);
+  const singleProb2 = weightedTraySingleCounts[2] / Math.max(0.001, weightedTrayTotalOpportunities[2]);
 
   // trayBuffer: 2 if player heavily restricts singles at tray=2/3; 3 if they tolerate pushing
   const trayBuffer = (singleProb3 < 0.12 && singleProb2 < 0.21) ? 2 : 3;
 
-  // clockPatience: ratio of moves on clock cone
+  // clockPatience: ratio of moves on clock cone strictly while clock is alive
   const clockConeRatio = weightedClockTotalMoves > 0 ? (weightedClockConeMoves / weightedClockTotalMoves) : 0.5;
   const clockPatience = Math.max(0.1, Math.min(0.95, clockConeRatio * 1.5));
 
-  // memoryDecay: rate of redundant inspections or memory slip
-  const rawDecay = inspectedTilesSeen > 0 ? (redundantInspections / inspectedTilesSeen) : 0.05;
-  const memoryDecay = Math.max(0.0, Math.min(0.4, rawDecay));
+  // memoryDecay: per-step empirical forgetting probability from re-inspection rate
+  const frac = weightedInspectionsSeen > 0 ? (weightedReInspectedTiles / weightedInspectionsSeen) : 0.5;
+  const avgM = weightedMovesSum / Math.max(0.001, weightedGamesSum);
+  const memoryDecay = Math.max(0.005, Math.min(0.08, 1 - Math.pow(Math.max(0.01, 1 - frac), 1 / Math.max(10, avgM))));
 
-  // retryLearning: carry-forward fraction
+  // retryLearning: exact-board carry-forward fraction
   const rawRetry = weightedRetryTotal > 0 ? (weightedRetryOverlap / weightedRetryTotal) : 0.6;
   const retryLearning = Math.max(0.1, Math.min(0.95, rawRetry));
 
-  // depth: based on win rate and moves
+  // depth: based on recency-weighted moves and win rate
   const winRate = allGames.filter(g => g.won).length / allGames.length;
   const depth = winRate > 0.7 ? 20 : winRate > 0.5 ? 16 : winRate > 0.3 ? 12 : 8;
 
@@ -192,14 +205,14 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
       singleProbAtTray2: +(singleProb2.toFixed(3)),
       singleProbAtTray3: +(singleProb3.toFixed(3)),
       clockConeRatio: +(clockConeRatio.toFixed(3)),
-      redundantInspectionRate: +(rawDecay.toFixed(3)),
+      reInspectedTileFraction: +(frac.toFixed(3)),
       retryCarryForwardRate: +(rawRetry.toFixed(3))
     },
     parameters: {
       depth,
       trayBuffer,
       clockPatience: +(clockPatience.toFixed(2)),
-      memoryDecay: +(memoryDecay.toFixed(2)),
+      memoryDecay: +(memoryDecay.toFixed(4)),
       retryLearning: +(retryLearning.toFixed(2))
     }
   };

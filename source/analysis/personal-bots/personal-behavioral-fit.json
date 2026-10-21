@@ -1,5 +1,5 @@
 {
-  "calibratedAt": "2026-10-21T13:19:44.613Z",
+  "calibratedAt": "2026-10-21T14:16:42.107Z",
   "cutoffTime": null,
   "halfLife": 20,
   "players": {
@@ -9,18 +9,18 @@
       "wins": 62,
       "winRate": 0.633,
       "diagnostics": {
-        "singleProbAtTray2": 0.196,
-        "singleProbAtTray3": 0.081,
-        "clockConeRatio": 0.014,
-        "redundantInspectionRate": 2.655,
-        "retryCarryForwardRate": 0.357
+        "singleProbAtTray2": 0.352,
+        "singleProbAtTray3": 0.083,
+        "clockConeRatio": 0.514,
+        "reInspectedTileFraction": 0.605,
+        "retryCarryForwardRate": 0.418
       },
       "parameters": {
         "depth": 16,
-        "trayBuffer": 2,
-        "clockPatience": 0.1,
-        "memoryDecay": 0.4,
-        "retryLearning": 0.36
+        "trayBuffer": 3,
+        "clockPatience": 0.77,
+        "memoryDecay": 0.0146,
+        "retryLearning": 0.42
       }
     },
     "Mrs. Doubtfire": {
@@ -29,18 +29,18 @@
       "wins": 15,
       "winRate": 0.259,
       "diagnostics": {
-        "singleProbAtTray2": 0.194,
-        "singleProbAtTray3": 0.122,
-        "clockConeRatio": 0.018,
-        "redundantInspectionRate": 2.442,
-        "retryCarryForwardRate": 0.464
+        "singleProbAtTray2": 0.381,
+        "singleProbAtTray3": 0.169,
+        "clockConeRatio": 0.524,
+        "reInspectedTileFraction": 0.675,
+        "retryCarryForwardRate": 0.498
       },
       "parameters": {
         "depth": 8,
         "trayBuffer": 3,
-        "clockPatience": 0.1,
-        "memoryDecay": 0.4,
-        "retryLearning": 0.46
+        "clockPatience": 0.79,
+        "memoryDecay": 0.0246,
+        "retryLearning": 0.5
       }
     },
     "PUK": {
@@ -49,18 +49,18 @@
       "wins": 34,
       "winRate": 0.557,
       "diagnostics": {
-        "singleProbAtTray2": 0.229,
-        "singleProbAtTray3": 0.168,
+        "singleProbAtTray2": 0.341,
+        "singleProbAtTray3": 0.213,
         "clockConeRatio": 0.5,
-        "redundantInspectionRate": 0.775,
-        "retryCarryForwardRate": 0.794
+        "reInspectedTileFraction": 0.379,
+        "retryCarryForwardRate": 0.816
       },
       "parameters": {
         "depth": 16,
         "trayBuffer": 3,
         "clockPatience": 0.75,
-        "memoryDecay": 0.4,
-        "retryLearning": 0.79
+        "memoryDecay": 0.0081,
+        "retryLearning": 0.82
       }
     },
     "Gerda": {
@@ -69,18 +69,18 @@
       "wins": 59,
       "winRate": 0.303,
       "diagnostics": {
-        "singleProbAtTray2": 0.236,
-        "singleProbAtTray3": 0.143,
+        "singleProbAtTray2": 0.358,
+        "singleProbAtTray3": 0.163,
         "clockConeRatio": 0.5,
-        "redundantInspectionRate": 1.949,
-        "retryCarryForwardRate": 0.614
+        "reInspectedTileFraction": 0.593,
+        "retryCarryForwardRate": 0.756
       },
       "parameters": {
         "depth": 12,
         "trayBuffer": 3,
         "clockPatience": 0.75,
-        "memoryDecay": 0.4,
-        "retryLearning": 0.61
+        "memoryDecay": 0.0163,
+        "retryLearning": 0.76
       }
     }
   }

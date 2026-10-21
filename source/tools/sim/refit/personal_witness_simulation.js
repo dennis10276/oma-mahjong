@@ -1,26 +1,31 @@
 'use strict';
+const assert = require('assert/strict');
 const crypto = require('crypto');
 const Hard = require('../../../www/hard.js');
-const L = require('../../../www/layouts.js');
-const physical = require('./known_tray_plan.js');
+const Layouts = require('../../../www/layouts.js');
+const { createSession } = require('./production_physical_session.js');
+const { createObservedMemory } = require('./personal_observed_memory.js');
 const { search } = require('./public_witness_search.js');
 const { calibratePlayer } = require('./personal_behavioral_calibration.js');
-const { retryMemory } = require('./personal_retry_memory.js');
+const { boardId } = require('./personal_model.js');
 
 /**
- * Simulates a player's multi-attempt play on a Mahjong board using their calibrated behavioral bot.
+ * Simulates a player's multi-attempt campaign on a Mahjong board using their calibrated behavioral bot.
  * 
  * Enforces:
- * 1. Production physical rules (Hard.step, Hard.rateChain).
- * 2. Human-visible information only (zero foresight into unrevealed tiles).
- * 3. Empirical calibrated behavioral knobs (depth, trayBuffer, clockPatience, memoryDecay, retryLearning).
- * 4. Genuine cross-attempt memory carry-forward between consecutive attempts (retryLearning).
- * 5. Deterministic repeatable PRNG for memory decay and exploration.
+ * 1. Production physical rules: transitions run strictly through compiled production Hard via createSession.
+ * 2. Human-visible information only: zero inspection of hidden faces; public-belief search via public_witness_search.
+ * 3. Exact observation boundary: face-up tiles visible only when exposed/uncovered; face-down tiles require physical inspection.
+ * 4. Production clock mechanics: pure inspection costs 0 removal moves.
+ * 5. Production tray overflow: tray >= 4 loses immediately.
+ * 6. Production victory: requires empty board AND empty tray; loss or censoring returns wonOn = null.
+ * 7. Legitimate cross-attempt learning: managed via createObservedMemory with exact board ID and campaign ID binding.
+ * 8. Only an actual completed production physicalLoss permits another attempt; computation caps or partial prefixes do not become free retries.
  * 
  * @param {Object} game - Initial board layout { tiles, nb, faces, down, rules, clock }
  * @param {string} playerName - Player name (Dennis, Mrs. Doubtfire, PUK, Gerda)
- * @param {Object} [options={}] - Simulation options (maxAttempts, customParams, cutoffTime)
- * @returns {Object} Simulation outcome { wonOn, attempts, clearedWithin, history }
+ * @param {Object} [options={}] - Simulation options (maxAttempts, customParams, cutoffTime, seed, campaign)
+ * @returns {Object} Simulation outcome { playerName, wonOn, cleared, totalAttempts, parameters, history }
  */
 function simulatePersonalCampaign(game, playerName, options = {}) {
   const maxAttempts = options.maxAttempts || 8;
@@ -28,148 +33,112 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
   const calibrated = calibratePlayer(playerName, cutoffTime);
   const params = { ...calibrated.parameters, ...(options.customParams || {}) };
 
-  const tilesCount = game.tiles.length;
+  const size = game.tiles.length;
+  const board = boardId(game);
+  const campaign = options.campaign || game.aid || 'camp_' + crypto.createHash('sha256').update(board).digest('hex').slice(0, 16);
+  const baseSeed = options.seed ?? crypto.createHash('sha256').update([playerName, campaign, board].join('|')).digest().readUInt32LE(0);
+
+  const memory = createObservedMemory({
+    size,
+    campaign,
+    board,
+    seed: baseSeed,
+    retryRetention: params.retryLearning,
+    decay: params.memoryDecay
+  });
+
+  const evidence = {
+    kind: 'production-physical-simulation-observer',
+    sha256: crypto.createHash('sha256').update([playerName, campaign, board].join('|')).digest('hex')
+  };
+
   let wonOn = null;
   const attemptHistory = [];
-  let persistentSeen = new Uint8Array(tilesCount);
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    // Generate deterministic attempt seed
-    const seed = crypto.createHash('sha256')
-      .update([playerName, game.key || 'deal', attempt].join('|'))
-      .digest().readUInt32LE(0);
-    const rng = L.rng(seed);
+    memory.beginAttempt({ campaign, board, size, attempt });
+    const attemptSeed = (baseSeed + attempt * 10007) >>> 0;
+    const session = createSession(game, { seed: attemptSeed });
+    let frame = session.view();
 
-    // Build initial attempt state
-    // On attempt > 1, carry forward tiles remembered from previous attempts based on retryLearning
-    const knownPictures = new Array(tilesCount).fill(null);
-    for (let i = 0; i < tilesCount; i++) {
-      if (!game.down[i]) {
-        // Face-up tiles are immediately observable
-        knownPictures[i] = game.faces[i];
-      } else if (attempt > 1 && persistentSeen[i]) {
-        // Check carry-forward retention
-        if (rng() < params.retryLearning) {
-          knownPictures[i] = game.faces[i];
+    const getObservation = f => {
+      const pictures = f.state.alive.map((alive, index) => {
+        if (!alive) return null;
+        if (index === f.state.openPeek) return game.faces[index];
+        if (!game.down[index]) {
+          const aboveList = (game.nb && game.nb.above && game.nb.above[index]) || [];
+          if (aboveList.every(a => !f.state.alive[a])) return game.faces[index];
         }
-      }
-    }
-
-    const state = {
-      pictures: knownPictures,
-      down: Array.from(game.down),
-      alive: new Array(tilesCount).fill(1),
-      tray: [],
-      moves: 0,
-      openPeek: -1,
-      relieved: false,
-      arriving: []
+        return null;
+      });
+      return {
+        physicalTaps: f.state.physicalTaps,
+        alive: f.state.alive,
+        pictures,
+        evidence: pictures.map(p => p !== null ? evidence : null)
+      };
     };
 
-    // Run attempt step-by-step
-    let won = false;
-    let lost = false;
-    let moves = 0;
-    const maxMoves = tilesCount * 2 + (game.clock ? game.clock.n : 50);
+    let observed = memory.observe(getObservation(frame));
 
-    while (!won && !lost && moves < maxMoves) {
-      // Find legal actions via authoritative physical model
-      const allowed = physical.legal(game, state);
-      if (!allowed || !allowed.free || allowed.free.length === 0) {
-        lost = true;
-        break;
-      }
-
-      // Check win condition
-      const aliveRemaining = state.alive.reduce((sum, v) => sum + v, 0);
-      if (aliveRemaining === 0) {
-        won = true;
-        break;
-      }
-
-      const legalMoves = allowed.free.map(index => ({
+    while (frame.type !== 'productionPhysicalEnd-v1') {
+      const legalMoves = frame.legalTiles.map(index => ({
         index,
-        inspect: !!state.down[index] && state.openPeek !== index
+        inspect: !!frame.state.down[index] && frame.state.openPeek !== index
       }));
 
-      // Call search with calibrated knobs
+      const searchState = {
+        pictures: observed.pictures,
+        down: frame.state.down,
+        alive: frame.state.alive,
+        tray: frame.state.tray,
+        moves: frame.state.moves,
+        openPeek: frame.state.openPeek,
+        relieved: frame.state.relieved,
+        arriving: frame.state.arriving
+      };
+
       const searchOptions = {
         depth: params.depth,
         trayBuffer: params.trayBuffer,
         clockPatience: params.clockPatience,
         memoryDecay: params.memoryDecay,
-        retryLearning: params.retryLearning,
-        rng
+        retryLearning: params.retryLearning
       };
 
-      const plan = search(game, state, legalMoves, searchOptions);
-      if (!plan || !plan.path || plan.path.length === 0) {
-        lost = true;
-        break;
-      }
+      const plan = search(game, searchState, legalMoves, searchOptions);
+      const nextTile = plan?.path?.[0] ?? frame.legalTiles[0];
 
-      const nextTile = plan.path[0];
-      moves++;
-
-      // Advance state physically
-      if (state.down[nextTile] && state.openPeek !== nextTile) {
-        // Inspecting face-down tile
-        state.openPeek = nextTile;
-        state.pictures[nextTile] = game.faces[nextTile];
-        persistentSeen[nextTile] = 1;
-      } else {
-        // Taking tile into tray or matching
-        const pic = game.faces[nextTile];
-        persistentSeen[nextTile] = 1;
-        state.alive[nextTile] = 0;
-        state.pictures[nextTile] = pic;
-
-        if (state.openPeek === nextTile) {
-          state.openPeek = -1;
-        }
-
-        const trayMatchIdx = state.tray.indexOf(pic);
-        if (trayMatchIdx >= 0) {
-          // Matched with tray
-          state.tray.splice(trayMatchIdx, 1);
-        } else if (state.openPeek >= 0 && game.faces[state.openPeek] === pic) {
-          // Matched with openPeek
-          state.alive[state.openPeek] = 0;
-          state.openPeek = -1;
-        } else {
-          // Placed into tray
-          state.tray.push(pic);
-          if (state.tray.length > 4) {
-            lost = true;
-            break;
-          }
-        }
-      }
-
-      // Check clock expiration
-      if (game.clock && state.alive[game.clock.i] && moves >= game.clock.n) {
-        lost = true;
-        break;
-      }
-
-      // Check remaining tiles
-      if (state.alive.reduce((sum, v) => sum + v, 0) === 0) {
-        won = true;
-        break;
+      frame = session.tap(nextTile);
+      if (frame.type !== 'productionPhysicalEnd-v1') {
+        observed = memory.observe(getObservation(frame));
       }
     }
 
-    attemptHistory.push({ attempt, won, moves });
+    const end = memory.endAttempt(frame);
+    attemptHistory.push({
+      attempt,
+      status: end.status,
+      moves: frame.state.moves,
+      physicalTaps: frame.state.physicalTaps,
+      why: frame.why,
+      win: frame.win
+    });
 
-    if (won) {
+    if (end.status === 'cleared') {
       wonOn = attempt;
+      break;
+    }
+
+    if (end.status !== 'physicalLoss') {
+      // Unresolved or calculation limit: cannot retry
       break;
     }
   }
 
   return {
     playerName,
-    wonOn: wonOn || maxAttempts,
+    wonOn, // null if not cleared!
     cleared: wonOn !== null,
     totalAttempts: attemptHistory.length,
     parameters: params,
