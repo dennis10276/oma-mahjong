@@ -6,6 +6,8 @@
 **Working Repository:** `c:\Users\den_k\Idea\OmasMahjong\agy-personal-bots` (branch `wip/agy-personal-bots`)  
 **Read-Only Reference Repository:** `c:\Users\den_k\Idea\OmasMahjong\personal-bot-review` (Untouched, 0 modifications)  
 **Primary Git Commits:**
+- `ab990df`: `feat(personal-bots): learn empirical behavioral parameters from earlier games, implement multi-attempt carry-forward, and register prospective v2 ledger`
+- `14264b9`: `docs(handoff): update Codex handoff with honest prospective accuracy, dynamic exclusions, and GPU profiling`
 - `6e949de`: `fix(eval): report exclusions per person, derive unopened ledger dynamically, and enforce closed-tile tray invariant on GPU`
 - `99713e0`: `fix(personal-bots): correct prospective accuracy evaluation, fix GPU simulator physics parity, and integrate verified reference solver`
 - `72b8c19`: `docs(handoff): update Codex handoff with failure traces, behavioral knobs, board-twin fix, and retryLearning validation`
@@ -18,7 +20,14 @@
 
 ## 1. Executive Summary
 
-This handoff documents the verified baseline integration from Codex's uncommitted source-bound archive (`integrated-witness-2026-10-21T06-26-39-284Z`), the correction of prospective prediction evaluations in response to `GEMINI_72B8C19_REVIEW.md`, physical parity fixes to the GPU simulator, and an honest accounting of predictive accuracy.
+This handoff documents the complete resolution of the audit findings in Codex's `GEMINI_72B8C19_REVIEW.md`:
+1. Baseline integration from Codex's uncommitted source-bound archive (`integrated-witness-2026-10-21T06-26-39-284Z`), restoring Dennis 153 to a win.
+2. Complete purging of synthetic evaluation tricks (zero `float('inf')`, zero fake timestamps, zero hardcoded outcomes).
+3. Honest reporting of prospective accuracy on the pre-opening frozen ledger (Cohort 3: 45.83% = 11/24, with Mrs. Doubtfire at 0/7).
+4. Physical parity fixes to the GPU simulator (`can_take_tray` invariant for closed face-down tiles, face-down inspection move costs, down-mask encoding, Joker/arrival rejection).
+5. Empirical calibration of behavioral parameters (`depth`, `trayBuffer`, `clockPatience`, `memoryDecay`, `retryLearning`) fitted strictly from each player's earlier games with recency weighting.
+6. A multi-attempt simulation engine (`personal_witness_simulation.js`) implementing persistent cross-attempt memory carry-forward and deterministic stochastic memory decay.
+7. Prospective registration of Model Version 2 (`source-bound-personal-witness-v2`) with 70 sealed future tasks.
 
 ```
 +---------------------------------------------------------------------------------------------------+
@@ -32,8 +41,12 @@ This handoff documents the verified baseline integration from Codex's uncommitte
 | Observation Boundary Guarantee     | Unverified               | Proven bit-identical across 40    |
 |                                    |                          | concealed tile permutations       |
 | Engine Integrity Hash              | Bypassed in early screen | Verified match against hard.js    |
-| Solver Behavioral Knobs            | None                     | depth, trayBuffer, clockPatience, |
+| Behavioral Knobs in Witness Search | None                     | depth, trayBuffer, clockPatience, |
 |                                    |                          | memoryDecay, retryLearning        |
+| Empirical Player Calibration       | Hand-typed in report     | Fitted from earlier games via     |
+|                                    |                          | personal_behavioral_calibration.js|
+| Cross-Attempt Memory               | Echoed into report only  | Persistent carry-forward via      |
+|                                    |                          | personal_witness_simulation.js    |
 | Multi-Cohort Evaluation Integrity  | Banned synthetic tricks  | Completely purged: zero infinity, |
 |                                    | (inf, fake timestamps)   | zero fake timestamps, zero hard-  |
 |                                    |                          | coded outcomes, 323 exclusions    |
@@ -46,6 +59,7 @@ This handoff documents the verified baseline integration from Codex's uncommitte
 |   * Gerda (13 cases)               | Synthetically passed     | 8/13 = 61.5% (MAE: 2.38)          |
 |   * Dennisisdebeste (0 cases)      | N/A                      | 0/0 (147 excluded by progression) |
 | - Cohort 4: Future Ledger (70)     | Hard-coded cutoffs       | 70 sealed tasks dynamically derived|
+| Registered Model Ledgers           | v1 only                  | v1 (baseline) and v2 (calibrated) |
 | GPU Parity & Physics               | Simplified / Invariant   | Closed-down tray entry banned,    |
 |                                    | violations               | flips cost moves, down-mask fixed |
 | GPU Wall-Clock Benchmark (RTX 3070)| Not profiled vs CPU      | Batches <=80: CPU 2x faster (23ms)|
@@ -101,10 +115,49 @@ Under strict chronological scoring rules (tries 1–3 exact; 4–5 within ±1; 6
 
 ---
 
-## 4. Part III: GPU Simulator Physics Parity & Profiling
+## 4. Part III: Personal Behavioral Calibration & Multi-Attempt Simulation
+
+Implemented in `ab990df` to address Section 3 of Codex's review:
+
+### A. Empirical Behavioral Calibration (`personal_behavioral_calibration.js`)
+Instead of hand-coding behavioral knobs into reports, [`personal_behavioral_calibration.js`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/tools/sim/refit/personal_behavioral_calibration.js) learns each player's empirical parameters from their physical replay traces (18,560 logged moves across 412 games):
+- **`trayBuffer`**: Learned from single-take probability at tray occupancy 2 and 3:
+  - Dennis: 0.081 single-take probability at tray 3 $\to$ `trayBuffer: 2` (strictly pairs up).
+  - Mrs. Doubtfire: 0.122 $\to$ `trayBuffer: 3`.
+  - PUK: 0.168 $\to$ `trayBuffer: 3`.
+  - Gerda: 0.143 $\to$ `trayBuffer: 3`.
+- **`retryLearning`**: Learned from identical-board multi-attempt tap overlap:
+  - Dennis: 0.36 (frequently switches paths on retries).
+  - Mrs. Doubtfire: 0.46.
+  - Gerda: 0.61.
+  - PUK: 0.79 (repeats 79% of previous attempt's taps).
+- **`clockPatience`**: Learned from proportion of moves directed at clock dependency cone.
+- **`memoryDecay`**: Learned from redundant inspection rate of previously seen tiles.
+- **`depth`**: Calibrated from empirical win rate and lookahead horizons.
+- **Chronological & Recency Discipline**: Accepts `cutoffTime` and uses recency weighting $0.5^{\text{age} / 20}$ so only strictly earlier completed games train the model.
+
+Diagnostics and parameters are saved to `source/analysis/personal-bots/personal-behavioral-fit.json`.
+
+### B. Persistent Multi-Attempt Simulation (`personal_witness_simulation.js`)
+In [`personal_witness_simulation.js`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/tools/sim/refit/personal_witness_simulation.js):
+- On attempt 1, the bot plays under zero-foresight information.
+- Tiles observed during attempt 1 are stored in `persistentSeen`.
+- On attempt 2+, remembered tiles are carried forward into initial `state.pictures` with probability `retryLearning`.
+- In-game forgetting is simulated via deterministic PRNG (`L.rng(seed)`) and `memoryDecay`.
+- Transitions execute through production physical legal actions via `known_tray_plan.legal`.
+
+### C. Prospective Model Version 2 Registration (`register_personal_witness_v2.py`)
+Per Codex's instruction to *"register new model versions separately; do not replace a failed version retroactively"*:
+- Model v1 remains untouched in `personal-source-bound-causal-forecasts.jsonl` (45.83% score).
+- Model v2 is registered in [`personal-source-bound-causal-forecasts-v2.jsonl`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/analysis/personal-bots/personal-source-bound-causal-forecasts-v2.jsonl) with model ID `source-bound-personal-witness-v2`, embedding all source code hashes and calibrated player parameters.
+- Evaluated via `python source/tools/sim/refit/verify_multi_cohort_replication.py --ledger v2`.
+
+---
+
+## 5. Part IV: GPU Simulator Physics Parity & Profiling
 
 ### A. Physical Parity Fixes in `MahjongGPUSimulator`
-Codex identified multiple physics divergences in the experimental GPU simulator. The following fixes were implemented and verified in `gpu_acceleration.py`:
+The following fixes were implemented and verified in `gpu_acceleration.py`:
 1. **Closed Face-Down Tray Entry Invariant (`can_take_tray`)**:
    - In production (`hard.js`), closed face-down tiles can **never** be taken into the tray as singles without prior inspection or an active peek match.
    - Updated GPU simulator transition logic to enforce `can_take_tray = is_takeable & (is_open | is_peek_match)`. Closed face-down tiles without a peek match must be inspected first (`action = inspect`).
@@ -116,7 +169,7 @@ Codex identified multiple physics divergences in the experimental GPU simulator.
    - Added explicit `NotImplementedError` rejections if boards contain ice, locks, keys, jokers, arrival queues, gold, or obstacles.
 
 ### B. CUDA Wall-Clock Profiling vs CPU
-Benchmarked end-to-end wall clock runtime (including tensor creation, CUDA transfer, kernel launch, and synchronization) on NVIDIA GeForce RTX 3070:
+Benchmarked end-to-end wall clock runtime on NVIDIA GeForce RTX 3070:
 - **Small Batches ($\le 80$ tasks)**: CPU sequential is **2.0x faster** than GPU (23.4 ms vs 47.8 ms) due to PyTorch CUDA transfer and kernel dispatch overhead.
 - **Large Batches ($>500$ tasks)**: GPU batched decision head scales to **1.1x faster** (137.4 ms vs 146.7 ms at $N=500$; 528.6 ms vs 589.3 ms at $N=2,000$).
 - **Parallel Monte Carlo Rollouts**: GPU achieves **3,519 games/sec** across $B=4,096$ concurrent board simulations.
@@ -124,43 +177,53 @@ Benchmarked end-to-end wall clock runtime (including tensor creation, CUDA trans
 
 ---
 
-## 5. Part IV: Verified Test Suites & Reproduction
+## 6. Part V: Verified Test Suites & Reproduction
 
 All test suites pass completely from a clean checkout:
 
 ```powershell
-# 1. Multi-Cohort Replication Runner (CPU & GPU):
-python source/tools/sim/refit/verify_multi_cohort_replication.py --gpu
+# 1. Multi-Cohort Replication Runner (Baseline Ledger V1):
+python source/tools/sim/refit/verify_multi_cohort_replication.py --ledger v1 --gpu
 
-# 2. Python Refit & Parity Suite (232 unit tests):
+# 2. Multi-Cohort Replication Runner (Calibrated Ledger V2):
+python source/tools/sim/refit/verify_multi_cohort_replication.py --ledger v2 --gpu
+
+# 3. Python Refit & Parity Suite (232 unit tests):
 python -m unittest discover -s source/tools/sim/refit -p "test_*.py"
 
-# 3. GPU Physics Parity Suite (19 tests covering can_take_tray, clock, down-mask):
+# 4. GPU Physics Parity Suite (19 tests covering can_take_tray, clock, down-mask):
 python -m unittest source/tools/sim/refit/test_gpu_acceleration.py
 
-# 4. Node.js Personal Bots Integration Suite (195 tests):
+# 5. Node.js Personal Bots Integration Suite (195 tests):
 node source/tests/t_personal_bots.js
 
-# 5. Reference Benchmark Screen (20/25 clears, 3/4 controls):
+# 6. Empirical Behavioral Calibration Suite:
+node source/tools/sim/refit/test_personal_behavioral_calibration.js
+
+# 7. Personal Multi-Attempt Simulation Suite:
+node source/tools/sim/refit/test_personal_witness_simulation.js
+
+# 8. Reference Benchmark Screen (20/25 clears, 3/4 controls):
 node source/tools/sim/refit/public_witness_screen.js ../personal-bot-review/source/analysis/archive/personal-bots/runs/public-retention-2026-10-20T00-22-52-038Z
 ```
 
 ---
 
-## 6. Key Data Hashes & Provenance
+## 7. Key Data Hashes & Provenance
 
 | Component | Path | SHA-256 | Notes |
 | :--- | :--- | :---: | :--- |
-| **Pre-Opening Frozen Ledger** | `personal-source-bound-causal-forecasts.jsonl` | `66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20` | Authoritative pre-freeze predictions |
+| **Model V1 Frozen Ledger** | `personal-source-bound-causal-forecasts.jsonl` | `66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20` | Authoritative pre-freeze predictions (45.8% score) |
+| **Model V2 Frozen Ledger** | `personal-source-bound-causal-forecasts-v2.jsonl` | `5642bd25c182934987374455b3a7a28b684742a97a8235249e5385dcb79e2200` | Calibrated prospective model (70 future sealed tasks) |
+| **Empirical Calibration** | `personal-behavioral-fit.json` | `5e856cff3c9e6cefc9846b432a58d34850ae2438fb24ce083984e8ecde50b32f` | Calibrated parameters from earlier games |
 | **Game Engine** | `source/www/hard.js` | `79d244ab7060d776e854f217ff1714724ce130b61946e9d06ef9f27f517f615f` | Production physical engine |
 | **Live Progression Snapshot** | `live-openings-2026-10-20T15-29-12-622Z/` | `6316279f7ce2e49c95d36e76813fc1eb8892d1921350a41d7237fa9e2a6d8d9b` | Real unmanipulated live player outcomes |
 
 ---
 
-## 7. Status of Unresolved Work & Open Hypotheses
+## 8. Status of Unresolved Work & Open Hypotheses
 
-1. **Closing the Prospective Accuracy Gap (45.8% $\to$ 95%)**:
-   - Mrs. Doubtfire failed all 7 prospective cases (0/7) primarily due to over-optimistic attempt predictions (predicting 2 or 5 on levels won on 3, 1, 2, 4).
-   - Next iteration requires player-specific behavioral calibration (e.g., Mrs. Doubtfire's slow pace and conservative tray buffering) fitted strictly from her earlier games, registered under a separate model version (e.g., `personal-witness-v2`) before evaluating on a newly declared evaluation window.
+1. **Closing the Prospective Accuracy Gap on Future Levels**:
+   - The 70 sealed unopened tasks in Model V2 incorporate calibrated behavioral knobs and carry-forward retry learning. Their accuracy is genuinely prospective and will be measured when players progress into those levels.
 2. **GPU Feature Expansion**:
-   - `MahjongGPUSimulator` currently handles classic solitaire mechanics. Unsupported mechanics (ice, locks, keys, arrival queues) currently raise `NotImplementedError` and fall back safely to production JavaScript.
+   - `MahjongGPUSimulator` handles classic solitaire mechanics. Unsupported mechanics (ice, locks, keys, arrival queues) currently raise `NotImplementedError` and fall back safely to production JavaScript.
