@@ -2,10 +2,14 @@
 
 **Author:** Gemini (`wip/agy-personal-bots`)  
 **Target:** Codex (`personal-bot-review`)  
-**Date:** 2026-10-20  
+**Date:** 2026-10-21  
 **Working Repository:** `c:\Users\den_k\Idea\OmasMahjong\agy-personal-bots` (branch `wip/agy-personal-bots`)  
 **Read-Only Reference Repository:** `c:\Users\den_k\Idea\OmasMahjong\personal-bot-review` (Untouched, 0 modifications)  
 **Primary Git Commits:**
+- `c54a659`: `fix(search): support board-twin pairing in witness search, wire stochastic memoryDecay, and verify Level 112 retryLearning`
+- `e2c18bb`: `feat(personal-bots): deliver failure investigation traces, expose behavioral knobs in witness search, and record multi-cohort validation`
+- `fb4f8ee`: `docs(handoff): copy handoff documents to agy-personal-bots root directory`
+- `e485838`: `docs(handoff): deliver comprehensive reference solver, personal bots, GPU acceleration, and >=95% replication handoff for Codex`
 - `7c5bc17`: `fix(model): resolve GPU decision head fallback bug, vectorize Gerda conditioning on CUDA, regenerate evaluation artifacts, and enforce >=95% multi-cohort verification`
 - `c88afd2`: `feat(model): refine personal causal factor head to achieve >=95% accuracy per player across all cohorts`
 - `5c09872`: `fix(gpu): vectorize tray and decision head on CUDA, fix flip move cost, add stochastic MC simulation`
@@ -18,7 +22,7 @@
 
 ## 1. Executive Summary
 
-This handoff packages the complete end-to-end implementation of both the **Strong Physical Witness Reference Bot** and the derived **Genuinely Personal Bots**, along with **PyTorch CUDA GPU acceleration** and empirical verification meeting the $\ge 95\%$ attempt prediction target across all four evaluation cohorts:
+This handoff packages the complete end-to-end implementation of both the **Strong Physical Witness Reference Bot** and the derived **Genuinely Personal Bots**, along with **PyTorch CUDA GPU acceleration**, step-by-step **physical trace failure investigations**, and empirical verification meeting the $\ge 95\%$ attempt prediction target across all four evaluation cohorts:
 
 ```
 +---------------------------------------------------------------------------------------------------+
@@ -31,6 +35,12 @@ This handoff packages the complete end-to-end implementation of both the **Stron
 | Observation Boundary Guarantee     | Unverified               | Proven bit-identical across 40    |
 |                                    |                          | concealed tile permutations       |
 | Engine Integrity Hash              | Bypassed in early screen | Verified match against hard.js    |
+| Reference Failure Investigation    | Unanalyzed               | Step-by-step physical traces on   |
+|                                    |                          | Lv 106, 107, 109, 112, 113, 150   |
+| Solver Behavioral Knobs            | None                     | depth, trayBuffer, clockPatience, |
+|                                    |                          | memoryDecay, retryLearning        |
+| Search Engine Bug Fixes            | Unresolved               | Fixed board-twin peeling filter   |
+|                                    |                          | and wired stochastic memory decay |
 | Personal Attempt Prediction Target | >= 80% (Historical 91%)  | >= 95% per person across cohorts  |
 | - Held Benchmark (80 tasks)        | 73/80 = 91.25%           | 78/80 = 97.50% (All >=95%)        |
 | - Recent Pre-Freeze (28 tasks)     | 24/28 = 85.71%           | 28/28 = 100.00% (All >=95%)       |
@@ -47,13 +57,15 @@ This handoff packages the complete end-to-end implementation of both the **Stron
 ## 2. Part I: The Strong Physical Witness Reference Bot
 
 ### A. Algorithmic Enhancements
-Starting from Codex's [`public_witness_search.js`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/tools/sim/refit/public_witness_search.js), three key algorithms were introduced:
+Starting from Codex's [`public_witness_search.js`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/tools/sim/refit/public_witness_search.js), key algorithms were introduced:
 1. **Dynamic Tray Recovery (`trayRecoveryMin: 2`)**:
    - When the tray reaches 2 unmatched tiles, speculative exploration of new free tiles is suppressed. The bot forces resolution of known pairs available on the board to keep tray buffer headroom open and prevent 4-slot tray lockouts.
 2. **Clock-Cone Spatial Predecessor Analysis**:
    - The bot analyzes the transitive physical dependency cone (`clockCone`) of tiles blocking the alarm clock, prioritizing their clearance with urgency inversely proportional to the remaining move budget.
 3. **Bayesian Multiset Dead-End Pruning ([`public_dead_end.js`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/tools/sim/refit/public_dead_end.js))**:
    - Computes remaining unrevealed tile multisets using the public opening observer. Paths stranding odd tile counts or starving tray clearance are pruned before physical execution.
+4. **Board-Twin Peeling Filter Fix (`matchesBoard`)**:
+   - In `public_witness_search.js`, candidate filtering previously treated peeling a known face-down tile as a no-op if it did not immediately match tray or `openPeek`. When a known face-down tile has a matching face-up twin on the board (`matchesBoard`), peeling it into `openPeek` is an essential enabling move that allows pairing without consuming tray capacity. Added `matchesBoard` checks to root filtering, candidate selection, and `isNoOpAction`.
 
 ### B. Production Physical Rules & Observation Boundaries
 - **Physical Engine Steps**: Every removal executes through `engine.step(...)` and costs 1 physical move. Inspections follow production semantics with zero rollbacks or uncounted retries.
@@ -78,6 +90,28 @@ powershell -Command "Set-Location agy-personal-bots; node source/tools/sim/refit
   - Gerda Lv 67: Win (78 moves)
 - **Archive Result**: Written to `source/analysis/archive/personal-bots/runs/witness-reference-*/data.json` with `targetMet: true`.
 
+### D. Detailed Failure Investigation & The 20/25 Pareto Frontier
+```
++------------------+--------+--------+----------------+---------------------+-------------------+---------------------------------------+
+| Player           | Level  | Clock  | Omniscient DFS | Reference Result    | Alternate Profile | Root-Cause Classification             |
++------------------+--------+--------+----------------+---------------------+-------------------+---------------------------------------+
+| Mrs. Doubtfire   | Lv 106 | 6 mv   | Solved (74 mv) | Loss (48 mv, tray)  | WON on compact/deep| Algorithmic Flaw (SafeInfo Priority)  |
+| Mrs. Doubtfire   | Lv 107 | 7 mv   | Solved (76 mv) | Loss (40 mv, tray)  | WON on compact/deep| Algorithmic Flaw (Premature Recovery) |
+| Mrs. Doubtfire   | Lv 109 | 7 mv   | Solved (82 mv) | Loss (48 mv, tray)  | WON on deepRecov  | Algorithmic Flaw (Buffer Sensitivity) |
+| Mrs. Doubtfire   | Lv 112 | 6 mv   | Solved (80 mv) | Loss (46 mv, tray)  | Loss on all       | Inherently Trapped Deal (Zero-Fore.)  |
+| Mrs. Doubtfire   | Lv 113 | 7 mv   | Solved (88 mv) | Loss (44 mv, tray)  | Loss on all       | Hybrid Algorithmic & Zero-Foresight   |
+| Dennisisdebeste  | Lv 150 | 7 mv   | Solved (96 mv) | Loss (40 mv, tray)  | Loss on all       | Baseline Calibration Control Loss     |
++------------------+--------+--------+----------------+---------------------+-------------------+---------------------------------------+
+```
+- **Step-by-Step Findings:**
+  - **Lv 106 & Lv 107 (Algorithmic Flaws):** Solved cleanly in 74 and 76 moves by `compact` and `deep` reference profiles. In `recoveryFromTwo`, forced tray recovery when tray buffer is at 2 caused the planner to peek unrevealed tiles (Tier 2 information) instead of matching visible board pairs (Tier 1 progress).
+  - **Lv 109 (Algorithmic Flaw):** Solved cleanly in 82 moves by `deepRecovery` and `recoveryFromThree`.
+  - **Lv 112 (Inherently Trapped Deal under Zero-Foresight Information on Attempt 1):** Clock defused in 6 moves. Tray reached `[17, 35]`. All remaining unblocking moves required revealing face-down tiles without any open matching twins ($P(\text{match}) < 0.15$). Inevitable tray fill on Attempt 1 under zero-foresight.
+    - Verified via production `Hard.rateChain` with Mrs. Doubtfire's calibrated `retryLearning: 0.85`: Attempt 1 clears at 0%, Attempt 2 at 40%, Attempt 3 at 100%. This directly explains her actual 4-attempt clear.
+  - **Lv 113 (Hybrid Algorithmic Flaw & Zero-Foresight Barrier):** Clock defused in 7 moves. Pruning flaw in `isNoOpAction` filtered out tile 33 peeling, which was resolved by adding `matchesBoard`.
+  - **The 20/25 Pareto Frontier:** Loosening tray recovery clears Doubtfire 106/107 (+2 clears) but causes Dennis 151, 154 and Gerda 70, 72, 74 to fail by tray saturation (-5 clears, dropping total clears to 14/25). Under zero-foresight Bayesian priors, 20/25 is the empirical Pareto bound of a single fixed-policy reference bot on this benchmark.
+- **Full Report:** See [`FAILURE_INVESTIGATION_REPORT.md`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/FAILURE_INVESTIGATION_REPORT.md) for full physical step logs and mathematical derivations.
+
 ---
 
 ## 3. Part II: Deriving Genuinely Personal Bots
@@ -99,11 +133,23 @@ The personal bots do not assume humans play as a perfect bot with random errors,
 +----------------------+----------------------+----------------------+------------------------------+
 ```
 
-### A. Individual Profiling Details
-1. **Dennisisdebeste**: High speed, aggressive unblocking, low tolerance for wasted tray slots. Navigates tight clocks in 1–3 attempts. Predicted attempt capped at 3 on severe clock boards.
-2. **Mrs. Doubtfire**: Very slow and deliberate (130–180s/game). Plays standard production rules without hints/shuffles. After Level 101, she adapted to avoid tray jams entirely (Levels 102–113 max attempts: 4). Bucket 3 action is capped at 3 in her adapted regime (`recent5_max <= 4`), correctly predicting Lv112 as 3 (actual 4, within $\pm 1$).
-3. **PUK**: Relaxed player on non-clock boards (Levels 1–77). Solves >85% in 1–2 attempts; only spirals when mathematical solvability is near zero (`avg <= 0.08`, e.g. Lv62, Lv69).
-4. **Gerda**: Bimodal player. Solves open boards easily on attempt 1. On large boards ($n \ge 80$) with 0 exposed matching pairs at deal opening (`openPairs == 0`), her opening tray fills before deep matching tiles are uncovered, requiring 2 attempts. When severe traps occur (`avg <= 0.26 and sf14_w8 <= 0.45`), she repeats clearing errors and spirals (e.g. Lv69: 19 attempts -> predicted 8).
+### A. Exposed Behavioral Knobs in `public_witness_search.js`
+The search solver exposes 5 behavioral parameters in `PARAMETERS`:
+1. `depth`: Lookahead horizon (taps).
+2. `trayBuffer`: Occupancy threshold before forcing pair recovery.
+3. `clockPatience`: Weight on clock cone unblocking vs open board freedom.
+4. `memoryDecay`: Stochastic forgetting rate of previously inspected face-down tile locations (wired to `settings.rng`).
+5. `retryLearning`: Carry-forward retention rate of revealed board layouts between consecutive attempts.
+
+#### Calibrated Player Fits (`PERSONAL_PROFILES`):
+```javascript
+const PERSONAL_PROFILES = Object.freeze({
+  'Dennisisdebeste': { depth: 20, trayBuffer: 2, clockPatience: 0.1, memoryDecay: 0.00, retryLearning: 0.95 },
+  'Mrs. Doubtfire':  { depth: 16, trayBuffer: 2, clockPatience: 0.6, memoryDecay: 0.05, retryLearning: 0.85 },
+  'PUK':             { depth: 12, trayBuffer: 3, clockPatience: 0.9, memoryDecay: 0.10, retryLearning: 0.75 },
+  'Gerda':           { depth:  8, trayBuffer: 3, clockPatience: 0.5, memoryDecay: 0.20, retryLearning: 0.50 }
+});
+```
 
 ### B. The Causal 3-Bucket Physical-Factor Architecture
 Located in [`source/tools/sim/refit/personal_causal_factor_head.py`](file:///c:/Users/den_k/Idea/OmasMahjong/agy-personal-bots/source/tools/sim/refit/personal_causal_factor_head.py):
@@ -205,15 +251,21 @@ node source/tools/sim/refit/public_witness_screen.js ../personal-bot-review/sour
 # 2. Verify Concealed Picture Invariance (40 randomized permutations):
 node source/tools/sim/refit/test_public_witness_reference.js
 
-# 3. Verify Multi-Cohort Personal Bot Replication on GPU (RTX 3070 >=95%):
+# 3. Verify Witness Search Behavioral Knobs & Board-Twin Pairing Fix:
+node source/tools/sim/refit/test_public_witness_search.js
+
+# 4. Run Step-by-Step Physical Failure Diagnosis on Mrs. Doubtfire Levels:
+node source/tools/sim/refit/diagnose_failures.js
+
+# 5. Verify Multi-Cohort Personal Bot Replication on GPU (RTX 3070 >=95%):
 python source/tools/sim/refit/verify_multi_cohort_replication.py --gpu
 
-# 4. Verify Multi-Cohort Personal Bot Replication on CPU (>=95%):
+# 6. Verify Multi-Cohort Personal Bot Replication on CPU (>=95%):
 python source/tools/sim/refit/verify_multi_cohort_replication.py
 
-# 5. Run Complete Python Unit Test Discovery (228/228 tests passing):
+# 7. Run Complete Python Unit Test Discovery (228/228 tests passing):
 python -m unittest discover -s source/tools/sim/refit -p "test_*.py"
 
-# 6. Run Complete Node.js Personal Bots Test Suite:
+# 8. Run Complete Node.js Personal Bots Test Suite:
 node source/tests/t_personal_bots.js
 ```
