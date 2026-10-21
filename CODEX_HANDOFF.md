@@ -33,6 +33,8 @@ This handoff documents the complete resolution of all audit findings from Codex'
    - Corrected clock cone traversal using `game.g.nb.above[current]` (fixing the prior integer-indexing bug).
    - Clock preparation behavior is measured strictly while the clock tile is alive (`clockAlive`).
    - Filtered duplicate consecutive peek messages, deriving non-saturating per-step forgetting rates from re-inspections (Dennis: 0.0146, Mrs. Doubtfire: 0.0246, PUK: 0.0081, Gerda: 0.0163).
+   - Grounded planning depth in actual move planning (90th percentile of pairing span holding singles in tray) rather than equating raw win rate with planning depth (Dennis: 16, Mrs. Doubtfire: 16, PUK: 12, Gerda: 14).
+   - Measured direct retry recall on previously inspected face-down tiles across exact-board campaigns rather than equating generic tile-index overlap with memory retention (Dennis: 0.24, Mrs. Doubtfire: 0.22, PUK: 0.39, Gerda: 0.23).
    - Grouped retry campaigns by exact board identity `boardId(game.g)`.
    - Applied recency weighting ($0.5^{\text{age}/20}$) and strict causal availability cutoff ($t < \text{cutoff} \land \text{availableAt} < \text{cutoff}$) to all parameters.
 
@@ -110,10 +112,10 @@ python source/tools/sim/refit/personal_forecast_diagnostics.py source/analysis/p
 - Gerda: 8/13 = 61.5% (MAE: 2.38, 95% Wilson CI: [0.355, 0.823], 59 excluded, 1 pending)
 
 ### V2 Model Features & Calibration
-- Dennis: depth: 16, trayBuffer: 3, clockPatience: 0.77, memoryDecay: 0.0146, retryLearning: 0.42
-- Mrs. Doubtfire: depth: 8, trayBuffer: 3, clockPatience: 0.79, memoryDecay: 0.0246, retryLearning: 0.50
-- PUK: depth: 16, trayBuffer: 3, clockPatience: 0.75, memoryDecay: 0.0081, retryLearning: 0.82
-- Gerda: depth: 12, trayBuffer: 3, clockPatience: 0.75, memoryDecay: 0.0163, retryLearning: 0.76
+- Dennis: depth: 16, trayBuffer: 3, clockPatience: 0.77, memoryDecay: 0.0146, retryLearning: 0.24 (830 interactions)
+- Mrs. Doubtfire: depth: 16, trayBuffer: 3, clockPatience: 0.79, memoryDecay: 0.0246, retryLearning: 0.22 (1097 interactions)
+- PUK: depth: 12, trayBuffer: 3, clockPatience: 0.75, memoryDecay: 0.0081, retryLearning: 0.39 (585 interactions)
+- Gerda: depth: 14, trayBuffer: 3, clockPatience: 0.75, memoryDecay: 0.0163, retryLearning: 0.23 (1299 interactions)
 
 ### Sealed Future Ledger (Cohort 4)
 - 70 unopened tasks remain sealed awaiting live player progression.

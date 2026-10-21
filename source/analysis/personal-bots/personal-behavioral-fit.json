@@ -1,5 +1,5 @@
 {
-  "calibratedAt": "2026-10-21T14:16:42.107Z",
+  "calibratedAt": "2026-10-21T14:39:20.241Z",
   "cutoffTime": null,
   "halfLife": 20,
   "players": {
@@ -13,14 +13,17 @@
         "singleProbAtTray3": 0.083,
         "clockConeRatio": 0.514,
         "reInspectedTileFraction": 0.605,
-        "retryCarryForwardRate": 0.418
+        "p90PairingSpan": 6,
+        "retryRecallRate": 0.241,
+        "retryInteractionsCount": 830,
+        "retryUncertain": false
       },
       "parameters": {
         "depth": 16,
         "trayBuffer": 3,
         "clockPatience": 0.77,
         "memoryDecay": 0.0146,
-        "retryLearning": 0.42
+        "retryLearning": 0.24
       }
     },
     "Mrs. Doubtfire": {
@@ -33,14 +36,17 @@
         "singleProbAtTray3": 0.169,
         "clockConeRatio": 0.524,
         "reInspectedTileFraction": 0.675,
-        "retryCarryForwardRate": 0.498
+        "p90PairingSpan": 6,
+        "retryRecallRate": 0.22,
+        "retryInteractionsCount": 1097,
+        "retryUncertain": false
       },
       "parameters": {
-        "depth": 8,
+        "depth": 16,
         "trayBuffer": 3,
         "clockPatience": 0.79,
         "memoryDecay": 0.0246,
-        "retryLearning": 0.5
+        "retryLearning": 0.22
       }
     },
     "PUK": {
@@ -53,14 +59,17 @@
         "singleProbAtTray3": 0.213,
         "clockConeRatio": 0.5,
         "reInspectedTileFraction": 0.379,
-        "retryCarryForwardRate": 0.816
+        "p90PairingSpan": 3,
+        "retryRecallRate": 0.394,
+        "retryInteractionsCount": 585,
+        "retryUncertain": false
       },
       "parameters": {
-        "depth": 16,
+        "depth": 12,
         "trayBuffer": 3,
         "clockPatience": 0.75,
         "memoryDecay": 0.0081,
-        "retryLearning": 0.82
+        "retryLearning": 0.39
       }
     },
     "Gerda": {
@@ -73,14 +82,17 @@
         "singleProbAtTray3": 0.163,
         "clockConeRatio": 0.5,
         "reInspectedTileFraction": 0.593,
-        "retryCarryForwardRate": 0.756
+        "p90PairingSpan": 5,
+        "retryRecallRate": 0.225,
+        "retryInteractionsCount": 1299,
+        "retryUncertain": false
       },
       "parameters": {
-        "depth": 12,
+        "depth": 14,
         "trayBuffer": 3,
         "clockPatience": 0.75,
         "memoryDecay": 0.0163,
-        "retryLearning": 0.76
+        "retryLearning": 0.23
       }
     }
   }
