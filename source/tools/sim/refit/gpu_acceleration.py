@@ -425,6 +425,17 @@ class MahjongGPUSimulator:
         self.device = device or get_gpu_device()
         self.max_tray = max_tray_capacity
         self.n = len(board['tiles'])
+
+        # Explicitly refuse execution for unsupported mechanics
+        rules = board.get('rules')
+        if rules:
+            if isinstance(rules, dict):
+                if any(rules.get(k) for k in ('ice', 'iceNb', 'locks', 'keys', 'jokers', 'arriving')):
+                    raise NotImplementedError("MahjongGPUSimulator does not support ice, locks, keys, jokers, or arrival mechanics. Production JS physics remains authoritative.")
+            elif any(hasattr(rules, k) for k in ('ice', 'locks', 'keys')):
+                raise NotImplementedError("MahjongGPUSimulator does not support ice, locks, keys, jokers, or arrival mechanics. Production JS physics remains authoritative.")
+        if board.get('gold') or board.get('obst'):
+            raise NotImplementedError("MahjongGPUSimulator does not support obstacles/gold tiles. Production JS physics remains authoritative.")
         
         # Build binary dependency matrices (N, N)
         above = torch.zeros((self.n, self.n), dtype=torch.bool, device=self.device)
@@ -450,19 +461,58 @@ class MahjongGPUSimulator:
         self.left_matrix = left
         self.right_matrix = right
 
+        # Direct geometric coverage matrix (which tiles directly cover tile i)
+        cover_mat = torch.zeros((self.n, self.n), dtype=torch.bool, device=self.device)
+        if 'cover' in board and board['cover']:
+            for i, c_list in enumerate(board['cover']):
+                for j in c_list:
+                    if j < self.n:
+                        cover_mat[i, j] = True
+        elif 'tiles' in board and 'nb' in board and 'above' in board['nb']:
+            tiles = board['tiles']
+            for i in range(self.n):
+                t_i = tiles[i]
+                for j in board['nb']['above'][i]:
+                    if j < self.n:
+                        t_j = tiles[j]
+                        if isinstance(t_i, dict) and isinstance(t_j, dict):
+                            if t_i.get('x') == t_j.get('x') and t_i.get('y') == t_j.get('y'):
+                                cover_mat[i, j] = True
+                        elif isinstance(t_i, (list, tuple)) and isinstance(t_j, (list, tuple)):
+                            if t_i[0] == t_j[0] and t_i[1] == t_j[1]:
+                                cover_mat[i, j] = True
+        else:
+            cover_mat = above.clone()
+        self.cover_matrix = cover_mat
+
         # Faces tensor
         faces_list = [int(f) for f in board['faces']]
         self.faces = torch.tensor(faces_list, dtype=torch.int16, device=self.device)
 
-        # Down mask
+        # Down mask: distinguish indicator array/list of length N vs list/set of indices
         down_mask = torch.zeros(self.n, dtype=torch.bool, device=self.device)
-        if 'down' in board and board['down']:
-            if isinstance(board['down'], (list, set, tuple)):
-                for idx in board['down']:
-                    if idx < self.n:
-                        down_mask[idx] = True
-            elif hasattr(board['down'], '__iter__'):
-                for idx, val in enumerate(board['down']):
+        raw_down = board.get('down')
+        if raw_down is not None:
+            if isinstance(raw_down, (list, tuple, np.ndarray, torch.Tensor)) and len(raw_down) == self.n:
+                is_indicator = True
+                for val in raw_down:
+                    if val not in (0, 1, True, False, 0.0, 1.0):
+                        is_indicator = False
+                        break
+                if is_indicator:
+                    for idx, val in enumerate(raw_down):
+                        if val:
+                            down_mask[idx] = True
+                else:
+                    for idx in raw_down:
+                        if isinstance(idx, (int, np.integer)) and 0 <= idx < self.n:
+                            down_mask[int(idx)] = True
+            elif isinstance(raw_down, (list, set, tuple)):
+                for idx in raw_down:
+                    if isinstance(idx, (int, np.integer)) and 0 <= idx < self.n:
+                        down_mask[int(idx)] = True
+            elif hasattr(raw_down, '__iter__'):
+                for idx, val in enumerate(raw_down):
                     if idx < self.n and val:
                         down_mask[idx] = True
         self.is_down = down_mask
@@ -508,8 +558,18 @@ class MahjongGPUSimulator:
         # Batch state tensors on GPU
         alive = torch.ones((B, N), dtype=torch.bool, device=self.device)
         known = torch.full((B, N), -1, dtype=torch.int16, device=self.device)
-        # Face-up tiles are immediately known:
-        known[:, ~self.is_down] = self.faces[~self.is_down].unsqueeze(0).expand(B, -1)
+        open_peek = torch.full((B,), -1, dtype=torch.int64, device=self.device)
+
+        above_t = self.above_matrix.t().float()
+        left_t = self.left_matrix.t().float()
+        right_t = self.right_matrix.t().float()
+        cover_t = self.cover_matrix.t().float()
+        unique_faces = torch.unique(self.faces).tolist()
+
+        # Face-up tiles are known at deal ONLY if NOT covered by other tiles:
+        covered = torch.matmul(alive.float(), cover_t) > 0
+        uncovered_face_up = (~self.is_down.unsqueeze(0)) & (~covered)
+        known = torch.where(uncovered_face_up, self.faces.unsqueeze(0).expand(B, -1), known)
 
         # Tray state: B x max_tray
         tray = torch.full((B, self.max_tray), -1, dtype=torch.int16, device=self.device)
@@ -522,11 +582,6 @@ class MahjongGPUSimulator:
         lost_clock = torch.zeros(B, dtype=torch.bool, device=self.device)
         lost_dead_end = torch.zeros(B, dtype=torch.bool, device=self.device)
 
-        above_t = self.above_matrix.t().float()
-        left_t = self.left_matrix.t().float()
-        right_t = self.right_matrix.t().float()
-        unique_faces = torch.unique(self.faces).tolist()
-
         for step in range(max_steps):
             active = ~(won | lost_tray | lost_clock | lost_dead_end)
             if not active.any():
@@ -534,8 +589,13 @@ class MahjongGPUSimulator:
 
             noise = torch.rand((B, N), device=self.device) if is_stochastic else None
 
-            # 1. Compute free tiles for all games in parallel via matrix multiplication
+            # 1. Uncover face-up tiles that are no longer covered
             alive_f = alive.float()
+            covered = torch.matmul(alive_f, cover_t) > 0
+            uncovered_face_up = alive & (~self.is_down.unsqueeze(0)) & (~covered)
+            known = torch.where(uncovered_face_up & (known < 0), self.faces.unsqueeze(0).expand(B, -1), known)
+
+            # 2. Compute free tiles for all games in parallel via matrix multiplication
             blocked_above = torch.matmul(alive_f, above_t) > 0
             blocked_left = torch.matmul(alive_f, left_t) > 0
             blocked_right = torch.matmul(alive_f, right_t) > 0
@@ -544,7 +604,7 @@ class MahjongGPUSimulator:
 
             moved = torch.zeros(B, dtype=torch.bool, device=self.device)
 
-            # Phase 1: Vectorized board pair matching
+            # Phase 1: Free board pair matching
             faces_order = unique_faces
             if is_stochastic and len(unique_faces) > 1:
                 faces_order = [unique_faces[i] for i in torch.randperm(len(unique_faces)).tolist()]
@@ -568,8 +628,10 @@ class MahjongGPUSimulator:
                     moved |= has_pair
                     moves[has_pair] += 2
                     tiles_remaining[has_pair] -= 2
+                    peek_matched = has_pair & (open_peek >= 0) & (~alive.gather(1, open_peek.clamp(min=0).unsqueeze(1)).squeeze(1))
+                    open_peek[peek_matched] = -1
 
-            # Phase 2: Vectorized tray matching
+            # Phase 2: Tray matching with free board tiles
             cur_free_faces = torch.where(alive & is_free & (known >= 0), known, torch.tensor(-1, device=self.device, dtype=torch.int16))
             for s in range(self.max_tray):
                 slot_face = tray[:, s]
@@ -591,6 +653,8 @@ class MahjongGPUSimulator:
                         moved |= has_match
                         moves[has_match] += 1
                         tiles_remaining[has_match] -= 2
+                        peek_matched = has_match & (open_peek == match_tile)
+                        open_peek[peek_matched] = -1
 
             if moved.any():
                 # Compact tray slots on GPU
@@ -598,7 +662,29 @@ class MahjongGPUSimulator:
                 sorted_idx = torch.argsort(is_occupied, dim=1, descending=True, stable=True)
                 tray = torch.gather(tray, 1, sorted_idx)
 
-            # Phase 3: Vectorized safe peeking of face-down tiles
+            # Phase 2b: Open peek matching with free board tile
+            has_op = active & (~moved) & (open_peek >= 0)
+            if has_op.any():
+                op_idx = open_peek.clamp(min=0)
+                op_face = self.faces[op_idx]
+                cur_free = torch.where(alive & is_free & (known >= 0), known, torch.tensor(-1, device=self.device, dtype=torch.int16))
+                cand_op = (cur_free == op_face.unsqueeze(1)) & (torch.arange(N, device=self.device).unsqueeze(0) != op_idx.unsqueeze(1)) & has_op.unsqueeze(1)
+                has_op_match = cand_op.any(dim=1)
+                if has_op_match.any():
+                    mate_tile = torch.argmax(cand_op.int(), dim=1)
+                    mask_m = torch.zeros_like(alive)
+                    mask_m.scatter_(1, mate_tile.unsqueeze(1), True)
+                    mask_op = torch.zeros_like(alive)
+                    mask_op.scatter_(1, op_idx.unsqueeze(1), True)
+                    alive[has_op_match.unsqueeze(1) & (mask_m | mask_op)] = False
+                    moved |= has_op_match
+                    moves[has_op_match] += 2
+                    tiles_remaining[has_op_match] -= 2
+                    open_peek[has_op_match] = -1
+
+            # Phase 3: Inspecting a free face-down tile
+            # In production JS, inspecting a tile DOES NOT consume a move on the game move clock.
+            # If the flipped tile matches a tray slot, open peek, or free mate, it matches immediately.
             down_free = alive & is_free & (known < 0) & active.unsqueeze(1) & (~moved).unsqueeze(1)
             has_down = down_free.any(dim=1)
             if has_down.any():
@@ -607,11 +693,46 @@ class MahjongGPUSimulator:
                     flip_tile = torch.argmax(scores, dim=1)
                 else:
                     flip_tile = torch.argmax(down_free.int(), dim=1)
+
                 mask_flip = torch.zeros_like(alive)
                 mask_flip.scatter_(1, flip_tile.unsqueeze(1), True)
-                known[has_down.unsqueeze(1) & mask_flip] = self.faces.unsqueeze(0).expand(B, -1)[has_down.unsqueeze(1) & mask_flip]
+                flip_face = self.faces[flip_tile]
+                known[has_down.unsqueeze(1) & mask_flip] = flip_face.unsqueeze(1).expand(-1, N)[has_down.unsqueeze(1) & mask_flip]
+
+                # Immediate match with open_peek
+                has_prev_op = has_down & (open_peek >= 0) & (open_peek != flip_tile)
+                prev_op_face = self.faces[open_peek.clamp(min=0)]
+                match_prev_op = has_prev_op & (flip_face == prev_op_face)
+                if match_prev_op.any():
+                    prev_op_idx = open_peek.clamp(min=0)
+                    mask_op = torch.zeros_like(alive)
+                    mask_op.scatter_(1, prev_op_idx.unsqueeze(1), True)
+                    alive[match_prev_op.unsqueeze(1) & (mask_flip | mask_op)] = False
+                    moves[match_prev_op] += 2
+                    tiles_remaining[match_prev_op] -= 2
+                    open_peek[match_prev_op] = -1
+
+                # Immediate match with tray
+                match_tray = torch.zeros(B, dtype=torch.bool, device=self.device)
+                for s in range(self.max_tray):
+                    slot_match = has_down & (~match_prev_op) & (~match_tray) & (tray[:, s] == flip_face)
+                    if slot_match.any():
+                        alive[slot_match.unsqueeze(1) & mask_flip] = False
+                        tray[slot_match, s] = -1
+                        tray_count[slot_match] -= 1
+                        moves[slot_match] += 1
+                        tiles_remaining[slot_match] -= 2
+                        match_tray |= slot_match
+
+                if match_tray.any():
+                    is_occupied = (tray >= 0).int()
+                    sorted_idx = torch.argsort(is_occupied, dim=1, descending=True, stable=True)
+                    tray = torch.gather(tray, 1, sorted_idx)
+
+                # Pure inspection: No immediate match, becomes open peek without charging moves
+                pure_peek = has_down & (~match_prev_op) & (~match_tray)
+                open_peek[pure_peek] = flip_tile[pure_peek]
                 moved |= has_down
-                moves[has_down] += 1  # Flipping a face-down tile consumes 1 move
 
             # Phase 4: Taking a free tile into tray (if headroom permits)
             avail_free = alive & is_free & active.unsqueeze(1) & (~moved).unsqueeze(1)
@@ -623,7 +744,7 @@ class MahjongGPUSimulator:
                     take_tile = torch.argmax(scores, dim=1)
                 else:
                     take_tile = torch.argmax((avail_free & has_room.unsqueeze(1)).int(), dim=1)
-                
+
                 mask_take = torch.zeros_like(alive)
                 mask_take.scatter_(1, take_tile.unsqueeze(1), True)
                 alive[has_room.unsqueeze(1) & mask_take] = False
@@ -634,6 +755,8 @@ class MahjongGPUSimulator:
                 tray[has_room, first_empty[has_room]] = taken_faces[has_room]
                 tray_count[has_room] += 1
                 moves[has_room] += 1
+                peek_taken = has_room & (open_peek == take_tile)
+                open_peek[peek_taken] = -1
                 moved |= has_room
 
             # Tray loss condition: tray has >= max_tray-1 tiles and no valid non-overflow move exists

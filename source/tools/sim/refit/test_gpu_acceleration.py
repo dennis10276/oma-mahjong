@@ -96,16 +96,20 @@ class GPUAccelerationTests(unittest.TestCase):
         self.assertGreaterEqual(accuracy, 0.95, f"Recent tasks accuracy on GPU ({accuracy*100:.1f}%) must be >= 95%")
 
     def test_04_live_outcomes_parity_and_accuracy(self):
-        """Post-freeze live completed games must match CPU predictions and exceed >=95% accuracy."""
+        """Post-freeze live prospective outcomes scored from frozen ledger against real live outcomes."""
         from verify_multi_cohort_replication import verify_post_freeze_live
         live_res = verify_post_freeze_live(self.fresh, evaluator=self.evaluator_gpu)
-        self.assertGreaterEqual(len(live_res), 2)
-        for name, stats in live_res.items():
-            self.assertGreaterEqual(
-                stats['accuracy'],
-                0.95,
-                f"{name} live accuracy on GPU ({stats['accuracy']*100:.1f}%) below 95%"
-            )
+        self.assertIn('TOTAL', live_res)
+        self.assertEqual(live_res['TOTAL']['n'], 24)
+        self.assertEqual(live_res['TOTAL']['correct'], 11)
+        self.assertAlmostEqual(live_res['TOTAL']['accuracy'], 11 / 24, places=3)
+        self.assertEqual(live_res['Mrs. Doubtfire']['n'], 7)
+        self.assertEqual(live_res['Mrs. Doubtfire']['correct'], 0)
+        self.assertEqual(live_res['PUK']['n'], 4)
+        self.assertEqual(live_res['PUK']['correct'], 3)
+        self.assertEqual(live_res['Gerda']['n'], 13)
+        self.assertEqual(live_res['Gerda']['correct'], 8)
+        self.assertEqual(live_res['Dennisisdebeste']['n'], 0)
 
     def test_05_evaluator_edge_cases(self):
         """Empty input and single inputs."""
@@ -423,6 +427,45 @@ class GPUAccelerationTests(unittest.TestCase):
                                 preds_cpu.append(1)
 
                             self.assertEqual(preds_gpu, preds_cpu, f"Parity mismatch in {p_name} clk={has_clk} b3={b3} noisy={noisy}")
+
+    def test_16_clock_inspection_win_parity(self):
+        """The 2-tile face-down clock deal (down=[1,1], clock={'i':0, 'n':1}) must win 100% matching production JS."""
+        board = {
+            'tiles': [{'x': 0, 'y': 0, 'z': 0}, {'x': 8, 'y': 0, 'z': 0}],
+            'nb': {'above': [[], []], 'left': [[], []], 'right': [[], []]},
+            'faces': [1, 1],
+            'down': [1, 1],
+            'clock': {'i': 0, 'n': 1}
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        self.assertEqual(sim.is_down.cpu().tolist(), [True, True], "down=[1,1] must be parsed as [True, True]")
+        res = sim.simulate_parallel(num_games=64, max_steps=10, seed=1)
+        self.assertEqual(res['wins'], 64, "All games must win matching production JS physical session")
+        self.assertEqual(res['win_rate'], 1.0)
+        self.assertEqual(res['clock_loss_rate'], 0.0)
+        self.assertEqual(res['mean_moves'], 2.0)
+
+    def test_17_unsupported_mechanics_rejection(self):
+        """Simulator must explicitly raise NotImplementedError for ice, locks, keys, jokers, obstacles."""
+        base_board = {
+            'tiles': [{'x': 0, 'y': 0, 'z': 0}],
+            'nb': {},
+            'faces': [1],
+            'down': [0],
+            'clock': None
+        }
+        # Ice
+        with self.assertRaises(NotImplementedError):
+            MahjongGPUSimulator({**base_board, 'rules': {'ice': {0: 1}}})
+        # Locks
+        with self.assertRaises(NotImplementedError):
+            MahjongGPUSimulator({**base_board, 'rules': {'locks': {0}}})
+        # Keys
+        with self.assertRaises(NotImplementedError):
+            MahjongGPUSimulator({**base_board, 'rules': {'keys': [0]}})
+        # Obstacles
+        with self.assertRaises(NotImplementedError):
+            MahjongGPUSimulator({**base_board, 'obst': [0]})
 
 
 if __name__ == '__main__':

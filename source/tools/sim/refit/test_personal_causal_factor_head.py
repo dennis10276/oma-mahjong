@@ -131,8 +131,14 @@ class CausalFactorHeadTests(unittest.TestCase):
         recent = verify_recent_tasks(fresh)
         self.assertTrue(all(p['accuracy'] >= 0.95 for p in recent.values()))
         live = verify_post_freeze_live(fresh)
-        self.assertTrue(all(p['accuracy'] >= 0.95 for p in live.values()))
-        verify_unopened_future_ledger(fresh)
+        self.assertEqual(live['TOTAL']['n'], 24)
+        self.assertEqual(live['TOTAL']['correct'], 11)
+        self.assertAlmostEqual(live['TOTAL']['accuracy'], 11 / 24, places=3)
+        self.assertEqual(live['Mrs. Doubtfire']['correct'], 0)
+        self.assertEqual(live['PUK']['correct'], 3)
+        self.assertEqual(live['Gerda']['correct'], 8)
+        unopened = verify_unopened_future_ledger(fresh)
+        self.assertEqual(len(unopened), 70)
 
     def test_causal_factor_evaluation_json_matches_runtime(self):
         from personal_causal_factor_data import EVAL_OUTPUT

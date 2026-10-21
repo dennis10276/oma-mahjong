@@ -2,43 +2,36 @@
 const assert = require('assert/strict');
 const physical = require('./known_tray_plan.js');
 const deadEnd = require('./public_dead_end.js');
+const { guardedSearch } = require('./public_witness_reopen_guard.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
-  pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null,
-  depth: 20, trayBuffer: null, clockPatience: 0.5, memoryDecay: 0.0, retryLearning: 1.0 });
-
-const PERSONAL_PROFILES = Object.freeze({
-  'Dennisisdebeste': Object.freeze({ depth: 20, trayBuffer: 2, clockPatience: 0.1, memoryDecay: 0.0, retryLearning: 0.95, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: true }),
-  'Mrs. Doubtfire': Object.freeze({ depth: 16, trayBuffer: 2, clockPatience: 0.6, memoryDecay: 0.05, retryLearning: 0.85, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: true }),
-  'PUK': Object.freeze({ depth: 12, trayBuffer: 3, clockPatience: 0.9, memoryDecay: 0.10, retryLearning: 0.75, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: false }),
-  'Gerda': Object.freeze({ depth: 8, trayBuffer: 3, clockPatience: 0.5, memoryDecay: 0.20, retryLearning: 0.50, nodes: 1024, beam: 24, progress: 8, pruneDead: true, finishKnown: true, pairProgress: true })
-});
+  pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
 function clockCone(game, state) {
   if (!game.clock || !state.alive[game.clock.i]) return new Set();
   const target = game.clock.i, cone = new Set([target]), stack = [target];
   while (stack.length) {
-    const cur = stack.pop();
-    for (const above of game.nb.above[cur]) {
+    const current = stack.pop();
+    for (const above of game.nb.above[current]) {
       if (state.alive[above] && !cone.has(above)) { cone.add(above); stack.push(above); }
     }
   }
   const sideTiles = rows => {
     const visited = new Set([target]), list = [];
-    let cur = target;
+    let current = target;
     for (;;) {
-      const next = rows[cur].find(index => state.alive[index] && !visited.has(index));
+      const next = rows[current].find(index => state.alive[index] && !visited.has(index));
       if (next === undefined) return list;
-      visited.add(next); list.push(next); cur = next;
+      visited.add(next); list.push(next); current = next;
     }
   };
   const leftList = sideTiles(game.nb.left), rightList = sideTiles(game.nb.right);
   const shorter = leftList.length <= rightList.length ? leftList : rightList;
-  for (const s of shorter) {
-    if (!cone.has(s)) {
-      cone.add(s); stack.push(s);
+  for (const index of shorter) {
+    if (!cone.has(index)) {
+      cone.add(index); stack.push(index);
       while (stack.length) {
-        const cur = stack.pop();
-        for (const above of game.nb.above[cur]) {
+        const current = stack.pop();
+        for (const above of game.nb.above[current]) {
           if (state.alive[above] && !cone.has(above)) { cone.add(above); stack.push(above); }
         }
       }
@@ -53,6 +46,16 @@ function coveredCount(game, state, root) {
     if (state.alive[i] && game.nb.above[i].includes(root)) count++;
   }
   return count;
+}
+
+const REFERENCE_PARAMETERS = Object.freeze({ ...PARAMETERS, nodes: 4096, beam: 32,
+  pairProgress: true, finishKnown: true, trayRecovery: true, trayRecoveryMin: 2 });
+
+function unproductiveReopen(state, index) {
+  const picture = state.pictures[index];
+  return !!state.down[index] && state.openPeek !== index && picture !== null
+    && !state.tray.includes(picture)
+    && !(state.openPeek >= 0 && state.pictures[state.openPeek] === picture);
 }
 
 function keyOf(game, state, knowledge = false) {
@@ -104,16 +107,8 @@ function recoveryOf(game, state) {
   return { immediate, stranded };
 }
 
-function search(game, state, actions, options = PARAMETERS) {
+function searchKnown(game, state, actions, options = PARAMETERS) {
   const settings = { ...PARAMETERS, ...options };
-  if (options.depth !== undefined && options.depth !== null) settings.taps = options.depth;
-  if (options.trayBuffer !== undefined && options.trayBuffer !== null) {
-    settings.trayRecoveryMin = options.trayBuffer;
-    settings.trayRecovery = true;
-  }
-  const clockPatience = typeof settings.clockPatience === 'number' ? settings.clockPatience : 0.5;
-  const memoryDecay = typeof settings.memoryDecay === 'number' ? settings.memoryDecay : 0.0;
-  const retryLearning = typeof settings.retryLearning === 'number' ? settings.retryLearning : 1.0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -123,36 +118,19 @@ function search(game, state, actions, options = PARAMETERS) {
   assert(Number.isInteger(settings.trayRecoveryMin) && settings.trayRecoveryMin >= 0 && settings.trayRecoveryMin <= 3);
   assert(settings.trayRecoveryClockMin === null || Number.isInteger(settings.trayRecoveryClockMin)
     && settings.trayRecoveryClockMin >= 0 && settings.trayRecoveryClockMin <= 3);
-  assert(typeof clockPatience === 'number' && clockPatience >= 0 && clockPatience <= 1);
-  assert(typeof memoryDecay === 'number' && memoryDecay >= 0 && memoryDecay <= 1);
-  assert(typeof retryLearning === 'number' && retryLearning >= 0 && retryLearning <= 1);
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
-  let activeState = state;
-  if (memoryDecay > 0 && typeof settings.rng === 'function') {
-    let decayedPictures = null;
-    for (let i = 0; i < state.pictures.length; i++) {
-      if (state.alive[i] && state.down[i] && i !== state.openPeek && state.pictures[i] !== null) {
-        if (settings.rng() < memoryDecay) {
-          if (!decayedPictures) decayedPictures = state.pictures.slice();
-          decayedPictures[i] = null;
-        }
-      }
-    }
-    if (decayedPictures) activeState = { ...state, pictures: decayedPictures };
-  }
-
   assert(Array.isArray(actions) && actions.length > 0);
-  const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, activeState).free;
+  const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
   assert([...roots].every(index => initialFree.includes(index)));
-  const initialLeft = activeState.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && activeState.alive[game.clock.i]);
-  const cone = clocked ? clockCone(game, activeState) : null;
-  const initialKnown = activeState.pictures.filter((picture, index) => activeState.alive[index] && picture !== null).length;
+  const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
+  const cone = clocked ? clockCone(game, state) : null;
+  const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
-    initialLeft + activeState.down.filter((value, index) => value && activeState.alive[index]).length)) : settings.taps;
-  let best = null, beam = [{ state: activeState, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
+    initialLeft + state.down.filter((value, index) => value && state.alive[index]).length)) : settings.taps;
+  let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
   const provedDeadRoots = new Set();
-  const visited = new Set([keyOf(game, activeState)]);
+  const visited = new Set([keyOf(game, state)]);
 
   const evaluate = (position, path, information = false, targetIndex = -1) => {
     const room = roomOf(game, position), left = position.alive.reduce((sum, value) => sum + value, 0);
@@ -181,13 +159,7 @@ function search(game, state, actions, options = PARAMETERS) {
     } else if (exit) {
       rank = [tier, inCone ? 1 : 0, -room.pressure, room.room, progress, -path.length, -recovery.stranded, recovery.immediate];
     } else if (clocked) {
-      if (clockPatience > 0.6) {
-        rank = [tier, -room.pressure, room.room, progress, inCone ? 1 : 0, -clockDistance(game, position), safeInfo ? progress : -path.length];
-      } else if (clockPatience < 0.4) {
-        rank = [tier, inCone ? 2 : 0, -clockDistance(game, position), -room.pressure, safeInfo ? -path.length : progress, room.room, -path.length];
-      } else {
-        rank = [tier, inCone ? 1 : 0, -room.pressure, -clockDistance(game, position), safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
-      }
+      rank = [tier, inCone ? 1 : 0, -room.pressure, -clockDistance(game, position), safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
       if (settings.trayRecovery && (!clocked || !position.alive[game.clock.i])) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
         position.tray.length >= recoveryMin ? recovery.immediate : 0);
@@ -204,10 +176,8 @@ function search(game, state, actions, options = PARAMETERS) {
     return candidate;
   };
 
-  const hasOther = actions.some(a => !a.inspect || activeState.pictures[a.index] === null
-    || activeState.tray.includes(activeState.pictures[a.index])
-    || activeState.openPeek >= 0 && a.index !== activeState.openPeek && activeState.pictures[a.index] === activeState.pictures[activeState.openPeek]
-    || activeState.pictures.some((p, i) => i !== a.index && activeState.alive[i] && p === activeState.pictures[a.index]));
+  const hasOther = actions.some(action => !unproductiveReopen(state, action.index));
+  const excludedRoots = hasOther ? actions.filter(action => unproductiveReopen(state, action.index)).map(action => action.index) : [];
 
   for (let depth = 0; depth < tapLimit && beam.length; depth++) {
     const next = [];
@@ -215,20 +185,7 @@ function search(game, state, actions, options = PARAMETERS) {
       if (nodes >= settings.nodes) { boundary = true; break; }
       nodes++;
       const allowed = physical.legal(game, node.state), settled = { ...node.state, relieved: allowed.relieved };
-      const indices = allowed.free.filter(index => {
-        if (node.path.length) return true;
-        if (!roots.has(index)) return false;
-        if (hasOther) {
-          const act = actions.find(a => a.index === index);
-          if (act && act.inspect && settled.pictures[index] !== null) {
-            const matchesTray = settled.tray.includes(settled.pictures[index]);
-            const matchesPeek = settled.openPeek >= 0 && index !== settled.openPeek && settled.pictures[index] === settled.pictures[settled.openPeek];
-            const matchesBoard = settled.pictures.some((p, i) => i !== index && settled.alive[i] && p === settled.pictures[index]);
-            if (!matchesTray && !matchesPeek && !matchesBoard) return false;
-          }
-        }
-        return true;
-      });
+      const indices = allowed.free.filter(index => node.path.length || roots.has(index) && !excludedRoots.includes(index));
       const priority = index => {
         if (settled.pictures[index] !== null && settled.tray.includes(settled.pictures[index])) return 0;
         if (game.clock?.i === index) return 1;
@@ -285,23 +242,26 @@ function search(game, state, actions, options = PARAMETERS) {
   return finish();
 
   function finish() {
-    const isNoOpAction = action => {
-      if (!action.inspect) return false;
-      const idx = action.index;
-      if (!activeState.down[idx] || activeState.pictures[idx] === null) return false;
-      const matchesTray = activeState.tray.includes(activeState.pictures[idx]);
-      const matchesPeek = activeState.openPeek >= 0 && idx !== activeState.openPeek && activeState.pictures[idx] === activeState.pictures[activeState.openPeek];
-      const matchesBoard = activeState.pictures.some((p, i) => i !== idx && activeState.alive[i] && p === activeState.pictures[idx]);
-      return !matchesTray && !matchesPeek && !matchesBoard;
-    };
-    const validActions = actions.filter(action => !isNoOpAction(action));
+    const validActions = actions.filter(action => !unproductiveReopen(state, action.index));
     const fallback = (validActions.length ? validActions[0] : actions[0]).index;
     let selected = best || { path: [fallback], goal: 'unresolvedFallback', won: false, safeClockExit: false,
-      clockRoom: 0, progress: 0, information: activeState.pictures[fallback] === null };
-    const knownDead = !selected.won && !beam.length && !boundary && !unknown && !unsupported;
+      clockRoom: 0, progress: 0, information: state.pictures[fallback] === null };
+    const exhausted = !selected.won && !beam.length && !boundary && !unknown && !unsupported;
+    const exclusionProof = exhausted && excludedRoots.length && nodes < settings.nodes
+      ? searchKnown(game, state, actions.filter(action => excludedRoots.includes(action.index)),
+        { ...settings, nodes: Math.min(settings.proofNodes, settings.nodes - nodes) }) : null;
+    nodes += exclusionProof?.nodes || 0;
+    unknown += exclusionProof?.unknownTransitions || 0;
+    unsupported += exclusionProof?.unsupportedTransitions || 0;
+    deadPrunes += exclusionProof?.prunedDeadSuccessors || 0;
+    boundary ||= exclusionProof?.boundary || false;
+    if (exclusionProof && !exclusionProof.knownDead) {
+      selected = { ...exclusionProof, won: exclusionProof.knownWin, progress: exclusionProof.knownProgress };
+    }
+    const knownDead = exhausted && (!excludedRoots.length || exclusionProof?.knownDead === true);
     if (knownDead) {
-      const loss = actions.find(action => physical.advance(game, activeState, action.index).lost);
-      const progress = actions.find(action => { const moved = physical.advance(game, activeState, action.index); return !moved.uncertain && moved.removed > 0; });
+      const loss = actions.find(action => physical.advance(game, state, action.index).lost);
+      const progress = actions.find(action => { const moved = physical.advance(game, state, action.index); return !moved.uncertain && moved.removed > 0; });
       selected = { ...selected, path: [loss?.index ?? progress?.index ?? selected.path[0]], goal: 'knownDeadEnd',
         won: false, safeClockExit: false, clockRoom: 0, progress: 0, information: false };
     }
@@ -312,18 +272,27 @@ function search(game, state, actions, options = PARAMETERS) {
       prunedDeadSuccessors: deadPrunes, provedDeadRoots: [...provedDeadRoots],
       safeClockExit: selected.safeClockExit, clockRoom: selected.clockRoom, knownProgress: selected.progress,
       matchedTiles: selected.matchedTiles || 0,
-      information: selected.information, nodes, boundary, unknownTransitions: unknown, unsupportedTransitions: unsupported,
+      heuristicExcludedRoots: excludedRoots, exclusionProof,
+      information: selected.information, nodes, boundary: boundary || excludedRoots.length > 0 && !knownDead && !selected.won,
+      unknownTransitions: unknown, unsupportedTransitions: unsupported,
       initialKnown, initialLeft,
       finishKnown, tapLimit,
-      depth: settings.taps, trayBuffer: settings.trayRecovery ? settings.trayRecoveryMin : null,
-      clockPatience, memoryDecay, retryLearning,
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
         + 'are never sampled from the real board. Clock distance is an ordering heuristic, not a proven bound. '
         + 'A knownDead certificate requires a fully exhausted known graph with no new information or '
-        + 'unsupported transition, pruning only separately certified losses; it chooses an actual losing/progressing tap rather than calling a '
+        + 'unsupported transition, pruning only separately certified losses. Excluded heuristic roots require a separate '
+        + 'bounded search sharing the remaining node budget before a death certificate; it chooses an actual losing/progressing tap rather than calling a '
         + 'computation cap a failure. A returned win/exit has a constructive physical witness; other absence is not a proof of loss, uniqueness '
         + 'or optimality. Automatic Joker transitions outside the public transition model remain unresolved.' };
   }
 }
 
-module.exports = { PARAMETERS, PERSONAL_PROFILES, keyOf, clockDistance, roomOf, recoveryOf, search };
+const guarded = guardedSearch(searchKnown);
+function search(game, state, actions, options = PARAMETERS) {
+  const publicActions = actions.map(action => ({ index: action.index,
+    inspect: !!state.down[action.index] && state.openPeek !== action.index
+      && (state.pictures[action.index] === null || unproductiveReopen(state, action.index)) }));
+  return guarded(game, state, publicActions, options);
+}
+
+module.exports = { PARAMETERS, REFERENCE_PARAMETERS, keyOf, clockDistance, roomOf, recoveryOf, search };

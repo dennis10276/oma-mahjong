@@ -5,14 +5,17 @@ const witness = require('./public_witness_search.js');
 const FEATURES = ['witnessAction', 'winningWitness', 'safeClockExitWitness', 'clockRoomWitness',
   'knownProgressWitness', 'informationWitness', 'boundedWitness', 'persistentWitness'];
 
-function reference(options = witness.PARAMETERS, runSearch = witness.search) {
+function reference(options = witness.REFERENCE_PARAMETERS, runSearch = witness.search) {
   assert.equal(typeof runSearch, 'function');
-  let choice = null, pending = null, expected = null, staged = null;
+  let choice = null, pending = null, expected = null, expectedPictures = null, expectedDown = null, staged = null;
   const stats = { searches: 0, searchNodes: 0, retainedSteps: 0, winWitnesses: 0, exitWitnesses: 0, unknownFrontiers: 0, boundaries: 0, provedDeadEnds: 0, prunedDeadSuccessors: 0 };
   const planning = (game, state, actions) => {
-    const signature = witness.keyOf(game, state, false);
+    const signature = witness.keyOf(game, state);
+    const preservedKnowledge = expectedPictures?.every((picture, index) => !state.alive[index]
+      || (picture === null || state.pictures[index] === picture) && state.down[index] === expectedDown[index]);
     let report, retained = false;
-    if (pending?.path.length && expected === signature && actions.some(action => action.index === pending.path[0])) {
+    if (pending?.path.length && expected === signature && preservedKnowledge
+      && actions.some(action => action.index === pending.path[0])) {
       report = { ...pending, index: pending.path[0], nodes: 0 }; retained = true; stats.retainedSteps++;
     } else {
       report = runSearch(game, state, actions, options); stats.searches++; stats.searchNodes += report.nodes;
@@ -24,8 +27,10 @@ function reference(options = witness.PARAMETERS, runSearch = witness.search) {
     const selected = actions.findIndex(action => action.index === report.index); assert(selected >= 0);
     const moved = physical.advance(game, state, report.index);
     const continuation = !moved.uncertain && !moved.lost && report.path.length > 1 ? { ...report, path: report.path.slice(1) } : null;
-    staged = { pending: continuation, expected: continuation ? witness.keyOf(game, moved.state, false) : null };
-    choice = { index: selected, report };
+    staged = { pending: continuation, expected: continuation ? witness.keyOf(game, moved.state) : null,
+      pictures: continuation ? moved.state.pictures.slice() : null,
+      down: continuation ? moved.state.down.slice() : null };
+    choice = { index: selected, report, tiles: actions.map(action => action.index) };
     const features = actions.map((action, index) => index === selected ? [1, +report.knownWin, +report.safeClockExit,
       report.clockRoom / 4, Math.min(1, report.knownProgress / 8), +report.information, +report.boundary, +retained] : FEATURES.map(() => 0));
     return { features, nodes: report.nodes, boundaries: +report.boundary };
@@ -38,10 +43,20 @@ function reference(options = witness.PARAMETERS, runSearch = witness.search) {
     check(decision); assert(Number.isInteger(selected) && selected >= 0 && selected < decision.F.length);
     pending = selected === choice.index ? staged.pending : null;
     expected = selected === choice.index ? staged.expected : null;
+    expectedPictures = selected === choice.index ? staged.pictures : null;
+    expectedDown = selected === choice.index ? staged.down : null;
   };
   const choose = decision => { check(decision); const selected = choice.index; observe(decision, selected); return selected; };
   choose.probabilities = decision => { check(decision); return decision.F.map((feature, index) => +(index === choice.index)); };
   choose.observe = observe;
+  choose.acknowledgeTile = index => {
+    assert(choice && Number.isInteger(index));
+    const selected = choice.tiles.indexOf(index); assert(selected >= 0, 'Acknowledge only a currently legal physical tile');
+    pending = selected === choice.index ? staged.pending : null;
+    expected = selected === choice.index ? staged.expected : null;
+    expectedPictures = selected === choice.index ? staged.pictures : null;
+    expectedDown = selected === choice.index ? staged.down : null;
+  };
   choose.physicalTrayPlanning = planning; choose.stats = () => ({ ...stats });
   choose.report = () => choice?.report || null;
   return choose;
