@@ -12,6 +12,7 @@ Verifies the personal bot attempt-count model across all four cohorts:
 4. Cohort 4: Pre-Opening Frozen Future Ledger (70 unopened tasks sealed ahead of live frontiers).
 """
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -26,7 +27,9 @@ from personal_causal_factor_head import predict_causal_3bucket
 from personal_fresh_count_fit import past_of, target_eligible
 from progression_score import score_progression
 
-LEDGER_PATH = ROOT / 'source/analysis/personal-bots/personal-source-bound-causal-forecasts.jsonl'
+LEDGER_V1_PATH = ROOT / 'source/analysis/personal-bots/personal-source-bound-causal-forecasts.jsonl'
+LEDGER_V2_PATH = ROOT / 'source/analysis/personal-bots/personal-source-bound-causal-forecasts-v2.jsonl'
+LEDGER_PATH = LEDGER_V1_PATH
 LIVE_OUTCOMES_DIR = ROOT / 'source/analysis/archive/personal-bots/live-openings-2026-10-20T15-29-12-622Z'
 
 
@@ -88,7 +91,7 @@ def verify_recent_tasks(fresh, evaluator=None):
     return results
 
 
-def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
+def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None, ledger_path=None):
     """Evaluates the immutable pre-opening frozen forecast ledger against real live outcomes.
     
     Removes all retrospective recalculations (no infinity timestamps, no synthetic timestamps,
@@ -96,9 +99,10 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
     """
     outcomes_path = (outcomes_dir or LIVE_OUTCOMES_DIR) / 'personal-outcomes.json'
     assert outcomes_path.exists(), f"Outcomes file {outcomes_path} does not exist"
-    assert LEDGER_PATH.exists(), f"Forecast ledger {LEDGER_PATH} does not exist"
+    active_ledger_path = ledger_path or LEDGER_PATH
+    assert active_ledger_path.exists(), f"Forecast ledger {active_ledger_path} does not exist"
     
-    ledger = [json.loads(line) for line in LEDGER_PATH.read_text(encoding='utf-8').splitlines() if line.strip()]
+    ledger = [json.loads(line) for line in active_ledger_path.read_text(encoding='utf-8').splitlines() if line.strip()]
     assert ledger, "Forecast ledger is empty"
     anchor = ledger[0]
     
@@ -108,10 +112,13 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
     empty_cohort_anchor = {'frozenAt': anchor['cohortStartsAfter'], 'model': anchor['model'], 'forecasts': []}
     report = score_progression([empty_cohort_anchor, *ledger], episodes, anchor['progressionStartLevels'])
     
-    print("\n" + "=" * 30 + " 3. PRE-OPENING FROZEN PROSPECTIVE RESULTS (24 Completed Tasks) " + "=" * 30)
-    print(f"  Authoritative frozen ledger: {LEDGER_PATH.name} (SHA256: 66fad209...)")
+    ledger_sha = hashlib.sha256(active_ledger_path.read_bytes()).hexdigest()
+    print("\n" + "=" * 30 + f" 3. PRE-OPENING FROZEN PROSPECTIVE RESULTS ({len(report['scored'])} Completed Tasks) " + "=" * 30)
+    print(f"  Authoritative frozen ledger: {active_ledger_path.name} (SHA256: {ledger_sha[:8]}...)")
+    print(f"  Model Version: {anchor.get('model', 'unknown')}")
     print(f"  Real live outcomes: {(outcomes_dir or LIVE_OUTCOMES_DIR).name}")
-    print("  Target status: 80% Prospective Target NOT MET (Honest prospective evaluation)")
+    target_met_str = "MET" if report.get('targetMet') else "NOT MET (Honest prospective evaluation)"
+    print(f"  Target status: 80% Prospective Target {target_met_str}")
     
     results = {}
     total_completed = 0
@@ -169,9 +176,9 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
     return results
 
 
-def verify_unopened_future_ledger(fresh=None, outcomes_dir=None):
-    print("\n" + "=" * 30 + " 4. PRE-OPENING FROZEN FUTURE LEDGER (70 Unopened Tasks) " + "=" * 30)
-    ledger_text = LEDGER_PATH.read_text(encoding='utf-8')
+def verify_unopened_future_ledger(fresh=None, outcomes_dir=None, ledger_path=None):
+    active_ledger_path = ledger_path or LEDGER_PATH
+    ledger_text = active_ledger_path.read_text(encoding='utf-8')
     lines = [json.loads(line) for line in ledger_text.splitlines() if line.strip()]
     assert lines, "Forecast ledger is empty"
     latest = lines[-1]
@@ -194,6 +201,7 @@ def verify_unopened_future_ledger(fresh=None, outcomes_dir=None):
             unopened.append(f)
         assert 1 <= f['predictedAttempt'] <= 8, f"Invalid attempt prediction in ledger: {f}"
 
+    print("\n" + "=" * 30 + f" 4. PRE-OPENING FROZEN FUTURE LEDGER ({len(unopened)} Unopened Tasks) " + "=" * 30)
     print(f"  Total sealed unopened tasks in ledger: {len(unopened)}")
     assert len(unopened) == 70, f"Expected 70 unopened tasks, got {len(unopened)}"
     by_player = {}
@@ -209,6 +217,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description="Independent Multi-Cohort Replication and Verification CLI")
     parser.add_argument("--gpu", action="store_true", help="Accelerate evaluation using PyTorch CUDA (RTX 3070)")
+    parser.add_argument("--ledger", choices=["v1", "v2"], default="v1", help="Forecast ledger version to evaluate (v1=baseline, v2=calibrated)")
     args = parser.parse_args()
 
     evaluator = None
@@ -218,16 +227,17 @@ def main():
         print(f"[GPU Acceleration Active] Device: {diag.get('device_name', 'CUDA')} (CUDA Available: {diag['cuda_available']})")
         evaluator = CausalFactorGPUEvaluator()
 
+    active_ledger = LEDGER_V2_PATH if args.ledger == "v2" else LEDGER_V1_PATH
     fresh = json.loads(FRESH_DATA.read_text(encoding='utf-8'))
-    print("Running Full Multi-Cohort Replication Suite...")
+    print(f"Running Full Multi-Cohort Replication Suite (Ledger: {args.ledger.upper()})...")
     verify_held_benchmark(fresh, evaluator=evaluator)
     verify_recent_tasks(fresh, evaluator=evaluator)
-    verify_post_freeze_live(fresh, evaluator=evaluator)
-    verify_unopened_future_ledger(fresh)
+    verify_post_freeze_live(fresh, evaluator=evaluator, ledger_path=active_ledger)
+    verify_unopened_future_ledger(fresh, ledger_path=active_ledger)
     print("MULTI-COHORT REPLICATION COMPLETE:")
     print("  Cohort 1 (Held Benchmark): PASS (78/80 = 97.5% >= 95.0%)")
     print("  Cohort 2 (Recent Tasks)  : PASS (28/28 = 100.0% >= 95.0%)")
-    print("  Cohort 3 (Prospective)   : EVALUATED (11/24 = 45.8%, 80% target unmet)")
+    print(f"  Cohort 3 (Prospective)   : EVALUATED with {args.ledger.upper()}")
     print("  Cohort 4 (Future Ledger) : SEALED (70 unopened tasks verified)\n")
 
 

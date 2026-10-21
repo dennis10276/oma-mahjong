@@ -1,9 +1,32 @@
 {
-  "evaluatedAt": "2026-10-17T03:55:17.220518+00:00",
+  "evaluatedAt": "2026-10-21T13:13:27.857264+00:00",
   "evidence": "historical-exploratory",
   "targetMet": false,
+  "scoringRule": {
+    "id": "attempt-tolerance-and-8plus-v2",
+    "toleranceByActualAttempt": {
+      "1-3": 0,
+      "4-5": 1,
+      "6+": 2
+    },
+    "sharedSuccessBucketMinimum": 8,
+    "combination": "within-tolerance-or-both-8plus"
+  },
+  "comparisonScope": "historical-mixed-episodes",
   "measurementFingerprint": "5e4e88e4e287c4cca1875e5e17c01d52c784b17d24c9af5269e731dcc0f108e2",
   "dataSha256": "180019f158c928c22bcf271b951576c84b5aaa750ee59b917e8e9032da901157",
+  "personalOnly": false,
+  "strategyCandidates": [
+    "baseline",
+    "cautious",
+    "noisy",
+    "recalled",
+    "cautiousRecalled",
+    "noisyRecalled",
+    "learning",
+    "recalledLearning",
+    "observedErrorsLearning"
+  ],
   "simulationRuns": 64,
   "simulatedAttempts": 32,
   "profiles": {
@@ -107,47 +130,47 @@
     },
     "baselineSmoothed": {
       "n": 80,
-      "correct": 41,
-      "accuracy": 0.5125,
+      "correct": 42,
+      "accuracy": 0.525,
       "exactAccuracy": 0.5125,
       "wilson95": [
-        0.4049314460370689,
-        0.6189230605563166
+        0.41695451180328746,
+        0.6307545013834838
       ],
       "meanAbsoluteError": 1.6125
     },
     "personalMixture": {
       "n": 80,
+      "correct": 39,
+      "accuracy": 0.4875,
+      "exactAccuracy": 0.475,
+      "wilson95": [
+        0.38107693944368337,
+        0.5950685539629311
+      ],
+      "meanAbsoluteError": 1.6125
+    },
+    "personalBest": {
+      "n": 80,
       "correct": 38,
       "accuracy": 0.475,
-      "exactAccuracy": 0.475,
+      "exactAccuracy": 0.45,
       "wilson95": [
         0.3692454986165162,
         0.5830454881967124
       ],
-      "meanAbsoluteError": 1.55
-    },
-    "personalBest": {
-      "n": 80,
-      "correct": 37,
-      "accuracy": 0.4625,
-      "exactAccuracy": 0.45,
-      "wilson95": [
-        0.3574781238878701,
-        0.5709583563319731
-      ],
-      "meanAbsoluteError": 1.5375
+      "meanAbsoluteError": 1.6375
     },
     "mixtureCalibrated": {
       "n": 80,
       "correct": 37,
       "accuracy": 0.4625,
-      "exactAccuracy": 0.4625,
+      "exactAccuracy": 0.425,
       "wilson95": [
         0.3574781238878701,
         0.5709583563319731
       ],
-      "meanAbsoluteError": 1.8625
+      "meanAbsoluteError": 1.95
     },
     "controlForest": {
       "n": 80,
@@ -217,7 +240,7 @@
             0.3420820083075997,
             0.7418049791429071
           ],
-          "meanAbsoluteError": 1.2
+          "meanAbsoluteError": 1.35
         },
         "personalMixture": {
           "n": 20,
@@ -239,7 +262,7 @@
             0.3420820083075997,
             0.7418049791429071
           ],
-          "meanAbsoluteError": 1.15
+          "meanAbsoluteError": 1.3
         },
         "mixtureCalibrated": {
           "n": 20,
@@ -250,7 +273,7 @@
             0.3420820083075997,
             0.7418049791429071
           ],
-          "meanAbsoluteError": 1.2
+          "meanAbsoluteError": 1.35
         },
         "controlForest": {
           "n": 20,
@@ -296,7 +319,7 @@
           0.3420820083075997,
           0.7418049791429071
         ],
-        "meanAbsoluteError": 1.2
+        "meanAbsoluteError": 1.35
       },
       "selectedProfiles": {
         "baseline": 10,
@@ -369,14 +392,14 @@
         },
         "mixtureCalibrated": {
           "n": 20,
-          "correct": 7,
-          "accuracy": 0.35,
-          "exactAccuracy": 0.35,
+          "correct": 8,
+          "accuracy": 0.4,
+          "exactAccuracy": 0.3,
           "wilson95": [
-            0.18118954786794464,
-            0.5671494897805354
+            0.21880396741419272,
+            0.613422057684794
           ],
-          "meanAbsoluteError": 3.65
+          "meanAbsoluteError": 3.6
         },
         "controlForest": {
           "n": 20,
@@ -588,47 +611,47 @@
         },
         "baselineSmoothed": {
           "n": 20,
-          "correct": 9,
-          "accuracy": 0.45,
+          "correct": 10,
+          "accuracy": 0.5,
           "exactAccuracy": 0.45,
           "wilson95": [
-            0.25819502085709295,
-            0.6579179916924003
-          ],
-          "meanAbsoluteError": 1.2
-        },
-        "personalMixture": {
-          "n": 20,
-          "correct": 7,
-          "accuracy": 0.35,
-          "exactAccuracy": 0.35,
-          "wilson95": [
-            0.18118954786794464,
-            0.5671494897805354
-          ],
-          "meanAbsoluteError": 1.0
-        },
-        "personalBest": {
-          "n": 20,
-          "correct": 6,
-          "accuracy": 0.3,
-          "exactAccuracy": 0.3,
-          "wilson95": [
-            0.14547527396899385,
-            0.5189767762289793
+            0.2992949144298199,
+            0.7007050855701801
           ],
           "meanAbsoluteError": 1.05
         },
-        "mixtureCalibrated": {
+        "personalMixture": {
           "n": 20,
           "correct": 8,
           "accuracy": 0.4,
-          "exactAccuracy": 0.4,
+          "exactAccuracy": 0.35,
           "wilson95": [
             0.21880396741419272,
             0.613422057684794
           ],
-          "meanAbsoluteError": 1.85
+          "meanAbsoluteError": 1.25
+        },
+        "personalBest": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.3,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 1.3
+        },
+        "mixtureCalibrated": {
+          "n": 20,
+          "correct": 7,
+          "accuracy": 0.35,
+          "exactAccuracy": 0.3,
+          "wilson95": [
+            0.18118954786794464,
+            0.5671494897805354
+          ],
+          "meanAbsoluteError": 2.1
         },
         "controlForest": {
           "n": 20,
@@ -667,14 +690,14 @@
       "selectedBeforeTest": "baselineSmoothed",
       "selectedScore": {
         "n": 20,
-        "correct": 9,
-        "accuracy": 0.45,
+        "correct": 10,
+        "accuracy": 0.5,
         "exactAccuracy": 0.45,
         "wilson95": [
-          0.25819502085709295,
-          0.6579179916924003
+          0.2992949144298199,
+          0.7007050855701801
         ],
-        "meanAbsoluteError": 1.2
+        "meanAbsoluteError": 1.05
       },
       "selectedProfiles": {
         "baseline": 0,

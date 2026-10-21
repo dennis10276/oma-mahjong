@@ -1,0 +1,87 @@
+{
+  "calibratedAt": "2026-10-21T13:19:44.613Z",
+  "cutoffTime": null,
+  "halfLife": 20,
+  "players": {
+    "Dennisisdebeste": {
+      "name": "Dennisisdebeste",
+      "episodes": 98,
+      "wins": 62,
+      "winRate": 0.633,
+      "diagnostics": {
+        "singleProbAtTray2": 0.196,
+        "singleProbAtTray3": 0.081,
+        "clockConeRatio": 0.014,
+        "redundantInspectionRate": 2.655,
+        "retryCarryForwardRate": 0.357
+      },
+      "parameters": {
+        "depth": 16,
+        "trayBuffer": 2,
+        "clockPatience": 0.1,
+        "memoryDecay": 0.4,
+        "retryLearning": 0.36
+      }
+    },
+    "Mrs. Doubtfire": {
+      "name": "Mrs. Doubtfire",
+      "episodes": 58,
+      "wins": 15,
+      "winRate": 0.259,
+      "diagnostics": {
+        "singleProbAtTray2": 0.194,
+        "singleProbAtTray3": 0.122,
+        "clockConeRatio": 0.018,
+        "redundantInspectionRate": 2.442,
+        "retryCarryForwardRate": 0.464
+      },
+      "parameters": {
+        "depth": 8,
+        "trayBuffer": 3,
+        "clockPatience": 0.1,
+        "memoryDecay": 0.4,
+        "retryLearning": 0.46
+      }
+    },
+    "PUK": {
+      "name": "PUK",
+      "episodes": 61,
+      "wins": 34,
+      "winRate": 0.557,
+      "diagnostics": {
+        "singleProbAtTray2": 0.229,
+        "singleProbAtTray3": 0.168,
+        "clockConeRatio": 0.5,
+        "redundantInspectionRate": 0.775,
+        "retryCarryForwardRate": 0.794
+      },
+      "parameters": {
+        "depth": 16,
+        "trayBuffer": 3,
+        "clockPatience": 0.75,
+        "memoryDecay": 0.4,
+        "retryLearning": 0.79
+      }
+    },
+    "Gerda": {
+      "name": "Gerda",
+      "episodes": 195,
+      "wins": 59,
+      "winRate": 0.303,
+      "diagnostics": {
+        "singleProbAtTray2": 0.236,
+        "singleProbAtTray3": 0.143,
+        "clockConeRatio": 0.5,
+        "redundantInspectionRate": 1.949,
+        "retryCarryForwardRate": 0.614
+      },
+      "parameters": {
+        "depth": 12,
+        "trayBuffer": 3,
+        "clockPatience": 0.75,
+        "memoryDecay": 0.4,
+        "retryLearning": 0.61
+      }
+    }
+  }
+}
