@@ -97,7 +97,20 @@ function candidates(job) {
       b = { tiles: x.tiles, faces: x.faces.slice(), down: x.down.slice(), gold: (x.gold || []).slice(), obst: x.obst, clock: x.clock ? { ...x.clock } : null, solution: x.solution.slice() };
     }
     if (!b) continue;
-    const quick = measure(b, SCREEN, 31 + lv);
+    let quick = measure(b, SCREEN, 31 + lv);
+    // the cheapest strong lever right away: the clock a move longer when far too hard, shorter when too
+    // easy (no clock: a face-down tile more or less), each change kept only if the quick look gets closer
+    const own = P.target, gap = mm => NAMES.reduce((s, x) => s + (mm[x].first - own[x].first) + (mm[x].two - own[x].two) + (mm[x].four - own[x].four), 0) / 6;
+    const base = b.clock ? b.solution.indexOf(b.clock.i) + 1 : 0, al = new Uint8Array(b.tiles.length).fill(1), nb0 = L.neighbors(tilesOf(b));
+    for (let k = 0; k < 3 && !within(quick, own, false); k++) {
+      const dir = gap(quick), c = { ...b, down: b.down.slice(), clock: b.clock ? { ...b.clock } : null };
+      if (c.clock) { const nn = c.clock.n + (dir > 0 ? -1 : 1); if (nn < base + 1 || nn > base + 5) break; c.clock.n = nn; }
+      else if (dir > 0) { const ob = c.obst || {}, ban = new Set([...(c.gold || []), ...Object.keys(ob.ice || {}).map(Number), ...(ob.locks || []), ...(ob.keys || [])]); const f = []; for (let i = 0; i < c.tiles.length; i++) if (!ban.has(i) && !c.down.includes(i) && !L.isFree(i, al, nb0)) f.push(i); if (!f.length) break; c.down.push(f[(lv * 31 + k) % f.length]); }
+      else { if (c.down.length < 2) break; c.down.pop(); }
+      if (!valid(c)) break;
+      const mq = measure(c, SCREEN, 31 + lv + k + 1);
+      if (distTo(mq, own) < distTo(quick, own)) { b = c; quick = mq; } else break;
+    }
     out.push({ lv, shape, free: best.free, board: b, quick });
   }
   // measured properly: the ones a level nearby could use (quick look not far off any target near by)
@@ -189,7 +202,7 @@ function cmdAssign(from) {
   const order = levels.map(l => ({ l, opts: optionsOf(l) })).sort((a, b) => a.opts.filter(x => x.ok).length - b.opts.filter(x => x.ok).length || a.l.lv - b.l.lv);
   const used = new Set(), chosen = {};
   for (const { l, opts } of order) {
-    const pick = opts.filter(x => !used.has(x.o.id) && !Object.values(chosen).some(c => tooAlike(c.s, x.o.s))).sort((a, b) => a.d - b.d)[0];
+    const pick = opts.filter(x => !used.has(x.o.id) && !Object.values(chosen).some(c => c && tooAlike(c.s, x.o.s))).sort((a, b) => a.d - b.d)[0];
     if (!pick) { chosen[l.lv] = null; continue; }
     used.add(pick.o.id); chosen[l.lv] = { id: pick.o.id, made: pick.o.made, shape: pick.o.c.shape, board: pick.o.c.board, m: pick.o.c.m, dist: +pick.d.toFixed(3), ok: pick.ok, s: pick.o.s };
   }
