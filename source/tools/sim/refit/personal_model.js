@@ -18,6 +18,17 @@ function boardId(game) {
   ])).digest('hex');
 }
 
+function publicBoardId(game) {
+  const rules = game.rules;
+  const ice = rules ? Object.entries(rules.ice || {}).sort(([left], [right]) => +left - +right) : [];
+  const locks = rules && rules.locks ? Array.from(rules.locks).sort((left, right) => left - right) : [];
+  const keys = rules ? Array.from(rules.keys || []).sort((left, right) => left - right) : [];
+  return crypto.createHash('sha256').update(JSON.stringify([
+    game.tiles.map(tile => [tile.x, tile.y, tile.z]), Array.from(game.down),
+    ice, locks, keys, game.clock ? [game.clock.i, game.clock.n] : null,
+  ])).digest('hex');
+}
+
 function conditional(chain, attempt) {
   for (let index = Math.min(attempt, chain.cond.length) - 1; index >= 0; index--) {
     if (Number.isFinite(chain.cond[index])) return chain.cond[index];
@@ -96,4 +107,4 @@ function recentRate(past, row) {
 }
 
 const loss = (probability, outcome) => -Math.log(outcome ? clamp(probability, 1e-9) : 1 - clamp(probability, 1e-9));
-module.exports = { NAMES, CONFIG, boardId, conditional, cumulative, fit, predict, recentRate, loss };
+module.exports = { NAMES, CONFIG, boardId, publicBoardId, conditional, cumulative, fit, predict, recentRate, loss };

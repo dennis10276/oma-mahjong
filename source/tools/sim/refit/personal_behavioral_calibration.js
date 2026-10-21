@@ -136,7 +136,7 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
         // Paired with tray
         tray.splice(inTrayIdx, 1);
         if (trayState[pic] !== undefined) {
-          singleInTrayDurations.push(s - trayState[pic]);
+          singleInTrayDurations.push({ span: s - trayState[pic], weight });
           delete trayState[pic];
         }
       } else {
@@ -159,28 +159,32 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
 
   // Calculate empirical retry learning across exact-board consecutive attempts:
   // Measure direct recall (direct tap of previously inspected face-down tile) vs re-peeking,
-  // avoiding generic tile-index overlap.
+  // avoiding generic tile-index overlap and freezing knowledge prior to each retry.
   let weightedDirectMatches = 0;
   let weightedRePeeks = 0;
 
   for (const [, attempts] of campaignAttempts.entries()) {
     if (attempts.length > 1) {
-      const peekedEver = new Set();
+      const seenBefore = new Set();
       for (let i = 0; i < attempts.length; i++) {
         const { game: attGame, weight: w } = attempts[i];
+        const seenThisAttempt = new Set();
         for (const tap of attGame.take) {
           if (tap < 0) {
             const idx = -(tap + 1);
-            if (i > 0 && peekedEver.has(idx)) {
+            if (i > 0 && seenBefore.has(idx) && !seenThisAttempt.has(idx)) {
               weightedRePeeks += w;
             }
-            peekedEver.add(idx);
+            seenThisAttempt.add(idx);
           } else {
             const idx = tap;
-            if (i > 0 && peekedEver.has(idx) && attGame.g.down && attGame.g.down[idx]) {
+            if (i > 0 && seenBefore.has(idx) && !seenThisAttempt.has(idx) && attGame.g.down && attGame.g.down[idx]) {
               weightedDirectMatches += w;
             }
           }
+        }
+        for (const idx of seenThisAttempt) {
+          seenBefore.add(idx);
         }
       }
     }
@@ -213,10 +217,18 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
     retryLearning = Math.max(0.1, Math.min(0.95, weightedDirectMatches / totalRetryInteractions));
   }
 
-  // depth: based on 90th percentile of pairing span (planning horizon for committing tray space)
-  // rather than equating raw win rate with planning depth
-  singleInTrayDurations.sort((a, b) => a - b);
-  const p90Span = singleInTrayDurations.length ? singleInTrayDurations[Math.floor(singleInTrayDurations.length * 0.90)] : 0;
+  // depth: based on recency-weighted 90th percentile of pairing span
+  singleInTrayDurations.sort((a, b) => a.span - b.span);
+  const totalSpanWeight = singleInTrayDurations.reduce((sum, item) => sum + item.weight, 0);
+  let cumSpanWeight = 0;
+  let p90Span = 0;
+  for (const item of singleInTrayDurations) {
+    cumSpanWeight += item.weight;
+    if (cumSpanWeight >= 0.90 * totalSpanWeight) {
+      p90Span = item.span;
+      break;
+    }
+  }
   const depth = p90Span >= 6 ? 16 : p90Span >= 5 ? 14 : p90Span >= 3 ? 12 : 10;
   const winRate = allGames.filter(g => g.won).length / allGames.length;
 
@@ -232,6 +244,7 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
       reInspectedTileFraction: +(frac.toFixed(3)),
       p90PairingSpan: p90Span,
       retryRecallRate: +(retryLearning.toFixed(3)),
+      retryCarryForwardRate: +(retryLearning.toFixed(3)),
       retryInteractionsCount: Math.round(totalRetryInteractions),
       retryUncertain
     },

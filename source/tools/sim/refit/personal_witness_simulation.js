@@ -7,7 +7,7 @@ const { createSession } = require('./production_physical_session.js');
 const { createObservedMemory } = require('./personal_observed_memory.js');
 const { search } = require('./public_witness_search.js');
 const { calibratePlayer } = require('./personal_behavioral_calibration.js');
-const { boardId } = require('./personal_model.js');
+const { boardId, publicBoardId } = require('./personal_model.js');
 
 /**
  * Simulates a player's multi-attempt campaign on a Mahjong board using their calibrated behavioral bot.
@@ -35,8 +35,9 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
 
   const size = game.tiles.length;
   const board = boardId(game);
-  const campaign = options.campaign || game.aid || 'camp_' + crypto.createHash('sha256').update(board).digest('hex').slice(0, 16);
-  const baseSeed = options.seed ?? crypto.createHash('sha256').update([playerName, campaign, board].join('|')).digest().readUInt32LE(0);
+  const publicBoard = publicBoardId(game);
+  const campaign = options.campaign || game.aid || 'camp_' + crypto.createHash('sha256').update(publicBoard).digest('hex').slice(0, 16);
+  const baseSeed = options.seed ?? crypto.createHash('sha256').update([playerName, campaign, publicBoard].join('|')).digest().readUInt32LE(0);
 
   const memory = createObservedMemory({
     size,

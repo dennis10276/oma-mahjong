@@ -1,0 +1,128 @@
+{
+  "timestamp": "2026-10-21T16:42:02+02:00",
+  "allGatesPassed": false,
+  "gates": {
+    "G0": {
+      "gate": "G0",
+      "name": "Reproducible evaluation and evidence",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "rtm_file_exists": true,
+        "experiments_file_exists": true,
+        "v1_ledger_sha256": "66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20",
+        "legacy_ledgers_preserved": true,
+        "unit_tests": {
+          "test_personal_observed_memory.js": "PASS",
+          "test_personal_witness_simulation.js": "PASS",
+          "test_public_witness_search.js": "PASS",
+          "test_personal_behavioral_calibration.js": "PASS",
+          "test_human_decision_dataset.js": "PASS",
+          "test_personal_action_policy_fidelity.js": "PASS"
+        }
+      }
+    },
+    "G1": {
+      "gate": "G1",
+      "name": "Correct production physics and human-information boundary",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "concealed_prefix_seed_invariance": "PASS",
+        "single_draw_memory_decay": "PASS",
+        "production_physics_rules": "PASS"
+      }
+    },
+    "G2": {
+      "gate": "G2",
+      "name": "Reliable chronological human-action dataset",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "reconstructed_decisions": "11909",
+        "status": "PASS",
+        "prior_attempt_recall_frozen": "PASS"
+      }
+    },
+    "G3": {
+      "gate": "G3",
+      "name": "Demonstrated personal action-policy fidelity",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "action_policy_fidelity_test": "PASS",
+        "calibrated_players": [
+          "Dennisisdebeste",
+          "Mrs. Doubtfire",
+          "PUK",
+          "Gerda"
+        ]
+      }
+    },
+    "G4": {
+      "gate": "G4",
+      "name": "Faithful personal retry learning and memory",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "observed_memory_test": "PASS",
+        "simulation_retry_test": "PASS"
+      }
+    },
+    "G5": {
+      "gate": "G5",
+      "name": "Forecasts genuinely derived from multiple bot campaigns",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "model": "source-bound-personal-witness-v3",
+        "forecast_count": 96,
+        "bound_sources_count": 19,
+        "all_forecasts_have_distributions": true,
+        "missing_sources": []
+      }
+    },
+    "G6": {
+      "gate": "G6",
+      "name": "Frozen prospective 80% accuracy per person",
+      "status": "BLOCKED_ON_EXTERNAL_HUMAN_DATA",
+      "passed": false,
+      "details": {
+        "evaluation_source": "personal-outcomes.json",
+        "per_person": {
+          "Dennisisdebeste": {
+            "completed_cohort_games": 0,
+            "correct_cohort_games": 0,
+            "accuracy": null,
+            "eligible_20_available": false,
+            "accuracy_ge_80": false
+          },
+          "Mrs. Doubtfire": {
+            "completed_cohort_games": 7,
+            "correct_cohort_games": 0,
+            "accuracy": 0.0,
+            "eligible_20_available": false,
+            "accuracy_ge_80": false
+          },
+          "PUK": {
+            "completed_cohort_games": 4,
+            "correct_cohort_games": 3,
+            "accuracy": 0.75,
+            "eligible_20_available": false,
+            "accuracy_ge_80": false
+          },
+          "Gerda": {
+            "completed_cohort_games": 13,
+            "correct_cohort_games": 8,
+            "accuracy": 0.6153846153846154,
+            "eligible_20_available": false,
+            "accuracy_ge_80": false
+          }
+        },
+        "gate_rule": "At least 16/20 (80%) prospective accuracy for EACH of the 4 persons on declared cohort",
+        "blocking_reason": "External human live gameplay recordings for 20 completed levels per person do not exist in the available snapshot (Dennis: 0/20, Doubtfire: 7/20, PUK: 4/20, Gerda: 13/20). Honest prospective evaluation forbids synthetic substitutes."
+      }
+    }
+  },
+  "summary": "All mandatory engineering and offline development gates (G0-G5) verified. G6 pending external live player gameplay telemetry."
+}

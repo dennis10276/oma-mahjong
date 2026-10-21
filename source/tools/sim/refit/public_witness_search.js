@@ -395,7 +395,8 @@ function search(game, state, actions, options = PARAMETERS) {
   const publicActions = actions.map(action => ({ index: action.index,
     inspect: !!effectiveState.down[action.index] && effectiveState.openPeek !== action.index
       && (effectiveState.pictures[action.index] === null || unproductiveReopen(effectiveState, action.index)) }));
-  return guarded(game, effectiveState, publicActions, options);
+  const innerOptions = { ...options, rng: null };
+  return guarded(game, effectiveState, publicActions, innerOptions);
 }
 
 module.exports = { PARAMETERS, REFERENCE_PARAMETERS, keyOf, clockDistance, roomOf, recoveryOf, search };
