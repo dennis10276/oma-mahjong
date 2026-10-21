@@ -61,7 +61,11 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     memory.beginAttempt({ campaign, board, size, attempt });
     const attemptSeed = (baseSeed + attempt * 10007) >>> 0;
-    const session = createSession(game, { seed: attemptSeed });
+    const sessionOptions = { seed: attemptSeed };
+    if (options.choiceLimit !== undefined) sessionOptions.choiceLimit = options.choiceLimit;
+    if (options.settleBefore !== undefined) sessionOptions.settleBefore = options.settleBefore;
+    if (options.tapTimes !== undefined) sessionOptions.tapTimes = options.tapTimes;
+    const session = createSession(game, sessionOptions);
     let frame = session.view();
 
     const getObservation = f => {

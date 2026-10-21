@@ -31,12 +31,24 @@ for (const name of NAMES) {
     assert(typeof d.publicBoardId === 'string' && d.publicBoardId.length === 64, 'Must have valid SHA256 publicBoardId');
     assert(typeof d.campaignId === 'string' && d.campaignId.length > 0, 'Must have valid campaignId');
     assert(Number.isInteger(d.attempt) && d.attempt >= 1, 'Attempt number must be >= 1');
+
+    // 5. Actual opening, completion and data-availability timestamps
+    assert(Number.isInteger(d.openedAt) && Number.isInteger(d.availableAt), 'Must have integer timestamps');
+    assert(d.availableAt >= d.openedAt, 'Data availability/completion must be >= opening timestamp');
+    assert.equal(d.t, d.openedAt, 't must equal openedAt');
   }
 
-  // 5. Test chronological ordering
+  // 6. Test chronological ordering
   for (let i = 1; i < result.decisions.length; i++) {
     assert(result.decisions[i].t >= result.decisions[i - 1].t, 'Decisions must be chronologically sorted');
   }
+
+  // 7. Test chronological cutoff: training may use only earlier available information
+  const midCutoff = 1792000000000;
+  const causalResult = reconstructHumanDecisions(name, midCutoff);
+  assert(causalResult.decisions.length <= result.decisions.length);
+  assert(causalResult.decisions.every(d => d.availableAt < midCutoff && d.openedAt < midCutoff),
+    'Training for a target must use only earlier available information');
 }
 
 console.log('PASS human decision dataset: pre-action state integrity, action classification, campaign binding, and chronological ordering verified');

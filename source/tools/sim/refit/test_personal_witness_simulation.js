@@ -85,4 +85,13 @@ const runB = simulatePersonalCampaign(towerGame, 'PUK', { maxAttempts: 2 });
 assert.equal(runA.wonOn, runB.wonOn);
 assert.equal(runA.totalAttempts, runB.totalAttempts);
 
+// 6. Test numerical caps and unsupported transitions remain unresolved
+// Under choiceLimit: 1, session terminates as computationCensored; wonOn must be null, no retry allowed
+const resCapped = simulatePersonalCampaign(towerGame, 'Dennisisdebeste', { maxAttempts: 3, choiceLimit: 1 });
+assert.equal(resCapped.wonOn, null, 'Capped campaign must return wonOn = null');
+assert.equal(resCapped.cleared, false, 'Capped campaign must not be marked cleared');
+assert.equal(resCapped.totalAttempts, 1, 'Capped campaign must not perform retries');
+assert.equal(resCapped.history.length, 1);
+assert.equal(resCapped.history[0].status, 'unresolved', 'Capped campaign must record status unresolved');
+
 console.log('PASS personal witness simulation: production physics via Hard, two-tile clock clear, tray overflow loss, wonOn null on failure, and multi-attempt retry learning');

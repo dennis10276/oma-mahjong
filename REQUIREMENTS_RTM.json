@@ -8,8 +8,11 @@
       "requirement": "[/goal](slashCommand;goal) Build faithful personal player simulators whose performance on upcoming levels predicts each person’s successful attempt with at least80% prospective accuracy PER PERSON.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity",
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.002",
@@ -18,8 +21,11 @@
       "requirement": "This is NOT primarily an attempt-count classification task.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity",
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.003",
@@ -28,8 +34,10 @@
       "requirement": "The required pipeline is:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.004",
@@ -38,8 +46,10 @@
       "requirement": "Earlier human actions",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.005",
@@ -51,8 +61,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.006",
@@ -64,8 +76,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.007",
@@ -77,8 +91,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.008",
@@ -90,8 +106,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.009",
@@ -103,8 +121,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.010",
@@ -116,8 +136,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.011",
@@ -126,8 +148,10 @@
       "requirement": "Work in agy-personal-bots on wip/agy-personal-bots.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.012",
@@ -136,8 +160,10 @@
       "requirement": "Keep personal-bot-review read-only.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.013",
@@ -146,8 +172,10 @@
       "requirement": "Read:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R00.014",
@@ -156,8 +184,10 @@
       "requirement": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\personal-bots\\GEMINI_EEC825D_REVIEW.md",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S01",
@@ -180,7 +210,7 @@
         "R01.011"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R01.001",
@@ -189,8 +219,11 @@
       "requirement": "Continue implementing, fitting, testing and investigating until the acceptance gates below are genuinely satisfied.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.002",
@@ -199,8 +232,11 @@
       "requirement": "Do not stop after:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.003",
@@ -209,8 +245,11 @@
       "requirement": "- Discovering the honest baseline.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.004",
@@ -219,8 +258,11 @@
       "requirement": "- Producing an audit or RTM.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.005",
@@ -229,8 +271,11 @@
       "requirement": "- Fixing infrastructure.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.006",
@@ -239,8 +284,11 @@
       "requirement": "- Passing unit tests.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.007",
@@ -249,8 +297,11 @@
       "requirement": "- Registering future forecasts.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.008",
@@ -259,8 +310,11 @@
       "requirement": "- Discovering that accuracy remains below80%.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.009",
@@ -269,8 +323,11 @@
       "requirement": "An unmet result is the trigger for the next meaningful experiment, not a successful handoff.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.010",
@@ -279,8 +336,11 @@
       "requirement": "Honesty takes precedence over completion pressure. Never fabricate evidence, rewrite forecasts or hide failures.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R01.011",
@@ -289,8 +349,11 @@
       "requirement": "If future human outcomes genuinely become the only remaining dependency, preserve an explicitly incomplete checkpoint. First finish all meaningful engineering and offline development possible with available data. Do not idle indefinitely or launch redundant jobs merely to avoid stopping.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests",
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S02",
@@ -330,7 +393,7 @@
         "R02.028"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R02.001",
@@ -339,8 +402,10 @@
       "requirement": "Before execution, create an atomic requirement row for every numbered requirement and sub-bullet.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.002",
@@ -349,8 +414,10 @@
       "requirement": "Maintain:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.003",
@@ -359,8 +426,10 @@
       "requirement": "- REQUIREMENTS_RTM.md: requirements, dependencies, implementation, acceptance commands and commit references.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.004",
@@ -369,8 +438,10 @@
       "requirement": "- EXPERIMENTS.jsonl: append-only hypotheses, configurations, provenance, results and failed variants.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.005",
@@ -379,8 +450,10 @@
       "requirement": "- ACCEPTANCE_GATE.json: machine-generated gate results.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.006",
@@ -389,8 +462,10 @@
       "requirement": "Use these top-level gates:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.007",
@@ -399,8 +474,10 @@
       "requirement": "G0: Reproducible evaluation and evidence.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.008",
@@ -409,8 +486,10 @@
       "requirement": "G1: Correct production physics and human-information boundary.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.009",
@@ -419,8 +498,10 @@
       "requirement": "G2: Reliable chronological human-action dataset.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.010",
@@ -429,8 +510,10 @@
       "requirement": "G3: Demonstrated personal action-policy fidelity.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.011",
@@ -439,8 +522,10 @@
       "requirement": "G4: Faithful personal retry learning and memory.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.012",
@@ -449,8 +534,10 @@
       "requirement": "G5: Forecasts genuinely derived from multiple bot campaigns.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.013",
@@ -459,8 +546,10 @@
       "requirement": "G6: Frozen prospective80% accuracy per person.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.014",
@@ -469,8 +558,10 @@
       "requirement": "Dependencies:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.015",
@@ -479,8 +570,10 @@
       "requirement": "- G3 depends on G1 and G2.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.016",
@@ -489,8 +582,10 @@
       "requirement": "- G4 depends on G1 and G2.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.017",
@@ -499,8 +594,10 @@
       "requirement": "- G5 depends on G3 and G4.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.018",
@@ -509,8 +606,10 @@
       "requirement": "- G6 depends on all earlier gates.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.019",
@@ -519,8 +618,10 @@
       "requirement": "RTM rules:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.020",
@@ -541,8 +642,10 @@
       "requirement": "- “Code exists” is not “behavior verified.”",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.022",
@@ -551,8 +654,10 @@
       "requirement": "- Tests of parameter presence or bounds do not prove personal fidelity.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.023",
@@ -561,8 +666,10 @@
       "requirement": "- Documentation cannot close a behavioral or accuracy requirement.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.024",
@@ -571,8 +678,10 @@
       "requirement": "- Regressions reopen affected requirements.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.025",
@@ -581,8 +690,10 @@
       "requirement": "- Every verified row needs its exact implementation commit, acceptance command, actual output and source/input-bound evidence.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.026",
@@ -591,8 +702,10 @@
       "requirement": "- Preserve failed experiments and previous candidate scores.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R02.027",
@@ -613,8 +726,10 @@
       "requirement": "Implement an acceptance checker that exits nonzero until every mandatory gate passes. Synthetic test outcomes cannot satisfy G6.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S03",
@@ -647,7 +762,7 @@
         "R03.021"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R03.001",
@@ -656,8 +771,10 @@
       "requirement": "Fix the independently reproduced issues:",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "physics.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.002",
@@ -739,8 +856,10 @@
       "requirement": "Use production physics for actual transitions:",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "physics.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.009",
@@ -797,8 +916,10 @@
       "requirement": "- Keep numerical caps and unsupported transitions unresolved.",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "simulation.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.014",
@@ -819,8 +940,10 @@
       "requirement": "The policy may use only information the person could see or legitimately remember:",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.016",
@@ -829,8 +952,10 @@
       "requirement": "- Recognizable exposed edges must be handled through a validated observation process.",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.017",
@@ -839,8 +964,10 @@
       "requirement": "- Covered face-up pictures are not automatically known.",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.018",
@@ -849,8 +976,10 @@
       "requirement": "- Actual concealed pictures remain inside the trusted environment/renderer.",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.019",
@@ -859,8 +988,10 @@
       "requirement": "- Hypothetical search must not reveal the real hidden outcome.",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.020",
@@ -869,8 +1000,10 @@
       "requirement": "- Identical public prefixes and seeds must produce identical policy/memory behavior despite changes to still-concealed pictures.",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R03.021",
@@ -879,8 +1012,10 @@
       "requirement": "Preserve the full reference benchmark and controls, including known reopening and Dennis153 regressions. A strong reference is useful machinery—not the behavior every personal bot should imitate.",
       "gate": "G1",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "search.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S04",
@@ -903,7 +1038,7 @@
         "R04.011"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R04.001",
@@ -912,8 +1047,10 @@
       "requirement": "Reconstruct each person’s actual physical actions through production-consistent replay.",
       "gate": "G2",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R04.002",
@@ -922,8 +1059,10 @@
       "requirement": "For every training decision:",
       "gate": "G2",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R04.003",
@@ -932,8 +1071,10 @@
       "requirement": "- Use the public state and legitimate memory available BEFORE the human action.",
       "gate": "G2",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R04.004",
@@ -1002,8 +1143,10 @@
       "requirement": "- Track actual opening, completion and data-availability timestamps.",
       "gate": "G2",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R04.010",
@@ -1012,8 +1155,10 @@
       "requirement": "- Preserve ambiguous or unreconstructable events with explicit status rather than inventing certainty.",
       "gate": "G2",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R04.011",
@@ -1022,8 +1167,10 @@
       "requirement": "Training for a target may use only that person’s earlier available information.",
       "gate": "G2",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "calibration.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S05",
@@ -1067,7 +1214,7 @@
         "R05.029"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R05.001",
@@ -1079,8 +1226,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.002",
@@ -1092,8 +1242,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.003",
@@ -1105,8 +1258,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.004",
@@ -1118,8 +1274,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.005",
@@ -1146,8 +1305,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.007",
@@ -1159,8 +1321,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.008",
@@ -1172,8 +1337,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.009",
@@ -1185,8 +1353,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.010",
@@ -1198,8 +1369,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.011",
@@ -1211,8 +1385,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.012",
@@ -1224,8 +1401,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.013",
@@ -1237,8 +1417,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.014",
@@ -1250,8 +1433,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.tray_comparison"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.015",
@@ -1263,8 +1448,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.016",
@@ -1276,8 +1464,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.017",
@@ -1289,8 +1480,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.018",
@@ -1302,8 +1496,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.tray_comparison"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.019",
@@ -1315,8 +1511,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.020",
@@ -1344,8 +1543,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "calibration.tests",
+        "fidelity.acceptance_test"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.022",
@@ -1372,8 +1574,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.024",
@@ -1385,8 +1590,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.025",
@@ -1398,8 +1606,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.026",
@@ -1411,8 +1622,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.027",
@@ -1424,8 +1638,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "calibration.tests",
+        "fidelity.acceptance_test"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.028",
@@ -1437,8 +1654,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R05.029",
@@ -1450,8 +1670,11 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S06",
@@ -1479,7 +1702,7 @@
         "R06.013"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R06.001",
@@ -1491,8 +1714,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "simulation.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.002",
@@ -1504,8 +1729,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.003",
@@ -1517,8 +1744,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.004",
@@ -1530,8 +1759,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.005",
@@ -1543,8 +1774,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.006",
@@ -1556,8 +1789,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.007",
@@ -1569,8 +1804,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.008",
@@ -1582,8 +1819,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.009",
@@ -1595,8 +1834,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.010",
@@ -1608,8 +1849,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.011",
@@ -1621,8 +1864,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "search.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.012",
@@ -1634,8 +1879,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R06.013",
@@ -1647,8 +1894,10 @@
         "G1",
         "G2"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "simulation.tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S07",
@@ -1682,7 +1931,7 @@
         "R07.019"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R07.001",
@@ -1694,8 +1943,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.002",
@@ -1707,8 +1958,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.003",
@@ -1720,8 +1973,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.004",
@@ -1748,8 +2003,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.006",
@@ -1761,8 +2018,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.stability"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.007",
@@ -1774,8 +2033,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.008",
@@ -1787,8 +2048,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.009",
@@ -1800,8 +2063,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.010",
@@ -1813,8 +2078,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.011",
@@ -1826,8 +2093,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.012",
@@ -1839,8 +2108,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.013",
@@ -1852,8 +2123,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.014",
@@ -1865,8 +2138,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.015",
@@ -1878,8 +2153,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.016",
@@ -1891,8 +2168,11 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.sources",
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.017",
@@ -1904,8 +2184,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.018",
@@ -1917,8 +2199,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R07.019",
@@ -1930,8 +2214,10 @@
         "G3",
         "G4"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S08",
@@ -1986,8 +2272,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.002",
@@ -2003,8 +2291,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.003",
@@ -2020,8 +2310,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.004",
@@ -2037,8 +2329,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.005",
@@ -2054,8 +2348,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.006",
@@ -2071,8 +2367,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.007",
@@ -2107,8 +2405,11 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "registration.guard",
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.009",
@@ -2124,8 +2425,11 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "registration.guard",
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.010",
@@ -2141,8 +2445,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.011",
@@ -2196,8 +2502,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.014",
@@ -2233,8 +2541,11 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "registration.guard",
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.016",
@@ -2250,8 +2561,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.017",
@@ -2267,8 +2580,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.018",
@@ -2284,8 +2599,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.019",
@@ -2301,8 +2618,11 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "fidelity.acceptance_test",
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "R08.020",
@@ -2318,8 +2638,10 @@
         "G4",
         "G5"
       ],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
     },
     {
       "id": "S09",
@@ -2339,7 +2661,7 @@
         "R09.008"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R09.001",
@@ -2348,8 +2670,10 @@
       "requirement": "You may use the RTX3070 when useful for fitting, batched scoring or valid simulation work.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R09.002",
@@ -2358,8 +2682,10 @@
       "requirement": "- Profile the actual bottleneck.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R09.003",
@@ -2368,8 +2694,10 @@
       "requirement": "- Preserve production rules and the public-information boundary.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R09.004",
@@ -2378,8 +2706,10 @@
       "requirement": "- Provide CPU/CUDA parity tests and CPU fallback.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R09.005",
@@ -2388,8 +2718,10 @@
       "requirement": "- Measure end-to-end speed including transfers and startup.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R09.006",
@@ -2398,8 +2730,10 @@
       "requirement": "- Keep CPU when it is faster.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R09.007",
@@ -2408,8 +2742,10 @@
       "requirement": "- Do not substitute a simplified GPU game for the real one.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R09.008",
@@ -2418,8 +2754,10 @@
       "requirement": "- Account for owned jobs and avoid redundant experiments.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
     },
     {
       "id": "S10",
@@ -2441,7 +2779,7 @@
         "R10.010"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "PASS"
     },
     {
       "id": "R10.001",
@@ -2450,8 +2788,10 @@
       "requirement": "After every experiment:",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.002",
@@ -2460,8 +2800,10 @@
       "requirement": "- Identify where the bot diverged from the person.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.003",
@@ -2470,8 +2812,10 @@
       "requirement": "- Separate observation, planning, memory, retry-learning and randomness errors.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.004",
@@ -2480,8 +2824,10 @@
       "requirement": "- Fix bugs before interpreting them as human behavior.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.005",
@@ -2490,8 +2836,10 @@
       "requirement": "- Tune promising mechanisms and combinations before rejecting them.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.006",
@@ -2500,8 +2848,10 @@
       "requirement": "- Update the RTM and append experiment evidence.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.007",
@@ -2510,8 +2860,10 @@
       "requirement": "- Begin the next meaningful experiment without waiting for another user message.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.008",
@@ -2520,8 +2872,10 @@
       "requirement": "If delegating, give every subagent this entire prompt verbatim, then append its specific assignment. Do not replace these requirements with a summary.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.009",
@@ -2530,8 +2884,10 @@
       "requirement": "Declare successful completion only when the automated checker verifies G0–G6, including real80% prospective accuracy for every person.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "R10.010",
@@ -2540,8 +2896,10 @@
       "requirement": "Otherwise report an explicitly incomplete, reproducible checkpoint with exact remaining work or external evidence—not a “complete” handoff.",
       "gate": "G0",
       "dependsOn": [],
-      "checks": [],
-      "status": "UNVERIFIED"
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
     },
     {
       "id": "AUDIT.history.integrity",
