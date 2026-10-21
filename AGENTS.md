@@ -79,11 +79,12 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   levels people are playing.
 
 - In progress, NOT live (Dennis, 2026-10-18; branch `wip/level-variety`): more variety. Levels
-  157-269 (nobody has reached them) each get a new pile shape, unlike every other designed level,
+  158-269 (nobody has reached them) each get a new pile shape, unlike every other designed level,
   with the same difficulty as the board they replace (both personal players with the frozen observer,
   the 1.54 reorder measure). Everything needed to continue is in `source/analysis/variety-plan.md`;
-  the work is resumable (`node source/tools/sim/variety/variety.js build 2`, progress in
-  `source/analysis/variety-progress.json`). Do not publish until Dennis says so.
+  use the quicker method there (`source/tools/sim/variety/variety2.js`: cands, assign, tune,
+  validate, report, apply; resumable). From 158 (Dennisisdebeste reached 157). Do not publish until
+  Dennis says so.
 
 ## Predictions on the dashboard
 

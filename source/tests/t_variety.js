@@ -27,7 +27,9 @@ module.exports = [{
     const tiles = {}; for (let lv = T.from; lv < T.from + T.levels.length; lv++) tiles[lv] = Hard.get(lv).tiles;
     for (const r of R.levels) {
       const lv = r.lv, d = Hard.get(lv), a = set(d.tiles), am = set(mir(d.tiles));
-      let worst = 0; for (const k in tiles) if (+k !== lv) { const b = set(tiles[k]); worst = Math.max(worst, ov(a, b), ov(am, b)); }
+      // against the levels that stay before the remake and the other new boards (an old board kept
+      // further on, where no new one fitted, is not compared)
+      let worst = 0; for (const k in tiles) if (+k !== lv && (+k < R.from || changed.has(+k))) { const b = set(tiles[k]); worst = Math.max(worst, ov(a, b), ov(am, b)); }
       t.ok(worst <= R.novel.pos + 1e-9, `level ${lv}: a pile unlike every other level`, worst.toFixed(2));
       const g = { tiles: d.tiles.map(([x, y, z]) => ({ x, y, z })), faces: d.faces, clock: d.clock };
       g.nb = L.neighbors(g.tiles);

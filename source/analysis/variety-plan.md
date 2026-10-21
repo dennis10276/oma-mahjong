@@ -1,4 +1,4 @@
-# Level variety: a new pile shape per level, same difficulty (2026-10-18)
+# Level variety: a new pile shape per level, same difficulty curve (2026-10-18, quicker method 2026-10-21)
 
 Status: **in progress, unpublished** (branch `wip/level-variety`). Dennis: "More variety. But the
 difficulty should stay the same as is. Don't publish yet and make sure Codex can finish your work."
@@ -40,6 +40,38 @@ pictures, and the 1.54 reorder kept whole boards.
   no face-down tile free at the start. Fresh games every 9 steps so it does not tune to one sample.
 - Saves: the table gets `designVersions: [[70, 7], [92, 8], [157, 9]]` and `hard.js designVersion`
   reads it, so only a half-played game on a changed level starts fresh.
+
+## The quicker method (2026-10-21, `tools/sim/variety/variety2.js`) — use this one
+
+Dennis: "The last ones ran very slow. Find a quicker and still good way" and "the curve of the
+difficulty should stay about the same". The first method (`variety.js` below) tuned every level to
+its exact target and took up to an hour per level (12 done, 7 failed in 2 hours). Dennisisdebeste
+reached 157 meanwhile, so the remake now starts at **158** (157 keeps its board).
+
+Like the 1.54 reorder: make boards, measure them, put each where its difficulty fits.
+
+```
+node source/tools/sim/variety/variety2.js cands 2 158 269   # ~1 min per level per worker, resumable
+node source/tools/sim/variety/variety2.js assign 158
+node source/tools/sim/variety/variety2.js tune 2            # only levels without a close candidate
+node source/tools/sim/variety/variety2.js validate 2        # 1200 games, other seeds
+node source/tools/sim/variety/variety2.js report            # the curve per 10 levels, old/new
+node source/tools/sim/variety/variety2.js apply 158         # www/levels-hard.js + analysis/variety.json
+```
+
+1. `cands`: per level up to 5 boards, each on another new shape (unlike levels 70-157), the game's
+   designer on a quick setting (`RULES.hard` rounds/deals/steps 4); a quick look (120 games), then the
+   ones near any target of a level within 2 measured with 300 games. `analysis/variety2-cands.json`.
+2. `assign`: every level takes the closest unused candidate made for itself or a level at most 2 away
+   (big boards stay on every 10th level), never two boards that look alike; the levels with the fewest
+   close candidates choose first. The boards the first method finished are candidates too.
+3. `tune`: at most 12 short steps, only where no candidate was within the tolerance.
+4. `validate`: 1200 games (seed 55001 + level x 101); passes within the tolerance below (per level,
+   both players). `report` shows the curve per 10 levels (first try and ease, old against new).
+5. `apply`: levels that passed get the new board, the others keep theirs. Before a release, re-run
+   `apply` with the first level nobody has reached yet.
+
+## The first method (`variety.js`, slow; kept for reference)
 
 ## How to run / resume (any agent)
 
