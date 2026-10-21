@@ -466,6 +466,59 @@ class GPUAccelerationTests(unittest.TestCase):
         # Obstacles
         with self.assertRaises(NotImplementedError):
             MahjongGPUSimulator({**base_board, 'obst': [0]})
+        # Joker in faces (101)
+        with self.assertRaises(NotImplementedError):
+            MahjongGPUSimulator({**base_board, 'faces': [101]})
+        # Arrival queues
+        with self.assertRaises(NotImplementedError):
+            MahjongGPUSimulator({**base_board, 'arriving': [0]})
+
+    def test_18_face_down_cannot_enter_tray_without_peek(self):
+        """A closed face-down tile can never be taken directly into tray in Phase 4 without being flipped."""
+        # 1 face-down tile and 1 face-up non-matching tile.
+        # Tile 0 is face-down (face 10). Tile 1 is face-up (face 20).
+        # Tapping tile 0 must inspect it (open peek), but when another tile is open peek or none is open peek,
+        # closed face-down tile cannot enter tray.
+        board = {
+            'tiles': [{'x': 0, 'y': 0, 'z': 0}, {'x': 8, 'y': 0, 'z': 0}],
+            'nb': {'above': [[], []], 'left': [[], []], 'right': [[], []]},
+            'faces': [10, 20],
+            'down': [1, 0],
+            'clock': None
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        res = sim.simulate_parallel(num_games=64, max_steps=5, seed=42)
+        # Cannot win because no matching pairs exist (tiles 10 and 20).
+        self.assertEqual(res['wins'], 0)
+        # Face-up tile 1 enters tray (1 move), tile 0 is flipped (0 moves), then enters tray (1 move) -> 2 moves
+        self.assertEqual(res['mean_moves'], 2.0)
+
+    def test_19_multi_layer_3d_coverage_unmasking(self):
+        """3-layer vertical stack (z=0, z=1, z=2) unmasks transitive coverage step by step."""
+        board = {
+            'tiles': [
+                {'x': 0, 'y': 0, 'z': 0}, {'x': 0, 'y': 0, 'z': 1}, {'x': 0, 'y': 0, 'z': 2},
+                {'x': 10, 'y': 0, 'z': 0}, {'x': 20, 'y': 0, 'z': 0}, {'x': 30, 'y': 0, 'z': 0}
+            ],
+            'nb': {
+                'above': [[1, 2], [2], [], [], [], []],
+                'left': [[], [], [], [], [], []],
+                'right': [[], [], [], [], [], []]
+            },
+            'faces': [10, 20, 30, 30, 20, 10],
+            'down': [0, 0, 0, 0, 0, 0],
+            'clock': None
+        }
+        sim = MahjongGPUSimulator(board, device=self.evaluator_gpu.device)
+        # Tile 0 is covered by 1 and 2:
+        self.assertEqual(sim.cover_matrix[0].cpu().tolist(), [False, True, True, False, False, False])
+        # Tile 1 is covered by 2:
+        self.assertEqual(sim.cover_matrix[1].cpu().tolist(), [False, False, True, False, False, False])
+        # Tile 2 is not covered:
+        self.assertEqual(sim.cover_matrix[2].cpu().tolist(), [False, False, False, False, False, False])
+        res = sim.simulate_parallel(num_games=64, max_steps=10, strategy='uniform', seed=42)
+        self.assertEqual(res['wins'], 64, "All 64 games must win by unmasking stack top-to-bottom")
+        self.assertEqual(res['win_rate'], 1.0)
 
 
 if __name__ == '__main__':

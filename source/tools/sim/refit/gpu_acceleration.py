@@ -432,10 +432,14 @@ class MahjongGPUSimulator:
             if isinstance(rules, dict):
                 if any(rules.get(k) for k in ('ice', 'iceNb', 'locks', 'keys', 'jokers', 'arriving')):
                     raise NotImplementedError("MahjongGPUSimulator does not support ice, locks, keys, jokers, or arrival mechanics. Production JS physics remains authoritative.")
-            elif any(hasattr(rules, k) for k in ('ice', 'locks', 'keys')):
+            elif any(hasattr(rules, k) for k in ('ice', 'locks', 'keys', 'jokers', 'arriving')):
                 raise NotImplementedError("MahjongGPUSimulator does not support ice, locks, keys, jokers, or arrival mechanics. Production JS physics remains authoritative.")
         if board.get('gold') or board.get('obst'):
             raise NotImplementedError("MahjongGPUSimulator does not support obstacles/gold tiles. Production JS physics remains authoritative.")
+        if board.get('arriving'):
+            raise NotImplementedError("MahjongGPUSimulator does not support arrival queues. Production JS physics remains authoritative.")
+        if any(int(f) == 101 for f in board.get('faces', [])):
+            raise NotImplementedError("MahjongGPUSimulator does not support Joker mechanics. Production JS physics remains authoritative.")
         
         # Build binary dependency matrices (N, N)
         above = torch.zeros((self.n, self.n), dtype=torch.bool, device=self.device)
@@ -735,7 +739,12 @@ class MahjongGPUSimulator:
                 moved |= has_down
 
             # Phase 4: Taking a free tile into tray (if headroom permits)
-            avail_free = alive & is_free & active.unsqueeze(1) & (~moved).unsqueeze(1)
+            # In production JS (hard.js physicalTakeable):
+            # A closed face-down tile cannot be taken directly into tray as a single tile.
+            # Only face-up tiles (~is_down) or the active open_peek can enter tray.
+            tile_indices = torch.arange(N, device=self.device).unsqueeze(0)
+            can_take_tray = (~self.is_down.unsqueeze(0)) | (open_peek.unsqueeze(1) == tile_indices)
+            avail_free = alive & is_free & can_take_tray & active.unsqueeze(1) & (~moved).unsqueeze(1)
             has_avail = avail_free.any(dim=1)
             has_room = has_avail & (tray_count < self.max_tray - 1)
             if has_room.any():

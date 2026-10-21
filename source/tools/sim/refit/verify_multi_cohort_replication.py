@@ -116,6 +116,17 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
     results = {}
     total_completed = 0
     total_correct = 0
+
+    # Extract excluded episodes per player from authoritative score_progression diagnostics
+    excluded_episodes = report.get('diagnostics', {}).get('excludedEpisodes', [])
+    exclusions_by_player = {}
+    for ep in excluded_episodes:
+        p_name = ep.get('name')
+        reason = ep.get('progressionExclusion', 'unknown')
+        if p_name:
+            rec = exclusions_by_player.setdefault(p_name, {'total': 0, 'by_reason': {}})
+            rec['total'] += 1
+            rec['by_reason'][reason] = rec['by_reason'].get(reason, 0) + 1
     
     for name in NAMES:
         p_stats = report['players'].get(name, {})
@@ -126,6 +137,7 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
         mae = p_stats.get('meanAbsoluteError')
         wilson = p_stats.get('wilson95')
         pending = c_stats.get('pending', 0)
+        exc_rec = exclusions_by_player.get(name, {'total': 0, 'by_reason': {}})
         
         results[name] = {
             'n': n,
@@ -135,6 +147,7 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
             'wilson95': wilson,
             'pending': pending,
             'opened': c_stats.get('opened', 0),
+            'exclusions': exc_rec,
         }
         total_completed += n
         total_correct += correct
@@ -142,7 +155,7 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
         acc_str = f"{acc*100:5.1f}%" if acc is not None else " N/A "
         mae_str = f"{mae:.2f}" if mae is not None else "N/A"
         ci_str = f"[{wilson[0]:.3f}, {wilson[1]:.3f}]" if wilson else "N/A"
-        print(f"  {name:15s}: {correct:2d}/{n:2d} = {acc_str} | MAE: {mae_str:4s} | 95% CI: {ci_str:16s} | Pending: {pending}")
+        print(f"  {name:15s}: {correct:2d}/{n:2d} = {acc_str} | MAE: {mae_str:4s} | 95% CI: {ci_str:16s} | Pending: {pending} | Excluded: {exc_rec['total']}")
 
     total_acc = total_correct / total_completed if total_completed else 0.0
     print(f"  TOTAL PROSPECTIVE ACCURACY: {total_correct}/{total_completed} = {total_acc*100:.2f}% (Mrs. Doubtfire 0/7, PUK 3/4, Gerda 8/13, Dennis 0/0)")
@@ -151,33 +164,33 @@ def verify_post_freeze_live(fresh=None, evaluator=None, outcomes_dir=None):
         'correct': total_correct,
         'accuracy': total_acc,
         'pending': sum(r['pending'] for r in results.values() if isinstance(r, dict) and 'pending' in r),
+        'exclusions': sum(r.get('exclusions', {}).get('total', 0) for r in results.values() if isinstance(r, dict)),
     }
     return results
 
 
-def verify_unopened_future_ledger(fresh=None):
+def verify_unopened_future_ledger(fresh=None, outcomes_dir=None):
     print("\n" + "=" * 30 + " 4. PRE-OPENING FROZEN FUTURE LEDGER (70 Unopened Tasks) " + "=" * 30)
     ledger_text = LEDGER_PATH.read_text(encoding='utf-8')
     lines = [json.loads(line) for line in ledger_text.splitlines() if line.strip()]
     assert lines, "Forecast ledger is empty"
     latest = lines[-1]
     
-    # Real live progression frontiers (from scores.json / live outcomes):
-    # Dennisisdebeste: level 156 (forecasts start at lv 157 -> all 24 unopened: 157-180)
-    # Mrs. Doubtfire: level 114 (completed 107-113 -> 17 unopened: 114-130)
-    # PUK: level 58 (completed 54-57, pending 58 -> 19 unopened: 59-77)
-    # Gerda: level 82 (completed 69-81, pending 82 -> 10 unopened: 83-92)
-    # Total unopened = 24 + 17 + 19 + 10 = 70 unopened tasks!
+    # Real live progression records (from personal-outcomes.json):
+    outcomes_path = (outcomes_dir or LIVE_OUTCOMES_DIR) / 'personal-outcomes.json'
+    assert outcomes_path.exists(), f"Outcomes file {outcomes_path} does not exist"
+    outcomes = json.loads(outcomes_path.read_bytes())
+    episodes = outcomes['episodes']
+
+    opened_levels = {}
+    for ep in episodes:
+        opened_levels.setdefault(ep['name'], set()).add(ep['lv'])
+
+    # Determine unopened eligibility dynamically from actual progression records (not hard-coded frontier numbers):
     unopened = []
     for f in latest['forecasts']:
         name, lv = f['name'], f['lv']
-        if name == 'Dennisisdebeste' and lv >= 157:
-            unopened.append(f)
-        elif name == 'Mrs. Doubtfire' and lv >= 114:
-            unopened.append(f)
-        elif name == 'PUK' and lv >= 59:
-            unopened.append(f)
-        elif name == 'Gerda' and lv >= 83:
+        if lv not in opened_levels.get(name, set()):
             unopened.append(f)
         assert 1 <= f['predictedAttempt'] <= 8, f"Invalid attempt prediction in ledger: {f}"
 
