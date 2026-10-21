@@ -34,6 +34,8 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
   const params = { ...calibrated.parameters, ...(options.customParams || {}) };
 
   const size = game.tiles.length;
+  // The policy receives geometry and public rules, never the private deal.
+  const publicGeometry = { tiles: game.tiles, nb: game.nb, rules: game.rules, clock: game.clock };
   const board = boardId(game);
   const publicBoard = publicBoardId(game);
   const campaign = options.campaign || game.aid || 'camp_' + crypto.createHash('sha256').update(publicBoard).digest('hex').slice(0, 16);
@@ -107,7 +109,7 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
         retryLearning: params.retryLearning
       };
 
-      const plan = search(game, searchState, legalMoves, searchOptions);
+      const plan = search(publicGeometry, searchState, legalMoves, searchOptions);
       const nextTile = plan?.path?.[0] ?? frame.legalTiles[0];
 
       frame = session.tap(nextTile);

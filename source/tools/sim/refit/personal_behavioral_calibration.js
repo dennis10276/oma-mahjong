@@ -195,7 +195,11 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
   const singleProb2 = weightedTraySingleCounts[2] / Math.max(0.001, weightedTrayTotalOpportunities[2]);
 
   // trayBuffer: 2 if player heavily restricts singles at tray=2/3; 3 if they tolerate pushing
-  const trayBuffer = (singleProb3 < 0.12 && singleProb2 < 0.21) ? 2 : 3;
+  // trayBuffer: search sets trayRecoveryMin = Math.max(0, Math.min(3, 4 - trayBuffer)).
+  // trayBuffer 1 -> recovery at tray >= 3 (tolerates 1-2 singles in tray before recovery)
+  // trayBuffer 2 -> recovery at tray >= 2 (tolerates 1 single in tray before recovery)
+  // trayBuffer 3 -> recovery at tray >= 1 (heavily restricts singles, recovers immediately)
+  const trayBuffer = (singleProb2 >= 0.32) ? 1 : (singleProb3 < 0.05 && singleProb2 < 0.15) ? 3 : 2;
 
   // clockPatience: ratio of moves on clock cone strictly while clock is alive
   const clockConeRatio = weightedClockTotalMoves > 0 ? (weightedClockConeMoves / weightedClockTotalMoves) : 0.5;

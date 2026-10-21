@@ -1,0 +1,257 @@
+[/goal](slashCommand;goal) Build faithful personal player simulators whose performance on upcoming levels predicts each person’s successful attempt with at least80% prospective accuracy PER PERSON.
+
+This is NOT primarily an attempt-count classification task.
+
+The required pipeline is:
+
+Earlier human actions
+→ learned personal playing policy and learning behavior
+→ that personal bot physically plays upcoming levels and retries
+→ multiple simulated campaigns produce a clear-attempt distribution
+→ that distribution produces the frozen prediction
+→ later real human play evaluates the prediction.
+
+Do not bypass this pipeline with a separate count predictor, manual adjustments or person-specific attempt thresholds.
+
+Work in agy-personal-bots on wip/agy-personal-bots.
+Keep personal-bot-review read-only.
+
+Read:
+C:\Users\den_k\Idea\OmasMahjong\personal-bot-review\source\analysis\personal-bots\GEMINI_EEC825D_REVIEW.md
+
+1. EXECUTION CONTRACT
+
+Continue implementing, fitting, testing and investigating until the acceptance gates below are genuinely satisfied.
+
+Do not stop after:
+- Discovering the honest baseline.
+- Producing an audit or RTM.
+- Fixing infrastructure.
+- Passing unit tests.
+- Registering future forecasts.
+- Discovering that accuracy remains below80%.
+
+An unmet result is the trigger for the next meaningful experiment, not a successful handoff.
+
+Honesty takes precedence over completion pressure. Never fabricate evidence, rewrite forecasts or hide failures.
+
+If future human outcomes genuinely become the only remaining dependency, preserve an explicitly incomplete checkpoint. First finish all meaningful engineering and offline development possible with available data. Do not idle indefinitely or launch redundant jobs merely to avoid stopping.
+
+2. USE DEPENDENCY-DRIVEN RTMs, NOT SELF-DECLARED CHECKLISTS
+
+Before execution, create an atomic requirement row for every numbered requirement and sub-bullet.
+
+Maintain:
+- REQUIREMENTS_RTM.md: requirements, dependencies, implementation, acceptance commands and commit references.
+- EXPERIMENTS.jsonl: append-only hypotheses, configurations, provenance, results and failed variants.
+- ACCEPTANCE_GATE.json: machine-generated gate results.
+
+Use these top-level gates:
+
+G0: Reproducible evaluation and evidence.
+G1: Correct production physics and human-information boundary.
+G2: Reliable chronological human-action dataset.
+G3: Demonstrated personal action-policy fidelity.
+G4: Faithful personal retry learning and memory.
+G5: Forecasts genuinely derived from multiple bot campaigns.
+G6: Frozen prospective80% accuracy per person.
+
+Dependencies:
+- G3 depends on G1 and G2.
+- G4 depends on G1 and G2.
+- G5 depends on G3 and G4.
+- G6 depends on all earlier gates.
+
+RTM rules:
+- A parent cannot complete while a dependency or child remains incomplete.
+- “Code exists” is not “behavior verified.”
+- Tests of parameter presence or bounds do not prove personal fidelity.
+- Documentation cannot close a behavioral or accuracy requirement.
+- Regressions reopen affected requirements.
+- Every verified row needs its exact implementation commit, acceptance command, actual output and source/input-bound evidence.
+- Preserve failed experiments and previous candidate scores.
+- Status changes must be justified by evidence, not by a desire to finish.
+
+Implement an acceptance checker that exits nonzero until every mandatory gate passes. Synthetic test outcomes cannot satisfy G6.
+
+3. G0–G1: REPAIR FOUNDATIONS FIRST, THEN CONTINUE IMMEDIATELY
+
+Fix the independently reproduced issues:
+- Default policy/memory seeds must be independent of concealed tile contents.
+- Apply forgetting in one persistent memory layer, not repeatedly inside search wrappers, beam nodes or guarded probes.
+- Freeze prior-attempt knowledge before processing the current retry.
+- Do not count current-attempt discoveries as earlier-attempt recall.
+- Bind the actual forecast generator, full dependencies, calibration inputs and training provenance.
+- Preserve existing ledgers; do not overwrite a registered model version.
+
+Use production physics for actual transitions:
+- Correct inspection/removal costs and clock deadlines.
+- Correct tray overflow, peek matching and victory conditions.
+- Correct keys, ice, locks, Joker and arrivals.
+- Retry only after an actual completed loss.
+- Keep numerical caps and unsupported transitions unresolved.
+- Return wonOn=null when no clear occurred.
+
+The policy may use only information the person could see or legitimately remember:
+- Recognizable exposed edges must be handled through a validated observation process.
+- Covered face-up pictures are not automatically known.
+- Actual concealed pictures remain inside the trusted environment/renderer.
+- Hypothetical search must not reveal the real hidden outcome.
+- Identical public prefixes and seeds must produce identical policy/memory behavior despite changes to still-concealed pictures.
+
+Preserve the full reference benchmark and controls, including known reopening and Dennis153 regressions. A strong reference is useful machinery—not the behavior every personal bot should imitate.
+
+4. G2: BUILD VALID HUMAN DECISION EXAMPLES
+
+Reconstruct each person’s actual physical actions through production-consistent replay.
+
+For every training decision:
+- Use the public state and legitimate memory available BEFORE the human action.
+- Keep the chosen action and subsequent reveal as targets/outcomes, not leaked input features.
+- Distinguish actual inspections from repeated peek fields in state messages.
+- Distinguish single tray additions, tray matches and board/peek matches.
+- Bind exact board identity and local campaign identity.
+- Separate later replays from retries within the same campaign.
+- Track actual opening, completion and data-availability timestamps.
+- Preserve ambiguous or unreconstructable events with explicit status rather than inventing certainty.
+
+Training for a target may use only that person’s earlier available information.
+
+5. G3: FIT HOW THE PERSON PLAYS
+
+The personal bot must choose actions like the person—not simply clear more levels.
+
+Learn and test:
+- Exploration and information gathering.
+- Planning depth and route commitment.
+- Tray-space tolerance and recovery behavior.
+- Clock digging, preparation and abandonment.
+- Key/lock planning.
+- Memory and uncertainty.
+- Deliberate risks versus mistakes.
+- Timing where production mechanics make it relevant.
+- Strategy changes after difficult clears and throughout the dataset.
+
+Do not equate:
+- Win rate with planning depth.
+- Holding a tray tile for several recorded events with proven lookahead.
+- Reopening a remembered tile with forgetting.
+- Repeated tile overlap with retry learning.
+- Tougher recent levels with reduced skill.
+
+Use user descriptions as priors to investigate, not rigid rules or proof of calibration. For example, Dennis digs toward the clock but adjusts when tray pressure becomes excessive, generally prioritizes finishing, and recognizes identifiable exposed pictures.
+
+Fit against actual action behavior. Evaluate on later chronological blocks using:
+- Chosen-action likelihood and ranking.
+- Calibration of action probabilities.
+- Tray occupancy and risk distributions.
+- Inspection/reinspection behavior.
+- Clock/key preparation patterns.
+- Route and retry changes.
+
+Compare with a non-personal reference, simple baselines and alternative personal configurations.
+
+Recent play matters especially, but compare recency weighting, rolling windows and change-point adaptation rather than assuming one fixed personality.
+
+A better personal simulator may play LESS optimally than the reference. That is correct when it better reproduces the person.
+
+If a parameter cannot be identified from the data, report uncertainty instead of inventing precision.
+
+6. G4: SIMULATE PERSONAL RETRIES FAITHFULLY
+
+Each retry must arise from the bot’s own preceding simulated experience.
+
+- Carry forward only legitimately observed information.
+- Model persistent forgetting and reacquisition.
+- Model avoidance of learned mistakes and changes of route.
+- Distinguish remembering a picture from deciding to repeat an opening.
+- Preserve exact-board/campaign boundaries.
+- Do not feed later real human actions into a supposedly independent future campaign.
+- Do not restart a failed search inside one reported attempt.
+- Do not resample forgetting merely because search performs more computation.
+
+Test actual causal effects in the component owning each parameter:
+- Planning controls in the planner.
+- Memory controls in persistent memory.
+- Retry-learning controls across completed attempts.
+
+7. G5: DERIVE FORECASTS FROM MULTIPLE SIMULATED CAMPAIGNS
+
+Run multiple plausible campaigns of the fitted personal bot on each upcoming level.
+
+- Use declared reproducible seeds independent of hidden contents.
+- Include realistic variability learned from behavior.
+- Retain all campaign results—not only the best or most human-looking run.
+- Record clears, actual losses, no-clear outcomes and numerical censoring separately.
+- Check Monte Carlo stability before treating the distribution as reliable.
+- Do not automatically translate computational censoring into a successful try8.
+
+Produce:
+P(clear on try1), P(clear on try2), P(clear on try3), and subsequent/tail probabilities.
+
+Derive the point forecast from that distribution using one declared scoring-aware rule, such as maximizing expected correctness under the agreed metric. Freeze the tie-breaking rule.
+
+There must be an auditable path:
+forecast
+→ campaign distribution
+→ individual campaign results
+→ personal policy/version
+→ earlier training data.
+
+No manually adjusted player predictions.
+No independent count head that bypasses the playing bot.
+No selecting a seed after seeing the human result.
+
+8. G6: THE GENUINE80% PROSPECTIVE GATE
+
+Scoring:
+- Actual tries1–3: exact.
+- Actual tries4–5: within±1.
+- Actual tries6+: within±2.
+- Predicted and actual both≥8: also correct.
+- Replays restart at local try1 and do not count toward primary new-level accuracy.
+- Pending games are not completed successes.
+
+For each genuinely new candidate:
+- Preregister the model, adaptation procedure and evaluation cohort before its games open.
+- Use the first20 consecutive eligible new-level games per person in that declared cohort.
+- Require at least16/20 correct for EACH person.
+- Require legitimate before-opening forecasts for all20.
+- Keep missing, race-opened, pending and difficult cases visible.
+- Never alter an already registered candidate’s cohort or predictions.
+- A genuinely improved later candidate may have a newly preregistered future evaluation, but retain every previous candidate and failure. Do not report only the eventual winner.
+- Report confidence intervals, absolute errors and the complete model-selection history.
+
+Online personal adaptation is allowed only through a procedure declared beforehand, using earlier available data.
+
+Historical action fidelity tests whether the simulator is personal.
+Prospective attempt accuracy tests whether that fidelity transfers.
+Both are required; neither substitutes for the other.
+
+9. CUDA IS OPTIONAL
+
+You may use the RTX3070 when useful for fitting, batched scoring or valid simulation work.
+
+- Profile the actual bottleneck.
+- Preserve production rules and the public-information boundary.
+- Provide CPU/CUDA parity tests and CPU fallback.
+- Measure end-to-end speed including transfers and startup.
+- Keep CPU when it is faster.
+- Do not substitute a simplified GPU game for the real one.
+- Account for owned jobs and avoid redundant experiments.
+
+10. CONTINUATION AND HANDOFF
+
+After every experiment:
+- Identify where the bot diverged from the person.
+- Separate observation, planning, memory, retry-learning and randomness errors.
+- Fix bugs before interpreting them as human behavior.
+- Tune promising mechanisms and combinations before rejecting them.
+- Update the RTM and append experiment evidence.
+- Begin the next meaningful experiment without waiting for another user message.
+
+If delegating, give every subagent this entire prompt verbatim, then append its specific assignment. Do not replace these requirements with a summary.
+
+Declare successful completion only when the automated checker verifies G0–G6, including real80% prospective accuracy for every person.
+
+Otherwise report an explicitly incomplete, reproducible checkpoint with exact remaining work or external evidence—not a “complete” handoff.

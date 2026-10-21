@@ -7,6 +7,7 @@ const { search } = require('./public_witness_search.js');
 const { NAMES } = require('./personal_model.js');
 const { gamesOf } = require('./mimic_games.js');
 const { createSession } = require('./production_physical_session.js');
+const { createObservedMemory } = require('./personal_observed_memory.js');
 
 /**
  * Evaluates action-policy fidelity of personal bots against actual human decisions
@@ -35,6 +36,7 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
 
     for (const game of testGames) {
       if (totalEvaluated >= samplePerPlayer) break;
+      const publicGeometry = { tiles: game.g.tiles, nb: game.g.nb, rules: game.g.rules, clock: game.g.clock };
 
       let session;
       try {
@@ -96,7 +98,7 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
 
         // Personal bot decision
         const personalChoice = search(
-          game.g,
+          publicGeometry,
           searchState,
           legalMoves,
           {
@@ -113,7 +115,7 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
 
         // Generic reference decision (neutral default)
         const refChoice = search(
-          game.g,
+          publicGeometry,
           searchState,
           legalMoves,
           { depth: 16, trayBuffer: 2, clockPatience: 0.5 }
@@ -137,10 +139,110 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
       humanTrayDist[k] = +( (trayCounts[k] || 0) / Math.max(1, totalEvaluated) ).toFixed(3);
     }
 
+    // Simulated bot rollout on held-out test games to measure bot tray distribution
+    const botTrayCounts = { 0: 0, 1: 0, 2: 0, 3: 0 };
+    let botSteps = 0;
+    const botStepTarget = Math.max(30, samplePerPlayer);
+
+    for (const game of testGames) {
+      if (botSteps >= botStepTarget) break;
+      const g = game.g;
+      const publicGeometry = { tiles: g.tiles, nb: g.nb, rules: g.rules, clock: g.clock };
+      const memory = createObservedMemory({
+        size: g.tiles.length,
+        campaign: 'eval_' + name,
+        board: 'board_' + game.key,
+        seed: 42,
+        retryRetention: calib.parameters.retryLearning,
+        decay: calib.parameters.memoryDecay
+      });
+      memory.beginAttempt({ campaign: 'eval_' + name, board: 'board_' + game.key, size: g.tiles.length, attempt: 1 });
+      let botSession;
+      try { botSession = createSession(g); } catch (e) { continue; }
+      let bFrame = botSession.view();
+
+      const ev = { kind: 'eval-observer', sha256: '0'.repeat(64) };
+      const getObs = f => {
+        const pictures = f.state.alive.map((alive, index) => {
+          if (!alive) return null;
+          if (index === f.state.openPeek) return g.faces[index];
+          if (!g.down[index]) {
+            const aboveList = (g.nb && g.nb.above && g.nb.above[index]) || [];
+            if (aboveList.every(a => !f.state.alive[a])) return g.faces[index];
+          }
+          return null;
+        });
+        return { physicalTaps: f.state.physicalTaps, alive: f.state.alive, pictures, evidence: pictures.map(p => p !== null ? ev : null) };
+      };
+
+      let observed = memory.observe(getObs(bFrame));
+
+      while (bFrame.type !== 'productionPhysicalEnd-v1' && botSteps < botStepTarget) {
+        const tLen = bFrame.state.tray.length;
+        if (tLen <= 3) botTrayCounts[tLen] = (botTrayCounts[tLen] || 0) + 1;
+        botSteps++;
+
+        const legalMoves = bFrame.legalTiles.map(index => ({
+          index,
+          inspect: !!bFrame.state.down[index] && bFrame.state.openPeek !== index
+        }));
+
+        const sState = {
+          pictures: observed.pictures,
+          down: bFrame.state.down,
+          alive: bFrame.state.alive,
+          tray: bFrame.state.tray,
+          moves: bFrame.state.moves,
+          openPeek: bFrame.state.openPeek,
+          relieved: bFrame.state.relieved,
+          arriving: bFrame.state.arriving
+        };
+
+        const plan = search(publicGeometry, sState, legalMoves, {
+          depth: calib.parameters.depth,
+          trayBuffer: calib.parameters.trayBuffer,
+          clockPatience: calib.parameters.clockPatience,
+          memoryDecay: calib.parameters.memoryDecay,
+          retryLearning: calib.parameters.retryLearning,
+          pairProgress: true
+        });
+
+        const nextTile = plan?.path?.[0] ?? bFrame.legalTiles[0];
+        bFrame = botSession.tap(nextTile);
+        if (bFrame.type !== 'productionPhysicalEnd-v1') {
+          observed = memory.observe(getObs(bFrame));
+        }
+      }
+    }
+
+    const botTrayDist = {};
+    for (let k = 0; k <= 3; k++) {
+      botTrayDist[k] = +( (botTrayCounts[k] || 0) / Math.max(1, botSteps) ).toFixed(3);
+    }
+
+    let tvd = 0;
+    let cdfH = 0, cdfB = 0, w1 = 0;
+    for (let k = 0; k <= 3; k++) {
+      tvd += Math.abs((humanTrayDist[k] || 0) - (botTrayDist[k] || 0));
+      if (k <= 2) {
+        cdfH += humanTrayDist[k] || 0;
+        cdfB += botTrayDist[k] || 0;
+        w1 += Math.abs(cdfH - cdfB);
+      }
+    }
+    tvd = +(0.5 * tvd).toFixed(4);
+    w1 = +w1.toFixed(4);
+
     results[name] = {
       evaluatedDecisions: totalEvaluated,
       calibratedParameters: calib.parameters,
       humanTrayDistribution: humanTrayDist,
+      botTrayDistribution: botTrayDist,
+      trayComparison: {
+        totalVariationDistance: tvd,
+        wassersteinDistance: w1,
+        replicatesDistribution: tvd <= 0.50
+      },
       top1Accuracy: {
         personalBot: +( (personalTop1 / Math.max(1, totalEvaluated)).toFixed(3) ),
         referenceBot: +( (referenceTop1 / Math.max(1, totalEvaluated)).toFixed(3) ),

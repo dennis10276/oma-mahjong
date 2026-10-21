@@ -1,500 +1,278 @@
-"""Machine-generated acceptance checker for personal player simulators.
-
-Enforces top-level gates G0 through G6 with dependency graph verification:
-G0: Reproducible evaluation and evidence.
-G1: Correct production physics and human-information boundary.
-G2: Reliable chronological human-action dataset.
-G3: Demonstrated personal action-policy fidelity (depends on G1, G2).
-G4: Faithful personal retry learning and memory (depends on G1, G2).
-G5: Forecasts genuinely derived from multiple bot campaigns (depends on G3, G4).
-G6: Frozen prospective 80% accuracy per person (depends on G0-G5).
-
-Exits nonzero if any mandatory gate fails.
-"""
-
-import hashlib
+"""Fail-closed acceptance audit. No model registration or forecast writes occur here."""
+import argparse
+from datetime import datetime, timezone
 import json
-import os
 import subprocess
 import sys
+import time
 from pathlib import Path
 
+from acceptance_evidence import (BASELINE_SHA256, CONTRACT_SHA256, NAMES, digest,
+    validate_stability,
+    fidelity_errors, parse_contract, prospective_errors, rollup, tray_comparison_errors,
+    validate_campaigns, validate_sources, verify_baseline)
+
 ROOT = Path(__file__).resolve().parents[4]
-REFIT = ROOT / 'source' / 'tools' / 'sim' / 'refit'
-ANALYSIS = ROOT / 'source' / 'analysis' / 'personal-bots'
-OUTCOMES_FILE = ROOT / 'source' / 'analysis' / 'archive' / 'personal-bots' / 'live-openings-2026-10-20T15-29-12-622Z' / 'personal-outcomes.json'
-GATE_OUTPUT = ROOT / 'ACCEPTANCE_GATE.json'
-RTM_FILE = ROOT / 'REQUIREMENTS_RTM.md'
-EXP_FILE = ROOT / 'EXPERIMENTS.jsonl'
-
-NAMES = ['Dennisisdebeste', 'Mrs. Doubtfire', 'PUK', 'Gerda']
+REFIT = ROOT / 'source/tools/sim/refit'
+AUDIT = ROOT / 'source/analysis/personal-bots/acceptance'
+DEFAULT_LEDGER = ROOT / 'source/analysis/personal-bots/personal-source-bound-causal-forecasts-v3.jsonl'
+DEFAULT_OUTCOMES = ROOT / 'source/analysis/archive/personal-bots/live-openings-2026-10-20T15-29-12-622Z/personal-outcomes.json'
 
 
-def run_node_check(script_content):
-    res = subprocess.run(['node', '-e', script_content], cwd=str(ROOT), capture_output=True, text=True)
-    return res.returncode == 0, res.stdout.strip(), res.stderr.strip()
+def command(argv, timeout=180):
+    started = time.monotonic()
+    try:
+        res = subprocess.run(argv, cwd=ROOT, capture_output=True, text=True, timeout=timeout, encoding='utf-8')
+        return {'command': argv, 'cwd': str(ROOT), 'exitCode': res.returncode,
+                'durationSeconds': round(time.monotonic() - started, 3),
+                'stdout': res.stdout, 'stderr': res.stderr}
+    except (OSError, subprocess.TimeoutExpired) as error:
+        return {'command': argv, 'cwd': str(ROOT), 'exitCode': None, 'error': str(error),
+                'durationSeconds': round(time.monotonic() - started, 3)}
 
 
-def check_g0():
-    """G0: Reproducible evaluation and evidence."""
-    details = {}
-    passed = True
-
-    # 1. Check tracking files exist
-    if not RTM_FILE.exists():
-        details['rtm_file_exists'] = False
-        passed = False
-    else:
-        details['rtm_file_exists'] = True
-
-    if not EXP_FILE.exists():
-        details['experiments_file_exists'] = False
-        passed = False
-    else:
-        details['experiments_file_exists'] = True
-
-    # 2. Check preservation of legacy ledgers
-    v1_file = ANALYSIS / 'personal-source-bound-causal-forecasts.jsonl'
-    v2_file = ANALYSIS / 'personal-source-bound-causal-forecasts-v2.jsonl'
-    if not v1_file.exists() or not v2_file.exists():
-        details['legacy_ledgers_preserved'] = False
-        passed = False
-    else:
-        v1_hash = hashlib.sha256(v1_file.read_bytes()).hexdigest()
-        details['v1_ledger_sha256'] = v1_hash
-        details['legacy_ledgers_preserved'] = True
-
-    # 3. Unit test suite execution
-    test_scripts = [
-        'test_personal_observed_memory.js',
-        'test_personal_witness_simulation.js',
-        'test_public_witness_search.js',
-        'test_personal_behavioral_calibration.js',
-        'test_human_decision_dataset.js',
-        'test_personal_action_policy_fidelity.js'
-    ]
-    test_results = {}
-    for ts in test_scripts:
-        cmd = subprocess.run(['node', str(REFIT / ts)], cwd=str(ROOT), capture_output=True, text=True)
-        ok = (cmd.returncode == 0)
-        test_results[ts] = 'PASS' if ok else f'FAIL: {cmd.stderr.strip()[:100]}'
-        if not ok:
-            passed = False
-    details['unit_tests'] = test_results
-
-    return {
-        'gate': 'G0',
-        'name': 'Reproducible evaluation and evidence',
-        'status': 'PASS' if passed else 'FAIL',
-        'passed': passed,
-        'details': details
-    }
+def record(errors=(), **details):
+    return {'status': 'FAIL' if errors else 'PASS', 'errors': list(errors), **details}
 
 
-def check_g1():
-    """G1: Correct production physics and human-information boundary."""
-    details = {}
-    passed = True
-
-    # Test 1: Concealed tile permutation prefix invariance (seed independent of hidden faces)
-    code_seed_invariance = """
-    const assert = require('assert/strict');
-    const path = require('path');
-    const Layouts = require('./source/www/layouts.js');
-    const searchModule = require('./source/tools/sim/refit/public_witness_search.js');
-    const simulationFile = path.resolve('./source/tools/sim/refit/personal_witness_simulation.js');
-    const originalSearch = searchModule.search;
-
-    function prefix(faces, seed) {
-      const steps = [];
-      searchModule.search = (game, state) => {
-        steps.push({ pictures: state.pictures.slice(), openPeek: state.openPeek, moves: state.moves });
-        if (steps.length === 5) throw Error('PUBLIC_PREFIX_COMPLETE');
-        return { path: [steps.length - 1] };
-      };
-      delete require.cache[simulationFile];
-      const { simulatePersonalCampaign } = require(simulationFile);
-      const tiles = faces.map((unused, index) => ({ x: index * 8, y: 0, z: 0 }));
-      try {
-        simulatePersonalCampaign({ tiles, nb: Layouts.neighbors(tiles), faces, down: faces.map(() => 1), rules: null, clock: null },
-          'Dennisisdebeste', { maxAttempts: 1, cutoffTime: 1, ...(seed === undefined ? {} : { seed }),
-            customParams: { depth: 20, trayBuffer: 2, clockPatience: 0.5, memoryDecay: 0.5, retryLearning: 1 } });
-      } catch (error) { assert.equal(error.message, 'PUBLIC_PREFIX_COMPLETE'); }
-      return steps;
-    }
-
-    try {
-      const first = [1, 2, 3, 4, 1, 2, 3, 4], second = [1, 2, 3, 4, 2, 1, 3, 4];
-      const defaultA = prefix(first);
-      const defaultB = prefix(second);
-      assert.deepEqual(defaultA, defaultB);
-      console.log('PREFIX_INVARIANT_OK');
-    } finally {
-      searchModule.search = originalSearch;
-      delete require.cache[simulationFile];
-    }
-    """
-    ok1, out1, err1 = run_node_check(code_seed_invariance)
-    details['concealed_prefix_seed_invariance'] = 'PASS' if (ok1 and 'PREFIX_INVARIANT_OK' in out1) else f'FAIL: {err1[:100]}'
-    if not ok1:
-        passed = False
-
-    # Test 2: Single-draw memory decay (no duplicate forgetting across search wrappers/probes)
-    code_single_draw = """
-    const assert = require('assert/strict');
-    const Layouts = require('./source/www/layouts.js');
-    const { search } = require('./source/tools/sim/refit/public_witness_search.js');
-    const tiles = [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }];
-    const geometry = { tiles, nb: Layouts.neighbors(tiles), rules: null, clock: null };
-    const state = { pictures: [1, 1], down: [1, 0], alive: [1, 1], tray: [], moves: 0, openPeek: -1, relieved: false, arriving: [] };
-    let draws = 0;
-    const values = [0.9, 0.1];
-    const decayed = search(geometry, state, [{ index: 1 }], { memoryDecay: 0.5, rng: () => values[draws++] ?? 0.9 });
-    assert.equal(draws, 1);
-    assert.equal(decayed.initialKnown, 2);
-    console.log('SINGLE_DRAW_DECAY_OK');
-    """
-    ok2, out2, err2 = run_node_check(code_single_draw)
-    details['single_draw_memory_decay'] = 'PASS' if (ok2 and 'SINGLE_DRAW_DECAY_OK' in out2) else f'FAIL: {err2[:100]}'
-    if not ok2:
-        passed = False
-
-    # Test 3: Production physics transitions & win/loss handling
-    code_physics = """
-    const assert = require('assert/strict');
-    const { simulatePersonalCampaign } = require('./source/tools/sim/refit/personal_witness_simulation.js');
-    // 2-tile clock clear
-    const clockGame = {
-      tiles: [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }],
-      nb: { above: [[], []], left: [[], []], right: [[], []] },
-      faces: [1, 1], down: [1, 0], rules: null, clock: { i: 0, n: 1 }
-    };
-    const cRes = simulatePersonalCampaign(clockGame, 'Dennisisdebeste', { maxAttempts: 1, seed: 1 });
-    assert.equal(cRes.wonOn, 1);
-    // Unsolvable tray overflow returns wonOn = null
-    const stuckGame = {
-      tiles: [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }, { x: 16, y: 0, z: 0 }, { x: 24, y: 0, z: 0 }],
-      nb: { above: [[], [], [], []], left: [[], [], [], []], right: [[], [], [], []] },
-      faces: [1, 2, 3, 4], down: [0, 0, 0, 0], rules: null, clock: null
-    };
-    const sRes = simulatePersonalCampaign(stuckGame, 'Dennisisdebeste', { maxAttempts: 1, seed: 1 });
-    assert.equal(sRes.wonOn, null);
-    assert.equal(sRes.cleared, false);
-    console.log('PRODUCTION_PHYSICS_OK');
-    """
-    ok3, out3, err3 = run_node_check(code_physics)
-    details['production_physics_rules'] = 'PASS' if (ok3 and 'PRODUCTION_PHYSICS_OK' in out3) else f'FAIL: {err3[:100]}'
-    if not ok3:
-        passed = False
-
-    return {
-        'gate': 'G1',
-        'name': 'Correct production physics and human-information boundary',
-        'status': 'PASS' if passed else 'FAIL',
-        'passed': passed,
-        'details': details
-    }
+def node(script):
+    receipt = command(['node', str(REFIT / script)])
+    return record([] if receipt['exitCode'] == 0 else [f'{script} did not pass'], receipt=receipt)
 
 
-def check_g2(g1_passed):
-    """G2: Reliable chronological human-action dataset."""
-    details = {}
-    passed = True
-
-    # Test reconstructed decisions
-    code_dataset = """
-    const assert = require('assert/strict');
-    const { reconstructHumanDecisions } = require('./source/tools/sim/refit/human_decision_dataset.js');
-    const { NAMES } = require('./source/tools/sim/refit/personal_model.js');
-    let total = 0;
-    for (const name of NAMES) {
-      const res = reconstructHumanDecisions(name);
-      assert(res.decisionCount > 100);
-      total += res.decisionCount;
-    }
-    console.log('DATASET_COUNT_' + total);
-    """
-    ok, out, err = run_node_check(code_dataset)
-    if ok and 'DATASET_COUNT_' in out:
-        details['reconstructed_decisions'] = out.split('DATASET_COUNT_')[1].strip()
-        details['status'] = 'PASS'
-    else:
-        details['reconstructed_decisions'] = f'FAIL: {err[:100]}'
-        passed = False
-
-    # Check prior attempt recall freezing (no current attempt leakage)
-    code_recall = """
-    const assert = require('assert/strict');
-    const { calibratePlayer } = require('./source/tools/sim/refit/personal_behavioral_calibration.js');
-    const { NAMES } = require('./source/tools/sim/refit/personal_model.js');
-    for (const name of NAMES) {
-      const cal = calibratePlayer(name);
-      assert(cal.diagnostics.retryRecallRate >= 0.05 && cal.diagnostics.retryRecallRate <= 0.95);
-      assert(typeof cal.diagnostics.p90PairingSpan === 'number');
-    }
-    console.log('RECALL_FREEZING_OK');
-    """
-    ok_rec, out_rec, err_rec = run_node_check(code_recall)
-    details['prior_attempt_recall_frozen'] = 'PASS' if (ok_rec and 'RECALL_FREEZING_OK' in out_rec) else f'FAIL: {err_rec[:100]}'
-    if not ok_rec:
-        passed = False
-
-    return {
-        'gate': 'G2',
-        'name': 'Reliable chronological human-action dataset',
-        'status': 'PASS' if passed else 'FAIL',
-        'passed': passed,
-        'details': details
-    }
+def load_ledger(path):
+    snapshots = [json.loads(line) for line in path.read_text(encoding='utf-8-sig').splitlines() if line.strip()]
+    if len(snapshots) != 1:
+        raise ValueError('A registered candidate must have exactly one immutable anchor; adaptation needs its own validated protocol')
+    return snapshots[0]
 
 
-def check_g3(g1_passed, g2_passed):
-    """G3: Demonstrated personal action-policy fidelity (depends on G1, G2)."""
-    if not (g1_passed and g2_passed):
-        return {
-            'gate': 'G3',
-            'name': 'Demonstrated personal action-policy fidelity',
-            'status': 'BLOCKED',
-            'passed': False,
-            'details': {'error': 'Dependencies G1 and G2 must pass first'}
-        }
-
-    cmd = subprocess.run(['node', str(REFIT / 'test_personal_action_policy_fidelity.js')],
-                         cwd=str(ROOT), capture_output=True, text=True)
-    passed = (cmd.returncode == 0)
-    details = {
-        'action_policy_fidelity_test': 'PASS' if passed else f'FAIL: {cmd.stderr.strip()[:100]}'
-    }
-
-    # Calibration parameters grounded in pairing span and empirical observation
-    calib_file = ANALYSIS / 'personal-behavioral-fit.json'
-    if calib_file.exists():
-        fit_data = json.loads(calib_file.read_text(encoding='utf-8'))
-        details['calibrated_players'] = list(fit_data.get('players', {}).keys())
-    else:
-        passed = False
-        details['calib_file_missing'] = True
-
-    return {
-        'gate': 'G3',
-        'name': 'Demonstrated personal action-policy fidelity',
-        'status': 'PASS' if passed else 'FAIL',
-        'passed': passed,
-        'details': details
-    }
-
-
-def check_g4(g1_passed, g2_passed):
-    """G4: Faithful personal retry learning and memory (depends on G1, G2)."""
-    if not (g1_passed and g2_passed):
-        return {
-            'gate': 'G4',
-            'name': 'Faithful personal retry learning and memory',
-            'status': 'BLOCKED',
-            'passed': False,
-            'details': {'error': 'Dependencies G1 and G2 must pass first'}
-        }
-
-    cmd1 = subprocess.run(['node', str(REFIT / 'test_personal_observed_memory.js')],
-                          cwd=str(ROOT), capture_output=True, text=True)
-    cmd2 = subprocess.run(['node', str(REFIT / 'test_personal_witness_simulation.js')],
-                          cwd=str(ROOT), capture_output=True, text=True)
-
-    passed = (cmd1.returncode == 0 and cmd2.returncode == 0)
-    details = {
-        'observed_memory_test': 'PASS' if cmd1.returncode == 0 else f'FAIL: {cmd1.stderr.strip()[:100]}',
-        'simulation_retry_test': 'PASS' if cmd2.returncode == 0 else f'FAIL: {cmd2.stderr.strip()[:100]}'
-    }
-
-    return {
-        'gate': 'G4',
-        'name': 'Faithful personal retry learning and memory',
-        'status': 'PASS' if passed else 'FAIL',
-        'passed': passed,
-        'details': details
-    }
+def collect_checks(ledger_path, outcomes_path):
+    checks = {}
+    checks['history.integrity'] = record(verify_baseline(ROOT, (AUDIT / 'AUDIT_BASELINE.json').read_bytes()))
+    for ident, filename in [('physics.tests', 'test_production_physical_session.js'),
+                            ('information.boundary_regressions', 'test_personal_information_boundary.js'),
+                            ('memory.tests', 'test_personal_observed_memory.js'),
+                            ('simulation.tests', 'test_personal_witness_simulation.js'),
+                            ('search.tests', 'test_public_witness_search.js'),
+                            ('calibration.tests', 'test_personal_behavioral_calibration.js'),
+                            ('dataset.tests', 'test_human_decision_dataset.js'),
+                            ('registration.guard', 'test_personal_registration_guard.js')]:
+        checks[ident] = node(filename)
+    # This is a behavioral acceptance test: an honest negative result is expected
+    # to keep G3 open, not to be recategorized as infrastructure success.
+    checks['fidelity.acceptance_test'] = node('test_personal_action_policy_fidelity.js')
+    evaluator = command(['node', '-e', "const {evaluateActionPolicyFidelity:e}=require('./source/tools/sim/refit/personal_action_policy_evaluation.js'); console.log(JSON.stringify({sample20:e(20),sample30:e(30)}));"])
+    try:
+        if evaluator['exitCode'] != 0:
+            raise ValueError('Action evaluator did not complete')
+        results = json.loads(evaluator['stdout'])
+        errors = [f'{sample}: {error}' for sample, values in results.items() for error in fidelity_errors(values)]
+        if set(results) != {'sample20', 'sample30'}:
+            errors.append('Both declared sample sizes are required')
+        checks['fidelity.minimum'] = record(errors, measurements=results, receipt=evaluator,
+            limitation='A minimum screen only. Passing this cannot establish all G3 requirements, independent test blocks, probability calibration or personal identification.')
+    except (ValueError, TypeError) as error:
+        checks['fidelity.minimum'] = record([str(error)], receipt=evaluator)
+    try:
+        tray_errors = [f'{sample}: {error}' for sample, values in results.items() for error in tray_comparison_errors(values)]
+        checks['fidelity.tray_comparison'] = record(tray_errors,
+            measurements={sample: {name: results[sample][name].get('trayComparison') for name in NAMES if name in results.get(sample, {})} for sample in ('sample20', 'sample30')},
+            limitation='Evaluates simulated bot rollout tray occupancy against human chronological test decisions.')
+    except Exception as error:
+        checks['fidelity.tray_comparison'] = record(['No independently simulated bot tray distribution or human-versus-bot distance is implemented; human-only counts cannot prove replication'])
+    try:
+        anchor = load_ledger(ledger_path)
+        checks['forecast.sources'] = record(validate_sources(ROOT, anchor), model=anchor.get('model'))
+        checks['forecast.campaigns'] = record(validate_campaigns(anchor), model=anchor.get('model'), forecastCount=len(anchor.get('forecasts', [])))
+        checks['forecast.stability'] = record(validate_stability(anchor), model=anchor.get('model'))
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        anchor = None
+        for ident in ('forecast.sources', 'forecast.campaigns', 'forecast.stability'):
+            checks[ident] = record([str(error)])
+    checks['prospective.target'] = evaluate_prospective(ledger_path, outcomes_path, anchor)
+    receipt = command([sys.executable, '-B', '-m', 'unittest', 'discover', '-s', str(REFIT), '-p', 'test_acceptance_evidence.py', '-v'], timeout=180)
+    checks['checker.adversarial_tests'] = record([] if receipt['exitCode'] == 0 else ['Adversarial checker tests failed'], receipt=receipt)
+    receipt = command([sys.executable, '-B', '-m', 'unittest', 'discover', '-s', str(REFIT), '-p', 'test_*.py'], timeout=180)
+    checks['python.suite'] = record([] if receipt['exitCode'] == 0 else ['Python regression suite failed'], receipt=receipt)
+    return checks
 
 
-def check_g5(g3_passed, g4_passed):
-    """G5: Forecasts genuinely derived from multiple bot campaigns (depends on G3, G4)."""
-    if not (g3_passed and g4_passed):
-        return {
-            'gate': 'G5',
-            'name': 'Forecasts genuinely derived from multiple bot campaigns',
-            'status': 'BLOCKED',
-            'passed': False,
-            'details': {'error': 'Dependencies G3 and G4 must pass first'}
-        }
-
-    v3_file = ANALYSIS / 'personal-source-bound-causal-forecasts-v3.jsonl'
-    if not v3_file.exists():
-        return {
-            'gate': 'G5',
-            'name': 'Forecasts genuinely derived from multiple bot campaigns',
-            'status': 'PENDING_SIMULATION',
-            'passed': False,
-            'details': {'error': 'v3 ledger does not exist yet (simulation in progress)'}
-        }
-
-    line = json.loads(v3_file.read_text(encoding='utf-8').strip().splitlines()[0])
-    forecasts = line.get('forecasts', [])
-    passed = True
-    details = {
-        'model': line.get('model'),
-        'forecast_count': len(forecasts),
-        'bound_sources_count': len(line.get('quantitativeSourceHashes', {}))
-    }
-
-    if len(forecasts) < 96:
-        passed = False
-        details['insufficient_forecasts'] = len(forecasts)
-
-    # Verify campaign distributions and Bayes expected scoring maximization
-    has_distributions = all('campaignDistribution' in fc and 'campaignCount' in fc for fc in forecasts)
-    details['all_forecasts_have_distributions'] = has_distributions
-    if not has_distributions:
-        passed = False
-
-    # Verify source closure bindings
-    required_sources = [
-        'source/tools/sim/refit/generate_personal_witness_v3.js',
-        'source/tools/sim/refit/personal_witness_simulation.js',
-        'source/tools/sim/refit/personal_behavioral_calibration.js',
-        'source/tools/sim/refit/personal_observed_memory.js',
-        'source/tools/sim/refit/public_witness_search.js',
-        'source/tools/sim/refit/boards.js',
-        'source/www/hard.js',
-        'source/analysis/personal-bots/personal-behavioral-fit.json'
-    ]
-    bound = line.get('quantitativeSourceHashes', {})
-    missing_sources = [s for s in required_sources if s not in bound]
-    details['missing_sources'] = missing_sources
-    if missing_sources:
-        passed = False
-
-    return {
-        'gate': 'G5',
-        'name': 'Forecasts genuinely derived from multiple bot campaigns',
-        'status': 'PASS' if passed else 'FAIL',
-        'passed': passed,
-        'details': details
-    }
+def evaluate_prospective(ledger_path, outcomes_path, anchor=None):
+    try:
+        anchor = anchor or load_ledger(ledger_path)
+        # Always evaluate the selected candidate, never use a baseline model's score.
+        receipt = command([sys.executable, '-B', str(REFIT / 'personal_forecast_diagnostics.py'), str(ledger_path), str(outcomes_path)])
+        if receipt['exitCode'] != 0:
+            return record(['Prospective scorer failed'], receipt=receipt)
+        report = json.loads(receipt['stdout'])
+        errors = prospective_errors(report)
+        if report.get('model') != anchor.get('model'):
+            errors.append('Scorer evaluated a different candidate')
+        raw = json.loads(outcomes_path.read_bytes())
+        if raw.get('evidence') != 'separate-live-completed-and-pending-outcomes':
+            errors.append('Synthetic/test outcomes cannot satisfy G6')
+        # Rebuild episodes from the independently archived plays and manifest in
+        # memory. Declaring evidence="live" in JSON is insufficient.
+        reconstruction = command(['node', '-e', "const fs=require('fs'); const {buildReport}=require('./source/tools/sim/refit/personal_live_outcomes.js'); const report=buildReport(process.argv[1]); console.log(JSON.stringify(report));", str(outcomes_path.parent)])
+        if reconstruction['exitCode'] != 0:
+            errors.append('Live outcome provenance could not be reconstructed')
+        else:
+            rebuilt = json.loads(reconstruction['stdout'])
+            for key in ('episodes', 'observedAt', 'liveManifestSha256', 'playsSha256', 'previousOutcomeSha256', 'unresolvedBoards'):
+                if raw.get(key) != rebuilt.get(key):
+                    errors.append(f'Live outcome differs from archived evidence: {key}')
+        if raw.get('unresolvedBoards', 0):
+            errors.append('Unresolved board identities require explicit cohort audit; they cannot silently disappear')
+        if not anchor.get('model', '').startswith('source-bound-personal-witness-'):
+            errors.append('Selected candidate is not the personal playing-policy pipeline')
+        # Frozen-source authentication remains mandatory independently of numeric scores.
+        source_errors = validate_sources(ROOT, anchor)
+        if source_errors:
+            errors.append('Candidate source/input provenance is not authenticated; see forecast.sources')
+        return record(errors, ledger=str(ledger_path.resolve()), ledgerSha256=digest(ledger_path.read_bytes()),
+            outcomes=str(outcomes_path.resolve()), outcomesSha256=digest(outcomes_path.read_bytes()),
+            measurements=report, receipt=receipt, outcomeReconstruction=reconstruction,
+            limitation='Local archive consistency is not proof of server authenticity; an independent reviewer must retain the raw live export.')
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        return record([str(error)], ledger=str(ledger_path), outcomes=str(outcomes_path))
 
 
-def check_g6(all_earlier_passed):
-    """G6: Frozen prospective 80% accuracy per person (depends on G0-G5)."""
-    if not all_earlier_passed:
-        return {
-            'gate': 'G6',
-            'name': 'Frozen prospective 80% accuracy per person',
-            'status': 'BLOCKED',
-            'passed': False,
-            'details': {'error': 'All earlier gates (G0-G5) must pass first'}
-        }
+# Explicit, narrow verification bindings. Every unmapped original clause stays
+# UNVERIFIED. A future implementation needs a substantive verifier here, not an
+# edited PASS field in a report. Unit tests do not close entire behavioral sections.
+REQUIREMENT_CHECKS = {
+    '- Preserve existing ledgers; do not overwrite a registered model version.': ['history.integrity', 'registration.guard'],
+    '- Never alter an already registered candidate’s cohort or predictions.': ['history.integrity', 'registration.guard'],
+    '- Require at least16/20 correct for EACH person.': ['prospective.target'],
+    '- Require legitimate before-opening forecasts for all20.': ['prospective.target'],
+    '- Pending games are not completed successes.': ['prospective.target'],
+    '- Separate later replays from retries within the same campaign.': ['dataset.tests'],
+    '- Retain all campaign results—not only the best or most human-looking run.': ['forecast.campaigns'],
+    '- Bind the actual forecast generator, full dependencies, calibration inputs and training provenance.': ['forecast.sources'],
+    '- A parent cannot complete while a dependency or child remains incomplete.': ['checker.adversarial_tests'],
+    '- Status changes must be justified by evidence, not by a desire to finish.': ['checker.adversarial_tests'],
+    '- Tray occupancy and risk distributions.': ['fidelity.tray_comparison'],
+    '- Tray-space tolerance and recovery behavior.': ['fidelity.tray_comparison'],
+    '- Chosen-action likelihood and ranking.': ['fidelity.minimum', 'fidelity.acceptance_test'],
+    '- Default policy/memory seeds must be independent of concealed tile contents.': ['information.boundary_regressions'],
+    '- Apply forgetting in one persistent memory layer, not repeatedly inside search wrappers, beam nodes or guarded probes.': ['information.boundary_regressions'],
+    '- Freeze prior-attempt knowledge before processing the current retry.': ['memory.tests'],
+    '- Do not count current-attempt discoveries as earlier-attempt recall.': ['memory.tests'],
+    '- Return wonOn=null when no clear occurred.': ['simulation.tests'],
+    '- Correct tray overflow, peek matching and victory conditions.': ['physics.tests'],
+    '- Correct keys, ice, locks, Joker and arrivals.': ['physics.tests'],
+    '- Correct inspection/removal costs and clock deadlines.': ['physics.tests'],
+    '- Retry only after an actual completed loss.': ['simulation.tests'],
+    '- Keep the chosen action and subsequent reveal as targets/outcomes, not leaked input features.': ['dataset.tests'],
+    '- Distinguish actual inspections from repeated peek fields in state messages.': ['dataset.tests'],
+    '- Distinguish single tray additions, tray matches and board/peek matches.': ['dataset.tests'],
+    '- Bind exact board identity and local campaign identity.': ['dataset.tests'],
+    '- Require at least 2 campaigns per forecast; single-run samples cannot establish a distribution.': ['forecast.campaigns'],
+    '- Recompute distributions and point forecasts from the individual campaign runs.': ['forecast.campaigns'],
+    '- Check for duplicate forecasts, duplicate seeds or non-monotonic attempt histories.': ['forecast.campaigns'],
+    '- Check for Monte Carlo stability across campaign counts.': ['forecast.stability'],
+}
 
-    # Evaluate against actual outcomes
-    if not OUTCOMES_FILE.exists():
-        return {
-            'gate': 'G6',
-            'name': 'Frozen prospective 80% accuracy per person',
-            'status': 'BLOCKED_NO_OUTCOMES_FILE',
-            'passed': False,
-            'details': {'error': f'Outcomes file {OUTCOMES_FILE} not found'}
-        }
+CHECK_GATES = {
+    'history.integrity': 'G0', 'checker.adversarial_tests': 'G0', 'physics.tests': 'G1',
+    'python.suite': 'G0',
+    'information.boundary_regressions': 'G1',
+    'memory.tests': 'G4', 'simulation.tests': 'G1', 'search.tests': 'G1',
+    'calibration.tests': 'G2', 'dataset.tests': 'G2', 'registration.guard': 'G5',
+    'fidelity.acceptance_test': 'G3', 'fidelity.minimum': 'G3', 'fidelity.tray_comparison': 'G3',
+    'forecast.sources': 'G5', 'forecast.campaigns': 'G5', 'forecast.stability': 'G5',
+    'prospective.target': 'G6',
+}
 
-    # Run personal_forecast_diagnostics.py on v1 and evaluate current cohort status
-    v1_file = ANALYSIS / 'personal-source-bound-causal-forecasts.jsonl'
-    cmd = subprocess.run([
-        sys.executable, str(REFIT / 'personal_forecast_diagnostics.py'),
-        str(v1_file), str(OUTCOMES_FILE)
-    ], cwd=str(ROOT), capture_output=True, text=True)
 
-    if cmd.returncode != 0:
-        return {
-            'gate': 'G6',
-            'name': 'Frozen prospective 80% accuracy per person',
-            'status': 'ERROR_DIAGNOSTICS_FAILED',
-            'passed': False,
-            'details': {'error': cmd.stderr.strip() or cmd.stdout.strip()}
-        }
+def requirement_rows():
+    rows = parse_contract((AUDIT / 'EXECUTION_CONTRACT.txt').read_bytes())
+    for row in rows:
+        row['checks'] = REQUIREMENT_CHECKS.get(row['requirement'], [])
+    for ident, gate in CHECK_GATES.items():
+        rows.append({'id': f'AUDIT.{ident}', 'section': 'audit', 'sourceLine': None,
+                     'requirement': f'Independent evidence check: {ident}', 'gate': gate,
+                     'checks': [ident]})
+    return rows
 
-    diag = json.loads(cmd.stdout.strip())
-    players = diag.get('players', {})
 
-    per_person_status = {}
-    passed_80 = True
+def evidence_hashes(extra_paths=()):
+    paths = [*REFIT.glob('*.py'), *REFIT.glob('*.js'), *REFIT.glob('tables/*.js'),
+             ROOT / 'source/www/hard.js', ROOT / 'source/www/layouts.js',
+             AUDIT / 'EXECUTION_CONTRACT.txt', AUDIT / 'AUDIT_BASELINE.json', ROOT / 'EXPERIMENTS.jsonl',
+             ROOT / 'AGENTS.md', ROOT / 'GEMINI.md', ROOT / 'ACCEPTANCE_REVIEW.md',
+             ROOT / 'source/analysis/personal-bots/personal-behavioral-fit.json']
+    paths.extend((ROOT / 'source/analysis/archive/replays').glob('*.json'))
+    paths.extend(extra_paths)
+    return {(p.relative_to(ROOT).as_posix() if p.is_relative_to(ROOT) else str(p)):
+            digest(p.read_bytes()) if p.exists() else 'MISSING' for p in sorted(set(paths))}
 
-    for name in NAMES:
-        p_info = players.get(name, {})
-        cohort = p_info.get('cohort', {})
-        completed = cohort.get('completed', 0)
-        correct = cohort.get('correct', 0)
-        acc = p_info.get('accuracy')
 
-        per_person_status[name] = {
-            'completed_cohort_games': completed,
-            'correct_cohort_games': correct,
-            'accuracy': acc,
-            'eligible_20_available': completed >= 20,
-            'accuracy_ge_80': (acc is not None and acc >= 0.80)
-        }
-
-        # Gate requires at least 20 consecutive eligible completed games per person AND >= 80%
-        if completed < 20 or acc is None or acc < 0.80:
-            passed_80 = False
-
-    details = {
-        'evaluation_source': str(OUTCOMES_FILE.name),
-        'per_person': per_person_status,
-        'gate_rule': 'At least 16/20 (80%) prospective accuracy for EACH of the 4 persons on declared cohort',
-        'blocking_reason': 'External human live gameplay recordings for 20 completed levels per person do not exist in the available snapshot (Dennis: 0/20, Doubtfire: 7/20, PUK: 4/20, Gerda: 13/20). Honest prospective evaluation forbids synthetic substitutes.'
-    }
-
-    return {
-        'gate': 'G6',
-        'name': 'Frozen prospective 80% accuracy per person',
-        'status': 'BLOCKED_ON_EXTERNAL_HUMAN_DATA' if not passed_80 else 'PASS',
-        'passed': passed_80,
-        'details': details
-    }
+def render_rtm(report):
+    lines = ['# Requirements Traceability Matrix', '',
+        'Generated by `python -B source/tools/sim/refit/check_acceptance_gates.py` from the pinned user contract.',
+        'INCOMPLETE. Unmapped or missing behavioral evidence is UNVERIFIED. Documentation and parameter bounds cannot close it.',
+        f"Evidence Git HEAD: `{report['git']['head']}`. Working tree changes and source/input hashes are recorded in ACCEPTANCE_GATE.json; an uncommitted implementation has no verified implementation commit.",
+        'Earlier claims remain in `source/analysis/personal-bots/acceptance/REQUIREMENTS_RTM.before-hardening.md`.', '',
+        '| Gate | Verified / total | Status | Unmet dependencies |', '| --- | --- | --- | --- |']
+    for gate, value in report['gates'].items():
+        lines.append(f"| {gate} | {value['verifiedRequirements']} / {value['requirements']} | {value['status']} | {', '.join(value['unmetDependencies']) or 'None'} |")
+    lines += ['', '| ID | Contract line | Gate | Requirement (verbatim) | Checks / actual result | Status |',
+              '| --- | --- | --- | --- | --- | --- |']
+    for row in report['requirements']:
+        evidence = ('Rollup of all ' + str(len(row['children'])) + ' children' if row.get('children') else
+            '; '.join(f"{c}: {report['checks'].get(c, {}).get('status', 'UNVERIFIED')}" for c in row['checks']) or 'No substantive verifier implemented')
+        text = row['requirement'].replace('|', '&#124;')
+        lines.append(f"| {row['id']} | {row['sourceLine'] or 'audit'} | {row['gate']} | {text} | {evidence} | {row['status']} |")
+    lines += ['', 'Every original nonempty requirement line is retained. Compound clauses remain open until all their parts have evidence.',
+        'Gate dependencies are enforced independently of local row results. The JSON report contains commands, actual outputs, hashes and failure reasons.',
+        'No valid implementation commit is inferred from a claim in an experiment or an older RTM. Add an independently checked implementation/evidence binding before promoting an unverified row.', '']
+    return '\n'.join(lines)
 
 
 def main():
-    print('==================== MACHINE-GENERATED ACCEPTANCE GATE CHECKER ====================')
-    g0 = check_g0()
-    g1 = check_g1()
-    g2 = check_g2(g1['passed'])
-    g3 = check_g3(g1['passed'], g2['passed'])
-    g4 = check_g4(g1['passed'], g2['passed'])
-    g5 = check_g5(g3['passed'], g4['passed'])
-    all_earlier = g0['passed'] and g1['passed'] and g2['passed'] and g3['passed'] and g4['passed'] and g5['passed']
-    g6 = check_g6(all_earlier)
-
-    gates = [g0, g1, g2, g3, g4, g5, g6]
-    all_passed = all(g['passed'] for g in gates)
-
-    for g in gates:
-        status_str = g['status']
-        gate_name = g['name']
-        gate_code = g['gate']
-        mark = '[PASS]' if g['passed'] else '[FAIL]' if status_str == 'FAIL' else f'[{status_str}]'
-        print(f'{mark} {gate_code}: {gate_name}')
-
-    report = {
-        'timestamp': subprocess.run(['git', 'log', '-1', '--format=%cI'], cwd=str(ROOT), capture_output=True, text=True).stdout.strip(),
-        'allGatesPassed': all_passed,
-        'gates': {g['gate']: g for g in gates},
-        'summary': 'All mandatory engineering and offline development gates (G0-G5) verified. G6 pending external live player gameplay telemetry.' if all_earlier and not g6['passed'] else 'Acceptance gates evaluation complete.'
-    }
-
-    GATE_OUTPUT.write_text(json.dumps(report, indent=2), encoding='utf-8')
-    print(f'\nWrote gate report to {GATE_OUTPUT}')
-    overall_msg = 'ALL GATES SATISFIED' if all_passed else 'INCOMPLETE (Checker exiting nonzero as mandated by contract)'
-    print(f'Overall status: {overall_msg}')
-
-    if not all_passed:
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--ledger', type=Path, default=DEFAULT_LEDGER)
+    parser.add_argument('--outcomes', type=Path, default=DEFAULT_OUTCOMES)
+    parser.add_argument('--output', type=Path, default=ROOT / 'ACCEPTANCE_GATE.json')
+    args = parser.parse_args()
+    output = args.output.resolve()
+    # Reports must never be written over a selected ledger, raw evidence or source.
+    if (output in (args.ledger.resolve(), args.outcomes.resolve()) or output.suffix != '.json'
+            or (output.is_relative_to(ROOT / 'source') and not output.is_relative_to(AUDIT / 'runs'))):
+        parser.error('Output must be a JSON report outside source inputs (or under acceptance/runs), never a ledger or outcome file')
+    raw_inputs = [args.ledger.resolve(), args.outcomes.resolve(),
+                  args.outcomes.resolve().parent / 'manifest.json', args.outcomes.resolve().parent / 'plays.json',
+                  ROOT / 'source/analysis/archive/personal-bots/prospective-outcomes.json']
+    before = evidence_hashes(raw_inputs)
+    checks = collect_checks(args.ledger.resolve(), args.outcomes.resolve())
+    if evidence_hashes(raw_inputs) != before:
+        checks['history.integrity'] = record(['Sources or inputs changed while the audit ran; discard mixed-version evidence'])
+    rows, gates = rollup(requirement_rows(), checks)
+    head = command(['git', 'rev-parse', 'HEAD'])
+    dirty = command(['git', 'status', '--porcelain=v1', '--untracked-files=all'])
+    report = {'schemaVersion': 2, 'evaluatedAt': datetime.now(timezone.utc).isoformat(),
+        'allGatesPassed': all(g['passed'] for g in gates.values()),
+        'summary': 'INCOMPLETE: substantive engineering/evidence gaps remain. Future human outcomes are not the only dependency.',
+        'contractSha256': CONTRACT_SHA256, 'baselineSha256': BASELINE_SHA256,
+        'git': {'head': head.get('stdout', '').strip(), 'status': dirty.get('stdout', ''),
+                'implementationCommitVerified': False},
+        'selectedLedger': str(args.ledger.resolve()), 'selectedOutcomes': str(args.outcomes.resolve()),
+        'sourceAndInputHashes': before, 'checks': checks, 'requirements': rows, 'gates': gates}
+    if report['allGatesPassed']:
+        report['summary'] = 'All mandatory requirements and dependent gates verified by this audit.'
+    args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    (ROOT / 'REQUIREMENTS_RTM.json').write_text(json.dumps({'contractSha256': CONTRACT_SHA256, 'requirements': rows}, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    (ROOT / 'REQUIREMENTS_RTM.md').write_text(render_rtm(report), encoding='utf-8')
+    for gate, value in gates.items():
+        print(f"{gate}: {value['status']} ({value['verifiedRequirements']}/{value['requirements']} requirements verified)")
+    for ident, value in checks.items():
+        if value['status'] != 'PASS':
+            print(f"FAIL {ident}: " + '; '.join(value['errors'][:3]))
+    print(report['summary'])
+    return 0 if report['allGatesPassed'] else 1
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

@@ -16,7 +16,7 @@ for (const name of NAMES) {
 
   const params = result.parameters;
   assert([8, 12, 16, 20].includes(params.depth), `Invalid depth: ${params.depth}`);
-  assert([2, 3].includes(params.trayBuffer), `Invalid trayBuffer: ${params.trayBuffer}`);
+  assert([1, 2, 3].includes(params.trayBuffer), `Invalid trayBuffer: ${params.trayBuffer}`);
   assert(params.clockPatience >= 0 && params.clockPatience <= 1.0, `Invalid clockPatience: ${params.clockPatience}`);
   assert(params.memoryDecay >= 0 && params.memoryDecay <= 1.0, `Invalid memoryDecay: ${params.memoryDecay}`);
   assert(params.retryLearning >= 0 && params.retryLearning <= 1.0, `Invalid retryLearning: ${params.retryLearning}`);

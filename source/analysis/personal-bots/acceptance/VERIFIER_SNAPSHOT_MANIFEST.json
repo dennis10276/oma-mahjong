@@ -1,0 +1,29 @@
+{
+  "createdAt": "2026-10-21T17:34:53.027915+00:00",
+  "purpose": "Independent verifier/evidence snapshot for external pinning and comparison; not a passing model or a standalone training-data bundle.",
+  "sha256": {
+    "AGENTS.md": "a9c2634a9a347e8563fe4ab488f046f8184127051e1d4ae3e95968a8a393432a",
+    "GEMINI.md": "2a0f9e6e05fe060a558d8dd6fe4d69acbf9a0f14cd1f5f2f81a0183110af23f5",
+    "ACCEPTANCE_REVIEW.md": "29a901faefe5513444e6186d8006fd4b1d34961ae3f1490c5fc6cb6d4791d2e1",
+    "ACCEPTANCE_GATE.json": "17f5dfd446d829309270658e28a54ef7eb4d9b2fab15b54d503db5e7599d83b1",
+    "REQUIREMENTS_RTM.json": "c345da9a63a7d1990230b5a67bd127a4612f8c2f83f01aa52a0b65d6a793ddf8",
+    "REQUIREMENTS_RTM.md": "ead931994f81bb315a126cf7738983c06255de2f4699bae8e138a90efc8ca2a5",
+    "EXPERIMENTS.jsonl": "98e6d10c5d2bc418d9bba4da0d43f39ff278dfb85f6da2c83ac2d3aecb132de1",
+    "source/tools/sim/refit/acceptance_evidence.py": "e0c78ad7672a01287ea961cadf811b64d4ea0899837d473571a3ae3fd7168204",
+    "source/tools/sim/refit/check_acceptance_gates.py": "d131f69b6e1be8bc3a4d94e27215eb83ced20ec3c250403c8edb8674f54c46cc",
+    "source/tools/sim/refit/test_acceptance_evidence.py": "8b33096144ba8ae90511d6b976d00df8846749e615c8b2e32ed11f1120389435",
+    "source/tools/sim/refit/test_personal_information_boundary.js": "b0270cc1ac620d332086725c1051bc2b15651bccfd0d24dfabe4788592f0f3ed",
+    "source/tools/sim/refit/test_personal_registration_guard.js": "d04399d4e5049dfc180d8c43c2e9a0ae9e2d7ed998a17fcb959b40c1e8c0e1cf",
+    "source/tools/sim/refit/test_human_decision_dataset.js": "ae6418bfaa7971fcf4bea0880f778c26510d1a4878d27e208b6082b908a81e0b",
+    "source/tools/sim/refit/test_personal_action_policy_fidelity.js": "dfb6f1f7e7752367f500f66739839240247ef44f836fac4e0008a659533ebfa9",
+    "source/tools/sim/refit/human_decision_dataset.js": "7ca90498f83b53820736dcf513f61b27823a7e635384c50934f91ac5ff7254a3",
+    "source/tools/sim/refit/personal_action_policy_evaluation.js": "85c79c57dbe36dcbb2a296502fcd1d970a7e006495ab7616a5ff6641efd771bf",
+    "source/tools/sim/refit/personal_witness_simulation.js": "cb50ff6c4b0c151350d5956cb01c7dc89b3595c2e44ad901cae329495d22600b",
+    "source/tools/sim/refit/personal_live_outcomes.js": "4e194d1865a9447ae7af851f151744c1ea1e03c46df35a99c0ae2b95f54e79be",
+    "source/tools/sim/refit/generate_personal_witness_v3.js": "aed540d2036de5a0cfb1e1024322d6ccfb4e6ae4d44d5603a4338e25563a5894",
+    "source/analysis/personal-bots/acceptance/EXECUTION_CONTRACT.txt": "f0f445635577877f122785c5504856fbba2756db113083ded7ac3de2a8ff017b",
+    "source/analysis/personal-bots/acceptance/AUDIT_BASELINE.json": "e22d59e8eb4c26bbe219ec257cc6963c6296fe6e7ea7fa9df589bfdd88c4f199",
+    "source/analysis/personal-bots/acceptance/REQUIREMENTS_RTM.before-hardening.md": "e2fbc3b5f6136faa831f77b20e611373ed90d791f8bd3dcbf71f3b8b4315c44a",
+    "source/analysis/personal-bots/acceptance/ACCEPTANCE_GATE.before-hardening.json": "2c889e535e1fb8326208ea38c6e2a9f7bbfac17d61a8a2ee61da136cfafb0543"
+  }
+}

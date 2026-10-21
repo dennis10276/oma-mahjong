@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "gitCommit": "0e8bcf8a6260c630a944ec86de9ca9b78a7159ff",
+  "immutableFiles": {
+    "source/analysis/personal-bots/personal-source-bound-causal-forecasts.jsonl": "66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20",
+    "source/analysis/personal-bots/personal-source-bound-causal-forecasts-v2.jsonl": "c8d26e48f83a1ca8fc3a5fdc31da2f921c6a1cb7173422d68adfa36d5ab3598c",
+    "source/analysis/personal-bots/personal-source-bound-causal-forecasts-v3.jsonl": "caef7101b8495ab0dfe6f287b6da136b2e48dda7decb0778bbbc1ee717d3b545",
+    "source/analysis/personal-bots/acceptance/EXECUTION_CONTRACT.txt": "f0f445635577877f122785c5504856fbba2756db113083ded7ac3de2a8ff017b",
+    "source/analysis/personal-bots/acceptance/REQUIREMENTS_RTM.before-hardening.md": "e2fbc3b5f6136faa831f77b20e611373ed90d791f8bd3dcbf71f3b8b4315c44a"
+  },
+  "experimentPrefix": {
+    "bytes": 6219,
+    "sha256": "75a1901b851ec7fe0811fdbcbe747c41272bfdf2756d7680655705e45089d375"
+  }
+}

@@ -1,0 +1,2745 @@
+{
+  "contractSha256": "f0f445635577877f122785c5504856fbba2756db113083ded7ac3de2a8ff017b",
+  "requirements": [
+    {
+      "id": "R00.001",
+      "section": 0,
+      "sourceLine": 1,
+      "requirement": "[/goal](slashCommand;goal) Build faithful personal player simulators whose performance on upcoming levels predicts each person’s successful attempt with at least80% prospective accuracy PER PERSON.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.002",
+      "section": 0,
+      "sourceLine": 3,
+      "requirement": "This is NOT primarily an attempt-count classification task.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.003",
+      "section": 0,
+      "sourceLine": 5,
+      "requirement": "The required pipeline is:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.004",
+      "section": 0,
+      "sourceLine": 7,
+      "requirement": "Earlier human actions",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.005",
+      "section": 0,
+      "sourceLine": 8,
+      "requirement": "→ learned personal playing policy and learning behavior",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.006",
+      "section": 0,
+      "sourceLine": 9,
+      "requirement": "→ that personal bot physically plays upcoming levels and retries",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.007",
+      "section": 0,
+      "sourceLine": 10,
+      "requirement": "→ multiple simulated campaigns produce a clear-attempt distribution",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.008",
+      "section": 0,
+      "sourceLine": 11,
+      "requirement": "→ that distribution produces the frozen prediction",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.009",
+      "section": 0,
+      "sourceLine": 12,
+      "requirement": "→ later real human play evaluates the prediction.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.010",
+      "section": 0,
+      "sourceLine": 14,
+      "requirement": "Do not bypass this pipeline with a separate count predictor, manual adjustments or person-specific attempt thresholds.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.011",
+      "section": 0,
+      "sourceLine": 16,
+      "requirement": "Work in agy-personal-bots on wip/agy-personal-bots.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.012",
+      "section": 0,
+      "sourceLine": 17,
+      "requirement": "Keep personal-bot-review read-only.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.013",
+      "section": 0,
+      "sourceLine": 19,
+      "requirement": "Read:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R00.014",
+      "section": 0,
+      "sourceLine": 20,
+      "requirement": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\source\\analysis\\personal-bots\\GEMINI_EEC825D_REVIEW.md",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S01",
+      "section": 1,
+      "sourceLine": 22,
+      "requirement": "1. EXECUTION CONTRACT",
+      "gate": "G0",
+      "dependsOn": [],
+      "children": [
+        "R01.001",
+        "R01.002",
+        "R01.003",
+        "R01.004",
+        "R01.005",
+        "R01.006",
+        "R01.007",
+        "R01.008",
+        "R01.009",
+        "R01.010",
+        "R01.011"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.001",
+      "section": 1,
+      "sourceLine": 24,
+      "requirement": "Continue implementing, fitting, testing and investigating until the acceptance gates below are genuinely satisfied.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.002",
+      "section": 1,
+      "sourceLine": 26,
+      "requirement": "Do not stop after:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.003",
+      "section": 1,
+      "sourceLine": 27,
+      "requirement": "- Discovering the honest baseline.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.004",
+      "section": 1,
+      "sourceLine": 28,
+      "requirement": "- Producing an audit or RTM.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.005",
+      "section": 1,
+      "sourceLine": 29,
+      "requirement": "- Fixing infrastructure.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.006",
+      "section": 1,
+      "sourceLine": 30,
+      "requirement": "- Passing unit tests.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.007",
+      "section": 1,
+      "sourceLine": 31,
+      "requirement": "- Registering future forecasts.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.008",
+      "section": 1,
+      "sourceLine": 32,
+      "requirement": "- Discovering that accuracy remains below80%.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.009",
+      "section": 1,
+      "sourceLine": 34,
+      "requirement": "An unmet result is the trigger for the next meaningful experiment, not a successful handoff.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.010",
+      "section": 1,
+      "sourceLine": 36,
+      "requirement": "Honesty takes precedence over completion pressure. Never fabricate evidence, rewrite forecasts or hide failures.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R01.011",
+      "section": 1,
+      "sourceLine": 38,
+      "requirement": "If future human outcomes genuinely become the only remaining dependency, preserve an explicitly incomplete checkpoint. First finish all meaningful engineering and offline development possible with available data. Do not idle indefinitely or launch redundant jobs merely to avoid stopping.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S02",
+      "section": 2,
+      "sourceLine": 40,
+      "requirement": "2. USE DEPENDENCY-DRIVEN RTMs, NOT SELF-DECLARED CHECKLISTS",
+      "gate": "G0",
+      "dependsOn": [],
+      "children": [
+        "R02.001",
+        "R02.002",
+        "R02.003",
+        "R02.004",
+        "R02.005",
+        "R02.006",
+        "R02.007",
+        "R02.008",
+        "R02.009",
+        "R02.010",
+        "R02.011",
+        "R02.012",
+        "R02.013",
+        "R02.014",
+        "R02.015",
+        "R02.016",
+        "R02.017",
+        "R02.018",
+        "R02.019",
+        "R02.020",
+        "R02.021",
+        "R02.022",
+        "R02.023",
+        "R02.024",
+        "R02.025",
+        "R02.026",
+        "R02.027",
+        "R02.028"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.001",
+      "section": 2,
+      "sourceLine": 42,
+      "requirement": "Before execution, create an atomic requirement row for every numbered requirement and sub-bullet.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.002",
+      "section": 2,
+      "sourceLine": 44,
+      "requirement": "Maintain:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.003",
+      "section": 2,
+      "sourceLine": 45,
+      "requirement": "- REQUIREMENTS_RTM.md: requirements, dependencies, implementation, acceptance commands and commit references.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.004",
+      "section": 2,
+      "sourceLine": 46,
+      "requirement": "- EXPERIMENTS.jsonl: append-only hypotheses, configurations, provenance, results and failed variants.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.005",
+      "section": 2,
+      "sourceLine": 47,
+      "requirement": "- ACCEPTANCE_GATE.json: machine-generated gate results.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.006",
+      "section": 2,
+      "sourceLine": 49,
+      "requirement": "Use these top-level gates:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.007",
+      "section": 2,
+      "sourceLine": 51,
+      "requirement": "G0: Reproducible evaluation and evidence.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.008",
+      "section": 2,
+      "sourceLine": 52,
+      "requirement": "G1: Correct production physics and human-information boundary.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.009",
+      "section": 2,
+      "sourceLine": 53,
+      "requirement": "G2: Reliable chronological human-action dataset.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.010",
+      "section": 2,
+      "sourceLine": 54,
+      "requirement": "G3: Demonstrated personal action-policy fidelity.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.011",
+      "section": 2,
+      "sourceLine": 55,
+      "requirement": "G4: Faithful personal retry learning and memory.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.012",
+      "section": 2,
+      "sourceLine": 56,
+      "requirement": "G5: Forecasts genuinely derived from multiple bot campaigns.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.013",
+      "section": 2,
+      "sourceLine": 57,
+      "requirement": "G6: Frozen prospective80% accuracy per person.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.014",
+      "section": 2,
+      "sourceLine": 59,
+      "requirement": "Dependencies:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.015",
+      "section": 2,
+      "sourceLine": 60,
+      "requirement": "- G3 depends on G1 and G2.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.016",
+      "section": 2,
+      "sourceLine": 61,
+      "requirement": "- G4 depends on G1 and G2.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.017",
+      "section": 2,
+      "sourceLine": 62,
+      "requirement": "- G5 depends on G3 and G4.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.018",
+      "section": 2,
+      "sourceLine": 63,
+      "requirement": "- G6 depends on all earlier gates.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.019",
+      "section": 2,
+      "sourceLine": 65,
+      "requirement": "RTM rules:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.020",
+      "section": 2,
+      "sourceLine": 66,
+      "requirement": "- A parent cannot complete while a dependency or child remains incomplete.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R02.021",
+      "section": 2,
+      "sourceLine": 67,
+      "requirement": "- “Code exists” is not “behavior verified.”",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.022",
+      "section": 2,
+      "sourceLine": 68,
+      "requirement": "- Tests of parameter presence or bounds do not prove personal fidelity.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.023",
+      "section": 2,
+      "sourceLine": 69,
+      "requirement": "- Documentation cannot close a behavioral or accuracy requirement.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.024",
+      "section": 2,
+      "sourceLine": 70,
+      "requirement": "- Regressions reopen affected requirements.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.025",
+      "section": 2,
+      "sourceLine": 71,
+      "requirement": "- Every verified row needs its exact implementation commit, acceptance command, actual output and source/input-bound evidence.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.026",
+      "section": 2,
+      "sourceLine": 72,
+      "requirement": "- Preserve failed experiments and previous candidate scores.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R02.027",
+      "section": 2,
+      "sourceLine": 73,
+      "requirement": "- Status changes must be justified by evidence, not by a desire to finish.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R02.028",
+      "section": 2,
+      "sourceLine": 75,
+      "requirement": "Implement an acceptance checker that exits nonzero until every mandatory gate passes. Synthetic test outcomes cannot satisfy G6.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S03",
+      "section": 3,
+      "sourceLine": 77,
+      "requirement": "3. G0–G1: REPAIR FOUNDATIONS FIRST, THEN CONTINUE IMMEDIATELY",
+      "gate": "G1",
+      "dependsOn": [],
+      "children": [
+        "R03.001",
+        "R03.002",
+        "R03.003",
+        "R03.004",
+        "R03.005",
+        "R03.006",
+        "R03.007",
+        "R03.008",
+        "R03.009",
+        "R03.010",
+        "R03.011",
+        "R03.012",
+        "R03.013",
+        "R03.014",
+        "R03.015",
+        "R03.016",
+        "R03.017",
+        "R03.018",
+        "R03.019",
+        "R03.020",
+        "R03.021"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.001",
+      "section": 3,
+      "sourceLine": 79,
+      "requirement": "Fix the independently reproduced issues:",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.002",
+      "section": 3,
+      "sourceLine": 80,
+      "requirement": "- Default policy/memory seeds must be independent of concealed tile contents.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.003",
+      "section": 3,
+      "sourceLine": 81,
+      "requirement": "- Apply forgetting in one persistent memory layer, not repeatedly inside search wrappers, beam nodes or guarded probes.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.004",
+      "section": 3,
+      "sourceLine": 82,
+      "requirement": "- Freeze prior-attempt knowledge before processing the current retry.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.005",
+      "section": 3,
+      "sourceLine": 83,
+      "requirement": "- Do not count current-attempt discoveries as earlier-attempt recall.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.006",
+      "section": 3,
+      "sourceLine": 84,
+      "requirement": "- Bind the actual forecast generator, full dependencies, calibration inputs and training provenance.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [
+        "forecast.sources"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.007",
+      "section": 3,
+      "sourceLine": 85,
+      "requirement": "- Preserve existing ledgers; do not overwrite a registered model version.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [
+        "history.integrity",
+        "registration.guard"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.008",
+      "section": 3,
+      "sourceLine": 87,
+      "requirement": "Use production physics for actual transitions:",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.009",
+      "section": 3,
+      "sourceLine": 88,
+      "requirement": "- Correct inspection/removal costs and clock deadlines.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "physics.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.010",
+      "section": 3,
+      "sourceLine": 89,
+      "requirement": "- Correct tray overflow, peek matching and victory conditions.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "physics.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.011",
+      "section": 3,
+      "sourceLine": 90,
+      "requirement": "- Correct keys, ice, locks, Joker and arrivals.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "physics.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.012",
+      "section": 3,
+      "sourceLine": 91,
+      "requirement": "- Retry only after an actual completed loss.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "simulation.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.013",
+      "section": 3,
+      "sourceLine": 92,
+      "requirement": "- Keep numerical caps and unsupported transitions unresolved.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.014",
+      "section": 3,
+      "sourceLine": 93,
+      "requirement": "- Return wonOn=null when no clear occurred.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [
+        "simulation.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R03.015",
+      "section": 3,
+      "sourceLine": 95,
+      "requirement": "The policy may use only information the person could see or legitimately remember:",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.016",
+      "section": 3,
+      "sourceLine": 96,
+      "requirement": "- Recognizable exposed edges must be handled through a validated observation process.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.017",
+      "section": 3,
+      "sourceLine": 97,
+      "requirement": "- Covered face-up pictures are not automatically known.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.018",
+      "section": 3,
+      "sourceLine": 98,
+      "requirement": "- Actual concealed pictures remain inside the trusted environment/renderer.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.019",
+      "section": 3,
+      "sourceLine": 99,
+      "requirement": "- Hypothetical search must not reveal the real hidden outcome.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.020",
+      "section": 3,
+      "sourceLine": 100,
+      "requirement": "- Identical public prefixes and seeds must produce identical policy/memory behavior despite changes to still-concealed pictures.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R03.021",
+      "section": 3,
+      "sourceLine": 102,
+      "requirement": "Preserve the full reference benchmark and controls, including known reopening and Dennis153 regressions. A strong reference is useful machinery—not the behavior every personal bot should imitate.",
+      "gate": "G1",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S04",
+      "section": 4,
+      "sourceLine": 104,
+      "requirement": "4. G2: BUILD VALID HUMAN DECISION EXAMPLES",
+      "gate": "G2",
+      "dependsOn": [],
+      "children": [
+        "R04.001",
+        "R04.002",
+        "R04.003",
+        "R04.004",
+        "R04.005",
+        "R04.006",
+        "R04.007",
+        "R04.008",
+        "R04.009",
+        "R04.010",
+        "R04.011"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R04.001",
+      "section": 4,
+      "sourceLine": 106,
+      "requirement": "Reconstruct each person’s actual physical actions through production-consistent replay.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R04.002",
+      "section": 4,
+      "sourceLine": 108,
+      "requirement": "For every training decision:",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R04.003",
+      "section": 4,
+      "sourceLine": 109,
+      "requirement": "- Use the public state and legitimate memory available BEFORE the human action.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R04.004",
+      "section": 4,
+      "sourceLine": 110,
+      "requirement": "- Keep the chosen action and subsequent reveal as targets/outcomes, not leaked input features.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R04.005",
+      "section": 4,
+      "sourceLine": 111,
+      "requirement": "- Distinguish actual inspections from repeated peek fields in state messages.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R04.006",
+      "section": 4,
+      "sourceLine": 112,
+      "requirement": "- Distinguish single tray additions, tray matches and board/peek matches.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R04.007",
+      "section": 4,
+      "sourceLine": 113,
+      "requirement": "- Bind exact board identity and local campaign identity.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R04.008",
+      "section": 4,
+      "sourceLine": 114,
+      "requirement": "- Separate later replays from retries within the same campaign.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R04.009",
+      "section": 4,
+      "sourceLine": 115,
+      "requirement": "- Track actual opening, completion and data-availability timestamps.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R04.010",
+      "section": 4,
+      "sourceLine": 116,
+      "requirement": "- Preserve ambiguous or unreconstructable events with explicit status rather than inventing certainty.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R04.011",
+      "section": 4,
+      "sourceLine": 118,
+      "requirement": "Training for a target may use only that person’s earlier available information.",
+      "gate": "G2",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S05",
+      "section": 5,
+      "sourceLine": 120,
+      "requirement": "5. G3: FIT HOW THE PERSON PLAYS",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "children": [
+        "R05.001",
+        "R05.002",
+        "R05.003",
+        "R05.004",
+        "R05.005",
+        "R05.006",
+        "R05.007",
+        "R05.008",
+        "R05.009",
+        "R05.010",
+        "R05.011",
+        "R05.012",
+        "R05.013",
+        "R05.014",
+        "R05.015",
+        "R05.016",
+        "R05.017",
+        "R05.018",
+        "R05.019",
+        "R05.020",
+        "R05.021",
+        "R05.022",
+        "R05.023",
+        "R05.024",
+        "R05.025",
+        "R05.026",
+        "R05.027",
+        "R05.028",
+        "R05.029"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.001",
+      "section": 5,
+      "sourceLine": 122,
+      "requirement": "The personal bot must choose actions like the person—not simply clear more levels.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.002",
+      "section": 5,
+      "sourceLine": 124,
+      "requirement": "Learn and test:",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.003",
+      "section": 5,
+      "sourceLine": 125,
+      "requirement": "- Exploration and information gathering.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.004",
+      "section": 5,
+      "sourceLine": 126,
+      "requirement": "- Planning depth and route commitment.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.005",
+      "section": 5,
+      "sourceLine": 127,
+      "requirement": "- Tray-space tolerance and recovery behavior.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [
+        "fidelity.tray_comparison"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R05.006",
+      "section": 5,
+      "sourceLine": 128,
+      "requirement": "- Clock digging, preparation and abandonment.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.007",
+      "section": 5,
+      "sourceLine": 129,
+      "requirement": "- Key/lock planning.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.008",
+      "section": 5,
+      "sourceLine": 130,
+      "requirement": "- Memory and uncertainty.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.009",
+      "section": 5,
+      "sourceLine": 131,
+      "requirement": "- Deliberate risks versus mistakes.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.010",
+      "section": 5,
+      "sourceLine": 132,
+      "requirement": "- Timing where production mechanics make it relevant.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.011",
+      "section": 5,
+      "sourceLine": 133,
+      "requirement": "- Strategy changes after difficult clears and throughout the dataset.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.012",
+      "section": 5,
+      "sourceLine": 135,
+      "requirement": "Do not equate:",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.013",
+      "section": 5,
+      "sourceLine": 136,
+      "requirement": "- Win rate with planning depth.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.014",
+      "section": 5,
+      "sourceLine": 137,
+      "requirement": "- Holding a tray tile for several recorded events with proven lookahead.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.015",
+      "section": 5,
+      "sourceLine": 138,
+      "requirement": "- Reopening a remembered tile with forgetting.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.016",
+      "section": 5,
+      "sourceLine": 139,
+      "requirement": "- Repeated tile overlap with retry learning.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.017",
+      "section": 5,
+      "sourceLine": 140,
+      "requirement": "- Tougher recent levels with reduced skill.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.018",
+      "section": 5,
+      "sourceLine": 142,
+      "requirement": "Use user descriptions as priors to investigate, not rigid rules or proof of calibration. For example, Dennis digs toward the clock but adjusts when tray pressure becomes excessive, generally prioritizes finishing, and recognizes identifiable exposed pictures.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.019",
+      "section": 5,
+      "sourceLine": 144,
+      "requirement": "Fit against actual action behavior. Evaluate on later chronological blocks using:",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.020",
+      "section": 5,
+      "sourceLine": 145,
+      "requirement": "- Chosen-action likelihood and ranking.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [
+        "fidelity.minimum",
+        "fidelity.acceptance_test"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R05.021",
+      "section": 5,
+      "sourceLine": 146,
+      "requirement": "- Calibration of action probabilities.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.022",
+      "section": 5,
+      "sourceLine": 147,
+      "requirement": "- Tray occupancy and risk distributions.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [
+        "fidelity.tray_comparison"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R05.023",
+      "section": 5,
+      "sourceLine": 148,
+      "requirement": "- Inspection/reinspection behavior.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.024",
+      "section": 5,
+      "sourceLine": 149,
+      "requirement": "- Clock/key preparation patterns.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.025",
+      "section": 5,
+      "sourceLine": 150,
+      "requirement": "- Route and retry changes.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.026",
+      "section": 5,
+      "sourceLine": 152,
+      "requirement": "Compare with a non-personal reference, simple baselines and alternative personal configurations.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.027",
+      "section": 5,
+      "sourceLine": 154,
+      "requirement": "Recent play matters especially, but compare recency weighting, rolling windows and change-point adaptation rather than assuming one fixed personality.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.028",
+      "section": 5,
+      "sourceLine": 156,
+      "requirement": "A better personal simulator may play LESS optimally than the reference. That is correct when it better reproduces the person.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R05.029",
+      "section": 5,
+      "sourceLine": 158,
+      "requirement": "If a parameter cannot be identified from the data, report uncertainty instead of inventing precision.",
+      "gate": "G3",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S06",
+      "section": 6,
+      "sourceLine": 160,
+      "requirement": "6. G4: SIMULATE PERSONAL RETRIES FAITHFULLY",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "children": [
+        "R06.001",
+        "R06.002",
+        "R06.003",
+        "R06.004",
+        "R06.005",
+        "R06.006",
+        "R06.007",
+        "R06.008",
+        "R06.009",
+        "R06.010",
+        "R06.011",
+        "R06.012",
+        "R06.013"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.001",
+      "section": 6,
+      "sourceLine": 162,
+      "requirement": "Each retry must arise from the bot’s own preceding simulated experience.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.002",
+      "section": 6,
+      "sourceLine": 164,
+      "requirement": "- Carry forward only legitimately observed information.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.003",
+      "section": 6,
+      "sourceLine": 165,
+      "requirement": "- Model persistent forgetting and reacquisition.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.004",
+      "section": 6,
+      "sourceLine": 166,
+      "requirement": "- Model avoidance of learned mistakes and changes of route.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.005",
+      "section": 6,
+      "sourceLine": 167,
+      "requirement": "- Distinguish remembering a picture from deciding to repeat an opening.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.006",
+      "section": 6,
+      "sourceLine": 168,
+      "requirement": "- Preserve exact-board/campaign boundaries.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.007",
+      "section": 6,
+      "sourceLine": 169,
+      "requirement": "- Do not feed later real human actions into a supposedly independent future campaign.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.008",
+      "section": 6,
+      "sourceLine": 170,
+      "requirement": "- Do not restart a failed search inside one reported attempt.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.009",
+      "section": 6,
+      "sourceLine": 171,
+      "requirement": "- Do not resample forgetting merely because search performs more computation.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.010",
+      "section": 6,
+      "sourceLine": 173,
+      "requirement": "Test actual causal effects in the component owning each parameter:",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.011",
+      "section": 6,
+      "sourceLine": 174,
+      "requirement": "- Planning controls in the planner.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.012",
+      "section": 6,
+      "sourceLine": 175,
+      "requirement": "- Memory controls in persistent memory.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R06.013",
+      "section": 6,
+      "sourceLine": 176,
+      "requirement": "- Retry-learning controls across completed attempts.",
+      "gate": "G4",
+      "dependsOn": [
+        "G1",
+        "G2"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S07",
+      "section": 7,
+      "sourceLine": 178,
+      "requirement": "7. G5: DERIVE FORECASTS FROM MULTIPLE SIMULATED CAMPAIGNS",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "children": [
+        "R07.001",
+        "R07.002",
+        "R07.003",
+        "R07.004",
+        "R07.005",
+        "R07.006",
+        "R07.007",
+        "R07.008",
+        "R07.009",
+        "R07.010",
+        "R07.011",
+        "R07.012",
+        "R07.013",
+        "R07.014",
+        "R07.015",
+        "R07.016",
+        "R07.017",
+        "R07.018",
+        "R07.019"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.001",
+      "section": 7,
+      "sourceLine": 180,
+      "requirement": "Run multiple plausible campaigns of the fitted personal bot on each upcoming level.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.002",
+      "section": 7,
+      "sourceLine": 182,
+      "requirement": "- Use declared reproducible seeds independent of hidden contents.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.003",
+      "section": 7,
+      "sourceLine": 183,
+      "requirement": "- Include realistic variability learned from behavior.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.004",
+      "section": 7,
+      "sourceLine": 184,
+      "requirement": "- Retain all campaign results—not only the best or most human-looking run.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R07.005",
+      "section": 7,
+      "sourceLine": 185,
+      "requirement": "- Record clears, actual losses, no-clear outcomes and numerical censoring separately.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.006",
+      "section": 7,
+      "sourceLine": 186,
+      "requirement": "- Check Monte Carlo stability before treating the distribution as reliable.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.007",
+      "section": 7,
+      "sourceLine": 187,
+      "requirement": "- Do not automatically translate computational censoring into a successful try8.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.008",
+      "section": 7,
+      "sourceLine": 189,
+      "requirement": "Produce:",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.009",
+      "section": 7,
+      "sourceLine": 190,
+      "requirement": "P(clear on try1), P(clear on try2), P(clear on try3), and subsequent/tail probabilities.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.010",
+      "section": 7,
+      "sourceLine": 192,
+      "requirement": "Derive the point forecast from that distribution using one declared scoring-aware rule, such as maximizing expected correctness under the agreed metric. Freeze the tie-breaking rule.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.011",
+      "section": 7,
+      "sourceLine": 194,
+      "requirement": "There must be an auditable path:",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.012",
+      "section": 7,
+      "sourceLine": 195,
+      "requirement": "forecast",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.013",
+      "section": 7,
+      "sourceLine": 196,
+      "requirement": "→ campaign distribution",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.014",
+      "section": 7,
+      "sourceLine": 197,
+      "requirement": "→ individual campaign results",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.015",
+      "section": 7,
+      "sourceLine": 198,
+      "requirement": "→ personal policy/version",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.016",
+      "section": 7,
+      "sourceLine": 199,
+      "requirement": "→ earlier training data.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.017",
+      "section": 7,
+      "sourceLine": 201,
+      "requirement": "No manually adjusted player predictions.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.018",
+      "section": 7,
+      "sourceLine": 202,
+      "requirement": "No independent count head that bypasses the playing bot.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R07.019",
+      "section": 7,
+      "sourceLine": 203,
+      "requirement": "No selecting a seed after seeing the human result.",
+      "gate": "G5",
+      "dependsOn": [
+        "G3",
+        "G4"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S08",
+      "section": 8,
+      "sourceLine": 205,
+      "requirement": "8. G6: THE GENUINE80% PROSPECTIVE GATE",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "children": [
+        "R08.001",
+        "R08.002",
+        "R08.003",
+        "R08.004",
+        "R08.005",
+        "R08.006",
+        "R08.007",
+        "R08.008",
+        "R08.009",
+        "R08.010",
+        "R08.011",
+        "R08.012",
+        "R08.013",
+        "R08.014",
+        "R08.015",
+        "R08.016",
+        "R08.017",
+        "R08.018",
+        "R08.019",
+        "R08.020"
+      ],
+      "checks": [],
+      "status": "FAIL"
+    },
+    {
+      "id": "R08.001",
+      "section": 8,
+      "sourceLine": 207,
+      "requirement": "Scoring:",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.002",
+      "section": 8,
+      "sourceLine": 208,
+      "requirement": "- Actual tries1–3: exact.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.003",
+      "section": 8,
+      "sourceLine": 209,
+      "requirement": "- Actual tries4–5: within±1.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.004",
+      "section": 8,
+      "sourceLine": 210,
+      "requirement": "- Actual tries6+: within±2.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.005",
+      "section": 8,
+      "sourceLine": 211,
+      "requirement": "- Predicted and actual both≥8: also correct.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.006",
+      "section": 8,
+      "sourceLine": 212,
+      "requirement": "- Replays restart at local try1 and do not count toward primary new-level accuracy.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.007",
+      "section": 8,
+      "sourceLine": 213,
+      "requirement": "- Pending games are not completed successes.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
+    },
+    {
+      "id": "R08.008",
+      "section": 8,
+      "sourceLine": 215,
+      "requirement": "For each genuinely new candidate:",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.009",
+      "section": 8,
+      "sourceLine": 216,
+      "requirement": "- Preregister the model, adaptation procedure and evaluation cohort before its games open.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.010",
+      "section": 8,
+      "sourceLine": 217,
+      "requirement": "- Use the first20 consecutive eligible new-level games per person in that declared cohort.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.011",
+      "section": 8,
+      "sourceLine": 218,
+      "requirement": "- Require at least16/20 correct for EACH person.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
+    },
+    {
+      "id": "R08.012",
+      "section": 8,
+      "sourceLine": 219,
+      "requirement": "- Require legitimate before-opening forecasts for all20.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
+    },
+    {
+      "id": "R08.013",
+      "section": 8,
+      "sourceLine": 220,
+      "requirement": "- Keep missing, race-opened, pending and difficult cases visible.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.014",
+      "section": 8,
+      "sourceLine": 221,
+      "requirement": "- Never alter an already registered candidate’s cohort or predictions.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [
+        "history.integrity",
+        "registration.guard"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "R08.015",
+      "section": 8,
+      "sourceLine": 222,
+      "requirement": "- A genuinely improved later candidate may have a newly preregistered future evaluation, but retain every previous candidate and failure. Do not report only the eventual winner.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.016",
+      "section": 8,
+      "sourceLine": 223,
+      "requirement": "- Report confidence intervals, absolute errors and the complete model-selection history.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.017",
+      "section": 8,
+      "sourceLine": 225,
+      "requirement": "Online personal adaptation is allowed only through a procedure declared beforehand, using earlier available data.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.018",
+      "section": 8,
+      "sourceLine": 227,
+      "requirement": "Historical action fidelity tests whether the simulator is personal.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.019",
+      "section": 8,
+      "sourceLine": 228,
+      "requirement": "Prospective attempt accuracy tests whether that fidelity transfers.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R08.020",
+      "section": 8,
+      "sourceLine": 229,
+      "requirement": "Both are required; neither substitutes for the other.",
+      "gate": "G6",
+      "dependsOn": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S09",
+      "section": 9,
+      "sourceLine": 231,
+      "requirement": "9. CUDA IS OPTIONAL",
+      "gate": "G0",
+      "dependsOn": [],
+      "children": [
+        "R09.001",
+        "R09.002",
+        "R09.003",
+        "R09.004",
+        "R09.005",
+        "R09.006",
+        "R09.007",
+        "R09.008"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.001",
+      "section": 9,
+      "sourceLine": 233,
+      "requirement": "You may use the RTX3070 when useful for fitting, batched scoring or valid simulation work.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.002",
+      "section": 9,
+      "sourceLine": 235,
+      "requirement": "- Profile the actual bottleneck.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.003",
+      "section": 9,
+      "sourceLine": 236,
+      "requirement": "- Preserve production rules and the public-information boundary.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.004",
+      "section": 9,
+      "sourceLine": 237,
+      "requirement": "- Provide CPU/CUDA parity tests and CPU fallback.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.005",
+      "section": 9,
+      "sourceLine": 238,
+      "requirement": "- Measure end-to-end speed including transfers and startup.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.006",
+      "section": 9,
+      "sourceLine": 239,
+      "requirement": "- Keep CPU when it is faster.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.007",
+      "section": 9,
+      "sourceLine": 240,
+      "requirement": "- Do not substitute a simplified GPU game for the real one.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R09.008",
+      "section": 9,
+      "sourceLine": 241,
+      "requirement": "- Account for owned jobs and avoid redundant experiments.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "S10",
+      "section": 10,
+      "sourceLine": 243,
+      "requirement": "10. CONTINUATION AND HANDOFF",
+      "gate": "G0",
+      "dependsOn": [],
+      "children": [
+        "R10.001",
+        "R10.002",
+        "R10.003",
+        "R10.004",
+        "R10.005",
+        "R10.006",
+        "R10.007",
+        "R10.008",
+        "R10.009",
+        "R10.010"
+      ],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.001",
+      "section": 10,
+      "sourceLine": 245,
+      "requirement": "After every experiment:",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.002",
+      "section": 10,
+      "sourceLine": 246,
+      "requirement": "- Identify where the bot diverged from the person.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.003",
+      "section": 10,
+      "sourceLine": 247,
+      "requirement": "- Separate observation, planning, memory, retry-learning and randomness errors.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.004",
+      "section": 10,
+      "sourceLine": 248,
+      "requirement": "- Fix bugs before interpreting them as human behavior.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.005",
+      "section": 10,
+      "sourceLine": 249,
+      "requirement": "- Tune promising mechanisms and combinations before rejecting them.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.006",
+      "section": 10,
+      "sourceLine": 250,
+      "requirement": "- Update the RTM and append experiment evidence.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.007",
+      "section": 10,
+      "sourceLine": 251,
+      "requirement": "- Begin the next meaningful experiment without waiting for another user message.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.008",
+      "section": 10,
+      "sourceLine": 253,
+      "requirement": "If delegating, give every subagent this entire prompt verbatim, then append its specific assignment. Do not replace these requirements with a summary.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.009",
+      "section": 10,
+      "sourceLine": 255,
+      "requirement": "Declare successful completion only when the automated checker verifies G0–G6, including real80% prospective accuracy for every person.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "R10.010",
+      "section": 10,
+      "sourceLine": 257,
+      "requirement": "Otherwise report an explicitly incomplete, reproducible checkpoint with exact remaining work or external evidence—not a “complete” handoff.",
+      "gate": "G0",
+      "dependsOn": [],
+      "checks": [],
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "AUDIT.history.integrity",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: history.integrity",
+      "gate": "G0",
+      "checks": [
+        "history.integrity"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.checker.adversarial_tests",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: checker.adversarial_tests",
+      "gate": "G0",
+      "checks": [
+        "checker.adversarial_tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.physics.tests",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: physics.tests",
+      "gate": "G1",
+      "checks": [
+        "physics.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.python.suite",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: python.suite",
+      "gate": "G0",
+      "checks": [
+        "python.suite"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.information.boundary_regressions",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: information.boundary_regressions",
+      "gate": "G1",
+      "checks": [
+        "information.boundary_regressions"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.memory.tests",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: memory.tests",
+      "gate": "G4",
+      "checks": [
+        "memory.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.simulation.tests",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: simulation.tests",
+      "gate": "G1",
+      "checks": [
+        "simulation.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.search.tests",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: search.tests",
+      "gate": "G1",
+      "checks": [
+        "search.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.calibration.tests",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: calibration.tests",
+      "gate": "G2",
+      "checks": [
+        "calibration.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.dataset.tests",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: dataset.tests",
+      "gate": "G2",
+      "checks": [
+        "dataset.tests"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.registration.guard",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: registration.guard",
+      "gate": "G5",
+      "checks": [
+        "registration.guard"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.fidelity.acceptance_test",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: fidelity.acceptance_test",
+      "gate": "G3",
+      "checks": [
+        "fidelity.acceptance_test"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.fidelity.minimum",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: fidelity.minimum",
+      "gate": "G3",
+      "checks": [
+        "fidelity.minimum"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.fidelity.tray_comparison",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: fidelity.tray_comparison",
+      "gate": "G3",
+      "checks": [
+        "fidelity.tray_comparison"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.forecast.sources",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: forecast.sources",
+      "gate": "G5",
+      "checks": [
+        "forecast.sources"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.forecast.campaigns",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: forecast.campaigns",
+      "gate": "G5",
+      "checks": [
+        "forecast.campaigns"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.forecast.stability",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: forecast.stability",
+      "gate": "G5",
+      "checks": [
+        "forecast.stability"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "AUDIT.prospective.target",
+      "section": "audit",
+      "sourceLine": null,
+      "requirement": "Independent evidence check: prospective.target",
+      "gate": "G6",
+      "checks": [
+        "prospective.target"
+      ],
+      "status": "FAIL"
+    }
+  ]
+}

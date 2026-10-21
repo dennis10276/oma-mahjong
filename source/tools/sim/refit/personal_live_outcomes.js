@@ -9,7 +9,7 @@ const { PIDS } = require('./mimic_games.js');
 const root = path.resolve(__dirname, '../../..');
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 
-function main(argument) {
+function buildReport(argument) {
   assert(argument, 'Supply a separate read-only live opening snapshot');
   const folder = path.resolve(argument), manifestBytes = fs.readFileSync(path.join(folder, 'manifest.json')), manifest = JSON.parse(manifestBytes);
   assert(folder.startsWith(path.join(root, 'analysis/archive/personal-bots/live-openings-')));
@@ -42,8 +42,14 @@ function main(argument) {
     note: 'Separate outcome export; never replaces frozen fitting raw inputs. Exact previous boards or verified fixed-table boards only. '
       + 'Unresolved boards and pending campaigns remain explicit, not discarded successes. Actual start timestamps determine forecast eligibility. '
       + 'Replay counts are episode-relative; all original numeric forecasts and misses remain unchanged.' };
-  fs.writeFileSync(path.join(folder, 'personal-outcomes.json'), JSON.stringify(report));
-  console.log(JSON.stringify({ folder, episodes: episodes.length, unresolvedBoards: report.unresolvedBoards }));
+  return report;
 }
 
+function main(argument) {
+  const report = buildReport(argument), folder = path.resolve(argument);
+  fs.writeFileSync(path.join(folder, 'personal-outcomes.json'), JSON.stringify(report));
+  console.log(JSON.stringify({ folder, episodes: report.episodes.length, unresolvedBoards: report.unresolvedBoards }));
+}
+
+module.exports = { buildReport };
 if (require.main === module) main(process.argv[2]);

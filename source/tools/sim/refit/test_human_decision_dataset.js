@@ -40,3 +40,34 @@ for (const name of NAMES) {
 }
 
 console.log('PASS human decision dataset: pre-action state integrity, action classification, campaign binding, and chronological ordering verified');
+
+// A replay followed by a retry must never rejoin the earlier campaign.
+// Fixtures are injected only in this test process; they are not human evidence.
+const mimicFile = require.resolve('./mimic_games.js');
+const datasetFile = require.resolve('./human_decision_dataset.js');
+const actualGamesOf = require.cache[mimicFile].exports.gamesOf;
+const fixture = {
+  tiles: [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }],
+  nb: { above: [[], []], left: [[], []], right: [[], []] },
+  faces: [1, 1], down: [0, 0], rules: null, clock: null
+};
+try {
+  require.cache[mimicFile].exports.gamesOf = () => [
+    { key: 'synthetic', aid: 'old', at: 1, t: 1, availableAt: 1, won: true, take: [0], g: fixture },
+    { key: 'synthetic', aid: 'replay', at: 1, t: 2, availableAt: 2, won: false, take: [0], g: fixture },
+    { key: 'synthetic', aid: 'retry', at: 2, t: 3, availableAt: 3, won: false, take: [0, 99], g: fixture }
+  ];
+  delete require.cache[datasetFile];
+  const result = require(datasetFile).reconstructHumanDecisions('Gerda');
+  const [old, replay, retry] = result.decisions;
+  assert.notEqual(old.campaignId, replay.campaignId);
+  assert.equal(retry.campaignId, replay.campaignId);
+  assert.equal(retry.attempt, 2);
+  assert.equal(result.unresolvedEvents.length, 1);
+  assert.equal(result.unresolvedEvents[0].status, 'unresolved');
+  assert.equal(result.unresolvedEvents[0].actionIndex, 99);
+  console.log('PASS: replay campaign reset, local retry numbering, unresolved event retention');
+} finally {
+  require.cache[mimicFile].exports.gamesOf = actualGamesOf;
+  delete require.cache[datasetFile];
+}

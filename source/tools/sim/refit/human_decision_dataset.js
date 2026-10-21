@@ -21,6 +21,7 @@ function reconstructHumanDecisions(playerName, cutoffTime = Infinity) {
     .sort((a, b) => a.t - b.t);
 
   const decisions = [];
+  const unresolvedEvents = [];
   let unreconstructableCount = 0;
 
   // Track campaigns: consecutive attempts on the same board
@@ -34,13 +35,14 @@ function reconstructHumanDecisions(playerName, cutoffTime = Infinity) {
       || prevInBoard[prevInBoard.length - 1].won
       || (game.t - prevInBoard[prevInBoard.length - 1].t > 4 * 3600 * 1000);
 
+    const activeCampaign = isNewCampaign ? [] : prevInBoard;
     const campaignId = isNewCampaign
       ? `camp_${game.key}_${game.t}`
-      : prevInBoard[0].campaignId;
+      : activeCampaign[activeCampaign.length - 1].campaignId;
 
-    const attemptNumber = isNewCampaign ? 1 : prevInBoard.length + 1;
-    prevInBoard.push({ ...game, campaignId, attemptNumber });
-    boardCampaigns.set(bId, prevInBoard);
+    const attemptNumber = activeCampaign.length + 1;
+    activeCampaign.push({ ...game, campaignId, attemptNumber });
+    boardCampaigns.set(bId, activeCampaign);
 
     // Reconstruct through production physical session
     let session;
@@ -48,6 +50,7 @@ function reconstructHumanDecisions(playerName, cutoffTime = Infinity) {
       session = createSession(game.g);
     } catch (e) {
       unreconstructableCount++;
+      unresolvedEvents.push({ aid: game.aid, campaignId, stage: 'createSession', status: 'unresolved', reason: e.message });
       continue;
     }
 
@@ -77,6 +80,9 @@ function reconstructHumanDecisions(playerName, cutoffTime = Infinity) {
       // Check if action is currently legal in production frame
       if (!frame.legalTiles || !frame.legalTiles.includes(actionIndex)) {
         unreconstructableCount++;
+        unresolvedEvents.push({ aid: game.aid, campaignId, eventIndex: s, actionIndex,
+          status: 'unresolved', reason: 'Recorded action is not legal in the production replay',
+          remainingRecordedEvents: game.take.length - s });
         break;
       }
 
@@ -129,6 +135,10 @@ function reconstructHumanDecisions(playerName, cutoffTime = Infinity) {
         if (frame.type === 'productionPhysicalEnd-v1') break;
       } catch (e) {
         unreconstructableCount++;
+        const invalid = decisions.pop();
+        unresolvedEvents.push({ aid: game.aid, campaignId, eventIndex: s, actionIndex,
+          status: 'unresolved', reason: e.message, attemptedDecision: invalid,
+          remainingRecordedEvents: game.take.length - s });
         break;
       }
     }
@@ -139,6 +149,7 @@ function reconstructHumanDecisions(playerName, cutoffTime = Infinity) {
     gamesProcessed: games.length,
     decisionCount: decisions.length,
     unreconstructableCount,
+    unresolvedEvents,
     decisions
   };
 }

@@ -212,6 +212,9 @@ if (!isMainThread && workerData?.isWorker) {
 }
 
 async function main() {
+  // Refuse before calibration or worker launch. Registered candidates are evidence,
+  // including their failures; improvements require a distinct candidate/version.
+  assertUnregistered(V3_PATH);
   const { calibrateAll } = require('./personal_behavioral_calibration.js');
   console.log('Calibrating all player parameters from historical recordings...');
   const calibration = calibrateAll(CALIBRATION_PATH);
@@ -280,8 +283,17 @@ async function main() {
     note: 'Model v3 forecasts derived genuinely from multiple simulated campaigns of personal behavioral bots playing through production Hard. Forgetting applied in one persistent layer; RNG seeds independent of concealed pictures; point forecasts derived from campaign attempt distributions via Bayes expected scoring maximization under the agreed metric. All sources, generator, calibration inputs and replay files bound in source closure.'
   };
 
-  fs.writeFileSync(V3_PATH, JSON.stringify(v3Anchor) + '\n', { flag: 'w', encoding: 'utf8' });
+  registerNewLedger(V3_PATH, v3Anchor);
   console.log(`SUCCESS: Wrote v3 ledger to ${V3_PATH} with ${orderedForecasts.length} forecasts.`);
 }
 
-module.exports = { computeSourceClosureHashes, derivePointForecast, score };
+function assertUnregistered(filename) {
+  if (fs.existsSync(filename)) throw new Error(`Refusing to overwrite registered candidate: ${filename}. Use a new model version and future cohort.`);
+}
+
+function registerNewLedger(filename, anchor) {
+  // Exclusive creation also closes the race between the early check and writing.
+  fs.writeFileSync(filename, JSON.stringify(anchor) + '\n', { flag: 'wx', encoding: 'utf8' });
+}
+
+module.exports = { computeSourceClosureHashes, derivePointForecast, score, assertUnregistered, registerNewLedger };
