@@ -1,0 +1,14 @@
+'use strict';
+const assert = require('assert/strict');
+const { roundedContains } = require('./public_tile_pixels.js');
+const bounds = { left: 0, right: 100, top: 0, bottom: 124 };
+assert(roundedContains(50, 62, bounds, 1));
+assert(!roundedContains(0, 0, bounds));
+assert(roundedContains(50, .5, bounds, -1));
+assert(!roundedContains(50, .5, bounds, 1));
+assert(roundedContains(99, 62, bounds));
+assert(!roundedContains(101.5, 62, bounds, -1));
+assert(roundedContains(100.5, 62, bounds, -1));
+assert(roundedContains(2, 62, bounds, 1));
+assert(!roundedContains(2, 2, bounds, 1));
+console.log('PASS rounded tile masks retain flat exposed edges, exclude transparent corners and apply conservative antialiasing margins without symbol identity');

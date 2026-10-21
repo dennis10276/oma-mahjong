@@ -1,0 +1,53 @@
+'use strict';
+const assert = require('assert/strict'), Layouts = require('../../../www/layouts.js');
+const { search, REFERENCE_PARAMETERS } = require('./public_witness_search.js');
+const { reference } = require('./public_witness_reference.js');
+const { createSession } = require('./production_physical_session.js');
+const { advance, legal } = require('./known_tray_plan.js');
+const tiles = [0, 1, 2, 3].map(index => ({ x: index * 8, y: 0, z: 0 }));
+const privateGame = { tiles, nb: Layouts.neighbors(tiles), faces: [1, 1, 2, 2], down: [1, 0, 1, 0], clock: { i: 0, n: 1 }, rules: null };
+const game = { tiles, nb: privateGame.nb, clock: privateGame.clock, rules: null };
+Object.defineProperty(game, 'faces', { get() { throw Error('Private picture access'); } });
+const session = createSession(privateGame); session.tap(0); session.tap(2);
+const state = { ...session.view().state, pictures: privateGame.faces.slice() };
+const actions = session.view().legalTiles.map(index => ({ index }));
+const plan = search(game, state, actions, REFERENCE_PARAMETERS);
+assert(plan.knownWin && !plan.knownDead && plan.index === 0);
+for (const index of plan.path) session.tap(index);
+assert(session.view().win);
+const towerTiles = [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 3 }, { x: 8, y: 0, z: 2 }, { x: 8, y: 0, z: 1 }, { x: 8, y: 0, z: 0 }];
+const tower = { tiles: towerTiles, nb: Layouts.neighbors(towerTiles), rules: null, clock: null };
+const towerState = { pictures: [1, 1, 10, 20, 30], down: [1, 0, 0, 0, 0], alive: [1, 1, 1, 1, 1], tray: [10, 20, 30], moves: 0, openPeek: -1, relieved: false, arriving: [] };
+const towerPlan = search(tower, towerState, legal(tower, towerState).free.map(index => ({ index })), REFERENCE_PARAMETERS);
+assert(towerPlan.knownWin); assert.deepEqual(towerPlan.path, [0, 1, 2, 3, 4]);
+let position = towerState;
+for (const index of towerPlan.path) { const moved = advance(tower, position, index); assert(!moved.lost && !moved.uncertain); position = moved.state; }
+assert(!position.alive.some(Boolean) && !position.tray.length);
+const uncertain = { ...state, pictures: [1, 1, 2, null] };
+assert.deepEqual(search(game, uncertain, actions), search(game, uncertain, actions.map(action => ({ ...action, inspect: false }))));
+const noClock = { ...game, clock: null };
+let calls = 0;
+const injected = (game, snapshot, available) => {
+  calls++;
+  return { index: available[0].index, path: available.map(action => action.index), knownWin: false,
+    safeClockExit: false, clockRoom: 0, knownProgress: 2, information: false, boundary: false,
+    knownDead: false, nodes: 1, prunedDeadSuccessors: 0 };
+};
+const initial = { ...state, openPeek: -1, down: [0, 0, 0, 0], pictures: [1, 1, null, null] };
+const route = reference(undefined, injected);
+route.physicalTrayPlanning(noClock, initial, actions); route.acknowledgeTile(0);
+const next = advance(noClock, initial, 0).state;
+const available = legal(noClock, next).free.map(index => ({ index }));
+route.physicalTrayPlanning(noClock, { ...next, pictures: [null, 1, 2, null] }, available);
+assert.equal(calls, 1); assert.equal(route.stats().retainedSteps, 1);
+route.physicalTrayPlanning(noClock, { ...next, pictures: [null, null, 2, null] }, available);
+assert.equal(calls, 2);
+route.physicalTrayPlanning(noClock, { ...next, pictures: [null, 3, 2, null] }, available);
+assert.equal(calls, 3);
+route.physicalTrayPlanning(noClock, { ...next, pictures: [null, 1, 2, null], down: [0, 1, 0, 0] }, available);
+assert.equal(calls, 4);
+const deadState = { ...state, clock: null, pictures: [1, 2, 3, 4], down: [1, 1, 1, 1], tray: [5, 6], openPeek: 0 };
+const bounded = search(noClock, deadState, actions, { nodes: 1 });
+assert(!bounded.knownDead && bounded.deadCertificate === null && bounded.nodes <= 1);
+assert(bounded.heuristicExcludedRoots.length > 0);
+console.log('PASS strengthened reference fixes physical clock reopening and board twins, derives actions only from public state, retains newly informed routes, invalidates lost knowledge, and does not prove death from heuristic exclusions');

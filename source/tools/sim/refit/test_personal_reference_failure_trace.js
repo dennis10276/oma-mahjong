@@ -1,0 +1,16 @@
+'use strict';
+const assert = require('assert/strict'), Layouts = require('../../../www/layouts.js');
+const { publicForensics } = require('./personal_reference_failure_trace.js');
+const tiles = Array.from({ length: 4 }, (unused, index) => ({ x: index * 8, y: 0, z: 0 }));
+const geometry = { tiles, nb: Layouts.neighbors(tiles), rules: null, clock: null };
+Object.defineProperty(geometry, 'faces', { get() { throw Error('Concealed picture read'); } });
+const state = { alive: [1, 1, 1, 1], down: [0, 0, 0, 0], pictures: [1, 2, 3, 4], tray: [1, 2, 3], moves: 0, openPeek: -1, relieved: false, arriving: [] };
+const avoidable = publicForensics(geometry, state, tiles.map((unused, index) => ({ index })), 3);
+assert(avoidable.immediatelyAvoidableKnownLoss); assert.deepEqual(avoidable.knownSafeRemovalIndices, [0, 1, 2]);
+const trapped = publicForensics(geometry, { ...state, alive: [0, 0, 0, 1], pictures: [null, null, null, 4] }, [{ index: 3 }], 3);
+assert(trapped.publicDeadEnd.knownDead); assert(!trapped.immediatelyAvoidableKnownLoss);
+const unknown = publicForensics(geometry, { ...state, down: [0, 0, 0, 1], pictures: [1, 2, 3, null] }, [{ index: 3 }], 3);
+assert(unknown.informationBoundary); assert(!unknown.publicDeadEnd.knownDead);
+const risk = publicForensics(geometry, { ...state, tray: [1, 2] }, tiles.map((unused, index) => ({ index })), 3);
+assert(risk.thirdSlotCommitment); assert.equal(risk.chosen.resultingTray.length, 3);
+console.log('PASS reference forensics distinguishes known avoidable loss, public dead-end proof, unresolved information and third-slot risk without private deck access');

@@ -1,0 +1,66 @@
+Command: node source/tests/run.js reference_bots
+Staged-only snapshot tree: d5864db10229831f8e957154bde7994f298c97e4
+The snapshot excludes all unstaged personal experiments and ledgers.
+
+PASS observed retry memory retains only earlier supplied observations, carries exact-board provenance, forgets persistently and reproducibly, preserves current recognition, and never restarts wins or numerical caps as losses
+✓ ok    reference bots: personal_observed_memory  (0.0s)
+PASS independent pixel replay checks every public candidate with direct arithmetic, preserves ambiguity and rejects changed alphabets, masks or noise bounds without private truth
+✓ ok    reference bots: personal_pixel_capture_verify  (0.0s)
+PASS explicit prefix status, contiguous committed-frame hashes, original input binding, complete PNG/bank binding, in-flight exclusion and completed-run verification
+✓ ok    reference bots: personal_pixel_opaque_inset_audit  (0.0s)
+PASS independent screenshot replay uses the production256-entry uniform public prior, preserves the37-symbol support and rejects the former truncated prior
+✓ ok    reference bots: personal_pixel_reference_verify  (0.0s)
+PASS physical control comparison preserves every tap, witness path, memory state, physical frame, raw audit and terminal outcome without claiming plan-report or pixel equality
+✓ ok    reference bots: personal_pixel_session_compare  (0.0s)
+PASS public picture priors require no actual hidden faces, normalize only legal symbols and count public waiting/odd-known targets with wildcard semantics
+✓ ok    reference bots: personal_public_picture_prior  (0.0s)
+PASS reference forensics distinguishes known avoidable loss, public dead-end proof, unresolved information and third-slot risk without private deck access
+✓ ok    reference bots: personal_reference_failure_trace  (0.0s)
+PASS stepwise production sessions preserve complete traces/results for inspections, twins, clocks, jokers, arrival timing and relief; expose no hidden pictures/kinds/scores; retain caps as censored and forbid free restart
+✓ ok    reference bots: production_physical_session  (0.0s)
+PASS production scene uses actual obstacle code: keys unlock, thick ice thaws twice, legal taps and clock agree at every physical frame, unvalidated relief stays refused
+✓ ok    reference bots: production_scene_renderer  (0.9s)
+PASS batch factory pins verified production code, removes per-session source reads, preserves full traces, rejects changed-source validation and keeps the standard constructor guard
+✓ ok    reference bots: production_session_factory  (0.0s)
+PASS exact declared-belief policies use production actions, solve inspection cycles, certify rational optimal values independently, obey clock costs, reject hidden/Joker/partial-edge inputs and preserve numerical limits as unresolved
+✓ ok    reference bots: public_belief_exact  (0.8s)
+PASS optional complete-known-continuation pruning rejects two frozen publicly doomed commitments while preserving unknown alternatives and exact disabled behavior without actual hidden pictures
+✓ ok    reference bots: public_continuation_pruning  (0.0s)
+PASS public dead-end proofs exhaust known inspection graphs, reject unknown/bounded/recoverable states and agree with independent full-information recovery graphs
+✓ ok    reference bots: public_dead_end  (0.0s)
+PASS optional dead-end acknowledgement has exact disabled delegation, updates the actual personal choice once and ends proven dead states through real production taps
+✓ ok    reference bots: public_dead_end_choice  (0.0s)
+PASS optional information escape preserves known wins and clock priorities, rejects hypothetical suffixes after unknowns, shares the original search budget and prefers a verified lower-pressure public frontier over a crowded commitment
+✓ ok    reference bots: public_information_escape  (0.1s)
+PASS known-continuation proofs include safe removals, preserve initial root restrictions only on the first tap, reopen returned states fully, and never turn unknowns or bounds into losses
+✓ ok    reference bots: public_known_continuation  (0.0s)
+PASS observed-value opening capture never reads hidden faces, preserves recognized mistakes, retains ambiguous beliefs, marks a distinct observer version and passes37 filler controls
+✓ ok    reference bots: public_observed_opening  (0.0s)
+PASS public pixel beliefs condition only on observed symbol classes, keep uncertainty and mismatches explicit, and distinguish symbol compatibility from physical guarantees
+✓ ok    reference bots: public_pixel_belief  (0.0s)
+PASS screenshot-observation bridge derives knowledge only from validated singleton public pixel classes and preserves unknown/dead tiles without private metadata
+✓ ok    reference bots: public_pixel_capture  (0.0s)
+PASS bounded pixel support retains every within-one-channel candidate, rejects larger unsupported noise and never reads or hashes unobserved pixels
+✓ ok    reference bots: public_pixel_match  (0.0s)
+PASS picture memory is created only by screenshot singletons, survives closing a peek, distinguishes recall from new recognition, skips hidden backs and rejects seeds/restarts
+✓ ok    reference bots: public_pixel_memory  (4.8s)
+PASS public parallel templates partition the complete alphabet, retain public context/order, restore every worker on failure and reject invalid inputs
+✓ ok    reference bots: public_pixel_parallel  (0.0s)
+PASS pixel recognition keeps indistinguishable symbols ambiguous, retains useful partial information and never hashes hidden pixels into dictionary identity
+✓ ok    reference bots: public_pixel_partition  (0.0s)
+PASS sanitized scene masks exclude antialiased target borders with a fixed1.5-pixel opacity inset, use only public geometry/paint order, exclude foreground/depth and retain exposed edge pixels without private identities
+✓ ok    reference bots: public_pixel_scene  (0.0s)
+PASS rounded tile masks retain flat exposed edges, exclude transparent corners and apply conservative antialiasing margins without symbol identity
+✓ ok    reference bots: public_tile_pixels  (0.0s)
+PASS witness memoization keys complete public state, rules and budgets, never reads private faces, preserves reports and prevents mutation/invalid-state cache hits
+✓ ok    reference bots: public_witness_cache  (0.0s)
+PASS strengthened reference fixes physical clock reopening and board twins, derives actions only from public state, retains newly informed routes, invalidates lost knowledge, and does not prove death from heuristic exclusions
+✓ ok    reference bots: public_witness_integration  (0.0s)
+PASS witness reference executes physical taps through production, retains only actual selected routes, preserves public tags and resets planner state per canonical attempt factory
+✓ ok    reference bots: public_witness_reference  (0.0s)
+PASS reopen guard requires constructive witnesses, shares the node budget, keeps existing wins, and refuses death certificates from unexamined heuristic exclusions
+✓ ok    reference bots: public_witness_reopen_guard  (0.0s)
+PASS witness search uses public pictures only, constructs separate physical clock-safe taps, stops at unknown reveals, retains bounds and respects actual root restrictions
+✓ ok    reference bots: public_witness_search  (0.1s)
+
+30/30 tests passed in 7s (offline; add --online for the real-database tests)

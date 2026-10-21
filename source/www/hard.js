@@ -234,16 +234,21 @@ const Hard = (() => {
     const known = new Uint8Array(n), freeNow = new Uint8Array(n), cnt = new Int16Array(256);
     // smart guessing (p.reveal): the pictures it has not seen yet, counted the way a person counts
     // what is still missing (how many of each, never where they are)
-    const unseen = new Int16Array(256); let unseenN = 0;
+    const publicPicturePrior = p.publicPicturePrior === undefined ? null : p.publicPicturePrior;
+    if (publicPicturePrior && (!p.physicalFlips || !Array.isArray(publicPicturePrior) || publicPicturePrior.length !== 256
+      || publicPicturePrior.some((value, picture) => !Number.isFinite(value) || value < 0 || value > 0 && !(picture < 36 || picture === 101))
+      || Math.abs(publicPicturePrior.reduce((sum, value) => sum + value, 0) - 1) > 1e-12)) throw new Error('Invalid public picture prior');
+    const priorPictures = publicPicturePrior ? Array.from({ length: 256 }, (unused, picture) => picture) : null;
+    const unseen = new Float64Array(256); let unseenN = 0;
     const unseenHit = (waiting, countOf) => {
       let hit = 0;
-      if (!hasJoker) {
+      if (!publicPicturePrior && !hasJoker) {
         for (const face of waiting) hit += unseen[face & 255];
         for (const face of byFace.keys()) if ((countOf(face) & 1) && !waiting.includes(face)) hit += unseen[face & 255];
         return unseenN ? Math.min(1, hit / unseenN) : 0;
       }
-      const odd = [...byFace.keys()].filter(face => countOf(face) & 1);
-      for (const face of byFace.keys()) if (waiting.some(picture => picturesFit(face, picture)) || odd.some(picture => picturesFit(face, picture))) hit += unseen[face & 255];
+      const odd = (priorPictures || [...byFace.keys()]).filter(face => countOf(face) & 1);
+      for (const face of priorPictures || byFace.keys()) if (waiting.some(picture => picturesFit(face, picture)) || odd.some(picture => picturesFit(face, picture))) hit += unseen[face & 255];
       return unseenN ? Math.min(1, hit / unseenN) : 0;
     };
     const W = weightsOf(p), cf = new Float64Array(NF);   // (weights saved with fewer parts get 0 for the rest)
@@ -296,7 +301,7 @@ const Hard = (() => {
         if (c < 2) continue;
         pr++;
         // a pair with a face-down tile in it needs no slot (turn it over, then tap its twin)
-        for (const i of list) if (alive[i] && freeNow[i] && down[i]) { safe++; break; }
+        for (const i of list) if (alive[i] && freeNow[i] && down[i] && (!publicPicturePrior || known[i])) { safe++; break; }
       }
       cf[6] = fr; cf[7] = pr;
       // tiles this move uncovers that it could not see before: each is a draw from the pictures still
@@ -826,7 +831,12 @@ const Hard = (() => {
         for (const index of flipT) if (known[index]) policyPairPrep[index] = +fr.some(mate => mate !== index
           && known[mate] && faces[mate] === faces[index]);
       }
-      unseen.fill(0); unseenN = 0; for (let i = 0; i < n; i++) if (alive[i] && !known[i]) { unseen[faces[i] & 255]++; unseenN++; }
+      unseen.fill(0); unseenN = 0;
+      for (let index = 0; index < n; index++) if (alive[index] && !known[index]) {
+        unseenN++;
+        if (!publicPicturePrior) unseen[faces[index] & 255]++;
+      }
+      if (publicPicturePrior) for (let picture = 0; picture < unseen.length; picture++) unseen[picture] = unseenN * publicPicturePrior[picture];
       const mateKnown = mateKnownPre;
       const unknown = fr.filter(i => !mateKnown(i)).length;
       unknownOptions += unknown; singleOptions += fr.length;
@@ -1048,7 +1058,7 @@ const Hard = (() => {
         if (k < 0) { for (const i of (pairK >= 0 ? [h, h2] : [h])) if (!commit(i)) return end(false, 'clock'); fi = pairK >= 0 ? f2 + 1 : fi + 1; if (tray.length >= SLOTS) return end(false, 'tray'); continue; }
         fi = opts[k].length === 2 ? f2 + 1 : fi + 1;
       } else if (choiceMode) {
-        k = p.physicalChoice({ F: policyF.map((feature, index) => feature.concat(goalF[index])), kindContext, immediate: valueParts,
+        k = p.physicalChoice({ ...(publicPicturePrior ? { observationVersion: 1 } : {}), F: policyF.map((feature, index) => feature.concat(goalF[index])), kindContext, immediate: valueParts,
           ...(knownPlan ? { knownPlan } : {}) }, r());
         if (!Number.isInteger(k) || k < 0 || k >= all.length) throw new Error('Context choice selected an unavailable physical action');
         if (k >= opts.length) { if (!inspectTile(flipT[k - opts.length])) return end(false, 'clock'); continue; }
@@ -1510,6 +1520,6 @@ const Hard = (() => {
     return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
   }
 
-  return { MODEL_VERSION: 2, FEAT, POLICY_FEAT, KIND_CONTEXT, GOAL_FEAT, TRAY_GOAL_CONTEXT, trayGoalContext, trayGoalActions, trayGoalInfo, advanceTrayGoal, weightsOf, P, REF, persona, play, rate, rate2, rateChain, remembered, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+  return { MODEL_VERSION: 2, PUBLIC_OBSERVATION_VERSION: 1, FEAT, POLICY_FEAT, KIND_CONTEXT, GOAL_FEAT, TRAY_GOAL_CONTEXT, trayGoalContext, trayGoalActions, trayGoalInfo, advanceTrayGoal, weightsOf, P, REF, persona, play, rate, rate2, rateChain, remembered, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
 })();
 if (typeof module !== 'undefined') module.exports = Hard;

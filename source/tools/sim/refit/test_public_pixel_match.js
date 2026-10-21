@@ -1,0 +1,20 @@
+'use strict';
+const assert = require('assert/strict');
+const { compile } = require('./public_pixel_match.js');
+const templates = [{ picture: 2, pixels: [100, 60, 10, 255, 90, 0, 0, 255] },
+  { picture: 4, pixels: [101, 60, 10, 255, 20, 0, 0, 255] }, { picture: 6, pixels: [140, 60, 10, 255, 30, 0, 0, 255] }];
+const read = compile(templates, [1, 0], 1, [2, 4, 6]);
+assert.deepEqual(read([100, 60, 10, 255, 0, 0, 0, 0]).pictures, [2, 4]);
+assert.equal(read([140, 61, 9, 254, 0, 0, 0, 0]).known, 6);
+assert.equal(read([140, 62, 10, 255, 0, 0, 0, 0]).reason, 'outsideDictionary');
+assert.deepEqual(compile(templates, [0, 0], 1, [2, 4, 6])([0, 0, 0, 0, 0, 0, 0, 0]).pictures, [2, 4, 6]);
+assert.equal(compile(templates, [1, 0], 0, [2, 4, 6])([100, 60, 10, 255, 0, 0, 0, 0]).known, 2);
+assert.throws(() => compile(templates, [1, 0], 2, [2, 4, 6]));
+const hidden = templates.map(template => ({ picture: template.picture, pixels: template.pixels.slice() }));
+for (const template of hidden) Object.defineProperty(template.pixels, '4', { get() { throw new Error('Unobserved pixel'); } });
+const privateRead = compile(hidden, [1, 0], 1, [2, 4, 6]);
+assert.equal(privateRead.dictionaryId, read.dictionaryId);
+const pixels = [100, 60, 10, 255, 0, 0, 0, 0];
+Object.defineProperty(pixels, '4', { get() { throw new Error('Unobserved pixel'); } });
+assert.deepEqual(privateRead(pixels).pictures, [2, 4]);
+console.log('PASS bounded pixel support retains every within-one-channel candidate, rejects larger unsupported noise and never reads or hashes unobserved pixels');
