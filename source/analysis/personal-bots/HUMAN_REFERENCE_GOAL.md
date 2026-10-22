@@ -90,6 +90,21 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
+Two causal one-node production-backed regressions now pass: information-tap
+safety evaluates the actual boundary action rather than borrowing safety from
+an unrelated free match; known-pair macros also finish face-up-first pairs before
+beam pruning their unmatched intermediate state. Passive revelation after a
+known safe prefix and first unopened peeks remain distinct from commitments.
+33/33 offline checks pass. The six-case source-unchanged focus restores141 on
+try1 and retains134/139/143;136 and147 still fail. Slowest890.7ms. This is not a
+complete-set pass; the next unchanged20-case screen checks wider effects.
+
+The previous patient-single-carry/full-forecast combination passed13/20 rather
+than15/20, regressing133 and146. Its full short table is retained; it was not
+promoted or hidden by reporting only successful profiles. The read-only catalog
+refresh still accounts for140 first clears, levels17-156, without opening any
+future/unseen board.
+
 Using the declared exclusive-role forecast throughout play passed15/20 recent
 cases, slowest1506ms. It adds133 and137 on try1 but regresses141 from a clear
 to an18-tile tray loss; it is not a dominating replacement for the14/20 clock-only
