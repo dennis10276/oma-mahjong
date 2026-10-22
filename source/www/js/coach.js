@@ -1,8 +1,9 @@
 /* Oma's Mahjong — game tips (from 1.59, from level RULES.coach.fromLevel on).
-   From that level the tips replace the tile lessons of specials.js: a small film of a real game
-   (COACH_CLIPS, without names) in the player's own tiles, background and tray, first the move that
-   went wrong, then the better one. After a lost try the player sees the same film of their own last
-   moves: where it went wrong and what would have worked (coachReview). Nothing here touches the real
+   From that level no lesson shows on its own any more. After a lost try the player sees a small film
+   of their own last moves in their own tiles, background and tray: where it went wrong and what would
+   have worked, tied to the game tip of that trick (coachReview). The tips themselves (a film of a real
+   game, COACH_CLIPS, without names: first the move that went wrong, then the better one) open from
+   that film and from the menu. Nothing here touches the real
    board: the film has its own little pile, worked out with the same rules as tapTile. */
 'use strict';
 
@@ -80,7 +81,28 @@ function coachDemoHTML(own = false) {
 // a film from a tip (COACH_TIPS): the clip with its captions and pointed-out tiles
 function coachTipClip(id) {
   const tip = COACH_TIPS[id], c = COACH_CLIPS[tip.clip];
-  return { tiles: c.tiles, faces: c.faces, segs: c.segs.map((s, n) => ({ ...s, caps: (tip.caps[n] || []).map(k => tx(k)), marks: (tip.marks || [])[n] || [] })) };
+  const segs = c.segs.map((s, n) => ({ ...s, caps: (tip.caps[n] || []).map(k => tx(k)), marks: (tip.marks || [])[n] || [] }));
+  // the right way starts from the same moment as the wrong one
+  if (segs.length === 2 && JSON.stringify(segs[0].start) !== JSON.stringify(segs[1].start)) {
+    const B = czSameStart(segs[0], segs[1].acts.filter(a => a[0] !== 'end'), c.faces, segs[1].marks.flatMap(m => m[1]));
+    segs[1] = { ...segs[1], start: B.start, acts: B.acts, marks: B.marks };
+  }
+  return { tiles: c.tiles, faces: c.faces, segs };
+}
+/* The right way, from the same moment as the wrong way: the same taps up to the mistake, then the
+   better move (with a peek first where the film's own taps left a different tile open). The tiles of
+   the better move light up at the moment of the decision. */
+function czSameStart(segA, better, faces, good) {
+  const prefix = segA.acts.filter(a => a[0] !== 'end').slice(0, -1);
+  let st = czState(segA.start);
+  for (const a of prefix) st = czApply(st, faces, a);
+  const line = [];
+  for (const a of better) {
+    if (czStep(st, faces, a[1])[0] !== a[0] && a[0] === 'pair' && st.p !== a[2]) { line.push(['peek', a[2]]); st = czApply(st, faces, ['peek', a[2]]); }
+    line.push(a); st = czApply(st, faces, a);
+  }
+  const when = prefix.length ? prefix.length - 1 : 'start';
+  return { start: segA.start, acts: prefix.concat(line, [['end', 'ok']]), marks: good.length ? [[when, good, 'good']] : [] };
 }
 /* Play a film in a .coach-demo: each part starts from its position and plays its taps; between
    parts the little pile is set up again. Loops until the window closes. */
@@ -299,16 +321,6 @@ function showCoachMenu() {
   $('#modalBox').querySelectorAll('.cz-pick').forEach(b => { b.onclick = () => showCoachTip(b.dataset.kind, showCoachMenu, false, 'manual'); });
   $('#mClose').onclick = closeModal;
 }
-// a tip at the start of a retry (from the third failure), one that fits this level, in turn
-function coachRetryTip(after = null) {
-  const tips = [];
-  if (G.clock) tips.push('clockFirst', 'clockSlot');
-  if (G.down.some(Boolean)) tips.push('three', 'twin', 'remember');
-  tips.push('lookTray', 'uncover', 'retry');
-  showCoachTip(tips[((S.fails[G.key] || 0) - 3) % tips.length], after, true);
-  return true;
-}
-
 // ---------- the player's own last moves ----------
 /* Every accepted tap of this try is noted (the position at the first tap, then only the tile
    numbers); the film is worked out from that when the try is lost. Anything the little game does
@@ -451,14 +463,17 @@ function coachReview(why) {
   const mine = czTrim(acts.slice(from)).concat([['end', why === 'clock' ? 'clock' : 'lose']]);
   // the view: around the last taps, the fatal one and the better move (the clock films show the whole route)
   const czFocus = tip === 'clockFirst' || tip === 'clockSlot' ? null : [...new Set(mine.slice(-4).concat(better).filter(a => a[0] !== 'end').flatMap(a => a.slice(1)))];
-  const startB = why === 'clock' || from === 0 && (kind === 'clockFirst' || kind === 'clockSlot') ? states[0] : pre;
   const enc = st => ({ a: st.a, d: st.d, p: st.p, tray: st.tray, ck: st.ck });
-  const mark = kind === 'clockFirst' || kind === 'clockSlot' ? [] : [['start', better.filter(a => a[0] !== 'peek').flatMap(a => a.slice(1)), 'good']];
+  // the right way starts from the same moment as the replay: the clock routes from the start of the
+  // try, the others with the same taps up to the mistake and then the better move
+  const segA = { start: enc(states[from]), acts: mine };
+  const B = kind === 'clockFirst' || kind === 'clockSlot' ? { start: enc(states[0]), acts: better.concat([['end', 'ok']]), marks: [] }
+    : czSameStart(segA, better, faces, better.filter(a => a[0] !== 'peek').flatMap(a => a.slice(1)));
   return {
     tip, kind,
     clip: { tiles, faces, ob, focus: czFocus, known: [...new Set([...seen, ...before])], segs: [
-      { start: enc(states[from]), acts: mine, caps: [tx('czOwnA'), tx(why === 'clock' ? 'czOwnClock' : 'czOwnLose')], marks: [] },
-      { start: enc(startB), acts: better.concat([['end', 'ok']]), caps: [tx('czOwnB', tx('czT_' + tip)), tx('czOwn_' + kind)], marks: mark },
+      { ...segA, caps: [tx('czOwnA'), tx(why === 'clock' ? 'czOwnClock' : 'czOwnLose')], marks: [] },
+      { ...B, caps: [tx('czOwnB', tx('czT_' + tip)), tx('czOwn_' + kind)] },
     ] },
   };
 }

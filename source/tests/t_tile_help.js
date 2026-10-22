@@ -36,23 +36,23 @@ module.exports = [
       t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'ice reminder also fits: ' + lang);
       await click(p, '#ntGo');
       await p.evaluate(() => showIntro()); await click(p, '#mTileHelp');
-      t.eq(await p.locator('.lesson-pick').count(), 4, 'all lessons can be reopened from How to play');
+      t.eq(await p.locator('.cz-pick').count(), 8, 'from level 60 How to play opens the game tips (js/coach.js)');
       await p.emulateMedia({ reducedMotion: 'reduce' });
       await p.evaluate(() => showTileLesson('trayPair'));
       t.eq(await p.evaluate(() => lessonTimer), null, 'reduced motion starts paused');
     }
   }},
-  { name: 'tile help: introduction requires acknowledgment; third loss starts rotating relevant reminders; resume stays quiet', async run(t, { startLevel, click, modal, sleep }) {
+  { name: 'tile help: introduction requires acknowledgment; below level 60 the third loss starts rotating relevant reminders; resume stays quiet', async run(t, { startLevel, click, modal, sleep }) {
     const p = await t.phone({ state: { name: 'Dennis', level: 80, sunSeen: true, seenSp: { ...seen, trayPair: 0 } } });
     await startLevel(p, 50);
     t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), 'trayPair', 'teach the three-slot trick from level 50');
     t.eq(await p.evaluate(() => [G.mv, !!S.seenSp.trayPair]), [0, false], 'intro pauses play before acknowledgment');
     await click(p, '#ntGo');
     t.eq(await p.evaluate(() => !!JSON.parse(localStorage.getItem(STORE)).seenSp.trayPair), true, 'remember acknowledgment');
-    await p.evaluate(() => { S.fails.L80 = 2; save(); });
-    await startLevel(p, 80); t.eq(await modal(p), null, 'no reminder after two failures');
+    await p.evaluate(() => { S.fails.L55 = 2; save(); });
+    await startLevel(p, 55); t.eq(await modal(p), null, 'no reminder after two failures');
     await p.evaluate(() => { failTry(); restart(); });
-    t.eq(await p.evaluate(() => S.fails.L80), 3, 'loss counted once');
+    t.eq(await p.evaluate(() => S.fails.L55), 3, 'loss counted once');
     const kinds = await p.evaluate(() => ['ice', 'lock', 'trayPair'].filter(k => NEW_TILES[k].has()).concat(G.clock ? ['clock'] : []));
     t.ok(kinds.length > 1, 'level includes several teaching topics');
     t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), kinds[0], 'third failure shows first relevant tip');
@@ -61,7 +61,7 @@ module.exports = [
     await p.evaluate(() => { failTry(); restart(); });
     t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), kinds[1], 'next failure rotates topic');
     await click(p, '#ntGo');
-    await p.reload(); await p.waitForFunction(() => window.__mjReady); await startLevel(p, 80, false);
+    await p.reload(); await p.waitForFunction(() => window.__mjReady); await startLevel(p, 55, false);
     t.eq(await modal(p), null, 'resuming an unfinished attempt does not repeat reminder');
   }},
   { name: 'tile help: face-down first clears a different pair with three tray tiles; taking a fourth unrelated tile loses', async run(t, { startLevel, sleep }) {

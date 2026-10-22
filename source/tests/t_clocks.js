@@ -4,7 +4,7 @@ const H=require('../www/hard'), C=require('../tools/sim/clock_routes');
 const {game}=require('../tools/sim/tighten_clocks');
 const table=()=>vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+';HARD_LEVELS');
 module.exports=[
-  {name:'clocks: explain before level 80 even after the old tip, and repeat after every timeout in both languages',async run(t,{startLevel,modal,click,sleep}){
+  {name:'clocks: explain before level 80 even after the old tip; after a timeout the own film or what happened, in both languages',async run(t,{startLevel,modal,click,sleep}){
     for(const lang of ['nl','en']){
       const p=await t.phone({size:[360,640],state:{name:'Dennis',pid:'test-clock-help-'+lang,level:81,sunSeen:true,lang,seenSp:{clock:1,ice:1,lock:1,gold:1,joker2:1}}});
       await startLevel(p,79);t.eq(await modal(p),null,'no clock popup before 80 '+lang);
@@ -22,7 +22,8 @@ module.exports=[
         await p.evaluate(()=>{const i=G.tiles.findIndex((t,i)=>i!==G.clock.i&&G.alive[i]&&!G.down[i]&&canTake(i));if(i<0)throw Error('No free non-clock tile');G.clock.n=G.mv+1;__mj.onTap(i);});
         await sleep(900);
         const m=await modal(p);t.eq(m.title,await p.evaluate(()=>tx('clockTitle')),'clock timeout explains the loss '+lang);
-        for(const part of text)t.ok(m.text.includes(part),'repeat the complete explanation after timeout '+lang);
+        // from level 60 (RULES.coach) no lesson of its own after a timeout: the film of the own try, or only what happened
+        t.ok(await p.evaluate(()=>!$('#modalBox .lesson-demo:not(.coach-demo)')&&(!!$('#modalBox .coach-own')||$('#modalBox').innerText.includes(tx('clockText',G.clock.n).replace(/<[^>]+>/g,'')))),'own film or what happened, no standard lesson after timeout '+lang);
         t.eq(m.buttons,['sRetry','sMenu'],'retry and menu are available '+lang);
         t.ok(await p.evaluate(()=>$('#modalBox').scrollHeight<=$('#modalBox').clientHeight+1),'explanation, retry and menu fit on a small phone '+lang);
         if(!attempt){await click(p,'#sRetry');await sleep(1400);t.eq(await modal(p),null,'retry starts directly after explanation '+lang);}

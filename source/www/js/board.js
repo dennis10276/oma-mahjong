@@ -744,14 +744,14 @@ function checkClock() {
     const coach = coachLevelOn();
     let review = null;
     if (coach) try { review = coachReview('clock'); } catch (e) { review = null; }
+    // (from there no lesson film of its own: without a film of the own try only what happened)
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      ${review ? coachReviewHTML(review) : coach ? `${coachDemoHTML()}<p>${tx('czX_clockFirst')}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${lessonDemoHTML('clock')}${clockHelpText()}`}
+      ${review ? coachReviewHTML(review) : coach ? `<p>${tx('clockText', G.clock.n)}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${lessonDemoHTML('clock')}${clockHelpText()}`}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, coach ? 'tile-help coach-help coach-loss' : 'clock-help');
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : 'clock-help');
     if (review) coachReviewStart(review);
-    else if (coach) coachPlay($('#modalBox .coach-demo'), coachTipClip('clockFirst'));
-    else startLessonDemo();
-    const message = recordHelpMessage(review ? 'coach-' + review.tip : coach ? 'coach-clockFirst' : 'clock', 'timeout');
+    else if (!coach) startLessonDemo();
+    const message = recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout');
     $('#sRetry').onclick = () => { message('retry'); closeModal(); restart(); };
     $('#sMenu').onclick = () => { message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);

@@ -23,14 +23,15 @@ module.exports = [
         t.eq([ack.action, ack.mid], ['ack', shown.mid], 'acknowledgment identifies the shown message');
       }
       t.eq(messages().length, 8, 'animation frames do not add feed events');
-      await p.evaluate(() => { S.fails.L80 = 3; clearCur(); __mj.startLevel(80); });
+      await p.evaluate(() => { S.fails.L55 = 3; clearCur(); __mj.startLevel(55); });   // below level 60: reminders; from 60 none (js/coach.js)
       await drain();
       t.eq([messages().at(-1).why, messages().at(-1).fails], ['retry', 3], 'real third-failure reminder is logged when displayed');
       await click(p, '#ntGo');
       await p.evaluate(() => showLessonMenu());
-      await click(p, '.lesson-pick[data-kind="clock"]'); await drain();
+      await click(p, '.cz-pick[data-kind="clockFirst"]'); await drain();
       t.eq(messages().at(-1).why, 'manual', 'manually reopened clock explanation is distinguished');
       await click(p, '#ntGo'); await p.evaluate(() => closeModal());
+      await p.evaluate(() => { clearCur(); __mj.startLevel(80); });
       await p.evaluate(() => { G.clock.n = G.mv; checkClock(); });
       await p.waitForSelector('#sMenu', { state: 'visible' }); await drain();
       const timeout = messages().at(-1);
@@ -38,7 +39,7 @@ module.exports = [
       t.ok(messageText(timeout).includes(lang === 'en' ? 'still there' : 'lag er nog'), 'timeout includes the actual loss explanation');
       await click(p, '#sMenu'); await drain();
       t.eq([messages().at(-1).action, messages().at(-1).mid], ['menu', timeout.mid], 'closing the timeout to the menu is logged');
-      await p.evaluate(() => showLessonMenu()); await click(p, '.lesson-pick[data-kind="ice"]'); await drain();
+      await p.evaluate(() => showLessonMenu()); await click(p, '.cz-pick[data-kind="three"]'); await drain();
       t.eq([messages().at(-1).why, messages().at(-1).scr, messages().at(-1).at], ['manual', 'home', undefined], 'help from home is not assigned to an old attempt');
     }
   }},

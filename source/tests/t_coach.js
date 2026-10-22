@@ -23,20 +23,29 @@ module.exports = [
       }
     }
   }},
-  { name: 'game tips: from level 90 the tips replace the tile lessons in the menu and the retry reminders', async run(t, { startLevel, click, modal }) {
-    const p = await t.phone({ state: { name: 'Dennis', level: 80, sunSeen: true, seenSp: seen } });
+  { name: 'game tips: from level 60 no lesson shows on its own; the tips stay in the menu; every film starts both parts at the same moment', async run(t, { startLevel, click, modal }) {
+    const p = await t.phone({ state: { name: 'Dennis', level: 55, sunSeen: true, seenSp: seen } });
     await p.evaluate(() => showLessonMenu());
-    t.eq(await p.locator('.lesson-pick:not(.cz-pick)').count(), 4, 'below 90: the tile lessons');
+    t.eq(await p.locator('.lesson-pick:not(.cz-pick)').count(), 4, 'below 60: the tile lessons');
     await p.evaluate(() => { closeModal(); S.level = 95; save(); showLessonMenu(); });
-    t.eq(await p.locator('.cz-pick').count(), 8, 'from 90: the game tips');
+    t.eq(await p.locator('.cz-pick').count(), 8, 'from 60: the game tips in the menu');
     await click(p, '.cz-pick[data-kind="remember"]');
     t.ok(await p.evaluate(() => !!$('#modalBox .coach-demo')), 'a tip opens from the menu');
     await click(p, '#ntGo');
-    await p.evaluate(() => { S.fails.L95 = 3; save(); });
-    await startLevel(p, 95);
-    t.ok(await p.evaluate(() => !!$('#modalBox .coach-demo') && !$('#modalBox .lesson-demo:not(.coach-demo)')), 'third failure at 95: a game tip instead of a tile lesson');
-    await click(p, '#ntGo');
-    t.eq(await modal(p), null, 'play goes on after the tip');
+    for (const lv of [65, 95]) {
+      await p.evaluate(lv => { S.fails['L' + lv] = 3; save(); }, lv);
+      await startLevel(p, lv);
+      t.eq(await modal(p), null, 'third failure at ' + lv + ': no lesson of its own');
+    }
+    // the right way starts where the wrong way started, and every tap of it is a real move
+    const bad = await p.evaluate(() => COACH_ORDER.filter(id => {
+      const c = coachTipClip(id); if (c.segs.length < 2) return false;
+      if (JSON.stringify(c.segs[0].start) !== JSON.stringify(c.segs[1].start)) return true;
+      let s = czState(c.segs[1].start);
+      for (const a of c.segs[1].acts) { if (a[0] === 'end') continue; if (czStep(s, c.faces, a[1])[0] !== a[0]) return true; s = czApply(s, c.faces, a); }
+      return s.tray.length >= 4;
+    }));
+    t.eq(bad, [], 'both parts of every tip start at the same moment and play real moves');
   }},
   { name: 'game tips: the little game follows the real one tap for tap', async run(t, { startLevel, sleep }) {
     const p = await t.phone({ state: { name: 'Dennis', level: 140, sunSeen: true, seenSp: seen } });
@@ -85,6 +94,7 @@ module.exports = [
     await p.evaluate(x => onTap(x), x); await sleep(1400);
     t.ok(await p.evaluate(() => !!$('#modalBox .coach-own')), 'the loss shows the own film');
     t.eq(await p.evaluate(() => coachReview('tray') && coachReview('tray').kind), 'twin', 'the right tip: tap the twin');
+    t.ok(await p.evaluate(() => { const c = coachReview('tray').clip; return JSON.stringify(c.segs[0].start) === JSON.stringify(c.segs[1].start); }), 'the right way starts at the same moment as the own replay');
     t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'the own film fits a small phone');
     t.ok(await p.evaluate(() => !!$('.cz-board .tile .emo')), 'in the player\'s own tiles');
     // never a picture the player has not seen: every picture in the film belongs to a seen tile

@@ -410,7 +410,7 @@ function showTileLesson(kind, after = null, reminder = false, why = reminder ? '
 // Resuming an unfinished try does not trigger it again.
 function retryTileHelp(after = null, resumed = false) {
   if (!G || resumed || G.o.mode !== 'level' || (S.fails[G.key] || 0) < 3) return false;
-  if (coachLevelOn()) return coachRetryTip(after);        // from RULES.coach.fromLevel: the game tips instead
+  if (coachLevelOn()) return false;        // from RULES.coach.fromLevel: no reminders, only the film of the own lost try
   const kinds = ['ice', 'lock', 'trayPair'].filter(k => NEW_TILES[k].has());
   if (G.clock) kinds.push('clock');
   if (!kinds.length) return false;

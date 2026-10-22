@@ -13,9 +13,10 @@ const RULES = {
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
-  // from this level the game tips (js/coach.js) replace the tile lessons: a film of a real game and,
-  // after a lost try, of the player's own last moves with what would have worked
-  coach: { fromLevel: 90 },
+  // from this level (decision Dennis 2026-10-22) no lessons are shown on their own any more: after a lost
+  // try the player sees a film of their own last moves and the better move, tied to its game tip
+  // (js/coach.js). The game tips stay in the menu; first-time introductions of a new tile kind stay.
+  coach: { fromLevel: 60 },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
