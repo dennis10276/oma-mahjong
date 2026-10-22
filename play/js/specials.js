@@ -48,6 +48,7 @@ function jokerTarget() {
 }
 // j = the joker, x = the tile it takes (one of them waits in the tray, the other was tapped)
 function jokerPlay(j, x) {
+  coachForget();
   clearHint();
   const waiting = G.tray.includes(j) ? j : x, tapped = waiting === j ? x : j;
   luckyTaken(tapped);
@@ -209,7 +210,7 @@ const NEW_TILES = {
    picture was drawn again every step, every tile popping in anew, and the clock's number stood
    apart from its tile: it looked jumpy and was hard to follow.) One step every 2.4 s, 4 steps. */
 let lessonTimer = null, lessonJobs = [];
-function stopLessonDemo() { clearInterval(lessonTimer); lessonTimer = null; lessonJobs.forEach(clearTimeout); lessonJobs = []; }
+function stopLessonDemo() { clearInterval(lessonTimer); lessonTimer = null; lessonJobs.forEach(clearTimeout); lessonJobs = []; if (typeof stopCoach === 'function') stopCoach(); }
 const LZ_STEP_MS = 2400;
 const LESSON_SCENES = {
   // [id, face, kind of tile]
@@ -218,7 +219,8 @@ const LESSON_SCENES = {
   clock: { tiles: [['ck', 31, 'clock'], ['a', 4], ['d', 8, 'down']], tray: [] },
   trayPair: { tiles: [['d', 31, 'down'], ['t', 31]], tray: [4, 8, 12], trayFirst: true },
 };
-const lzTile = (id, face, kind = '') => `<span class="lesson-tile${kind === 'down' ? ' lesson-back' : kind ? ' lz-' + kind : ''}" data-id="${id}"><span class="lesson-face">${Tiles.faceHTML('classic', face)}</span>` +
+// in the player's own tiles (the theme from the settings)
+const lzTile = (id, face, kind = '') => `<span class="lesson-tile${kind === 'down' ? ' lesson-back' : kind ? ' lz-' + kind : ''}" data-id="${id}"><span class="lesson-face">${Tiles.faceHTML(S.theme, face)}</span>` +
   (kind === 'key' ? '<b class="lz-badge lz-keyb">🔑</b>' : kind === 'lock' ? '<b class="lz-badge lz-lockb">🔒</b>' : kind === 'ice2' ? '<b class="lz-badge lz-iceb">❄️❄️</b>' : kind === 'clock' ? '<b class="lz-ck">⏰<i>3</i></b>' : '') + '</span>';
 const lzTray = faces => `<div class="lesson-tray">${[0, 1, 2, 3].map(i => `<span class="lesson-slot">${i < faces.length ? lzTile('s' + i, faces[i]) : ''}</span>`).join('')}</div>`;
 function lessonSceneHTML(kind) {
@@ -408,6 +410,7 @@ function showTileLesson(kind, after = null, reminder = false, why = reminder ? '
 // Resuming an unfinished try does not trigger it again.
 function retryTileHelp(after = null, resumed = false) {
   if (!G || resumed || G.o.mode !== 'level' || (S.fails[G.key] || 0) < 3) return false;
+  if (coachLevelOn()) return false;        // from RULES.coach.fromLevel: no reminders, only the film of the own lost try
   const kinds = ['ice', 'lock', 'trayPair'].filter(k => NEW_TILES[k].has());
   if (G.clock) kinds.push('clock');
   if (!kinds.length) return false;
@@ -417,6 +420,7 @@ function retryTileHelp(after = null, resumed = false) {
   return true;
 }
 function showLessonMenu() {
+  if (coachOn(S.level)) { showCoachMenu(); return; }      // from RULES.coach.fromLevel the game tips replace these
   openModal(`<h2>${tx('lessonMenu')}</h2>${['ice', 'lock', 'clock', 'trayPair'].map(k => `<button class="big-btn lesson-pick" data-kind="${k}"><span class="bb-text"><b>${tx('nt_' + k)}</b></span></button>`).join('')}
     <button class="link-btn" id="mClose">${tx('gotIt')}</button>`, true, null, 'tile-help');
   $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { b.onclick = () => b.dataset.kind === 'clock' ? showClockLesson(showLessonMenu, false, 'manual') : showTileLesson(b.dataset.kind, showLessonMenu, false, 'manual'); });
@@ -424,14 +428,17 @@ function showLessonMenu() {
 }
 // The same explanation before the first clock level and after every clock timeout.
 const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
+// (from 1.59, with the film: the first line shows, the rest folds open, so the film can be big)
+const clockHelpShort = () => `<p>${tx('nt_clock_text')}</p><details class="cz-more"><summary>${tx('czMore')}</summary>${['clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('')}</details>`;
 function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
-  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${lessonDemoHTML('clock')}${clockHelpText()}
+  // (from 1.59: a film of a real game in the player's own tiles, js/coach.js)
+  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${coachDemoHTML(false, 'clock')}${clockHelpShort()}
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp.clock = S.seenSp.clockMoves = true; save();
       replayMark('clock-help', 'acknowledged');
       if (after) after();
-    }, 'clock-help');
-  startLessonDemo();
+    }, 'clock-help coach-help');
+  coachPlay($('#modalBox .coach-demo'), coachClockClip());
   replayMark('clock-help', 'intro');
   const message = recordHelpMessage('clock', why);
   $('#ntGo').onclick = () => { message('ack'); closeModal(); };

@@ -134,7 +134,7 @@ function begin(o, restart = false) {
   };
   if (!clockIntro(ready) && !newTileIntro(ready) && !retryTileHelp(ready, resumed)) ready();
 }
-const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
+const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); coachCount(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
 function noteFail() { if (!G) return; S.fails[G.key] = (S.fails[G.key] || 0) + 1; S.winStreak = 0; save(); }
 
@@ -410,6 +410,7 @@ function tapTile(i) {
   }
   if (frozen(i) || lockedT(i)) { G.st.bt++; obBlocked(i); return; }
   blockedTaps = 0;
+  coachNote(i);                     // the game tips' own film of this try (coach.js)
   G.lastMove = performance.now();   // the board moved: the helper waits again
   let reveal = false;
   if (G.down[i] && G.peek !== i) {
@@ -625,14 +626,20 @@ function checkStuck() {
 function failTry() { bumpStat('losses'); noteFail(); endLevel('stuck'); }
 function gameOver() {
   failTry();
+  // from RULES.coach.fromLevel: the film of the last moves and what would have worked (coach.js)
+  let review = null;
+  try { review = coachDue() ? coachReview('tray') : null; } catch (e) { review = null; }
+  if (review) coachShown();
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
-    openModal(`<h2>${tx('fullTitle')}</h2>
-      <p>${tx('fullText')}</p>
+    openModal(`<h2>${tx(review ? 'czOwnTitle' : 'fullTitle')}</h2>
+      ${review ? coachReviewHTML(review) : `<p>${tx('fullText')}</p>`}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
-    $('#sRetry').onclick = () => { closeModal(); restart(); };
-    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : '');
+    let message = null;
+    if (review) { coachReviewStart(review); message = recordHelpMessage('coach-' + review.tip, 'review'); }
+    $('#sRetry').onclick = () => { if (message) message('retry'); closeModal(); restart(); };
+    $('#sMenu').onclick = () => { if (message) message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
   }, 450);
 }
 
@@ -660,6 +667,7 @@ function hint() {
 function shuffle() {
   if (!toolUsable(G && G.usedShuffle, tx('shuffleUsed'))) return;
   if (shuffleTooEarly()) return;
+  coachForget();
   G.usedShuffle = true; updateTools(); clearNudge();
   logLvl('shuf', { tray: G.tray.length });
   G.busy = true;
@@ -733,12 +741,19 @@ function checkClock() {
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
+    // from RULES.coach.fromLevel: the film of this try and a route that reached the clock in time
+    const coach = coachLevelOn();
+    let review = null;
+    if (coach) try { review = coachDue() ? coachReview('clock') : null; } catch (e) { review = null; }
+    if (review) coachShown();
+    // (from there no lesson film of its own: without a film of the own try only what happened)
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      <p>${tx('clockText', G.clock.n)}</p>${lessonDemoHTML('clock')}${clockHelpText()}
+      ${review ? coachReviewHTML(review) : coach ? `<p>${tx('clockText', G.clock.n)}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${coachDemoHTML(false, 'clock')}${clockHelpShort()}`}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
-    startLessonDemo();
-    const message = recordHelpMessage('clock', 'timeout');
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : coach ? 'clock-help' : 'clock-help coach-help');
+    if (review) coachReviewStart(review);
+    else if (!coach) coachPlay($('#modalBox .coach-demo'), coachClockClip());
+    const message = recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout');
     $('#sRetry').onclick = () => { message('retry'); closeModal(); restart(); };
     $('#sMenu').onclick = () => { message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);

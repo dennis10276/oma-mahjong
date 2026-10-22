@@ -648,7 +648,8 @@ body.nonum .cn { display: none; }
 .lesson-tile { position: relative; display: inline-flex; width: 38px; height: 48px; align-items: center; justify-content: center; border-radius: 7px; background: linear-gradient(160deg, #fffef9 0%, #fbf4e2 55%, #efe2c0 100%); box-shadow: 2px 3px 0 #c5ac75; flex: none; }
 .lesson-face { display: flex; width: 30px; height: 36px; align-items: center; justify-content: center; font-size: 27px; }
 .lesson-face svg { width: 100%; height: 100%; }
-.lesson-back { background: repeating-linear-gradient(45deg, #508b62 0 4px, #6ca278 4px 8px); outline: 2px solid #fff9e9; }
+/* face-down in the lessons: the same back as on the board (and the sunflower back in that theme) */
+.lesson-back { background: radial-gradient(circle at 50% 50%, #ffe08a 0 9%, #e8b13a 10% 14%, transparent 15%), repeating-linear-gradient(45deg, rgba(255,255,255,.13) 0 2px, transparent 2px 8px), repeating-linear-gradient(-45deg, rgba(255,255,255,.13) 0 2px, transparent 2px 8px), linear-gradient(160deg, #3dbb90, #1b8063); outline: 2px solid #fff9e9; }
 .lesson-back .lesson-face { visibility: hidden; }
 .lesson-tray { display: flex; gap: 5px; padding: 5px; background: #805431; border-radius: 10px; }
 .lesson-slot { display: flex; align-items: center; justify-content: center; width: 36px; height: 40px; border-radius: 5px; background: #573b28; }
@@ -723,6 +724,86 @@ body.nonum .cn { display: none; }
 .clock-help .lesson-demo { padding-top: 8px; }
 .clock-help .lz-hand i { font-size: 24px; }
 .clock-help .lz-ripple { width: 38px; height: 38px; margin: -19px 0 0 -19px; }
+/* ---------- the game tips (js/coach.js): a little real pile in the player's own tiles ---------- */
+.cz-stage { position: relative; height: 290px; border-radius: 14px; overflow: hidden; transition: opacity .18s; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+.cz-stage.lz-fade { opacity: 0; }
+.cz-tray { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); z-index: 2; display: grid; grid-template-columns: repeat(4, 32px); gap: 4px; padding: 4px; border-radius: 11px;
+  background: linear-gradient(#8a5a33, #6b4224); box-shadow: inset 0 3px 6px rgba(0,0,0,.45), 0 3px 0 #4a2d17; transition: box-shadow .3s; --sfs: 20px; }
+.cz-slot { aspect-ratio: 1 / 1.24; border-radius: 7px; background: rgba(0,0,0,.28); box-shadow: inset 0 2px 4px rgba(0,0,0,.45); position: relative; }
+.cz-tray .tmini { border-radius: 7px; padding: 2px; }
+body.sunny .cz-tray { background: linear-gradient(#f3b73a, #c98317); box-shadow: inset 0 3px 6px rgba(80,40,0,.45), 0 3px 0 #8a5a10; }
+.cz-tray.cz-full { box-shadow: inset 0 3px 6px rgba(0,0,0,.45), 0 3px 0 #4a2d17, 0 0 0 3px #ff4d4d, 0 0 16px 3px rgba(255,60,60,.7); }
+.cz-tray.cz-ok { animation: lz-trayok .9s ease; }
+.cz-tray .tmini.cz-bad { animation: shake .3s 3; box-shadow: 0 0 0 3px #ff4d4d, 0 0 10px 2px rgba(255,60,60,.7); }
+.cz-tray .tmini.cz-pop { animation: popout .23s ease forwards; }
+.cz-board { position: absolute; left: 0; right: 0; bottom: 0; top: 60px; overflow: hidden; }
+.cz-ov .tile { pointer-events: none; }
+.cz-ov .tile.cz-moving { transition: transform .38s cubic-bezier(.35,.1,.25,1), opacity .25s; }
+.cz-ov .tile.cz-pop { opacity: 0; transition: opacity .2s; }
+.cz-board .tile { pointer-events: none; }
+.cz-board .tile.cz-moving { transition: transform .38s cubic-bezier(.35,.1,.25,1), opacity .25s; }
+.cz-board .tile.cz-pop { opacity: 0; transition: opacity .2s; }
+.cz-board.hl .tile.blocked::after { opacity: 1; }
+/* a tile whose picture the player has not seen: no picture in the film */
+.cz-board .tile.cz-unseen .face { display: grid; place-items: center; }
+.cz-q { font-size: calc(var(--fs, 30px) * .8); font-weight: 900; color: #b9a77c; line-height: 1; }
+.cz-board .tile.cz-peek { box-shadow: 0 0 0 2px #ffb300, 0 0 8px 2px rgba(255,179,0,.7); }
+.cz-ov { position: absolute; inset: 0; pointer-events: none; z-index: 950000; }
+.cz-mark { position: absolute; border-radius: 14%; animation: czGlow 1s ease-in-out infinite alternate; }
+.cz-mark.cz-good { box-shadow: 0 0 0 3px #2ecc71, 0 0 12px 4px rgba(46,204,113,.85); }
+.cz-mark.cz-info { box-shadow: 0 0 0 3px #4fc3ff, 0 0 12px 4px rgba(80,200,255,.85); }
+.cz-mark.cz-bad { box-shadow: 0 0 0 3px #ff4d4d, 0 0 12px 4px rgba(255,60,60,.85); }
+.cz-mark.cz-cone { box-shadow: 0 0 0 3px #ffb300, 0 0 10px 3px rgba(255,179,0,.8); }
+@keyframes czGlow { from { opacity: .55; } to { opacity: 1; } }
+.cz-ck { position: absolute; transform: translate(-50%, -100%); display: flex; align-items: center; gap: 1px; padding: 0 5px 0 2px; border-radius: 99px; background: #fff3e6; border: 2px solid #ff7a2f; box-shadow: 0 2px 4px rgba(0,0,0,.35); font-size: 12px; line-height: 1.3; font-weight: 900; color: #b23c00; white-space: nowrap; }
+.cz-ck i { font-style: normal; font-variant-numeric: tabular-nums; min-width: .75em; text-align: center; }
+.cz-ck.lz-tick { animation: czTick .5s ease; }
+@keyframes czTick { 40% { background: #ffd23f; transform: translate(-50%, -100%) scale(1.4); } }
+.cz-ck.cz-out { background: #e53935; border-color: #fff; color: #fff; animation: shake .3s 3; }
+.cz-stage .lz-hand { z-index: 990000; }
+.cz-stage .lz-ripple, .cz-stage .lz-spark { z-index: 985000; }
+.cz-verdict { position: absolute; left: 50%; top: 58%; z-index: 980000; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%; display: grid; place-items: center; font-size: 36px; font-weight: 900; color: #fff; opacity: 0; transform: scale(.4); transition: transform .35s cubic-bezier(.3,1.6,.5,1), opacity .2s; pointer-events: none; box-shadow: 0 4px 0 rgba(0,0,0,.2), 0 0 0 4px #fff; }
+.cz-verdict.cz-no { background: #e53935; opacity: .95; transform: scale(1); }
+.cz-verdict.cz-yes { background: #2ecc71; opacity: .95; transform: scale(1); }
+.coach-help h2 { font-size: 23px; }
+.coach-help p { font-size: 15.5px; line-height: 1.3; margin: 6px 0; }
+.coach-help .lesson-demo { margin: 8px 0; padding: 6px 6px 2px; }
+.coach-help .lesson-caption { min-height: 40px; font-size: 15px; }
+.coach-loss .nt-ico { display: none; }
+.cz-tiplink { display: block; width: 100%; margin: 2px 0 8px; font-size: 15px; line-height: 1.3; }
+.cz-tiplink b { text-decoration: underline; }
+.clock-help .cz-stage { height: 196px; }
+.clock-help .coach-demo .lesson-caption { min-height: 34px; font-size: 14px; }
+.cz-h3 { margin: 10px 0 0; font-size: 17px; }
+.cz-tilepicks .cz-pick { min-height: 58px; }
+.cz-mine { font-style: normal; font-size: 12px; font-weight: 900; color: #fff; background: #f2a300; border-radius: 99px; padding: 0 7px; }
+.cz-switch { display: flex; gap: 6px; justify-content: center; margin: -2px 0 4px; }
+.cz-sw { font: inherit; font-size: 14px; font-weight: 900; padding: 4px 12px; border-radius: 99px; background: #fff; color: #31582c; box-shadow: 0 2px 0 #c9b98f; }
+.cz-sw.on { background: #2ebd74; color: #fff; box-shadow: 0 2px 0 #1e8a52; }
+.cz-picks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 6px; }
+.cz-pick { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 76px; padding: 8px 6px; border-radius: 14px; background: #fff; box-shadow: 0 3px 0 #c9b98f; font: inherit; font-size: 14px; line-height: 1.2; color: #31582c; }
+.cz-pick span { font-size: 24px; line-height: 1; }
+@media (max-height: 700px) { .cz-stage { height: 228px; } .coach-help p { font-size: 14.5px; } .clock-help .cz-stage { height: 148px; } }
+/* the films are the explanation: they get most of the screen, the text folds away (Dennis, 2026-10-22) */
+.modal-box.coach-help { max-width: 560px; padding: 12px 10px 10px; max-height: 97vh; max-height: 97dvh; }
+.coach-help h2 { font-size: 22px; margin: 0 0 2px; line-height: 1.15; }
+.coach-help .lesson-demo { margin: 4px 0; padding: 4px 4px 0; }
+/* everything else in the window takes about 300px: the film gets the rest */
+.coach-help .cz-stage { height: calc(97vh - 300px); height: calc(97dvh - 300px); max-height: 620px; min-height: 180px; }
+.clock-help.coach-help .cz-stage { height: calc(97vh - 330px); height: calc(97dvh - 330px); }
+.coach-help .lesson-caption { min-height: 38px; font-size: 15.5px; }
+.coach-help .lesson-controls { min-height: 26px; }
+.coach-help .lesson-controls button { min-height: 26px; padding: 2px 6px; }
+.coach-help p { font-size: 15px; margin: 4px 0; line-height: 1.3; }
+.coach-help .big-btn { margin-top: 6px; }
+.coach-help .big-btn b { font-size: 22px; }
+.coach-help .link-btn { padding-top: 4px; padding-bottom: 4px; }
+.coach-menu .cz-stage { height: auto; }
+.cz-more { margin: 2px 0; font-size: 14px; color: #52674c; }
+.cz-more summary { cursor: pointer; font-weight: 900; text-decoration: underline; list-style: none; }
+.cz-more summary::-webkit-details-marker { display: none; }
+.cz-more summary::before { content: 'ⓘ '; }
+.cz-more p { text-align: left; }
 @media (prefers-reduced-motion: reduce) { .lesson-demo *, .lesson-demo *::before, .lesson-demo *::after { animation: none !important; transition: none !important; } }
 /* the daily gift */
 .gift-box { font-size: 86px; line-height: 1.1; cursor: pointer; display: inline-block; animation: giftWiggle 1.2s ease-in-out infinite; }
@@ -740,9 +821,10 @@ body.nonum .cn { display: none; }
 .tile.lucky .face::before { content: '🍀'; position: absolute; left: -10%; top: -10%; font-size: calc(var(--fs, 30px) * .45); line-height: 1; }
 
 /* ========== 12 themes: Zonnebloem prize and high contrast ========== */
+body.sunny .lesson-tile { background: linear-gradient(160deg, #fffef4 0%, #fff6d0 55%, #f9e39a 100%); }
 body.sunny .tile { background: linear-gradient(160deg, #fffef4 0%, #fff6d0 55%, #f9e39a 100%);
   box-shadow: calc(var(--d) * .5) calc(var(--d) * .6) 0 0 #efd27a, var(--d) calc(var(--d) * 1.2) 0 0 #5c9e34, calc(var(--d) * 1.1) calc(var(--d) * 1.5) calc(var(--d) * 1.2) 0 rgba(60,40,0,.35); }
-body.sunny .tile.back { background: url(data:image/png;base64,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) center / cover no-repeat; }
+body.sunny .tile.back, body.sunny .lesson-back { background: url(data:image/png;base64,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) center / cover no-repeat; }
 body.sunny #tray { background: linear-gradient(#f3b73a, #c98317); box-shadow: inset 0 3px 6px rgba(80,40,0,.45), 0 4px 0 #8a5a10, 0 8px 14px rgba(0,0,0,.3); }
 body.sunny #tray .slot { background: rgba(90,50,0,.28); }
 body.sunny .tmini { background: linear-gradient(160deg, #fffef4, #f9e39a); box-shadow: 2px 2px 0 #efd27a, 2px 4px 0 #5c9e34; }

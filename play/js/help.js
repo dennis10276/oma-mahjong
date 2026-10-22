@@ -56,7 +56,7 @@ function offerRescue() {
 function rescueTray() {
   if (!G || G.done) return;
   closeModal();
-  G.rescued = true; G.overShown = false; G.combo = 0; clearNudge();
+  G.rescued = true; G.overShown = false; G.combo = 0; clearNudge(); coachForget();
   replayMark('rescue', G.tray.slice());
   logLvl('rescue', { ez: G.ez || undefined });
   bumpStat('rescues');
@@ -126,6 +126,7 @@ function nudgeTick() {
   if (pair) startNudge(pair, w.upS);
 }
 function startNudge(pair, wait) {
+  coachForget();                 // the helper turns tiles over: the game tips' film starts afresh
   replayMark('nudge', pair.slice());
   G.nudge = pair.slice();
   let turned = 0;

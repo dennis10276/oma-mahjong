@@ -31,12 +31,18 @@ $('#btnHint').onclick = hint;
 $('#btnShuffle').onclick = shuffle;
 $('#btnRestart').onclick = () => {
   if (!G || G.done || G.busy) return;
+  // from RULES.coach.fromLevel, when the film is due: the way out that was still there, or where it went
+  // wrong; "keep playing" goes back to the try (and nothing is counted)
+  let review = null;
+  try { review = coachDueRestart() ? coachReview('restart') : null; } catch (e) { review = null; }
   openModal(`<h2>${tx('restartTitle')}</h2>
-    <p>${tx('restartText')}</p>
+    ${review ? coachReviewHTML(review) : `<p>${tx('restartText')}</p>`}
     <button class="big-btn play" id="rYes"><span class="bb-text"><b>${tx('restartYes')}</b></span></button>
-    <button class="link-btn" id="rNo">${tx('restartNo')}</button>`);
-  $('#rYes').onclick = () => { closeModal(); restart(); };
-  $('#rNo').onclick = closeModal;
+    <button class="link-btn" id="rNo">${tx(review ? 'czKeepPlaying' : 'restartNo')}</button>`, true, null, review ? 'tile-help coach-help coach-loss' : '');
+  let message = null;
+  if (review) { coachReviewStart(review); message = recordHelpMessage('coach-' + review.tip, 'restart'); }
+  $('#rYes').onclick = () => { if (message) message('retry'); closeModal(); restart(); if (review) coachShown(); };
+  $('#rNo').onclick = () => { if (message) message('ack'); closeModal(); };
 };
 $('#btnHome').onclick = () => { saveCur(); if (G && !G.done) logLvl('pause'); show('home'); };
 $('#btnPlay').onclick = () => startLevel(S.level);
