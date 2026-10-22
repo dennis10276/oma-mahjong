@@ -11,7 +11,7 @@ function test() {
   const configurations = [{}, { goalRecovery: true, goalRecoveryMin: 1, obstacleFrontier: true,
     alternativeGoalRoutes: true, alternativeRecoveryRoutes: true, safeInformationEscape: true, inspectBeforeCommit: true,
     inspectionTrayLimit: 3, exclusiveRoles: 'clock', cachePublicAnalysis: true,
-    preservePairFlexibility: true, knownPairMacros: true, patientSingleCarry: true }];
+    preservePairFlexibility: true, knownPairMacros: true, progressiveReopens: true, patientSingleCarry: true }];
   let canonical = null, controls = 0;
   for (let world = 0; world < 96; world++) {
     const state = { alive: [1, 1, 1, 1, 1, 1], down: [world % 2, Math.floor(world / 2) % 2, 0, 0, 0, 0],

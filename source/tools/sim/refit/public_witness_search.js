@@ -8,6 +8,7 @@ const { aliveSignature } = require('./public_alive_signature.js');
 const { createPairFlexibility } = require('./public_pair_flexibility.js');
 const { goalRoutes } = require('./public_goal_routes.js');
 const { informationTraySafe } = require('./public_information_tray_safety.js');
+const { opensKnownFrontier } = require('./public_reopen_frontier.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -56,13 +57,14 @@ function coveredCount(game, state, root) {
 const REFERENCE_PARAMETERS = Object.freeze({ ...PARAMETERS, nodes: 4096, beam: 32,
   pairProgress: true, finishKnown: true, trayRecovery: true, trayRecoveryMin: 2, continuationPruning: true });
 
-function unproductiveReopen(state, index, allowed) {
+function unproductiveReopen(game, state, index, allowed, progressiveReopens = false) {
   const picture = state.pictures[index];
   const reopening = !!state.down[index] && state.openPeek !== index && picture !== null
     && !state.tray.includes(picture)
     && !(state.openPeek >= 0 && state.pictures[state.openPeek] === picture);
   if (!reopening || allowed.uncertain?.includes(index)) return false;
-  return !allowed.free.some(mate => mate !== index && !allowed.uncertain?.includes(mate) && state.pictures[mate] === picture);
+  if (allowed.free.some(mate => mate !== index && !allowed.uncertain?.includes(mate) && state.pictures[mate] === picture)) return false;
+  return !progressiveReopens || !opensKnownFrontier(game, state, index, allowed);
 }
 
 function keyOf(game, state, knowledge = false) {
@@ -121,8 +123,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const deadline = settings.deadline ?? Infinity;
   const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
   const knownPairMacros = settings.knownPairMacros ?? false;
+  const progressiveReopens = settings.progressiveReopens ?? false;
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
+  assert.equal(typeof progressiveReopens, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
   let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
@@ -229,8 +233,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     return candidate;
   };
 
-  const hasOther = actions.some(action => !unproductiveReopen(state, action.index, initialAllowed));
-  const excludedRoots = hasOther ? actions.filter(action => unproductiveReopen(state, action.index, initialAllowed)).map(action => action.index) : [];
+  const hasOther = actions.some(action => !unproductiveReopen(game, state, action.index, initialAllowed, progressiveReopens));
+  const excludedRoots = hasOther ? actions.filter(action => unproductiveReopen(game, state, action.index, initialAllowed, progressiveReopens)).map(action => action.index) : [];
 
   for (let depth = 0; depth < tapLimit && beam.length; depth++) {
     const next = [];
@@ -326,7 +330,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   return finish();
 
   function finish() {
-    const validActions = actions.filter(action => !unproductiveReopen(state, action.index, initialAllowed));
+    const validActions = actions.filter(action => !unproductiveReopen(game, state, action.index, initialAllowed, progressiveReopens));
     const fallback = (validActions.length ? validActions[0] : actions[0]).index;
     let selected = best || { path: [fallback], goal: 'unresolvedFallback', won: false, safeClockExit: false,
       clockRoom: 0, progress: 0, information: state.pictures[fallback] === null };
@@ -386,7 +390,7 @@ function search(game, state, actions, options = PARAMETERS) {
   const allowed = physical.legal(game, state);
   const publicActions = actions.map(action => ({ index: action.index,
     inspect: !!state.down[action.index] && state.openPeek !== action.index
-      && (state.pictures[action.index] === null || unproductiveReopen(state, action.index, allowed)) }));
+      && (state.pictures[action.index] === null || unproductiveReopen(game, state, action.index, allowed, options.progressiveReopens)) }));
   return guarded(game, state, publicActions, settings);
 }
 
