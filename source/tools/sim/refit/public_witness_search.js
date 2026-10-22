@@ -223,9 +223,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       for (const index of indices) {
         const moved = physical.advance(game, settled, index), path = node.path.concat(index);
         if (moved.uncertain) {
-          if (moved.reason !== 'unseenPicture') { unsupported++; continue; }
+          if (!['unseenPicture', 'unobservedObstacleRole', 'unobservedOrientation'].includes(moved.reason)) { unsupported++; continue; }
           unknown++;
-          const sequence = settled.down[index] ? path : node.path;
+          const sequence = moved.reason !== 'unseenPicture' || settled.down[index] ? path : node.path;
           if (sequence.length) evaluate(settled, sequence, true, index);
           continue;
         }
