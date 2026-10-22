@@ -260,8 +260,8 @@ async function cmdMore(workers, per, from, to, rounds) {
 function cmdAssign(from) {
   const P = plan(), C = readJ(CANDS_F, null); if (!C) throw Error('no candidates yet');
   const prev = readJ(OUT, { levels: {} }), checked = readJ(CHECKED_F, {});
-  // (no board is kept as such: boards measured by validate come back through `checked`)
-  const keep = [];
+  // boards measured by validate come back through `checked`; only tuned boards that passed are kept as such
+  const keep = prev.from === from ? Object.entries(prev.levels).filter(([, x]) => x.status === 'ok' && /~t$/.test(x.id || '')) : [];
   const levels = P.levels.filter(l => l.lv >= from && C.levels[l.lv]);
   const all = []; for (const [lv, cs] of Object.entries(C.levels)) cs.forEach((c, k) => { if (c.m) all.push({ id: lv + ':' + k, made: +lv, c, s: sig(c.board.tiles) }); });
   // the boards the slower first method (variety.js) finished are candidates too (measured with 1200 games)
