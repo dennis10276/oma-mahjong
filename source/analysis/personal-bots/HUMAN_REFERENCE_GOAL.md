@@ -69,3 +69,20 @@ one-try Dennis clear; Dennis minus one otherwise). This affects only evaluation
 censoring, not policy decisions. A `>N` result means no clear within N actual
 tries, not an invented successful try. Source hashes and board provenance are
 reported; only one short table is written when a report path is explicitly given.
+
+## Development checkpoint
+
+The source-bound focused run in `HUMAN_REFERENCE_FOCUS_2026-10-22.md` clears
+134,141,143 on try1 and fails147 within its allowed single try. Slowest planning
+decision is1499.8ms. These four rows are not a complete-catalog pass. An earlier
+20-case conservative-role experiment passed14/20; the next full-catalog run must
+retain all failures, including132,136,145,147,149,150 rather than reporting only
+the improved focus cases. No unseen20-level freeze or completion is claimed.
+
+Public-analysis caching is scoped to one search/observation snapshot. It reuses
+metrics and bounded/unbounded proof analyses without turning bounds into loss
+certificates. Frozen alive arrays may cache their binary signatures; mutable
+arrays never do. Tests check identical paths/conclusions with caching enabled,
+including one-node proof limits, and96 concealed worlds with identical public
+observations. The stopped full-catalog batch is recorded separately as interrupted,
+not promoted to a completed benchmark.
