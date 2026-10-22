@@ -327,7 +327,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="../play/tiles.js"></script>
 <script src="replay-state.js?v=537f6d4c1bc1"></script>
 <script src="playback.js?v=db4d48cfd379"></script>
-<script src="forecast-score.js?v=f92621ec0050"></script>
+<script src="forecast-score.js?v=9b1acdcc8464"></script>
 <script src="watch.js?v=26f6a2dd4e6b"></script>
 <script>
 /* Predictions are off (Dennis, 2026-10-22: not good enough). Codex and Gemini are making better ones,
@@ -899,30 +899,31 @@ const fcTime = t => new Date(t).toLocaleString('nl-NL', { day: 'numeric', month:
 const fcMark = ok => `<span class="pred-hit ${ok ? 'ok' : 'miss'}">${ok ? '✓' : '✗'}</span>`;
 function renderForecasts() {
   const box = $('#fcScore'); if (!box) return;
-  const note = '<p class="pred-note">Een voorspelling telt alleen als hij in de database stond vóór het level voor het eerst geopend werd. Vastgelegd is vastgelegd: niemand kan hem daarna nog veranderen of weghalen. Goed is precies bij 1-3 pogingen, 1 ernaast bij 4-5, 2 ernaast bij 6-7, of allebei 8 of meer. Doel: 16 van de eerste 20 per speler, en eerst beter dan altijd ‘1 poging’ raden.</p>';
+  const note = '<p class="pred-note">Een voorspelling telt alleen als hij in de database stond vóór het level voor het eerst geopend werd, en als alle pogingen komen van een gewone app-sessie op een apparaat dat de speler al gebruikte vóór het vastleggen; een nieuw apparaat telt pas mee na goedkeuring door Dennis. Vastgelegd is vastgelegd: niemand kan hem daarna nog veranderen of weghalen. Goed is precies bij 1-3 pogingen, 1 ernaast bij 4-5, 2 ernaast bij 6-7, of allebei 8 of meer. Doel: 16 van de eerste 20 per speler, en eerst beter dan altijd ‘1 poging’ raden.</p>';
   if (FC_STATE === 'rules') { box.innerHTML = '<div class="empty">De database laat de voorspellingen nog niet zien: publiceer eerst de nieuwe Firebase-regels.</div>'; return; }
   if (FC_STATE !== 'ok') { box.innerHTML = `<div class="empty">${FC_STATE === 'loading' ? 'Laden…' : 'De voorspellingen konden niet geladen worden.'}</div>`; return; }
   const people = Object.keys(FORECASTS || {}).filter(pid => !pid.startsWith('test-') && FORECASTS[pid] && typeof FORECASTS[pid] === 'object')
-    .map(pid => ({ pid, ...ForecastScore.score(FORECASTS[pid], events(pid)) })).sort((a, b) => nameOf(a.pid).localeCompare(nameOf(b.pid)));
+    .map(pid => ({ pid, ...ForecastScore.score(FORECASTS[pid], events(pid), ForecastScore.APPROVED[pid] || []) })).sort((a, b) => nameOf(a.pid).localeCompare(nameOf(b.pid)));
   if (!people.length) { box.innerHTML = '<div class="empty">Nog geen vastgelegde voorspellingen.</div>' + note; return; }
   const ratio = (n, d) => d ? `${n} van ${d}` : '–';
   const sumRow = ({ pid, summary: s }) => `<tr><td><button class="fc-who" data-pid="${esc(pid)}">${esc(nameOf(pid))}</button></td>`
     + `<td class="num">${s.cohort} van ${s.size}</td>`
     + `<td class="num">${ratio(s.ok, s.decided)}${s.decided ? (s.ok > s.baseline ? ' <span class="pred-hit ok">beter</span>' : ' <span class="pred-hit miss">niet beter</span>') : ''}</td>`
     + `<td class="num">${ratio(s.baseline, s.decided)}</td>`
-    + `<td class="num">${s.playing}</td><td class="num">${s.waiting}</td><td class="num">${s.late}${s.invalid ? ` · ${s.invalid} ongeldig` : ''}</td></tr>`;
-  let html = `<div class="tbl-wrap"><table><thead><tr><th>Speler</th><th class="num">In de test</th><th class="num">Voorspelling goed</th><th class="num">‘Altijd 1’ goed</th><th class="num">Bezig</th><th class="num">Nog te spelen</th><th class="num">Te laat vastgelegd</th></tr></thead><tbody>${people.map(sumRow).join('')}</tbody></table></div>`;
+    + `<td class="num">${s.playing}</td><td class="num">${s.waiting}</td><td class="num">${s.late}${s.invalid ? ` · ${s.invalid} ongeldig` : ''}</td><td class="num">${s.unverified}</td></tr>`;
+  let html = `<div class="tbl-wrap"><table><thead><tr><th>Speler</th><th class="num">In de test</th><th class="num">Voorspelling goed</th><th class="num">‘Altijd 1’ goed</th><th class="num">Bezig</th><th class="num">Nog te spelen</th><th class="num">Te laat vastgelegd</th><th class="num">Niet geverifieerd</th></tr></thead><tbody>${people.map(sumRow).join('')}</tbody></table></div>`;
   const mine = people.find(p => p.pid === sel);
   if (mine) {
     const seen = mine.rows.filter(r => r.status !== 'waiting' && r.status !== 'invalid').sort((a, b) => b.opened - a.opened).slice(0, 15);
     const next = mine.rows.filter(r => r.status === 'waiting').slice(0, 5);
     const row = r => {
-      const real = r.status === 'scored' ? (r.actual != null ? String(r.actual) : r.tries >= ForecastScore.MAX ? '8+ (nog niet gehaald)' : `nog niet, na ${r.tries} ${r.tries === 1 ? 'poging' : 'pogingen'}`) : r.status === 'playing' ? `bezig, ${r.tries} ${r.tries === 1 ? 'poging' : 'pogingen'}` : r.status === 'late' ? '–' : 'nog niet gespeeld';
-      const verdict = r.status === 'scored' ? fcMark(r.ok) : r.status === 'late' ? 'telt niet' : '';
+      const real = r.status === 'unverified' ? `niet geverifieerd: ${esc(r.check.reason)}${r.check.device ? ` (${esc(r.check.device)})` : ''}` : r.status === 'scored' ? (r.actual != null ? String(r.actual) : r.tries >= ForecastScore.MAX ? '8+ (nog niet gehaald)' : `nog niet, na ${r.tries} ${r.tries === 1 ? 'poging' : 'pogingen'}`) : r.status === 'playing' ? `bezig, ${r.tries} ${r.tries === 1 ? 'poging' : 'pogingen'}` : r.status === 'late' ? '–' : 'nog niet gespeeld';
+      const verdict = r.status === 'scored' ? fcMark(r.ok) : r.status === 'late' || r.status === 'unverified' ? 'telt niet' : '';
       const base = r.status === 'scored' ? fcMark(r.baseline) : '';
-      return `<tr class="${r.status === 'late' ? 'fc-late' : r.status === 'waiting' ? 'fc-wait' : ''}"><td>Level ${r.lv}</td><td class="num">${fcTry(r.p)}</td><td>${fcTime(r.locked)}${r.by ? ` · ${esc(r.by)}` : ''}${r.model ? ` · ${esc(r.model)}` : ''}</td><td>${r.opened ? fcTime(r.opened) : '–'}</td><td>${real}</td><td>${verdict}</td><td>${base}</td></tr>`;
+      return `<tr class="${r.status === 'late' || r.status === 'unverified' ? 'fc-late' : r.status === 'waiting' ? 'fc-wait' : ''}"><td>Level ${r.lv}</td><td class="num">${fcTry(r.p)}</td><td>${fcTime(r.locked)}${r.by ? ` · ${esc(r.by)}` : ''}${r.model ? ` · ${esc(r.model)}` : ''}</td><td>${r.opened ? fcTime(r.opened) : '–'}</td><td>${real}</td><td>${verdict}</td><td>${base}</td></tr>`;
     };
-    html += `<p class="fc-sub">${esc(nameOf(sel))}: per level</p><div class="tbl-wrap"><table><thead><tr><th>Level</th><th class="num">Voorspeld</th><th>Vastgelegd</th><th>Voor het eerst gespeeld</th><th>Echt gehaald bij</th><th>Goed?</th><th>‘Altijd 1’</th></tr></thead><tbody>${[...next.reverse(), ...seen].map(row).join('')}</tbody></table></div>`;
+    html += `<p class="fc-sub">${esc(nameOf(sel))}: per level</p><div class="tbl-wrap"><table><thead><tr><th>Level</th><th class="num">Voorspeld</th><th>Vastgelegd</th><th>Voor het eerst gespeeld</th><th>Echt gehaald bij</th><th>Goed?</th><th>‘Altijd 1’</th></tr></thead><tbody>${[...next.reverse(), ...seen].map(row).join('')}</tbody></table></div>`
+      + `<p class="pred-note">Bekende apparaten: ${mine.devices.map(d => `${esc(d.device)} (sinds ${new Date(d.since).toLocaleDateString('nl-NL', { day: 'numeric', month: 'numeric' })}${d.approved ? ', goedgekeurd' : ''})`).join(' · ') || 'nog geen'}</p>`;
   }
   box.innerHTML = html + note;
   box.querySelectorAll('table').forEach(table => {

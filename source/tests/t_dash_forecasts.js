@@ -7,10 +7,14 @@ const FS = require(path.join(SITE, 'dash', 'forecast-score.js'));
 function fixture(now) {
   const h = 3600e3;
   let n = 0;
-  const plays = {}, add = (pid, hAgo, e) => { (plays[pid] = plays[pid] || {})['-e' + String(++n).padStart(4, '0')] = { t: now - hAgo * h, v: '1.59', dev: 'android', ses: 's1', ...e }; };
-  const level = (pid, lv, hAgo, results) => results.forEach((r, i) => {
-    add(pid, hAgo - i * 0.1, { k: 'start', lv, at: i + 1, n: 80 });
-    add(pid, hAgo - i * 0.1 - 0.05, { k: 'end', lv, at: i + 1, n: 80, r, left: r === 'win' ? 0 : 10, dur: 120 });
+  const plays = {}, add = (pid, hAgo, e) => { (plays[pid] = plays[pid] || {})['-e' + String(++n).padStart(4, '0')] = { t: now - hAgo * h, v: '1.59', dev: 'android', ...e }; };
+  const ses = hAgo => Math.round(now - hAgo * h).toString(36);
+  const S1 = ses(50), S2 = ses(3);                                // the phone she always uses; a new one after the lock
+  add('pG', 50, { k: 'open', ses: S1, dev: 'android', vw: 338, vh: 654, name: 'Gerda' });
+  add('pG', 3, { k: 'open', ses: S2, dev: 'android', vw: 999, vh: 1800 });
+  const level = (pid, lv, hAgo, results, extra = { ses: S1 }) => results.forEach((r, i) => {
+    add(pid, hAgo - i * 0.1, { k: 'start', lv, at: i + 1, n: 80, ...extra });
+    add(pid, hAgo - i * 0.1 - 0.05, { k: 'end', lv, at: i + 1, n: 80, r, left: r === 'win' ? 0 : 10, dur: 120, ...extra });
   });
   level('pG', 101, 20, ['win']);                                   // predicted 1, won at 1: right, and "always 1" right
   level('pG', 102, 19, ['stuck', 'stuck', 'stuck', 'win']);        // predicted 3, won at 4: right (+-1)
@@ -18,11 +22,14 @@ function fixture(now) {
   level('pG', 104, 17, Array(9).fill('stuck'));                    // predicted 8, still not won after 9: right already
   level('pG', 105, 10, ['stuck']);                                 // predicted 2, still playing
   level('pG', 109, 9, ['stuck']);                                  // predicted 1, first try lost: already wrong
+  level('pG', 110, 2, ['win'], { ses: S2 });                       // played on the new device: unverified
+  level('pG', 111, 2.5, ['win'], { ses: 'zzzzzzzz' });               // no app session behind it: unverified
+  level('pG', 112, 2.6, ['win'], { ses: S1 }); add('pG', 2.58, { k: 'end', lv: 112, at: 1, r: 'stuck', left: 4, ses: S2 });   // one record from the new device before the win spoils it
   level('pG', 106, 30, ['win']);                                   // locked after it was opened: does not count
   add('pG', 5, { k: 'end', m: 'd', d: '2026-10-22', lv: 107, r: 'win', at: 1 });   // a daily puzzle is not level 107
   const f = (p, hAgo) => ({ p, t: now - hAgo * h, by: 'gemini', model: 'v9' });
   const forecasts = {
-    pG: { 101: f(1, 40), 102: f(3, 40), 103: f(1, 40), 104: f(8, 40), 105: f(2, 40), 109: f(1, 40), 106: f(1, 25), 107: f(2, 40), 108: f(4, 40) },
+    pG: { 101: f(1, 40), 102: f(3, 40), 103: f(1, 40), 104: f(8, 40), 105: f(2, 40), 109: f(1, 40), 110: f(1, 40), 111: f(1, 40), 112: f(1, 40), 106: f(1, 25), 107: f(2, 40), 108: f(4, 40) },
     'test-x': { 1: f(1, 40) },
   };
   return { plays, forecasts, scores: { pG: { name: 'Gerda', level: 108, t: now } } };
@@ -45,8 +52,14 @@ module.exports = [
       t.eq([by[105].status, by[105].tries], ['playing', 1], 'still playing: try 2 would still be right');
       t.eq([by[109].status, by[109].ok, by[109].actual], ['scored', false, null], 'predicted 1 and the first try was lost: wrong already');
       t.eq(by[106].status, 'late', 'locked after the level was opened');
+      t.eq([by[110].status, by[110].check], ['unverified', { reason: 'nieuw apparaat', device: 'android 999' }], 'a device first seen after the lock is not counted');
+      t.eq([by[111].status, by[111].check.reason], ['unverified', 'geen app-sessie'], 'a record without an app session is not counted');
+      t.eq(by[112].status, 'unverified', 'one record from an unknown device is enough to leave the level out');
+      t.eq(FS.score(forecasts.pG, ev, ['android 999']).rows.find(r => r.lv === 110).status, 'scored', 'a device Dennis approved counts');
+      const fakeTime = Object.values(plays.pG).sort((a, b) => a.t - b.t).map(e => e.lv === 101 && e.k === 'end' ? { ...e, ses: Math.round(e.t + 3600e3).toString(36) } : e);
+      t.eq(FS.score(forecasts.pG, fakeTime).rows.find(r => r.lv === 101).check.reason, 'geen app-sessie', 'a session id that was never opened is caught');
       t.eq(by[107].status, 'waiting', 'the daily puzzle does not open level 107');
-      t.eq(summary, { cohort: 6, decided: 5, ok: 3, baseline: 1, playing: 1, waiting: 2, late: 1, invalid: 0, target: 16, size: 20 }, 'summary');
+      t.eq(summary, { cohort: 6, decided: 5, ok: 3, baseline: 1, playing: 1, waiting: 2, late: 1, unverified: 3, invalid: 0, target: 16, size: 20 }, 'summary');
       t.eq(FS.score({ 5: { p: 9, t: 1 }, 6: { p: 2 }, x: { p: 1, t: 1 } }, []).summary.invalid, 2, 'malformed predictions are shown as invalid, not scored');
     },
   },
@@ -63,7 +76,7 @@ module.exports = [
       const text = await p.locator('#fcScore').innerText();
       t.ok(/6 van 20/.test(text) && /3 van 5/.test(text) && /1 van 5/.test(text) && /beter/.test(text), 'summary: 6 in the test, 3 of 5 right, "always 1" 1 of 5', text);
       t.ok(!text.includes('test-x'), 'test players are left out');
-      t.ok(/Level 103/.test(text) && /Level 106/.test(text) && /telt niet/.test(text) && /8\+ \(nog niet gehaald\)/.test(text) && /bezig, 1 poging/.test(text) && /nog niet, na 1 poging/.test(text), 'per-level rows for the chosen player', text);
+      t.ok(/Level 103/.test(text) && /Level 106/.test(text) && /telt niet/.test(text) && /8\+ \(nog niet gehaald\)/.test(text) && /bezig, 1 poging/.test(text) && /nog niet, na 1 poging/.test(text) && /niet geverifieerd: nieuw apparaat \(android 999\)/.test(text) && /Bekende apparaten: android 338/.test(text), 'per-level rows for the chosen player', text);
       t.ok(/Level 107/.test(text) && /nog niet gespeeld/.test(text), 'upcoming locked levels are listed');
       const empty = new FakeDB({ ...fixture(now), forecasts: null });
       const q = await ctx.newPage(); await q.unroute('**/*').catch(() => { });

@@ -154,6 +154,12 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   6-7, both 8+. Test set: the first 20 levels opened after locking; target 16 of 20 per player.
   Outcomes come only from `plays/`. Agents never write to `plays/`, `scores/` or `replays/` for
   real players, and do not edit the scorecard to change a result.
+- Devices: a level only counts when every try record before the win comes from a normal app session
+  (the session's own "open" record: platform + screen width; `ses` is its start time) on a device the
+  player already used before the prediction was locked. A new device, or a record without such a
+  session, shows as "niet geverifieerd" and is left out. Only Dennis approves a new device
+  (`APPROVED` in `forecast-score.js`). These fields are public: this stops careless or invented
+  records, not a deliberate copy of a known device.
 - Rules check without production access: `EMULATOR_JAR=... node source/tests/forecast_rules_emulator.js`.
 
 ## Firebase
