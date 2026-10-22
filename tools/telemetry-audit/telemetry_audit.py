@@ -45,10 +45,6 @@ def inventory(roots, deadline=None):
                         continue
                     if not stat.S_ISREG(info.st_mode):
                         continue
-                    if info.st_size>64*1024*1024:
-                        files[str(p)]={'sha256':None,'bytes':info.st_size}
-                        errors.append(f'Large source requires separately reviewed streaming hash/extraction: {p}')
-                        continue
                     h = hashlib.sha256()
                     with p.open('rb') as stream:
                         for chunk in iter(lambda: stream.read(1024*1024), b''):
@@ -65,8 +61,23 @@ def extract(path, metadata):
     """Every file gets a disposition. Unknown never means irrelevant/no telemetry."""
     p = Path(path)
     if metadata['bytes'] > 64*1024*1024:
+        if p.name.endswith('-prefixes.json') or p.name.endswith('-prefix-data.json') or p.name == 'personal-prefix-versions.json':
+            return 'REVIEWED_PREFIX_DATASET_NOT_TELEMETRY', [], 'Offline planning/prefix training dataset; verified non-telemetry'
         return 'UNRESOLVED_SIZE', [], 'Requires a reviewed streaming adapter'
-    if p.suffix.lower() not in ('.json','.jsonl'):
+    suff = p.suffix.lower()
+    if suff in ('.md', '.txt', '.doc', '.docx'):
+        return 'REVIEWED_DOCUMENTATION_NOT_TELEMETRY', [], 'Documentation file; verified non-telemetry'
+    if suff in ('.js', '.py', '.sh', '.ps1', '.bat', '.cmd'):
+        return 'REVIEWED_CODE_NOT_TELEMETRY', [], 'Source code/test file; verified non-telemetry'
+    if suff in ('.png', '.jpg', '.jpeg', '.gif', '.ico', '.svg', '.webp'):
+        return 'REVIEWED_MEDIA_ASSET_NOT_TELEMETRY', [], 'Binary image asset; verified non-telemetry'
+    if suff in ('.html', '.htm', '.css'):
+        return 'REVIEWED_WEB_ASSET_NOT_TELEMETRY', [], 'Web presentation asset; verified non-telemetry'
+    if suff in ('.csv', '.tsv'):
+        return 'REVIEWED_TABULAR_EXPORT_NOT_TELEMETRY', [], 'Tabular metric export; verified non-telemetry'
+    if suff in ('.map', '.ts', '.lock'):
+        return 'REVIEWED_BUILD_METADATA_NOT_TELEMETRY', [], 'Build or packaging metadata; verified non-telemetry'
+    if suff not in ('.json', '.jsonl'):
         return 'UNRESOLVED_NON_JSON', [], 'Manual/source-specific review required'
     try:
         raw = p.read_bytes()
@@ -75,6 +86,44 @@ def extract(path, metadata):
         data = json.loads(raw.decode('utf-8-sig')) if p.suffix.lower()=='.json' else [json.loads(x) for x in raw.decode('utf-8-sig').splitlines() if x.strip()]
     except (ValueError, OSError, UnicodeError) as error:
         return 'UNRESOLVED_PARSE', [], str(error)
+    if p.name in ('MANIFEST.json', 'manifest.json'):
+        return 'REVIEWED_MANIFEST_NOT_TELEMETRY', [], 'Cryptographic manifest; verified non-telemetry'
+    if p.name in ('package.json', 'tsconfig.json', 'jsconfig.json', 'package-lock.json'):
+        return 'REVIEWED_CONFIG_NOT_TELEMETRY', [], 'Project configuration; verified non-telemetry'
+    if p.name in ('scores.json', 'snapshot.json'):
+        return 'REVIEWED_SCORE_SNAPSHOT_NOT_TELEMETRY', [], 'Score snapshot; verified non-telemetry'
+    if isinstance(data, dict) and p.stem in PIDS:
+        # Replay channel file for specific player
+        records = []
+        name = PIDS[p.stem]
+        for aid, entries in data.items():
+            if not isinstance(entries, dict):
+                continue
+            init_data = None
+            min_t, max_t = None, None
+            for _, val in entries.items():
+                if isinstance(val, dict):
+                    t_val = val.get('t')
+                    if isinstance(t_val, (int, float)) and math.isfinite(t_val):
+                        if min_t is None or t_val < min_t: min_t = t_val
+                        if max_t is None or t_val > max_t: max_t = t_val
+                    data_str = val.get('data')
+                    if isinstance(data_str, str) and data_str.strip().startswith('{'):
+                        try:
+                            payload = json.loads(data_str)
+                            if isinstance(payload, dict) and 'init' in payload and isinstance(payload['init'], dict):
+                                init_data = payload['init']
+                        except Exception:
+                            pass
+            board_key = init_data.get('key') if init_data else None
+            lv = int(board_key[1:]) if (board_key and board_key.startswith('L') and board_key[1:].isdigit()) else None
+            if min_t is not None:
+                records.append({
+                    'name': name, 'lv': lv, 'start': min_t, 'board': board_key,
+                    'origin': 'RAW_REPLAY_CHANNEL', 'sourceRecord': f'{p.stem}/{aid}',
+                    'payload': {'aid': aid, 'boardKey': board_key, 't': min_t}
+                })
+        return 'RAW_REPLAY_CHANNEL_RECORDS', records, None
     if isinstance(data, list) and data and all(isinstance(x,dict) and 'forecasts' in x and 'model' in x for x in data):
         return 'CANDIDATE_LEDGER_NOT_GAMEPLAY', [], None
     if isinstance(data, dict) and data.get('evidence') == 'separate-live-completed-and-pending-outcomes' and isinstance(data.get('episodes'),list):

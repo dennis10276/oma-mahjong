@@ -76,6 +76,29 @@ class TelemetryAuditTests(unittest.TestCase):
     def test_extraction_detects_changed_bytes(self):
         p=self.put('unknown.json',{});files,_=inventory([str(self.root)]);p.write_text('[]')
         self.assertEqual(extract(str(p),files[str(p)])[0],'UNRESOLVED_CHANGED')
+    def test_reviewed_code_and_documentation_dispositions(self):
+        p_md=self.root/'doc.md'; p_md.write_text('# Doc')
+        p_js=self.root/'script.js'; p_js.write_text('console.log(1);')
+        files,_=inventory([str(self.root)])
+        self.assertEqual(extract(str(p_md),files[str(p_md)])[0],'REVIEWED_DOCUMENTATION_NOT_TELEMETRY')
+        self.assertEqual(extract(str(p_js),files[str(p_js)])[0],'REVIEWED_CODE_NOT_TELEMETRY')
+    def test_reviewed_prefix_dataset_disposition(self):
+        p_pfx=self.root/'personal-fresh-clock-prefixes.json'; p_pfx.write_text('{}')
+        meta={'bytes': 70*1024*1024, 'sha256': 'abc'}
+        self.assertEqual(extract(str(p_pfx), meta)[0], 'REVIEWED_PREFIX_DATASET_NOT_TELEMETRY')
+    def test_replay_channel_extraction(self):
+        p_rep=self.put('pmuy78xu6tsths9.json', {
+            'aid-123': {
+                'entry-1': {'t': 1792000000000, 'data': json.dumps({'init': {'key': 'L100', 'at': 1}})}
+            }
+        })
+        files,_=inventory([str(self.root)])
+        disp, rows, _ = extract(str(p_rep), files[str(p_rep)])
+        self.assertEqual(disp, 'RAW_REPLAY_CHANNEL_RECORDS')
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['name'], 'Dennisisdebeste')
+        self.assertEqual(rows[0]['lv'], 100)
+
 
 
 if __name__=='__main__':unittest.main()
