@@ -169,6 +169,7 @@ module.exports = [
     t.eq(due.half, [3], 'a try less than 70% done: only once, at the 3rd loss');
     t.eq(due.most, [3, 9, 12, 15, 18, 21, 22, 23, 24], 'over 70% done: the 3rd, then 9, 12, 15, 18, and after the 20th every loss');
     t.eq(due.noFilmAt3.slice(0, 2), [3, 4], 'no film possible at the 3rd loss: the next loss gets it');
-    t.eq(await p.evaluate(() => { S.czLoss = {}; save(); restart(); return S.czLoss[G.key] || null; }), null, 'starting over does not count as a lost try');
+    t.eq(await p.evaluate(() => { S.czLoss = {}; save(); restart(); return S.czLoss[G.key]; }), { n: 1, shown: 0 }, 'starting over counts as a lost try');
+    t.eq(await p.evaluate(() => { S.czLoss = {}; save(); failTry(); restart(); return S.czLoss[G.key] || null; }), null, '"try again" after a lost try is not counted a second time');
   }},
 ];

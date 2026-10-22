@@ -478,13 +478,19 @@ function coachReview(why) {
   };
 }
 /* Is the film of the own try due at this loss (RULES.coach)? Counts the real lost tries of each level
-   (S.czLoss, not restarts): once from the first-th loss (the next one if no film could be made then),
+   (S.czLoss, restarts included): once from the first-th loss (the next one if no film could be made then),
    and from again-th on every every-th loss, from always-th on every loss, when the try was more than
    done (share of tiles gone). */
-function coachDue() {
-  if (!coachLevelOn()) return false;
-  const C = RULES.coach, e = S.czLoss[G.key] || (S.czLoss[G.key] = { n: 0, shown: 0 });
+// count a lost try (a restart counts too: decision Dennis 2026-10-22)
+function coachCount() {
+  if (!coachLevelOn()) return null;
+  const e = S.czLoss[G.key] || (S.czLoss[G.key] = { n: 0, shown: 0 });
   e.n++; save();
+  return e;
+}
+function coachDue() {
+  const C = RULES.coach, e = coachCount();
+  if (!e) return false;
   const n = G.tiles.length, done = (n - aliveCount() - G.tray.length) / n;
   return (!e.shown && e.n >= C.first) || (e.n >= C.again && ((e.n - C.again) % C.every === 0 || e.n >= C.always) && done > C.done);
 }
