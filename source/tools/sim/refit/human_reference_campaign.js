@@ -14,6 +14,7 @@ const { aliveSignature } = require('./public_alive_signature.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
+  assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
@@ -76,7 +77,8 @@ function createHumanController(tiles, options = {}) {
       };
     },
     decide() {
-      const actions = geometry.publicFrontier(current).free.map(index => ({ index }));
+      const available = geometry.publicFrontier(current);
+      let actions = available.free.map(index => ({ index }));
       if (!actions.length) return null;
       const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit && !(clock && current.alive[clock.i])
         ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
@@ -86,6 +88,15 @@ function createHumanController(tiles, options = {}) {
         resetPlanner();
         return { plan: { index, path: [index], goal: 'closedTileDiscovery', knownWin: false, knownDead: false,
           knownProgress: 0, information: true, boundary: true, nodes: 0 }, predicted: advance(geometry, current, index) };
+      }
+      if (options.patientSingleCarry && current.tray.length === 1 && !(clock && current.alive[clock.i])) {
+        const guaranteed = actions.filter(action => !available.uncertain.includes(action.index));
+        const ready = guaranteed.filter(action => {
+          const picture = current.pictures[action.index];
+          return picture !== null && (picture === current.tray[0] || guaranteed.some(partner =>
+            partner.index !== action.index && current.pictures[partner.index] === picture));
+        });
+        if (ready.length) actions = ready;
       }
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report(), predicted = advance(geometry, current, plan.index);
