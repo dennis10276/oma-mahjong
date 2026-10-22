@@ -178,6 +178,10 @@ const TEXT = {
   // the game tips (js/coach.js): titles czT_, explanations czX_, film captions
   czMenu: ['Speltips', 'Game tips'],
   czYours: ['Jouw spel', 'Your game'],
+  czClockIntro: ['De wekker telt zetten, geen seconden.', 'The clock counts moves, not seconds.'],
+  czClockMove: ['Elke steen die je pakt kost 1 zet.', 'Every tile you take costs 1 move.'],
+  czClockPeek: ['Kijken kost niets: de wekker blijft staan.', 'Peeking costs nothing: the clock stays.'],
+  czClockDone: ['Wekkersteen op tijd weg: de wekker stopt!', 'Clock tile gone in time: the clock stops!'],
   czT_three: ['Drie in het bakje', 'Three in the tray'],
   czX_three: ['Met 3 stenen in het bakje past een gewoon paar niet meer: de eerste steen zou de 4e worden. Een paar met een <b>dichte steen</b> kan nog wel: bekijk hem en tik dan op zijn maatje. Ze verdwijnen samen en het bakje blijft hetzelfde.', 'With 3 tiles in the tray a normal pair no longer fits: its first tile would be the 4th. A pair with a <b>face-down tile</b> still works: peek at it, then tap its twin. They go together and the tray stays the same.'],
   czThreeA: ['3 vakjes vol. Kijk naar de dichte stenen…', '3 slots filled. Look at the face-down tiles…'],

@@ -36,7 +36,7 @@ module.exports = [
       t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'ice reminder also fits: ' + lang);
       await click(p, '#ntGo');
       await p.evaluate(() => showIntro()); await click(p, '#mTileHelp');
-      t.eq(await p.locator('.cz-pick').count(), 8, 'from level 60 How to play opens the game tips (js/coach.js)');
+      t.eq([await p.locator('.cz-pick[data-kind]').count(), await p.locator('.cz-tilepick').count()], [8, 4], 'from level 60 How to play opens the game tips and the tile explanations (js/coach.js)');
       await p.emulateMedia({ reducedMotion: 'reduce' });
       await p.evaluate(() => showTileLesson('trayPair'));
       t.eq(await p.evaluate(() => lessonTimer), null, 'reduced motion starts paused');

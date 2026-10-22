@@ -71,8 +71,8 @@ function czObKind(s, ob, inb, i) {
 let coachRun = null;
 const COACH_STOP = 'coach-stop';
 function stopCoach() { if (coachRun) { coachRun.dead = true; coachRun.timers.forEach(clearTimeout); coachRun = null; } }
-function coachDemoHTML(own = false) {
-  return `<div class="lesson-demo coach-demo${own ? ' coach-own' : ''}">
+function coachDemoHTML(own = false, lesson = '') {
+  return `<div class="lesson-demo coach-demo${own ? ' coach-own' : ''}"${lesson ? ` data-lesson="${lesson}"` : ''}>
     <div class="cz-stage" aria-hidden="true"><div class="cz-tray">${'<span class="cz-slot"></span>'.repeat(4)}</div><div class="cz-board"></div><div class="cz-ov"></div><span class="lz-hand"><i>👆</i></span><div class="cz-verdict"></div></div>
     <div class="lesson-caption"></div>
     <div class="lesson-controls"><span>${tx(own ? 'czYours' : 'lessonExample')}</span><button type="button" class="lesson-toggle"></button><button type="button" class="lesson-replay">↺ ${tx('lessonReplay')}</button></div>
@@ -289,6 +289,7 @@ function coachPlay(demo, clip) {
         for (let k = 0; k < seg.acts.length; k++) {
           const act = seg.acts[k];
           if (act[0] === 'end') { await ending(act[1]); continue; }
+          if (act[0] === 'say') { say(tx(act[1])); await sleep(1100); continue; }
           demo.dataset.step = k + 1;
           await doAct(act, k, seg);
           await sleep(act[0] === 'peek' ? 420 : 560);
@@ -308,18 +309,52 @@ function coachPlay(demo, clip) {
 
 // ---------- showing a tip ----------
 function showCoachTip(id, after = null, reminder = false, why = reminder ? 'retry' : 'manual') {
+  const mine = why === 'manual' ? czMine()[id] : null;
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('czT_' + id)}</h2>
-    ${coachDemoHTML()}<p>${tx('czX_' + id)}</p>
+    ${coachDemoHTML()}${mine ? `<div class="cz-switch"><button type="button" class="cz-sw on" data-w="tip">${tx('lessonExample')}</button><button type="button" class="cz-sw" data-w="mine">⭐ ${tx('czYours')}</button></div>` : ''}<p>${tx('czX_' + id)}</p>
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, after, 'tile-help coach-help');
   coachPlay($('#modalBox .coach-demo'), coachTipClip(id));
+  // the player's own game with this trick, next to the real game
+  if (mine) $('#modalBox').querySelectorAll('.cz-sw').forEach(b => { b.onclick = () => {
+    $('#modalBox').querySelectorAll('.cz-sw').forEach(x => x.classList.toggle('on', x === b));
+    const demo = $('#modalBox .coach-demo');
+    demo.classList.toggle('coach-own', b.dataset.w === 'mine');
+    demo.querySelector('.lesson-controls span').textContent = tx(b.dataset.w === 'mine' ? 'czYours' : 'lessonExample');
+    coachPlay(demo, b.dataset.w === 'mine' ? mine.clip : coachTipClip(id));
+  }; });
   replayMark('coach', [id, why]);
   const message = recordHelpMessage('coach-' + id, why);
   $('#ntGo').onclick = () => { message('ack'); closeModal(); };
 }
+/* The clock, explained with a real game (the route of the tip "go for the clock first"): the clock
+   counts down on its own tile with every tile taken, a peek costs nothing, the clock tile in time. */
+function coachClockClip() {
+  const c = COACH_CLIPS.clockFirst, sg = c.segs[1], acts = [];
+  sg.acts.forEach((a, k) => {
+    if (a[0] === 'peek') acts.push(['say', 'czClockPeek']);
+    acts.push(a);
+    if (k === 0) acts.push(['say', 'czClockMove']);
+  });
+  return { tiles: c.tiles, faces: c.faces, segs: [{ start: sg.start, acts, caps: [tx('czClockIntro'), tx('czClockDone')], marks: [] }] };
+}
+/* The player's own examples: every own film shown is kept for its tip (the newest one), so the tip in
+   the menu can show the player's own game next to the real game. Kept apart from the saved progress. */
+const CZ_MINE = 'omamj.czmine';
+const czMine = () => { try { return JSON.parse(localStorage.getItem(CZ_MINE) || '{}'); } catch (e) { return {}; } };
+function czKeepMine(r) {
+  if (!r || !r.tip) return;
+  const m = czMine(); m[r.tip] = { t: Date.now(), lv: G && G.o.level, clip: r.clip };
+  try { localStorage.setItem(CZ_MINE, JSON.stringify(m)); } catch (e) { }
+}
+// the game tips, the player's own examples, and the explanations of the special tiles
 function showCoachMenu() {
-  openModal(`<h2>${tx('czMenu')}</h2><div class="cz-picks">${COACH_ORDER.map(k => `<button class="lesson-pick cz-pick" data-kind="${k}"><span>${COACH_ICO[k]}</span><b>${tx('czT_' + k)}</b></button>`).join('')}</div>
-    <button class="link-btn" id="mClose">${tx('gotIt')}</button>`, true, null, 'tile-help coach-help');
-  $('#modalBox').querySelectorAll('.cz-pick').forEach(b => { b.onclick = () => showCoachTip(b.dataset.kind, showCoachMenu, false, 'manual'); });
+  const mine = czMine();
+  const tiles = ['ice', 'lock', 'trayPair', 'clock'];
+  openModal(`<h2>${tx('czMenu')}</h2><div class="cz-picks">${COACH_ORDER.map(k => `<button class="lesson-pick cz-pick" data-kind="${k}"><span>${COACH_ICO[k]}</span><b>${tx('czT_' + k)}</b>${mine[k] ? `<i class="cz-mine">${tx('czYours')}</i>` : ''}</button>`).join('')}</div>
+    <h3 class="cz-h3">${tx('lessonMenu')}</h3><div class="cz-picks cz-tilepicks">${tiles.map(k => `<button class="lesson-pick cz-pick cz-tilepick" data-tile="${k}"><span>${NEW_TILES[k] ? NEW_TILES[k].ico : '⏰'}</span><b>${tx('nt_' + k)}</b></button>`).join('')}</div>
+    <button class="link-btn" id="mClose">${tx('gotIt')}</button>`, true, null, 'tile-help coach-help coach-menu');
+  $('#modalBox').querySelectorAll('.cz-pick[data-kind]').forEach(b => { b.onclick = () => showCoachTip(b.dataset.kind, showCoachMenu, false, 'manual'); });
+  $('#modalBox').querySelectorAll('.cz-tilepick').forEach(b => { b.onclick = () => b.dataset.tile === 'clock' ? showClockLesson(showCoachMenu, false, 'manual') : showTileLesson(b.dataset.tile, showCoachMenu, false, 'manual'); });
   $('#mClose').onclick = closeModal;
 }
 // ---------- the player's own last moves ----------
@@ -541,6 +576,7 @@ const coachShown = () => { const e = S.czLoss[G.key]; if (e) { e.shown = e.n; sa
    (the film of a real game and its explanation) opens from here; afterwards this window comes back. */
 const coachReviewHTML = r => `${coachDemoHTML(true)}<button type="button" class="link-btn cz-tiplink" id="czTip">${COACH_ICO[r.tip]} ${tx('czSeeTip')} <b>${tx('czT_' + r.tip)}</b></button>`;
 function coachReviewStart(r) {
+  czKeepMine(r);
   coachPlay($('#modalBox .coach-demo'), r.clip);
   replayMark('coach', [r.tip, 'review', r.kind]);
   const link = $('#czTip');

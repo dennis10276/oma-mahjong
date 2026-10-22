@@ -28,10 +28,22 @@ module.exports = [
     await p.evaluate(() => showLessonMenu());
     t.eq(await p.locator('.lesson-pick:not(.cz-pick)').count(), 4, 'below 60: the tile lessons');
     await p.evaluate(() => { closeModal(); S.level = 95; save(); showLessonMenu(); });
-    t.eq(await p.locator('.cz-pick').count(), 8, 'from 60: the game tips in the menu');
+    t.eq(await p.locator('.cz-pick[data-kind]').count(), 8, 'from 60: the game tips in the menu');
+    t.eq(await p.locator('.cz-tilepick').count(), 4, 'and the explanations of the special tiles');
     await click(p, '.cz-pick[data-kind="remember"]');
     t.ok(await p.evaluate(() => !!$('#modalBox .coach-demo')), 'a tip opens from the menu');
     await click(p, '#ntGo');
+    // an own film that was shown is kept with its tip: the menu marks it and the tip can play it
+    await p.evaluate(() => { const c = coachTipClip('twin'); localStorage.setItem(CZ_MINE, JSON.stringify({ twin: { t: 1, lv: 95, clip: c } })); showLessonMenu(); });
+    t.eq(await p.locator('.cz-pick[data-kind="twin"] .cz-mine').count(), 1, 'the menu marks a tip with an own example');
+    await click(p, '.cz-pick[data-kind="twin"]');
+    await click(p, '.cz-sw[data-w="mine"]');
+    t.ok(await p.evaluate(() => $('#modalBox .coach-demo').classList.contains('coach-own') && !!coachRun), 'the own example plays in the tip');
+    await click(p, '#ntGo');
+    await p.evaluate(() => { localStorage.removeItem(CZ_MINE); closeModal(); });
+    await p.evaluate(() => showLessonMenu()); await click(p, '.cz-tilepick[data-tile="ice"]');
+    t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), 'ice', 'tile explanations open from the same menu');
+    await click(p, '#ntGo'); await p.evaluate(() => closeModal());
     for (const lv of [65, 95]) {
       await p.evaluate(lv => { S.fails['L' + lv] = 3; save(); }, lv);
       await startLevel(p, lv);
@@ -94,6 +106,7 @@ module.exports = [
     await p.evaluate(x => onTap(x), x); await sleep(400);
     await p.evaluate(x => onTap(x), x); await sleep(1400);
     t.ok(await p.evaluate(() => !!$('#modalBox .coach-own')), 'the loss shows the own film');
+    t.ok(await p.evaluate(() => !!czMine().twin), 'the own film is kept with its tip for the menu');
     t.eq(await p.evaluate(() => coachReview('tray') && coachReview('tray').kind), 'twin', 'the right tip: tap the twin');
     t.ok(await p.evaluate(() => { const c = coachReview('tray').clip; return JSON.stringify(c.segs[0].start) === JSON.stringify(c.segs[1].start); }), 'the right way starts at the same moment as the own replay');
     t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'the own film fits a small phone');

@@ -429,13 +429,14 @@ function showLessonMenu() {
 // The same explanation before the first clock level and after every clock timeout.
 const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
 function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
-  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${lessonDemoHTML('clock')}${clockHelpText()}
+  // (from 1.59: a film of a real game in the player's own tiles, js/coach.js)
+  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${coachDemoHTML(false, 'clock')}${clockHelpText()}
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp.clock = S.seenSp.clockMoves = true; save();
       replayMark('clock-help', 'acknowledged');
       if (after) after();
     }, 'clock-help');
-  startLessonDemo();
+  coachPlay($('#modalBox .coach-demo'), coachClockClip());
   replayMark('clock-help', 'intro');
   const message = recordHelpMessage('clock', why);
   $('#ntGo').onclick = () => { message('ack'); closeModal(); };
