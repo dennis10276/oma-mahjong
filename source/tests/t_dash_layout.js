@@ -22,7 +22,7 @@ module.exports = [
       const geometry = () => p.evaluate(() => ['#kpis', '.game-watch', '#ranking', '#chHeat', '#chClose', '#tbl'].map(selector => { const b = document.querySelector(selector).getBoundingClientRect(); return { x: b.x + scrollX, y: b.y + scrollY, width: b.width }; }));
       try {
         for (const width of [2546, 1600]) {
-          await p.setViewportSize({ width, height: 1200 }); await p.goto(site.url + 'dash/#pA'); await p.waitForFunction(() => document.querySelector('#feed').textContent.includes('App geopend'));
+          await p.setViewportSize({ width, height: 1200 }); await p.goto(site.url + 'dash/?pred=1#pA'); await p.waitForFunction(() => document.querySelector('#feed').textContent.includes('App geopend'));
           await p.evaluate(key => localStorage.removeItem(key), KEY); await p.reload(); await p.waitForFunction(() => document.querySelector('#feed').textContent.includes('App geopend')); await p.waitForTimeout(300);
           const before = await geometry();
           await p.locator('#layoutEdit').click();
@@ -64,7 +64,7 @@ module.exports = [
       const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
       const panel = id => p.locator(`[data-panel="${id}"]`);
       try {
-        await p.goto(site.url + 'dash/#pA'); await p.waitForSelector('#tbl button[data-aid]');
+        await p.goto(site.url + 'dash/?pred=1#pA'); await p.waitForSelector('#tbl button[data-aid]');
         t.ok(await p.locator('#layoutBoard').isHidden(), 'original layout remains until editor is used');
         await p.locator('#layoutEdit').click(); await p.getByRole('button', { name: 'Andere indeling kiezen', exact: true }).click(); await p.waitForSelector('#layoutBoard .layout-panel');
         t.eq(await p.locator('#layoutBoard .layout-panel').count(), 9, 'every dashboard panel has an edit control');

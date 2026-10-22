@@ -197,7 +197,7 @@ module.exports = [
       await ctx.route(u => /\/dash\/predict\.json/.test(u.pathname), r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(pred) }));
       const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
       try {
-        await p.goto(site.url + 'dash/#pDen'); await sleep(2000);
+        await p.goto(site.url + 'dash/?pred=1#pDen'); await sleep(2000);
         const txt = await p.evaluate(() => document.querySelector('#pred').innerText);
         t.ok(!txt.includes('%'), 'old percentage chance metrics are completely absent from the Voorspelling card', txt);
         t.ok(/8\+ pogingen verwacht[\s\S]*Level 30/i.test(txt), '8+ attempt levels are highlighted in the summary', txt.slice(0, 300));

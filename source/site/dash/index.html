@@ -324,6 +324,13 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="playback.js?v=db4d48cfd379"></script>
 <script src="watch.js?v=26f6a2dd4e6b"></script>
 <script>
+/* Predictions are off (Dennis, 2026-10-22: not good enough). Codex and Gemini are making better ones,
+   to show in the live game and the level cards. dash/?pred=1 still shows the old Voorspelling card for
+   whoever works on them; predict*.json stay in place. */
+const PREDICTIONS = /[?&]pred=1\b/.test(location.search);
+if (!PREDICTIONS) { const c = document.getElementById('predTitle'); if (c) c.closest('section').remove(); }
+</script>
+<script>
 let PLAYS = {}, SCORES = {}, sel = null, liveOK = false;
 const want = location.hash.length > 2 ? decodeURIComponent(location.hash.slice(1)) : '';   // a player picked earlier (link with #id)
 let wantDone = false;
@@ -755,6 +762,7 @@ function renderHeartTop() { const el = $('#heartTop'); if (el) el.innerHTML = se
 let PRED = null;
 const PRED_BY_VERSION = new Map();
 async function loadPred() {
+  if (!PREDICTIONS) return;
   try {
     const stamp = '?v=pb-1.58.2&t=' + Math.floor(Date.now() / 60000);
     const r = await fetch('predict.json' + stamp); if (!r.ok) return;

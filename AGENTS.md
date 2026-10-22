@@ -80,6 +80,11 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Predictions on the dashboard
 
+- Off since 2026-10-22 (Dennis: not good enough). The Voorspelling card is gone and predict*.json is not
+  downloaded; `dash/?pred=1` still shows the old card. Codex and Gemini are making better predictions,
+  to show in the live game and the level cards: switch them on there when Dennis approves. The files and
+  notes below stay as they are.
+
 - Release 1.56 only improves tutorials; all boards are identical to 1.55. Current
   predictions carry the same numbers under version 1.56, with 1.55 registered as
   comparable on all levels and its original file preserved in `predict-1.55.json`.
