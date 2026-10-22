@@ -16,7 +16,9 @@ const RULES = {
   // from this level (decision Dennis 2026-10-22) no lessons are shown on their own any more: after a lost
   // try the player sees a film of their own last moves and the better move, tied to its game tip
   // (js/coach.js). The game tips stay in the menu; first-time introductions of a new tile kind stay.
-  coach: { fromLevel: 60 },
+  // When (decision Dennis 2026-10-22): once from the 3rd lost try of a level; then from the 9th lost try
+  // every 3rd one (9, 12, 15, ...), but only when that try was more than 70% done. Restarts do not count.
+  coach: { fromLevel: 60, first: 3, again: 9, every: 3, done: 0.7 },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on

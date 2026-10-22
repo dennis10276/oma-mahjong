@@ -39,7 +39,7 @@ const defaults = () => ({
   sfx: true, music: true, vibrate: true, highlight: true, nums: true, contrast: false,
   seenIntro: false, sunSeen: false, seenSp: {},
   matches: 0, bestCombo: 0, bestStreak: 0, winStreak: 0, bonusStars: 0, bonusPts: 0, weekWins: 0,
-  stats: {}, trophies: {}, att: {}, fails: {}, lvlPts: {}, dayPts: {}, lvlHist: {}, botLv: {},
+  stats: {}, trophies: {}, att: {}, fails: {}, czLoss: {}, lvlPts: {}, dayPts: {}, lvlHist: {}, botLv: {},
   heartsSent: {}, heartsSeen: {}, heartsOut: {}, pendingHearts: [],
 });
 let S;

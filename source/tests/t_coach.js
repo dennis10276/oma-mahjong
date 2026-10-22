@@ -78,6 +78,7 @@ module.exports = [
   { name: 'game tips: a lost try shows the player\'s own last moves and the better move', async run(t, { startLevel, sleep }) {
     const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 111, sunSeen: true, theme: 'animals', seenSp: seen } });
     await startLevel(p, 110);
+    await p.evaluate(() => { S.czLoss[G.key] = { n: 2, shown: 0 }; save(); });   // this loss is the 3rd: the film is due
     // one free tile of an open pair lies face down; three single tiles fill the tray; then the peeked tile is tapped again
     const [x, y] = await p.evaluate(() => {
       const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
@@ -151,5 +152,23 @@ module.exports = [
     const k = await p.evaluate(() => G.key);
     await p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i) && !G.down[i]) fr.push(i); onTap(fr[0]); });
     t.ok(await p.evaluate(([k, i]) => !!czMemory.get(k) && czMemory.get(k).seen.has(i), [k, peeked]), 'the peeked tile is remembered for the retry');
+  }},
+  { name: 'game tips: the own film shows once from the 3rd lost try, then from the 9th every 3rd when the try was over 70% done', async run(t, { startLevel }) {
+    const p = await t.phone({ state: { name: 'Dennis', level: 101, sunSeen: true, seenSp: seen } });
+    await startLevel(p, 100);
+    const due = await p.evaluate(() => {
+      const keep = Array.from(G.alive), n = G.tiles.length;
+      const setDone = f => { G.alive = Uint8Array.from(keep); let k = Math.round(n * f); for (let i = 0; i < n && k > 0; i++) if (G.alive[i]) { G.alive[i] = 0; k--; } };
+      const run = (f, shownOn) => { S.czLoss[G.key] = { n: 0, shown: 0 }; setDone(f); const out = [];
+        for (let l = 1; l <= 21; l++) if (coachDue()) { out.push(l); if (!shownOn || shownOn(l)) coachShown(); }
+        return out; };
+      const r = { half: run(0.5), most: run(0.8), noFilmAt3: run(0.5, l => l !== 3) };
+      G.alive = Uint8Array.from(keep);
+      return r;
+    });
+    t.eq(due.half, [3], 'a try less than 70% done: only once, at the 3rd loss');
+    t.eq(due.most, [3, 9, 12, 15, 18, 21], 'over 70% done: the 3rd, then 9, 12, 15, 18, 21');
+    t.eq(due.noFilmAt3.slice(0, 2), [3, 4], 'no film possible at the 3rd loss: the next loss gets it');
+    t.eq(await p.evaluate(() => { S.czLoss = {}; save(); restart(); return S.czLoss[G.key] || null; }), null, 'starting over does not count as a lost try');
   }},
 ];

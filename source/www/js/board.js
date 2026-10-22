@@ -628,7 +628,8 @@ function gameOver() {
   failTry();
   // from RULES.coach.fromLevel: the film of the last moves and what would have worked (coach.js)
   let review = null;
-  try { review = coachReview('tray'); } catch (e) { review = null; }
+  try { review = coachDue() ? coachReview('tray') : null; } catch (e) { review = null; }
+  if (review) coachShown();
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
     openModal(`<h2>${tx(review ? 'czOwnTitle' : 'fullTitle')}</h2>
@@ -743,7 +744,8 @@ function checkClock() {
     // from RULES.coach.fromLevel: the film of this try and a route that reached the clock in time
     const coach = coachLevelOn();
     let review = null;
-    if (coach) try { review = coachReview('clock'); } catch (e) { review = null; }
+    if (coach) try { review = coachDue() ? coachReview('clock') : null; } catch (e) { review = null; }
+    if (review) coachShown();
     // (from there no lesson film of its own: without a film of the own try only what happened)
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
       ${review ? coachReviewHTML(review) : coach ? `<p>${tx('clockText', G.clock.n)}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${lessonDemoHTML('clock')}${clockHelpText()}`}
