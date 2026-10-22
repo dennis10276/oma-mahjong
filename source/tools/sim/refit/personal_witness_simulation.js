@@ -55,6 +55,8 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
     sha256: crypto.createHash('sha256').update([playerName, campaign, board].join('|')).digest('hex')
   };
 
+  const cover = Hard.coverOf(game.tiles, game.nb);
+
   let wonOn = null;
   const attemptHistory = [];
 
@@ -73,8 +75,7 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
         if (!alive) return null;
         if (index === f.state.openPeek) return game.faces[index];
         if (!game.down[index]) {
-          const aboveList = (game.nb && game.nb.above && game.nb.above[index]) || [];
-          if (aboveList.every(a => !f.state.alive[a])) return game.faces[index];
+          if (!cover[index].some(above => f.state.alive[above])) return game.faces[index];
         }
         return null;
       });
