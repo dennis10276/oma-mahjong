@@ -92,6 +92,8 @@ function coachPlay(demo, clip) {
   const verdict = stage.querySelector('.cz-verdict'), capEl = demo.querySelector('.lesson-caption'), toggle = demo.querySelector('.lesson-toggle');
   const tiles = clip.tiles.map(([x, y, z]) => ({ x, y, z })), faces = clip.faces, nb = Layouts.neighbors(tiles);
   const ob = clip.ob || null, inb = ob ? Layouts.iceNeighbors(tiles) : null;
+  // an own film never shows a picture the player has not seen: such a tile shows a question mark
+  const knownSet = clip.known ? new Set(clip.known) : null, hidden = i => !!knownSet && !knownSet.has(i);
   const bg = BGS.find(b => b.id === S.bg && !bgLocked(b)) || BGS[0];
   stage.style.background = bg.css;
   boardEl.classList.toggle('hl', S.highlight);
@@ -175,7 +177,7 @@ function coachPlay(demo, clip) {
     const order = tiles.map((t, i) => i).filter(i => s.a[i]).sort((p, q) => tiles[p].z - tiles[q].z || tiles[p].y - tiles[q].y || tiles[p].x - tiles[q].x);
     boardEl.innerHTML = order.map(i => {
       const R = rect(i), t = tiles[i];
-      return `<div class="tile${s.d[i] && s.p !== i ? ' back' : ''}${s.p === i ? ' cz-peek' : ''}" data-i="${i}" style="left:${R.l.toFixed(1)}px;top:${R.t.toFixed(1)}px;width:${R.w.toFixed(1)}px;height:${R.h.toFixed(1)}px;z-index:${t.z * 10000 + t.y * 100 + t.x}"><div class="face">${Tiles.boardFace(S.theme, faces[i])}</div></div>`;
+      return `<div class="tile${s.d[i] && s.p !== i ? ' back' : ''}${s.p === i ? ' cz-peek' : ''}${hidden(i) ? ' cz-unseen' : ''}" data-i="${i}" style="left:${R.l.toFixed(1)}px;top:${R.t.toFixed(1)}px;width:${R.w.toFixed(1)}px;height:${R.h.toFixed(1)}px;z-index:${t.z * 10000 + t.y * 100 + t.x}"><div class="face">${hidden(i) ? '<b class="cz-q">?</b>' : Tiles.boardFace(S.theme, faces[i])}</div></div>`;
     }).join('');
     boardEl.querySelectorAll('.tile').forEach(el => { els[+el.dataset.i] = el; });
     paintBlocked(); paintTray(); paintClock();
@@ -312,13 +314,39 @@ function coachRetryTip(after = null) {
    numbers); the film is worked out from that when the try is lost. Anything the little game does
    not know (a joker, shuffling, putting the tray back, the helper turning tiles over) starts the
    notes afresh from the next tap. */
+/* What the player has seen. The films never show a picture the player has not seen: not in this
+   try, and not in an earlier try of the same board this session (a retry is the same deal). A tile
+   counts as seen when it lay face up and not fully under another tile, or was peeked at. */
+const czMemory = new Map();          // level key -> { sig, seen: Set of tiles }
+let czOpen = null;                    // the notes of the current try, with its board
+const czSig = faces => faces.join(',');
+function czCovered(st, tiles, nb, i) { return nb.above[i].some(j => st.a[j] && tiles[j][0] === tiles[i][0] && tiles[j][1] === tiles[i][1]); }
+function czLook(st, tiles, nb, seen) { st.a.forEach((v, i) => { if (v && ((!st.d[i] && !czCovered(st, tiles, nb, i)) || st.p === i)) seen.add(i); }); }
+// play the notes again in the little game: every position, every act, and what was seen before each tap
+function czRun(z) {
+  const { faces, tiles, nb } = z;
+  let s = czState(z.start);
+  const states = [s], acts = [], seen = new Set(), seenAt = [];
+  czLook(s, tiles, nb, seen);
+  for (const i of z.taps) { seenAt.push(new Set(seen)); const a = czStep(s, faces, i); acts.push(a); s = czApply(s, faces, a); states.push(s); czLook(s, tiles, nb, seen); }
+  return { states, acts, seen, seenAt };
+}
+// keep what this try showed, for a next try of the same board
+function czFold(z) {
+  if (!z || !z.taps.length) return;
+  const sig = czSig(z.faces), m = czMemory.get(z.key);
+  const mem = m && m.sig === sig ? m : { sig, seen: new Set() };
+  for (const i of czRun(z).seen) mem.seen.add(i);
+  czMemory.set(z.key, mem);
+}
+const czSeenBefore = z => { const m = czMemory.get(z.key); return m && m.sig === czSig(z.faces) ? m.seen : new Set(); };
 function coachNote(i) {
   if (!G) return;
-  if (!G.cz) G.cz = { start: { a: Array.from(G.alive), d: Array.from(G.down), p: G.peek, tray: G.tray.map(faceOf), ck: G.clock && G.alive[G.clock.i] ? { i: G.clock.i, left: clockLeft() } : null },
-    ob: G.ob ? { need: { ...G.ob.need }, locks: [...G.ob.locks], keys: G.ob.keys.slice(), unlocked: G.ob.unlocked } : null, taps: [] };
+  if (!G.cz) { czFold(czOpen); G.cz = czOpen = { key: G.key, faces: G.tiles.map((t, k) => faceOf(k)), tiles: G.tiles.map(t => [t.x, t.y, t.z]), nb: G.nb, start: { a: Array.from(G.alive), d: Array.from(G.down), p: G.peek, tray: G.tray.map(faceOf), ck: G.clock && G.alive[G.clock.i] ? { i: G.clock.i, left: clockLeft() } : null },
+    ob: G.ob ? { need: { ...G.ob.need }, locks: [...G.ob.locks], keys: G.ob.keys.slice(), unlocked: G.ob.unlocked } : null, taps: [] }; }
   G.cz.taps.push(i);
 }
-const coachForget = () => { if (G) G.cz = null; };
+const coachForget = () => { if (G && G.cz) { czFold(G.cz); G.cz = czOpen = null; } };
 
 // only the peeks the film needs: the one right before the tile is used
 function czTrim(acts) {
@@ -331,10 +359,10 @@ function czTrim(acts) {
     return false;
   });
 }
-/* A short route to the clock with the tiles as they really lay (the film shows it with peeks first,
-   as a player would do it): pairs, matches with the tray and single tiles, never a 4th tile, the clock
-   off the board in time. Tiles on top of and next to the clock are tried first. */
-function czClockRoute(start, faces, tiles, nb, ob, inb, budget = 40000) {
+/* A short route to the clock using only tiles the player has seen (known): pairs, matches with the
+   tray and single tiles, never a 4th tile, the clock off the board in time. Tiles on top of and next to
+   the clock are tried first. No route with known tiles: no film. */
+function czClockRoute(start, faces, tiles, nb, ob, inb, known, budget = 40000) {
   const ck = start.ck; if (!ck) return null;
   const cone = new Set();
   (function dig(i, dir) {
@@ -346,7 +374,8 @@ function czClockRoute(start, faces, tiles, nb, ob, inb, budget = 40000) {
   })(ck.i, 0);
   let nodes = 0;
   const moves = s => {
-    const fr = []; for (let i = 0; i < s.a.length; i++) if (czTakeable(s, nb, ob, inb, i)) fr.push(i);
+    // only tiles whose picture the player has seen (in this try or an earlier one)
+    const fr = []; for (let i = 0; i < s.a.length; i++) if (known.has(i) && czTakeable(s, nb, ob, inb, i)) fr.push(i);
     const out = [];
     for (const i of fr) if (s.tray.includes(faces[i])) out.push([['match', i]]);
     for (const i of fr) for (const j of fr) if (j > i && faces[i] === faces[j] && !s.tray.includes(faces[i])) {
@@ -379,40 +408,34 @@ function czClockRoute(start, faces, tiles, nb, ob, inb, budget = 40000) {
 function coachReview(why) {
   const z = G && G.cz;
   if (!z || !z.taps.length || !coachLevelOn()) return null;
-  const faces = G.tiles.map((t, i) => faceOf(i)), tiles = G.tiles.map(t => [t.x, t.y, t.z]), nb = G.nb;
+  const { faces, tiles, nb } = z;
   const ob = z.ob, inb = ob ? Layouts.iceNeighbors(G.tiles) : null;
   if (faces.some(f => f >= 100)) return null;               // jokers: not in the little game
-  let s = czState(z.start);
-  const states = [s], acts = [], seen = new Set();
-  const look = st => st.a.forEach((v, i) => { if (v && (!st.d[i] || st.p === i)) seen.add(i); });
-  const seenAt = [];
-  look(s);
-  for (const i of z.taps) { seenAt.push(new Set(seen)); const a = czStep(s, faces, i); acts.push(a); s = czApply(s, faces, a); states.push(s); look(s); }
+  const before = czSeenBefore(z), { states, acts, seen, seenAt } = czRun(z), s = states[states.length - 1];
+  czFold(z);
   // the little game must end exactly where the real one did
   if (s.a.some((v, i) => v !== G.alive[i]) || s.tray.join() !== G.tray.map(faceOf).join()) return null;
   const free = (st, i) => czTakeable(st, nb, ob, inb, i);
-  const L = acts.length - 1, pre = states[L], t = acts[L][1], known = seenAt[L];
+  const L = acts.length - 1, pre = states[L], t = acts[L][1], known = new Set([...seenAt[L], ...before]);
   const fr = pre.a.map((v, i) => i).filter(i => free(pre, i));
   const ok = (st, line) => { let x = st; for (const a of line) { if (czStep(x, faces, a[1])[0] !== a[0]) return null; x = czApply(x, faces, a); } return x.tray.length < 4 ? line : null; };
   let tip = null, better = null, kind = null, from = Math.max(0, L - 12);
   if (why === 'clock' || (pre.ck && !pre.ck.done && t === pre.ck.i && why === 'tray')) {
     // the clock: the whole try from the start, then a route that reaches the clock in time
-    const route = czClockRoute(states[0], faces, tiles, nb, ob, inb);
+    const route = czClockRoute(states[0], faces, tiles, nb, ob, inb, new Set([...seen, ...before]));
     if (route) { tip = why === 'clock' ? 'clockFirst' : 'clockSlot'; kind = tip; better = route; from = 0; }
   } else {
-    const twin = pre.p === t ? fr.find(j => j !== t && faces[j] === faces[t]) : undefined;
+    const twin = pre.p === t ? fr.find(j => j !== t && faces[j] === faces[t] && known.has(j)) : undefined;
     const trayM = fr.find(j => j !== t && pre.tray.includes(faces[j]) && known.has(j));
     let memo = null;
     for (const x of fr) for (const y of fr) if (!memo && x !== y && faces[x] === faces[y] && pre.d[x] && known.has(x) && known.has(y) && !pre.tray.includes(faces[x]))
       memo = pre.p === x ? [['pair', y, x]] : pre.p === y ? [['pair', x, y]] : [['peek', x], ['pair', y, x]];
-    const peekM = fr.find(j => pre.d[j] && j !== pre.p && pre.tray.includes(faces[j]));
-    let downPair = null;
-    for (const x of fr) for (const y of fr) if (!downPair && x !== y && faces[x] === faces[y] && pre.d[x] && !pre.tray.includes(faces[x])) downPair = x === pre.p ? [['pair', y, x]] : [['peek', x], ['pair', y, x]];
+    // a face-down tile seen before (now or in an earlier try) whose twin waits in the tray
+    const peekM = fr.find(j => pre.d[j] && j !== pre.p && pre.tray.includes(faces[j]) && known.has(j));
     if (twin !== undefined && (better = ok(pre, [['pair', twin, t]]))) { tip = 'twin'; kind = 'twin'; }
     else if (trayM !== undefined && (better = ok(pre, [['match', trayM]]))) { tip = 'lookTray'; kind = 'lookTray'; }
     else if (memo && (better = ok(pre, memo))) { tip = 'remember'; kind = 'remember'; }
-    else if (peekM !== undefined && (better = ok(pre, [['peek', peekM], ['match', peekM]].slice(pre.p === peekM ? 1 : 1)))) { tip = 'three'; kind = 'peek'; }
-    else if (downPair && (better = ok(pre, downPair))) { tip = 'three'; kind = 'three'; }
+    else if (peekM !== undefined && (better = ok(pre, [['match', peekM]]))) { tip = 'remember'; kind = 'peek'; }
     if (!tip) return null;
     // the moves that led up to it: from the last time the tray had room, at most 6 taps
     let k = L; while (k > 0 && L - k < 6 && states[k].tray.length >= 2) k--;
@@ -427,15 +450,19 @@ function coachReview(why) {
   const mark = kind === 'clockFirst' || kind === 'clockSlot' ? [] : [['start', better.filter(a => a[0] !== 'peek').flatMap(a => a.slice(1)), 'good']];
   return {
     tip, kind,
-    clip: { tiles, faces, ob, focus: czFocus, segs: [
+    clip: { tiles, faces, ob, focus: czFocus, known: [...new Set([...seen, ...before])], segs: [
       { start: enc(states[from]), acts: mine, caps: [tx('czOwnA'), tx(why === 'clock' ? 'czOwnClock' : 'czOwnLose')], marks: [] },
-      { start: enc(startB), acts: better.concat([['end', 'ok']]), caps: [tx('czOwnB'), tx('czOwn_' + kind)], marks: mark },
+      { start: enc(startB), acts: better.concat([['end', 'ok']]), caps: [tx('czOwnB', tx('czT_' + tip)), tx('czOwn_' + kind)], marks: mark },
     ] },
   };
 }
-// the film of the own try, inside the window that tells the try was lost
-const coachReviewHTML = r => `${coachDemoHTML(true)}<p class="cz-tipline">${COACH_ICO[r.tip]} <b>${tx('czT_' + r.tip)}</b></p>`;
+/* The film of the own try, inside the window that tells the try was lost. It is tied to the tip whose
+   trick would have saved the try: the better move is shown "with the tip ...", and the tip itself
+   (the film of a real game and its explanation) opens from here; afterwards this window comes back. */
+const coachReviewHTML = r => `${coachDemoHTML(true)}<button type="button" class="link-btn cz-tiplink" id="czTip">${COACH_ICO[r.tip]} ${tx('czSeeTip')} <b>${tx('czT_' + r.tip)}</b></button>`;
 function coachReviewStart(r) {
   coachPlay($('#modalBox .coach-demo'), r.clip);
   replayMark('coach', [r.tip, 'review', r.kind]);
+  const link = $('#czTip');
+  if (link) link.onclick = () => { const back = keepModal(); showCoachTip(r.tip, () => { back(); coachReviewStart(r); }, false, 'review'); };
 }

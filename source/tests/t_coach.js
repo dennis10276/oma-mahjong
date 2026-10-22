@@ -84,8 +84,59 @@ module.exports = [
     t.eq(await p.evaluate(() => coachReview('tray') && coachReview('tray').kind), 'twin', 'the right tip: tap the twin');
     t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'the own film fits a small phone');
     t.ok(await p.evaluate(() => !!$('.cz-board .tile .emo')), 'in the player\'s own tiles');
+    // never a picture the player has not seen: every picture in the film belongs to a seen tile
+    for (let k = 0; k < 6; k++) {
+      const bad = await p.evaluate(() => { const r = coachReview('tray'), known = new Set(r.clip.known);
+        return [...document.querySelectorAll('.cz-board .tile:not(.back)')].filter(e => !e.classList.contains('cz-unseen') && !known.has(+e.dataset.i)).length; });
+      t.eq(bad, 0, 'no unseen picture in the film (' + k + ')');
+      await sleep(1500);
+    }
+    // the own film is tied to its tip: the better move is shown "with the tip", and the tip opens from here
+    t.ok(/maatje|twin/i.test(await p.locator('#czTip').innerText()), 'the link names the tip');
+    await p.evaluate(() => $('#czTip').click()); await sleep(500);
+    t.eq(await p.evaluate(() => [!!$('#modalBox .coach-demo:not(.coach-own)'), $('#modalBox h2').textContent]), [true, await p.evaluate(() => tx('czT_twin'))], 'the tip opens with its film');
+    await p.evaluate(() => $('#ntGo').click()); await sleep(500);
+    t.eq(await p.evaluate(() => [!!$('#modalBox .coach-own'), !!$('#sRetry'), !!coachRun]), [true, true, true], 'back to the own film after the tip');
     await sleep(200);
     await p.evaluate(() => $('#sRetry').click()); await sleep(600);
     t.eq(await p.evaluate(() => [G.mv, G.tray.length, !!G.cz]), [0, 0, false], 'trying again starts a fresh try and fresh notes');
+  }},
+  { name: 'game tips: a better route only uses tiles the player has seen, in this try or an earlier try of the same board', async run(t, { startLevel, sleep }) {
+    const p = await t.phone({ state: { name: 'Dennis', level: 141, sunSeen: true, seenSp: seen } });
+    let checked = 0;
+    for (const lv of [95, 110, 120, 140]) {
+      await startLevel(p, lv);
+      const r = await p.evaluate(() => {
+        if (!G.clock) return null;
+        const faces = G.tiles.map((t, i) => faceOf(i)), tiles = G.tiles.map(t => [t.x, t.y, t.z]);
+        const st = czState({ a: Array.from(G.alive), d: Array.from(G.down), p: -1, tray: [], ck: { i: G.clock.i, left: G.clock.n } });
+        const known = new Set(); czLook(st, tiles, G.nb, known);
+        const ob = G.ob ? { need: { ...G.ob.need }, locks: [...G.ob.locks], keys: G.ob.keys.slice(), unlocked: G.ob.unlocked } : null, inb = ob ? Layouts.iceNeighbors(G.tiles) : null;
+        const route = czClockRoute(st, faces, tiles, G.nb, ob, inb, known);
+        const none = czClockRoute(st, faces, tiles, G.nb, ob, inb, new Set());
+        return { route, known: [...known], none };
+      });
+      if (!r) continue;
+      checked++;
+      t.eq(r.none, null, 'nothing seen: no route at ' + lv);
+      if (r.route) t.ok(r.route.every(a => a.slice(1).every(i => r.known.includes(i))), 'route uses only seen tiles at ' + lv, r.route);
+    }
+    t.ok(checked >= 2, 'clock levels were checked', checked);
+    // what was seen in a lost try counts for the next try of the same level, not for another level
+    let peeked;
+    for (const lv of [110, 120, 130, 95, 100, 105, 115, 125]) {
+      await startLevel(p, lv);
+      // (test set-up: a free tile lies face down, as the deal on a retry still is)
+      peeked = await p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
+        const x = fr.find(i => G.down[i]) ?? fr[0]; if (x === undefined) return undefined; if (!G.down[x]) { G.down[x] = 1; renderBoard(false); updateBlocked(); } onTap(x); return x; });
+      if (peeked !== undefined) break;
+    }
+    t.ok(peeked !== undefined, 'a face-down tile to peek at');
+    await sleep(300);
+    await p.evaluate(() => restart()); await sleep(800);
+    await p.evaluate(x => { G.down[x] = 1; renderBoard(false); updateBlocked(); }, peeked);
+    const k = await p.evaluate(() => G.key);
+    await p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i) && !G.down[i]) fr.push(i); onTap(fr[0]); });
+    t.ok(await p.evaluate(([k, i]) => !!czMemory.get(k) && czMemory.get(k).seen.has(i), [k, peeked]), 'the peeked tile is remembered for the retry');
   }},
 ];
