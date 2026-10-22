@@ -37,3 +37,20 @@ Covered or closed pictures/roles stay unknown. The active clock badge alone is
 public even through a cover; its picture gets no exemption. `observeBoard` calls
 trusted picture/role readers only after that gate. Search receives data, not
 readers, and must stop at an unobserved picture, orientation or mechanical role.
+
+## Recorded-clear coverage
+
+Dennis confirmed on2026-10-22 that old recordings do not exist and that his
+attempt counts still set the target. The catalog therefore keeps every recorded
+first clear, not just the recent recording subset. It prefers an exact opening
+recording, then that app version's fixed level table, then the current fixed
+definition, then a current classic board at declared aspect1.5. The last two
+sources are explicitly not asserted identical to the historical board. This
+distinction must remain in results; counts alone cannot reconstruct a missing
+historical deal. A replay win never replaces the first-clear target.
+
+The human-information campaign independently replays accepted actions through
+unmodified production. A1500ms shared search deadline includes alternative-root
+searches and death proofs. Expiration stays unresolved/bounded, never a loss.
+The candidate inspects unknown free closed tiles before nonclock commitments;
+inspection ordering is still being compared over the complete development set.

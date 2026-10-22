@@ -1,8 +1,8 @@
 'use strict';
 
-function campaignsOf(rawEvents) {
+function campaignsOf(rawEvents, { minimumVersion = 1.31, minimumLevel = 10 } = {}) {
   const events = Object.values(rawEvents || {}).filter(event => event.m !== 'd' && !event.tk
-    && event.lv >= 10 && Number(event.v) >= 1.31 && ['start', 'end'].includes(event.k))
+    && event.lv >= minimumLevel && Number(event.v) >= minimumVersion && ['start', 'end'].includes(event.k))
     .sort((left, right) => left.t - right.t);
   const active = new Map(), campaigns = [];
   for (const event of events) {
