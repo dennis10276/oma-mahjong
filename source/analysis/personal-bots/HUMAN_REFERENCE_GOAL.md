@@ -90,6 +90,15 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
+The source-unchanged clock-route screen passed14/20 recent levels, slowest
+1508.4ms, adding139 without losing the other13 passes. Raising nonclock discovery
+to three carried tiles also passed14/20 but changed139 from one try to two, so
+it is not automatically promoted. Production controls cover all37 pictures at
+three carried tiles: first discovery either matches or peeks, never adds a fourth
+unmatched tile. That local safety property does not prove a stronger whole-game
+strategy.31/31 offline tests pass, including192 baseline/research concealed-world
+controls. No full-catalog or unseen20 success is claimed.
+
 Border recognition passed13/20 recent cases, adding145 on try1; slowest1511ms.
 The optional `alternativeGoalRoutes` compares both side directions using only
 public dependencies rather than choosing a geometric length tie arbitrarily.
