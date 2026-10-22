@@ -20,6 +20,9 @@ function test() {
   const report = search(game, state, [{ index: 0 }, { index: 1 }], { taps: 1, nodes: 1, beam: 1, pruneDead: false });
   assert.equal(report.index, 0, 'Known pair preparation must remain available before a face-up fourth tile');
   assert(!report.heuristicExcludedRoots.includes(0)); assert(!report.knownDead);
+  const paired = search(game, state, [{ index: 0 }], { taps: 2, nodes: 1, beam: 1, pruneDead: false, knownPairMacros: true });
+  assert.deepEqual(paired.path, [0, 1]); assert.equal(paired.knownProgress, 2);
+  assert.equal(paired.expandedKnownPairs, 1); assert(!paired.knownDead); assert.equal(paired.tapLimit, 2);
   session.tap(report.index); assert.equal(session.view().state.tray.length, 3);
   session.tap(1); assert.equal(session.view().state.tray.length, 3);
   assert.equal(session.view().state.alive[0], 0); assert.equal(session.view().state.alive[1], 0);

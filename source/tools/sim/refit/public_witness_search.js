@@ -118,9 +118,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const settings = { ...PARAMETERS, ...options };
   const deadline = settings.deadline ?? Infinity;
   const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
+  const knownPairMacros = settings.knownPairMacros ?? false;
   assert.equal(typeof cachePublicAnalysis, 'boolean');
+  assert.equal(typeof knownPairMacros, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
-  let metricsHits = 0, proofHits = 0, boundedProofHits = 0;
+  let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -226,6 +228,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const next = [];
     for (const node of beam) {
       if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
+      if (node.path.length >= tapLimit) { boundary = true; continue; }
       nodes++;
       const allowed = physical.legal(game, node.state), settled = { ...node.state, relieved: allowed.relieved };
       const indices = allowed.free.filter(index => node.path.length || roots.has(index) && !excludedRoots.includes(index));
@@ -286,6 +289,21 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         }
         const identity = keyOf(game, moved.state);
         if (!visited.has(identity)) { visited.add(identity); next.push(candidate); }
+        if (knownPairMacros && !moved.removed && path.length < tapLimit) {
+          const pairedActions = physical.legal(game, moved.state).free.filter(mate => mate !== index
+            && moved.state.pictures[mate] === moved.state.pictures[index]);
+          for (const mate of pairedActions) {
+            if (Date.now() >= deadline) { boundary = true; break; }
+            const paired = physical.advance(game, moved.state, mate);
+            if (paired.uncertain || paired.lost) continue;
+            assert.equal(paired.removed, 2, 'A known inspection-pair expansion must contain two actual removals');
+            macroPairs++; hasSafeRemoval = true;
+            const pairedCandidate = evaluate(paired.state, path.concat(mate), false, mate);
+            if (paired.win) { best = pairedCandidate; return finish(); }
+            const pairedIdentity = keyOf(game, paired.state);
+            if (!visited.has(pairedIdentity)) { visited.add(pairedIdentity); next.push(pairedCandidate); }
+          }
+        }
       }
     }
     next.sort((left, right) => compare(right.rank, left.rank));
@@ -336,6 +354,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       finishKnown, tapLimit,
       ...(continuationPruning ? { continuationProof } : {}),
       ...(cachePublicAnalysis ? { analysisCache: { metricsHits, proofHits, boundedProofHits, metricsEntries: metricsCache.size, proofEntries: proofCache.size } } : {}),
+      ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         goalRecoveryMin, recoveryRankWidths: [...recoveryRankWidths].sort() } } : {}),
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
