@@ -154,7 +154,7 @@ function playHumanCampaign(input, options = {}) {
     const session = factory(game, settings), actions = [], decisions = [];
     let status = null, previousTap = -1, lastPlan = null;
     for (;;) {
-      const actual = session.view(), state = actual.state;
+      const started = performance.now(), actual = session.view(), state = actual.state;
       if (state.physicalTaps > previousTap) {
         const publicBoard = observeBoard(game.tiles, state, game.clock,
           { picture: index => game.faces[index], role: index => visibleRole(game, state, index) });
@@ -163,7 +163,7 @@ function playHumanCampaign(input, options = {}) {
         previousTap = state.physicalTaps;
       }
       if (actual.type === 'productionPhysicalEnd-v1') break;
-      const started = performance.now(), selected = controller.decide(), elapsed = performance.now() - started;
+      const selected = controller.decide(), elapsed = performance.now() - started;
       if (elapsed > slowestMs) { slowestMs = elapsed; decision = { attempt, physicalTaps: state.physicalTaps }; }
       if (!selected) { status = 'unresolvedPublicFrontier'; break; }
       const index = selected.plan.index, accepted = actual.legalTiles.includes(index);

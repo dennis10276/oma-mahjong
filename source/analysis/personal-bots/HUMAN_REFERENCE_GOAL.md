@@ -28,15 +28,27 @@ individual regressions and the unseen20-level gate are still open.
 ## Single visibility rule
 
 `human_board_visibility.js:tileVisibility` is the only exposure decision.
-An alive tile is exposed unless an alive, higher tile occupies the exact same
-x/y position (the production Hard cover convention). Partial overlap leaves a
-recognizable edge, as Dennis confirmed. Side-blocking prevents taking, not seeing.
+The old exact-grid Hard cover shortcut is replaced by game-geometry occlusion:
+the renderer's1.24 height ratio,14% up-left layer lift and drawing order are
+projected without screenshots. Higher drawn tiles are subtracted as a union,
+not checked individually. Opaque-body/side bounds are conservative for tile
+widths of at least20px (side allowance=max(.085,3/20)). An inner face region,
+inset.15 tile-widths, excludes the colored physical border; an exposed fragment
+there is the declared readable-picture condition. This is an explicit semantic
+visibility rule, not a pixel-recognition or per-picture artwork guarantee.
+Renderer/CSS anchors and covered-union/separated-layer controls guard it.
+Side-blocking prevents taking, not seeing.
 Exposed back orientation is public; a picture and current obstacle overlay are
 read only when exposed and face-up, including a physically opened peek.
 Covered or closed pictures/roles stay unknown. The active clock badge alone is
 public even through a cover; its picture gets no exemption. `observeBoard` calls
 trusted picture/role readers only after that gate. Search receives data, not
 readers, and must stop at an unobserved picture, orientation or mechanical role.
+
+The game-state bridge currently assumes the declared >=20px viewport domain.
+Integration at a smaller rendered tile size must remain unsupported until its
+geometry bound is supplied; old unrecorded viewport identity is not claimed.
+Seeing only the physical side/border is not permission to read an unseen image.
 
 ## Recorded-clear coverage
 

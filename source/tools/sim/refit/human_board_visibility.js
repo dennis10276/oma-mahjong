@@ -2,9 +2,28 @@
 const assert = require('assert/strict');
 
 function tileVisibility(tiles, state, clock) {
+  const side = Math.max(0.085, 3 / 20);
+  const boxes = tiles.map(tile => {
+    const left = tile.x / 2 - tile.z * 0.14, top = tile.y / 2 * 1.24 - tile.z * 0.14;
+    return { left, top, right: left + 1 + side, bottom: top + 1.24 + side * 1.2, order: tile.z * 10000 + tile.y * 100 + tile.x };
+  });
   const tilesVisible = tiles.map((tile, index) => {
-    const exposed = !!state.alive[index] && !tiles.some((above, other) => state.alive[other]
-      && above.z > tile.z && above.x === tile.x && above.y === tile.y);
+    const box = boxes[index];
+    let regions = state.alive[index] ? [[box.left + 0.15, box.top + 0.15, box.left + 0.85, box.top + 1.09]] : [];
+    for (const [other, cover] of boxes.entries()) {
+      if (!regions.length) break;
+      if (!state.alive[other] || cover.order <= box.order) continue;
+      regions = regions.flatMap(region => {
+        const [left, top, right, bottom] = region;
+        const cutLeft = Math.max(left, cover.left), cutTop = Math.max(top, cover.top);
+        const cutRight = Math.min(right, cover.right), cutBottom = Math.min(bottom, cover.bottom);
+        if (cutLeft >= cutRight || cutTop >= cutBottom) return [region];
+        return [[left, top, cutLeft, bottom], [cutRight, top, right, bottom],
+          [cutLeft, top, cutRight, cutTop], [cutLeft, cutBottom, cutRight, bottom]]
+          .filter(([start, upper, end, lower]) => end - start > 1e-9 && lower - upper > 1e-9);
+      });
+    }
+    const exposed = regions.length > 0;
     const faceUp = exposed && (!state.down[index] || state.openPeek === index);
     return { orientation: exposed, picture: faceUp, role: faceUp };
   });
