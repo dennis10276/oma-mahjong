@@ -83,14 +83,17 @@ node source/tools/sim/variety/variety2.js apply 158         # www/levels-hard.js
    both players). Then `assign` again (missed levels get another board), `validate`, and so on.
 5. `report` shows the curve per 10 levels (first try and ease, old against new, "OFF THE CURVE"
    when a band average moved more than 0.02).
-6. `apply`: levels that passed get the new board, the others keep theirs. Before a release, re-run
+6. `balance` (then `tune`, `validate`): a band of 10 levels off the curve gets its passed level that
+   pulls most the wrong way tuned again towards a shifted aim; if that fails, the passed board stays.
+7. `apply`: levels that passed get the new board, the others keep theirs. Before a release, re-run
    `apply` with the first level nobody has reached yet.
 
 Tolerance (Dennis: "the curve of the difficulty should stay about the same"): per level both
 players within first try ±0.08, within 2 ±0.10, within 4 ±0.08, ease ±0.05 (the reorder already
 puts neighbouring levels 0.05 ease apart; ±0.05 first try was below the noise of the measurements
-and made the work slow), and per 10 levels the average first try and ease of each player within
-0.02 of before. `tests/t_variety.js` checks both.
+and made the work slow), and per 10 levels the average first try and ease of each player not easier than before
+(Dennis, 2026-10-22: "It shouldn't be easier really"; 0.005 allowed for measurement noise) and at
+most 0.02 harder. When choosing and tuning, a board that is easier than its target counts double. `tests/t_variety.js` checks both.
 
 ## The first method (`variety.js`, slow; kept for reference)
 

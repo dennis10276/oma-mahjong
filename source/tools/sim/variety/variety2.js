@@ -327,11 +327,14 @@ function cmdAssign(from) {
 
 async function cmdTune(workers) {
   const O = readJ(OUT, null);
-  const jobs = Object.entries(O.levels).filter(([, x]) => x.status === 'tune' || x.status === 'missed').map(([lv, x]) => ({ lv: +lv, board: x.board, m: x.m, target: target(+lv) }));
+  const jobs = Object.entries(O.levels).filter(([, x]) => ['tune', 'missed', 'balance'].includes(x.status)).map(([lv, x]) => ({ lv: +lv, board: x.board, m: x.status === 'balance' ? x.final : x.m, target: x.aim || target(+lv) }));
   console.log(`tune: ${jobs.length} levels`);
   await pool(jobs, 'tune', workers, res => {
     const cur = readJ(OUT, O), x = cur.levels[res.lv];
+    delete x.aim;
     Object.assign(x, { id: x.id.replace(/~t$/, '') + '~t', board: res.board, m: res.m, dist: +res.dist.toFixed(3), status: within(res.m, target(res.lv), false) ? 'tuned' : 'tune-failed', final: undefined });
+    // a balance try that does not work: back to the board that had passed
+    if (x.prevOk && x.status !== 'tuned') { Object.assign(x, x.prevOk, { status: 'ok' }); delete x.prevOk; }
     writeJ(OUT, cur); Object.assign(O, cur);
     console.log(`level ${res.lv}: ${x.status} (off ${x.dist})`);
   });
@@ -344,10 +347,35 @@ async function cmdValidate(workers) {
   await pool(jobs, 'validate', workers, res => {
     const cur = readJ(OUT, O), x = cur.levels[res.lv];
     x.final = res.final; x.status = within(res.final, target(res.lv), true) ? 'ok' : 'missed';
-    writeJ(OUT, cur); Object.assign(O, cur);
     if (!/~t$/.test(x.id)) { const ch = readJ(CHECKED_F, {}); ch[x.id] = res.final; writeJ(CHECKED_F, ch); }
+    if (x.prevOk) { if (x.status === 'missed') Object.assign(x, x.prevOk, { status: 'ok' }); delete x.prevOk; }
+    writeJ(OUT, cur); Object.assign(O, cur);
     console.log(`level ${res.lv}: ${x.status}`);
   });
+}
+
+// a band of 10 levels off the curve: the passed level that pulls it most the wrong way is tuned again,
+// towards its own target shifted by what the band is off (it must still pass its own level's tolerance)
+function cmdBalance() {
+  const P = plan(), O = readJ(OUT, null); let n = 0;
+  for (let a = Math.floor(O.from / 10) * 10; a <= 269; a += 10) {
+    const ls = P.levels.filter(l => l.lv >= Math.max(a, O.from) && l.lv < a + 10 && O.levels[l.lv] && O.levels[l.lv].status === 'ok');
+    if (!ls.length) continue;
+    const avg = f => ls.reduce((s, l) => s + f(l), 0) / ls.length;
+    for (const nm of NAMES) {
+      const d1 = avg(l => O.levels[l.lv].final[nm].first - l.target[nm].first), de = avg(l => ease(O.levels[l.lv].final[nm]) - ease(l.target[nm]));
+      if (!offCurve(d1, de)) continue;
+      const easy = Math.max(d1, de) > CURVE.easier, sign = easy ? 1 : -1;
+      const off = easy ? Math.max(d1, de) - CURVE.easier / 2 : -Math.min(d1, de) - CURVE.harder / 2;
+      // the level that pulls most the wrong way
+      const l = ls.slice().sort((x, y) => sign * (O.levels[y.lv].final[nm].first - y.target[nm].first - O.levels[x.lv].final[nm].first + x.target[nm].first))[0], x = O.levels[l.lv];
+      const shift = Math.min(off * ls.length, TOL.first * 0.6);
+      const aim = JSON.parse(JSON.stringify(l.target)); for (const k of ['first', 'two', 'four']) aim[nm][k] -= sign * shift;
+      Object.assign(x, { status: 'balance', aim, prevOk: { id: x.id, board: x.board, m: x.m, final: x.final } }); n++;
+      console.log(`${a}-${a + 9} ${nm}: ${easy ? 'easier' : 'harder'} by ${Math.max(Math.abs(d1), Math.abs(de)).toFixed(3)}; level ${l.lv} aims ${(sign * shift).toFixed(3)} the other way`);
+    }
+  }
+  writeJ(OUT, O); console.log(`balance: ${n} levels to tune`);
 }
 
 function cmdReport() {
@@ -397,6 +425,7 @@ if (!isMainThread) {
     else if (cmd === 'tune') await cmdTune(+(a1 || 2));
     else if (cmd === 'validate') await cmdValidate(+(a1 || 2));
     else if (cmd === 'report') cmdReport();
+    else if (cmd === 'balance') cmdBalance();
     else if (cmd === 'apply') cmdApply(+(a1 || 158));
     else console.log('usage: cands [workers] [from] [to] | assign [from] | tune [workers] | validate [workers] | report | apply [from]');
   })();
