@@ -22,8 +22,8 @@ Use `node source/tests/run.js human_reference` for the non-pixel core checks.
 Historical symbolic campaigns declaring complete obstacle rules are not proof
 that this new visibility-gated goal has passed.
 
-Current status: implementation and validation in progress. The prior four
-individual regressions and the unseen20-level gate are still open.
+Current status: implementation and validation in progress. The complete
+development set and the unseen20-level gate are still open.
 
 ## Single visibility rule
 
@@ -90,87 +90,45 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
-The full safety/pair-macro screen passed15/20 with a1503.6ms slowest decision:
-141 is restored, but145 regresses, so focused gains are not presented as a
-dominating whole-policy improvement. Optional `alternativeRecoveryRoutes`
-reuses the observed side/thaw alternatives for carried-tile recovery, not only
-clocks. A six-tile control reduces an inflated recovery estimate from5 to2
-without reading any unobserved identity; the estimate is still not a bound or
-route certificate. Its nine-case check retains134/139/141/143 and restores145;
-136/147/149/150 remain failures. Slowest1505.1ms. Broader screening remains
-required, with all failures retained and no per-level profile selection.
+The goal remains unmet. The latest completed full20-case screen passed16/20,
+with a1508.5ms slowest observation-plus-planning decision. See
+`HUMAN_REFERENCE_RECOVERY_2026-10-23.md`, policy source at `6ed93dc`, fingerprint
+`4a7d9926b6e7faec9f01dc90534baf0c43030392bdb9bebb1c826096dec55617`.
+134/139/141/143/145 clear on try1;136/147/149/150 remain failures. These are
+development boards, not the complete140-level gate or the unseen20-level gate.
 
-Two causal one-node production-backed regressions now pass: information-tap
-safety evaluates the actual boundary action rather than borrowing safety from
-an unrelated free match; known-pair macros also finish face-up-first pairs before
-beam pruning their unmatched intermediate state. Passive revelation after a
-known safe prefix and first unopened peeks remain distinct from commitments.
-33/33 offline checks pass. The six-case source-unchanged focus restores141 on
-try1 and retains134/139/143;136 and147 still fail. Slowest890.7ms. This is not a
-complete-set pass; the next unchanged20-case screen checks wider effects.
+Validated general changes distinguish actual unknown boundary taps from passive
+reveals, refuse to borrow safety from an unrelated free match, preserve complete
+known face-up pairs before beam pruning, and compare observed side/thaw routes
+for both clocks and tray recovery. Dependency costs remain ordering heuristics,
+never lower bounds, route witnesses, safety certificates or impossibility proofs.
 
-The previous patient-single-carry/full-forecast combination passed13/20 rather
-than15/20, regressing133 and146. Its full short table is retained; it was not
-promoted or hidden by reporting only successful profiles. The read-only catalog
-refresh still accounts for140 first clears, levels17-156, without opening any
-future/unseen board.
+The current `9c61b2b` experiment stops rewarding an extra immediately matchable
+carry over consuming its pair. A causal production-backed regression passes;
+34/34 offline tests pass, including192 baseline/research concealed-world controls.
+Its nine-case check retains134/139/141/143/145 but still fails136/147/149/150;
+slowest1508.6ms. A complete20-case comparison is required before promotion.
+No profile is selected by level, human outcome or hidden information.
 
-Using the declared exclusive-role forecast throughout play passed15/20 recent
-cases, slowest1506ms. It adds133 and137 on try1 but regresses141 from a clear
-to an18-tile tray loss; it is not a dominating replacement for the14/20 clock-only
-forecast. Neither result permits selecting different profiles by level or human
-outcome. A combined general single-carry strategy is the next comparison.
+The read-only catalog refresh still accounts for140 first clears, levels17-156,
+without opening future/unseen boards. An older full-catalog baseline passed
+111/140 with `unchanged:false` because source changed during execution; that is
+coverage/older-policy evidence, not validation of the current source. The next
+20 not-developed-on progression levels remain reserved for a later freeze.
 
-A public-only replay probe of136 removes the clock at move6 and later reaches
-an empty tray. The subsequent singleton commitments lead to a certified dead
-position only after earlier choices. This is evidence to investigate general
-commitment/route selection, not evidence that the starting board is impossible
-or that hidden luck excuses failure.147,149 and150 remain unresolved failures.
+Negative experiments remain in their short reports: patient-single-carry plus
+full forecasting passed13/20 and regressed133/146; crowded discovery passed14/20
+but changed139 from one try to two. These results are not hidden by reporting
+only successful settings. Historical details remain in per-run tables and Git.
 
-The source-unchanged clock-route screen passed14/20 recent levels, slowest
-1508.4ms, adding139 without losing the other13 passes. Raising nonclock discovery
-to three carried tiles also passed14/20 but changed139 from one try to two, so
-it is not automatically promoted. Production controls cover all37 pictures at
-three carried tiles: first discovery either matches or peeks, never adds a fourth
-unmatched tile. That local safety property does not prove a stronger whole-game
-strategy.31/31 offline tests pass, including192 baseline/research concealed-world
-controls. No full-catalog or unseen20 success is claimed.
+A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
+the clock at move6, and later reaches an empty tray. Subsequent commitments cause
+the loss. A dead position reached after mistakes does not prove that the initial
+board is impossible or excuse failure as hidden luck. Investigate general route
+and commitment selection before making any such claim.
 
-Border recognition passed13/20 recent cases, adding145 on try1; slowest1511ms.
-The optional `alternativeGoalRoutes` compares both side directions using only
-public dependencies rather than choosing a geometric length tie arbitrarily.
-It includes every blocker on a branching side and only the needed observed thaw
-neighbors. A focused check adds139 on try1 versus Dennis3 while retaining
-134/141/143;147 still fails.30/30 core checks pass. Broader testing is required
-before selecting a new default; dependency costs remain heuristics, never
-feasibility, lower-bound, safety or impossibility certificates.
-
-The completed older full-catalog baseline passed111/140, not the goal. Its
-source changed on disk during execution, so its report explicitly records
-`unchanged:false`; it is coverage/older-policy evidence, not a current gate pass.
-The source-unchanged20-case geometry/known-pair candidate passed12/20, with a
-1505.1ms slowest observation-plus-planning decision. These results predate the
-newly authorized border-recognition contract. Both full failures and substitute
-board provenance remain in the short reports.
-
-The optional `patientSingleCarry` phase prefers guaranteed ready pairs with one
-carried tile outside the clock phase, rather than digging prematurely. It uses
-only observed pictures and public mechanical certainty. Its initial focused
-comparison remained3/4, including a failure on147, so it is experimental rather
-than a demonstrated improvement or promoted default.29/29 offline human-reference
-tests pass after the border-contract change; the full goal remains active.
-
-The source-bound focused run in `HUMAN_REFERENCE_FOCUS_2026-10-22.md` clears
-134,141,143 on try1 and fails147 within its allowed single try. Slowest planning
-decision is1499.8ms. These four rows are not a complete-catalog pass. An earlier
-20-case conservative-role experiment passed14/20; the next full-catalog run must
-retain all failures, including132,136,145,147,149,150 rather than reporting only
-the improved focus cases. No unseen20-level freeze or completion is claimed.
-
-Public-analysis caching is scoped to one search/observation snapshot. It reuses
-metrics and bounded/unbounded proof analyses without turning bounds into loss
-certificates. Frozen alive arrays may cache their binary signatures; mutable
-arrays never do. Tests check identical paths/conclusions with caching enabled,
-including one-node proof limits, and96 concealed worlds with identical public
-observations. The stopped full-catalog batch is recorded separately as interrupted,
-not promoted to a completed benchmark.
+Public-analysis caching is scoped to one search/observation snapshot. Bounded
+proofs stay unresolved. Only frozen alive arrays may cache binary signatures;
+mutable arrays never do. Accepted campaign actions independently replay through
+unmodified production. The1500ms search deadline is shared by alternative roots
+and death proofs; timing also includes the actual observation/projection work.
