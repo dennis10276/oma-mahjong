@@ -194,12 +194,12 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
   const singleProb3 = weightedTraySingleCounts[3] / Math.max(0.001, weightedTrayTotalOpportunities[3]);
   const singleProb2 = weightedTraySingleCounts[2] / Math.max(0.001, weightedTrayTotalOpportunities[2]);
 
-  // trayBuffer: 2 if player heavily restricts singles at tray=2/3; 3 if they tolerate pushing
   // trayBuffer: search sets trayRecoveryMin = Math.max(0, Math.min(3, 4 - trayBuffer)).
-  // trayBuffer 1 -> recovery at tray >= 3 (tolerates 1-2 singles in tray before recovery)
-  // trayBuffer 2 -> recovery at tray >= 2 (tolerates 1 single in tray before recovery)
-  // trayBuffer 3 -> recovery at tray >= 1 (heavily restricts singles, recovers immediately)
-  const trayBuffer = (singleProb2 >= 0.32) ? 1 : (singleProb3 < 0.05 && singleProb2 < 0.15) ? 3 : 2;
+  // In Mahjong, humans match pairs 80-92% of the time once tray reaches 2+ tiles.
+  // trayBuffer 2 -> recovery at tray >= 2 (safe standard human behavior; prevents overflow)
+  // trayBuffer 3 -> recovery at tray >= 1 (extremely risk-averse)
+  // trayBuffer 1 -> recovery at tray >= 3 (only if player persistently takes singles at tray >= 3)
+  const trayBuffer = (singleProb3 >= 0.30) ? 1 : (singleProb3 < 0.05 && singleProb2 < 0.15) ? 3 : 2;
 
   // clockPatience: ratio of moves on clock cone strictly while clock is alive
   const clockConeRatio = weightedClockTotalMoves > 0 ? (weightedClockConeMoves / weightedClockTotalMoves) : 0.5;
