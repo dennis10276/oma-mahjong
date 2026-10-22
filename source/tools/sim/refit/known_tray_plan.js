@@ -2,14 +2,14 @@
 const L = require('../../../www/layouts.js');
 const FEATURES = ['knownProgress', 'knownTrayClear', 'knownTrap', 'informationReachable', 'planningBoundary'];
 
-function validate(game, state) {
+function validate(game, state, partialOrientation = false) {
   const size = game.tiles.length;
   if (!Number.isInteger(size) || size < 1 || !game.nb || state.alive.length !== size || state.pictures.length !== size
     || state.down.length !== size || !Number.isInteger(state.moves) || state.moves < 0
     || !Number.isInteger(state.openPeek) || state.openPeek < -1 || state.openPeek >= size
     || !Array.isArray(state.tray) || state.tray.length > L.SLOTS
     || state.alive.some(value => value !== 0 && value !== 1)
-    || state.down.some(value => value !== 0 && value !== 1)
+    || state.down.some(value => value !== 0 && value !== 1 && !(partialOrientation && value === null))
     || state.pictures.some(value => value !== null && (!Number.isInteger(value) || value < 0 || value > 101))
     || state.tray.some(value => !Number.isInteger(value) || value < 0 || value > 101)
     || state.openPeek >= 0 && (!state.alive[state.openPeek] || !state.down[state.openPeek] || state.pictures[state.openPeek] === null)) {
@@ -30,7 +30,22 @@ function legal(game, state) {
 }
 
 function advance(game, state, index) {
-  const allowed = legal(game, state);
+  return advanceAllowed(game, state, index, legal(game, state));
+}
+
+function advanceObserved(game, state, index, frontier) {
+  validate(game, state, true);
+  if (state.relieved) return { uncertain: true, reason: 'unvalidatedReliefObservation' };
+  const allowed = frontier.query(state.alive);
+  if (allowed.uncertain.includes(index)) return { uncertain: true, reason: 'unobservedObstacleRole' };
+  if (state.down[index] === null) return { uncertain: true, reason: 'unobservedOrientation' };
+  if (state.openPeek >= 0 && state.openPeek !== index && allowed.uncertain.includes(state.openPeek)
+    && state.pictures[state.openPeek] !== null && state.pictures[state.openPeek] === state.pictures[index]
+    && !state.tray.includes(state.pictures[index])) return { uncertain: true, reason: 'unresolvedOpenTwinLegality' };
+  return advanceAllowed(game, state, index, { free: allowed.free, relieved: false });
+}
+
+function advanceAllowed(game, state, index, allowed) {
   if (!allowed.free.includes(index)) throw new Error('Known-only planner selected a blocked tile');
   const face = state.pictures[index];
   if (face === null) return { uncertain: true, reason: 'unseenPicture' };
@@ -144,4 +159,4 @@ function featuresOf(game, state, actions, options = {}) {
   return { features, nodes: totalNodes, boundaries, inactive: null };
 }
 
-module.exports = { FEATURES, legal, advance, featuresOf };
+module.exports = { FEATURES, legal, advance, advanceObserved, featuresOf };

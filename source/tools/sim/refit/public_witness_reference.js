@@ -2,20 +2,27 @@
 const assert = require('assert/strict');
 const physical = require('./known_tray_plan.js');
 const witness = require('./public_witness_search.js');
+const { knowledgeChange } = require('./public_information_revision.js');
 const FEATURES = ['witnessAction', 'winningWitness', 'safeClockExitWitness', 'clockRoomWitness',
   'knownProgressWitness', 'informationWitness', 'boundedWitness', 'persistentWitness'];
 
 function reference(options = witness.REFERENCE_PARAMETERS, runSearch = witness.search) {
   assert.equal(typeof runSearch, 'function');
+  const replanOnInformation = options.replanOnInformation ?? false;
+  assert.equal(typeof replanOnInformation, 'boolean');
   let choice = null, pending = null, expected = null, expectedPictures = null, expectedDown = null, staged = null;
   const stats = { searches: 0, searchNodes: 0, retainedSteps: 0, winWitnesses: 0, exitWitnesses: 0, unknownFrontiers: 0, boundaries: 0, provedDeadEnds: 0, prunedDeadSuccessors: 0 };
+  if (replanOnInformation) stats.informationReplans = 0;
   const planning = (game, state, actions) => {
     const signature = witness.keyOf(game, state);
     const preservedKnowledge = expectedPictures?.every((picture, index) => !state.alive[index]
       || (picture === null || state.pictures[index] === picture) && state.down[index] === expectedDown[index]);
+    const canRetain = pending?.path.length && expected === signature && preservedKnowledge
+      && actions.some(action => action.index === pending.path[0]);
+    const informationRevision = canRetain && replanOnInformation && knowledgeChange(expectedPictures, state).gained.length > 0;
+    if (informationRevision) stats.informationReplans++;
     let report, retained = false;
-    if (pending?.path.length && expected === signature && preservedKnowledge
-      && actions.some(action => action.index === pending.path[0])) {
+    if (canRetain && !informationRevision) {
       report = { ...pending, index: pending.path[0], nodes: 0 }; retained = true; stats.retainedSteps++;
     } else {
       report = runSearch(game, state, actions, options); stats.searches++; stats.searchNodes += report.nodes;

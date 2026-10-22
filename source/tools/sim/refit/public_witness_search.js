@@ -3,6 +3,7 @@ const assert = require('assert/strict');
 const physical = require('./known_tray_plan.js');
 const deadEnd = require('./public_dead_end.js');
 const { guardedSearch } = require('./public_witness_reopen_guard.js');
+const { frontierFor, recoveryDepth } = require('./public_goal_frontier.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -120,12 +121,17 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     && settings.trayRecoveryClockMin >= 0 && settings.trayRecoveryClockMin <= 3);
   const continuationPruning = settings.continuationPruning ?? false, continuationTrayMin = settings.continuationTrayMin ?? 3;
   assert(typeof continuationPruning === 'boolean'); assert(Number.isInteger(continuationTrayMin) && continuationTrayMin >= 2 && continuationTrayMin <= 3);
+  const obstacleFrontier = settings.obstacleFrontier ?? false, goalRecovery = settings.goalRecovery ?? false;
+  assert(typeof obstacleFrontier === 'boolean' && typeof goalRecovery === 'boolean');
+  const goalRecoveryMin = settings.goalRecoveryMin ?? 0;
+  assert(Number.isInteger(goalRecoveryMin) && goalRecoveryMin >= 0 && goalRecoveryMin <= 3);
+  const goalRecoveryActive = goalRecovery && state.tray.length >= goalRecoveryMin;
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
   assert(Array.isArray(actions) && actions.length > 0);
   const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
-  const cone = clocked ? clockCone(game, state) : null;
+  const cone = clocked ? obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
   const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
@@ -133,6 +139,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
   const provedDeadRoots = new Set();
   const continuationProof = { calls: 0, nodes: 0, bounded: 0, certified: 0 };
+  const recoveryRankWidths = new Set();
   const visited = new Set([keyOf(game, state)]);
 
   const evaluate = (position, path, information = false, targetIndex = -1) => {
@@ -172,6 +179,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         : [tier, -room.pressure, progress, room.room, -path.length, 0];
       if (settings.trayRecovery) rank.splice(2, 0, position.tray.length >= settings.trayRecoveryMin ? -recovery.stranded : 0,
         position.tray.length >= settings.trayRecoveryMin ? recovery.immediate : 0);
+      if (goalRecoveryActive) {
+        const depth = recoveryDepth(game, position);
+        rank.splice(2, 0, -depth.unknownWaiting, -depth.knownCost);
+        recoveryRankWidths.add(rank.length);
+      }
     }
 
     const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information };
@@ -287,6 +299,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       initialKnown, initialLeft,
       finishKnown, tapLimit,
       ...(continuationPruning ? { continuationProof } : {}),
+      ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
+        goalRecoveryMin, recoveryRankWidths: [...recoveryRankWidths].sort() } } : {}),
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
         + 'are never sampled from the real board. Clock distance is an ordering heuristic, not a proven bound. '
         + 'A knownDead certificate requires a fully exhausted known graph with no new information or '
