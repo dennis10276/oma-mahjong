@@ -90,6 +90,18 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
+Using the declared exclusive-role forecast throughout play passed15/20 recent
+cases, slowest1506ms. It adds133 and137 on try1 but regresses141 from a clear
+to an18-tile tray loss; it is not a dominating replacement for the14/20 clock-only
+forecast. Neither result permits selecting different profiles by level or human
+outcome. A combined general single-carry strategy is the next comparison.
+
+A public-only replay probe of136 removes the clock at move6 and later reaches
+an empty tray. The subsequent singleton commitments lead to a certified dead
+position only after earlier choices. This is evidence to investigate general
+commitment/route selection, not evidence that the starting board is impossible
+or that hidden luck excuses failure.147,149 and150 remain unresolved failures.
+
 The source-unchanged clock-route screen passed14/20 recent levels, slowest
 1508.4ms, adding139 without losing the other13 passes. Raising nonclock discovery
 to three carried tiles also passed14/20 but changed139 from one try to two, so
