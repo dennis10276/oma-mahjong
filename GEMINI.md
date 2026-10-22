@@ -1,5 +1,12 @@
 # Mandatory project instructions
 
+The authoritative gate definitions now reside outside this editable repository.
+Read `ACCEPTANCE_PROTECTION.md` and check the actual installation status before
+claiming acceptance. Use the absolute protected command documented there.
+Repository gate scripts, requirement mappings, and test edits cannot change the
+protected acceptance standard. Propose substantive tests/evidence for independent
+review; do not request administrator elevation to change the rules yourself.
+
 Read and follow `AGENTS.md`, `ACCEPTANCE_REVIEW.md`, and the **entire** original
 contract at `source/analysis/personal-bots/acceptance/EXECUTION_CONTRACT.txt`.
 

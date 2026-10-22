@@ -1,0 +1,61 @@
+﻿{
+    "checkedAt":  "2026-10-22T14:08:46.2009371Z",
+    "directory":  "C:\\ProgramData\\OmasMahjongAcceptance\\v1",
+    "installed":  true,
+    "user":  "PC-DENNIS\\den_k",
+    "owner":  "BUILTIN\\Administrators",
+    "manifestSha256":  "ac984d93c2fc26107ee8b629cf29a5143e82c2d1392de600e050c41272356a51",
+    "tests":  [
+                  {
+                      "operation":  "overwrite",
+                      "denied":  true,
+                      "error":  "Exception calling \"WriteAllText\" with \"2\" argument(s): \"Access to the path \u0027C:\\ProgramData\\OmasMahjongAcceptance\\v1\\probe-write.txt\u0027 is denied.\"",
+                      "exceptionType":  "System.Management.Automation.MethodInvocationException",
+                      "hresult":  -2146233087,
+                      "category":  "NotSpecified"
+                  },
+                  {
+                      "operation":  "delete",
+                      "denied":  true,
+                      "error":  "Exception calling \"Delete\" with \"1\" argument(s): \"Access to the path \u0027C:\\ProgramData\\OmasMahjongAcceptance\\v1\\probe-delete.txt\u0027 is denied.\"",
+                      "exceptionType":  "System.Management.Automation.MethodInvocationException",
+                      "hresult":  -2146233087,
+                      "category":  "NotSpecified"
+                  },
+                  {
+                      "operation":  "rename",
+                      "denied":  true,
+                      "error":  "Access to the path is denied.",
+                      "exceptionType":  "System.UnauthorizedAccessException",
+                      "hresult":  -2147024891,
+                      "category":  "PermissionDenied"
+                  },
+                  {
+                      "operation":  "create-file",
+                      "denied":  true,
+                      "error":  "Exception calling \"WriteAllText\" with \"2\" argument(s): \"Access to the path \u0027C:\\ProgramData\\OmasMahjongAcceptance\\v1\\unauthorized-new-file.txt\u0027 is denied.\"",
+                      "exceptionType":  "System.Management.Automation.MethodInvocationException",
+                      "hresult":  -2146233087,
+                      "category":  "NotSpecified"
+                  },
+                  {
+                      "operation":  "change-permissions",
+                      "denied":  true,
+                      "error":  "Attempted to perform an unauthorized operation.",
+                      "exceptionType":  "System.UnauthorizedAccessException",
+                      "hresult":  -2147024891,
+                      "category":  "PermissionDenied"
+                  }
+              ],
+    "integrityFailures":  [
+
+                          ],
+    "changedProbeFiles":  [
+
+                          ],
+    "protected":  true,
+    "scope":  "Normal unelevated file access; not elevated administrator access or same-account process interference",
+    "candidateCodeExecutedAsAdministrator":  false,
+    "agentWriteProtectionEnforced":  true,
+    "protectionTestsExecuted":  true
+}

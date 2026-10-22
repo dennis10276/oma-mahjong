@@ -155,34 +155,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
   assert([...roots].every(index => initialFree.includes(index)));
 
-  let effectiveState = state;
-  let modifiedPictures = false;
-  let currentPictures = state.pictures;
-  if (settings.memoryDecay !== null && settings.memoryDecay > 0 && settings.rng) {
-    currentPictures = currentPictures.slice();
-    for (let i = 0; i < currentPictures.length; i++) {
-      if (state.down[i] && currentPictures[i] !== null && i !== state.openPeek) {
-        if (settings.rng() < settings.memoryDecay) {
-          currentPictures[i] = null;
-          modifiedPictures = true;
-        }
-      }
-    }
-  }
-  if (settings.retryLearning !== null && settings.previousAttemptObserved && settings.rng) {
-    if (!modifiedPictures) currentPictures = currentPictures.slice();
-    for (let i = 0; i < currentPictures.length; i++) {
-      if (state.down[i] && currentPictures[i] === null && settings.previousAttemptObserved[i] !== null) {
-        if (settings.rng() < settings.retryLearning) {
-          currentPictures[i] = settings.previousAttemptObserved[i];
-          modifiedPictures = true;
-        }
-      }
-    }
-  }
-  if (modifiedPictures) {
-    effectiveState = { ...state, pictures: currentPictures };
-  }
+  const effectiveState = state;
 
   const initialLeft = effectiveState.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && effectiveState.alive[game.clock.i]);
   const cone = clocked ? clockCone(game, effectiveState) : null;
@@ -364,6 +337,12 @@ function search(game, state, actions, options = PARAMETERS) {
     assert(ALLOWED_OPTIONS.has(key), `Unsupported search option: ${key}`);
   }
   const settings = { ...PARAMETERS, ...options };
+  if (settings.memoryDecay !== null && settings.memoryDecay !== undefined) {
+    assert(typeof settings.memoryDecay === 'number' && Number.isFinite(settings.memoryDecay) && settings.memoryDecay >= 0 && settings.memoryDecay <= 1, 'memoryDecay must be in 0..1');
+  }
+  if (settings.retryLearning !== null && settings.retryLearning !== undefined) {
+    assert(typeof settings.retryLearning === 'number' && Number.isFinite(settings.retryLearning) && settings.retryLearning >= 0 && settings.retryLearning <= 1, 'retryLearning must be in 0..1');
+  }
   let effectiveState = state;
   let modifiedPictures = false;
   let currentPictures = state.pictures;
@@ -395,7 +374,7 @@ function search(game, state, actions, options = PARAMETERS) {
   const publicActions = actions.map(action => ({ index: action.index,
     inspect: !!effectiveState.down[action.index] && effectiveState.openPeek !== action.index
       && (effectiveState.pictures[action.index] === null || unproductiveReopen(effectiveState, action.index)) }));
-  const innerOptions = { ...options, rng: null };
+  const innerOptions = { ...options, rng: null, memoryDecay: null, retryLearning: null, previousAttemptObserved: null };
   return guarded(game, effectiveState, publicActions, innerOptions);
 }
 

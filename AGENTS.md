@@ -8,9 +8,12 @@ verification rules and does not replace any requirement.
 Work only on `wip/agy-personal-bots` in this repository. Keep
 `../personal-bot-review` strictly read-only.
 
-Run `python -B source/tools/sim/refit/check_acceptance_gates.py` after substantive
-changes and before any acceptance/completion claim. The expected current exit
-code is 1. That is an honest incomplete result, not a reason to weaken a check.
+Read `ACCEPTANCE_PROTECTION.md` and run the absolute protected verifier command
+after substantive changes and before any acceptance/completion claim. Confirm
+installation and ACL tests in `tools/acceptance-protection/PROTECTION_STATUS.json`.
+Repository-local gate scripts and test/mapping changes are not authoritative.
+The expected current exit code is 1. That is an honest incomplete result, not a
+reason to weaken a check or request administrator access to change the rules.
 Read every failed and UNVERIFIED row in the generated RTM, including dependencies.
 
 - Never hand-edit PASS, targetMet, allGatesPassed, requirement coverage, cohort
