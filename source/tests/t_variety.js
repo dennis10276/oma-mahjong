@@ -22,17 +22,31 @@ module.exports = [{
     // alike: share of the same tile spots (shifted, also mirrored) with any other designed level
     const norm = a => { const mx = Math.min(...a.map(p => p[0])), my = Math.min(...a.map(p => p[1])); return a.map(([x, y, z]) => [x - mx, y - my, z]); };
     const mir = a => { const w = Math.max(...a.map(p => p[0])); return a.map(([x, y, z]) => [w - x, y, z]); };
-    const set = a => new Set(norm(a).map(p => p.join(',')));
+    const set = a => new Set(norm(a).map(p => p.join(','))), fset = a => new Set(norm(a).map(p => p[0] + ',' + p[1]));
     const ov = (A, B2) => { let c = 0; for (const k of A) if (B2.has(k)) c++; return c / Math.max(A.size, B2.size); };
-    const tiles = {}; for (let lv = T.from; lv < T.from + T.levels.length; lv++) tiles[lv] = Hard.get(lv).tiles;
+    const alike = (ta, tb) => ({ pos: Math.max(ov(set(ta), set(tb)), ov(set(mir(ta)), set(tb))), foot: Math.max(ov(fset(ta), fset(tb)), ov(fset(mir(ta)), fset(tb))) });
+    // same picture on the same spot / pairs on the same two spots (also mirrored)
+    const pics = (A, B2) => { let w = { spot: 0, pair: 0 };
+      for (const m of [false, true]) { const a = norm(m ? mir(A.tiles) : A.tiles), b = norm(B2.tiles), at = new Map(b.map((p, k) => [p.join(','), k])), map = a.map(p => at.get(p.join(',')));
+        let spot = 0, pairs = 0, same = 0; const by = {};
+        a.forEach((p, i) => { (by[A.faces[i]] = by[A.faces[i]] || []).push(i); if (map[i] !== undefined && A.faces[i] === B2.faces[map[i]]) spot++; });
+        for (const g of Object.values(by)) for (let x = 0; x < g.length; x++) for (let y = x + 1; y < g.length; y++) { pairs++; const p = map[g[x]], q = map[g[y]]; if (p !== undefined && q !== undefined && B2.faces[p] === B2.faces[q]) same++; }
+        w = { spot: Math.max(w.spot, spot / Math.max(a.length, b.length)), pair: Math.max(w.pair, pairs ? same / pairs : 0) }; }
+      return w; };
+    const boards = {}; for (let lv = T.from; lv < T.from + T.levels.length; lv++) boards[lv] = Hard.get(lv);
     for (const r of R.levels) {
-      const lv = r.lv, d = Hard.get(lv), a = set(d.tiles), am = set(mir(d.tiles));
-      // against the levels that stay before the remake (an old board kept further on, where no new one
-      // fitted, is not compared) and, a little less strict, the other new boards (R.pair: near / far)
-      let worst = 0; for (const k in tiles) if (+k < R.from) { const b = set(tiles[k]); worst = Math.max(worst, ov(a, b), ov(am, b)); }
-      t.ok(worst <= R.novel.pos + 1e-9, `level ${lv}: a pile unlike every level before`, worst.toFixed(2));
-      for (const k of changed) if (k !== lv) { const b = set(tiles[k]), lim = Math.abs(k - lv) <= R.nearLevels ? R.pair.near : R.pair.far;
-        if (Math.max(ov(a, b), ov(am, b)) > lim + 1e-9) t.ok(false, `level ${lv}: unlike new level ${k}`, Math.max(ov(a, b), ov(am, b)).toFixed(2)); }
+      const lv = r.lv, d = boards[lv];
+      // unlike every level people could have played (before the remake; an old board kept further on,
+      // where no new one fitted, is not compared)
+      let worst = { pos: 0, foot: 0 }; for (const k in boards) if (+k < R.from) { const x = alike(d.tiles, boards[k].tiles); worst = { pos: Math.max(worst.pos, x.pos), foot: Math.max(worst.foot, x.foot) }; }
+      t.ok(worst.pos <= R.novel.pos + 1e-9 && worst.foot <= R.novel.foot + 1e-9, `level ${lv}: a pile unlike every level before`, JSON.stringify(worst));
+      // the other new boards: within R.nearLevels just as different; further apart a pile may look alike,
+      // but then its pairs are in new spots (Dennis, 2026-10-22)
+      for (const k of changed) if (k > lv) {
+        const x = alike(d.tiles, boards[k].tiles), near = k - lv <= R.nearLevels;
+        if (near && (x.pos > R.novel.pos || x.foot > R.novel.foot)) t.ok(false, `level ${lv}: unlike new level ${k}`, JSON.stringify(x));
+        if (!near && x.pos > R.novel.pos) { const p = pics(d, boards[k]); if (p.spot > R.pics.spot || p.pair > R.pics.pair) t.ok(false, `level ${lv} and ${k}: pairs in new spots`, JSON.stringify(p)); }
+      }
       const g = { tiles: d.tiles.map(([x, y, z]) => ({ x, y, z })), faces: d.faces, clock: d.clock };
       g.nb = L.neighbors(g.tiles);
       const o = d.obst; g.rules = o && (Object.keys(o.ice || {}).length || (o.keys || []).length) ? { iceNb: L.iceNeighbors(g.tiles), ice: o.ice || {}, locks: (o.keys || []).length ? new Set(o.locks) : null, keys: o.keys || [] } : null;

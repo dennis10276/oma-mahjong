@@ -46,8 +46,24 @@ const SHAPES = {
   castle: (u, v) => v >= -0.45 ? Math.abs(u) <= 0.92 : (Math.abs(u) > 0.62 || Math.abs(u) < 0.2),
 };
 const SHAPE_NAMES = Object.keys(SHAPES);
+/* 'blob<seed>': a random mirror-symmetric outline, a union of 2-4 rectangles, ovals and slanted bands,
+   sometimes with a hole (variety2 `more`: the named shapes alone give too few different piles) */
+function blob(seed) {
+  let s = seed % 2147483646 + 1; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const prims = [], n = 2 + Math.floor(r() * 3);
+  for (let k = 0; k < n; k++) {
+    const t = r(), cu = r() * 0.9, cv = r() * 2 - 1;
+    if (t < 0.4) prims.push({ k: 'rect', u0: cu - r() * 0.6, u1: cu + r() * 0.6, v0: cv - r() * 0.7, v1: cv + r() * 0.7 });
+    else if (t < 0.75) prims.push({ k: 'ell', cu, cv, ru: 0.2 + r() * 0.6, rv: 0.2 + r() * 0.6 });
+    else prims.push({ k: 'band', a: (r() - 0.5) * 3, b: r() * 2 - 1, w: 0.15 + r() * 0.3 });
+  }
+  const hole = r() < 0.35 ? { cu: r() * 0.5, cv: r() * 1.4 - 0.7, ru: 0.12 + r() * 0.25, rv: 0.12 + r() * 0.3 } : null;
+  const inP = (p, u, v) => p.k === 'rect' ? u >= p.u0 && u <= p.u1 && v >= p.v0 && v <= p.v1 : p.k === 'ell' ? ((u - p.cu) / p.ru) ** 2 + ((v - p.cv) / p.rv) ** 2 <= 1 : Math.abs(v - (p.a * u + p.b)) <= p.w;
+  return (u, v) => { u = Math.abs(u); if (hole && ((u - hole.cu) / hole.ru) ** 2 + ((v - hole.cv) / hole.rv) ** 2 <= 1) return false; return prims.some(p => inP(p, u, v)); };
+}
+const shapeFn = name => SHAPES[name] || (/^blob\d+$/.test(name) ? (SHAPES[name] = blob(+name.slice(4))) : null);
 function shapeCells(name, W, H, brick) {
-  const f = SHAPES[name], cells = [];
+  const f = shapeFn(name), cells = [];
   for (let r = 0; r < H; r++) {
     const odd = brick && r % 2 === 1;
     for (let c = 0; c < (odd ? W - 1 : W); c++) {

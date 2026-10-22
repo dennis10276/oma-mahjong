@@ -53,6 +53,26 @@ const sig = t => { const n = norm(t), m = norm(mir(t)); return { pos: [new Set(n
 const overlap = (a, b) => { let c = 0; for (const k of a) if (b.has(k)) c++; return c / Math.max(a.size, b.size); };
 const alike = (sa, sb) => ({ pos: Math.max(overlap(sa.pos[0], sb.pos[0]), overlap(sa.pos[1], sb.pos[0])), foot: Math.max(overlap(sa.foot[0], sb.foot[0]), overlap(sa.foot[1], sb.foot[0])) });
 const tooAlike = (a, b) => { const x = alike(a, b); return x.pos > NOVEL.pos || x.foot > NOVEL.foot; };
+// Two boards on (nearly) the same spots: the share of tiles with the same picture on the same spot, and of
+// pairs on the same two spots (same picture in both boards), also mirrored; too many = same pairs again
+const PICS = { spot: 0.1, pair: 0.1 };
+const picMemo = new Map();
+function pictureOverlap(A, B) {
+  const key = A.solution.join() + '|' + B.solution.join(); if (picMemo.has(key)) return picMemo.get(key);
+  let worst = { spot: 0, pair: 0 };
+  for (const m of [false, true]) {
+    const a = norm(m ? mir(A.tiles) : A.tiles), b = norm(B.tiles), at = new Map(b.map((p, k) => [p.join(','), k]));
+    const map = a.map(p => at.get(p.join(',')));   // tile of A -> tile of B on the same spot
+    let spot = 0, pairs = 0, same = 0; const byFace = {};
+    a.forEach((p, i) => { (byFace[A.faces[i]] = byFace[A.faces[i]] || []).push(i); if (map[i] !== undefined && A.faces[i] === B.faces[map[i]]) spot++; });
+    for (const g of Object.values(byFace)) for (let x = 0; x < g.length; x++) for (let y = x + 1; y < g.length; y++) {
+      pairs++; const p = map[g[x]], q = map[g[y]]; if (p !== undefined && q !== undefined && B.faces[p] === B.faces[q]) same++;
+    }
+    worst = { spot: Math.max(worst.spot, spot / Math.max(a.length, b.length)), pair: Math.max(worst.pair, pairs ? same / pairs : 0) };
+  }
+  picMemo.set(key, worst); return worst;
+}
+const pictureClash = (A, B) => { const o = pictureOverlap(A, B); return o.spot > PICS.spot || o.pair > PICS.pair; };
 const ease = m => 0.5 * m.first + 0.25 * m.two + 0.25 * m.four;
 const distTo = (m, target) => NAMES.reduce((s, n) => s + Math.abs(m[n].first - target[n].first) + 0.5 * Math.abs(m[n].two - target[n].two) + 0.5 * Math.abs(m[n].four - target[n].four), 0);
 const within = (m, target, ez, f = 1) => NAMES.every(n => Math.abs(m[n].first - target[n].first) <= TOL.first * f && Math.abs(m[n].two - target[n].two) <= TOL.two * f && Math.abs(m[n].four - target[n].four) <= TOL.four * f && (!ez || Math.abs(ease(m[n]) - ease(target[n])) <= TOL.ease * f));
@@ -79,7 +99,7 @@ function candidates(job) {
   const P = job.level, lv = P.lv, minPx = P.big ? 48 : 54, fixed = job.fixed.map(sig);
   const out = [];
   for (const shape of P.shapes) {
-    if (out.length >= CANDS) break;
+    if (out.length >= (job.max || CANDS)) break;
     // a pile of this shape: right size, tiles big enough, about as tall, unlike the levels that stay
     let best = null;
     for (let s = 0; s < 6; s++) for (const bf of [0.2, 0.25, 0.3, 0.36]) for (const ly of [P.layers, P.layers + 1, P.layers + 2, P.layers + 3]) for (const st of [0.2, 0.4, 0.6]) {
@@ -123,7 +143,7 @@ function candidates(job) {
     const near = job.near.map(t => distTo(c.quick, t));
     if (Math.min(...near) < 0.6) c.m = measure(c.board, SEARCH, 17011 + lv * 101 + out.indexOf(c));
   }
-  return { lv, cands: out };
+  return { lv, cands: out, round: job.round };
 }
 
 // ---------- 3. short tuning towards a target ----------
@@ -219,10 +239,29 @@ function hungarian(cost) {
 
 // like the 1.54 reorder: a board may go to any level from `from` (same big/normal kind), wherever its
 // difficulty fits; levels that already passed validation keep their board
+// more candidates on random outlines (piles.js 'blob<seed>'): `round` r gives every level `per` more boards
+async function cmdMore(workers, per, from, to, rounds) {
+  const P = plan(), { Hard } = gameModules();
+  const fixed = []; for (let lv = 70; lv < from; lv++) fixed.push(Hard.get(lv).tiles);
+  for (let round = 1; round <= rounds; round++) {
+    const C = readJ(CANDS_F, null); C.more = C.more || {};
+    const todo = P.levels.filter(l => l.lv >= from && l.lv <= to && (C.more[l.lv] || 0) < round);
+    console.log(`more, round ${round}: ${todo.length} levels`);
+    const t0 = Date.now();
+    await pool(todo.map(level => ({ level: { ...level, shapes: Array.from({ length: 80 }, (_, k) => 'blob' + (level.lv * 100003 + round * 1009 + k)) }, max: per, round, fixed,
+      near: P.levels.filter(x => x.lv >= from && x.big === level.big).map(x => x.target) })), 'cands', workers, res => {
+      const cur = readJ(CANDS_F, C); cur.more = cur.more || {};
+      cur.levels[res.lv] = (cur.levels[res.lv] || []).concat(res.cands); cur.more[res.lv] = res.round; writeJ(CANDS_F, cur);
+      console.log(`level ${res.lv}: +${res.cands.length} (${res.cands.filter(c => c.m).length} measured) ${((Date.now() - t0) / 60000).toFixed(1)} min`);
+    });
+  }
+}
+
 function cmdAssign(from) {
   const P = plan(), C = readJ(CANDS_F, null); if (!C) throw Error('no candidates yet');
   const prev = readJ(OUT, { levels: {} }), checked = readJ(CHECKED_F, {});
-  const keep = prev.from === from ? Object.entries(prev.levels).filter(([, x]) => x.status === 'ok') : [];
+  // (no board is kept as such: boards measured by validate come back through `checked`)
+  const keep = [];
   const levels = P.levels.filter(l => l.lv >= from && C.levels[l.lv]);
   const all = []; for (const [lv, cs] of Object.entries(C.levels)) cs.forEach((c, k) => { if (c.m) all.push({ id: lv + ':' + k, made: +lv, c, s: sig(c.board.tiles) }); });
   // the boards the slower first method (variety.js) finished are candidates too (measured with 1200 games)
@@ -234,17 +273,21 @@ function cmdAssign(from) {
   // the worse half of each clash and solving again. Among the new boards: at most 65% of the same tile
   // spots (the outline of two compact piles is often much the same, so it does not count here) and no
   // shape twice within 5 levels.
-  // Two new boards within NEAR_LV levels share at most PAIR.near of their tile spots, further apart at most
-  // PAIR.far (a player remembers the last few levels, and with 31 shapes for 112 levels some return).
-  const PAIR = { near: 0.65, far: 0.8 }, NEAR_LV = 10, SHAPE_GAP = 5;
-  const clashes = (la, a, lb, b) => { const dl = Math.abs(la - lb); return (dl <= SHAPE_GAP && (a.shape || a.c.shape) === (b.shape || b.c.shape)) || alike(a.s, b.s).pos > (dl <= NEAR_LV ? PAIR.near : PAIR.far); };
+  // Dennis (2026-10-22): tiles stay at least 54 px, so only about 25 piles can be truly different. Two new
+  // boards within NEAR_LV levels are as different as from the levels people played (NOVEL: spots and
+  // outline); further apart a pile may look alike, but then its pairs must be in new spots (PICS).
+  const NEAR_LV = +(process.env.NEAR_LV || 10), SHAPE_GAP = 5;
+  const clashes = (la, a, lb, b) => { const dl = Math.abs(la - lb), A = a.c ? a.c : a, B = b.c ? b.c : b;
+    if (dl <= SHAPE_GAP && A.shape === B.shape) return true;
+    if (dl <= NEAR_LV) return tooAlike(a.s, b.s);
+    return alike(a.s, b.s).pos > NOVEL.pos && pictureClash(A.board, B.board); };
   // candidates only looked at quickly (120 games) can still be picked to be tuned
   for (const [lv, cs] of Object.entries(C.levels)) cs.forEach((c, k) => { if (!c.m && c.quick) all.push({ id: lv + ':' + k, made: +lv, c: { ...c, m: c.quick }, s: sig(c.board.tiles), quick: true }); });
   const used = new Set(), chosen = {};
   for (const [lv, x] of keep) { used.add(x.id); chosen[lv] = { ...x, s: sig(x.board.tiles) }; }
   const keptS = Object.values(chosen).map(c => c.s);
   const open = levels.filter(l => !chosen[l.lv]);
-  const cands = all.filter(o => !used.has(o.id) && !keptS.some(s2 => alike(s2, o.s).pos > PAIR.far));
+  const cands = all.filter(o => !used.has(o.id));
   const cost = open.map(l => cands.map(o => {
     if ((o.made % 10 === 0) !== l.big) return Infinity;
     const f = checked[o.id], m = f || o.c.m, ok = !o.quick && (f ? within(f, l.target, true) : within(m, l.target, false));
@@ -270,7 +313,7 @@ function cmdAssign(from) {
     const f = checked[o.id], m = f || o.c.m;
     chosen[l.lv] = { id: o.id, made: o.made, shape: o.c.shape, board: o.c.board, m, dist: +distTo(m, l.target).toFixed(3), ok: cost[i][match[i]] < 10, s: o.s, ...(f ? { final: f, checked: true } : {}) };
   });
-  const out = { made: new Date().toISOString(), from, tol: TOL, novel: NOVEL, pair: PAIR, nearLevels: NEAR_LV, levels: {} };
+  const out = { made: new Date().toISOString(), from, tol: TOL, novel: NOVEL, pics: PICS, nearLevels: NEAR_LV, levels: {} };
   console.log(`assign: ${rounds + 1} rounds to remove look-alikes`);
   for (const l of levels) { const c = chosen[l.lv]; out.levels[l.lv] = !c ? { status: 'none' } : c.status === 'ok' ? { ...c, s: undefined } : { ...c, s: undefined, status: c.checked ? (c.ok ? 'ok' : 'tune') : c.ok ? 'close' : 'tune' }; if (out.levels[l.lv].status === 'tune') delete out.levels[l.lv].final; }
   writeJ(OUT, out);
@@ -334,7 +377,7 @@ function cmdApply(from) {
   fs.writeFileSync(path.join(ROOT, 'www', 'levels-hard.js'), head + 'const HARD_LEVELS = ' + JSON.stringify(NT) + ';\n');
   const missing = []; for (let lv = from; lv <= 269; lv++) if (!take.some(([l]) => l === lv)) missing.push(lv);
   // the report the tests read
-  fs.writeFileSync(A('variety.json'), JSON.stringify({ made: new Date().toISOString(), from, tol: TOL, curve: CURVE, novel: NOVEL, pair: O.pair, nearLevels: O.nearLevels, levels: take.map(([lv, x]) => ({ lv, shape: x.shape, target: target(lv), final: x.final })) }, null, 1));
+  fs.writeFileSync(A('variety.json'), JSON.stringify({ made: new Date().toISOString(), from, tol: TOL, curve: CURVE, novel: NOVEL, pics: O.pics, nearLevels: O.nearLevels, levels: take.map(([lv, x]) => ({ lv, shape: x.shape, target: target(lv), final: x.final })) }, null, 1));
   console.log(`apply: ${take.length} levels with a new board (v${NT.v})${missing.length ? '; kept the old board on ' + missing.join(', ') : ''}`);
 }
 
@@ -345,6 +388,7 @@ if (!isMainThread) {
   const [cmd, a1, a2, a3] = process.argv.slice(2);
   (async () => {
     if (cmd === 'cands') await cmdCands(+(a1 || 2), +(a2 || 158), +(a3 || 269));
+    else if (cmd === 'more') await cmdMore(+(a1 || 2), +(a2 || 3), +(a3 || 158), +(process.argv[6] || 269), +(process.argv[7] || 1));
     else if (cmd === 'assign') cmdAssign(+(a1 || 158));
     else if (cmd === 'tune') await cmdTune(+(a1 || 2));
     else if (cmd === 'validate') await cmdValidate(+(a1 || 2));

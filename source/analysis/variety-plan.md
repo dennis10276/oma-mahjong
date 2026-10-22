@@ -24,8 +24,12 @@ pictures, and the 1.54 reorder kept whole boards.
   pile (more layers and towers): with 80-96 tiles that must stay at least 54 px (48 on every 10th
   level) on a phone, a wide flat base is a block whatever its shape.
 - **Different from every other level**: at most 60% of the tile spots and 65% of the outline the same
-  as any level that stays (70-157; today the most alike other level shares about 94% / 97%); among
-  the new boards 65% of the spots within 10 levels, 80% further apart (see `assign` below).
+  as any level that stays (70-157; today the most alike other level shares about 94% / 97%). Among
+  the new boards the same within `NEAR_LV` levels (10 if it can be done). Further apart a pile may look
+  alike (Dennis, 2026-10-22: tiles stay at least 54 px, and at that size only about 25 piles can be
+  this different from each other; 51 px would allow about 120), but then **its pairs must be in new
+  spots**: at most 10% of the tiles with the same picture on the same spot, and at most 10% of the
+  pairs on the same two spots (`PICS`, also mirrored).
 - **Same difficulty**: the frozen calibrated observer (`tools/sim/honest`, commit 316f3b1) plays the
   board as both personal players (Dennisisdebeste, Mrs. Doubtfire), first try / within 2 / within 4
   with memory, exactly the 1.54 reorder measure. Target per level: `analysis/reorder-92.json`
@@ -66,11 +70,13 @@ node source/tools/sim/variety/variety2.js apply 158         # www/levels-hard.js
 2. `assign` (2026-10-22): like the 1.54 reorder, a board may go to **any** level from 158 of the same
    kind (big boards every 10th level), wherever its difficulty fits. The best overall assignment
    (Hungarian method): as many levels as possible within the tolerance, then the smallest total
-   distance. Look-alike rules between the new boards: at most 65% of the same tile spots within 10
-   levels, 80% further apart, no shape twice within 5 levels (against levels 70-157: 60% / 65%
-   outline, from `cands`). Levels that passed `validate` keep their board; candidates measured by
+   distance. Look-alike rules between the new boards: see "Different from every other level" above,
+   and no shape twice within 5 levels. Levels that passed `validate` keep their board; candidates measured by
    `validate` use that sharper number (`analysis/variety2-checked.json`). Greedy level-by-level
    picking (the first version) used only 12 of the ~80 possible close fits.
+   `more [workers] [per] [from] [to] [rounds]` adds boards on random outlines (`piles.js` 'blob<seed>':
+   2-4 rectangles, ovals and slanted bands, mirror-symmetric), because the 31 named shapes give too few
+   piles that differ enough from each other.
 3. `tune`: at most 16 short steps (swap pictures, clock, face-down tiles), only where no candidate
    was within the tolerance.
 4. `validate`: 1200 games (seed 55001 + level x 101); passes within the tolerance below (per level,
