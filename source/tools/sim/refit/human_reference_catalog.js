@@ -36,7 +36,8 @@ function reconstructLevel(version, level) {
   return { game: encodeGame(classic(level, 1.5)), boardSource: 'currentClassicDefinitionAspect1.5', historicalBoardExact: false };
 }
 
-async function loadRecordedClears({ get, raw, cached, buildBoard = reconstructLevel } = {}) {
+async function loadRecordedClears({ get, raw, cached, buildBoard = reconstructLevel, selectedLevels = null } = {}) {
+  assert(selectedLevels === null || Array.isArray(selectedLevels) && selectedLevels.every(level => Number.isInteger(level) && level > 0));
   const database = fs.readFileSync(path.join(root, 'www/js/rules.js'), 'utf8').match(/const DB_URL\s*=\s*['"]([^'"]+)['"]/)[1];
   const fetchJson = get ?? (async resource => {
     let failure;
@@ -59,6 +60,7 @@ async function loadRecordedClears({ get, raw, cached, buildBoard = reconstructLe
     const labels = normalizeAttempts(campaign.firstCounter, end.at || 1, campaign.confirmedOpening);
     const metadata = { name: 'Dennisisdebeste', lv: level, start: campaign.start, version: (opening || campaign.events[0]).v, ...labels,
       assisted: campaign.events.some(event => event.ez || event.h || event.sh || event.rb) };
+    if (selectedLevels && !selectedLevels.includes(level)) { rows.push({ ...metadata, status: 'notRequested' }); continue; }
     if (!campaign.confirmedOpening) { rows.push({ ...metadata, status: 'unconfirmedOpening' }); continue; }
     const chunks = opening?.aid ? replays[opening.aid] ?? await fetchJson('/replays/' + PIDS.Dennisisdebeste + '/' + encodeURIComponent(opening.aid)) : null;
     const initial = initialBoard(chunks);

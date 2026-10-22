@@ -30,10 +30,10 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
 }
 
 async function main(filename, levels, settings, reportFile) {
-  const input = filename === '--live' ? await loadRecordedClears() : JSON.parse(fs.readFileSync(filename));
+  const selected = levels ? levels.split(',').map(Number) : null;
+  const input = filename === '--live' ? await loadRecordedClears({ selectedLevels: selected }) : JSON.parse(fs.readFileSync(filename));
   const catalog = input.rows ?? input.entries ?? input.baseline?.input.entries;
   assert(Array.isArray(catalog));
-  const selected = levels ? levels.split(',').map(Number) : null;
   const entries = catalog.filter(entry => entry.name === 'Dennisisdebeste' && (!selected || selected.includes(entry.lv)));
   assert(entries.length > 0);
   assert(entries.every(entry => entry.game && Number.isInteger(entry.wonOn)), 'Keep unavailable boards/labels unresolved; do not silently exclude them from the catalog gate');

@@ -26,6 +26,10 @@ async function test() {
   assert.equal(catalog.rows.find(row => row.lv === 101).status, 'missingExactOpeningBoard');
   const older = catalog.rows.find(row => row.lv === 17);
   assert.equal(older.status, 'available'); assert.equal(older.wonOn, 1); assert.equal(older.historicalBoardExact, false);
+  const scoped = await loadRecordedClears({ raw, cached: { first: chunks }, selectedLevels: [100],
+    get: async () => { throw Error('Requested an unrelated replay'); }, buildBoard: () => { throw Error('Built an unrelated board'); } });
+  assert.equal(scoped.rows.length, 3); assert.equal(scoped.rows.filter(row => row.status === 'available').length, 1);
+  assert(scoped.rows.filter(row => row.lv !== 100).every(row => row.status === 'notRequested'));
   assert(passes(1, 1)); assert(!passes(1, 2)); assert(passes(2, 1)); assert(!passes(2, 2)); assert(!passes(3, null));
   console.log('PASS recorded-clear catalog keeps all levels and missing evidence, uses exact first-opening boards, counts restarts, ignores easier replay wins, and enforces the strict per-level Dennis gate');
 }
