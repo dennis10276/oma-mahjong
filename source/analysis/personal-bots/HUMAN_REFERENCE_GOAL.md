@@ -90,6 +90,16 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
+The full safety/pair-macro screen passed15/20 with a1503.6ms slowest decision:
+141 is restored, but145 regresses, so focused gains are not presented as a
+dominating whole-policy improvement. Optional `alternativeRecoveryRoutes`
+reuses the observed side/thaw alternatives for carried-tile recovery, not only
+clocks. A six-tile control reduces an inflated recovery estimate from5 to2
+without reading any unobserved identity; the estimate is still not a bound or
+route certificate. Its nine-case check retains134/139/141/143 and restores145;
+136/147/149/150 remain failures. Slowest1505.1ms. Broader screening remains
+required, with all failures retained and no per-level profile selection.
+
 Two causal one-node production-backed regressions now pass: information-tap
 safety evaluates the actual boundary action rather than borrowing safety from
 an unrelated free match; known-pair macros also finish face-up-first pairs before
