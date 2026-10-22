@@ -9,23 +9,30 @@ function tileVisibility(tiles, state, clock) {
   });
   const tilesVisible = tiles.map((tile, index) => {
     const box = boxes[index];
-    let regions = state.alive[index] ? [[box.left + 0.15, box.top + 0.15, box.left + 0.85, box.top + 1.09]] : [];
-    for (const [other, cover] of boxes.entries()) {
-      if (!regions.length) break;
-      if (!state.alive[other] || cover.order <= box.order) continue;
-      regions = regions.flatMap(region => {
-        const [left, top, right, bottom] = region;
-        const cutLeft = Math.max(left, cover.left), cutTop = Math.max(top, cover.top);
-        const cutRight = Math.min(right, cover.right), cutBottom = Math.min(bottom, cover.bottom);
-        if (cutLeft >= cutRight || cutTop >= cutBottom) return [region];
-        return [[left, top, cutLeft, bottom], [cutRight, top, right, bottom],
-          [cutLeft, top, cutRight, cutTop], [cutLeft, cutBottom, cutRight, bottom]]
-          .filter(([start, upper, end, lower]) => end - start > 1e-9 && lower - upper > 1e-9);
-      });
-    }
-    const exposed = regions.length > 0;
+    const exposedRegion = initial => {
+      let regions = state.alive[index] ? initial : [];
+      for (const [other, cover] of boxes.entries()) {
+        if (!regions.length) break;
+        if (!state.alive[other] || cover.order <= box.order) continue;
+        regions = regions.flatMap(region => {
+          const [left, top, right, bottom] = region;
+          const cutLeft = Math.max(left, cover.left), cutTop = Math.max(top, cover.top);
+          const cutRight = Math.min(right, cover.right), cutBottom = Math.min(bottom, cover.bottom);
+          if (cutLeft >= cutRight || cutTop >= cutBottom) return [region];
+          return [[left, top, cutLeft, bottom], [cutRight, top, right, bottom],
+            [cutLeft, top, cutRight, cutTop], [cutLeft, cutBottom, cutRight, bottom]]
+            .filter(([start, upper, end, lower]) => end - start > 1e-9 && lower - upper > 1e-9);
+        });
+      }
+      return regions.length > 0;
+    };
+    const exposed = exposedRegion([
+      [box.left + 0.15, box.top + 0.05, box.left + 0.85, box.top + 1.24 + 0.085 * 1.2 - 0.03],
+      [box.left + 0.05, box.top + 0.15, box.left + 1 + 0.085 - 0.03, box.top + 1.09],
+    ]);
+    const overlayExposed = exposedRegion([[box.left + 0.15, box.top + 0.15, box.left + 0.85, box.top + 1.09]]);
     const faceUp = exposed && (!state.down[index] || state.openPeek === index);
-    return { orientation: exposed, picture: faceUp, role: faceUp };
+    return { orientation: exposed, picture: faceUp, role: overlayExposed && faceUp };
   });
   return { tiles: tilesVisible, clock: clock && state.alive[clock.i]
     ? { i: clock.i, n: clock.n, remaining: Math.max(0, clock.n - state.moves) } : null };

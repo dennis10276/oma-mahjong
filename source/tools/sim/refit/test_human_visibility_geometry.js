@@ -21,12 +21,15 @@ function test() {
   assert.equal(observed.pictures[0], null); assert.equal(observed.roles[0], null); assert.equal(observed.down[0], null);
   assert.deepEqual(observed.clock, { i: 0, n: 8, remaining: 6 });
   const near = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }];
-  assert(!tileVisibility(near, { ...state, alive: [1, 1], down: [0, 0] }, null).tiles[0].picture);
+  const borderOnly = tileVisibility(near, { ...state, alive: [1, 1], down: [0, 0] }, null).tiles[0];
+  assert(borderOnly.picture, 'Dennis explicitly recognizes a face-up picture from an exposed physical border');
+  assert(!borderOnly.role, 'Recognizing a border is not permission to read a covered obstacle overlay');
+  assert(!tileVisibility(near, { ...state, alive: [1, 1], down: [1, 0] }, null).tiles[0].picture);
   const separated = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 3 }];
   assert(tileVisibility(separated, { ...state, alive: [1, 1], down: [0, 0] }, null).tiles[0].picture);
   assert(!tileVisibility(separated, { ...state, alive: [1, 1], down: [1, 0] }, null).tiles[0].picture);
   assert(tileVisibility(separated, { ...state, alive: [1, 1], down: [1, 0] }, null).tiles[0].orientation);
-  console.log('PASS renderer-anchored geometry accounts for layer lift, opaque sides and unions of covers; closed/fully covered pictures and roles remain unread, while exposed inner faces and covered clock badges are public');
+  console.log('PASS renderer-anchored geometry permits declared border-based picture recognition without revealing covered obstacle overlays; closed/fully covered pictures remain unread and clock badges stay public');
 }
 
 if (require.main === module) test();

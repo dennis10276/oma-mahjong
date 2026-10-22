@@ -4,8 +4,8 @@ const { observeBoard } = require('./human_board_visibility.js');
 const { createHumanController } = require('./human_reference_campaign.js');
 
 function test() {
-  const tiles = [{ x: 0, y: 0, z: 0 }, { x: 4, y: 0, z: 0 }, { x: 0, y: 0, z: 1 },
-    { x: 4, y: 0, z: 1 }, { x: 8, y: 0, z: 0 }, { x: 12, y: 0, z: 0 }];
+  const tiles = [{ x: 0, y: 0, z: 0 }, { x: 4, y: 0, z: 0 }, { x: 0.28, y: 0.28 / 1.24, z: 1 },
+    { x: 4.28, y: 0.28 / 1.24, z: 1 }, { x: 8, y: 0, z: 0 }, { x: 12, y: 0, z: 0 }];
   for (const tile of tiles) Object.defineProperty(tile, 'face', { get() { throw Error('Geometry accessed private picture'); } });
   const clock = { i: 0, n: 8 }, visible = [2, 3, 4, 5];
   let canonical = null, controls = 0;

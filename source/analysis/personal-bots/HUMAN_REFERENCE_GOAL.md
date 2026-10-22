@@ -33,9 +33,13 @@ the renderer's1.24 height ratio,14% up-left layer lift and drawing order are
 projected without screenshots. Higher drawn tiles are subtracted as a union,
 not checked individually. Opaque-body/side bounds are conservative for tile
 widths of at least20px (side allowance=max(.085,3/20)). An inner face region,
-inset.15 tile-widths, excludes the colored physical border; an exposed fragment
-there is the declared readable-picture condition. This is an explicit semantic
-visibility rule, not a pixel-recognition or per-picture artwork guarantee.
+inset.15 tile-widths, defines the readable obstacle-overlay region. Dennis
+clarified on2026-10-23 that he recognizes a face-up picture even from its exposed
+beige/green border. Picture/orientation visibility therefore also tests two
+inscribed body strips, including the minimum solid side depth. Rounded corners
+and soft shadows alone do not count. This is an explicit semantic recognition
+contract, not a pixel-recognition or per-picture artwork guarantee. A border
+does not disclose an obstacle overlay that is still covered.
 Renderer/CSS anchors and covered-union/separated-layer controls guard it.
 Side-blocking prevents taking, not seeing.
 Exposed back orientation is public; a picture and current obstacle overlay are
@@ -48,7 +52,9 @@ readers, and must stop at an unobserved picture, orientation or mechanical role.
 The game-state bridge currently assumes the declared >=20px viewport domain.
 Integration at a smaller rendered tile size must remain unsupported until its
 geometry bound is supplied; old unrecorded viewport identity is not claimed.
-Seeing only the physical side/border is not permission to read an unseen image.
+Entirely occluded pictures and closed pictures remain unknown, even with the
+border-recognition contract. Concealed-world controls use projection-aligned
+covers so they remain genuinely occluded rather than merely grid-stacked.
 
 ## Recorded-clear coverage
 
@@ -83,6 +89,21 @@ tries, not an invented successful try. Source hashes and board provenance are
 reported; only one short table is written when a report path is explicitly given.
 
 ## Development checkpoint
+
+The completed older full-catalog baseline passed111/140, not the goal. Its
+source changed on disk during execution, so its report explicitly records
+`unchanged:false`; it is coverage/older-policy evidence, not a current gate pass.
+The source-unchanged20-case geometry/known-pair candidate passed12/20, with a
+1505.1ms slowest observation-plus-planning decision. These results predate the
+newly authorized border-recognition contract. Both full failures and substitute
+board provenance remain in the short reports.
+
+The optional `patientSingleCarry` phase prefers guaranteed ready pairs with one
+carried tile outside the clock phase, rather than digging prematurely. It uses
+only observed pictures and public mechanical certainty. Its initial focused
+comparison remained3/4, including a failure on147, so it is experimental rather
+than a demonstrated improvement or promoted default.29/29 offline human-reference
+tests pass after the border-contract change; the full goal remains active.
 
 The source-bound focused run in `HUMAN_REFERENCE_FOCUS_2026-10-22.md` clears
 134,141,143 on try1 and fails147 within its allowed single try. Slowest planning

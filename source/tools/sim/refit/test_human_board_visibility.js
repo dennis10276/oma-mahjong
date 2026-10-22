@@ -5,7 +5,7 @@ const Layouts = require('../../../www/layouts.js');
 const { search, REFERENCE_PARAMETERS } = require('./public_witness_search.js');
 
 function test() {
-  const tiles = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 4, y: 0, z: 0 }, { x: 5, y: 0, z: 1 }];
+  const tiles = [{ x: 0, y: 0, z: 0 }, { x: 0.28, y: 0.28 / 1.24, z: 1 }, { x: 4, y: 0, z: 0 }, { x: 5, y: 0, z: 1 }];
   const state = { alive: [1, 1, 1, 1], down: [0, 1, 0, 0], openPeek: -1, moves: 3 };
   const clock = { i: 0, n: 12 }, reads = [];
   const readers = { picture(index) { assert([2, 3].includes(index)); reads.push(index); return 7; },

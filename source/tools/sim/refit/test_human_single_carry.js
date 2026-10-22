@@ -6,7 +6,7 @@ const { createHumanController, visibleRole } = require('./human_reference_campai
 const { createSessionFactory } = require('./production_physical_session.js');
 
 function test() {
-  const tiles = [{ x: 0, y: 0, z: 0 }, { x: 4, y: 0, z: 0 }, { x: 8, y: 0, z: 2 },
+  const tiles = [{ x: 0, y: 0, z: 0 }, { x: 4, y: 0, z: 0 }, { x: 8.28, y: 0.28 / 1.24, z: 2 },
     { x: 8, y: 0, z: 1 }, { x: 12, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }];
   const game = { tiles, nb: Layouts.neighbors(tiles), faces: [1, 1, 2, 9, 9, 2],
     down: tiles.map(() => 0), rules: null, clock: null };
