@@ -10,8 +10,7 @@ if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administra
 }
 $Payload = [IO.Path]::GetFullPath($Payload)
 $Destination = [IO.Path]::GetFullPath($Destination)
-$expected = 'C:\ProgramData\OmasMahjongAcceptance\v1'
-if ($Destination -ne $expected) { throw 'Unexpected installation destination' }
+if ($Destination -notmatch '^C:\\ProgramData\\OmasMahjongAcceptance\\v[1-9][0-9]*$') { throw 'Unexpected installation destination' }
 if (Test-Path -LiteralPath $Destination) { throw 'Version already exists. Never overwrite a protected verifier release.' }
 $manifestFile = Join-Path $Payload 'MANIFEST.json'
 if ((Get-FileHash -LiteralPath $manifestFile -Algorithm SHA256).Hash -ne $ManifestSha256) { throw 'Payload manifest changed' }

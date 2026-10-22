@@ -1,0 +1,26 @@
+{
+  "installed": false,
+  "manifestSha256": "39323bba74c12e5a71cf0e52753c3f250673713cbb24888621014fb9a4124ce1",
+  "payload": "C:\\Users\\den_k\\.codex\\telemetry-audit\\release-v2-sealed",
+  "packageHashesMatch": true,
+  "unitTestsPassed": 16,
+  "additionalLimitRegressionsPassed": [
+    "timeout",
+    "large-source",
+    "partial-inventory",
+    "deleted-pinned-source",
+    "source-disguised-as-ledger"
+  ],
+  "protectedV1Changed": false,
+  "newTaskAuthorityActive": false,
+  "scopeRoots": 5,
+  "pinnedCandidates": 8,
+  "claim": "Discovery framework only; no telemetry exhaustion or G6 success established.",
+  "pinnedSourcePaths": 44913,
+  "preliminaryScan": {
+    "report": "C:\\Users\\den_k\\.codex\\telemetry-audit\\bounded-scan.json",
+    "recordsOrLeads": 2438,
+    "allGatesPassed": false,
+    "noDataClaimPermitted": false
+  }
+}

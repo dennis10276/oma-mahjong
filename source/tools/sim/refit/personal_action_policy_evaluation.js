@@ -4,10 +4,11 @@ const path = require('path');
 const assert = require('assert/strict');
 const { calibratePlayer } = require('./personal_behavioral_calibration.js');
 const { search } = require('./public_witness_search.js');
-const { NAMES } = require('./personal_model.js');
+const { NAMES, boardId, publicBoardId } = require('./personal_model.js');
 const { gamesOf } = require('./mimic_games.js');
 const { createSession } = require('./production_physical_session.js');
 const { createObservedMemory } = require('./personal_observed_memory.js');
+const { compareTrayCounts } = require('./independent_tray_metrics.js');
 
 /**
  * Evaluates action-policy fidelity of personal bots against actual human decisions
@@ -33,19 +34,49 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
     let randomTop1Expected = 0;
     let totalEvaluated = 0;
     const trayCounts = { 0: 0, 1: 0, 2: 0, 3: 0 };
+    const perGameRecords = [];
 
     for (const game of testGames) {
       if (totalEvaluated >= samplePerPlayer) break;
-      const publicGeometry = { tiles: game.g.tiles, nb: game.g.nb, rules: game.g.rules, clock: game.g.clock };
+      const g = game.g;
+      const publicGeometry = { tiles: g.tiles, nb: g.nb, rules: g.rules, clock: g.clock };
+      const bId = boardId(g);
+      const pId = publicBoardId(g);
+      let gameEvaluated = 0;
 
       let session;
       try {
-        session = createSession(game.g);
+        session = createSession(g);
       } catch (e) {
         continue;
       }
 
+      const memory = createObservedMemory({
+        size: g.tiles.length,
+        campaign: 'eval_tf_' + name,
+        board: 'board_' + game.key,
+        seed: 42,
+        retryRetention: calib.parameters.retryLearning,
+        decay: calib.parameters.memoryDecay
+      });
+      memory.beginAttempt({ campaign: 'eval_tf_' + name, board: 'board_' + game.key, size: g.tiles.length, attempt: 1 });
+
+      const ev = { kind: 'eval-observer', sha256: '0'.repeat(64) };
+      const getObs = f => {
+        const pictures = f.state.alive.map((alive, index) => {
+          if (!alive) return null;
+          if (index === f.state.openPeek) return g.faces[index];
+          if (!g.down[index]) {
+            const aboveList = (g.nb && g.nb.above && g.nb.above[index]) || [];
+            if (aboveList.every(a => !f.state.alive[a])) return g.faces[index];
+          }
+          return null;
+        });
+        return { physicalTaps: f.state.physicalTaps, alive: f.state.alive, pictures, evidence: pictures.map(p => p !== null ? ev : null) };
+      };
+
       let frame = session.view();
+      let observed = memory.observe(getObs(frame));
       let lastPeek = -1;
 
       for (let s = 0; s < game.take.length && totalEvaluated < samplePerPlayer; s++) {
@@ -74,19 +105,8 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
           inspect: !!frame.state.down[index] && frame.state.openPeek !== index
         }));
 
-        // Public search state (no concealed faces)
-        const publicPictures = frame.state.alive.map((alive, idx) => {
-          if (!alive) return null;
-          if (idx === frame.state.openPeek) return game.g.faces[idx];
-          if (!game.g.down[idx]) {
-            const above = (game.g.nb?.above && game.g.nb.above[idx]) || [];
-            if (above.every(a => !frame.state.alive[a])) return game.g.faces[idx];
-          }
-          return null;
-        });
-
         const searchState = {
-          pictures: publicPictures,
+          pictures: observed.pictures,
           down: frame.state.down,
           alive: frame.state.alive,
           tray: frame.state.tray,
@@ -122,14 +142,27 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
         if (rIndex === actionIndex) referenceTop1++;
 
         totalEvaluated++;
+        gameEvaluated++;
 
         try {
           frame = session.tap(actionIndex);
           if (frame.type === 'productionPhysicalEnd-v1') break;
+          observed = memory.observe(getObs(frame));
         } catch (e) {
           break;
         }
       }
+
+      perGameRecords.push({
+        aid: game.aid,
+        lv: game.lv,
+        boardId: bId,
+        publicBoardId: pId,
+        openedAt: game.t,
+        availableAt: game.availableAt,
+        completedAt: game.availableAt,
+        evaluatedDecisions: gameEvaluated
+      });
     }
 
     const humanTrayDist = {};
@@ -216,35 +249,31 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
       botTrayDist[k] = +( (botTrayCounts[k] || 0) / Math.max(1, botSteps) ).toFixed(3);
     }
 
-    let tvd = 0;
-    let cdfH = 0, cdfB = 0, w1 = 0;
-    for (let k = 0; k <= 3; k++) {
-      tvd += Math.abs((humanTrayDist[k] || 0) - (botTrayDist[k] || 0));
-      if (k <= 2) {
-        cdfH += humanTrayDist[k] || 0;
-        cdfB += botTrayDist[k] || 0;
-        w1 += Math.abs(cdfH - cdfB);
-      }
-    }
-    tvd = +(0.5 * tvd).toFixed(4);
-    w1 = +w1.toFixed(4);
+    const trayMetrics = compareTrayCounts(trayCounts, botTrayCounts);
 
     results[name] = {
       evaluatedDecisions: totalEvaluated,
       calibratedParameters: calib.parameters,
       humanTrayDistribution: humanTrayDist,
       botTrayDistribution: botTrayDist,
+      humanTrayCounts: { ...trayCounts },
+      botTrayCounts: { ...botTrayCounts },
       trayComparison: {
-        totalVariationDistance: tvd,
-        wassersteinDistance: w1,
-        replicatesDistribution: tvd <= 0.50
+        totalVariationDistance: trayMetrics.totalVariationDistance,
+        wassersteinDistance: trayMetrics.wassersteinDistance,
+        replicatesDistribution: trayMetrics.totalVariationDistance <= 0.50
       },
       top1Accuracy: {
         personalBot: +( (personalTop1 / Math.max(1, totalEvaluated)).toFixed(3) ),
         referenceBot: +( (referenceTop1 / Math.max(1, totalEvaluated)).toFixed(3) ),
         randomBaseline: +( (randomTop1Expected / Math.max(1, totalEvaluated)).toFixed(3) )
       },
-      personalFidelityVerified: (personalTop1 / Math.max(1, totalEvaluated)) > (randomTop1Expected / Math.max(1, totalEvaluated))
+      personalFidelityVerified: (personalTop1 / Math.max(1, totalEvaluated)) > (randomTop1Expected / Math.max(1, totalEvaluated)),
+      provenance: {
+        trainCutoff: testCutoff,
+        games: perGameRecords,
+        unresolvedEvents: []
+      }
     };
   }
 

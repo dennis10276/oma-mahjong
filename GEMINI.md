@@ -1,5 +1,21 @@
 # Mandatory project instructions
 
+Next phase: execute `TELEMETRY_DISCOVERY_TASK.md` and its T0-T5 gates before making
+any claim that available telemetry is exhausted. Do not assume offline mechanics
+are sound or pass that conclusion to subagents as fact. Subagents receive the full
+original contract and must investigate independently. Unknown source schemas,
+unreconstructed raw campaigns and derived-only outcomes block an exhaustion claim.
+This discovery phase does not suspend meaningful independent implementation work.
+For this phase, TELEMETRY_DISCOVERY_TASK.md takes precedence over the ordering of
+GEMINI_NEXT_WORK.md. Resume that engineering assignment when independent discovery
+work is exhausted or while adapter review is pending.
+
+Current assignment: read and execute `GEMINI_NEXT_WORK.md` in dependency order.
+V8's old cohort cannot be repaired by waiting for later games. The proposed tray
+and Monte Carlo harnesses have been corrected, but numeric integrity is not proof
+of fidelity or protected approval. Continue substantive dataset/policy work; do not
+treat administrator deployment as the sole engineering blocker.
+
 The authoritative gate definitions now reside outside this editable repository.
 Read `ACCEPTANCE_PROTECTION.md` and check the actual installation status before
 claiming acceptance. Use the absolute protected command documented there.

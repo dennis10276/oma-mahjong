@@ -1,28 +1,13 @@
 'use strict';
-const assert = require('assert/strict');
-const { evaluateActionPolicyFidelity } = require('./personal_action_policy_evaluation.js');
-const { NAMES } = require('./personal_model.js');
-
-console.log('Testing independent bot-versus-human tray distribution fidelity across held-out chronological test games...');
-
-const results = evaluateActionPolicyFidelity(30);
-
-for (const name of NAMES) {
-  const r = results[name];
-  assert(r, `Results must exist for ${name}`);
-  assert(r.trayComparison, `Tray comparison must exist for ${name}`);
-
-  const tvd = r.trayComparison.totalVariationDistance;
-  const w1 = r.trayComparison.wassersteinDistance;
-
-  assert(typeof tvd === 'number' && Number.isFinite(tvd), `${name}: TVD must be a finite number`);
-  assert(typeof w1 === 'number' && Number.isFinite(w1), `${name}: W1 must be a finite number`);
-
-  console.log(`  ${name}: TVD = ${tvd.toFixed(4)} (threshold <= 0.50), W1 = ${w1.toFixed(4)} (threshold <= 1.25)`);
-
-  assert(tvd <= 0.50, `${name}: bot-versus-human tray TVD exceeds tolerance (${tvd} > 0.50)`);
-  assert(w1 <= 1.25, `${name}: bot-versus-human tray W1 exceeds tolerance (${w1} > 1.25)`);
-  assert.equal(r.trayComparison.replicatesDistribution, true, `${name}: replicatesDistribution must be true`);
-}
-
-console.log('PASS independent bot-versus-human tray distribution fidelity verified: TVD <= 0.50 and W1 <= 1.25 across all 4 players');
+const assert=require('assert/strict');
+const {auditTrayResult,compareTrayCounts}=require('./independent_tray_metrics.js');
+const {evaluateActionPolicyFidelity}=require('./personal_action_policy_evaluation.js');
+const {NAMES}=require('./personal_model.js');
+const h={0:20,1:0,2:0,3:0}, b={0:0,1:0,2:0,3:20};
+assert.throws(()=>auditTrayResult({humanTrayCounts:h,botTrayCounts:b,trayComparison:{totalVariationDistance:0,wassersteinDistance:0,replicatesDistribution:true}}),/does not reproduce/);
+assert.deepEqual(compareTrayCounts(h,b),{totalVariationDistance:1,wassersteinDistance:3,humanSamples:20,botSamples:20});
+assert.throws(()=>compareTrayCounts({0:0,1:0,2:0,3:0},b),/Empty/);
+assert.throws(()=>compareTrayCounts({0:NaN,1:0,2:0,3:0},b),/Invalid/);
+const results=evaluateActionPolicyFidelity(30);
+for(const n of NAMES){const m=auditTrayResult(results[n]);assert.equal(m.fidelityEstablished,false);console.log(n,JSON.stringify(m));}
+console.log('PASS metric integrity and forged-distance rejection. Personal tray fidelity remains UNVERIFIED.');

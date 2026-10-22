@@ -647,7 +647,7 @@
         "R03.021"
       ],
       "checks": [],
-      "status": "UNVERIFIED"
+      "status": "FAIL"
     },
     {
       "id": "R03.001",
@@ -709,7 +709,7 @@
       "checks": [
         "forecast.sources"
       ],
-      "status": "PASS"
+      "status": "FAIL"
     },
     {
       "id": "R03.007",
@@ -2673,7 +2673,7 @@
       "checks": [
         "forecast.sources"
       ],
-      "status": "PASS"
+      "status": "FAIL"
     },
     {
       "id": "AUDIT.forecast.campaigns",
