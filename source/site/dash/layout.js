@@ -12,6 +12,7 @@
     ['levels', 'Alle levels', '#tbl', 4],
     ['feed', 'Live verloop', '#feed', 4],
     ['prediction', 'Voorspelling', '#pred', 4],
+    ['scorecard', 'Voorspeltest', '#fcScore', 8],
   ];
   const panels = new Map(); let editing = false, saved = null, draft = null, dragging = null, pending = 0, mode = 'original', savedMode = 'original';
   const el = (tag, className, text) => { const n = document.createElement(tag); if (className) n.className = className; if (text) n.textContent = text; return n; };

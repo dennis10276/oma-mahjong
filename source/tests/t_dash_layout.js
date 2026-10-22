@@ -67,7 +67,7 @@ module.exports = [
         await p.goto(site.url + 'dash/?pred=1#pA'); await p.waitForSelector('#tbl button[data-aid]');
         t.ok(await p.locator('#layoutBoard').isHidden(), 'original layout remains until editor is used');
         await p.locator('#layoutEdit').click(); await p.getByRole('button', { name: 'Andere indeling kiezen', exact: true }).click(); await p.waitForSelector('#layoutBoard .layout-panel');
-        t.eq(await p.locator('#layoutBoard .layout-panel').count(), 9, 'every dashboard panel has an edit control');
+        t.eq(await p.locator('#layoutBoard .layout-panel').count(), 10, 'every dashboard panel has an edit control');
         await p.getByLabel('Breedte Meekijken', { exact: true }).selectOption('6');
         await p.getByLabel('Toon Live verloop', { exact: true }).uncheck();
         await p.getByRole('button', { name: 'Verplaats Meekijken omhoog', exact: true }).click();

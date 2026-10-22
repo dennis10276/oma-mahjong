@@ -81,6 +81,20 @@
         }
       }
     },
+    "forecasts": {
+      ".read": true,
+      "$pid": {
+        "$lv": {
+          ".write": "newData.exists() && (!data.exists() || $pid.beginsWith('test-')) || !newData.exists() && $pid.beginsWith('test-')",
+          ".validate": "newData.hasChildren(['p', 't', 'by']) && $lv.matches(/^[1-9][0-9]{0,3}$/)",
+          "p": { ".validate": "newData.isNumber() && (newData.val() === 1 || newData.val() === 2 || newData.val() === 3 || newData.val() === 4 || newData.val() === 5 || newData.val() === 6 || newData.val() === 7 || newData.val() === 8)" },
+          "t": { ".validate": "newData.isNumber() && newData.val() === now" },
+          "by": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 24" },
+          "model": { ".validate": "newData.isString() && newData.val().length <= 60" },
+          "$other": { ".validate": false }
+        }
+      }
+    },
     "plays": {
       ".read": true,
       "$pid": {

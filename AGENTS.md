@@ -139,6 +139,23 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - The Speltips menu: 8 tips (films of real recorded games, no names, `coach-clips.js`, made with
   `source/tools/coach/`), the player's own example per tip, and the tile explanations.
 
+## Voorspeltest: locked predictions (Dennis, 2026-10-22)
+
+- Bot predictions of a player's winning try are only judged when they were locked in Firebase
+  BEFORE the player first opened that level: `forecasts/<pid>/<level>` =
+  `{ p: 1-8 (8 = 8 or more), t: {".sv": "timestamp"}, by: "<agent>", model: "<free text>" }`.
+  The rules (`source/firebase/rules.json`) accept only the server's own time, one write per level,
+  and never a change or delete (except `test-` players). A refused write means: already locked.
+- Lock one level: `curl -X PUT -d '{"p":3,"t":{".sv":"timestamp"},"by":"gemini","model":"v9"}'
+  https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app/forecasts/<pid>/<level>.json`
+  (several new levels at once: PATCH `forecasts/<pid>.json` with `{ "<level>": {...}, ... }`).
+- The dashboard card "Voorspeltest" (`source/site/dash/forecast-score.js`) scores them against the
+  real plays and against the plain guess "always 1 try": exact for 1-3 tries, +-1 for 4-5, +-2 for
+  6-7, both 8+. Test set: the first 20 levels opened after locking; target 16 of 20 per player.
+  Outcomes come only from `plays/`. Agents never write to `plays/`, `scores/` or `replays/` for
+  real players, and do not edit the scorecard to change a result.
+- Rules check without production access: `EMULATOR_JAR=... node source/tests/forecast_rules_emulator.js`.
+
 ## Firebase
 
 - The database rules are `source/firebase/rules.json`. Dennis publishes them in the Firebase

@@ -148,6 +148,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   .tbl-wrap td:first-child { font-weight: 700; }
 }
 .res { font-weight: 700; letter-spacing: 1px; }
+#fcScore .tbl-wrap { margin-top: 10px; }
+#fcScore .fc-who { font: inherit; font-weight: 700; color: var(--ink); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline dotted; }
+#fcScore .fc-sub { margin: 12px 0 0; font-size: 13px; font-weight: 700; }
+#fcScore tr.fc-late td, #fcScore tr.fc-wait td { color: var(--ink-3); }
 .res .w { color: var(--good-ink); } .res .l { color: var(--bad); } .res .r { color: var(--ink-3); }
 .attempt-results { display: inline-grid; grid-template-columns: repeat(5, max-content); gap: 4px; max-width: 100%; vertical-align: middle; }
 .attempt-result { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; white-space: nowrap; }
@@ -312,6 +316,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <div id="alerts"></div>
     <div id="heartTop" class="wide"></div>
     <section class="card wide" aria-labelledby="predTitle"><h2 id="predTitle">Voorspelling</h2><div id="pred"></div></section>
+    <section class="card wide" aria-labelledby="fcTitle"><h2 id="fcTitle">Voorspeltest</h2><div id="fcScore"><div class="empty">Laden…</div></div></section>
     <section class="card wide"><h2>Alle levels</h2><div class="tbl-wrap" id="tbl"></div></section>
   </aside>
 </main>
@@ -322,6 +327,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="../play/tiles.js"></script>
 <script src="replay-state.js?v=537f6d4c1bc1"></script>
 <script src="playback.js?v=db4d48cfd379"></script>
+<script src="forecast-score.js?v=f92621ec0050"></script>
 <script src="watch.js?v=26f6a2dd4e6b"></script>
 <script>
 /* Predictions are off (Dennis, 2026-10-22: not good enough). Codex and Gemini are making better ones,
@@ -500,6 +506,7 @@ function heatmap(el, ev) {
 function render() {
   renderAlerts();
   renderRanking();
+  renderForecasts();
   if (!sel) { DashWatch.follow(null, '', []); return; }
   const ev = events(sel), sc = SCORES[sel] || {}, last = ev[ev.length - 1];
   const { levels, days } = analyse(ev);
@@ -877,6 +884,54 @@ function renderPred(levels, curLv) {
     <p class="pred-note">${howMadePb}</p>`;
 }
 
+// ---------- Voorspeltest: locked predictions against the real result (forecast-score.js) ----------
+let FORECASTS = {}, FC_STATE = 'loading';
+async function loadForecasts() {
+  try {
+    const r = await fetch(dbUrl('forecasts'), { cache: 'no-store' });
+    if (r.ok) { FORECASTS = (await r.json()) || {}; FC_STATE = 'ok'; }
+    else FC_STATE = r.status === 401 || r.status === 403 ? 'rules' : 'error';
+  } catch (e) { FC_STATE = 'error'; }
+  renderForecasts();
+}
+const fcTry = n => n >= ForecastScore.MAX ? '8+' : String(n);
+const fcTime = t => new Date(t).toLocaleString('nl-NL', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' });
+const fcMark = ok => `<span class="pred-hit ${ok ? 'ok' : 'miss'}">${ok ? '✓' : '✗'}</span>`;
+function renderForecasts() {
+  const box = $('#fcScore'); if (!box) return;
+  const note = '<p class="pred-note">Een voorspelling telt alleen als hij in de database stond vóór het level voor het eerst geopend werd. Vastgelegd is vastgelegd: niemand kan hem daarna nog veranderen of weghalen. Goed is precies bij 1-3 pogingen, 1 ernaast bij 4-5, 2 ernaast bij 6-7, of allebei 8 of meer. Doel: 16 van de eerste 20 per speler, en eerst beter dan altijd ‘1 poging’ raden.</p>';
+  if (FC_STATE === 'rules') { box.innerHTML = '<div class="empty">De database laat de voorspellingen nog niet zien: publiceer eerst de nieuwe Firebase-regels.</div>'; return; }
+  if (FC_STATE !== 'ok') { box.innerHTML = `<div class="empty">${FC_STATE === 'loading' ? 'Laden…' : 'De voorspellingen konden niet geladen worden.'}</div>`; return; }
+  const people = Object.keys(FORECASTS || {}).filter(pid => !pid.startsWith('test-') && FORECASTS[pid] && typeof FORECASTS[pid] === 'object')
+    .map(pid => ({ pid, ...ForecastScore.score(FORECASTS[pid], events(pid)) })).sort((a, b) => nameOf(a.pid).localeCompare(nameOf(b.pid)));
+  if (!people.length) { box.innerHTML = '<div class="empty">Nog geen vastgelegde voorspellingen.</div>' + note; return; }
+  const ratio = (n, d) => d ? `${n} van ${d}` : '–';
+  const sumRow = ({ pid, summary: s }) => `<tr><td><button class="fc-who" data-pid="${esc(pid)}">${esc(nameOf(pid))}</button></td>`
+    + `<td class="num">${s.cohort} van ${s.size}</td>`
+    + `<td class="num">${ratio(s.ok, s.decided)}${s.decided ? (s.ok > s.baseline ? ' <span class="pred-hit ok">beter</span>' : ' <span class="pred-hit miss">niet beter</span>') : ''}</td>`
+    + `<td class="num">${ratio(s.baseline, s.decided)}</td>`
+    + `<td class="num">${s.playing}</td><td class="num">${s.waiting}</td><td class="num">${s.late}${s.invalid ? ` · ${s.invalid} ongeldig` : ''}</td></tr>`;
+  let html = `<div class="tbl-wrap"><table><thead><tr><th>Speler</th><th class="num">In de test</th><th class="num">Voorspelling goed</th><th class="num">‘Altijd 1’ goed</th><th class="num">Bezig</th><th class="num">Nog te spelen</th><th class="num">Te laat vastgelegd</th></tr></thead><tbody>${people.map(sumRow).join('')}</tbody></table></div>`;
+  const mine = people.find(p => p.pid === sel);
+  if (mine) {
+    const seen = mine.rows.filter(r => r.status !== 'waiting' && r.status !== 'invalid').sort((a, b) => b.opened - a.opened).slice(0, 15);
+    const next = mine.rows.filter(r => r.status === 'waiting').slice(0, 5);
+    const row = r => {
+      const real = r.status === 'scored' ? (r.actual != null ? String(r.actual) : r.tries >= ForecastScore.MAX ? '8+ (nog niet gehaald)' : `nog niet, na ${r.tries} ${r.tries === 1 ? 'poging' : 'pogingen'}`) : r.status === 'playing' ? `bezig, ${r.tries} ${r.tries === 1 ? 'poging' : 'pogingen'}` : r.status === 'late' ? '–' : 'nog niet gespeeld';
+      const verdict = r.status === 'scored' ? fcMark(r.ok) : r.status === 'late' ? 'telt niet' : '';
+      const base = r.status === 'scored' ? fcMark(r.baseline) : '';
+      return `<tr class="${r.status === 'late' ? 'fc-late' : r.status === 'waiting' ? 'fc-wait' : ''}"><td>Level ${r.lv}</td><td class="num">${fcTry(r.p)}</td><td>${fcTime(r.locked)}${r.by ? ` · ${esc(r.by)}` : ''}${r.model ? ` · ${esc(r.model)}` : ''}</td><td>${r.opened ? fcTime(r.opened) : '–'}</td><td>${real}</td><td>${verdict}</td><td>${base}</td></tr>`;
+    };
+    html += `<p class="fc-sub">${esc(nameOf(sel))}: per level</p><div class="tbl-wrap"><table><thead><tr><th>Level</th><th class="num">Voorspeld</th><th>Vastgelegd</th><th>Voor het eerst gespeeld</th><th>Echt gehaald bij</th><th>Goed?</th><th>‘Altijd 1’</th></tr></thead><tbody>${[...next.reverse(), ...seen].map(row).join('')}</tbody></table></div>`;
+  }
+  box.innerHTML = html + note;
+  box.querySelectorAll('table').forEach(table => {
+    const heads = [...table.querySelectorAll('th')].map(th => th.textContent);
+    table.querySelectorAll('tbody tr').forEach(tr => [...tr.cells].forEach((cell, i) => { cell.dataset.label = heads[i]; }));
+  });
+  box.onclick = event => { const b = event.target.closest('button[data-pid]'); if (b) selectPlayer(b.dataset.pid); };
+}
+
 // ---------- live connection ----------
 async function loadScores() { try { SCORES = await dbGet('scores') || {}; } catch (e) { } }
 function stream() {
@@ -896,12 +951,14 @@ function stream() {
 }
 loadScores().then(() => { fillPicker(); render(); stream(); });
 loadPred().then(render);
+loadForecasts();
+setInterval(loadForecasts, 60000);
 setInterval(() => loadPred().then(render), 600000);
 setInterval(() => loadScores().then(render), 30000);
 setInterval(render, 30000);   // "x min geleden" stays fresh
 setInterval(checkHeartsSeen, 15000);
 let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(render, 200); });
 </script>
-<script src="layout.js?v=ebcd9971c05a"></script>
+<script src="layout.js?v=4d8bc4db147e"></script>
 </body>
 </html>
