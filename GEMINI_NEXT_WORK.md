@@ -1,3 +1,5 @@
+> **REPLACED on 22 Oct 2026 by Dennis. Do not execute this file.** The only assignment for Gemini is GEMINI.md (locked predictions scored on the dashboard's Voorspeltest card). Kept as history only.
+
 # Required next work after the v8 audit
 
 This is an implementation assignment, not permission to promote verifier v2.

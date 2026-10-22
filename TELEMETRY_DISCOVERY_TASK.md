@@ -1,3 +1,5 @@
+> **REPLACED on 22 Oct 2026 by Dennis. Do not execute this file.** The only assignment for Gemini is GEMINI.md (locked predictions scored on the dashboard's Voorspeltest card). Kept as history only.
+
 # Gated telemetry-discovery assignment
 
 Read the entire original execution contract and AGENTS.md. This is the next
