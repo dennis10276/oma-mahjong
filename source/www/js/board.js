@@ -748,9 +748,9 @@ function checkClock() {
     if (review) coachShown();
     // (from there no lesson film of its own: without a film of the own try only what happened)
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      ${review ? coachReviewHTML(review) : coach ? `<p>${tx('clockText', G.clock.n)}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${coachDemoHTML(false, 'clock')}${clockHelpText()}`}
+      ${review ? coachReviewHTML(review) : coach ? `<p>${tx('clockText', G.clock.n)}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${coachDemoHTML(false, 'clock')}${clockHelpShort()}`}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : 'clock-help');
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : coach ? 'clock-help' : 'clock-help coach-help');
     if (review) coachReviewStart(review);
     else if (!coach) coachPlay($('#modalBox .coach-demo'), coachClockClip());
     const message = recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout');

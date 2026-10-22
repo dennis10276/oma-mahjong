@@ -140,7 +140,7 @@ function coachPlay(demo, clip) {
   const grow = (lo, hi, want, min, max) => { const need = want - (hi - lo); if (need <= 0) return [lo, hi]; lo = Math.max(min, lo - need / 2); hi = Math.min(max, lo + want); lo = Math.max(min, hi - want); return [lo, hi]; };
   [vl, vr] = grow(vl, vr, Math.max(5, (vb - vt) * aspect), all.l, all.r);
   [vt, vb] = grow(vt, vb, (vr - vl) / aspect, all.t0, all.b);
-  const tw = Math.min(46, (W - 12) / (vr - vl + depthF + 0.04), (H - top - 8) / (vb - vt + depthF * 1.4 + 0.04)), th = tw * ratio, dz = tw * dF, d = Math.max(2, tw * depthF);
+  const tw = Math.min(76, (W - 12) / (vr - vl + depthF + 0.04), (H - top - 8) / (vb - vt + depthF * 1.4 + 0.04)), th = tw * ratio, dz = tw * dF, d = Math.max(2, tw * depthF);
   // the pile has its own window below the tray (tiles outside the view are cut off there, not under the tray)
   boardEl.style.top = top + 'px';
   const ox = (W - (vr - vl) * tw - d) / 2 - vl * tw, oy = (H - top - (vb - vt) * tw - d * 1.4 - 4) / 2 - vt * tw;
@@ -311,7 +311,7 @@ function coachPlay(demo, clip) {
 function showCoachTip(id, after = null, reminder = false, why = reminder ? 'retry' : 'manual') {
   const mine = why === 'manual' ? czMine()[id] : null;
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('czT_' + id)}</h2>
-    ${coachDemoHTML()}${mine ? `<div class="cz-switch"><button type="button" class="cz-sw on" data-w="tip">${tx('lessonExample')}</button><button type="button" class="cz-sw" data-w="mine">⭐ ${tx('czYours')}</button></div>` : ''}<p>${tx('czX_' + id)}</p>
+    ${coachDemoHTML()}${mine ? `<div class="cz-switch"><button type="button" class="cz-sw on" data-w="tip">${tx('lessonExample')}</button><button type="button" class="cz-sw" data-w="mine">⭐ ${tx('czYours')}</button></div>` : ''}<details class="cz-more"><summary>${tx('czMore')}</summary><p>${tx('czX_' + id)}</p></details>
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, after, 'tile-help coach-help');
   coachPlay($('#modalBox .coach-demo'), coachTipClip(id));
   // the player's own game with this trick, next to the real game

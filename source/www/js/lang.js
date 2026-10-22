@@ -178,6 +178,7 @@ const TEXT = {
   // the game tips (js/coach.js): titles czT_, explanations czX_, film captions
   czMenu: ['Speltips', 'Game tips'],
   czYours: ['Jouw spel', 'Your game'],
+  czMore: ['Meer uitleg', 'More explanation'],
   czClockIntro: ['De wekker telt zetten, geen seconden.', 'The clock counts moves, not seconds.'],
   czClockMove: ['Elke steen die je pakt kost 1 zet.', 'Every tile you take costs 1 move.'],
   czClockPeek: ['Kijken kost niets: de wekker blijft staan.', 'Peeking costs nothing: the clock stays.'],

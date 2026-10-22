@@ -428,14 +428,16 @@ function showLessonMenu() {
 }
 // The same explanation before the first clock level and after every clock timeout.
 const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
+// (from 1.59, with the film: the first line shows, the rest folds open, so the film can be big)
+const clockHelpShort = () => `<p>${tx('nt_clock_text')}</p><details class="cz-more"><summary>${tx('czMore')}</summary>${['clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('')}</details>`;
 function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
   // (from 1.59: a film of a real game in the player's own tiles, js/coach.js)
-  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${coachDemoHTML(false, 'clock')}${clockHelpText()}
+  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${coachDemoHTML(false, 'clock')}${clockHelpShort()}
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp.clock = S.seenSp.clockMoves = true; save();
       replayMark('clock-help', 'acknowledged');
       if (after) after();
-    }, 'clock-help');
+    }, 'clock-help coach-help');
   coachPlay($('#modalBox .coach-demo'), coachClockClip());
   replayMark('clock-help', 'intro');
   const message = recordHelpMessage('clock', why);
