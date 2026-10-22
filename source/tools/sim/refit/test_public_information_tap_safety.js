@@ -23,12 +23,22 @@ function test() {
   assert(informationTraySafe(state, 3, false, allowed), 'Passive revelation after a known prefix needs no extra commitment');
   assert(informationTraySafe({ ...state, down: state.down.map((value, index) => index === 3 ? 1 : value) }, 3, true, allowed));
   assert(!informationTraySafe({ ...state, down: state.down.map((value, index) => index === 3 ? null : value) }, 3, true, allowed));
+  const peeked = { ...state, openPeek: 7, down: state.down.map((value, index) => index === 7 ? 1 : value) };
+  assert(informationTraySafe(peeked, 3, true, allowed));
+  assert(!informationTraySafe(peeked, 3, true, { ...allowed, uncertain: [3, 7] }));
   const options = { ...REFERENCE_PARAMETERS, nodes: 1, taps: 1, beam: 1, finishKnown: false,
     pruneDead: false, trayRecovery: false };
   const planned = search(game, state, [{ index: 3 }, { index: 4 }], options);
   assert.equal(planned.index, 4, 'A guaranteed tray escape must outrank an uncertain fourth unmatched commitment');
   session.tap(planned.index);
   assert.deepEqual(session.view().state.tray, [2, 3]);
+  const unsafe = createSession(actualGame);
+  for (const index of [0, 1, 2, 3]) unsafe.tap(index);
+  assert.equal(unsafe.view().why, 'tray', 'The rejected old choice really is an immediate production loss');
+  const twin = createSession({ ...actualGame, down: peeked.down });
+  for (const index of [0, 1, 2, 7, 3]) twin.tap(index);
+  assert.deepEqual(twin.view().state.tray, [1, 2, 3]);
+  assert.equal(twin.view().state.alive[3], 0); assert.equal(twin.view().state.alive[7], 0);
   console.log('PASS information-action tray safety belongs to the actual boundary tap, not to an unrelated free match; unopened peeks and passive revelations remain safe');
 }
 
