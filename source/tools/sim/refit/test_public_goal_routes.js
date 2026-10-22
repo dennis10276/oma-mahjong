@@ -23,6 +23,15 @@ function test() {
   const branchingRoute = goalRoutes(branching, { alive: branching.tiles.map(() => 1), relieved: false }, 0);
   assert(branchingRoute.alternatives.some(frontier => frontier.has(2) && frontier.has(6)), 'All overlapping blockers on a selected side must be included');
   assert.throws(() => goalRoutes(game, state, -1));
+  const { search, REFERENCE_PARAMETERS } = require('./public_witness_search.js');
+  const position = { ...state, pictures: [11, 7, 7, 10, 10, 11], down: tiles.map(() => 0),
+    tray: [], moves: 0, openPeek: -1, arriving: [] };
+  const clocked = { tiles, nb: game.nb, rules: game.rules, clock: { i: 0, n: 4 } };
+  const planned = search(clocked, position, [2, 3, 4].map(index => ({ index })),
+    { ...REFERENCE_PARAMETERS, alternativeGoalRoutes: true, nodes: 128, taps: 6 });
+  assert.equal(planned.index, 2);
+  assert(planned.safeClockExit, 'The chosen cheap side must still have a constructive physical clock-exit witness');
+  assert.throws(() => search(clocked, position, [{ index: 2 }], { alternativeGoalRoutes: 'yes' }));
   console.log('PASS alternative public goal routes compare mechanical side costs, choose only needed observed thaw neighbors, include branching blockers and never read private pictures');
 }
 

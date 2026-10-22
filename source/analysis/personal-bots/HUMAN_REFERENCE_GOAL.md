@@ -90,6 +90,15 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
+Border recognition passed13/20 recent cases, adding145 on try1; slowest1511ms.
+The optional `alternativeGoalRoutes` compares both side directions using only
+public dependencies rather than choosing a geometric length tie arbitrarily.
+It includes every blocker on a branching side and only the needed observed thaw
+neighbors. A focused check adds139 on try1 versus Dennis3 while retaining
+134/141/143;147 still fails.30/30 core checks pass. Broader testing is required
+before selecting a new default; dependency costs remain heuristics, never
+feasibility, lower-bound, safety or impossibility certificates.
+
 The completed older full-catalog baseline passed111/140, not the goal. Its
 source changed on disk during execution, so its report explicitly records
 `unchanged:false`; it is coverage/older-policy evidence, not a current gate pass.
