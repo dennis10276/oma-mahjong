@@ -102,7 +102,24 @@
     };
   }
 
-  const api = { MAX, COHORT, TARGET, APPROVED, correct, outcome, devices, score };
+  /* Each model version is judged on its own levels (its first 20 opened ones). Levels inside a model's
+     range without any locked prediction are counted as skipped: locks go in unbroken runs, no picking. */
+  function byModel(forecasts, events, approved = []) {
+    const groups = new Map();
+    for (const [key, f] of Object.entries(forecasts || {})) {
+      const model = f && typeof f.model === 'string' && f.model ? f.model : '–';
+      if (!groups.has(model)) groups.set(model, {}); groups.get(model)[key] = f;
+    }
+    return [...groups].map(([model, set]) => {
+      const levels = Object.keys(set).filter(k => /^[1-9][0-9]{0,3}$/.test(k)).map(Number);
+      const lo = Math.min(...levels), hi = Math.max(...levels);
+      const skipped = []; for (let lv = lo; levels.length && lv <= hi; lv++) if (!(String(lv) in forecasts)) skipped.push(lv);
+      const firstLock = Math.min(...Object.values(set).map(f => f && Number.isFinite(f.t) ? f.t : Infinity));
+      return { model, firstLock, skipped, ...score(set, events, approved) };
+    }).sort((a, b) => a.firstLock - b.firstLock);
+  }
+
+  const api = { MAX, COHORT, TARGET, APPROVED, correct, outcome, devices, score, byModel };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.ForecastScore = api;
 })(typeof window === 'object' ? window : globalThis);
