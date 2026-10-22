@@ -60,6 +60,8 @@ module.exports = [
       t.eq(FS.score(forecasts.pG, fakeTime).rows.find(r => r.lv === 101).check.reason, 'geen app-sessie', 'a session id that was never opened is caught');
       t.eq(by[107].status, 'waiting', 'the daily puzzle does not open level 107');
       t.eq(summary, { cohort: 6, decided: 5, ok: 3, baseline: 1, playing: 1, waiting: 2, late: 1, unverified: 3, invalid: 0, target: 16, size: 20 }, 'summary');
+      const models = FS.byModel({ ...forecasts.pG, 120: { p: 2, t: now - 1e3, by: 'gemini', model: 'v10' }, 123: { p: 2, t: now - 1e3, by: 'gemini', model: 'v10' } }, ev);
+      t.eq(models.map(m => [m.model, m.summary.cohort, m.skipped]), [['v9', 6, []], ['v10', 0, [121, 122]]], 'each model on its own levels; gaps in its run are skipped levels');
       t.eq(FS.score({ 5: { p: 9, t: 1 }, 6: { p: 2 }, x: { p: 1, t: 1 } }, []).summary.invalid, 2, 'malformed predictions are shown as invalid, not scored');
     },
   },
@@ -74,7 +76,7 @@ module.exports = [
       await p.goto(site.url + 'dash/#pG');
       await p.waitForFunction(() => document.querySelector('#fcScore').textContent.includes('Gerda'));
       const text = await p.locator('#fcScore').innerText();
-      t.ok(/6 van 20/.test(text) && /3 van 5/.test(text) && /1 van 5/.test(text) && /beter/.test(text), 'summary: 6 in the test, 3 of 5 right, "always 1" 1 of 5', text);
+      t.ok(/v9/.test(text) && /6 van 20/.test(text) && /3 van 5/.test(text) && /1 van 5/.test(text) && /beter/.test(text), 'summary: 6 in the test, 3 of 5 right, "always 1" 1 of 5', text);
       t.ok(!text.includes('test-x'), 'test players are left out');
       t.ok(/Level 103/.test(text) && /Level 106/.test(text) && /telt niet/.test(text) && /8\+ \(nog niet gehaald\)/.test(text) && /bezig, 1 poging/.test(text) && /nog niet, na 1 poging/.test(text) && /niet geverifieerd: nieuw apparaat \(android 999\)/.test(text) && /Bekende apparaten: android 338/.test(text), 'per-level rows for the chosen player', text);
       t.ok(/Level 107/.test(text) && /nog niet gespeeld/.test(text), 'upcoming locked levels are listed');

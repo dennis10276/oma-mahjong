@@ -151,7 +151,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   (several new levels at once: PATCH `forecasts/<pid>.json` with `{ "<level>": {...}, ... }`).
 - The dashboard card "Voorspeltest" (`source/site/dash/forecast-score.js`) scores them against the
   real plays and against the plain guess "always 1 try": exact for 1-3 tries, +-1 for 4-5, +-2 for
-  6-7, both 8+. Test set: the first 20 levels opened after locking; target 16 of 20 per player.
+  6-7, both 8+. Each `model` version is judged on its own levels: its first 20 opened levels per
+  player, target 16 of 20. Locks go in unbroken runs of levels; gaps show as "overgeslagen".
   Outcomes come only from `plays/`. Agents never write to `plays/`, `scores/` or `replays/` for
   real players, and do not edit the scorecard to change a result.
 - Devices: a level only counts when every try record before the win comes from a normal app session
