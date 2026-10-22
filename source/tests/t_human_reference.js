@@ -5,6 +5,7 @@ const modules = [
   'test_human_reference_campaign.js',
   'test_human_reference_budget.js',
   'test_human_reference_catalog.js',
+  'test_human_information_invariance.js',
   'test_public_goal_frontier.js',
   'test_public_information_revision.js',
   'test_public_frontier_plan.js',
