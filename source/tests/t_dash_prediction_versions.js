@@ -34,7 +34,7 @@ module.exports = [{
       const current = require('../site/dash/predict.json');
       const v155 = require('../site/dash/predict-1.55.json');
       t.eq(v155.version, '1.55', '1.55 predictions are archived for older apps');
-      t.eq(current.version, '1.58', 'the current prediction file supports the smoothness release');
+      t.eq(current.version, '1.59', 'the current prediction file supports the game tips release');
       t.eq(current.players, v155.players, 'unchanged boards keep the same prediction values');
       t.ok((await content()).includes('eigen gewoontes uit de opgenomen spellen'), 'explains the personal bot');
       if (current.players[pid].levels[93]) t.ok((await row(93).innerText()).includes('gehaald in 1 poging'), 'a 1.54 result on a board that did not change still counts');
@@ -51,8 +51,11 @@ module.exports = [{
       t.ok((await content()).includes('versie 1.58'), 'smoothness update keeps predictions available');
       t.ok((await content()).includes('Level 119'), 'Mrs. Doubtfire upcoming 8+ level 119 is displayed');
       t.ok(!(await content()).includes('%'), 'no percentage chance metrics are shown on 1.58');
-      await event({ k: 'open', v: '1.59', lv: 107, t: now + 4500 });
-      t.ok((await content()).includes('Geen passende voorspelling voor versie 1.59'), 'unsupported version never gets another version predictions');
+      await event({ k: 'open', v: '1.59', lv: 107, t: now + 4400 });
+      t.ok((await content()).includes('versie 1.59'), 'game tips update keeps predictions available');
+      t.eq(require('../site/dash/predict-1.58.json').version, '1.58', '1.58 predictions are archived for older apps');
+      await event({ k: 'open', v: '1.60', lv: 107, t: now + 4500 });
+      t.ok((await content()).includes('Geen passende voorspelling voor versie 1.60'), 'unsupported version never gets another version predictions');
       t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'viewing predictions writes no player data');
       t.eq(errors, [], 'no dashboard errors');
     } finally { await ctx.close(); site.close(); }
