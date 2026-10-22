@@ -30,8 +30,10 @@ const NAMES = ['Dennisisdebeste', 'Mrs. Doubtfire'];
 const CANDS = 5, SCREEN = 120, SEARCH = 300, FINAL = { runs: 1200, seed: 55001 }, NEAR = 2, TUNE_STEPS = +(process.env.TUNE_STEPS || 16);
 // per level (both players): the old board's numbers give or take TOL. The 1.54 reorder sorted boards in
 // ease bands of 0.05, so neighbouring levels already differ that much; what must stay the same is the
-// curve: per 10 levels the average first try and ease within CURVE of before (report, tests)
-const TOL = { first: 0.08, two: 0.1, four: 0.08, ease: 0.05 }, CURVE = 0.02;
+// curve: per 10 levels the average first try and ease of each player not easier than before (Dennis,
+// 2026-10-22: "It shouldn't be easier really"; CURVE.easier = measurement noise) and at most CURVE.harder
+// harder (report, tests). Easier is also weighed EASIER times as heavy when choosing and tuning boards.
+const TOL = { first: 0.08, two: 0.1, four: 0.08, ease: 0.05 }, CURVE = { easier: 0.005, harder: 0.02 }, EASIER = 2;
 const NOVEL = { pos: 0.6, foot: 0.65 };
 const readJ = (f, d) => fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : d;
 const writeJ = (f, x) => { fs.writeFileSync(f + '.tmp', JSON.stringify(x)); fs.renameSync(f + '.tmp', f); };
@@ -74,7 +76,9 @@ function pictureOverlap(A, B) {
 }
 const pictureClash = (A, B) => { const o = pictureOverlap(A, B); return o.spot > PICS.spot || o.pair > PICS.pair; };
 const ease = m => 0.5 * m.first + 0.25 * m.two + 0.25 * m.four;
-const distTo = (m, target) => NAMES.reduce((s, n) => s + Math.abs(m[n].first - target[n].first) + 0.5 * Math.abs(m[n].two - target[n].two) + 0.5 * Math.abs(m[n].four - target[n].four), 0);
+const dev = d => d > 0 ? EASIER * d : -d;   // d = new - old chance: above 0 is easier
+const distTo = (m, target) => NAMES.reduce((s, n) => s + dev(m[n].first - target[n].first) + 0.5 * dev(m[n].two - target[n].two) + 0.5 * dev(m[n].four - target[n].four), 0);
+const offCurve = (d1, de) => [d1, de].some(d => d > CURVE.easier || d < -CURVE.harder);
 const within = (m, target, ez, f = 1) => NAMES.every(n => Math.abs(m[n].first - target[n].first) <= TOL.first * f && Math.abs(m[n].two - target[n].two) <= TOL.two * f && Math.abs(m[n].four - target[n].four) <= TOL.four * f && (!ez || Math.abs(ease(m[n]) - ease(target[n])) <= TOL.ease * f));
 
 // the observer's measurement and the board checks (in workers)
@@ -357,7 +361,7 @@ function cmdReport() {
     const ls = P.levels.filter(l => l.lv >= Math.max(a, O.from) && l.lv < a + 10 && O.levels[l.lv] && O.levels[l.lv].final);
     if (!ls.length) continue;
     const avg = f => ls.reduce((s, l) => s + f(l), 0) / ls.length;
-    const off = NAMES.some(n => Math.abs(avg(l => O.levels[l.lv].final[n].first - l.target[n].first)) > CURVE || Math.abs(avg(l => ease(O.levels[l.lv].final[n]) - ease(l.target[n]))) > CURVE);
+    const off = NAMES.some(n => offCurve(avg(l => O.levels[l.lv].final[n].first - l.target[n].first), avg(l => ease(O.levels[l.lv].final[n]) - ease(l.target[n]))));
     console.log(`${a}-${a + 9}`.padEnd(10) + NAMES.map(n => `${avg(l => l.target[n].first).toFixed(2)}/${avg(l => O.levels[l.lv].final[n].first).toFixed(2)}       ${avg(l => ease(l.target[n])).toFixed(2)}/${avg(l => ease(O.levels[l.lv].final[n])).toFixed(2)}`).join('      | ') + `   (${ls.length} levels${off ? ', OFF THE CURVE' : ''})`);
   }
 }

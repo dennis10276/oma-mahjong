@@ -59,7 +59,9 @@ module.exports = [{
     for (const r of R.levels) (bands[Math.floor(r.lv / 10)] = bands[Math.floor(r.lv / 10)] || []).push(r);
     for (const [b, rs] of Object.entries(bands)) for (const n of Object.keys(rs[0].target)) {
       const avg = f => rs.reduce((s, r) => s + f(r), 0) / rs.length;
-      t.ok(Math.abs(avg(r => r.final[n].first - r.target[n].first)) <= R.curve + 1e-9 && Math.abs(avg(r => ease(r.final[n]) - ease(r.target[n]))) <= R.curve + 1e-9, `levels ${b}0-${b}9 ${n}: the curve as before`);
+      // not easier than before (only measurement noise), at most a little harder
+      const d = [avg(r => r.final[n].first - r.target[n].first), avg(r => ease(r.final[n]) - ease(r.target[n]))];
+      t.ok(d.every(x => x <= R.curve.easier + 1e-9 && x >= -R.curve.harder - 1e-9), `levels ${b}0-${b}9 ${n}: the curve as before, not easier`, d.map(x => x.toFixed(3)));
     }
     const first = Math.min(...changed);
     t.ok(Hard.designVersion(first) !== Hard.designVersion(first - 1) && Hard.designVersion(91) !== Hard.designVersion(92), 'saved games: only remade levels start fresh');
