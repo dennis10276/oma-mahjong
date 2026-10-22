@@ -24,9 +24,14 @@ const { Worker, isMainThread, parentPort, workerData } = require('worker_threads
 const ROOT = path.resolve(__dirname, '..', '..', '..');
 const A = f => path.join(ROOT, 'analysis', f);
 const BASE = A('levels-before-variety.js'), PLAN = A('variety-plan.json'), CANDS_F = A('variety2-cands.json'), OUT = A('variety2.json');
+// 1200-game measurements of candidates (validate), so a later assign uses the sharper number
+const CHECKED_F = A('variety2-checked.json');
 const NAMES = ['Dennisisdebeste', 'Mrs. Doubtfire'];
 const CANDS = 5, SCREEN = 120, SEARCH = 300, FINAL = { runs: 1200, seed: 55001 }, NEAR = 2, TUNE_STEPS = 16;
-const TOL = { first: 0.05, two: 0.06, four: 0.05, ease: 0.03 };
+// per level (both players): the old board's numbers give or take TOL. The 1.54 reorder sorted boards in
+// ease bands of 0.05, so neighbouring levels already differ that much; what must stay the same is the
+// curve: per 10 levels the average first try and ease within CURVE of before (report, tests)
+const TOL = { first: 0.08, two: 0.1, four: 0.08, ease: 0.05 }, CURVE = 0.02;
 const NOVEL = { pos: 0.6, foot: 0.65 };
 const readJ = (f, d) => fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : d;
 const writeJ = (f, x) => { fs.writeFileSync(f + '.tmp', JSON.stringify(x)); fs.renameSync(f + '.tmp', f); };
@@ -190,40 +195,87 @@ async function cmdCands(workers, from, to) {
   });
 }
 
+// min-cost assignment of every row to its own column (rows <= columns); Infinity = not allowed
+function hungarian(cost) {
+  const n = cost.length, m = cost[0].length, BIG = 1e9, c = (i, j) => (cost[i][j] === Infinity ? BIG : cost[i][j]);
+  const u = new Float64Array(n + 1), v = new Float64Array(m + 1), p = new Int32Array(m + 1), way = new Int32Array(m + 1);
+  for (let i = 1; i <= n; i++) {
+    p[0] = i; let j0 = 0; const minv = new Float64Array(m + 1).fill(Infinity), usedC = new Uint8Array(m + 1);
+    do {
+      usedC[j0] = 1; const i0 = p[j0]; let delta = Infinity, j1 = 0;
+      for (let j = 1; j <= m; j++) if (!usedC[j]) {
+        const cur = c(i0 - 1, j - 1) - u[i0] - v[j];
+        if (cur < minv[j]) { minv[j] = cur; way[j] = j0; }
+        if (minv[j] < delta) { delta = minv[j]; j1 = j; }
+      }
+      for (let j = 0; j <= m; j++) if (usedC[j]) { u[p[j]] += delta; v[j] -= delta; } else minv[j] -= delta;
+      j0 = j1;
+    } while (p[j0] !== 0);
+    do { const j1 = way[j0]; p[j0] = p[j1]; j0 = j1; } while (j0);
+  }
+  const row = new Array(n).fill(-1); for (let j = 1; j <= m; j++) if (p[j]) row[p[j] - 1] = j - 1;
+  return row;
+}
+
+// like the 1.54 reorder: a board may go to any level from `from` (same big/normal kind), wherever its
+// difficulty fits; levels that already passed validation keep their board
 function cmdAssign(from) {
   const P = plan(), C = readJ(CANDS_F, null); if (!C) throw Error('no candidates yet');
+  const prev = readJ(OUT, { levels: {} }), checked = readJ(CHECKED_F, {});
+  const keep = prev.from === from ? Object.entries(prev.levels).filter(([, x]) => x.status === 'ok') : [];
   const levels = P.levels.filter(l => l.lv >= from && C.levels[l.lv]);
   const all = []; for (const [lv, cs] of Object.entries(C.levels)) cs.forEach((c, k) => { if (c.m) all.push({ id: lv + ':' + k, made: +lv, c, s: sig(c.board.tiles) }); });
   // the boards the slower first method (variety.js) finished are candidates too (measured with 1200 games)
   const old = readJ(A('variety-progress.json'), { levels: {} });
   for (const [lv, r] of Object.entries(old.levels)) if (r.status === 'done' && +lv >= from) all.push({ id: 'old:' + lv, made: +lv, c: { shape: r.shape, board: r.board, m: r.final }, s: sig(r.board.tiles) });
-  const optionsOf = l => all.filter(o => Math.abs(o.made - l.lv) <= NEAR && (o.made % 10 === 0) === l.big).map(o => ({ o, d: distTo(o.c.m, l.target), ok: within(o.c.m, l.target, false) }));
-  // hardest first: the levels with the fewest close candidates choose first
-  const order = levels.map(l => ({ l, opts: optionsOf(l) })).sort((a, b) => a.opts.filter(x => x.ok).length - b.opts.filter(x => x.ok).length || a.l.lv - b.l.lv);
-  // among the new boards: at most 65% of the same tile spots (the outline of two compact piles is often
-  // much the same, so it does not count here), no shape twice within 5 levels; only if that leaves
-  // nothing, up to 70% of the same spots
-  const PAIR = { pos: 0.65, foot: 1 }, LOOSE = { pos: 0.7, foot: 1 };
-  const clash = (l, x, lim) => Object.entries(chosen).some(([lv2, c]) => c && ((Math.abs(lv2 - l.lv) <= 5 && c.shape === x.o.c.shape) || (() => { const a = alike(c.s, x.o.s); return a.pos > lim.pos || a.foot > lim.foot; })()));
+  const optionsOf = l => all.filter(o => (o.made % 10 === 0) === l.big).map(o => { const f = checked[o.id], m = f || o.c.m; return { o, m, d: distTo(m, l.target), ok: f ? within(f, l.target, true) : within(m, l.target, false) }; });
+  // the best overall assignment (Hungarian method): first as many levels as possible within the
+  // tolerance, then the smallest total distance; then the look-alike rules are enforced by forbidding
+  // the worse half of each clash and solving again. Among the new boards: at most 65% of the same tile
+  // spots (the outline of two compact piles is often much the same, so it does not count here) and no
+  // shape twice within 5 levels.
+  // Two new boards within NEAR_LV levels share at most PAIR.near of their tile spots, further apart at most
+  // PAIR.far (a player remembers the last few levels, and with 31 shapes for 112 levels some return).
+  const PAIR = { near: 0.65, far: 0.8 }, NEAR_LV = 10, SHAPE_GAP = 5;
+  const clashes = (la, a, lb, b) => { const dl = Math.abs(la - lb); return (dl <= SHAPE_GAP && (a.shape || a.c.shape) === (b.shape || b.c.shape)) || alike(a.s, b.s).pos > (dl <= NEAR_LV ? PAIR.near : PAIR.far); };
+  // candidates only looked at quickly (120 games) can still be picked to be tuned
+  for (const [lv, cs] of Object.entries(C.levels)) cs.forEach((c, k) => { if (!c.m && c.quick) all.push({ id: lv + ':' + k, made: +lv, c: { ...c, m: c.quick }, s: sig(c.board.tiles), quick: true }); });
   const used = new Set(), chosen = {};
-  for (const { l, opts } of order) {
-    const free = opts.filter(x => !used.has(x.o.id)).sort((a, b) => a.d - b.d);
-    const pick = free.find(x => !clash(l, x, PAIR)) || free.find(x => !clash(l, x, LOOSE));
-    if (!pick) {
-      // none left near by: the closest of its own candidates not used yet (also one only looked at
-      // quickly), to be tuned
-      const own = (C.levels[l.lv] || []).map((c, k) => ({ id: l.lv + ':' + k, c, m: c.m || c.quick })).filter(x => !used.has(x.id)).sort((a, b) => distTo(a.m, l.target) - distTo(b.m, l.target))[0];
-      if (!own) { chosen[l.lv] = null; continue; }
-      used.add(own.id); chosen[l.lv] = { id: own.id, made: l.lv, shape: own.c.shape, board: own.c.board, m: own.m, dist: +distTo(own.m, l.target).toFixed(3), ok: false, s: sig(own.c.board.tiles) };
-      continue;
+  for (const [lv, x] of keep) { used.add(x.id); chosen[lv] = { ...x, s: sig(x.board.tiles) }; }
+  const keptS = Object.values(chosen).map(c => c.s);
+  const open = levels.filter(l => !chosen[l.lv]);
+  const cands = all.filter(o => !used.has(o.id) && !keptS.some(s2 => alike(s2, o.s).pos > PAIR.far));
+  const cost = open.map(l => cands.map(o => {
+    if ((o.made % 10 === 0) !== l.big) return Infinity;
+    const f = checked[o.id], m = f || o.c.m, ok = !o.quick && (f ? within(f, l.target, true) : within(m, l.target, false));
+    return (ok ? 0 : 10) + distTo(m, l.target);
+  }));
+  // kept boards near by: same rules
+  for (let i = 0; i < open.length; i++) for (let j = 0; j < cands.length; j++)
+    if (Object.entries(chosen).some(([lv2, c]) => clashes(+lv2, c, open[i].lv, cands[j]))) cost[i][j] = Infinity;
+  let match, rounds = 0;
+  for (; rounds < 400; rounds++) {
+    match = hungarian(cost);
+    // every clash: the worse-fitting of the two may not have that board at that level
+    let n = 0;
+    for (let i = 0; i < open.length; i++) for (let k = i + 1; k < open.length; k++) {
+      if (match[i] < 0 || match[k] < 0 || !clashes(open[i].lv, cands[match[i]], open[k].lv, cands[match[k]])) continue;
+      if (cost[i][match[i]] === Infinity || cost[k][match[k]] === Infinity) continue;
+      if (cost[i][match[i]] > cost[k][match[k]]) cost[i][match[i]] = Infinity; else cost[k][match[k]] = Infinity; n++;
     }
-    used.add(pick.o.id); chosen[l.lv] = { id: pick.o.id, made: pick.o.made, shape: pick.o.c.shape, board: pick.o.c.board, m: pick.o.c.m, dist: +pick.d.toFixed(3), ok: pick.ok, s: pick.o.s };
+    if (!n) break;
   }
-  const out = { made: new Date().toISOString(), from, tol: TOL, novel: NOVEL, levels: {} };
-  for (const l of levels) { const c = chosen[l.lv]; out.levels[l.lv] = c ? { ...c, s: undefined, status: c.ok ? 'close' : 'tune' } : { status: 'none' }; }
+  open.forEach((l, i) => {
+    const o = cands[match[i]]; if (!o || cost[i][match[i]] === Infinity) { chosen[l.lv] = null; return; }
+    const f = checked[o.id], m = f || o.c.m;
+    chosen[l.lv] = { id: o.id, made: o.made, shape: o.c.shape, board: o.c.board, m, dist: +distTo(m, l.target).toFixed(3), ok: cost[i][match[i]] < 10, s: o.s, ...(f ? { final: f, checked: true } : {}) };
+  });
+  const out = { made: new Date().toISOString(), from, tol: TOL, novel: NOVEL, pair: PAIR, nearLevels: NEAR_LV, levels: {} };
+  console.log(`assign: ${rounds + 1} rounds to remove look-alikes`);
+  for (const l of levels) { const c = chosen[l.lv]; out.levels[l.lv] = !c ? { status: 'none' } : c.status === 'ok' ? { ...c, s: undefined } : { ...c, s: undefined, status: c.checked ? (c.ok ? 'ok' : 'tune') : c.ok ? 'close' : 'tune' }; if (out.levels[l.lv].status === 'tune') delete out.levels[l.lv].final; }
   writeJ(OUT, out);
   const st = s => Object.values(out.levels).filter(x => x.status === s).length;
-  console.log(`assign: ${levels.length} levels: close enough ${st('close')}, to tune ${st('tune')}, no candidate ${st('none')}`);
+  console.log(`assign: ${levels.length} levels: passed ${st('ok')}, close enough ${st('close')}, to tune ${st('tune')}, no candidate ${st('none')}`);
 }
 
 async function cmdTune(workers) {
@@ -232,7 +284,7 @@ async function cmdTune(workers) {
   console.log(`tune: ${jobs.length} levels`);
   await pool(jobs, 'tune', workers, res => {
     const cur = readJ(OUT, O), x = cur.levels[res.lv];
-    Object.assign(x, { board: res.board, m: res.m, dist: +res.dist.toFixed(3), status: within(res.m, target(res.lv), false) ? 'tuned' : 'tune-failed', final: undefined });
+    Object.assign(x, { id: x.id.replace(/~t$/, '') + '~t', board: res.board, m: res.m, dist: +res.dist.toFixed(3), status: within(res.m, target(res.lv), false) ? 'tuned' : 'tune-failed', final: undefined });
     writeJ(OUT, cur); Object.assign(O, cur);
     console.log(`level ${res.lv}: ${x.status} (off ${x.dist})`);
   });
@@ -246,6 +298,7 @@ async function cmdValidate(workers) {
     const cur = readJ(OUT, O), x = cur.levels[res.lv];
     x.final = res.final; x.status = within(res.final, target(res.lv), true) ? 'ok' : 'missed';
     writeJ(OUT, cur); Object.assign(O, cur);
+    if (!/~t$/.test(x.id)) { const ch = readJ(CHECKED_F, {}); ch[x.id] = res.final; writeJ(CHECKED_F, ch); }
     console.log(`level ${res.lv}: ${x.status}`);
   });
 }
@@ -261,7 +314,8 @@ function cmdReport() {
     const ls = P.levels.filter(l => l.lv >= Math.max(a, O.from) && l.lv < a + 10 && O.levels[l.lv] && O.levels[l.lv].final);
     if (!ls.length) continue;
     const avg = f => ls.reduce((s, l) => s + f(l), 0) / ls.length;
-    console.log(`${a}-${a + 9}`.padEnd(10) + NAMES.map(n => `${avg(l => l.target[n].first).toFixed(2)}/${avg(l => O.levels[l.lv].final[n].first).toFixed(2)}       ${avg(l => ease(l.target[n])).toFixed(2)}/${avg(l => ease(O.levels[l.lv].final[n])).toFixed(2)}`).join('      | ') + `   (${ls.length} levels)`);
+    const off = NAMES.some(n => Math.abs(avg(l => O.levels[l.lv].final[n].first - l.target[n].first)) > CURVE || Math.abs(avg(l => ease(O.levels[l.lv].final[n]) - ease(l.target[n]))) > CURVE);
+    console.log(`${a}-${a + 9}`.padEnd(10) + NAMES.map(n => `${avg(l => l.target[n].first).toFixed(2)}/${avg(l => O.levels[l.lv].final[n].first).toFixed(2)}       ${avg(l => ease(l.target[n])).toFixed(2)}/${avg(l => ease(O.levels[l.lv].final[n])).toFixed(2)}`).join('      | ') + `   (${ls.length} levels${off ? ', OFF THE CURVE' : ''})`);
   }
 }
 
@@ -280,7 +334,7 @@ function cmdApply(from) {
   fs.writeFileSync(path.join(ROOT, 'www', 'levels-hard.js'), head + 'const HARD_LEVELS = ' + JSON.stringify(NT) + ';\n');
   const missing = []; for (let lv = from; lv <= 269; lv++) if (!take.some(([l]) => l === lv)) missing.push(lv);
   // the report the tests read
-  fs.writeFileSync(A('variety.json'), JSON.stringify({ made: new Date().toISOString(), from, tol: TOL, novel: NOVEL, levels: take.map(([lv, x]) => ({ lv, shape: x.shape, target: target(lv), final: x.final })) }, null, 1));
+  fs.writeFileSync(A('variety.json'), JSON.stringify({ made: new Date().toISOString(), from, tol: TOL, curve: CURVE, novel: NOVEL, pair: O.pair, nearLevels: O.nearLevels, levels: take.map(([lv, x]) => ({ lv, shape: x.shape, target: target(lv), final: x.final })) }, null, 1));
   console.log(`apply: ${take.length} levels with a new board (v${NT.v})${missing.length ? '; kept the old board on ' + missing.join(', ') : ''}`);
 }
 

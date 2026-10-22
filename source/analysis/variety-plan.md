@@ -24,14 +24,15 @@ pictures, and the 1.54 reorder kept whole boards.
   pile (more layers and towers): with 80-96 tiles that must stay at least 54 px (48 on every 10th
   level) on a phone, a wide flat base is a block whatever its shape.
 - **Different from every other level**: at most 60% of the tile spots and 65% of the outline the same
-  as any other designed level (today the most alike other level shares about 94% / 97%).
+  as any level that stays (70-157; today the most alike other level shares about 94% / 97%); among
+  the new boards 65% of the spots within 10 levels, 80% further apart (see `assign` below).
 - **Same difficulty**: the frozen calibrated observer (`tools/sim/honest`, commit 316f3b1) plays the
   board as both personal players (Dennisisdebeste, Mrs. Doubtfire), first try / within 2 / within 4
   with memory, exactly the 1.54 reorder measure. Target per level: `analysis/reorder-92.json`
-  `moves[lv].primary` (the board at that level now). Accepted when both players are within
-  first ±0.05, within 2 ±0.06, within 4 ±0.05 in a 300-game search measurement AND within
-  first ±0.05, within 2 ±0.06, within 4 ±0.05 and ease ±0.03 in an independent 1200-game
-  measurement with other seeds (55001 + level × 101).
+  `moves[lv].primary` (the board at that level now). Accepted (2026-10-22, see "Tolerance" below) when both
+  players are within first ±0.08, within 2 ±0.10, within 4 ±0.08 and ease ±0.05 in an independent
+  1200-game measurement with other seeds (55001 + level × 101), and per 10 levels the averages stay
+  within 0.02. (The first method used ±0.05 / 0.06 / 0.05 / 0.03.)
 - How a board is made: the game's designer (`Hard.makeNow(level, 1.6, 1, salt, { tiles })`, new
   option `opt.tiles`) puts pictures, face-down tiles, gold, ice, locks and the clock on the new pile
   exactly as it does for any level (same counts for that level). Then tuning towards the target:
@@ -62,14 +63,28 @@ node source/tools/sim/variety/variety2.js apply 158         # www/levels-hard.js
 1. `cands`: per level up to 5 boards, each on another new shape (unlike levels 70-157), the game's
    designer on a quick setting (`RULES.hard` rounds/deals/steps 4); a quick look (120 games), then the
    ones near any target of a level within 2 measured with 300 games. `analysis/variety2-cands.json`.
-2. `assign`: every level takes the closest unused candidate made for itself or a level at most 2 away
-   (big boards stay on every 10th level), never two boards that look alike; the levels with the fewest
-   close candidates choose first. The boards the first method finished are candidates too.
-3. `tune`: at most 12 short steps, only where no candidate was within the tolerance.
+2. `assign` (2026-10-22): like the 1.54 reorder, a board may go to **any** level from 158 of the same
+   kind (big boards every 10th level), wherever its difficulty fits. The best overall assignment
+   (Hungarian method): as many levels as possible within the tolerance, then the smallest total
+   distance. Look-alike rules between the new boards: at most 65% of the same tile spots within 10
+   levels, 80% further apart, no shape twice within 5 levels (against levels 70-157: 60% / 65%
+   outline, from `cands`). Levels that passed `validate` keep their board; candidates measured by
+   `validate` use that sharper number (`analysis/variety2-checked.json`). Greedy level-by-level
+   picking (the first version) used only 12 of the ~80 possible close fits.
+3. `tune`: at most 16 short steps (swap pictures, clock, face-down tiles), only where no candidate
+   was within the tolerance.
 4. `validate`: 1200 games (seed 55001 + level x 101); passes within the tolerance below (per level,
-   both players). `report` shows the curve per 10 levels (first try and ease, old against new).
-5. `apply`: levels that passed get the new board, the others keep theirs. Before a release, re-run
+   both players). Then `assign` again (missed levels get another board), `validate`, and so on.
+5. `report` shows the curve per 10 levels (first try and ease, old against new, "OFF THE CURVE"
+   when a band average moved more than 0.02).
+6. `apply`: levels that passed get the new board, the others keep theirs. Before a release, re-run
    `apply` with the first level nobody has reached yet.
+
+Tolerance (Dennis: "the curve of the difficulty should stay about the same"): per level both
+players within first try ±0.08, within 2 ±0.10, within 4 ±0.08, ease ±0.05 (the reorder already
+puts neighbouring levels 0.05 ease apart; ±0.05 first try was below the noise of the measurements
+and made the work slow), and per 10 levels the average first try and ease of each player within
+0.02 of before. `tests/t_variety.js` checks both.
 
 ## The first method (`variety.js`, slow; kept for reference)
 
