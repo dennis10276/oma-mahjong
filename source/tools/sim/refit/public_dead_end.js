@@ -1,9 +1,10 @@
 'use strict';
 const assert = require('assert/strict');
 const physical = require('./known_tray_plan.js');
+const { aliveSignature } = require('./public_alive_signature.js');
 
 function keyOf(state) {
-  return state.alive.join('') + '|' + state.tray.slice().sort((left, right) => left - right).join(',')
+  return aliveSignature(state.alive) + '|' + state.tray.slice().sort((left, right) => left - right).join(',')
     + '|' + state.openPeek + '|' + state.moves + '|' + +state.relieved + '|' + (state.arriving || []).join(',');
 }
 

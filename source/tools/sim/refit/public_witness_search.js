@@ -4,6 +4,7 @@ const physical = require('./known_tray_plan.js');
 const deadEnd = require('./public_dead_end.js');
 const { guardedSearch } = require('./public_witness_reopen_guard.js');
 const { frontierFor, recoveryDepth } = require('./public_goal_frontier.js');
+const { aliveSignature } = require('./public_alive_signature.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -61,7 +62,7 @@ function unproductiveReopen(state, index) {
 
 function keyOf(game, state, knowledge = false) {
   const active = !!(game.clock && state.alive[game.clock.i]);
-  return state.alive.join('') + '|' + state.tray.slice().sort((left, right) => left - right).join(',')
+  return aliveSignature(state.alive) + '|' + state.tray.slice().sort((left, right) => left - right).join(',')
     + '|' + state.openPeek + '|' + (active ? state.moves : '-') + '|' + +state.relieved
     + '|' + (state.arriving || []).slice().sort((left, right) => left - right).join(',')
     + (knowledge ? '|' + state.pictures.map((picture, index) => state.alive[index] ? picture === null ? '?' : picture : '-').join(',') : '');
@@ -111,6 +112,10 @@ function recoveryOf(game, state) {
 function searchKnown(game, state, actions, options = PARAMETERS) {
   const settings = { ...PARAMETERS, ...options };
   const deadline = settings.deadline ?? Infinity;
+  const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
+  assert.equal(typeof cachePublicAnalysis, 'boolean');
+  const metricsCache = new Map(), proofCache = new Map();
+  let metricsHits = 0, proofHits = 0, boundedProofHits = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -144,11 +149,20 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const visited = new Set([keyOf(game, state)]);
 
   const evaluate = (position, path, information = false, targetIndex = -1) => {
-    const room = roomOf(game, position), left = position.alive.reduce((sum, value) => sum + value, 0);
+    const metricsKey = cachePublicAnalysis ? keyOf(game, position) : null;
+    let metrics = cachePublicAnalysis ? metricsCache.get(metricsKey) : null;
+    if (metrics) metricsHits++;
+    else {
+      metrics = { room: roomOf(game, position), left: position.alive.reduce((sum, value) => sum + value, 0),
+        recovery: recoveryOf(game, position),
+        depth: !clocked && goalRecoveryActive && position.tray.length >= goalRecoveryMin ? recoveryDepth(game, position) : { unknownWaiting: 0, knownCost: 0 },
+        clockDistance: clocked && position.alive[game.clock.i] ? clockDistance(game, position) : 0 };
+      if (cachePublicAnalysis) metricsCache.set(metricsKey, metrics);
+    }
+    const { room, left, recovery } = metrics;
     const won = left === 0 && position.tray.length === 0, exit = clocked && !position.alive[game.clock.i];
     const progress = initialLeft - left;
     const matchedTiles = initialLeft + state.tray.length - left - position.tray.length;
-    const recovery = recoveryOf(game, position);
     const inCone = cone && targetIndex >= 0 ? cone.has(targetIndex) : false;
 
     // Safety check: is this information path safe for the tray?
@@ -170,7 +184,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     } else if (exit) {
       rank = [tier, inCone ? 1 : 0, -room.pressure, room.room, progress, -path.length, -recovery.stranded, recovery.immediate];
     } else if (clocked) {
-      rank = [tier, inCone ? 1 : 0, -room.pressure, -clockDistance(game, position), safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
+      rank = [tier, inCone ? 1 : 0, -room.pressure, -metrics.clockDistance, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
       if (settings.trayRecovery && (!clocked || !position.alive[game.clock.i])) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
         position.tray.length >= recoveryMin ? recovery.immediate : 0);
@@ -181,7 +195,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       if (settings.trayRecovery) rank.splice(2, 0, position.tray.length >= settings.trayRecoveryMin ? -recovery.stranded : 0,
         position.tray.length >= settings.trayRecoveryMin ? recovery.immediate : 0);
       if (goalRecoveryActive) {
-        const depth = position.tray.length >= goalRecoveryMin ? recoveryDepth(game, position) : { unknownWaiting: 0, knownCost: 0 };
+        const depth = metrics.depth;
         rank.splice(2, 0, -depth.unknownWaiting, -depth.knownCost);
         recoveryRankWidths.add(rank.length);
       }
@@ -236,8 +250,15 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         if (settings.pruneDead && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
           || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) {
           const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
-          const proof = nextActions.length ? (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(game, moved.state, nextActions, settings.proofNodes, deadline) : null;
-          if (continuationPruning && proof) {
+          const proofKey = cachePublicAnalysis ? keyOf(game, moved.state) : null;
+          let proof = cachePublicAnalysis ? proofCache.get(proofKey) : null;
+          const reusedProof = !!proof;
+          if (reusedProof) { proofHits++; boundedProofHits += +(proof.reason === 'bounded'); }
+          else if (nextActions.length) {
+            proof = (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(game, moved.state, nextActions, settings.proofNodes, deadline);
+            if (cachePublicAnalysis) proofCache.set(proofKey, proof);
+          }
+          if (continuationPruning && proof && !reusedProof) {
             continuationProof.calls++; continuationProof.nodes += proof.nodes; continuationProof.bounded += +(proof.reason === 'bounded');
             continuationProof.certified += +proof.knownDead;
           }
@@ -301,6 +322,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       initialKnown, initialLeft,
       finishKnown, tapLimit,
       ...(continuationPruning ? { continuationProof } : {}),
+      ...(cachePublicAnalysis ? { analysisCache: { metricsHits, proofHits, boundedProofHits, metricsEntries: metricsCache.size, proofEntries: proofCache.size } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         goalRecoveryMin, recoveryRankWidths: [...recoveryRankWidths].sort() } } : {}),
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '

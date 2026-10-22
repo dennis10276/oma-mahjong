@@ -10,6 +10,7 @@ const { createObstacleFrontier } = require('./public_obstacle_frontier.js');
 const { reference } = require('./public_witness_reference.js');
 const { REFERENCE_PARAMETERS } = require('./public_witness_search.js');
 const { advance } = require('./known_tray_plan.js');
+const { aliveSignature } = require('./public_alive_signature.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
@@ -59,11 +60,12 @@ function createHumanController(tiles, options = {}) {
         locks: new Set(roles.flatMap((role, index) => role === 'lock' ? [index] : [])),
         keys: roles.flatMap((role, index) => role === 'key' ? [index] : []) };
       geometry.publicFrontier = position => {
-        const cacheKey = +!!position.relieved + '|' + position.alive.join('');
+        Object.freeze(position.alive);
+        const aliveKey = aliveSignature(position.alive), cacheKey = +!!position.relieved + '|' + aliveKey;
         if (frontierCache.has(cacheKey)) return frontierCache.get(cacheKey);
         const queried = frontier.query(position.alive, options.exclusiveRoles === 'clock'
           ? !!(clock && position.alive[clock.i]) : !!options.exclusiveRoles);
-        const sameBoard = position.alive.join('') === blockedAlive;
+        const sameBoard = aliveKey === blockedAlive;
         const free = position.relieved ? position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : [])
           : [...queried.free, ...queried.uncertain];
         const result = { free: free.filter(index => !sameBoard || !blocked.has(index)),
