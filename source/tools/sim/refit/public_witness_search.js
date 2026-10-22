@@ -214,7 +214,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         ? [tier, -room.pressure, matchedTiles, room.room, progress, -path.length]
         : [tier, -room.pressure, progress, room.room, -path.length, 0];
       if (settings.trayRecovery) rank.splice(2, 0, position.tray.length >= settings.trayRecoveryMin ? -recovery.stranded : 0,
-        position.tray.length >= settings.trayRecoveryMin ? recovery.immediate : 0);
+        position.tray.length >= settings.trayRecoveryMin ? -recovery.immediate : 0);
       if (goalRecoveryActive) {
         const depth = metrics.depth;
         const burden = trayRecoveryBurden(depth, recovery, position.tray.length);
