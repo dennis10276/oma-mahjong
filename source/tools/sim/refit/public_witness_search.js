@@ -88,7 +88,8 @@ function clockDistance(game, state) {
 
 function roomOf(game, state) {
   const allowed = physical.legal(game, state);
-  const match = allowed.free.some(index => state.pictures[index] !== null && state.tray.includes(state.pictures[index]));
+  const uncertain = new Set(allowed.uncertain || []);
+  const match = allowed.free.some(index => !uncertain.has(index) && state.pictures[index] !== null && state.tray.includes(state.pictures[index]));
   return { room: 4 - state.tray.length, safe: state.tray.length <= 2 || state.tray.length === 3 && match,
     pressure: +(state.tray.length >= 3 && !match), allowed };
 }
@@ -99,7 +100,8 @@ function compare(left, right) {
 }
 
 function recoveryOf(game, state) {
-  const free = new Set(physical.legal(game, state).free);
+  const allowed = physical.legal(game, state), uncertain = new Set(allowed.uncertain || []);
+  const free = new Set(allowed.free.filter(index => !uncertain.has(index)));
   let immediate = 0, stranded = 0;
   for (const picture of state.tray) {
     const mates = state.pictures.flatMap((candidate, index) => state.alive[index] && candidate === picture ? [index] : []);
