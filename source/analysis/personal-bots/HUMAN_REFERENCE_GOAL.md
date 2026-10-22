@@ -50,7 +50,22 @@ distinction must remain in results; counts alone cannot reconstruct a missing
 historical deal. A replay win never replaces the first-clear target.
 
 The human-information campaign independently replays accepted actions through
-unmodified production. A1500ms shared search deadline includes alternative-root
+unmodified production. A 1500 ms shared search deadline includes alternative-root
 searches and death proofs. Expiration stays unresolved/bounded, never a loss.
 The candidate inspects unknown free closed tiles before nonclock commitments;
 inspection ordering is still being compared over the complete development set.
+
+The optional exclusive-role contract derives from `Layouts.obstacles`: the
+generator reserves keys/locks before choosing ice from unused positions. The
+trusted environment rejects overlap, more than two ice hits, or a key count
+other than zero/two before enabling that declaration. Under it, previously
+observed ice can be forecast to thaw and an observed lock can open after both
+actually observed keys leave. No unobserved role is read or assumed absent.
+`exclusiveRoles: 'clock'` uses that extra forecast only while the clock remains;
+it is an experimental general strategy, not a per-level rule or proven optimum.
+
+Screening stops once the allowed number of tries is exhausted (one for a
+one-try Dennis clear; Dennis minus one otherwise). This affects only evaluation
+censoring, not policy decisions. A `>N` result means no clear within N actual
+tries, not an invented successful try. Source hashes and board provenance are
+reported; only one short table is written when a report path is explicitly given.

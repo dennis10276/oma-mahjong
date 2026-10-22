@@ -37,6 +37,7 @@ function test() {
   assert.equal(visibleRole(overlapped, { ...state, alive: [1, 0, 1, 1] }, 0), 'lock');
   assert.equal(visibleRole(overlapped, { ...state, alive: [1, 0, 0, 0] }, 0), 'none');
   assert.equal(visibleRole(overlapped, { ...state, relieved: true }, 0), 'none');
+  assert.throws(() => playHumanCampaign(overlapped, { planning: { exclusiveRoles: true } }), /stacked roles/);
   console.log('PASS visibility-gated campaigns replay through original production, remember only observations, honor covered clock badges, keep caps unresolved, and avoid private-seed access or rejected-tap loops');
 }
 

@@ -43,6 +43,16 @@ function test() {
   assert.throws(() => frontier.observe({ alive: unlocked, physicalTaps: 5 }, []), /monotone/);
   assert.throws(() => frontier.observe({ alive: unlocked, physicalTaps: 6 }, [row(0, 'ice')]), /contradict/);
   assert.throws(() => createObstacleFrontier(tiles).observe({ alive: initial, physicalTaps: 0, rules: null }, []));
+  const exclusive = createObstacleFrontier(tiles, { exclusiveRoles: true });
+  exclusive.observe({ alive: initial, physicalTaps: 0 }, [row(0, 'ice2'), row(3, 'lock'), row(4, 'key'), row(5, 'key')]);
+  assert(exclusive.query([1, 0, 1, 1, 1, 1]).blocked.includes(0));
+  assert(exclusive.query(thawed).free.includes(0));
+  assert(exclusive.query(thawed, false).uncertain.includes(0));
+  assert(exclusive.query(unlocked).free.includes(3));
+  const partialKeys = createObstacleFrontier(tiles, { exclusiveRoles: true });
+  partialKeys.observe({ alive: initial, physicalTaps: 0 }, [row(3, 'lock'), row(4, 'key')]);
+  assert(partialKeys.query(unlocked).uncertain.includes(3), 'One seen key cannot stand in for an unseen second key');
+  assert.throws(() => frontier.query(unlocked, true), /Declare/);
   console.log('PASS public obstacle frontier: ' + controls + ' production-rule controls; unknown roles stay uncertain, thawed ice can hide locks, remembered safety survives occlusion, and attempt restarts/private pictures are refused');
 }
 

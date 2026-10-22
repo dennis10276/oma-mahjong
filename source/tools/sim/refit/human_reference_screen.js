@@ -1,8 +1,11 @@
 'use strict';
 const assert = require('assert/strict');
 const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
 const { decodeGame } = require('./personal_game_io.js');
 const { playHumanCampaign } = require('./human_reference_campaign.js');
+const { loadRecordedClears } = require('./human_reference_catalog.js');
 
 function passes(dennis, bot) {
   assert(Number.isInteger(dennis) && dennis > 0);
@@ -14,8 +17,11 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
   for (const entry of entries) {
     assert.equal(entry.name, 'Dennisisdebeste');
     assert(Number.isInteger(entry.wonOn) && entry.wonOn > 0);
-    const result = playHumanCampaign(decodeGame(entry.game), { planning });
+    const attemptLimit = Math.max(1, entry.wonOn - 1);
+    const result = playHumanCampaign(decodeGame(entry.game), { planning, maximumAttempts: attemptLimit });
     const row = { level: entry.lv, dennis: entry.wonOn, bot: result.wonOn, pass: passes(entry.wonOn, result.wonOn),
+      boardSource: entry.boardSource ?? entry.source ?? 'providedDevelopmentBoard', historicalBoardExact: entry.historicalBoardExact ?? null,
+      attemptLimit,
       slowestMs: Math.round(result.slowestMs * 10) / 10, status: result.status, verifiedTaps: result.verifiedTaps,
       attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left })) };
     rows.push(row); emit(row);
@@ -23,17 +29,39 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
   return rows;
 }
 
-function main(filename, levels, settings) {
-  const input = JSON.parse(fs.readFileSync(filename)), catalog = input.entries ?? input.baseline?.input.entries;
+async function main(filename, levels, settings, reportFile) {
+  const input = filename === '--live' ? await loadRecordedClears() : JSON.parse(fs.readFileSync(filename));
+  const catalog = input.rows ?? input.entries ?? input.baseline?.input.entries;
   assert(Array.isArray(catalog));
   const selected = levels ? levels.split(',').map(Number) : null;
   const entries = catalog.filter(entry => entry.name === 'Dennisisdebeste' && (!selected || selected.includes(entry.lv)));
   assert(entries.length > 0);
-  const rows = screen(entries, settings ? JSON.parse(settings) : {});
-  console.log(JSON.stringify({ cases: rows.length, passed: rows.filter(row => row.pass).length,
+  assert(entries.every(entry => entry.game && Number.isInteger(entry.wonOn)), 'Keep unavailable boards/labels unresolved; do not silently exclude them from the catalog gate');
+  const sourceRoot = path.resolve(__dirname, '../../..');
+  const files = Object.keys(require.cache).filter(filename => filename.startsWith(sourceRoot + path.sep)).sort();
+  const fingerprint = () => crypto.createHash('sha256').update(files.map(filename => path.relative(sourceRoot, filename).replace(/\\/g, '/') + '\0'
+    + crypto.createHash('sha256').update(fs.readFileSync(filename)).digest('hex')).join('\n')).digest('hex');
+  const sourceHash = fingerprint(), planning = settings ? JSON.parse(settings) : {};
+  console.log(JSON.stringify({ startedAt: new Date().toISOString(), cases: entries.length, sourceHash, planning }));
+  const rows = screen(entries, planning);
+  const unchanged = fingerprint() === sourceHash;
+  const summary = { cases: rows.length, passed: rows.filter(row => row.pass).length, sourceHash, sourceUnchanged: unchanged,
     slowestMs: Math.max(...rows.map(row => row.slowestMs)), completeGate: false,
-    note: 'Selected development cases, not the complete recorded-clear gate or unseen20 validation. Human try labels enter comparison only, never the controller.' }));
+    developmentGate: filename === '--live' && !selected && unchanged && rows.every(row => row.pass && row.slowestMs < 2000),
+    byBoardSource: Object.fromEntries([...new Set(rows.map(row => row.boardSource))].map(source => [source,
+      { cases: rows.filter(row => row.boardSource === source).length, passed: rows.filter(row => row.boardSource === source && row.pass).length }])),
+    note: 'Development results, not unseen20 validation. Human try labels enter comparison only, never the controller. Board provenance remains explicit; current definitions need not be identical to historical deals.' };
+  if (reportFile) {
+    const table = ['# Human-information reference development run', '', 'Planning: `' + JSON.stringify(planning) + '`',
+      'Source: `' + sourceHash + '`; unchanged: ' + unchanged + '.', '',
+      '| Level | Dennis tries | Bot tries | Pass | Board source | Slowest ms |', '|---:|---:|---:|:---:|---|---:|',
+      ...rows.map(row => `| ${row.level} | ${row.dennis} | ${row.bot ?? '>' + row.attemptLimit} | ${row.pass ? 'yes' : 'no'} | ${row.boardSource} | ${row.slowestMs} |`),
+      '', `Passed ${summary.passed}/${summary.cases}; slowest ${summary.slowestMs}ms.`,
+      'Historical board identity is not claimed for current-definition substitutes. The unseen20-level gate has not been run.', ''];
+    fs.writeFileSync(path.resolve(reportFile), table.join('\n'), { flag: 'wx' });
+  }
+  console.log(JSON.stringify(summary));
 }
 
-if (require.main === module) main(...process.argv.slice(2));
+if (require.main === module) main(...process.argv.slice(2)).catch(error => { console.error(error); process.exitCode = 1; });
 module.exports = { screen, passes };

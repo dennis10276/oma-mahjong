@@ -12,6 +12,7 @@ const { REFERENCE_PARAMETERS } = require('./public_witness_search.js');
 const { advance } = require('./known_tray_plan.js');
 
 function createHumanController(tiles, options = {}) {
+  assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
   geometry.nb = Layouts.neighbors(geometry.tiles);
   for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(geometry, field, { get() { throw Error('Policy accessed private ' + field); } });
@@ -22,7 +23,7 @@ function createHumanController(tiles, options = {}) {
   const resetPlanner = () => { planner = reference(settings); };
   return {
     beginAttempt() {
-      attempt++; frontier = createObstacleFrontier(tiles); roleSignature = null;
+      attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       resetPlanner();
     },
@@ -60,7 +61,8 @@ function createHumanController(tiles, options = {}) {
       geometry.publicFrontier = position => {
         const cacheKey = +!!position.relieved + '|' + position.alive.join('');
         if (frontierCache.has(cacheKey)) return frontierCache.get(cacheKey);
-        const queried = frontier.query(position.alive);
+        const queried = frontier.query(position.alive, options.exclusiveRoles === 'clock'
+          ? !!(clock && position.alive[clock.i]) : !!options.exclusiveRoles);
         const sameBoard = position.alive.join('') === blockedAlive;
         const free = position.relieved ? position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : [])
           : [...queried.free, ...queried.uncertain];
@@ -133,6 +135,14 @@ function playHumanCampaign(input, options = {}) {
   const maximumAttempts = options.maximumAttempts ?? 3;
   assert(Number.isInteger(maximumAttempts) && maximumAttempts > 0);
   const encoded = encodeGame(input), game = decodeGame(encoded), controller = createHumanController(game.tiles, options.planning);
+  if (options.planning?.exclusiveRoles && game.rules) {
+    const keys = game.rules.keys || [], locks = [...(game.rules.locks || [])];
+    const ice = Object.keys(game.rules.ice || {}).filter(index => game.rules.ice[index] > 0).map(Number);
+    assert(keys.length === 0 || keys.length === 2, 'Exclusive production-role contract requires zero or two keys');
+    const special = [...keys, ...locks, ...ice];
+    assert.equal(new Set(special).size, special.length, 'Exclusive production-role contract forbids stacked roles');
+    assert(ice.every(index => game.rules.ice[index] <= 2), 'Exclusive production-role contract supports one/two-hit ice');
+  }
   const factory = createSessionFactory(), attempts = [];
   let slowestMs = 0, controls = 0, verifiedTaps = 0, rejected = 0, decision = null;
   for (let attempt = 1; attempt <= maximumAttempts; attempt++) {
