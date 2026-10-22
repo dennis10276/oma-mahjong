@@ -602,7 +602,7 @@ function render() {
       case 'help_msg': {
         const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'],
           // the game tips from level 90 (js/coach.js)
-          'coach-three': ['🀄', 'Speltip: drie in het bakje'], 'coach-twin': ['👆', 'Speltip: tik op het maatje'], 'coach-lookTray': ['👀', 'Speltip: kijk naar alle plaatjes'], 'coach-remember': ['🧠', 'Speltip: onthoud wat je bekeek'], 'coach-uncover': ['🔍', 'Speltip: maak meer open'], 'coach-clockFirst': ['⏰', 'Speltip: eerst naar de wekker'], 'coach-clockSlot': ['⏰', 'Speltip: wekker heeft een vakje nodig'], 'coach-retry': ['🔁', 'Speltip: opnieuw is hetzelfde spel'] };
+          'coach-three': ['🀄', 'Speltip: drie in het bakje'], 'coach-twin': ['👆', 'Speltip: tik op het maatje'], 'coach-lookTray': ['👀', 'Speltip: kijk eerst naar alle plaatjes'], 'coach-remember': ['🧠', 'Speltip: onthoud wat je bekeek'], 'coach-uncover': ['🔍', 'Speltip: maak meer open'], 'coach-clockFirst': ['⏰', 'Speltip: eerst naar de wekker'], 'coach-clockSlot': ['⏰', 'Speltip: wekker heeft een vakje nodig'], 'coach-retry': ['🔁', 'Speltip: opnieuw is hetzelfde spel'] };
         const [icon, topic] = topics[e.topic] || ['📖', 'Speluitleg'];
         const reasons = { intro: 'eerste uitleg', retry: `herinnering na ${Number(e.fails) || 3} mislukte pogingen`, manual: 'zelf geopend', timeout: 'na afloop van de wekker' };
         const actions = { shown: 'Uitleg getoond', ack: 'Uitleg bevestigd', retry: 'Uitleg gesloten · opnieuw proberen', menu: 'Uitleg gesloten · naar menu' };

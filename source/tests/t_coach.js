@@ -172,4 +172,40 @@ module.exports = [
     t.eq(await p.evaluate(() => { S.czLoss = {}; save(); restart(); return S.czLoss[G.key]; }), { n: 1, shown: 0 }, 'starting over counts as a lost try');
     t.eq(await p.evaluate(() => { S.czLoss = {}; save(); failTry(); restart(); return S.czLoss[G.key] || null; }), null, '"try again" after a lost try is not counted a second time');
   }},
+  { name: 'game tips: starting over shows the way out that was still there (keep playing counts nothing), or where it went wrong', async run(t, { startLevel, sleep, click }) {
+    const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 141, sunSeen: true, seenSp: seen } });
+    const single = () => p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
+      const known = i => !G.down[i];
+      return fr.find(i => known(i) && !trayHas(faceOf(i)) && !G.tiles.some((u, j) => j !== i && G.alive[j] && faceOf(j) === faceOf(i) && canTake(j)) && (!G.clock || i !== G.clock.i)); });
+    const openPair = () => p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i) && !G.down[i] && (!G.clock || i !== G.clock.i)) fr.push(i);
+      for (const x of fr) for (const y of fr) if (x < y && faceOf(x) === faceOf(y)) return [x, y]; return null; });
+    let lv = null;
+    const singles4 = () => p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
+      return fr.filter(i => !G.down[i] && !G.tiles.some((u, j) => j !== i && G.alive[j] && faceOf(j) === faceOf(i) && canTake(j)) && (!G.clock || i !== G.clock.i)).length >= 4; });
+    for (const l of [100, 102, 104, 105, 108, 110, 112, 115, 118, 120, 122, 125, 128, 130, 132, 135, 138, 140]) { await startLevel(p, l); if (await openPair() && await singles4()) { lv = l; break; } }
+    t.ok(lv, 'a level with an open pair and a single tile');
+    // 1. a way out is still there: an open pair while the tray has room
+    await p.evaluate(() => { S.czLoss[G.key] = { n: 2, shown: 0 }; save(); });
+    const pair = await openPair();
+    await p.evaluate(i => onTap(i), await single()); await sleep(500);
+    await click(p, '#btnRestart'); await sleep(400);
+    t.ok(await p.evaluate(() => !!$('#modalBox .coach-own') && $('#modalBox .coach-own').dataset.part !== undefined), 'the restart window shows the way out that was still there');
+    t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'it fits a small phone');
+    t.eq(await p.evaluate(() => { const r = coachReview('restart'); return [r.still, r.kind]; }), [true, 'pair'], 'an open pair you knew');
+    const before = await p.evaluate(() => [G.mv, G.tray.length, S.czLoss[G.key].n]);
+    await click(p, '#rNo'); await sleep(300);
+    t.eq(await p.evaluate(() => [G.mv, G.tray.length, S.czLoss[G.key].n]), before, 'keep playing: back to the try, nothing counted');
+    await click(p, '#btnRestart'); await sleep(300);
+    await click(p, '#rYes'); await sleep(800);
+    t.eq(await p.evaluate(() => [G.mv, S.czLoss[G.key]]), [0, { n: 3, shown: 3 }], 'starting over counts the try and the film as seen');
+    // 2. a lost try whose last tap had no way out: the film goes back to where a known pair was skipped
+    await p.evaluate(() => { S.czLoss[G.key] = { n: 2, shown: 0 }; save(); });
+    const singles = [];
+    for (let k = 0; k < 4; k++) { const i = await single(); if (i === undefined) break; singles.push(i); await p.evaluate(i => onTap(i), i); await sleep(450); }
+    t.eq(singles.length, 4, 'four single tiles: the 4th loses');
+    await sleep(900);
+    t.ok(await p.evaluate(() => !!$('#modalBox .coach-own')), 'the lost try shows a film');
+    const r = await p.evaluate(() => { const c = coachReview('tray').clip; return { kind: coachReview('tray').kind, bad: c.segs[0].marks.map(m => m[2]), same: JSON.stringify(c.segs[0].start) === JSON.stringify(c.segs[1].start) }; });
+    t.eq([r.kind, r.bad, r.same], ['pair', ['bad'], true], 'the skipped pair: the wrong tap is marked and the right way starts at the same moment');
+  }},
 ];

@@ -92,8 +92,8 @@ function coachTipClip(id) {
 /* The right way, from the same moment as the wrong way: the same taps up to the mistake, then the
    better move (with a peek first where the film's own taps left a different tile open). The tiles of
    the better move light up at the moment of the decision. */
-function czSameStart(segA, better, faces, good) {
-  const prefix = segA.acts.filter(a => a[0] !== 'end').slice(0, -1);
+function czSameStart(segA, better, faces, good, cut = null) {
+  const own = segA.acts.filter(a => a[0] !== 'end'), prefix = own.slice(0, cut ?? own.length - 1);
   let st = czState(segA.start);
   for (const a of prefix) st = czApply(st, faces, a);
   const line = [];
@@ -267,6 +267,7 @@ function coachPlay(demo, clip) {
     hand.classList.remove('lz-on');
     if (end === 'lose') { trayEl.classList.add('cz-full'); verdict.className = 'cz-verdict cz-no'; verdict.textContent = '✗'; }
     else if (end === 'clock') { if (badge) badge.classList.add('cz-out'); verdict.className = 'cz-verdict cz-no'; verdict.textContent = '⏰'; }
+    else if (end === 'stuck') { verdict.className = 'cz-verdict cz-no'; verdict.textContent = '✗'; }
     else if (end === 'ok') { trayEl.classList.add('cz-ok'); verdict.className = 'cz-verdict cz-yes'; verdict.textContent = '✓'; const c = at(verdict); sparkle(c.x, c.y, ['✨', '⭐']); }
     await sleep(80);
   };
@@ -421,8 +422,15 @@ function czClockRoute(start, faces, tiles, nb, ob, inb, known, budget = 40000) {
   try { for (const maxTray of [2, 3]) { nodes = 0; const r = go(start, 24, [], maxTray); if (r) return r; } } catch (e) { if (e !== COACH_STOP) throw e; }
   return null;
 }
-/* Which tip fits the lost try, with the film of the player's own moves (wrong) and the better move.
-   why: 'tray' (a 4th tile) or 'clock' (the clock ran out). Returns null when nothing clear fits. */
+/* Which tip fits the try, with the film of the player's own moves and the better move.
+   why: 'tray' (a 4th tile), 'clock' (the clock ran out) or 'restart' (the player starts over).
+   A way out ("out") is a move that does not fill the tray, with tiles the player has seen: a tile that
+   matches the tray, a pair with a face-down tile, or an open pair while the tray has room.
+   - a loss: the better move at the losing tap; if there was none, the last earlier moment where the
+     player still had a way out but took a single tile instead (that tap is marked);
+   - a restart: the way out that was still there; if there was none, as above;
+   - the clock: a route from the start of the try that reaches the clock in time.
+   Returns null when nothing clear fits. */
 function coachReview(why) {
   const z = G && G.cz;
   if (!z || !z.taps.length || !coachLevelOn()) return null;
@@ -434,46 +442,74 @@ function coachReview(why) {
   // the little game must end exactly where the real one did
   if (s.a.some((v, i) => v !== G.alive[i]) || s.tray.join() !== G.tray.map(faceOf).join()) return null;
   const free = (st, i) => czTakeable(st, nb, ob, inb, i);
-  const L = acts.length - 1, pre = states[L], t = acts[L][1], known = new Set([...seenAt[L], ...before]);
-  const fr = pre.a.map((v, i) => i).filter(i => free(pre, i));
   const ok = (st, line) => { let x = st; for (const a of line) { if (czStep(x, faces, a[1])[0] !== a[0]) return null; x = czApply(x, faces, a); } return x.tray.length < 4 ? line : null; };
-  let tip = null, better = null, kind = null, from = Math.max(0, L - 12);
-  if (why === 'clock' || (pre.ck && !pre.ck.done && t === pre.ck.i && why === 'tray')) {
-    // the clock: the whole try from the start, then a route that reaches the clock in time
+  const knownAt = k => new Set([...(k < seenAt.length ? seenAt[k] : seen), ...before]);
+  // a way out at position k (before tap k; k = acts.length is where the try ended)
+  const outAt = (k, tapped = -1) => {
+    const st = states[k], kn = knownAt(k), fr = st.a.map((v, i) => i).filter(i => free(st, i));
+    let line;
+    if (tapped >= 0 && st.p === tapped) {
+      const tw = fr.find(j => j !== tapped && faces[j] === faces[tapped] && kn.has(j));
+      if (tw !== undefined && (line = ok(st, [['pair', tw, tapped]]))) return { line, kind: 'twin', tip: 'twin' };
+    }
+    const m = fr.find(j => j !== tapped && st.tray.includes(faces[j]) && kn.has(j));
+    if (m !== undefined && (line = ok(st, [['match', m]]))) return st.d[m] ? { line, kind: 'peek', tip: 'remember' } : { line, kind: 'lookTray', tip: 'lookTray' };
+    for (const x of fr) for (const y of fr) if (x !== y && faces[x] === faces[y] && st.d[x] && kn.has(x) && kn.has(y) && !st.tray.includes(faces[x])) {
+      line = ok(st, st.p === x ? [['pair', y, x]] : st.p === y ? [['pair', x, y]] : [['peek', x], ['pair', y, x]]);
+      if (line) return { line, kind: 'remember', tip: 'remember' };
+    }
+    if (st.tray.length <= 2) for (const x of fr) for (const y of fr) if (x < y && faces[x] === faces[y] && !st.d[x] && !st.d[y] && kn.has(x) && kn.has(y) && !st.tray.includes(faces[x])) {
+      line = ok(st, [['take', x], ['match', y]]);
+      if (line) return { line, kind: 'pair', tip: 'lookTray' };
+    }
+    return null;
+  };
+  // the last earlier moment with a way out where a single tile went into the tray instead
+  const mistake = last => {
+    for (let k = last; k >= 0 && k >= last - 25; k--) {
+      if (acts[k][0] !== 'take') continue;
+      const o = outAt(k);
+      if (o && JSON.stringify(o.line[0]) !== JSON.stringify(acts[k])) return { k, ...o };
+    }
+    return null;
+  };
+  const L = acts.length - 1;
+  let found = null, end = why === 'clock' ? 'clock' : why === 'restart' ? 'restart' : 'lose';
+  if (why === 'clock' || (why === 'tray' && states[L].ck && !states[L].ck.done && acts[L][1] === states[L].ck.i)) {
     const route = czClockRoute(states[0], faces, tiles, nb, ob, inb, new Set([...seen, ...before]));
-    if (route) { tip = why === 'clock' ? 'clockFirst' : 'clockSlot'; kind = tip; better = route; from = 0; }
+    if (!route) return null;
+    const kind = why === 'clock' ? 'clockFirst' : 'clockSlot';
+    found = { k: 0, line: route, kind, tip: kind };
+  } else if (why === 'tray') {
+    const o = outAt(L, acts[L][1]);
+    found = o ? { k: L, ...o } : mistake(L - 1);
   } else {
-    const twin = pre.p === t ? fr.find(j => j !== t && faces[j] === faces[t] && known.has(j)) : undefined;
-    const trayM = fr.find(j => j !== t && pre.tray.includes(faces[j]) && known.has(j));
-    let memo = null;
-    for (const x of fr) for (const y of fr) if (!memo && x !== y && faces[x] === faces[y] && pre.d[x] && known.has(x) && known.has(y) && !pre.tray.includes(faces[x]))
-      memo = pre.p === x ? [['pair', y, x]] : pre.p === y ? [['pair', x, y]] : [['peek', x], ['pair', y, x]];
-    // a face-down tile seen before (now or in an earlier try) whose twin waits in the tray
-    const peekM = fr.find(j => pre.d[j] && j !== pre.p && pre.tray.includes(faces[j]) && known.has(j));
-    if (twin !== undefined && (better = ok(pre, [['pair', twin, t]]))) { tip = 'twin'; kind = 'twin'; }
-    else if (trayM !== undefined && (better = ok(pre, [['match', trayM]]))) { tip = 'lookTray'; kind = 'lookTray'; }
-    else if (memo && (better = ok(pre, memo))) { tip = 'remember'; kind = 'remember'; }
-    else if (peekM !== undefined && (better = ok(pre, [['match', peekM]]))) { tip = 'remember'; kind = 'peek'; }
-    if (!tip) return null;
-    // the moves that led up to it: from the last time the tray had room, at most 6 taps
-    let k = L; while (k > 0 && L - k < 6 && states[k].tray.length >= 2) k--;
-    from = k;
+    const o = outAt(acts.length);
+    if (o) found = { k: acts.length, ...o, still: true };
+    else { found = mistake(L); end = 'stuck'; }
   }
-  if (!tip) return null;
-  const mine = czTrim(acts.slice(from)).concat([['end', why === 'clock' ? 'clock' : 'lose']]);
-  // the view: around the last taps, the fatal one and the better move (the clock films show the whole route)
-  const czFocus = tip === 'clockFirst' || tip === 'clockSlot' ? null : [...new Set(mine.slice(-4).concat(better).filter(a => a[0] !== 'end').flatMap(a => a.slice(1)))];
+  if (!found) return null;
+  const clock = found.kind === 'clockFirst' || found.kind === 'clockSlot';
+  // the replay: from the last time the tray had room before the moment that counts, at most 6 taps earlier
+  let from = 0;
+  if (!clock) { from = Math.min(found.k, L); while (from > 0 && found.k - from < 6 && states[from].tray.length >= 2) from--; }
+  const mine = czTrim(acts.slice(from));
+  // the tap that went wrong earlier glows red until it is made
+  const at = found.k < acts.length ? mine.indexOf(acts[found.k]) : -1;
+  const markA = !clock && found.k < L && at >= 0 ? [[at > 0 ? at - 1 : 'start', [acts[found.k][1]], 'bad']] : [];
   const enc = st => ({ a: st.a, d: st.d, p: st.p, tray: st.tray, ck: st.ck });
-  // the right way starts from the same moment as the replay: the clock routes from the start of the
-  // try, the others with the same taps up to the mistake and then the better move
-  const segA = { start: enc(states[from]), acts: mine };
-  const B = kind === 'clockFirst' || kind === 'clockSlot' ? { start: enc(states[0]), acts: better.concat([['end', 'ok']]), marks: [] }
-    : czSameStart(segA, better, faces, better.filter(a => a[0] !== 'peek').flatMap(a => a.slice(1)));
+  const segA = { start: enc(states[from]), acts: mine.concat([['end', end]]) };
+  // the right way starts at the same moment: the same taps up to that moment, then the way out
+  const cutAt = found.k >= acts.length ? mine.length : at;
+  const good = found.line.filter(a => a[0] !== 'peek').flatMap(a => a.slice(1));
+  const B = clock ? { start: enc(states[0]), acts: found.line.concat([['end', 'ok']]), marks: [] } : czSameStart(segA, found.line, faces, good, cutAt);
+  const focus = clock ? null : [...new Set(mine.slice(Math.max(0, cutAt - 3)).concat(found.line).flatMap(a => a.slice(1)))];
+  const endCap = found.still ? 'czStillOut' : { lose: 'czOwnLose', clock: 'czOwnClock', restart: 'czOwnRestart', stuck: 'czOwnStuck' }[end];
   return {
-    tip, kind,
-    clip: { tiles, faces, ob, focus: czFocus, known: [...new Set([...seen, ...before])], segs: [
-      { ...segA, caps: [tx('czOwnA'), tx(why === 'clock' ? 'czOwnClock' : 'czOwnLose')], marks: [] },
-      { ...B, caps: [tx('czOwnB', tx('czT_' + tip)), tx('czOwn_' + kind)] },
+    tip: found.tip, kind: found.kind, still: !!found.still,
+    clip: { tiles, faces, ob, focus, known: [...new Set([...seen, ...before])], segs: [
+      { ...segA, caps: [tx('czOwnA'), tx(endCap)], marks: markA },
+      { ...B, caps: [tx('czOwnB', tx('czT_' + found.tip)), tx('czOwn_' + found.kind)] },
     ] },
   };
 }
@@ -488,11 +524,16 @@ function coachCount() {
   e.n++; save();
   return e;
 }
-function coachDue() {
-  const C = RULES.coach, e = coachCount();
-  if (!e) return false;
-  const n = G.tiles.length, done = (n - aliveCount() - G.tray.length) / n;
-  return (!e.shown && e.n >= C.first) || (e.n >= C.again && ((e.n - C.again) % C.every === 0 || e.n >= C.always) && done > C.done);
+function coachDueAt(n, shown) {
+  const C = RULES.coach, t = G.tiles.length, done = (t - aliveCount() - G.tray.length) / t;
+  return (!shown && n >= C.first) || (n >= C.again && ((n - C.again) % C.every === 0 || n >= C.always) && done > C.done);
+}
+function coachDue() { const e = coachCount(); return !!e && coachDueAt(e.n, e.shown); }
+// would the film be due if the player starts over now (nothing is counted yet)
+function coachDueRestart() {
+  if (!coachLevelOn()) return false;
+  const e = S.czLoss[G.key] || { n: 0, shown: 0 };
+  return coachDueAt(e.n + 1, e.shown);
 }
 const coachShown = () => { const e = S.czLoss[G.key]; if (e) { e.shown = e.n; save(); } };
 /* The film of the own try, inside the window that tells the try was lost. It is tied to the tip whose
