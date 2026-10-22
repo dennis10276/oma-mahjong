@@ -295,14 +295,15 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         }
         const identity = keyOf(game, moved.state);
         if (!visited.has(identity)) { visited.add(identity); next.push(candidate); }
-        if (knownPairMacros && !moved.removed && path.length < tapLimit) {
+        const preparesKnownPair = !moved.removed || moved.removed === 1 && moved.state.tray.includes(settled.pictures[index]);
+        if (knownPairMacros && preparesKnownPair && path.length < tapLimit) {
           const pairedActions = physical.legal(game, moved.state).free.filter(mate => mate !== index
             && moved.state.pictures[mate] === moved.state.pictures[index]);
           for (const mate of pairedActions) {
             if (Date.now() >= deadline) { boundary = true; break; }
             const paired = physical.advance(game, moved.state, mate);
             if (paired.uncertain || paired.lost) continue;
-            assert.equal(paired.removed, 2, 'A known inspection-pair expansion must contain two actual removals');
+            assert.equal(moved.removed + paired.removed, 2, 'A known pair expansion must contain two actual removals');
             macroPairs++; hasSafeRemoval = true;
             const pairedCandidate = evaluate(paired.state, path.concat(mate), false, mate);
             if (paired.win) { best = pairedCandidate; return finish(); }

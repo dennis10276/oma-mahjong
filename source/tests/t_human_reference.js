@@ -16,6 +16,7 @@ const modules = [
   'test_public_tray_burden.js',
   'test_public_direct_clock.js',
   'test_public_productive_reopen.js',
+  'test_public_faceup_pair_macro.js',
   'test_public_goal_frontier.js',
   'test_public_goal_routes.js',
   'test_public_information_revision.js',
