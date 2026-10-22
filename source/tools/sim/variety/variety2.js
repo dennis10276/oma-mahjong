@@ -82,7 +82,22 @@ const ease = m => 0.5 * m.first + 0.25 * m.two + 0.25 * m.four;
 const dev = (d, n) => d > 0 ? EASIER * d : -d * HARDER[n];   // d = new - old chance: above 0 is easier
 const distTo = (m, target) => NAMES.reduce((s, n) => s + dev(m[n].first - target[n].first, n) + 0.5 * dev(m[n].two - target[n].two, n) + 0.5 * dev(m[n].four - target[n].four, n), 0);
 const offCurve = (d1, de, n) => [d1, de].some(d => d > CURVE.easier || (CURVE.harder[n] !== null && d < -CURVE.harder[n]));
-const within = (m, target, ez, f = 1) => NAMES.every(n => Math.abs(m[n].first - target[n].first) <= TOL.first * f && Math.abs(m[n].two - target[n].two) <= TOL.two * f && Math.abs(m[n].four - target[n].four) <= TOL.four * f && (!ez || Math.abs(ease(m[n]) - ease(target[n])) <= TOL.ease * f));
+// Mrs. Doubtfire (Dennis, 2026-10-22): "Everything should be harder or the same for Mrs Doubtfire", "5 points
+// harder is too much", and per 10 levels "1 level in it can never be more than 2 points easier, 1 one point
+// easier, rest should be same or harder". Per level (first try and ease): at most MRS.harder harder and
+// MRS.slots[0] easier; per block of 10 the easier levels fill MRS.slots (one up to 2, one up to 1 point,
+// the rest at most MRS.same, which is "the same" rounded to whole points). Checked by report, balance, tests.
+const MRS_N = 'Mrs. Doubtfire', MRS = { harder: 0.05, slots: [0.02, 0.01], same: 0.005 };
+const mrsOff = (m, target) => Math.max(m[MRS_N].first - target[MRS_N].first, ease(m[MRS_N]) - ease(target[MRS_N]));
+const mrsHard = (m, target) => Math.min(m[MRS_N].first - target[MRS_N].first, ease(m[MRS_N]) - ease(target[MRS_N]));
+const within = (m, target, ez, f = 1) => NAMES.every(n => {
+  const d1 = m[n].first - target[n].first, de = ease(m[n]) - ease(target[n]);
+  const two = Math.abs(m[n].two - target[n].two) <= TOL.two * f && Math.abs(m[n].four - target[n].four) <= TOL.four * f;
+  if (n === MRS_N) return two && d1 <= MRS.slots[0] * f && d1 >= -MRS.harder * f && (!ez || (de <= MRS.slots[0] * f && de >= -MRS.harder * f));
+  return two && Math.abs(d1) <= TOL.first * f && (!ez || Math.abs(de) <= TOL.ease * f);
+});
+// a fit that needs no slot: the same or harder for Mrs. Doubtfire
+const sameOrHarder = (m, target) => mrsOff(m, target) <= MRS.same;
 
 // the observer's measurement and the board checks (in workers)
 function tools() {
@@ -178,7 +193,7 @@ function tune(job) {
     return valid(c) ? c : null;
   };
   let seed = 17011 + job.lv * 101 + 3, m = job.m, d = distTo(m, target);
-  for (let it = 0; it < TUNE_STEPS && !within(m, target, false, 0.8); it++) {
+  for (let it = 0; it < TUNE_STEPS && !(within(m, target, false, 0.8) && mrsOff(m, target) <= 0); it++) {
     let best = null;
     for (let q = 0; q < 4; q++) { const c = propose(gap(m)); if (!c) continue; const dc = distTo(measure(c, SCREEN, seed), target); if (!best || dc < best.d) best = { c, d: dc }; }
     if (best && best.d < d + 0.05) { const mc = measure(best.c, SEARCH, seed + 1); const dc = distTo(mc, target); if (dc < d) { b = best.c; m = mc; d = dc; } }
@@ -298,7 +313,8 @@ function cmdAssign(from) {
   const cost = open.map(l => cands.map(o => {
     if ((o.made % 10 === 0) !== l.big) return Infinity;
     const f = checked[o.id], m = f || o.c.m, ok = !o.quick && (f ? within(f, l.target, true) : within(m, l.target, false));
-    return (ok ? 0 : 10) + distTo(m, l.target);
+    // fits that are the same or harder for Mrs. Doubtfire first; a slightly easier fit only where needed
+    return (ok ? (sameOrHarder(m, l.target) ? 0 : 3) : 10) + distTo(m, l.target);
   }));
   // kept boards near by: same rules
   for (let i = 0; i < open.length; i++) for (let j = 0; j < cands.length; j++)
@@ -357,25 +373,40 @@ async function cmdValidate(workers) {
   });
 }
 
+// Mrs. Doubtfire's easier levels in one block of 10: the most easier one may use slot 0 (2 points), the
+// next slot 1 (1 point), the rest MRS.same. Returns [{ lv, off, allowed }] for the levels over their slot.
+function slotsOver(ls, mOf) {
+  const offs = ls.map(l => ({ lv: l.lv, off: mrsOff(mOf(l), l.target) })).sort((a, b) => b.off - a.off);
+  return offs.map((x, k) => ({ ...x, allowed: MRS.slots[k] ?? MRS.same })).filter(x => x.off > x.allowed + 1e-9);
+}
+
 // a band of 10 levels off the curve: the passed level that pulls it most the wrong way is tuned again,
-// towards its own target shifted by what the band is off (it must still pass its own level's tolerance)
+// towards its own target shifted by what the band is off (it must still pass its own level's tolerance);
+// Mrs. Doubtfire's levels over their slot are tuned harder
 function cmdBalance() {
   const P = plan(), O = readJ(OUT, null); let n = 0;
+  const mark = (l, nm, shift, why) => {
+    const x = O.levels[l.lv]; if (x.status !== 'ok') return;
+    const aim = JSON.parse(JSON.stringify(l.target)); for (const k of ['first', 'two', 'four']) aim[nm][k] -= shift;
+    Object.assign(x, { status: 'balance', aim, prevOk: { id: x.id, board: x.board, m: x.m, final: x.final } }); n++;
+    console.log(`level ${l.lv} ${nm}: ${why}; aims ${(shift * 100).toFixed(1)} points ${shift > 0 ? 'harder' : 'easier'}`);
+  };
   for (let a = Math.floor(O.from / 10) * 10; a <= 269; a += 10) {
     const ls = P.levels.filter(l => l.lv >= Math.max(a, O.from) && l.lv < a + 10 && O.levels[l.lv] && O.levels[l.lv].status === 'ok');
     if (!ls.length) continue;
+    const over = slotsOver(ls, l => O.levels[l.lv].final);
+    for (const o of over) mark(ls.find(l => l.lv === o.lv), MRS_N, o.off - o.allowed + 0.01, `${(o.off * 100).toFixed(1)} points easier (allowed ${(o.allowed * 100).toFixed(1)})`);
     const avg = f => ls.reduce((s, l) => s + f(l), 0) / ls.length;
     for (const nm of NAMES) {
+      if (nm === MRS_N && over.length) continue;
       const d1 = avg(l => O.levels[l.lv].final[nm].first - l.target[nm].first), de = avg(l => ease(O.levels[l.lv].final[nm]) - ease(l.target[nm]));
       if (!offCurve(d1, de, nm)) continue;
       const easy = Math.max(d1, de) > CURVE.easier, sign = easy ? 1 : -1;
       const off = easy ? Math.max(d1, de) - CURVE.easier / 2 : -Math.min(d1, de) - CURVE.harder[nm] / 2;
-      // the level that pulls most the wrong way
-      const l = ls.slice().sort((x, y) => sign * (O.levels[y.lv].final[nm].first - y.target[nm].first - O.levels[x.lv].final[nm].first + x.target[nm].first))[0], x = O.levels[l.lv];
-      const shift = Math.min(off * ls.length, TOL.first * 0.6);
-      const aim = JSON.parse(JSON.stringify(l.target)); for (const k of ['first', 'two', 'four']) aim[nm][k] -= sign * shift;
-      Object.assign(x, { status: 'balance', aim, prevOk: { id: x.id, board: x.board, m: x.m, final: x.final } }); n++;
-      console.log(`${a}-${a + 9} ${nm}: ${easy ? 'easier' : 'harder'} by ${Math.max(Math.abs(d1), Math.abs(de)).toFixed(3)}; level ${l.lv} aims ${(sign * shift).toFixed(3)} the other way`);
+      const free = ls.filter(l => O.levels[l.lv].status === 'ok');
+      if (!free.length) continue;
+      const l = free.sort((x, y) => sign * (O.levels[y.lv].final[nm].first - y.target[nm].first - O.levels[x.lv].final[nm].first + x.target[nm].first))[0];
+      mark(l, nm, sign * Math.min(off * ls.length, (nm === MRS_N ? MRS.harder : TOL.first) * 0.6), `${a}-${a + 9} ${easy ? 'easier' : 'harder'} by ${(Math.max(Math.abs(d1), Math.abs(de)) * 100).toFixed(1)} points`);
     }
   }
   writeJ(OUT, O); console.log(`balance: ${n} levels to tune`);
@@ -392,7 +423,7 @@ function cmdReport() {
     const ls = P.levels.filter(l => l.lv >= Math.max(a, O.from) && l.lv < a + 10 && O.levels[l.lv] && O.levels[l.lv].final);
     if (!ls.length) continue;
     const avg = f => ls.reduce((s, l) => s + f(l), 0) / ls.length;
-    const off = NAMES.some(n => offCurve(avg(l => O.levels[l.lv].final[n].first - l.target[n].first), avg(l => ease(O.levels[l.lv].final[n]) - ease(l.target[n])), n));
+    const off = NAMES.some(n => offCurve(avg(l => O.levels[l.lv].final[n].first - l.target[n].first), avg(l => ease(O.levels[l.lv].final[n]) - ease(l.target[n])), n)) || slotsOver(ls, l => O.levels[l.lv].final).length > 0;
     console.log(`${a}-${a + 9}`.padEnd(10) + NAMES.map(n => `${avg(l => l.target[n].first).toFixed(2)}/${avg(l => O.levels[l.lv].final[n].first).toFixed(2)}       ${avg(l => ease(l.target[n])).toFixed(2)}/${avg(l => ease(O.levels[l.lv].final[n])).toFixed(2)}`).join('      | ') + `   (${ls.length} levels${off ? ', OFF THE CURVE' : ''})`);
   }
 }
@@ -412,7 +443,7 @@ function cmdApply(from) {
   fs.writeFileSync(path.join(ROOT, 'www', 'levels-hard.js'), head + 'const HARD_LEVELS = ' + JSON.stringify(NT) + ';\n');
   const missing = []; for (let lv = from; lv <= 269; lv++) if (!take.some(([l]) => l === lv)) missing.push(lv);
   // the report the tests read
-  fs.writeFileSync(A('variety.json'), JSON.stringify({ made: new Date().toISOString(), from, tol: TOL, curve: CURVE, novel: NOVEL, pics: O.pics, nearLevels: O.nearLevels, levels: take.map(([lv, x]) => ({ lv, shape: x.shape, target: target(lv), final: x.final })) }, null, 1));
+  fs.writeFileSync(A('variety.json'), JSON.stringify({ made: new Date().toISOString(), from, tol: TOL, curve: CURVE, mrs: MRS, novel: NOVEL, pics: O.pics, nearLevels: O.nearLevels, levels: take.map(([lv, x]) => ({ lv, shape: x.shape, target: target(lv), final: x.final })) }, null, 1));
   console.log(`apply: ${take.length} levels with a new board (v${NT.v})${missing.length ? '; kept the old board on ' + missing.join(', ') : ''}`);
 }
 

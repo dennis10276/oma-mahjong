@@ -94,7 +94,13 @@ puts neighbouring levels 0.05 ease apart; ±0.05 first try was below the noise o
 and made the work slow), and per 10 levels the average first try and ease of each player not easier than before
 (Dennis, 2026-10-22: "It shouldn't be easier really"; 0.005 allowed for measurement noise) and at
 most 0.02 harder (for Dennisisdebeste any amount harder: "If a board fits but it's too hard for
-Dennis on the curve just let it fit", 2026-10-22; his harder side counts half when choosing). When choosing and tuning, a board that is easier than its target counts double. `tests/t_variety.js` checks both.
+Dennis on the curve just let it fit", 2026-10-22; his harder side counts half when choosing). When choosing and tuning, a board that is easier than its target counts double.
+Mrs. Doubtfire (Dennis, 2026-10-22): "Everything should be harder or the same for Mrs Doubtfire",
+"5 points harder is too much", and per 10 levels "1 level in it can never be more than 2 points easier,
+1 one point easier, rest should be same or harder". So per level (first try and ease) at most 5 points
+harder and 2 easier; per block of 10 one level up to 2 points easier, one up to 1, the rest at most 0.5
+(the same in whole points). `assign` prefers fits that are the same or harder for her; `balance` tunes
+the levels over their allowance harder. `tests/t_variety.js` checks both.
 
 ## The first method (`variety.js`, slow; kept for reference)
 

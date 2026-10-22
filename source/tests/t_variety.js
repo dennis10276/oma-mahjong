@@ -51,8 +51,12 @@ module.exports = [{
       g.nb = L.neighbors(g.tiles);
       const o = d.obst; g.rules = o && (Object.keys(o.ice || {}).length || (o.keys || []).length) ? { iceNb: L.iceNeighbors(g.tiles), ice: o.ice || {}, locks: (o.keys || []).length ? new Set(o.locks) : null, keys: o.keys || [] } : null;
       t.ok(Hard.validSolution(g, d.solution), `level ${lv}: can be finished (stored way through, clock in time)`);
-      for (const n of Object.keys(r.target)) for (const k of ['first', 'two', 'four'])
-        t.ok(Math.abs(r.final[n][k] - r.target[n][k]) <= R.tol[k] + 1e-9, `level ${lv} ${n} ${k}: as hard as before`, [r.final[n][k], r.target[n][k]]);
+      for (const n of Object.keys(r.target)) for (const k of ['first', 'two', 'four']) {
+        const d = r.final[n][k] - r.target[n][k];
+        // Mrs. Doubtfire: first try at most R.mrs.harder harder and R.mrs.slots[0] easier
+        const ok = n === 'Mrs. Doubtfire' && k === 'first' ? d <= R.mrs.slots[0] + 1e-9 && d >= -R.mrs.harder - 1e-9 : Math.abs(d) <= R.tol[k] + 1e-9;
+        t.ok(ok, `level ${lv} ${n} ${k}: as hard as before`, [r.final[n][k], r.target[n][k]]);
+      }
     }
     // the curve: per 10 levels the average first try and ease of each player as before
     const ease = m => 0.5 * m.first + 0.25 * m.two + 0.25 * m.four, bands = {};
@@ -64,6 +68,12 @@ module.exports = [{
       // (Dennisisdebeste may be harder: R.curve.harder[n] null)
       const hard = R.curve.harder[n];
       t.ok(d.every(x => x <= R.curve.easier + 1e-9 && (hard === null || x >= -hard - 1e-9)), `levels ${b}0-${b}9 ${n}: the curve as before, not easier`, d.map(x => x.toFixed(3)));
+    }
+    // Mrs. Doubtfire per 10 levels: one level up to 2 points easier, one up to 1, the rest the same or harder
+    const easeOf = m => 0.5 * m.first + 0.25 * m.two + 0.25 * m.four;
+    for (const [b, rs] of Object.entries(bands)) {
+      const offs = rs.map(r => Math.max(r.final['Mrs. Doubtfire'].first - r.target['Mrs. Doubtfire'].first, easeOf(r.final['Mrs. Doubtfire']) - easeOf(r.target['Mrs. Doubtfire']))).sort((x, y) => y - x);
+      t.ok(offs.every((o, k) => o <= (R.mrs.slots[k] ?? R.mrs.same) + 1e-9), `levels ${b}0-${b}9 Mrs. Doubtfire: the same or harder (one level 2 points, one 1 point easier at most)`, offs.map(x => x.toFixed(3)));
     }
     const first = Math.min(...changed);
     t.ok(Hard.designVersion(first) !== Hard.designVersion(first - 1) && Hard.designVersion(91) !== Hard.designVersion(92), 'saved games: only remade levels start fresh');
