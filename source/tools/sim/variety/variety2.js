@@ -27,7 +27,7 @@ const BASE = A('levels-before-variety.js'), PLAN = A('variety-plan.json'), CANDS
 // 1200-game measurements of candidates (validate), so a later assign uses the sharper number
 const CHECKED_F = A('variety2-checked.json');
 const NAMES = ['Dennisisdebeste', 'Mrs. Doubtfire'];
-const CANDS = 5, SCREEN = 120, SEARCH = 300, FINAL = { runs: 1200, seed: 55001 }, NEAR = 2, TUNE_STEPS = 16;
+const CANDS = 5, SCREEN = 120, SEARCH = 300, FINAL = { runs: 1200, seed: 55001 }, NEAR = 2, TUNE_STEPS = +(process.env.TUNE_STEPS || 16);
 // per level (both players): the old board's numbers give or take TOL. The 1.54 reorder sorted boards in
 // ease bands of 0.05, so neighbouring levels already differ that much; what must stay the same is the
 // curve: per 10 levels the average first try and ease within CURVE of before (report, tests)
