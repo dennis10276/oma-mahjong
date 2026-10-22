@@ -7,6 +7,7 @@ const { frontierFor, recoveryDepth, trayRecoveryBurden } = require('./public_goa
 const { aliveSignature } = require('./public_alive_signature.js');
 const { createPairFlexibility } = require('./public_pair_flexibility.js');
 const { goalRoutes } = require('./public_goal_routes.js');
+const { informationTraySafe } = require('./public_information_tray_safety.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -164,7 +165,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const recoveryRankWidths = new Set();
   const visited = new Set([keyOf(game, state)]);
 
-  const evaluate = (position, path, information = false, targetIndex = -1) => {
+  const evaluate = (position, path, information = false, targetIndex = -1, executesUnknownTap = false) => {
     const metricsKey = cachePublicAnalysis ? keyOf(game, position) : null;
     let metrics = cachePublicAnalysis ? metricsCache.get(metricsKey) : null;
     if (metrics) metricsHits++;
@@ -183,8 +184,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const matchedTiles = initialLeft + state.tray.length - left - position.tray.length;
     const inCone = cone && targetIndex >= 0 ? cone.has(targetIndex) : false;
 
-    // Safety check: is this information path safe for the tray?
-    const safeInfo = information && (room.safe || position.tray.length <= 2);
+    const safeInfo = information && informationTraySafe(position, targetIndex, executesUnknownTap, room.allowed);
 
     const goal = won ? 'win' : exit && room.safe ? 'safeClockExit'
       : (!clocked && progress >= settings.progress && !position.tray.length) ? 'knownProgress'
@@ -262,8 +262,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         if (moved.uncertain) {
           if (!['unseenPicture', 'unobservedObstacleRole', 'unobservedOrientation'].includes(moved.reason)) { unsupported++; continue; }
           unknown++;
-          const sequence = moved.reason !== 'unseenPicture' || settled.down[index] ? path : node.path;
-          if (sequence.length) evaluate(settled, sequence, true, index);
+          const executesUnknownTap = moved.reason !== 'unseenPicture' || !!settled.down[index];
+          const sequence = executesUnknownTap ? path : node.path;
+          if (sequence.length) evaluate(settled, sequence, true, index, executesUnknownTap);
           continue;
         }
         if (moved.lost) continue;
