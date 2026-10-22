@@ -89,6 +89,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - Release 1.58 only makes starting, matching and the lessons smoother; boards and prediction
   numbers are unchanged. The 1.57 file is archived as `predict-1.57.json`; 1.55-1.57 stay
   comparable on all levels.
+- Release 1.59 adds the game tips (js/coach.js); boards and prediction numbers are unchanged. The
+  1.58 file is archived as `predict-1.58.json`; 1.55-1.58 stay comparable on all levels.
 
 - `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, the prediction for
   their next 60 levels: first try, within 2 and within 4 tries. The dashboard shows it in the card
@@ -117,6 +119,20 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   code that runs on every tap. Sparkles are `FX.burst`/`FX.emoji` (graphics chip, `fx.js`).
 - Lessons: `LESSON_SCENES` / `LESSON_STEPS` in `specials.js`. Findings and numbers:
   `source/analysis/smooth-1.58.md`; `tests/perf_probe.js` and `tests/perf_trace.js` measure.
+
+## Game tips (from 1.59, js/coach.js; decisions by Dennis, 2026-10-22)
+
+- From level 60 (`RULES.coach`) no lesson shows on its own: no retry reminders, no lesson after a
+  clock timeout. First-time introductions of a new tile kind stay (the clock at 80 is a real-game film).
+- After a lost try (a 4th tile, the clock, or starting over: a restart counts) the player sees a film
+  of their own last moves and the better move, tied to its tip: once at the 3rd lost try of a level,
+  then at the 9th, 12th, 15th, 18th and every lost try after the 20th, but from the 9th only when that
+  try was more than 60% done. Counted per level in `S.czLoss`.
+- A film never shows a picture the player has not seen (in this try or an earlier try of the same
+  board this session); unseen tiles show "?". Better moves use only seen tiles.
+- The right way always starts at the same moment as the replay. Films get most of the screen.
+- The Speltips menu: 8 tips (films of real recorded games, no names, `coach-clips.js`, made with
+  `source/tools/coach/`), the player's own example per tip, and the tile explanations.
 
 ## Firebase
 
