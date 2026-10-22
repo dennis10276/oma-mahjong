@@ -47,7 +47,8 @@ module.exports = [
       const done = await p.evaluate(() => G.overShown || G.done || G.autoFin); if (done) break;
       const fr = await freeTiles(p);
       // prefer what keeps the try going, but also peeks and singles, like a player
-      const i = await p.evaluate(fr => fr.find(i => trayHas(faceOf(i))) ?? (G.peek >= 0 ? fr.find(i => i !== G.peek && faceOf(i) === faceOf(G.peek)) : undefined) ?? fr.find(i => G.down[i] && i !== G.peek) ?? fr.find(i => fr.some(j => j !== i && faceOf(j) === faceOf(i))) ?? fr[0], fr);
+      // a face-down tile whose twin waits in the tray first: it goes straight there, flipping open
+      const i = await p.evaluate(fr => fr.find(i => G.down[i] && i !== G.peek && trayHas(faceOf(i))) ?? fr.find(i => trayHas(faceOf(i))) ?? (G.peek >= 0 ? fr.find(i => i !== G.peek && faceOf(i) === faceOf(G.peek)) : undefined) ?? fr.find(i => G.down[i] && i !== G.peek) ?? fr.find(i => fr.some(j => j !== i && faceOf(j) === faceOf(i))) ?? fr[0], fr);
       if (i === undefined) break;
       await p.evaluate(i => onTap(i), i); n++;
       await sleep(80);
@@ -55,7 +56,9 @@ module.exports = [
         const z = G.cz; if (!z) return true;
         const faces = G.tiles.map((t, i) => faceOf(i)); let s = czState(z.start);
         for (const i of z.taps) s = czApply(s, faces, czStep(s, faces, i));
-        return s.a.every((v, i) => v === G.alive[i]) && s.tray.join() === G.tray.map(faceOf).join() && s.p === G.peek;
+        // every tapped tile counts as seen (also a face-down tile that went straight to its twin)
+        const seen = czRun(z).seen;
+        return s.a.every((v, i) => v === G.alive[i]) && s.tray.join() === G.tray.map(faceOf).join() && s.p === G.peek && z.taps.every(i => seen.has(i));
       });
       if (!t.ok(same, `little game equals the real one: level ${lv}, tap ${n}`)) break;
     }

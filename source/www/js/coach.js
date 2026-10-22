@@ -316,7 +316,7 @@ function coachRetryTip(after = null) {
    notes afresh from the next tap. */
 /* What the player has seen. The films never show a picture the player has not seen: not in this
    try, and not in an earlier try of the same board this session (a retry is the same deal). A tile
-   counts as seen when it lay face up and not fully under another tile, or was peeked at. */
+   counts as seen when it lay face up and not fully under another tile, was peeked at, or was tapped. */
 const czMemory = new Map();          // level key -> { sig, seen: Set of tiles }
 let czOpen = null;                    // the notes of the current try, with its board
 const czSig = faces => faces.join(',');
@@ -328,7 +328,13 @@ function czRun(z) {
   let s = czState(z.start);
   const states = [s], acts = [], seen = new Set(), seenAt = [];
   czLook(s, tiles, nb, seen);
-  for (const i of z.taps) { seenAt.push(new Set(seen)); const a = czStep(s, faces, i); acts.push(a); s = czApply(s, faces, a); states.push(s); czLook(s, tiles, nb, seen); }
+  for (const i of z.taps) {
+    seenAt.push(new Set(seen));
+    const a = czStep(s, faces, i); acts.push(a); s = czApply(s, faces, a); states.push(s);
+    // a tapped tile was seen: a face-down tile that goes straight to its twin flips open as it goes
+    a.slice(1).forEach(k => seen.add(k));
+    czLook(s, tiles, nb, seen);
+  }
   return { states, acts, seen, seenAt };
 }
 // keep what this try showed, for a next try of the same board
