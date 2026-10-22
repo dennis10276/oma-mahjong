@@ -25,7 +25,7 @@ const ROOT = path.resolve(__dirname, '..', '..', '..');
 const A = f => path.join(ROOT, 'analysis', f);
 const BASE = A('levels-before-variety.js'), PLAN = A('variety-plan.json'), CANDS_F = A('variety2-cands.json'), OUT = A('variety2.json');
 const NAMES = ['Dennisisdebeste', 'Mrs. Doubtfire'];
-const CANDS = 5, SCREEN = 120, SEARCH = 300, FINAL = { runs: 1200, seed: 55001 }, NEAR = 2, TUNE_STEPS = 12;
+const CANDS = 5, SCREEN = 120, SEARCH = 300, FINAL = { runs: 1200, seed: 55001 }, NEAR = 2, TUNE_STEPS = 16;
 const TOL = { first: 0.05, two: 0.06, four: 0.05, ease: 0.03 };
 const NOVEL = { pos: 0.6, foot: 0.65 };
 const readJ = (f, d) => fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : d;
@@ -200,10 +200,23 @@ function cmdAssign(from) {
   const optionsOf = l => all.filter(o => Math.abs(o.made - l.lv) <= NEAR && (o.made % 10 === 0) === l.big).map(o => ({ o, d: distTo(o.c.m, l.target), ok: within(o.c.m, l.target, false) }));
   // hardest first: the levels with the fewest close candidates choose first
   const order = levels.map(l => ({ l, opts: optionsOf(l) })).sort((a, b) => a.opts.filter(x => x.ok).length - b.opts.filter(x => x.ok).length || a.l.lv - b.l.lv);
+  // among the new boards: at most 65% of the same tile spots (the outline of two compact piles is often
+  // much the same, so it does not count here), no shape twice within 5 levels; only if that leaves
+  // nothing, up to 70% of the same spots
+  const PAIR = { pos: 0.65, foot: 1 }, LOOSE = { pos: 0.7, foot: 1 };
+  const clash = (l, x, lim) => Object.entries(chosen).some(([lv2, c]) => c && ((Math.abs(lv2 - l.lv) <= 5 && c.shape === x.o.c.shape) || (() => { const a = alike(c.s, x.o.s); return a.pos > lim.pos || a.foot > lim.foot; })()));
   const used = new Set(), chosen = {};
   for (const { l, opts } of order) {
-    const pick = opts.filter(x => !used.has(x.o.id) && !Object.values(chosen).some(c => c && tooAlike(c.s, x.o.s))).sort((a, b) => a.d - b.d)[0];
-    if (!pick) { chosen[l.lv] = null; continue; }
+    const free = opts.filter(x => !used.has(x.o.id)).sort((a, b) => a.d - b.d);
+    const pick = free.find(x => !clash(l, x, PAIR)) || free.find(x => !clash(l, x, LOOSE));
+    if (!pick) {
+      // none left near by: the closest of its own candidates not used yet (also one only looked at
+      // quickly), to be tuned
+      const own = (C.levels[l.lv] || []).map((c, k) => ({ id: l.lv + ':' + k, c, m: c.m || c.quick })).filter(x => !used.has(x.id)).sort((a, b) => distTo(a.m, l.target) - distTo(b.m, l.target))[0];
+      if (!own) { chosen[l.lv] = null; continue; }
+      used.add(own.id); chosen[l.lv] = { id: own.id, made: l.lv, shape: own.c.shape, board: own.c.board, m: own.m, dist: +distTo(own.m, l.target).toFixed(3), ok: false, s: sig(own.c.board.tiles) };
+      continue;
+    }
     used.add(pick.o.id); chosen[l.lv] = { id: pick.o.id, made: pick.o.made, shape: pick.o.c.shape, board: pick.o.c.board, m: pick.o.c.m, dist: +pick.d.toFixed(3), ok: pick.ok, s: pick.o.s };
   }
   const out = { made: new Date().toISOString(), from, tol: TOL, novel: NOVEL, levels: {} };
