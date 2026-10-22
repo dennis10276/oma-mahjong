@@ -93,7 +93,8 @@ players within first try ±0.08, within 2 ±0.10, within 4 ±0.08, ease ±0.05 (
 puts neighbouring levels 0.05 ease apart; ±0.05 first try was below the noise of the measurements
 and made the work slow), and per 10 levels the average first try and ease of each player not easier than before
 (Dennis, 2026-10-22: "It shouldn't be easier really"; 0.005 allowed for measurement noise) and at
-most 0.02 harder. When choosing and tuning, a board that is easier than its target counts double. `tests/t_variety.js` checks both.
+most 0.02 harder (for Dennisisdebeste any amount harder: "If a board fits but it's too hard for
+Dennis on the curve just let it fit", 2026-10-22; his harder side counts half when choosing). When choosing and tuning, a board that is easier than its target counts double. `tests/t_variety.js` checks both.
 
 ## The first method (`variety.js`, slow; kept for reference)
 

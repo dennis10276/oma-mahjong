@@ -61,7 +61,9 @@ module.exports = [{
       const avg = f => rs.reduce((s, r) => s + f(r), 0) / rs.length;
       // not easier than before (only measurement noise), at most a little harder
       const d = [avg(r => r.final[n].first - r.target[n].first), avg(r => ease(r.final[n]) - ease(r.target[n]))];
-      t.ok(d.every(x => x <= R.curve.easier + 1e-9 && x >= -R.curve.harder - 1e-9), `levels ${b}0-${b}9 ${n}: the curve as before, not easier`, d.map(x => x.toFixed(3)));
+      // (Dennisisdebeste may be harder: R.curve.harder[n] null)
+      const hard = R.curve.harder[n];
+      t.ok(d.every(x => x <= R.curve.easier + 1e-9 && (hard === null || x >= -hard - 1e-9)), `levels ${b}0-${b}9 ${n}: the curve as before, not easier`, d.map(x => x.toFixed(3)));
     }
     const first = Math.min(...changed);
     t.ok(Hard.designVersion(first) !== Hard.designVersion(first - 1) && Hard.designVersion(91) !== Hard.designVersion(92), 'saved games: only remade levels start fresh');
