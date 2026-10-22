@@ -104,9 +104,7 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
           {
             depth: calib.parameters.depth,
             trayBuffer: calib.parameters.trayBuffer,
-            clockPatience: calib.parameters.clockPatience,
-            memoryDecay: calib.parameters.memoryDecay,
-            retryLearning: calib.parameters.retryLearning
+            clockPatience: calib.parameters.clockPatience
           }
         );
 
@@ -202,8 +200,6 @@ function evaluateActionPolicyFidelity(samplePerPlayer = 30) {
           depth: calib.parameters.depth,
           trayBuffer: calib.parameters.trayBuffer,
           clockPatience: calib.parameters.clockPatience,
-          memoryDecay: calib.parameters.memoryDecay,
-          retryLearning: calib.parameters.retryLearning,
           pairProgress: true
         });
 
