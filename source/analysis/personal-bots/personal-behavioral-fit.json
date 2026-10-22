@@ -1,5 +1,5 @@
 {
-  "calibratedAt": "2026-10-22T22:13:36.961Z",
+  "calibratedAt": "2026-10-22T23:06:12.116Z",
   "cutoffTime": null,
   "halfLife": 20,
   "players": {
@@ -21,7 +21,7 @@
       },
       "parameters": {
         "depth": 16,
-        "trayBuffer": 1,
+        "trayBuffer": 2,
         "clockPatience": 0.77,
         "memoryDecay": 0.0146,
         "retryLearning": 0.1
@@ -45,7 +45,7 @@
       },
       "parameters": {
         "depth": 16,
-        "trayBuffer": 1,
+        "trayBuffer": 2,
         "clockPatience": 0.79,
         "memoryDecay": 0.0246,
         "retryLearning": 0.1
@@ -69,7 +69,7 @@
       },
       "parameters": {
         "depth": 12,
-        "trayBuffer": 1,
+        "trayBuffer": 2,
         "clockPatience": 0.75,
         "memoryDecay": 0.0081,
         "retryLearning": 0.12
@@ -93,7 +93,7 @@
       },
       "parameters": {
         "depth": 16,
-        "trayBuffer": 1,
+        "trayBuffer": 2,
         "clockPatience": 0.75,
         "memoryDecay": 0.0163,
         "retryLearning": 0.1
