@@ -13,6 +13,11 @@ function test() {
   const route = goalRoutes(game, state, 0);
   assert.deepEqual([...route.frontier].sort(), [0, 2, 5], 'An equally short side with a lock is worse than a side that also thaws the cover');
   assert.equal(route.cost, 3);
+  const { recoveryDepth } = require('./public_goal_frontier.js');
+  const carried = { ...state, tray: [7], pictures: [7, null, null, null, null, null] };
+  assert.equal(recoveryDepth(game, carried).knownCost, 5);
+  assert.equal(recoveryDepth(game, carried, true).knownCost, 2, 'Tray recovery should also compare the cheaper unlocked side and reuse a necessary thaw removal');
+  assert.throws(() => recoveryDepth(game, carried, 'yes'));
   assert(route.alternatives.some(frontier => frontier.has(1) && frontier.has(3) && frontier.has(4)));
   assert.equal(goalRoutes(game, { ...state, alive: [0, 1, 1, 1, 1, 1] }, 0).cost, 0);
   const relieved = goalRoutes(game, { ...state, relieved: true }, 0);
@@ -32,6 +37,7 @@ function test() {
   assert.equal(planned.index, 2);
   assert(planned.safeClockExit, 'The chosen cheap side must still have a constructive physical clock-exit witness');
   assert.throws(() => search(clocked, position, [{ index: 2 }], { alternativeGoalRoutes: 'yes' }));
+  assert.throws(() => search(clocked, position, [{ index: 2 }], { alternativeRecoveryRoutes: 'yes' }));
   console.log('PASS alternative public goal routes compare mechanical side costs, choose only needed observed thaw neighbors, include branching blockers and never read private pictures');
 }
 

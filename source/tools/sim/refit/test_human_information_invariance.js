@@ -9,7 +9,7 @@ function test() {
   for (const tile of tiles) Object.defineProperty(tile, 'face', { get() { throw Error('Geometry accessed private picture'); } });
   const clock = { i: 0, n: 8 }, visible = [2, 3, 4, 5];
   const configurations = [{}, { goalRecovery: true, goalRecoveryMin: 1, obstacleFrontier: true,
-    alternativeGoalRoutes: true, safeInformationEscape: true, inspectBeforeCommit: true,
+    alternativeGoalRoutes: true, alternativeRecoveryRoutes: true, safeInformationEscape: true, inspectBeforeCommit: true,
     inspectionTrayLimit: 3, exclusiveRoles: 'clock', cachePublicAnalysis: true,
     preservePairFlexibility: true, knownPairMacros: true, patientSingleCarry: true }];
   let canonical = null, controls = 0;

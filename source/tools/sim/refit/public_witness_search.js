@@ -140,6 +140,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert(typeof obstacleFrontier === 'boolean' && typeof goalRecovery === 'boolean');
   const alternativeGoalRoutes = settings.alternativeGoalRoutes ?? false;
   assert.equal(typeof alternativeGoalRoutes, 'boolean');
+  const alternativeRecoveryRoutes = settings.alternativeRecoveryRoutes ?? false;
+  assert.equal(typeof alternativeRecoveryRoutes, 'boolean');
   const goalRecoveryMin = settings.goalRecoveryMin ?? 0;
   const balancedTrayRecovery = settings.balancedTrayRecovery ?? false;
   assert.equal(typeof balancedTrayRecovery, 'boolean');
@@ -173,7 +175,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       metrics = { room: roomOf(game, position), left: position.alive.reduce((sum, value) => sum + value, 0),
         recovery: recoveryOf(game, position),
         pairDebt: !clocked && pairFlexibility ? pairFlexibility(position) : 0,
-        depth: !clocked && goalRecoveryActive && position.tray.length >= goalRecoveryMin ? recoveryDepth(game, position) : { unknownWaiting: 0, knownCost: 0 },
+        depth: !clocked && goalRecoveryActive && position.tray.length >= goalRecoveryMin
+          ? recoveryDepth(game, position, alternativeRecoveryRoutes) : { unknownWaiting: 0, knownCost: 0 },
         clockDistance: clocked && position.alive[game.clock.i]
           ? alternativeGoalRoutes ? goalRoutes(game, position, game.clock.i).cost : clockDistance(game, position) : 0 };
       if (cachePublicAnalysis) metricsCache.set(metricsKey, metrics);
@@ -363,6 +366,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(cachePublicAnalysis ? { analysisCache: { metricsHits, proofHits, boundedProofHits, metricsEntries: metricsCache.size, proofEntries: proofCache.size } } : {}),
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
+        ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),
         goalRecoveryMin, recoveryRankWidths: [...recoveryRankWidths].sort() } } : {}),
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
         + 'are never sampled from the real board. Clock distance is an ordering heuristic, not a proven bound. '

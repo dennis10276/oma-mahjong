@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const { goalRoutes } = require('./public_goal_routes.js');
 
 function frontierFor(game, state, target) {
   assert(Number.isInteger(target) && target >= 0 && target < game.tiles.length);
@@ -29,13 +30,15 @@ function frontierFor(game, state, target) {
   return frontier;
 }
 
-function recoveryDepth(game, state) {
+function recoveryDepth(game, state, alternativeRoutes = false) {
+  assert.equal(typeof alternativeRoutes, 'boolean');
   let knownCost = 0, unknownWaiting = 0;
   const targets = [];
   for (const picture of state.tray) {
     const mates = state.pictures.flatMap((candidate, index) => state.alive[index] && candidate === picture ? [index] : []);
     if (!mates.length) { unknownWaiting++; continue; }
-    const ranked = mates.map(index => ({ index, cost: frontierFor(game, state, index).size - 1 }))
+    const ranked = mates.map(index => ({ index, cost: (alternativeRoutes
+      ? goalRoutes(game, state, index).cost : frontierFor(game, state, index).size) - 1 }))
       .sort((left, right) => left.cost - right.cost || left.index - right.index);
     knownCost += ranked[0].cost; targets.push({ picture, ...ranked[0] });
   }
