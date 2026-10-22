@@ -7,7 +7,7 @@ function keyOf(state) {
     + '|' + state.openPeek + '|' + state.moves + '|' + +state.relieved + '|' + (state.arriving || []).join(',');
 }
 
-function analyze(game, state, actions, nodeLimit = 128) {
+function analyze(game, state, actions, nodeLimit = 128, deadline = Infinity) {
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
   assert(Array.isArray(actions) && actions.length > 0);
@@ -15,9 +15,10 @@ function analyze(game, state, actions, nodeLimit = 128) {
   assert([...roots].every(index => allowed.includes(index)));
   const queue = [{ state, path: [] }], seen = new Set(allowed.every(index => roots.has(index)) ? [keyOf(state)] : []); let lossPath = null, nodes = 0;
   for (let cursor = 0; cursor < queue.length; cursor++) {
-    if (nodes >= nodeLimit) return { knownDead: false, reason: 'bounded', nodes, lossPath: null };
+    if (nodes >= nodeLimit || Date.now() >= deadline) return { knownDead: false, reason: 'bounded', nodes, lossPath: null };
     const node = queue[cursor]; nodes++;
     for (const index of physical.legal(game, node.state).free.filter(index => node.path.length || roots.has(index))) {
+      if (Date.now() >= deadline) return { knownDead: false, reason: 'bounded', nodes, lossPath: null };
       const moved = physical.advance(game, node.state, index), path = node.path.concat(index);
       if (moved.uncertain) return { knownDead: false, reason: moved.reason === 'unseenPicture' ? 'reachableInformation' : 'unsupportedTransition', nodes, lossPath: null };
       if (moved.lost) { if (!lossPath) lossPath = path; continue; }
@@ -33,17 +34,18 @@ function analyze(game, state, actions, nodeLimit = 128) {
       + 'from a simulation timeout. lossPath is a real physical tap sequence, never a free reset.' };
 }
 
-function analyzeContinuation(game, state, actions, nodeLimit = 128) {
+function analyzeContinuation(game, state, actions, nodeLimit = 128, deadline = Infinity) {
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
   const allowed = physical.legal(game, state).free, roots = new Set(actions.map(action => action.index));
   assert(actions.length && roots.size === actions.length && [...roots].every(index => allowed.includes(index)));
   const queue = [{ state, path: [] }], seen = new Set(allowed.every(index => roots.has(index)) ? [keyOf(state)] : []); let lossPath = null, transitions = 0;
   for (let cursor = 0; cursor < queue.length; cursor++) {
-    if (cursor >= nodeLimit) return { knownDead: false, reason: 'bounded', nodes: cursor, transitions, path: null };
+    if (cursor >= nodeLimit || Date.now() >= deadline) return { knownDead: false, reason: 'bounded', nodes: cursor, transitions, path: null };
     const node = queue[cursor];
     if (!node.state.alive.some(Boolean) && !node.state.tray.length) return { knownDead: false, reason: 'knownWin', nodes: cursor + 1, transitions, path: node.path };
     for (const index of physical.legal(game, node.state).free.filter(index => node.path.length || roots.has(index))) {
+      if (Date.now() >= deadline) return { knownDead: false, reason: 'bounded', nodes: cursor + 1, transitions, path: null };
       const moved = physical.advance(game, node.state, index), path = node.path.concat(index); transitions++;
       if (moved.uncertain) return { knownDead: false, reason: moved.reason === 'unseenPicture' ? 'reachableInformation' : 'unsupportedTransition',
         nodes: cursor + 1, transitions, path };

@@ -40,6 +40,7 @@ function guardedSearch(search, options = {}) {
       || state.pictures.every((picture, index) => !state.alive[index] || picture !== null);
     const immediatelyLoses = progressEscape && physical.advance(game, state, primary.index).lost;
     for (const action of excluded) {
+      if (Date.now() >= (settings.deadline ?? Infinity)) { allExcludedDead = false; break; }
       if (!canProveWitness && !progressEscape && !informationEscapeEligible) { allExcludedDead = false; break; }
       if (nodes >= limit) { allExcludedDead = false; break; }
       const alternative = search(game, state, [action], { ...settings, nodes: limit - nodes });

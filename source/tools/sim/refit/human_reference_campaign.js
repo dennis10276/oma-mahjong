@@ -16,8 +16,9 @@ function createHumanController(tiles, options = {}) {
   geometry.nb = Layouts.neighbors(geometry.tiles);
   for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(geometry, field, { get() { throw Error('Policy accessed private ' + field); } });
   const pictures = tiles.map(() => null), down = tiles.map(() => null), initialRoles = tiles.map(() => null);
-  let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null;
-  const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, ...options };
+  let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
+  const frontierCache = new Map();
+  const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   const resetPlanner = () => { planner = reference(settings); };
   return {
     beginAttempt() {
@@ -26,6 +27,7 @@ function createHumanController(tiles, options = {}) {
       resetPlanner();
     },
     observe(state, observed) {
+      frontierCache.clear();
       assert(attempt > 0);
       assert(!current || state.physicalTaps > current.physicalTaps);
       observed.pictures.forEach((picture, index) => {
@@ -56,29 +58,42 @@ function createHumanController(tiles, options = {}) {
         locks: new Set(roles.flatMap((role, index) => role === 'lock' ? [index] : [])),
         keys: roles.flatMap((role, index) => role === 'key' ? [index] : []) };
       geometry.publicFrontier = position => {
+        const cacheKey = +!!position.relieved + '|' + position.alive.join('');
+        if (frontierCache.has(cacheKey)) return frontierCache.get(cacheKey);
         const queried = frontier.query(position.alive);
         const sameBoard = position.alive.join('') === blockedAlive;
         const free = position.relieved ? position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : [])
           : [...queried.free, ...queried.uncertain];
-        return { free: free.filter(index => !sameBoard || !blocked.has(index)),
+        const result = { free: free.filter(index => !sameBoard || !blocked.has(index)),
           uncertain: position.relieved ? [] : queried.uncertain.filter(index => !sameBoard || !blocked.has(index)) };
+        frontierCache.set(cacheKey, result); return result;
       };
     },
     decide() {
       const actions = geometry.publicFrontier(current).free.map(index => ({ index }));
       if (!actions.length) return null;
+      const discoveries = options.inspectBeforeCommit && !(clock && current.alive[clock.i])
+        ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
+      manualChoice = discoveries.length > 0;
+      if (manualChoice) {
+        const index = discoveries[0].index;
+        resetPlanner();
+        return { plan: { index, path: [index], goal: 'zeroMoveDiscovery', knownWin: false, knownDead: false,
+          knownProgress: 0, information: true, boundary: true, nodes: 0 }, predicted: advance(geometry, current, index) };
+      }
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report(), predicted = advance(geometry, current, plan.index);
       return { plan: structuredClone(plan), predicted };
     },
     acknowledge(index, accepted) {
-      if (accepted) planner.acknowledgeTile(index);
+      if (accepted) { if (!manualChoice) planner.acknowledgeTile(index); }
       else {
         assert(geometry.publicFrontier(current).uncertain.includes(index), 'A guaranteed public tap was rejected by production');
-        blocked.add(index); resetPlanner();
+        blocked.add(index); frontierCache.clear(); resetPlanner();
       }
     },
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
+    state() { return structuredClone(current); },
   };
 }
 
@@ -94,9 +109,11 @@ function visibleRole(game, state, index) {
 }
 
 function verifyAttempt(encoded, actions, settings, audit) {
+  if (!actions.length) { assert.equal(audit.physicalLog.length, 0); return 0; }
+  const replaySettings = audit.result ? settings : { ...settings, choiceLimit: actions.length };
   const replay = { ...decodeGame(encoded), physicalLog: [] }, trace = [];
   let available, cursor = 0;
-  const result = Hard.play(replay, { ...parameters(encoded.tiles.length, settings),
+  const result = Hard.play(replay, { ...parameters(encoded.tiles.length, replaySettings),
     physicalTrayPlanning(game, state, candidates) { available = candidates; return { features: candidates.map(() => []), nodes: 0, boundaries: 0 }; },
     physicalChoice() {
       const requested = actions[cursor++], selected = available.findIndex(action => action.index === requested);
@@ -104,12 +121,14 @@ function verifyAttempt(encoded, actions, settings, audit) {
         requested: actions[cursor - 1], available: available.map(action => action.index), total: actions.length })); return selected;
     } }, settings.seed, trace);
   assert.equal(cursor, actions.length);
-  assert.deepEqual(result, audit.result); assert.deepEqual(replay.physicalLog, audit.physicalLog); assert.deepEqual(trace, audit.trace);
+  if (audit.result) assert.deepEqual(result, audit.result);
+  else assert.equal(result.why, 'contextChoiceLimit');
+  assert.deepEqual(replay.physicalLog, audit.physicalLog); assert.deepEqual(trace, audit.trace);
   return actions.length;
 }
 
 function playHumanCampaign(input, options = {}) {
-  assert(Object.keys(options).every(key => ['maximumAttempts', 'choiceLimit', 'planning'].includes(key)));
+  assert(Object.keys(options).every(key => ['maximumAttempts', 'choiceLimit', 'planning', 'captureDecisions'].includes(key)));
   const settings = { seed: 20261111, choiceLimit: options.choiceLimit ?? 512, tapMs: 1000 };
   const maximumAttempts = options.maximumAttempts ?? 3;
   assert(Number.isInteger(maximumAttempts) && maximumAttempts > 0);
@@ -118,7 +137,7 @@ function playHumanCampaign(input, options = {}) {
   let slowestMs = 0, controls = 0, verifiedTaps = 0, rejected = 0, decision = null;
   for (let attempt = 1; attempt <= maximumAttempts; attempt++) {
     controller.beginAttempt();
-    const session = factory(game, settings), actions = [];
+    const session = factory(game, settings), actions = [], decisions = [];
     let status = null, previousTap = -1, lastPlan = null;
     for (;;) {
       const actual = session.view(), state = actual.state;
@@ -134,26 +153,30 @@ function playHumanCampaign(input, options = {}) {
       if (elapsed > slowestMs) { slowestMs = elapsed; decision = { attempt, physicalTaps: state.physicalTaps }; }
       if (!selected) { status = 'unresolvedPublicFrontier'; break; }
       const index = selected.plan.index, accepted = actual.legalTiles.includes(index);
+      if (options.captureDecisions) decisions.push({ state: controller.state(), index, accepted,
+        plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
+          boundary: selected.plan.boundary, knownDead: selected.plan.knownDead } });
       controller.acknowledge(index, accepted);
       lastPlan = selected.plan;
       if (!accepted) { rejected++; continue; }
       actions.push(index);
       const after = session.tap(index), predicted = selected.predicted;
       if (!predicted.uncertain) {
-        for (const field of ['alive', 'tray', 'moves', 'openPeek']) assert.deepEqual(after.state[field], predicted.state[field]);
+        for (const field of ['alive', 'tray', 'moves', 'openPeek']) assert.deepEqual(after.state[field], predicted.state[field],
+          JSON.stringify({ field, index, publicState: controller.state(), predicted: predicted.state, actual: after.state }));
         controls++;
       }
     }
     const terminal = session.view(), audit = session.audit();
+    verifiedTaps += verifyAttempt(encoded, actions, settings, audit);
     if (status === null) {
-      verifiedTaps += verifyAttempt(encoded, actions, settings, audit);
       status = terminal.computationCensored ? 'unresolvedBudget' : terminal.win ? 'cleared'
         : ['tray', 'clock', 'stuck'].includes(terminal.why) ? 'physicalLoss' : 'unresolved';
     }
     attempts.push({ attempt, status, why: terminal.why ?? status, taps: actions.length,
       left: terminal.state.alive.reduce((sum, alive) => sum + alive, 0), tray: terminal.state.tray,
       last: { alive: terminal.state.alive, openPeek: terminal.state.openPeek, moves: terminal.state.moves,
-        pictures: controller.known().pictures, plan: lastPlan }, actions });
+        pictures: controller.known().pictures, plan: lastPlan }, actions, ...(options.captureDecisions ? { decisions } : {}) });
     if (status !== 'physicalLoss') break;
   }
   factory.verifySource();

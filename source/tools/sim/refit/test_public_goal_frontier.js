@@ -29,10 +29,10 @@ const flatState = { alive: [1, 1, 1, 1], down: [0, 0, 0, 0], pictures: [1, 1, 2,
 const rankControl = search(flat, flatState, [0, 1, 2, 3].map(index => ({ index })),
   { ...REFERENCE_PARAMETERS, taps: 2, nodes: 32, beam: 16, finishKnown: false, pruneDead: false, goalRecovery: true });
 assert.deepEqual(rankControl.goalAudit.recoveryRankWidths, [10], 'Empty and occupied trays must use identical ranking axes');
-const inactive = search(flat, flatState, [0, 1, 2, 3].map(index => ({ index })),
+const prospective = search(flat, flatState, [0, 1, 2, 3].map(index => ({ index })),
   { ...REFERENCE_PARAMETERS, taps: 2, nodes: 32, beam: 16, finishKnown: false, pruneDead: false, goalRecovery: true, goalRecoveryMin: 2 });
-assert.equal(inactive.goalAudit.goalRecoveryActive, false);
-assert.deepEqual(inactive.goalAudit.recoveryRankWidths, []);
+assert.equal(prospective.goalAudit.goalRecoveryActive, true, 'An empty root tray must not disable safety for occupied hypothetical trays');
+assert.deepEqual(prospective.goalAudit.recoveryRankWidths, [10], 'Below-threshold candidates retain neutral values on the same ranking axes');
 assert.throws(() => search(flat, flatState, [{ index: 0 }], { ...REFERENCE_PARAMETERS, goalRecoveryMin: 4 }));
 assert.throws(() => search(flat, flatState, [{ index: 0 }], { ...REFERENCE_PARAMETERS, goalRecovery: 'yes' }));
 console.log('PASS public goal frontiers include buried key and thaw dependencies, update after removals/relief, terminate on cycles and never inspect concealed identities');

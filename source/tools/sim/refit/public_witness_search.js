@@ -110,6 +110,7 @@ function recoveryOf(game, state) {
 
 function searchKnown(game, state, actions, options = PARAMETERS) {
   const settings = { ...PARAMETERS, ...options };
+  const deadline = settings.deadline ?? Infinity;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -125,7 +126,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert(typeof obstacleFrontier === 'boolean' && typeof goalRecovery === 'boolean');
   const goalRecoveryMin = settings.goalRecoveryMin ?? 0;
   assert(Number.isInteger(goalRecoveryMin) && goalRecoveryMin >= 0 && goalRecoveryMin <= 3);
-  const goalRecoveryActive = goalRecovery && state.tray.length >= goalRecoveryMin;
+  const goalRecoveryActive = goalRecovery;
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
   assert(Array.isArray(actions) && actions.length > 0);
   const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
@@ -180,7 +181,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       if (settings.trayRecovery) rank.splice(2, 0, position.tray.length >= settings.trayRecoveryMin ? -recovery.stranded : 0,
         position.tray.length >= settings.trayRecoveryMin ? recovery.immediate : 0);
       if (goalRecoveryActive) {
-        const depth = recoveryDepth(game, position);
+        const depth = position.tray.length >= goalRecoveryMin ? recoveryDepth(game, position) : { unknownWaiting: 0, knownCost: 0 };
         rank.splice(2, 0, -depth.unknownWaiting, -depth.knownCost);
         recoveryRankWidths.add(rank.length);
       }
@@ -197,7 +198,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   for (let depth = 0; depth < tapLimit && beam.length; depth++) {
     const next = [];
     for (const node of beam) {
-      if (nodes >= settings.nodes) { boundary = true; break; }
+      if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
       nodes++;
       const allowed = physical.legal(game, node.state), settled = { ...node.state, relieved: allowed.relieved };
       const indices = allowed.free.filter(index => node.path.length || roots.has(index) && !excludedRoots.includes(index));
@@ -221,6 +222,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       });
 
       for (const index of indices) {
+        if (Date.now() >= deadline) { boundary = true; break; }
         const moved = physical.advance(game, settled, index), path = node.path.concat(index);
         if (moved.uncertain) {
           if (!['unseenPicture', 'unobservedObstacleRole', 'unobservedOrientation'].includes(moved.reason)) { unsupported++; continue; }
@@ -234,7 +236,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         if (settings.pruneDead && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
           || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) {
           const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
-          const proof = nextActions.length ? (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(game, moved.state, nextActions, settings.proofNodes) : null;
+          const proof = nextActions.length ? (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(game, moved.state, nextActions, settings.proofNodes, deadline) : null;
           if (continuationPruning && proof) {
             continuationProof.calls++; continuationProof.nodes += proof.nodes; continuationProof.bounded += +(proof.reason === 'bounded');
             continuationProof.certified += +proof.knownDead;
@@ -255,7 +257,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     next.sort((left, right) => compare(right.rank, left.rank));
     if (next.length > settings.beam) boundary = true;
     beam = next.slice(0, settings.beam);
-    if (nodes >= settings.nodes) break;
+    if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
     if (!finishKnown && !clocked && best?.progress >= settings.progress && best.state.tray.length === 0 && best.goal !== 'boundedProgress') break;
     if (depth === tapLimit - 1 && beam.length) boundary = true;
   }
@@ -267,7 +269,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     let selected = best || { path: [fallback], goal: 'unresolvedFallback', won: false, safeClockExit: false,
       clockRoom: 0, progress: 0, information: state.pictures[fallback] === null };
     const exhausted = !selected.won && !beam.length && !boundary && !unknown && !unsupported;
-    const exclusionProof = exhausted && excludedRoots.length && nodes < settings.nodes
+    const exclusionProof = exhausted && excludedRoots.length && nodes < settings.nodes && Date.now() < deadline
       ? searchKnown(game, state, actions.filter(action => excludedRoots.includes(action.index)),
         { ...settings, nodes: Math.min(settings.proofNodes, settings.nodes - nodes) }) : null;
     nodes += exclusionProof?.nodes || 0;
@@ -313,10 +315,13 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
 
 const guarded = guardedSearch(searchKnown);
 function search(game, state, actions, options = PARAMETERS) {
+  const decisionMs = options.decisionMs;
+  assert(decisionMs === undefined || Number.isFinite(decisionMs) && decisionMs > 0 && decisionMs <= 2000);
+  const settings = decisionMs === undefined ? options : { ...options, deadline: Date.now() + decisionMs };
   const publicActions = actions.map(action => ({ index: action.index,
     inspect: !!state.down[action.index] && state.openPeek !== action.index
       && (state.pictures[action.index] === null || unproductiveReopen(state, action.index)) }));
-  return guarded(game, state, publicActions, options);
+  return guarded(game, state, publicActions, settings);
 }
 
 module.exports = { PARAMETERS, REFERENCE_PARAMETERS, keyOf, clockDistance, roomOf, recoveryOf, search };

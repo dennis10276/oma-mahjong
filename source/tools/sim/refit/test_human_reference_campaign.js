@@ -15,6 +15,9 @@ function test() {
   assert.equal(won.wonOn, 1); assert.equal(won.verifiedTaps, won.attempts[0].taps); assert(won.controls > 0);
   const hidden = gameOf([1, 1, 2, 2], [1, 1, 1, 1]);
   const inspected = playHumanCampaign(hidden); assert.equal(inspected.wonOn, 1); assert(inspected.verifiedTaps >= 4);
+  const discovery = playHumanCampaign(hidden, { planning: { inspectBeforeCommit: true } });
+  assert.equal(discovery.wonOn, 1); assert.equal(discovery.rejected, 0);
+  assert.equal(discovery.verifiedTaps, discovery.attempts[0].taps);
   const cap = playHumanCampaign(hidden, { choiceLimit: 1 });
   assert.equal(cap.wonOn, null); assert.equal(cap.attempts.length, 1); assert.equal(cap.status, 'unresolvedBudget');
   const tower = gameOf([1, 1, 2, 2]);
