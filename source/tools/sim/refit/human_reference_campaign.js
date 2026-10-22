@@ -14,6 +14,8 @@ const { aliveSignature } = require('./public_alive_signature.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
+  const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
+  assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
   geometry.nb = Layouts.neighbors(geometry.tiles);
   for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(geometry, field, { get() { throw Error('Policy accessed private ' + field); } });
@@ -76,13 +78,13 @@ function createHumanController(tiles, options = {}) {
     decide() {
       const actions = geometry.publicFrontier(current).free.map(index => ({ index }));
       if (!actions.length) return null;
-      const discoveries = options.inspectBeforeCommit && !(clock && current.alive[clock.i])
+      const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit && !(clock && current.alive[clock.i])
         ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
       manualChoice = discoveries.length > 0;
       if (manualChoice) {
         const index = discoveries[0].index;
         resetPlanner();
-        return { plan: { index, path: [index], goal: 'zeroMoveDiscovery', knownWin: false, knownDead: false,
+        return { plan: { index, path: [index], goal: 'closedTileDiscovery', knownWin: false, knownDead: false,
           knownProgress: 0, information: true, boundary: true, nodes: 0 }, predicted: advance(geometry, current, index) };
       }
       planner.physicalTrayPlanning(geometry, current, actions);

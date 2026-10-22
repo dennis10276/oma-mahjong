@@ -18,6 +18,8 @@ function test() {
   const discovery = playHumanCampaign(hidden, { planning: { inspectBeforeCommit: true } });
   assert.equal(discovery.wonOn, 1); assert.equal(discovery.rejected, 0);
   assert.equal(discovery.verifiedTaps, discovery.attempts[0].taps);
+  assert.equal(playHumanCampaign(hidden, { planning: { inspectBeforeCommit: true, inspectionTrayLimit: 1 } }).wonOn, 1);
+  assert.throws(() => createHumanController(simple.tiles, { inspectionTrayLimit: 4 }));
   const cap = playHumanCampaign(hidden, { choiceLimit: 1 });
   assert.equal(cap.wonOn, null); assert.equal(cap.attempts.length, 1); assert.equal(cap.status, 'unresolvedBudget');
   const tower = gameOf([1, 1, 2, 2]);

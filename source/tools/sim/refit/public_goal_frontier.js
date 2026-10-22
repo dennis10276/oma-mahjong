@@ -43,4 +43,9 @@ function recoveryDepth(game, state) {
     note: 'Public geometric/obstacle ordering heuristic only. Side choice and alternative thaw neighbors are approximate; cost is not a lower bound, route witness, death proof or hidden-picture inference.' };
 }
 
-module.exports = { frontierFor, recoveryDepth };
+function trayRecoveryBurden(depth, recovery, trayLength) {
+  const carried = Math.max(0, trayLength - recovery.immediate);
+  return { carried, burden: depth.knownCost + 2 * depth.unknownWaiting + 2 * Math.max(0, carried - 1) };
+}
+
+module.exports = { frontierFor, recoveryDepth, trayRecoveryBurden };

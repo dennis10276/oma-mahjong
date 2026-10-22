@@ -3,8 +3,9 @@ const assert = require('assert/strict');
 const physical = require('./known_tray_plan.js');
 const deadEnd = require('./public_dead_end.js');
 const { guardedSearch } = require('./public_witness_reopen_guard.js');
-const { frontierFor, recoveryDepth } = require('./public_goal_frontier.js');
+const { frontierFor, recoveryDepth, trayRecoveryBurden } = require('./public_goal_frontier.js');
 const { aliveSignature } = require('./public_alive_signature.js');
+const { createPairFlexibility } = require('./public_pair_flexibility.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -53,11 +54,13 @@ function coveredCount(game, state, root) {
 const REFERENCE_PARAMETERS = Object.freeze({ ...PARAMETERS, nodes: 4096, beam: 32,
   pairProgress: true, finishKnown: true, trayRecovery: true, trayRecoveryMin: 2, continuationPruning: true });
 
-function unproductiveReopen(state, index) {
+function unproductiveReopen(state, index, allowed) {
   const picture = state.pictures[index];
-  return !!state.down[index] && state.openPeek !== index && picture !== null
+  const reopening = !!state.down[index] && state.openPeek !== index && picture !== null
     && !state.tray.includes(picture)
     && !(state.openPeek >= 0 && state.pictures[state.openPeek] === picture);
+  if (!reopening || allowed.uncertain?.includes(index)) return false;
+  return !allowed.free.some(mate => mate !== index && !allowed.uncertain?.includes(mate) && state.pictures[mate] === picture);
 }
 
 function keyOf(game, state, knowledge = false) {
@@ -132,11 +135,16 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const obstacleFrontier = settings.obstacleFrontier ?? false, goalRecovery = settings.goalRecovery ?? false;
   assert(typeof obstacleFrontier === 'boolean' && typeof goalRecovery === 'boolean');
   const goalRecoveryMin = settings.goalRecoveryMin ?? 0;
+  const balancedTrayRecovery = settings.balancedTrayRecovery ?? false;
+  assert.equal(typeof balancedTrayRecovery, 'boolean');
+  const preservePairFlexibility = settings.preservePairFlexibility ?? false;
+  assert.equal(typeof preservePairFlexibility, 'boolean');
+  const pairFlexibility = preservePairFlexibility ? createPairFlexibility(game, state.pictures) : null;
   assert(Number.isInteger(goalRecoveryMin) && goalRecoveryMin >= 0 && goalRecoveryMin <= 3);
   const goalRecoveryActive = goalRecovery;
   physical.featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
   assert(Array.isArray(actions) && actions.length > 0);
-  const roots = new Set(actions.map(action => action.index)), initialFree = physical.legal(game, state).free;
+  const roots = new Set(actions.map(action => action.index)), initialAllowed = physical.legal(game, state), initialFree = initialAllowed.free;
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
   const cone = clocked ? obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
@@ -157,6 +165,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     else {
       metrics = { room: roomOf(game, position), left: position.alive.reduce((sum, value) => sum + value, 0),
         recovery: recoveryOf(game, position),
+        pairDebt: !clocked && pairFlexibility ? pairFlexibility(position) : 0,
         depth: !clocked && goalRecoveryActive && position.tray.length >= goalRecoveryMin ? recoveryDepth(game, position) : { unknownWaiting: 0, knownCost: 0 },
         clockDistance: clocked && position.alive[game.clock.i] ? clockDistance(game, position) : 0 };
       if (cachePublicAnalysis) metricsCache.set(metricsKey, metrics);
@@ -184,7 +193,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     if (won) {
       rank = [tier, room.room, -path.length];
     } else if (exit) {
-      rank = [tier, inCone ? 1 : 0, -room.pressure, room.room, progress, -path.length, -recovery.stranded, recovery.immediate];
+      rank = [tier, inCone ? 1 : 0, -room.pressure, room.room, -path.length, progress, -recovery.stranded, recovery.immediate];
     } else if (clocked) {
       rank = [tier, inCone ? 1 : 0, -room.pressure, -metrics.clockDistance, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
@@ -198,9 +207,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         position.tray.length >= settings.trayRecoveryMin ? recovery.immediate : 0);
       if (goalRecoveryActive) {
         const depth = metrics.depth;
-        rank.splice(2, 0, -depth.unknownWaiting, -depth.knownCost);
+        const burden = trayRecoveryBurden(depth, recovery, position.tray.length);
+        rank.splice(2, 0, ...(balancedTrayRecovery ? [-burden.burden, -burden.carried] : [-depth.unknownWaiting, -depth.knownCost]));
         recoveryRankWidths.add(rank.length);
       }
+      if (pairFlexibility) rank.splice(2 + (settings.trayRecovery ? 2 : 0) + (goalRecoveryActive ? 2 : 0), 0, -metrics.pairDebt);
     }
 
     const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information };
@@ -208,8 +219,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     return candidate;
   };
 
-  const hasOther = actions.some(action => !unproductiveReopen(state, action.index));
-  const excludedRoots = hasOther ? actions.filter(action => unproductiveReopen(state, action.index)).map(action => action.index) : [];
+  const hasOther = actions.some(action => !unproductiveReopen(state, action.index, initialAllowed));
+  const excludedRoots = hasOther ? actions.filter(action => unproductiveReopen(state, action.index, initialAllowed)).map(action => action.index) : [];
 
   for (let depth = 0; depth < tapLimit && beam.length; depth++) {
     const next = [];
@@ -287,7 +298,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   return finish();
 
   function finish() {
-    const validActions = actions.filter(action => !unproductiveReopen(state, action.index));
+    const validActions = actions.filter(action => !unproductiveReopen(state, action.index, initialAllowed));
     const fallback = (validActions.length ? validActions[0] : actions[0]).index;
     let selected = best || { path: [fallback], goal: 'unresolvedFallback', won: false, safeClockExit: false,
       clockRoom: 0, progress: 0, information: state.pictures[fallback] === null };
@@ -342,9 +353,10 @@ function search(game, state, actions, options = PARAMETERS) {
   const decisionMs = options.decisionMs;
   assert(decisionMs === undefined || Number.isFinite(decisionMs) && decisionMs > 0 && decisionMs <= 2000);
   const settings = decisionMs === undefined ? options : { ...options, deadline: Date.now() + decisionMs };
+  const allowed = physical.legal(game, state);
   const publicActions = actions.map(action => ({ index: action.index,
     inspect: !!state.down[action.index] && state.openPeek !== action.index
-      && (state.pictures[action.index] === null || unproductiveReopen(state, action.index)) }));
+      && (state.pictures[action.index] === null || unproductiveReopen(state, action.index, allowed)) }));
   return guarded(game, state, publicActions, settings);
 }
 
