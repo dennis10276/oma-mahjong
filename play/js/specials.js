@@ -396,13 +396,15 @@ function startLessonDemo() {
   paint(); fresh(false); run();
 }
 function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
+  // (from 1.60: a film of a real game in the player's own tiles, background and tray, js/coach.js;
+  // the explanation folds open under it)
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_' + kind)}</h2>
-    ${lessonDemoHTML(kind)}<p>${tx('nt_' + kind + '_text')}</p>
+    ${coachDemoHTML(false, kind)}<details class="cz-more"><summary>${tx('czMore')}</summary><p>${tx('nt_' + kind + '_text')}</p></details>
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp[kind] = true; save();
       if (after) after();
-    }, 'tile-help');
-  startLessonDemo();
+    }, 'tile-help coach-help');
+  coachPlay($('#modalBox .coach-demo'), coachTileClip(kind));
   const message = recordHelpMessage(kind, why);
   $('#ntGo').onclick = () => { message('ack'); closeModal(); };
 }

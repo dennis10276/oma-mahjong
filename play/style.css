@@ -348,6 +348,9 @@ body.nonum .cn { display: none; }
 .how-tray { display: grid; grid-template-columns: repeat(4, 52px); gap: 6px; justify-content: center; padding: 8px; margin: 6px auto 10px; width: max-content; border-radius: 16px; background: linear-gradient(#8a5a33, #6b4224); }
 .how-tray .hm { height: 66px; border-radius: 9px; background: linear-gradient(#fffef8, #f1e6cb); padding: 3px; }
 .how-tray .hm svg { width: 100%; height: 100%; }
+.how-tray .hm .emo { display: grid; place-items: center; height: 100%; font-size: 40px; line-height: 1; }
+body.sunny .how-tray, body.sunny .lesson-tray { background: linear-gradient(#f3b73a, #c98317); }
+body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: linear-gradient(#fffef4, #f9e39a); }
 .how-tray .hm.empty { background: rgba(0,0,0,.28); }
 .how-tray .hm.glow { outline: 4px solid #ffb300; outline-offset: 1px; }
 .backmini { background:
