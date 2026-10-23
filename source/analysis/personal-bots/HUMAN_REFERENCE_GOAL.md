@@ -51,18 +51,17 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current code, tests and active experiment
 
-Latest runtime:`f226d71`; baseline key recovery:`a5cb7db`;
+Latest runtime:`86afedf`; baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
-**51/51 offline tests pass** in approximately3s, including2112 concealed-world
+**51/51 offline tests pass** in approximately3s, including2496 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The newer runtime has NOT completed a fresh140-level run.
 
-Active serial diagnostic: compare carrier-aware role information against the
-same role-information profile without short-information ordering, first50,
-then147, attempt1. Tool session71376. Revalidate its actual handle/process.
-Fingerprint:`9d3b0d0e813cf54f737a8d618ace8254d0f9efca5485a5214ea19eb261009f94`.
-Carrier-aware screens have finished and their reports are retained.
-Hold runtime unchanged until BOTH comparison children finish. One CPU-heavy simulation at a time.
+Active job: `passiveInformation:'shortRoles'`, no short-information override,
+same8 controls. Tool session54216; revalidate its actual handle/process.
+Fingerprint:`e5c97c9a0d5d0beb06e08ee1befd7dc0923703a4a5ab0fb53add4f33b474588f`.
+Report pending:`HUMAN_REFERENCE_SHORT_HORIZON_ROLES_2026-10-23.md`.
+Hold runtime unchanged until it finishes. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
 Research baseline settings (not a released/default/frozen winner):
@@ -84,11 +83,13 @@ Research baseline settings (not a released/default/frozen winner):
 | Short information, without roles |6/8; same new successful-try counts |Also loses50/147, not a numerical cap |
 | Carrier-aware short information, roles |6/8;92try2,121try3,137try1 |Still loses50/147; slowest1511.7ms |
 | Carrier-aware short information, no roles |5/8;121fails again |Still loses50/147; slowest1507.8ms |
+| Immediate role clues |6/8;92 restored,121/137fail |Slowest1506.2ms, not promoted |
+| Three-action role payoff |RUNNING |Known-route depth remains unchanged |
 
 Corresponding dated reports:KEY_RECOVERY, ROUTE_CACHE, RECOVERY_ROLE_INFORMATION,
 RECOVERY_ALL_INFORMATION, ROLE_DEEP_PROOF, DEEP_PROOF,
 FRONTIER_ROLE_INFORMATION, SHORT_ROLE_INFORMATION, SHORT_INFORMATION,
-CARRIER_ROLE_INFORMATION and CARRIER_INFORMATION,
+CARRIER_ROLE_INFORMATION, CARRIER_INFORMATION and IMMEDIATE_ROLE_INFORMATION,
 all prefixed `HUMAN_REFERENCE_` and suffixed `_2026-10-23.md`.
 Each preserves its exact settings, source fingerprint, provenance and slowest move.
 
@@ -116,6 +117,24 @@ Carrier-aware mode adds the existing two-point unseen-mate carrier penalty
 to prefix length. This is a heuristic, NOT an optimal cost or safety proof.
 Successful-tap availability memory was considered but no current regression
 has been established as caused by its absence; do not claim it implemented.
+
+Regression comparisons:50 diverges on its FIRST decision with empty tray:
+short probes peek90; baseline takes the known28 pair91/93 first.147 has6
+identical actions, then short probes overwrite open80 with82, while baseline
+commits known10 tile80 then matches74. These first divergences guide diagnosis;
+they do not prove that one action alone makes the complete board unwinnable.
+Never encode these IDs in policy.
+
+Immediate-role scoring keeps first-action readable TARGET IDs through a known
+neutral recovery prefix. Its transposition identity includes that latent target
+set; raw physical/metric/proof cache keys remain unchanged. It still yields6/8.
+The current three-action payoff horizon is a global heuristic experiment,
+not a level cutoff, optimality theorem or reduced known-route search depth.
+ALL predicted new observations, even unrewarded ones, still count as unknown
+for death-certification guards.51 tests include a four-tap delayed reveal that
+must not become a known-world death claim merely because its reward is gated.
+After this control, broaden the promising short-probe policy to all42 challenge
+levels, even if50/147 remain regressions: do not confine optimization to this8.
 
 Public audit tool:
 `node source/tools/sim/refit/human_reference_information_probe.js LEVEL ATTEMPT PHYSICAL_TAPS PROFILE_JSON`.
