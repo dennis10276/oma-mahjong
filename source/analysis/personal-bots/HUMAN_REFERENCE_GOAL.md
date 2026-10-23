@@ -385,6 +385,25 @@ that picture in hypothetical ranking. The remaining diagnosis is whether the
 passive role payoff is mechanically useful versus already deducible, and how
 its longer prefix compares with direct uncertain-role inspection. Do not add
 tile55/72/60 or any level-specific preference to the runtime.
+The new opt-in public information audit walks only known transitions and
+reports future visibility indices, remembered values and public availability;
+it never reads the newly visible value. Diagnostic captures replay in original
+production and are not canonical timing benchmarks.50/50 tests pass.
+The actual92 audit finds four blocked role targets:17/23 become readable after
+five known taps and22/28 after nine. Thus the tempting claim that these clues
+were already mechanically free is false; no such penalty was added. The direct
+route instead reaches an unobserved-role boundary at60 after one known removal.
+
+Optional `passiveInformation:'frontierRoles'` rewards newly readable roles only
+at public action candidates (including unresolved-role candidates), leaving
+the actual observer and its memory unchanged. It passes6/8, unchanged source
+`58a34ba8dc2b9f577a2d7e6bad20c2e7d8988c34392221bacdf03e0a4ac536f3`,
+slowest1509.9ms:92 is restored but121 loses its role-information gain.137 still
+fails. No full-score improvement is claimed and this option is not promoted.
+An exact layered production fixture distinguishes a newly readable but still
+blocked role from a later action-frontier role, keeps its value unknown, and
+replays both removals.1728 clock/nonclock hidden-world controls and all50 tests
+pass. Next compare121's actual divergence rather than select modes by level.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
