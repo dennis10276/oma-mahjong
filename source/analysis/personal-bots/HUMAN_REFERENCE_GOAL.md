@@ -294,6 +294,21 @@ The initial14-case screen passes10/14, source unchanged, slowest1506.5ms:
 retains86 and111 simultaneously but does not yet repair85 or meet the goal.
 49/49 offline tests pass, with additional tray-carry and production-replay
 checks. No full-catalog gain or unseen validation is inferred from this subset.
+Preserving the planner's own selected discovery alone still passes10/14.
+A public profile comparison locates85's first divergence after11 identical
+decisions: the planner prefers unknown85, whereas the injected heuristic
+chooses unknown66. Later, inspecting another tile overwrites a useful known
+open-twin setup. The refined priority respects the first actual non-losing
+neutral/reducing tray checkpoint, and consumption of an already open known tile
+without adding carriers; it does not require the entire subsequent plan to
+have the same final tray. It stops before any unknown transition and makes no
+claim about the unseen suffix. Stale reported progress is not used.
+That unified checkpoint policy passes11/14, unchanged source
+`3d0cd9f5c87f777665a28ef201a31ffbcad6a3b0167b59816e0731a7c72fdd86`,
+slowest1505.8ms:85/86/111/123 all pass together, retaining50/92/150 and the
+original134/141/143/147 fixes.121/124/137 remain failures on this screen.
+All49 offline tests pass. A full140-level17–156 run is next, with runtime
+held unchanged; no full-count extrapolation, per-level switch or unseen claim.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
