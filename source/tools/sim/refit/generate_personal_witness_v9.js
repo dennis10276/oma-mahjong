@@ -112,7 +112,7 @@ function derivePointForecast(dist) {
     for (let a = 1; a <= 8; a++) {
       s += (dist[`try${a}`] || 0) * score(p, a);
     }
-    s += (dist.noClear || 0) * score(p, 8);
+    s += (dist.noClear || 0) * (p >= 8 ? 1 : 0);
     scores[p] = s;
     if (s > bestScore) bestScore = s;
   }

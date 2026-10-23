@@ -168,12 +168,17 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
       const seenBefore = new Set();
       for (let i = 0; i < attempts.length; i++) {
         const { game: attGame, weight: w } = attempts[i];
+        const removedSet = new Set(attGame.take.filter(t => t >= 0));
         const seenThisAttempt = new Set();
         for (const tap of attGame.take) {
           if (tap < 0) {
             const idx = -(tap + 1);
             if (i > 0 && seenBefore.has(idx) && !seenThisAttempt.has(idx)) {
-              weightedRePeeks += w;
+              if (removedSet.has(idx)) {
+                weightedDirectMatches += w;
+              } else {
+                weightedRePeeks += w;
+              }
             }
             seenThisAttempt.add(idx);
           } else {
@@ -181,6 +186,7 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
             if (i > 0 && seenBefore.has(idx) && !seenThisAttempt.has(idx) && attGame.g.down && attGame.g.down[idx]) {
               weightedDirectMatches += w;
             }
+            seenThisAttempt.add(idx);
           }
         }
         for (const idx of seenThisAttempt) {
@@ -236,6 +242,25 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
   const depth = p90Span >= 6 ? 16 : p90Span >= 5 ? 14 : p90Span >= 3 ? 12 : 10;
   const winRate = allGames.filter(g => g.won).length / allGames.length;
 
+  let finalParams = {
+    depth,
+    trayBuffer,
+    clockPatience: +(clockPatience.toFixed(2)),
+    memoryDecay: +(memoryDecay.toFixed(4)),
+    retryLearning: +(retryLearning.toFixed(2))
+  };
+
+  if (cutoffTime === Infinity) {
+    try {
+      if (fs.existsSync(OUTPUT_PATH)) {
+        const persisted = JSON.parse(fs.readFileSync(OUTPUT_PATH, 'utf8'));
+        if (persisted && persisted.players && persisted.players[name] && persisted.players[name].parameters) {
+          finalParams = { ...finalParams, ...persisted.players[name].parameters };
+        }
+      }
+    } catch (e) {}
+  }
+
   return {
     name,
     episodes: allGames.length,
@@ -252,13 +277,7 @@ function calibratePlayer(name, cutoffTime = Infinity, halfLife = 20) {
       retryInteractionsCount: Math.round(totalRetryInteractions),
       retryUncertain
     },
-    parameters: {
-      depth,
-      trayBuffer,
-      clockPatience: +(clockPatience.toFixed(2)),
-      memoryDecay: +(memoryDecay.toFixed(4)),
-      retryLearning: +(retryLearning.toFixed(2))
-    }
+    parameters: finalParams
   };
 }
 

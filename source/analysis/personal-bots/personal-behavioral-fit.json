@@ -1,5 +1,5 @@
 {
-  "calibratedAt": "2026-10-22T23:06:12.116Z",
+  "calibratedAt": "2026-10-23T01:31:19.563Z",
   "cutoffTime": null,
   "halfLife": 20,
   "players": {
@@ -14,17 +14,17 @@
         "clockConeRatio": 0.514,
         "reInspectedTileFraction": 0.605,
         "p90PairingSpan": 7,
-        "retryRecallRate": 0.1,
-        "retryCarryForwardRate": 0.1,
-        "retryInteractionsCount": 87,
+        "retryRecallRate": 0.95,
+        "retryCarryForwardRate": 0.95,
+        "retryInteractionsCount": 100,
         "retryUncertain": false
       },
       "parameters": {
         "depth": 16,
         "trayBuffer": 2,
         "clockPatience": 0.77,
-        "memoryDecay": 0.0146,
-        "retryLearning": 0.1
+        "memoryDecay": 0.005,
+        "retryLearning": 0.95
       }
     },
     "Mrs. Doubtfire": {
@@ -38,17 +38,17 @@
         "clockConeRatio": 0.524,
         "reInspectedTileFraction": 0.675,
         "p90PairingSpan": 6,
-        "retryRecallRate": 0.1,
-        "retryCarryForwardRate": 0.1,
-        "retryInteractionsCount": 180,
+        "retryRecallRate": 0.872,
+        "retryCarryForwardRate": 0.872,
+        "retryInteractionsCount": 192,
         "retryUncertain": false
       },
       "parameters": {
         "depth": 16,
         "trayBuffer": 2,
         "clockPatience": 0.79,
-        "memoryDecay": 0.0246,
-        "retryLearning": 0.1
+        "memoryDecay": 0.02,
+        "retryLearning": 0.85
       }
     },
     "PUK": {
@@ -62,17 +62,17 @@
         "clockConeRatio": 0.5,
         "reInspectedTileFraction": 0.379,
         "p90PairingSpan": 3,
-        "retryRecallRate": 0.121,
-        "retryCarryForwardRate": 0.121,
-        "retryInteractionsCount": 232,
+        "retryRecallRate": 0.899,
+        "retryCarryForwardRate": 0.899,
+        "retryInteractionsCount": 244,
         "retryUncertain": false
       },
       "parameters": {
         "depth": 12,
         "trayBuffer": 2,
         "clockPatience": 0.75,
-        "memoryDecay": 0.0081,
-        "retryLearning": 0.12
+        "memoryDecay": 0.008,
+        "retryLearning": 0.7
       }
     },
     "Gerda": {
@@ -86,17 +86,17 @@
         "clockConeRatio": 0.5,
         "reInspectedTileFraction": 0.593,
         "p90PairingSpan": 6,
-        "retryRecallRate": 0.1,
-        "retryCarryForwardRate": 0.1,
-        "retryInteractionsCount": 319,
+        "retryRecallRate": 0.824,
+        "retryCarryForwardRate": 0.824,
+        "retryInteractionsCount": 327,
         "retryUncertain": false
       },
       "parameters": {
-        "depth": 16,
+        "depth": 12,
         "trayBuffer": 2,
         "clockPatience": 0.75,
-        "memoryDecay": 0.0163,
-        "retryLearning": 0.1
+        "memoryDecay": 0.02,
+        "retryLearning": 0.45
       }
     }
   }

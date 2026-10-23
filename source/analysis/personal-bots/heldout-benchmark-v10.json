@@ -1,0 +1,1446 @@
+{
+  "evaluatedAt": "2026-10-23T02:12:15.490Z",
+  "model": "v10",
+  "elapsedSeconds": 797.3,
+  "campaignsPerLevel": 6,
+  "cohorts": {
+    "Mrs. Doubtfire": {
+      "completedLevels": 20,
+      "botCorrect": 6,
+      "baseCorrect": 9,
+      "botPercentage": 30,
+      "basePercentage": 45,
+      "margin": -3,
+      "beatsBaseline": false,
+      "rows": [
+        {
+          "level": 107,
+          "actualWinAt": 3,
+          "predictedAttempt": 3,
+          "botCorrect": true,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.16666666666666666,
+            "try1": 0.16666666666666666,
+            "try2": 0,
+            "try3": 0.5,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 108,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 109,
+          "actualWinAt": 2,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.3333333333333333,
+            "try1": 0,
+            "try2": 0.16666666666666666,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0.16666666666666666
+          }
+        },
+        {
+          "level": 110,
+          "actualWinAt": 2,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 111,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.5,
+            "try3": 0,
+            "try4": 0.3333333333333333,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0.16666666666666666,
+            "try8": 0
+          }
+        },
+        {
+          "level": 112,
+          "actualWinAt": 4,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.9999999999999999,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 113,
+          "actualWinAt": 1,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0.8333333333333333,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 114,
+          "actualWinAt": 4,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.5,
+            "try2": 0.16666666666666666,
+            "try3": 0.16666666666666666,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 115,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0.3333333333333333,
+            "try1": 0,
+            "try2": 0.3333333333333333,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0.16666666666666666,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 116,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.5,
+            "try3": 0.16666666666666666,
+            "try4": 0.16666666666666666,
+            "try5": 0.16666666666666666,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 117,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.6666666666666666,
+            "try2": 0.3333333333333333,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 118,
+          "actualWinAt": 2,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 119,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.6666666666666666,
+            "try2": 0.3333333333333333,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 120,
+          "actualWinAt": 4,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 121,
+          "actualWinAt": 2,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.16666666666666666,
+            "try1": 0.16666666666666666,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0.16666666666666666,
+            "try8": 0.16666666666666666
+          }
+        },
+        {
+          "level": 122,
+          "actualWinAt": 5,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 123,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.6666666666666666,
+            "try2": 0,
+            "try3": 0.3333333333333333,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 124,
+          "actualWinAt": 5,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.9999999999999999,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 125,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 126,
+          "actualWinAt": 6,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.8333333333333333,
+            "try2": 0.16666666666666666,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        }
+      ]
+    },
+    "Dennisisdebeste": {
+      "completedLevels": 19,
+      "botCorrect": 7,
+      "baseCorrect": 12,
+      "botPercentage": 36.8,
+      "basePercentage": 63.2,
+      "margin": -5,
+      "beatsBaseline": false,
+      "rows": [
+        {
+          "level": 138,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.16666666666666666,
+            "try2": 0.8333333333333333,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 139,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 140,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 141,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.8333333333333333,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 142,
+          "actualWinAt": 1,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0.16666666666666666,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0.3333333333333333,
+            "try8": 0.16666666666666666
+          }
+        },
+        {
+          "level": 143,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.5,
+            "try3": 0.16666666666666666,
+            "try4": 0.3333333333333333,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 144,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 145,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 146,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.9999999999999999,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 147,
+          "actualWinAt": 1,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0.9999999999999999,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 148,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 149,
+          "actualWinAt": 2,
+          "predictedAttempt": 5,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0.16666666666666666,
+            "try4": 0,
+            "try5": 0.3333333333333333,
+            "try6": 0.3333333333333333,
+            "try7": 0.16666666666666666,
+            "try8": 0
+          }
+        },
+        {
+          "level": 150,
+          "actualWinAt": 3,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.8333333333333333,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 151,
+          "actualWinAt": 2,
+          "predictedAttempt": 2,
+          "botCorrect": true,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.5,
+            "try3": 0.16666666666666666,
+            "try4": 0,
+            "try5": 0.3333333333333333,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 152,
+          "actualWinAt": 2,
+          "predictedAttempt": 2,
+          "botCorrect": true,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.16666666666666666,
+            "try2": 0.5,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0.16666666666666666,
+            "try8": 0
+          }
+        },
+        {
+          "level": 153,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 154,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 155,
+          "actualWinAt": 1,
+          "predictedAttempt": 4,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0.16666666666666666,
+            "try4": 0.6666666666666666,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 156,
+          "actualWinAt": 3,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.3333333333333333,
+            "try1": 0,
+            "try2": 0.3333333333333333,
+            "try3": 0.16666666666666666,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0
+          }
+        }
+      ]
+    },
+    "PUK": {
+      "completedLevels": 19,
+      "botCorrect": 8,
+      "baseCorrect": 12,
+      "botPercentage": 42.1,
+      "basePercentage": 63.2,
+      "margin": -4,
+      "beatsBaseline": false,
+      "rows": [
+        {
+          "level": 39,
+          "actualWinAt": 2,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 40,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.3333333333333333,
+            "try3": 0.3333333333333333,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0.16666666666666666
+          }
+        },
+        {
+          "level": 41,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 42,
+          "actualWinAt": 2,
+          "predictedAttempt": 3,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.3333333333333333,
+            "try2": 0.16666666666666666,
+            "try3": 0.3333333333333333,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 43,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 44,
+          "actualWinAt": 1,
+          "predictedAttempt": 3,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.16666666666666666,
+            "try2": 0.3333333333333333,
+            "try3": 0.16666666666666666,
+            "try4": 0.3333333333333333,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 45,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 46,
+          "actualWinAt": 4,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 47,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 48,
+          "actualWinAt": 1,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0.8333333333333333,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 49,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 50,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0.5,
+            "try3": 0.3333333333333333,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0.16666666666666666
+          }
+        },
+        {
+          "level": 51,
+          "actualWinAt": 1,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.16666666666666666,
+            "try2": 0.6666666666666666,
+            "try3": 0.16666666666666666,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 52,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 53,
+          "actualWinAt": 15,
+          "predictedAttempt": 8,
+          "botCorrect": true,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.16666666666666666,
+            "try1": 0.3333333333333333,
+            "try2": 0.16666666666666666,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0.16666666666666666,
+            "try8": 0.16666666666666666
+          }
+        },
+        {
+          "level": 54,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.5,
+            "try2": 0.5,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 55,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 56,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 57,
+          "actualWinAt": 4,
+          "predictedAttempt": 8,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.5,
+            "try1": 0.16666666666666666,
+            "try2": 0.3333333333333333,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        }
+      ]
+    },
+    "Gerda": {
+      "completedLevels": 19,
+      "botCorrect": 4,
+      "baseCorrect": 4,
+      "botPercentage": 21.1,
+      "basePercentage": 21.1,
+      "margin": 0,
+      "beatsBaseline": false,
+      "rows": [
+        {
+          "level": 90,
+          "actualWinAt": 6,
+          "predictedAttempt": 3,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.3333333333333333,
+            "try2": 0,
+            "try3": 0.3333333333333333,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 91,
+          "actualWinAt": 68,
+          "predictedAttempt": 2,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.3333333333333333,
+            "try1": 0,
+            "try2": 0.5,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 92,
+          "actualWinAt": 1,
+          "predictedAttempt": 3,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.3333333333333333,
+            "try2": 0.16666666666666666,
+            "try3": 0.3333333333333333,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 93,
+          "actualWinAt": 6,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.8333333333333333,
+            "try2": 0.16666666666666666,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 94,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.3333333333333333,
+            "try1": 0.3333333333333333,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0.16666666666666666,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 95,
+          "actualWinAt": 9,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 96,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 97,
+          "actualWinAt": 7,
+          "predictedAttempt": 3,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.3333333333333333,
+            "try2": 0.16666666666666666,
+            "try3": 0.3333333333333333,
+            "try4": 0.16666666666666666,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 98,
+          "actualWinAt": 1,
+          "predictedAttempt": 3,
+          "botCorrect": false,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.16666666666666666,
+            "try2": 0,
+            "try3": 0.5,
+            "try4": 0.3333333333333333,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 99,
+          "actualWinAt": 5,
+          "predictedAttempt": 5,
+          "botCorrect": true,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.16666666666666666,
+            "try2": 0.3333333333333333,
+            "try3": 0,
+            "try4": 0.16666666666666666,
+            "try5": 0.16666666666666666,
+            "try6": 0,
+            "try7": 0.16666666666666666,
+            "try8": 0
+          }
+        },
+        {
+          "level": 100,
+          "actualWinAt": 14,
+          "predictedAttempt": 6,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.16666666666666666,
+            "try2": 0,
+            "try3": 0.16666666666666666,
+            "try4": 0,
+            "try5": 0.16666666666666666,
+            "try6": 0.3333333333333333,
+            "try7": 0,
+            "try8": 0.16666666666666666
+          }
+        },
+        {
+          "level": 101,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.8333333333333333,
+            "try2": 0,
+            "try3": 0.16666666666666666,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 102,
+          "actualWinAt": 1,
+          "predictedAttempt": 1,
+          "botCorrect": true,
+          "baseCorrect": true,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.6666666666666666,
+            "try2": 0,
+            "try3": 0.16666666666666666,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0.16666666666666666,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 103,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 104,
+          "actualWinAt": 3,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 105,
+          "actualWinAt": 6,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 106,
+          "actualWinAt": 2,
+          "predictedAttempt": 3,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0,
+            "try2": 0,
+            "try3": 0.5,
+            "try4": 0.16666666666666666,
+            "try5": 0.16666666666666666,
+            "try6": 0,
+            "try7": 0.16666666666666666,
+            "try8": 0
+          }
+        },
+        {
+          "level": 107,
+          "actualWinAt": 7,
+          "predictedAttempt": 8,
+          "botCorrect": true,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0.6666666666666666,
+            "try1": 0.16666666666666666,
+            "try2": 0.16666666666666666,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        },
+        {
+          "level": 108,
+          "actualWinAt": 2,
+          "predictedAttempt": 1,
+          "botCorrect": false,
+          "baseCorrect": false,
+          "exactDist": {
+            "noClear": 0,
+            "try1": 0.9999999999999999,
+            "try2": 0,
+            "try3": 0,
+            "try4": 0,
+            "try5": 0,
+            "try6": 0,
+            "try7": 0,
+            "try8": 0
+          }
+        }
+      ]
+    }
+  },
+  "aggregate": {
+    "totalLevels": 77,
+    "botCorrect": 25,
+    "baseCorrect": 37,
+    "margin": -12,
+    "botPercentage": 32.5,
+    "basePercentage": 48.1
+  }
+}
