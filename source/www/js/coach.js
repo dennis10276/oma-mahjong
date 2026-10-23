@@ -270,6 +270,21 @@ function coachPlay(demo, clip) {
     if (k !== 'peek') {
       if (s.ck && before.ck && !before.ck.done && s.ck.done) { const c = at(els[s.ck.i] || boardEl); sparkle(c.x, c.y, ['⏰', '✨']); }
       paintBlocked(); paintClock(s.ck && !s.ck.done && s.ck.left !== before.ck.left);
+      // the tile explanations: say what the ice and the locks just did
+      if (ob && clip.onOb) {
+        for (const t of Object.keys(ob.need).map(Number)) {
+          if (!s.a[t]) continue;
+          const k0 = czObKind(before, ob, inb, t), k1 = czObKind(s, ob, inb, t);
+          if (k0 === k1 || !k0.startsWith('ice')) continue;
+          const key = k1 === 'ice' ? clip.onOb.ice1 : !k1 ? clip.onOb.ice0 : null;
+          if (key) say(tx(key));
+          if (els[t]) { const c = at(els[t]); sparkle(c.x, c.y, k1 ? ['❄️'] : ['💧', '✨']); }
+        }
+        if (clip.onOb.open && ob.locks.some(l => czLocked(before, ob, l)) && !ob.locks.some(l => czLocked(s, ob, l))) {
+          say(tx(clip.onOb.open));
+          ob.locks.forEach(l => { if (els[l]) { const c = at(els[l]); sparkle(c.x, c.y, ['🔓', '✨']); } });
+        }
+      }
     }
     for (const [when, ids, cls] of seg.marks) if (when === n) ids.forEach(t => { if (s.a[t]) placeMark(t, cls); });
   };
@@ -299,8 +314,8 @@ function coachPlay(demo, clip) {
         for (let k = 0; k < seg.acts.length; k++) {
           const act = seg.acts[k];
           if (act[0] === 'end') { await ending(act[1]); continue; }
-          if (act[0] === 'say') { say(tx(act[1])); await sleep(1100); continue; }
           demo.dataset.step = k + 1;
+          if (act[0] === 'say') { say(tx(act[1])); await sleep(1100); continue; }
           await doAct(act, k, seg);
           await sleep(act[0] === 'peek' ? 420 : 560);
         }
@@ -346,6 +361,29 @@ function coachClockClip() {
     if (k === 0) acts.push(['say', 'czClockMove']);
   });
   return { tiles: c.tiles, faces: c.faces, segs: [{ start: sg.start, acts, caps: [tx('czClockIntro'), tx('czClockDone')], marks: [] }] };
+}
+/* The special tiles, explained with real games: thick ice that cracks, melts and is taken; both keys,
+   then a tile that was locked; the pair with a face-down tile while the tray holds 3 (the tip "three"). */
+function coachTileClip(kind) {
+  if (kind === 'trayPair') {
+    const c = COACH_CLIPS.three, sg = c.segs[0], acts = [];
+    let peeked = false, paired = false;
+    for (const a of sg.acts) {
+      if (a[0] === 'peek' && !peeked) { acts.push(['say', 'lessonPair1']); peeked = true; }
+      if (a[0] === 'pair' && !paired) { acts.push(['say', 'lessonPair2']); paired = true; }
+      acts.push(a);
+    }
+    return { tiles: c.tiles, faces: c.faces, segs: [{ start: sg.start, acts, caps: [tx('lessonPair0'), tx('lessonPair3')], marks: [] }] };
+  }
+  const c = COACH_CLIPS[kind], sg = c.segs[0], own = sg.acts.filter(a => a[0] !== 'end');
+  if (kind === 'ice') {
+    const ice = own[own.length - 1][1];       // the frozen tile: taken at the end
+    return { tiles: c.tiles, faces: c.faces, ob: c.ob, onOb: { ice1: 'czIce1', ice0: 'czIce0' },
+      segs: [{ start: sg.start, acts: sg.acts, caps: [tx('czIceA'), tx('czIceEnd')], marks: [['start', [ice], 'info']] }] };
+  }
+  const acts = sg.acts.slice(); acts.splice(1, 0, ['say', 'lessonLock1']);
+  return { tiles: c.tiles, faces: c.faces, ob: c.ob, onOb: { open: 'lessonLock2' },
+    segs: [{ start: sg.start, acts, caps: [tx('lessonLock0'), tx('lessonLock3')], marks: [['start', c.ob.keys, 'cone']] }] };
 }
 /* The player's own examples: every own film shown is kept for its tip (the newest one), so the tip in
    the menu can show the player's own game next to the real game. Kept apart from the saved progress. */

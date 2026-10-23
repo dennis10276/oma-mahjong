@@ -15,7 +15,7 @@ for(const aid in d){let r;try{r=readReplay(d[aid]);}catch(e){continue;}
  if(!r.initial||r.initial.partial)continue;
  const I=r.initial, tiles=I.tiles.map(([x,y,z])=>({x,y,z})), nb=neighbors(tiles), n=tiles.length;
  const faces=I.state.f;
- const att={aid, key:I.key, at:I.at, result:r.result, n, clock:I.state.ck||null, ob:I.state.ob?{locks:I.state.ob.locks,keys:I.state.ob.keys,ice:Object.keys(I.state.ob.need||{}).length}:null, down0:I.state.d.reduce((a,b)=>a+b,0), steps:[], t0:null};
+ const att={aid, key:I.key, at:I.at, result:r.result, n, clock:I.state.ck||null, ob:I.state.ob?{locks:I.state.ob.locks,keys:I.state.ob.keys,ice:Object.keys(I.state.ob.need||{}).length, need:I.state.ob.need||{}, unlocked0:!!I.state.ob.unlocked}:null, down0:I.state.d.reduce((a,b)=>a+b,0), steps:[], t0:null};
  let S=JSON.parse(JSON.stringify(I.state)); const seen=new Set(); // pictures seen by tile index
  const markSeen=()=>{for(let i=0;i<n;i++) if(S.a[i]&&!S.d[i]){ // face-up & not fully covered
      const full=nb.above[i].some(j=>S.a[j]&&tiles[j].x===tiles[i].x&&tiles[j].y===tiles[i].y); if(!full) seen.add(i);} if(S.p>=0) seen.add(S.p);};

@@ -10,10 +10,9 @@ module.exports = [
         const before = await p.evaluate(() => JSON.stringify([G.mv, G.tray, [...G.alive], [...G.down], obState(), G.clock]));
         await p.evaluate(k => k === 'clock' ? showClockLesson() : showTileLesson(k), kind);
         t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), kind, 'correct demonstration');
-        if (kind === 'ice') t.ok(await p.evaluate(() => {
-          const [above, ice, below] = [...$('.lesson-ice-board').children].map(e => e.getBoundingClientRect());
-          return above.bottom <= ice.top && ice.bottom <= below.top;
-        }), 'ice demonstration includes touching tiles above and below');
+        // (from 1.60 a real game in the player's own tiles: the ice and the locks lie on the pile)
+        if (kind === 'ice') t.ok(await p.evaluate(() => !!$('.cz-board .tile .ob[data-k^="ice"]')), 'ice film shows frozen tiles on a real pile');
+        if (kind === 'lock') t.ok(await p.evaluate(() => !!$('.cz-board .tile .ob[data-k="lock"]') && !!$('.cz-board .tile .ob[data-k="key"]')), 'lock film shows locks and keys on a real pile');
         if (kind === 'clock') t.ok(!/hint|schudden|shuffle/i.test(await p.locator('#modalBox').innerText), 'clock explanation does not mention tools');
         t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'lesson and button fit: ' + lang + ' ' + kind);
         await click(p, '.lesson-toggle');
@@ -22,8 +21,9 @@ module.exports = [
         t.eq(await p.locator('.lesson-demo').getAttribute('data-step'), step, 'pause freezes demonstration');
         await click(p, '.lesson-replay');
         t.eq(await p.locator('.lesson-demo').getAttribute('data-step'), '0', 'replay returns to first step');
-        await sleep(2500);
-        t.eq(await p.locator('.lesson-demo').getAttribute('data-step'), '1', 'animation advances');
+        // (the films start their first tap after 1.5 s; under load timers can run late)
+        const moved = await p.waitForFunction(() => $('.lesson-demo').dataset.step !== '0', null, { timeout: 6000 }).then(() => true, () => false);
+        t.ok(moved, 'animation advances');
         t.eq(await p.evaluate(() => JSON.stringify([G.mv, G.tray, [...G.alive], [...G.down], obState(), G.clock])), before, 'demo does not touch game state');
         if (process.env.CAPTURE_TILE_HELP_DIR) {
           fs.mkdirSync(process.env.CAPTURE_TILE_HELP_DIR, { recursive: true });
