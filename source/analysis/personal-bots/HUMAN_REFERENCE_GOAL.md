@@ -325,6 +325,21 @@ full result, not an extrapolated129 or a best-of merge. Bounded wall-time
 search can return different partial results; neither a shared source hash nor
 an isolated pass establishes robust repeatability. The goal remains unmet;
 the next improvement targets stronger constructive recovery at a fixed budget.
+The optional `keyRecoveryMacros` expansion now integrates the previously
+isolated builder into the real search, sharing the original physical-tap cap
+and deadline. One expanded node constructs four-tap face-up and six-tap known-
+closed production wins where primitive edges remain bounded; uncertain roles,
+expired deadlines and insufficient tap limits still refuse a witness. No
+hidden values or per-level rules are introduced.49/49 tests pass, including
+1536 concealed-world controls.
+Its42-case screen passes31/42, source unchanged
+`4dd2646520a558ba549a17f52b0947b220169ce65379ed1ae71464ae9999222a`,
+slowest1504.7ms.111 clears on try2 in this screen; all other prior full failures
+remain81/84/93/99/102/107/112/121/124/125/137. The original four fixes and all
+25 recent passing levels remain clear. Because111 has already differed between
+subset and full runs, this is not proof of a robust full129/140 score or a
+causal attempt-count gain from the macro. The next optimization removes repeated
+public dependency calculations while retaining fixed-budget plan parity.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
