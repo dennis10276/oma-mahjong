@@ -179,11 +179,19 @@ a promoted replacement. Neither is claimed complete.
 The new optional `passiveInformation` recognizes that removing a known tile can
 make another picture/orientation/overlay readable before it is takeable. It
 uses the same central geometry gate, not a second recognition rule, and stops
-the hypothetical prefix before reading any newly permitted value. Only the
-actual next observation may supply it. Subset masks match the full gate;72
-concealed worlds yield identical public stop plans and production-replayed
-prefixes.43/43 offline tests pass, including480 controller concealed-world
-controls. Broader campaign screening is pending.
+before any action requiring an unknown value. Only the actual next observation
+may supply it. Subset masks match the full gate;72 concealed worlds yield
+identical public plans and production-replayed prefixes. The first version
+stopped all expansion at passive exposure:19/38 passes, newly clearing121 on
+try3 versus4, but regressing several clock openings and92/150. A controlled
+reproducer confirms that this discarded an already known safe clock route.
+The corrected version values the information frontier while continuing routes
+using only previously known facts. It never invents the newly readable value;
+the real actor still observes after every physical tap and replans.72-world
+pair and clock continuations independently replay in production.43/43 offline
+tests pass, including480 controller concealed-world controls. The corrected
+campaign screen is pending. The reusable legacy cache now keys every setting
+and bypasses observation callbacks/live deadlines instead of reusing stale plans.
 
 A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
 the clock at move6, and later reaches an empty tray. Subsequent commitments cause
