@@ -6,7 +6,7 @@
 'use strict';
 const path = require('path');
 const L = require(path.join(__dirname, '..', '..', 'www', 'layouts.js'));
-function exactRoute(g, ci, limit = 400000) {
+function exactRoute(g, ci, limit = +(process.env.EXACT_LIMIT || 400000)) {
   const n = g.tiles.length, F = g.faces, init = new Uint8Array(n).fill(1);
   const can = (i, alive) => alive[i] && (g.rules ? L.takeable(i, alive, g.nb, g.rules, init) : L.isFree(i, alive, g.nb));
   const rulesNow = alive => { if (!g.rules) return null; const ice = {}; for (const k in g.rules.ice) { const gone = g.rules.iceNb[k].filter(i => !alive[i]).length; if (g.rules.ice[k] > gone) ice[k] = g.rules.ice[k] - gone; } return { ...g.rules, ice }; };
