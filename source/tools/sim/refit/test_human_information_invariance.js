@@ -16,14 +16,17 @@ function test() {
   configurations.push({ ...configurations[1], diverseWitness: true, uniqueKnownCleanup: true });
   configurations.push({ ...configurations[1], passiveInformation: true });
   configurations.push({ ...configurations[1], passiveInformation: 'roles' });
-  let canonical = null, controls = 0;
-  for (let world = 0; world < 96; world++) {
+  configurations.push({ ...configurations[1], inspectBeforeCommit: 'recovery' });
+  const canonical = new Map();
+  let controls = 0;
+  for (let world = 0; world < 192; world++) {
+    const publicClock = world < 96 ? clock : null;
     const state = { alive: [1, 1, 1, 1, 1, 1], down: [world % 2, Math.floor(world / 2) % 2, 0, 0, 0, 0],
       moves: 0, tray: [], openPeek: -1, relieved: false, arriving: [], physicalTaps: 0 };
     const privateFaces = [world % 36, (world * 7) % 36, 2, 2, 3, 3];
     const privateRoles = [world % 3 === 0 ? 'ice' : world % 3 === 1 ? 'lock' : 'key',
       world % 3 === 0 ? 'key' : 'none', 'none', 'none', 'none', 'none'];
-    const observation = observeBoard(tiles, state, clock, {
+    const observation = observeBoard(tiles, state, publicClock, {
       picture(index) { assert(visible.includes(index)); return privateFaces[index]; },
       role(index) { assert(visible.includes(index)); return privateRoles[index]; },
     });
@@ -40,10 +43,10 @@ function test() {
       assert.deepEqual(result.memory.initialRoles.slice(0, 2), [null, null]);
       controls++; return result;
     });
-    if (canonical === null) canonical = output;
-    else assert.deepEqual(output, canonical, 'A private-world change altered the public observation, controller or memory');
+    if (!canonical.has(!!publicClock)) canonical.set(!!publicClock, output);
+    else assert.deepEqual(output, canonical.get(!!publicClock), 'A private-world change altered the public observation, controller or memory');
   }
-  console.log('PASS ' + controls + ' baseline/research concealed-world controls produce identical public observations, controller plans and retry memory while the covered clock badge stays public');
+  console.log('PASS ' + controls + ' clock/nonclock baseline/research concealed-world controls preserve public observations, controller plans and retry memory, including recovery-led inspection and covered clock badges');
 }
 
 if (require.main === module) test();

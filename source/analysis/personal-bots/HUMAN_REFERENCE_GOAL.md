@@ -307,8 +307,13 @@ That unified checkpoint policy passes11/14, unchanged source
 `3d0cd9f5c87f777665a28ef201a31ffbcad6a3b0167b59816e0731a7c72fdd86`,
 slowest1505.8ms:85/86/111/123 all pass together, retaining50/92/150 and the
 original134/141/143/147 fixes.121/124/137 remain failures on this screen.
-All49 offline tests pass. A full140-level17–156 run is next, with runtime
+All49 offline tests pass. A full140-level17–156 run is active, with runtime
 held unchanged; no full-count extrapolation, per-level switch or unseen claim.
+The runtime checkpoint is `5b89505`; the full-run fingerprint matches the
+14-case checkpoint screen. Separate tests expand concealed-world invariance
+to1344 clock/nonclock cases, including recovery-led inspection; all49 tests
+still pass. The2026-10-23T20:24Z metadata-only refresh finds140 clears through
+156, no later clears, and decodes zero boards.157+ remains unopened.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
