@@ -10,9 +10,9 @@ function test() {
     { x: 4, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }];
   const iceNb = Layouts.iceNeighbors(tiles);
   const factory = createSessionFactory();
-  for (const role of ['ice2', 'key', 'lock', 'none']) {
+  for (const role of ['ice2', 'thawedIce', 'key', 'lock', 'none']) {
     const game = { tiles, nb: Layouts.neighbors(tiles), faces: [7, 7, 9, 9], down: [0, 0, 0, 0], clock: null,
-      rules: { iceNb, ice: role === 'ice2' ? { 0: 2 } : {},
+      rules: { iceNb, ice: role === 'ice2' ? { 0: 2 } : role === 'thawedIce' ? { 0: 1 } : {},
         keys: role === 'key' ? [0, 2] : role === 'lock' ? [2, 3] : [], locks: new Set(role === 'lock' ? [0] : []) } };
     for (const exclusiveRoles of [false, true]) {
       const controller = createHumanController(tiles, { exclusiveRoles });
@@ -26,9 +26,9 @@ function test() {
       controller.beginAttempt();
       assert.equal(observe().roles[0], null);
       session.tap(1);
-      assert.equal(observe().roles[0], role === 'ice2' ? 'ice' : role);
+      assert.equal(observe().roles[0], role === 'ice2' ? 'ice' : role === 'thawedIce' ? 'none' : role);
       const remembered = controller.known().initialRoles[0];
-      assert.equal(remembered, exclusiveRoles && role !== 'none' ? role : null,
+      assert.equal(remembered, exclusiveRoles && ['ice2', 'key', 'lock'].includes(role) ? role : null,
         'Later observed immutable roles and remaining ice plus observed neighbor removals should reconstruct initial roles only under the declared contract');
       controller.beginAttempt();
       const restarted = factory(game).view().state;
