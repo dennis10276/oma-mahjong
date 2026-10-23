@@ -404,6 +404,28 @@ An exact layered production fixture distinguishes a newly readable but still
 blocked role from a later action-frontier role, keeps its value unknown, and
 replays both removals.1728 clock/nonclock hidden-world controls and all50 tests
 pass. Next compare121's actual divergence rather than select modes by level.
+121's first23 decisions match before choice24. Both clocks are already gone,
+so clock-only mode selection is not justified. The useful role clue there is
+blocked43, revealed after one known tap;92's first blocked clues require five.
+The next experiment compares shorter safe information prefixes globally, not
+a fixed level/tap cutoff. Physical overflow remains ahead of this ordering;
+known win/clock witnesses remain higher priority, and no future values are read.
+
+`shortInformation:true` yields6/8 with or without passive roles, unchanged
+source `ab9ffecf4d8057e1e3c0f61e74844b720fbe6a080e374c0c5ee9a1e458c49cc4`.
+It now clears121 and137 on try1 and92 on try2, but regresses50 and147 to real
+tray losses (not numerical caps). Roles:50 loses after93 taps,147 after48;
+without passive roles:94 and68 taps. Other142/149/150 controls remain clear.
+Slowest1520.4ms roles and1507.0ms without roles. These gains are not merged
+with the old policy, and no overall score improvement is claimed.
+
+The refined `shortInformation:'carrierAware'` balances prefix length with the
+existing two-point unseen-mate carrier penalty, instead of letting probe speed
+alone preempt that uncertainty. This is a heuristic, not an optimal cost or
+safety proof. A layered fixture distinguishes a one-tap unmatched-carrier probe
+from a two-tap neutral pair reveal and replays the latter through production.
+All51 tests pass, including2112 concealed-world controls and37 real hidden-
+identity probe checks. The refined policy is being screened globally next.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
