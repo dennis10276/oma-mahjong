@@ -203,8 +203,22 @@ only when the known prefix does not add unmatched tray carriers. New facts are
 still recognized; this is a conservative ranking preference, not a proof that
 a carrier-increasing route is unsafe or impossible. Actual unknown-tap handling
 is unchanged. Controlled pair/clock/provenance/tray comparisons pass.
+The unchanged-source risk-neutral run passes26/38, slowest1508.2ms. It clears50
+on try1 and121 on try3 versus4, and restores147/150, but loses92 and149. That
+matches the baseline count on this38-level cohort, not a full-catalog gain.
+The new `passiveInformation: 'roles'` ablation values guaranteed overlay reveals
+without giving the same priority to orientation-only discoveries, which may
+merely show another back. The observer still records every actual visible field.
+All43 offline tests pass, now with576 controller concealed-world controls.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
+
+A public-only137 probe rejects another tempting diagnosis:14's mate31 has an
+actually observed ice role and is guaranteed thawed after the proposed41 removal;
+9's mate32 is observed none and opens after52/66. Both candidate recoveries are
+mechanically certain conditional on those removals. Do not invent an unknown-role
+penalty to explain this particular failure; the route/campaign ranking remains
+the problem.
 
 A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
 the clock at move6, and later reaches an empty tray. Subsequent commitments cause
