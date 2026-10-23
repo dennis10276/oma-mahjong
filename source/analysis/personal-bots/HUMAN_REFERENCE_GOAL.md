@@ -41,7 +41,7 @@ Recent131–156:25/26, failing137.151–156 all clear on try1.
 111 passed isolated screens but failed both full-run tries (60/33 taps);
 never extrapolate129/140 from isolated111 passes or merge different profiles.
 
-Read-only metadata refresh2026-10-23T21:10Z:140 first clears through156, no later
+Read-only metadata refresh2026-10-23T22:02Z:140 first clears through156, no later
 clears, zero boards decoded. Refresh metadata only with selectedLevels:[].
 Dennis authorized count comparisons without old17–99 recordings on2026-10-22.
 Prefer exact opening, then original-version fixed table, current fixed definition,
@@ -62,6 +62,9 @@ The three-action role-payoff screen completed7/8, source unchanged, slowest
 fails. This is an improvement over the six-of-eight controls, NOT a full score.
 Next serial job: all42 challenge/recent levels, first `shortRoles` without the
 short-information override, then all role information plus `shortInformation:true`.
+Tool session55597; first worker PID41604 confirmed live2026-10-24T00:02 local.
+Reports:`HUMAN_REFERENCE_SHORT_ROLE_CHALLENGE_2026-10-24.md` and
+`HUMAN_REFERENCE_SHORT_PROBE_CHALLENGE_2026-10-24.md`.
 Fingerprint:`e5c97c9a0d5d0beb06e08ee1befd7dc0923703a4a5ab0fb53add4f33b474588f`.
 Hold runtime unchanged until BOTH finish. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
