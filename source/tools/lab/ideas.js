@@ -184,13 +184,16 @@ const IDEAS = {
 
 // a change that breaks the stored way through: search a new one with the rules on (the clock keeps its
 // spare moves on the new way)
-function fix(y) {
-  if (valid(y)) return y;
-  const g = gameG(y), al = new Uint8Array(y.tiles.length).fill(1);
-  const path = L.solve(g.tiles, g.nb, y.faces, al, [], 40000, g.rules);
+function fix(y, spare) {
+  const g = gameG(y);
+  let path = null;
+  if (y.clock) path = Hard.clockRoute(g, y.clock.i);   // the quickest way to the clock that finishes the level
+  if (!path && valid(y)) path = y.solution;
+  if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], 120000, g.rules); }
   if (!path || path.length !== y.tiles.length) return null;
   const z = { ...y, solution: path };
-  if (y.clock) { const spare = y.clock.n - (y.solution.indexOf(y.clock.i) + 1); z.clock = { i: y.clock.i, n: path.indexOf(y.clock.i) + 1 + Math.max(0, spare) }; }
+  // the clock: the moves that way needs to reach it, plus `spare` (never a number cut below that)
+  if (y.clock) z.clock = { i: y.clock.i, n: path.indexOf(y.clock.i) + 1 + (spare ?? Math.max(0, y.clock.n - (y.solution.indexOf(y.clock.i) + 1))) };
   return valid(z) ? z : null;
 }
 
@@ -201,13 +204,8 @@ function fix(y) {
 // (its number counts the moves the quickest found way needs, plus SPARE), the keys on a deeper pair,
 // ice (also double) on the tiles you dig through, more locks, more face-down tiles.
 const coverOf = (c, i) => { const s2 = new Set(), st = [i]; while (st.length) { const j = st.pop(); for (const a of c.nb.above[j]) if (!s2.has(a)) { s2.add(a); st.push(a); } } return s2; };
-function clockOn(y, ci, spare) {
-  const route = Hard.clockRoute(gameG(y), ci);
-  if (!route) return null;
-  const z = { ...y, solution: route, clock: { i: ci, n: route.indexOf(ci) + 1 + spare } };
-  return valid(z) ? z : null;
-}
-function nudge(b, target, seed, keep, spare, kind, steps = 24) {
+const clockOn = (y, ci, spare) => fix({ ...y, clock: { i: ci, n: 999 } }, spare);
+function nudge(b, target, seed, keep, spare, kind, steps = 30) {
   const r = rngOf(seed);
   let m = measure(b, 160, seed), x = b;
   const off = mm => NAMES.reduce((s, n) => s + (mm[n].first - target[n].first), 0) / 2;
@@ -242,9 +240,7 @@ function nudge(b, target, seed, keep, spare, kind, steps = 24) {
         } else if (u < 0.8) { const f = Object.keys(y.obst.ice || {}).map(Number).filter(i => !keep.includes(i)); if (!f.length) continue; const i = pick(f); const ice = { ...y.obst.ice }; delete ice[i]; y.obst = { ...y.obst, ice }; }
         else { const f = (y.obst.locks || []).filter(i => !keep.includes(i)); if (!f.length) continue; y.obst = { ...y.obst, locks: y.obst.locks.filter(i => i !== pick(f)) }; }
       }
-      y = fix(y); if (!y) continue;
-      // the clock keeps exactly SPARE moves on the way through
-      if (y.clock) { y.clock = { ...y.clock, n: y.solution.indexOf(y.clock.i) + 1 + spare }; if (!valid(y)) continue; }
+      y = fix(y, spare); if (!y) continue;
       const my = measure(y, 160, seed + k * 10 + q + 1);
       if (!best || Math.abs(off(my)) < Math.abs(off(best.m))) best = { y, m: my };
     }
@@ -259,6 +255,7 @@ function nudge(b, target, seed, keep, spare, kind, steps = 24) {
    node ideas.js merge                                    writes lab-ideas.js from tools/lab/ideas-out
    Dennis (2026-10-23) after the first round: "They need to be tuned way harder so that there is almost no
    room for error". hard: the test players win about 1 in 8 / 1 in 20 first tries; very hard: 1 in 20 / 1 in 50. */
+// the clock: the moves the quickest found way needs to reach it, plus SPARE
 const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 } }, SPARE = { hard: 2, veryhard: 1 };
 const OUTD = path.join(__dirname, 'ideas-out');
 const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 80 }, (_, k) => 'blob' + (9001 + k * 37))];
@@ -275,7 +272,7 @@ if (process.argv[2] === 'merge') {
     let made = null, si = id * 7;
     for (let tries = 0; tries < 60 && !made; tries++) {
       const shape = shapes[(si++) % shapes.length];
-      if (fs.existsSync(OUTD) && fs.readdirSync(OUTD).some(f => { try { return JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8')).shape === shape; } catch (e) { return false; } })) continue;
+      if (tries < 30 && fs.existsSync(OUTD) && fs.readdirSync(OUTD).some(f => { try { return JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8')).shape === shape; } catch (e) { return false; } })) continue;
       const p = newPile(shape, N, 4, 1000 + si * 13); if (!p) continue;
       const d = Hard.makeNow(230, 1.6, 1, si, { tiles: p.tiles });
       if (!d.solution || !valid(d)) continue;
@@ -283,9 +280,8 @@ if (process.argv[2] === 'merge') {
       const x = I.make(base, ctxOf(base), rngOf(si * 31 + 7));
       if (!x) continue;
       const keepT = [...(x.obst.locks || []), ...(x.obst.keys || []), ...(x.clock ? [x.clock.i] : []), ...Object.keys(x.obst.ice || {}).map(Number).filter(i => !(base.obst.ice || {})[i]), ...x.down.filter(i => !base.down.includes(i))];
-      if (x.clock) x.clock.n = x.solution.indexOf(x.clock.i) + 1 + SPARE[lvl];
-      if (!valid(x)) continue;
-      const t = nudge(x, tfull, 7001 + si, keepT, SPARE[lvl], kind);
+      const x2 = fix(x, SPARE[lvl]); if (!x2) continue;
+      const t = nudge(x2, tfull, 7001 + si, keepT, SPARE[lvl], kind);
       const ck = t.board.clock ? t.board.clock.n - (t.board.solution.indexOf(t.board.clock.i) + 1) : null;
       made = { id, kind, level: lvl, title: I.title + (lvl === 'veryhard' ? ' · very hard' : ' · hard') + (N < 80 ? ' · small board' : ''), idea: I.idea + (N < 80 ? ` Only ${N} tiles.` : ''), shape, like: +p.like.toFixed(2), tiles: N, board: t.board, m: t.m,
         specials: { down: t.board.down.length, ice: Object.keys(t.board.obst.ice || {}).length, locks: (t.board.obst.locks || []).length, clockSpare: ck } };
