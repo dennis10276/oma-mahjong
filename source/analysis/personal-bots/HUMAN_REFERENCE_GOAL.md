@@ -189,9 +189,16 @@ The corrected version values the information frontier while continuing routes
 using only previously known facts. It never invents the newly readable value;
 the real actor still observes after every physical tap and replans.72-world
 pair and clock continuations independently replay in production.43/43 offline
-tests pass, including480 controller concealed-world controls. The corrected
-campaign screen is pending. The reusable legacy cache now keys every setting
-and bypasses observation callbacks/live deadlines instead of reusing stale plans.
+tests pass, including480 controller concealed-world controls. The continuation
+correction improves19/38 to22/38 but still regresses92/142/147/149/150, so is not
+promoted. A public-only142 replay pinpoints another bug: removing70 reveals41,
+outside the public clock frontier, but a later64 removal incorrectly lends
+that information clock-cone priority. `50946d8` now returns only the indices
+whose geometry becomes readable and attributes clock relevance to those indices,
+not to an unrelated removed tile. It does not return any future picture/role.
+Clock provenance controls pass; affected-level campaign screening is pending.
+The reusable legacy cache now keys every setting and bypasses observation
+callbacks/live deadlines instead of reusing stale plans.
 
 A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
 the clock at move6, and later reaches an empty tray. Subsequent commitments cause
