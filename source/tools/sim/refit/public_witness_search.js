@@ -129,6 +129,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
   const knownPairMacros = settings.knownPairMacros ?? false;
   const keyRecoveryMacros = settings.keyRecoveryMacros ?? false;
+  const shortInformation = settings.shortInformation ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
@@ -136,6 +137,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
   assert.equal(typeof keyRecoveryMacros, 'boolean');
+  assert.equal(typeof shortInformation, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -242,6 +244,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         recoveryRankWidths.add(rank.length);
       }
       if (pairFlexibility) rank.splice(2 + (settings.trayRecovery ? 2 : 0) + (goalRecoveryActive ? riskFirstRecovery ? 3 : 2 : 0), 0, -metrics.pairDebt);
+      if (shortInformation && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0, -path.length);
     }
 
     const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information };
