@@ -262,6 +262,24 @@ known keys/pictures and guaranteed actions. Face-up, remembered closed, remainin
 key and clock-first examples independently replay in production; uncertainty,
 tray loss and deadline/tap exhaustion refuse the candidate. It is staged in
 isolation, not imported by the running policy or claimed as a campaign gain.
+
+The planner-led-discovery full run completes127/140, unchanged source,
+slowest1504.3ms. It restores85 but regresses86 and still fails111; current
+failures are81/84/86/93/99/102/107/111/112/121/124/125/137. Thus neither globally
+forcing nor globally disabling opportunistic discovery solves the interaction.
+The127/140 result is verified; no128/129 extrapolation or best-of merging.
+
+A separate retry-memory fix records a removed closed tile's identity only when
+its actual match uniquely identifies it from a previously seen tray/open tile.
+The selected tile must have been observed closed, its picture unknown, and one
+actual accepted tap must produce the exact normal match delta. No removed tile
+reader, hidden picture, role, deck, seed or hypothetical reveal is queried.
+This runs in the actual observation path, including terminal clock matches,
+and does not invent the removed tile's starting role.222 production/replay
+controls cover normal/Joker identities, tray/twin matches and terminal outcomes;
+a retry integration check preserves that legitimate identity while the role
+stays unknown.48/48 offline tests pass. Campaign effects are being isolated
+before combining this with inspection-priority changes.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
