@@ -23,6 +23,8 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
       boardSource: entry.boardSource ?? entry.source ?? 'providedDevelopmentBoard', historicalBoardExact: entry.historicalBoardExact ?? null,
       attemptLimit,
       slowestMs: Math.round(result.slowestMs * 10) / 10, status: result.status, verifiedTaps: result.verifiedTaps,
+      decisionCount: result.decisionCount, meanDecisionMs: Math.round(result.meanDecisionMs * 10) / 10,
+      dominanceStops: result.dominanceStops,
       attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left })) };
     rows.push(row); emit(row);
   }
@@ -47,6 +49,9 @@ async function main(filename, levels, settings, reportFile) {
   const unchanged = fingerprint() === sourceHash;
   const summary = { cases: rows.length, passed: rows.filter(row => row.pass).length, sourceHash, sourceUnchanged: unchanged,
     slowestMs: Math.max(...rows.map(row => row.slowestMs)), completeGate: false,
+    meanDecisionMs: Math.round(rows.reduce((sum, row) => sum + row.meanDecisionMs * row.decisionCount, 0)
+      / Math.max(1, rows.reduce((sum, row) => sum + row.decisionCount, 0)) * 10) / 10,
+    dominanceStops: rows.reduce((sum, row) => sum + row.dominanceStops, 0),
     developmentGate: filename === '--live' && !selected && unchanged && rows.every(row => row.pass && row.slowestMs < 2000),
     byBoardSource: Object.fromEntries([...new Set(rows.map(row => row.boardSource))].map(source => [source,
       { cases: rows.filter(row => row.boardSource === source).length, passed: rows.filter(row => row.boardSource === source && row.pass).length }])),
@@ -54,9 +59,9 @@ async function main(filename, levels, settings, reportFile) {
   if (reportFile) {
     const table = ['# Human-information reference development run', '', 'Planning: `' + JSON.stringify(planning) + '`',
       'Source: `' + sourceHash + '`; unchanged: ' + unchanged + '.', '',
-      '| Level | Dennis tries | Bot tries | Pass | Board source | Slowest ms |', '|---:|---:|---:|:---:|---|---:|',
-      ...rows.map(row => `| ${row.level} | ${row.dennis} | ${row.bot ?? '>' + row.attemptLimit} | ${row.pass ? 'yes' : 'no'} | ${row.boardSource} | ${row.slowestMs} |`),
-      '', `Passed ${summary.passed}/${summary.cases}; slowest ${summary.slowestMs}ms.`,
+      '| Level | Dennis tries | Bot tries | Pass | Board source | Mean ms | Slowest ms |', '|---:|---:|---:|:---:|---|---:|---:|',
+      ...rows.map(row => `| ${row.level} | ${row.dennis} | ${row.bot ?? '>' + row.attemptLimit} | ${row.pass ? 'yes' : 'no'} | ${row.boardSource} | ${row.meanDecisionMs} | ${row.slowestMs} |`),
+      '', `Passed ${summary.passed}/${summary.cases}; mean ${summary.meanDecisionMs}ms; slowest ${summary.slowestMs}ms; dominance stops ${summary.dominanceStops}.`,
       'Historical board identity is not claimed for current-definition substitutes. The unseen20-level gate has not been run.', ''];
     fs.writeFileSync(path.resolve(reportFile), table.join('\n'), { flag: 'wx' });
   }

@@ -130,6 +130,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const knownPairMacros = settings.knownPairMacros ?? false;
   const keyRecoveryMacros = settings.keyRecoveryMacros ?? false;
   const shortInformation = settings.shortInformation ?? false;
+  const informationDominance = settings.informationDominance ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
@@ -148,6 +149,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof knownPairMacros, 'boolean');
   assert.equal(typeof keyRecoveryMacros, 'boolean');
   assert([false, true, 'carrierAware'].includes(shortInformation));
+  assert.equal(typeof informationDominance, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -192,6 +194,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
     initialLeft + state.down.filter((value, index) => value && state.alive[index]).length)) : settings.taps;
   let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
+  let dominanceStop = null;
   const provedDeadRoots = new Set();
   const continuationProof = { calls: 0, nodes: 0, bounded: 0, certified: 0 };
   const recoveryRankWidths = new Set();
@@ -268,8 +271,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
 
   for (let depth = 0; depth < tapLimit && beam.length; depth++) {
     const next = new Map();
+    let completedLayer = true;
     for (const node of beam) {
-      if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
+      if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; completedLayer = false; break; }
       if (node.path.length >= tapLimit) { boundary = true; continue; }
       nodes++;
       const allowed = physical.legal(game, node.state), settled = { ...node.state, relieved: allowed.relieved };
@@ -294,7 +298,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       });
 
       for (const index of indices) {
-        if (Date.now() >= deadline) { boundary = true; break; }
+        if (Date.now() >= deadline) { boundary = true; completedLayer = false; break; }
         const moved = physical.advance(game, settled, index), path = node.path.concat(index);
         if (moved.uncertain) {
           if (!['unseenPicture', 'unobservedObstacleRole', 'unobservedOrientation'].includes(moved.reason)) { unsupported++; continue; }
@@ -341,7 +345,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
           const pairedActions = physical.legal(game, moved.state).free.filter(mate => mate !== index
             && moved.state.pictures[mate] === moved.state.pictures[index]);
           for (const mate of pairedActions) {
-            if (Date.now() >= deadline) { boundary = true; break; }
+            if (Date.now() >= deadline) { boundary = true; completedLayer = false; break; }
             const paired = physical.advance(game, moved.state, mate);
             if (paired.uncertain || paired.lost) continue;
             assert.equal(moved.removed + paired.removed, 2, 'A known pair expansion must contain two actual removals');
@@ -378,6 +382,12 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     if (ranked.length > settings.beam) boundary = true;
     beam = diverseBeam ? selectBeam(ranked, settings.beam) : ranked.slice(0, settings.beam);
     if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
+    if (informationDominance && shortInformation === true && !clocked && initialKnown < initialLeft
+      && state.tray.length <= 1 && depth >= 1 && completedLayer && best?.information && best.path.length === 1
+      && best.rank[0] === 2 && best.rank[1] === 0 && (!(goalRecoveryActive && riskFirstRecovery) || best.rank[2] === 0)) {
+      dominanceStop = { completedLayers: depth + 1, unknownPictures: initialLeft - initialKnown, pathLength: 1 };
+      boundary = true; break;
+    }
     if (!finishKnown && !clocked && best?.progress >= settings.progress && best.state.tray.length === 0 && best.goal !== 'boundedProgress') break;
     if (depth === tapLimit - 1 && beam.length) boundary = true;
   }
@@ -425,6 +435,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         proofEntries: proofCache.size, ...routePlanner.stats() } } : {}),
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
+      ...(dominanceStop ? { dominanceStop } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),
         ...(riskFirstRecovery ? { riskFirstRecovery } : {}),

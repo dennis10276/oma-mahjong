@@ -219,6 +219,7 @@ function playHumanCampaign(input, options = {}) {
   }
   const factory = createSessionFactory(), attempts = [];
   let slowestMs = 0, controls = 0, verifiedTaps = 0, rejected = 0, decision = null;
+  let decisionCount = 0, totalDecisionMs = 0, dominanceStops = 0;
   for (let attempt = 1; attempt <= maximumAttempts; attempt++) {
     controller.beginAttempt();
     const session = factory(game, settings), actions = [], decisions = [];
@@ -234,12 +235,14 @@ function playHumanCampaign(input, options = {}) {
       }
       if (actual.type === 'productionPhysicalEnd-v1') break;
       const selected = controller.decide(), elapsed = performance.now() - started;
+      decisionCount++; totalDecisionMs += elapsed;
+      dominanceStops += +(!!selected?.plan.dominanceStop);
       if (elapsed > slowestMs) { slowestMs = elapsed; decision = { attempt, physicalTaps: state.physicalTaps }; }
       if (!selected) { status = 'unresolvedPublicFrontier'; break; }
       const index = selected.plan.index, accepted = actual.legalTiles.includes(index);
       if (options.captureDecisions) decisions.push({ state: controller.state(), index, accepted,
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
-          boundary: selected.plan.boundary, knownDead: selected.plan.knownDead },
+          boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes },
         ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path) } : {}) });
       controller.acknowledge(index, accepted);
       lastPlan = selected.plan;
@@ -266,7 +269,8 @@ function playHumanCampaign(input, options = {}) {
   }
   factory.verifySource();
   return { wonOn: attempts.at(-1).status === 'cleared' ? attempts.length : null, status: attempts.at(-1).status,
-    slowestMs, decision, attempts, controls, verifiedTaps, rejected,
+    slowestMs, decisionCount, meanDecisionMs: decisionCount ? totalDecisionMs / decisionCount : 0,
+    dominanceStops, decision, attempts, controls, verifiedTaps, rejected,
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }
 
