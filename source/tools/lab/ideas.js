@@ -319,7 +319,7 @@ const IDEAS = {
       const ok = i => !special(b, i);
       for (const ck of c.P.filter(i => ok(i) && c.free0[i])) {
         const mates = []; for (let j = 0; j < c.n; j++) if (j !== ck && b.faces[j] === b.faces[ck]) mates.push(j);
-        if (!mates.every(j => coverOf(c, j).size >= 3 && ok(j))) continue;
+        if (!mates.every(j => coverOf(c, j).size >= 2 && ok(j))) continue;
         const mate = mates.sort((p, q) => coverOf(c, p).size - coverOf(c, q).size)[0];
         const x = clone(b); x.clock = null; noDown(x, [ck]);
         // the quickest way to the partner; the clock goes off one move after that
@@ -483,7 +483,7 @@ function fix(y, spare) {
 // ice (also double) on the tiles you dig through, more locks, more face-down tiles.
 const coverOf = (c, i) => { const s2 = new Set(), st = [i]; while (st.length) { const j = st.pop(); for (const a of c.nb.above[j]) if (!s2.has(a)) { s2.add(a); st.push(a); } } return s2; };
 const clockOn = (y, ci, spare) => fix({ ...y, clock: { i: ci, n: 999 } }, spare);
-function nudge(b, target, seed, keep, spare, kind, steps = 30) {
+function nudge(b, target, seed, keep, spare, kind, steps = +(process.env.STEPS || 30)) {
   const r = rngOf(seed);
   let m = measure(b, 160, seed), x = b;
   const off = mm => NAMES.reduce((s, n) => s + (mm[n].first - target[n].first), 0) / 2;
