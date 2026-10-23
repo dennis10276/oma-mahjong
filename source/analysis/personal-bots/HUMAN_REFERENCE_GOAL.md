@@ -375,6 +375,16 @@ fails121/137. Slowest1507.9ms role-only and1509.8ms non-passive. Merely lowering
 the proof threshold does not solve the retry-route tradeoff and is not promoted.
 Next inspect92's second-attempt public divergence; first-attempt identity rules
 out blaming a changed opening or unobserved first-try clues for this difference.
+The second-attempt comparison finds29 identical decisions before choice30,
+with identical public board projection and the clock already removed. The
+role-information route chooses known13 tile55, consuming the open13 twin,
+on a nine-tap information prefix. The non-passive route chooses known12 tile72
+and then inspects remembered closed28 tile60 on a two-tap information prefix;
+its later actual play reveals another picture. This is not permission to use
+that picture in hypothetical ranking. The remaining diagnosis is whether the
+passive role payoff is mechanically useful versus already deducible, and how
+its longer prefix compares with direct uncertain-role inspection. Do not add
+tile55/72/60 or any level-specific preference to the runtime.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
