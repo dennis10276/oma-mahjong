@@ -30,4 +30,20 @@ assert.throws(() => memoized(game, { ...state, pictures: [NaN, 1, 2, 2] }, actio
 assert.deepEqual(memoized(game, state, actions, { nodes: 1 }), search(game, state, actions, { nodes: 1 }));
 assert.deepEqual(memoized(game, state, actions, { nodes: 2 }), search(game, state, actions, { nodes: 2 }));
 assert.equal(memoized.stats().entries, 2); assert.equal(memoized.stats().evictions, 1);
-console.log('PASS witness memoization keys complete public state, rules and budgets, never reads private faces, preserves reports and prevents mutation/invalid-state cache hits');
+for (const setting of ['diverseBeam', 'diverseWitness', 'knownPairMacros', 'goalRecovery', 'alternativeGoalRoutes', 'passiveInformation']) {
+  assert.notEqual(keyOf(game, state, actions, { ...PARAMETERS, [setting]: true }), baseKey);
+}
+const uncached = cachedSearch(4);
+assert(uncached(game, state, actions).knownWin);
+const expired = uncached(game, state, actions, { deadline: Date.now() - 1 });
+assert(!expired.knownWin && !expired.knownDead && expired.boundary);
+const callbackGame = { tiles, nb: game.nb, rules: null, clock: null, publicExposure: () => true };
+uncached(callbackGame, state, actions); callbackGame.publicExposure = () => false;
+assert.deepEqual(uncached(callbackGame, state, actions), expected);
+assert.throws(() => keyOf(callbackGame, state, actions, PARAMETERS));
+const frontierGame = { tiles, nb: game.nb, rules: null, clock: null,
+  publicFrontier: position => ({ free: position.alive.flatMap((alive, index) => alive ? [index] : []), uncertain: [] }) };
+assert.deepEqual(uncached(frontierGame, state, actions), expected);
+assert.equal(uncached.stats().hits, 0); assert.equal(uncached.stats().bypasses, 4); assert.equal(uncached.stats().entries, 1);
+assert.throws(() => keyOf(game, state, actions, { decisionMs: 1 }));
+console.log('PASS witness memoization keys all public settings, preserves immutable reports and bypasses live deadlines or opaque observation callbacks instead of reusing stale plans');
