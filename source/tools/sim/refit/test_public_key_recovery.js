@@ -57,6 +57,10 @@ function test() {
   assert.equal(verifyAttempt(encodeGame(actual), [0, ...lastKey.path], settings, partial.audit()), 4);
   const clockFirst = keyRecoveryPath({ ...game, clock: { i: 0, n: 1 } }, state, 0, 4);
   assert(clockFirst && !clockFirst.state.alive[0] && !clockFirst.state.alive.some(Boolean));
+  const clockActual = { ...actual, clock: { i: 0, n: 1 } }, clockSession = createSession(clockActual, settings);
+  for (const index of clockFirst.path) clockSession.tap(index);
+  assert(clockSession.view().win);
+  assert.equal(verifyAttempt(encodeGame(clockActual), clockFirst.path, settings, clockSession.audit()), 4);
   assert.equal(keyRecoveryPath({ ...game, rules: { ...game.rules, keys: [0] } }, state, 0, 4), null);
   assert.equal(keyRecoveryPath({ ...game, rules: { ...game.rules, keys: [0, 0] } }, state, 0, 4), null);
   assert.throws(() => keyRecoveryPath(game, state, 0, 4, NaN));

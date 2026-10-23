@@ -255,6 +255,13 @@ planned moves. The old route starts with85/82 instead. Disabling the global
 clears85 on try1 in110 taps, slowest1033ms. This is an isolated control, not a
 combined best-of policy or proof that one early action alone caused the loss.
 The next full-catalog candidate lets the planner choose discoveries globally.
+That full run is active with runtime source held unchanged and
+`inspectBeforeCommit:false`;46/46 offline tests pass. The separate observed-key
+recovery builder constructs a bounded unlock-and-match candidate using only
+known keys/pictures and guaranteed actions. Face-up, remembered closed, remaining-
+key and clock-first examples independently replay in production; uncertainty,
+tray loss and deadline/tap exhaustion refuse the candidate. It is staged in
+isolation, not imported by the running policy or claimed as a campaign gain.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
