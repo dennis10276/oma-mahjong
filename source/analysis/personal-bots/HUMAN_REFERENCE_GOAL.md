@@ -210,6 +210,19 @@ The new `passiveInformation: 'roles'` ablation values guaranteed overlay reveals
 without giving the same priority to orientation-only discoveries, which may
 merely show another back. The observer still records every actual visible field.
 All43 offline tests pass, now with576 controller concealed-world controls.
+Three subsequent8-level combinations each pass5/8: overlay-only information
+recovers149 but not50/92; mixing all exposure with a diverse beam or a
+constructive portfolio plus unique cleanup retains50/121/150 but still loses
+92/149. No per-level profile switching or combined best-of score is promoted.
+
+The latest tap-budget fix replaces a visited-state set with shortest-prefix
+depths: mixed one-tap actions and two-tap pair macros can reach the same state
+first by a longer physical route. The old set discarded a later shorter route,
+missing independently verified four-tap win and clock-exit witnesses. Both
+replay through original production; an exhaustive small graph confirms the
+minimum. This proves a bounded-search omission, not yet a Dennis campaign gain
+(the old controller could sometimes replan out of a missed certificate).44/44
+offline tests pass. Campaign comparisons with/without passive exposure are next.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
