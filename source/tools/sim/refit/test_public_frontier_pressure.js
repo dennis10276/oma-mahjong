@@ -12,6 +12,10 @@ function test() {
   assert.equal(frontierPressure({ ...state, pictures: [7, 8, 8, null, 8] }, frontier, 0, { free: [], uncertain: [] }).overflow, 0);
   assert.equal(frontierPressure(state, frontier, 0, { free: [4], uncertain: [] }).overflow, 0);
   assert.equal(frontierPressure(state, frontier, 0, { free: [4], uncertain: [4] }).overflow, 1);
+  assert.equal(frontierPressure({ ...state, pictures: [7, 8, 8, null, 8] }, frontier, 0,
+    { free: [4], uncertain: [] }).projected, 2, 'A spare outside mate must not split an already complete required pair');
+  assert.equal(frontierPressure({ ...state, tray: [7, 8] }, frontier, 0,
+    { free: [4], uncertain: [] }).overflow, 0, 'A required blocker can resolve an existing carry without prematurely spending its outside mate');
   assert.equal(frontierPressure(state, frontier, 0, { free: [0], uncertain: [] }).overflow, 0);
   const tiles = [{ x: 0, y: 0, z: 0 }, { x: 2, y: 0, z: 0 }, { x: 4, y: 0, z: 0 },
     { x: 12, y: 0, z: 0 }, { x: 12, y: 0, z: 1 }, { x: 12, y: 0, z: 2 }, { x: 12, y: 0, z: 3 }];
