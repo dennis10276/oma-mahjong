@@ -15,7 +15,7 @@
     keep();
     if (!db) return;
     const it = IDEAS.find(x => x.id === id), r = rec(id);
-    try { await db.doc('ratings/idea-' + id).set({ id, kind: it.kind, level: it.level || null, title: it.title, shape: it.shape, made: LAB.made, m: it.m || null, stars: r.stars, note: r.note, starts: r.starts || 0, tries: r.tries, wins: r.wins, results: r.results.slice(-30), t: Date.now() }); setSync(true); }
+    try { await db.doc('ratings/idea-' + id).set({ id, kind: it.kind, level: it.level || null, title: it.title, shape: it.shape, made: LAB.made, m: it.m || null, stars: r.stars, note: r.note, starts: r.starts || 0, tries: r.tries, wins: r.wins, results: JSON.parse(JSON.stringify(r.results.slice(-30))), tapErr: r.tapErr || null, t: Date.now() }); setSync(true); }
     catch (e) { setSync(false); }
   }
   // the database, when this runs as an artifact (null elsewhere: ratings stay here)
@@ -97,26 +97,53 @@
   }
   // a finished try: counted for the idea; a win shows the lab's own end screen (no stars, no next level)
   const endLevel0 = window.endLevel;
+  // (the lab's bookkeeping never gets in the way of the game: the game's own end of a try runs first,
+  // and nothing the lab does can stop it)
   window.endLevel = function (r, extra) {
-    if (G && G.o && G.o.lab && !G.logged) {
-      const x = rec(G.o.lab); x.tries++; if (r === 'win') x.wins++;
-      x.results.push({ r, ck: extra && extra.ck ? 1 : undefined, left: typeof aliveCount === 'function' ? aliveCount() : undefined, s: Math.round(G.elapsed || 0), t: Date.now() });
-      push(G.o.lab);
-      // every tap of this try, so the test players can be compared with how Dennis really plays these
-      // boards: [tile, ms since the start, 0 taken / 1 turned over / 2 nothing happened]
-      if (db && G.labTaps && G.labTaps.length) { const taps = G.labTaps.slice(0, 2000); db.collection('taps').add({ id: G.o.lab, r, ck: extra && extra.ck ? 1 : 0, t: Date.now(), made: LAB.made, n: taps.length, taps: taps.flat() }).catch(() => { }); }
-    }
-    return endLevel0.apply(this, arguments);
+    const lab = G && G.o && G.o.lab && !G.logged ? G.o.lab : null, taps = lab && G.labTaps ? G.labTaps.slice(0, 2000) : null, left = typeof aliveCount === 'function' ? aliveCount() : null, s = Math.round(G && G.elapsed || 0);
+    const res = endLevel0.apply(this, arguments);
+    if (lab) setTimeout(() => {
+      try {
+        const x = rec(lab); x.tries++; if (r === 'win') x.wins++;
+        const one = { r, left, s, t: Date.now() }; if (extra && extra.ck) one.ck = 1; if (extra && extra.nm) one.nm = 1;
+        x.results.push(one);
+        push(lab);
+        // every tap of this try, so the test players can be compared with how Dennis really plays these
+        // boards: [tile, ms since the start, 0 taken / 1 turned over / 2 nothing happened]
+        if (db && taps && taps.length) Promise.resolve().then(() => db.collection('taps').add({ id: lab, r, ck: extra && extra.ck ? 1 : 0, t: Date.now(), made: LAB.made, n: taps.length, taps: [].concat(...taps) }))
+          .catch(e => { x.tapErr = String(e && (e.code || e.message) || e).slice(0, 120); push(lab); });
+      } catch (e) { }
+    }, 0);
+    return res;
   };
   const onTap0 = window.onTap;
   window.onTap = function (i, auto) {
     if (!(G && G.o && G.o.lab) || auto) return onTap0.apply(this, arguments);
     if (!G.labTaps) G.labTaps = [];   // (a new G for every try)
-    const was = G.alive[i], t0 = G.labTaps.t0 || (G.labTaps.t0 = Date.now());
+    const was = G.alive[i], t0 = G.labTaps.t0 || (G.labTaps.t0 = Date.now()), g = G;
     const res = onTap0.apply(this, arguments);
-    G.labTaps.push([i, Date.now() - t0, was && !G.alive[i] ? 0 : G.peek === i ? 1 : 2]);
+    try { g.labTaps.push([i, Date.now() - t0, was && !g.alive[i] ? 0 : g.peek === i ? 1 : 2]); } catch (e) { }
+    setTimeout(() => { try { noMovesCheck(); } catch (e) { } }, 700);
     return res;
   };
+  /* No tile can be taken any more (everything you can reach is locked or frozen) while the tray still
+     has room: the game itself only ends a try when the tray is full, so the lab ends it here.
+     (The real game needs the same check before levels like these go live.) */
+  function noMovesCheck() {
+    if (!G || !G.o || !G.o.lab || G.done || G.overShown || G.busy || G.flights) return;
+    let left = 0; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i]) { left++; if (canTake(i)) return; }
+    if (!left) return;
+    G.busy = true; G.overShown = true; syncClock();
+    bumpStat('losses'); noteFail(); endLevel('stuck', { nm: 1 });
+    setTimeout(() => {
+      Sound.stuck(); buzz([40, 80, 40]);
+      openModal(`<h2>No moves left</h2><p>Every tile you can reach is locked or frozen.</p>
+        <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
+        <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
+      document.getElementById('sRetry').onclick = () => { closeModal(); restart(); };
+      document.getElementById('sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
+    }, 450);
+  }
   const win0 = window.win;
   window.win = function () {
     if (!(G && G.o && G.o.lab)) return win0.apply(this, arguments);
