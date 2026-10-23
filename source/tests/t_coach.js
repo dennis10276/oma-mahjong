@@ -79,7 +79,8 @@ module.exports = [
         for (const i of z.taps) s = czApply(s, faces, czStep(s, faces, i));
         // every tapped tile counts as seen (also a face-down tile that went straight to its twin)
         const seen = czRun(z).seen;
-        return s.a.every((v, i) => v === G.alive[i]) && s.tray.join() === G.tray.map(faceOf).join() && s.p === G.peek && z.taps.every(i => seen.has(i));
+        return s.a.every((v, i) => v === G.alive[i]) && s.tray.join() === G.tray.map(faceOf).join() && s.p === G.peek && z.taps.every(i => seen.has(i))
+          && (!s.ck || s.ck.done || s.ck.left === clockLeft());   // the clock counts exactly as in the game
       });
       if (!t.ok(same, `little game equals the real one: level ${lv}, tap ${n}`)) break;
     }
@@ -131,7 +132,7 @@ module.exports = [
   { name: 'game tips: a better route only uses tiles the player has seen, in this try or an earlier try of the same board', async run(t, { startLevel, sleep }) {
     const p = await t.phone({ state: { name: 'Dennis', level: 141, sunSeen: true, seenSp: seen } });
     let checked = 0;
-    for (const lv of [95, 110, 120, 140]) {
+    for (const lv of [85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140]) {
       await startLevel(p, lv);
       const r = await p.evaluate(() => {
         if (!G.clock) return null;
@@ -141,11 +142,16 @@ module.exports = [
         const ob = G.ob ? { need: { ...G.ob.need }, locks: [...G.ob.locks], keys: G.ob.keys.slice(), unlocked: G.ob.unlocked } : null, inb = ob ? Layouts.iceNeighbors(G.tiles) : null;
         const route = czClockRoute(st, faces, tiles, G.nb, ob, inb, known);
         const none = czClockRoute(st, faces, tiles, G.nb, ob, inb, new Set());
-        return { route, known: [...known], none };
+        // replay it tap by tap with the game's own rule: after every tap, the clock tile must be gone or have moves left
+        let x = st, fair = true;
+        for (const a of route || []) { x = czApply(x, faces, a); if (x.tray.length >= 4 || (!x.ck.done && x.ck.left <= 0)) { fair = false; break; } }
+        if (route && !x.ck.done) fair = false;
+        return { route, known: [...known], none, fair };
       });
       if (!r) continue;
       checked++;
       t.eq(r.none, null, 'nothing seen: no route at ' + lv);
+      t.ok(r.fair, 'the route is a real game tap by tap: never a tap after the clock ran out, the clock tile in time, at ' + lv, r.route);
       if (r.route) t.ok(r.route.every(a => a.slice(1).every(i => r.known.includes(i))), 'route uses only seen tiles at ' + lv, r.route);
     }
     t.ok(checked >= 2, 'clock levels were checked', checked);

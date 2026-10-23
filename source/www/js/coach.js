@@ -53,6 +53,16 @@ function czApply(s, faces, act) {
   return n;
 }
 const czRemovals = act => act[0] === 'pair' ? 2 : act[0] === 'peek' ? 0 : 1;
+/* Is this position already lost? A 4th tile in the tray, or the clock tile still there with no moves
+   left (the game ends right after the tap that used the last move, see checkClock). Checked after
+   every single tap of a better move, never only after a group of taps. */
+const czLost = st => st.tray.length >= 4 || !!(st.ck && !st.ck.done && st.ck.left <= 0);
+// play a line of taps; null when a tap does something else than the line says, or the try is lost on the way
+function czLine(st, faces, line) {
+  let x = st;
+  for (const a of line) { if (czStep(x, faces, a[1])[0] !== a[0]) return null; x = czApply(x, faces, a); if (czLost(x)) return null; }
+  return x;
+}
 /* Ice and locks, as in specials.js: ob = { need: {tile: hits}, locks, keys, unlocked } from the start of
    the try, inb = Layouts.iceNeighbors. Ice melts as tiles around it leave; locks open when both keys are gone. */
 function czIceLeft(s, ob, inb, i) { const n = ob && ob.need[i]; if (!n) return 0; let gone = 0; for (const j of inb[i]) if (!s.a[j]) gone++; return Math.max(0, n - gone); }
@@ -445,10 +455,8 @@ function czClockRoute(start, faces, tiles, nb, ob, inb, known, budget = 40000) {
     if (s.ck.done) return s.tray.length <= maxTray ? path : null;
     if (s.ck.left <= 0 || depth <= 0) return null;
     for (const m of moves(s)) {
-      let t = s, ok = true;
-      for (const a of m) { if (czStep(t, faces, a[1])[0] !== a[0]) { ok = false; break; } t = czApply(t, faces, a); }
-      if (!ok || t.tray.length >= 4) continue;
-      if (!t.ck.done && t.ck.left <= 0) continue;
+      const t = czLine(s, faces, m);         // every tap of the group must keep the try alive
+      if (!t) continue;
       const r = go(t, depth - m.length, path.concat(m), maxTray);
       if (r) return r;
     }
@@ -477,7 +485,7 @@ function coachReview(why) {
   // the little game must end exactly where the real one did
   if (s.a.some((v, i) => v !== G.alive[i]) || s.tray.join() !== G.tray.map(faceOf).join()) return null;
   const free = (st, i) => czTakeable(st, nb, ob, inb, i);
-  const ok = (st, line) => { let x = st; for (const a of line) { if (czStep(x, faces, a[1])[0] !== a[0]) return null; x = czApply(x, faces, a); } return x.tray.length < 4 ? line : null; };
+  const ok = (st, line) => czLine(st, faces, line) ? line : null;
   const knownAt = k => new Set([...(k < seenAt.length ? seenAt[k] : seen), ...before]);
   // a way out at position k (before tap k; k = acts.length is where the try ended)
   const outAt = (k, tapped = -1) => {
@@ -538,6 +546,10 @@ function coachReview(why) {
   const cutAt = found.k >= acts.length ? mine.length : at;
   const good = found.line.filter(a => a[0] !== 'peek').flatMap(a => a.slice(1));
   const B = clock ? { start: enc(states[0]), acts: found.line.concat([['end', 'ok']]), marks: [] } : czSameStart(segA, found.line, faces, good, cutAt);
+  // last check: the right way must be a real game, tap by tap (no tap after the clock ran out, never a
+  // 4th tile), and a clock film must end with the clock tile off the board. Otherwise: no film at all.
+  const endB = czLine(czState(B.start), faces, B.acts.filter(a => a[0] !== 'end' && a[0] !== 'say'));
+  if (!endB || (clock && !(endB.ck && endB.ck.done))) return null;
   const focus = clock ? null : [...new Set(mine.slice(Math.max(0, cutAt - 3)).concat(found.line).flatMap(a => a.slice(1)))];
   const endCap = found.still ? 'czStillOut' : { lose: 'czOwnLose', clock: 'czOwnClock', restart: 'czOwnRestart', stuck: 'czOwnStuck' }[end];
   return {
