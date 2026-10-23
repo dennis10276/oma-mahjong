@@ -361,6 +361,14 @@ regresses149. Both sources remain unchanged; slowest1294.2ms role-only and
 1384.5ms all-fields. Neither option is promoted or combined per level.
 The role-only route is retained for diagnosis rather than discarded: compare
 the first actual public decision divergence on92 before changing its ranking.
+A fresh-process comparison shows that92's first attempt is identical across
+all59 decisions with and without role information; both end in the same
+known-dead position. Divergence is therefore in retry planning, not the first
+clock opening. The role route's later attempts all lose after43 taps with44
+tiles left; identical counts alone do not establish identical later paths.
+The non-passive route loses its second attempt and clears its third. The next
+control tests the already-supported two-carrier continuation-proof threshold,
+with and without role information, before inventing a new ranking penalty.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
