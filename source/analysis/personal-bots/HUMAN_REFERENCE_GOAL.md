@@ -90,12 +90,16 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
-The goal remains unmet. The completed pressure-policy full20-case screen
-passed18/20 with a1511.8ms slowest observation-plus-planning decision. See
-`HUMAN_REFERENCE_PRESSURE_PARITY_2026-10-23.md`, policy source at `aa9795c`,
-fingerprint `bab967f44115c22b945e6b16db7d7b9ab8dea442e198066e894a0a540efd5be7`.
-All original134/141/143/147 focus levels and149 clear on try1.137 and150 fail.
-These are development boards, not the complete catalog or unseen20-level gate.
+The goal remains unmet. The completed frozen full-catalog screen passes126/140,
+slowest1516.1ms. Every recorded first clear17-156 is included. See
+`HUMAN_REFERENCE_CATALOG_CURRENT_2026-10-23.md`, source `040a5e8`, fingerprint
+`59599bbbfb2e2d66c78f735956c1eb8e87bf66d0db19e2ad1176756563f625a5`;
+unchanged throughout execution. All original134/141/143/147 focus levels pass
+on try1. Failures:50,81,84,92,93,99,102,107,112,121,124,125,137,150. Recorded
+openings pass49/57; original-version tables19/24; explicitly non-identical current
+fixed substitutes24/24; current classic/aspect1.5 substitutes34/35. This is still
+development evidence, not the unseen20-level gate. The metadata-only refresh
+still finds140 clears, newest156; no future board was opened.
 
 Validated general changes distinguish actual unknown boundary taps from passive
 reveals, refuse to borrow safety from an unrelated free match, preserve complete
@@ -103,14 +107,16 @@ known face-up pairs before beam pruning, and compare observed side/thaw routes
 for both clocks and tray recovery. Dependency costs remain ordering heuristics,
 never lower bounds, route witnesses, safety certificates or impossibility proofs.
 
-The current `040a5e8` source fixes remembered ice strength growing while a tile
-remains covered and removes obsolete clock-cone preference after the clock is
-gone. A production-backed control now prefers an outside-cone recovery match
-after deadline removal.38/38 offline checks pass, including192 baseline/research
-concealed-world controls. Its10-case focused screen passes8/10, retaining all
-original focus clears and failing137/150; slowest1504.1ms. A complete-catalog
-coverage run is next, with planner sources held unchanged during execution.
-No profile is chosen by level, human outcome or hidden information.
+Current `4d9f249` adds a rule-supported takeability proof for an unobserved role:
+the origin frame must be known, both actually observed keys removed, and two
+actually observed starting ice-neighbors removed. Under the declared maximum2
+ice hits and0-or-2-key contract, every supported blocker is then discharged.
+The role/picture remains unknown; only legal availability is proved. Exhaustive
+public-world controls and original-engine closed-tile replays validate it.
+39/39 offline tests pass. On the14 prior failures it clears92 on try3 versus5,
+and150 on try2 versus3; the other12 still fail. Recent-level regression checking
+is pending, so no128/140 mixed-source score or complete-set improvement is claimed.
+No profile is selected by level, human outcome or hidden information.
 
 The earlier ice-budget-fixed source `b2f8845` also clears all six recorded
 levels151-156 on try1 (strictly beating every2+ target), with1552.5ms slowest.
