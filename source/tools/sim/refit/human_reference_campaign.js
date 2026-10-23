@@ -11,10 +11,12 @@ const { reference } = require('./public_witness_reference.js');
 const { REFERENCE_PARAMETERS } = require('./public_witness_search.js');
 const { advance } = require('./known_tray_plan.js');
 const { aliveSignature } = require('./public_alive_signature.js');
+const { knownCleanup } = require('./public_unique_cleanup.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
+  assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
@@ -107,6 +109,14 @@ function createHumanController(tiles, options = {}) {
             partner.index !== action.index && current.pictures[partner.index] === picture));
         });
         if (ready.length) actions = ready;
+      }
+      const cleanup = options.uniqueKnownCleanup ? knownCleanup(geometry, current, actions) : null;
+      if (cleanup) {
+        manualChoice = true; resetPlanner();
+        const index = cleanup.path[0], won = !cleanup.state.alive.some(Boolean) && !cleanup.state.tray.length;
+        return { plan: { index, path: cleanup.path, goal: won ? 'win' : 'knownUniqueCleanup', knownWin: won,
+          knownDead: false, knownProgress: cleanup.removed, information: false, boundary: !won, nodes: 0 },
+        predicted: advance(geometry, current, index) };
       }
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report(), predicted = advance(geometry, current, plan.index);

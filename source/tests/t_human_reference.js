@@ -12,6 +12,7 @@ const modules = [
   'test_human_information_invariance.js',
   'test_public_analysis_cache.js',
   'test_public_diverse_beam.js',
+  'test_public_unique_cleanup.js',
   'test_public_uncertain_safety.js',
   'test_public_information_tap_safety.js',
   'test_public_pair_flexibility.js',
