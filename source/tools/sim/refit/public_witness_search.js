@@ -12,6 +12,7 @@ const { opensKnownFrontier } = require('./public_reopen_frontier.js');
 const { selectBeam } = require('./public_diverse_beam.js');
 const { diverseWitnessSearch } = require('./public_diverse_witness.js');
 const { informationInCone } = require('./public_exposure_frontier.js');
+const { admitPath } = require('./public_path_budget.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -178,7 +179,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const provedDeadRoots = new Set();
   const continuationProof = { calls: 0, nodes: 0, bounded: 0, certified: 0 };
   const recoveryRankWidths = new Set();
-  const visited = new Set([keyOf(game, state)]);
+  const visited = new Map([[keyOf(game, state), 0]]);
 
   const evaluate = (position, path, information = false, targetIndex = -1, executesUnknownTap = false, informationTargets = null) => {
     const metricsKey = cachePublicAnalysis ? keyOf(game, position) : null;
@@ -316,7 +317,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         }
         if (passiveInformation) unknown++;
         const identity = keyOf(game, moved.state);
-        if (!visited.has(identity)) { visited.add(identity); next.push(candidate); }
+        if (admitPath(visited, identity, path.length)) next.push(candidate);
         const preparesKnownPair = !moved.removed || moved.removed === 1 && moved.state.tray.includes(settled.pictures[index]);
         if (knownPairMacros && preparesKnownPair && path.length < tapLimit) {
           const pairedActions = physical.legal(game, moved.state).free.filter(mate => mate !== index
@@ -334,7 +335,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             if (paired.win) { best = pairedCandidate; return finish(); }
             if (pairedInformation) unknown++;
             const pairedIdentity = keyOf(game, paired.state);
-            if (!visited.has(pairedIdentity)) { visited.add(pairedIdentity); next.push(pairedCandidate); }
+            if (admitPath(visited, pairedIdentity, pairedCandidate.path.length)) next.push(pairedCandidate);
           }
         }
       }

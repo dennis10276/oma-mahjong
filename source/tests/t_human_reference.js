@@ -15,6 +15,7 @@ const modules = [
   'test_public_diverse_witness.js',
   'test_public_unique_cleanup.js',
   'test_public_exposure_frontier.js',
+  'test_public_path_budget.js',
   'test_public_uncertain_safety.js',
   'test_public_information_tap_safety.js',
   'test_public_pair_flexibility.js',
