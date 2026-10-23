@@ -56,6 +56,12 @@ dependency route cache:`0ead64d`; information audit:`2c10828`.
 **52/52 offline tests pass** in approximately4s, including2688 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The newer runtime has NOT completed a fresh140-level run.
+An isolated `public_known_recovery.js` helper now constructs ordinary one/two-tap
+tray matches, open twins and known pairs, including a mate thawed by the first
+removal.144 standalone production/replay checks pass. It is NOT imported by
+the running actor/search and no campaign gain is claimed. The new registry
+test is staged; rerun the complete suite after the frozen full runs finish
+(the last executed complete suite remains52/52).
 
 The three-action role-payoff screen completed7/8, source unchanged, slowest
 1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
