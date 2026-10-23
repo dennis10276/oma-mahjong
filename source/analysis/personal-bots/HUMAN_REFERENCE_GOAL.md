@@ -57,15 +57,12 @@ dependency route cache:`0ead64d`; information audit:`2c10828`.
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The newer runtime has NOT completed a fresh140-level run.
 
-Active serial job: unified `shortInformation:'carrierAware'`, first with
-`passiveInformation:'roles'`, then without passive information, same8 controls:
-50,92,121,137,142,147,149,150.
-Tool session35011; initially PID35336. Revalidate its actual handle/process.
+Active serial diagnostic: compare carrier-aware role information against the
+same role-information profile without short-information ordering, first50,
+then147, attempt1. Tool session71376. Revalidate its actual handle/process.
 Fingerprint:`9d3b0d0e813cf54f737a8d618ace8254d0f9efca5485a5214ea19eb261009f94`.
-Reports pending:
-`HUMAN_REFERENCE_CARRIER_ROLE_INFORMATION_2026-10-23.md`,
-`HUMAN_REFERENCE_CARRIER_INFORMATION_2026-10-23.md`.
-Hold runtime unchanged until BOTH finish. One CPU-heavy simulation at a time.
+Carrier-aware screens have finished and their reports are retained.
+Hold runtime unchanged until BOTH comparison children finish. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
 Research baseline settings (not a released/default/frozen winner):
@@ -85,11 +82,13 @@ Research baseline settings (not a released/default/frozen winner):
 | Frontier-only role information |6/8; restores92, loses121 |Not promoted |
 | Short information, with roles |6/8;92try2,121try1,137try1 |Real tray losses on50/147 |
 | Short information, without roles |6/8; same new successful-try counts |Also loses50/147, not a numerical cap |
-| Carrier-aware short information |RUNNING |No result/combined score claimed |
+| Carrier-aware short information, roles |6/8;92try2,121try3,137try1 |Still loses50/147; slowest1511.7ms |
+| Carrier-aware short information, no roles |5/8;121fails again |Still loses50/147; slowest1507.8ms |
 
 Corresponding dated reports:KEY_RECOVERY, ROUTE_CACHE, RECOVERY_ROLE_INFORMATION,
 RECOVERY_ALL_INFORMATION, ROLE_DEEP_PROOF, DEEP_PROOF,
-FRONTIER_ROLE_INFORMATION, SHORT_ROLE_INFORMATION and SHORT_INFORMATION,
+FRONTIER_ROLE_INFORMATION, SHORT_ROLE_INFORMATION, SHORT_INFORMATION,
+CARRIER_ROLE_INFORMATION and CARRIER_INFORMATION,
 all prefixed `HUMAN_REFERENCE_` and suffixed `_2026-10-23.md`.
 Each preserves its exact settings, source fingerprint, provenance and slowest move.
 
