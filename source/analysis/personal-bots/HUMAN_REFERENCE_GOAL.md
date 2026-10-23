@@ -340,6 +340,19 @@ remain81/84/93/99/102/107/112/121/124/125/137. The original four fixes and all
 subset and full runs, this is not proof of a robust full129/140 score or a
 causal attempt-count gain from the macro. The next optimization removes repeated
 public dependency calculations while retaining fixed-budget plan parity.
+A per-search dependency-route cache now keys only the actual fixed-geometry
+inputs: alive layout, relief state and target. It never keys on or reads hidden
+pictures, peeks, tray contents or future reveals, and is recreated for every
+search/observation snapshot.768 direct raw/cache comparisons cover mutable
+alive arrays, targets and relief; integrated clock/nonclock fixed-budget
+comparisons retain identical nodes, paths and conclusions while reusing18
+dependency calculations.49/49 offline tests pass.
+The cached42-case screen also passes31/42, source unchanged
+`9c24333dae913bdcf57789e285be5c7016aae236570292dc636c79be11ffac2c`,
+slowest1510.0ms. No new count gain or measured full-catalog speedup is claimed.
+The next controlled combination revisits passive-information planning, which
+previously cleared121 but had regressions, on the corrected inspection/key
+recovery/search stack. This is not a per-level selector or best-of merge.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
