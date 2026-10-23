@@ -200,7 +200,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const matchedTiles = initialLeft + state.tray.length - left - position.tray.length;
     const inCone = informationInCone(cone, targetIndex, informationTargets);
 
-    const safeInfo = information && informationTraySafe(position, targetIndex, executesUnknownTap, room.allowed);
+    const passiveRiskNeutral = informationTargets === null || position.tray.length <= state.tray.length;
+    const safeInfo = information && passiveRiskNeutral && informationTraySafe(position, targetIndex, executesUnknownTap, room.allowed);
 
     const goal = won ? 'win' : exit && room.safe ? 'safeClockExit'
       : (!clocked && progress >= settings.progress && !position.tray.length) ? 'knownProgress'

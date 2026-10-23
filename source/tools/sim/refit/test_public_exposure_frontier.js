@@ -47,6 +47,9 @@ function test() {
     const informed = search(publicGame, state, [{ index: 1 }], options);
     assert(informed.information && !informed.knownDead && !informed.knownWin && informed.unknownTransitions > 0);
     assert.deepEqual(informed.path, [1, 3], 'Value newly readable information without discarding a continuation using only previously known pictures');
+    const carried = search(publicGame, state, [{ index: 1 }], { ...options, taps: 1 });
+    assert.equal(carried.goal, 'boundedProgress', 'Uncovering information by adding an unmatched carrier must not receive risk-neutral information priority');
+    assert(carried.information && !carried.knownDead);
     if (canonicalPlan === null) canonicalPlan = informed; else assert.deepEqual(informed, canonicalPlan);
     const clockGame = { ...publicGame, clock: { i: 2, n: 3 } };
     const clockPlan = search(clockGame, state, [{ index: 1 }], { ...options, taps: 4, nodes: 64, beam: 8 });
