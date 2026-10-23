@@ -11,11 +11,13 @@ function test() {
     tray: [5, 6, 7], moves: 3, openPeek: -1, relieved: false, arriving: [] };
   const actions = tiles.map((tile, index) => ({ index })), now = Date.now;
   try {
-    let ticks = 0;
-    Date.now = () => ++ticks;
-    const limited = search(game, state, actions, { decisionMs: 1, nodes: 4096 });
-    assert(limited.boundary); assert(!limited.knownDead); assert(!limited.knownWin);
-    assert(actions.some(action => action.index === limited.index));
+    for (const diverseWitness of [false, true]) {
+      let ticks = 0;
+      Date.now = () => ++ticks;
+      const limited = search(game, state, actions, { decisionMs: 1, nodes: 4096, diverseWitness });
+      assert(limited.boundary); assert(!limited.knownDead); assert(!limited.knownWin);
+      assert(actions.some(action => action.index === limited.index));
+    }
     for (const proof of [analyze, analyzeContinuation]) {
       const expired = proof(game, state, actions, 128, 0);
       assert.equal(expired.reason, 'bounded'); assert(!expired.knownDead);

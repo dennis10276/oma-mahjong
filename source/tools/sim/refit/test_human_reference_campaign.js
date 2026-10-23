@@ -13,6 +13,10 @@ function test() {
   Object.defineProperty(simple, 'seed', { get() { throw Error('Read actual level seed'); } });
   const won = playHumanCampaign(simple);
   assert.equal(won.wonOn, 1); assert.equal(won.verifiedTaps, won.attempts[0].taps); assert(won.controls > 0);
+  const cleaned = playHumanCampaign(simple, { planning: { uniqueKnownCleanup: true, diverseWitness: true }, captureDecisions: true });
+  assert.equal(cleaned.wonOn, 1); assert.equal(cleaned.verifiedTaps, cleaned.attempts[0].taps);
+  assert.equal(cleaned.attempts[0].decisions[0].plan.goal, 'knownUniqueCleanup');
+  assert.throws(() => createHumanController(simple.tiles, { uniqueKnownCleanup: 'yes' }));
   const hidden = gameOf([1, 1, 2, 2], [1, 1, 1, 1]);
   const inspected = playHumanCampaign(hidden); assert.equal(inspected.wonOn, 1); assert(inspected.verifiedTaps >= 4);
   const discovery = playHumanCampaign(hidden, { planning: { inspectBeforeCommit: true } });

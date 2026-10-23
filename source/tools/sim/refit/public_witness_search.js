@@ -10,6 +10,7 @@ const { goalRoutes } = require('./public_goal_routes.js');
 const { informationTraySafe } = require('./public_information_tray_safety.js');
 const { opensKnownFrontier } = require('./public_reopen_frontier.js');
 const { selectBeam } = require('./public_diverse_beam.js');
+const { diverseWitnessSearch } = require('./public_diverse_witness.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -389,7 +390,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   }
 }
 
-const guarded = guardedSearch(searchKnown);
+const guarded = diverseWitnessSearch(guardedSearch(searchKnown));
 function search(game, state, actions, options = PARAMETERS) {
   const decisionMs = options.decisionMs;
   assert(decisionMs === undefined || Number.isFinite(decisionMs) && decisionMs > 0 && decisionMs <= 2000);
