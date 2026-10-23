@@ -10,12 +10,12 @@
   const local = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
   const R = local();   // id -> { stars, note, tries, wins, results: [] }
   const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(R)); } catch (e) { } };
-  const rec = id => (R[id] = R[id] || { stars: 0, note: '', tries: 0, wins: 0, results: [] });
+  const rec = id => (R[id] = R[id] || { stars: 0, note: '', starts: 0, tries: 0, wins: 0, results: [] });
   async function push(id) {
     keep();
     if (!db) return;
     const it = IDEAS.find(x => x.id === id), r = rec(id);
-    try { await db.doc('ratings/idea-' + id).set({ id, kind: it.kind, title: it.title, shape: it.shape, made: LAB.made, stars: r.stars, note: r.note, tries: r.tries, wins: r.wins, results: r.results.slice(-30), t: Date.now() }); setSync(true); }
+    try { await db.doc('ratings/idea-' + id).set({ id, kind: it.kind, level: it.level || null, title: it.title, shape: it.shape, made: LAB.made, m: it.m || null, stars: r.stars, note: r.note, starts: r.starts || 0, tries: r.tries, wins: r.wins, results: r.results.slice(-30), t: Date.now() }); setSync(true); }
     catch (e) { setSync(false); }
   }
   // the database, when this runs as an artifact (null elsewhere: ratings stay here)
@@ -25,7 +25,7 @@
       db = await claude.use('db');
       if (!db) return;
       const snap = await db.collection('ratings').get();
-      for (const d of snap.docs) { const x = d.data(); if (x && x.id) Object.assign(rec(x.id), { stars: x.stars || 0, note: x.note || '', tries: x.tries || 0, wins: x.wins || 0, results: x.results || [] }); }
+      for (const d of snap.docs) { const x = d.data(); if (x && x.id) Object.assign(rec(x.id), { stars: x.stars || 0, note: x.note || '', starts: x.starts || 0, tries: x.tries || 0, wins: x.wins || 0, results: x.results || [] }); }
       keep(); render(); setSync(true);
     } catch (e) { db = null; }
   })();
@@ -60,12 +60,12 @@
   function render() {
     const T = LAB.target || {};
     panel.innerHTML = `<h1>Level lab</h1>
-      <p class="sub">New piles without towers, normal tile size. Each idea combines the specials in its own way. Play it as often as you like, then rate how clever the combination is. These ideas are not in the game, and playing here changes nothing in the game or on the dashboard.<br><span id="labSync">${db ? '' : 'Ratings are kept on this device.'}</span></p>
+      <p class="sub">New piles without towers, normal tile size. Each idea combines the specials in its own way, as a hard and a very hard version. Play it as often as you like, then rate how clever the combination is. These ideas are not in the game, and playing here changes nothing in the game or on the dashboard.<br><span id="labSync">${db ? '' : 'Ratings are kept on this device.'}</span></p>
       ${IDEAS.map(it => { const r = rec(it.id), m = it.m || {}, d = m.Dennisisdebeste, md = m['Mrs. Doubtfire'];
         return `<div class="lab-card" data-id="${it.id}">
         <h2>Idea ${it.id} · ${esc(it.title)}</h2>
         <p>${esc(it.idea)}</p>
-        <div class="lab-meta">${it.tiles} tiles · test players win the first try: Dennis ${d ? pct(d.first) : '?'}, Mrs. Doubtfire ${md ? pct(md.first) : '?'} (a level near ${T.level || 200}: ${T.Dennisisdebeste ? pct(T.Dennisisdebeste.first) : '?'} / ${T['Mrs. Doubtfire'] ? pct(T['Mrs. Doubtfire'].first) : '?'})${r.tries ? ` · your tries: ${r.tries}, won ${r.wins}` : ''}</div>
+        <div class="lab-meta">${it.tiles} tiles${it.specials ? ` · ${it.specials.down} face down, ${it.specials.ice} frozen, ${it.specials.locks} locked${it.specials.clockSpare !== null && it.specials.clockSpare !== undefined ? `, clock with ${it.specials.clockSpare} spare move${it.specials.clockSpare === 1 ? '' : 's'}` : ''}` : ''} · test players win the first try: Dennis ${d ? pct(d.first) : '?'}, Mrs. Doubtfire ${md ? pct(md.first) : '?'}${r.starts || r.tries ? ` · you: started ${r.starts || 0}×, finished ${r.tries}, won ${r.wins}` : ''}</div>
         <div class="lab-row"><button class="lab-play">Play</button>
           <span class="lab-stars">${[1, 2, 3, 4, 5].map(k => `<button data-k="${k}" class="${r.stars >= k ? 'on' : ''}" aria-label="${k} stars">⭐</button>`).join('')}</span>
           <span class="lab-saved"></span></div>
@@ -92,6 +92,7 @@
   }
   function play(it) {
     panel.classList.add('hidden');
+    rec(it.id).starts = (rec(it.id).starts || 0) + 1; push(it.id);
     begin({ mode: 'lab', lab: it.id, key: 'X' + it.id, track: '', level: 201, title: 'Idea ' + it.id, fixedAspect: 1.6, makeSpec: () => specOf(it) });
   }
   // a finished try: counted for the idea; a win shows the lab's own end screen (no stars, no next level)

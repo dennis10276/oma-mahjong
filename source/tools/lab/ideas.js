@@ -159,81 +159,114 @@ const IDEAS = {
   },
   deepKeys: {
     title: 'Locks in plain sight',
-    idea: 'Six tiles on top are locked from the start; the keys lie deep in the middle of the pile.',
+    idea: 'Tiles on top are locked from the start; both keys lie deep inside the pile under ordinary tiles. Dig down to the keys without filling the tray.',
     make(b, c) {
-      // keys under other tiles, completed as late as still leaves visible tiles to lock
-      const keys = c.pairs.filter(([a, b2, k]) => k >= 6 && c.nb.above[a].length && c.nb.above[b2].length && !special(b, a) && !special(b, b2))
-        .map(p => ({ p, vis: c.P.filter(i => c.pos[i] > p[2] && c.top[i] && !special(b, i)).length })).filter(o => o.vis >= 5).sort((u, v) => v.p[2] - u.p[2])[0];
-      if (!keys) return null;
-      const kk = keys.p, locks = c.P.filter(i => c.pos[i] > kk[2] && c.top[i] && !special(b, i) && i !== kk[0] && i !== kk[1]).slice(0, 6);
-      const keysArr = kk; keysArr.length = 3;
-      return (x => { x.obst = { ice: Object.fromEntries(Object.entries(x.obst && x.obst.ice || {}).filter(([i]) => ![...locks, kk[0], kk[1]].includes(+i))), locks, keys: [kk[0], kk[1]] }; noDown(x, [...locks, kk[0], kk[1]]); return valid(x) ? x : null; })(clone(b));
-      const x = clone(b);
-      x.obst = { ice: Object.fromEntries(Object.entries(x.obst && x.obst.ice || {}).filter(([i]) => ![...locks, keys[0], keys[1]].includes(+i))), locks, keys: [keys[0], keys[1]] };
-      noDown(x, [...locks, keys[0], keys[1]]);
-      return valid(x) ? x : null;
+      // two keys of one picture, both under other tiles and low in the pile; the locks: tiles you can see
+      // at the start, not on the way down to the keys. A new way through is searched with the locks on.
+      const deep = i => c.nb.above[i].length && c.tiles[i].z <= 1 && !special(b, i);
+      const byFace = {}; for (let i = 0; i < c.n; i++) if (deep(i)) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+      const pairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).sort((p, q) => Math.abs(c.tiles[q[0]].x - c.tiles[q[1]].x) - Math.abs(c.tiles[p[0]].x - c.tiles[p[1]].x));
+      const coverOf = i => { const s2 = new Set(), st = [i]; while (st.length) { const j = st.pop(); for (const a of c.nb.above[j]) if (!s2.has(a)) { s2.add(a); st.push(a); } } return s2; };
+      for (const kk of pairs.slice(0, 12)) {
+        const way = new Set([...coverOf(kk[0]), ...coverOf(kk[1])]);
+        const locks = c.P.filter(i => c.top[i] && !way.has(i) && !kk.includes(i) && !special(b, i)).slice(0, 6);
+        if (locks.length < 5) continue;
+        const x = clone(b);
+        x.obst = { ice: Object.fromEntries(Object.entries(x.obst && x.obst.ice || {}).filter(([i]) => ![...locks, ...kk].includes(+i))), locks, keys: [kk[0], kk[1]] };
+        noDown(x, [...locks, ...kk]);
+        const y = fix(x);
+        if (y) return y;
+      }
+      return null;
     },
   },
 };
 
-// ---------- difficulty: towards a level near 200 ----------
-// the idea's own specials stay; around them: face-down tiles, extra ice, the clock, pictures
-function nudge(b, target, seed, keep) {
+// a change that breaks the stored way through: search a new one with the rules on (the clock keeps its
+// spare moves on the new way)
+function fix(y) {
+  if (valid(y)) return y;
+  const g = gameG(y), al = new Uint8Array(y.tiles.length).fill(1);
+  const path = L.solve(g.tiles, g.nb, y.faces, al, [], 40000, g.rules);
+  if (!path || path.length !== y.tiles.length) return null;
+  const z = { ...y, solution: path };
+  if (y.clock) { const spare = y.clock.n - (y.solution.indexOf(y.clock.i) + 1); z.clock = { i: y.clock.i, n: path.indexOf(y.clock.i) + 1 + Math.max(0, spare) }; }
+  return valid(z) ? z : null;
+}
+
+// ---------- difficulty ----------
+// the idea's own specials stay; around them: face-down tiles, ice, locks, the clock (down to no spare
+// move at all) and pictures (a tile on its own twin fills the tray). Aimed at first tries only.
+function nudge(b, target, seed, keep, steps = 24) {
   const r = rngOf(seed);
-  let m = measure(b, 120, seed), x = b;
-  const off = mm => NAMES.reduce((s, n) => s + (mm[n].first - target[n].first) + (ease(mm[n]) - ease(target[n])), 0) / 4;
-  for (let k = 0; k < 16 && Math.abs(off(m)) > 0.025; k++) {
+  let m = measure(b, 160, seed), x = b;
+  const off = mm => NAMES.reduce((s, n) => s + (mm[n].first - target[n].first), 0) / 2;
+  for (let k = 0; k < steps && Math.abs(off(m)) > 0.02; k++) {
     const dir = off(m); let best = null;
-    for (let q = 0; q < 4; q++) {
-      const y = clone(x), c = ctxOf(y), u = r();
+    for (let q = 0; q < 5; q++) {
+      let y = clone(x); const c = ctxOf(y), u = r();
       const pick = a => a[Math.floor(r() * a.length)];
       if (dir > 0) {   // too easy
-        if (u < 0.35) { const f = c.P.filter(i => !c.free0[i] && !special(y, i) && !y.down.includes(i)); if (!f.length) continue; for (let t = 0; t < 1 + Math.floor(Math.abs(dir) * 20); t++) { const i = pick(f); if (!y.down.includes(i)) y.down.push(i); } }
-        else if (u < 0.6 && y.clock) { const base = c.pos[y.clock.i] + 1; if (y.clock.n <= base + 1) continue; y.clock.n--; }
-        else if (u < 0.85) { const f = c.P.filter(i => !special(y, i) && !y.down.includes(i) && iceOK(c, i, 1) && !c.inb[i].some(j => (y.obst.ice || {})[j])); if (!f.length) continue; y.obst.ice = { ...(y.obst.ice || {}), [pick(f)]: 1 }; }
-        else { const ks = y.obst.keys || []; if (!ks.length) continue; const kpos = Math.max(c.pos[ks[0]], c.pos[ks[1]]); const f = c.P.filter(i => c.pos[i] > kpos + 1 && !special(y, i) && !y.down.includes(i)); if (!f.length) continue; y.obst.locks = [...y.obst.locks, pick(f)]; }
+        if (u < 0.25) { const f = c.P.filter(i => !c.free0[i] && !special(y, i) && !y.down.includes(i)); if (!f.length) continue; for (let t = 0; t < 1 + Math.floor(dir * 25); t++) { const i = pick(f); if (!y.down.includes(i)) y.down.push(i); } }
+        else if (u < 0.45 && y.clock) { const base = c.pos[y.clock.i] + 1; if (y.clock.n <= base) continue; y.clock.n--; }
+        else if (u < 0.6) { const f = c.P.filter(i => !special(y, i) && !y.down.includes(i) && !c.inb[i].some(j => (y.obst.ice || {})[j])); if (!f.length) continue; y.obst.ice = { ...(y.obst.ice || {}), [pick(f)]: r() < 0.4 ? 2 : 1 }; }
+        else if (u < 0.75) { if (!(y.obst.keys || []).length) continue; const f = c.P.filter(i => !special(y, i) && !y.down.includes(i)); if (!f.length) continue; y.obst.locks = [...y.obst.locks, pick(f)]; }
+        else {           // a tile right under its twin
+          const d = Math.floor(r() * c.n), ups = c.nb.above[d]; if (!ups.length) continue; const up = pick(ups);
+          if (y.faces[d] === y.faces[up]) continue; const xs = []; for (let i = 0; i < c.n; i++) if (i !== up && i !== d && y.faces[i] === y.faces[up]) xs.push(i); if (!xs.length) continue;
+          const o = pick(xs); [y.faces[d], y.faces[o]] = [y.faces[o], y.faces[d]];
+        }
       } else {         // too hard
-        if (u < 0.45) { const f = y.down.filter(i => !keep.includes(i)); if (!f.length) continue; y.down = y.down.filter(i => i !== pick(f)); }
-        else if (u < 0.7 && y.clock) { const base = c.pos[y.clock.i] + 1; if (y.clock.n >= base + 6) continue; y.clock.n++; }
-        else { const f = Object.keys(y.obst.ice || {}).map(Number).filter(i => !keep.includes(i)); if (!f.length) continue; const i = pick(f); const ice = { ...y.obst.ice }; delete ice[i]; y.obst.ice = ice; }
+        if (u < 0.4) { const f = y.down.filter(i => !keep.includes(i)); if (!f.length) continue; y.down = y.down.filter(i => i !== pick(f)); }
+        else if (u < 0.65 && y.clock) { y.clock.n++; }
+        else if (u < 0.85) { const f = Object.keys(y.obst.ice || {}).map(Number).filter(i => !keep.includes(i)); if (!f.length) continue; const i = pick(f); const ice = { ...y.obst.ice }; delete ice[i]; y.obst.ice = ice; }
+        else { const f = (y.obst.locks || []).filter(i => !keep.includes(i)); if (!f.length) continue; y.obst.locks = y.obst.locks.filter(i => i !== pick(f)); }
       }
-      if (!valid(y)) continue;
-      const my = measure(y, 120, seed + k * 10 + q + 1);
+      y = fix(y); if (!y) continue;
+      const my = measure(y, 160, seed + k * 10 + q + 1);
       if (!best || Math.abs(off(my)) < Math.abs(off(best.m))) best = { y, m: my };
     }
     if (best && Math.abs(off(best.m)) < Math.abs(off(m))) { x = best.y; m = best.m; }
+    if (process.env.VERBOSE) console.log(`  step ${k}: Dennis ${(m.Dennisisdebeste.first * 100).toFixed(0)}% Mrs D ${(m['Mrs. Doubtfire'].first * 100).toFixed(0)}%`);
   }
-  return { board: x, m: measure(x, 300, seed + 99) };
+  return { board: x, m: measure(x, 400, seed + 99) };
 }
 
 // ---------- make them ----------
-const COUNT = +(process.argv[2] || 8);
-const plan = [
-  ['lockedClock', 86], ['frozenGuards', 86], ['keysAcross', 88], ['iceChain', 84],
-  ['blindTwins', 86], ['deepKeys', 88], ['lockedClock', 70], ['iceChain', 70],
-].slice(0, COUNT);
-const target = PLAN.levels.find(l => l.lv === 201).target;
-const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 60 }, (_, k) => 'blob' + (9001 + k * 37))];
-const out = [], usedShapes = new Set();
-let si = 0;
-for (const [kind, N] of plan) {
-  const I = IDEAS[kind]; let made = null;
-  for (let tries = 0; tries < 40 && !made; tries++) {
-    const shape = shapes[(si++) % shapes.length]; if (usedShapes.has(shape)) continue;
-    const p = newPile(shape, N, 4, 1000 + si * 13); if (!p) continue;
-    const d = Hard.makeNow(201, 1.6, 1, si, { tiles: p.tiles });
-    if (!d.solution || !valid(d)) continue;
-    const base = { tiles: d.tiles, faces: d.faces.slice(), down: d.down.slice(), gold: (d.gold || []).slice(), obst: d.obst ? clone(d.obst) : { ice: {}, locks: [], keys: [] }, clock: d.clock ? { ...d.clock } : null, solution: d.solution.slice() };
-    const x = I.make(base, ctxOf(base), rngOf(si * 31 + 7));
-    if (!x) continue;
-    // the idea's specials (what differs from the designer's board) are kept while nudging
-    const keepT = [...(x.obst.locks || []), ...(x.obst.keys || []), ...(x.clock ? [x.clock.i] : []), ...Object.keys(x.obst.ice || {}).map(Number).filter(i => !(base.obst.ice || {})[i]), ...x.down.filter(i => !base.down.includes(i))];
-    const t = nudge(x, target, 7001 + si, keepT);
-    made = { id: out.length + 1, kind, title: I.title + (N < 80 ? ' (small board)' : ''), idea: I.idea + (N < 80 ? ` Only ${N} tiles.` : ''), shape, like: +p.like.toFixed(2), tiles: N, board: t.board, m: t.m };
-    usedShapes.add(shape);
-    console.log(`idea ${made.id} ${kind} on ${shape} (${N} tiles, ${Math.round(p.like * 100)}% like a played level): Dennis ${(t.m.Dennisisdebeste.first * 100).toFixed(0)}% / Mrs D ${(t.m['Mrs. Doubtfire'].first * 100).toFixed(0)}% first try (level 201: ${(target.Dennisisdebeste.first * 100).toFixed(0)}% / ${(target['Mrs. Doubtfire'].first * 100).toFixed(0)}%)`);
+/* node ideas.js make <first id> <kind:tiles:level> ...   (level: hard | veryhard)
+   node ideas.js merge                                    writes lab-ideas.js from tools/lab/ideas-out
+   Dennis (2026-10-23) after the first round: "They need to be tuned way harder so that there is almost no
+   room for error". hard: the test players win about 1 in 8 / 1 in 20 first tries; very hard: 1 in 20 / 1 in 50. */
+const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 } };
+const OUTD = path.join(__dirname, 'ideas-out');
+const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 80 }, (_, k) => 'blob' + (9001 + k * 37))];
+if (process.argv[2] === 'merge') {
+  const ideas = fs.readdirSync(OUTD).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8'))).sort((a, b) => a.id - b.id);
+  fs.writeFileSync(path.join(__dirname, 'lab-ideas.js'), '/* made by tools/lab/ideas.js */\nconst LAB_IDEAS = ' + JSON.stringify({ made: new Date().toISOString(), levels: LEVELS, ideas }) + ';\n');
+  console.log(`lab-ideas.js: ${ideas.length} ideas`);
+} else if (process.argv[2] === 'make') {
+  fs.mkdirSync(OUTD, { recursive: true });
+  let id = +process.argv[3];
+  for (const spec of process.argv.slice(4)) {
+    const [kind, N0, lvl] = spec.split(':'), N = +N0, I = IDEAS[kind], tgt = LEVELS[lvl];
+    const tfull = { Dennisisdebeste: { first: tgt.Dennisisdebeste }, 'Mrs. Doubtfire': { first: tgt['Mrs. Doubtfire'] } };
+    let made = null, si = id * 7;
+    for (let tries = 0; tries < 30 && !made; tries++) {
+      const shape = shapes[(si++) % shapes.length];
+      const p = newPile(shape, N, 4, 1000 + si * 13); if (!p) continue;
+      const d = Hard.makeNow(230, 1.6, 1, si, { tiles: p.tiles });
+      if (!d.solution || !valid(d)) continue;
+      const base = { tiles: d.tiles, faces: d.faces.slice(), down: d.down.slice(), gold: (d.gold || []).slice(), obst: d.obst ? clone(d.obst) : { ice: {}, locks: [], keys: [] }, clock: d.clock ? { ...d.clock } : null, solution: d.solution.slice() };
+      const x = I.make(base, ctxOf(base), rngOf(si * 31 + 7));
+      if (!x) continue;
+      const keepT = [...(x.obst.locks || []), ...(x.obst.keys || []), ...(x.clock ? [x.clock.i] : []), ...Object.keys(x.obst.ice || {}).map(Number).filter(i => !(base.obst.ice || {})[i]), ...x.down.filter(i => !base.down.includes(i))];
+      const t = nudge(x, tfull, 7001 + si, keepT);
+      const ck = t.board.clock ? t.board.clock.n - (t.board.solution.indexOf(t.board.clock.i) + 1) : null;
+      made = { id, kind, level: lvl, title: I.title + (lvl === 'veryhard' ? ' · very hard' : ' · hard') + (N < 80 ? ' · small board' : ''), idea: I.idea + (N < 80 ? ` Only ${N} tiles.` : ''), shape, like: +p.like.toFixed(2), tiles: N, board: t.board, m: t.m,
+        specials: { down: t.board.down.length, ice: Object.keys(t.board.obst.ice || {}).length, locks: (t.board.obst.locks || []).length, clockSpare: ck } };
+      console.log(`idea ${id} ${kind} ${lvl} on ${shape} (${N} tiles): Dennis ${(t.m.Dennisisdebeste.first * 100).toFixed(0)}% / Mrs D ${(t.m['Mrs. Doubtfire'].first * 100).toFixed(0)}% first try; ${JSON.stringify(made.specials)}`);
+    }
+    if (made) fs.writeFileSync(path.join(OUTD, id + '.json'), JSON.stringify(made)); else console.log(`no place for ${kind}`);
+    id++;
   }
-  if (made) out.push(made); else console.log(`no place for ${kind}`);
 }
-fs.writeFileSync(path.join(__dirname, 'lab-ideas.js'), '/* made by tools/lab/ideas.js */\nconst LAB_IDEAS = ' + JSON.stringify({ made: new Date().toISOString(), target: { level: 201, ...target }, ideas: out }) + ';\n');
-console.log(`wrote ${out.length} ideas`);
