@@ -280,6 +280,20 @@ controls cover normal/Joker identities, tray/twin matches and terminal outcomes;
 a retry integration check preserves that legitimate identity while the role
 stays unknown.48/48 offline tests pass. Campaign effects are being isolated
 before combining this with inspection-priority changes.
+That canonical screen and an explicit memory-disabled diagnostic both pass3/5
+(92/111/150), with121/124 still failing. No attempt-count gain is claimed for
+this memory correction on those cases.
+
+The optional `inspectBeforeCommit:'recovery'` controller mode plans first and
+keeps a known prefix only when its actual public simulation removes tiles and
+ends with an empty initial-empty tray or fewer initial carriers; constructive
+win/clock-exit witnesses also take priority. Neutral detours while an unresolved
+carrier remains do not suppress discovery. Legacy true/false modes are retained.
+The initial14-case screen passes10/14, source unchanged, slowest1506.5ms:
+50/86/92/111/123/134/141/143/147/150 pass;85/121/124/137 fail. Thus this mode
+retains86 and111 simultaneously but does not yet repair85 or meet the goal.
+49/49 offline tests pass, with additional tray-carry and production-replay
+checks. No full-catalog gain or unseen validation is inferred from this subset.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
