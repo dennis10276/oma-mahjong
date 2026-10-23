@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
-const { admitPath } = require('./public_path_budget.js');
+const { admitPath, queuePath } = require('./public_path_budget.js');
 const layouts = require('../../../www/layouts.js');
 const { search } = require('./public_witness_search.js');
 const { legal } = require('./known_tray_plan.js');
@@ -15,6 +15,14 @@ function test() {
   assert(admitPath(shortest, 'shared', 4)); assert(!admitPath(shortest, 'shared', 4));
   assert(!admitPath(shortest, 'shared', 5)); assert(admitPath(shortest, 'shared', 3));
   assert(!admitPath(shortest, 'shared', 4)); assert.equal(shortest.get('shared'), 3);
+  const queued = new Map(), depths = new Map();
+  const long = { path: [0, 1, 2, 3] }, short = { path: [1, 2, 3] }, other = { path: [4, 5] };
+  assert(queuePath(depths, queued, 'same', long));
+  assert(queuePath(depths, queued, 'other', other));
+  assert(queuePath(depths, queued, 'same', short));
+  assert.equal(queued.size, 2); assert.equal(queued.get('same'), short);
+  assert.deepEqual([...queued.keys()], ['same', 'other']);
+  assert(!queuePath(depths, queued, 'same', long)); assert.equal(queued.size, 2);
   const graph = { root: [['macro', 2], ['single', 1]], macro: [['shared', 2]],
     single: [['middle', 1]], middle: [['shared', 1]], shared: [['win', 2]], win: [] };
   const visit = depthAware => {

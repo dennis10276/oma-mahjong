@@ -12,7 +12,7 @@ const { opensKnownFrontier } = require('./public_reopen_frontier.js');
 const { selectBeam } = require('./public_diverse_beam.js');
 const { diverseWitnessSearch } = require('./public_diverse_witness.js');
 const { informationInCone } = require('./public_exposure_frontier.js');
-const { admitPath } = require('./public_path_budget.js');
+const { queuePath } = require('./public_path_budget.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -249,7 +249,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const excludedRoots = hasOther ? actions.filter(action => unproductiveReopen(game, state, action.index, initialAllowed, progressiveReopens)).map(action => action.index) : [];
 
   for (let depth = 0; depth < tapLimit && beam.length; depth++) {
-    const next = [];
+    const next = new Map();
     for (const node of beam) {
       if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
       if (node.path.length >= tapLimit) { boundary = true; continue; }
@@ -317,7 +317,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         }
         if (passiveInformation) unknown++;
         const identity = keyOf(game, moved.state);
-        if (admitPath(visited, identity, path.length)) next.push(candidate);
+        queuePath(visited, next, identity, candidate);
         const preparesKnownPair = !moved.removed || moved.removed === 1 && moved.state.tray.includes(settled.pictures[index]);
         if (knownPairMacros && preparesKnownPair && path.length < tapLimit) {
           const pairedActions = physical.legal(game, moved.state).free.filter(mate => mate !== index
@@ -335,14 +335,14 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             if (paired.win) { best = pairedCandidate; return finish(); }
             if (pairedInformation) unknown++;
             const pairedIdentity = keyOf(game, paired.state);
-            if (admitPath(visited, pairedIdentity, pairedCandidate.path.length)) next.push(pairedCandidate);
+            queuePath(visited, next, pairedIdentity, pairedCandidate);
           }
         }
       }
     }
-    next.sort((left, right) => compare(right.rank, left.rank));
-    if (next.length > settings.beam) boundary = true;
-    beam = diverseBeam ? selectBeam(next, settings.beam) : next.slice(0, settings.beam);
+    const ranked = [...next.values()].sort((left, right) => compare(right.rank, left.rank));
+    if (ranked.length > settings.beam) boundary = true;
+    beam = diverseBeam ? selectBeam(ranked, settings.beam) : ranked.slice(0, settings.beam);
     if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
     if (!finishKnown && !clocked && best?.progress >= settings.progress && best.state.tray.length === 0 && best.goal !== 'boundedProgress') break;
     if (depth === tapLimit - 1 && beam.length) boundary = true;

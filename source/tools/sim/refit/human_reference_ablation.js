@@ -19,7 +19,14 @@ function install(mode) {
   for (const filename of ['./human_reference_campaign.js', './public_witness_search.js']) {
     assert(!require.cache[require.resolve(filename)], 'Install a diagnostic ablation before loading the policy');
   }
-  if (mode === 'firstVisit' || mode === 'both') require('./public_path_budget.js').admitPath = firstVisit;
+  if (mode === 'firstVisit' || mode === 'both') {
+    const budget = require('./public_path_budget.js');
+    budget.admitPath = firstVisit;
+    budget.queuePath = (visited, frontier, identity, candidate) => {
+      if (!firstVisit(visited, identity, candidate.path.length)) return false;
+      frontier.set(identity, candidate); return true;
+    };
+  }
   if (mode === 'noBounds' || mode === 'both') {
     const module = require('./public_obstacle_frontier.js'), create = module.createObstacleFrontier;
     module.createObstacleFrontier = (...args) => {

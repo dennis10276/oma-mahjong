@@ -6,4 +6,9 @@ function admitPath(shortest, identity, taps) {
   shortest.set(identity, taps); return true;
 }
 
-module.exports = { admitPath };
+function queuePath(shortest, frontier, identity, candidate) {
+  if (!admitPath(shortest, identity, candidate.path.length)) return false;
+  frontier.set(identity, candidate); return true;
+}
+
+module.exports = { admitPath, queuePath };
