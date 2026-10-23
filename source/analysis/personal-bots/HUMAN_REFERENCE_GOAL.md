@@ -41,7 +41,7 @@ Recent131–156:25/26, failing137.151–156 all clear on try1.
 111 passed isolated screens but failed both full-run tries (60/33 taps);
 never extrapolate129/140 from isolated111 passes or merge different profiles.
 
-Read-only metadata refresh2026-10-23T22:02Z:140 first clears through156, no later
+Read-only metadata refresh2026-10-23T22:43Z:140 first clears through156, no later
 clears, zero boards decoded. Refresh metadata only with selectedLevels:[].
 Dennis authorized count comparisons without old17–99 recordings on2026-10-22.
 Prefer exact opening, then original-version fixed table, current fixed definition,
@@ -73,8 +73,13 @@ speedup or proof that every timed action sequence must be identical.
 Source:`5df95cb01cd2179c69fa98495b1b500f69572ff1a8e83fd0f899247f9ac182af`.
 Reports:`HUMAN_REFERENCE_DOMINANCE_CONTROL_2026-10-24.md` and
 `HUMAN_REFERENCE_DOMINANCE_OPTIMIZED_2026-10-24.md`.
-Next: two complete140-level17–156 runs, first shortRoles (no short-probe
+ACTIVE: two complete140-level17–156 runs, first shortRoles (no short-probe
 override), then full-role short probes with informationDominance enabled.
+Tool session35017; first worker PID21088 confirmed live. Its actual140-case
+header matches the5df95cb source above. First snapshot reaches24 with no loss;
+that is NOT a whole-catalog score. Reports pending:
+`HUMAN_REFERENCE_CATALOG_SHORT_ROLES_2026-10-24.md` and
+`HUMAN_REFERENCE_CATALOG_SHORT_PROBES_2026-10-24.md`.
 Hold runtime unchanged until BOTH full runs finish. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
