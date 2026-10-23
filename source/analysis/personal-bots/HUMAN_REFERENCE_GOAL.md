@@ -1,449 +1,211 @@
 # Human-information reference: Dennis gate
 
-This replaces the open-ended perfect-reference/perception project. Work is on
-`wip/personal-bots` in `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
+Worktree: `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
+Branch: `wip/personal-bots`. Goal ACTIVE and UNMET.
+The previous turn made progress: full-catalog evidence, constructive key recovery,
+dependency caching, public information diagnostics and controlled experiments.
+Do not redefine completion around a subset, a percentage, or an isolated pass.
 
-1. One documented game-state visibility function gates picture and role reads.
-   Retry memory contains only previously seen information on the same level.
-   The visible clock badge is public even when its tile is covered, confirmed
-   by Dennis on2026-10-22. No hidden deck, level seed or future-branch reveals.
-2. Include every recorded Dennis clear, including131-155 and later clears.
-   Count actual starts/restarts. Require bot tries <= Dennis tries on every
-   level, and strictly fewer wherever Dennis needed2+. Initial focus:
-   134,141,143,147. A finite failure is not impossibility or permission to peek.
-3. Make general planning changes only. After development passes, freeze the
-   bot and compare the next20 progression levels without fitting on them.
-4. Report the slowest decision; target under approximately2 seconds on a PC.
-5. Small commits, short per-run result tables, no large new analysis logs.
+## Contract and completion evidence
 
-The screenshot/pixel/pose/dictionary track is stopped. Existing source and
-evidence are retained for archival purposes only; it is not part of this bot.
-Use `node source/tests/run.js human_reference` for the non-pixel core checks.
-Historical symbolic campaigns declaring complete obstacle rules are not proof
-that this new visibility-gated goal has passed.
+1. ONE game-state geometry gate; no screenshot/pixel/pose/dictionary track.
+   Only actually visible or remembered pictures/roles and sound public deductions.
+   Never read hidden pictures, the deck, the level seed or actual future reveals.
+2. Include EVERY Dennis first clear, plus later clears. Count actual starts and
+   restarts. Dennis1 requires bot1; Dennis2+ requires strictly fewer tries.
+   Initial134/141/143/147 fixes must remain clear. A bounded failure is not
+   impossibility, hidden luck, or permission to peek.
+3. General planning only, never per-level policies, routes, seed choices or best-of
+   merging. After development passes, freeze for the next20 untouched progression
+   levels and compare against Dennis when played.157+ remains unopened.
+4. Decisions under approximately2s. Shared1500ms search deadline includes guards,
+   alternative roots and proofs; observed-frame projection is included in timing.
+5. Small curated commits; one short Markdown table per run, no large analysis logs.
+   Final handoff, only when done: one-screen level|Dennis tries|bot tries table,
+   planner changes and any required human decision.
 
-Current status: implementation and validation in progress. The complete
-development set and the unseen20-level gate are still open.
+The development gate and unseen20 gate are both still open. Do not mark complete
+or blocked. There is useful algorithmic work available, not an external blocker.
 
-## Single visibility rule
+## Latest complete development run
 
-`human_board_visibility.js:tileVisibility` is the only exposure decision.
-The old exact-grid Hard cover shortcut is replaced by game-geometry occlusion:
-the renderer's1.24 height ratio,14% up-left layer lift and drawing order are
-projected without screenshots. Higher drawn tiles are subtracted as a union,
-not checked individually. Opaque-body/side bounds are conservative for tile
-widths of at least20px (side allowance=max(.085,3/20)). An inner face region,
-inset.15 tile-widths, defines the readable obstacle-overlay region. Dennis
-clarified on2026-10-23 that he recognizes a face-up picture even from its exposed
-beige/green border. Picture/orientation visibility therefore also tests two
-inscribed body strips, including the minimum solid side depth. Rounded corners
-and soft shadows alone do not count. This is an explicit semantic recognition
-contract, not a pixel-recognition or per-picture artwork guarantee. A border
-does not disclose an obstacle overlay that is still covered.
-Renderer/CSS anchors and covered-union/separated-layer controls guard it.
-Side-blocking prevents taking, not seeing.
-Exposed back orientation is public; a picture and current obstacle overlay are
-read only when exposed and face-up, including a physically opened peek.
-Covered or closed pictures/roles stay unknown. The active clock badge alone is
-public even through a cover; its picture gets no exemption. `observeBoard` calls
-trusted picture/role readers only after that gate. Search receives data, not
-readers, and must stop at an unobserved picture, orientation or mechanical role.
+**128/140**, unchanged source, slowest**1511.4ms**.
+Report: `HUMAN_REFERENCE_CATALOG_RECOVERY_CHECKPOINT_2026-10-23.md`.
+Runtime checkpoint:`5b89505`; result commit:`ab098b5`.
+Fingerprint:`3d0cd9f5c87f777665a28ef201a31ffbcad6a3b0167b59816e0731a7c72fdd86`.
 
-The game-state bridge currently assumes the declared >=20px viewport domain.
-Integration at a smaller rendered tile size must remain unsupported until its
-geometry bound is supplied; old unrecorded viewport identity is not claimed.
-Entirely occluded pictures and closed pictures remain unknown, even with the
-border-recognition contract. Concealed-world controls use projection-aligned
-covers so they remain genuinely occluded rather than merely grid-stacked.
+Failures:**81,84,93,99,102,107,111,112,121,124,125,137**.
+Classic35/35; current-fixed24/24; version-table20/24; recorded openings49/57.
+Original134/141/143/147 all pass on try1.50/85/86/92/123/150 gains remain clear.
+Recent131–156:25/26, failing137.151–156 all clear on try1.
+111 passed isolated screens but failed both full-run tries (60/33 taps);
+never extrapolate129/140 from isolated111 passes or merge different profiles.
 
-## Recorded-clear coverage
+Read-only metadata refresh2026-10-23T21:10Z:140 first clears through156, no later
+clears, zero boards decoded. Refresh metadata only with selectedLevels:[].
+Dennis authorized count comparisons without old17–99 recordings on2026-10-22.
+Prefer exact opening, then original-version fixed table, current fixed definition,
+then current classic/aspect1.5. The last two are explicitly NOT historical-identical.
+Keep every unavailable board/label unresolved, never silently exclude it.
+Old-level replays restart at try1 and do not replace first-clear targets.
 
-Dennis confirmed on2026-10-22 that old recordings do not exist and that his
-attempt counts still set the target. The catalog therefore keeps every recorded
-first clear, not just the recent recording subset. It prefers an exact opening
-recording, then that app version's fixed level table, then the current fixed
-definition, then a current classic board at declared aspect1.5. The last two
-sources are explicitly not asserted identical to the historical board. This
-distinction must remain in results; counts alone cannot reconstruct a missing
-historical deal. A replay win never replaces the first-clear target.
+## Current code, tests and active experiment
 
-The human-information campaign independently replays accepted actions through
-unmodified production. A 1500 ms shared search deadline includes alternative-root
-searches and death proofs. Expiration stays unresolved/bounded, never a loss.
-The candidate inspects unknown free closed tiles before nonclock commitments;
-inspection ordering is still being compared over the complete development set.
+Latest runtime:`f226d71`; baseline key recovery:`a5cb7db`;
+dependency route cache:`0ead64d`; information audit:`2c10828`.
+**51/51 offline tests pass** in approximately3s, including2112 concealed-world
+clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
+The newer runtime has NOT completed a fresh140-level run.
 
-The optional exclusive-role contract derives from `Layouts.obstacles`: the
-generator reserves keys/locks before choosing ice from unused positions. The
-trusted environment rejects overlap, more than two ice hits, or a key count
-other than zero/two before enabling that declaration. Under it, previously
-observed ice can be forecast to thaw and an observed lock can open after both
-actually observed keys leave. No unobserved role is read or assumed absent.
-`exclusiveRoles: 'clock'` uses that extra forecast only while the clock remains;
-it is an experimental general strategy, not a per-level rule or proven optimum.
+Active serial job: unified `shortInformation:'carrierAware'`, first with
+`passiveInformation:'roles'`, then without passive information, same8 controls:
+50,92,121,137,142,147,149,150.
+Tool session35011; initially PID35336. Revalidate its actual handle/process.
+Fingerprint:`9d3b0d0e813cf54f737a8d618ace8254d0f9efca5485a5214ea19eb261009f94`.
+Reports pending:
+`HUMAN_REFERENCE_CARRIER_ROLE_INFORMATION_2026-10-23.md`,
+`HUMAN_REFERENCE_CARRIER_INFORMATION_2026-10-23.md`.
+Hold runtime unchanged until BOTH finish. One CPU-heavy simulation at a time.
+Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
-Screening stops once the allowed number of tries is exhausted (one for a
-one-try Dennis clear; Dennis minus one otherwise). This affects only evaluation
-censoring, not policy decisions. A `>N` result means no clear within N actual
-tries, not an invented successful try. Source hashes and board provenance are
-reported; only one short table is written when a report path is explicitly given.
+Research baseline settings (not a released/default/frozen winner):
+```json
+{"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true}
+```
 
-## Development checkpoint
+## Current controlled evidence
 
-The goal remains unmet. The completed frozen full-catalog screen passes126/140,
-slowest1516.1ms. Every recorded first clear17-156 is included. See
-`HUMAN_REFERENCE_CATALOG_CURRENT_2026-10-23.md`, source `040a5e8`, fingerprint
-`59599bbbfb2e2d66c78f735956c1eb8e87bf66d0db19e2ad1176756563f625a5`;
-unchanged throughout execution. All original134/141/143/147 focus levels pass
-on try1. Failures:50,81,84,92,93,99,102,107,112,121,124,125,137,150. Recorded
-openings pass49/57; original-version tables19/24; explicitly non-identical current
-fixed substitutes24/24; current classic/aspect1.5 substitutes34/35. This is still
-development evidence, not the unseen20-level gate. The metadata-only refresh
-still finds140 clears, newest156; no future board was opened.
+| Experiment | Scope/result | Important limitation |
+|---|---|---|
+| Key recovery |31/42, unchanged; slowest1504.7ms |111 isolated try2, not a full129 score |
+| Route cache |31/42, unchanged; slowest1510ms |No new count gain or measured full speedup |
+| Role information |6/8;121try3,92fails |Tradeoff, not promoted |
+| All-field information |5/8; additionally loses149 |Not promoted |
+| Two-carrier proof threshold |6/8 with/without roles |Does not solve92/121 tradeoff |
+| Frontier-only role information |6/8; restores92, loses121 |Not promoted |
+| Short information, with roles |6/8;92try2,121try1,137try1 |Real tray losses on50/147 |
+| Short information, without roles |6/8; same new successful-try counts |Also loses50/147, not a numerical cap |
+| Carrier-aware short information |RUNNING |No result/combined score claimed |
 
-Validated general changes distinguish actual unknown boundary taps from passive
-reveals, refuse to borrow safety from an unrelated free match, preserve complete
-known face-up pairs before beam pruning, and compare observed side/thaw routes
-for both clocks and tray recovery. Dependency costs remain ordering heuristics,
-never lower bounds, route witnesses, safety certificates or impossibility proofs.
+Corresponding dated reports:KEY_RECOVERY, ROUTE_CACHE, RECOVERY_ROLE_INFORMATION,
+RECOVERY_ALL_INFORMATION, ROLE_DEEP_PROOF, DEEP_PROOF,
+FRONTIER_ROLE_INFORMATION, SHORT_ROLE_INFORMATION and SHORT_INFORMATION,
+all prefixed `HUMAN_REFERENCE_` and suffixed `_2026-10-23.md`.
+Each preserves its exact settings, source fingerprint, provenance and slowest move.
 
-Current `4d9f249` adds a rule-supported takeability proof for an unobserved role:
-the origin frame must be known, both actually observed keys removed, and two
-actually observed starting ice-neighbors removed. Under the declared maximum2
-ice hits and0-or-2-key contract, every supported blocker is then discharged.
-The role/picture remains unknown; only legal availability is proved. Exhaustive
-public-world controls and original-engine closed-tile replays validate it.
-39/39 offline tests pass. On the14 prior failures it clears92 on try3 versus5,
-and150 on try2 versus3; the other12 still fail. The unchanged-source recent
-regression passes25/26 recorded levels131-156, slowest1502.5ms; only137 fails.
-Increasing the inspection tray limit from1 to3 still passes the same2/14 prior
-failures, so that combination is not promoted. No128/140 mixed-source score or
-complete-set improvement is claimed without a new full-catalog run.
-No profile is selected by level, human outcome or hidden information.
+## What the public diagnostics actually establish
 
-The earlier ice-budget-fixed source `b2f8845` also clears all six recorded
-levels151-156 on try1 (strictly beating every2+ target), with1552.5ms slowest.
-That broadens development coverage, but is not the future unseen20 gate and
-is not silently merged with another source's results into a frozen score.
+92: first attempt identical for all59 decisions with/without passive roles.
+Second attempt:29 identical decisions before choice30, identical public projection,
+clock already removed. Roles choose known13 tile55 (consumes open13 twin) on a
+nine-tap information path. Roles17/23 become readable after5 taps;22/28 after9.
+ALL FOUR remain geometrically blocked, not already deduced mechanically free.
+Non-passive chooses known12 tile72, then remembered closed28 tile60;
+the boundary is60's unobserved role after one known removal.
+Never feed the later actually revealed picture back into hypothetical ranking.
+Repeated43-tap losses with44 left do not alone prove identical later paths.
 
-`progressiveReopens` keeps a remembered closed tile eligible when its actual
-known non-losing peek/removal prefix opens a new possible public action or
-mechanical-certainty gain. It does not assume the newly exposed picture/role.
-`riskFirstRecovery` estimates unresolved carrier pressure along observed mate
-frontiers before applying the ordinary known-mate preference. Required known
-pairs cancel before outside matches are spent. Unknown pictures and Jokers stay
-unresolved; projected overflow is a ranking risk, not a physical prediction,
-route witness, safety guarantee or death proof. Endpoint parity is not a proof
-that intermediate tray pressure fits. Actual known transitions still use the
-physical model, and every campaign action independently replays in production.
+121: first23 decisions match, then roles choose65 while baseline chooses78,
+with the clock already gone.65 reveals blocked role43 after ONE tap.
+Thus neither a clock-only mode switch nor removing all blocked-role clues is justified.
+No tile55/72/60/65/78 or level-specific preferences may enter runtime code.
 
-Retry memory now also retains later-seen keys/locks and reconstructs starting
-ice hits from visible remaining ice plus public neighbor removals under the
-declared exclusive-role contract. Late none remains ambiguous: it may be thawed
-ice or an opened lock, so it must not become starting safety. No hidden role is
-read or inferred merely because its picture was recognized from a border.
+Short-information ordering prioritizes a shorter safe observation prefix over
+bulk heuristic pair progress, behind physical overflow and below constructive
+win/clock witnesses. It clears121/137 on try1 but loses50/147.
+Carrier-aware mode adds the existing two-point unseen-mate carrier penalty
+to prefix length. This is a heuristic, NOT an optimal cost or safety proof.
+Successful-tap availability memory was considered but no current regression
+has been established as caused by its absence; do not claim it implemented.
 
-The read-only catalog refresh still accounts for140 first clears, levels17-156,
-without opening future/unseen boards. An older full-catalog baseline passed
-111/140 with `unchanged:false` because source changed during execution; that is
-coverage/older-policy evidence, not validation of the current source. The next
-20 not-developed-on progression levels remain reserved for a later freeze.
+Public audit tool:
+`node source/tools/sim/refit/human_reference_information_probe.js LEVEL ATTEMPT PHYSICAL_TAPS PROFILE_JSON`.
+It walks only known transitions; reports visibility indices, remembered values,
+unknown roles and public availability; stops before unobserved values.
+Diagnostic capture is not a canonical timing benchmark.
+`human_reference_compare.js LEVEL profile CURRENT_JSON ATTEMPT ALTERNATIVE_JSON`
+compares actual public decisions in fresh serial children; traces stay in memory.
+An identical projected state alone does not prove identical internal pending plans.
 
-Negative experiments remain in their short reports. The latest patient-pair
-combination passes8/12 and regresses146/149 without fixing137/150. A public-role
-replay confirms137's apparent free pair is iced, not a guaranteed usable pair.
-The consumed-pair scoring screen passed15/20, regressing133. Balanced recovery
-plus constructive digging passed16/20, fixing136 but regressing137 and changing132 from one try to two.
-These results are not hidden by reporting only successful settings; initial
-focused improvements are not presented as complete-set wins. Earlier comparisons
-remain in per-run tables and Git rather than growing this checkpoint indefinitely.
+## Single visibility and information contract
 
-The optional diverse beam retains alternative public first taps within the same
-width, node and shared deadline. Its unchanged-source screen still passes25/26
-recent levels and clears50 on try1, but regresses92 (no clear in4 tries), so it
-is not promoted as a global replacement. The new optional `diverseWitness`
-portfolio preserves the original primary search and spends only leftover
-nodes/time on diversity; it changes the choice only for a constructive win or
-safe clock exit. `uniqueKnownCleanup` is another optional optimization: after
-all remaining pictures are actually known, no clock/Joker remains, and a class
-has only its last pair or tray mate, commute a physically safe guaranteed free
-match before search. It never assumes that two observed copies are globally
-unique while any remaining picture is unknown.2052 exhaustive small known-board
-controls preserve winning continuations, including crowded closed-twin prefixes;
-key/ice/lock examples independently replay through original production.42/42
-offline tests pass, with384 concealed-world controls. The combined portfolio and
-cleanup screen preserves92/150 and25/26 recent passes, but does not clear50.
-It adds no campaign passes and more search time, so remains optional rather than
-a promoted replacement. Neither is claimed complete.
+`human_board_visibility.js:tileVisibility` is the only exposure gate.
+Renderer geometry:height ratio1.24, up-left layer lift.14, z/y/x draw ordering.
+Subtract the UNION of higher alive bodies. Opaque bounds cover side allowance
+max(.085,3/20), assuming rendered tile width>=20px. Smaller viewports unsupported.
+Inscribed body strips include solid beige/green borders: Dennis explicitly permits
+face-up picture recognition from border alone. Rounded corners/shadows do not count.
+Inner face inset.15 defines role visibility. A border does NOT reveal a covered role.
+Exposed back orientation is public; closed/fully covered pictures remain unknown.
+Open peeks follow the same gate. The covered clock badge's location/deadline is public;
+its picture gets no exemption. `observeBoard` reads values only after gating.
+No pixel readers, pose banks, joint dictionaries or future-value samplers in the bot.
 
-The new optional `passiveInformation` recognizes that removing a known tile can
-make another picture/orientation/overlay readable before it is takeable. It
-uses the same central geometry gate, not a second recognition rule, and stops
-before any action requiring an unknown value. Only the actual next observation
-may supply it. Subset masks match the full gate;72 concealed worlds yield
-identical public plans and production-replayed prefixes. The first version
-stopped all expansion at passive exposure:19/38 passes, newly clearing121 on
-try3 versus4, but regressing several clock openings and92/150. A controlled
-reproducer confirms that this discarded an already known safe clock route.
-The corrected version values the information frontier while continuing routes
-using only previously known facts. It never invents the newly readable value;
-the real actor still observes after every physical tap and replans.72-world
-pair and clock continuations independently replay in production.43/43 offline
-tests pass, including480 controller concealed-world controls. The continuation
-correction improves19/38 to22/38 but still regresses92/142/147/149/150, so is not
-promoted. A public-only142 replay pinpoints another bug: removing70 reveals41,
-outside the public clock frontier, but a later64 removal incorrectly lends
-that information clock-cone priority. `50946d8` now returns only the indices
-whose geometry becomes readable and attributes clock relevance to those indices,
-not to an unrelated removed tile. It does not return any future picture/role.
-Clock provenance controls pass and142 recovers its try1 clear, but the focus
-screen still passes only6/11:92/137/147/149/150 fail. Passive information remains
-unpromoted. The next correction gives passive exposure information-priority
-only when the known prefix does not add unmatched tray carriers. New facts are
-still recognized; this is a conservative ranking preference, not a proof that
-a carrier-increasing route is unsafe or impossible. Actual unknown-tap handling
-is unchanged. Controlled pair/clock/provenance/tray comparisons pass.
-The unchanged-source risk-neutral run passes26/38, slowest1508.2ms. It clears50
-on try1 and121 on try3 versus4, and restores147/150, but loses92 and149. That
-matches the baseline count on this38-level cohort, not a full-catalog gain.
-The new `passiveInformation: 'roles'` ablation values guaranteed overlay reveals
-without giving the same priority to orientation-only discoveries, which may
-merely show another back. The observer still records every actual visible field.
-All43 offline tests pass, now with576 controller concealed-world controls.
-Three subsequent8-level combinations each pass5/8: overlay-only information
-recovers149 but not50/92; mixing all exposure with a diverse beam or a
-constructive portfolio plus unique cleanup retains50/121/150 but still loses
-92/149. No per-level profile switching or combined best-of score is promoted.
+Actual observer data, not trusted readers, enters search. Unknown picture,
+orientation or mechanical role stops the hypothetical transition. Passive exposure
+predicts readable INDICES only, never their unseen values.
+`frontierRoles` changes reward eligibility, NOT visibility or actual memory.
 
-The latest tap-budget fix replaces a visited-state set with shortest-prefix
-depths: mixed one-tap actions and two-tap pair macros can reach the same state
-first by a longer physical route. The old set discarded a later shorter route,
-missing independently verified four-tap win and clock-exit witnesses. Both
-replay through original production; an exhaustive small graph confirms the
-minimum. This proves a bounded-search omission, not yet a Dennis campaign gain
-(the old controller could sometimes replan out of a missed certificate).44/44
-offline tests pass. The unchanged-source base campaign now passes27/38,
-slowest1510.4ms:50 clears on try1 while92 remains try3 and150 try2. All25 recent
-passes remain, with137 still failing. This is one additional pass on the same
-cohort, not a verified129/140 full-catalog score. The same-source passive-exposure
-comparison passes26/38, still losing92/149 while gaining121; it is not promoted.
-The unchanged-source full-catalog screen completed126/140, slowest1515.7ms;
-the expected129/140 is disproved. Relative to the earlier126/140 full screen,
-50/92/150 improve but85/111/123 regress. Current failures are81/84/85/93/99/102/
-107/111/112/121/123/124/125/137. The full comparison spans both the discharged-
-obstacle proof and the shortest-prefix fix, so their effects must be isolated
-before blaming either. Current classic substitutes pass35/35, current fixed
-substitutes24/24, original-version tables19/24 and recorded openings48/57.
-Metadata refreshed at2026-10-23T16:00Z still accounts for all140 recorded clears,
-maximum156. The explicit17-156 range keeps157+ unopened; the unseen20 gate has
-not run and the goal remains unmet.
-Explicit fresh-process ablations restore85/111/123 when only first-visit state
-admission is reinstated. Disabling discharged bounds alone restores111/123 but
-not85; this isolates an interaction rather than a failed physical contract.
-The next correction keeps a keyed, unique beam frontier: accepting a shorter
-prefix replaces the old candidate instead of letting both consume slots. It
-preserves the verified four-tap witnesses and all45 offline tests pass. The
-old first-visit/bounds-disabled modes remain diagnostic only, not per-level
-runtime switches. The ablation table records every result, including failures.
-The unique-frontier screen completes29/41, slowest1503.4ms:111 and123 recover,
-50/92/150 remain clear, and85 still fails. This is not a full128/140 result.
-A fresh-process public trace shows the first85 divergence after16 identical
-decisions, with the clock already removed and the tray empty. The shorter route
-clears52/55 first; an opportunistic32 discovery is then injected between its
-planned moves. The old route starts with85/82 instead. Disabling the global
-`inspectBeforeCommit` heuristic, while retaining the same corrected search,
-clears85 on try1 in110 taps, slowest1033ms. This is an isolated control, not a
-combined best-of policy or proof that one early action alone caused the loss.
-The next full-catalog candidate lets the planner choose discoveries globally.
-That full run is active with runtime source held unchanged and
-`inspectBeforeCommit:false`;46/46 offline tests pass. The separate observed-key
-recovery builder constructs a bounded unlock-and-match candidate using only
-known keys/pictures and guaranteed actions. Face-up, remembered closed, remaining-
-key and clock-first examples independently replay in production; uncertainty,
-tray loss and deadline/tap exhaustion refuse the candidate. It is staged in
-isolation, not imported by the running policy or claimed as a campaign gain.
+## Memory, mechanics and physical validation
 
-The planner-led-discovery full run completes127/140, unchanged source,
-slowest1504.3ms. It restores85 but regresses86 and still fails111; current
-failures are81/84/86/93/99/102/107/111/112/121/124/125/137. Thus neither globally
-forcing nor globally disabling opportunistic discovery solves the interaction.
-The127/140 result is verified; no128/129 extrapolation or best-of merging.
+- Retry memory stays on the same exact board. Store actual pictures, orientations,
+  observed roles and sound deductions. Late observed none is NOT initial none.
+  Observed immutable keys/locks and observed remaining ice plus real removals can
+  recover initial roles only under the declared production contract.
+- Original ice budgets must not grow under occlusion. Actual immediately removed
+  closed pictures can be inferred only from an unambiguous actual match to a
+  previously seen tray/open picture;222 production controls guard this.
+  Matching does not invent the removed tile's hidden starting role.
+- Exclusive contract:zero/two keys, one/two-hit ice, no overlapping special roles;
+  trusted environment rejects violations. Both actually observed keys removed
+  plus two actual initial-neighbor removals can prove takeability for an unseen
+  role. This does NOT assign its role or picture;264 public-world checks.
+- Every accepted action independently replays through original `Hard.play`
+  with identical physical log, trace and result. Trusted session physics is source
+  anchored; policy geometry throws on private faces/down/deck/seed access.
+  Physical seed20261111 and tapMs1000 belong only to the environment.
+- A rejected uncertain tap changes no move/try and is blocked only for the same
+  alive layout. A cap/frontier/timeout is unresolved, not a loss or free restart.
+  Only actual tray/clock/stuck losses trigger the next attempt.
+- A known-dead certificate requires exhaustive supported known graph, no reachable
+  unknown or pruned/bounded frontier. Heuristic root exclusions need their own
+  shared-budget proof. A missing bounded witness never proves impossibility.
 
-A separate retry-memory fix records a removed closed tile's identity only when
-its actual match uniquely identifies it from a previously seen tray/open tile.
-The selected tile must have been observed closed, its picture unknown, and one
-actual accepted tap must produce the exact normal match delta. No removed tile
-reader, hidden picture, role, deck, seed or hypothetical reveal is queried.
-This runs in the actual observation path, including terminal clock matches,
-and does not invent the removed tile's starting role.222 production/replay
-controls cover normal/Joker identities, tray/twin matches and terminal outcomes;
-a retry integration check preserves that legitimate identity while the role
-stays unknown.48/48 offline tests pass. Campaign effects are being isolated
-before combining this with inspection-priority changes.
-That canonical screen and an explicit memory-disabled diagnostic both pass3/5
-(92/111/150), with121/124 still failing. No attempt-count gain is claimed for
-this memory correction on those cases.
+## Search/cache facts to preserve
 
-The optional `inspectBeforeCommit:'recovery'` controller mode plans first and
-keeps a known prefix only when its actual public simulation removes tiles and
-ends with an empty initial-empty tray or fewer initial carriers; constructive
-win/clock-exit witnesses also take priority. Neutral detours while an unresolved
-carrier remains do not suppress discovery. Legacy true/false modes are retained.
-The initial14-case screen passes10/14, source unchanged, slowest1506.5ms:
-50/86/92/111/123/134/141/143/147/150 pass;85/121/124/137 fail. Thus this mode
-retains86 and111 simultaneously but does not yet repair85 or meet the goal.
-49/49 offline tests pass, with additional tray-carry and production-replay
-checks. No full-catalog gain or unseen validation is inferred from this subset.
-Preserving the planner's own selected discovery alone still passes10/14.
-A public profile comparison locates85's first divergence after11 identical
-decisions: the planner prefers unknown85, whereas the injected heuristic
-chooses unknown66. Later, inspecting another tile overwrites a useful known
-open-twin setup. The refined priority respects the first actual non-losing
-neutral/reducing tray checkpoint, and consumption of an already open known tile
-without adding carriers; it does not require the entire subsequent plan to
-have the same final tray. It stops before any unknown transition and makes no
-claim about the unseen suffix. Stale reported progress is not used.
-That unified checkpoint policy passes11/14, unchanged source
-`3d0cd9f5c87f777665a28ef201a31ffbcad6a3b0167b59816e0731a7c72fdd86`,
-slowest1505.8ms:85/86/111/123 all pass together, retaining50/92/150 and the
-original134/141/143/147 fixes.121/124/137 remain failures on this screen.
-All49 offline tests pass. A full140-level17–156 run is active, with runtime
-held unchanged; no full-count extrapolation, per-level switch or unseen claim.
-The runtime checkpoint is `5b89505`; the full-run fingerprint matches the
-14-case checkpoint screen. Separate tests expand concealed-world invariance
-to1344 clock/nonclock cases, including recovery-led inspection; all49 tests
-still pass. The2026-10-23T20:24Z metadata-only refresh finds140 clears through
-156, no later clears, and decodes zero boards.157+ remains unopened.
-The full checkpoint run completes128/140 with source unchanged and slowest
-1511.4ms. Classic35/35, current-fixed24/24, version-table20/24 and recorded49/57.
-Failures:81/84/93/99/102/107/111/112/121/124/125/137.85 and86 are restored,
-and50/92/123/150 plus the original four fixes remain clear. All151–156 clear
-on try1. The recent131–156 result is25/26, still failing137.
-111's isolated second-try clear does not reproduce in the full run: it loses
-both allowed attempts (60 and33 taps). Therefore128/140 is the authoritative
-full result, not an extrapolated129 or a best-of merge. Bounded wall-time
-search can return different partial results; neither a shared source hash nor
-an isolated pass establishes robust repeatability. The goal remains unmet;
-the next improvement targets stronger constructive recovery at a fixed budget.
-The optional `keyRecoveryMacros` expansion now integrates the previously
-isolated builder into the real search, sharing the original physical-tap cap
-and deadline. One expanded node constructs four-tap face-up and six-tap known-
-closed production wins where primitive edges remain bounded; uncertain roles,
-expired deadlines and insufficient tap limits still refuse a witness. No
-hidden values or per-level rules are introduced.49/49 tests pass, including
-1536 concealed-world controls.
-Its42-case screen passes31/42, source unchanged
-`4dd2646520a558ba549a17f52b0947b220169ce65379ed1ae71464ae9999222a`,
-slowest1504.7ms.111 clears on try2 in this screen; all other prior full failures
-remain81/84/93/99/102/107/112/121/124/125/137. The original four fixes and all
-25 recent passing levels remain clear. Because111 has already differed between
-subset and full runs, this is not proof of a robust full129/140 score or a
-causal attempt-count gain from the macro. The next optimization removes repeated
-public dependency calculations while retaining fixed-budget plan parity.
-A per-search dependency-route cache now keys only the actual fixed-geometry
-inputs: alive layout, relief state and target. It never keys on or reads hidden
-pictures, peeks, tray contents or future reveals, and is recreated for every
-search/observation snapshot.768 direct raw/cache comparisons cover mutable
-alive arrays, targets and relief; integrated clock/nonclock fixed-budget
-comparisons retain identical nodes, paths and conclusions while reusing18
-dependency calculations.49/49 offline tests pass.
-The cached42-case screen also passes31/42, source unchanged
-`9c24333dae913bdcf57789e285be5c7016aae236570292dc636c79be11ffac2c`,
-slowest1510.0ms. No new count gain or measured full-catalog speedup is claimed.
-The next controlled combination revisits passive-information planning, which
-previously cleared121 but had regressions, on the corrected inspection/key
-recovery/search stack. This is not a per-level selector or best-of merge.
-On the same corrected runtime, role-only passive information passes6/8:
-50/121/142/147/149/150 clear,92 and137 fail.121 clears on try3, whereas
-the non-passive policy still fails its three allowed tries; however92 loses
-its prior try3 clear. Full passive information passes5/8 and additionally
-regresses149. Both sources remain unchanged; slowest1294.2ms role-only and
-1384.5ms all-fields. Neither option is promoted or combined per level.
-The role-only route is retained for diagnosis rather than discarded: compare
-the first actual public decision divergence on92 before changing its ranking.
-A fresh-process comparison shows that92's first attempt is identical across
-all59 decisions with and without role information; both end in the same
-known-dead position. Divergence is therefore in retry planning, not the first
-clock opening. The role route's later attempts all lose after43 taps with44
-tiles left; identical counts alone do not establish identical later paths.
-The non-passive route loses its second attempt and clears its third. The next
-control tests the already-supported two-carrier continuation-proof threshold,
-with and without role information, before inventing a new ranking penalty.
-The two-carrier proof controls both finish6/8 with unchanged source: role-only
-still clears121 and fails92/137; no passive information still clears92 and
-fails121/137. Slowest1507.9ms role-only and1509.8ms non-passive. Merely lowering
-the proof threshold does not solve the retry-route tradeoff and is not promoted.
-Next inspect92's second-attempt public divergence; first-attempt identity rules
-out blaming a changed opening or unobserved first-try clues for this difference.
-The second-attempt comparison finds29 identical decisions before choice30,
-with identical public board projection and the clock already removed. The
-role-information route chooses known13 tile55, consuming the open13 twin,
-on a nine-tap information prefix. The non-passive route chooses known12 tile72
-and then inspects remembered closed28 tile60 on a two-tap information prefix;
-its later actual play reveals another picture. This is not permission to use
-that picture in hypothetical ranking. The remaining diagnosis is whether the
-passive role payoff is mechanically useful versus already deducible, and how
-its longer prefix compares with direct uncertain-role inspection. Do not add
-tile55/72/60 or any level-specific preference to the runtime.
-The new opt-in public information audit walks only known transitions and
-reports future visibility indices, remembered values and public availability;
-it never reads the newly visible value. Diagnostic captures replay in original
-production and are not canonical timing benchmarks.50/50 tests pass.
-The actual92 audit finds four blocked role targets:17/23 become readable after
-five known taps and22/28 after nine. Thus the tempting claim that these clues
-were already mechanically free is false; no such penalty was added. The direct
-route instead reaches an unobserved-role boundary at60 after one known removal.
+Shortest physical-prefix admission plus a UNIQUE keyed beam frontier replaces
+longer duplicates without occupying two slots. Preserve the four-tap production
+win/clock witnesses; don't revert to first-visit semantics to fit one level.
+Known pair macros include inspect-first and face-up-first physical tap orders.
+Known-key recovery is optional, observed-only, bounded and separately replayed;
+one expanded node can construct4 face-up or6 remembered-closed taps where primitive
+edges remain bounded. No actual unknown role or picture is sampled.
 
-Optional `passiveInformation:'frontierRoles'` rewards newly readable roles only
-at public action candidates (including unresolved-role candidates), leaving
-the actual observer and its memory unchanged. It passes6/8, unchanged source
-`58a34ba8dc2b9f577a2d7e6bad20c2e7d8988c34392221bacdf03e0a4ac536f3`,
-slowest1509.9ms:92 is restored but121 loses its role-information gain.137 still
-fails. No full-score improvement is claimed and this option is not promoted.
-An exact layered production fixture distinguishes a newly readable but still
-blocked role from a later action-frontier role, keeps its value unknown, and
-replays both removals.1728 clock/nonclock hidden-world controls and all50 tests
-pass. Next compare121's actual divergence rather than select modes by level.
-121's first23 decisions match before choice24. Both clocks are already gone,
-so clock-only mode selection is not justified. The useful role clue there is
-blocked43, revealed after one known tap;92's first blocked clues require five.
-The next experiment compares shorter safe information prefixes globally, not
-a fixed level/tap cutoff. Physical overflow remains ahead of this ordering;
-known win/clock witnesses remain higher priority, and no future values are read.
+Inspection `'recovery'` plans first, retains the planner's own discovery and
+a real non-losing neutral/reducing tray checkpoint, including consuming a known
+open twin without adding carriers. Don't globally force/disable all peeks again.
+A zero-removal peek is not universally dominant: auto-twins can spend useful copies.
 
-`shortInformation:true` yields6/8 with or without passive roles, unchanged
-source `ab9ffecf4d8057e1e3c0f61e74844b720fbe6a080e374c0c5ee9a1e458c49cc4`.
-It now clears121 and137 on try1 and92 on try2, but regresses50 and147 to real
-tray losses (not numerical caps). Roles:50 loses after93 taps,147 after48;
-without passive roles:94 and68 taps. Other142/149/150 controls remain clear.
-Slowest1520.4ms roles and1507.0ms without roles. These gains are not merged
-with the old policy, and no overall score improvement is claimed.
+Dependency route cache is recreated per synchronous search with fixed public
+geometry/rules. Key only alive signature, relief and target; don't mutate cached Sets.
+768 raw/cache checks and clock/nonclock fixed-node path parity validate it.
+Generic reusable cache keys ALL settings and bypasses callbacks/live deadlines;
+never reuse opaque observation callbacks or timed reports across actual frames.
+Costs, overflow estimates, clock cones and pair debt are heuristics, not lower
+bounds, route witnesses, safety certificates or hidden-role deductions.
 
-The refined `shortInformation:'carrierAware'` balances prefix length with the
-existing two-point unseen-mate carrier penalty, instead of letting probe speed
-alone preempt that uncertainty. This is a heuristic, not an optimal cost or
-safety proof. A layered fixture distinguishes a one-tap unmatched-carrier probe
-from a two-tap neutral pair reveal and replays the latter through production.
-All51 tests pass, including2112 concealed-world controls and37 real hidden-
-identity probe checks. The refined policy is being screened globally next.
-The reusable legacy cache now keys every setting and bypasses observation
-callbacks/live deadlines instead of reusing stale plans.
+137's former known14/known9 routes BOTH had mechanically certain conditional
+recoveries; do not revive the rejected unknown-role-penalty explanation.
+136's old failing trace already removed its clock correctly; later commitments,
+not its opening, caused that loss.
 
-A public-only137 probe rejects another tempting diagnosis:14's mate31 has an
-actually observed ice role and is guaranteed thawed after the proposed41 removal;
-9's mate32 is observed none and opens after52/66. Both candidate recoveries are
-mechanically certain conditional on those removals. Do not invent an unknown-role
-penalty to explain this particular failure; the route/campaign ranking remains
-the problem.
+## Workflow and history
 
-A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
-the clock at move6, and later reaches an empty tray. Subsequent commitments cause
-the loss. A dead position reached after mistakes does not prove that the initial
-board is impossible or excuse failure as hidden luck. Investigate general route
-and commitment selection before making any such claim.
-
-Public-analysis caching is scoped to one search/observation snapshot. Bounded
-proofs stay unresolved. Only frozen alive arrays may cache binary signatures;
-mutable arrays never do. Accepted campaign actions independently replay through
-unmodified production. The1500ms search deadline is shared by alternative roots
-and death proofs; timing also includes the actual observation/projection work.
+Use `$env:NODE_PATH='C:\Users\den_k\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\node_modules'`.
+Tests:`node source/tests/run.js human_reference`.
+CLI screens take explicit17–156 or a documented subset;157+ stays unopened.
+A new full score requires a full unchanged-source run, not extrapolation from42/8.
+Preserve unrelated dirty/untracked ML, perception, ledger and Gemini files.
+Stage exact reference paths only; no blanket add/reset/clean. No subagents authorized.
+Detailed earlier chronology is preserved in git at417faac and per-run reports;
+read it only when needed rather than appending another unbounded duplicate log.
