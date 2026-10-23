@@ -369,6 +369,12 @@ tiles left; identical counts alone do not establish identical later paths.
 The non-passive route loses its second attempt and clears its third. The next
 control tests the already-supported two-carrier continuation-proof threshold,
 with and without role information, before inventing a new ranking penalty.
+The two-carrier proof controls both finish6/8 with unchanged source: role-only
+still clears121 and fails92/137; no passive information still clears92 and
+fails121/137. Slowest1507.9ms role-only and1509.8ms non-passive. Merely lowering
+the proof threshold does not solve the retry-route tradeoff and is not promoted.
+Next inspect92's second-attempt public divergence; first-attempt identity rules
+out blaming a changed opening or unobserved first-try clues for this difference.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
