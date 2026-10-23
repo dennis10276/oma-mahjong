@@ -39,8 +39,16 @@ function test() {
     publicGame.publicExposure = frontier;
     const informed = search(publicGame, state, [{ index: 1 }], options);
     assert(informed.information && !informed.knownDead && !informed.knownWin && informed.unknownTransitions > 0);
-    assert.deepEqual(informed.path, [1], 'Stop at the first actual known prefix that permits observation, before continuing a pair macro blindly');
+    assert.deepEqual(informed.path, [1, 3], 'Value newly readable information without discarding a continuation using only previously known pictures');
     if (canonicalPlan === null) canonicalPlan = informed; else assert.deepEqual(informed, canonicalPlan);
+    const clockGame = { ...publicGame, clock: { i: 2, n: 3 } };
+    const clockPlan = search(clockGame, state, [{ index: 1 }], { ...options, taps: 4, nodes: 64, beam: 8 });
+    assert(clockPlan.safeClockExit, 'Newly readable fields must not erase an already known physically safe clock continuation');
+    const clockActual = { ...actualGame, clock: clockGame.clock }, clockSession = createSession(clockActual, settings);
+    for (const index of clockPlan.path) clockSession.tap(index);
+    assert.equal(clockSession.view().state.alive[2], 0);
+    assert(clockSession.view().state.tray.length <= 2);
+    assert.equal(verifyAttempt(encodeGame(clockActual), clockPlan.path, settings, clockSession.audit()), clockPlan.path.length);
     session.tap(1);
     const after = session.view().state;
     assert.equal(Layouts.isFree(0, after.alive, actualGame.nb), false, 'A picture can be revealed before its tile becomes takeable');
@@ -68,9 +76,11 @@ function test() {
     for (const [index, visible] of full.tiles.entries()) assert.deepEqual(selected.tiles[index], [0, 4].includes(index) ? visible : null);
     assert.throws(() => tileVisibility(tiles, after, null, [-1]));
     assert(legal(actualGame, after).free.includes(2));
+    session.tap(3);
+    assert.equal(verifyAttempt(encodeGame(actualGame), informed.path, settings, session.audit()), informed.path.length);
     controls++;
   }
-  console.log('PASS ' + controls + ' concealed worlds produce identical public information-stop plans before takeability; orientation, pictures and roles are never sampled, subset masks match the central gate, and the prefix independently replays in production');
+  console.log('PASS ' + controls + ' concealed worlds value new geometry-visible information before takeability without discarding known pair/clock witnesses; no future values are sampled, subset masks match the central gate, and both continuations independently replay in production');
 }
 
 if (require.main === module) test();

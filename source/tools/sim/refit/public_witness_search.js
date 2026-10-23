@@ -286,7 +286,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         if (moved.lost) continue;
         hasSafeRemoval ||= moved.removed > 0;
         const passiveInformation = exposureFrontier ? exposureFrontier(moved.state) : false;
-        if (settings.pruneDead && !passiveInformation && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
+        if (settings.pruneDead && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
           || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) {
           const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
           const proofKey = cachePublicAnalysis ? keyOf(game, moved.state) : null;
@@ -310,7 +310,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
           best = candidate;
           return finish();
         }
-        if (passiveInformation) { unknown++; continue; }
+        if (passiveInformation) unknown++;
         const identity = keyOf(game, moved.state);
         if (!visited.has(identity)) { visited.add(identity); next.push(candidate); }
         const preparesKnownPair = !moved.removed || moved.removed === 1 && moved.state.tray.includes(settled.pictures[index]);
@@ -326,7 +326,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             const pairedInformation = exposureFrontier ? exposureFrontier(paired.state) : false;
             const pairedCandidate = evaluate(paired.state, path.concat(mate), pairedInformation, mate);
             if (paired.win) { best = pairedCandidate; return finish(); }
-            if (pairedInformation) { unknown++; continue; }
+            if (pairedInformation) unknown++;
             const pairedIdentity = keyOf(game, paired.state);
             if (!visited.has(pairedIdentity)) { visited.add(pairedIdentity); next.push(pairedCandidate); }
           }
@@ -387,7 +387,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         ...(riskFirstRecovery ? { riskFirstRecovery } : {}),
         goalRecoveryMin, recoveryRankWidths: [...recoveryRankWidths].sort() } } : {}),
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
-        + 'are never sampled from the real board. Optional public-geometry exposure stops at the known prefix before new readable fields, without querying their values. Clock distance is an ordering heuristic, not a proven bound. '
+        + 'are never sampled from the real board. Optional public-geometry exposure values newly readable fields without querying them; already known physical continuations remain searchable, and actual observations occur after every tap. Clock distance is an ordering heuristic, not a proven bound. '
         + 'A knownDead certificate requires a fully exhausted known graph with no new information or '
         + 'unsupported transition, pruning only separately certified losses. Excluded heuristic roots require a separate '
         + 'bounded search sharing the remaining node budget before a death certificate; it chooses an actual losing/progressing tap rather than calling a '
