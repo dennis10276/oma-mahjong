@@ -15,6 +15,7 @@ const { knownCleanup } = require('./public_unique_cleanup.js');
 const { createExposureFrontier } = require('./public_exposure_frontier.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 const { preferKnownRecovery } = require('./public_recovery_priority.js');
+const { describeInformation } = require('./public_information_audit.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -155,6 +156,7 @@ function createHumanController(tiles, options = {}) {
     },
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
     state() { return structuredClone(current); },
+    explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
 }
 
@@ -194,7 +196,9 @@ function verifyAttempt(encoded, actions, settings, audit) {
 }
 
 function playHumanCampaign(input, options = {}) {
-  assert(Object.keys(options).every(key => ['maximumAttempts', 'choiceLimit', 'planning', 'captureDecisions'].includes(key)));
+  assert(Object.keys(options).every(key => ['maximumAttempts', 'choiceLimit', 'planning', 'captureDecisions', 'captureInformation'].includes(key)));
+  assert(options.captureInformation === undefined || typeof options.captureInformation === 'boolean');
+  assert(!options.captureInformation || options.captureDecisions);
   const settings = { seed: 20261111, choiceLimit: options.choiceLimit ?? 512, tapMs: 1000 };
   const maximumAttempts = options.maximumAttempts ?? 3;
   assert(Number.isInteger(maximumAttempts) && maximumAttempts > 0);
@@ -229,7 +233,8 @@ function playHumanCampaign(input, options = {}) {
       const index = selected.plan.index, accepted = actual.legalTiles.includes(index);
       if (options.captureDecisions) decisions.push({ state: controller.state(), index, accepted,
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
-          boundary: selected.plan.boundary, knownDead: selected.plan.knownDead } });
+          boundary: selected.plan.boundary, knownDead: selected.plan.knownDead },
+        ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path) } : {}) });
       controller.acknowledge(index, accepted);
       lastPlan = selected.plan;
       if (!accepted) { rejected++; continue; }
