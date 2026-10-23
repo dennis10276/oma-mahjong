@@ -314,6 +314,17 @@ The runtime checkpoint is `5b89505`; the full-run fingerprint matches the
 to1344 clock/nonclock cases, including recovery-led inspection; all49 tests
 still pass. The2026-10-23T20:24Z metadata-only refresh finds140 clears through
 156, no later clears, and decodes zero boards.157+ remains unopened.
+The full checkpoint run completes128/140 with source unchanged and slowest
+1511.4ms. Classic35/35, current-fixed24/24, version-table20/24 and recorded49/57.
+Failures:81/84/93/99/102/107/111/112/121/124/125/137.85 and86 are restored,
+and50/92/123/150 plus the original four fixes remain clear. All151–156 clear
+on try1. The recent131–156 result is25/26, still failing137.
+111's isolated second-try clear does not reproduce in the full run: it loses
+both allowed attempts (60 and33 taps). Therefore128/140 is the authoritative
+full result, not an extrapolated129 or a best-of merge. Bounded wall-time
+search can return different partial results; neither a shared source hash nor
+an isolated pass establishes robust repeatability. The goal remains unmet;
+the next improvement targets stronger constructive recovery at a fixed budget.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
