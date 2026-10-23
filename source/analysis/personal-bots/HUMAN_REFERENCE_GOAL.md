@@ -237,6 +237,14 @@ substitutes24/24, original-version tables19/24 and recorded openings48/57.
 Metadata refreshed at2026-10-23T16:00Z still accounts for all140 recorded clears,
 maximum156. The explicit17-156 range keeps157+ unopened; the unseen20 gate has
 not run and the goal remains unmet.
+Explicit fresh-process ablations restore85/111/123 when only first-visit state
+admission is reinstated. Disabling discharged bounds alone restores111/123 but
+not85; this isolates an interaction rather than a failed physical contract.
+The next correction keeps a keyed, unique beam frontier: accepting a shorter
+prefix replaces the old candidate instead of letting both consume slots. It
+preserves the verified four-tap witnesses and all45 offline tests pass. The
+old first-visit/bounds-disabled modes remain diagnostic only, not per-level
+runtime switches. The ablation table records every result, including failures.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
