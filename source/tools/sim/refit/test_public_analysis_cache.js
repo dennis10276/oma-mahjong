@@ -29,7 +29,24 @@ function test() {
     }
   }
   assert(metricsHits > 0); assert(proofHits > 0);
-  console.log('PASS per-search public-state analysis caching preserves actions, paths and proof conclusions while reusing ' + metricsHits + ' metric and ' + proofHits + ' proof analyses without private-deck access; cached bounds remain unresolved');
+  let routeHits = 0;
+  for (const clocked of [false, true]) {
+    const pictures = [1, 1, 2, 2, 3, 3], tiles = pictures.map((picture, index) => ({ x: index * 4, y: 0, z: 0 }));
+    const game = { tiles, nb: Layouts.neighbors(tiles), rules: null, clock: clocked ? { i: 0, n: 3 } : null };
+    for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(game, field, { get() { throw Error('Private ' + field); } });
+    const state = { alive: tiles.map(() => 1), pictures, down: tiles.map(() => 1),
+      tray: [], moves: 0, openPeek: -1, relieved: false, arriving: [] };
+    const actions = tiles.map((tile, index) => ({ index }));
+    const options = { ...REFERENCE_PARAMETERS, taps: 4, nodes: 128, beam: 16, progress: 4, finishKnown: false, pruneDead: false,
+      goalRecovery: true, goalRecoveryMin: 1, alternativeGoalRoutes: true, alternativeRecoveryRoutes: true,
+      riskFirstRecovery: true, knownPairMacros: true };
+    const original = search(game, state, actions, options), cached = search(game, state, actions, { ...options, cachePublicAnalysis: true });
+    for (const field of ['index', 'path', 'goal', 'knownWin', 'knownDead', 'safeClockExit', 'knownProgress', 'matchedTiles',
+      'information', 'boundary', 'nodes', 'unknownTransitions', 'unsupportedTransitions']) assert.deepEqual(cached[field], original[field], field);
+    routeHits += cached.analysisCache.routeHits;
+  }
+  assert(routeHits > 0);
+  console.log('PASS per-search public-state analysis caching preserves fixed-budget paths and conclusions while reusing ' + metricsHits + ' metric, ' + proofHits + ' proof and ' + routeHits + ' dependency calculations without private-deck access; cached bounds remain unresolved');
 }
 
 if (require.main === module) test();

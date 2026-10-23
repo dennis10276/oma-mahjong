@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const { aliveSignature } = require('./public_alive_signature.js');
 
 function goalRoutes(game, state, target) {
   assert(Number.isInteger(target) && target >= 0 && target < state.alive.length);
@@ -57,4 +58,19 @@ function goalRoutes(game, state, target) {
     note: 'Bounded public dependency ordering over alternative sides and observed mechanics, not a removal witness, lower bound, safety certificate or hidden-role inference.' };
 }
 
-module.exports = { goalRoutes };
+function createGoalRouteCache(game) {
+  const cache = new Map();
+  let hits = 0;
+  const planner = (snapshot, state, target) => {
+    assert.equal(snapshot, game);
+    assert(Number.isInteger(target) && target >= 0 && target < state.alive.length);
+    const identity = aliveSignature(state.alive) + '|' + +!!state.relieved + '|' + target;
+    if (cache.has(identity)) { hits++; return cache.get(identity); }
+    const route = goalRoutes(game, state, target);
+    cache.set(identity, route); return route;
+  };
+  planner.stats = () => ({ routeHits: hits, routeEntries: cache.size });
+  return planner;
+}
+
+module.exports = { goalRoutes, createGoalRouteCache };

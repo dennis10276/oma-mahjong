@@ -6,7 +6,7 @@ const { guardedSearch } = require('./public_witness_reopen_guard.js');
 const { frontierFor, recoveryDepth, trayRecoveryBurden } = require('./public_goal_frontier.js');
 const { aliveSignature } = require('./public_alive_signature.js');
 const { createPairFlexibility } = require('./public_pair_flexibility.js');
-const { goalRoutes } = require('./public_goal_routes.js');
+const { goalRoutes, createGoalRouteCache } = require('./public_goal_routes.js');
 const { informationTraySafe } = require('./public_information_tray_safety.js');
 const { opensKnownFrontier } = require('./public_reopen_frontier.js');
 const { selectBeam } = require('./public_diverse_beam.js');
@@ -139,6 +139,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
+  const routePlanner = cachePublicAnalysis ? createGoalRouteCache(game) : goalRoutes;
   let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0, macroKeys = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
@@ -172,7 +173,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const roots = new Set(actions.map(action => action.index)), initialAllowed = physical.legal(game, state), initialFree = initialAllowed.free;
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
-  const cone = clocked ? alternativeGoalRoutes ? goalRoutes(game, state, game.clock.i).frontier
+  const cone = clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).frontier
     : obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
   const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
@@ -193,9 +194,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         recovery: recoveryOf(game, position),
         pairDebt: !clocked && pairFlexibility ? pairFlexibility(position) : 0,
         depth: !clocked && goalRecoveryActive && position.tray.length >= goalRecoveryMin
-          ? recoveryDepth(game, position, alternativeRecoveryRoutes, riskFirstRecovery) : { unknownWaiting: 0, knownCost: 0 },
+          ? recoveryDepth(game, position, alternativeRecoveryRoutes, riskFirstRecovery, routePlanner) : { unknownWaiting: 0, knownCost: 0 },
         clockDistance: clocked && position.alive[game.clock.i]
-          ? alternativeGoalRoutes ? goalRoutes(game, position, game.clock.i).cost : clockDistance(game, position) : 0 };
+          ? alternativeGoalRoutes ? routePlanner(game, position, game.clock.i).cost : clockDistance(game, position) : 0 };
       if (cachePublicAnalysis) metricsCache.set(metricsKey, metrics);
     }
     const { room, left, recovery } = metrics;
@@ -405,7 +406,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       initialKnown, initialLeft,
       finishKnown, tapLimit,
       ...(continuationPruning ? { continuationProof } : {}),
-      ...(cachePublicAnalysis ? { analysisCache: { metricsHits, proofHits, boundedProofHits, metricsEntries: metricsCache.size, proofEntries: proofCache.size } } : {}),
+      ...(cachePublicAnalysis ? { analysisCache: { metricsHits, proofHits, boundedProofHits, metricsEntries: metricsCache.size,
+        proofEntries: proofCache.size, ...routePlanner.stats() } } : {}),
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,

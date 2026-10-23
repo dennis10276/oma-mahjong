@@ -32,9 +32,10 @@ function frontierFor(game, state, target) {
   return frontier;
 }
 
-function recoveryDepth(game, state, alternativeRoutes = false, assessPressure = false) {
+function recoveryDepth(game, state, alternativeRoutes = false, assessPressure = false, routePlanner = goalRoutes) {
   assert.equal(typeof alternativeRoutes, 'boolean');
   assert.equal(typeof assessPressure, 'boolean');
+  assert.equal(typeof routePlanner, 'function');
   let knownCost = 0, unknownWaiting = 0, maximumOverflow = 0;
   const allowed = assessPressure ? legal(game, state) : null;
   const targets = [];
@@ -42,7 +43,7 @@ function recoveryDepth(game, state, alternativeRoutes = false, assessPressure = 
     const mates = state.pictures.flatMap((candidate, index) => state.alive[index] && candidate === picture ? [index] : []);
     if (!mates.length) { unknownWaiting++; continue; }
     const ranked = mates.flatMap(index => {
-      const routes = alternativeRoutes ? goalRoutes(game, state, index) : null;
+      const routes = alternativeRoutes ? routePlanner(game, state, index) : null;
       const frontiers = routes ? assessPressure ? routes.alternatives : [routes.frontier] : [frontierFor(game, state, index)];
       return frontiers.map(frontier => ({ index, cost: (routes && !assessPressure ? routes.cost : frontier.size) - 1,
         ...(assessPressure ? frontierPressure(state, frontier, index, allowed) : {}) }));

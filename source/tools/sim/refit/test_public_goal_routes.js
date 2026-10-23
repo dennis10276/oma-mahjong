@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
-const { goalRoutes } = require('./public_goal_routes.js');
+const { goalRoutes, createGoalRouteCache } = require('./public_goal_routes.js');
 
 function test() {
   const tiles = [{ x: 2, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 4, y: 0, z: 0 },
@@ -10,6 +10,24 @@ function test() {
     rules: { locks: new Set([1]), keys: [3, 4], ice: { 5: 1 }, iceNb: [[], [], [], [], [], [2]] } };
   for (const field of ['faces', 'down', 'seed', 'deck']) Object.defineProperty(game, field, { get() { throw Error('Private ' + field); } });
   const state = { alive: tiles.map(() => 1), relieved: false };
+  const cached = createGoalRouteCache(game);
+  let controls = 0;
+  for (let mask = 0; mask < 64; mask++) for (const relieved of [false, true]) for (let target = 0; target < tiles.length; target++) {
+    const position = { alive: tiles.map((tile, index) => +(!!(mask & 2 ** index))), relieved };
+    const result = cached(game, position, target);
+    assert.deepEqual(result, goalRoutes(game, position, target));
+    const irrelevant = { alive: position.alive.slice(), relieved };
+    for (const field of ['pictures', 'down', 'tray', 'moves', 'openPeek', 'arriving', 'seed']) {
+      Object.defineProperty(irrelevant, field, { get() { throw Error('Dependency cache read irrelevant/private ' + field); } });
+    }
+    assert.equal(cached(game, irrelevant, target), result);
+    position.alive[0] = 1 - position.alive[0];
+    assert.deepEqual(cached(game, position, target), goalRoutes(game, position, target));
+    controls++;
+  }
+  assert(cached.stats().routeHits >= controls);
+  assert.throws(() => cached(game, state, '0'));
+  assert.throws(() => cached({ ...game }, state, 0));
   const route = goalRoutes(game, state, 0);
   assert.deepEqual([...route.frontier].sort(), [0, 2, 5], 'An equally short side with a lock is worse than a side that also thaws the cover');
   assert.equal(route.cost, 3);
@@ -38,7 +56,7 @@ function test() {
   assert(planned.safeClockExit, 'The chosen cheap side must still have a constructive physical clock-exit witness');
   assert.throws(() => search(clocked, position, [{ index: 2 }], { alternativeGoalRoutes: 'yes' }));
   assert.throws(() => search(clocked, position, [{ index: 2 }], { alternativeRecoveryRoutes: 'yes' }));
-  console.log('PASS alternative public goal routes compare mechanical side costs, choose only needed observed thaw neighbors, include branching blockers and never read private pictures');
+  console.log('PASS alternative public goal routes compare mechanical side costs and thaw dependencies; ' + controls + ' scoped cache controls match raw results, distinguish alive/relief/targets and ignore pictures, trays and peeks without stale mutable signatures');
 }
 
 if (require.main === module) test();
