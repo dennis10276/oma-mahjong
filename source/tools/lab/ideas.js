@@ -332,12 +332,13 @@ const IDEAS = {
     make(b, c) {
       const ok = i => !special(b, i);
       for (const ck of c.P.filter(i => ok(i) && c.free0[i]).slice(0, 15)) {
-        const x = clone(b); const mates = buryMates(x, c, ck, 2); if (!mates || !mates.length) continue;
+        const x = clone(b); const mates = buryMates(x, c, ck, 4); if (!mates || !mates.length) continue;
         const mate = mates.sort((p, q) => coverOf(c, p).size - coverOf(c, q).size)[0];
         x.clock = null; noDown(x, [ck]);
         // the quickest way to the partner; the clock goes off one move after that
         const g = gameG(x), route = clockRoute(g, mate); if (!route) continue;
-        const k = route.indexOf(mate), path = route.filter(i => i !== ck);
+        const k = route.indexOf(mate); if (k < 8) continue;   // a real dig, not three moves
+        const path = route.filter(i => i !== ck);
         path.splice(k + (route.indexOf(ck) < k ? 0 : 1), 0, ck);
         const y = { ...x, solution: path, clock: { i: ck, n: path.indexOf(ck) + 2 }, clockMate: mate };
         if (valid(y)) return y;
