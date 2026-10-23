@@ -156,3 +156,20 @@ node source/tools/sim/variety/variety.js apply          # when all are done: wri
 - After `apply`: run the tests (`node source/tests/run.js`), look at a few boards in the game, and
   only release when Dennis says so. The dashboard predictions (`dash/predict.json`) for 157+ are for
   the old boards: make new ones for the new version (AGENTS.md, "Predictions on the dashboard").
+
+## Lab results (2026-10-23)
+
+| idea | test players first try (Dennis / Mrs D) | Dennis: tries to win | stars | note (short) |
+|---|---|---|---|---|
+| 11 deep keys, hard | 2% / 3% | 2 | 4 | fun |
+| 12 locked clock, hard | 16% / 8% | 6 (4 lost to the clock within a minute) | 4 | good |
+| 15 chain of ice, hard | 0% / 0% | 11 | 5 | nice hardness |
+| 31 chain reaction, brutal | 0% / 0% | 2 | 5 | fun |
+| 32 partners behind locks, brutal | 2% / 2% | 5 | 5 | felt impossible, then: keys first, then the clock, because of tray space |
+| 33 blind dig, brutal | 1% / 1% | 5 | 4 | very clever; the lock and key add nothing here |
+
+The test players do not rank these boards like Dennis does (0% took 2 tries and 11 tries). A first
+"room for error" measure (`tools/lab/room.js`: along the way through, how many of the tiles you could
+take still leave the level winnable) does not rank them either (traps in bits: 77, 75, 138, 152, 89, 129).
+Lessons: only the specials that belong to the idea (filler locks/ice "add nothing"); the clock as a
+route to find (12) costs tries; tray space forcing an order (32) is liked.
