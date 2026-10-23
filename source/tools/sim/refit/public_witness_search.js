@@ -9,6 +9,7 @@ const { createPairFlexibility } = require('./public_pair_flexibility.js');
 const { goalRoutes } = require('./public_goal_routes.js');
 const { informationTraySafe } = require('./public_information_tray_safety.js');
 const { opensKnownFrontier } = require('./public_reopen_frontier.js');
+const { selectBeam } = require('./public_diverse_beam.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -124,9 +125,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
   const knownPairMacros = settings.knownPairMacros ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
+  const diverseBeam = settings.diverseBeam ?? false;
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
+  assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
   let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
@@ -325,7 +328,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     }
     next.sort((left, right) => compare(right.rank, left.rank));
     if (next.length > settings.beam) boundary = true;
-    beam = next.slice(0, settings.beam);
+    beam = diverseBeam ? selectBeam(next, settings.beam) : next.slice(0, settings.beam);
     if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
     if (!finishKnown && !clocked && best?.progress >= settings.progress && best.state.tray.length === 0 && best.goal !== 'boundedProgress') break;
     if (depth === tapLimit - 1 && beam.length) boundary = true;
