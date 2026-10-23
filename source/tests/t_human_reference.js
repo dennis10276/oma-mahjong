@@ -15,6 +15,7 @@ const modules = [
   'test_public_information_tap_safety.js',
   'test_public_pair_flexibility.js',
   'test_public_tray_burden.js',
+  'test_public_frontier_pressure.js',
   'test_public_consumed_recovery.js',
   'test_public_direct_clock.js',
   'test_public_productive_reopen.js',

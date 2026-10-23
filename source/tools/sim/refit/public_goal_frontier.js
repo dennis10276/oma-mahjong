@@ -1,6 +1,8 @@
 'use strict';
 const assert = require('assert/strict');
 const { goalRoutes } = require('./public_goal_routes.js');
+const { legal } = require('./known_tray_plan.js');
+const { frontierPressure } = require('./public_frontier_pressure.js');
 
 function frontierFor(game, state, target) {
   assert(Number.isInteger(target) && target >= 0 && target < game.tiles.length);
@@ -30,19 +32,26 @@ function frontierFor(game, state, target) {
   return frontier;
 }
 
-function recoveryDepth(game, state, alternativeRoutes = false) {
+function recoveryDepth(game, state, alternativeRoutes = false, assessPressure = false) {
   assert.equal(typeof alternativeRoutes, 'boolean');
-  let knownCost = 0, unknownWaiting = 0;
+  assert.equal(typeof assessPressure, 'boolean');
+  let knownCost = 0, unknownWaiting = 0, maximumOverflow = 0;
+  const allowed = assessPressure ? legal(game, state) : null;
   const targets = [];
   for (const picture of state.tray) {
     const mates = state.pictures.flatMap((candidate, index) => state.alive[index] && candidate === picture ? [index] : []);
     if (!mates.length) { unknownWaiting++; continue; }
-    const ranked = mates.map(index => ({ index, cost: (alternativeRoutes
-      ? goalRoutes(game, state, index).cost : frontierFor(game, state, index).size) - 1 }))
-      .sort((left, right) => left.cost - right.cost || left.index - right.index);
+    const ranked = mates.flatMap(index => {
+      const routes = alternativeRoutes ? goalRoutes(game, state, index) : null;
+      const frontiers = routes ? assessPressure ? routes.alternatives : [routes.frontier] : [frontierFor(game, state, index)];
+      return frontiers.map(frontier => ({ index, cost: (routes && !assessPressure ? routes.cost : frontier.size) - 1,
+        ...(assessPressure ? frontierPressure(state, frontier, index, allowed) : {}) }));
+    }).sort((left, right) => (left.overflow ?? 0) - (right.overflow ?? 0) || left.cost - right.cost || left.index - right.index);
     knownCost += ranked[0].cost; targets.push({ picture, ...ranked[0] });
+    maximumOverflow = Math.max(maximumOverflow, ranked[0].overflow ?? 0);
   }
   return { knownCost, unknownWaiting, targets,
+    ...(assessPressure ? { maximumOverflow } : {}),
     note: 'Public geometric/obstacle ordering heuristic only. Side choice and alternative thaw neighbors are approximate; cost is not a lower bound, route witness, death proof or hidden-picture inference.' };
 }
 

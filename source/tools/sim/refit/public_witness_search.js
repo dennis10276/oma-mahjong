@@ -146,6 +146,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof alternativeGoalRoutes, 'boolean');
   const alternativeRecoveryRoutes = settings.alternativeRecoveryRoutes ?? false;
   assert.equal(typeof alternativeRecoveryRoutes, 'boolean');
+  const riskFirstRecovery = settings.riskFirstRecovery ?? false;
+  assert.equal(typeof riskFirstRecovery, 'boolean');
   const goalRecoveryMin = settings.goalRecoveryMin ?? 0;
   const balancedTrayRecovery = settings.balancedTrayRecovery ?? false;
   assert.equal(typeof balancedTrayRecovery, 'boolean');
@@ -180,7 +182,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         recovery: recoveryOf(game, position),
         pairDebt: !clocked && pairFlexibility ? pairFlexibility(position) : 0,
         depth: !clocked && goalRecoveryActive && position.tray.length >= goalRecoveryMin
-          ? recoveryDepth(game, position, alternativeRecoveryRoutes) : { unknownWaiting: 0, knownCost: 0 },
+          ? recoveryDepth(game, position, alternativeRecoveryRoutes, riskFirstRecovery) : { unknownWaiting: 0, knownCost: 0 },
         clockDistance: clocked && position.alive[game.clock.i]
           ? alternativeGoalRoutes ? goalRoutes(game, position, game.clock.i).cost : clockDistance(game, position) : 0 };
       if (cachePublicAnalysis) metricsCache.set(metricsKey, metrics);
@@ -222,10 +224,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       if (goalRecoveryActive) {
         const depth = metrics.depth;
         const burden = trayRecoveryBurden(depth, recovery, position.tray.length);
-        rank.splice(2, 0, ...(balancedTrayRecovery ? [-burden.burden, -burden.carried] : [-depth.unknownWaiting, -depth.knownCost]));
+        rank.splice(2, 0, ...(riskFirstRecovery ? [-(depth.maximumOverflow ?? 0)] : []),
+          ...(balancedTrayRecovery ? [-burden.burden, -burden.carried] : [-depth.unknownWaiting, -depth.knownCost]));
         recoveryRankWidths.add(rank.length);
       }
-      if (pairFlexibility) rank.splice(2 + (settings.trayRecovery ? 2 : 0) + (goalRecoveryActive ? 2 : 0), 0, -metrics.pairDebt);
+      if (pairFlexibility) rank.splice(2 + (settings.trayRecovery ? 2 : 0) + (goalRecoveryActive ? riskFirstRecovery ? 3 : 2 : 0), 0, -metrics.pairDebt);
     }
 
     const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information };
@@ -371,6 +374,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),
+        ...(riskFirstRecovery ? { riskFirstRecovery } : {}),
         goalRecoveryMin, recoveryRankWidths: [...recoveryRankWidths].sort() } } : {}),
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
         + 'are never sampled from the real board. Clock distance is an ordering heuristic, not a proven bound. '
