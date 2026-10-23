@@ -6,6 +6,7 @@ const { advance } = require('./known_tray_plan.js');
 const { createSession } = require('./production_physical_session.js');
 const { encodeGame } = require('./personal_game_io.js');
 const { verifyAttempt } = require('./human_reference_campaign.js');
+const { search, REFERENCE_PARAMETERS } = require('./public_witness_search.js');
 
 function fixture(down) {
   const tiles = [0, 4, 8, 12].map(horizontal => ({ x: horizontal, y: 0, z: 0 }));
@@ -45,6 +46,26 @@ function test() {
     } };
     assert.equal(keyRecoveryPath(uncertain, state, 0, taps), null, 'Unknown lock legality must not be silently treated as an unlocked match');
     assert.equal(keyRecoveryPath({ ...game, clock: { i: 3, n: 2 } }, state, 0, taps), null);
+    const options = { ...REFERENCE_PARAMETERS, nodes: 1, taps, beam: 1, pruneDead: false, finishKnown: false };
+    const roots = [{ index: 0 }, { index: 1 }];
+    const bounded = search(game, state, roots, options);
+    assert(!bounded.knownWin && !bounded.knownDead && bounded.boundary);
+    const expanded = search(game, state, roots, { ...options, keyRecoveryMacros: true });
+    assert(expanded.knownWin && !expanded.knownDead && expanded.expandedKeyRecoveries === 1);
+    assert.equal(expanded.path.length, taps);
+    assert.equal(expanded.nodes, 1);
+    const expandedSession = createSession(actual, settings);
+    for (const index of expanded.path) expandedSession.tap(index);
+    assert(expandedSession.view().win);
+    assert.equal(verifyAttempt(encodeGame(actual), expanded.path, settings, expandedSession.audit()), taps);
+    const short = search(game, state, roots, { ...options, keyRecoveryMacros: true, taps: taps - 1 });
+    assert(!short.knownWin && !short.knownDead && short.boundary);
+    const blocked = search(uncertain, state, roots, { ...options, keyRecoveryMacros: true });
+    assert(!blocked.knownWin && blocked.expandedKeyRecoveries === 0);
+    const expired = search(game, state, roots, { ...options, keyRecoveryMacros: true, deadline: Date.now() - 1 });
+    assert(!expired.knownWin && !expired.knownDead && expired.boundary && expired.expandedKeyRecoveries === 0);
+    assert.equal(expired.nodes, 0);
+    assert.throws(() => search(game, state, roots, { ...options, keyRecoveryMacros: 'yes' }));
   }
   const { game, state } = fixture([0, 0, 0, 0]);
   const { actual } = fixture([0, 0, 0, 0]), settings = { seed: 1, choiceLimit: 32, tapMs: 1000 };
@@ -64,7 +85,7 @@ function test() {
   assert.equal(keyRecoveryPath({ ...game, rules: { ...game.rules, keys: [0] } }, state, 0, 4), null);
   assert.equal(keyRecoveryPath({ ...game, rules: { ...game.rules, keys: [0, 0] } }, state, 0, 4), null);
   assert.throws(() => keyRecoveryPath(game, state, 0, 4, NaN));
-  console.log('PASS bounded observed-key recovery constructs real unlock/match witnesses for face-up and remembered closed keys, independently replays in production and refuses unknown roles, crowded trays, clock loss or exhausted budgets');
+  console.log('PASS bounded observed-key recovery and integrated one-node macros construct physical unlock/match wins missed by primitive edges, independently replay in production and refuse unknown roles, crowded trays, clock loss or exhausted tap/deadline budgets');
 }
 
 if (require.main === module) test();

@@ -13,6 +13,7 @@ const { selectBeam } = require('./public_diverse_beam.js');
 const { diverseWitnessSearch } = require('./public_diverse_witness.js');
 const { informationInCone } = require('./public_exposure_frontier.js');
 const { queuePath } = require('./public_path_budget.js');
+const { keyRecoveryPath } = require('./public_key_recovery.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -127,16 +128,18 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const deadline = settings.deadline ?? Infinity;
   const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
   const knownPairMacros = settings.knownPairMacros ?? false;
+  const keyRecoveryMacros = settings.keyRecoveryMacros ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
   assert(exposureFrontier === undefined || typeof exposureFrontier === 'function');
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
+  assert.equal(typeof keyRecoveryMacros, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
-  let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0;
+  let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0, macroKeys = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -338,6 +341,21 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             queuePath(visited, next, pairedIdentity, pairedCandidate);
           }
         }
+        if (keyRecoveryMacros && game.rules?.keys?.includes(index) && path.length < tapLimit) {
+          const recovered = keyRecoveryPath(game, settled, index, tapLimit - node.path.length, deadline);
+          if (recovered) {
+            macroKeys++; hasSafeRemoval = true;
+            const recoveredExposed = exposureFrontier ? exposureFrontier(recovered.state) : [];
+            assert(Array.isArray(recoveredExposed));
+            const recoveredInformation = recoveredExposed.length > 0;
+            const recoveredPath = node.path.concat(recovered.path);
+            const recoveredCandidate = evaluate(recovered.state, recoveredPath, recoveredInformation,
+              recovered.path.at(-1), false, recoveredInformation ? recoveredExposed : null);
+            if (recoveredCandidate.won) { best = recoveredCandidate; return finish(); }
+            if (recoveredInformation) unknown++;
+            queuePath(visited, next, keyOf(game, recovered.state), recoveredCandidate);
+          }
+        }
       }
     }
     const ranked = [...next.values()].sort((left, right) => compare(right.rank, left.rank));
@@ -389,6 +407,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(continuationPruning ? { continuationProof } : {}),
       ...(cachePublicAnalysis ? { analysisCache: { metricsHits, proofHits, boundedProofHits, metricsEntries: metricsCache.size, proofEntries: proofCache.size } } : {}),
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
+      ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),
         ...(riskFirstRecovery ? { riskFirstRecovery } : {}),
