@@ -469,16 +469,19 @@ function clockRoute(g, ci) {   // (hard.js clockRoute, searching deeper: a clock
   return null;
 }
 
+// EXACT: the clock counts from the true shortest way to it (tools/lab/exact.js), not the beam search
+const { exactRoute } = require('./exact');
+let EXACT = false;
 function fix(y, spare) {
   const g = gameG(y);
   let path = null;
   if (y.clock && y.clockMate !== undefined) {   // "don't grab the clock": the quickest way to its buried partner, the clock right with it
-    const route = clockRoute(g, y.clockMate); if (!route) return null;
+    const ex = EXACT ? exactRoute(g, y.clockMate) : null, route = ex ? ex.path : clockRoute(g, y.clockMate); if (!route) return null;
     const ck = y.clock.i, k = route.indexOf(y.clockMate); path = route.filter(i => i !== ck); path.splice(k + (route.indexOf(ck) < k ? 0 : 1), 0, ck);
     const z = { ...y, solution: path, clock: { i: ck, n: path.indexOf(ck) + 1 + (spare ?? 1) } };
     return valid(z) ? z : null;
   }
-  if (y.clock) { path = clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
+  if (y.clock) { const ex = EXACT ? exactRoute(g, y.clock.i) : null; path = ex ? ex.path : EXACT ? null : clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
   if (!path && valid(y)) path = y.solution;
   if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], 120000, g.rules); }
   if (!path || path.length !== y.tiles.length) return null;
@@ -547,7 +550,10 @@ function nudge(b, target, seed, keep, spare, kind, steps = +(process.env.STEPS |
    Dennis (2026-10-23) after the first round: "They need to be tuned way harder so that there is almost no
    room for error". hard: the test players win about 1 in 8 / 1 in 20 first tries; very hard: 1 in 20 / 1 in 50. */
 // the clock: the moves the quickest found way needs to reach it, plus SPARE
-const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 }, brutal: { Dennisisdebeste: 0.02, 'Mrs. Doubtfire': 0.01 } }, SPARE = { hard: 2, veryhard: 1, brutal: 1 };
+// honest (round 5, 2026-10-24): no tuning towards the test players (they do not reason the way Dennis
+// does); the clock = the true shortest way + 2 (Dennis on a clock with about that: "give the clock 1/2
+// more turns"; the levels with the clock near the true shortest took him 5-11 tries)
+const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 }, brutal: { Dennisisdebeste: 0.02, 'Mrs. Doubtfire': 0.01 }, honest: null }, SPARE = { hard: 2, veryhard: 1, brutal: 1, honest: 2 };
 const OUTD = path.join(__dirname, 'ideas-out');
 const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 80 }, (_, k) => 'blob' + (9001 + k * 37))];
 if (process.argv[2] === 'merge') {
@@ -559,7 +565,8 @@ if (process.argv[2] === 'merge') {
   let id = +process.argv[3];
   for (const spec of process.argv.slice(4)) {
     const [kind, N0, lvl] = spec.split(':'), N = +N0, I = IDEAS[kind], tgt = LEVELS[lvl];
-    const tfull = { Dennisisdebeste: { first: tgt.Dennisisdebeste }, 'Mrs. Doubtfire': { first: tgt['Mrs. Doubtfire'] } };
+    const tfull = tgt ? { Dennisisdebeste: { first: tgt.Dennisisdebeste }, 'Mrs. Doubtfire': { first: tgt['Mrs. Doubtfire'] } } : null;
+    EXACT = lvl === 'honest';
     let made = null, si = id * 7;
     for (let tries = 0; tries < 60 && !made; tries++) {
       const shape = shapes[(si++) % shapes.length];
@@ -575,9 +582,9 @@ if (process.argv[2] === 'merge') {
         const cx = ctxOf(x); if (x.obst.keys.some(k => cx.free0[k])) x.obst = { ...x.obst, keys: [], locks: [] };
       }
       const x2 = fix(x, SPARE[lvl]); if (!x2) continue;
-      const t = nudge(x2, tfull, 7001 + si, keepT, SPARE[lvl], kind);
+      const t = lvl === 'honest' ? { board: x2, m: measure(x2, 400, 7099 + si) } : nudge(x2, tfull, 7001 + si, keepT, SPARE[lvl], kind);
       const ck = t.board.clock ? t.board.clock.n - (t.board.solution.indexOf(t.board.clock.i) + 1) : null;
-      made = { id, kind, level: lvl, title: I.title + ({ veryhard: ' · very hard', brutal: ' · brutal' }[lvl] || ' · hard') + (N < 80 ? ' · small board' : ''), idea: I.idea + (N < 80 ? ` Only ${N} tiles.` : ''), shape, like: +p.like.toFixed(2), tiles: N, board: t.board, m: t.m,
+      made = { id, kind, level: lvl, title: I.title + ({ veryhard: ' · very hard', brutal: ' · brutal', honest: ' · tight clock' }[lvl] || ' · hard') + (N < 80 ? ' · small board' : ''), idea: I.idea + (N < 80 ? ` Only ${N} tiles.` : ''), shape, like: +p.like.toFixed(2), tiles: N, board: t.board, m: t.m,
         specials: { down: t.board.down.length, ice: Object.keys(t.board.obst.ice || {}).length, locks: (t.board.obst.locks || []).length, clockSpare: ck } };
       console.log(`idea ${id} ${kind} ${lvl} on ${shape} (${N} tiles): Dennis ${(t.m.Dennisisdebeste.first * 100).toFixed(0)}% / Mrs D ${(t.m['Mrs. Doubtfire'].first * 100).toFixed(0)}% first try; ${JSON.stringify(made.specials)}`);
     }
