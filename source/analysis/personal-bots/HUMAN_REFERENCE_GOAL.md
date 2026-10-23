@@ -158,6 +158,22 @@ These results are not hidden by reporting only successful settings; initial
 focused improvements are not presented as complete-set wins. Earlier comparisons
 remain in per-run tables and Git rather than growing this checkpoint indefinitely.
 
+The optional diverse beam retains alternative public first taps within the same
+width, node and shared deadline. Its unchanged-source screen still passes25/26
+recent levels and clears50 on try1, but regresses92 (no clear in4 tries), so it
+is not promoted as a global replacement. The new optional `diverseWitness`
+portfolio preserves the original primary search and spends only leftover
+nodes/time on diversity; it changes the choice only for a constructive win or
+safe clock exit. `uniqueKnownCleanup` is another optional optimization: after
+all remaining pictures are actually known, no clock/Joker remains, and a class
+has only its last pair or tray mate, commute a physically safe guaranteed free
+match before search. It never assumes that two observed copies are globally
+unique while any remaining picture is unknown.2052 exhaustive small known-board
+controls preserve winning continuations, including crowded closed-twin prefixes;
+key/ice/lock examples independently replay through original production.42/42
+offline tests pass, with384 concealed-world controls. Campaign comparison of
+the constructive portfolio and cleanup is pending; neither is claimed complete.
+
 A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
 the clock at move6, and later reaches an empty tray. Subsequent commitments cause
 the loss. A dead position reached after mistakes does not prove that the initial
