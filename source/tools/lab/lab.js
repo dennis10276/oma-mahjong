@@ -50,7 +50,7 @@
   .lab-saved{font-size:13px;color:#1f8a5b;margin-left:auto}
   #labSync{font-size:12px;opacity:.75}`;
   document.head.appendChild(css);
-  const btn = document.createElement('button'); btn.id = 'labBtn'; btn.textContent = '🧪 Lab';
+  const btn = document.createElement('button'); btn.id = 'labBtn'; btn.textContent = '🧪'; btn.title = 'Level lab'; btn.setAttribute('aria-label', 'Level lab');
   const panel = document.createElement('div'); panel.id = 'labPanel';
   document.body.appendChild(panel); document.body.appendChild(btn);
   btn.onclick = () => { panel.classList.toggle('hidden'); if (!panel.classList.contains('hidden')) render(); };
