@@ -113,6 +113,20 @@ function trayJuggleIdea(kind, title, idea) {
   } };
 }
 
+// move the partners of tile t under other tiles (a picture swap with a buried tile of another picture,
+// never onto its own twin); returns the partners, or null
+function buryMates(x, c, t, minCover, avoid = []) {
+  const f = x.faces, out = [];
+  for (let j = 0; j < c.n; j++) {
+    if (j === t || f[j] !== f[t]) continue;
+    if (coverOf(c, j).size >= minCover && !special(x, j) && !avoid.includes(j)) { out.push(j); continue; }
+    const s2 = c.P.find(q => q !== t && f[q] !== f[t] && coverOf(c, q).size >= minCover && !special(x, q) && !avoid.includes(q) && !out.includes(q) && !c.nb.above[q].some(a => f[a] === f[t]));
+    if (s2 === undefined) return null;
+    [f[j], f[s2]] = [f[s2], f[j]]; out.push(s2);
+  }
+  return out;
+}
+
 const IDEAS = {
   lockedClock: {
     title: 'The clock is locked',
@@ -317,11 +331,10 @@ const IDEAS = {
     idea: 'The alarm clock is free from the start, but its partner is buried. Take the clock too early and it blocks a tray slot while you dig; wait too long and the alarm goes off.',
     make(b, c) {
       const ok = i => !special(b, i);
-      for (const ck of c.P.filter(i => ok(i) && c.free0[i])) {
-        const mates = []; for (let j = 0; j < c.n; j++) if (j !== ck && b.faces[j] === b.faces[ck]) mates.push(j);
-        if (!mates.every(j => coverOf(c, j).size >= 2 && ok(j))) continue;
+      for (const ck of c.P.filter(i => ok(i) && c.free0[i]).slice(0, 15)) {
+        const x = clone(b); const mates = buryMates(x, c, ck, 2); if (!mates || !mates.length) continue;
         const mate = mates.sort((p, q) => coverOf(c, p).size - coverOf(c, q).size)[0];
-        const x = clone(b); x.clock = null; noDown(x, [ck]);
+        x.clock = null; noDown(x, [ck]);
         // the quickest way to the partner; the clock goes off one move after that
         const g = gameG(x), route = clockRoute(g, mate); if (!route) continue;
         const k = route.indexOf(mate), path = route.filter(i => i !== ck);
@@ -367,16 +380,15 @@ const IDEAS = {
     idea: "The alarm clock is free, but its partner is buried under locked tiles. Find the keys, then dig to the partner, and only then take the clock.",
     make(b, c) {
       const ok = i => !special(b, i);
-      for (const ck of c.P.filter(i => ok(i) && c.free0[i])) {
-        const mates = []; for (let j = 0; j < c.n; j++) if (j !== ck && b.faces[j] === b.faces[ck]) mates.push(j);
-        if (!mates.every(j => ok(j) && coverOf(c, j).size >= 2)) continue;
+      for (const ck of c.P.filter(i => ok(i) && c.free0[i]).slice(0, 15)) {
+        const b2 = clone(b), mates = buryMates(b2, c, ck, 2); if (!mates || !mates.length) continue;
         const m = mates[0], lockT = [...coverOf(c, m)].filter(ok);
         if (lockT.length < 2) continue;
         const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2 && i !== ck && !mates.includes(i) && !lockT.includes(i)) deep.push(i);
-        const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+        const byFace = {}; for (const i of deep) (byFace[b2.faces[i]] = byFace[b2.faces[i]] || []).push(i);
         for (const kk of Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).slice(0, 6)) {
           const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]); if (lockT.some(t => kdig.has(t)) || kdig.has(ck)) continue;
-          const x = clone(b);
+          const x = clone(b2);
           x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, m, ...lockT, ...kk].includes(+i))), locks: lockT, keys: [kk[0], kk[1]] };
           x.clock = { i: ck, n: 999 }; x.clockMate = m; noDown(x, [ck, ...lockT, ...kk]);
           const y = fix(x); if (y) return y;
