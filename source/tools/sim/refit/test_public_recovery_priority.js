@@ -15,10 +15,13 @@ function test() {
   assert(preferKnownRecovery(game, state, plan([0, 1, 4])));
   assert(!preferKnownRecovery(game, state, plan([0, 4])));
   assert(!preferKnownRecovery(game, state, plan([4])));
-  assert(!preferKnownRecovery(game, state, plan([0, 1, 4, 5])));
+  assert(!preferKnownRecovery(game, state, plan([4, 0, 1])));
+  assert(preferKnownRecovery(game, state, plan([0, 1, 4, 5])), 'A safe recovery checkpoint needs no hypothetical future reveal');
   assert(!preferKnownRecovery(game, { ...state, tray: [3] }, plan([0, 1, 4])));
   assert(preferKnownRecovery(game, { ...state, tray: [1] }, plan([0, 4])));
-  assert(!preferKnownRecovery(game, { ...state, tray: [1, 2, 3] }, plan([0, 1, 4])));
+  assert(!preferKnownRecovery(game, { ...state, tray: [7, 8, 9] }, plan([0, 1, 4])));
+  assert(preferKnownRecovery(game, { ...state, tray: [7], down: [1, 0, 0, 0, 1, 1], openPeek: 0 }, plan([1, 4])),
+    'Complete a known open twin without adding a carrier before overwriting its inspection');
   assert.deepEqual(state, before);
   for (const tray of [[7], [1]]) {
     const controller = createHumanController(tiles, { inspectBeforeCommit: 'recovery', inspectionTrayLimit: 1 });
