@@ -137,4 +137,27 @@ module.exports = [
       t.ok(Layouts.careEff(35) < 14, 'level 35 plays like a normal level 13');
     },
   },
+  {
+    name: 'grandma catches up from level 119: family face-down share and first-try target by 143',
+    async run(t) {
+      const bad = [];
+      t.eq(Layouts.careCatchup(118), null, 'level 118 and below unchanged');
+      const at = lv => Layouts.forLevel(lv, 1.6, 1, 'care').diff;
+      t.ok(at(118).downN === 6 && at(119).downN === undefined, 'from 119 a share of the pile instead of a few on top');
+      let prev = at(118);
+      for (let lv = 119; lv <= 143; lv++) {
+        const d = at(lv), fam = Layouts.difficultyFor(Layouts.effLevel(lv));
+        if (lv > 119 && (d.down < prev.down - 1e-9 || d.target > prev.target + 1e-9)) bad.push(`L${lv}: not steadily harder`);
+        if (d.down > fam.down + 1e-9 || d.target < fam.target - 1e-9) bad.push(`L${lv}: harder than the family`);
+        prev = d;
+      }
+      for (const lv of [143, 150, 200]) {
+        const d = at(lv), fam = Layouts.difficultyFor(Layouts.effLevel(lv));
+        if (Math.abs(d.down - fam.down) > 1e-9 || Math.abs(d.target - fam.target) > 1e-9) bad.push(`L${lv}: not the family's values`);
+      }
+      const spec = Layouts.forLevel(143, 1.6, 1, 'care'), deal = Layouts.makeDeal(spec, 24, true), nb = Layouts.neighbors(spec.tiles);
+      if (!deal.down.some(i => nb.above[i].length)) bad.push('L143: no face-down tile under another one (family rule: anywhere)');
+      t.eq(bad, [], 'levels 119-200');
+    },
+  },
 ];

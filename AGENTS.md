@@ -77,6 +77,11 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   for shape 1.6 (`RULES.levels.aspect`). Grandma's own track still follows her screen. The
   extra-large tiles setting is removed (it changed the level). Keep the table: changing it changes
   levels people are playing.
+- Grandma catches up with the family (Dennis, 2026-10-24; from 1.61): her own track keeps levels 1-118
+  exactly as they were. From 119 her face-down tiles follow the family's rule (any tile, a share of
+  the pile, both twins possible) and her deal target follows the family's; both climb evenly from
+  8% / 75% at 118 to the family's 40% / 42% at 143 (`CARE_CATCHUP` in `www/layouts.js`). Her pile
+  sizes stay her own. Long term Dennis wants her fully at family level, maybe ~100 levels on.
 
 ## Predictions on the dashboard
 
