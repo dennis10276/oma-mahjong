@@ -18,6 +18,7 @@ function test() {
   configurations.push({ ...configurations[1], passiveInformation: 'roles' });
   configurations.push({ ...configurations[1], inspectBeforeCommit: 'recovery' });
   configurations.push({ ...configurations[1], keyRecoveryMacros: true });
+  configurations.push({ ...configurations[1], passiveInformation: 'frontierRoles' });
   const canonical = new Map();
   let controls = 0;
   for (let world = 0; world < 192; world++) {
