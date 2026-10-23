@@ -209,7 +209,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     if (won) {
       rank = [tier, room.room, -path.length];
     } else if (exit) {
-      rank = [tier, inCone ? 1 : 0, -room.pressure, room.room, -path.length, progress, -recovery.stranded, recovery.immediate];
+      rank = [tier, -room.pressure, room.room, -path.length, progress, -recovery.stranded, recovery.immediate];
     } else if (clocked) {
       rank = [tier, inCone ? 1 : 0, -room.pressure, -metrics.clockDistance, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
