@@ -11,6 +11,7 @@ const { informationTraySafe } = require('./public_information_tray_safety.js');
 const { opensKnownFrontier } = require('./public_reopen_frontier.js');
 const { selectBeam } = require('./public_diverse_beam.js');
 const { diverseWitnessSearch } = require('./public_diverse_witness.js');
+const { informationInCone } = require('./public_exposure_frontier.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -179,7 +180,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const recoveryRankWidths = new Set();
   const visited = new Set([keyOf(game, state)]);
 
-  const evaluate = (position, path, information = false, targetIndex = -1, executesUnknownTap = false) => {
+  const evaluate = (position, path, information = false, targetIndex = -1, executesUnknownTap = false, informationTargets = null) => {
     const metricsKey = cachePublicAnalysis ? keyOf(game, position) : null;
     let metrics = cachePublicAnalysis ? metricsCache.get(metricsKey) : null;
     if (metrics) metricsHits++;
@@ -197,7 +198,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const won = left === 0 && position.tray.length === 0, exit = clocked && !position.alive[game.clock.i];
     const progress = initialLeft - left;
     const matchedTiles = initialLeft + state.tray.length - left - position.tray.length;
-    const inCone = cone && targetIndex >= 0 ? cone.has(targetIndex) : false;
+    const inCone = informationInCone(cone, targetIndex, informationTargets);
 
     const safeInfo = information && informationTraySafe(position, targetIndex, executesUnknownTap, room.allowed);
 
@@ -285,7 +286,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         }
         if (moved.lost) continue;
         hasSafeRemoval ||= moved.removed > 0;
-        const passiveInformation = exposureFrontier ? exposureFrontier(moved.state) : false;
+        const exposed = exposureFrontier ? exposureFrontier(moved.state) : [];
+        assert(Array.isArray(exposed));
+        const passiveInformation = exposed.length > 0;
         if (settings.pruneDead && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
           || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) {
           const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
@@ -305,7 +308,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             deadPrunes++; if (!node.path.length) provedDeadRoots.add(index); continue;
           }
         }
-        const candidate = evaluate(moved.state, path, passiveInformation, index);
+        const candidate = evaluate(moved.state, path, passiveInformation, index, false, passiveInformation ? exposed : null);
         if (moved.win) {
           best = candidate;
           return finish();
@@ -323,8 +326,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             if (paired.uncertain || paired.lost) continue;
             assert.equal(moved.removed + paired.removed, 2, 'A known pair expansion must contain two actual removals');
             macroPairs++; hasSafeRemoval = true;
-            const pairedInformation = exposureFrontier ? exposureFrontier(paired.state) : false;
-            const pairedCandidate = evaluate(paired.state, path.concat(mate), pairedInformation, mate);
+            const pairedExposed = exposureFrontier ? exposureFrontier(paired.state) : [];
+            assert(Array.isArray(pairedExposed));
+            const pairedInformation = pairedExposed.length > 0;
+            const pairedCandidate = evaluate(paired.state, path.concat(mate), pairedInformation, mate, false, pairedInformation ? pairedExposed : null);
             if (paired.win) { best = pairedCandidate; return finish(); }
             if (pairedInformation) unknown++;
             const pairedIdentity = keyOf(game, paired.state);

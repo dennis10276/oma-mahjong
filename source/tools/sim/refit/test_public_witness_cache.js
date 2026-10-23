@@ -37,8 +37,8 @@ const uncached = cachedSearch(4);
 assert(uncached(game, state, actions).knownWin);
 const expired = uncached(game, state, actions, { deadline: Date.now() - 1 });
 assert(!expired.knownWin && !expired.knownDead && expired.boundary);
-const callbackGame = { tiles, nb: game.nb, rules: null, clock: null, publicExposure: () => true };
-uncached(callbackGame, state, actions); callbackGame.publicExposure = () => false;
+const callbackGame = { tiles, nb: game.nb, rules: null, clock: null, publicExposure: () => [2] };
+uncached(callbackGame, state, actions); callbackGame.publicExposure = () => [];
 assert.deepEqual(uncached(callbackGame, state, actions), expected);
 assert.throws(() => keyOf(callbackGame, state, actions, PARAMETERS));
 const frontierGame = { tiles, nb: game.nb, rules: null, clock: null,

@@ -2,7 +2,7 @@
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 const { observeBoard, tileVisibility } = require('./human_board_visibility.js');
-const { createExposureFrontier } = require('./public_exposure_frontier.js');
+const { createExposureFrontier, informationInCone } = require('./public_exposure_frontier.js');
 const { createSession } = require('./production_physical_session.js');
 const { verifyAttempt } = require('./human_reference_campaign.js');
 const { encodeGame } = require('./personal_game_io.js');
@@ -10,6 +10,13 @@ const { legal } = require('./known_tray_plan.js');
 const { search } = require('./public_witness_search.js');
 
 function test() {
+  const cone = new Set([1, 2]);
+  assert.equal(informationInCone(cone, 1, [4]), false, 'A clock-route removal must not give clock relevance to unrelated information');
+  assert.equal(informationInCone(cone, 4, [1]), true, 'Information about the clock route remains relevant even if an outside tile uncovered it');
+  assert.equal(informationInCone(cone, 1), true);
+  assert.equal(informationInCone(cone, 4), false);
+  assert.equal(informationInCone(cone, 1, []), false);
+  assert.equal(informationInCone(null, 1, [1]), false);
   const tiles = [{ x: 0, y: 0, z: 0 }, { x: 0.28, y: 0.28 / 1.24, z: 1 }, { x: 1, y: 0, z: 1 },
     { x: 8, y: 0, z: 0 }, { x: 12, y: 0, z: 0 }, { x: 16, y: 0, z: 0 },
     { x: 12.28, y: 0.28 / 1.24, z: 1 }, { x: 20, y: 0, z: 0 }];
@@ -26,7 +33,7 @@ function test() {
     if (canonical === null) canonical = first; else assert.deepEqual(first, canonical);
     const state = { ...initial, pictures: first.pictures, down: first.down };
     const frontier = createExposureFrontier(tiles, state);
-    assert.equal(frontier(state), false);
+    assert.deepEqual(frontier(state), []);
     const publicGame = { tiles, nb: actualGame.nb, rules: null, clock: null,
       publicFrontier(position) {
         const free = position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, actualGame.nb) ? [index] : []);
@@ -52,26 +59,26 @@ function test() {
     session.tap(1);
     const after = session.view().state;
     assert.equal(Layouts.isFree(0, after.alive, actualGame.nb), false, 'A picture can be revealed before its tile becomes takeable');
-    assert.equal(frontier(after), true);
+    assert.deepEqual(frontier(after), [0]); assert(Object.isFrozen(frontier(after)));
     const second = observe(after);
     assert.equal(second.down[0], hiddenDown);
     assert.equal(second.pictures[0], hiddenDown ? null : hiddenPicture);
     assert.equal(verifyAttempt(encodeGame(actualGame), [1], settings, session.audit()), 1);
     const rememberedBack = createExposureFrontier(tiles, { ...state, down: [1, ...state.down.slice(1)] });
-    assert.equal(rememberedBack(after), false, 'Exposing a remembered back does not disclose its picture');
+    assert.deepEqual(rememberedBack(after), [], 'Exposing a remembered back does not disclose its picture');
     const rememberedPicture = createExposureFrontier(tiles, { ...state, down: [0, ...state.down.slice(1)], pictures: [hiddenPicture, ...state.pictures.slice(1)] });
-    assert.equal(rememberedPicture(after), false);
+    assert.deepEqual(rememberedPicture(after), []);
     const unknownRoles = first.roles.slice();
     const roleOnly = { ...state, down: [0, ...state.down.slice(1)], pictures: [hiddenPicture, ...state.pictures.slice(1)], roles: unknownRoles };
-    assert.equal(createExposureFrontier(tiles, roleOnly)(after), true);
+    assert.deepEqual(createExposureFrontier(tiles, roleOnly)(after), [0]);
     unknownRoles[0] = 'none';
-    assert.equal(createExposureFrontier(tiles, roleOnly)(after), false);
+    assert.deepEqual(createExposureFrontier(tiles, roleOnly)(after), []);
     const knownFaceUp = createExposureFrontier(tiles, { ...state, down: [0, ...state.down.slice(1)] });
-    assert.equal(knownFaceUp(after), true);
-    assert.equal(knownFaceUp({ alive: [0, ...after.alive.slice(1)] }), false);
+    assert.deepEqual(knownFaceUp(after), [0]);
+    assert.deepEqual(knownFaceUp({ alive: [0, ...after.alive.slice(1)] }), []);
     const restored = { ...after, alive: initial.alive.slice() };
-    assert.equal(frontier(restored), false); restored.alive[1] = 0;
-    assert.equal(frontier(restored), true);
+    assert.deepEqual(frontier(restored), []); restored.alive[1] = 0;
+    assert.deepEqual(frontier(restored), [0]);
     const full = tileVisibility(tiles, after, null), selected = tileVisibility(tiles, after, null, [0, 4]);
     for (const [index, visible] of full.tiles.entries()) assert.deepEqual(selected.tiles[index], [0, 4].includes(index) ? visible : null);
     assert.throws(() => tileVisibility(tiles, after, null, [-1]));

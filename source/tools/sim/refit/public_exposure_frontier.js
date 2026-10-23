@@ -12,17 +12,21 @@ function createExposureFrontier(tiles, initial) {
     return orientation || picture || role ? [{ index, orientation, picture, role }] : [];
   });
   const indices = targets.map(target => target.index);
-  const cache = new Map();
+  const cache = new Map(), empty = Object.freeze([]);
   return position => {
-    if (!targets.length) return false;
+    if (!targets.length) return empty;
     const signature = position.alive.join('');
     if (cache.has(signature)) return cache.get(signature);
     const projected = tileVisibility(tiles, { alive: position.alive, down, openPeek: -1 }, null, indices);
-    const gained = targets.some(target => position.alive[target.index]
+    const gained = Object.freeze(targets.filter(target => position.alive[target.index]
       && (target.orientation && projected.tiles[target.index].orientation
-        || target.picture && projected.tiles[target.index].picture || target.role && projected.tiles[target.index].role));
+        || target.picture && projected.tiles[target.index].picture || target.role && projected.tiles[target.index].role)).map(target => target.index));
     cache.set(signature, gained); return gained;
   };
 }
 
-module.exports = { createExposureFrontier };
+function informationInCone(cone, target, newlyReadable = null) {
+  return !!cone && (newlyReadable === null ? cone.has(target) : newlyReadable.some(index => cone.has(index)));
+}
+
+module.exports = { createExposureFrontier, informationInCone };
