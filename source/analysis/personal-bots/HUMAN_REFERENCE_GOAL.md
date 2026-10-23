@@ -171,8 +171,19 @@ match before search. It never assumes that two observed copies are globally
 unique while any remaining picture is unknown.2052 exhaustive small known-board
 controls preserve winning continuations, including crowded closed-twin prefixes;
 key/ice/lock examples independently replay through original production.42/42
-offline tests pass, with384 concealed-world controls. Campaign comparison of
-the constructive portfolio and cleanup is pending; neither is claimed complete.
+offline tests pass, with384 concealed-world controls. The combined portfolio and
+cleanup screen preserves92/150 and25/26 recent passes, but does not clear50.
+It adds no campaign passes and more search time, so remains optional rather than
+a promoted replacement. Neither is claimed complete.
+
+The new optional `passiveInformation` recognizes that removing a known tile can
+make another picture/orientation/overlay readable before it is takeable. It
+uses the same central geometry gate, not a second recognition rule, and stops
+the hypothetical prefix before reading any newly permitted value. Only the
+actual next observation may supply it. Subset masks match the full gate;72
+concealed worlds yield identical public stop plans and production-replayed
+prefixes.43/43 offline tests pass, including480 controller concealed-world
+controls. Broader campaign screening is pending.
 
 A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
 the clock at move6, and later reaches an empty tray. Subsequent commitments cause
