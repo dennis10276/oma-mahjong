@@ -13,6 +13,7 @@ const { advance } = require('./known_tray_plan.js');
 const { aliveSignature } = require('./public_alive_signature.js');
 const { knownCleanup } = require('./public_unique_cleanup.js');
 const { createExposureFrontier } = require('./public_exposure_frontier.js');
+const { inferMatchedPicture } = require('./public_matched_picture.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
@@ -27,6 +28,7 @@ function createHumanController(tiles, options = {}) {
   for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(geometry, field, { get() { throw Error('Policy accessed private ' + field); } });
   const pictures = tiles.map(() => null), down = tiles.map(() => null), initialRoles = tiles.map(() => null);
   let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
+  let lastAcceptedIndex = null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   const resetPlanner = () => { planner = reference(settings); };
@@ -34,12 +36,22 @@ function createHumanController(tiles, options = {}) {
     beginAttempt() {
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
+      lastAcceptedIndex = null;
       resetPlanner();
     },
     observe(state, observed) {
       frontierCache.clear();
       assert(attempt > 0);
       assert(!current || state.physicalTaps > current.physicalTaps);
+      if (current && lastAcceptedIndex !== null) {
+        const inferred = inferMatchedPicture(current, lastAcceptedIndex, { alive: state.alive, tray: state.tray,
+          moves: state.moves, openPeek: state.openPeek, physicalTaps: state.physicalTaps });
+        if (inferred) {
+          assert(pictures[inferred.index] === null || pictures[inferred.index] === inferred.picture);
+          pictures[inferred.index] = inferred.picture;
+        }
+      }
+      lastAcceptedIndex = null;
       observed.pictures.forEach((picture, index) => {
         if (picture !== null) { assert(pictures[index] === null || pictures[index] === picture); pictures[index] = picture; }
         if (observed.down[index] !== null) { assert(down[index] === null || down[index] === observed.down[index]); down[index] = observed.down[index]; }
@@ -127,6 +139,7 @@ function createHumanController(tiles, options = {}) {
       return { plan: structuredClone(plan), predicted };
     },
     acknowledge(index, accepted) {
+      lastAcceptedIndex = accepted ? index : null;
       if (accepted) { if (!manualChoice) planner.acknowledgeTile(index); }
       else {
         assert(geometry.publicFrontier(current).uncertain.includes(index), 'A guaranteed public tap was rejected by production');
@@ -236,7 +249,7 @@ function playHumanCampaign(input, options = {}) {
   factory.verifySource();
   return { wonOn: attempts.at(-1).status === 'cleared' ? attempts.length : null, status: attempts.at(-1).status,
     slowestMs, decision, attempts, controls, verifiedTaps, rejected,
-    note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry pictures/orientations were actually observed; starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
+    note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }
 
 module.exports = { createHumanController, playHumanCampaign, visibleRole, verifyAttempt, startingIceHits };

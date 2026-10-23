@@ -49,7 +49,7 @@ function readTrace(mode, level, settings) {
 function main(levelText, mode = 'firstVisit', settings = '{}', attemptText = '1') {
   const level = Number(levelText), attempt = Number(attemptText);
   assert(Number.isInteger(level) && level > 0 && Number.isInteger(attempt) && attempt > 0);
-  assert(['firstVisit', 'noBounds', 'both'].includes(mode));
+  assert(['firstVisit', 'noBounds', 'both', 'noOutcomeMemory'].includes(mode));
   const current = readTrace('current', level, settings), alternative = readTrace(mode, level, settings);
   assert(current.attempts[attempt - 1] && alternative.attempts[attempt - 1], 'Requested attempt does not exist in both campaigns');
   const summary = result => ({ mode: result.mode, wonOn: result.wonOn, status: result.status, slowestMs: result.slowestMs,

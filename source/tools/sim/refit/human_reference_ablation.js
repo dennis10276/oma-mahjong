@@ -15,10 +15,11 @@ function withoutDischargedBounds(result) {
 }
 
 function install(mode) {
-  assert(['current', 'firstVisit', 'noBounds', 'both'].includes(mode));
+  assert(['current', 'firstVisit', 'noBounds', 'both', 'noOutcomeMemory'].includes(mode));
   for (const filename of ['./human_reference_campaign.js', './public_witness_search.js']) {
     assert(!require.cache[require.resolve(filename)], 'Install a diagnostic ablation before loading the policy');
   }
+  if (mode === 'noOutcomeMemory') require('./public_matched_picture.js').inferMatchedPicture = () => null;
   if (mode === 'firstVisit' || mode === 'both') {
     const budget = require('./public_path_budget.js');
     budget.admitPath = firstVisit;
