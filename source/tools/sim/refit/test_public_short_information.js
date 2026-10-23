@@ -29,6 +29,23 @@ function test() {
     assert.deepEqual(search(clocked, state, roots, { ...options, shortInformation: true })[field],
       search(clocked, state, roots, options)[field]);
   }
+  const covered = [{ x: 0, y: 0, z: 1 }, { x: 8, y: 0, z: 1 }, { x: 10, y: 0, z: 1 },
+    { x: 0, y: 0, z: 0 }, { x: 9, y: 0, z: 0 }, { x: 16, y: 0, z: 0 }];
+  const partial = { tiles: covered, nb: Layouts.neighbors(covered), rules: null, clock: null };
+  for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(partial, field, { get() { throw Error('Private ' + field); } });
+  const partialState = { ...state, pictures: [7, 8, 8, null, null, 9], down: covered.map(() => 0) };
+  const partialRoots = covered.flatMap((tile, index) => Layouts.isFree(index, partialState.alive, partial.nb) ? [{ index }] : []);
+  const urgent = search(partial, partialState, partialRoots, { ...options, shortInformation: true });
+  const balanced = search(partial, partialState, partialRoots, { ...options, shortInformation: 'carrierAware' });
+  assert.equal(urgent.index, 0);
+  assert(urgent.information && urgent.path.length === 1);
+  assert([1, 2].includes(balanced.index) && balanced.information && balanced.path.length === 2);
+  const pairedActual = { tiles: covered, nb: partial.nb, faces: [7, 8, 8, 7, 9, 9],
+    down: partialState.down, rules: null, clock: null };
+  const pairedSettings = { seed: 1, choiceLimit: 32, tapMs: 1000 }, pairedSession = createSessionFactory()(pairedActual, pairedSettings);
+  for (const index of balanced.path) pairedSession.tap(index);
+  assert.deepEqual(pairedSession.view().state.tray, []);
+  assert.equal(verifyAttempt(encodeGame(pairedActual), balanced.path, pairedSettings, pairedSession.audit()), balanced.path.length);
   const factory = createSessionFactory(), settings = { seed: 1, choiceLimit: 32, tapMs: 1000 };
   for (const hidden of [...Array(36).keys(), 101]) {
     const actual = { tiles, nb: game.nb, faces: [1, 1, 2, 2, hidden, hidden], down: state.down, rules: null, clock: null };
@@ -40,7 +57,7 @@ function test() {
   }
   factory.verifySource();
   assert.throws(() => search(game, state, roots, { ...options, shortInformation: 'yes' }));
-  console.log('PASS short safe information ordering prefers an earlier observation over bulk known-pair progress, preserves wins and clock ordering, and independently replays all37 unseen identities without sampling them');
+  console.log('PASS short safe information ordering balances probe length against unseen-mate carriers, preserves wins and clock ordering, and independently replays paired openings and all37 unseen identities without sampling them');
 }
 
 if (require.main === module) test();
