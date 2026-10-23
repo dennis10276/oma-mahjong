@@ -614,16 +614,20 @@ body.nonum .cn { display: none; }
 .tile .ob[data-k="key"]::after { content: '🔑'; left: -4%; top: -6%; font-size: calc(var(--fs, 30px) * .46); }
 /* the alarm clock: a badge with the moves left (red and pulsing for the last 5) */
 #board .tile.clocked { box-shadow: 0 0 0 3px #ff7a2f, 0 0 12px 3px rgba(255,122,47,.6); }
-/* outlines above the pile (spotMark): the clock tile, and the keys after a tap on a lock */
+/* outlines above the pile for a moment (spotMark): the clock tile, and the keys after a tap on a lock */
 #board .spot { position: absolute; z-index: 1999998; pointer-events: none; border-radius: 10%; box-sizing: border-box; }
-#board .spot.clock { border: 3px solid #ff7a2f; box-shadow: 0 0 10px 2px rgba(255,122,47,.75), inset 0 0 8px rgba(255,122,47,.45); }
-#board .spot.clock.covered { border-style: dashed; animation: spotBreathe 1.6s ease-in-out infinite; }
+#board .spot.clockflash { border: 3px solid #ff7a2f; box-shadow: 0 0 12px 3px rgba(255,122,47,.8), inset 0 0 8px rgba(255,122,47,.5); opacity: 0; }
+#board .spot.clockflash.go { animation: spotKey 1.8s ease-in-out 1; }
 #board .spot.key { border: 3px solid #ffd23f; box-shadow: 0 0 14px 4px rgba(255,210,63,.9), inset 0 0 10px rgba(255,210,63,.5); opacity: 0; }
 #board .spot.key.go { animation: spotKey 2.6s ease-in-out 1; }
 #board .spot.key::after { content: '🔑'; position: absolute; right: -10%; top: -18%; font-size: 1.1em; filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
 @keyframes spotKey { 0% { opacity: 0; transform: scale(1.25); } 12% { opacity: 1; transform: scale(1); } 30%, 60% { opacity: 1; } 45%, 75% { opacity: .55; } 100% { opacity: 0; } }
-@keyframes spotBreathe { 50% { box-shadow: 0 0 16px 5px rgba(255,122,47,.95), inset 0 0 10px rgba(255,122,47,.6); } }
-@media (prefers-reduced-motion: reduce) { #board .spot.clock.covered, #board .spot.key.go { animation: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { #board .spot.clockflash.go, #board .spot.key.go { animation: none; opacity: 1; } }
+/* the badge's tail points at the clock tile (down, or up when the badge sits under the tile) */
+#clockBadge::after { content: ''; position: absolute; left: 0.45em; bottom: -0.5em; border-left: 0.32em solid transparent; border-right: 0.32em solid transparent; border-top: 0.5em solid #ff7a2f; }
+#clockBadge.below::after { bottom: auto; top: -0.5em; border-top: 0; border-bottom: 0.5em solid #ff7a2f; }
+#clockBadge.urgent::after { border-top-color: #b51d10; }
+#clockBadge.urgent.below::after { border-bottom-color: #b51d10; }
 #clockBadge { position: absolute; z-index: 1999999; display: flex; align-items: center; gap: 1px; padding: 1px 6px 1px 3px; border-radius: 99px; background: #fff3e6; border: 2px solid #ff7a2f; box-shadow: 0 2px 5px rgba(0,0,0,.4); line-height: 1.15; pointer-events: none; }
 #clockBadge b { color: #b23c00; font-weight: 900; font-variant-numeric: tabular-nums; min-width: 1.2em; text-align: center; }
 #clockBadge.urgent { background: #ff4d3d; border-color: #b51d10; animation: ckPulse .8s ease-in-out infinite; }

@@ -173,3 +173,27 @@ The test players do not rank these boards like Dennis does (0% took 2 tries and 
 take still leave the level winnable) does not rank them either (traps in bits: 77, 75, 138, 152, 89, 129).
 Lessons: only the specials that belong to the idea (filler locks/ice "add nothing"); the clock as a
 route to find (12) costs tries; tray space forcing an order (32) is liked.
+
+## Lab round 4 (2026-10-23/24) and the honest clock
+
+| idea | stars | Dennis: tries | clock given / shortest way to the clock | note (short) |
+|---|---|---|---|---|
+| 41 clock in sight, keys buried | 3 | 7 | 61 / 15 | frozen bottom tiles add nothing; clock can be got quickly; feels like guessing |
+| 42 don't grab the clock | 4 | 4 | 13 (partner dug at 11) | very hard and frustrating; how many routes are there? |
+| 44 room in the tray | 3 | 1 | 16 / 9 | easy and boring after the clock |
+| 45 room in the tray, locked partners | 4 | 6 | 48 / ? | liked planning what to do when; give the clock 1-2 more moves |
+| 46 room in the tray, frozen partners | 1 | 1 | 16 / 9 | very easy; more orders than you think |
+| 47 the key to the way out | 1 | 1 | 11 (partner) | very easy |
+| 48 the frozen key | 1 | 2 | 17 / 11 | easy; "levels that are passed by deducing which routes won't work are not hard: deducing is the way forward at high levels" |
+| 49 ice, lock, then the clock | 2 | 2 | 34 / 23 | fun trap idea, clock far too loose |
+
+Earlier: 12 locked clock: clock 11 / shortest 9, 6 tries; 33 blind dig: 18 / 17, 5 tries; 31 chain reaction:
+38 / 31, 2 tries; 32 partners behind locks: 44 / 21, 5 tries (a tray-order puzzle).
+Finding: the "quickest way" used for the clock (hard.js clockRoute, a beam search) was often far longer
+than the real shortest (`tools/lab/exact.js`, best-first over every legal order), so most clocks were
+loose; the levels where the clock was close to the true shortest took Dennis many tries. From now on
+the clock = the true shortest + a spare of 1-2. The test players (which do not reason "this route can't
+work") are not used to judge these boards.
+Game (branch only): the clock badge points at its tile with a small tail (below the tile when there is
+no room above), its outline shows briefly at the start, at 5 moves left and when you tap it while
+covered (a permanent outline was distracting); a tap on a covered locked tile shows the keys too.

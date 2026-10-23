@@ -188,22 +188,29 @@ function spotMark(i, kind, ms) {
   el.classList.toggle('covered', !free(i));
   if (kind !== 'clock') { el.classList.remove('go'); void el.offsetWidth; el.classList.add('go'); clearTimeout(el._t); el._t = setTimeout(() => el.remove(), ms || 2600); }
 }
+function clockFlash() { if (G && G.clock && clockOn()) spotMark(G.clock.i, 'clockflash', 1800); }
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
 function clockBadge() {
   let ck = $('#clockBadge');
   const on = clockOn(), el = on && G.tiles[G.clock.i].el;
   G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
-  if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); spotMark(null, 'clock'); return; }
-  // the clock tile's outline, above the whole pile: you see which tile it is even when others lie on it
-  spotMark(G.clock.i, 'clock');
+  if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); return; }
+  // which tile it is: the badge points at it, and its outline shows briefly above the pile (also when
+  // other tiles lie on it) when the level starts, at 5 moves left, and when you tap it while covered.
+  // (A permanent outline drew the eye away from the pile: Dennis, 2026-10-24.)
+  if (!G.ckShown) { G.ckShown = true; setTimeout(clockFlash, 900); }
   if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; $('#board').appendChild(ck); }
   const r = G.tiles[G.clock.i].r, left = clockLeft();
   ck.innerHTML = `<span>⏰</span><b>${left}</b>`;
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
   if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.4)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
   ck.dataset.n = left;
-  ck.style.left = (r.l + r.w * 0.55).toFixed(1) + 'px'; ck.style.top = (r.t - r.h * 0.16).toFixed(1) + 'px';
+  // above the tile, its tail pointing down at it; below the tile when there is no room above (the tray)
+  const below = r.t - r.h * 0.42 < 0;
+  ck.classList.toggle('below', below);
+  ck.style.left = (r.l + r.w * 0.38).toFixed(1) + 'px'; ck.style.top = (below ? r.t + r.h * 0.92 : r.t - r.h * 0.38).toFixed(1) + 'px';
   ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
+  if (left <= 5 && !ck.classList.contains('urgent')) setTimeout(clockFlash, 50);
   ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.boardFace(S.theme, faceOf(i)); decorate(i); };
@@ -423,6 +430,9 @@ function tapTile(i) {
     G.st.bt++;
     replay(el, 'shake'); showBlockers(i);
     Sound.blocked(); buzz(30);
+    // a covered locked tile: also where its keys are (the tiles in the way get arrows above); the covered clock: where it is
+    if (lockedT(i)) { G.ob.keys.filter(k => G.alive[k]).forEach(k => spotMark(k, 'key', 2600)); toast(tx('lockedTap'), 2600); }
+    if (G.clock && i === G.clock.i) clockFlash();
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
   }
