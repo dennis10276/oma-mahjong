@@ -27,6 +27,7 @@ const modules = [
   'test_public_information_revision.js',
   'test_public_frontier_plan.js',
   'test_public_obstacle_frontier.js',
+  'test_public_discharged_obstacles.js',
   'test_personal_observed_memory.js',
   'test_production_physical_session.js',
   'test_production_session_factory.js',

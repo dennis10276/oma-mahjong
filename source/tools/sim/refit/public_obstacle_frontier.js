@@ -7,7 +7,7 @@ function createObstacleFrontier(tiles, { exclusiveRoles = false } = {}) {
   const geometry = tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z }));
   const neighbors = Layouts.neighbors(geometry), iceNeighbors = Layouts.iceNeighbors(geometry);
   const roles = ['none', 'ice', 'ice2', 'lock', 'key'], records = geometry.map(() => null);
-  let previous = null;
+  let previous = null, initialAlive = null;
   const validateAlive = alive => assert(Array.isArray(alive) && alive.length === geometry.length && alive.every(value => value === 0 || value === 1));
   return {
     observe(frame, rows) {
@@ -17,6 +17,7 @@ function createObstacleFrontier(tiles, { exclusiveRoles = false } = {}) {
         assert(frame.physicalTaps > previous.physicalTaps, 'Obstacle memory is confined to one monotone attempt');
         assert(frame.alive.every((value, index) => !value || previous.alive[index]), 'Obstacle memory cannot cross a restart');
       }
+      if (!previous && frame.physicalTaps === 0) initialAlive = frame.alive.slice();
       assert(Array.isArray(rows) && new Set(rows.map(row => row.index)).size === rows.length);
       const next = structuredClone(records);
       for (const row of rows) {
@@ -41,6 +42,7 @@ function createObstacleFrontier(tiles, { exclusiveRoles = false } = {}) {
       assert(previous, 'Observe public roles before querying an obstacle frontier'); validateAlive(alive);
       assert(alive.every((value, index) => !value || previous.alive[index]), 'Hypothetical states cannot return removed tiles');
       const knownKeys = records.flatMap((record, index) => record?.role === 'key' ? [index] : []);
+      const bothKeysRemoved = knownKeys.length === 2 && knownKeys.every(key => !alive[key]);
       const free = [], blocked = [], uncertain = [], reasons = [];
       for (const [index, present] of alive.entries()) {
         if (!present) continue;
@@ -53,13 +55,16 @@ function createObstacleFrontier(tiles, { exclusiveRoles = false } = {}) {
           status = 'blocked'; reason = 'observedLockStillPresent';
         } else if (useExclusiveRoles && record?.role.startsWith('ice')) {
           status = 'free'; reason = 'observedIceThawedUnderExclusiveRoleContract';
-        } else if (useExclusiveRoles && record?.role === 'lock' && knownKeys.length === 2 && knownKeys.every(key => !alive[key])) {
+        } else if (useExclusiveRoles && record?.role === 'lock' && bothKeysRemoved) {
           status = 'free'; reason = 'BothObservedKeysRemovedUnderExclusiveRoleContract';
+        } else if (useExclusiveRoles && initialAlive && bothKeysRemoved
+          && iceNeighbors[index].filter(neighbor => initialAlive[neighbor] && !alive[neighbor]).length >= 2) {
+          status = 'free'; reason = 'AllSupportedObstaclesDischargedUnderPublicBounds';
         } else { status = 'uncertain'; reason = record?.role.startsWith('ice') ? 'thawedMayConcealLockOrKey' : 'unobservedCurrentRole'; }
         ({ free, blocked, uncertain })[status].push(index); reasons.push({ index, status, reason });
       }
       return { free, blocked, uncertain, reasons, unresolved: uncertain.length > 0,
-        exclusiveRoles, note: 'Guaranteed public obstacle frontier, not full hidden rules. Unless an exclusive-role production contract is explicitly declared, thawing can reveal a lock/key. Unknown roles never mean none. Unlocking under that contract requires both actually observed keys. No free action is not a death or impossibility proof. This memory cannot cross an attempt restart.' };
+        exclusiveRoles, note: 'Guaranteed public obstacle frontier, not full hidden rules. The declared exclusive-role contract also bounds starting ice to two hits and keys to zero or two. Unless declared, thawing can reveal a lock/key. Unknown roles never mean none; takeability can still be proved after both actually observed keys and two actually observed starting neighbors are removed. No free action is not a death or impossibility proof. This memory cannot cross an attempt restart.' };
     },
   };
 }
