@@ -5,7 +5,7 @@
 
 const $ = s => document.querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.56';
+const APP_VERSION = '1.61';
 // one-time clean start for every device (all progress from the test period is wiped once)
 const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
 try {
@@ -39,7 +39,7 @@ const defaults = () => ({
   sfx: true, music: true, vibrate: true, highlight: true, nums: true, contrast: false,
   seenIntro: false, sunSeen: false, seenSp: {},
   matches: 0, bestCombo: 0, bestStreak: 0, winStreak: 0, bonusStars: 0, bonusPts: 0, weekWins: 0,
-  stats: {}, trophies: {}, att: {}, fails: {}, lvlPts: {}, dayPts: {}, lvlHist: {}, botLv: {},
+  stats: {}, trophies: {}, att: {}, fails: {}, czLoss: {}, lvlPts: {}, dayPts: {}, lvlHist: {}, botLv: {},
   heartsSent: {}, heartsSeen: {}, heartsOut: {}, pendingHearts: [],
 });
 let S;

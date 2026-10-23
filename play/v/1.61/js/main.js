@@ -31,12 +31,18 @@ $('#btnHint').onclick = hint;
 $('#btnShuffle').onclick = shuffle;
 $('#btnRestart').onclick = () => {
   if (!G || G.done || G.busy) return;
+  // from RULES.coach.fromLevel, when the film is due: the way out that was still there, or where it went
+  // wrong; "keep playing" goes back to the try (and nothing is counted)
+  let review = null;
+  try { review = coachDueRestart() ? coachReview('restart') : null; } catch (e) { review = null; }
   openModal(`<h2>${tx('restartTitle')}</h2>
-    <p>${tx('restartText')}</p>
+    ${review ? coachReviewHTML(review) : `<p>${tx('restartText')}</p>`}
     <button class="big-btn play" id="rYes"><span class="bb-text"><b>${tx('restartYes')}</b></span></button>
-    <button class="link-btn" id="rNo">${tx('restartNo')}</button>`);
-  $('#rYes').onclick = () => { closeModal(); restart(); };
-  $('#rNo').onclick = closeModal;
+    <button class="link-btn" id="rNo">${tx(review ? 'czKeepPlaying' : 'restartNo')}</button>`, true, null, review ? 'tile-help coach-help coach-loss' : '');
+  let message = null;
+  if (review) { coachReviewStart(review); message = recordHelpMessage('coach-' + review.tip, 'restart'); }
+  $('#rYes').onclick = () => { if (message) message('retry'); closeModal(); restart(); if (review) coachShown(); };
+  $('#rNo').onclick = () => { if (message) message('ack'); closeModal(); };
 };
 $('#btnHome').onclick = () => { saveCur(); if (G && !G.done) logLvl('pause'); show('home'); };
 $('#btnPlay').onclick = () => startLevel(S.level);
@@ -123,6 +129,7 @@ if (IS_IOS && !standalone && location.protocol === 'https:' && !S.iosTip) setTim
 // this version started fine: forget earlier failed starts
 try { const c = JSON.parse(localStorage.getItem(CODE_KEY) || 'null'); if (c && c.v === window.__mjCode && c.fail) { c.fail = 0; localStorage.setItem(CODE_KEY, JSON.stringify(c)); } } catch (e) { }
 setTimeout(checkUpdate, 2500);
+setTimeout(() => { try { Tiles.warm(S.theme); } catch (e) { } }, 1200);   // the tile pictures, before the first level (tiles.js)
 setInterval(checkUpdate, 60 * 1000);          // every minute while the app is open
 // just updated between two levels: continue with the next level
 if (S.afterUpdate) { const a = S.afterUpdate; S.afterUpdate = null; save(); setTimeout(() => { if (a.level) startLevel(a.level); else if (a.show && a.show !== 'home') show(a.show); toast(tx('updatedTo', APP_VERSION), 2200); }, 300); }
