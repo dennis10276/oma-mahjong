@@ -32,9 +32,18 @@ function test() {
   assert(distant.information && distant.path.length === 2);
   assert(!immediate.information && !immediate.knownWin && !immediate.knownDead);
   assert(immediate.unknownTransitions > 0, 'Unrewarded future observations still prevent an exhaustive known-world death claim');
+  assert(search(delayed, known, root, { ...timing, passiveInformation: 'shortRoles' }).information);
   const nextFrame = search(game, known, root, { ...timing, passiveInformation: 'immediateRoles' });
   assert(nextFrame.information && nextFrame.path.length === 2 && nextFrame.index === 0,
     'An immediate clue keeps its credit through a fully known neutral recovery prefix');
+  const distantTiles = Array.from({ length: 6 }, (_, index) => ({ x: index * 4, y: 0, z: 0 }));
+  const distantGame = { tiles: distantTiles, nb: Layouts.neighbors(distantTiles), rules: null, clock: null,
+    publicExposure(position) { return position.alive.slice(0, 4).every(alive => !alive) ? [4] : []; } };
+  const distantState = { ...known, alive: distantTiles.map(() => 1), pictures: [1, 1, 2, 2, 3, 3], down: distantTiles.map(() => 0) };
+  const horizon = { ...timing, nodes: 64, taps: 4, beam: 16, progress: 8 };
+  assert(search(distantGame, distantState, root, { ...horizon, passiveInformation: 'roles' }).information);
+  const short = search(distantGame, distantState, root, { ...horizon, passiveInformation: 'shortRoles' });
+  assert(!short.information && short.unknownTransitions > 0 && !short.knownDead);
   const uncertain = { ...game, publicFrontier(position) { return { free: position.alive.flatMap((alive, index) => alive ? [index] : []), uncertain: [2] }; } };
   assert.equal(describeInformation(uncertain, state, [0], ['none', 'none', null, null]).events[0].gained[0].availability, 'uncertain');
   const actual = { tiles, nb: game.nb, faces: [1, 1, 2, 2], down: [0, 0, 1, 1], clock: null, rules: null };

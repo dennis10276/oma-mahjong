@@ -22,7 +22,7 @@ function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
-  assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles'].includes(options.passiveInformation));
+  assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
@@ -105,7 +105,7 @@ function createHumanController(tiles, options = {}) {
         frontierCache.set(cacheKey, result); return result;
       };
       const exposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles },
-        ['roles', 'frontierRoles', 'immediateRoles'].includes(options.passiveInformation) ? 'roles' : 'all') : undefined;
+        ['roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation) ? 'roles' : 'all') : undefined;
       geometry.publicExposure = options.passiveInformation === 'frontierRoles' ? position => {
         const gained = exposure(position);
         if (!gained.length) return gained;
