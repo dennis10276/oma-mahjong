@@ -180,6 +180,75 @@ const IDEAS = {
       return null;
     },
   },
+  // ---- round 3 (Dennis, 2026-10-23: "more clever combination ideas, also with high tray pressure";
+  //      not tiles on their own twins: the tray fills because you have to dig) ----
+  chainReaction: {
+    title: 'Chain reaction',
+    idea: 'Frozen tiles guard the keys, the keys open the lock on the alarm clock, and the clock is buried. Every step means digging while the tray fills.',
+    make(b, c) {
+      const ok = i => !special(b, i);
+      const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2) deep.push(i);
+      const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+      const keyPairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]);
+      for (const kk of keyPairs.slice(0, 10)) {
+        const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]);
+        const clocks = deep.filter(i => !kk.includes(i) && !kdig.has(i) && coverOf(c, i).size >= 3 && ![...coverOf(c, i)].some(j => kk.includes(j))).sort((p, q) => coverOf(c, q).size - coverOf(c, p).size);
+        for (const ck of clocks.slice(0, 4)) {
+          const cdig = coverOf(c, ck);
+          const x = clone(b);
+          // ice on one tile over each key (double where it fits)
+          const ice = {}; for (const k of kk) { const t = [...coverOf(c, k)].find(j => ok(j) && !Object.keys(ice).some(q => c.inb[j].includes(+q))); if (t !== undefined) ice[t] = 2; }
+          const locks = [ck, ...c.P.filter(i => ok(i) && c.top[i] && !kdig.has(i) && !cdig.has(i) && !kk.includes(i) && i !== ck).slice(0, 3)];
+          x.obst = { ice, locks, keys: [kk[0], kk[1]] };
+          x.clock = { i: ck, n: 999 };
+          noDown(x, [...kk, ck, ...Object.keys(ice).map(Number), ...locks]);
+          const y = fix(x); if (y) return y;
+        }
+      }
+      return null;
+    },
+  },
+  lockedPartners: {
+    title: 'Partners behind locks',
+    idea: 'The keys are deep. Every tile you dig through on the way has its partner locked, so they wait in the tray until you reach the keys.',
+    make(b, c) {
+      const ok = i => !special(b, i);
+      const byFace = {}; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+      const pairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).sort((p, q) => (coverOf(c, q[0]).size + coverOf(c, q[1]).size) - (coverOf(c, p[0]).size + coverOf(c, p[1]).size));
+      for (const kk of pairs.slice(0, 12)) {
+        const dig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]);
+        const locks = [];
+        for (const t of dig) for (let j = 0; j < c.n; j++) if (j !== t && b.faces[j] === b.faces[t] && !dig.has(j) && !kk.includes(j) && ok(j) && !locks.includes(j)) { locks.push(j); break; }
+        if (locks.length < 3) continue;
+        const x = clone(b);
+        x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![...locks, ...kk, ...dig].includes(+i))), locks: locks.slice(0, 8), keys: [kk[0], kk[1]] };
+        noDown(x, [...kk, ...locks]);
+        const y = fix(x); if (y) return y;
+      }
+      return null;
+    },
+  },
+  blindDig: {
+    title: 'Blind dig',
+    idea: 'The alarm clock is buried, the tiles on top of it are face down, and their partners are frozen. You dig without knowing what you take.',
+    make(b, c) {
+      const ok = i => !special(b, i);
+      const clocks = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 4) clocks.push(i);
+      clocks.sort((p, q) => coverOf(c, q).size - coverOf(c, p).size);
+      for (const ck of clocks.slice(0, 8)) {
+        const dig = [...coverOf(c, ck)].filter(ok);
+        const x = clone(b);
+        const down = new Set(x.down.filter(i => i !== ck)); for (const t of dig) if (!c.free0[t]) down.add(t);
+        const ice = Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => !dig.includes(+i) && +i !== ck));
+        let n = 0;
+        for (const t of dig) { const p = c.P.find(j => j !== t && b.faces[j] === b.faces[t] && !dig.includes(j) && ok(j) && !down.has(j) && !c.inb[j].some(q => ice[q])); if (p !== undefined) { ice[p] = 1; n++; } }
+        if (n < 2) continue;
+        x.down = [...down]; x.obst = { ...x.obst, ice }; x.clock = { i: ck, n: 999 };
+        const y = fix(x); if (y) return y;
+      }
+      return null;
+    },
+  },
 };
 
 // a change that breaks the stored way through: search a new one with the rules on (the clock keeps its
@@ -256,11 +325,11 @@ function nudge(b, target, seed, keep, spare, kind, steps = 30) {
    Dennis (2026-10-23) after the first round: "They need to be tuned way harder so that there is almost no
    room for error". hard: the test players win about 1 in 8 / 1 in 20 first tries; very hard: 1 in 20 / 1 in 50. */
 // the clock: the moves the quickest found way needs to reach it, plus SPARE
-const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 } }, SPARE = { hard: 2, veryhard: 1 };
+const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 }, brutal: { Dennisisdebeste: 0.02, 'Mrs. Doubtfire': 0.01 } }, SPARE = { hard: 2, veryhard: 1, brutal: 1 };
 const OUTD = path.join(__dirname, 'ideas-out');
 const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 80 }, (_, k) => 'blob' + (9001 + k * 37))];
 if (process.argv[2] === 'merge') {
-  const ideas = fs.readdirSync(OUTD).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8'))).sort((a, b) => a.id - b.id);
+  const ideas = fs.readdirSync(OUTD).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8'))).filter(x => x.id >= +(process.argv[3] || 0)).sort((a, b) => a.id - b.id);
   fs.writeFileSync(path.join(__dirname, 'lab-ideas.js'), '/* made by tools/lab/ideas.js */\nconst LAB_IDEAS = ' + JSON.stringify({ made: new Date().toISOString(), levels: LEVELS, ideas }) + ';\n');
   console.log(`lab-ideas.js: ${ideas.length} ideas`);
 } else if (process.argv[2] === 'make') {
@@ -283,7 +352,7 @@ if (process.argv[2] === 'merge') {
       const x2 = fix(x, SPARE[lvl]); if (!x2) continue;
       const t = nudge(x2, tfull, 7001 + si, keepT, SPARE[lvl], kind);
       const ck = t.board.clock ? t.board.clock.n - (t.board.solution.indexOf(t.board.clock.i) + 1) : null;
-      made = { id, kind, level: lvl, title: I.title + (lvl === 'veryhard' ? ' · very hard' : ' · hard') + (N < 80 ? ' · small board' : ''), idea: I.idea + (N < 80 ? ` Only ${N} tiles.` : ''), shape, like: +p.like.toFixed(2), tiles: N, board: t.board, m: t.m,
+      made = { id, kind, level: lvl, title: I.title + ({ veryhard: ' · very hard', brutal: ' · brutal' }[lvl] || ' · hard') + (N < 80 ? ' · small board' : ''), idea: I.idea + (N < 80 ? ` Only ${N} tiles.` : ''), shape, like: +p.like.toFixed(2), tiles: N, board: t.board, m: t.m,
         specials: { down: t.board.down.length, ice: Object.keys(t.board.obst.ice || {}).length, locks: (t.board.obst.locks || []).length, clockSpare: ck } };
       console.log(`idea ${id} ${kind} ${lvl} on ${shape} (${N} tiles): Dennis ${(t.m.Dennisisdebeste.first * 100).toFixed(0)}% / Mrs D ${(t.m['Mrs. Doubtfire'].first * 100).toFixed(0)}% first try; ${JSON.stringify(made.specials)}`);
     }

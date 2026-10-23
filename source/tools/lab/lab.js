@@ -60,7 +60,7 @@
   function render() {
     const T = LAB.target || {};
     panel.innerHTML = `<h1>Level lab</h1>
-      <p class="sub">New piles without towers, normal tile size. Each idea combines the specials in its own way, as a hard and a very hard version. Play it as often as you like, then rate how clever the combination is. These ideas are not in the game, and playing here changes nothing in the game or on the dashboard.<br><span id="labSync">${db ? '' : 'Ratings are kept on this device.'}</span></p>
+      <p class="sub">New piles without towers, normal tile size. Each idea combines the specials in its own way. Play it as often as you like, then rate how clever the combination is. These ideas are not in the game, and playing here changes nothing in the game or on the dashboard.<br><span id="labSync">${db ? '' : 'Ratings are kept on this device.'}</span></p>
       ${IDEAS.map(it => { const r = rec(it.id), m = it.m || {}, d = m.Dennisisdebeste, md = m['Mrs. Doubtfire'];
         return `<div class="lab-card" data-id="${it.id}">
         <h2>Idea ${it.id} · ${esc(it.title)}</h2>
@@ -102,8 +102,20 @@
       const x = rec(G.o.lab); x.tries++; if (r === 'win') x.wins++;
       x.results.push({ r, ck: extra && extra.ck ? 1 : undefined, left: typeof aliveCount === 'function' ? aliveCount() : undefined, s: Math.round(G.elapsed || 0), t: Date.now() });
       push(G.o.lab);
+      // every tap of this try, so the test players can be compared with how Dennis really plays these
+      // boards: [tile, ms since the start, 0 taken / 1 turned over / 2 nothing happened]
+      if (db && G.labTaps && G.labTaps.length) { const taps = G.labTaps.slice(0, 2000); db.collection('taps').add({ id: G.o.lab, r, ck: extra && extra.ck ? 1 : 0, t: Date.now(), made: LAB.made, n: taps.length, taps: taps.flat() }).catch(() => { }); }
     }
     return endLevel0.apply(this, arguments);
+  };
+  const onTap0 = window.onTap;
+  window.onTap = function (i, auto) {
+    if (!(G && G.o && G.o.lab) || auto) return onTap0.apply(this, arguments);
+    if (!G.labTaps || G.labTaps.started !== G.tStart) { G.labTaps = []; G.labTaps.started = G.tStart; }
+    const was = G.alive[i], t0 = G.labTaps.t0 || (G.labTaps.t0 = Date.now());
+    const res = onTap0.apply(this, arguments);
+    G.labTaps.push([i, Date.now() - t0, was && !G.alive[i] ? 0 : G.peek === i ? 1 : 2]);
+    return res;
   };
   const win0 = window.win;
   window.win = function () {

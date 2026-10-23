@@ -18,6 +18,14 @@ difficulty should stay the same as is. Don't publish yet and make sure Codex can
   freeze, lock/key, face down and clock".
 - Mrs. Doubtfire per level and per 10 levels as below (same or harder; at most 5 points harder);
   Dennisisdebeste may be harder.
+- **Real levels 158-269: harder, like the lab's hard versions** (Dennis, 2026-10-23: "lab version
+  harder", "we need more consistency in how hard a level is", "don't be afraid to make it too hard").
+  Tray pressure from digging (the clock deeper, the keys deeper, ice on the tiles you dig through,
+  partners locked), never tiles on their own twins; the clock number = the moves the quickest way to it
+  needs plus a small spare, never a smaller number. The test players misjudge these boards both ways
+  (lab: chain of ice "0%" took Dennis 11 tries, locked clock "16%" took 6, deep keys "2%" took 2), so
+  they are refitted on Dennis's lab taps (collection `taps` in the lab page's database) before levels
+  are measured with them. At most 3 lab tests per round.
 - **Level lab first** (Dennis: "a small test env for you to put your level ideas in so I can play and
   judge them on cleverness of combining the different specials"): `tools/lab/ideas.js` makes ideas
   (one way of combining the specials each, on a new towerless pile, difficulty nudged towards a level near
