@@ -227,10 +227,16 @@ slowest1510.4ms:50 clears on try1 while92 remains try3 and150 try2. All25 recent
 passes remain, with137 still failing. This is one additional pass on the same
 cohort, not a verified129/140 full-catalog score. The same-source passive-exposure
 comparison passes26/38, still losing92/149 while gaining121; it is not promoted.
-A new full-catalog screen uses the base profile and tap-budget fix, with runtime
-source held unchanged. Metadata refreshed at2026-10-23T16:00Z still accounts for
-all140 recorded clears, maximum156. The explicit17-156 range keeps157+ unopened;
-no full-catalog score or unseen20 gate success is claimed before completion.
+The unchanged-source full-catalog screen completed126/140, slowest1515.7ms;
+the expected129/140 is disproved. Relative to the earlier126/140 full screen,
+50/92/150 improve but85/111/123 regress. Current failures are81/84/85/93/99/102/
+107/111/112/121/123/124/125/137. The full comparison spans both the discharged-
+obstacle proof and the shortest-prefix fix, so their effects must be isolated
+before blaming either. Current classic substitutes pass35/35, current fixed
+substitutes24/24, original-version tables19/24 and recorded openings48/57.
+Metadata refreshed at2026-10-23T16:00Z still accounts for all140 recorded clears,
+maximum156. The explicit17-156 range keeps157+ unopened; the unseen20 gate has
+not run and the goal remains unmet.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
