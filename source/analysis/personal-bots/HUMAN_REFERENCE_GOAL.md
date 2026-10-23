@@ -29,17 +29,18 @@ or blocked. There is useful algorithmic work available, not an external blocker.
 
 ## Latest complete development run
 
-**128/140**, unchanged source, slowest**1511.4ms**.
-Report: `HUMAN_REFERENCE_CATALOG_RECOVERY_CHECKPOINT_2026-10-23.md`.
-Runtime checkpoint:`5b89505`; result commit:`ab098b5`.
-Fingerprint:`3d0cd9f5c87f777665a28ef201a31ffbcad6a3b0167b59816e0731a7c72fdd86`.
+**130/140**, unchanged source, mean**151.5ms**, slowest**1529.9ms**.
+Report: `HUMAN_REFERENCE_CATALOG_SHORT_ROLES_2026-10-24.md`.
+Runtime checkpoint:`b2d3c5f`, using `passiveInformation:'shortRoles'`.
+Fingerprint:`5df95cb01cd2179c69fa98495b1b500f69572ff1a8e83fd0f899247f9ac182af`.
 
-Failures:**81,84,93,99,102,107,111,112,121,124,125,137**.
-Classic35/35; current-fixed24/24; version-table20/24; recorded openings49/57.
+Failures:**81,84,93,99,102,107,112,124,125,137**.
+Classic35/35; current-fixed24/24; version-table20/24; recorded openings51/57.
 Original134/141/143/147 all pass on try1.50/85/86/92/123/150 gains remain clear.
 Recent131–156:25/26, failing137.151–156 all clear on try1.
-111 passed isolated screens but failed both full-run tries (60/33 taps);
-never extrapolate129/140 from isolated111 passes or merge different profiles.
+111 now clears on try2 and121 on try3 in this complete run, improving the old
+128/140 result.111's earlier screen/full disagreement still warns against
+extrapolating isolated passes or merging different profiles.
 
 Read-only metadata refresh2026-10-23T22:43Z:140 first clears through156, no later
 clears, zero boards decoded. Refresh metadata only with selectedLevels:[].
@@ -55,7 +56,8 @@ Latest runtime:`b2d3c5f`; baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
 **52/52 offline tests pass** in approximately4s, including2688 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
-The newer runtime has NOT completed a fresh140-level run.
+The shortRoles policy has completed140 levels; the short-probe policy is still
+running. The development gate remains unmet and the unseen20 gate is unopened.
 An isolated `public_known_recovery.js` helper now constructs ordinary one/two-tap
 tray matches, open twins and known pairs, including a mate thawed by the first
 removal.144 standalone production/replay checks pass. It is NOT imported by
@@ -79,14 +81,12 @@ speedup or proof that every timed action sequence must be identical.
 Source:`5df95cb01cd2179c69fa98495b1b500f69572ff1a8e83fd0f899247f9ac182af`.
 Reports:`HUMAN_REFERENCE_DOMINANCE_CONTROL_2026-10-24.md` and
 `HUMAN_REFERENCE_DOMINANCE_OPTIMIZED_2026-10-24.md`.
-ACTIVE: two complete140-level17–156 runs, first shortRoles (no short-probe
-override), then full-role short probes with informationDominance enabled.
-Tool session35017; first worker PID21088 confirmed live. Its actual140-case
-header matches the5df95cb source above. First snapshot reaches24 with no loss;
-that is NOT a whole-catalog score. Reports pending:
-`HUMAN_REFERENCE_CATALOG_SHORT_ROLES_2026-10-24.md` and
+ACTIVE: second full run, full-role short probes with informationDominance enabled.
+Tool session35017; second worker PID39728, started2026-10-23T23:18:52Z.
+Its140-case header matches the same5df95cb source. Last collected snapshot reaches
+43; do NOT extrapolate a whole-catalog score from it. Pending report:
 `HUMAN_REFERENCE_CATALOG_SHORT_PROBES_2026-10-24.md`.
-Hold runtime unchanged until BOTH full runs finish. One CPU-heavy simulation at a time.
+Hold loaded runtime unchanged until it finishes. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
 Research baseline settings (not a released/default/frozen winner):
