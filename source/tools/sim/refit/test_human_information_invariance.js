@@ -15,6 +15,7 @@ function test() {
   configurations.push({ ...configurations[1], diverseBeam: true });
   configurations.push({ ...configurations[1], diverseWitness: true, uniqueKnownCleanup: true });
   configurations.push({ ...configurations[1], passiveInformation: true });
+  configurations.push({ ...configurations[1], passiveInformation: 'roles' });
   let canonical = null, controls = 0;
   for (let world = 0; world < 96; world++) {
     const state = { alive: [1, 1, 1, 1, 1, 1], down: [world % 2, Math.floor(world / 2) % 2, 0, 0, 0, 0],

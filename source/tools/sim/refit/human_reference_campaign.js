@@ -18,7 +18,7 @@ function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
-  assert(options.passiveInformation === undefined || typeof options.passiveInformation === 'boolean');
+  assert(options.passiveInformation === undefined || [false, true, 'roles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
@@ -89,7 +89,8 @@ function createHumanController(tiles, options = {}) {
           uncertain: position.relieved ? [] : queried.uncertain.filter(index => !sameBoard || !blocked.has(index)) };
         frontierCache.set(cacheKey, result); return result;
       };
-      geometry.publicExposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles }) : undefined;
+      geometry.publicExposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles },
+        options.passiveInformation === 'roles' ? 'roles' : 'all') : undefined;
     },
     decide() {
       const available = geometry.publicFrontier(current);

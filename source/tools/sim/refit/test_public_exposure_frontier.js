@@ -63,6 +63,7 @@ function test() {
     const after = session.view().state;
     assert.equal(Layouts.isFree(0, after.alive, actualGame.nb), false, 'A picture can be revealed before its tile becomes takeable');
     assert.deepEqual(frontier(after), [0]); assert(Object.isFrozen(frontier(after)));
+    assert.deepEqual(createExposureFrontier(tiles, state, 'roles')(after), [], 'Orientation discovery alone is not a guaranteed overlay observation');
     const second = observe(after);
     assert.equal(second.down[0], hiddenDown);
     assert.equal(second.pictures[0], hiddenDown ? null : hiddenPicture);
@@ -74,8 +75,11 @@ function test() {
     const unknownRoles = first.roles.slice();
     const roleOnly = { ...state, down: [0, ...state.down.slice(1)], pictures: [hiddenPicture, ...state.pictures.slice(1)], roles: unknownRoles };
     assert.deepEqual(createExposureFrontier(tiles, roleOnly)(after), [0]);
+    assert.deepEqual(createExposureFrontier(tiles, roleOnly, 'roles')(after), [0]);
     unknownRoles[0] = 'none';
     assert.deepEqual(createExposureFrontier(tiles, roleOnly)(after), []);
+    assert.deepEqual(createExposureFrontier(tiles, roleOnly, 'roles')(after), []);
+    assert.throws(() => createExposureFrontier(tiles, roleOnly, 'private'));
     const knownFaceUp = createExposureFrontier(tiles, { ...state, down: [0, ...state.down.slice(1)] });
     assert.deepEqual(knownFaceUp(after), [0]);
     assert.deepEqual(knownFaceUp({ alive: [0, ...after.alive.slice(1)] }), []);
