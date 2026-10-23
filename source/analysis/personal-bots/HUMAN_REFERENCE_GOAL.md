@@ -225,8 +225,12 @@ minimum. This proves a bounded-search omission, not yet a Dennis campaign gain
 offline tests pass. The unchanged-source base campaign now passes27/38,
 slowest1510.4ms:50 clears on try1 while92 remains try3 and150 try2. All25 recent
 passes remain, with137 still failing. This is one additional pass on the same
-cohort, not a verified129/140 full-catalog score. The passive-exposure comparison
-is running before choosing the next full-catalog candidate.
+cohort, not a verified129/140 full-catalog score. The same-source passive-exposure
+comparison passes26/38, still losing92/149 while gaining121; it is not promoted.
+A new full-catalog screen uses the base profile and tap-budget fix, with runtime
+source held unchanged. Metadata refreshed at2026-10-23T16:00Z still accounts for
+all140 recorded clears, maximum156. The explicit17-156 range keeps157+ unopened;
+no full-catalog score or unseen20 gate success is claimed before completion.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
