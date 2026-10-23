@@ -57,11 +57,13 @@ dependency route cache:`0ead64d`; information audit:`2c10828`.
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The newer runtime has NOT completed a fresh140-level run.
 
-Active job: `passiveInformation:'shortRoles'`, no short-information override,
-same8 controls. Tool session54216; revalidate its actual handle/process.
+The three-action role-payoff screen completed7/8, source unchanged, slowest
+1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
+fails. This is an improvement over the six-of-eight controls, NOT a full score.
+Next serial job: all42 challenge/recent levels, first `shortRoles` without the
+short-information override, then all role information plus `shortInformation:true`.
 Fingerprint:`e5c97c9a0d5d0beb06e08ee1befd7dc0923703a4a5ab0fb53add4f33b474588f`.
-Report pending:`HUMAN_REFERENCE_SHORT_HORIZON_ROLES_2026-10-23.md`.
-Hold runtime unchanged until it finishes. One CPU-heavy simulation at a time.
+Hold runtime unchanged until BOTH finish. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
 Research baseline settings (not a released/default/frozen winner):
@@ -84,12 +86,13 @@ Research baseline settings (not a released/default/frozen winner):
 | Carrier-aware short information, roles |6/8;92try2,121try3,137try1 |Still loses50/147; slowest1511.7ms |
 | Carrier-aware short information, no roles |5/8;121fails again |Still loses50/147; slowest1507.8ms |
 | Immediate role clues |6/8;92 restored,121/137fail |Slowest1506.2ms, not promoted |
-| Three-action role payoff |RUNNING |Known-route depth remains unchanged |
+| Three-action role payoff |7/8;121try3 and92try3 together |Only137fails; slowest1504.5ms |
 
 Corresponding dated reports:KEY_RECOVERY, ROUTE_CACHE, RECOVERY_ROLE_INFORMATION,
 RECOVERY_ALL_INFORMATION, ROLE_DEEP_PROOF, DEEP_PROOF,
 FRONTIER_ROLE_INFORMATION, SHORT_ROLE_INFORMATION, SHORT_INFORMATION,
-CARRIER_ROLE_INFORMATION, CARRIER_INFORMATION and IMMEDIATE_ROLE_INFORMATION,
+CARRIER_ROLE_INFORMATION, CARRIER_INFORMATION, IMMEDIATE_ROLE_INFORMATION and
+SHORT_HORIZON_ROLES,
 all prefixed `HUMAN_REFERENCE_` and suffixed `_2026-10-23.md`.
 Each preserves its exact settings, source fingerprint, provenance and slowest move.
 
