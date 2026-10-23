@@ -133,6 +133,15 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
+  const immediateRoles = settings.passiveInformation === 'immediateRoles', firstExposures = new Map();
+  const eligibleExposure = (exposed, path) => {
+    if (!immediateRoles) return exposed;
+    if (path.length === 1) firstExposures.set(path[0], exposed.slice().sort((left, right) => left - right));
+    const first = firstExposures.get(path[0]) || [];
+    return exposed.filter(index => first.includes(index));
+  };
+  const stateIdentity = (position, path) => keyOf(game, position)
+    + (immediateRoles ? '|firstExposure:' + (firstExposures.get(path[0]) || []).join(',') : '');
   assert(exposureFrontier === undefined || typeof exposureFrontier === 'function');
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
@@ -185,7 +194,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const provedDeadRoots = new Set();
   const continuationProof = { calls: 0, nodes: 0, bounded: 0, certified: 0 };
   const recoveryRankWidths = new Set();
-  const visited = new Map([[keyOf(game, state), 0]]);
+  const visited = new Map([[stateIdentity(state, []), 0]]);
 
   const evaluate = (position, path, information = false, targetIndex = -1, executesUnknownTap = false, informationTargets = null) => {
     const metricsKey = cachePublicAnalysis ? keyOf(game, position) : null;
@@ -298,7 +307,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         hasSafeRemoval ||= moved.removed > 0;
         const exposed = exposureFrontier ? exposureFrontier(moved.state) : [];
         assert(Array.isArray(exposed));
-        const passiveInformation = exposed.length > 0;
+        const eligible = eligibleExposure(exposed, path), passiveInformation = eligible.length > 0;
         if (settings.pruneDead && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
           || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) {
           const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
@@ -318,13 +327,13 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             deadPrunes++; if (!node.path.length) provedDeadRoots.add(index); continue;
           }
         }
-        const candidate = evaluate(moved.state, path, passiveInformation, index, false, passiveInformation ? exposed : null);
+        const candidate = evaluate(moved.state, path, passiveInformation, index, false, passiveInformation ? eligible : null);
         if (moved.win) {
           best = candidate;
           return finish();
         }
-        if (passiveInformation) unknown++;
-        const identity = keyOf(game, moved.state);
+        if (exposed.length) unknown++;
+        const identity = stateIdentity(moved.state, path);
         queuePath(visited, next, identity, candidate);
         const preparesKnownPair = !moved.removed || moved.removed === 1 && moved.state.tray.includes(settled.pictures[index]);
         if (knownPairMacros && preparesKnownPair && path.length < tapLimit) {
@@ -338,11 +347,12 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             macroPairs++; hasSafeRemoval = true;
             const pairedExposed = exposureFrontier ? exposureFrontier(paired.state) : [];
             assert(Array.isArray(pairedExposed));
-            const pairedInformation = pairedExposed.length > 0;
-            const pairedCandidate = evaluate(paired.state, path.concat(mate), pairedInformation, mate, false, pairedInformation ? pairedExposed : null);
+            const pairedPath = path.concat(mate), pairedEligible = eligibleExposure(pairedExposed, pairedPath);
+            const pairedInformation = pairedEligible.length > 0;
+            const pairedCandidate = evaluate(paired.state, pairedPath, pairedInformation, mate, false, pairedInformation ? pairedEligible : null);
             if (paired.win) { best = pairedCandidate; return finish(); }
-            if (pairedInformation) unknown++;
-            const pairedIdentity = keyOf(game, paired.state);
+            if (pairedExposed.length) unknown++;
+            const pairedIdentity = stateIdentity(paired.state, pairedPath);
             queuePath(visited, next, pairedIdentity, pairedCandidate);
           }
         }
@@ -352,13 +362,13 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             macroKeys++; hasSafeRemoval = true;
             const recoveredExposed = exposureFrontier ? exposureFrontier(recovered.state) : [];
             assert(Array.isArray(recoveredExposed));
-            const recoveredInformation = recoveredExposed.length > 0;
             const recoveredPath = node.path.concat(recovered.path);
+            const recoveredEligible = eligibleExposure(recoveredExposed, recoveredPath), recoveredInformation = recoveredEligible.length > 0;
             const recoveredCandidate = evaluate(recovered.state, recoveredPath, recoveredInformation,
-              recovered.path.at(-1), false, recoveredInformation ? recoveredExposed : null);
+              recovered.path.at(-1), false, recoveredInformation ? recoveredEligible : null);
             if (recoveredCandidate.won) { best = recoveredCandidate; return finish(); }
-            if (recoveredInformation) unknown++;
-            queuePath(visited, next, keyOf(game, recovered.state), recoveredCandidate);
+            if (recoveredExposed.length) unknown++;
+            queuePath(visited, next, stateIdentity(recovered.state, recoveredPath), recoveredCandidate);
           }
         }
       }

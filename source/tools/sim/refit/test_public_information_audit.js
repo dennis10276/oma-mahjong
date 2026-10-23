@@ -6,6 +6,7 @@ const { playHumanCampaign, createHumanController, verifyAttempt } = require('./h
 const { observeBoard } = require('./human_board_visibility.js');
 const { createSession } = require('./production_physical_session.js');
 const { encodeGame } = require('./personal_game_io.js');
+const { search, REFERENCE_PARAMETERS } = require('./public_witness_search.js');
 
 function test() {
   const tiles = Array.from({ length: 4 }, (_, index) => ({ x: index * 4, y: 0, z: 0 }));
@@ -21,6 +22,19 @@ function test() {
     rememberedPicture: 2, rememberedDown: 0, observedRole: null, availability: 'guaranteedFree' }] }]);
   assert.deepEqual(report.boundary, { afterTaps: 2, index: 3, reason: 'unseenPicture' });
   assert.deepEqual(state, snapshot);
+  const known = { ...state, pictures: [1, 1, 2, 2], down: [0, 0, 0, 0] };
+  const delayed = { ...game, publicExposure(position) { return !position.alive[0] && !position.alive[1] ? [2] : []; } };
+  const timing = { ...REFERENCE_PARAMETERS, nodes: 1, taps: 2, beam: 4, progress: 4, finishKnown: false,
+    pruneDead: false, knownPairMacros: true };
+  const root = [{ index: 0 }];
+  const distant = search(delayed, known, root, { ...timing, passiveInformation: 'roles' });
+  const immediate = search(delayed, known, root, { ...timing, passiveInformation: 'immediateRoles' });
+  assert(distant.information && distant.path.length === 2);
+  assert(!immediate.information && !immediate.knownWin && !immediate.knownDead);
+  assert(immediate.unknownTransitions > 0, 'Unrewarded future observations still prevent an exhaustive known-world death claim');
+  const nextFrame = search(game, known, root, { ...timing, passiveInformation: 'immediateRoles' });
+  assert(nextFrame.information && nextFrame.path.length === 2 && nextFrame.index === 0,
+    'An immediate clue keeps its credit through a fully known neutral recovery prefix');
   const uncertain = { ...game, publicFrontier(position) { return { free: position.alive.flatMap((alive, index) => alive ? [index] : []), uncertain: [2] }; } };
   assert.equal(describeInformation(uncertain, state, [0], ['none', 'none', null, null]).events[0].gained[0].availability, 'uncertain');
   const actual = { tiles, nb: game.nb, faces: [1, 1, 2, 2], down: [0, 0, 1, 1], clock: null, rules: null };
