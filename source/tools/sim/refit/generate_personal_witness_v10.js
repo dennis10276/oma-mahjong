@@ -211,6 +211,11 @@ if (!isMainThread && workerData && workerData.isWorker) {
 }
 
 async function generateCandidateDraft(outputDraftPath = DRAFT_V10_PATH, numWorkers = 8, campaignsPerTarget = 8) {
+  if (typeof outputDraftPath === 'number') {
+    campaignsPerTarget = typeof numWorkers === 'number' ? numWorkers : 8;
+    numWorkers = outputDraftPath;
+    outputDraftPath = DRAFT_V10_PATH;
+  }
   const targets = generateTargets();
   const sourceClosure = computeSourceClosureHashes();
   const { calibrateAll } = require('./personal_behavioral_calibration.js');
@@ -290,3 +295,11 @@ module.exports = {
   score,
   V10_FRONTIERS
 };
+
+if (isMainThread && require.main === module) {
+  generateCandidateDraft().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
