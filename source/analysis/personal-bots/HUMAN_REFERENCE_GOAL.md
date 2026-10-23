@@ -196,7 +196,13 @@ outside the public clock frontier, but a later64 removal incorrectly lends
 that information clock-cone priority. `50946d8` now returns only the indices
 whose geometry becomes readable and attributes clock relevance to those indices,
 not to an unrelated removed tile. It does not return any future picture/role.
-Clock provenance controls pass; affected-level campaign screening is pending.
+Clock provenance controls pass and142 recovers its try1 clear, but the focus
+screen still passes only6/11:92/137/147/149/150 fail. Passive information remains
+unpromoted. The next correction gives passive exposure information-priority
+only when the known prefix does not add unmatched tray carriers. New facts are
+still recognized; this is a conservative ranking preference, not a proof that
+a carrier-increasing route is unsafe or impossible. Actual unknown-tap handling
+is unchanged. Controlled pair/clock/provenance/tray comparisons pass.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
