@@ -51,9 +51,9 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current code, tests and active experiment
 
-Latest runtime:`86afedf`; baseline key recovery:`a5cb7db`;
+Latest runtime:`b2d3c5f`; baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
-**51/51 offline tests pass** in approximately3s, including2496 concealed-world
+**52/52 offline tests pass** in approximately4s, including2688 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The newer runtime has NOT completed a fresh140-level run.
 
@@ -65,9 +65,14 @@ full-role short probes33/42. Tool session55597 is terminal, not a live runner.
 Reports:`HUMAN_REFERENCE_SHORT_ROLE_CHALLENGE_2026-10-24.md` and
 `HUMAN_REFERENCE_SHORT_PROBE_CHALLENGE_2026-10-24.md`.
 Fingerprint:`e5c97c9a0d5d0beb06e08ee1befd7dc0923703a4a5ab0fb53add4f33b474588f`.
-The next optimization preserves selected short-probe prefixes while avoiding
-deeper known-only work that cannot outrank them. Then full140-level validation
-is required for both candidates. One CPU-heavy simulation at a time.
+The dominance optimization is implemented, default off. Active serial control:
+50/81/111/121/137/147/150, first raw full-role short probes, then the same profile
+with `informationDominance:true`. Tool session64334; revalidate the live handle.
+Source:`5df95cb01cd2179c69fa98495b1b500f69572ff1a8e83fd0f899247f9ac182af`.
+Reports:`HUMAN_REFERENCE_DOMINANCE_CONTROL_2026-10-24.md` and
+`HUMAN_REFERENCE_DOMINANCE_OPTIMIZED_2026-10-24.md`.
+Hold runtime unchanged until BOTH finish. Then full140-level validation is
+required for both candidates. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
 Research baseline settings (not a released/default/frozen winner):
@@ -225,6 +230,18 @@ Generic reusable cache keys ALL settings and bypasses callbacks/live deadlines;
 never reuse opaque observation callbacks or timed reports across actual frames.
 Costs, overflow estimates, clock cones and pair debt are heuristics, not lower
 bounds, route witnesses, safety certificates or hidden-role deductions.
+
+Optional information-dominance stopping applies ONLY to raw short-information
+ordering, nonclock roots with0/1 carried tiles, at least one unknown picture,
+and a one-tap information prefix at minimal pressure/overflow. Unknown pictures
+cannot disappear through a supported known-only winning route; longer prefixes
+cannot beat that rank's path-length term. TWO complete layers are required:
+a newly readable face-up boundary can credit a one-tap prefix in the second.
+72 fixed-work comparisons retain decisions while avoiding2304 expansions.
+Clock/fully-known/crowded/capped cases remain unshortened, and no death proof
+or real-world optimality claim follows from this heuristic-rank bound.
+Average decision time and dominance-stop counts now accompany the maximum;
+they include the actual observation/projection, not independent replay time.
 
 137's former known14/known9 routes BOTH had mechanically certain conditional
 recoveries; do not revive the rejected unknown-role-penalty explanation.
