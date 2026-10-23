@@ -114,8 +114,11 @@ ice hits and0-or-2-key contract, every supported blocker is then discharged.
 The role/picture remains unknown; only legal availability is proved. Exhaustive
 public-world controls and original-engine closed-tile replays validate it.
 39/39 offline tests pass. On the14 prior failures it clears92 on try3 versus5,
-and150 on try2 versus3; the other12 still fail. Recent-level regression checking
-is pending, so no128/140 mixed-source score or complete-set improvement is claimed.
+and150 on try2 versus3; the other12 still fail. The unchanged-source recent
+regression passes25/26 recorded levels131-156, slowest1502.5ms; only137 fails.
+Increasing the inspection tray limit from1 to3 still passes the same2/14 prior
+failures, so that combination is not promoted. No128/140 mixed-source score or
+complete-set improvement is claimed without a new full-catalog run.
 No profile is selected by level, human outcome or hidden information.
 
 The earlier ice-budget-fixed source `b2f8845` also clears all six recorded
