@@ -17,6 +17,8 @@ function test() {
   assert.equal(cleaned.wonOn, 1); assert.equal(cleaned.verifiedTaps, cleaned.attempts[0].taps);
   assert.equal(cleaned.attempts[0].decisions[0].plan.goal, 'knownUniqueCleanup');
   assert.throws(() => createHumanController(simple.tiles, { uniqueKnownCleanup: 'yes' }));
+  assert.equal(playHumanCampaign(simple, { planning: { passiveInformation: true } }).wonOn, 1);
+  assert.throws(() => createHumanController(simple.tiles, { passiveInformation: 'yes' }));
   const hidden = gameOf([1, 1, 2, 2], [1, 1, 1, 1]);
   const inspected = playHumanCampaign(hidden); assert.equal(inspected.wonOn, 1); assert(inspected.verifiedTaps >= 4);
   const discovery = playHumanCampaign(hidden, { planning: { inspectBeforeCommit: true } });

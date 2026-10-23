@@ -127,6 +127,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const knownPairMacros = settings.knownPairMacros ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
+  const exposureFrontier = game.publicExposure;
+  assert(exposureFrontier === undefined || typeof exposureFrontier === 'function');
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
@@ -283,7 +285,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         }
         if (moved.lost) continue;
         hasSafeRemoval ||= moved.removed > 0;
-        if (settings.pruneDead && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
+        const passiveInformation = exposureFrontier ? exposureFrontier(moved.state) : false;
+        if (settings.pruneDead && !passiveInformation && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
           || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) {
           const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
           const proofKey = cachePublicAnalysis ? keyOf(game, moved.state) : null;
@@ -302,11 +305,12 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             deadPrunes++; if (!node.path.length) provedDeadRoots.add(index); continue;
           }
         }
-        const candidate = evaluate(moved.state, path, false, index);
+        const candidate = evaluate(moved.state, path, passiveInformation, index);
         if (moved.win) {
           best = candidate;
           return finish();
         }
+        if (passiveInformation) { unknown++; continue; }
         const identity = keyOf(game, moved.state);
         if (!visited.has(identity)) { visited.add(identity); next.push(candidate); }
         const preparesKnownPair = !moved.removed || moved.removed === 1 && moved.state.tray.includes(settled.pictures[index]);
@@ -319,8 +323,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             if (paired.uncertain || paired.lost) continue;
             assert.equal(moved.removed + paired.removed, 2, 'A known pair expansion must contain two actual removals');
             macroPairs++; hasSafeRemoval = true;
-            const pairedCandidate = evaluate(paired.state, path.concat(mate), false, mate);
+            const pairedInformation = exposureFrontier ? exposureFrontier(paired.state) : false;
+            const pairedCandidate = evaluate(paired.state, path.concat(mate), pairedInformation, mate);
             if (paired.win) { best = pairedCandidate; return finish(); }
+            if (pairedInformation) { unknown++; continue; }
             const pairedIdentity = keyOf(game, paired.state);
             if (!visited.has(pairedIdentity)) { visited.add(pairedIdentity); next.push(pairedCandidate); }
           }
@@ -381,7 +387,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         ...(riskFirstRecovery ? { riskFirstRecovery } : {}),
         goalRecoveryMin, recoveryRankWidths: [...recoveryRankWidths].sort() } } : {}),
       note: 'Bounded known-only witness search. Unknown reveals stop the hypothetical route; their actual faces '
-        + 'are never sampled from the real board. Clock distance is an ordering heuristic, not a proven bound. '
+        + 'are never sampled from the real board. Optional public-geometry exposure stops at the known prefix before new readable fields, without querying their values. Clock distance is an ordering heuristic, not a proven bound. '
         + 'A knownDead certificate requires a fully exhausted known graph with no new information or '
         + 'unsupported transition, pruning only separately certified losses. Excluded heuristic roots require a separate '
         + 'bounded search sharing the remaining node budget before a death certificate; it chooses an actual losing/progressing tap rather than calling a '

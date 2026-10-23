@@ -1,13 +1,16 @@
 'use strict';
 const assert = require('assert/strict');
 
-function tileVisibility(tiles, state, clock) {
+function tileVisibility(tiles, state, clock, requested = null) {
+  assert(requested === null || Array.isArray(requested) && requested.every(index => Number.isInteger(index) && index >= 0 && index < tiles.length));
+  const selected = requested === null ? null : new Set(requested);
   const side = Math.max(0.085, 3 / 20);
   const boxes = tiles.map(tile => {
     const left = tile.x / 2 - tile.z * 0.14, top = tile.y / 2 * 1.24 - tile.z * 0.14;
     return { left, top, right: left + 1 + side, bottom: top + 1.24 + side * 1.2, order: tile.z * 10000 + tile.y * 100 + tile.x };
   });
   const tilesVisible = tiles.map((tile, index) => {
+    if (selected && !selected.has(index)) return null;
     const box = boxes[index];
     const exposedRegion = initial => {
       let regions = state.alive[index] ? initial : [];
