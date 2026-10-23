@@ -90,12 +90,12 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
-The goal remains unmet. The best completed full20-case screen passed16/20,
-with a1508.5ms slowest observation-plus-planning decision. See
-`HUMAN_REFERENCE_RECOVERY_2026-10-23.md`, policy source at `6ed93dc`, fingerprint
-`4a7d9926b6e7faec9f01dc90534baf0c43030392bdb9bebb1c826096dec55617`.
-134/139/141/143/145 clear on try1;136/147/149/150 remain failures. These are
-development boards, not the complete140-level gate or the unseen20-level gate.
+The goal remains unmet. The completed pressure-policy full20-case screen
+passed18/20 with a1511.8ms slowest observation-plus-planning decision. See
+`HUMAN_REFERENCE_PRESSURE_PARITY_2026-10-23.md`, policy source at `aa9795c`,
+fingerprint `bab967f44115c22b945e6b16db7d7b9ab8dea442e198066e894a0a540efd5be7`.
+All original134/141/143/147 focus levels and149 clear on try1.137 and150 fail.
+These are development boards, not the complete catalog or unseen20-level gate.
 
 Validated general changes distinguish actual unknown boundary taps from passive
 reveals, refuse to borrow safety from an unrelated free match, preserve complete
@@ -103,14 +103,19 @@ known face-up pairs before beam pruning, and compare observed side/thaw routes
 for both clocks and tray recovery. Dependency costs remain ordering heuristics,
 never lower bounds, route witnesses, safety certificates or impossibility proofs.
 
-The current `aa9795c` pressure-aware candidate passes9/11 focused cases, including
-all original134/141/143/147 focus levels plus136 and149 on try1.137 fails its
-allowed single try;150 fails both allowed tries. Slowest1507.5ms. See
-`HUMAN_REFERENCE_PRESSURE_PARITY_FOCUS_2026-10-23.md`, source fingerprint
-`bab967f44115c22b945e6b16db7d7b9ab8dea442e198066e894a0a540efd5be7`.
-A complete20-case comparison is required before promotion. No profile is chosen
-by level, human outcome or hidden information.37/37 offline checks pass,
-including192 baseline/research concealed-world controls.
+The current `040a5e8` source fixes remembered ice strength growing while a tile
+remains covered and removes obsolete clock-cone preference after the clock is
+gone. A production-backed control now prefers an outside-cone recovery match
+after deadline removal.38/38 offline checks pass, including192 baseline/research
+concealed-world controls. Its10-case focused screen passes8/10, retaining all
+original focus clears and failing137/150; slowest1504.1ms. A complete-catalog
+coverage run is next, with planner sources held unchanged during execution.
+No profile is chosen by level, human outcome or hidden information.
+
+The earlier ice-budget-fixed source `b2f8845` also clears all six recorded
+levels151-156 on try1 (strictly beating every2+ target), with1552.5ms slowest.
+That broadens development coverage, but is not the future unseen20 gate and
+is not silently merged with another source's results into a frozen score.
 
 `progressiveReopens` keeps a remembered closed tile eligible when its actual
 known non-losing peek/removal prefix opens a new possible public action or
@@ -135,9 +140,11 @@ without opening future/unseen boards. An older full-catalog baseline passed
 coverage/older-policy evidence, not validation of the current source. The next
 20 not-developed-on progression levels remain reserved for a later freeze.
 
-Negative experiments remain in their short reports. The consumed-pair scoring
-screen passed15/20, regressing133. Balanced recovery plus constructive digging
-passed16/20, fixing136 but regressing137 and changing132 from one try to two.
+Negative experiments remain in their short reports. The latest patient-pair
+combination passes8/12 and regresses146/149 without fixing137/150. A public-role
+replay confirms137's apparent free pair is iced, not a guaranteed usable pair.
+The consumed-pair scoring screen passed15/20, regressing133. Balanced recovery
+plus constructive digging passed16/20, fixing136 but regressing137 and changing132 from one try to two.
 These results are not hidden by reporting only successful settings; initial
 focused improvements are not presented as complete-set wins. Earlier comparisons
 remain in per-run tables and Git rather than growing this checkpoint indefinitely.
