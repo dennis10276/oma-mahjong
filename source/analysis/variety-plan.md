@@ -3,6 +3,31 @@
 Status: **in progress, unpublished** (branch `wip/level-variety`). Dennis: "More variety. But the
 difficulty should stay the same as is. Don't publish yet and make sure Codex can finish your work."
 
+## Latest decisions (2026-10-23) — read first
+
+- **No towers** (tiles straight on top of each other): "they introduce luck too much". The boards made
+  with `variety2.js` (`analysis/variety2*.json`) all have towers (about half the tiles, columns up to 7
+  high) and are NOT to be used. `piles.js` must be called with `stack: 0`; check that no tile lies
+  straight on another.
+- **No smaller tiles** (54 px stays; 48 px on every 10th level).
+- Without towers at 54 px, 86 tiles fill most of the screen, so piles share many spots. Agreed: each new
+  level shares **at most 75% of its tile spots** with any played level (70-157) and with the 10 levels
+  around it; its **pairs** always in new spots, and **the specials too** (ice, lock and keys, face-down
+  tiles, the clock, gold: not on the same spots as on a level with a similar pile).
+- **Some levels smaller** (about 70 tiles instead of about 86), made as hard with "a smart combination of
+  freeze, lock/key, face down and clock".
+- Mrs. Doubtfire per level and per 10 levels as below (same or harder; at most 5 points harder);
+  Dennisisdebeste may be harder.
+- **Level lab first** (Dennis: "a small test env for you to put your level ideas in so I can play and
+  judge them on cleverness of combining the different specials"): `tools/lab/ideas.js` makes ideas
+  (one way of combining the specials each, on a new towerless pile, difficulty nudged towards a level near
+  200), `tools/lab/build_lab.js <dir>` builds the real game plus the lab (`tools/lab/lab.js`) with the
+  family database, self-update and news switched off; `lab.html` in that folder is the page for a
+  claude.ai artifact. Dennis rates each idea 1-5 for cleverness with a note; the ratings are in the
+  artifact's database (collection `ratings`, one document per idea). Use them to choose which ways of
+  combining specials the real levels get, then make the levels (a `variety3` along the lines of
+  `variety2.js`, with the rules above).
+
 ## Why
 
 Dennis noticed level 154 felt like one he had played. Of the designed levels 106-269, 122 of 164
