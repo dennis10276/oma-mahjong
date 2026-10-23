@@ -249,6 +249,73 @@ const IDEAS = {
       return null;
     },
   },
+  // ---- round 4 (Dennis, 2026-10-23: "The clock doesn't always need the digging. Maybe the clock is locked
+  //      on top and the keys need digging. Or even harder cause less clear: you need to do something else
+  //      first cause of tray space or freeze or lock before you can take the obvious clock") ----
+  clockOnTopLocked: {
+    title: 'Clock in sight, keys out of reach',
+    idea: 'The alarm clock lies on top, free, but locked. Both keys are buried. Dig them out before time runs out.',
+    make(b, c) {
+      const ok = i => !special(b, i);
+      const tops = c.P.filter(i => ok(i) && c.free0[i]);
+      const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 3) deep.push(i);
+      const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+      const keyPairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]);
+      for (const kk of keyPairs.slice(0, 10)) for (const ck of tops.slice(0, 6)) {
+        if (b.faces[ck] === b.faces[kk[0]]) continue;
+        const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]); if (kdig.has(ck)) continue;
+        const x = clone(b);
+        x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, ...kk].includes(+i))), locks: [ck], keys: [kk[0], kk[1]] };
+        x.clock = { i: ck, n: 999 }; noDown(x, [ck, ...kk]);
+        const y = fix(x); if (y) return y;
+      }
+      return null;
+    },
+  },
+  dontGrab: {
+    title: "Don't grab the clock",
+    idea: 'The alarm clock is free from the start, but its partner is buried. Take the clock too early and it blocks a tray slot while you dig; wait too long and the alarm goes off.',
+    make(b, c) {
+      const ok = i => !special(b, i);
+      for (const ck of c.P.filter(i => ok(i) && c.free0[i])) {
+        const mates = []; for (let j = 0; j < c.n; j++) if (j !== ck && b.faces[j] === b.faces[ck]) mates.push(j);
+        if (!mates.every(j => coverOf(c, j).size >= 3 && ok(j))) continue;
+        const mate = mates.sort((p, q) => coverOf(c, p).size - coverOf(c, q).size)[0];
+        const x = clone(b); x.clock = null; noDown(x, [ck]);
+        // the quickest way to the partner; the clock goes off one move after that
+        const g = gameG(x), route = clockRoute(g, mate); if (!route) continue;
+        const k = route.indexOf(mate), path = route.filter(i => i !== ck);
+        path.splice(k + (route.indexOf(ck) < k ? 0 : 1), 0, ck);
+        const y = { ...x, solution: path, clock: { i: ck, n: path.indexOf(ck) + 2 }, clockMate: mate };
+        if (valid(y)) return y;
+      }
+      return null;
+    },
+  },
+  iceLockClock: {
+    title: 'Ice, lock, then the clock',
+    idea: 'The alarm clock lies on top but is frozen. The tiles next to it are locked, and the keys are buried. Keys first, then its neighbours, then the clock.',
+    make(b, c) {
+      const ok = i => !special(b, i);
+      for (const ck of c.P.filter(i => ok(i) && c.top[i])) {
+        const nbs = c.inb[ck].filter(j => ok(j) && c.tiles[j].z === c.tiles[ck].z);
+        if (nbs.length < 2) continue;
+        const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2 && i !== ck && !nbs.includes(i)) deep.push(i);
+        const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+        for (const kk of Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).slice(0, 6)) {
+          const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]);
+          if (nbs.some(j => kdig.has(j)) || kdig.has(ck)) continue;
+          const x = clone(b);
+          const ice = Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, ...nbs, ...kk].includes(+i) && !c.inb[ck].includes(+i)));
+          ice[ck] = Math.min(2, nbs.length);
+          x.obst = { ice, locks: nbs.slice(0, 3), keys: [kk[0], kk[1]] };
+          x.clock = { i: ck, n: 999 }; noDown(x, [ck, ...nbs, ...kk]);
+          const y = fix(x); if (y) return y;
+        }
+      }
+      return null;
+    },
+  },
 };
 
 // a change that breaks the stored way through: search a new one with the rules on (the clock keeps its
@@ -301,6 +368,12 @@ function clockRoute(g, ci) {   // (hard.js clockRoute, searching deeper: a clock
 function fix(y, spare) {
   const g = gameG(y);
   let path = null;
+  if (y.clock && y.clockMate !== undefined) {   // "don't grab the clock": the quickest way to its buried partner, the clock right with it
+    const route = clockRoute(g, y.clockMate); if (!route) return null;
+    const ck = y.clock.i, k = route.indexOf(y.clockMate); path = route.filter(i => i !== ck); path.splice(k + (route.indexOf(ck) < k ? 0 : 1), 0, ck);
+    const z = { ...y, solution: path, clock: { i: ck, n: path.indexOf(ck) + 1 + (spare ?? 1) } };
+    return valid(z) ? z : null;
+  }
   if (y.clock) { path = clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
   if (!path && valid(y)) path = y.solution;
   if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], 120000, g.rules); }
@@ -394,6 +467,9 @@ if (process.argv[2] === 'merge') {
       const x = I.make(base, ctxOf(base), rngOf(si * 31 + 7));
       if (!x) continue;
       const keepT = [...(x.obst.locks || []), ...(x.obst.keys || []), ...(x.clock ? [x.clock.i] : []), ...Object.keys(x.obst.ice || {}).map(Number).filter(i => !(base.obst.ice || {})[i]), ...x.down.filter(i => !base.down.includes(i))];
+      if ((x.obst.keys || []).length && !x.obst.keys.some(k => keepT.includes(k))) {
+        const cx = ctxOf(x); if (x.obst.keys.some(k => cx.free0[k])) x.obst = { ...x.obst, keys: [], locks: [] };
+      }
       const x2 = fix(x, SPARE[lvl]); if (!x2) continue;
       const t = nudge(x2, tfull, 7001 + si, keepT, SPARE[lvl], kind);
       const ck = t.board.clock ? t.board.clock.n - (t.board.solution.indexOf(t.board.clock.i) + 1) : null;
