@@ -14,8 +14,10 @@ const { aliveSignature } = require('./public_alive_signature.js');
 const { knownCleanup } = require('./public_unique_cleanup.js');
 const { createExposureFrontier } = require('./public_exposure_frontier.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
+const { preferKnownRecovery } = require('./public_recovery_priority.js');
 
 function createHumanController(tiles, options = {}) {
+  assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
@@ -110,13 +112,15 @@ function createHumanController(tiles, options = {}) {
       if (!actions.length) return null;
       const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit && !(clock && current.alive[clock.i])
         ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
-      manualChoice = discoveries.length > 0;
-      if (manualChoice) {
+      manualChoice = false;
+      const discover = () => {
+        manualChoice = true;
         const index = discoveries[0].index;
         resetPlanner();
         return { plan: { index, path: [index], goal: 'closedTileDiscovery', knownWin: false, knownDead: false,
           knownProgress: 0, information: true, boundary: true, nodes: 0 }, predicted: advance(geometry, current, index) };
-      }
+      };
+      if (discoveries.length && options.inspectBeforeCommit !== 'recovery') return discover();
       if (options.patientSingleCarry && current.tray.length === 1 && !(clock && current.alive[clock.i])) {
         const guaranteed = actions.filter(action => !available.uncertain.includes(action.index));
         const ready = guaranteed.filter(action => {
@@ -135,7 +139,9 @@ function createHumanController(tiles, options = {}) {
         predicted: advance(geometry, current, index) };
       }
       planner.physicalTrayPlanning(geometry, current, actions);
-      const plan = planner.report(), predicted = advance(geometry, current, plan.index);
+      const plan = planner.report();
+      if (discoveries.length && !preferKnownRecovery(geometry, current, plan)) return discover();
+      const predicted = advance(geometry, current, plan.index);
       return { plan: structuredClone(plan), predicted };
     },
     acknowledge(index, accepted) {
