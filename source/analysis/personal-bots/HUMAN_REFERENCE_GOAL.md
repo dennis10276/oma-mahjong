@@ -353,6 +353,14 @@ slowest1510.0ms. No new count gain or measured full-catalog speedup is claimed.
 The next controlled combination revisits passive-information planning, which
 previously cleared121 but had regressions, on the corrected inspection/key
 recovery/search stack. This is not a per-level selector or best-of merge.
+On the same corrected runtime, role-only passive information passes6/8:
+50/121/142/147/149/150 clear,92 and137 fail.121 clears on try3, whereas
+the non-passive policy still fails its three allowed tries; however92 loses
+its prior try3 clear. Full passive information passes5/8 and additionally
+regresses149. Both sources remain unchanged; slowest1294.2ms role-only and
+1384.5ms all-fields. Neither option is promoted or combined per level.
+The role-only route is retained for diagnosis rather than discarded: compare
+the first actual public decision divergence on92 before changing its ranking.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
