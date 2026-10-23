@@ -233,9 +233,9 @@ const IDEAS = {
     idea: 'The alarm clock is buried, the tiles on top of it are face down, and their partners are frozen. You dig without knowing what you take.',
     make(b, c) {
       const ok = i => !special(b, i);
-      const clocks = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 4) clocks.push(i);
+      const clocks = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 4 && coverOf(c, i).size <= 9) clocks.push(i);
       clocks.sort((p, q) => coverOf(c, q).size - coverOf(c, p).size);
-      for (const ck of clocks.slice(0, 8)) {
+      for (const ck of clocks.slice(0, 12)) {
         const dig = [...coverOf(c, ck)].filter(ok);
         const x = clone(b);
         const down = new Set(x.down.filter(i => i !== ck)); for (const t of dig) if (!c.free0[t]) down.add(t);
@@ -253,10 +253,55 @@ const IDEAS = {
 
 // a change that breaks the stored way through: search a new one with the rules on (the clock keeps its
 // spare moves on the new way)
+function clockRoute(g, ci) {   // (hard.js clockRoute, searching deeper: a clock behind keys and ice is far down)
+  const n = g.tiles.length, initial = new Uint8Array(n).fill(1);
+  const remainingRules = alive => {
+    if (!g.rules) return null;
+    const ice = {};
+    for (const k in g.rules.ice) {
+      const gone = g.rules.iceNb[k].filter(i => !alive[i]).length;
+      if (g.rules.ice[k] > gone) ice[k] = g.rules.ice[k] - gone;
+    }
+    return { ...g.rules, ice };
+  };
+  const blockers = alive => {
+    const up = new Set(), todo = [ci];
+    while (todo.length) for (const j of g.nb.above[todo.pop()]) if (alive[j] && !up.has(j)) { up.add(j); todo.push(j); }
+    const side = name => { const set = new Set(up), todo = [ci], seen = new Set();
+      while (todo.length) { const k = todo.pop(); if (seen.has(k)) continue; seen.add(k); for (const j of g.nb[name][k]) if (alive[j]) { set.add(j); todo.push(j); } }
+      return set.size;
+    };
+    return Math.min(side('left'), side('right')) + 1;
+  };
+  let frontier = [{ alive: initial.slice(), tray: [], path: [] }], nodes = 0;
+  const seen = new Set();
+  for (let depth = 0; depth < Math.min(70, n * 0.85) && frontier.length && nodes < 60000; depth++) {
+    const next = [];
+    for (const state of frontier) {
+      for (let i = 0; i < n; i++) {
+        if (!(g.rules ? L.takeable(i, state.alive, g.nb, g.rules, initial) : L.isFree(i, state.alive, g.nb))) continue;
+        const q = state.tray.findIndex(j => g.faces[j] === g.faces[i]);
+        if (q < 0 && state.tray.length >= 3) continue;
+        const alive = state.alive.slice(); alive[i] = 0;
+        const tray = q < 0 ? state.tray.concat(i) : state.tray.filter((_, k) => k !== q), path = state.path.concat(i);
+        const key = alive.join('') + '|' + tray.map(j => g.faces[j]).sort((a,b) => a-b).join(',');
+        if (seen.has(key)) continue; seen.add(key); nodes++;
+        if (i === ci) {
+          const rest = L.solve(g.tiles, g.nb, g.faces, alive, tray, 12000, remainingRules(alive));
+          if (rest) return path.concat(rest);
+        } else next.push({ alive, tray, path, score: blockers(alive) + tray.length * 0.15 });
+      }
+    }
+    next.sort((a,b) => a.score-b.score);
+    frontier = next.slice(0, 48);
+  }
+  return null;
+}
+
 function fix(y, spare) {
   const g = gameG(y);
   let path = null;
-  if (y.clock) path = Hard.clockRoute(g, y.clock.i);   // the quickest way to the clock that finishes the level
+  if (y.clock) { path = clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
   if (!path && valid(y)) path = y.solution;
   if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], 120000, g.rules); }
   if (!path || path.length !== y.tiles.length) return null;
