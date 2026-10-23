@@ -65,14 +65,17 @@ full-role short probes33/42. Tool session55597 is terminal, not a live runner.
 Reports:`HUMAN_REFERENCE_SHORT_ROLE_CHALLENGE_2026-10-24.md` and
 `HUMAN_REFERENCE_SHORT_PROBE_CHALLENGE_2026-10-24.md`.
 Fingerprint:`e5c97c9a0d5d0beb06e08ee1befd7dc0923703a4a5ab0fb53add4f33b474588f`.
-The dominance optimization is implemented, default off. Active serial control:
-50/81/111/121/137/147/150, first raw full-role short probes, then the same profile
-with `informationDominance:true`. Tool session64334; revalidate the live handle.
+The dominance optimization is implemented, default off. Its seven-case serial
+control completed5/7 both ways; every attempt's tap/remaining-tile/outcome count
+matches. Mean decision time394.5→364.0ms (7.7% in this single control),53 actual
+dominance stops, slowest1520.1→1516.7ms. This is measured scope, not a universal
+speedup or proof that every timed action sequence must be identical.
 Source:`5df95cb01cd2179c69fa98495b1b500f69572ff1a8e83fd0f899247f9ac182af`.
 Reports:`HUMAN_REFERENCE_DOMINANCE_CONTROL_2026-10-24.md` and
 `HUMAN_REFERENCE_DOMINANCE_OPTIMIZED_2026-10-24.md`.
-Hold runtime unchanged until BOTH finish. Then full140-level validation is
-required for both candidates. One CPU-heavy simulation at a time.
+Next: two complete140-level17–156 runs, first shortRoles (no short-probe
+override), then full-role short probes with informationDominance enabled.
+Hold runtime unchanged until BOTH full runs finish. One CPU-heavy simulation at a time.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
 Research baseline settings (not a released/default/frozen winner):
