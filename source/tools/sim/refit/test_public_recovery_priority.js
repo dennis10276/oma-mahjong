@@ -25,7 +25,8 @@ function test() {
     controller.beginAttempt();
     controller.observe({ ...state, tray, physicalTaps: 0 }, { pictures: state.pictures, down: state.down, roles: tiles.map(() => 'none'), clock: null });
     const selected = controller.decide();
-    assert.equal(selected.plan.goal === 'closedTileDiscovery', tray[0] === 7);
+    if (tray[0] === 7) assert.equal(state.pictures[selected.plan.index], null);
+    else assert(preferKnownRecovery(game, { ...state, tray }, selected.plan));
     controller.acknowledge(selected.plan.index, true);
   }
   for (const inspection of [true, 'recovery']) {

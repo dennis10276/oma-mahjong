@@ -46,17 +46,19 @@ function readTrace(mode, level, settings) {
   return JSON.parse(result.stdout);
 }
 
-function main(levelText, mode = 'firstVisit', settings = '{}', attemptText = '1') {
+function main(levelText, mode = 'firstVisit', settings = '{}', attemptText = '1', alternativeSettings) {
   const level = Number(levelText), attempt = Number(attemptText);
   assert(Number.isInteger(level) && level > 0 && Number.isInteger(attempt) && attempt > 0);
-  assert(['firstVisit', 'noBounds', 'both', 'noOutcomeMemory'].includes(mode));
-  const current = readTrace('current', level, settings), alternative = readTrace(mode, level, settings);
+  assert(['firstVisit', 'noBounds', 'both', 'noOutcomeMemory', 'profile'].includes(mode));
+  assert(mode !== 'profile' || typeof alternativeSettings === 'string', 'A profile comparison requires explicit alternative settings');
+  const current = readTrace('current', level, settings), alternative = readTrace(mode === 'profile' ? 'current' : mode, level, alternativeSettings ?? settings);
   assert(current.attempts[attempt - 1] && alternative.attempts[attempt - 1], 'Requested attempt does not exist in both campaigns');
   const summary = result => ({ mode: result.mode, wonOn: result.wonOn, status: result.status, slowestMs: result.slowestMs,
     attempts: result.attempts.map(({ decisions, ...attempt }) => attempt) });
-  console.log(JSON.stringify({ diagnostic: true, level, attempt, current: summary(current), alternative: summary(alternative),
+  console.log(JSON.stringify({ diagnostic: true, level, attempt, current: { ...summary(current), planning: JSON.parse(settings) },
+    alternative: { ...summary(alternative), planning: JSON.parse(alternativeSettings ?? settings) },
     comparison: compareTraces(current.attempts[attempt - 1].decisions, alternative.attempts[attempt - 1].decisions, current.clock),
-    note: 'Fresh-process comparison of actual visibility-gated controller records; full traces stay in memory and only the first divergent window is printed. Explicit ablation, not a canonical frozen-policy claim.' }));
+    note: 'Fresh-process comparison of actual visibility-gated controller records; full traces stay in memory and only the first divergent window is printed. Explicit ablation/profile comparison, not a canonical frozen-policy claim.' }));
 }
 
 if (require.main === module) main(...process.argv.slice(2));

@@ -140,7 +140,8 @@ function createHumanController(tiles, options = {}) {
       }
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report();
-      if (discoveries.length && !preferKnownRecovery(geometry, current, plan)) return discover();
+      if (discoveries.length && !discoveries.some(action => action.index === plan.index)
+        && !preferKnownRecovery(geometry, current, plan)) return discover();
       const predicted = advance(geometry, current, plan.index);
       return { plan: structuredClone(plan), predicted };
     },
