@@ -245,6 +245,16 @@ prefix replaces the old candidate instead of letting both consume slots. It
 preserves the verified four-tap witnesses and all45 offline tests pass. The
 old first-visit/bounds-disabled modes remain diagnostic only, not per-level
 runtime switches. The ablation table records every result, including failures.
+The unique-frontier screen completes29/41, slowest1503.4ms:111 and123 recover,
+50/92/150 remain clear, and85 still fails. This is not a full128/140 result.
+A fresh-process public trace shows the first85 divergence after16 identical
+decisions, with the clock already removed and the tray empty. The shorter route
+clears52/55 first; an opportunistic32 discovery is then injected between its
+planned moves. The old route starts with85/82 instead. Disabling the global
+`inspectBeforeCommit` heuristic, while retaining the same corrected search,
+clears85 on try1 in110 taps, slowest1033ms. This is an isolated control, not a
+combined best-of policy or proof that one early action alone caused the loss.
+The next full-catalog candidate lets the planner choose discoveries globally.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
