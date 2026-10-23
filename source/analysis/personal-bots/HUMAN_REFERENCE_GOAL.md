@@ -90,7 +90,7 @@ reported; only one short table is written when a report path is explicitly given
 
 ## Development checkpoint
 
-The goal remains unmet. The latest completed full20-case screen passed16/20,
+The goal remains unmet. The best completed full20-case screen passed16/20,
 with a1508.5ms slowest observation-plus-planning decision. See
 `HUMAN_REFERENCE_RECOVERY_2026-10-23.md`, policy source at `6ed93dc`, fingerprint
 `4a7d9926b6e7faec9f01dc90534baf0c43030392bdb9bebb1c826096dec55617`.
@@ -103,12 +103,31 @@ known face-up pairs before beam pruning, and compare observed side/thaw routes
 for both clocks and tray recovery. Dependency costs remain ordering heuristics,
 never lower bounds, route witnesses, safety certificates or impossibility proofs.
 
-The current `9c61b2b` experiment stops rewarding an extra immediately matchable
-carry over consuming its pair. A causal production-backed regression passes;
-34/34 offline tests pass, including192 baseline/research concealed-world controls.
-Its nine-case check retains134/139/141/143/145 but still fails136/147/149/150;
-slowest1508.6ms. A complete20-case comparison is required before promotion.
-No profile is selected by level, human outcome or hidden information.
+The current `aa9795c` pressure-aware candidate passes9/11 focused cases, including
+all original134/141/143/147 focus levels plus136 and149 on try1.137 fails its
+allowed single try;150 fails both allowed tries. Slowest1507.5ms. See
+`HUMAN_REFERENCE_PRESSURE_PARITY_FOCUS_2026-10-23.md`, source fingerprint
+`bab967f44115c22b945e6b16db7d7b9ab8dea442e198066e894a0a540efd5be7`.
+A complete20-case comparison is required before promotion. No profile is chosen
+by level, human outcome or hidden information.37/37 offline checks pass,
+including192 baseline/research concealed-world controls.
+
+`progressiveReopens` keeps a remembered closed tile eligible when its actual
+known non-losing peek/removal prefix opens a new possible public action or
+mechanical-certainty gain. It does not assume the newly exposed picture/role.
+`riskFirstRecovery` estimates unresolved carrier pressure along observed mate
+frontiers before applying the ordinary known-mate preference. Required known
+pairs cancel before outside matches are spent. Unknown pictures and Jokers stay
+unresolved; projected overflow is a ranking risk, not a physical prediction,
+route witness, safety guarantee or death proof. Endpoint parity is not a proof
+that intermediate tray pressure fits. Actual known transitions still use the
+physical model, and every campaign action independently replays in production.
+
+Retry memory now also retains later-seen keys/locks and reconstructs starting
+ice hits from visible remaining ice plus public neighbor removals under the
+declared exclusive-role contract. Late none remains ambiguous: it may be thawed
+ice or an opened lock, so it must not become starting safety. No hidden role is
+read or inferred merely because its picture was recognized from a border.
 
 The read-only catalog refresh still accounts for140 first clears, levels17-156,
 without opening future/unseen boards. An older full-catalog baseline passed
@@ -116,10 +135,12 @@ without opening future/unseen boards. An older full-catalog baseline passed
 coverage/older-policy evidence, not validation of the current source. The next
 20 not-developed-on progression levels remain reserved for a later freeze.
 
-Negative experiments remain in their short reports: patient-single-carry plus
-full forecasting passed13/20 and regressed133/146; crowded discovery passed14/20
-but changed139 from one try to two. These results are not hidden by reporting
-only successful settings. Historical details remain in per-run tables and Git.
+Negative experiments remain in their short reports. The consumed-pair scoring
+screen passed15/20, regressing133. Balanced recovery plus constructive digging
+passed16/20, fixing136 but regressing137 and changing132 from one try to two.
+These results are not hidden by reporting only successful settings; initial
+focused improvements are not presented as complete-set wins. Earlier comparisons
+remain in per-run tables and Git rather than growing this checkpoint indefinitely.
 
 A public-only136 probe finds the same seven-tap clock opening as Dennis, removes
 the clock at move6, and later reaches an empty tray. Subsequent commitments cause
