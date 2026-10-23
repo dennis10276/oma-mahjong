@@ -111,7 +111,7 @@
   const onTap0 = window.onTap;
   window.onTap = function (i, auto) {
     if (!(G && G.o && G.o.lab) || auto) return onTap0.apply(this, arguments);
-    if (!G.labTaps || G.labTaps.started !== G.tStart) { G.labTaps = []; G.labTaps.started = G.tStart; }
+    if (!G.labTaps) G.labTaps = [];   // (a new G for every try)
     const was = G.alive[i], t0 = G.labTaps.t0 || (G.labTaps.t0 = Date.now());
     const res = onTap0.apply(this, arguments);
     G.labTaps.push([i, Date.now() - t0, was && !G.alive[i] ? 0 : G.peek === i ? 1 : 2]);
