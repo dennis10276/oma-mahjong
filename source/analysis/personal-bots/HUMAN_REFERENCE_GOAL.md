@@ -222,7 +222,11 @@ missing independently verified four-tap win and clock-exit witnesses. Both
 replay through original production; an exhaustive small graph confirms the
 minimum. This proves a bounded-search omission, not yet a Dennis campaign gain
 (the old controller could sometimes replan out of a missed certificate).44/44
-offline tests pass. Campaign comparisons with/without passive exposure are next.
+offline tests pass. The unchanged-source base campaign now passes27/38,
+slowest1510.4ms:50 clears on try1 while92 remains try3 and150 try2. All25 recent
+passes remain, with137 still failing. This is one additional pass on the same
+cohort, not a verified129/140 full-catalog score. The passive-exposure comparison
+is running before choosing the next full-catalog candidate.
 The reusable legacy cache now keys every setting and bypasses observation
 callbacks/live deadlines instead of reusing stale plans.
 
