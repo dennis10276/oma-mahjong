@@ -4,6 +4,7 @@ const modules = [
   'test_human_board_visibility.js',
   'test_human_visibility_geometry.js',
   'test_human_reference_campaign.js',
+  'test_human_initial_role_memory.js',
   'test_human_single_carry.js',
   'test_human_crowded_discovery.js',
   'test_human_reference_budget.js',

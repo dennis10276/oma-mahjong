@@ -19,6 +19,7 @@ function createHumanController(tiles, options = {}) {
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
   geometry.nb = Layouts.neighbors(geometry.tiles);
+  const iceNb = Layouts.iceNeighbors(geometry.tiles);
   for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(geometry, field, { get() { throw Error('Policy accessed private ' + field); } });
   const pictures = tiles.map(() => null), down = tiles.map(() => null), initialRoles = tiles.map(() => null);
   let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
@@ -45,7 +46,17 @@ function createHumanController(tiles, options = {}) {
         const value = role ?? (state.physicalTaps === 0 ? initialRoles[index] : null);
         if (value === null || !state.alive[index]) return;
         roles[index] = value;
-        if (state.physicalTaps === 0) initialRoles[index] = value;
+        let initialRole = state.physicalTaps === 0 ? value : null;
+        if (options.exclusiveRoles && ['key', 'lock'].includes(role)) initialRole = role;
+        if (options.exclusiveRoles && role?.startsWith('ice')) {
+          const initialHits = (role === 'ice2' ? 2 : 1) + iceNb[index].filter(neighbor => !state.alive[neighbor]).length;
+          assert(initialHits === 1 || initialHits === 2, 'Observed ice contradicts the declared one/two-hit contract');
+          initialRole = initialHits === 2 ? 'ice2' : 'ice';
+        }
+        if (initialRole !== null) {
+          assert(initialRoles[index] === null || initialRoles[index] === initialRole, 'Observed role contradicts learned starting role');
+          initialRoles[index] = initialRole;
+        }
         rows.push({ index, observation: { roles: [value], knownRole: value } });
       });
       frontier.observe({ alive: state.alive, physicalTaps: state.physicalTaps }, rows);
@@ -57,7 +68,6 @@ function createHumanController(tiles, options = {}) {
       if (roleSignature !== signature) resetPlanner();
       roleSignature = signature;
       geometry.clock = clock;
-      const iceNb = Layouts.iceNeighbors(tiles);
       geometry.rules = { iceNb, ice: Object.fromEntries(roles.flatMap((role, index) => role?.startsWith('ice')
         ? [[index, (role === 'ice2' ? 2 : 1) + iceNb[index].filter(neighbor => !state.alive[neighbor]).length]] : [])),
         locks: new Set(roles.flatMap((role, index) => role === 'lock' ? [index] : [])),
