@@ -2,10 +2,14 @@
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 const { observeBoard } = require('./human_board_visibility.js');
-const { createHumanController, visibleRole } = require('./human_reference_campaign.js');
+const { createHumanController, visibleRole, startingIceHits } = require('./human_reference_campaign.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 
 function test() {
+  for (let removed = 0; removed <= 3; removed++) assert.equal(startingIceHits('ice2', 'ice2', removed), 2,
+    'A remembered original ice budget must not grow while the covered tile stays unobserved');
+  assert.equal(startingIceHits('ice', 'ice2', 1), 2);
+  assert.equal(startingIceHits('ice', null, 1), 2);
   const tiles = [{ x: 0, y: 0, z: 0 }, { x: 0.28, y: 0.28 / 1.24, z: 1 },
     { x: 4, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }];
   const iceNb = Layouts.iceNeighbors(tiles);

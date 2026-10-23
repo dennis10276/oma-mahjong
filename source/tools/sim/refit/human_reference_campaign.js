@@ -69,7 +69,7 @@ function createHumanController(tiles, options = {}) {
       roleSignature = signature;
       geometry.clock = clock;
       geometry.rules = { iceNb, ice: Object.fromEntries(roles.flatMap((role, index) => role?.startsWith('ice')
-        ? [[index, (role === 'ice2' ? 2 : 1) + iceNb[index].filter(neighbor => !state.alive[neighbor]).length]] : [])),
+        ? [[index, startingIceHits(role, initialRoles[index], iceNb[index].filter(neighbor => !state.alive[neighbor]).length)]] : [])),
         locks: new Set(roles.flatMap((role, index) => role === 'lock' ? [index] : [])),
         keys: roles.flatMap((role, index) => role === 'key' ? [index] : []) };
       geometry.publicFrontier = position => {
@@ -122,6 +122,11 @@ function createHumanController(tiles, options = {}) {
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
     state() { return structuredClone(current); },
   };
+}
+
+function startingIceHits(currentRole, rememberedRole, removedNeighbors) {
+  if (rememberedRole?.startsWith('ice')) return rememberedRole === 'ice2' ? 2 : 1;
+  return (currentRole === 'ice2' ? 2 : 1) + removedNeighbors;
 }
 
 function visibleRole(game, state, index) {
@@ -217,7 +222,7 @@ function playHumanCampaign(input, options = {}) {
   factory.verifySource();
   return { wonOn: attempts.at(-1).status === 'cleared' ? attempts.length : null, status: attempts.at(-1).status,
     slowestMs, decision, attempts, controls, verifiedTaps, rejected,
-    note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry pictures/orientations were actually observed; only initial role observations are carried to an initial board. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
+    note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry pictures/orientations were actually observed; starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }
 
-module.exports = { createHumanController, playHumanCampaign, visibleRole, verifyAttempt };
+module.exports = { createHumanController, playHumanCampaign, visibleRole, verifyAttempt, startingIceHits };
