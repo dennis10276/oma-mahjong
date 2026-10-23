@@ -73,6 +73,46 @@ const iceOK = (c, i, h) => c.inb[i].filter(j => c.pos[j] < c.pos[i]).length >= h
 /* ---------- the ideas ----------
    Each takes the designer's board and its way through and places specials after one idea. They return
    null when the pile gives no place for it (another pile is tried). */
+
+// the "room in the tray" ideas: the clock under 3-6 tiles; the partners of those tiles moved (picture swap
+// with a buried tile, never onto its own twin) so they are buried elsewhere, and in the variants locked or
+// frozen
+function trayJuggleIdea(kind, title, idea) {
+  return { title, idea, make(b, c) {
+    const ok = i => !special(b, i);
+    const cks = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 3 && coverOf(c, i).size <= 6) cks.push(i);
+    for (const ck of cks.slice(0, 12)) {
+      const D = [...coverOf(c, ck)]; if (!D.every(ok)) continue;
+      const x = clone(b), f = x.faces, buried = i => coverOf(c, i).size >= 2 && !D.includes(i) && i !== ck && ok(i);
+      let fine = true; const partners = [];
+      for (const t of D) {
+        for (let j = 0; j < c.n; j++) {
+          if (j === t || f[j] !== f[t]) continue;
+          if (buried(j)) { partners.push(j); continue; }
+          // move this partner: swap pictures with a buried tile of another picture
+          const s2 = c.P.find(q => buried(q) && f[q] !== f[t] && !D.some(d => f[d] === f[q]) && !partners.includes(q) && !c.nb.above[q].some(a => f[a] === f[t]));
+          if (s2 === undefined) { fine = false; break; }
+          [f[j], f[s2]] = [f[s2], f[j]]; partners.push(s2);
+        }
+        if (!fine) break;
+      }
+      if (!fine || !partners.length) continue;
+      x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, ...D, ...partners].includes(+i))), locks: [], keys: [] };
+      if (kind === 'locked') {
+        const byFace = {}; for (let i = 0; i < c.n; i++) if (buried(i) && !partners.includes(i)) (byFace[f[i]] = byFace[f[i]] || []).push(i);
+        const kk = Object.values(byFace).find(g => g.length >= 2 && !D.some(d => f[d] === f[g[0]]));
+        if (!kk) continue;
+        x.obst.locks = partners.slice(0, 6); x.obst.keys = [kk[0], kk[1]];
+      } else if (kind === 'frozen') {
+        for (const p of partners) if (!c.inb[p].some(q => x.obst.ice[q])) x.obst.ice[p] = 2;
+      }
+      x.clock = { i: ck, n: 999 }; noDown(x, [ck, ...partners]);
+      const y = fix(x); if (y) return y;
+    }
+    return null;
+  } };
+}
+
 const IDEAS = {
   lockedClock: {
     title: 'The clock is locked',
@@ -310,6 +350,57 @@ const IDEAS = {
           ice[ck] = Math.min(2, nbs.length);
           x.obst = { ice, locks: nbs.slice(0, 3), keys: [kk[0], kk[1]] };
           x.clock = { i: ck, n: 999 }; noDown(x, [ck, ...nbs, ...kk]);
+          const y = fix(x); if (y) return y;
+        }
+      }
+      return null;
+    },
+  },
+  // ---- round 4, Claude's own: tray space as the puzzle (Dennis liked it; with two variants) ----
+  // the clock under a few tiles whose partners are elsewhere and buried: digging to the clock fills the
+  // tray, and you have to plan which singles you can hold at the moment you take it
+  trayJuggle: trayJuggleIdea('plain', 'Room in the tray', 'The alarm clock lies under a few tiles whose partners are buried elsewhere. Plan your tray: you have to hold those singles at the moment you take the clock.'),
+  trayJuggleLocked: trayJuggleIdea('locked', 'Room in the tray: locked partners', 'Digging to the alarm clock puts singles in your tray, and their partners are locked. The keys are elsewhere: decide what to hold and when.'),
+  trayJuggleFrozen: trayJuggleIdea('frozen', 'Room in the tray: frozen partners', 'Digging to the alarm clock puts singles in your tray, and their partners are frozen. Thaw them in the right order or the tray fills up.'),
+  keyToEscape: {
+    title: 'The key to the way out',
+    idea: "The alarm clock is free, but its partner is buried under locked tiles. Find the keys, then dig to the partner, and only then take the clock.",
+    make(b, c) {
+      const ok = i => !special(b, i);
+      for (const ck of c.P.filter(i => ok(i) && c.free0[i])) {
+        const mates = []; for (let j = 0; j < c.n; j++) if (j !== ck && b.faces[j] === b.faces[ck]) mates.push(j);
+        if (!mates.every(j => ok(j) && coverOf(c, j).size >= 2)) continue;
+        const m = mates[0], lockT = [...coverOf(c, m)].filter(ok);
+        if (lockT.length < 2) continue;
+        const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2 && i !== ck && !mates.includes(i) && !lockT.includes(i)) deep.push(i);
+        const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+        for (const kk of Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).slice(0, 6)) {
+          const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]); if (lockT.some(t => kdig.has(t)) || kdig.has(ck)) continue;
+          const x = clone(b);
+          x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, m, ...lockT, ...kk].includes(+i))), locks: lockT, keys: [kk[0], kk[1]] };
+          x.clock = { i: ck, n: 999 }; x.clockMate = m; noDown(x, [ck, ...lockT, ...kk]);
+          const y = fix(x); if (y) return y;
+        }
+      }
+      return null;
+    },
+  },
+  frozenKey: {
+    title: 'The frozen key',
+    idea: 'The alarm clock lies on top, locked. One key is easy to reach; the other lies under double ice, and the tiles around that ice are face down.',
+    make(b, c) {
+      const ok = i => !special(b, i);
+      const byFace = {}; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 1 && !c.free0[i]) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
+      for (const g of Object.values(byFace).filter(g => g.length >= 2)) for (const [k1, k2] of [[g[0], g[1]], [g[1], g[0]]]) {
+        const u = [...coverOf(c, k2)].find(t => ok(t) && c.nb.above[t].length === 0);
+        if (u === undefined) continue;
+        const kdig = new Set([...coverOf(c, k1), ...coverOf(c, k2)]);
+        for (const ck of c.P.filter(i => ok(i) && c.free0[i] && !kdig.has(i) && i !== k1 && i !== k2).slice(0, 4)) {
+          const x = clone(b);
+          const ice = Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, k1, k2, u].includes(+i) && !c.inb[u].includes(+i)));
+          ice[u] = 2;
+          const down = new Set(x.down.filter(i => ![ck, k1, k2, u].includes(i))); for (const j of c.inb[u]) if (!c.free0[j] && ok(j) && j !== k2) down.add(j);
+          x.down = [...down]; x.obst = { ice, locks: [ck], keys: [k1, k2] }; x.clock = { i: ck, n: 999 };
           const y = fix(x); if (y) return y;
         }
       }
