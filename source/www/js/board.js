@@ -172,12 +172,30 @@ function decorate(i) {
   else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
   if (G.clock && G.clock.i === i) clockBadge();
 }
+/* An outline of a tile drawn above the whole pile (a frame, the middle open, so the tiles lying on it
+   stay visible): where the alarm clock is, and, after a tap on a lock, where the keys are, also when
+   other tiles cover them (Dennis, 2026-10-23). kind 'clock' stays until it is switched off (i null);
+   'key' goes away by itself after ms. */
+function spotMark(i, kind, ms) {
+  const board = $('#board'); if (!board) return;
+  const id = 'spot-' + kind + (kind === 'clock' ? '' : '-' + i);
+  let el = document.getElementById(id);
+  if (i === null || i === undefined || !G || !G.tiles[i] || !G.tiles[i].r || !G.alive[i]) { if (el && (kind === 'clock' || i === null)) el.remove(); if (kind === 'clock') document.querySelectorAll('.spot.clock').forEach(e => e.remove()); return; }
+  if (!el) { el = document.createElement('div'); el.id = id; el.className = 'spot ' + kind; board.appendChild(el); }
+  const r = G.tiles[i].r;
+  el.style.left = (r.l - 2).toFixed(1) + 'px'; el.style.top = (r.t - 2).toFixed(1) + 'px';
+  el.style.width = (r.w + 4).toFixed(1) + 'px'; el.style.height = (r.h + 4).toFixed(1) + 'px';
+  el.classList.toggle('covered', !free(i));
+  if (kind !== 'clock') { el.classList.remove('go'); void el.offsetWidth; el.classList.add('go'); clearTimeout(el._t); el._t = setTimeout(() => el.remove(), ms || 2600); }
+}
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
 function clockBadge() {
   let ck = $('#clockBadge');
   const on = clockOn(), el = on && G.tiles[G.clock.i].el;
   G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
-  if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); return; }
+  if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); spotMark(null, 'clock'); return; }
+  // the clock tile's outline, above the whole pile: you see which tile it is even when others lie on it
+  spotMark(G.clock.i, 'clock');
   if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; $('#board').appendChild(ck); }
   const r = G.tiles[G.clock.i].r, left = clockLeft();
   ck.innerHTML = `<span>⏰</span><b>${left}</b>`;
