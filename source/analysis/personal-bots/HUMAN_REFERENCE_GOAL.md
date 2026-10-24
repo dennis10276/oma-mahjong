@@ -76,9 +76,10 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`d7778dd`; key-access helper:`1bb716d`, integration:`6655f50`;
-catalog/gate repair:`820e95a`. **61/61 offline tests pass** in about4s,
-including4992 clock/nonclock concealed-world controls,144 local recoveries,
+Runtime:`2f23e47`; last full139/155 policy:`d7778dd`; retry integration:`0f529b0`;
+key-access helper:`1bb716d`, integration:`6655f50`; catalog/gate repair:`820e95a`.
+**66/66 offline tests pass** in about4s, including5376 concealed-world controls,
+675 accepted-availability production-rule controls,144 local recoveries,
 24 relief witnesses and production-replayed preparatory key/clock routes.
 Latest full score139/155 is recorded above; research helpers are not in that policy.
 The goal is ACTIVE and UNMET. No research option is promoted.
@@ -90,6 +91,7 @@ The goal is ACTIVE and UNMET. No research option is promoted.
 | Clock recovery after1 carrier |39/57:32 natural+7 lab |Gains84/lab49; loses142/lab15; max1505.5ms |
 | Known key access preparation |32/42 natural,7/15 lab |Constructs new bounded key routes but no count gain |
 | Key access + information before crowded exits |33/42 natural,8/15 lab |Gains84/lab45, no challenge regressions; max1504.9ms |
+| Previous + actual retry risk learning |33/42 natural,8/15 lab |No measured count gain; max1505.3ms |
 
 Reports respectively:
 - `HUMAN_REFERENCE_MACRO_CONTROL_CHALLENGE_2026-10-24.md`,
@@ -101,6 +103,8 @@ Reports respectively:
   `HUMAN_REFERENCE_LAB_KEY_ACCESS_2026-10-24.md`.
 - `HUMAN_REFERENCE_LAB_CLOCK_INFORMATION_2026-10-24.md`; natural report:
   `HUMAN_REFERENCE_CLOCK_INFORMATION_CHALLENGE_2026-10-24.md`.
+- `HUMAN_REFERENCE_LAB_RETRY_LEARNING_2026-10-24.md` and
+  `HUMAN_REFERENCE_RETRY_LEARNING_CHALLENGE_2026-10-24.md`.
 
 COMPLETED:session58527, lab15 completed8/15 and natural42 completed33/42.
 Mean60.9ms natural and68.9ms lab; no new losses against the corrected control.
@@ -117,17 +121,31 @@ The155 source freeze has ended. No extrapolated or mixed-policy full score is va
 One CPU-heavy simulation at a time. Never restart for a polling timeout or kill
 app/Gemini helpers.157+ remains unopened.
 
-Standalone research helpers14143f5 andc994ff5/25dc52a:
-`public_retry_risk_memory.js` and its standalone test are committed but NOT
-integrated into the139/155 actor/search and NOT included in that policy.
+Retry helpers14143f5 andc994ff5/25dc52a are integrated optionally by0f529b0,
+but were NOT included in the completed139/155 policy.
 Production-replayed loss/clear/capped episodes validate learning only an actual
 third-carrier commitment whose pressure never recovers before physical loss.
 An earlier recovered third carrier is not penalized, caps/clears teach no loss,
 clock resources distinguish states, hidden getters throw and levels do not share
-evidence. After the full run, consider it only as bounded heuristic exploration
-from actual prior failures, never a proof that an action is losing. No campaign
-gain from this helper has been measured. Full actor suite remains61/61; the new
-standalone retry-memory test passes separately.
+evidence. The wrapper shares one budget, protects active clocks and known wins,
+and accepts only a known non-losing prefix ending at at most2 carriers. A final
+unknown-role/orientation probe is allowed there, never a suffix beyond it.
+Known-witness retention is reset at learned nonclock risks unless winning.
+Real actor replay tests change a subsequent choice, but broad counts stayed
+33/42 and8/15. This heuristic is not proof that the original action loses.
+
+ACTIVE:session55779 runs matched124/lab12 controls with rememberAcceptedTaps
+off then on, using the last full profile and NO retryRiskLearning. Runtime2f23e47;
+sourcef68c38e22e473affc820b9f93c67595b9d6ae76737fcde584864577232288c14.
+Pending reports:HUMAN_REFERENCE_ACCEPTED_AVAILABILITY_CONTROL_{OFF,ON}_2026-10-24.md.
+Keep loaded code fixed until both finish. Actual accepted taps now optionally
+prove conditional availability on the same board and subsets of the witnessed
+alive layout. Pictures/initial roles are untouched, after-relief evidence is
+refused, and only actual accepted transitions record a witness.675 rule controls
+and a production retry with hidden initial ice validate the prerequisites. The
+actual blocked tile is NOT declared initially safe on the next try, but its route
+after the observed thawing removal becomes a known winning witness. No campaign
+gain is claimed until the controls/broader tests finish.
 
 Research conservative control:
 ```json
