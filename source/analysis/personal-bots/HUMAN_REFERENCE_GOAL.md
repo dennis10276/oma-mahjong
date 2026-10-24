@@ -92,9 +92,9 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 ## Current runtime and active experiment
 
 Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
-Current optional blocked-memory candidate:`1fabb04`; no full score is claimed.
-Goal ACTIVE, UNMET. Sessions95132 and11316 are terminal; no source freeze remains.
-**81/81 offline tests pass** in8s, including7488 concealed-world controls,
+Current optional hypothesis candidate:`093585e`; no new full score is claimed.
+Goal ACTIVE, UNMET. Session36618 is live; keep its loaded source frozen.
+**83/83 offline tests pass** in8s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -256,7 +256,7 @@ full141 rows, with ZERO retained rejected-tap facts. Independent table audit
 verified labels, tries, provenance, scoring and timing. This foundational feature
 has no measured campaign benefit here; the eight natural failures remain.
 
-New standalone sampling components, NOT yet used by the actor:
+Public sampling components, now used by the optional actor candidate:
 public_paired_picture_sampler.js draws complete original-picture hypotheses only
 from actually remembered identities, even initial counts and an explicit Joker
 bound. It never accepts an inventory, deck, level or actual seed. Its prior is
@@ -269,29 +269,63 @@ the original choice on ties and stops at one absolute deadline. Incomplete batch
 do not bias early roots. It never returns real knownWin/knownDead flags or exact
 loss shares. Unit tests cover deadline exhaustion, incomplete batches, prior
 conditioning, unresolved budgets, fallback ties and evaluator node limits.
-81/81 offline tests pass after registering both components. Their current
-evaluator tests are scheduler contracts, NOT production physics validation.
+The original scheduler tests remain contract checks; the following physics tests
+now separately ground its evaluations in production.
 
-NEXT REQUIRED WORK:connect the sampler to public-only counterfactual physical
-search and the actor, then measure changes on the cold failures and the full gate.
-Do not stop at the sampler infrastructure. The evaluator must respect remembered
-initial/current roles, actual accepted/cleared/blocked evidence, public geometry,
-standard closed-tile placement, clock costs and actual arrival rules. Unknown
-orientation/roles need explicit hypotheses, never private reads or assumed facts.
-Keep all hypothesis-local state separate from actual observation/learning and
-preserve real known winning/clock-exit witnesses. A primary-search time slice plus
-all hypothesis evaluations must share the SAME1500ms decision deadline, single
-thread. Every physical candidate must ultimately independently replay in Hard.
-Missing hypothetical solutions remain unresolved; a hypothetical win is never a
-known actual route. Complete trusted opening audit2026-10-24T11:36:47.303Z:
+Implemented98cb6de:public_hypothesis_physics.js completes unknown orientation and
+initial obstacle roles under public bounds and the standard closed-tile placement
+rule. Every hypothesis must replay EVERY actual earlier/current attempt prefix
+through original Hard, with identical alive/tray/moves/peek/relief/arrival/tap
+states. Every actually visible role and actual blocked probe constrains the
+assignment. Picture guesses preserve all immutable observed identities. Every
+hypothetical winning suffix is independently replayed in original production
+before counting it. Inconsistent history, unsupported Joker transitions, caps and
+deadline exhaustion remain unresolved, not real losses. Candidate roots share ONE
+cached complete world; changing the filling inside a balanced batch is rejected.
+Projection copies named public fields and never reads tile.face, deck or a seed.
+
+Integrated093585e:hypothesisSampling requires public standard/lab mode and the
+exclusive production bounds. Actual observation frames/actions are recorded
+separately from all hypothetical state. Only actual observations update memory.
+The primary planner runs first under the SAME1500ms deadline. Sampling uses time
+left afterward, at roots with at least two carriers and unseen alive pictures.
+It protects real known wins, safe clock exits and actual complete loss proofs.
+Its random stream is derived only from public geometry/knowledge/state, never a
+level ID, human label, actual seed or future value. A changed root executes ONE
+actual tap and discards all guessed continuations. No changed hypothesis is
+claimed as knownWin/knownDead. Actual choices still independently replay exactly.
+83/83 tests pass in8s, including concealed-picture-swap invariance of active
+sampling, production-grounded hypothetical and actual clears, protected real
+winning/clock witnesses, contradictory-history rejection and bounded fallbacks.
+
+RUNNING:session36618, PID10252, started2026-10-24T11:59:58.716Z, runtime093585e.
+Natural18:81,92,93,99,102,107,111,112,121,123,124,125,134,137,141,143,147,150.
+Profile:full141 plus hypothesisSampling:true,rememberBlockedTaps:true; default
+maximum32 worlds and256 nodes per candidate action. Report destination:
+HUMAN_REFERENCE_HYPOTHESIS_CHALLENGE_2026-10-24.md.
+Sourceea57c84eb4c5edbbfbe6a54623ace90d100e9c9a9a09391271a8bd979c2f3f9a;
+input02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
+Last confirmed live2026-10-24T12:03:36Z.81 and93 still fail, with zero preferred
+worlds/root changes;92 clears ontry3 with146 preferred worlds and580 independently
+validated hypothetical clears but also zero root changes. Maximum seen1507.5ms.
+This partial evidence is NOT a new score and does not reject sampling as a route.
+Keep loaded source unchanged until terminal; one CPU-heavy simulation only.
+NEXT after this run:measure a narrow fully-known rollout. Current beam24 with
+256 nodes can exhaust its work before reaching a long board's end. Construct a
+public synthetic long-board control and compare narrow versus broad beams at the
+same node limit, then refine the rollout budget/shape before discarding sampling.
+Add aggregate unresolved/incomplete/prior-excluded counts so capped search is
+distinguished from sampled physical losses. Do not lose the full14-failure scope.
+
+Complete trusted opening audit2026-10-24T11:36:47.303Z:
 all155 development boards have even initial picture counts and at most two
 Jokers (actual maximum0 in this corpus). Input hash matches the full141 run:
 00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9.
 No identity, inventory or seed was supplied to a policy. This validates the
 source-declared opening bounds, not a known unseen inventory or a uniform prior.
-There are still no newer natural clears;157+ stays unopened. No CPU-heavy job
-remains live:the full run, cold diagnostic, blocked screen,81-test suite and
-trusted input audit all exited successfully.
+There are still no newer natural clears;157+ stays unopened. The full run, cold
+diagnostic, blocked screen and trusted input audit all exited successfully; only
+the explicitly recorded new hypothesis challenge is live.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
