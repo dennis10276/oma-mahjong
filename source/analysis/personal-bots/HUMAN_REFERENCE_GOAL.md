@@ -91,9 +91,10 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`3081a3a`; last completed full141/155 policy includes causal memory.
-Goal ACTIVE, UNMET. Session95132 is terminal; its source freeze has ended.
-**77/77 offline tests pass** in7s, including7296 concealed-world controls,
+Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
+Current optional blocked-memory candidate:`1fabb04`; no full score is claimed.
+Goal ACTIVE, UNMET. Sessions95132 and11316 are terminal; no source freeze remains.
+**81/81 offline tests pass** in8s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -243,6 +244,46 @@ one rejected probe across unrelated moves and an actual failed attempt, then
 physically clears both controls; all accepted taps independently replay. It never
 learns the hidden original ice identity.79/79 offline tests pass in9s, including
 7488 concealed-world controls. No new full campaign gain is claimed.
+
+COMPLETED:session11316, started2026-10-24T11:26:07.269Z. Same full141 profile
+plus rememberBlockedTaps:true on the eight cold failures and all15 lab boards.
+Report:HUMAN_REFERENCE_BLOCKED_TAPS_CHALLENGE_2026-10-24.md.
+Source21ca235aff2184e5e911b1fff17d0493a21ea343e93e4a5d2dac7f7a5845dc67;
+input85df19d5b4f0f0a0d3d557cb0262e013675739a0a563dee72f69adc66e64b19e.
+9/23,mean110.9ms,max1504.8ms,source unchanged. ALL try counts match the prior
+full141 rows, with ZERO retained rejected-tap facts. Independent table audit
+verified labels, tries, provenance, scoring and timing. This foundational feature
+has no measured campaign benefit here; the eight natural failures remain.
+
+New standalone sampling components, NOT yet used by the actor:
+public_paired_picture_sampler.js draws complete original-picture hypotheses only
+from actually remembered identities, even initial counts and an explicit Joker
+bound. It never accepts an inventory, deck, level or actual seed. Its prior is
+explicitly nonuniform over distinct fillings, not a calibrated probability model.
+6648 reproducible completion controls preserve observations, pair counts and Joker
+bounds. public_anytime_hypotheses.js compares every candidate on the SAME sampled
+filling, accepts statistics only from complete balanced batches, prefers fillings
+with a constructed hypothetical clear, keeps capped worlds unresolved, preserves
+the original choice on ties and stops at one absolute deadline. Incomplete batches
+do not bias early roots. It never returns real knownWin/knownDead flags or exact
+loss shares. Unit tests cover deadline exhaustion, incomplete batches, prior
+conditioning, unresolved budgets, fallback ties and evaluator node limits.
+81/81 offline tests pass after registering both components. Their current
+evaluator tests are scheduler contracts, NOT production physics validation.
+
+NEXT REQUIRED WORK:connect the sampler to public-only counterfactual physical
+search and the actor, then measure changes on the cold failures and the full gate.
+Do not stop at the sampler infrastructure. The evaluator must respect remembered
+initial/current roles, actual accepted/cleared/blocked evidence, public geometry,
+standard closed-tile placement, clock costs and actual arrival rules. Unknown
+orientation/roles need explicit hypotheses, never private reads or assumed facts.
+Keep all hypothesis-local state separate from actual observation/learning and
+preserve real known winning/clock-exit witnesses. A primary-search time slice plus
+all hypothesis evaluations must share the SAME1500ms decision deadline, single
+thread. Every physical candidate must ultimately independently replay in Hard.
+Missing hypothetical solutions remain unresolved; a hypothetical win is never a
+known actual route. Before using the paired/Joker opening bounds, validate them
+against all155 input boards. Current corpus still ends156;157+ stays unopened.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
