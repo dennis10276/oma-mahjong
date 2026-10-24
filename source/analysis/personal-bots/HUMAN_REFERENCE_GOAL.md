@@ -62,7 +62,8 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`8055ad6`; lab catalog/screen:`0bc0f3e`; manual twin guard:`cede8f0`;
+Runtime:`f25d374`; uniform continuation proofs:`8055ad6`;
+lab catalog/screen:`0bc0f3e`; manual twin guard:`cede8f0`;
 public-relief correction:`2d6ec2f`; root adaptive probing:`80491b6`;
 information width:`ae1753f`; experimental pair-headroom cap:`1fe9239`.
 **59/59 offline tests pass** in about4s, including4416 clock/nonclock
@@ -89,6 +90,14 @@ orders equal-room exit witnesses by that debt. Urgent and nonclock ordering is
 unchanged, defaults remain off, and the estimate never prunes or certifies safety.
 Tests include a production-replayed clock route, urgent/nonclock equality, private
 getters and192 additional hidden-world controls. No campaign gain is claimed yet.
+ACTIVE:session27372, serial lab15 then natural42 with the conservative control
+plus `clockRecovery:true`. Source held unchanged:
+`c61e6c1e5edfc4806652c304645c9de15306b2df0ac74d714685d2d8df8fcd3d`.
+Reports pending:`HUMAN_REFERENCE_LAB_CLOCK_RECOVERY_2026-10-24.md` and
+`HUMAN_REFERENCE_CLOCK_RECOVERY_CHALLENGE_2026-10-24.md`.
+Early actual evidence:lab11 still fails, but reaches50 tiles left rather than82;
+lab41 still fails across6 real attempts, eventually reaching32 rather than52.
+These are not passes and must not replace the try-count gate. Wait for all rows.
 
 COMPLETED:serial8-case protected-width1 control, then42-case
 protected-width1 challenge, then42-case protected-width2 challenge.
