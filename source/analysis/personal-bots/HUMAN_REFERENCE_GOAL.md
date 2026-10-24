@@ -71,8 +71,8 @@ Observed influence285/1075 (26.5%); max1305.8ms. No promotion with a guard lost.
 Interleaved scheduling scored0/3 on99/111/112 and is not promoted.
 Strong primary200ms screen finished4/24:92,111,141,143 pass; six guards regress.
 The isolated99/111/112 successes did not repeat. This profile is not promoted.
-Dispersed-pair probe is running:93 clears1 in270 verified taps; other four pending.
-It uses visible counts/public generation with broad backoff; no full score inferred.
+Dispersed-pair probe stopped after guard111 failed:93 clears1,99 fails;112/137 pending.
+Next: compare complete known-peek take/pair options and retain their public prefix.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.
