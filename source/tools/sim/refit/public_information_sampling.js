@@ -2,8 +2,9 @@
 const assert = require('assert/strict');
 const { createPairedPictureSampler } = require('./public_paired_picture_sampler.js');
 const { interleavePlayouts } = require('./public_interleaved_playouts.js');
+const { rankSequentialInformationActions } = require('./public_sequential_information_sampling.js');
 
-function rankInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096 }) {
+function rankInterleavedInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096 }) {
   assert(Object.keys(problem).every(key => ['rememberedPictures', 'actions', 'fallbackIndex', 'unseenFraction'].includes(key)));
   assert(Number.isFinite(deadline)); assert(Number.isInteger(maximumWorlds) && maximumWorlds > 0 && maximumWorlds <= 128);
   assert(Number.isInteger(exactNodes) && exactNodes >= 1000 && exactNodes <= 4096);
@@ -59,6 +60,12 @@ function rankInformationActions(problem, { physics, random, deadline, now = Date
   return { kind: 'informationRanking', index: selected.index, totals, nodes, generatedWorlds, completeWorlds, preferredWorlds,
     unresolvedWorlds, excludedByWinnabilityPreference: 0, incompleteWorlds: generatedWorlds - completeWorlds,
     informationWeight, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
+}
+
+function rankInformationActions(problem, { schedule = 'sequential', ...options }) {
+  assert(['sequential', 'interleaved'].includes(schedule));
+  const rank = schedule === 'sequential' ? rankSequentialInformationActions : rankInterleavedInformationActions;
+  return { ...rank(problem, options), schedule };
 }
 
 module.exports = { rankInformationActions };

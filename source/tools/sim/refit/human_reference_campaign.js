@@ -48,6 +48,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
   assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
   assert(!options.informationSampling || options.hypothesisSampling === true);
+  assert(options.informationSchedule === undefined || ['sequential', 'interleaved'].includes(options.informationSchedule));
+  assert(options.informationPrimaryMs === undefined || Number.isFinite(options.informationPrimaryMs)
+    && options.informationPrimaryMs > 0 && options.informationPrimaryMs <= 500);
   assert(options.informationPlayoutNodes === undefined || Number.isInteger(options.informationPlayoutNodes)
     && options.informationPlayoutNodes > 0 && options.informationPlayoutNodes <= 64);
   assert(options.hypothesisActionMs === undefined || options.hypothesisSampling === true
@@ -105,8 +108,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const baseSearch = options.hypothesisSampling ? (game, state, actions, searchOptions) => {
     const contested = options.informationSampling && state.pictures.some((picture, index) => state.alive[index] && picture === null);
     return searchPublicWitness(game, state, actions, { ...searchOptions,
-      ...(contested ? { nodes: Math.min(64, searchOptions.nodes) } : {}), decisionMs: undefined,
-      deadline: Math.min(decisionDeadline, searchOptions.deadline ?? Infinity, contested ? Date.now() + 40 : Infinity) });
+      decisionMs: undefined,
+      deadline: Math.min(decisionDeadline, searchOptions.deadline ?? Infinity,
+        contested ? Date.now() + (options.informationPrimaryMs ?? 200) : Infinity) });
   } : searchPublicWitness;
   const retrySearchFactory = options.clockRetryLearning ? clockRetryExploration : retryExploration;
   const runRetrySearch = options.retryRiskLearning ? retrySearchFactory(baseSearch) : null;
@@ -278,7 +282,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction };
         const ranking = options.informationSampling ? rankInformationActions({ ...problem,
           unseenFraction: current.pictures.filter((picture, index) => current.alive[index] && picture === null).length
-            / current.alive.reduce((sum, alive) => sum + alive, 0) }, { deadline: decisionDeadline, random, physics,
+            / current.alive.reduce((sum, alive) => sum + alive, 0) }, {
+          deadline: Math.min(decisionDeadline, Date.now() + 1300), random, physics, schedule: options.informationSchedule ?? 'sequential',
           maximumWorlds: options.hypothesisMaximumWorlds ?? 128 }) : options.hypothesisActionMs === undefined
           ? rankHypothesisActions(problem, { ...rankOptions, evaluate: physics.evaluate })
           : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });

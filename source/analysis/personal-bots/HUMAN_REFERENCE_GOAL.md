@@ -68,7 +68,9 @@ Report sampling changes / contested decisions; below5% is insufficient influence
 The corrected screen stopped after guard111 regressed.99 and112 both clear1;
 92 passes4.81/93/102/107 fail.16 cases remain uncompleted; no full score inferred.
 Observed influence285/1075 (26.5%); max1305.8ms. No promotion with a guard lost.
-Interleaved production play-outs are integrated; next compare99/111/112, then24.
+Interleaved scheduling scored0/3 on99/111/112 and is not promoted.
+Sequential scheduling is restored with a full-node primary tie-break (max200ms)
+inside the same1.3s decision deadline. Next compare99/111/112, then24.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.

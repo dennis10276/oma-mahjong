@@ -23,6 +23,10 @@ function test() {
   assert.equal(honest.index, 1); assert.equal(honest.informationWeight, 1); assert.equal(honest.nodes, 0);
   assert.deepEqual(seen[1][1], seen[2][1]); assert.equal(honest.completeWorlds, 1);
   assert.equal(honest.knownWin, false); assert.equal(honest.exactLossShares, false);
+  const interleaved = rankInformationActions(problem, { physics, random: () => 0,
+    deadline: Date.now() + 1000, maximumWorlds: 1, schedule: 'interleaved' });
+  assert.equal(interleaved.index, 1); assert.equal(interleaved.schedule, 'interleaved');
+  assert.throws(() => rankInformationActions(problem, { physics, deadline: 1, schedule: 'perLevel' }));
   const remembered = rankInformationActions({ ...problem, unseenFraction: 0.05 },
     { physics, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1 });
   assert.equal(remembered.index, 0); assert.equal(remembered.nodes, 4000);
