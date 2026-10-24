@@ -3,7 +3,7 @@ const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { advance, legal } = require('./known_tray_plan.js');
-const { search, REFERENCE_PARAMETERS } = require('./public_witness_search.js');
+const { searchHypothesisContinuation } = require('./public_hypothesis_rollout.js');
 
 function roleAt(game, state, index) {
   if (state.relieved || !game.rules) return 'none';
@@ -83,7 +83,8 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
     const value = random(); assert(Number.isFinite(value) && value >= 0 && value < 1);
     return Math.floor(value * limit);
   };
-  const stats = { assignments: 0, rejectedAssignments: 0, historyReplays: 0, verifiedHypotheticalClears: 0, deadlineStops: 0 };
+  const stats = { assignments: 0, rejectedAssignments: 0, historyReplays: 0, verifiedHypotheticalClears: 0, deadlineStops: 0,
+    thinRolloutClears: 0, wideRolloutClears: 0, unresolvedRollouts: 0, certifiedRolloutLosses: 0 };
   let cachedOrdinal = null, cachedPictures = null, cached = null;
   const replayPrefix = (game, episode, deadline, validateFrames) => {
     if (now() >= deadline) return null;
@@ -176,16 +177,19 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
       const moved = advance(game, state, index);
       if (moved.uncertain) return result('unresolved', 1);
       if (moved.lost) return result('lost', 1);
-      let path = [index], nodes = 1, status = moved.win ? 'cleared' : 'unresolved';
+      let path = [index], nodes = 1, status = moved.win ? 'cleared' : 'unresolved', winningBeam = null;
       if (!moved.win && nodeLimit > 1 && now() < deadline) {
         const actions = legal(game, moved.state).free.map(target => ({ index: target }));
         if (actions.length) {
-          const planned = search(game, moved.state, actions, { ...REFERENCE_PARAMETERS, nodes: nodeLimit - 1,
-            beam: 24, knownPairMacros: true, progressiveReopens: true, cachePublicAnalysis: true,
-            proofNodes: Math.min(32, nodeLimit - 1), deadline, decisionMs: undefined });
+          const planned = searchHypothesisContinuation({ tiles: game.tiles, nb: game.nb, rules: game.rules, clock: game.clock },
+            moved.state, actions, { nodeLimit: nodeLimit - 1, deadline });
           nodes += planned.nodes;
-          if (planned.knownWin) { path = path.concat(planned.path); status = 'cleared'; }
-          else if (planned.knownDead) status = 'lost';
+          status = planned.status;
+          if (status === 'cleared') {
+            path = path.concat(planned.path);
+            winningBeam = planned.stages.at(-1).beam;
+          } else if (status === 'lost') stats.certifiedRolloutLosses++;
+          else stats.unresolvedRollouts++;
         }
       }
       if (status === 'cleared') {
@@ -198,6 +202,7 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
         }
         assert.equal(session.view().win, true, 'A hypothetical winning witness failed independent production replay');
         stats.verifiedHypotheticalClears++;
+        if (winningBeam !== null) stats[winningBeam === 1 ? 'thinRolloutClears' : 'wideRolloutClears']++;
       }
       return result(status, nodes);
     },

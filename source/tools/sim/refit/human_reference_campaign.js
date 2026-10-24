@@ -78,7 +78,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const blockedTapMemory = options.rememberBlockedTaps || options.hypothesisSampling ? createBlockedTapMemory(geometry.tiles,
     { exclusiveRoles: options.exclusiveRoles === true }) : null;
   const episodes = [], hypothesisStats = { decisions: 0, changed: 0, generatedWorlds: 0, completeWorlds: 0,
-    preferredWorlds: 0, verifiedHypotheticalClears: 0, rejectedAssignments: 0 };
+    preferredWorlds: 0, unresolvedWorlds: 0, excludedByWinnabilityPreference: 0, incompleteWorlds: 0,
+    verifiedHypotheticalClears: 0, rejectedAssignments: 0, thinRolloutClears: 0, wideRolloutClears: 0,
+    unresolvedRollouts: 0, certifiedRolloutLosses: 0, historyReplays: 0, assignments: 0 };
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   let decisionDeadline = Infinity;
@@ -212,8 +214,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const physicalStats = physics.stats(), predicted = advance(geometry, current, ranking.index);
         const changed = ranking.index !== selected.plan.index && (predicted.uncertain || !predicted.lost);
         hypothesisStats.decisions++; hypothesisStats.changed += +changed;
-        for (const field of ['generatedWorlds', 'completeWorlds', 'preferredWorlds']) hypothesisStats[field] += ranking[field];
-        for (const field of ['verifiedHypotheticalClears', 'rejectedAssignments']) hypothesisStats[field] += physicalStats[field];
+        for (const field of ['generatedWorlds', 'completeWorlds', 'preferredWorlds', 'unresolvedWorlds',
+          'excludedByWinnabilityPreference', 'incompleteWorlds']) hypothesisStats[field] += ranking[field];
+        for (const field of ['verifiedHypotheticalClears', 'rejectedAssignments', 'thinRolloutClears', 'wideRolloutClears',
+          'unresolvedRollouts', 'certifiedRolloutLosses', 'historyReplays', 'assignments']) hypothesisStats[field] += physicalStats[field];
         const audit = { ...ranking, ...physicalStats, changed, primaryIndex: selected.plan.index,
           sharedDeadline: decisionDeadline };
         if (!changed) return { ...selected, plan: { ...selected.plan, hypothesisAudit: audit } };

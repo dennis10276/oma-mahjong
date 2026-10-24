@@ -92,9 +92,9 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 ## Current runtime and active experiment
 
 Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
-Current optional hypothesis candidate:`093585e`; no new full score is claimed.
-Goal ACTIVE, UNMET. Session36618 is live; keep its loaded source frozen.
-**83/83 offline tests pass** in8s, including7488 concealed-world controls,
+Current optional hypothesis candidate adds a narrow-first rollout; no new full score is claimed.
+Goal ACTIVE, UNMET. Session36618 is terminal; its source freeze has ended.
+**84/84 offline tests pass** in9s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -298,24 +298,36 @@ claimed as knownWin/knownDead. Actual choices still independently replay exactly
 sampling, production-grounded hypothetical and actual clears, protected real
 winning/clock witnesses, contradictory-history rejection and bounded fallbacks.
 
-RUNNING:session36618, PID10252, started2026-10-24T11:59:58.716Z, runtime093585e.
+COMPLETED:session36618, started2026-10-24T11:59:58.716Z, runtime093585e.
 Natural18:81,92,93,99,102,107,111,112,121,123,124,125,134,137,141,143,147,150.
 Profile:full141 plus hypothesisSampling:true,rememberBlockedTaps:true; default
 maximum32 worlds and256 nodes per candidate action. Report destination:
 HUMAN_REFERENCE_HYPOTHESIS_CHALLENGE_2026-10-24.md.
 Sourceea57c84eb4c5edbbfbe6a54623ace90d100e9c9a9a09391271a8bd979c2f3f9a;
 input02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
-Last confirmed live2026-10-24T12:03:36Z.81 and93 still fail, with zero preferred
-worlds/root changes;92 clears ontry3 with146 preferred worlds and580 independently
-validated hypothetical clears but also zero root changes. Maximum seen1507.5ms.
-This partial evidence is NOT a new score and does not reject sampling as a route.
-Keep loaded source unchanged until terminal; one CPU-heavy simulation only.
-NEXT after this run:measure a narrow fully-known rollout. Current beam24 with
-256 nodes can exhaust its work before reaching a long board's end. Construct a
-public synthetic long-board control and compare narrow versus broad beams at the
-same node limit, then refine the rollout budget/shape before discarding sampling.
-Add aggregate unresolved/incomplete/prior-excluded counts so capped search is
-distinguished from sampled physical losses. Do not lose the full14-failure scope.
+10/18,mean695.2ms,max1508.5ms,source unchanged. Independent canonical-table audit
+verified every human label, board source and try count against full141:ALL match,
+no passes lost and no new pass.707 sampled decisions,one changed root on141,
+1465 generated worlds,758 complete balanced batches,419 preferred worlds,
+1963 independently production-replayed hypothetical clears. All eight cold
+failures still fail. This is not a new full score and does not reject sampling.
+
+Verified rollout-budget limitation:the new public synthetic40-tile control has a
+straightforward40-tap clear. Beam24 misses it at256 nodes; narrow-first finds it
+in20 nodes, and the entire route independently replays in unmodified Hard.play.
+public_hypothesis_rollout.js now tries beam1 with half the node cap, then beam4
+with the unspent nodes if necessary; both share the same absolute deadline.
+Only counterfactual rollouts use this shape; the real primary planner is unchanged.
+Its conditional winning route STILL requires independent production replay before
+counting a clear, and capped or expired work stays unresolved. Aggregate reporting
+now distinguishes unresolved complete worlds, unfinished batches, worlds excluded
+only by the winnability preference, verified thin/wider wins and conditional loss
+certificates.84/84 tests pass after integration, including the long-route control.
+NEXT:compare the narrow-first candidate on the SAME18 levels and profile before
+considering broader development validation. Keep all14 failures in scope. If no
+complete batches fit, measure history-replay/verification cost; if all candidates
+tie as winnable, investigate information-aware rollouts rather than promoting an
+omniscient conditional upper bound to an actual success probability.
 
 Complete trusted opening audit2026-10-24T11:36:47.303Z:
 all155 development boards have even initial picture counts and at most two
@@ -323,9 +335,10 @@ Jokers (actual maximum0 in this corpus). Input hash matches the full141 run:
 00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9.
 No identity, inventory or seed was supplied to a policy. This validates the
 source-declared opening bounds, not a known unseen inventory or a uniform prior.
-There are still no newer natural clears;157+ stays unopened. The full run, cold
-diagnostic, blocked screen and trusted input audit all exited successfully; only
-the explicitly recorded new hypothesis challenge is live.
+Metadata refresh2026-10-24T12:17:46.918Z still finds140 natural first clears through
+156,zero boards decoded and no newer clears.157+ stays unopened. The full run,
+cold diagnostic, blocked screen, trusted input audit and first hypothesis
+challenge all exited successfully. No CPU-heavy job remains from those runs.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
