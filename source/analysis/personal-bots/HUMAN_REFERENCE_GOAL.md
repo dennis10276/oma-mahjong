@@ -61,8 +61,8 @@ Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
 
 ## Next and completion
 
-Baseline and32x1 screens finished. Finish12x16, primitive-root calibration and
-three-salt lab retry baseline on frozen inputs. No early guard stops.
+Baseline and32x1 screens finished; lab baseline0/12, retained14-35 unseen.
+Finish12x16 and primitive-root screens; test retry-risk learning. No early stops.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.
