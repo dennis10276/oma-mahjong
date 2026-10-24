@@ -33,6 +33,7 @@ function test() {
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 'pairHeadroom' });
   configurations.push({ ...configurations[1], protectOpenTwin: true });
   configurations.push({ ...configurations[1], clockRecovery: true });
+  configurations.push({ ...configurations[1], clockInformationBeforeRisk: true });
   configurations.push({ ...configurations[1], clockRecovery: true, trayRecoveryClockMin: 1 });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 1, protectOpenTwin: true });
   const canonical = new Map();

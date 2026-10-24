@@ -136,6 +136,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const informationDominance = settings.informationDominance ?? false;
   const informationWidth = settings.informationWidth ?? 0;
   const clockRecovery = settings.clockRecovery ?? false;
+  const clockInformationBeforeRisk = settings.clockInformationBeforeRisk ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
@@ -158,6 +159,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof informationDominance, 'boolean');
   assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
   assert.equal(typeof clockRecovery, 'boolean');
+  assert.equal(typeof clockInformationBeforeRisk, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -211,6 +213,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     initialLeft + state.down.filter((value, index) => value && state.alive[index]).length)) : settings.taps;
   let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
   let dominanceStop = null;
+  let clockPreparationFrontiers = 0;
   const provedDeadRoots = new Set();
   const continuationProof = { calls: 0, nodes: 0, bounded: 0, certified: 0 };
   const recoveryRankWidths = new Set();
@@ -265,9 +268,13 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       : (!clocked && progress >= settings.progress && !position.tray.length) ? 'knownProgress'
       : safeInfo ? 'information' : 'boundedProgress';
 
+    const clockPreparation = clockInformationBeforeRisk && clocked && !exit && safeInfo && game.clock.n - position.moves > 2;
+    clockPreparationFrontiers += +clockPreparation;
+
     const tier = won ? 6
       : exit && room.safe ? 5
       : exit ? 3
+      : clockPreparation ? 4
       : safeInfo ? 2
       : 1;
 
@@ -484,6 +491,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(dominanceStop ? { dominanceStop } : {}),
       ...(informationWidth ? { informationWidthTarget } : {}),
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost } : {}),
+      ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive,
         recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
