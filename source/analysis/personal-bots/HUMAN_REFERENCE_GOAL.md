@@ -70,9 +70,20 @@ This is a heuristic switch, not optimality or a loss proof. It uses no level/see
 IDs, cannot guess an uncertain partner and shares the existing decision deadline.
 The default is unchanged. Tests retain known wins, clocks and expired-budget guards.
 No campaign improvement is claimed before its complete experiment finishes.
-ACTIVE:42-case roles+recoveryAware screen, session64254, runtime80491b6,
-fingerprint:`dc45e00313de551af23ebf43fc4e6adfb277183aff953cf4afaa8a2398aee8b6`.
-Pending:`HUMAN_REFERENCE_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
+The roles+recoveryAware42-case screen completed34/42 unchanged, mean118.8ms,
+slowest1509.4ms. Relative to shortRoles32/42 it gains81/93/102/107/137 and
+improves92 from3 to2, but newly loses121/123/147. Remaining failures:
+84/99/112/121/123/124/125/147. This changes BOTH information horizon and probe
+ordering, so the count difference cannot isolate either factor's causal effect.
+Report:`HUMAN_REFERENCE_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
+A fresh147 comparison agrees through six actual decisions. At decision7 the
+conservative shortRoles profile takes68, whereas fullRoles+recoveryAware consumes
+the known80/74 pair first, then discovers82. Both start from the same projection;
+neither the first divergence nor the pair itself is proved to force the later loss.
+This is NOT the old raw policy's immediate overwrite of open80 by unknown82.
+ACTIVE:42-case shortRoles+recoveryAware interaction screen, session55535,
+runtime80491b6, fingerprint:`dc45e00313de551af23ebf43fc4e6adfb277183aff953cf4afaa8a2398aee8b6`.
+Pending:`HUMAN_REFERENCE_SHORT_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
 
 The three-action role-payoff screen completed7/8, source unchanged, slowest
 1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
@@ -125,6 +136,7 @@ Research baseline settings (not a released/default/frozen winner):
 | Frontier-only role information |6/8; restores92, loses121 |Not promoted |
 | Short information, with roles |6/8;92try2,121try1,137try1 |Real tray losses on50/147 |
 | Short information, without roles |6/8; same new successful-try counts |Also loses50/147, not a numerical cap |
+| Recovery-aware probes + full roles |34/42;81/93/102/107/137 gain,92try2 |New losses121/123/147; two-factor comparison, not a full-catalog gain |
 | Carrier-aware short information, roles |6/8;92try2,121try3,137try1 |Still loses50/147; slowest1511.7ms |
 | Carrier-aware short information, no roles |5/8;121fails again |Still loses50/147; slowest1507.8ms |
 | Immediate role clues |6/8;92 restored,121/137fail |Slowest1506.2ms, not promoted |
