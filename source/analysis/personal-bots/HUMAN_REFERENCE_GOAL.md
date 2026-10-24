@@ -62,8 +62,10 @@ Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
 ## Next and completion
 
 Baseline24/48; progress22/20, primitive19/20, long20 and recovery13 all rejected.
-Lab baseline and retry learning both0/12. Exact visibility parity passes86,016 cases.
-Screen compiled public occluders: progress32x1/12x16 and primitive32x1, salts1-3.
+Compiled progress19/21 and primitive21 rejected; compiled lab and risk control0/12.
+Risk control:6 matching decisions,0 penalized choices,0 penalized clock-exit choices.
+Exact visibility parity passes86,016 cases. Exact <=8 count-gate candidate testing
+32x1/12x16 and lab retries, salts1-3; unknown fractions previously disabled this gate.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.
