@@ -50,12 +50,13 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
     completeWorlds++;
     const anyClear = batch.some(row => row.honest.status === 'cleared' || row.exact.status === 'cleared');
     preferredWorlds += +anyClear; unresolvedWorlds += +!anyClear;
+    const allExactLost = batch.every(row => row.exact.status === 'lost');
     batch.forEach(({ honest, exact }, offset) => {
       const total = totals[offset];
       total.informationClears += +(honest.status === 'cleared'); total.exactClears += +(exact.status === 'cleared');
       total.score += informationWeight * +(honest.status === 'cleared') + (1 - informationWeight) * +(exact.status === 'cleared');
       total.unresolved += +(honest.status === 'unresolved'); total.lost += +(honest.status === 'lost');
-      if (exact.status === 'lost') total.progress += exact.progress ?? 0;
+      if (allExactLost) total.progress += exact.progress ?? 0;
     });
   }
   let selected = totals.find(row => row.index === problem.fallbackIndex);

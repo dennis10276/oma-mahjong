@@ -42,7 +42,7 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
         const decisions = attempt.decisions;
         const offsets = [...new Set([decisions.findIndex(choice => choice.plan.hypothesis?.changed),
           decisions.findIndex(choice => choice.state.tray.length === 2), decisions.findIndex(choice => choice.state.tray.length === 3),
-          decisions.length - 3, decisions.length - 2, decisions.length - 1])].filter(offset => offset >= 0);
+          decisions.length - 3, decisions.length - 2, decisions.length - 1])].filter(offset => offset >= 0).sort((left, right) => left - right);
         return offsets.map(offset => {
           const choice = decisions[offset], audit = choice.plan.hypothesis;
           const chosen = audit?.totals?.find(total => total.index === audit.index);

@@ -55,6 +55,21 @@ function test() {
   const remembered = rankInformationActions({ ...problem, unseenFraction: 0.05 },
     { physics, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1 });
   assert.equal(remembered.index, 0); assert.equal(remembered.nodes, 4000);
+  for (const schedule of ['sequential', 'interleaved']) {
+    const noneClear = { ...physics,
+      evaluateInformation: () => ({ kind: 'informationEvaluation', status: 'lost', progress: 0 }),
+      evaluate: request => ({ kind: 'hypothesisEvaluation', status: request.index === 0 ? 'unresolved' : 'lost',
+        nodes: 2000, progress: request.index === 1 ? 0.9 : 0 }) };
+    const mixed = rankInformationActions({ ...problem, unseenFraction: 0.1 }, { physics: noneClear, random: () => 0,
+      deadline: Date.now() + 1000, maximumWorlds: 1, schedule });
+    assert.equal(mixed.index, 0, 'A losing action cannot outrank an unresolved action just by oracle progress');
+    assert(mixed.totals.every(total => total.progress === 0));
+    const exhausted = rankInformationActions({ ...problem, unseenFraction: 0.1 }, { physics: { ...noneClear,
+      evaluate: request => ({ kind: 'hypothesisEvaluation', status: 'lost', nodes: 2000, progress: request.index === 0 ? 0.2 : 0.9 }) },
+    random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1, schedule });
+    assert.equal(exhausted.index, 1, 'Progress may break a tie once every candidate is proved to lose in the filling');
+    assert.equal(exhausted.totals[1].progress, 0.9);
+  }
   const tied = { ...physics, evaluateInformation: () => ({ kind: 'informationEvaluation', status: 'cleared', progress: 1 }) };
   assert.equal(rankInformationActions(problem, { physics: tied, random: () => 0,
     deadline: Date.now() + 1000, maximumWorlds: 1 }).index, 0);

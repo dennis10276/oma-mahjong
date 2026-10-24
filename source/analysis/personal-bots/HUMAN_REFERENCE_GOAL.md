@@ -40,7 +40,7 @@ Experimental results, not promoted:
   fast primary play-outs through production, all contested roots, shared1.3s,
   actual-memory seeding, uncertainty weights and4096-node remembered-board search.
   Exact filled-position DFS is integrated with12 graph/production controls;
-  progress breaks ties only for fully exhausted hypothetical losses.
+  progress breaks ties only after every compared action has an exhausted loss.
   First screen stopped at81's512-action cap:0/2225 play-outs cleared.
   Influence attribution, all-root death handling and fast-policy costs are fixed.
   Reproduction of reference wins remains open; no new level win is claimed.
