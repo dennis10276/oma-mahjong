@@ -232,7 +232,28 @@ across changed concealed identities, and never crosses its unknown boundary.
 70/70 tests pass, including6336 concealed-world controls. The first new fixture
 needed progressiveReopens:true to admit its constructive remembered-closed
 access route; this was fixed in the fixture rather than weakening the planner.
-No score for this additional preference has yet been measured.
+COMPLETED:session81000 tested that preference on the same22 tasks.
+Runtimea849fd3; source76a7f689327a0eaa8ed6b0f14057c3a5e9b49dc90814a97032db0afaee3ac27f.
+Report:HUMAN_REFERENCE_AVAILABLE_RECOVERY_SCREEN_2026-10-24.md.
+7/22 vs control6/22:gain124try2 and lab12try3 (Dennis6); regression147 persists.
+The earlier102/125 gains are not retained. Mean80.5ms, maximum1501.9ms;
+source unchanged. No promotion or mixed-policy score.
+Actual paired diagnostics, independently replayed, show147 STILL diverges at48:
+the preference now chooses36/11 (one guaranteed discovery), not baseline's
+59/59/0/54/40. It later fails after64 taps.102 diverges at37:the earlier winning
+84/67 uncertain-role route loses to50/20 guaranteed discovery. Thus mechanical
+certainty alone cannot justify claiming the new route better or safe to finish.
+
+Optional recoveryInformationBreadth ranks up to two safe discovery candidates
+before shortest-prefix length, only during active recovery-aware ordering. It
+includes known-closed candidates with uncertain roles:an unavailable tap is
+rejected without a physical move; an available one inspects without adding a
+fourth carrier. Face-up unknowns at three carriers and unknown orientations
+are excluded. This estimates options, not hidden identities or win probability.
+The default is false.70/70 tests pass, including6528 concealed-world controls.
+A stacked-pair fixture independently replays the longer prefix exposing two
+closed uncertain-role discoveries; it never assumes either hidden role or face.
+No development score for this breadth refinement has yet been measured.
 
 Research conservative control:
 ```json

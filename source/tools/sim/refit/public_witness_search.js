@@ -7,7 +7,7 @@ const { frontierFor, recoveryDepth, trayRecoveryBurden } = require('./public_goa
 const { aliveSignature } = require('./public_alive_signature.js');
 const { createPairFlexibility } = require('./public_pair_flexibility.js');
 const { goalRoutes, createGoalRouteCache } = require('./public_goal_routes.js');
-const { informationTraySafe } = require('./public_information_tray_safety.js');
+const { informationTraySafe, safeDiscoveryCount } = require('./public_information_tray_safety.js');
 const { opensKnownFrontier } = require('./public_reopen_frontier.js');
 const { selectBeam } = require('./public_diverse_beam.js');
 const { diverseWitnessSearch } = require('./public_diverse_witness.js');
@@ -135,6 +135,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const shortInformation = settings.shortInformation ?? false;
   const recoveryInformationMinTray = settings.recoveryInformationMinTray ?? 0;
   const recoveryAvailableInformation = settings.recoveryAvailableInformation ?? false;
+  const recoveryInformationBreadth = settings.recoveryInformationBreadth ?? false;
   const informationDominance = settings.informationDominance ?? false;
   const informationWidth = settings.informationWidth ?? 0;
   const clockRecovery = settings.clockRecovery ?? false;
@@ -162,6 +163,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
   assert(Number.isInteger(recoveryInformationMinTray) && recoveryInformationMinTray >= 0 && recoveryInformationMinTray <= 3);
   assert.equal(typeof recoveryAvailableInformation, 'boolean');
+  assert.equal(typeof recoveryInformationBreadth, 'boolean');
   assert.equal(typeof informationDominance, 'boolean');
   assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
   assert.equal(typeof clockRecovery, 'boolean');
@@ -326,6 +328,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
           +room.allowed.free.some(index => !room.allowed.uncertain?.includes(index)
             && position.pictures[index] === null && position.down[index] !== null));
+      }
+      if (shortInformation === 'recoveryAware' && shortInformationActive && safeInfo && recoveryInformationBreadth) {
+        rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0, Math.min(2, safeDiscoveryCount(position, room.allowed)));
       }
       if (informationWidth && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
         Math.min(informationWidthTarget, room.allowed.free.filter(index => !room.allowed.uncertain?.includes(index)
@@ -514,6 +519,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(rememberedLoss ? { rememberedLossPrunes } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive, minimumTray: recoveryInformationMinTray,
         availableFirst: recoveryAvailableInformation,
+        safeDiscoveryBreadth: recoveryInformationBreadth,
         recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),

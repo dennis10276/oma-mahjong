@@ -10,4 +10,9 @@ function informationTraySafe(state, index, executesUnknownTap, allowed) {
     && state.pictures[peek] === picture && allowed.free.includes(peek) && !allowed.uncertain?.includes(peek);
 }
 
-module.exports = { informationTraySafe };
+function safeDiscoveryCount(state, allowed) {
+  return allowed.free.filter(index => state.pictures[index] === null && state.down[index] !== null
+    && informationTraySafe(state, index, true, allowed)).length;
+}
+
+module.exports = { informationTraySafe, safeDiscoveryCount };

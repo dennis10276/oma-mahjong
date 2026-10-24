@@ -33,6 +33,7 @@ function test() {
   configurations.push({ ...configurations[1], shortInformation: 'recoveryAware' });
   configurations.push({ ...configurations[1], shortInformation: 'recoveryAware', recoveryInformationMinTray: 2 });
   configurations.push({ ...configurations[1], shortInformation: 'recoveryAware', recoveryInformationMinTray: 2, recoveryAvailableInformation: true });
+  configurations.push({ ...configurations[1], shortInformation: 'recoveryAware', recoveryInformationMinTray: 2, recoveryInformationBreadth: true });
   configurations.push({ ...configurations[1], passiveInformation: 'roles', shortInformation: 'recoveryAware' });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware' });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 2 });

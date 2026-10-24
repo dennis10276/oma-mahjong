@@ -7,6 +7,7 @@ const { advance } = require('./known_tray_plan.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { verifyAttempt } = require('./human_reference_campaign.js');
 const { encodeGame } = require('./personal_game_io.js');
+const { safeDiscoveryCount } = require('./public_information_tray_safety.js');
 
 function test() {
   const tiles = [{ x: 0, y: 0, z: 1 }, { x: 0, y: 0, z: 0 },
@@ -65,6 +66,40 @@ function test() {
   }
   const expired = search(game, state, roots, { ...options, recoveryAvailableInformation: true, deadline: 0 });
   assert(expired.boundary && !expired.knownDead);
+  const expandedTiles = tiles.map(tile => ({ ...tile }));
+  expandedTiles[4] = { x: 9, y: -1, z: 0 };
+  expandedTiles.push({ x: 9, y: 1, z: 0 });
+  const expandedNeighbors = Layouts.neighbors(expandedTiles);
+  const expanded = { tiles: expandedTiles, nb: expandedNeighbors, rules: null, clock: null, publicFrontier(position) {
+    const free = position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, expandedNeighbors) ? [index] : []);
+    return { free, uncertain: free.filter(index => [1, 4, 8].includes(index)) };
+  } };
+  const expandedState = { ...state, alive: [...state.alive, 1], down: [...state.down, 1], pictures: [...state.pictures, null] };
+  const expandedRoots = expanded.publicFrontier(expandedState).free.map(index => ({ index }));
+  assert.equal(knownRecovery(expanded, expandedState), null);
+  const narrow = search(expanded, expandedState, expandedRoots, options);
+  const broader = search(expanded, expandedState, expandedRoots, { ...options, recoveryInformationBreadth: true });
+  assert.equal(narrow.index, 0);
+  assert.equal(broader.index, 2);
+  let broaderPosition = expandedState;
+  const broaderPrefix = [];
+  for (const index of broader.path) {
+    const moved = advance(expanded, broaderPosition, index);
+    if (moved.uncertain) break;
+    assert(!moved.lost); broaderPosition = moved.state; broaderPrefix.push(index);
+  }
+  const broaderAllowed = expanded.publicFrontier(broaderPosition);
+  assert.equal(safeDiscoveryCount(broaderPosition, broaderAllowed), 2);
+  assert(broaderAllowed.uncertain.includes(4) && broaderAllowed.uncertain.includes(8));
+  const expandedActual = { ...actual, tiles: expandedTiles, nb: expandedNeighbors,
+    faces: [...actual.faces, 10], down: [...actual.down, 1] };
+  const broaderSession = factory(expandedActual, settings);
+  for (const index of [6, 7, ...broaderPrefix]) broaderSession.tap(index);
+  assert.deepEqual(broaderSession.view().state.tray, broaderPosition.tray);
+  assert.equal(verifyAttempt(encodeGame(expandedActual), [6, 7, ...broaderPrefix], settings, broaderSession.audit()), broaderPrefix.length + 2);
+  assert.equal(safeDiscoveryCount({ alive: [1, 1, 1], pictures: [null, null, null], down: [1, 0, null],
+    tray: [20, 21, 8], openPeek: -1 }, { free: [0, 1, 2], uncertain: [0] }), 1);
+  assert.throws(() => search(game, state, roots, { ...options, recoveryInformationBreadth: 1 }));
   factory.verifySource();
   console.log('PASS crowded adaptive information prefers a longer public physical route to guaranteed available discovery over a shorter uncertain-role boundary, without reading either hidden identity or claiming safety beyond the observation');
 }
