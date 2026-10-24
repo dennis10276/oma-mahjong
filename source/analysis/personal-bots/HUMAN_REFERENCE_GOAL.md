@@ -52,7 +52,8 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current code, tests and active experiment
 
-Latest runtime:`b2d3c5f`; baseline key recovery:`a5cb7db`;
+Latest verified correction:`2d6ec2f`; preceding runtime:`b2d3c5f`;
+baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
 **54/54 offline tests pass** in approximately4s, including2688 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
@@ -90,7 +91,12 @@ production wins incorrectly received known-dead certificates because the public
 callback omitted automatic obstacle relief.24 regression worlds now construct
 and independently replay the win; unknown roles/pictures and full trays remain
 guarded. Old successful physical routes remain valid, but their death explanations
-predate the correction. No post-fix catalog gain has yet been measured.
+predate the correction. The post-fix42-level challenge completed32/42 unchanged,
+mean122.7ms, slowest1511.5ms, retaining the same ten failures and all26 recent
+cases except137. Report:`HUMAN_REFERENCE_RELIEF_CHALLENGE_2026-10-24.md`;
+fingerprint:`def591841ba74308b2cd154ac3123e9358165c306a8264f4d4b4dc22c3746e1d`.
+This validates the soundness correction without claiming a campaign-count gain
+or a post-fix full140 score.
 One CPU-heavy simulation at a time; hold loaded runtime unchanged while running.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
