@@ -25,6 +25,7 @@ const modules = [
   'test_public_exposure_frontier.js',
   'test_public_path_budget.js',
   'test_public_key_recovery.js',
+  'test_public_key_access.js',
   'test_public_known_recovery.js',
   'test_public_frontier_relief.js',
   'test_public_matched_picture.js',

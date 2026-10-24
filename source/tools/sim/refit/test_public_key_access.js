@@ -7,6 +7,7 @@ const { advance } = require('./known_tray_plan.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { verifyAttempt } = require('./human_reference_campaign.js');
 const { encodeGame } = require('./personal_game_io.js');
+const { search, REFERENCE_PARAMETERS } = require('./public_witness_search.js');
 
 function test() {
   const tiles = [{ x: 0, y: 0, z: 0 }, { x: 8, y: 0, z: 0 }, { x: 0, y: 0, z: 1 },
@@ -56,6 +57,21 @@ function test() {
   assert.equal(keyAccessPath({ ...game, clock: { i: 4, n: 2 } }, state, 1, 6).path, null);
   assert.throws(() => keyAccessPath(game, state, 1, 6, 0));
   assert.deepEqual(state, snapshot);
+  const roots = [1, 2, 3].map(index => ({ index }));
+  const planned = search(game, state, roots, { ...REFERENCE_PARAMETERS, keyAccessMacros: true, nodes: 64, beam: 2, taps: 6 });
+  assert(planned.expandedKeyAccesses > 0);
+  assert(planned.keyAccessNodes > 0 && planned.keyAccessNodes <= planned.nodes && planned.nodes <= 64);
+  const clocked = { ...game, clock: { i: 4, n: 6 } };
+  const clockPlan = search(clocked, state, roots, { ...REFERENCE_PARAMETERS, keyAccessMacros: true, nodes: 64, beam: 2, taps: 6 });
+  assert(clockPlan.knownWin);
+  const clockGame = { tiles, nb: game.nb, rules, clock: clocked.clock, faces: state.pictures, down: state.down };
+  const clockSettings = { seed: 1, tapMs: 1000, choiceLimit: 32 }, clockSession = createSessionFactory()(clockGame, clockSettings);
+  for (const index of clockPlan.path) clockSession.tap(index);
+  assert(clockSession.view().win);
+  assert.equal(verifyAttempt(encodeGame(clockGame), clockPlan.path, clockSettings, clockSession.audit()), clockPlan.path.length);
+  const limited = search(game, state, roots, { ...REFERENCE_PARAMETERS, keyAccessMacros: true, nodes: 2, beam: 2, taps: 6 });
+  assert(limited.nodes <= 2 && limited.boundary && !limited.knownDead);
+  assert.throws(() => search(game, state, roots, { ...REFERENCE_PARAMETERS, keyAccessMacros: 'yes' }));
   console.log('PASS bounded public key-access planning prepares obstructed keys through observed matching pairs, handles remembered closed taps, independently replays every witness and preserves unknown/deadline/node boundaries');
 }
 

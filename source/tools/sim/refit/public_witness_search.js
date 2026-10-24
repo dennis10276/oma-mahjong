@@ -15,6 +15,7 @@ const { informationInCone } = require('./public_exposure_frontier.js');
 const { queuePath } = require('./public_path_budget.js');
 const { keyRecoveryPath } = require('./public_key_recovery.js');
 const { knownRecovery } = require('./public_known_recovery.js');
+const { keyAccessPath } = require('./public_key_access.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -130,6 +131,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
   const knownPairMacros = settings.knownPairMacros ?? false;
   const keyRecoveryMacros = settings.keyRecoveryMacros ?? false;
+  const keyAccessMacros = settings.keyAccessMacros ?? false;
   const shortInformation = settings.shortInformation ?? false;
   const informationDominance = settings.informationDominance ?? false;
   const informationWidth = settings.informationWidth ?? 0;
@@ -151,6 +153,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
   assert.equal(typeof keyRecoveryMacros, 'boolean');
+  assert.equal(typeof keyAccessMacros, 'boolean');
   assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
   assert.equal(typeof informationDominance, 'boolean');
   assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
@@ -160,6 +163,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const metricsCache = new Map(), proofCache = new Map();
   const routePlanner = cachePublicAnalysis ? createGoalRouteCache(game) : goalRoutes;
   let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0, macroKeys = 0;
+  let macroAccesses = 0, keyAccessNodes = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -386,6 +390,21 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             queuePath(visited, next, pairedIdentity, pairedCandidate);
           }
         }
+        if (keyAccessMacros && !node.path.length && path.length < tapLimit && nodes < settings.nodes) {
+          const accessed = keyAccessPath(game, settled, index, tapLimit, Math.min(64, settings.nodes - nodes), deadline);
+          nodes += accessed.nodes; keyAccessNodes += accessed.nodes;
+          if (accessed.path && !certifiedContinuationLoss(accessed, accessed.path)) {
+            macroAccesses++; hasSafeRemoval = true;
+            const accessedExposed = exposureFrontier ? exposureFrontier(accessed.state) : [];
+            assert(Array.isArray(accessedExposed));
+            const accessedEligible = eligibleExposure(accessedExposed, accessed.path), accessedInformation = accessedEligible.length > 0;
+            const accessedCandidate = evaluate(accessed.state, accessed.path, accessedInformation,
+              accessed.path.at(-1), false, accessedInformation ? accessedEligible : null);
+            if (accessedCandidate.won) { best = accessedCandidate; return finish(); }
+            if (accessedExposed.length) unknown++;
+            queuePath(visited, next, stateIdentity(accessed.state, accessed.path), accessedCandidate);
+          }
+        }
         if (keyRecoveryMacros && game.rules?.keys?.includes(index) && path.length < tapLimit) {
           const recovered = keyRecoveryPath(game, settled, index, tapLimit - node.path.length, deadline);
           if (recovered) {
@@ -461,6 +480,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         proofEntries: proofCache.size, ...routePlanner.stats() } } : {}),
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
+      ...(keyAccessMacros ? { expandedKeyAccesses: macroAccesses, keyAccessNodes } : {}),
       ...(dominanceStop ? { dominanceStop } : {}),
       ...(informationWidth ? { informationWidthTarget } : {}),
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost } : {}),
