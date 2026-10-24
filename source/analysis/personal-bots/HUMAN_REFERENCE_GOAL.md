@@ -108,6 +108,32 @@ timing.140/155,132 natural+8 lab; only new pass124, no pass regressions. The run
 is terminal and its source freeze has ended. No CPU-heavy simulation remains live.
 This is development, NOT unseen20;157+ remains unopened.
 
+RUNNING:session17435, started2026-10-24T06:35:00.383Z, runtime59d441f.
+Source24948314e07715c5ab30b629db59c6d857d0f931697b028743a8758734e96443.
+Serial phases:LAB_CLOCK_RETRY_CONTROL (15, actual retry learning, clock extension
+off),LAB_CLOCK_RETRY (same15 with extension on),CLOCK_RETRY_NATURAL_CONTROL
+(92/111/121/123/124/134/141/143/147/150 with extension on). All report stems start
+HUMAN_REFERENCE_ and end_2026-10-24.md. The lab phases both completed8/15 with
+source unchanged; mean/max84.3/1224.7ms off and84.8/1244.6ms on. The extension
+reports ZERO audited-plan and adopted-plan decisions on all lab boards:it did not
+activate, so do not claim a measured improvement. Natural10 is still running.
+Hold loaded controller/search/memory files fixed until this serial run finishes.
+
+New independent, currently UNLOADED helper:public_availability_transfer.js.
+Its standalone test passes4656 production-world proofs, including3108 transfers
+beyond alive-mask subsets, and replays two different complete winning routes.
+Original-rule safety while an actually known key remained alive excludes lock;
+equal sufficient ice-neighbor removal counts can then replace exact removals.
+If both actually known keys were gone, both must remain gone. Unknown second keys,
+restored covers, insufficient ice removal and resurrection of initially absent
+tiles are refused. Only the declared zero/two-key and at-most-two-hit contract is
+used; no picture, role, deck or seed is read. Helper geometry is public and copied.
+After17435 ends:optionally wire this stateless proof into existing accepted/cleared
+memory. Feed ONLY initialRoles' actually observed immutable keys; keep after-relief
+witness rejection, old subset fallback, geometry checks and actual-only recording.
+Do not record hypothetical transfer queries as observations. Then register tests
+and test whole policies. No campaign gain is inferred from the property test.
+
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
 after the run ended. clockRetryLearning requires actual retryRiskLearning. The helper permits
