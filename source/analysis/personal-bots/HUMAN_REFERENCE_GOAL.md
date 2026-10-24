@@ -77,7 +77,7 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 ## Current runtime and active experiment
 
 Runtime:`a4cb277`; last full139/155 policy:`d7778dd`.
-**70/70 offline tests pass**, including6528 concealed-world controls,675 accepted
+**71/71 offline tests pass**, including6720 concealed-world controls,675 accepted
 availability controls,380 cleared-role subset controls,144 local recoveries,
 24 relief witnesses and original-production replay. No research policy is promoted.
 
@@ -106,18 +106,25 @@ HUMAN_REFERENCE_BREADTH_EARLY_PROOF_CONTROL_2026-10-24.md.
 5/7, same try counts as the corresponding breadth-policy rows;147 still fails.
 Mean73.7ms, maximum1502.4ms; source unchanged. No new gain, not promoted.
 
-RUNNING:session89195, started2026-10-24T05:34:54.195Z, same breadth profile but
+COMPLETED:session89195, started2026-10-24T05:34:54.195Z, same breadth profile but
 recoveryInformationMinTray:1, default three-carrier proof threshold. Targets:
 102/121/123/124/125/136/143/147/150/lab12 (10), including earlier regression
-controls. Emitted102 still clears in1, but121 and123 already regress. This policy
-is unpromoted; finish and retain the experiment rather than silently omit failures.
-No full score may be extrapolated.
+controls.5/10 vs matched control6/10:102/124/lab12 gain,121/123/147/150 regress.
+Mean76.2ms, maximum1504ms; source unchanged. Unpromoted, no full-score extrapolation.
 Report:HUMAN_REFERENCE_SINGLE_CARRY_BREADTH_CONTROL_2026-10-24.md.
 Source remains1c0c90b87e2bfebeaaedc297280ccef7e228fc8303d14794f2631992d57968a7;
 input7155f8037684ff6ad8c2e36a3b3ce361e0ba47a4d06904ecab392e07c3105ded.
-Poll this actual handle before another CPU-heavy simulation. Hold loaded runtime
-fixed until terminal; never restart for observation timeout or kill helpers.
-157+ remains unopened. This is development, not unseen20.
+That process is terminal.157+ remains unopened. This is development, not unseen20.
+
+Next option:informationTrayLimit (default3, range0–3) ranks information prefixes
+using a lower carrier limit on nonclock roots. Effective limit is at least the
+root's current carrier count, so an already crowded tray keeps its safe probes.
+A known closed inspection or tray/open-twin match adds no new carrier; an unseen
+face-up commitment does. The limit is a preference, not a removal prohibition,
+death proof or assumed reveal. Known wins and clock search retain their behavior.
+The physical fixture chooses a longer prefix ending at two instead of three,
+then independently replays the unknown inspection for all37 possible identities.
+No development score has yet been measured.71/71 tests pass in7s.
 
 ## Completed research evidence
 
@@ -136,6 +143,7 @@ historical diagnostics remain in the individual reports and this file at a4cb277
 | Previous + available discovery preference |7/22; gains124 and lab12try3 vsDennis6, loses147; max1501.9ms |AVAILABLE_RECOVERY_SCREEN |
 | Crowded recovery + safe discovery breadth |8/22; gains102/124/lab12 (try1), loses147; max1502.1ms |RECOVERY_BREADTH_SCREEN |
 | Previous + early continuation proofs |5/7, identical tries to breadth;147 still fails; max1502.4ms |BREADTH_EARLY_PROOF_CONTROL |
+| Breadth active from one carrier |5/10; gains102/124/lab12, loses121/123/147/150; max1504ms |SINGLE_CARRY_BREADTH_CONTROL |
 
 These are whole-policy results, never a merged best-of. The two22-task policies
 remain unpromoted. The next breadth experiment refines them rather than discarding

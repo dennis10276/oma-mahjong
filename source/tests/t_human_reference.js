@@ -40,6 +40,7 @@ const modules = [
   'test_public_recovery_priority.js',
   'test_public_uncertain_safety.js',
   'test_public_information_tap_safety.js',
+  'test_public_information_headroom.js',
   'test_public_pair_flexibility.js',
   'test_public_tray_burden.js',
   'test_public_frontier_pressure.js',

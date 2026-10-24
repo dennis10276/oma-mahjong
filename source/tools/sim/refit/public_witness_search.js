@@ -136,6 +136,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const recoveryInformationMinTray = settings.recoveryInformationMinTray ?? 0;
   const recoveryAvailableInformation = settings.recoveryAvailableInformation ?? false;
   const recoveryInformationBreadth = settings.recoveryInformationBreadth ?? false;
+  const informationTrayLimit = settings.informationTrayLimit ?? 3;
   const informationDominance = settings.informationDominance ?? false;
   const informationWidth = settings.informationWidth ?? 0;
   const clockRecovery = settings.clockRecovery ?? false;
@@ -164,6 +165,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert(Number.isInteger(recoveryInformationMinTray) && recoveryInformationMinTray >= 0 && recoveryInformationMinTray <= 3);
   assert.equal(typeof recoveryAvailableInformation, 'boolean');
   assert.equal(typeof recoveryInformationBreadth, 'boolean');
+  assert(Number.isInteger(informationTrayLimit) && informationTrayLimit >= 0 && informationTrayLimit <= 3);
   assert.equal(typeof informationDominance, 'boolean');
   assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
   assert.equal(typeof clockRecovery, 'boolean');
@@ -278,7 +280,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const inCone = informationInCone(cone, targetIndex, informationTargets);
 
     const passiveRiskNeutral = informationTargets === null || position.tray.length <= state.tray.length;
-    const safeInfo = information && passiveRiskNeutral && informationTraySafe(position, targetIndex, executesUnknownTap, room.allowed);
+    const safeInfo = information && passiveRiskNeutral && informationTraySafe(position, targetIndex, executesUnknownTap, room.allowed,
+      clocked ? 3 : Math.max(informationTrayLimit, state.tray.length));
 
     const goal = won ? 'win' : exit && room.safe ? 'safeClockExit'
       : (!clocked && progress >= settings.progress && !position.tray.length) ? 'knownProgress'

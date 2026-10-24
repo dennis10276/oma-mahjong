@@ -1,7 +1,8 @@
 'use strict';
 
-function informationTraySafe(state, index, executesUnknownTap, allowed) {
-  if (!executesUnknownTap || state.tray.length < 3) return true;
+function informationTraySafe(state, index, executesUnknownTap, allowed, maximumTray = 3) {
+  if (state.tray.length > maximumTray) return false;
+  if (!executesUnknownTap || state.tray.length < maximumTray) return true;
   const picture = state.pictures[index];
   if (picture !== null && state.tray.includes(picture)) return true;
   if (state.down[index] === 1 && state.openPeek !== index) return true;
