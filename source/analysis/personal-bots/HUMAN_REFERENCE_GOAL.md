@@ -65,8 +65,9 @@ Experimental results, not promoted:
 Quick screen24:81,93,99,102,107,112,125,137,10011,10032,10033,10041,10049,10052,
 plus guards92,111,121,123,124,134,141,143,147,150.
 Report sampling changes / contested decisions; below5% is insufficient influence.
-The corrected24-case screen is running; keep its source fixed.81/93 still fail1;
-92 passes4 vsDennis5. Observed influence137/535 (25.6%); max1305.8ms.
+The corrected24-case screen is running; keep its source fixed.99 now clears1
+vsDennis2;92 passes4.81/93/102/107 still fail. No full score is inferred.
+Observed influence175/755 (23.2%); max1305.8ms. Remaining guards/lab cases pending.
 Interleaved production play-outs pass standalone tests but are not yet integrated.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
