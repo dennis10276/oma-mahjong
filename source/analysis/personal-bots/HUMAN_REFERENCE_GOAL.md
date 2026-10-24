@@ -72,7 +72,7 @@ Interleaved scheduling scored0/3 on99/111/112 and is not promoted.
 Strong primary200ms screen finished4/24:92,111,141,143 pass; six guards regress.
 The isolated99/111/112 successes did not repeat. This profile is not promoted.
 Dispersed-pair probe stopped after guard111 failed:93 clears1,99 fails;112/137 pending.
-Next: probe complete known-peek take/pair options with guarded public continuations.
+Complete-option probe running:93 fails30 taps;99 clears1 in85; three cases pending.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.
