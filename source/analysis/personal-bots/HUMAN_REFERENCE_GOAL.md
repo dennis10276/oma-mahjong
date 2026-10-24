@@ -52,11 +52,12 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current code, tests and active experiment
 
-Latest experimental runtime:`80491b6`; verified correction:`2d6ec2f`;
+Latest verified runtime before information-width experiment:`80491b6`;
+verified correction:`2d6ec2f`;
 preceding runtime:`b2d3c5f`;
 baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
-**55/55 offline tests pass** in approximately5s, including3264 concealed-world
+**56/56 offline tests pass** in approximately5s, including3648 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The shortRoles policy completed140 levels before the public-relief correction;
 the short-probe run was deliberately stopped for that reproduced physics bug.
@@ -81,9 +82,30 @@ conservative shortRoles profile takes68, whereas fullRoles+recoveryAware consume
 the known80/74 pair first, then discovers82. Both start from the same projection;
 neither the first divergence nor the pair itself is proved to force the later loss.
 This is NOT the old raw policy's immediate overwrite of open80 by unknown82.
-ACTIVE:42-case shortRoles+recoveryAware interaction screen, session55535,
-runtime80491b6, fingerprint:`dc45e00313de551af23ebf43fc4e6adfb277183aff953cf4afaa8a2398aee8b6`.
-Pending:`HUMAN_REFERENCE_SHORT_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
+The42-case shortRoles+recoveryAware interaction screen also completed34/42
+unchanged, same eight failures, mean93ms and slowest1511ms. This did not restore
+121/123/147. Report:`HUMAN_REFERENCE_SHORT_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
+Runtime80491b6, fingerprint:`dc45e00313de551af23ebf43fc4e6adfb277183aff953cf4afaa8a2398aee8b6`.
+Do not merge this with the32/42 control or extrapolate a full132/140 score.
+
+The shortRoles interaction's147 trace matches the control for48 actual decisions,
+NOT just six. At decision49 it takes known66 then probes51 with tray[9,35,4].
+The control instead reopens/commits59, uses known0/54 and reaches40 carrying[9,35,20].
+A known-only audit (no actual future values) finds BOTH endpoints have three
+unseen tray partners and no local recovery. However, the66 endpoint has ZERO
+guaranteed unknown-picture options and only uncertain-role51; the longer endpoint
+retains guaranteed closed unknowns1/40 and a new passive field33. The old metric
+equates those option sets before preferring the short path. This is an ordering
+weakness, not a proof that the initial position or every short probe is doomed.
+
+Optional `informationWidth:1..4` (default0/off) now rewards a capped count of
+mechanically guaranteed, known-orientation tiles with unseen pictures before
+short-path tie-breaking. Unknown-role tiles do not count. It does not invent
+their pictures, outcomes, loss proofs or optimality; clocks/wins remain unchanged.
+The old one-tap dominance shortcut is disabled for this different objective.
+A compact synthetic regression chooses the broader known prefix, independently
+replays it through production, and rejects the old shortcut;56 tests pass.
+No natural-level gain is claimed before the next controlled screen completes.
 
 The three-action role-payoff screen completed7/8, source unchanged, slowest
 1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
