@@ -21,8 +21,9 @@ decisions, but does not prove taking that tile was a losing action.
 A stronger information-use issue appears in the same trace: no attempt ever chose
 clock52, either successfully or unsuccessfully. At the tile67 decisions and the next
 three decisions, the public geometry says clock52 is structurally free, its picture13
-and face-up orientation are remembered, and the route audit ends at its unknown
-obstacle role. The planner repeatedly chose routes ending at that information
+and face-up orientation are remembered, and the route audit ends at an unknown
+obstacle role in a hypothetical successor. This does not establish the current
+mechanical frontier. The planner repeatedly chose routes ending at that information
 frontier instead of testing the clock directly. Some such routes increased tray load.
 The public clock badge reports location52 and move limit61; no concealed role or
 future picture was used to derive this finding.
@@ -33,3 +34,6 @@ possible unmatched take; a free closed peek or known tray match is also eligible
 Preserve known winning routes. Rejection means ice-or-lock only, not which one;
 existing blocked-tap memory must prevent unchanged repeated probes. The candidate
 needs production controls and a complete48-case seeded screen before adoption.
+The subsequent direct candidate trace recorded zero probes across four attempts;
+the original geometric-access diagnosis was too strong. Capture current public
+role, availability and rejected-tap blocking before choosing a further route change.

@@ -465,6 +465,15 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     knowledgeSignature,
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
+    clockFrontierAudit() {
+      if (!clock || !current || !current.alive[clock.i]) return null;
+      const available = geometry.publicFrontier(current);
+      const observedKeys = initialRoles.flatMap((role, index) => role === 'key' ? [index] : []);
+      return { index: clock.i, available: available.free.includes(clock.i),
+        uncertain: available.uncertain.includes(clock.i), observedRole: roles[clock.i], initialRole: initialRoles[clock.i],
+        blockedByRejectedTap: blockedTapMemory?.knowsBlocked(clock.i, current.alive, observedKeys, !!current.relieved) ?? false,
+        information: describeInformation(geometry, current, [clock.i], roles) };
+    },
   };
 }
 
@@ -571,7 +580,8 @@ function playHumanCampaign(input, options = {}) {
           ...(selected.plan.hypothesisAudit ? { hypothesis: Object.fromEntries(['changed', 'primaryIndex', 'preferredWorlds', 'completeWorlds',
             'index', 'primaryOptionId', 'totals', 'informationWeight', 'unseenCount', 'exactUnknownLimit', 'confidence', 'scoreMode']
             .map(field => [field, selected.plan.hypothesisAudit[field]])) } : {}) },
-        ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path) } : {}) });
+        ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path),
+          clockFrontierAudit: controller.clockFrontierAudit() } : {}) });
       controller.acknowledge(index, accepted);
       lastPlan = selected.plan;
       if (!accepted) { rejected++; continue; }
