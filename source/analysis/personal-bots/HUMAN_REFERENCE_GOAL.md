@@ -155,24 +155,24 @@ Natural-level gains are unmeasured until the current runs finish.
 
 ## Matched-state diagnostic facts
 
--147 raw short probing once replaced open80 by unknown82 after six shared actions.
+- 147 raw short probing once replaced open80 by unknown82 after six shared actions.
  Full-role recoveryAware instead consumes80/74 first; a different divergence.
  Short-role recoveryAware shares48 decisions with control, then chooses66→51,
  carrying[9,35,4]. Its endpoint has ZERO guaranteed unseen-picture options, only
  uncertain-role51. Control uses59/59/0/54→40, carrying[9,35,20], retaining guaranteed
  closed unknowns1/40 plus passive field33. Both have three unseen tray partners
  and no local recovery. This audit uses no actual future values.
--Fixed widths1/2 share41 decisions on123 and147.123 then has an empty tray:
+- Fixed widths1/2 share41 decisions on123 and147.123 then has an empty tray:
  width1 manually peeks43, width2 consumes a known open twin first.147 carries[6]:
  width1 takes79→71, width2 takes36→11. Those first differences alone do not prove
  the chosen action forces the later outcome; headroom-based switching indeed
  failed to combine their successes.
--92's longer role prefix exposes17/23 after5 and22/28 after9 taps; they are still
+- 92's longer role prefix exposes17/23 after5 and22/28 after9 taps; they are still
  blocked, not already mechanically free. Filtering blocked-role information is
  not universally safe:it loses121. Clock-only switching did not solve the tradeoff.
--137's old known14/known9 recoveries BOTH had mechanically certain conditional
+- 137's old known14/known9 recoveries BOTH had mechanically certain conditional
  partners. Do not revive the rejected unknown-role-penalty story.
--84/99/112/125 diagnostic losses occur AFTER their clocks are removed (first
+- 84/99/112/125 diagnostic losses occur AFTER their clocks are removed (first
  post-clock decisions17/12/6/6).136's old first seven clock actions also matched
  the human and removed its clock. Do not blame the active clock just because a
  board has a badge; this does not prove the earlier clock route strategically best.
