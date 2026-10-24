@@ -132,6 +132,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const keyRecoveryMacros = settings.keyRecoveryMacros ?? false;
   const shortInformation = settings.shortInformation ?? false;
   const informationDominance = settings.informationDominance ?? false;
+  const informationWidth = settings.informationWidth ?? 0;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
@@ -151,6 +152,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof keyRecoveryMacros, 'boolean');
   assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
   assert.equal(typeof informationDominance, 'boolean');
+  assert(Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -263,6 +265,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       if (pairFlexibility) rank.splice(2 + (settings.trayRecovery ? 2 : 0) + (goalRecoveryActive ? riskFirstRecovery ? 3 : 2 : 0), 0, -metrics.pairDebt);
       if (shortInformationActive && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
         -path.length - (shortInformation === 'carrierAware' ? 2 * metrics.depth.unknownWaiting : 0));
+      if (informationWidth && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
+        Math.min(informationWidth, room.allowed.free.filter(index => !room.allowed.uncertain?.includes(index)
+          && position.pictures[index] === null && position.down[index] !== null).length));
     }
 
     const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information };
@@ -386,7 +391,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     if (ranked.length > settings.beam) boundary = true;
     beam = diverseBeam ? selectBeam(ranked, settings.beam) : ranked.slice(0, settings.beam);
     if (nodes >= settings.nodes || Date.now() >= deadline) { boundary = true; break; }
-    if (informationDominance && shortInformation === true && !clocked && initialKnown < initialLeft
+    if (informationDominance && !informationWidth && shortInformation === true && !clocked && initialKnown < initialLeft
       && state.tray.length <= 1 && depth >= 1 && completedLayer && best?.information && best.path.length === 1
       && best.rank[0] === 2 && best.rank[1] === 0 && (!(goalRecoveryActive && riskFirstRecovery) || best.rank[2] === 0)) {
       dominanceStop = { completedLayers: depth + 1, unknownPictures: initialLeft - initialKnown, pathLength: 1 };
