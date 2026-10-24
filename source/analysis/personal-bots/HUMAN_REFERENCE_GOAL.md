@@ -178,6 +178,22 @@ zero boards decoded and no newer clears.157+ remains unopened. The earlier
 public-uncertainty diagnostic is no longer live, but its stdout was lost at context
 compaction; no inference or result is claimed from that missing output.
 
+New standalone helper, NOT imported by the frozen full155 runtime:
+public_paired_picture.js infers one final unknown original identity only when
+ALL other original tiles (including removed tiles) have remembered identities
+and an explicit pairedInitialPictures opening contract applies. It uses original
+memory, never parity of the remaining board/tray, which avoids assuming anything
+about later Joker effects or arrivals. Multiple unknown positions remain unknown;
+a known multiset alone does not assign identities to locations. No orientation,
+role or takeability is inferred. No private inventory or future reveal is read.
+Its registered standalone test passes35472 public-memory masks in588 exhaustive
+paired worlds,3432 sound deductions including Jokers, and four complete routes
+independently replayed through Hard.play. Standalone runtime0.37s. The latest full
+suite remains76/76 before this addition; do not claim77 until rerun after freeze.
+Before integration, audit the public opening contract across supported generators
+and all155 development inputs, then run the missing public-uncertainty diagnostic
+after session95132 ends. No campaign gain or initial-contract coverage is claimed.
+
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
 after the run ended. clockRetryLearning requires actual retryRiskLearning. The helper permits
