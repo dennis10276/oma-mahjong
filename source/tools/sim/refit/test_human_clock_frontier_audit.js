@@ -25,6 +25,7 @@ function test() {
   const blocked = controller.clockFrontierAudit();
   assert.equal(blocked.available, false); assert.equal(blocked.observedRole, 'lock'); assert.equal(blocked.initialRole, 'lock');
   assert.equal(blocked.blockedByRejectedTap, false);
+  assert.deepEqual(blocked.observedKeys, [0, 1]); assert.deepEqual(blocked.aliveObservedKeys, [0, 1]);
   assert.equal(blocked.information.boundary.reason, 'blockedKnownSuffix');
   const before = controller.known(); blocked.observedRole = 'key';
   assert.equal(controller.clockFrontierAudit().observedRole, 'lock'); assert.deepEqual(controller.known(), before);
@@ -36,6 +37,7 @@ function test() {
   observe(controller);
   assert(controller.clockFrontierAudit().available); assert.equal(controller.clockFrontierAudit().observedRole, 'none');
   assert.equal(controller.clockFrontierAudit().initialRole, 'lock');
+  assert.deepEqual(controller.clockFrontierAudit().aliveObservedKeys, []);
   assert.equal(verifyAttempt(encodeGame(game), [0, 1], settings, session.audit()), 2);
   factory.verifySource();
   console.log('PASS public clock frontier audit distinguishes a visible known lock from an uncertain role, reports only actual public facts, preserves starting-role memory after key removals and cannot mutate policy knowledge');

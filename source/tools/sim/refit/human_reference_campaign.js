@@ -470,6 +470,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const available = geometry.publicFrontier(current);
       const observedKeys = initialRoles.flatMap((role, index) => role === 'key' ? [index] : []);
       return { index: clock.i, available: available.free.includes(clock.i),
+        observedKeys, aliveObservedKeys: observedKeys.filter(index => current.alive[index]),
         uncertain: available.uncertain.includes(clock.i), observedRole: roles[clock.i], initialRole: initialRoles[clock.i],
         blockedByRejectedTap: blockedTapMemory?.knowsBlocked(clock.i, current.alive, observedKeys, !!current.relieved) ?? false,
         information: describeInformation(geometry, current, [clock.i], roles) };
