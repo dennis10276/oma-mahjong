@@ -92,9 +92,9 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 ## Current runtime and active experiment
 
 Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
-Current optional hypothesis candidate adds a narrow-first rollout; no new full score is claimed.
-Goal ACTIVE, UNMET. Session36618 is terminal; its source freeze has ended.
-**84/84 offline tests pass** in9s, including7488 concealed-world controls,
+Current optional hypothesis candidate adds narrow-first rollout and actual-state visit guards.
+No new full score is claimed. Goal ACTIVE, UNMET. Prior trial/diagnostic jobs are terminal.
+**85/85 offline tests pass** in9s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -328,6 +328,43 @@ considering broader development validation. Keep all14 failures in scope. If no
 complete batches fit, measure history-replay/verification cost; if all candidates
 tie as winnable, investigate information-aware rollouts rather than promoting an
 omniscient conditional upper bound to an actual success probability.
+
+Interrupted narrow trial:session2256, PID12264, started2026-10-24T12:25:24.715Z,
+runtimeeeaa906, source671a5beb04e4765dac7863ca8a5a2acf80fef1158be31a8da63f518c07925655,
+same18-input hash02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
+It completed81(fail,122 sampled decisions/107 changed roots),92(try3),93(fail),
+then was deliberately stopped during99 to diagnose excessive decisions. Process
+identity was checked before Stop-Process; only this benchmark was killed, and its
+exec handle returned terminalexit1. This was an explicit interruption, never a
+timeout treated as terminal. Partial report:
+HUMAN_REFERENCE_NARROW_HYPOTHESIS_CHALLENGE_2026-10-24.md.
+The interrupted99 case and all unreached cases remain unresolved. No18-case or
+full155 score is inferred, and no earlier/future profile's wins are merged.
+
+Bounded public99 diagnostic49067 exited0:64 accepted taps,40 moves,32 left,
+unresolvedBudget;9 repeated identical public-state/knowledge/action choices.
+From53/54 onward it repeatedly selected known peeks29/6 instead of primary49,
+without any new picture/orientation/role/safety fact or physical progress.
+Read-only knowledge signatures and small sampled-plan summaries now accompany
+captureDecisions; no private values are included and no large trace is written.
+
+New public_action_visits.js records ONLY actually accepted choices, keyed by
+physical state (including tray order, peek, arrivals/relief) plus actual complete
+picture/orientation/role/accepted/cleared/blocked/loss memory. It omits tap count,
+sampling results and query counters, which are not new game information. Sampling
+cannot reselect an already tried alternative in that exact state/knowledge. The
+real primary fallback remains eligible; real wins/exits/loss proofs are protected.
+New knowledge permits reconsideration, and a real retry clears visit bookkeeping.
+The production fixture demonstrates a zero-progress peek cycle, new-information
+invalidation and a complete independently replayed clear.85/85 tests pass.
+
+Guarded diagnostic12463 exited0:the SAME64-tap window has ZERO repeated identical
+public choices,43 moves and29 left;6 repeated roots filtered on3 decisions.
+Maximum1508.2ms. Both diagnostics independently replay all64 taps in original
+Hard, and BOTH remain computation-censored, not physical losses or counted clears.
+Report:HUMAN_REFERENCE_REPEEK_DIAGNOSTIC_2026-10-24.md.
+NEXT:restart the complete18-case comparison using the fixed narrow policy, then
+inspect sampling censoring and information dependence; do not stop at this bug fix.
 
 Complete trusted opening audit2026-10-24T11:36:47.303Z:
 all155 development boards have even initial picture counts and at most two

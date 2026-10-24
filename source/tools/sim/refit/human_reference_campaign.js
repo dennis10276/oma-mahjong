@@ -26,6 +26,7 @@ const { createAvailabilityTransfer } = require('./public_availability_transfer.j
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
+const { createPublicActionVisits } = require('./public_action_visits.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
@@ -80,7 +81,13 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const episodes = [], hypothesisStats = { decisions: 0, changed: 0, generatedWorlds: 0, completeWorlds: 0,
     preferredWorlds: 0, unresolvedWorlds: 0, excludedByWinnabilityPreference: 0, incompleteWorlds: 0,
     verifiedHypotheticalClears: 0, rejectedAssignments: 0, thinRolloutClears: 0, wideRolloutClears: 0,
-    unresolvedRollouts: 0, certifiedRolloutLosses: 0, historyReplays: 0, assignments: 0 };
+    unresolvedRollouts: 0, certifiedRolloutLosses: 0, historyReplays: 0, assignments: 0,
+    cycleFilteredRoots: 0, cycleLimitedDecisions: 0 };
+  const hypothesisVisits = options.hypothesisSampling ? createPublicActionVisits() : null;
+  let decisionPosition = null;
+  const knowledgeSignature = () => JSON.stringify({ pictures, down, initialRoles, roles,
+    accepted: acceptedTapMemory?.entries() ?? [], cleared: clearedRoleMemory?.entries() ?? [],
+    blocked: blockedTapMemory?.entries() ?? [], knownLosses: knownLossMemory?.entries() ?? [] });
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   let decisionDeadline = Infinity;
@@ -100,6 +107,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       retryRiskMemory?.beginAttempt();
       blockedTapMemory?.beginAttempt();
       if (options.hypothesisSampling) episodes.push({ actions: [], frames: [] });
+      hypothesisVisits?.beginAttempt(); decisionPosition = null;
       resetPlanner();
     },
     observe(state, observed) {
@@ -196,10 +204,18 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const available = geometry.publicFrontier(current);
       let actions = available.free.map(index => ({ index }));
       if (!actions.length) return null;
+      if (hypothesisVisits) decisionPosition = JSON.stringify(Object.fromEntries(
+        ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving'].map(field => [field, current[field]])));
       const finalize = selected => {
         if (!options.hypothesisSampling || selected.plan.knownWin || selected.plan.safeClockExit || selected.plan.knownDead
           || current.tray.length < 2 || !current.pictures.some((picture, index) => current.alive[index] && picture === null)
           || Date.now() >= decisionDeadline) return selected;
+        const knowledge = knowledgeSignature();
+        const candidates = actions.filter(action => action.index === selected.plan.index
+          || !hypothesisVisits.hasTried(decisionPosition, knowledge, action.index));
+        const removed = actions.length - candidates.length;
+        hypothesisStats.cycleFilteredRoots += removed; hypothesisStats.cycleLimitedDecisions += +(removed > 0);
+        if (candidates.length === 1) return selected;
         let publicHash = 2166136261;
         for (const character of JSON.stringify({ tiles: geometry.tiles, pictures, down, initialRoles,
           alive: current.alive, tray: current.tray, moves: current.moves, openPeek: current.openPeek })) {
@@ -208,7 +224,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const random = Layouts.rng(publicHash);
         const physics = createHypothesisPhysics({ tiles: geometry.tiles, rememberedPictures: pictures, rememberedDown: down,
           initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random });
-        const ranking = rankHypothesisActions({ rememberedPictures: pictures, actions: actions.map(action => action.index),
+        const ranking = rankHypothesisActions({ rememberedPictures: pictures, actions: candidates.map(action => action.index),
           fallbackIndex: selected.plan.index }, { deadline: decisionDeadline, random, evaluate: physics.evaluate,
           maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction });
         const physicalStats = physics.stats(), predicted = advance(geometry, current, ranking.index);
@@ -276,6 +292,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     },
     acknowledge(index, accepted) {
       lastAcceptedIndex = accepted ? index : null;
+      if (accepted && hypothesisVisits) hypothesisVisits.recordActual(decisionPosition, knowledgeSignature(), index);
       if (accepted && options.hypothesisSampling) episodes.at(-1).actions.push(index);
       if (accepted) { if (!manualChoice) planner.acknowledgeTile(index); }
       else {
@@ -297,6 +314,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     blockedEvidence() { return blockedTapMemory?.entries() ?? []; },
     causalAvailabilityStats() { return { ...transferStats }; },
     hypothesisStats() { return { ...hypothesisStats }; },
+    knowledgeSignature,
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
@@ -397,8 +415,11 @@ function playHumanCampaign(input, options = {}) {
         clockRetry.decisionsUsingAlternative += +selected.plan.clockRetryExploration.adopted;
       }
       if (options.captureDecisions) decisions.push({ state: controller.state(), index, accepted,
+        knowledgeSignature: controller.knowledgeSignature(),
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
-          boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes },
+          boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes,
+          ...(selected.plan.hypothesisAudit ? { hypothesis: Object.fromEntries(['changed', 'primaryIndex', 'preferredWorlds', 'completeWorlds']
+            .map(field => [field, selected.plan.hypothesisAudit[field]])) } : {}) },
         ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path) } : {}) });
       controller.acknowledge(index, accepted);
       lastPlan = selected.plan;
