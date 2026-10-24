@@ -178,7 +178,26 @@ and current geometric freedom. No accepted tap of the observed tile is needed.
 initial ice fixture observes a thaw, loses before tapping it, then plans a known
 winning retry with the exact removal prerequisite. All actions independently
 replay in Hard.play.69/69 tests pass, including5952 concealed-world controls.
-No broader score for this new option has yet been measured.
+COMPLETED:session56420 tested that option with accepted availability and known-loss
+memory, runtime7b53fa9, sourcef1314d9780dee1437bb5c07f837869c997f77c52dc724c79f814ccb53e4bbc8f.
+Reports:HUMAN_REFERENCE_{LAB_CLEARED_ROLE_MEMORY,CLEARED_ROLE_MEMORY_CHALLENGE}_2026-10-24.md.
+Lab8/15, challenge33/42; every row's try count, label and board source equals the
+known-loss-memory control. Mean/maximum:lab84.3/1277.5ms, natural64/1505.7ms.
+Lab input4e5a9c9870dac977f024c3700b6c4813b5cdf463f6f9b63dcd37ecbd1dde5d17
+differs from older26e875b6 ONLY because --development adds status:available to
+each otherwise identical source row; both hashes were independently reproduced.
+Source remained unchanged; no new pass-count gain or full155 score is claimed.
+
+RUNNING:session19374 tests the same source/profile plus continuationTrayMin:2
+on all16 remaining failures plus original controls134/141/143/147 (20 total).
+Started2026-10-24T05:13:10.139Z. This attempts complete known-continuation proofs
+at two carried tiles rather than waiting for three. It shares the same1500ms
+deadline, retains unknown/bounded positions, and never declares impossibility
+from a budget failure. This is a focused development screen, not unseen20.
+Report:HUMAN_REFERENCE_TWO_CARRIER_PROOF_SCREEN_2026-10-24.md.
+Input243ddaf18ea5b0c5d20e01056247f2c50f560a9bb29283b0bb2e730f32c8190e.
+Hold loaded runtime files fixed until this process finishes. No other CPU-heavy
+simulation is live. Poll its handle before starting another campaign.
 
 Research conservative control:
 ```json
