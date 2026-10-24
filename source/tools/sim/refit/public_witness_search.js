@@ -133,6 +133,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const shortInformation = settings.shortInformation ?? false;
   const informationDominance = settings.informationDominance ?? false;
   const informationWidth = settings.informationWidth ?? 0;
+  const clockRecovery = settings.clockRecovery ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
@@ -153,6 +154,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
   assert.equal(typeof informationDominance, 'boolean');
   assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
+  assert.equal(typeof clockRecovery, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -196,6 +198,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const shortInformationActive = shortInformation === 'recoveryAware' ? !clocked && !informationRecovery : !!shortInformation;
   const cone = clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).frontier
     : obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
+  const rootClockCost = clockRecovery && clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).cost : clockDistance(game, state) : 0;
+  const clockRecoveryActive = clockRecovery && clocked && game.clock.n - state.moves - rootClockCost > 2;
   const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
@@ -237,7 +241,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       metrics = { room: roomOf(game, position), left: position.alive.reduce((sum, value) => sum + value, 0),
         recovery: recoveryOf(game, position),
         pairDebt: !clocked && pairFlexibility ? pairFlexibility(position) : 0,
-        depth: !clocked && goalRecoveryActive && position.tray.length >= goalRecoveryMin
+        depth: (!clocked || clockRecoveryActive) && goalRecoveryActive && position.tray.length >= goalRecoveryMin
           ? recoveryDepth(game, position, alternativeRecoveryRoutes, riskFirstRecovery, routePlanner) : { unknownWaiting: 0, knownCost: 0 },
         clockDistance: clocked && position.alive[game.clock.i]
           ? alternativeGoalRoutes ? routePlanner(game, position, game.clock.i).cost : clockDistance(game, position) : 0 };
@@ -267,8 +271,12 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       rank = [tier, room.room, -path.length];
     } else if (exit) {
       rank = [tier, -room.pressure, room.room, -path.length, progress, -recovery.stranded, recovery.immediate];
+      if (clockRecoveryActive) rank.splice(3, 0, -(metrics.depth.maximumOverflow ?? 0), -metrics.depth.unknownWaiting, -metrics.depth.knownCost);
     } else if (clocked) {
       rank = [tier, inCone ? 1 : 0, -room.pressure, -metrics.clockDistance, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
+      if (clockRecoveryActive) rank = [tier, -room.pressure, -(metrics.depth.maximumOverflow ?? 0),
+        -metrics.depth.unknownWaiting, -metrics.depth.knownCost, inCone ? 1 : 0, -metrics.clockDistance,
+        safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
       if (settings.trayRecovery && (!clocked || !position.alive[game.clock.i])) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
         position.tray.length >= recoveryMin ? recovery.immediate : 0);
@@ -454,6 +462,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
       ...(dominanceStop ? { dominanceStop } : {}),
       ...(informationWidth ? { informationWidthTarget } : {}),
+      ...(clockRecovery ? { clockRecoveryActive, rootClockCost } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive,
         recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
