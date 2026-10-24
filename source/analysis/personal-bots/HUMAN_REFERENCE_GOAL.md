@@ -93,9 +93,10 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
 Current optional hypothesis candidate adds narrow-first rollout and actual-state visit guards.
-No new full score is claimed. Goal ACTIVE, UNMET. Guarded trial3967 is live;
-keep its loaded source frozen. Earlier trial/diagnostic jobs are terminal.
-**85/85 offline tests pass** in9s, including7488 concealed-world controls,
+No new full score is claimed. Goal ACTIVE, UNMET. Guarded trial3967 exited0.
+All earlier trial/diagnostic jobs are terminal. New structural legality cache is
+integrated into hypothetical rollouts; comparative timed validation is next.
+**86/86 offline tests pass** in9s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -364,17 +365,31 @@ public choices,43 moves and29 left;6 repeated roots filtered on3 decisions.
 Maximum1508.2ms. Both diagnostics independently replay all64 taps in original
 Hard, and BOTH remain computation-censored, not physical losses or counted clears.
 Report:HUMAN_REFERENCE_REPEEK_DIAGNOSTIC_2026-10-24.md.
-RUNNING:session3967, PID39684, started2026-10-24T13:00:43.320Z, runtimedfb33c4.
+COMPLETED:session3967, PID39684, started2026-10-24T13:00:43.320Z, runtimedfb33c4.
 Report destination:HUMAN_REFERENCE_GUARDED_HYPOTHESIS_CHALLENGE_2026-10-24.md.
 Same18 levels and same profile as the broad and interrupted narrow trials.
 Sourcea239b8a91eb8cefb4596f6fd02b66c5a1f801b6039a09b27ea9693558cedbe3e;
 input02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
-Last confirmed live2026-10-24T13:04:38Z.81 still loses after36 accepted taps,
-19 sampled decisions/4 changed roots;92 clears ontry3;93 still loses. Maximum
-seen1507.3ms. No completed18-case or new full155 score is claimed.
-One CPU-heavy simulation only. Keep loaded source unchanged until terminal.
-NEXT:finish and audit this complete comparison, then inspect sampling censoring
-and information dependence; do not stop at this bug fix.93's7 verified hypothetical
+Terminalexit0 verified2026-10-24T13:37:26Z.11/18, mean745.6ms, maximum1509.4ms.
+107 nowclears1;121 improves2 to1. All10 old passing cases remain passing.
+An independent parser verified identical profile/input to the broad18, all labels,
+provenance, strict scoring and timings against the complete141/155 table.
+No new full155 score is extrapolated. Source unchanged confirmed by the runner.
+11739 hypothetical winning routes independently replayed,2423 complete worlds,
+1817 preferred,794 incomplete batches.7 natural cold failures remain in this subset.
+Next candidate caches original known_tray_plan.legal results by alive layout,
+relief and tray capacity, never guessed pictures.3840 exhaustive structural/ice/
+lock/relief/capacity comparisons and fixed-node clock/nonclock route parity pass.
+Initial cache timing exposed a regression from freezing search alive arrays.
+The corrected cache leaves mutable arrays untouched, hashes their current values,
+and uses identity memoization only for already frozen arrays. Mutation controls
+pass. Four alternating fixed-work synthetic comparisons (72/120 tiles, with and
+without obstacles,3 measured repetitions each) retain identical paths/node counts
+and reduce total search time by21–36%. These are microbenchmarks, not game scores.
+Two unintegrated budget-scheduler files also pass their standalone fake-clock test;
+they require a separate physical-world preparation API before actor integration.
+NEXT:compare the cache on the same18 before changing sampling policy; then inspect
+sampling censoring and information dependence.93's7 verified hypothetical
 clears all fell in unfinished batches, so preferredWorlds remained0. Consider fair
 per-root/pairwise budgeting after measuring it. If loops disappear but policy
 dithers between known peeks, investigate retaining a REAL known-safe prefix until
