@@ -20,7 +20,7 @@ function test() {
       return { kind: 'hypothesisEvaluation', status: request.index === 0 ? 'cleared' : 'lost', nodes: 2000 };
     } };
   const honest = rankInformationActions(problem, { physics, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1 });
-  assert.equal(honest.index, 1); assert.equal(honest.informationWeight, 1); assert.equal(honest.nodes, 0);
+  assert.equal(honest.index, 1); assert.equal(honest.informationWeight, 0.75); assert.equal(honest.nodes, 4000);
   assert.deepEqual(seen[1][1], seen[2][1]); assert.equal(honest.completeWorlds, 1);
   assert.equal(honest.knownWin, false); assert.equal(honest.exactLossShares, false);
   const interleaved = rankInformationActions(problem, { physics, random: () => 0,
@@ -103,7 +103,7 @@ function test() {
     const fractional = { ...physics, evaluateInformation: request => ({ kind: 'informationEvaluation',
       status: 'lost', progress: request.index === 0 ? 0.2 : 0.4 }) };
     const measured = rankInformationActions(problem, { physics: fractional, random: () => 0, deadline: Date.now() + 1000,
-      maximumWorlds: 3, schedule, scoreMode: 'progress', confidenceSE: 2 });
+      maximumWorlds: 3, schedule, scoreMode: 'progress', confidenceSE: 2, exactUnknownLimit: 0 });
     assert.equal(measured.index, 1); assert.equal(measured.confidence.samples, 3);
     assert(measured.totals.every(total => total.informationClears === 0));
   }

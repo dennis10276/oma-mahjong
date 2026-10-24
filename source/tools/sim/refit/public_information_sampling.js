@@ -18,7 +18,7 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
   const sampler = (picturePrior === 'diverse' ? createDiversePictureSampler : createPairedPictureSampler)(problem.rememberedPictures, { random });
   assert(Number.isInteger(exactUnknownLimit) && exactUnknownLimit >= 0 && exactUnknownLimit <= 512);
   const unseenCount = problem.unseenCount ?? problem.rememberedPictures.filter(picture => picture === null).length;
-  const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(1, 2 * problem.unseenFraction);
+  const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(0.75, 2 * problem.unseenFraction);
   const comparison = createInformationComparison(actions, problem.fallbackIndex, { scoreMode, confidenceSE });
   let generatedWorlds = 0, completeWorlds = 0, preferredWorlds = 0, unresolvedWorlds = 0, nodes = 0;
   while (generatedWorlds < maximumWorlds && now() < deadline - 8) {

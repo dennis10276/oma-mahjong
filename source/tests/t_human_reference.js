@@ -54,6 +54,7 @@ const modules = [
   'test_public_information_playout.js',
   'test_public_interleaved_playouts.js',
   'test_public_information_sampling.js',
+  'test_public_exact_gate.js',
   'test_public_information_comparison.js',
   'test_public_information_actions.js',
   'test_human_information_options.js',
