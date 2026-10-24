@@ -38,6 +38,8 @@ function test() {
   assert.throws(() => inferPairedPicture([0, 1, 2, null], contract), /contradict/);
   assert.throws(() => inferPairedPicture([0, null, null], contract));
   assert.throws(() => inferPairedPicture([36, null], contract));
+  const sparse = [0, null]; sparse.length = 4;
+  assert.throws(() => inferPairedPicture(sparse, contract), 'Absent array entries cannot masquerade as remembered pictures');
   assert.equal(inferPairedPicture([null, null], contract), null, 'An unknown pair has no identifiable picture');
   assert.equal(inferPairedPicture([0, null, 1, null], contract), null, 'A known multiset does not assign pictures to positions');
   assert.deepEqual(inferPairedPicture([...Array(69).fill(35), null], contract),
