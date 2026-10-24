@@ -6,6 +6,8 @@ const modules = [
   'test_human_reference_campaign.js',
   'test_human_initial_role_memory.js',
   'test_human_retry_risk_learning.js',
+  'test_human_accepted_tap_memory.js',
+  'test_public_accepted_tap_memory.js',
   'test_public_retry_risk_memory.js',
   'test_public_retry_exploration.js',
   'test_human_single_carry.js',

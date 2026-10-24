@@ -18,6 +18,7 @@ const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_pri
 const { describeInformation } = require('./public_information_audit.js');
 const { createRetryRiskMemory } = require('./public_retry_risk_memory.js');
 const { retryExploration } = require('./public_retry_exploration.js');
+const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -26,6 +27,7 @@ function createHumanController(tiles, options = {}) {
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
   assert(options.protectOpenTwin === undefined || typeof options.protectOpenTwin === 'boolean');
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
+  assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
@@ -37,6 +39,7 @@ function createHumanController(tiles, options = {}) {
   let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
   let lastAcceptedIndex = null;
   let retryRiskMemory = null;
+  const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length) : null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   const runRetrySearch = options.retryRiskLearning ? retryExploration(searchPublicWitness) : null;
@@ -56,6 +59,7 @@ function createHumanController(tiles, options = {}) {
       assert(!current || state.physicalTaps > current.physicalTaps);
       if (current && lastAcceptedIndex !== null) {
         retryRiskMemory?.observeTransition(current, lastAcceptedIndex, state);
+        acceptedTapMemory?.observeAccepted(lastAcceptedIndex, current, state);
         const inferred = inferMatchedPicture(current, lastAcceptedIndex, { alive: state.alive, tray: state.tray,
           moves: state.moves, openPeek: state.openPeek, physicalTaps: state.physicalTaps });
         if (inferred) {
@@ -117,7 +121,8 @@ function createHumanController(tiles, options = {}) {
           relieved = free.length > 0;
         }
         const result = { free, relieved,
-          uncertain: relieved ? [] : queried.uncertain.filter(index => !sameBoard || !blocked.has(index)) };
+          uncertain: relieved ? [] : queried.uncertain.filter(index => (!sameBoard || !blocked.has(index))
+            && !acceptedTapMemory?.knowsAvailable(index, position.alive)) };
         frontierCache.set(cacheKey, result); return result;
       };
       const exposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles },
@@ -189,6 +194,7 @@ function createHumanController(tiles, options = {}) {
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
     completeAttempt(status) { return retryRiskMemory?.finish(status) ?? null; },
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
+    acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
