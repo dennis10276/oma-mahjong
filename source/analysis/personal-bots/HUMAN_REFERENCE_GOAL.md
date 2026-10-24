@@ -169,8 +169,16 @@ earlier winning alternative. It has not improved development pass counts.
 Renderer audit:board.js updateBlocked uses Layouts.isFree, not takeable;
 style.css shows that geometric blocked class through the optional highlight.
 This supplies no additional public hidden-ice/lock availability signal.
-The next memory improvement retains actually visible late none conditionally
+Optional rememberClearedRoles now retains actually visible late none conditionally
 across retries, without turning it into an initial none or bypassing geometry.
+Only the ONE visibility gate's actual roles enter this memory. Original-rule
+evidence is refused after global relief; reuse requires all witnessed removals
+and current geometric freedom. No accepted tap of the observed tile is needed.
+380 production subset controls cover ice, locks and their overlap; a real hidden
+initial ice fixture observes a thaw, loses before tapping it, then plans a known
+winning retry with the exact removal prerequisite. All actions independently
+replay in Hard.play.69/69 tests pass, including5952 concealed-world controls.
+No broader score for this new option has yet been measured.
 
 Research conservative control:
 ```json

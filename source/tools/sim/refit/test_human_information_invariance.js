@@ -22,6 +22,8 @@ function test() {
   configurations.push({ ...configurations[1], retryRiskLearning: true });
   configurations.push({ ...configurations[1], rememberAcceptedTaps: true });
   configurations.push({ ...configurations[1], rememberKnownLosses: true });
+  configurations.push({ ...configurations[1], rememberClearedRoles: true });
+  configurations.push({ ...configurations[1], rememberAcceptedTaps: true, rememberKnownLosses: true, rememberClearedRoles: true });
   configurations.push({ ...configurations[1], passiveInformation: 'frontierRoles' });
   configurations.push({ ...configurations[1], passiveInformation: 'roles', shortInformation: true });
   configurations.push({ ...configurations[1], passiveInformation: 'roles', shortInformation: 'carrierAware' });
@@ -59,7 +61,8 @@ function test() {
     const output = configurations.map(configuration => {
       const controller = createHumanController(tiles, configuration);
       controller.beginAttempt(); controller.observe(publicState, observation);
-      const result = { observation, decision: controller.decide(), memory: controller.known() };
+      const result = { observation, decision: controller.decide(), memory: controller.known(), clearedRoles: controller.clearedRoleEvidence() };
+      assert(result.clearedRoles.every(entry => visible.includes(entry.index)));
       assert.deepEqual(result.memory.pictures.slice(0, 2), [null, null]);
       assert.deepEqual(result.memory.down.slice(0, 2), [null, null]);
       assert.deepEqual(result.memory.initialRoles.slice(0, 2), [null, null]);

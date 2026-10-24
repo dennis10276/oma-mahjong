@@ -20,6 +20,7 @@ const { createRetryRiskMemory } = require('./public_retry_risk_memory.js');
 const { retryExploration } = require('./public_retry_exploration.js');
 const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 const { createKnownLossMemory } = require('./public_known_loss_memory.js');
+const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -30,6 +31,7 @@ function createHumanController(tiles, options = {}) {
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
+  assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
@@ -43,6 +45,7 @@ function createHumanController(tiles, options = {}) {
   let retryRiskMemory = null;
   const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length) : null;
   const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
+  const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles) : null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   const runRetrySearch = options.retryRiskLearning ? retryExploration(searchPublicWitness) : null;
@@ -97,6 +100,7 @@ function createHumanController(tiles, options = {}) {
         rows.push({ index, observation: { roles: [value], knownRole: value } });
       });
       frontier.observe({ alive: state.alive, physicalTaps: state.physicalTaps }, rows);
+      clearedRoleMemory?.observe(state, observed.roles);
       current = { ...structuredClone(state), down: down.map((value, index) => state.alive[index] ? value : 0),
         pictures: pictures.map((picture, index) => state.alive[index] ? picture : null) };
       const aliveKey = state.alive.join('');
@@ -126,7 +130,8 @@ function createHumanController(tiles, options = {}) {
         }
         const result = { free, relieved,
           uncertain: relieved ? [] : queried.uncertain.filter(index => (!sameBoard || !blocked.has(index))
-            && !acceptedTapMemory?.knowsAvailable(index, position.alive)) };
+            && !acceptedTapMemory?.knowsAvailable(index, position.alive)
+            && !clearedRoleMemory?.knowsAvailable(index, position.alive)) };
         frontierCache.set(cacheKey, result); return result;
       };
       const exposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles },
@@ -201,6 +206,7 @@ function createHumanController(tiles, options = {}) {
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
+    clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
