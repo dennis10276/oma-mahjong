@@ -109,7 +109,9 @@ Mean73.7ms, maximum1502.4ms; source unchanged. No new gain, not promoted.
 RUNNING:session89195, started2026-10-24T05:34:54.195Z, same breadth profile but
 recoveryInformationMinTray:1, default three-carrier proof threshold. Targets:
 102/121/123/124/125/136/143/147/150/lab12 (10), including earlier regression
-controls. First emitted102 still clears in1. No full score may be extrapolated.
+controls. Emitted102 still clears in1, but121 and123 already regress. This policy
+is unpromoted; finish and retain the experiment rather than silently omit failures.
+No full score may be extrapolated.
 Report:HUMAN_REFERENCE_SINGLE_CARRY_BREADTH_CONTROL_2026-10-24.md.
 Source remains1c0c90b87e2bfebeaaedc297280ccef7e228fc8303d14794f2631992d57968a7;
 input7155f8037684ff6ad8c2e36a3b3ce361e0ba47a4d06904ecab392e07c3105ded.
