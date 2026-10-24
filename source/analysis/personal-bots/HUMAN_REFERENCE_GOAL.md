@@ -99,13 +99,23 @@ recoveryInformationMinTray:2,recoveryInformationBreadth:true.
 It does NOT add recoveryAvailableInformation or continuationTrayMin:2.
 Do not extrapolate a full score or combine individual policy wins.
 
-RUNNING:the next serial process tests this breadth policy plus continuationTrayMin:2
+COMPLETED:session65015 tested this breadth policy plus continuationTrayMin:2
 on102/121/123/124/125/147/lab12 (7). Earlier proofs alone did not help the old
 routes, but may protect positions newly reached by this policy. Report:
 HUMAN_REFERENCE_BREADTH_EARLY_PROOF_CONTROL_2026-10-24.md.
-Poll the actual handle before another CPU-heavy simulation. Hold loaded runtime
-fixed while running; never restart for an observation timeout or kill helpers.
-157+ remains unopened. This is a focused development control, not unseen20.
+5/7, same try counts as the corresponding breadth-policy rows;147 still fails.
+Mean73.7ms, maximum1502.4ms; source unchanged. No new gain, not promoted.
+
+RUNNING:session89195, started2026-10-24T05:34:54.195Z, same breadth profile but
+recoveryInformationMinTray:1, default three-carrier proof threshold. Targets:
+102/121/123/124/125/136/143/147/150/lab12 (10), including earlier regression
+controls. First emitted102 still clears in1. No full score may be extrapolated.
+Report:HUMAN_REFERENCE_SINGLE_CARRY_BREADTH_CONTROL_2026-10-24.md.
+Source remains1c0c90b87e2bfebeaaedc297280ccef7e228fc8303d14794f2631992d57968a7;
+input7155f8037684ff6ad8c2e36a3b3ce361e0ba47a4d06904ecab392e07c3105ded.
+Poll this actual handle before another CPU-heavy simulation. Hold loaded runtime
+fixed until terminal; never restart for observation timeout or kill helpers.
+157+ remains unopened. This is development, not unseen20.
 
 ## Completed research evidence
 
@@ -123,6 +133,7 @@ historical diagnostics remain in the individual reports and this file at a4cb277
 | Crowded recovery-aware information |8/22 versus control6/22; gains102/124/125, loses147; max1501.6ms |CROWDED_INFORMATION_SCREEN |
 | Previous + available discovery preference |7/22; gains124 and lab12try3 vsDennis6, loses147; max1501.9ms |AVAILABLE_RECOVERY_SCREEN |
 | Crowded recovery + safe discovery breadth |8/22; gains102/124/lab12 (try1), loses147; max1502.1ms |RECOVERY_BREADTH_SCREEN |
+| Previous + early continuation proofs |5/7, identical tries to breadth;147 still fails; max1502.4ms |BREADTH_EARLY_PROOF_CONTROL |
 
 These are whole-policy results, never a merged best-of. The two22-task policies
 remain unpromoted. The next breadth experiment refines them rather than discarding
@@ -180,6 +191,14 @@ is STILL48, not merely a later decision. All three runs independently replayed.
 102:short candidate84/67 uncertain-role route clears; available-first50/20 fails,
 first divergence37. Thus certainty alone does not identify the best unknown result.
 These diagnostics do not establish impossibility, uniqueness or hidden bad luck.
+
+Latest breadth147 replay independently verifies63 accepted taps. It shrinks the
+tray to[35] at51, then ordinary ranking commits58 (picture16) before54/0/41.
+At55 it commits the now-seen21 to free33/16, leaving[35,21]. It peeks1 and10,
+matches63, then at60 commits66/4 for discovery51. After that actual reveal the
+position is knownDead and the final fourth carrier loses. Earlier proof threshold2
+does not change these tries. The min1 experiment tests the earlier single-carry
+decision instead of inventing a losing proof before an unknown observation.
 
 Earlier rejected stories remain rejected:137's known14/known9 routes were BOTH
 mechanically certain conditional recoveries;136 removed its clock correctly before
