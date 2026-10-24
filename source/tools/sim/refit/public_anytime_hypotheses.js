@@ -27,7 +27,7 @@ function rankHypothesisActions(problem, options) {
     for (const index of actions) {
       if (now() >= options.deadline) { stopReason = 'deadline'; break; }
       const report = evaluate({ hypothesis: structuredClone(hypothesis), index,
-        deadline: options.deadline, nodeLimit: nodesPerAction });
+        deadline: options.deadline, nodeLimit: nodesPerAction, worldOrdinal: generatedWorlds });
       assert(report && Object.keys(report).every(key => ['kind', 'status', 'nodes'].includes(key)));
       assert.equal(report.kind, 'hypothesisEvaluation');
       assert(['cleared', 'lost', 'unresolved'].includes(report.status));
