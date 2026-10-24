@@ -14,7 +14,7 @@ const { aliveSignature } = require('./public_alive_signature.js');
 const { knownCleanup } = require('./public_unique_cleanup.js');
 const { createExposureFrontier } = require('./public_exposure_frontier.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
-const { preferKnownRecovery } = require('./public_recovery_priority.js');
+const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_priority.js');
 const { describeInformation } = require('./public_information_audit.js');
 
 function createHumanController(tiles, options = {}) {
@@ -22,6 +22,7 @@ function createHumanController(tiles, options = {}) {
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
+  assert(options.protectOpenTwin === undefined || typeof options.protectOpenTwin === 'boolean');
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
@@ -128,6 +129,14 @@ function createHumanController(tiles, options = {}) {
       manualChoice = false;
       const discover = () => {
         manualChoice = true;
+        const recovered = options.protectOpenTwin ? openTwinRecovery(geometry, current) : null;
+        if (recovered) {
+          resetPlanner();
+          const won = !recovered.moved.state.alive.some(Boolean) && !recovered.moved.state.tray.length;
+          return { plan: { index: recovered.index, path: [recovered.index], goal: won ? 'win' : 'knownOpenTwin',
+            knownWin: won, knownDead: false, knownProgress: 2, information: false, boundary: !won, nodes: 0 },
+          predicted: recovered.moved };
+        }
         const index = discoveries[0].index;
         resetPlanner();
         return { plan: { index, path: [index], goal: 'closedTileDiscovery', knownWin: false, knownDead: false,

@@ -1,8 +1,11 @@
 'use strict';
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
-const { preferKnownRecovery } = require('./public_recovery_priority.js');
-const { createHumanController, playHumanCampaign } = require('./human_reference_campaign.js');
+const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_priority.js');
+const { createHumanController, playHumanCampaign, verifyAttempt } = require('./human_reference_campaign.js');
+const { observeBoard } = require('./human_board_visibility.js');
+const { createSessionFactory } = require('./production_physical_session.js');
+const { encodeGame } = require('./personal_game_io.js');
 
 function test() {
   const tiles = Array.from({ length: 6 }, (_, index) => ({ x: index * 4, y: 0, z: 0 }));
@@ -46,6 +49,30 @@ function test() {
   const replayed = playHumanCampaign(actual, { planning: { inspectBeforeCommit: 'recovery', inspectionTrayLimit: 1 } });
   assert.equal(replayed.wonOn, 1);
   assert.equal(replayed.verifiedTaps, replayed.attempts[0].taps);
+  const opened = { ...actual, down: [1, 0, 0, 0, 1, 1] };
+  const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 32 };
+  const session = factory(opened, settings);
+  session.tap(0);
+  const frame = session.view().state;
+  const observed = observeBoard(tiles, frame, null, { picture: index => opened.faces[index], role: () => 'none' });
+  const plainController = createHumanController(tiles, { inspectBeforeCommit: true });
+  plainController.beginAttempt(); plainController.observe(frame, observed);
+  assert.equal(plainController.decide().plan.goal, 'closedTileDiscovery');
+  const protectedController = createHumanController(tiles, { inspectBeforeCommit: true, protectOpenTwin: true });
+  protectedController.beginAttempt(); protectedController.observe(frame, observed);
+  const protectedChoice = protectedController.decide();
+  assert.equal(protectedChoice.plan.goal, 'knownOpenTwin');
+  assert.equal(protectedChoice.plan.index, 1);
+  const after = session.tap(protectedChoice.plan.index);
+  for (const field of ['alive', 'tray', 'moves', 'openPeek']) assert.deepEqual(after.state[field], protectedChoice.predicted.state[field]);
+  assert.equal(verifyAttempt(encodeGame(opened), [0, 1], settings, session.audit()), 2);
+  const publicState = { ...frame, pictures: observed.pictures };
+  assert(openTwinRecovery(game, publicState));
+  assert.equal(openTwinRecovery(game, { ...publicState, pictures: [1, null, 2, 2, null, null] }), null);
+  const uncertainTwin = { ...game, publicFrontier: () => ({ free: [0, 1, 2, 3, 4, 5], uncertain: [0] }) };
+  assert.equal(openTwinRecovery(uncertainTwin, publicState), null);
+  assert.equal(openTwinRecovery({ ...game, clock: { i: 4, n: 1 } }, publicState), null);
+  assert.throws(() => createHumanController(tiles, { protectOpenTwin: 'yes' }));
   console.log('PASS planner-led inspection preserves real known neutral/reducing prefixes, not stale progress, hidden outcomes, unknown mechanics or unresolved-carrier neutral detours');
 }
 
