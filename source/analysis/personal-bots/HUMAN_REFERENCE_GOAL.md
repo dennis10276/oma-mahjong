@@ -93,7 +93,8 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
 Current optional hypothesis candidate adds narrow-first rollout and actual-state visit guards.
-No new full score is claimed. Goal ACTIVE, UNMET. Prior trial/diagnostic jobs are terminal.
+No new full score is claimed. Goal ACTIVE, UNMET. Guarded trial3967 is live;
+keep its loaded source frozen. Earlier trial/diagnostic jobs are terminal.
 **85/85 offline tests pass** in9s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
@@ -363,8 +364,21 @@ public choices,43 moves and29 left;6 repeated roots filtered on3 decisions.
 Maximum1508.2ms. Both diagnostics independently replay all64 taps in original
 Hard, and BOTH remain computation-censored, not physical losses or counted clears.
 Report:HUMAN_REFERENCE_REPEEK_DIAGNOSTIC_2026-10-24.md.
-NEXT:restart the complete18-case comparison using the fixed narrow policy, then
-inspect sampling censoring and information dependence; do not stop at this bug fix.
+RUNNING:session3967, PID39684, started2026-10-24T13:00:43.320Z, runtimedfb33c4.
+Report destination:HUMAN_REFERENCE_GUARDED_HYPOTHESIS_CHALLENGE_2026-10-24.md.
+Same18 levels and same profile as the broad and interrupted narrow trials.
+Sourcea239b8a91eb8cefb4596f6fd02b66c5a1f801b6039a09b27ea9693558cedbe3e;
+input02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
+Last confirmed live2026-10-24T13:04:38Z.81 still loses after36 accepted taps,
+19 sampled decisions/4 changed roots;92 clears ontry3;93 still loses. Maximum
+seen1507.3ms. No completed18-case or new full155 score is claimed.
+One CPU-heavy simulation only. Keep loaded source unchanged until terminal.
+NEXT:finish and audit this complete comparison, then inspect sampling censoring
+and information dependence; do not stop at this bug fix.93's7 verified hypothetical
+clears all fell in unfinished batches, so preferredWorlds remained0. Consider fair
+per-root/pairwise budgeting after measuring it. If loops disappear but policy
+dithers between known peeks, investigate retaining a REAL known-safe prefix until
+new actual information, never a continuation justified by guessed identities.
 
 Complete trusted opening audit2026-10-24T11:36:47.303Z:
 all155 development boards have even initial picture counts and at most two
