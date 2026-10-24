@@ -65,7 +65,8 @@ Baseline24/48; progress22/20, primitive19/20, long20 and recovery13 all rejected
 Compiled progress19/21 and primitive21 rejected; compiled lab and risk control0/12.
 Risk control:6 matching decisions,0 penalized choices,0 penalized clock-exit choices.
 Exact visibility parity passes86,016 cases. Exact count-gate screens17/19 rejected;
-lower oracle weights remain open. Clock-probe labs2/12 strict passes, screen finishing.
+Clock-probe screen17 rejected despite2/12 strict lab passes. Lower exact-score
+weight5% with >=25% exact time is testing32x1/12x16, salts1-3;100 tests pass.
 Lab41 trace:176 replayed taps, repeated second carrier, clock frontier never tested.
 Test buffered uncertain-clock probes with32x1 progress/paired2SE, salts1-3.
 Lab41 frontier confirms known lock with hidden keys; direct probe is correctly inactive.
