@@ -13,7 +13,7 @@ Branch: wip/personal-bots. Goal ACTIVE and UNMET.
 - Every accepted tap independently replays through original production.
   Real retries count; finite search/time caps remain unresolved.
 - Under2s per move; about1.3s contested-decision budget.
-  Up to8 CPU workers side by side, one per salt; each campaign remains single-thread.
+  Up to12 CPU workers side by side, one per salt; each campaign remains single-thread.
 - General planning only. No proof/cache/speed side projects unless a failure needs one.
 - One short Markdown table per screen. Keep this file <=80 lines, without process logs.
 
@@ -29,7 +29,7 @@ Full155 contains natural first clears17-156 and15 labs, excluding only10031.
 Dennis1 requires bot1; Dennis2+ requires strictly fewer actual tries.
 Unopened progression157+ remains held out; unseen20 has not run.
 Prior unsalted single-run screens are exploratory, never seeded adoption evidence.
-Latest five-case probe completed2/5, including99try1 and111try2; no adoption inferred.
+Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
 
 ## Required seeded measurement
 
@@ -61,8 +61,8 @@ Latest five-case probe completed2/5, including99try1 and111try2; no adoption inf
 
 ## Next and completion
 
-Finish baseline48 with clear-only scoring/no confidence and both48-case
-progress-scoring/2SE profiles on the same frozen input. No early guard stops.
+Baseline and32x1 screens finished. Finish12x16, primitive-root calibration and
+three-salt lab retry baseline on frozen inputs. No early guard stops.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.

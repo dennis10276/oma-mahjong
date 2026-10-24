@@ -6,8 +6,20 @@
   "sourceHash": "872d982790f44225a53c927920a033be3c008a845b898cad2fbca564e234e30c",
   "inputHash": "08621c705b790e488aa09ca6b526ce70b95feb11f47207abd88fe40b7e5e6a1d",
   "retainedInterruptedObservations": [
-    { "level": 81, "wonFirstTry": false, "verifiedTaps": 32, "slowestMs": 1310.2 },
-    { "level": 93, "wonFirstTry": false, "verifiedTaps": 32, "slowestMs": 1305.3 }
+    {
+      "level": 81,
+      "wonFirstTry": false,
+      "verifiedTaps": 32,
+      "slowestMs": 1310.2
+    },
+    {
+      "level": 93,
+      "wonFirstTry": false,
+      "verifiedTaps": 32,
+      "slowestMs": 1305.3
+    }
   ],
-  "nextAction": "Queue a complete sixteen-case salt-3 worker when a slot is free. Mark the administrative restart in the completed screen report; do not mix interrupted rows into its official 48-case result or adopt from partial results."
+  "nextAction": "Queue a complete sixteen-case salt-3 worker when a slot is free. Mark the administrative restart in the completed screen report; do not mix interrupted rows into its official 48-case result or adopt from partial results.",
+  "rescheduledAt": "2026-10-24T21:11:45.847Z",
+  "resumedAfterCapacityRaisedTo": 12
 }
