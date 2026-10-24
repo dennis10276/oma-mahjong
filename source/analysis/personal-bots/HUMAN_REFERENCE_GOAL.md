@@ -2,9 +2,8 @@
 
 Worktree: `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
 Branch: `wip/personal-bots`. Goal ACTIVE and UNMET.
-Recent progress: public standard-game placement deduction improves the natural
-challenge34/42 with no pass regressions; a full155 validation is running.
-The last completed full score remains139/155; sixteen fail that policy.
+Recent progress: public standard-game placement deduction improves the full
+development result to140/155 with no previous pass lost. Fifteen still fail.
 Do not redefine completion around a subset, a percentage, or an isolated pass.
 
 ## Contract and completion evidence
@@ -40,17 +39,21 @@ or blocked. There is useful algorithmic work available, not an external blocker.
 
 ## Latest full expanded development result
 
-**139/155**, unchanged source, mean**80.7ms**, slowest**1506ms**.
-Report:`HUMAN_REFERENCE_CATALOG_CLOCK_INFORMATION_2026-10-24.md`.
-Completed2026-10-24T03:35:02.853Z; runtimed7778dd.
-Natural**131/140**, lab**8/15**. Natural gain84, no previously passing natural
-level regressed. Lab gain45try1 vsDennis6. Original134/141/143/147 alltry1.
-Natural failures:**81,93,99,102,107,112,124,125,137**.
+**140/155**, unchanged source, mean**85ms**, slowest**1505.4ms**.
+Report:`HUMAN_REFERENCE_CATALOG_PLACEMENT_CONTRACT_2026-10-24.md`.
+Completion observed2026-10-24T06:20:27Z; runtime32f493a.
+Natural**132/140**, lab**8/15**. New gain124try2 vsDennis3; no previous pass lost
+against full139/155.121 improves3 to2 tries and lab42 improves3 to2. The earlier
+42-task screen's92try3 is2 in this full run; do not substitute screen counts.
+Original134/141/143/147 alltry1.
+Natural failures:**81,93,99,102,107,112,125,137**.
 Lab failures:**11,12,32,33,41,49,52** (encoded10000+id).
 All155 unique rows, natural17–156, lab15, only10031 excluded, strict try scoring,
 input hash, unchanged source, old labels/provenance and maximum timing were
 independently checked from the canonical table. The unseen20 gate is not run.
-The full goal is NOT complete; keep all16 failures in scope.
+The full goal is NOT complete; keep all15 failures in scope.
+Previous full139/155:d7778dd, mean80.7ms,max1506ms, report
+HUMAN_REFERENCE_CATALOG_CLOCK_INFORMATION_2026-10-24.md.
 
 ## Previous full natural result before lab expansion
 
@@ -78,7 +81,7 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 ## Current runtime and active experiment
 
 Runtime:`32f493a`, diagnostic context fix:`b1bdbec`;
-last completed full139/155 policy:`d7778dd`. Goal ACTIVE, UNMET.
+last completed full140/155 policy:`32f493a`. Goal ACTIVE, UNMET.
 **72/72 offline tests pass** in6s, including6912 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
@@ -94,14 +97,16 @@ board sources, all lab try counts, strict PASS scoring and timing. No pass
 regressions:124 nowtry2,121 improves3 to2,92 worsens2 to3 but still beatsDennis5;
 147 remains1. No full155 score is extrapolated.
 
-RUNNING:session26989, started2026-10-24T05:57:39.306Z, full --development155 with
+COMPLETED:session26989, started2026-10-24T05:57:39.306Z, full --development155 with
 the unchanged profile below. Report:HUMAN_REFERENCE_CATALOG_PLACEMENT_CONTRACT_2026-10-24.md.
 Source remains0c85b8bf0780c4566175c26b15a0afacc32ca4fc35a67520d00c3a87e72df364;
 full input00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9,
-identical to the earlier full155 input. Header confirms155 targets. No other
-CPU-heavy process is live. Hold loaded runtime fixed until this run is terminal;
-poll its actual handle, never restart just for an observation timeout or kill
-app/Gemini helpers. This is development, NOT unseen20;157+ remains unopened.
+identical to the earlier full155 input. Independent canonical-table audit verifies
+155 unique targets, natural17–156 plus exact eligible lab15, unchanged labels and
+provenance, strict try scoring, source unchanged, profile equality and maximum
+timing.140/155,132 natural+8 lab; only new pass124, no pass regressions. The run
+is terminal and its source freeze has ended. No CPU-heavy simulation remains live.
+This is development, NOT unseen20;157+ remains unopened.
 
 Independent work while this freeze runs:public_clock_retry_exploration.js and its
 standalone test are new, NOT imported by the frozen controller. The helper permits
@@ -110,9 +115,17 @@ alternative has a known physical safe-exit prefix. It shares deadline/node budge
 protects known wins/exits/deaths, and rejects unknown transitions or expired clocks.
 The real loss/retry fixture independently replays both physical routes and tests
 both primary and alternative budget overruns. Standalone test PASS in0.2s.
-No campaign score or main-suite increase is claimed. After full155 finishes,
-register its test, integrate optionally with actual retry learning, and test whole
-policies. Do not modify the frozen actor before that run ends.
+No campaign score or main-suite increase is claimed. Next:register its test,
+integrate optionally with actual retry learning, and test whole policies.
+
+Also reproduced:a physically replayed known winning route is discarded solely
+when a compatible late roleNone becomes visible. The stacked closed-tile fixture
+finds winning path[2,6,3,7,4,8,5,9,0,0,1], then searches again after actual tap9
+reveals tile0's role, even though the continuation remains valid. This is wasted
+proof work, not evidence of an actual lost game. Untracked regression fixture
+test_human_winning_role_retention.js intentionally fails2 searches versus1 until
+the actor fix. It also tests that a different physical action still forces a new
+search. Fix and register it now that the full run is terminal, then commit green.
 
 Frozen current profile:
 ```json
@@ -142,8 +155,8 @@ Null generations are valid and excluded from role-count coverage, not asserted b
 
 Read-only metadata refresh2026-10-24T05:53:51.481Z:140 natural clears through156,
 zero boards decoded, no newer clears.157+ remains unopened.
-The unchanged57-task screen gained without pass regressions; full155 is now
-running before promotion. Next research candidate, NOT running:placement profile plus
+The unchanged57-task screen and full155 both gained without pass regressions.
+Next research candidate, NOT running:placement profile plus
 shortInformation:'recoveryAware',recoveryInformationMinTray:2,
 recoveryInformationBreadth:true. The new sound deduction may interact with earlier
 mixed-result routes; test the whole policy rather than merging past individual wins.
