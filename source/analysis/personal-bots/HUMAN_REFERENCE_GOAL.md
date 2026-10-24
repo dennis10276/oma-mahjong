@@ -42,7 +42,7 @@ Recent131–156:25/26, failing137.151–156 all clear on try1.
 128/140 result.111's earlier screen/full disagreement still warns against
 extrapolating isolated passes or merging different profiles.
 
-Read-only metadata refresh2026-10-23T22:43Z:140 first clears through156, no later
+Read-only metadata refresh2026-10-24T00:46:27Z:140 first clears through156, no later
 clears, zero boards decoded. Refresh metadata only with selectedLevels:[].
 Dennis authorized count comparisons without old17–99 recordings on2026-10-22.
 Prefer exact opening, then original-version fixed table, current fixed definition,
@@ -50,219 +50,132 @@ then current classic/aspect1.5. The last two are explicitly NOT historical-ident
 Keep every unavailable board/label unresolved, never silently exclude it.
 Old-level replays restart at try1 and do not replace first-clear targets.
 
-## Current code, tests and active experiment
+## Current runtime and active experiment
 
-Latest experimental runtime:`1fe9239`; preceding width runtime:`ae1753f`;
-preceding adaptive runtime:`80491b6`;
-verified correction:`2d6ec2f`;
-preceding runtime:`b2d3c5f`;
-baseline key recovery:`a5cb7db`;
-dependency route cache:`0ead64d`; information audit:`2c10828`.
-**56/56 offline tests pass** in approximately4s, including3840 concealed-world
-clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
-The shortRoles policy completed140 levels before the public-relief correction;
-the short-probe run was deliberately stopped for that reproduced physics bug.
-The development gate remains unmet and the unseen20 gate is unopened.
-The `public_known_recovery.js` helper constructs ordinary one/two-tap
-tray matches, open twins and known pairs, including a mate thawed by the first
-removal.144 production/replay checks pass. Optional `shortInformation:'recoveryAware'`
-now uses this constructive local witness to retain ordinary information ordering
-when a permitted one/two-tap recovery is detected; otherwise it tries short probes.
-This is a heuristic switch, not optimality or a loss proof. It uses no level/seed
-IDs, cannot guess an uncertain partner and shares the existing decision deadline.
-The default is unchanged. Tests retain known wins, clocks and expired-budget guards.
-No campaign improvement is claimed before its complete experiment finishes.
-The roles+recoveryAware42-case screen completed34/42 unchanged, mean118.8ms,
-slowest1509.4ms. Relative to shortRoles32/42 it gains81/93/102/107/137 and
-improves92 from3 to2, but newly loses121/123/147. Remaining failures:
-84/99/112/121/123/124/125/147. This changes BOTH information horizon and probe
-ordering, so the count difference cannot isolate either factor's causal effect.
-Report:`HUMAN_REFERENCE_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
-A fresh147 comparison agrees through six actual decisions. At decision7 the
-conservative shortRoles profile takes68, whereas fullRoles+recoveryAware consumes
-the known80/74 pair first, then discovers82. Both start from the same projection;
-neither the first divergence nor the pair itself is proved to force the later loss.
-This is NOT the old raw policy's immediate overwrite of open80 by unknown82.
-The42-case shortRoles+recoveryAware interaction screen also completed34/42
-unchanged, same eight failures, mean93ms and slowest1511ms. This did not restore
-121/123/147. Report:`HUMAN_REFERENCE_SHORT_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
-Runtime80491b6, fingerprint:`dc45e00313de551af23ebf43fc4e6adfb277183aff953cf4afaa8a2398aee8b6`.
-Do not merge this with the32/42 control or extrapolate a full132/140 score.
+Runtime:`cede8f0`; public-relief correction:`2d6ec2f`; root adaptive probing:`80491b6`;
+information width:`ae1753f`; experimental pair-headroom cap:`1fe9239`.
+**56/56 offline tests pass** in about4s, including4224 clock/nonclock
+concealed-world controller controls,144 local-recovery and24 relief witnesses.
+No new post-correction full140 score exists. No research option is a released winner.
 
-The shortRoles interaction's147 trace matches the control for48 actual decisions,
-NOT just six. At decision49 it takes known66 then probes51 with tray[9,35,4].
-The control instead reopens/commits59, uses known0/54 and reaches40 carrying[9,35,20].
-A known-only audit (no actual future values) finds BOTH endpoints have three
-unseen tray partners and no local recovery. However, the66 endpoint has ZERO
-guaranteed unknown-picture options and only uncertain-role51; the longer endpoint
-retains guaranteed closed unknowns1/40 and a new passive field33. The old metric
-equates those option sets before preferring the short path. This is an ordering
-weakness, not a proof that the initial position or every short probe is doomed.
+ACTIVE:session12879, serial8-case protected-width1 control, then42-case
+protected-width1 challenge, then42-case protected-width2 challenge.
+Runtimecede8f0; fingerprint:
+`cd0cedc57a268e539245c20cfc69a9bca354f2ed438196c53d6c77d471eec168`.
+Pending reports:
+- `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_1_CONTROL_2026-10-24.md`
+- `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_1_CHALLENGE_2026-10-24.md`
+- `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_2_CHALLENGE_2026-10-24.md`
 
-Optional `informationWidth:1..4` (default0/off) now rewards a capped count of
-mechanically guaranteed, known-orientation tiles with unseen pictures before
-short-path tie-breaking. Unknown-role tiles do not count. It does not invent
-their pictures, outcomes, loss proofs or optimality; clocks/wins remain unchanged.
-The old one-tap dominance shortcut is disabled for this different objective.
-A compact synthetic regression chooses the broader known prefix, independently
-replays it through production, and rejects the old shortcut;56 tests pass.
-No natural-level gain is claimed before the next controlled screen completes.
-Both serial eight-case informationWidth1/2 controls completed7/8 unchanged,
-session93094 terminal. Levels50/81/92/121/123/137/147/150, runtimeae1753f.
-Width1:only123 fails;121 nowtry2,147try1,92try2;mean163.8ms,max1516.5ms.
-Width2:only147 fails;121try2,123try1,92 nowtry1;mean121.9ms,max1511.6ms.
-Both retain50/81/137/150. These are different failures, NOT a merged8/8 and NOT
-a new full-catalog score. They cover gains, all three adaptive regressions and
-old50/92/150 controls; do not equate this set with earlier different8-case screens.
-Fingerprint:`b21239e48e7cbe6b45a4dc7815cab67085b55d3316f986b8338166bb5e041ccc`.
-Reports:`HUMAN_REFERENCE_INFORMATION_WIDTH_1_2026-10-24.md` and
-`HUMAN_REFERENCE_INFORMATION_WIDTH_2_2026-10-24.md`.
+Hold loaded runtime fixed until all three finish. One CPU-heavy simulation at a
+time. Never restart for a polling timeout, or kill app/Gemini helpers.
+The old raw-short full run was deliberately stopped after emitting69 ONLY for
+the reproduced false-certificate physics bug. Failures already included46/50/52/69.
+Session35017 and its owned worker39728 are terminal; no complete raw full score.
+Its successful physical prefixes remain valid, but its explanations predate relief.
 
-Both width controls share41 actual decisions on123 and147. The123 divergence
-has an EMPTY tray:width2 consumes a known pair before peeking43, whilewidth1
-peeks43 first. The147 divergence instead carries[6]:width1 takes79 then probes71,
-whilewidth2 takes36 then probes11. Each comparison starts from equal projections;
-the first difference does not by itself prove that action forces the outcome.
-Optional `informationWidth:'pairHeadroom'` now caps width by
-`max(1,floor((4-currentTrayLength)/2))`:two with an empty tray, one otherwise.
-This is a general headroom-based ordering hypothesis, not per-level selection or
-a claim that every inspection consumes two tray slots. Tests match the fixed
-width controls for0/1/2 carried tiles, preserve clocks and add concealed-world checks.
-ACTIVE:serial8-case control then42-case challenge, session34744, runtime1fe9239,
-fingerprint:`52f073531e13a6356ad9034d59f3b59485c0a63d3bf94fefb5de7ea8de5e6b66`.
-Pending:`HUMAN_REFERENCE_PAIR_HEADROOM_CONTROL_2026-10-24.md` and
-`HUMAN_REFERENCE_PAIR_HEADROOM_CHALLENGE_2026-10-24.md`. Keep loaded source fixed.
-
-A separate actual-production diagnostic of84/99/112/125 finds the clock already
-removed before EACH loss (first post-clock decisions17/12/6/6 respectively).
-Do not blame an active-clock countdown merely because these levels have badges;
-this also does not prove their earlier clock routes were strategically optimal.
-Metadata-only refresh2026-10-24T00:46:27Z still reports140 clears through156,
-no later clears, zero boards decoded/returned.157+ remains unopened.
-
-The three-action role-payoff screen completed7/8, source unchanged, slowest
-1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
-fails. This is an improvement over the six-of-eight controls, NOT a full score.
-Both42-level runs finished with unchanged source: shortRoles32/42,
-full-role short probes33/42. Tool session55597 is terminal, not a live runner.
-Reports:`HUMAN_REFERENCE_SHORT_ROLE_CHALLENGE_2026-10-24.md` and
-`HUMAN_REFERENCE_SHORT_PROBE_CHALLENGE_2026-10-24.md`.
-Fingerprint:`e5c97c9a0d5d0beb06e08ee1befd7dc0923703a4a5ab0fb53add4f33b474588f`.
-The dominance optimization is implemented, default off. Its seven-case serial
-control completed5/7 both ways; every attempt's tap/remaining-tile/outcome count
-matches. Mean decision time394.5→364.0ms (7.7% in this single control),53 actual
-dominance stops, slowest1520.1→1516.7ms. This is measured scope, not a universal
-speedup or proof that every timed action sequence must be identical.
-Source:`5df95cb01cd2179c69fa98495b1b500f69572ff1a8e83fd0f899247f9ac182af`.
-Reports:`HUMAN_REFERENCE_DOMINANCE_CONTROL_2026-10-24.md` and
-`HUMAN_REFERENCE_DOMINANCE_OPTIMIZED_2026-10-24.md`.
-STOPPED: second full run, full-role short probes with informationDominance enabled.
-Only owned worker39728 was stopped; session35017 has ended. It emitted through69,
-with new failures46/52/69 as well as50, before this actual physics defect was fixed.
-There is no complete full-probe score/report. Do NOT extrapolate from33/42.
-See `HUMAN_REFERENCE_PUBLIC_RELIEF_FIX_2026-10-24.md`: all-visible four-tile
-production wins incorrectly received known-dead certificates because the public
-callback omitted automatic obstacle relief.24 regression worlds now construct
-and independently replay the win; unknown roles/pictures and full trays remain
-guarded. Old successful physical routes remain valid, but their death explanations
-predate the correction. The post-fix42-level challenge completed32/42 unchanged,
-mean122.7ms, slowest1511.5ms, retaining the same ten failures and all26 recent
-cases except137. Report:`HUMAN_REFERENCE_RELIEF_CHALLENGE_2026-10-24.md`;
-fingerprint:`def591841ba74308b2cd154ac3123e9358165c306a8264f4d4b4dc22c3746e1d`.
-This validates the soundness correction without claiming a campaign-count gain
-or a post-fix full140 score.
-One CPU-heavy simulation at a time; hold loaded runtime unchanged while running.
-Never restart merely because a polling call times out; never kill app/Gemini helpers.
-
-Research baseline settings (not a released/default/frozen winner):
+Research control settings:
 ```json
-{"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true}
+{"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true,"passiveInformation":"shortRoles"}
 ```
+Active candidates add `shortInformation:'recoveryAware'`, `informationWidth:1`
+or2, and `protectOpenTwin:true`. No per-level policy or best-of merging.
 
-## Current controlled evidence
+## Latest controlled evidence
 
-| Experiment | Scope/result | Important limitation |
+All completed rows below retain unchanged-source checks and independent original
+production replay.42 cases:50/81/84/85/86/92/93/99/102/107/111/112/121/123/124/125
+plus131–156. Latest8 cases:50/81/92/121/123/137/147/150, NOT earlier different8-case sets.
+
+| Profile | Scope/result | Remaining issue |
 |---|---|---|
-| Key recovery |31/42, unchanged; slowest1504.7ms |111 isolated try2, not a full129 score |
-| Route cache |31/42, unchanged; slowest1510ms |No new count gain or measured full speedup |
-| Role information |6/8;121try3,92fails |Tradeoff, not promoted |
-| All-field information |5/8; additionally loses149 |Not promoted |
-| Two-carrier proof threshold |6/8 with/without roles |Does not solve92/121 tradeoff |
-| Frontier-only role information |6/8; restores92, loses121 |Not promoted |
-| Short information, with roles |6/8;92try2,121try1,137try1 |Real tray losses on50/147 |
-| Short information, without roles |6/8; same new successful-try counts |Also loses50/147, not a numerical cap |
-| Recovery-aware probes + full roles |34/42;81/93/102/107/137 gain,92try2 |New losses121/123/147; two-factor comparison, not a full-catalog gain |
-| Carrier-aware short information, roles |6/8;92try2,121try3,137try1 |Still loses50/147; slowest1511.7ms |
-| Carrier-aware short information, no roles |5/8;121fails again |Still loses50/147; slowest1507.8ms |
-| Immediate role clues |6/8;92 restored,121/137fail |Slowest1506.2ms, not promoted |
-| Three-action role payoff |7/8;121try3 and92try3 together |Only137fails; slowest1504.5ms |
-| Three-action role payoff, challenge |32/42; no new losses in that42 |Slowest1504.4ms; not a full score |
-| Full-role short probes, challenge |33/42;81/93/112/124/137 now clear |Loses50/138/147/152; slowest1515.6ms |
+| Post-relief shortRoles |32/42;mean122.7ms,max1511.5ms |Same ten failures as old130/140; no new full score |
+| Full roles + recoveryAware |34/42;mean118.8ms,max1509.4ms |Gains81/93/102/107/137;new losses121/123/147 |
+| ShortRoles + recoveryAware |34/42;mean93ms,max1511ms |Same eight failures:84/99/112/121/123/124/125/147 |
+| Previous + fixed width1 |7/8;mean163.8ms,max1516.5ms |Only123 fails;121try2,147try1,92try2 |
+| Previous + fixed width2 |7/8;mean121.9ms,max1511.6ms |Only147 fails;121try2,123try1,92try1 |
+| Pair-headroom width |6/8,then32/42;max1505.5ms broad |New losses136/143/150;not promoted |
 
-Corresponding dated reports:KEY_RECOVERY, ROUTE_CACHE, RECOVERY_ROLE_INFORMATION,
-RECOVERY_ALL_INFORMATION, ROLE_DEEP_PROOF, DEEP_PROOF,
-FRONTIER_ROLE_INFORMATION, SHORT_ROLE_INFORMATION, SHORT_INFORMATION,
-CARRIER_ROLE_INFORMATION, CARRIER_INFORMATION, IMMEDIATE_ROLE_INFORMATION and
-SHORT_HORIZON_ROLES,
-all prefixed `HUMAN_REFERENCE_` and suffixed `_2026-10-23.md`.
-Each preserves its exact settings, source fingerprint, provenance and slowest move.
-The two42-level challenge reports use the2026-10-24 suffix. ShortRoles still
-fails81/84/93/99/102/107/112/124/125/137. Short probes fail50/84/99/102/107/125/
-138/147/152.111 clears in both screens but its prior full-run instability remains
-unresolved. The other98 baseline-passing levels have not been revalidated, so
-neither130 nor131/140 may be claimed from these challenge counts.
+Reports:`HUMAN_REFERENCE_RELIEF_CHALLENGE_2026-10-24.md`,
+`HUMAN_REFERENCE_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`,
+`HUMAN_REFERENCE_SHORT_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`,
+`HUMAN_REFERENCE_INFORMATION_WIDTH_1_2026-10-24.md`,
+`HUMAN_REFERENCE_INFORMATION_WIDTH_2_2026-10-24.md`,
+`HUMAN_REFERENCE_PAIR_HEADROOM_CONTROL_2026-10-24.md`,
+`HUMAN_REFERENCE_PAIR_HEADROOM_CHALLENGE_2026-10-24.md`.
+Never merge the two7/8 runs into8/8 or extrapolate132/140 from34/42.
 
-## What the public diagnostics actually establish
+Relevant earlier evidence is archived in prior goal revisions/per-run reports:
+- full128/140 recovery checkpoint preceded full130/140 shortRoles;
+- unguarded full-role short probes33/42 gained112/124 but lost50/138/147/152;
+- frontier-only roles restored92 but lost121; all-field information also lost149;
+- widening two-carrier death proofs did not resolve the92/121 tradeoff;
+- dominance seven-case control5/7 both ways retained attempt tap/left/outcome counts;
+  mean394.5→364ms in that control only, not a universal speedup.
 
-92: first attempt identical for all59 decisions with/without passive roles.
-Second attempt:29 identical decisions before choice30, identical public projection,
-clock already removed. Roles choose known13 tile55 (consumes open13 twin) on a
-nine-tap information path. Roles17/23 become readable after5 taps;22/28 after9.
-ALL FOUR remain geometrically blocked, not already deduced mechanically free.
-Non-passive chooses known12 tile72, then remembered closed28 tile60;
-the boundary is60's unobserved role after one known removal.
-Never feed the later actually revealed picture back into hypothetical ranking.
-Repeated43-tap losses with44 left do not alone prove identical later paths.
+## Corrections and current hypotheses
 
-121: first23 decisions match, then roles choose65 while baseline chooses78,
-with the clock already gone.65 reveals blocked role43 after ONE tap.
-Thus neither a clock-only mode switch nor removing all blocked-role clues is justified.
-No tile55/72/60/65/78 or level-specific preferences may enter runtime code.
+**Public obstacle relief:** original Hard lifts obstacles when no legal tile
+remains, a geometrically free tile exists and the tray is not full. The old public
+callback omitted this and falsely called an all-visible four-tile win known-dead.
+The callback now requires its ENTIRE possible frontier empty; uncertainty prevents
+the proof. It returns relief and the known planner retains it; cache distinguishes
+full/nonfull trays. Arbitrary restricted callbacks cannot invent relief.24 renamed
+one/two-hit ice wins now construct/replay correctly; hidden pictures remain unknown.
+See `HUMAN_REFERENCE_PUBLIC_RELIEF_FIX_2026-10-24.md`.
+Old completed successful routes stay physically valid, but old death explanations
+predate this correction. Post-fix32/42 preserved counts, not a new campaign gain.
 
-Short-information ordering prioritizes a shorter safe observation prefix over
-bulk heuristic pair progress, behind physical overflow and below constructive
-win/clock witnesses. It clears121/137 on try1 but loses50/147.
-Carrier-aware mode adds the existing two-point unseen-mate carrier penalty
-to prefix length. This is a heuristic, NOT an optimal cost or safety proof.
-Successful-tap availability memory was considered but no current regression
-has been established as caused by its absence; do not claim it implemented.
+**Local recovery:** `public_known_recovery.js` constructs actual one/two-tap
+tray matches, open twins and pairs, including a mate thawed by the first removal.
+144 production/replay controls pass. Optional recoveryAware retains ordinary
+information ranking when a permitted local recovery is detected; otherwise it
+tries short probes. No optimum/loss inference, hidden partner or extra deadline.
+The full-roles comparison also changes information horizon, so its count delta
+does not causally isolate the probe switch.
 
-Regression comparisons:50 diverges on its FIRST decision with empty tray:
-short probes peek90; baseline takes the known28 pair91/93 first.147 has6
-identical actions, then short probes overwrite open80 with82, while baseline
-commits known10 tile80 then matches74. These first divergences guide diagnosis;
-they do not prove that one action alone makes the complete board unwinnable.
-Never encode these IDs in policy.
+**Information width:**0/off or1..4 caps the count of mechanically guaranteed,
+known-orientation tiles with unseen pictures, ahead of short-path tie-breaking.
+Unknown-role tiles do NOT count. This is opportunity ordering, not a prediction
+of identities/outcomes or a proof of recovery. Existing clock/win tiers stay intact.
+Old one-tap information-dominance stopping is disabled whenever width is nonzero.
+Synthetic broader-prefix controls independently replay and retain deadline guards.
+Experimental `'pairHeadroom'` cap=max(1,floor((4-currentTrayLength)/2)) regressed
+on broader testing; keep it optional, not a winner or a mixture of per-level results.
+It does not mean that every peek physically consumes two tray slots.
 
-Immediate-role scoring keeps first-action readable TARGET IDs through a known
-neutral recovery prefix. Its transposition identity includes that latent target
-set; raw physical/metric/proof cache keys remain unchanged. It still yields6/8.
-The current three-action payoff horizon is a global heuristic experiment,
-not a level cutoff, optimality theorem or reduced known-route search depth.
-ALL predicted new observations, even unrewarded ones, still count as unknown
-for death-certification guards.51 tests include a four-tap delayed reveal that
-must not become a known-world death claim merely because its reward is gated.
-After this control, broaden the promising short-probe policy to all42 challenge
-levels, even if50/147 remain regressions: do not confine optimization to this8.
+**Ready open twin:** optional protectOpenTwin guards ONLY manual discovery fallback.
+If it would overwrite an open ordinary picture with a mechanically guaranteed
+matching partner, a single independently modeled tap consumes that actual pair.
+It does not override the planner's explicitly selected discovery/known win/clock
+route, infer hidden roles, or assert greedy pairing is universally dominant.
+Regression uses a genuine production peek, verifies the two-tile transition and
+original Hard replay; uncertain partners, automatic Jokers and clock loss are refused.
+Natural-level gains are unmeasured until the current runs finish.
 
-Public audit tool:
-`node source/tools/sim/refit/human_reference_information_probe.js LEVEL ATTEMPT PHYSICAL_TAPS PROFILE_JSON`.
-It walks only known transitions; reports visibility indices, remembered values,
-unknown roles and public availability; stops before unobserved values.
-Diagnostic capture is not a canonical timing benchmark.
-`human_reference_compare.js LEVEL profile CURRENT_JSON ATTEMPT ALTERNATIVE_JSON`
-compares actual public decisions in fresh serial children; traces stay in memory.
-An identical projected state alone does not prove identical internal pending plans.
+## Matched-state diagnostic facts
+
+-147 raw short probing once replaced open80 by unknown82 after six shared actions.
+ Full-role recoveryAware instead consumes80/74 first; a different divergence.
+ Short-role recoveryAware shares48 decisions with control, then chooses66→51,
+ carrying[9,35,4]. Its endpoint has ZERO guaranteed unseen-picture options, only
+ uncertain-role51. Control uses59/59/0/54→40, carrying[9,35,20], retaining guaranteed
+ closed unknowns1/40 plus passive field33. Both have three unseen tray partners
+ and no local recovery. This audit uses no actual future values.
+-Fixed widths1/2 share41 decisions on123 and147.123 then has an empty tray:
+ width1 manually peeks43, width2 consumes a known open twin first.147 carries[6]:
+ width1 takes79→71, width2 takes36→11. Those first differences alone do not prove
+ the chosen action forces the later outcome; headroom-based switching indeed
+ failed to combine their successes.
+-92's longer role prefix exposes17/23 after5 and22/28 after9 taps; they are still
+ blocked, not already mechanically free. Filtering blocked-role information is
+ not universally safe:it loses121. Clock-only switching did not solve the tradeoff.
+-137's old known14/known9 recoveries BOTH had mechanically certain conditional
+ partners. Do not revive the rejected unknown-role-penalty story.
+-84/99/112/125 diagnostic losses occur AFTER their clocks are removed (first
+ post-clock decisions17/12/6/6).136's old first seven clock actions also matched
+ the human and removed its clock. Do not blame the active clock just because a
+ board has a badge; this does not prove the earlier clock route strategically best.
 
 ## Single visibility and information contract
 
