@@ -72,7 +72,7 @@ Augmented options keep99try1 but fail93/111/112;137 remains uncompleted.
 Strong primary200ms screen finished4/24:92,111,141,143 pass; six guards regress.
 The isolated99/111/112 successes did not repeat. This profile is not promoted.
 Dispersed-pair probe stopped after guard111 failed:93 clears1,99 fails;112/137 pending.
-Four-node probe0/4; next fix oracle progress ties to require all roots proved lost.
+Corrected progress probe0/3; next reserve exact search for <=8 unseen pictures.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.
