@@ -49,6 +49,7 @@ const modules = [
   'test_public_anytime_hypotheses.js',
   'test_public_hypothesis_physics.js',
   'test_public_information_playout.js',
+  'test_public_interleaved_playouts.js',
   'test_public_information_sampling.js',
   'test_public_filled_search.js',
   'test_public_hypothesis_rollout.js',

@@ -4,7 +4,7 @@ const Layouts = require('../../../www/layouts.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { advance, legal } = require('./known_tray_plan.js');
 const { searchHypothesisContinuation } = require('./public_hypothesis_rollout.js');
-const { informationPlayout } = require('./public_information_playout.js');
+const { createInformationPlayout } = require('./public_interleaved_playouts.js');
 const { searchFilledPosition } = require('./public_filled_search.js');
 
 function roleAt(game, state, index) {
@@ -177,32 +177,54 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
     } else assert.equal(signature, cachedPictures, 'Every root in a balanced batch must use the same picture filling');
     return cached !== null;
   };
-  return {
-    prepare,
-    evaluateInformation({ hypothesis, index, deadline, worldOrdinal }) {
-      assert.equal(typeof createPolicy, 'function');
-      assert(Number.isInteger(index) && index >= 0 && index < size);
-      const result = (status, progress = 0) => ({ kind: 'informationEvaluation', status, progress });
-      if (!prepare({ hypothesis, deadline, worldOrdinal })) return result('unresolved');
-      const { game } = cached;
-      const session = replayPrefix(game, problem.episodes.at(-1), deadline, true);
-      if (!session) return result('unresolved');
-      const report = informationPlayout({ game, session, candidate: index,
-        memory: { pictures: problem.rememberedPictures, down: problem.rememberedDown, initialRoles: problem.initialRoles },
-        createPolicy, roleAt, deadline, now });
+  const informationResult = (status, progress = 0) => ({ kind: 'informationEvaluation', status, progress });
+  const finishInformation = (report, game, deadline) => {
       stats.informationEvaluations++;
       stats.informationCycleStops += +(report.reason === 'repeatedPublicChoice');
-      if (report.status === 'cleared') {
+      let status = now() < deadline ? report.status : 'unresolved';
+      if (status === 'cleared') {
         const replay = replayPrefix(game, problem.episodes.at(-1), deadline, true);
-        if (!replay) return result('unresolved');
-        for (const target of report.path) {
-          if (now() >= deadline) return result('unresolved');
+        let verified = replay !== null;
+        if (replay) for (const target of report.path) {
+          if (now() >= deadline) { verified = false; break; }
           assert(replay.view().legalTiles.includes(target)); replay.tap(target);
         }
-        assert.equal(replay.view().win, true, 'An information-aware clear failed independent production replay');
-        stats.informationClears++; stats.verifiedHypotheticalClears++;
-      } else stats[report.status === 'lost' ? 'informationLosses' : 'informationUnresolved']++;
-      return result(report.status, report.removed / Math.max(1, report.removed + report.remaining));
+        if (verified) assert.equal(replay.view().win, true, 'An information-aware clear failed independent production replay');
+        if (!verified || now() >= deadline) status = 'unresolved';
+      }
+      stats[status === 'cleared' ? 'informationClears' : status === 'lost' ? 'informationLosses' : 'informationUnresolved']++;
+      stats.verifiedHypotheticalClears += +(status === 'cleared');
+      return informationResult(status, report.removed / Math.max(1, report.removed + report.remaining));
+  };
+  const createInformationEvaluation = ({ hypothesis, index, deadline, worldOrdinal }) => {
+    assert.equal(typeof createPolicy, 'function'); assert(Number.isInteger(index) && index >= 0 && index < size);
+    const unavailable = () => ({ next: () => ({ done: true, value: informationResult('unresolved') }),
+      snapshot: () => informationResult('unresolved') });
+    if (!prepare({ hypothesis, deadline, worldOrdinal })) return unavailable();
+    const { game } = cached, session = replayPrefix(game, problem.episodes.at(-1), deadline, true);
+    if (!session) return unavailable();
+    const runner = createInformationPlayout({ game, session, candidate: index,
+      memory: { pictures: problem.rememberedPictures, down: problem.rememberedDown, initialRoles: problem.initialRoles },
+      createPolicy, roleAt, deadline, now });
+    let completed = null;
+    return { next() {
+      if (completed) return { done: true, value: completed };
+      const step = runner.next();
+      if (step.done) completed = finishInformation(step.value, game, deadline);
+      return step.done ? { done: true, value: completed } : step;
+    }, snapshot() {
+      if (!completed) completed = finishInformation(runner.snapshot(), game, deadline);
+      return completed;
+    } };
+  };
+  return {
+    prepare,
+    createInformationEvaluation,
+    evaluateInformation(request) {
+      const runner = createInformationEvaluation(request);
+      let step;
+      do { step = runner.next(); } while (!step.done);
+      return step.value;
     },
     evaluate({ hypothesis, index, deadline, nodeLimit, worldOrdinal }) {
       const result = (status, nodes) => ({ kind: 'hypothesisEvaluation', status, nodes });

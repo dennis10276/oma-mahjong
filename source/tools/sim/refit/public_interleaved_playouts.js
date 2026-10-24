@@ -69,7 +69,10 @@ function interleavePlayouts(runners, { deadline, now = Date.now }) {
     for (const [index, runner] of runners.entries()) {
       if (reports[index] || now() >= deadline) continue;
       const step = runner.next(); started.add(index);
-      if (step.done) { reports[index] = step.value; pending--; }
+      if (step.done) {
+        reports[index] = now() < deadline ? step.value : { ...step.value, status: 'unresolved' };
+        pending--;
+      }
     }
   }
   return { reports: reports.map((report, index) => report || runners[index].snapshot()),

@@ -2,7 +2,7 @@
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 const { observeBoard } = require('./human_board_visibility.js');
-const { visibleRole } = require('./human_reference_campaign.js');
+const { visibleRole, createHumanController } = require('./human_reference_campaign.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { createPairedPictureSampler } = require('./public_paired_picture_sampler.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
@@ -64,6 +64,24 @@ function test() {
     assert.equal(expired.prepare({ hypothesis, deadline: 1, worldOrdinal: 1 }), false);
     assert.equal(expired.stats().assignments, 0);
     assert.throws(() => evaluator.prepare({ hypothesis, deadline: Date.now() + 1000, worldOrdinal: 1, seed: 7 }));
+    if (!history.length) {
+      let expiredAfterLastTap = false;
+      const late = createHypothesisPhysics(problem, { random: () => 0, now: () => expiredAfterLastTap ? 101 : 0,
+        createPolicy() {
+          const policy = createHumanController(tiles, { exclusiveRoles: true, usePlacementContract: true,
+            knownPairMacros: true, nodes: 4, beam: 1, taps: 4, proofNodes: 2,
+            decisionMs: undefined, deadline: Date.now() + 1000 }, { boardMode: 'standard' });
+          return { ...policy, acknowledge(index, accepted) {
+            const last = policy.state().alive.reduce((sum, alive) => sum + alive, 0) === 1;
+            policy.acknowledge(index, accepted);
+            if (accepted && last) expiredAfterLastTap = true;
+          } };
+        } });
+      const timed = late.evaluateInformation({ hypothesis, index: 0, deadline: 100, worldOrdinal: 1 });
+      assert(expiredAfterLastTap); assert.equal(timed.status, 'unresolved');
+      assert.equal(late.stats().informationEvaluations, 1); assert.equal(late.stats().informationUnresolved, 1);
+      assert.equal(late.stats().informationClears, 0); assert.equal(late.stats().verifiedHypotheticalClears, 0);
+    }
   }
   const changedHistory = problemFrom(actual, [0, 2]); changedHistory.episodes[0].frames.at(-1).state.tray = [5, 6];
   const inconsistent = createHypothesisPhysics(changedHistory, { random: () => 0, maximumAssignments: 2 });

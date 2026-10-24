@@ -36,7 +36,7 @@ No new boards decoded during that refresh.157+ remains unopened.
 Experimental results, not promoted:
 - Guarded sampling11/18:107 clears1;121 improves2 to1; old passes retained.
 - Cache/cap/key-only variants were not promoted; their results remain in git.
-- All91 registered offline tests pass. Information-aware sampling is connected:
+- All92 registered offline tests pass. Information-aware sampling is connected:
   fast primary play-outs through production, all contested roots, shared1.3s,
   actual-memory seeding, uncertainty weights and4096-node remembered-board search.
   Exact filled-position DFS is integrated with12 graph/production controls;
@@ -65,10 +65,10 @@ Experimental results, not promoted:
 Quick screen24:81,93,99,102,107,112,125,137,10011,10032,10033,10041,10049,10052,
 plus guards92,111,121,123,124,134,141,143,147,150.
 Report sampling changes / contested decisions; below5% is insufficient influence.
-The corrected24-case screen is running; keep its source fixed.99 now clears1
-vsDennis2;92 passes4.81/93/102/107 still fail. No full score is inferred.
-Observed influence175/755 (23.2%); max1305.8ms. Remaining guards/lab cases pending.
-Interleaved production play-outs pass standalone tests but are not yet integrated.
+The corrected screen stopped after guard111 regressed.99 and112 both clear1;
+92 passes4.81/93/102/107 fail.16 cases remain uncompleted; no full score inferred.
+Observed influence285/1075 (26.5%); max1305.8ms. No promotion with a guard lost.
+Interleaved production play-outs are integrated; next compare99/111/112, then24.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.

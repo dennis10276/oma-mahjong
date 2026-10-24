@@ -6,6 +6,11 @@ function test() {
   const problem = { rememberedPictures: [0, 0, null, null], actions: [0, 1], fallbackIndex: 0, unseenFraction: 1 };
   const seen = [], physics = {
     prepare(request) { seen.push(['prepare', request.worldOrdinal]); return true; },
+    createInformationEvaluation(request) {
+      const evaluate = this.evaluateInformation.bind(this);
+      return { next: () => ({ done: true, value: evaluate(request) }),
+        snapshot: () => ({ kind: 'informationEvaluation', status: 'unresolved', progress: 0 }) };
+    },
     evaluateInformation(request) {
       seen.push([request.index, request.hypothesis.pictures.slice()]);
       return { kind: 'informationEvaluation', status: request.index === 1 ? 'cleared' : 'lost', progress: 0.5 };
