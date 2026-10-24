@@ -88,6 +88,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   2026-10-23: no towers, no smaller tiles, some smaller levels made hard with specials, specials and
   pairs in new spots, and a level lab for Dennis to rate ideas first: see "Latest decisions" at the top
   of `source/analysis/variety-plan.md`. The `variety2` boards have towers and are not to be used.
+  2026-10-24: PAUSED. Read `source/analysis/level-plan.md` first (what the lab taught us, why level 132
+  works, and the plan: ground truth from real play, validate a person-like bot (Codex's) on it, then build).
 
 ## Predictions on the dashboard
 

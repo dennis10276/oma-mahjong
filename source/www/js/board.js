@@ -196,8 +196,8 @@ function clockBadge() {
   G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
   if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); return; }
   // which tile it is: the badge points at it, and its outline shows briefly above the pile (also when
-  // other tiles lie on it) when the level starts, at 5 moves left, and when you tap it while covered.
-  // (A permanent outline drew the eye away from the pile: Dennis, 2026-10-24.)
+  // other tiles lie on it) when the level starts and when you tap it while covered. (A permanent outline
+  // drew the eye away from the pile, and a flash at 5 moves left was distracting: Dennis, 2026-10-24.)
   if (!G.ckShown) { G.ckShown = true; setTimeout(clockFlash, 900); }
   if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; $('#board').appendChild(ck); }
   const r = G.tiles[G.clock.i].r, left = clockLeft();
@@ -210,7 +210,6 @@ function clockBadge() {
   ck.classList.toggle('below', below);
   ck.style.left = (r.l + r.w * 0.38).toFixed(1) + 'px'; ck.style.top = (below ? r.t + r.h * 0.92 : r.t - r.h * 0.38).toFixed(1) + 'px';
   ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
-  if (left <= 5 && !ck.classList.contains('urgent')) setTimeout(clockFlash, 50);
   ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.boardFace(S.theme, faceOf(i)); decorate(i); };
