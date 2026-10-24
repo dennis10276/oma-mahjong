@@ -91,7 +91,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     verifiedHypotheticalClears: 0, rejectedAssignments: 0, thinRolloutClears: 0, wideRolloutClears: 0,
     unresolvedRollouts: 0, certifiedRolloutLosses: 0, historyReplays: 0, assignments: 0,
     cycleFilteredRoots: 0, cycleLimitedDecisions: 0, preparationCalls: 0, budgetedActions: 0, actionDeadlineStops: 0,
-    contestedDecisions: 0, informationEvaluations: 0, informationClears: 0, informationLosses: 0, informationUnresolved: 0 };
+    contestedDecisions: 0, safetyVetoes: 0, informationEvaluations: 0, informationClears: 0,
+    informationLosses: 0, informationUnresolved: 0, informationCycleStops: 0,
+    exactSearchCalls: 0, exactSearchNodes: 0, exactExhaustedLosses: 0 };
   const hypothesisVisits = options.hypothesisSampling ? createPublicActionVisits() : null;
   let decisionPosition = null;
   const knowledgeSignature = () => JSON.stringify({ pictures, down, initialRoles, roles,
@@ -232,6 +234,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       if (hypothesisVisits) decisionPosition = JSON.stringify(Object.fromEntries(
         ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving'].map(field => [field, current[field]])));
       const finalize = selected => {
+        if (options.informationSampling && selected.plan.knownDead && selected.plan.deadCertificate?.exhaustedKnownGraph) return selected;
         if (!options.hypothesisSampling || !options.informationSampling && (selected.plan.knownWin || selected.plan.safeClockExit
           || selected.plan.knownDead || current.tray.length < 2) || !current.pictures.some((picture, index) => current.alive[index] && picture === null)
           || Date.now() >= decisionDeadline) return selected;
@@ -262,7 +265,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           { ...options, hypothesisSampling: false, informationSampling: false, hypothesisActionMs: undefined,
             causalAvailabilityMemory: false, rememberAcceptedTaps: false, rememberClearedRoles: false,
             rememberKnownLosses: false, rememberBlockedTaps: true, keyAccessMacros: false,
-            nodes: options.informationPlayoutNodes ?? 4, beam: 1, taps: 4, finishKnown: false, proofNodes: 2,
+            goalRecovery: false, obstacleFrontier: false, alternativeGoalRoutes: false, alternativeRecoveryRoutes: false,
+            preservePairFlexibility: false, pruneDead: false, continuationPruning: false,
+            inspectBeforeCommit: true, inspectionTrayLimit: 3,
+            nodes: options.informationPlayoutNodes ?? 1, beam: 1, taps: 4, finishKnown: false, proofNodes: 2,
             decisionMs: undefined, deadline }, publicContext) : null;
         const physics = createHypothesisPhysics({ tiles: geometry.tiles, rememberedPictures: pictures, rememberedDown: down,
           initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random, createPolicy });
@@ -278,15 +284,19 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });
         const physicalStats = physics.stats(), predicted = advance(geometry, current, ranking.index);
         const changed = ranking.index !== selected.plan.index && (predicted.uncertain || !predicted.lost);
-        hypothesisStats.decisions++; hypothesisStats.changed += +changed;
+        const sampledChange = changed && ranking.index !== problem.fallbackIndex;
+        hypothesisStats.decisions++; hypothesisStats.changed += +sampledChange;
+        hypothesisStats.safetyVetoes += +(problem.fallbackIndex !== selected.plan.index);
         hypothesisStats.contestedDecisions += +!!options.informationSampling;
-        for (const field of ['informationEvaluations', 'informationClears', 'informationLosses', 'informationUnresolved']) hypothesisStats[field] += physicalStats[field];
+        for (const field of ['informationEvaluations', 'informationClears', 'informationLosses', 'informationUnresolved',
+          'informationCycleStops', 'exactSearchCalls', 'exactSearchNodes', 'exactExhaustedLosses']) hypothesisStats[field] += physicalStats[field];
         for (const field of ['generatedWorlds', 'completeWorlds', 'preferredWorlds', 'unresolvedWorlds',
           'excludedByWinnabilityPreference', 'incompleteWorlds']) hypothesisStats[field] += ranking[field];
         for (const field of ['preparationCalls', 'budgetedActions', 'actionDeadlineStops']) hypothesisStats[field] += ranking[field] ?? 0;
         for (const field of ['verifiedHypotheticalClears', 'rejectedAssignments', 'thinRolloutClears', 'wideRolloutClears',
           'unresolvedRollouts', 'certifiedRolloutLosses', 'historyReplays', 'assignments']) hypothesisStats[field] += physicalStats[field];
-        const audit = { ...ranking, ...physicalStats, changed, primaryIndex: selected.plan.index,
+        const audit = { ...ranking, ...physicalStats, changed: sampledChange, safetyVetoed: problem.fallbackIndex !== selected.plan.index,
+          primaryIndex: selected.plan.index,
           sharedDeadline: decisionDeadline };
         if (!changed) return { ...selected, plan: { ...selected.plan, hypothesisAudit: audit } };
         manualChoice = true; resetPlanner();

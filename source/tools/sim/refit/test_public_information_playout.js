@@ -40,6 +40,16 @@ function test() {
     assert.equal(expired.view().state.physicalTaps, 0);
   }
   assert.equal(firstChoices[0], firstChoices[1], 'A hidden replacement cannot affect decisions before it is seen');
+  const cycleGame = { tiles, nb: Layouts.neighbors(tiles), faces: [1, 1, 2, 2, 3, 3, 4, 4],
+    down: tiles.map(() => 1), rules: null, clock: null };
+  const cycleSession = factory(cycleGame, settings);
+  const cycle = informationPlayout({ game: cycleGame, session: cycleSession, candidate: 0,
+    memory: { pictures: cycleGame.faces.slice(), down: cycleGame.down.slice(), initialRoles: tiles.map(() => 'none') },
+    roleAt: visibleRole, deadline: Date.now() + 1000, createPolicy: () => ({
+      rememberPublic() {}, beginAttempt() {}, observe() {}, acknowledge() {}, knowledgeSignature: () => 'unchanged memories',
+      decide: () => ({ plan: { index: cycleSession.view().state.openPeek === 0 ? 2 : 0 } }) }) });
+  assert.equal(cycle.status, 'unresolved'); assert.equal(cycle.reason, 'repeatedPublicChoice');
+  assert.deepEqual(cycle.path, [0, 2, 0]); assert.equal(cycle.removed, 0);
   const policy = createHumanController(tiles);
   assert.throws(() => policy.rememberPublic({ pictures: [], down: [], initialRoles: [] }));
   assert.throws(() => policy.rememberPublic({ pictures: [], down: [], initialRoles: [], seed: 7 }));

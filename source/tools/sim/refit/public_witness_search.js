@@ -500,7 +500,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     assert(roots.has(selected.path[0]));
     return { index: selected.path[0], path: selected.path, goal: selected.goal, knownWin: selected.won,
       knownDead, deadCertificate: knownDead ? { exhaustedKnownGraph: true, reachableUnknown: false,
-        safeRemovalsExplored: hasSafeRemoval, unsupported: false, prunedOnlyCertifiedLosses: true } : null,
+        safeRemovalsExplored: hasSafeRemoval, unsupported: false, prunedOnlyCertifiedLosses: true,
+        allRequestedRoots: [...roots] } : null,
       prunedDeadSuccessors: deadPrunes, provedDeadRoots: [...provedDeadRoots],
       safeClockExit: selected.safeClockExit, clockRoom: selected.clockRoom, knownProgress: selected.progress,
       matchedTiles: selected.matchedTiles || 0,

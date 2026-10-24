@@ -22,6 +22,9 @@ function guardedSearch(search, options = {}) {
     assert.equal(typeof safeInformationEscape, 'boolean');
     const primary = search(game, state, actions, settings);
     if (primary.knownWin || primary.safeClockExit) return primary;
+    if (primary.knownDead && primary.deadCertificate?.exhaustedKnownGraph
+      && Array.isArray(primary.deadCertificate.allRequestedRoots)
+      && actions.every(action => primary.deadCertificate.allRequestedRoots.includes(action.index))) return primary;
     const hasOther = actions.some(action => !action.inspect || state.pictures[action.index] === null
       || state.tray.includes(state.pictures[action.index]) || state.openPeek >= 0 && action.index !== state.openPeek
       && state.pictures[action.index] === state.pictures[state.openPeek]);

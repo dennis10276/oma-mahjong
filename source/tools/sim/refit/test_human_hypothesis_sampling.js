@@ -89,6 +89,40 @@ function test() {
   assert.throws(() => createHumanController(tiles, { ...planning, hypothesisSampling: false, hypothesisActionMs: 100 }, { boardMode: 'standard' }));
   const unpaired = { ...fullKnown, faces: [0, 1, 0, 1, 2, 2, 3, 4] };
   assert.throws(() => playHumanCampaign(unpaired, { planning, publicContext: { boardMode: 'standard' } }), /paired initial/);
+  const stacked = (horizontal, height) => ({ x: horizontal + 0.28 * height, y: 0.28 / 1.24 * height, z: height });
+  const trappedTiles = [stacked(0, 3), stacked(0, 2), stacked(8, 2), stacked(8, 1),
+    stacked(20, 0), stacked(24, 0), stacked(28, 0), stacked(0, 1), stacked(0, 0), stacked(8, 0)];
+  const trapped = { tiles: trappedTiles, nb: Layouts.neighbors(trappedTiles), faces: [1, 7, 2, 8, 7, 8, 9, 9, 1, 2],
+    down: [1, 0, 1, 0, 0, 0, 0, 0, 0, 0], rules: null, clock: null };
+  const trappedPolicy = createHumanController(trappedTiles, { ...planning, informationSampling: true,
+    hypothesisMaximumWorlds: 1 }, { boardMode: 'standard' });
+  trappedPolicy.rememberPublic({ pictures: [1, null, 2, null, 7, 8, 9, null, null, null],
+    down: [1, null, 1, null, 0, 0, 0, null, null, null],
+    initialRoles: ['none', null, 'none', null, 'none', 'none', 'none', null, null, null] });
+  trappedPolicy.beginAttempt();
+  const trappedSession = factory(trapped, settings), trappedActions = [];
+  const observeTrap = () => {
+    const state = trappedSession.view().state;
+    trappedPolicy.observe(Object.fromEntries(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving', 'physicalTaps']
+      .map(field => [field, state[field]])), observeBoard(trappedTiles, state, null,
+    { picture: index => trapped.faces[index], role: () => 'none' }));
+  };
+  observeTrap();
+  for (const index of [4, 5, 6]) {
+    trappedPolicy.decide(); trappedPolicy.acknowledge(index, true); trappedSession.tap(index); trappedActions.push(index); observeTrap();
+  }
+  const contestsBefore = trappedPolicy.hypothesisStats().contestedDecisions;
+  while (trappedSession.view().type !== 'productionPhysicalEnd-v1') {
+    assert(trappedActions.length < 8);
+    const selected = trappedPolicy.decide(); assert(selected.plan.knownDead, JSON.stringify({ plan: selected.plan,
+      known: trappedPolicy.known(), state: trappedPolicy.state() }));
+    trappedPolicy.acknowledge(selected.plan.index, true); trappedSession.tap(selected.plan.index);
+    trappedActions.push(selected.plan.index); observeTrap();
+  }
+  assert.equal(trappedSession.view().why, 'tray');
+  assert.equal(trappedPolicy.hypothesisStats().contestedDecisions, contestsBefore,
+    'An exhausted actual public graph has no sensible surviving candidate; it must not resample free known peeks forever');
+  assert.equal(verifyAttempt(encodeGame(trapped), trappedActions, settings, trappedSession.audit()), trappedActions.length);
   factory.verifySource();
   console.log('PASS the human actor uses only public-consistent physical hypotheses within a shared deadline, retains no guessed pictures/roles, is invariant to concealed swaps, protects real wins/clock exits, preserves caps and independently replays actual clears');
 }

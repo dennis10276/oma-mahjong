@@ -5,13 +5,13 @@ const { observeBoard } = require('./human_board_visibility.js');
 function informationPlayout({ game, session, candidate, memory, createPolicy, roleAt, deadline, now = Date.now }) {
   assert(Number.isInteger(candidate) && Number.isFinite(deadline));
   assert.equal(typeof createPolicy, 'function'); assert.equal(typeof roleAt, 'function');
-  const size = game.tiles.length, path = [];
+  const size = game.tiles.length, path = [], visits = new Set();
   let rejected = 0, decisions = 0, policy = null, observedTap = -1;
   const startLeft = session.view().state.alive.reduce((sum, alive) => sum + alive, 0);
-  const summarize = status => {
+  const summarize = (status, reason = null) => {
     const frame = session.view(), left = frame.state.alive.reduce((sum, alive) => sum + alive, 0);
     return { kind: 'informationPlayout', status, path, decisions, rejected,
-      removed: startLeft - left, remaining: left, observedFact: false };
+      removed: startLeft - left, remaining: left, observedFact: false, reason };
   };
   if (now() >= deadline) return summarize('unresolved');
   const initial = session.view(), accepted = initial.legalTiles.includes(candidate);
@@ -39,6 +39,10 @@ function informationPlayout({ game, session, candidate, memory, createPolicy, ro
     const selected = policy.decide(); decisions++;
     if (!selected || now() >= deadline) return summarize('unresolved');
     const index = selected.plan.index, allowed = frame.legalTiles.includes(index);
+    const identity = JSON.stringify([frame.state.alive, frame.state.tray, frame.state.moves, frame.state.openPeek,
+      frame.state.relieved, frame.state.arriving, policy.knowledgeSignature(), index]);
+    if (visits.has(identity)) return summarize('unresolved', 'repeatedPublicChoice');
+    visits.add(identity);
     policy.acknowledge(index, allowed);
     if (allowed) { session.tap(index); path.push(index); }
     else rejected++;

@@ -35,5 +35,15 @@ const unknownState = { ...state, pictures: [1, 1, 2, null] };
 const noPossibleWitness = guardedSearch(() => { unknownCalls++; return { ...primary }; })({ ...game, clock: null }, unknownState, actions, { nodes: 8 });
 assert.equal(unknownCalls, 1); assert(!noPossibleWitness.knownDead && noPossibleWitness.deadCertificate === null);
 assert.equal(noPossibleWitness.reopenAudit.tested, 0);
+let coveredCalls = 0;
+const covered = guardedSearch(() => {
+  coveredCalls++;
+  return { ...primary, deadCertificate: { exhaustedKnownGraph: true, allRequestedRoots: actions.map(action => action.index) } };
+})({ ...game, clock: null }, unknownState, actions, { nodes: 8 });
+assert(covered.knownDead); assert.equal(coveredCalls, 1);
+const incomplete = guardedSearch(() => ({ ...primary,
+  deadCertificate: { exhaustedKnownGraph: true, allRequestedRoots: [1, 2, 3] } }))(
+{ ...game, clock: null }, unknownState, actions, { nodes: 8 });
+assert.equal(incomplete.knownDead, false);
 assert.throws(() => guardedSearch(null)); assert.throws(() => guardedSearch(() => primary, { oracle: true }));
 console.log('PASS reopen guard requires constructive witnesses, shares the node budget, keeps existing wins, and refuses death certificates from unexamined heuristic exclusions');

@@ -5,6 +5,7 @@ const { createSessionFactory } = require('./production_physical_session.js');
 const { advance, legal } = require('./known_tray_plan.js');
 const { searchHypothesisContinuation } = require('./public_hypothesis_rollout.js');
 const { informationPlayout } = require('./public_information_playout.js');
+const { searchFilledPosition } = require('./public_filled_search.js');
 
 function roleAt(game, state, index) {
   if (state.relieved || !game.rules) return 'none';
@@ -87,7 +88,8 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
   };
   const stats = { assignments: 0, rejectedAssignments: 0, historyReplays: 0, verifiedHypotheticalClears: 0, deadlineStops: 0,
     thinRolloutClears: 0, wideRolloutClears: 0, unresolvedRollouts: 0, certifiedRolloutLosses: 0,
-    informationEvaluations: 0, informationClears: 0, informationLosses: 0, informationUnresolved: 0 };
+    informationEvaluations: 0, informationClears: 0, informationLosses: 0, informationUnresolved: 0, informationCycleStops: 0,
+    exactSearchCalls: 0, exactSearchNodes: 0, exactExhaustedLosses: 0 };
   let cachedOrdinal = null, cachedPictures = null, cached = null;
   const replayPrefix = (game, episode, deadline, validateFrames) => {
     if (now() >= deadline) return null;
@@ -189,6 +191,7 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
         memory: { pictures: problem.rememberedPictures, down: problem.rememberedDown, initialRoles: problem.initialRoles },
         createPolicy, roleAt, deadline, now });
       stats.informationEvaluations++;
+      stats.informationCycleStops += +(report.reason === 'repeatedPublicChoice');
       if (report.status === 'cleared') {
         const replay = replayPrefix(game, problem.episodes.at(-1), deadline, true);
         if (!replay) return result('unresolved');
@@ -214,17 +217,23 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
       const moved = advance(game, state, index);
       if (moved.uncertain) return result('unresolved', 1);
       if (moved.lost) return result('lost', 1);
-      let path = [index], nodes = 1, status = moved.win ? 'cleared' : 'unresolved', winningBeam = null;
+      let path = [index], nodes = 1, status = moved.win ? 'cleared' : 'unresolved', winningBeam = null, deepest = moved.removed;
       if (!moved.win && nodeLimit > 1 && now() < deadline) {
         const actions = legal(game, moved.state).free.map(target => ({ index: target }));
         if (actions.length) {
-          const planned = searchHypothesisContinuation({ tiles: game.tiles, nb: game.nb, rules: game.rules, clock: game.clock },
-            moved.state, actions, { nodeLimit: nodeLimit - 1, deadline });
+          const geometry = { tiles: game.tiles, nb: game.nb, rules: game.rules, clock: game.clock };
+          const planned = createPolicy ? searchFilledPosition(geometry, moved.state, { nodeLimit: nodeLimit - 1, deadline, now })
+            : searchHypothesisContinuation(geometry, moved.state, actions, { nodeLimit: nodeLimit - 1, deadline });
           nodes += planned.nodes;
+          if (createPolicy) {
+            stats.exactSearchCalls++; stats.exactSearchNodes += planned.nodes;
+            stats.exactExhaustedLosses += +(planned.status === 'lost');
+            deepest += planned.deepest;
+          }
           status = planned.status;
           if (status === 'cleared') {
             path = path.concat(planned.path);
-            winningBeam = planned.stages.at(-1).beam;
+            winningBeam = planned.stages?.at(-1)?.beam ?? null;
           } else if (status === 'lost') stats.certifiedRolloutLosses++;
           else stats.unresolvedRollouts++;
         }
@@ -241,7 +250,8 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
         stats.verifiedHypotheticalClears++;
         if (winningBeam !== null) stats[winningBeam === 1 ? 'thinRolloutClears' : 'wideRolloutClears']++;
       }
-      return result(status, nodes);
+      return { ...result(status, nodes), ...(createPolicy && status === 'lost'
+        ? { progress: deepest / Math.max(1, state.alive.reduce((sum, alive) => sum + alive, 0)) } : {}) };
     },
     stats() { return { ...stats }; },
     verifySource: factory.verifySource,
