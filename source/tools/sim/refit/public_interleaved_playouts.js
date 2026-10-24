@@ -2,10 +2,12 @@
 const assert = require('assert/strict');
 const { observeBoard } = require('./human_board_visibility.js');
 
-function createInformationPlayout({ game, session, candidate, memory, createPolicy, roleAt, deadline, now = Date.now }) {
+function createInformationPlayout({ game, session, candidate, candidatePath = [candidate], memory, createPolicy, roleAt, deadline, now = Date.now }) {
   assert(Number.isInteger(candidate) && Number.isFinite(deadline));
   assert.equal(typeof createPolicy, 'function'); assert.equal(typeof roleAt, 'function');
   const size = game.tiles.length, path = [], visits = new Set();
+  assert(Array.isArray(candidatePath) && candidatePath.length >= 1 && candidatePath.length <= 2 && candidatePath[0] === candidate);
+  assert(candidatePath.every(index => Number.isInteger(index) && index >= 0 && index < size));
   let rejected = 0, decisions = 0, policy = null, observedTap = -1;
   const startLeft = session.view().state.alive.reduce((sum, alive) => sum + alive, 0);
   const summarize = (status, reason = null) => {
@@ -15,11 +17,15 @@ function createInformationPlayout({ game, session, candidate, memory, createPoli
   };
   function* steps() {
     if (now() >= deadline) return summarize('unresolved');
-    const accepted = session.view().legalTiles.includes(candidate);
-    if (accepted) { session.tap(candidate); path.push(candidate); }
-    if (session.view().type === 'productionPhysicalEnd-v1') {
-      const terminal = session.view();
-      return summarize(terminal.win ? 'cleared' : terminal.computationCensored ? 'unresolved' : 'lost');
+    let failedCandidate = null;
+    for (const index of candidatePath) {
+      if (now() >= deadline) return summarize('unresolved');
+      if (!session.view().legalTiles.includes(index)) { failedCandidate = index; break; }
+      session.tap(index); path.push(index);
+      if (session.view().type === 'productionPhysicalEnd-v1') {
+        const terminal = session.view();
+        return summarize(terminal.win ? 'cleared' : terminal.computationCensored ? 'unresolved' : 'lost');
+      }
     }
     yield;
     for (;;) {
@@ -39,7 +45,7 @@ function createInformationPlayout({ game, session, candidate, memory, createPoli
           { picture: index => game.faces[index], role: index => roleAt(game, frame.state, index) }));
         observedTap = frame.state.physicalTaps;
       }
-      if (!accepted && decisions === 0) { policy.acknowledge(candidate, false); rejected++; }
+      if (failedCandidate !== null && decisions === 0) { policy.acknowledge(failedCandidate, false); rejected++; }
       const selected = policy.decide(); decisions++;
       if (!selected || now() >= deadline) return summarize('unresolved');
       const index = selected.plan.index, allowed = frame.legalTiles.includes(index);

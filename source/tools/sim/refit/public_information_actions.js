@@ -25,4 +25,18 @@ function informationActions(game, state, roots) {
   return options;
 }
 
-module.exports = { informationActions };
+function candidatePaths(problem) {
+  assert(Object.keys(problem).every(key => ['rememberedPictures', 'actions', 'fallbackIndex', 'unseenFraction', 'actionPaths'].includes(key)));
+  const { actions, actionPaths, rememberedPictures } = problem;
+  assert(actions.length > 1 && new Set(actions).size === actions.length && actions.includes(problem.fallbackIndex));
+  assert(actions.every(index => Number.isInteger(index) && index >= 0));
+  assert(actionPaths === undefined || Array.isArray(actionPaths) && actionPaths.length === actions.length);
+  return new Map(actions.map((identifier, offset) => {
+    const path = actionPaths === undefined ? [identifier] : actionPaths[offset];
+    assert(Array.isArray(path) && path.length >= 1 && path.length <= 2);
+    assert(path.every(index => Number.isInteger(index) && index >= 0 && index < rememberedPictures.length));
+    return [identifier, path.slice()];
+  }));
+}
+
+module.exports = { informationActions, candidatePaths };

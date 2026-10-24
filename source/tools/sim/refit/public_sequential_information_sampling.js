@@ -2,15 +2,15 @@
 const assert = require('assert/strict');
 const { createPairedPictureSampler } = require('./public_paired_picture_sampler.js');
 const { createDiversePictureSampler } = require('./public_diverse_picture_sampler.js');
+const { candidatePaths } = require('./public_information_actions.js');
 
 function rankSequentialInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096, picturePrior = 'uniform' }) {
-  assert(Object.keys(problem).every(key => ['rememberedPictures', 'actions', 'fallbackIndex', 'unseenFraction'].includes(key)));
+  const paths = candidatePaths(problem);
   assert(Number.isFinite(deadline)); assert(Number.isInteger(maximumWorlds) && maximumWorlds > 0 && maximumWorlds <= 128);
   assert(Number.isInteger(exactNodes) && exactNodes >= 1000 && exactNodes <= 4096);
   assert(problem.unseenFraction >= 0 && problem.unseenFraction <= 1);
   const actions = problem.actions.slice();
   assert(actions.length > 1 && new Set(actions).size === actions.length && actions.includes(problem.fallbackIndex));
-  assert(actions.every(index => Number.isInteger(index) && index >= 0 && index < problem.rememberedPictures.length));
   assert(['uniform', 'diverse'].includes(picturePrior));
   const sampler = (picturePrior === 'diverse' ? createDiversePictureSampler : createPairedPictureSampler)(problem.rememberedPictures, { random });
   const informationWeight = Math.min(1, 2 * problem.unseenFraction);
@@ -24,7 +24,8 @@ function rankSequentialInformationActions(problem, { physics, random, deadline, 
       const actionDeadline = now() + Math.max(0, (deadline - now() - 8) / (actions.length - offset));
       const informationDeadline = now() + (actionDeadline - now()) * Math.max(0.35, informationWeight);
       let honest = { status: 'unresolved', progress: 0 }, exact = { status: 'unresolved', nodes: 0 };
-      const request = { hypothesis: structuredClone(hypothesis), index, worldOrdinal: generatedWorlds };
+      const path = paths.get(index);
+      const request = { hypothesis: structuredClone(hypothesis), index: path[0], candidatePath: path, worldOrdinal: generatedWorlds };
       if (ready) {
         const report = physics.evaluateInformation({ ...request, deadline: informationDeadline });
         assert.equal(report.kind, 'informationEvaluation');

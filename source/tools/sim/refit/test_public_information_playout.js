@@ -50,6 +50,13 @@ function test() {
       decide: () => ({ plan: { index: cycleSession.view().state.openPeek === 0 ? 2 : 0 } }) }) });
   assert.equal(cycle.status, 'unresolved'); assert.equal(cycle.reason, 'repeatedPublicChoice');
   assert.deepEqual(cycle.path, [0, 2, 0]); assert.equal(cycle.removed, 0);
+  const pairedSession = factory(cycleGame, settings);
+  const paired = informationPlayout({ game: cycleGame, session: pairedSession, candidate: 0, candidatePath: [0, 1],
+    memory: { pictures: cycleGame.faces.slice(), down: cycleGame.down.slice(), initialRoles: tiles.map(() => 'none') },
+    roleAt: visibleRole, deadline: Date.now() + 1000, createPolicy: deadline => createHumanController(tiles,
+      { nodes: 4, knownPairMacros: true, decisionMs: undefined, deadline }) });
+  assert.equal(paired.status, 'cleared'); assert.deepEqual(paired.path.slice(0, 2), [0, 1]);
+  assert.equal(verifyAttempt(encodeGame(cycleGame), paired.path, settings, pairedSession.audit()), paired.path.length);
   const policy = createHumanController(tiles);
   assert.throws(() => policy.rememberPublic({ pictures: [], down: [], initialRoles: [] }));
   assert.throws(() => policy.rememberPublic({ pictures: [], down: [], initialRoles: [], seed: 7 }));

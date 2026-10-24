@@ -83,6 +83,19 @@ function test() {
       assert.equal(late.stats().informationClears, 0); assert.equal(late.stats().verifiedHypotheticalClears, 0);
     }
   }
+  const optionProblem = problemFrom(actual);
+  const optionHypothesis = createPairedPictureSampler(optionProblem.rememberedPictures, { random: () => 0 }).sample();
+  const optionPhysics = createHypothesisPhysics(optionProblem, { random: () => 0,
+    createPolicy: deadline => createHumanController(tiles, { exclusiveRoles: true, usePlacementContract: true,
+      knownPairMacros: true, nodes: 4, beam: 1, taps: 4, proofNodes: 2, decisionMs: undefined, deadline }, { boardMode: 'standard' }) });
+  assert.equal(optionPhysics.evaluate({ hypothesis: optionHypothesis, index: 1, candidatePath: [1, 0],
+    deadline: Date.now() + 1000, nodeLimit: 4096, worldOrdinal: 1 }).status, 'cleared');
+  assert.equal(optionPhysics.evaluateInformation({ hypothesis: optionHypothesis, index: 1, candidatePath: [1, 0],
+    deadline: Date.now() + 1000, worldOrdinal: 1 }).status, 'cleared');
+  assert.equal(optionPhysics.stats().verifiedHypotheticalClears, 2);
+  const prefixCap = optionPhysics.evaluate({ hypothesis: optionHypothesis, index: 1, candidatePath: [1, 0],
+    deadline: Date.now() + 1000, nodeLimit: 1, worldOrdinal: 1 });
+  assert.equal(prefixCap.status, 'unresolved'); assert.equal(prefixCap.nodes, 1);
   const changedHistory = problemFrom(actual, [0, 2]); changedHistory.episodes[0].frames.at(-1).state.tray = [5, 6];
   const inconsistent = createHypothesisPhysics(changedHistory, { random: () => 0, maximumAssignments: 2 });
   const hypothesis = createPairedPictureSampler(changedHistory.rememberedPictures, { random: () => 0 }).sample();

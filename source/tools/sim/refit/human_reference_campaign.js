@@ -27,6 +27,7 @@ const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
 const { rankBudgetedHypotheses } = require('./public_budgeted_hypotheses.js');
 const { rankInformationActions } = require('./public_information_sampling.js');
+const { informationActions } = require('./public_information_actions.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
 
@@ -47,6 +48,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
   assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
   assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
+  assert(options.informationActionPaths === undefined || typeof options.informationActionPaths === 'boolean');
   assert(!options.informationSampling || options.hypothesisSampling === true);
   assert(options.informationSchedule === undefined || ['sequential', 'interleaved'].includes(options.informationSchedule));
   assert(options.informationPicturePrior === undefined || ['uniform', 'diverse'].includes(options.informationPicturePrior));
@@ -97,9 +99,14 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     cycleFilteredRoots: 0, cycleLimitedDecisions: 0, preparationCalls: 0, budgetedActions: 0, actionDeadlineStops: 0,
     contestedDecisions: 0, safetyVetoes: 0, informationEvaluations: 0, informationClears: 0,
     informationLosses: 0, informationUnresolved: 0, informationCycleStops: 0,
-    exactSearchCalls: 0, exactSearchNodes: 0, exactExhaustedLosses: 0 };
+    exactSearchCalls: 0, exactSearchNodes: 0, exactExhaustedLosses: 0,
+    optionDecisions: 0, optionChanges: 0, compoundChoices: 0, retainedOptionTaps: 0, invalidatedOptions: 0 };
   const hypothesisVisits = options.hypothesisSampling ? createPublicActionVisits() : null;
   let decisionPosition = null;
+  let pendingInformationAction = null;
+  const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles });
+  const physicalSignature = position => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
+    .map(field => position[field]));
   const knowledgeSignature = () => JSON.stringify({ pictures, down, initialRoles, roles,
     accepted: acceptedTapMemory?.entries() ?? [], cleared: clearedRoleMemory?.entries() ?? [],
     blocked: blockedTapMemory?.entries() ?? [], knownLosses: knownLossMemory?.entries() ?? [] });
@@ -139,6 +146,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       blockedTapMemory?.beginAttempt();
       if (options.hypothesisSampling) episodes.push({ actions: [], frames: [] });
       hypothesisVisits?.beginAttempt(); decisionPosition = null;
+      pendingInformationAction = null;
       resetPlanner();
     },
     observe(state, observed) {
@@ -236,6 +244,21 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       let actions = available.free.map(index => ({ index }));
       const initialActions = actions.slice();
       if (!actions.length) return null;
+      if (pendingInformationAction) {
+        const pending = pendingInformationAction; pendingInformationAction = null;
+        if (pending.expected === physicalSignature(current) && pending.knowledge === informationSignature()
+          && actions.some(action => action.index === pending.index)) {
+          const predicted = advance(geometry, current, pending.index);
+          if (predicted.uncertain || !predicted.lost) {
+            hypothesisStats.retainedOptionTaps++;
+            manualChoice = true; resetPlanner();
+            return { plan: { index: pending.index, path: [pending.index], goal: 'sampledOptionContinuation',
+              knownWin: !predicted.uncertain && predicted.win, knownDead: false, knownProgress: predicted.removed ?? 0,
+              nodes: 0, boundary: !!predicted.uncertain, information: !!predicted.uncertain }, predicted };
+          }
+        }
+        hypothesisStats.invalidatedOptions++;
+      }
       if (hypothesisVisits) decisionPosition = JSON.stringify(Object.fromEntries(
         ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving'].map(field => [field, current[field]])));
       const finalize = selected => {
@@ -279,9 +302,17 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random, createPolicy });
         const problem = { rememberedPictures: pictures, actions: candidates.map(action => action.index),
           fallbackIndex: candidates.some(action => action.index === selected.plan.index) ? selected.plan.index : candidates[0].index };
+        const actionOptions = options.informationSampling && options.informationActionPaths
+          ? informationActions(Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure']
+            .map(field => [field, geometry[field]])), current, problem.actions) : null;
+        const fallbackOption = actionOptions && (actionOptions.find(choice => choice.index === problem.fallbackIndex
+          && choice.path.every((index, offset) => selected.plan.path?.[offset] === index))
+          ?? actionOptions.find(choice => choice.index === problem.fallbackIndex));
+        const samplingProblem = actionOptions ? { ...problem, actions: actionOptions.map(choice => choice.id),
+          actionPaths: actionOptions.map(choice => choice.path), fallbackIndex: fallbackOption.id } : problem;
         const rankOptions = { deadline: decisionDeadline, random,
           maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction };
-        const ranking = options.informationSampling ? rankInformationActions({ ...problem,
+        const ranking = options.informationSampling ? rankInformationActions({ ...samplingProblem,
           unseenFraction: current.pictures.filter((picture, index) => current.alive[index] && picture === null).length
             / current.alive.reduce((sum, alive) => sum + alive, 0) }, {
           deadline: Math.min(decisionDeadline, Date.now() + 1300), random, physics, schedule: options.informationSchedule ?? 'sequential',
@@ -289,9 +320,14 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           maximumWorlds: options.hypothesisMaximumWorlds ?? 128 }) : options.hypothesisActionMs === undefined
           ? rankHypothesisActions(problem, { ...rankOptions, evaluate: physics.evaluate })
           : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });
-        const physicalStats = physics.stats(), predicted = advance(geometry, current, ranking.index);
-        const changed = ranking.index !== selected.plan.index && (predicted.uncertain || !predicted.lost);
-        const sampledChange = changed && ranking.index !== problem.fallbackIndex;
+        const rankedPath = actionOptions ? actionOptions.find(choice => choice.id === ranking.index).path : [ranking.index];
+        const rankedIndex = rankedPath[0];
+        hypothesisStats.optionDecisions += +!!actionOptions;
+        hypothesisStats.optionChanges += +(!!actionOptions && ranking.index !== fallbackOption.id);
+        hypothesisStats.compoundChoices += +(rankedPath.length > 1);
+        const physicalStats = physics.stats(), predicted = advance(geometry, current, rankedIndex);
+        const changed = rankedIndex !== selected.plan.index && (predicted.uncertain || !predicted.lost);
+        const sampledChange = changed && rankedIndex !== problem.fallbackIndex;
         hypothesisStats.decisions++; hypothesisStats.changed += +sampledChange;
         hypothesisStats.safetyVetoes += +(problem.fallbackIndex !== selected.plan.index);
         hypothesisStats.contestedDecisions += +!!options.informationSampling;
@@ -305,9 +341,13 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const audit = { ...ranking, ...physicalStats, changed: sampledChange, safetyVetoed: problem.fallbackIndex !== selected.plan.index,
           primaryIndex: selected.plan.index,
           sharedDeadline: decisionDeadline };
-        if (!changed) return { ...selected, plan: { ...selected.plan, hypothesisAudit: audit } };
+        if (rankedPath.length > 1) {
+          assert(!predicted.uncertain && !predicted.lost && predicted.removed === 0);
+          pendingInformationAction = { index: rankedPath[1], expected: physicalSignature(predicted.state), knowledge: informationSignature() };
+        }
+        if (!changed && rankedPath.length === 1) return { ...selected, plan: { ...selected.plan, hypothesisAudit: audit } };
         manualChoice = true; resetPlanner();
-        return { plan: { index: ranking.index, path: [ranking.index], goal: 'hypothesisChoice', knownWin: false, knownDead: false,
+        return { plan: { index: rankedIndex, path: rankedPath, goal: rankedPath.length > 1 ? 'hypothesisOption' : 'hypothesisChoice', knownWin: false, knownDead: false,
           knownProgress: predicted.uncertain ? 0 : predicted.removed, information: !!predicted.uncertain,
           boundary: true, nodes: selected.plan.nodes + ranking.nodes, hypothesisAudit: audit }, predicted };
       };

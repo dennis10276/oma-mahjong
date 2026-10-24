@@ -42,6 +42,16 @@ function test() {
     assert.deepEqual(fillings[0].pictures.slice(0, 2), problem.rememberedPictures.slice(0, 2));
   }
   assert.throws(() => rankInformationActions(problem, { physics, deadline: Date.now() + 1000, picturePrior: 'actualDeck' }));
+  for (const schedule of ['sequential', 'interleaved']) {
+    const paths = [], optionPhysics = { ...physics,
+      evaluateInformation(request) {
+        paths.push(request.candidatePath);
+        return { kind: 'informationEvaluation', status: request.candidatePath[1] === 1 ? 'cleared' : 'lost', progress: 0 };
+      } };
+    const options = rankInformationActions({ ...problem, actions: [10, 11], fallbackIndex: 10, actionPaths: [[0, 0], [0, 1]] },
+      { physics: optionPhysics, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1, schedule });
+    assert.equal(options.index, 11); assert.deepEqual(paths, [[0, 0], [0, 1]]);
+  }
   const remembered = rankInformationActions({ ...problem, unseenFraction: 0.05 },
     { physics, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1 });
   assert.equal(remembered.index, 0); assert.equal(remembered.nodes, 4000);

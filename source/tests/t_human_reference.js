@@ -51,6 +51,8 @@ const modules = [
   'test_public_information_playout.js',
   'test_public_interleaved_playouts.js',
   'test_public_information_sampling.js',
+  'test_public_information_actions.js',
+  'test_human_information_options.js',
   'test_public_diverse_picture_sampler.js',
   'test_public_filled_search.js',
   'test_public_hypothesis_rollout.js',

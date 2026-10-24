@@ -196,14 +196,14 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
       stats.verifiedHypotheticalClears += +(status === 'cleared');
       return informationResult(status, report.removed / Math.max(1, report.removed + report.remaining));
   };
-  const createInformationEvaluation = ({ hypothesis, index, deadline, worldOrdinal }) => {
+  const createInformationEvaluation = ({ hypothesis, index, candidatePath = [index], deadline, worldOrdinal }) => {
     assert.equal(typeof createPolicy, 'function'); assert(Number.isInteger(index) && index >= 0 && index < size);
     const unavailable = () => ({ next: () => ({ done: true, value: informationResult('unresolved') }),
       snapshot: () => informationResult('unresolved') });
     if (!prepare({ hypothesis, deadline, worldOrdinal })) return unavailable();
     const { game } = cached, session = replayPrefix(game, problem.episodes.at(-1), deadline, true);
     if (!session) return unavailable();
-    const runner = createInformationPlayout({ game, session, candidate: index,
+    const runner = createInformationPlayout({ game, session, candidate: index, candidatePath,
       memory: { pictures: problem.rememberedPictures, down: problem.rememberedDown, initialRoles: problem.initialRoles },
       createPolicy, roleAt, deadline, now });
     let completed = null;
@@ -226,26 +226,33 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
       do { step = runner.next(); } while (!step.done);
       return step.value;
     },
-    evaluate({ hypothesis, index, deadline, nodeLimit, worldOrdinal }) {
+    evaluate({ hypothesis, index, candidatePath = [index], deadline, nodeLimit, worldOrdinal }) {
       const result = (status, nodes) => ({ kind: 'hypothesisEvaluation', status, nodes });
       assert(Number.isInteger(index) && index >= 0 && index < size);
       assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
       assert(Number.isInteger(worldOrdinal) && worldOrdinal > 0);
       assert(Number.isFinite(deadline));
+      assert(Array.isArray(candidatePath) && candidatePath.length >= 1 && candidatePath.length <= 2 && candidatePath[0] === index);
+      assert(candidatePath.every(target => Number.isInteger(target) && target >= 0 && target < size));
       if (now() >= deadline) { stats.deadlineStops++; return result('unresolved', 0); }
       if (!prepare({ hypothesis, worldOrdinal, deadline })) return result('unresolved', 0);
-      const { game, state } = cached, available = legal(game, state).free;
-      if (!available.includes(index)) return result('unresolved', 0);
-      const moved = advance(game, state, index);
-      if (moved.uncertain) return result('unresolved', 1);
-      if (moved.lost) return result('lost', 1);
-      let path = [index], nodes = 1, status = moved.win ? 'cleared' : 'unresolved', winningBeam = null, deepest = moved.removed;
-      if (!moved.win && nodeLimit > 1 && now() < deadline) {
+      const { game, state } = cached;
+      let position = state, moved = null, path = [], nodes = 0, deepest = 0;
+      for (const target of candidatePath) {
+        if (nodes >= nodeLimit || now() >= deadline || !legal(game, position).free.includes(target)) return result('unresolved', nodes);
+        moved = advance(game, position, target); nodes++;
+        if (moved.uncertain) return result('unresolved', nodes);
+        if (moved.lost) return result('lost', nodes);
+        path.push(target); deepest += moved.removed; position = moved.state;
+        if (moved.win) break;
+      }
+      let status = moved.win ? 'cleared' : 'unresolved', winningBeam = null;
+      if (!moved.win && nodeLimit > nodes && now() < deadline) {
         const actions = legal(game, moved.state).free.map(target => ({ index: target }));
         if (actions.length) {
           const geometry = { tiles: game.tiles, nb: game.nb, rules: game.rules, clock: game.clock };
-          const planned = createPolicy ? searchFilledPosition(geometry, moved.state, { nodeLimit: nodeLimit - 1, deadline, now })
-            : searchHypothesisContinuation(geometry, moved.state, actions, { nodeLimit: nodeLimit - 1, deadline });
+          const planned = createPolicy ? searchFilledPosition(geometry, moved.state, { nodeLimit: nodeLimit - nodes, deadline, now })
+            : searchHypothesisContinuation(geometry, moved.state, actions, { nodeLimit: nodeLimit - nodes, deadline });
           nodes += planned.nodes;
           if (createPolicy) {
             stats.exactSearchCalls++; stats.exactSearchNodes += planned.nodes;

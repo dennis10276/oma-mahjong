@@ -4,15 +4,15 @@ const { createPairedPictureSampler } = require('./public_paired_picture_sampler.
 const { createDiversePictureSampler } = require('./public_diverse_picture_sampler.js');
 const { interleavePlayouts } = require('./public_interleaved_playouts.js');
 const { rankSequentialInformationActions } = require('./public_sequential_information_sampling.js');
+const { candidatePaths } = require('./public_information_actions.js');
 
 function rankInterleavedInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096, picturePrior = 'uniform' }) {
-  assert(Object.keys(problem).every(key => ['rememberedPictures', 'actions', 'fallbackIndex', 'unseenFraction'].includes(key)));
+  const paths = candidatePaths(problem);
   assert(Number.isFinite(deadline)); assert(Number.isInteger(maximumWorlds) && maximumWorlds > 0 && maximumWorlds <= 128);
   assert(Number.isInteger(exactNodes) && exactNodes >= 1000 && exactNodes <= 4096);
   assert(problem.unseenFraction >= 0 && problem.unseenFraction <= 1);
   const actions = problem.actions.slice();
   assert(actions.length > 1 && new Set(actions).size === actions.length && actions.includes(problem.fallbackIndex));
-  assert(actions.every(index => Number.isInteger(index) && index >= 0 && index < problem.rememberedPictures.length));
   assert(['uniform', 'diverse'].includes(picturePrior));
   const sampler = (picturePrior === 'diverse' ? createDiversePictureSampler : createPairedPictureSampler)(problem.rememberedPictures, { random });
   const informationWeight = Math.min(1, 2 * problem.unseenFraction);
@@ -23,7 +23,8 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
     const ready = physics.prepare({ hypothesis, worldOrdinal: generatedWorlds, deadline });
     const informationDeadline = now() + Math.max(0, deadline - now() - 8) * Math.max(0.35, informationWeight);
     const runners = actions.map(index => ready ? physics.createInformationEvaluation({
-      hypothesis: structuredClone(hypothesis), index, worldOrdinal: generatedWorlds, deadline: informationDeadline })
+      hypothesis: structuredClone(hypothesis), index: paths.get(index)[0], candidatePath: paths.get(index),
+      worldOrdinal: generatedWorlds, deadline: informationDeadline })
       : { next: () => ({ done: true, value: { kind: 'informationEvaluation', status: 'unresolved', progress: 0 } }),
         snapshot: () => ({ kind: 'informationEvaluation', status: 'unresolved', progress: 0 }) });
     const honestBatch = interleavePlayouts(runners, { deadline: informationDeadline, now });
@@ -36,7 +37,8 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
     for (const [offset, index] of actions.entries()) {
       if (informationWeight === 1 || now() >= deadline - 8) break;
       const actionDeadline = now() + Math.max(0, (deadline - now() - 8) / (actions.length - offset));
-      const request = { hypothesis: structuredClone(hypothesis), index, worldOrdinal: generatedWorlds };
+      const path = paths.get(index);
+      const request = { hypothesis: structuredClone(hypothesis), index: path[0], candidatePath: path, worldOrdinal: generatedWorlds };
       if (ready && now() < actionDeadline) {
         const report = physics.evaluate({ ...request, deadline: actionDeadline, nodeLimit: exactNodes });
         assert.equal(report.kind, 'hypothesisEvaluation');
