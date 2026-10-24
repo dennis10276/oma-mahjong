@@ -52,7 +52,7 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current code, tests and active experiment
 
-Latest verified runtime before information-width experiment:`80491b6`;
+Latest experimental runtime:`ae1753f`; preceding adaptive runtime:`80491b6`;
 verified correction:`2d6ec2f`;
 preceding runtime:`b2d3c5f`;
 baseline key recovery:`a5cb7db`;
@@ -106,6 +106,12 @@ The old one-tap dominance shortcut is disabled for this different objective.
 A compact synthetic regression chooses the broader known prefix, independently
 replays it through production, and rejects the old shortcut;56 tests pass.
 No natural-level gain is claimed before the next controlled screen completes.
+ACTIVE:serial eight-case informationWidth1 then2 controls, session93094,
+levels50/81/92/121/123/137/147/150, runtimeae1753f. This deliberately covers the
+new gains, all three adaptive regressions, and old50/92/150 controls, not a full
+development gate. Fingerprint:`b21239e48e7cbe6b45a4dc7815cab67085b55d3316f986b8338166bb5e041ccc`.
+Pending:`HUMAN_REFERENCE_INFORMATION_WIDTH_1_2026-10-24.md` and
+`HUMAN_REFERENCE_INFORMATION_WIDTH_2_2026-10-24.md`. Hold loaded runtime fixed.
 
 The three-action role-payoff screen completed7/8, source unchanged, slowest
 1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
