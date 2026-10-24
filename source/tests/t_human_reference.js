@@ -14,6 +14,7 @@ const modules = [
   'test_human_cleared_role_memory.js',
   'test_public_retry_risk_memory.js',
   'test_public_retry_exploration.js',
+  'test_public_clock_retry_exploration.js',
   'test_human_single_carry.js',
   'test_human_crowded_discovery.js',
   'test_human_reference_budget.js',

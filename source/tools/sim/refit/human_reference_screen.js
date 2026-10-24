@@ -32,6 +32,7 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
       slowestMs: Math.round(result.slowestMs * 10) / 10, status: result.status, verifiedTaps: result.verifiedTaps,
       decisionCount: result.decisionCount, meanDecisionMs: Math.round(result.meanDecisionMs * 10) / 10,
       dominanceStops: result.dominanceStops,
+      ...(result.clockRetry ? { clockRetry: result.clockRetry } : {}),
       attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left,
         ...(attempt.learnedRisk !== undefined ? { learnedRisk: attempt.learnedRisk } : {}) })) };
     rows.push(row); emit(row);
@@ -72,6 +73,9 @@ async function main(filename, levels, settings, reportFile) {
     meanDecisionMs: Math.round(rows.reduce((sum, row) => sum + row.meanDecisionMs * row.decisionCount, 0)
       / Math.max(1, rows.reduce((sum, row) => sum + row.decisionCount, 0)) * 10) / 10,
     dominanceStops: rows.reduce((sum, row) => sum + row.dominanceStops, 0),
+    ...(planning.clockRetryLearning ? { clockRetry: {
+      decisionsAudited: rows.reduce((sum, row) => sum + row.clockRetry.decisionsAudited, 0),
+      decisionsUsingAlternative: rows.reduce((sum, row) => sum + row.clockRetry.decisionsUsingAlternative, 0) } } : {}),
     developmentGate: filename === '--development' && !selected && unchanged && rows.every(row => row.pass && row.slowestMs < 2000),
     ...(input.excluded ? { excluded: input.excluded } : {}),
     byBoardSource: Object.fromEntries([...new Set(rows.map(row => row.boardSource))].map(source => [source,
@@ -83,6 +87,7 @@ async function main(filename, levels, settings, reportFile) {
       '| Level | Dennis tries | Bot tries | Pass | Board source | Mean ms | Slowest ms |', '|---:|---:|---:|:---:|---|---:|---:|',
       ...rows.map(row => `| ${row.level} | ${row.dennis} | ${row.bot ?? '>' + row.attemptLimit} | ${row.pass ? 'yes' : 'no'} | ${row.boardSource} | ${row.meanDecisionMs} | ${row.slowestMs} |`),
       '', `Passed ${summary.passed}/${summary.cases}; mean ${summary.meanDecisionMs}ms; slowest ${summary.slowestMs}ms; dominance stops ${summary.dominanceStops}.`,
+      ...(summary.clockRetry ? [`Clock retry audit: ${summary.clockRetry.decisionsAudited} decisions with an alternative-search audit; ${summary.clockRetry.decisionsUsingAlternative} decisions using an adopted alternative (including retained steps).`] : []),
       'Historical board identity is not claimed for current-definition substitutes. The unseen20-level gate has not been run.', ''];
     fs.writeFileSync(path.resolve(reportFile), table.join('\n'), { flag: 'wx' });
   }

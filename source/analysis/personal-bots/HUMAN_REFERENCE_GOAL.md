@@ -82,7 +82,7 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 Runtime:`32f493a`, diagnostic context fix:`b1bdbec`;
 last completed full140/155 policy:`32f493a`. Goal ACTIVE, UNMET.
-**73/73 offline tests pass** in6s, including6912 concealed-world controls,
+**74/74 offline tests pass** in7s, including7104 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -108,15 +108,21 @@ timing.140/155,132 natural+8 lab; only new pass124, no pass regressions. The run
 is terminal and its source freeze has ended. No CPU-heavy simulation remains live.
 This is development, NOT unseen20;157+ remains unopened.
 
-Independent work while this freeze runs:public_clock_retry_exploration.js and its
-standalone test are new, NOT imported by the frozen controller. The helper permits
+Independent work during the completed freeze:public_clock_retry_exploration.js
+was NOT imported by that full140/155 controller. It is now optionally integrated
+after the run ended. clockRetryLearning requires actual retryRiskLearning. The helper permits
 an earlier actual risk to change an active-clock root only if a lower-penalty
 alternative has a known physical safe-exit prefix. It shares deadline/node budget,
 protects known wins/exits/deaths, and rejects unknown transitions or expired clocks.
 The real loss/retry fixture independently replays both physical routes and tests
 both primary and alternative budget overruns. Standalone test PASS in0.2s.
-No campaign score or main-suite increase is claimed. Next:register its test,
-integrate optionally with actual retry learning, and test whole policies.
+Its test is registered;74/74 tests pass, including7104 concealed-world controls
+and an actual complete clock campaign that wins without teaching a fabricated
+loss. The actor now permits replanning at a learned active-clock risk while
+protecting a retained safe-exit or winning witness. Default behavior keeps the
+clock option off. Campaign/report clockRetry counters describe decisions using
+audited or adopted plans, including retained steps; they are NOT fresh-search
+invocation counts. No campaign gain is claimed before evaluation.
 
 Fixed after the full source freeze:a physically replayed known winning route was discarded solely
 when a compatible late roleNone becomes visible. The stacked closed-tile fixture

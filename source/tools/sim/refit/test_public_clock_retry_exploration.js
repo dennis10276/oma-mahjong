@@ -4,7 +4,7 @@ const Layouts = require('../../../www/layouts.js');
 const { clockRetryExploration, clockExitPrefix } = require('./public_clock_retry_exploration.js');
 const { createRetryRiskMemory } = require('./public_retry_risk_memory.js');
 const { createSessionFactory } = require('./production_physical_session.js');
-const { verifyAttempt } = require('./human_reference_campaign.js');
+const { verifyAttempt, createHumanController, playHumanCampaign } = require('./human_reference_campaign.js');
 const { encodeGame } = require('./personal_game_io.js');
 
 function test() {
@@ -78,6 +78,17 @@ function test() {
     assert.equal(count, 1);
   }
   assert.throws(() => clockRetryExploration(() => primary)({ ...game, publicRetryCost: () => -1 }, state, actions, { nodes: 32 }));
+  assert.throws(() => createHumanController(tiles, { clockRetryLearning: true }), /requires actual retry learning/);
+  assert.throws(() => createHumanController(tiles, { retryRiskLearning: true, clockRetryLearning: 1 }));
+  const completeTiles = tiles.concat([{ x: 32, y: 0, z: 0 }, { x: 36, y: 0, z: 0 }]);
+  const complete = { ...actual, tiles: completeTiles, nb: Layouts.neighbors(completeTiles),
+    faces: actual.faces.concat([7, 8]), down: actual.down.concat([0, 0]) };
+  const campaign = playHumanCampaign(complete, { maximumAttempts: 2,
+    planning: { retryRiskLearning: true, clockRetryLearning: true } });
+  assert.equal(campaign.wonOn, 1);
+  assert.equal(campaign.verifiedTaps, campaign.attempts[0].taps);
+  assert.deepEqual(campaign.retryRisks, []);
+  assert.deepEqual(campaign.clockRetry, { decisionsAudited: 0, decisionsUsingAlternative: 0 });
   factory.verifySource();
   console.log('PASS a real active-clock loss teaches a retry risk, a lower-risk physical route is adopted only with a verified safe clock exit, unknowns and tight clocks are refused, and every search shares one node/deadline budget');
 }

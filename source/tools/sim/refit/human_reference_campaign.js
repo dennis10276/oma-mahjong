@@ -18,6 +18,7 @@ const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_pri
 const { describeInformation } = require('./public_information_audit.js');
 const { createRetryRiskMemory } = require('./public_retry_risk_memory.js');
 const { retryExploration } = require('./public_retry_exploration.js');
+const { clockRetryExploration } = require('./public_clock_retry_exploration.js');
 const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
@@ -31,6 +32,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
   assert(options.protectOpenTwin === undefined || typeof options.protectOpenTwin === 'boolean');
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
+  assert(options.clockRetryLearning === undefined || typeof options.clockRetryLearning === 'boolean');
+  assert(!options.clockRetryLearning || options.retryRiskLearning, 'Clock retry exploration requires actual retry learning');
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
@@ -52,7 +55,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles) : null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
-  const runRetrySearch = options.retryRiskLearning ? retryExploration(searchPublicWitness) : null;
+  const retrySearchFactory = options.clockRetryLearning ? clockRetryExploration : retryExploration;
+  const runRetrySearch = options.retryRiskLearning ? retrySearchFactory(searchPublicWitness) : null;
   const resetPlanner = () => { planner = runRetrySearch ? reference(settings, runRetrySearch) : reference(settings); };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
@@ -188,7 +192,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           knownDead: false, knownProgress: cleanup.removed, information: false, boundary: !won, nodes: 0 },
         predicted: advance(geometry, current, index) };
       }
-      if (retryRiskMemory && !(clock && current.alive[clock.i]) && !planner.report()?.knownWin
+      const activeClock = !!(clock && current.alive[clock.i]);
+      const mayExploreRetry = !activeClock || options.clockRetryLearning && !planner.report()?.safeClockExit;
+      if (retryRiskMemory && mayExploreRetry && !planner.report()?.knownWin
         && actions.some(action => retryRiskMemory.cost(current, action.index) > 0)) resetPlanner();
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report();
@@ -276,6 +282,7 @@ function playHumanCampaign(input, options = {}) {
   const factory = createSessionFactory(), attempts = [];
   let slowestMs = 0, controls = 0, verifiedTaps = 0, rejected = 0, decision = null;
   let decisionCount = 0, totalDecisionMs = 0, dominanceStops = 0;
+  const clockRetry = options.planning?.clockRetryLearning ? { decisionsAudited: 0, decisionsUsingAlternative: 0 } : null;
   for (let attempt = 1; attempt <= maximumAttempts; attempt++) {
     controller.beginAttempt();
     const session = factory(game, settings), actions = [], decisions = [];
@@ -296,6 +303,10 @@ function playHumanCampaign(input, options = {}) {
       if (elapsed > slowestMs) { slowestMs = elapsed; decision = { attempt, physicalTaps: state.physicalTaps }; }
       if (!selected) { status = 'unresolvedPublicFrontier'; break; }
       const index = selected.plan.index, accepted = actual.legalTiles.includes(index);
+      if (clockRetry && selected.plan.clockRetryExploration) {
+        clockRetry.decisionsAudited++;
+        clockRetry.decisionsUsingAlternative += +selected.plan.clockRetryExploration.adopted;
+      }
       if (options.captureDecisions) decisions.push({ state: controller.state(), index, accepted,
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
           boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes },
@@ -329,6 +340,7 @@ function playHumanCampaign(input, options = {}) {
   return { wonOn: attempts.at(-1).status === 'cleared' ? attempts.length : null, status: attempts.at(-1).status,
     slowestMs, decisionCount, meanDecisionMs: decisionCount ? totalDecisionMs / decisionCount : 0,
     dominanceStops, decision, attempts, controls, verifiedTaps, rejected,
+    ...(clockRetry ? { clockRetry } : {}),
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
