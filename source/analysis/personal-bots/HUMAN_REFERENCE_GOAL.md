@@ -75,7 +75,7 @@ The goal is ACTIVE and UNMET. No research option is promoted.
 | Clock recovery, no carry threshold |32/42 natural,4/15 lab |Gains84,loses144; lab44/46/48 regress |
 | Clock recovery after1 carrier |39/57:32 natural+7 lab |Gains84/lab49; loses142/lab15; max1505.5ms |
 | Known key access preparation |32/42 natural,7/15 lab |Constructs new bounded key routes but no count gain |
-| Key access + information before crowded exits |8/15 lab; natural42 RUNNING |Lab45 nowtry1 vsDennis6, no lab regressions; lab max1194.3ms |
+| Key access + information before crowded exits |33/42 natural,8/15 lab |Gains84/lab45, no challenge regressions; max1504.9ms |
 
 Reports respectively:
 - `HUMAN_REFERENCE_MACRO_CONTROL_CHALLENGE_2026-10-24.md`,
@@ -85,11 +85,11 @@ Reports respectively:
 - `HUMAN_REFERENCE_CARRIED_CLOCK_EXPANDED_2026-10-24.md`.
 - `HUMAN_REFERENCE_KEY_ACCESS_CHALLENGE_2026-10-24.md`,
   `HUMAN_REFERENCE_LAB_KEY_ACCESS_2026-10-24.md`.
-- `HUMAN_REFERENCE_LAB_CLOCK_INFORMATION_2026-10-24.md`; natural report pending:
+- `HUMAN_REFERENCE_LAB_CLOCK_INFORMATION_2026-10-24.md`; natural report:
   `HUMAN_REFERENCE_CLOCK_INFORMATION_CHALLENGE_2026-10-24.md`.
 
-ACTIVE:session58527, lab15 completed8/15 then natural42 still running.
-Keep loaded catalog/screen/actor/search files fixed until completion.
+COMPLETED:session58527, lab15 completed8/15 and natural42 completed33/42.
+Mean60.9ms natural and68.9ms lab; no new losses against the corrected control.
 Source:`a137a1aff7d6574fc2e626af4faa9e68e2538f0ccd732b038795f58fc06bc836`.
 Input hashes:lab26e875b6bc204b952e47911465efddc103dd23e158695dcc921095a5cec54a83;
 natural c679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5.
