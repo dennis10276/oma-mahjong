@@ -68,7 +68,8 @@ Experimental results, not promoted:
 Quick screen24:81,93,99,102,107,112,125,137,10011,10032,10033,10041,10049,10052,
 plus guards92,111,121,123,124,134,141,143,147,150.
 Report sampling changes / contested decisions; below5% is insufficient influence.
-Repeat the24-case screen with the corrected fast mode and influence counter.
+The corrected24-case screen is running; keep its source fixed.81 still fails1,
+now a36-tap physical loss, max1304.2ms; genuine influence1/35 (2.9%), below gate.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.
