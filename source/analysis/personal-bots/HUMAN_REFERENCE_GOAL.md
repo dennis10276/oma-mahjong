@@ -76,79 +76,55 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`a4cb277`; last full139/155 policy:`d7778dd`.
-**72/72 offline tests pass**, including6912 concealed-world controls,675 accepted
-availability controls,380 cleared-role subset controls,144 local recoveries,
-24 relief witnesses and original-production replay. No research policy is promoted.
+Runtime:`32f493a`; last full139/155 policy:`d7778dd`. Goal ACTIVE, UNMET.
+**72/72 offline tests pass** in6s, including6912 concealed-world controls,
+675 accepted availability controls,380 cleared-role subset controls,144 local
+recoveries,24 relief witnesses and original-production replay.
 
-COMPLETED:session20129, started2026-10-24T05:29:10.780Z, on22 development tasks:
-all16 failures plus controls121/123/134/141/143/147. This is NOT unseen20.
-Report:`HUMAN_REFERENCE_RECOVERY_BREADTH_SCREEN_2026-10-24.md`.
-Source:`1c0c90b87e2bfebeaaedc297280ccef7e228fc8303d14794f2631992d57968a7`.
-Input:`6b0423fdb713967eaa3a4aee91cee0a19091b273fed1ca48dcac5ee875c64904`.
-Result8/22 vs control6/22:gain102try1,124try2,lab12try1; regression147 persists.
-Mean76.8ms, maximum1502.1ms, source unchanged.125 still fails. Not promoted.
+RUNNING:session44060, started2026-10-24T05:49:18.275Z. Serial natural42 then lab15.
+Reports:HUMAN_REFERENCE_PLACEMENT_CONTRACT_CHALLENGE_2026-10-24.md and
+HUMAN_REFERENCE_LAB_PLACEMENT_CONTEXT_2026-10-24.md.
+Source:`0c85b8bf0780c4566175c26b15a0afacc32ca4fc35a67520d00c3a87e72df364`.
+Natural input:`c679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5`.
+This is development, NOT unseen20. No other simulation is live. Hold loaded runtime
+fixed until terminal; poll the actual handle, never restart for an observation
+timeout or kill app/Gemini helpers. The emitted natural rows include124try2,
+121try2 (previously3),92try3 (previously2), and147 stilltry1. No new pass regression
+yet, but the complete result is unproven and no full155 score is extrapolated.
 
-Full139/155 profile:
+Frozen current profile:
 ```json
-{"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true,"passiveInformation":"shortRoles","keyAccessMacros":true,"clockInformationBeforeRisk":true}
+{"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true,"passiveInformation":"shortRoles","keyAccessMacros":true,"clockInformationBeforeRisk":true,"rememberAcceptedTaps":true,"rememberKnownLosses":true,"rememberClearedRoles":true,"usePlacementContract":true}
 ```
-Current candidate adds rememberAcceptedTaps:true,rememberKnownLosses:true,
-rememberClearedRoles:true,shortInformation:'recoveryAware',
-recoveryInformationMinTray:2,recoveryInformationBreadth:true.
-It does NOT add recoveryAvailableInformation or continuationTrayMin:2.
-Do not extrapolate a full score or combine individual policy wins.
+This adds actual accepted availability, actual cleared-role memory, actual complete
+loss-proof memory and standard placement deduction to the full139/155 policy.
+It does NOT enable recovery-aware ranking, breadth, headroom2 or earlier proofs.
+Those variants remain available for later combinations; no mixed-policy score.
 
-COMPLETED:session65015 tested this breadth policy plus continuationTrayMin:2
-on102/121/123/124/125/147/lab12 (7). Earlier proofs alone did not help the old
-routes, but may protect positions newly reached by this policy. Report:
-HUMAN_REFERENCE_BREADTH_EARLY_PROOF_CONTROL_2026-10-24.md.
-5/7, same try counts as the corresponding breadth-policy rows;147 still fails.
-Mean73.7ms, maximum1502.4ms; source unchanged. No new gain, not promoted.
+New source-backed rule:Hard.extras and UI addObstacles pass all original closed
+indices to Layouts.obstacles' avoid set; its ok predicate excludes them from ice,
+locks AND keys. usePlacementContract (defaultfalse) removes mechanical uncertainty
+only for actually observed/remembered closed backs in public standard mode.
+It reveals neither the picture nor the hidden role, never infers covered orientation,
+and never bypasses geometry. The campaign validates the contract before any action.
+screen sends only public standard/lab mode from recognized provenance, never IDs,
+labels, seed or private roles. Unknown source provenance gets no deduction.
 
-COMPLETED:session89195, started2026-10-24T05:34:54.195Z, same breadth profile but
-recoveryInformationMinTray:1, default three-carrier proof threshold. Targets:
-102/121/123/124/125/136/143/147/150/lab12 (10), including earlier regression
-controls.5/10 vs matched control6/10:102/124/lab12 gain,121/123/147/150 regress.
-Mean76.2ms, maximum1504ms; source unchanged. Unpromoted, no full-score extrapolation.
-Report:HUMAN_REFERENCE_SINGLE_CARRY_BREADTH_CONTROL_2026-10-24.md.
-Source remains1c0c90b87e2bfebeaaedc297280ccef7e228fc8303d14794f2631992d57968a7;
-input7155f8037684ff6ad8c2e36a3b3ce361e0ba47a4d06904ecab392e07c3105ded.
-That process is terminal.157+ remains unopened. This is development, not unseen20.
+Trusted audit of all155 developed boards:4815 closed tiles,1751 special-role tiles.
+Every natural17–156 board obeys exclusion; lab45 does not. ALL lab boards therefore
+retain normal obstacle handling, including the14 that happen to satisfy exclusion.
+No per-level exception. Tests reject closed ice/lock/key contradictions in standard
+mode, preserve actual lab closed-ice play, replay a remembered closed-match win and
+exercise24 real placement generations with all three obstacle types represented.
+Null generations are valid and excluded from role-count coverage, not asserted bad.
 
-Next option:informationTrayLimit (default3, range0–3) ranks information prefixes
-using a lower carrier limit on nonclock roots. Effective limit is at least the
-root's current carrier count, so an already crowded tray keeps its safe probes.
-A known closed inspection or tray/open-twin match adds no new carrier; an unseen
-face-up commitment does. The limit is a preference, not a removal prohibition,
-death proof or assumed reveal. Known wins and clock search retain their behavior.
-The physical fixture chooses a longer prefix ending at two instead of three,
-then independently replays the unknown inspection for all37 possible identities.
-Completed session95029, reportHUMAN_REFERENCE_INFORMATION_HEADROOM_SCREEN_2026-10-24.md:
-6/22 vs control6/22, gainlab12try5 but regression147; mean78.7ms,max1503.5ms.
-Source017549a391defc925d18c036a2f297f15d486fc29f38e4685497423cf128b8ed
-was unchanged. This option is not promoted.
-
-New production placement deduction:standard Hard.extras and UI addObstacles pass
-all original face-down indices into Layouts.obstacles' avoid set. Its ok filter
-guards keys, locks AND ice. usePlacementContract (defaultfalse) may therefore
-remove mechanical uncertainty for an actually observed/remembered closed back
-ONLY when publicContext.boardMode is standard. The picture, role and any fully
-covered orientation remain unknown. Geometry still gates freedom. Lab mode and
-unknown provenance never receive this deduction; no board/level ID is consulted.
-
-Trusted audit of155 already developed boards:4815 closed tiles,1751 special-role
-tiles; every natural17–156 board obeys exclusion. Only lab45 violates it, so ALL
-lab boards keep normal uncertain-role handling, not just45. No157+ board decoded.
-screen derives public mode solely from recognized source category; the policy
-receives only standard/lab, never the entry ID, label or hidden role facts.
-playHumanCampaign validates the declared standard contract before any actions,
-rejecting hidden closed ice/lock/key contradictions.24 production generator
-controls cover each obstacle type.72/72 tests pass in6s, including a physical
-remembered closed-match win, unchanged lab closed-ice support and6912 hidden-world
-controls. One generator test initially assumed every seed places obstacles;
-fixed the fixture to allow valid null generations while requiring all three role
-types to be exercised. No gate score for this deduction has yet been measured.
+Read-only metadata refresh2026-10-24T05:53:51.481Z:140 natural clears through156,
+zero boards decoded, no newer clears.157+ remains unopened.
+If the unchanged57-task screen gains without pass regressions, run full155 before
+promoting. Next research candidate, NOT running:current placement profile plus
+shortInformation:'recoveryAware',recoveryInformationMinTray:2,
+recoveryInformationBreadth:true. The new sound deduction may interact with earlier
+mixed-result routes; test the whole policy rather than merging past individual wins.
 
 ## Completed research evidence
 
