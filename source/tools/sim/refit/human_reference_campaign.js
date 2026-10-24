@@ -19,6 +19,7 @@ const { describeInformation } = require('./public_information_audit.js');
 const { createRetryRiskMemory } = require('./public_retry_risk_memory.js');
 const { retryExploration } = require('./public_retry_exploration.js');
 const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
+const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -28,6 +29,7 @@ function createHumanController(tiles, options = {}) {
   assert(options.protectOpenTwin === undefined || typeof options.protectOpenTwin === 'boolean');
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
+  assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
@@ -40,11 +42,13 @@ function createHumanController(tiles, options = {}) {
   let lastAcceptedIndex = null;
   let retryRiskMemory = null;
   const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length) : null;
+  const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   const runRetrySearch = options.retryRiskLearning ? retryExploration(searchPublicWitness) : null;
   const resetPlanner = () => { planner = runRetrySearch ? reference(settings, runRetrySearch) : reference(settings); };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
+  if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
   return {
     beginAttempt() {
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
@@ -178,6 +182,7 @@ function createHumanController(tiles, options = {}) {
         && actions.some(action => retryRiskMemory.cost(current, action.index) > 0)) resetPlanner();
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report();
+      if (knownLossMemory) knownLossMemory.recordActual(current, plan, actions);
       if (discoveries.length && !discoveries.some(action => action.index === plan.index)
         && !preferKnownRecovery(geometry, current, plan)) return discover();
       const predicted = advance(geometry, current, plan.index);
@@ -195,6 +200,7 @@ function createHumanController(tiles, options = {}) {
     completeAttempt(status) { return retryRiskMemory?.finish(status) ?? null; },
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
+    knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
@@ -308,6 +314,7 @@ function playHumanCampaign(input, options = {}) {
     slowestMs, decisionCount, meanDecisionMs: decisionCount ? totalDecisionMs / decisionCount : 0,
     dominanceStops, decision, attempts, controls, verifiedTaps, rejected,
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
+    ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }
 

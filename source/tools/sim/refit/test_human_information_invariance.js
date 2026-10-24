@@ -21,6 +21,7 @@ function test() {
   configurations.push({ ...configurations[1], keyAccessMacros: true });
   configurations.push({ ...configurations[1], retryRiskLearning: true });
   configurations.push({ ...configurations[1], rememberAcceptedTaps: true });
+  configurations.push({ ...configurations[1], rememberKnownLosses: true });
   configurations.push({ ...configurations[1], passiveInformation: 'frontierRoles' });
   configurations.push({ ...configurations[1], passiveInformation: 'roles', shortInformation: true });
   configurations.push({ ...configurations[1], passiveInformation: 'roles', shortInformation: 'carrierAware' });

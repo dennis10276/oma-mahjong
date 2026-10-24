@@ -62,6 +62,7 @@ const modules = [
   'test_public_macro_continuation.js',
   'test_public_dead_end.js',
   'test_public_known_continuation.js',
+  'test_public_known_loss_memory.js',
   'test_public_witness_cache.js',
   'test_public_witness_integration.js',
   'test_public_witness_reference.js',

@@ -140,6 +140,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
+  const rememberedLoss = game.publicKnownLoss;
   const immediateRoles = settings.passiveInformation === 'immediateRoles', firstExposures = new Map();
   const eligibleExposure = (exposed, path) => {
     if (settings.passiveInformation === 'shortRoles') return path.length <= 3 ? exposed : [];
@@ -151,6 +152,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const stateIdentity = (position, path) => keyOf(game, position)
     + (immediateRoles ? '|firstExposure:' + (firstExposures.get(path[0]) || []).join(',') : '');
   assert(exposureFrontier === undefined || typeof exposureFrontier === 'function');
+  assert(rememberedLoss === undefined || typeof rememberedLoss === 'function');
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
   assert.equal(typeof keyRecoveryMacros, 'boolean');
@@ -214,13 +216,20 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
   let dominanceStop = null;
   let clockPreparationFrontiers = 0;
+  let rememberedLossPrunes = 0;
   const provedDeadRoots = new Set();
   const continuationProof = { calls: 0, nodes: 0, bounded: 0, certified: 0 };
   const recoveryRankWidths = new Set();
   const visited = new Map([[stateIdentity(state, []), 0]]);
 
   const certifiedContinuationLoss = (moved, path) => {
-    if (!settings.pruneDead || !moved.removed || moved.win || !(moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
+    if (!settings.pruneDead || moved.win) return false;
+    if (rememberedLoss?.(moved.state)) {
+      rememberedLossPrunes++; deadPrunes++;
+      if (path.length === 1) provedDeadRoots.add(path[0]);
+      return true;
+    }
+    if (!moved.removed || !(moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
       || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) return false;
     const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
     const proofKey = cachePublicAnalysis ? keyOf(game, moved.state) : null;
@@ -492,6 +501,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(informationWidth ? { informationWidthTarget } : {}),
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost } : {}),
       ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
+      ...(rememberedLoss ? { rememberedLossPrunes } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive,
         recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
