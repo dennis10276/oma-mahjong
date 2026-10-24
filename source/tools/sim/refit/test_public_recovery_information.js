@@ -28,6 +28,23 @@ function test() {
   assert.equal(probing.informationPolicy.active, true);
   assert.deepEqual(comparable(probing), comparable(search(game, stranded, roots, { ...options, shortInformation: true })));
   assert.deepEqual(stranded, snapshot);
+  const crowdedOptions = { ...options, shortInformation: 'recoveryAware', recoveryInformationMinTray: 2 };
+  for (const tray of [[], [7]]) {
+    const lightlyCarried = { ...stranded, tray };
+    const retained = search(game, lightlyCarried, roots, crowdedOptions);
+    assert.equal(retained.informationPolicy.active, false);
+    assert.equal(retained.informationPolicy.minimumTray, 2);
+    assert.deepEqual(comparable(retained), comparable(search(game, lightlyCarried, roots, options)));
+  }
+  const crowded = { ...stranded, tray: [7, 8] };
+  const seeking = search(game, crowded, roots, crowdedOptions);
+  assert.equal(seeking.informationPolicy.active, true);
+  assert.deepEqual(comparable(seeking), comparable(search(game, crowded, roots, { ...options, shortInformation: true })));
+  const recovering = search(game, { ...crowded, pictures: [7, 2, 3, 4, null, null] }, roots, crowdedOptions);
+  assert.equal(recovering.informationPolicy.active, false);
+  assert.equal(recovering.informationPolicy.recovery.kind, 'trayMatch');
+  assert.throws(() => search(game, state, roots, { ...crowdedOptions, recoveryInformationMinTray: -1 }));
+  assert.throws(() => search(game, state, roots, { ...crowdedOptions, recoveryInformationMinTray: 4 }));
   const uncertain = { ...game, publicFrontier: () => ({ free: [0, 1, 2, 3, 4, 5], uncertain: [1] }) };
   const apparentPair = { ...stranded, pictures: [1, 1, 3, 4, null, null] };
   assert.equal(knownRecovery(uncertain, apparentPair), null);
@@ -43,7 +60,10 @@ function test() {
   const replayed = playHumanCampaign(actual, { maximumAttempts: 1, planning: { ...options, shortInformation: 'recoveryAware' } });
   assert.equal(replayed.wonOn, 1);
   assert.equal(replayed.verifiedTaps, replayed.attempts[0].taps);
-  console.log('PASS adaptive information ordering preserves ordinary ranking with a constructive local recovery, prefers short probes without one, rejects uncertain partners, retains wins/clocks and respects expired limits');
+  const crowdedReplay = playHumanCampaign(actual, { maximumAttempts: 1, planning: crowdedOptions });
+  assert.equal(crowdedReplay.wonOn, 1);
+  assert.equal(crowdedReplay.verifiedTaps, crowdedReplay.attempts[0].taps);
+  console.log('PASS adaptive information ordering preserves ordinary ranking with a constructive local recovery or below the declared tray threshold, prefers short probes in crowded states without recovery, rejects uncertain partners, retains wins/clocks and respects expired limits');
 }
 
 if (require.main === module) test();

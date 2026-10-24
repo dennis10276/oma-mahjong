@@ -133,6 +133,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const keyRecoveryMacros = settings.keyRecoveryMacros ?? false;
   const keyAccessMacros = settings.keyAccessMacros ?? false;
   const shortInformation = settings.shortInformation ?? false;
+  const recoveryInformationMinTray = settings.recoveryInformationMinTray ?? 0;
   const informationDominance = settings.informationDominance ?? false;
   const informationWidth = settings.informationWidth ?? 0;
   const clockRecovery = settings.clockRecovery ?? false;
@@ -158,6 +159,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof keyRecoveryMacros, 'boolean');
   assert.equal(typeof keyAccessMacros, 'boolean');
   assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
+  assert(Number.isInteger(recoveryInformationMinTray) && recoveryInformationMinTray >= 0 && recoveryInformationMinTray <= 3);
   assert.equal(typeof informationDominance, 'boolean');
   assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
   assert.equal(typeof clockRecovery, 'boolean');
@@ -201,9 +203,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
   const informationWidthTarget = informationWidth === 'pairHeadroom' ? Math.max(1, Math.floor((4 - state.tray.length) / 2)) : informationWidth;
-  const detectedRecovery = shortInformation === 'recoveryAware' && !clocked ? knownRecovery(game, state, 2, deadline) : null;
+  const recoveryInformationEligible = !clocked && state.tray.length >= recoveryInformationMinTray;
+  const detectedRecovery = shortInformation === 'recoveryAware' && recoveryInformationEligible ? knownRecovery(game, state, 2, deadline) : null;
   const informationRecovery = detectedRecovery && roots.has(detectedRecovery.path[0]) ? detectedRecovery : null;
-  const shortInformationActive = shortInformation === 'recoveryAware' ? !clocked && !informationRecovery : !!shortInformation;
+  const shortInformationActive = shortInformation === 'recoveryAware' ? recoveryInformationEligible && !informationRecovery : !!shortInformation;
   const cone = clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).frontier
     : obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
   const rootClockCost = clockRecovery && clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).cost : clockDistance(game, state) : 0;
@@ -502,7 +505,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost } : {}),
       ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
       ...(rememberedLoss ? { rememberedLossPrunes } : {}),
-      ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive,
+      ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive, minimumTray: recoveryInformationMinTray,
         recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),

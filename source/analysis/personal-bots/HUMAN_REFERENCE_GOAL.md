@@ -188,7 +188,7 @@ differs from older26e875b6 ONLY because --development adds status:available to
 each otherwise identical source row; both hashes were independently reproduced.
 Source remained unchanged; no new pass-count gain or full155 score is claimed.
 
-RUNNING:session19374 tests the same source/profile plus continuationTrayMin:2
+COMPLETED:session19374 tested the same source/profile plus continuationTrayMin:2
 on all16 remaining failures plus original controls134/141/143/147 (20 total).
 Started2026-10-24T05:13:10.139Z. This attempts complete known-continuation proofs
 at two carried tiles rather than waiting for three. It shares the same1500ms
@@ -196,8 +196,19 @@ deadline, retains unknown/bounded positions, and never declares impossibility
 from a budget failure. This is a focused development screen, not unseen20.
 Report:HUMAN_REFERENCE_TWO_CARRIER_PROOF_SCREEN_2026-10-24.md.
 Input243ddaf18ea5b0c5d20e01056247f2c50f560a9bb29283b0bb2e730f32c8190e.
-Hold loaded runtime files fixed until this process finishes. No other CPU-heavy
-simulation is live. Poll its handle before starting another campaign.
+Result4/20:only the four original controls pass; all16 failures remain. Every
+try count matches the corresponding previous natural/lab table. Mean78.6ms,
+maximum1501.8ms; source unchanged. Extra two-carrier proof work did not help this
+screen and is not promoted. It remains available for future policy combinations.
+
+The next optional recoveryInformationMinTray parameter (default0, range0–3)
+limits recovery-aware short-information ordering to sufficiently crowded ROOT
+states. This is a refinement of an earlier mixed-result route, not its removal:
+with threshold2, empty/one-carrier roots retain ordinary ranking; crowded roots
+without a constructive local recovery prefer shorter safe information prefixes.
+Known recoveries, wins and clocks retain their previous treatment.69/69 tests
+pass, including6144 concealed-world controls and threshold/replay checks.
+No development improvement for this refinement has yet been claimed.
 
 Research conservative control:
 ```json
