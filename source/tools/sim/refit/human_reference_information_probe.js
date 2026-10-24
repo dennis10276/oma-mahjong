@@ -3,6 +3,7 @@ const assert = require('assert/strict');
 const { loadRecordedClears } = require('./human_reference_catalog.js');
 const { decodeGame } = require('./personal_game_io.js');
 const { playHumanCampaign } = require('./human_reference_campaign.js');
+const { publicContextFor } = require('./human_reference_screen.js');
 
 async function main(levelText, attemptText, tapsText, settings = '{}') {
   const level = Number(levelText), attempt = Number(attemptText), physicalTaps = Number(tapsText);
@@ -13,7 +14,7 @@ async function main(levelText, attemptText, tapsText, settings = '{}') {
   assert(entry?.game);
   const planning = JSON.parse(settings);
   const result = playHumanCampaign(decodeGame(entry.game), { planning, maximumAttempts: attempt,
-    captureDecisions: true, captureInformation: true });
+    publicContext: publicContextFor(entry), captureDecisions: true, captureInformation: true });
   const choices = result.attempts[attempt - 1]?.decisions.filter(choice => choice.state.physicalTaps === physicalTaps);
   assert(choices?.length, 'Requested actual decision was not reached');
   console.log(JSON.stringify({ diagnostic: true, level, attempt, physicalTaps, planning,

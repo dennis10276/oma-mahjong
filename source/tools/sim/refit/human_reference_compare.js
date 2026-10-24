@@ -9,13 +9,15 @@ require(path.join(root, 'human_reference_ablation.js')).install(process.argv[2])
 const { loadRecordedClears } = require(path.join(root, 'human_reference_catalog.js'));
 const { decodeGame } = require(path.join(root, 'personal_game_io.js'));
 const { playHumanCampaign } = require(path.join(root, 'human_reference_campaign.js'));
+const { publicContextFor } = require(path.join(root, 'human_reference_screen.js'));
 (async () => {
   const level = Number(process.argv[3]), planning = JSON.parse(process.argv[4]);
   const catalog = await loadRecordedClears({ selectedLevels: [level] });
   const entry = catalog.rows.find(row => row.lv === level);
   if (!entry?.game) throw Error('Requested development board unavailable');
   const game = decodeGame(entry.game);
-  const result = playHumanCampaign(game, { maximumAttempts: Math.max(1, entry.wonOn - 1), captureDecisions: true, planning });
+  const result = playHumanCampaign(game, { maximumAttempts: Math.max(1, entry.wonOn - 1), captureDecisions: true, planning,
+    publicContext: publicContextFor(entry) });
   console.log(JSON.stringify({ mode: process.argv[2], clock: game.clock, wonOn: result.wonOn, status: result.status,
     slowestMs: result.slowestMs, attempts: result.attempts.map(attempt => ({ taps: attempt.taps, left: attempt.left,
       status: attempt.status, decisions: attempt.decisions })) }));
