@@ -10,3 +10,4 @@ source/site/OmasMahjong.apk
 source/tests/node_modules/
 source/analysis/archive/
 __pycache__/
+.codex-runs/

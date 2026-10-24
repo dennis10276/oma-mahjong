@@ -1,76 +1,62 @@
-# Human-information reference: Phase 3
+# Human-information reference: fixed re-deal benchmark
 
-Worktree: C:\Users\den_k\Idea\OmasMahjong\personal-bot-review
-Branch: wip/personal-bots. Goal ACTIVE and UNMET.
+ACTIVE and UNMET. Work on wip/personal-bots in personal-bot-review.
+Authoritative objective: attachment9080077f-6d85-47b8-9094-9b6b12fc0345.
+Theme: sunflower. No planner changes before the current-bot re-deal baseline.
 
-## Rules
+## Information and rules
 
-- Only human-visible or remembered same-level facts. One geometry visibility gate.
-  Exposed borders permit recognition; covered clock badges are public.
-  A rejected free tile means ice or lock, without identifying which.
-- No hidden pictures, inventory, seed or future reveals in policy.
-  Hypothetical fillings remain guesses, never actual memory or safety proofs.
-- Every accepted tap independently replays through original production.
-  Real retries count; finite search/time caps remain unresolved.
-- Under2s per move; about1.3s contested-decision budget.
-  Up to12 CPU workers side by side, one per salt; each campaign remains single-thread.
-- General planning only. No proof/cache/speed side projects unless a failure needs one.
-- One short Markdown table per screen. Keep this file <=80 lines, without process logs.
+- One small visibility gate: only face-up visible pictures and ice/lock/key roles.
+  Covered clock badges are public. A rejected free tap means ice or lock, not which.
+- Retry memory contains only actual observations from the same level/re-deal.
+  Hidden fillings remain guesses. Every real level being winnable is an allowed prior.
+- Policy never reads hidden pictures, deck, seed or future reveals. General planning
+  only: no per-level routes/settings. Every accepted tap replays original production.
+- Anytime, single-thread games, under2s per move; report the slowest move.
 
-## Current verified scope
+## Cohort and targets
 
-| Set | Passing | Remaining |
-|---|---:|---|
-| Natural |132/140|81,93,99,102,107,112,125,137|
-| Lab |9/15|11,32,33,41,49,52|
-| Historical full |141/155|Phase3 official salt1 score not yet measured|
+- Every recorded natural first clear17-156, plus later clears.
+- User clarified labs: all recorded Dennis clears in source/analysis/lab-clears.json,
+  excluding10031; unrecorded IDs are not test boards. New lab clears join later.
+- Current catalog:140 natural plus15 labs, all available; preserve board provenance.
+  Historical boards without recordings use explicitly labeled authorized definitions.
+- Human1 requires bot1; humanN>=2 requires bot<=N-1. Every restart counts.
 
-Full155 contains natural first clears17-156 and15 labs, excluding only10031.
-Dennis1 requires bot1; Dennis2+ requires strictly fewer actual tries.
-Unopened progression157+ remains held out; unseen20 has not run.
-Prior unsalted single-run screens are exploratory, never seeded adoption evidence.
-Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
+## Development benchmark and adoption
 
-## Required seeded measurement
+- Publish fixed disjoint seeds first:10 development re-deals and50 luck re-deals.
+- Preserve opening face-up visible facts; shuffle only hidden picture positions.
+  Preserve picture multiset/pairs, roles, clock and geometry. Retries keep that re-deal.
+- First freeze the last accepted141/155 profile and current source; run all development
+  cases. One table: overall target rate and the rate of each failing board.
+- Classify every target miss automatically. Only propose mechanisms targeting a
+  loss class covering>=10% of losses. No mechanism from one board or trace.
+- Compare identical re-deals. Adopt only if overall paired improvement is>2SE and
+  no board's rate drops by>10 percentage points. Up to12 independent workers.
+- After8 consecutive experiments without adoption, stop and report the table,
+  loss types and prospective luck flags; the user decides continuation.
+- Keep an explicit experiment ledger. Historical salt-screen results are rejected
+  evidence under the previous measure, not gains under this benchmark.
+- Small commits on this branch. This file<=80 lines. One short table per experiment.
+  New raw inputs/checkpoints/logs live in ignored .codex-runs/, not source/analysis.
 
-1. Mix run salt1,2,3 into the public-state random seed. No level IDs.
-2. Noise screen is TRY1 ONLY, all16 levels for each salt =48 cases:
-   failures81,93,99,102,107,112,125,137;
-   guards134,141,143,147,150,151,153,156.
-   Guard membership follows the requested list irrespective of human try labels.
-3. Always finish every screen. Show gains and losses side by side.
-   Adopt only if first-try wins increase AND no guard loses more than one
-   previously won salt. Invalid source/timing/error screens cannot establish adoption.
-4. Every few adopted changes run full155 with salt1 as the official score.
+## Luck and finish
 
-## Planner work and validation
+- A flag requires final frozen-bot target rate<50% on50 fixed re-deals AND a real-board
+  position showing loss shares for EVERY possible action over consistent fillings.
+  Bounded search failure is unresolved, not proof. Report shares honestly.
+- At most10% of boards may be flagged. More means improve the planner, not excuse it.
+  Recompute flags for the final version; improved boards lose their flags.
+- Salt1 real boards must meet target on every unflagged board. List each flagged
+  board with Dennis/bot tries and target rate; user acceptance is required.
+- Freeze and run the next20 progression levels ONCE unchanged; compare when played.
+- Final one-screen summary: level|Dennis|bot|flag, separate lab block, overall
+  re-deal rate, planner changes, slowest move and any user decision needed.
 
-- Honest play-outs score share of tiles cleared; a verified clear scores1.
-  Censored partial play-outs retain partial scores and their unresolved status.
-- Compare all actions on the SAME fillings; primary is the fallback.
-  Override only with paired mean improvement greater than2 standard errors.
-  Fewer than2 completed fillings cannot justify a confidence override.
-- Exact sampled planning only at <=8 unseen ALIVE pictures, thousands of nodes.
-  Below that limit mix honest and exact scores by the unseen fraction.
-  Oracle progress ties require every compared action proved lost in that filling.
-- Calibrate32 fillings/1-node play-outs against12 fillings/16-node play-outs.
-  Report requested caps AND actual completed fillings under the shared budget.
-- Check lab32/33/41/52 with salts1-3, retaining actual same-level retry memory.
-- Registered offline tests cover visibility, production replay, scores, paired
-  margins, salts, public clock probes and the48-case harness; 100/100 pass offline.
+## Immediate work
 
-## Next and completion
-
-Baseline24/48; progress22/20, primitive19/20, long20 and recovery13 all rejected.
-Compiled progress19/21 and primitive21 rejected; compiled lab and risk control0/12.
-Risk control:6 matching decisions,0 penalized choices,0 penalized clock-exit choices.
-Exact visibility parity passes86,016 cases. Exact count-gate screens17/19 rejected;
-Clock-probe screen17 rejected despite2/12 strict lab passes. Lower exact-score
-weight5% with >=25% exact time is testing32x1/12x16, salts1-3;100 tests pass.
-Lab41 trace:176 replayed taps, repeated second carrier, clock frontier never tested.
-Test buffered uncertain-clock probes with32x1 progress/paired2SE, salts1-3.
-Lab41 frontier confirms known lock with hidden keys; direct probe is correctly inactive.
-Test clock-time key inspections32x1/12x16 and lab retries, salts1-3;102 tests pass.
-Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
-unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
-planner changes, slowest move and any decision needed. Goal is not complete.
+Superseded workers stopped and queues cleared. Sunflower has36 distinct identities.
+Live catalog refreshed; newest natural clear156. Build and test the re-deal harness,
+freeze seeds/profile/input, then run the1550 development cases with automatic losses.
+No new planner mechanism or luck flag has been adopted under this objective.
