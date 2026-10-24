@@ -12,18 +12,19 @@ Input: `55119a1c07fdbc9518656e4c629a6deb0874a46aac66b5172b31d193cc512355`.
 |93|1|>1|tray loss; 48 tiles left|37|1302.6|
 |99|2|1|pass|87|1300.5|
 |111|3|>2|tray after73 taps, clock after7; 38/68 left|80|1302.5|
-|112|1|unresolved|not completed|—|—|
+|112|1|>1|tray loss; 36 tiles left|64|1301.5|
 |137|2|unresolved|not completed|—|—|
 
-Stopped intentionally after guard111 regressed. Only1/3 completed cases passed;
+Stopped intentionally after guard111 regressed;112 had also completed in buffered
+output before termination. Only1/4 completed cases passed;
 no five-case or full score is inferred. Level99 also cleared in the prior
 compound-only variant, but this is not an unchanged-profile replication.
 No promotion; the full-catalog result remains141/155.
 
-Sampling changed35/177 contested first taps (19.8%), no safety vetoes.
-Complete option changes36/177;12 two-tap options selected,11 continuations
+Sampling changed40/237 contested first taps (16.9%), no safety vetoes.
+Complete option changes41/237;15 two-tap options selected,14 continuations
 executed,1 cancelled after public state or knowledge changed.
-Honest play-outs:5783 evaluations =97 clears +3403 physical losses +2283 unresolved.
+Honest play-outs:8252 evaluations =97 clears +4190 physical losses +3965 unresolved.
 Every accepted actual tap independently replayed in original production.
 Conditional sample losses/caps are not actual impossibility proofs. No hidden deck,
 private kind count, seed, future reveal or unseen20 validation was used.

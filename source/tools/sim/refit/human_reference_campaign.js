@@ -340,7 +340,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         for (const field of ['preparationCalls', 'budgetedActions', 'actionDeadlineStops']) hypothesisStats[field] += ranking[field] ?? 0;
         for (const field of ['verifiedHypotheticalClears', 'rejectedAssignments', 'thinRolloutClears', 'wideRolloutClears',
           'unresolvedRollouts', 'certifiedRolloutLosses', 'historyReplays', 'assignments']) hypothesisStats[field] += physicalStats[field];
-        const audit = { ...ranking, ...physicalStats, changed: sampledChange, safetyVetoed: problem.fallbackIndex !== selected.plan.index,
+        const audit = { ...ranking, ...physicalStats, primaryOptionId: samplingProblem.fallbackIndex,
+          changed: sampledChange, safetyVetoed: problem.fallbackIndex !== selected.plan.index,
           primaryIndex: selected.plan.index,
           sharedDeadline: decisionDeadline };
         if (rankedPath.length > 1) {
@@ -529,7 +530,8 @@ function playHumanCampaign(input, options = {}) {
         knowledgeSignature: controller.knowledgeSignature(),
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
           boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes,
-          ...(selected.plan.hypothesisAudit ? { hypothesis: Object.fromEntries(['changed', 'primaryIndex', 'preferredWorlds', 'completeWorlds']
+          ...(selected.plan.hypothesisAudit ? { hypothesis: Object.fromEntries(['changed', 'primaryIndex', 'preferredWorlds', 'completeWorlds',
+            'index', 'primaryOptionId', 'totals', 'informationWeight']
             .map(field => [field, selected.plan.hypothesisAudit[field]])) } : {}) },
         ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path) } : {}) });
       controller.acknowledge(index, accepted);

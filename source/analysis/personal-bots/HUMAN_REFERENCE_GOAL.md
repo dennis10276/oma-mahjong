@@ -68,7 +68,7 @@ Report sampling changes / contested decisions; below5% is insufficient influence
 The corrected screen stopped after guard111 regressed.99 and112 both clear1;
 92 passes4.81/93/102/107 fail.16 cases remain uncompleted; no full score inferred.
 Observed influence285/1075 (26.5%); max1305.8ms. No promotion with a guard lost.
-Augmented options keep99try1 but fail93/111;112/137 remain uncompleted.
+Augmented options keep99try1 but fail93/111/112;137 remains uncompleted.
 Strong primary200ms screen finished4/24:92,111,141,143 pass; six guards regress.
 The isolated99/111/112 successes did not repeat. This profile is not promoted.
 Dispersed-pair probe stopped after guard111 failed:93 clears1,99 fails;112/137 pending.

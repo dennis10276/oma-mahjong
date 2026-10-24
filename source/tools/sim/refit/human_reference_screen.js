@@ -25,7 +25,8 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
     assert(Number.isInteger(entry.wonOn) && entry.wonOn > 0);
     const attemptLimit = Math.max(1, entry.wonOn - 1);
     const publicContext = publicContextFor(entry);
-    const result = playHumanCampaign(decodeGame(entry.game), { planning, publicContext, maximumAttempts: attemptLimit });
+    const result = playHumanCampaign(decodeGame(entry.game), { planning, publicContext, maximumAttempts: attemptLimit,
+      captureDecisions: !!planning.captureDecisionDiagnostics });
     const row = { level: entry.lv, dennis: entry.wonOn, bot: result.wonOn, pass: passes(entry.wonOn, result.wonOn),
       boardSource: entry.boardSource ?? entry.source ?? 'providedDevelopmentBoard', historicalBoardExact: entry.historicalBoardExact ?? null,
       attemptLimit,
@@ -36,6 +37,25 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
       ...(result.causalAvailability ? { causalAvailability: result.causalAvailability } : {}),
       ...(result.blockedTapFacts !== undefined ? { blockedTapFacts: result.blockedTapFacts } : {}),
       ...(result.hypothesis ? { hypothesis: result.hypothesis } : {}),
+      ...(planning.captureDecisionDiagnostics ? { publicDecisions: result.attempts.flatMap(attempt => {
+        if (attempt.status === 'cleared') return [];
+        const decisions = attempt.decisions;
+        const offsets = [...new Set([decisions.findIndex(choice => choice.plan.hypothesis?.changed),
+          decisions.findIndex(choice => choice.state.tray.length === 2), decisions.findIndex(choice => choice.state.tray.length === 3),
+          decisions.length - 3, decisions.length - 2, decisions.length - 1])].filter(offset => offset >= 0);
+        return offsets.map(offset => {
+          const choice = decisions[offset], audit = choice.plan.hypothesis;
+          const chosen = audit?.totals?.find(total => total.index === audit.index);
+          const primary = audit?.totals?.find(total => total.index === audit.primaryOptionId);
+          return { attempt: attempt.attempt, choice: offset + 1, index: choice.index, path: choice.plan.path, goal: choice.plan.goal,
+            tray: choice.state.tray, moves: choice.state.moves, left: choice.state.alive.reduce((sum, alive) => sum + alive, 0),
+            unseen: choice.state.pictures.filter((picture, index) => choice.state.alive[index] && picture === null).length,
+            ...(audit ? { sampled: { worlds: audit.completeWorlds, informationWeight: audit.informationWeight,
+              chosenScore: chosen?.score, primaryScore: primary?.score,
+              chosenClears: chosen && [chosen.informationClears, chosen.exactClears],
+              primaryClears: primary && [primary.informationClears, primary.exactClears] } } : {}) };
+        });
+      }) } : {}),
       attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left,
         ...(attempt.learnedRisk !== undefined ? { learnedRisk: attempt.learnedRisk } : {}) })) };
     rows.push(row); emit(row);
