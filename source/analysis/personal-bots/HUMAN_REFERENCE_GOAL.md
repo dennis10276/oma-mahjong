@@ -58,17 +58,24 @@ information width:`ae1753f`; experimental pair-headroom cap:`1fe9239`.
 concealed-world controller controls,144 local-recovery and24 relief witnesses.
 No new post-correction full140 score exists. No research option is a released winner.
 
-ACTIVE:session12879, serial8-case protected-width1 control, then42-case
+COMPLETED:serial8-case protected-width1 control, then42-case
 protected-width1 challenge, then42-case protected-width2 challenge.
 Runtimecede8f0; fingerprint:
 `cd0cedc57a268e539245c20cfc69a9bca354f2ed438196c53d6c77d471eec168`.
-Pending reports:
+Completed reports:
 - `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_1_CONTROL_2026-10-24.md`
 - `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_1_CHALLENGE_2026-10-24.md`
 - `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_2_CHALLENGE_2026-10-24.md`
 
-Hold loaded runtime fixed until all three finish. One CPU-heavy simulation at a
-time. Never restart for a polling timeout, or kill app/Gemini helpers.
+The old shell handle is missing after the host changed; all three canonical
+reports exist and confirm unchanged source. No benchmark worker remains live.
+Protected width1:7/8 control,33/42 broad; protected width2:32/42 broad.
+Neither is promoted. Width1 loses84/99/102/107/112/123/125/136/143; width2
+loses50/84/99/102/107/112/123/125/143/147. Slowest1505.1ms across these runs.
+The manual open-twin guard does not universally improve play: width2 previously
+cleared123 without it, and now fails123. Inspect the first actual divergence.
+One CPU-heavy simulation at a time. Never restart for a polling timeout, or kill
+app/Gemini helpers.
 The old raw-short full run was deliberately stopped after emitting69 ONLY for
 the reproduced false-certificate physics bug. Failures already included46/50/52/69.
 Session35017 and its owned worker39728 are terminal; no complete raw full score.
