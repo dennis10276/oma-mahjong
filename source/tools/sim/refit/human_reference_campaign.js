@@ -22,6 +22,7 @@ const { clockRetryExploration } = require('./public_clock_retry_exploration.js')
 const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
+const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
@@ -38,6 +39,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.usePlacementContract === undefined || typeof options.usePlacementContract === 'boolean');
+  assert(options.causalAvailabilityMemory === undefined || typeof options.causalAvailabilityMemory === 'boolean');
+  assert(!options.causalAvailabilityMemory || options.exclusiveRoles === true
+    && (options.rememberAcceptedTaps || options.rememberClearedRoles), 'Causal availability requires declared production bounds and actual safety memory');
   const excludeClosedObstacles = !!options.usePlacementContract && publicContext.boardMode === 'standard';
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
@@ -50,9 +54,17 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
   let lastAcceptedIndex = null;
   let retryRiskMemory = null;
-  const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length) : null;
+  const transfer = options.causalAvailabilityMemory ? createAvailabilityTransfer(geometry.tiles, { exclusiveRoles: true }) : null;
+  const transferStats = { queries: 0, provedTransfers: 0 };
+  const transferProof = transfer ? (...args) => {
+    transferStats.queries++;
+    const proof = transfer(...args);
+    transferStats.provedTransfers += +!!proof;
+    return proof;
+  } : null;
+  const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof }) : null;
   const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
-  const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles) : null;
+  const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof }) : null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   const retrySearchFactory = options.clockRetryLearning ? clockRetryExploration : retryExploration;
@@ -121,6 +133,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         ? [[index, startingIceHits(role, initialRoles[index], iceNb[index].filter(neighbor => !state.alive[neighbor]).length)]] : [])),
         locks: new Set(roles.flatMap((role, index) => role === 'lock' ? [index] : [])),
         keys: roles.flatMap((role, index) => role === 'key' ? [index] : []) };
+      const observedKeys = initialRoles.flatMap((role, index) => role === 'key' ? [index] : []);
       geometry.publicFrontier = position => {
         Object.freeze(position.alive);
         const aliveKey = aliveSignature(position.alive), cacheKey = +!!position.relieved + '|' + +(position.tray.length < Layouts.SLOTS) + '|' + aliveKey;
@@ -138,9 +151,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         }
         const result = { free, relieved,
           uncertain: relieved ? [] : queried.uncertain.filter(index => (!sameBoard || !blocked.has(index))
-            && !acceptedTapMemory?.knowsAvailable(index, position.alive)
-            && !clearedRoleMemory?.knowsAvailable(index, position.alive)
-            && !(excludeClosedObstacles && down[index] === 1)) };
+            && !(excludeClosedObstacles && down[index] === 1)
+            && !acceptedTapMemory?.knowsAvailable(index, position.alive, observedKeys)
+            && !clearedRoleMemory?.knowsAvailable(index, position.alive, observedKeys)) };
         frontierCache.set(cacheKey, result); return result;
       };
       const exposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles },
@@ -218,6 +231,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
+    causalAvailabilityStats() { return { ...transferStats }; },
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
@@ -278,6 +292,10 @@ function playHumanCampaign(input, options = {}) {
     const special = [...keys, ...locks, ...ice];
     assert.equal(new Set(special).size, special.length, 'Exclusive production-role contract forbids stacked roles');
     assert(ice.every(index => game.rules.ice[index] <= 2), 'Exclusive production-role contract supports one/two-hit ice');
+  }
+  if (options.planning?.causalAvailabilityMemory && game.rules) {
+    const ordered = rows => rows.map(row => row.slice().sort((left, right) => left - right));
+    assert.deepEqual(ordered(game.rules.iceNb), ordered(Layouts.iceNeighbors(game.tiles)), 'Causal availability requires the public geometric ice neighborhood');
   }
   const factory = createSessionFactory(), attempts = [];
   let slowestMs = 0, controls = 0, verifiedTaps = 0, rejected = 0, decision = null;
@@ -341,6 +359,7 @@ function playHumanCampaign(input, options = {}) {
     slowestMs, decisionCount, meanDecisionMs: decisionCount ? totalDecisionMs / decisionCount : 0,
     dominanceStops, decision, attempts, controls, verifiedTaps, rejected,
     ...(clockRetry ? { clockRetry } : {}),
+    ...(options.planning?.causalAvailabilityMemory ? { causalAvailability: controller.causalAvailabilityStats() } : {}),
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };

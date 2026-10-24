@@ -26,6 +26,8 @@ function test() {
   configurations.push({ ...configurations[1], informationTrayLimit: 2 });
   configurations.push({ ...configurations[1], usePlacementContract: true });
   configurations.push({ ...configurations[1], rememberClearedRoles: true });
+  configurations.push({ ...configurations[1], exclusiveRoles: true, rememberAcceptedTaps: true,
+    rememberClearedRoles: true, causalAvailabilityMemory: true });
   configurations.push({ ...configurations[1], rememberAcceptedTaps: true, rememberKnownLosses: true, rememberClearedRoles: true });
   configurations.push({ ...configurations[1], passiveInformation: 'frontierRoles' });
   configurations.push({ ...configurations[1], passiveInformation: 'roles', shortInformation: true });

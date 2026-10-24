@@ -1,8 +1,9 @@
 'use strict';
 const assert = require('assert/strict');
 
-function createAcceptedTapMemory(size) {
+function createAcceptedTapMemory(size, { transferProof = null } = {}) {
   assert(Number.isInteger(size) && size > 0);
+  assert(transferProof === null || typeof transferProof === 'function');
   const witnesses = Array.from({ length: size }, () => []);
   const validate = alive => assert(Array.isArray(alive) && alive.length === size && alive.every(value => value === 0 || value === 1));
   const subset = (candidate, witness) => candidate.every((alive, index) => !alive || witness[index]);
@@ -21,14 +22,16 @@ function createAcceptedTapMemory(size) {
       witnesses[index].push(witness);
       return true;
     },
-    knowsAvailable(index, alive) {
+    knowsAvailable(index, alive, observedKeys = []) {
       validate(alive);
       assert(Number.isInteger(index) && index >= 0 && index < size);
-      return !!alive[index] && witnesses[index].some(witness => subset(alive, witness));
+      return !!alive[index] && witnesses[index].some(witness => subset(alive, witness)
+        || !!transferProof?.(index, witness, alive, observedKeys));
     },
     entries() {
       return witnesses.flatMap((rows, index) => rows.map(alive => ({ index,
-        requiredGone: alive.flatMap((value, target) => value ? [] : [target]) })));
+        requiredGone: alive.flatMap((value, target) => value ? [] : [target]),
+        ...(transferProof ? { alternateProof: 'publicObstacleBounds' } : {}) })));
     },
   };
 }

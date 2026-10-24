@@ -33,6 +33,7 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
       decisionCount: result.decisionCount, meanDecisionMs: Math.round(result.meanDecisionMs * 10) / 10,
       dominanceStops: result.dominanceStops,
       ...(result.clockRetry ? { clockRetry: result.clockRetry } : {}),
+      ...(result.causalAvailability ? { causalAvailability: result.causalAvailability } : {}),
       attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left,
         ...(attempt.learnedRisk !== undefined ? { learnedRisk: attempt.learnedRisk } : {}) })) };
     rows.push(row); emit(row);
@@ -76,6 +77,9 @@ async function main(filename, levels, settings, reportFile) {
     ...(planning.clockRetryLearning ? { clockRetry: {
       decisionsAudited: rows.reduce((sum, row) => sum + row.clockRetry.decisionsAudited, 0),
       decisionsUsingAlternative: rows.reduce((sum, row) => sum + row.clockRetry.decisionsUsingAlternative, 0) } } : {}),
+    ...(planning.causalAvailabilityMemory ? { causalAvailability: {
+      queries: rows.reduce((sum, row) => sum + row.causalAvailability.queries, 0),
+      provedTransfers: rows.reduce((sum, row) => sum + row.causalAvailability.provedTransfers, 0) } } : {}),
     developmentGate: filename === '--development' && !selected && unchanged && rows.every(row => row.pass && row.slowestMs < 2000),
     ...(input.excluded ? { excluded: input.excluded } : {}),
     byBoardSource: Object.fromEntries([...new Set(rows.map(row => row.boardSource))].map(source => [source,
@@ -88,6 +92,7 @@ async function main(filename, levels, settings, reportFile) {
       ...rows.map(row => `| ${row.level} | ${row.dennis} | ${row.bot ?? '>' + row.attemptLimit} | ${row.pass ? 'yes' : 'no'} | ${row.boardSource} | ${row.meanDecisionMs} | ${row.slowestMs} |`),
       '', `Passed ${summary.passed}/${summary.cases}; mean ${summary.meanDecisionMs}ms; slowest ${summary.slowestMs}ms; dominance stops ${summary.dominanceStops}.`,
       ...(summary.clockRetry ? [`Clock retry audit: ${summary.clockRetry.decisionsAudited} decisions with an alternative-search audit; ${summary.clockRetry.decisionsUsingAlternative} decisions using an adopted alternative (including retained steps).`] : []),
+      ...(summary.causalAvailability ? [`Causal availability: ${summary.causalAvailability.provedTransfers} successful public proofs in ${summary.causalAvailability.queries} queries (includes hypothetical positions, not learned observations).`] : []),
       'Historical board identity is not claimed for current-definition substitutes. The unseen20-level gate has not been run.', ''];
     fs.writeFileSync(path.resolve(reportFile), table.join('\n'), { flag: 'wx' });
   }

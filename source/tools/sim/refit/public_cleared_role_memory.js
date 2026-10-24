@@ -2,7 +2,8 @@
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 
-function createClearedRoleMemory(tiles) {
+function createClearedRoleMemory(tiles, { transferProof = null } = {}) {
+  assert(transferProof === null || typeof transferProof === 'function');
   const neighbors = Layouts.neighbors(tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })));
   const witnesses = tiles.map(() => []);
   const validate = alive => assert(Array.isArray(alive) && alive.length === tiles.length
@@ -27,15 +28,16 @@ function createClearedRoleMemory(tiles) {
       });
       return learned;
     },
-    knowsAvailable(index, alive) {
+    knowsAvailable(index, alive, observedKeys = []) {
       validate(alive);
       assert(Number.isInteger(index) && index >= 0 && index < tiles.length);
       return !!alive[index] && Layouts.isFree(index, alive, neighbors)
-        && witnesses[index].some(witness => subset(alive, witness));
+        && witnesses[index].some(witness => subset(alive, witness) || !!transferProof?.(index, witness, alive, observedKeys));
     },
     entries() {
       return witnesses.flatMap((rows, index) => rows.map(alive => ({ index,
-        requiredGone: alive.flatMap((value, target) => value ? [] : [target]) })));
+        requiredGone: alive.flatMap((value, target) => value ? [] : [target]),
+        ...(transferProof ? { alternateProof: 'publicObstacleBounds' } : {}) })));
     },
   };
 }
