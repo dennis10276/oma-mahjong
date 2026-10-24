@@ -28,6 +28,7 @@ const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
 const { rankBudgetedHypotheses } = require('./public_budgeted_hypotheses.js');
 const { rankInformationActions } = require('./public_information_sampling.js');
 const { informationActions } = require('./public_information_actions.js');
+const { saltedPublicSeed } = require('./public_sampling_seed.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
 
@@ -48,6 +49,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
   assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
   assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
+  assert(options.hypothesisRunSalt === undefined || [1, 2, 3].includes(options.hypothesisRunSalt));
+  assert(options.informationScoreMode === undefined || ['clear', 'progress'].includes(options.informationScoreMode));
+  assert(options.informationConfidenceSE === undefined || Number.isFinite(options.informationConfidenceSE)
+    && options.informationConfidenceSE >= 0 && options.informationConfidenceSE <= 8);
   assert(options.informationActionPaths === undefined || typeof options.informationActionPaths === 'boolean');
   assert(options.informationPrimitivePeeks === undefined || typeof options.informationPrimitivePeeks === 'boolean');
   assert(options.informationExactUnknownLimit === undefined || Number.isInteger(options.informationExactUnknownLimit)
@@ -103,7 +108,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     contestedDecisions: 0, safetyVetoes: 0, informationEvaluations: 0, informationClears: 0,
     informationLosses: 0, informationUnresolved: 0, informationCycleStops: 0,
     exactSearchCalls: 0, exactSearchNodes: 0, exactExhaustedLosses: 0,
-    optionDecisions: 0, optionChanges: 0, compoundChoices: 0, retainedOptionTaps: 0, invalidatedOptions: 0 };
+    optionDecisions: 0, optionChanges: 0, compoundChoices: 0, retainedOptionTaps: 0, invalidatedOptions: 0,
+    confidenceDecisions: 0, confidenceOverrides: 0, confidenceSuppressed: 0 };
   const hypothesisVisits = options.hypothesisSampling ? createPublicActionVisits() : null;
   let decisionPosition = null;
   let pendingInformationAction = null;
@@ -291,7 +297,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           alive: current.alive, tray: current.tray, moves: current.moves, openPeek: current.openPeek })) {
           publicHash = Math.imul(publicHash ^ character.charCodeAt(0), 16777619) >>> 0;
         }
-        const random = Layouts.rng(publicHash);
+        const random = Layouts.rng(saltedPublicSeed(publicHash, options.hypothesisRunSalt ?? 1));
         const createPolicy = options.informationSampling ? deadline => createHumanController(geometry.tiles,
           { ...options, hypothesisSampling: false, informationSampling: false, hypothesisActionMs: undefined,
             causalAvailabilityMemory: false, rememberAcceptedTaps: false, rememberClearedRoles: false,
@@ -323,6 +329,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           deadline: Math.min(decisionDeadline, Date.now() + 1300), random, physics, schedule: options.informationSchedule ?? 'sequential',
           picturePrior: options.informationPicturePrior ?? 'uniform',
           exactUnknownLimit: options.informationExactUnknownLimit ?? 8,
+          scoreMode: options.informationScoreMode ?? 'clear', confidenceSE: options.informationConfidenceSE ?? 0,
           maximumWorlds: options.hypothesisMaximumWorlds ?? 128 }) : options.hypothesisActionMs === undefined
           ? rankHypothesisActions(problem, { ...rankOptions, evaluate: physics.evaluate })
           : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });
@@ -331,6 +338,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         hypothesisStats.optionDecisions += +!!actionOptions;
         hypothesisStats.optionChanges += +(!!actionOptions && ranking.index !== fallbackOption.id);
         hypothesisStats.compoundChoices += +(rankedPath.length > 1);
+        if (ranking.confidence?.thresholdSE > 0) {
+          hypothesisStats.confidenceDecisions++;
+          hypothesisStats.confidenceOverrides += +ranking.confidence.overrideAllowed;
+          hypothesisStats.confidenceSuppressed += +(ranking.confidence.rawWinner !== ranking.confidence.primaryIndex
+            && !ranking.confidence.overrideAllowed);
+        }
         const physicalStats = physics.stats(), predicted = advance(geometry, current, rankedIndex);
         const changed = rankedIndex !== selected.plan.index && (predicted.uncertain || !predicted.lost);
         const sampledChange = changed && rankedIndex !== problem.fallbackIndex;
@@ -535,7 +548,7 @@ function playHumanCampaign(input, options = {}) {
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
           boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes,
           ...(selected.plan.hypothesisAudit ? { hypothesis: Object.fromEntries(['changed', 'primaryIndex', 'preferredWorlds', 'completeWorlds',
-            'index', 'primaryOptionId', 'totals', 'informationWeight', 'unseenCount', 'exactUnknownLimit']
+            'index', 'primaryOptionId', 'totals', 'informationWeight', 'unseenCount', 'exactUnknownLimit', 'confidence', 'scoreMode']
             .map(field => [field, selected.plan.hypothesisAudit[field]])) } : {}) },
         ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path) } : {}) });
       controller.acknowledge(index, accepted);

@@ -3,8 +3,9 @@ const assert = require('assert/strict');
 const { createPairedPictureSampler } = require('./public_paired_picture_sampler.js');
 const { createDiversePictureSampler } = require('./public_diverse_picture_sampler.js');
 const { candidatePaths } = require('./public_information_actions.js');
+const { createInformationComparison } = require('./public_information_comparison.js');
 
-function rankSequentialInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096, picturePrior = 'uniform', exactUnknownLimit = 8 }) {
+function rankSequentialInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096, picturePrior = 'uniform', exactUnknownLimit = 8, scoreMode = 'clear', confidenceSE = 0 }) {
   const paths = candidatePaths(problem);
   assert(Number.isFinite(deadline)); assert(Number.isInteger(maximumWorlds) && maximumWorlds > 0 && maximumWorlds <= 128);
   assert(Number.isInteger(exactNodes) && exactNodes >= 1000 && exactNodes <= 4096);
@@ -16,7 +17,7 @@ function rankSequentialInformationActions(problem, { physics, random, deadline, 
   assert(Number.isInteger(exactUnknownLimit) && exactUnknownLimit >= 0 && exactUnknownLimit <= 512);
   const unseenCount = problem.unseenCount ?? problem.rememberedPictures.filter(picture => picture === null).length;
   const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(1, 2 * problem.unseenFraction);
-  const totals = actions.map(index => ({ index, score: 0, informationClears: 0, exactClears: 0, unresolved: 0, lost: 0, progress: 0 }));
+  const comparison = createInformationComparison(actions, problem.fallbackIndex, { scoreMode, confidenceSE });
   let generatedWorlds = 0, completeWorlds = 0, preferredWorlds = 0, unresolvedWorlds = 0, nodes = 0;
   while (generatedWorlds < maximumWorlds && now() < deadline - 8) {
     const hypothesis = sampler.sample(), batch = []; generatedWorlds++;
@@ -32,7 +33,7 @@ function rankSequentialInformationActions(problem, { physics, random, deadline, 
         const report = physics.evaluateInformation({ ...request, deadline: informationDeadline });
         assert.equal(report.kind, 'informationEvaluation');
         assert(['cleared', 'lost', 'unresolved'].includes(report.status));
-        honest = now() < informationDeadline ? report : honest;
+        honest = now() < informationDeadline ? report : scoreMode === 'progress' ? { ...report, status: 'unresolved' } : honest;
         if (informationWeight < 1 && now() < actionDeadline) {
           const report = physics.evaluate({ ...request, deadline: actionDeadline, nodeLimit: exactNodes });
           assert.equal(report.kind, 'hypothesisEvaluation');
@@ -48,19 +49,9 @@ function rankSequentialInformationActions(problem, { physics, random, deadline, 
     completeWorlds++;
     const anyClear = batch.some(row => row.honest.status === 'cleared' || row.exact.status === 'cleared');
     preferredWorlds += +anyClear; unresolvedWorlds += +!anyClear;
-    const allExactLost = batch.every(row => row.exact.status === 'lost');
-    batch.forEach(({ honest, exact }, offset) => {
-      const total = totals[offset];
-      total.informationClears += +(honest.status === 'cleared'); total.exactClears += +(exact.status === 'cleared');
-      total.score += informationWeight * +(honest.status === 'cleared') + (1 - informationWeight) * +(exact.status === 'cleared');
-      total.unresolved += +(honest.status === 'unresolved'); total.lost += +(honest.status === 'lost');
-      if (allExactLost) total.progress += exact.progress ?? 0;
-    });
+    comparison.add(batch, informationWeight);
   }
-  let selected = totals.find(row => row.index === problem.fallbackIndex);
-  for (const total of totals) if (total.score > selected.score + 1e-12
-    || Math.abs(total.score - selected.score) <= 1e-12 && total.progress > selected.progress) selected = total;
-  return { kind: 'informationRanking', index: selected.index, totals, nodes, generatedWorlds, completeWorlds, preferredWorlds,
+  return { kind: 'informationRanking', ...comparison.finish(), nodes, generatedWorlds, completeWorlds, preferredWorlds,
     unresolvedWorlds, excludedByWinnabilityPreference: 0, incompleteWorlds: generatedWorlds - completeWorlds,
     informationWeight, unseenCount, exactUnknownLimit, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
 }

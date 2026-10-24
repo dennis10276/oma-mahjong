@@ -1,80 +1,68 @@
-# Human-information reference: Dennis gate
+# Human-information reference: Phase 3
 
-Worktree: `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
-Branch: `wip/personal-bots`. Goal ACTIVE and UNMET.
-Current objective: phase 2, information-aware sampled planning.
+Worktree: C:\Users\den_k\Idea\OmasMahjong\personal-bot-review
+Branch: wip/personal-bots. Goal ACTIVE and UNMET.
 
 ## Rules
 
-- ONE geometry visibility gate; no screenshot or pixel recognition development.
-- Use only visible/remembered pictures and roles from the same actual level.
-  A rejected geometrically free tile has ice or a lock, without identifying which.
-  Covered clock badges are public. Border visibility permits picture recognition.
-- Hypothetical fillings may favor a still-winnable position. Guesses never become
-  observed memory, actual winning proofs, or exact hidden-filling loss shares.
-- Actual starts/restarts count. Dennis1 requires bot1; Dennis2+ requires fewer.
-  Caps remain unresolved. Every accepted actual tap replays in original production.
-- Include every recorded first clear and all15 eligible lab boards; exclude only10031.
-  Missing old recordings use explicitly labelled reconstructed board comparisons.
-- General planning only. Under approximately2s/move, single thread, anytime.
-  After all155 pass, freeze unchanged for20 unopened progression levels.
-- Small exact-path commits and one short table per run. Keep this file <=80 lines.
+- Only human-visible or remembered same-level facts. One geometry visibility gate.
+  Exposed borders permit recognition; covered clock badges are public.
+  A rejected free tile means ice or lock, without identifying which.
+- No hidden pictures, inventory, seed or future reveals in policy.
+  Hypothetical fillings remain guesses, never actual memory or safety proofs.
+- Every accepted tap independently replays through original production.
+  Real retries count; finite search/time caps remain unresolved.
+- Under2s per move; about1.3s contested-decision budget.
+  Up to3 CPU workers side by side, one per salt; each campaign remains single-thread.
+- General planning only. No proof/cache/speed side projects unless a failure needs one.
+- One short Markdown table per screen. Keep this file <=80 lines, without process logs.
 
-## Current verified table
+## Current verified scope
 
-| Set | Passing | Remaining failures |
+| Set | Passing | Remaining |
 |---|---:|---|
 | Natural |132/140|81,93,99,102,107,112,125,137|
 | Lab |9/15|11,32,33,41,49,52|
-| Combined |141/155|14 failures; unseen20 not run|
+| Historical full |141/155|Phase3 official salt1 score not yet measured|
 
-Authoritative full report: `HUMAN_REFERENCE_CATALOG_CAUSAL_AVAILABILITY_2026-10-24.md`.
-Mean85.1ms; maximum1505.7ms. No newer full result is claimed.
-Latest metadata refresh finds140 natural first clears through156; no newer clears.
-No new boards decoded during that refresh.157+ remains unopened.
+Full155 contains natural first clears17-156 and15 labs, excluding only10031.
+Dennis1 requires bot1; Dennis2+ requires strictly fewer actual tries.
+Unopened progression157+ remains held out; unseen20 has not run.
+Prior unsalted single-run screens are exploratory, never seeded adoption evidence.
+Latest five-case probe completed2/5, including99try1 and111try2; no adoption inferred.
 
-Experimental results, not promoted:
-- Guarded sampling11/18:107 clears1;121 improves2 to1; old passes retained.
-- Cache/cap/key-only variants were not promoted; their results remain in git.
-- All95 registered offline tests pass. Information-aware sampling is connected:
-  fast primary play-outs through production, all contested roots, shared1.3s,
-  actual-memory seeding, uncertainty weights and4096-node remembered-board search.
-  Exact filled-position DFS is integrated with12 graph/production controls;
-  progress breaks ties only after every compared action has an exhausted loss.
-  First screen stopped at81's512-action cap:0/2225 play-outs cleared.
-  Influence attribution, all-root death handling and fast-policy costs are fixed.
-  Reproduction of reference wins remains open; no new level win is claimed.
+## Required seeded measurement
 
-## Build now
+1. Mix run salt1,2,3 into the public-state random seed. No level IDs.
+2. Noise screen is TRY1 ONLY, all16 levels for each salt =48 cases:
+   failures81,93,99,102,107,112,125,137;
+   guards134,141,143,147,150,151,153,156.
+   Guard membership follows the requested list irrespective of human try labels.
+3. Always finish every screen. Show gains and losses side by side.
+   Adopt only if first-try wins increase AND no guard loses more than one
+   previously won salt. Invalid source/timing/error screens cannot establish adoption.
+4. Every few adopted changes run full155 with salt1 as the official score.
 
-1. Sampled comparison decides every contested decision with unseen pictures.
-   Compare all sensible actions on identical fillings. Primary choice only breaks
-   ties; safety may veto only proven losing moves. Reserve about1.3s for sampling.
-2. Play each candidate forward through a policy using only information visible
-   in that hypothetical world at that time. Reuse the primary policy in fast mode.
-   Looking is a real tap; automatic matches, clocks, obstacles and arrivals still apply.
-3. Use fully informed search chiefly with few unknown pictures and thousands of
-   nodes. Use its progress only as a tie-break in already lost fillings.
-4. Exact search only at <=8 alive unseen pictures; below that weight by unseen fraction.
-5. Reference: `origin/wip/det-bot`, `source/tools/sim/detbot/det_bot.js`,
-   `rollout.js`, `solver2.js`. Reproduce its81/93/99/137 and lab32/33/41/52 passes
-   in the audited pipeline. Its prototype shortcuts need physical/visibility parity.
+## Planner work and validation
 
-## Next validation
+- Honest play-outs score share of tiles cleared; a verified clear scores1.
+  Censored partial play-outs retain partial scores and their unresolved status.
+- Compare all actions on the SAME fillings; primary is the fallback.
+  Override only with paired mean improvement greater than2 standard errors.
+  Fewer than2 completed fillings cannot justify a confidence override.
+- Exact sampled planning only at <=8 unseen ALIVE pictures, thousands of nodes.
+  Below that limit mix honest and exact scores by the unseen fraction.
+  Oracle progress ties require every compared action proved lost in that filling.
+- Calibrate32 fillings/1-node play-outs against12 fillings/16-node play-outs.
+  Report requested caps AND actual completed fillings under the shared budget.
+- Check lab32/33/41/52 with salts1-3, retaining actual same-level retry memory.
+- Registered offline tests cover visibility, production replay, scores, paired
+  margins, salts and the48-case adoption harness. Seeded real baseline is next.
 
-Quick screen24:81,93,99,102,107,112,125,137,10011,10032,10033,10041,10049,10052,
-plus guards92,111,121,123,124,134,141,143,147,150.
-Report sampling changes / contested decisions; below5% is insufficient influence.
-The corrected screen stopped after guard111 regressed.99 and112 both clear1;
-92 passes4.81/93/102/107 fail.16 cases remain uncompleted; no full score inferred.
-Observed influence285/1075 (26.5%); max1305.8ms. No promotion with a guard lost.
-Augmented options keep99try1 but fail93/111/112;137 remains uncompleted.
-Strong primary200ms screen finished4/24:92,111,141,143 pass; six guards regress.
-The isolated99/111/112 successes did not repeat. This profile is not promoted.
-Dispersed-pair probe stopped after guard111 failed:93 clears1,99 fails;112/137 pending.
-Eight-unseen probe running:93 fails;99 clears1;111/112/137 pending.
-Run full155 only after a screen gains a pass without losing one.
-Stop standalone proof/cache/micro-speed work unless a failing level requires it.
-Do not merge different profiles' wins or infer a full score from subsets.
-If impossibility is claimed, supply the exact position, every move's exact loss
-share over consistent fillings, and why no move was knowably safe; user decides.
+## Next and completion
+
+Finish baseline48 with clear-only scoring/no confidence, then compare the two
+progress-scoring/2SE profiles on the identical frozen input. No early guard stops.
+Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
+unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
+planner changes, slowest move and any decision needed. Goal is not complete.

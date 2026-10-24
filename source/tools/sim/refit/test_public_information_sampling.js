@@ -99,6 +99,14 @@ function test() {
   const stopped = rankInformationActions(problem, { physics: slow, now: () => time,
     random: () => 0, deadline: 100, maximumWorlds: 1 });
   assert.equal(stopped.completeWorlds, 0); assert.equal(stopped.index, 0);
+  for (const schedule of ['sequential', 'interleaved']) {
+    const fractional = { ...physics, evaluateInformation: request => ({ kind: 'informationEvaluation',
+      status: 'lost', progress: request.index === 0 ? 0.2 : 0.4 }) };
+    const measured = rankInformationActions(problem, { physics: fractional, random: () => 0, deadline: Date.now() + 1000,
+      maximumWorlds: 3, schedule, scoreMode: 'progress', confidenceSE: 2 });
+    assert.equal(measured.index, 1); assert.equal(measured.confidence.samples, 3);
+    assert(measured.totals.every(total => total.informationClears === 0));
+  }
   assert(stopped.totals.every(row => row.score === 0));
   console.log('PASS balanced information-aware comparisons override the primary only by score, use identical fillings, weight honest play-outs by unseen information and thousands-node search by memory, preserve ties and discard expired incomplete batches');
 }
