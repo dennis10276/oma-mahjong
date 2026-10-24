@@ -209,9 +209,10 @@ independently replayed through Hard.play. Standalone runtime0.37s. The latest fu
 suite now passes77/77 after the full run ended.
 Committedacc751c, then d8ec5e6 rejects sparse memory arrays rather than skipping
 missing entries; the same standalone controls and production clears pass again.
-Before integration, audit the public opening contract across all155 development
-inputs. No campaign gain or complete initial-contract coverage is claimed.
-Partial trusted opening audit2026-10-24:all15 eligible lab boards and118 cached
+No campaign gain is claimed for the single-picture helper. All155 opening bounds
+are now independently validated below, but the cold8 diagnostic shows no usable
+single-unknown opportunity on those failing routes.
+Earlier partial trusted opening audit2026-10-24:all15 eligible lab boards and118 cached
 natural openings across63 levels(53–150) have even initial picture counts. No
 picture, inventory or seed was supplied to a policy. This is NOT yet the full155
 input audit. Layouts.makeDeal obtains paired faces from pairFacesFor and deal;
@@ -282,8 +283,15 @@ preserve real known winning/clock-exit witnesses. A primary-search time slice pl
 all hypothesis evaluations must share the SAME1500ms decision deadline, single
 thread. Every physical candidate must ultimately independently replay in Hard.
 Missing hypothetical solutions remain unresolved; a hypothetical win is never a
-known actual route. Before using the paired/Joker opening bounds, validate them
-against all155 input boards. Current corpus still ends156;157+ stays unopened.
+known actual route. Complete trusted opening audit2026-10-24T11:36:47.303Z:
+all155 development boards have even initial picture counts and at most two
+Jokers (actual maximum0 in this corpus). Input hash matches the full141 run:
+00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9.
+No identity, inventory or seed was supplied to a policy. This validates the
+source-declared opening bounds, not a known unseen inventory or a uniform prior.
+There are still no newer natural clears;157+ stays unopened. No CPU-heavy job
+remains live:the full run, cold diagnostic, blocked screen,81-test suite and
+trusted input audit all exited successfully.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
