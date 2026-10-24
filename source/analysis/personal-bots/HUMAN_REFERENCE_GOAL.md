@@ -398,8 +398,23 @@ RUNNING:session73067, PID15532, started2026-10-24T13:41:13.792Z, runtime06fec3d.
 Report:HUMAN_REFERENCE_CACHED_HYPOTHESIS_CHALLENGE_2026-10-24.md.
 Same18 levels/profile/input02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
 Source33ddd6f6db0af708ea6475e561b3616d71e49187a9443a886c1226f3a49a1c04.
-Last verifiedlive2026-10-24T13:44:34Z, process204CPU seconds.81 still fails after
-36 accepted taps, max1506.4ms; no other completed rows received yet. Not terminal.
+Last verifiedlive2026-10-24T13:53:28Z, through123.81/93/99/102/112 stillfail;
+92try3,107try1,111try2,121try1,123try1.121 uses103 taps vs130 in the previous
+guarded trial.107 completes613 balanced worlds vs516 previously. No completed
+try-count regression yet; full18 remains unfinished and maxseen1509.3ms.
+Standalone prefix validator committedf88eed3 (not imported by this live run or
+the full registry). It strips a sampled route to non-losing known-memory taps,
+stopping at unknown pictures/orientations/roles/open-twin legality, information
+exposure, illegal moves, actual tray/clock loss, repeated public state or deadline.
+Only an entirely real-known clear can set knownWin. A retained pair prefix and
+fully known clear independently replay through originalHard. Test passed0.2s.
+Future adoption must also stop retention on newly observed facts or physical
+mismatch. Do not copy sampled pictures/roles or a guessed winning suffix into
+actual memory. Budget integration remains the next controlled policy change;
+prefix integration must be separately measured, not mixed into the cache run.
+Trusted opening-only audit (zero chosen actions) confirms all6 remaining lab
+failures have active public clocks. Keep these and every other eligible lab board
+in the next broader validation; no natural-only subset can satisfy the full goal.
 NEXT:finish/audit the cache on the same18 before changing sampling policy; then inspect
 sampling censoring and information dependence.93's7 verified hypothetical
 clears all fell in unfinished batches, so preferredWorlds remained0. Consider fair
