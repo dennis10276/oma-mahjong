@@ -1,10 +1,11 @@
 'use strict';
 const assert = require('assert/strict');
+const vm = require('vm');
 const Layouts = require('../../../www/layouts.js');
 const { createHumanController, visibleRole, verifyAttempt, playHumanCampaign } = require('./human_reference_campaign.js');
 const { observeBoard } = require('./human_board_visibility.js');
 const { createSessionFactory } = require('./production_physical_session.js');
-const { encodeGame } = require('./personal_game_io.js');
+const { encodeGame, decodeGame } = require('./personal_game_io.js');
 
 function test() {
   const tiles = [{ x: 0, y: 0, z: 0 }, { x: 2, y: 0, z: 0 }, { x: 0, y: 2, z: 0 },
@@ -57,6 +58,10 @@ function test() {
   const wrongNeighborhood = actual.rules.iceNb.map(row => row.slice()); wrongNeighborhood[0] = [];
   assert.throws(() => playHumanCampaign({ ...actual, rules: { ...actual.rules, iceNb: wrongNeighborhood } },
     { planning, maximumAttempts: 1 }), /public geometric ice neighborhood/);
+  const encodedElsewhere = vm.runInNewContext('JSON.parse(encoded)', { encoded: JSON.stringify(encodeGame(actual)) });
+  assert.notEqual(Object.getPrototypeOf(encodedElsewhere.rules.iceNb), Array.prototype);
+  const reconstructed = playHumanCampaign(decodeGame(encodedElsewhere), { planning, maximumAttempts: 1 });
+  assert.equal(reconstructed.wonOn, 1, 'Equivalent sandbox-generated neighbor arrays are accepted while real graph mismatches remain rejected');
   factory.verifySource();
   console.log('PASS actual observed keys and a real earlier safe tap support a different thawing route on retry, preserve the unknown initial ice role and all original-rule witnesses, and independently replay the loss and both retry controls');
 }

@@ -294,7 +294,7 @@ function playHumanCampaign(input, options = {}) {
     assert(ice.every(index => game.rules.ice[index] <= 2), 'Exclusive production-role contract supports one/two-hit ice');
   }
   if (options.planning?.causalAvailabilityMemory && game.rules) {
-    const ordered = rows => rows.map(row => row.slice().sort((left, right) => left - right));
+    const ordered = rows => Array.from(rows, row => Array.from(row).sort((left, right) => left - right));
     assert.deepEqual(ordered(game.rules.iceNb), ordered(Layouts.iceNeighbors(game.tiles)), 'Causal availability requires the public geometric ice neighborhood');
   }
   const factory = createSessionFactory(), attempts = [];

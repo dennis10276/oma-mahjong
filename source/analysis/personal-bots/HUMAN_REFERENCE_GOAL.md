@@ -142,6 +142,26 @@ retry, proves a closed tap without re-observing its role, and physically clears
 both controls. The hidden initial ice stays unknown.76/76 tests pass, including
 7296 concealed-world controls; no campaign gain is inferred before benchmarking.
 
+Session11421 completed the causal-memory lab15 screen9/15 (new passlab12try5
+vsDennis6), mean103.2ms,max1502.6ms. Report:
+HUMAN_REFERENCE_LAB_CAUSAL_AVAILABILITY_2026-10-24.md.
+Sourcea943da0ec0c91f46d8d122dbe1a41cb30d2a8e96a71a7b18b47c22f90d1a2e61;
+input4e5a9c9870dac977f024c3700b6c4813b5cdf463f6f9b63dcd37ecbd1dde5d17,
+source unchanged.264578 successful public transfer proofs in607076 queries;
+these include hypothetical positions and are NOT observations. Existing lab passes
+retain their try counts. This does not establish a new full155 score.
+
+Its subsequent natural42 phase stopped before emitting any row:the strict
+ice-neighbor validation compared sandbox array prototypes rather than just graph
+values. Trusted audit of50 found ZERO neighbor-value differences, but native inner
+rows versus sandbox inner rows. The validator now normalizes BOTH outer and inner
+containers with Array.from before sorting/comparing. No graph edge or physics
+assumption is weakened. A real sandbox-generated full campaign passes; a genuine
+changed-neighborhood fixture still rejects.76/76 tests pass. The failed natural
+phase produced no canonical table. Restart natural42 with the same causal profile
+after this guard fix; keep lab9/15 at its recorded source, do not merge hashes into
+a full score. Retry-risk and clock-learning options are OFF in the causal profile.
+
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
 after the run ended. clockRetryLearning requires actual retryRiskLearning. The helper permits
