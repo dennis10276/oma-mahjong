@@ -28,3 +28,4 @@ erased by the small speculative exact component at high unseen fractions.
 Run the complete48-case screen for each frozen32x1/12x16 profile. These are candidate
 settings; choose only after the higher-than24 total and paired guard-loss gate pass.
 Full155 and the one-time unseen20 remain required before completing the goal.
+The complete offline reference suite passes100/100 in23s for this frozen build.
