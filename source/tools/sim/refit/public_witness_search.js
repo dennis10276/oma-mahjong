@@ -199,7 +199,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const cone = clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).frontier
     : obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
   const rootClockCost = clockRecovery && clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).cost : clockDistance(game, state) : 0;
-  const clockRecoveryActive = clockRecovery && clocked && game.clock.n - state.moves - rootClockCost > 2;
+  const clockRecoveryActive = clockRecovery && clocked && state.tray.length >= (settings.trayRecoveryClockMin ?? 0)
+    && game.clock.n - state.moves - rootClockCost > 2;
   const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,

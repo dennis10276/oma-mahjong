@@ -23,6 +23,11 @@ function test() {
   const recovered = search(game, state, roots, { ...options, clockRecovery: true });
   assert.equal(recovered.index, 4, 'With spare clock moves, inspect before committing an unmatched clock blocker');
   assert(recovered.clockRecoveryActive && !recovered.knownDead && !recovered.knownWin);
+  const empty = search(game, state, roots, { ...options, clockRecovery: true, trayRecoveryClockMin: 1 });
+  assert(!empty.clockRecoveryActive);
+  assert.deepEqual([empty.index, empty.path], [legacy.index, legacy.path]);
+  const carried = search(game, { ...state, tray: [9] }, roots, { ...options, clockRecovery: true, trayRecoveryClockMin: 1 });
+  assert(carried.clockRecoveryActive);
   const urgent = { ...game, clock: { i: 0, n: 4 } };
   const comparable = result => [result.index, result.path, result.goal, result.knownWin, result.safeClockExit];
   const urgentPlan = search(urgent, state, roots, { ...options, clockRecovery: true });
@@ -39,7 +44,7 @@ function test() {
   assert.equal(campaign.wonOn, 1);
   assert.equal(campaign.verifiedTaps, campaign.attempts[0].taps);
   assert.throws(() => search(game, state, roots, { ...options, clockRecovery: 'yes' }));
-  console.log('PASS spare-clock recovery ranks public tray debt before digging, retains urgent and nonclock ordering, and independently replays a matching inspection route through the production clock');
+  console.log('PASS spare-clock recovery ranks public tray debt before digging, respects the configured carried-tile threshold, retains urgent/nonclock ordering and independently replays a production clock route');
 }
 
 if (require.main === module) test();
