@@ -37,6 +37,15 @@ function test() {
   assert(crowded.some(choice => JSON.stringify(choice.path) === '[0,1]'));
   const originals = JSON.stringify(state);
   informationActions(geometry, state, [0, 1]); assert.equal(JSON.stringify(state), originals);
+  const clockGeometry = { ...geometry, clock: { i: 2, n: 1 } };
+  const clockChoices = informationActions(clockGeometry, state, [0]);
+  assert.deepEqual(clockChoices.map(choice => choice.path), [[0, 2]]);
+  const clockSession = factory({ ...clockGeometry, faces: pictures, down }, { seed: 7, choiceLimit: 32, tapMs: 1000 });
+  for (const index of clockChoices[0].path) clockSession.tap(index);
+  assert.equal(clockSession.view().state.moves, 1); assert.equal(clockSession.view().state.alive[2], 0);
+  assert.notEqual(clockSession.view().type, 'productionPhysicalEnd-v1');
+  const uncertainRole = { ...geometry, publicFrontier: () => ({ free: [0, 1, 2, 3], uncertain: [0], relieved: false }) };
+  assert.deepEqual(informationActions(uncertainRole, state, [0]).map(choice => choice.path), [[0]]);
   assert.throws(() => informationActions({ ...geometry, faces: pictures }, state, [0]));
   factory.verifySource();
   console.log('PASS known zero-progress peeks expand to separately scored physical take/pair/information options; unknown single looks remain, proven second-tap losses are omitted, and every known option independently matches production without hidden pictures');
