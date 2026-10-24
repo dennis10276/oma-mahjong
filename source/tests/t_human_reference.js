@@ -47,6 +47,8 @@ const modules = [
   'test_public_paired_picture.js',
   'test_public_paired_picture_sampler.js',
   'test_public_anytime_hypotheses.js',
+  'test_public_hypothesis_physics.js',
+  'test_human_hypothesis_sampling.js',
   'test_public_recovery_priority.js',
   'test_public_uncertain_safety.js',
   'test_public_information_tap_safety.js',

@@ -24,6 +24,8 @@ const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
 const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
+const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
+const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
@@ -40,6 +42,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
+  assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
+  assert(!options.hypothesisSampling || options.exclusiveRoles === true && ['standard', 'lab'].includes(publicContext.boardMode),
+    'Hypotheses require declared public board and exclusive obstacle contracts');
+  for (const [field, maximum] of [['hypothesisMaximumWorlds', 128], ['hypothesisNodesPerAction', 4096]]) {
+    assert(options[field] === undefined || Number.isInteger(options[field]) && options[field] > 0 && options[field] <= maximum);
+  }
   assert(options.usePlacementContract === undefined || typeof options.usePlacementContract === 'boolean');
   assert(options.causalAvailabilityMemory === undefined || typeof options.causalAvailabilityMemory === 'boolean');
   assert(!options.causalAvailabilityMemory || options.exclusiveRoles === true
@@ -67,13 +75,19 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof }) : null;
   const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
   const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof }) : null;
-  const blockedTapMemory = options.rememberBlockedTaps ? createBlockedTapMemory(geometry.tiles,
+  const blockedTapMemory = options.rememberBlockedTaps || options.hypothesisSampling ? createBlockedTapMemory(geometry.tiles,
     { exclusiveRoles: options.exclusiveRoles === true }) : null;
+  const episodes = [], hypothesisStats = { decisions: 0, changed: 0, generatedWorlds: 0, completeWorlds: 0,
+    preferredWorlds: 0, verifiedHypotheticalClears: 0, rejectedAssignments: 0 };
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
+  let decisionDeadline = Infinity;
+  const baseSearch = options.hypothesisSampling ? (game, state, actions, searchOptions) => searchPublicWitness(game, state, actions,
+    { ...searchOptions, decisionMs: undefined, deadline: Math.min(decisionDeadline, searchOptions.deadline ?? Infinity) }) : searchPublicWitness;
   const retrySearchFactory = options.clockRetryLearning ? clockRetryExploration : retryExploration;
-  const runRetrySearch = options.retryRiskLearning ? retrySearchFactory(searchPublicWitness) : null;
-  const resetPlanner = () => { planner = runRetrySearch ? reference(settings, runRetrySearch) : reference(settings); };
+  const runRetrySearch = options.retryRiskLearning ? retrySearchFactory(baseSearch) : null;
+  const resetPlanner = () => { planner = runRetrySearch || options.hypothesisSampling
+    ? reference(settings, runRetrySearch || baseSearch) : reference(settings); };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
   return {
@@ -83,6 +97,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       lastAcceptedIndex = null;
       retryRiskMemory?.beginAttempt();
       blockedTapMemory?.beginAttempt();
+      if (options.hypothesisSampling) episodes.push({ actions: [], frames: [] });
       resetPlanner();
     },
     observe(state, observed) {
@@ -100,6 +115,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         }
       }
       lastAcceptedIndex = null;
+      if (options.hypothesisSampling) episodes.at(-1).frames.push({
+        state: Object.fromEntries(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving', 'physicalTaps']
+          .map(field => [field, structuredClone(state[field])])), roles: observed.roles.slice() });
       observed.pictures.forEach((picture, index) => {
         if (picture !== null) { assert(pictures[index] === null || pictures[index] === picture); pictures[index] = picture; }
         if (observed.down[index] !== null) { assert(down[index] === null || down[index] === observed.down[index]); down[index] = observed.down[index]; }
@@ -172,9 +190,38 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       } : exposure;
     },
     decide() {
+      decisionDeadline = options.hypothesisSampling ? Date.now() + 1500 : Infinity;
       const available = geometry.publicFrontier(current);
       let actions = available.free.map(index => ({ index }));
       if (!actions.length) return null;
+      const finalize = selected => {
+        if (!options.hypothesisSampling || selected.plan.knownWin || selected.plan.safeClockExit || selected.plan.knownDead
+          || current.tray.length < 2 || !current.pictures.some((picture, index) => current.alive[index] && picture === null)
+          || Date.now() >= decisionDeadline) return selected;
+        let publicHash = 2166136261;
+        for (const character of JSON.stringify({ tiles: geometry.tiles, pictures, down, initialRoles,
+          alive: current.alive, tray: current.tray, moves: current.moves, openPeek: current.openPeek })) {
+          publicHash = Math.imul(publicHash ^ character.charCodeAt(0), 16777619) >>> 0;
+        }
+        const random = Layouts.rng(publicHash);
+        const physics = createHypothesisPhysics({ tiles: geometry.tiles, rememberedPictures: pictures, rememberedDown: down,
+          initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random });
+        const ranking = rankHypothesisActions({ rememberedPictures: pictures, actions: actions.map(action => action.index),
+          fallbackIndex: selected.plan.index }, { deadline: decisionDeadline, random, evaluate: physics.evaluate,
+          maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction });
+        const physicalStats = physics.stats(), predicted = advance(geometry, current, ranking.index);
+        const changed = ranking.index !== selected.plan.index && (predicted.uncertain || !predicted.lost);
+        hypothesisStats.decisions++; hypothesisStats.changed += +changed;
+        for (const field of ['generatedWorlds', 'completeWorlds', 'preferredWorlds']) hypothesisStats[field] += ranking[field];
+        for (const field of ['verifiedHypotheticalClears', 'rejectedAssignments']) hypothesisStats[field] += physicalStats[field];
+        const audit = { ...ranking, ...physicalStats, changed, primaryIndex: selected.plan.index,
+          sharedDeadline: decisionDeadline };
+        if (!changed) return { ...selected, plan: { ...selected.plan, hypothesisAudit: audit } };
+        manualChoice = true; resetPlanner();
+        return { plan: { index: ranking.index, path: [ranking.index], goal: 'hypothesisChoice', knownWin: false, knownDead: false,
+          knownProgress: predicted.uncertain ? 0 : predicted.removed, information: !!predicted.uncertain,
+          boundary: true, nodes: selected.plan.nodes + ranking.nodes, hypothesisAudit: audit }, predicted };
+      };
       const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit && !(clock && current.alive[clock.i])
         ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
       manualChoice = false;
@@ -193,7 +240,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         return { plan: { index, path: [index], goal: 'closedTileDiscovery', knownWin: false, knownDead: false,
           knownProgress: 0, information: true, boundary: true, nodes: 0 }, predicted: advance(geometry, current, index) };
       };
-      if (discoveries.length && options.inspectBeforeCommit !== 'recovery') return discover();
+      if (discoveries.length && options.inspectBeforeCommit !== 'recovery') return finalize(discover());
       if (options.patientSingleCarry && current.tray.length === 1 && !(clock && current.alive[clock.i])) {
         const guaranteed = actions.filter(action => !available.uncertain.includes(action.index));
         const ready = guaranteed.filter(action => {
@@ -207,9 +254,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       if (cleanup) {
         manualChoice = true; resetPlanner();
         const index = cleanup.path[0], won = !cleanup.state.alive.some(Boolean) && !cleanup.state.tray.length;
-        return { plan: { index, path: cleanup.path, goal: won ? 'win' : 'knownUniqueCleanup', knownWin: won,
+        return finalize({ plan: { index, path: cleanup.path, goal: won ? 'win' : 'knownUniqueCleanup', knownWin: won,
           knownDead: false, knownProgress: cleanup.removed, information: false, boundary: !won, nodes: 0 },
-        predicted: advance(geometry, current, index) };
+        predicted: advance(geometry, current, index) });
       }
       const activeClock = !!(clock && current.alive[clock.i]);
       const mayExploreRetry = !activeClock || options.clockRetryLearning && !planner.report()?.safeClockExit;
@@ -219,12 +266,13 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const plan = planner.report();
       if (knownLossMemory) knownLossMemory.recordActual(current, plan, actions);
       if (discoveries.length && !discoveries.some(action => action.index === plan.index)
-        && !preferKnownRecovery(geometry, current, plan)) return discover();
+        && !preferKnownRecovery(geometry, current, plan)) return finalize(discover());
       const predicted = advance(geometry, current, plan.index);
-      return { plan: structuredClone(plan), predicted };
+      return finalize({ plan: structuredClone(plan), predicted });
     },
     acknowledge(index, accepted) {
       lastAcceptedIndex = accepted ? index : null;
+      if (accepted && options.hypothesisSampling) episodes.at(-1).actions.push(index);
       if (accepted) { if (!manualChoice) planner.acknowledgeTile(index); }
       else {
         assert(geometry.publicFrontier(current).uncertain.includes(index), 'A guaranteed public tap was rejected by production');
@@ -234,13 +282,17 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       }
     },
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
-    completeAttempt(status) { return retryRiskMemory?.finish(status) ?? null; },
+    completeAttempt(status) {
+      if (options.hypothesisSampling) episodes.at(-1).status = status;
+      return retryRiskMemory?.finish(status) ?? null;
+    },
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
     blockedEvidence() { return blockedTapMemory?.entries() ?? []; },
     causalAvailabilityStats() { return { ...transferStats }; },
+    hypothesisStats() { return { ...hypothesisStats }; },
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
@@ -289,7 +341,7 @@ function playHumanCampaign(input, options = {}) {
   const maximumAttempts = options.maximumAttempts ?? 3;
   assert(Number.isInteger(maximumAttempts) && maximumAttempts > 0);
   const encoded = encodeGame(input), game = decodeGame(encoded), controller = createHumanController(game.tiles, options.planning, options.publicContext);
-  if (options.planning?.usePlacementContract && options.publicContext?.boardMode === 'standard') {
+  if ((options.planning?.usePlacementContract || options.planning?.hypothesisSampling) && options.publicContext?.boardMode === 'standard') {
     const specials = new Set([...(game.rules?.keys || []), ...(game.rules?.locks || []),
       ...Object.keys(game.rules?.ice || {}).filter(index => game.rules.ice[index] > 0).map(Number)]);
     assert([...specials].every(index => !game.down[index]), 'Standard placement contract forbids ice, locks or keys on initially closed tiles');
@@ -302,9 +354,15 @@ function playHumanCampaign(input, options = {}) {
     assert.equal(new Set(special).size, special.length, 'Exclusive production-role contract forbids stacked roles');
     assert(ice.every(index => game.rules.ice[index] <= 2), 'Exclusive production-role contract supports one/two-hit ice');
   }
-  if ((options.planning?.causalAvailabilityMemory || options.planning?.rememberBlockedTaps) && game.rules) {
+  if ((options.planning?.causalAvailabilityMemory || options.planning?.rememberBlockedTaps || options.planning?.hypothesisSampling) && game.rules) {
     const ordered = rows => Array.from(rows, row => Array.from(row).sort((left, right) => left - right));
     assert.deepEqual(ordered(game.rules.iceNb), ordered(Layouts.iceNeighbors(game.tiles)), 'Public obstacle memory requires the public geometric ice neighborhood');
+  }
+  if (options.planning?.hypothesisSampling) {
+    const odd = new Set();
+    for (const picture of game.faces) { if (odd.has(picture)) odd.delete(picture); else odd.add(picture); }
+    assert.equal(odd.size, 0, 'Hypothesis sampling requires paired initial pictures');
+    assert(game.faces.filter(picture => picture === 101).length <= 2, 'Hypothesis sampling requires at most two initial Jokers');
   }
   const factory = createSessionFactory(), attempts = [];
   let slowestMs = 0, controls = 0, verifiedTaps = 0, rejected = 0, decision = null;
@@ -370,6 +428,7 @@ function playHumanCampaign(input, options = {}) {
     ...(clockRetry ? { clockRetry } : {}),
     ...(options.planning?.causalAvailabilityMemory ? { causalAvailability: controller.causalAvailabilityStats() } : {}),
     ...(options.planning?.rememberBlockedTaps ? { blockedTapFacts: controller.blockedEvidence().length } : {}),
+    ...(options.planning?.hypothesisSampling ? { hypothesis: controller.hypothesisStats() } : {}),
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
