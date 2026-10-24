@@ -52,19 +52,27 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current code, tests and active experiment
 
-Latest verified correction:`2d6ec2f`; preceding runtime:`b2d3c5f`;
+Latest experimental runtime:`80491b6`; verified correction:`2d6ec2f`;
+preceding runtime:`b2d3c5f`;
 baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
-**54/54 offline tests pass** in approximately4s, including2688 concealed-world
+**55/55 offline tests pass** in approximately5s, including3264 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The shortRoles policy completed140 levels before the public-relief correction;
 the short-probe run was deliberately stopped for that reproduced physics bug.
 The development gate remains unmet and the unseen20 gate is unopened.
-An isolated `public_known_recovery.js` helper now constructs ordinary one/two-tap
+The `public_known_recovery.js` helper constructs ordinary one/two-tap
 tray matches, open twins and known pairs, including a mate thawed by the first
-removal.144 standalone production/replay checks pass. It is NOT imported by
-the actor/search and no campaign gain is claimed. Its144 controls are now
-included in the complete54-test suite.
+removal.144 production/replay checks pass. Optional `shortInformation:'recoveryAware'`
+now uses this constructive local witness to retain ordinary information ordering
+when a permitted one/two-tap recovery is detected; otherwise it tries short probes.
+This is a heuristic switch, not optimality or a loss proof. It uses no level/seed
+IDs, cannot guess an uncertain partner and shares the existing decision deadline.
+The default is unchanged. Tests retain known wins, clocks and expired-budget guards.
+No campaign improvement is claimed before its complete experiment finishes.
+ACTIVE:42-case roles+recoveryAware screen, session64254, runtime80491b6,
+fingerprint:`dc45e00313de551af23ebf43fc4e6adfb277183aff953cf4afaa8a2398aee8b6`.
+Pending:`HUMAN_REFERENCE_RECOVERY_PROBE_CHALLENGE_2026-10-24.md`.
 
 The three-action role-payoff screen completed7/8, source unchanged, slowest
 1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
