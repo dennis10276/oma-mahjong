@@ -641,7 +641,12 @@ function render() {
     }
   };
   let lastDay = '', html = '';
-  const feedEv = ev.concat(events(msgKey(sel))).sort((a, b) => a.t - b.t);
+  // From 1.59 to 1.61 the plain "the alarm went off" window of a level with game tips (no film, no
+  // explanation) was logged as help, so the feed showed "Uitleg getoond: Wekker" after every lost try.
+  // It was not a lesson: those messages are left out (the end of the try already says the alarm went off).
+  const plainLoss = new Set(ev.filter(e => e.k === 'help_msg' && e.action === 'shown' && e.topic === 'clock' && e.why === 'timeout'
+    && !Object.keys(e).filter(k => /^m\d+$/.test(k)).sort((a, b) => a.slice(1) - b.slice(1)).map(k => String(e[k])).join('').includes('\n\n')).map(e => String(e.mid || '')));
+  const feedEv = ev.filter(e => !(e.k === 'help_msg' && e.mid && plainLoss.has(String(e.mid)))).concat(events(msgKey(sel))).sort((a, b) => a.t - b.t);
   for (const e of [...feedEv].reverse().slice(0, 150)) {
     const dk = new Date(e.t).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
     if (dk !== lastDay) { html += `<li class="day">${dk}</li>`; lastDay = dk; }
