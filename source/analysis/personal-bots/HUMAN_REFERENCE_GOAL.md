@@ -82,7 +82,7 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 Runtime:`32f493a`, diagnostic context fix:`b1bdbec`;
 last completed full140/155 policy:`32f493a`. Goal ACTIVE, UNMET.
-**72/72 offline tests pass** in6s, including6912 concealed-world controls,
+**73/73 offline tests pass** in6s, including6912 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -118,14 +118,18 @@ both primary and alternative budget overruns. Standalone test PASS in0.2s.
 No campaign score or main-suite increase is claimed. Next:register its test,
 integrate optionally with actual retry learning, and test whole policies.
 
-Also reproduced:a physically replayed known winning route is discarded solely
+Fixed after the full source freeze:a physically replayed known winning route was discarded solely
 when a compatible late roleNone becomes visible. The stacked closed-tile fixture
 finds winning path[2,6,3,7,4,8,5,9,0,0,1], then searches again after actual tap9
-reveals tile0's role, even though the continuation remains valid. This is wasted
-proof work, not evidence of an actual lost game. Untracked regression fixture
-test_human_winning_role_retention.js intentionally fails2 searches versus1 until
-the actor fix. It also tests that a different physical action still forces a new
-search. Fix and register it now that the full run is terminal, then commit green.
+reveals tile0's role, even though the continuation remains valid. This was wasted
+proof work, not evidence of an actual lost game. The actor now keeps a knownWin
+planner across compatible role additions; the planner's physical-state and
+knowledge checks still invalidate incompatible continuations. Registered fixture
+test_human_winning_role_retention.js failed2 searches versus1 before the fix;
+now passes with1 search and the exact validated winning path. A separate real
+retry deliberately takes another physical action and still replans exactly once.
+Both failed learning attempts and both actual winning retries independently replay.
+73/73 tests pass. No new campaign count is inferred for this post-full change.
 
 Frozen current profile:
 ```json

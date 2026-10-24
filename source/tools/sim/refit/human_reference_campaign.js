@@ -110,7 +110,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const aliveKey = state.alive.join('');
       if (aliveKey !== blockedAlive) { blocked.clear(); blockedAlive = aliveKey; }
       const signature = roles.join(',');
-      if (roleSignature !== signature) resetPlanner();
+      if (roleSignature !== signature && !planner.report()?.knownWin) resetPlanner();
       roleSignature = signature;
       geometry.clock = clock;
       geometry.rules = { iceNb, ice: Object.fromEntries(roles.flatMap((role, index) => role?.startsWith('ice')
