@@ -20,6 +20,9 @@ Do not redefine completion around a subset, a percentage, or an isolated pass.
    restarts. Dennis1 requires bot1; Dennis2+ requires strictly fewer tries.
    Initial134/141/143/147 fixes must remain clear. A bounded failure is not
    impossibility, hidden luck, or permission to peek.
+   An impossibility report now requires the exact position, loss share for EACH
+   possible move among consistent hidden fillings, and why none is known safe.
+   Biased or bounded hypothesis samples do not establish those exact shares.
 3. General planning only, never per-level policies, routes, seed choices or best-of
    merging. After development passes, freeze for the next20 untouched progression
    levels and compare against Dennis when played.157+ remains unopened.
@@ -224,6 +227,22 @@ All last unrecovered third-carrier commitments occur after their clocks are gone
 Next work follows the new objective:negative mechanical observations plus bounded
 public-only hypothesis sampling, preserving known physical witnesses and the same
 shared deadline. Do not substitute more parity-only work for the cold failures.
+
+New optional actor flag rememberBlockedTaps records only an actually rejected,
+geometrically free tap, separately from picture/role memory. It does not label the
+unseen obstacle ice or lock. A stored obstruction remains certain when no more
+ice neighbors are removed AND a possible lock stays active, or both actually
+observed keys were already gone at the original rejection. Facts can transfer
+across actual retries and different removal routes; relief disables them. An
+unrelated removal must not erase the observation, while a thaw/unlock may make it
+uncertain again. Public frontier filtering happens before hypothetical relief.
+The campaign validates ice-neighbor geometry for this flag and reports retained
+actual fact counts. Default remains OFF until measured. Standalone proof suite:
+5336 production-rule controls,4492 non-subset transfers. Real actor fixture retains
+one rejected probe across unrelated moves and an actual failed attempt, then
+physically clears both controls; all accepted taps independently replay. It never
+learns the hidden original ice identity.79/79 offline tests pass in9s, including
+7488 concealed-world controls. No new full campaign gain is claimed.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated

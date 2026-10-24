@@ -11,6 +11,8 @@ const modules = [
   'test_human_accepted_tap_memory.js',
   'test_public_accepted_tap_memory.js',
   'test_public_availability_transfer.js',
+  'test_public_blocked_tap_memory.js',
+  'test_human_blocked_tap_memory.js',
   'test_human_causal_availability.js',
   'test_public_cleared_role_memory.js',
   'test_human_cleared_role_memory.js',

@@ -22,6 +22,7 @@ function test() {
   configurations.push({ ...configurations[1], retryRiskLearning: true });
   configurations.push({ ...configurations[1], retryRiskLearning: true, clockRetryLearning: true });
   configurations.push({ ...configurations[1], rememberAcceptedTaps: true });
+  configurations.push({ ...configurations[1], rememberBlockedTaps: true });
   configurations.push({ ...configurations[1], rememberKnownLosses: true });
   configurations.push({ ...configurations[1], informationTrayLimit: 2 });
   configurations.push({ ...configurations[1], usePlacementContract: true });

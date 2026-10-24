@@ -34,6 +34,7 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
       dominanceStops: result.dominanceStops,
       ...(result.clockRetry ? { clockRetry: result.clockRetry } : {}),
       ...(result.causalAvailability ? { causalAvailability: result.causalAvailability } : {}),
+      ...(result.blockedTapFacts !== undefined ? { blockedTapFacts: result.blockedTapFacts } : {}),
       attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left,
         ...(attempt.learnedRisk !== undefined ? { learnedRisk: attempt.learnedRisk } : {}) })) };
     rows.push(row); emit(row);
@@ -80,6 +81,7 @@ async function main(filename, levels, settings, reportFile) {
     ...(planning.causalAvailabilityMemory ? { causalAvailability: {
       queries: rows.reduce((sum, row) => sum + row.causalAvailability.queries, 0),
       provedTransfers: rows.reduce((sum, row) => sum + row.causalAvailability.provedTransfers, 0) } } : {}),
+    ...(planning.rememberBlockedTaps ? { blockedTapFacts: rows.reduce((sum, row) => sum + row.blockedTapFacts, 0) } : {}),
     developmentGate: filename === '--development' && !selected && unchanged && rows.every(row => row.pass && row.slowestMs < 2000),
     ...(input.excluded ? { excluded: input.excluded } : {}),
     byBoardSource: Object.fromEntries([...new Set(rows.map(row => row.boardSource))].map(source => [source,
@@ -93,6 +95,7 @@ async function main(filename, levels, settings, reportFile) {
       '', `Passed ${summary.passed}/${summary.cases}; mean ${summary.meanDecisionMs}ms; slowest ${summary.slowestMs}ms; dominance stops ${summary.dominanceStops}.`,
       ...(summary.clockRetry ? [`Clock retry audit: ${summary.clockRetry.decisionsAudited} decisions with an alternative-search audit; ${summary.clockRetry.decisionsUsingAlternative} decisions using an adopted alternative (including retained steps).`] : []),
       ...(summary.causalAvailability ? [`Causal availability: ${summary.causalAvailability.provedTransfers} successful public proofs in ${summary.causalAvailability.queries} queries (includes hypothetical positions, not learned observations).`] : []),
+      ...(summary.blockedTapFacts !== undefined ? [`Blocked taps: ${summary.blockedTapFacts} retained actual rejected-tap facts; no unseen ice/lock identity is assigned.`] : []),
       'Historical board identity is not claimed for current-definition substitutes. The unseen20-level gate has not been run.', ''];
     fs.writeFileSync(path.resolve(reportFile), table.join('\n'), { flag: 'wx' });
   }

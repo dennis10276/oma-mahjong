@@ -23,6 +23,7 @@ const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
 const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
+const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
@@ -38,6 +39,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
+  assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
   assert(options.usePlacementContract === undefined || typeof options.usePlacementContract === 'boolean');
   assert(options.causalAvailabilityMemory === undefined || typeof options.causalAvailabilityMemory === 'boolean');
   assert(!options.causalAvailabilityMemory || options.exclusiveRoles === true
@@ -65,6 +67,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof }) : null;
   const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
   const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof }) : null;
+  const blockedTapMemory = options.rememberBlockedTaps ? createBlockedTapMemory(geometry.tiles,
+    { exclusiveRoles: options.exclusiveRoles === true }) : null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   const retrySearchFactory = options.clockRetryLearning ? clockRetryExploration : retryExploration;
@@ -78,6 +82,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       lastAcceptedIndex = null;
       retryRiskMemory?.beginAttempt();
+      blockedTapMemory?.beginAttempt();
       resetPlanner();
     },
     observe(state, observed) {
@@ -143,14 +148,15 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const sameBoard = aliveKey === blockedAlive;
         let free = position.relieved ? position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : [])
           : [...queried.free, ...queried.uncertain];
-        free = free.filter(index => !sameBoard || !blocked.has(index));
+        free = free.filter(index => (!sameBoard || !blocked.has(index))
+          && !blockedTapMemory?.knowsBlocked(index, position.alive, observedKeys, !!position.relieved));
         let relieved = !!position.relieved;
         if (!relieved && !free.length && position.tray.length < Layouts.SLOTS) {
           free = position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : []);
           relieved = free.length > 0;
         }
         const result = { free, relieved,
-          uncertain: relieved ? [] : queried.uncertain.filter(index => (!sameBoard || !blocked.has(index))
+          uncertain: relieved ? [] : queried.uncertain.filter(index => free.includes(index) && (!sameBoard || !blocked.has(index))
             && !(excludeClosedObstacles && down[index] === 1)
             && !acceptedTapMemory?.knowsAvailable(index, position.alive, observedKeys)
             && !clearedRoleMemory?.knowsAvailable(index, position.alive, observedKeys)) };
@@ -222,6 +228,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       if (accepted) { if (!manualChoice) planner.acknowledgeTile(index); }
       else {
         assert(geometry.publicFrontier(current).uncertain.includes(index), 'A guaranteed public tap was rejected by production');
+        blockedTapMemory?.observeBlocked(index, { alive: current.alive, physicalTaps: current.physicalTaps,
+          relieved: !!current.relieved });
         blocked.add(index); frontierCache.clear(); resetPlanner();
       }
     },
@@ -231,6 +239,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
+    blockedEvidence() { return blockedTapMemory?.entries() ?? []; },
     causalAvailabilityStats() { return { ...transferStats }; },
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
@@ -293,9 +302,9 @@ function playHumanCampaign(input, options = {}) {
     assert.equal(new Set(special).size, special.length, 'Exclusive production-role contract forbids stacked roles');
     assert(ice.every(index => game.rules.ice[index] <= 2), 'Exclusive production-role contract supports one/two-hit ice');
   }
-  if (options.planning?.causalAvailabilityMemory && game.rules) {
+  if ((options.planning?.causalAvailabilityMemory || options.planning?.rememberBlockedTaps) && game.rules) {
     const ordered = rows => Array.from(rows, row => Array.from(row).sort((left, right) => left - right));
-    assert.deepEqual(ordered(game.rules.iceNb), ordered(Layouts.iceNeighbors(game.tiles)), 'Causal availability requires the public geometric ice neighborhood');
+    assert.deepEqual(ordered(game.rules.iceNb), ordered(Layouts.iceNeighbors(game.tiles)), 'Public obstacle memory requires the public geometric ice neighborhood');
   }
   const factory = createSessionFactory(), attempts = [];
   let slowestMs = 0, controls = 0, verifiedTaps = 0, rejected = 0, decision = null;
@@ -360,6 +369,7 @@ function playHumanCampaign(input, options = {}) {
     dominanceStops, decision, attempts, controls, verifiedTaps, rejected,
     ...(clockRetry ? { clockRetry } : {}),
     ...(options.planning?.causalAvailabilityMemory ? { causalAvailability: controller.causalAvailabilityStats() } : {}),
+    ...(options.planning?.rememberBlockedTaps ? { blockedTapFacts: controller.blockedEvidence().length } : {}),
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
