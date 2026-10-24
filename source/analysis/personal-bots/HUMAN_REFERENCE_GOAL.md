@@ -77,7 +77,7 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 ## Current runtime and active experiment
 
 Runtime:`a4cb277`; last full139/155 policy:`d7778dd`.
-**71/71 offline tests pass**, including6720 concealed-world controls,675 accepted
+**72/72 offline tests pass**, including6912 concealed-world controls,675 accepted
 availability controls,380 cleared-role subset controls,144 local recoveries,
 24 relief witnesses and original-production replay. No research policy is promoted.
 
@@ -124,7 +124,31 @@ face-up commitment does. The limit is a preference, not a removal prohibition,
 death proof or assumed reveal. Known wins and clock search retain their behavior.
 The physical fixture chooses a longer prefix ending at two instead of three,
 then independently replays the unknown inspection for all37 possible identities.
-No development score has yet been measured.71/71 tests pass in7s.
+Completed session95029, reportHUMAN_REFERENCE_INFORMATION_HEADROOM_SCREEN_2026-10-24.md:
+6/22 vs control6/22, gainlab12try5 but regression147; mean78.7ms,max1503.5ms.
+Source017549a391defc925d18c036a2f297f15d486fc29f38e4685497423cf128b8ed
+was unchanged. This option is not promoted.
+
+New production placement deduction:standard Hard.extras and UI addObstacles pass
+all original face-down indices into Layouts.obstacles' avoid set. Its ok filter
+guards keys, locks AND ice. usePlacementContract (defaultfalse) may therefore
+remove mechanical uncertainty for an actually observed/remembered closed back
+ONLY when publicContext.boardMode is standard. The picture, role and any fully
+covered orientation remain unknown. Geometry still gates freedom. Lab mode and
+unknown provenance never receive this deduction; no board/level ID is consulted.
+
+Trusted audit of155 already developed boards:4815 closed tiles,1751 special-role
+tiles; every natural17–156 board obeys exclusion. Only lab45 violates it, so ALL
+lab boards keep normal uncertain-role handling, not just45. No157+ board decoded.
+screen derives public mode solely from recognized source category; the policy
+receives only standard/lab, never the entry ID, label or hidden role facts.
+playHumanCampaign validates the declared standard contract before any actions,
+rejecting hidden closed ice/lock/key contradictions.24 production generator
+controls cover each obstacle type.72/72 tests pass in6s, including a physical
+remembered closed-match win, unchanged lab closed-ice support and6912 hidden-world
+controls. One generator test initially assumed every seed places obstacles;
+fixed the fixture to allow valid null generations while requiring all three role
+types to be exercised. No gate score for this deduction has yet been measured.
 
 ## Completed research evidence
 
@@ -144,6 +168,7 @@ historical diagnostics remain in the individual reports and this file at a4cb277
 | Crowded recovery + safe discovery breadth |8/22; gains102/124/lab12 (try1), loses147; max1502.1ms |RECOVERY_BREADTH_SCREEN |
 | Previous + early continuation proofs |5/7, identical tries to breadth;147 still fails; max1502.4ms |BREADTH_EARLY_PROOF_CONTROL |
 | Breadth active from one carrier |5/10; gains102/124/lab12, loses121/123/147/150; max1504ms |SINGLE_CARRY_BREADTH_CONTROL |
+| Information endpoint headroom2 |6/22; gainslab12try5, loses147; max1503.5ms |INFORMATION_HEADROOM_SCREEN |
 
 These are whole-policy results, never a merged best-of. The two22-task policies
 remain unpromoted. The next breadth experiment refines them rather than discarding

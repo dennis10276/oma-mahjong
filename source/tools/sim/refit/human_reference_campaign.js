@@ -22,7 +22,9 @@ const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
 
-function createHumanController(tiles, options = {}) {
+function createHumanController(tiles, options = {}, publicContext = {}) {
+  assert(Object.keys(publicContext).every(key => key === 'boardMode'));
+  assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
@@ -32,6 +34,8 @@ function createHumanController(tiles, options = {}) {
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
+  assert(options.usePlacementContract === undefined || typeof options.usePlacementContract === 'boolean');
+  const excludeClosedObstacles = !!options.usePlacementContract && publicContext.boardMode === 'standard';
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
@@ -131,7 +135,8 @@ function createHumanController(tiles, options = {}) {
         const result = { free, relieved,
           uncertain: relieved ? [] : queried.uncertain.filter(index => (!sameBoard || !blocked.has(index))
             && !acceptedTapMemory?.knowsAvailable(index, position.alive)
-            && !clearedRoleMemory?.knowsAvailable(index, position.alive)) };
+            && !clearedRoleMemory?.knowsAvailable(index, position.alive)
+            && !(excludeClosedObstacles && down[index] === 1)) };
         frontierCache.set(cacheKey, result); return result;
       };
       const exposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles },
@@ -248,13 +253,18 @@ function verifyAttempt(encoded, actions, settings, audit) {
 }
 
 function playHumanCampaign(input, options = {}) {
-  assert(Object.keys(options).every(key => ['maximumAttempts', 'choiceLimit', 'planning', 'captureDecisions', 'captureInformation'].includes(key)));
+  assert(Object.keys(options).every(key => ['maximumAttempts', 'choiceLimit', 'planning', 'captureDecisions', 'captureInformation', 'publicContext'].includes(key)));
   assert(options.captureInformation === undefined || typeof options.captureInformation === 'boolean');
   assert(!options.captureInformation || options.captureDecisions);
   const settings = { seed: 20261111, choiceLimit: options.choiceLimit ?? 512, tapMs: 1000 };
   const maximumAttempts = options.maximumAttempts ?? 3;
   assert(Number.isInteger(maximumAttempts) && maximumAttempts > 0);
-  const encoded = encodeGame(input), game = decodeGame(encoded), controller = createHumanController(game.tiles, options.planning);
+  const encoded = encodeGame(input), game = decodeGame(encoded), controller = createHumanController(game.tiles, options.planning, options.publicContext);
+  if (options.planning?.usePlacementContract && options.publicContext?.boardMode === 'standard') {
+    const specials = new Set([...(game.rules?.keys || []), ...(game.rules?.locks || []),
+      ...Object.keys(game.rules?.ice || {}).filter(index => game.rules.ice[index] > 0).map(Number)]);
+    assert([...specials].every(index => !game.down[index]), 'Standard placement contract forbids ice, locks or keys on initially closed tiles');
+  }
   if (options.planning?.exclusiveRoles && game.rules) {
     const keys = game.rules.keys || [], locks = [...(game.rules.locks || [])];
     const ice = Object.keys(game.rules.ice || {}).filter(index => game.rules.ice[index] > 0).map(Number);

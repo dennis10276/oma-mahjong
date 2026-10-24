@@ -23,6 +23,7 @@ function test() {
   configurations.push({ ...configurations[1], rememberAcceptedTaps: true });
   configurations.push({ ...configurations[1], rememberKnownLosses: true });
   configurations.push({ ...configurations[1], informationTrayLimit: 2 });
+  configurations.push({ ...configurations[1], usePlacementContract: true });
   configurations.push({ ...configurations[1], rememberClearedRoles: true });
   configurations.push({ ...configurations[1], rememberAcceptedTaps: true, rememberKnownLosses: true, rememberClearedRoles: true });
   configurations.push({ ...configurations[1], passiveInformation: 'frontierRoles' });
@@ -63,7 +64,7 @@ function test() {
     const publicState = { alive: state.alive, tray: state.tray, moves: state.moves, openPeek: state.openPeek,
       relieved: state.relieved, arriving: state.arriving, physicalTaps: state.physicalTaps };
     const output = configurations.map(configuration => {
-      const controller = createHumanController(tiles, configuration);
+      const controller = createHumanController(tiles, configuration, { boardMode: 'standard' });
       controller.beginAttempt(); controller.observe(publicState, observation);
       const result = { observation, decision: controller.decide(), memory: controller.known(), clearedRoles: controller.clearedRoleEvidence() };
       assert(result.clearedRoles.every(entry => visible.includes(entry.index)));

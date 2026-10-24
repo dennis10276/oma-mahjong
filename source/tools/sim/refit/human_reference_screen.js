@@ -12,13 +12,20 @@ function passes(dennis, bot) {
   return Number.isInteger(bot) && bot > 0 && (dennis === 1 ? bot === 1 : bot < dennis);
 }
 
+function publicContextFor(entry) {
+  if (entry.boardSource === 'levelLab') return { boardMode: 'lab' };
+  return ['recordedOpening', 'versionTable', 'currentClassicDefinitionAspect1.5', 'currentFixedDefinition'].includes(entry.boardSource)
+    ? { boardMode: 'standard' } : {};
+}
+
 function screen(entries, planning = {}, emit = row => console.log(JSON.stringify(row))) {
   const rows = [];
   for (const entry of entries) {
     assert.equal(entry.name, 'Dennisisdebeste');
     assert(Number.isInteger(entry.wonOn) && entry.wonOn > 0);
     const attemptLimit = Math.max(1, entry.wonOn - 1);
-    const result = playHumanCampaign(decodeGame(entry.game), { planning, maximumAttempts: attemptLimit });
+    const publicContext = publicContextFor(entry);
+    const result = playHumanCampaign(decodeGame(entry.game), { planning, publicContext, maximumAttempts: attemptLimit });
     const row = { level: entry.lv, dennis: entry.wonOn, bot: result.wonOn, pass: passes(entry.wonOn, result.wonOn),
       boardSource: entry.boardSource ?? entry.source ?? 'providedDevelopmentBoard', historicalBoardExact: entry.historicalBoardExact ?? null,
       attemptLimit,
@@ -83,4 +90,4 @@ async function main(filename, levels, settings, reportFile) {
 }
 
 if (require.main === module) main(...process.argv.slice(2)).catch(error => { console.error(error); process.exitCode = 1; });
-module.exports = { screen, passes, selectEntries };
+module.exports = { screen, passes, selectEntries, publicContextFor };
