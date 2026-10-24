@@ -62,11 +62,11 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`f25d374`; uniform continuation proofs:`8055ad6`;
+Runtime:`cc2994e`; clock recovery:`f25d374`; uniform continuation proofs:`8055ad6`;
 lab catalog/screen:`0bc0f3e`; manual twin guard:`cede8f0`;
 public-relief correction:`2d6ec2f`; root adaptive probing:`80491b6`;
 information width:`ae1753f`; experimental pair-headroom cap:`1fe9239`.
-**59/59 offline tests pass** in about4s, including4416 clock/nonclock
+**59/59 offline tests pass** in about4s, including4608 clock/nonclock
 concealed-world controller controls,144 local-recovery and24 relief witnesses.
 No new post-correction full140 score exists. No research option is a released winner.
 
@@ -103,9 +103,15 @@ These longer physical runs are not passes and must not replace the try-count
 gate. Natural42 finished32/42, mean62.8ms, slowest1505.8ms; gain84try1 but
 new loss144. Same source/input fingerprints as declared. The policy is not
 promoted; all-board scores cannot be assembled from different policies' wins.
-ACTIVE diagnostic:session41675, serial actual trajectory comparisons of control
-versus clockRecovery on84/144/lab44, output only concise divergence summaries.
-The first source/code change should wait for that diagnostic to finish.
+COMPLETED diagnostic:actual control/clock trajectories share3 decisions on84;
+the first difference occurs with tray[19]. New144/lab44 losses diverge at the
+empty opening. This motivated using the existing `trayRecoveryClockMin:1`
+threshold to activate recovery ordering only after a carrier is present.
+cc2994e implements that optional threshold, preserving empty-tray openings.
+Control3/3 PASS:84/144/lab44 alltry1; mean69.6ms, slowest1355.2ms; unchanged
+source24847b8cb25a769273361aa8f7807caf997c625cd9a7cb5e8087cc5f70386723.
+Report:`HUMAN_REFERENCE_CARRIED_CLOCK_CONTROL_2026-10-24.md`.
+This is one policy's actual3/3, not a merged score; broad validation is still due.
 
 COMPLETED:serial8-case protected-width1 control, then42-case
 protected-width1 challenge, then42-case protected-width2 challenge.
