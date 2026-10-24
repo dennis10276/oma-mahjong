@@ -68,6 +68,7 @@ function test() {
   const winning = retryExploration(search)(game, known, actions, { ...REFERENCE_PARAMETERS, decisionMs: 1500 });
   assert(winning.knownWin && !winning.retryExploration);
   assert.throws(() => wrapper({ ...game, publicRetryCost: () => -1 }, state, actions, { nodes: 32 }));
+  assert.throws(() => retryExploration(() => ({ ...primary, nodes: 33 }))(game, state, actions, { nodes: 32 }), /shared node budget/);
   factory.verifySource();
   console.log('PASS retry exploration uses a real earlier failed risk, replays an alternative production clear, rejects crowded prefixes, protects clocks/known wins and shares one node/deadline budget without fabricating loss proofs');
 }

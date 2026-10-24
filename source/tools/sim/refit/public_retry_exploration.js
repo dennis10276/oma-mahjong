@@ -16,11 +16,13 @@ function retryExploration(runSearch) {
     assert(deadline === Infinity || Number.isFinite(deadline));
     const settings = { ...options, decisionMs: undefined, deadline };
     const primary = runSearch(game, state, actions, settings);
+    assert(Number.isInteger(primary.nodes) && primary.nodes >= 0 && primary.nodes <= options.nodes, 'The primary search exceeded its shared node budget');
     if (primary.knownWin || primary.knownDead || primary.safeClockExit || !costs.get(primary.index)) return primary;
     const alternatives = actions.filter(action => costs.get(action.index) < costs.get(primary.index));
     const remaining = options.nodes - primary.nodes;
     if (!alternatives.length || remaining <= 0 || Date.now() >= deadline) return primary;
     const candidate = runSearch(game, state, alternatives, { ...settings, nodes: remaining });
+    assert(Number.isInteger(candidate.nodes) && candidate.nodes >= 0 && candidate.nodes <= remaining, 'Retry exploration exceeded the remaining node budget');
     const safety = !candidate.knownDead && (candidate.information || candidate.knownProgress > 0)
       ? describeKnownPath(game, state, candidate.path) : null;
     const adopted = candidate.knownWin || !!(safety?.safe && safety.maximumTray <= 3 && safety.finalTray <= 2);
