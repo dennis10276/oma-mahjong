@@ -2,8 +2,8 @@
 
 Worktree: `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
 Branch: `wip/personal-bots`. Goal ACTIVE and UNMET.
-Recent progress: public standard-game placement deduction improves the full
-development result to140/155 with no previous pass lost. Fifteen still fail.
+Recent progress: causal transfer of actual safety memories improves the full
+development result to141/155 with no previous pass lost. Fourteen still fail.
 Do not redefine completion around a subset, a percentage, or an isolated pass.
 
 ## Contract and completion evidence
@@ -11,6 +11,11 @@ Do not redefine completion around a subset, a percentage, or an isolated pass.
 1. ONE game-state geometry gate; no screenshot/pixel/pose/dictionary track.
    Only actually visible or remembered pictures/roles and sound public deductions.
    Never read hidden pictures, the deck, the level seed or actual future reveals.
+   Updated objective7af79a6f-2084-4990-8660-5048fc815147 explicitly allows the
+   public fact that a geometrically free unclickable tile has ice or a lock.
+   It also permits hidden-tile guesses that favor a still-winnable current state.
+   Guesses are hypotheses, never observed facts, known-win routes or real loss
+   certificates. They must not read actual hidden identities or future reveals.
 2. Include EVERY Dennis first clear, plus later clears. Count actual starts and
    restarts. Dennis1 requires bot1; Dennis2+ requires strictly fewer tries.
    Initial134/141/143/147 fixes must remain clear. A bounded failure is not
@@ -20,6 +25,8 @@ Do not redefine completion around a subset, a percentage, or an isolated pass.
    levels and compare against Dennis when played.157+ remains unopened.
 4. Decisions under approximately2s. Shared1500ms search deadline includes guards,
    alternative roots and proofs; observed-frame projection is included in timing.
+   The updated goal requires single-thread anytime sampling:stop and decide at
+   the shared deadline. Extra computing speed buys better decisions, not latency.
 5. Small curated commits; one short Markdown table per run, no large analysis logs.
    Final handoff, only when done: one-screen level|Dennis tries|bot tries table,
    planner changes and any required human decision.
@@ -39,19 +46,20 @@ or blocked. There is useful algorithmic work available, not an external blocker.
 
 ## Latest full expanded development result
 
-**140/155**, unchanged source, mean**85ms**, slowest**1505.4ms**.
-Report:`HUMAN_REFERENCE_CATALOG_PLACEMENT_CONTRACT_2026-10-24.md`.
-Completion observed2026-10-24T06:20:27Z; runtime32f493a.
-Natural**132/140**, lab**8/15**. New gain124try2 vsDennis3; no previous pass lost
-against full139/155.121 improves3 to2 tries and lab42 improves3 to2. The earlier
-42-task screen's92try3 is2 in this full run; do not substitute screen counts.
+**141/155**, unchanged source, mean**85.1ms**, slowest**1505.7ms**.
+Report:`HUMAN_REFERENCE_CATALOG_CAUSAL_AVAILABILITY_2026-10-24.md`.
+Completed2026-10-24T07:52:26Z (canonical report timestamp); runtime3081a3a.
+Natural**132/140**, lab**9/15**. New gainlab12try5 vsDennis6; no previous pass lost
+against full140/155. Independent table/source audit found no other try-count change.
 Original134/141/143/147 alltry1.
 Natural failures:**81,93,99,102,107,112,125,137**.
-Lab failures:**11,12,32,33,41,49,52** (encoded10000+id).
+Lab failures:**11,32,33,41,49,52** (encoded10000+id).
 All155 unique rows, natural17–156, lab15, only10031 excluded, strict try scoring,
 input hash, unchanged source, old labels/provenance and maximum timing were
 independently checked from the canonical table. The unseen20 gate is not run.
-The full goal is NOT complete; keep all15 failures in scope.
+The full goal is NOT complete; keep all14 failures in scope.
+Previous full140/155:32f493a,mean85ms,max1505.4ms, report
+HUMAN_REFERENCE_CATALOG_PLACEMENT_CONTRACT_2026-10-24.md.
 Previous full139/155:d7778dd, mean80.7ms,max1506ms, report
 HUMAN_REFERENCE_CATALOG_CLOCK_INFORMATION_2026-10-24.md.
 
@@ -80,9 +88,9 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`3081a3a`; last completed full140/155 policy:`32f493a`.
-Goal ACTIVE, UNMET. Current full155 validation is source-frozen below.
-**76/76 offline tests pass** in7s, including7296 concealed-world controls,
+Runtime:`3081a3a`; last completed full141/155 policy includes causal memory.
+Goal ACTIVE, UNMET. Session95132 is terminal; its source freeze has ended.
+**77/77 offline tests pass** in7s, including7296 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -167,14 +175,17 @@ inputc679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5.
 Keep lab9/15 at its recorded source; do not merge hashes into a full score.
 Retry-risk and clock-learning options are OFF in the causal profile.
 
-RUNNING:session95132, started2026-10-24T07:29:58.786Z, unchanged-source full155.
+COMPLETED:session95132, started2026-10-24T07:29:58.786Z, unchanged-source full155.
 Profile:the full140 policy below plus causalAvailabilityMemory:true, no other flags.
 Source3ee9ad33f605375dbb68b7db4fc376bea325c24b7436f7877daa11eb1407eb6e;
 input00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9.
 Destination:HUMAN_REFERENCE_CATALOG_CAUSAL_AVAILABILITY_2026-10-24.md.
-One CPU-heavy simulation only; keep all loaded source unchanged until terminal.
-Last verified live2026-10-24T07:36:52Z:node PID10800, session95132; output through
-level49, all17–49 pass. This partial result does not replace the full140/155 score.
+141/155,132 natural and9 lab; mean85.1ms,max1505.7ms. Independent canonical
+audit checked all155 unique targets, unchanged human labels/provenance/input,
+strict scoring, original134/141/143/147try1, exact profile, current source hash and
+no previous pass lost. Only lab12 changes its try count, now5 vsDennis6.
+265044 successful public proofs in607863 queries, not new observations.
+No CPU-heavy simulation remains from this run.77/77 offline tests pass afterward.
 Metadata refresh2026-10-24T07:17:56.699Z found140 natural first clears through156,
 zero boards decoded and no newer clears.157+ remains unopened. The earlier
 public-uncertainty diagnostic is no longer live, but its stdout was lost at context
@@ -191,12 +202,11 @@ role or takeability is inferred. No private inventory or future reveal is read.
 Its registered standalone test passes35472 public-memory masks in588 exhaustive
 paired worlds,3432 sound deductions including Jokers, and four complete routes
 independently replayed through Hard.play. Standalone runtime0.37s. The latest full
-suite remains76/76 before this addition; do not claim77 until rerun after freeze.
+suite now passes77/77 after the full run ended.
 Committedacc751c, then d8ec5e6 rejects sparse memory arrays rather than skipping
 missing entries; the same standalone controls and production clears pass again.
-Before integration, audit the public opening contract across supported generators
-and all155 development inputs, then run the missing public-uncertainty diagnostic
-after session95132 ends. No campaign gain or initial-contract coverage is claimed.
+Before integration, audit the public opening contract across all155 development
+inputs. No campaign gain or complete initial-contract coverage is claimed.
 Partial trusted opening audit2026-10-24:all15 eligible lab boards and118 cached
 natural openings across63 levels(53–150) have even initial picture counts. No
 picture, inventory or seed was supplied to a policy. This is NOT yet the full155
@@ -204,6 +214,16 @@ input audit. Layouts.makeDeal obtains paired faces from pairFacesFor and deal;
 Hard's hdeal consumes a pair pool, and its optimization swaps preserve counts.
 UI Joker replacement changes an exactly-two picture into two Jokers. These are
 opening properties; no claim about parity of a later remaining board is needed.
+
+Fresh cold8 baseline session80541 completed2026-10-24T11:12Z. All eight natural
+failures still lose to tray pressure on try1. Metadata still140 first clears,
+newest156, no newer clears and no157+ board decoded. Public-only diagnostic:
+HUMAN_REFERENCE_COLD_UNCERTAINTY_2026-10-24.md. Every loss still has at least6
+unknown alive pictures, so the final-single-unknown helper cannot fix these routes.
+All last unrecovered third-carrier commitments occur after their clocks are gone.
+Next work follows the new objective:negative mechanical observations plus bounded
+public-only hypothesis sampling, preserving known physical witnesses and the same
+shared deadline. Do not substitute more parity-only work for the cold failures.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
