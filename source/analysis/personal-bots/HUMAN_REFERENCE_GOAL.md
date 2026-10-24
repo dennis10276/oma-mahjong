@@ -35,10 +35,7 @@ No new boards decoded during that refresh.157+ remains unopened.
 
 Experimental results, not promoted:
 - Guarded sampling11/18:107 clears1;121 improves2 to1; old passes retained.
-- Cache-only10/18:124 regresses from2 to failing both allowed tries.
-- Local100ms caps0/3 on107/124/137:107 regresses;124 and137 still fail.
-- Added existing key-recovery/access moves to hypothetical solver. Key-only1/3
-  retains107; key+100ms1/3 restores124 but loses107.137 still fails both.
+- Cache/cap/key-only variants were not promoted; their results remain in git.
 - All91 registered offline tests pass. Information-aware sampling is connected:
   fast primary play-outs through production, all contested roots, shared1.3s,
   actual-memory seeding, uncertainty weights and4096-node remembered-board search.
@@ -68,8 +65,9 @@ Experimental results, not promoted:
 Quick screen24:81,93,99,102,107,112,125,137,10011,10032,10033,10041,10049,10052,
 plus guards92,111,121,123,124,134,141,143,147,150.
 Report sampling changes / contested decisions; below5% is insufficient influence.
-The corrected24-case screen is running; keep its source fixed.81 still fails1,
-now a36-tap physical loss, max1304.2ms; genuine influence1/35 (2.9%), below gate.
+The corrected24-case screen is running; keep its source fixed.81/93 still fail1;
+92 passes4 vsDennis5. Observed influence137/535 (25.6%); max1305.8ms.
+Interleaved production play-outs pass standalone tests but are not yet integrated.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.
