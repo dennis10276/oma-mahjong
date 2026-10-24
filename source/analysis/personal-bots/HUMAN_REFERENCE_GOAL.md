@@ -13,7 +13,7 @@ Branch: wip/personal-bots. Goal ACTIVE and UNMET.
 - Every accepted tap independently replays through original production.
   Real retries count; finite search/time caps remain unresolved.
 - Under2s per move; about1.3s contested-decision budget.
-  Up to3 CPU workers side by side, one per salt; each campaign remains single-thread.
+  Up to8 CPU workers side by side, one per salt; each campaign remains single-thread.
 - General planning only. No proof/cache/speed side projects unless a failure needs one.
 - One short Markdown table per screen. Keep this file <=80 lines, without process logs.
 
@@ -57,12 +57,13 @@ Latest five-case probe completed2/5, including99try1 and111try2; no adoption inf
   Report requested caps AND actual completed fillings under the shared budget.
 - Check lab32/33/41/52 with salts1-3, retaining actual same-level retry memory.
 - Registered offline tests cover visibility, production replay, scores, paired
-  margins, salts and the48-case adoption harness. Seeded real baseline is next.
+  margins, salts and the48-case adoption harness. Seeded baseline/candidates run now.
 
 ## Next and completion
 
-Finish baseline48 with clear-only scoring/no confidence, then compare the two
-progress-scoring/2SE profiles on the identical frozen input. No early guard stops.
+Finish baseline48 with clear-only scoring/no confidence and both48-case
+progress-scoring/2SE profiles on the same frozen input. No early guard stops.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.
+
