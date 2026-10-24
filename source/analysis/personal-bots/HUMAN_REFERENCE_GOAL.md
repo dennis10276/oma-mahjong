@@ -148,7 +148,29 @@ refused, and only actual accepted transitions record a witness.675 rule controls
 and a production retry with hidden initial ice validate the prerequisites. The
 actual blocked tile is NOT declared initially safe on the next try, but its route
 after the observed thawing removal becomes a known winning witness. No campaign
-gain is claimed; broader testing is still needed before promotion.
+gain is claimed from those two controls.
+
+COMPLETED:accepted-availability broad screen session18460, runtime2f23e47,
+sourcef68c38e22e473affc820b9f93c67595b9d6ae76737fcde584864577232288c14.
+Reports:HUMAN_REFERENCE_{LAB_ACCEPTED_AVAILABILITY,ACCEPTED_AVAILABILITY_CHALLENGE}_2026-10-24.md.
+Lab8/15, natural challenge33/42. Lab42 improves3 to2 tries; pass counts unchanged.
+Mean/maximum:lab80.3/1231.9ms, natural62.8/1507.7ms. No full155 score is inferred.
+
+COMPLETED:accepted-availability plus remembered known-loss screen session14585,
+runtimef10d874, sourcea93e129a3c73fe7963d690dcd248780f16c3786f467a099cfe548095b5232db4.
+Reports:HUMAN_REFERENCE_{LAB_KNOWN_LOSS_MEMORY,KNOWN_LOSS_MEMORY_CHALLENGE}_2026-10-24.md.
+Again lab8/15 and natural33/42; lab42 remains2 tries. Mean/maximum:lab81.5/1210.8ms,
+natural64.1/1504.4ms. Both serial runs finished, source unchanged. No simulation
+process remains live. The known-loss cache retains only actual complete public
+exhaustion proofs covering all legal roots, never bounded/partial-root reports.
+Its unit test prunes a real cyclic trap at two carriers while preserving the
+earlier winning alternative. It has not improved development pass counts.
+
+Renderer audit:board.js updateBlocked uses Layouts.isFree, not takeable;
+style.css shows that geometric blocked class through the optional highlight.
+This supplies no additional public hidden-ice/lock availability signal.
+The next memory improvement retains actually visible late none conditionally
+across retries, without turning it into an initial none or bypassing geometry.
 
 Research conservative control:
 ```json
