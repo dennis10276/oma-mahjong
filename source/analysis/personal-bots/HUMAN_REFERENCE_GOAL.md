@@ -62,11 +62,25 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`cede8f0`; public-relief correction:`2d6ec2f`; root adaptive probing:`80491b6`;
+Runtime:`8055ad6`; lab catalog/screen:`0bc0f3e`; manual twin guard:`cede8f0`;
+public-relief correction:`2d6ec2f`; root adaptive probing:`80491b6`;
 information width:`ae1753f`; experimental pair-headroom cap:`1fe9239`.
-**56/56 offline tests pass** in about4s, including4224 clock/nonclock
+**58/58 offline tests pass** in about4s, including4224 clock/nonclock
 concealed-world controller controls,144 local-recovery and24 relief witnesses.
 No new post-correction full140 score exists. No research option is a released winner.
+
+8055ad6 fixes a continuation-check gap: pair/key macro endpoints now use the
+same cached, bounded loss proof as ordinary removals. A production-replayed
+pair suffix demonstrates the prior missing check. Public geometry exposure is
+an information boundary, never a known-dead certificate. No hidden role is read.
+Current57-case serial worker:session29442. Loaded source fingerprint:
+`734e5ddec8c21ab07ad0649b6b252be6c4b981ec34a6ef08e674dd4182bc2110`.
+Lab15 control COMPLETED7/15, mean66.3ms, slowest910ms; unchanged source.
+Report:`HUMAN_REFERENCE_LAB_MACRO_CONTROL_2026-10-24.md`.
+The42-case natural control is still running; hold runtime fixed until completion.
+Lab remains7/15: the correctness fix alone does not improve the lab gate.
+All eight failures remain, with repeated actual failures on several boards.
+The expanded gate now requires natural140 AND lab15, then unseen20.
 
 COMPLETED:serial8-case protected-width1 control, then42-case
 protected-width1 challenge, then42-case protected-width2 challenge.
@@ -78,12 +92,16 @@ Completed reports:
 - `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_2_CHALLENGE_2026-10-24.md`
 
 The old shell handle is missing after the host changed; all three canonical
-reports exist and confirm unchanged source. No benchmark worker remains live.
+reports exist and confirm unchanged source. That old worker is terminal.
 Protected width1:7/8 control,33/42 broad; protected width2:32/42 broad.
 Neither is promoted. Width1 loses84/99/102/107/112/123/125/136/143; width2
 loses50/84/99/102/107/112/123/125/143/147. Slowest1505.1ms across these runs.
 The manual open-twin guard does not universally improve play: width2 previously
-cleared123 without it, and now fails123. Inspect the first actual divergence.
+cleared123 without it, and now fails123. Actual trace comparison found45 equal
+decisions; then protected24 consumes open17 (picture11) with tray[33], whereas
+unprotected discovers23. The observed23 matches33, leaving17/24 available for
+later. This is evidence against compulsory pair consumption, not proof of a
+unique winning route or permission to know23's picture before its actual reveal.
 One CPU-heavy simulation at a time. Never restart for a polling timeout, or kill
 app/Gemini helpers.
 The old raw-short full run was deliberately stopped after emitting69 ONLY for
