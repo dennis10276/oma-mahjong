@@ -1,10 +1,11 @@
 'use strict';
 const assert = require('assert/strict');
 const { createPairedPictureSampler } = require('./public_paired_picture_sampler.js');
+const { createDiversePictureSampler } = require('./public_diverse_picture_sampler.js');
 const { interleavePlayouts } = require('./public_interleaved_playouts.js');
 const { rankSequentialInformationActions } = require('./public_sequential_information_sampling.js');
 
-function rankInterleavedInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096 }) {
+function rankInterleavedInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096, picturePrior = 'uniform' }) {
   assert(Object.keys(problem).every(key => ['rememberedPictures', 'actions', 'fallbackIndex', 'unseenFraction'].includes(key)));
   assert(Number.isFinite(deadline)); assert(Number.isInteger(maximumWorlds) && maximumWorlds > 0 && maximumWorlds <= 128);
   assert(Number.isInteger(exactNodes) && exactNodes >= 1000 && exactNodes <= 4096);
@@ -12,7 +13,8 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
   const actions = problem.actions.slice();
   assert(actions.length > 1 && new Set(actions).size === actions.length && actions.includes(problem.fallbackIndex));
   assert(actions.every(index => Number.isInteger(index) && index >= 0 && index < problem.rememberedPictures.length));
-  const sampler = createPairedPictureSampler(problem.rememberedPictures, { random });
+  assert(['uniform', 'diverse'].includes(picturePrior));
+  const sampler = (picturePrior === 'diverse' ? createDiversePictureSampler : createPairedPictureSampler)(problem.rememberedPictures, { random });
   const informationWeight = Math.min(1, 2 * problem.unseenFraction);
   const totals = actions.map(index => ({ index, score: 0, informationClears: 0, exactClears: 0, unresolved: 0, lost: 0, progress: 0 }));
   let generatedWorlds = 0, completeWorlds = 0, preferredWorlds = 0, unresolvedWorlds = 0, nodes = 0;

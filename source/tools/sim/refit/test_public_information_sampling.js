@@ -27,6 +27,21 @@ function test() {
     deadline: Date.now() + 1000, maximumWorlds: 1, schedule: 'interleaved' });
   assert.equal(interleaved.index, 1); assert.equal(interleaved.schedule, 'interleaved');
   assert.throws(() => rankInformationActions(problem, { physics, deadline: 1, schedule: 'perLevel' }));
+  for (const schedule of ['sequential', 'interleaved']) {
+    const fillings = [], diversePhysics = { ...physics,
+      evaluateInformation(request) {
+        fillings.push(request.hypothesis);
+        return physics.evaluateInformation(request);
+      } };
+    const diverse = rankInformationActions(problem, { physics: diversePhysics, random: () => 0.5,
+      deadline: Date.now() + 1000, maximumWorlds: 1, schedule, picturePrior: 'diverse' });
+    assert.equal(diverse.index, 1); assert.equal(fillings.length, 2);
+    assert.deepEqual(fillings[0], fillings[1]);
+    assert.equal(fillings[0].pairPrior, 'diverseRegularPairs');
+    assert.equal(fillings[0].observedFact, false); assert.equal(fillings[0].exactPrior, false);
+    assert.deepEqual(fillings[0].pictures.slice(0, 2), problem.rememberedPictures.slice(0, 2));
+  }
+  assert.throws(() => rankInformationActions(problem, { physics, deadline: Date.now() + 1000, picturePrior: 'actualDeck' }));
   const remembered = rankInformationActions({ ...problem, unseenFraction: 0.05 },
     { physics, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1 });
   assert.equal(remembered.index, 0); assert.equal(remembered.nodes, 4000);

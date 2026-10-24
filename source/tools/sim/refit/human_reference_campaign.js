@@ -49,6 +49,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
   assert(!options.informationSampling || options.hypothesisSampling === true);
   assert(options.informationSchedule === undefined || ['sequential', 'interleaved'].includes(options.informationSchedule));
+  assert(options.informationPicturePrior === undefined || ['uniform', 'diverse'].includes(options.informationPicturePrior));
   assert(options.informationPrimaryMs === undefined || Number.isFinite(options.informationPrimaryMs)
     && options.informationPrimaryMs > 0 && options.informationPrimaryMs <= 500);
   assert(options.informationPlayoutNodes === undefined || Number.isInteger(options.informationPlayoutNodes)
@@ -284,6 +285,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           unseenFraction: current.pictures.filter((picture, index) => current.alive[index] && picture === null).length
             / current.alive.reduce((sum, alive) => sum + alive, 0) }, {
           deadline: Math.min(decisionDeadline, Date.now() + 1300), random, physics, schedule: options.informationSchedule ?? 'sequential',
+          picturePrior: options.informationPicturePrior ?? 'uniform',
           maximumWorlds: options.hypothesisMaximumWorlds ?? 128 }) : options.hypothesisActionMs === undefined
           ? rankHypothesisActions(problem, { ...rankOptions, evaluate: physics.evaluate })
           : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });

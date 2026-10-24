@@ -36,7 +36,7 @@ No new boards decoded during that refresh.157+ remains unopened.
 Experimental results, not promoted:
 - Guarded sampling11/18:107 clears1;121 improves2 to1; old passes retained.
 - Cache/cap/key-only variants were not promoted; their results remain in git.
-- All92 registered offline tests pass. Information-aware sampling is connected:
+- All93 registered offline tests pass. Information-aware sampling is connected:
   fast primary play-outs through production, all contested roots, shared1.3s,
   actual-memory seeding, uncertainty weights and4096-node remembered-board search.
   Exact filled-position DFS is integrated with12 graph/production controls;
@@ -69,10 +69,10 @@ The corrected screen stopped after guard111 regressed.99 and112 both clear1;
 92 passes4.81/93/102/107 fail.16 cases remain uncompleted; no full score inferred.
 Observed influence285/1075 (26.5%); max1305.8ms. No promotion with a guard lost.
 Interleaved scheduling scored0/3 on99/111/112 and is not promoted.
-Strong primary200ms probe passed99/111/112 on1/2/1. The unchanged24 screen is
-running:92 passes2,111 passes1;99 failed this run.81/93/102/107 also fail.
-The successful trio is not a stable wider score; keep code fixed until validation.
-An alternate diverse-pair prior is prepared separately, not active in this run.
+Strong primary200ms screen finished4/24:92,111,141,143 pass; six guards regress.
+The isolated99/111/112 successes did not repeat. This profile is not promoted.
+Next: test optional dispersed-pair sampling on93/99/111/112/137 with one profile.
+It uses visible counts and public generation only, with broad backoff; no deck reads.
 Run full155 only after a screen gains a pass without losing one.
 Stop standalone proof/cache/micro-speed work unless a failing level requires it.
 Do not merge different profiles' wins or infer a full score from subsets.
