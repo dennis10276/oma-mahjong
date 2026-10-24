@@ -13,6 +13,7 @@ const modules = [
   'test_human_reference_compare.js',
   'test_public_information_audit.js',
   'test_public_short_information.js',
+  'test_public_recovery_information.js',
   'test_public_information_dominance.js',
   'test_human_information_invariance.js',
   'test_public_analysis_cache.js',

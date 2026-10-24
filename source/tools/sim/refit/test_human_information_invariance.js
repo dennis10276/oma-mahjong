@@ -24,6 +24,9 @@ function test() {
   configurations.push({ ...configurations[1], passiveInformation: 'immediateRoles' });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles' });
   configurations.push({ ...configurations[1], shortInformation: true, informationDominance: true });
+  configurations.push({ ...configurations[1], shortInformation: 'recoveryAware' });
+  configurations.push({ ...configurations[1], passiveInformation: 'roles', shortInformation: 'recoveryAware' });
+  configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware' });
   const canonical = new Map();
   let controls = 0;
   for (let world = 0; world < 192; world++) {

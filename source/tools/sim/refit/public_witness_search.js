@@ -14,6 +14,7 @@ const { diverseWitnessSearch } = require('./public_diverse_witness.js');
 const { informationInCone } = require('./public_exposure_frontier.js');
 const { queuePath } = require('./public_path_budget.js');
 const { keyRecoveryPath } = require('./public_key_recovery.js');
+const { knownRecovery } = require('./public_known_recovery.js');
 const PARAMETERS = Object.freeze({ taps: 20, nodes: 1024, beam: 24, progress: 8, pruneDead: true, proofNodes: 128,
   pairProgress: false, finishKnown: false, trayRecovery: false, trayRecoveryMin: 0, trayRecoveryClockMin: null });
 
@@ -148,7 +149,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof cachePublicAnalysis, 'boolean');
   assert.equal(typeof knownPairMacros, 'boolean');
   assert.equal(typeof keyRecoveryMacros, 'boolean');
-  assert([false, true, 'carrierAware'].includes(shortInformation));
+  assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
   assert.equal(typeof informationDominance, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
@@ -187,6 +188,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const roots = new Set(actions.map(action => action.index)), initialAllowed = physical.legal(game, state), initialFree = initialAllowed.free;
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
+  const detectedRecovery = shortInformation === 'recoveryAware' && !clocked ? knownRecovery(game, state, 2, deadline) : null;
+  const informationRecovery = detectedRecovery && roots.has(detectedRecovery.path[0]) ? detectedRecovery : null;
+  const shortInformationActive = shortInformation === 'recoveryAware' ? !clocked && !informationRecovery : !!shortInformation;
   const cone = clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).frontier
     : obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
   const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
@@ -257,7 +261,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         recoveryRankWidths.add(rank.length);
       }
       if (pairFlexibility) rank.splice(2 + (settings.trayRecovery ? 2 : 0) + (goalRecoveryActive ? riskFirstRecovery ? 3 : 2 : 0), 0, -metrics.pairDebt);
-      if (shortInformation && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
+      if (shortInformationActive && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
         -path.length - (shortInformation === 'carrierAware' ? 2 * metrics.depth.unknownWaiting : 0));
     }
 
@@ -436,6 +440,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
       ...(dominanceStop ? { dominanceStop } : {}),
+      ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive,
+        recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),
         ...(riskFirstRecovery ? { riskFirstRecovery } : {}),
