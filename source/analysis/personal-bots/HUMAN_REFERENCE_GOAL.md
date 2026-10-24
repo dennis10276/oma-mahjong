@@ -98,6 +98,8 @@ All earlier trial/diagnostic jobs are terminal, including cache trial73067.
 Cache-only candidate regresses124 and is not promoted. Optional per-candidate
 budgeting's first100ms probe is0/3 and is also not promoted. Hypothetical solver
 now includes the primary bot's existing key-recovery/access macros; comparison next.
+Current comparison57994 is LIVE: two sequential3-case screens in one shell session.
+Freeze loaded source through BOTH screens; only one heavy node process at a time.
 **88/88 offline tests pass** in9s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
@@ -441,6 +443,16 @@ max1506.9ms.107 regresses to a tray loss after57 taps;124 still loses both tries
 3060/8318 candidate calls hit local caps. More complete batches alone are not
 better decisions; do not promote or discard solely from that count. Next compare
 the now stronger key-capable rollout WITH and WITHOUT100ms caps on the same3.
+RUNNING:session57994, firstnodePID26804, runtime353967b, start14:11:06.441Z.
+First screen has no local cap, destinationHUMAN_REFERENCE_KEY_HYPOTHESIS_PROBE_2026-10-24.md.
+If it exits0, the SAME shell automatically runs the100ms capped screen, destination
+HUMAN_REFERENCE_KEY_BUDGETED_HYPOTHESIS_PROBE_2026-10-24.md. A first-child exit or
+its report alone is not terminal for the combined handle; poll57994 until terminal.
+Both target107/124/137; inputb0c8844b5ae7ae59ffcb4bd43f1723d4f33e37f424bbe7df53cd5e5d3eb4b8ff;
+source65c5af718e0f6f97b056f1d58f12c4428a6e2543abdd73d67e5b6d0013284e7d.
+Last verifiedlive14:11:47Z, firstnode42.75CPU seconds, no completed rows yet.
+Fresh metadata14:11:47.564Z still140 natural first clears through156, no newer
+levels, zero boards decoded.157+ remains unopened. No full155 score is inferred.
 NEXT:compare key-capable rollout and budgeting interaction, then inspect
 sampling censoring and information dependence.93's7 verified hypothetical
 clears all fell in unfinished batches, so preferredWorlds remained0. Consider fair
