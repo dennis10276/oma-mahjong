@@ -8,7 +8,7 @@ const { createSessionFactory, parameters } = require('./production_physical_sess
 const { observeBoard } = require('./human_board_visibility.js');
 const { createObstacleFrontier } = require('./public_obstacle_frontier.js');
 const { reference } = require('./public_witness_reference.js');
-const { REFERENCE_PARAMETERS } = require('./public_witness_search.js');
+const { REFERENCE_PARAMETERS, search: searchPublicWitness } = require('./public_witness_search.js');
 const { advance } = require('./known_tray_plan.js');
 const { aliveSignature } = require('./public_alive_signature.js');
 const { knownCleanup } = require('./public_unique_cleanup.js');
@@ -16,6 +16,8 @@ const { createExposureFrontier } = require('./public_exposure_frontier.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_priority.js');
 const { describeInformation } = require('./public_information_audit.js');
+const { createRetryRiskMemory } = require('./public_retry_risk_memory.js');
+const { retryExploration } = require('./public_retry_exploration.js');
 
 function createHumanController(tiles, options = {}) {
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -23,6 +25,7 @@ function createHumanController(tiles, options = {}) {
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
   assert(options.protectOpenTwin === undefined || typeof options.protectOpenTwin === 'boolean');
+  assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation));
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
@@ -33,14 +36,18 @@ function createHumanController(tiles, options = {}) {
   const pictures = tiles.map(() => null), down = tiles.map(() => null), initialRoles = tiles.map(() => null);
   let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
   let lastAcceptedIndex = null;
+  let retryRiskMemory = null;
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
-  const resetPlanner = () => { planner = reference(settings); };
+  const runRetrySearch = options.retryRiskLearning ? retryExploration(searchPublicWitness) : null;
+  const resetPlanner = () => { planner = runRetrySearch ? reference(settings, runRetrySearch) : reference(settings); };
+  if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
   return {
     beginAttempt() {
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       lastAcceptedIndex = null;
+      retryRiskMemory?.beginAttempt();
       resetPlanner();
     },
     observe(state, observed) {
@@ -48,6 +55,7 @@ function createHumanController(tiles, options = {}) {
       assert(attempt > 0);
       assert(!current || state.physicalTaps > current.physicalTaps);
       if (current && lastAcceptedIndex !== null) {
+        retryRiskMemory?.observeTransition(current, lastAcceptedIndex, state);
         const inferred = inferMatchedPicture(current, lastAcceptedIndex, { alive: state.alive, tray: state.tray,
           moves: state.moves, openPeek: state.openPeek, physicalTaps: state.physicalTaps });
         if (inferred) {
@@ -61,6 +69,7 @@ function createHumanController(tiles, options = {}) {
         if (observed.down[index] !== null) { assert(down[index] === null || down[index] === observed.down[index]); down[index] = observed.down[index]; }
       });
       if (observed.clock) clock = { i: observed.clock.i, n: observed.clock.n };
+      if (options.retryRiskLearning && !retryRiskMemory) retryRiskMemory = createRetryRiskMemory(clock);
       const rows = [];
       observed.roles.forEach((role, index) => {
         const value = role ?? (state.physicalTaps === 0 ? initialRoles[index] : null);
@@ -160,6 +169,8 @@ function createHumanController(tiles, options = {}) {
           knownDead: false, knownProgress: cleanup.removed, information: false, boundary: !won, nodes: 0 },
         predicted: advance(geometry, current, index) };
       }
+      if (retryRiskMemory && !(clock && current.alive[clock.i]) && !planner.report()?.knownWin
+        && actions.some(action => retryRiskMemory.cost(current, action.index) > 0)) resetPlanner();
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report();
       if (discoveries.length && !discoveries.some(action => action.index === plan.index)
@@ -176,6 +187,8 @@ function createHumanController(tiles, options = {}) {
       }
     },
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
+    completeAttempt(status) { return retryRiskMemory?.finish(status) ?? null; },
+    retryEvidence() { return retryRiskMemory?.entries() ?? []; },
     state() { return structuredClone(current); },
     explainInformation(path) { return describeInformation(geometry, current, path, roles); },
   };
@@ -276,7 +289,9 @@ function playHumanCampaign(input, options = {}) {
       status = terminal.computationCensored ? 'unresolvedBudget' : terminal.win ? 'cleared'
         : ['tray', 'clock', 'stuck'].includes(terminal.why) ? 'physicalLoss' : 'unresolved';
     }
+    const learnedRisk = controller.completeAttempt(status);
     attempts.push({ attempt, status, why: terminal.why ?? status, taps: actions.length,
+      ...(options.planning?.retryRiskLearning ? { learnedRisk } : {}),
       left: terminal.state.alive.reduce((sum, alive) => sum + alive, 0), tray: terminal.state.tray,
       last: { alive: terminal.state.alive, openPeek: terminal.state.openPeek, moves: terminal.state.moves,
         pictures: controller.known().pictures, plan: lastPlan }, actions, ...(options.captureDecisions ? { decisions } : {}) });
@@ -286,6 +301,7 @@ function playHumanCampaign(input, options = {}) {
   return { wonOn: attempts.at(-1).status === 'cleared' ? attempts.length : null, status: attempts.at(-1).status,
     slowestMs, decisionCount, meanDecisionMs: decisionCount ? totalDecisionMs / decisionCount : 0,
     dominanceStops, decision, attempts, controls, verifiedTaps, rejected,
+    ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }
 

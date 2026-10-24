@@ -25,7 +25,8 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
       slowestMs: Math.round(result.slowestMs * 10) / 10, status: result.status, verifiedTaps: result.verifiedTaps,
       decisionCount: result.decisionCount, meanDecisionMs: Math.round(result.meanDecisionMs * 10) / 10,
       dominanceStops: result.dominanceStops,
-      attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left })) };
+      attempts: result.attempts.map(attempt => ({ why: attempt.why, taps: attempt.taps, left: attempt.left,
+        ...(attempt.learnedRisk !== undefined ? { learnedRisk: attempt.learnedRisk } : {}) })) };
     rows.push(row); emit(row);
   }
   return rows;

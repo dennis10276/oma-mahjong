@@ -1,6 +1,20 @@
 'use strict';
 const assert = require('assert/strict');
-const { describeKnownPath } = require('./public_witness_reopen_guard.js');
+const { advance } = require('./known_tray_plan.js');
+
+function describeRetryPath(game, state, path) {
+  let position = state, maximumTray = state.tray.length;
+  for (const [offset, index] of path.entries()) {
+    const moved = advance(game, position, index);
+    if (moved.uncertain) return { safe: offset === path.length - 1 && position.tray.length <= 2
+      && ['unseenPicture', 'unobservedObstacleRole', 'unobservedOrientation'].includes(moved.reason),
+      maximumTray, finalTray: position.tray.length, frontier: index, reason: moved.reason };
+    if (moved.lost) return { safe: false, maximumTray: Math.max(maximumTray, moved.state.tray.length),
+      finalTray: moved.state.tray.length, frontier: null };
+    position = moved.state; maximumTray = Math.max(maximumTray, position.tray.length);
+  }
+  return { safe: true, maximumTray, finalTray: position.tray.length, frontier: null };
+}
 
 function retryExploration(runSearch) {
   assert.equal(typeof runSearch, 'function');
@@ -24,7 +38,7 @@ function retryExploration(runSearch) {
     const candidate = runSearch(game, state, alternatives, { ...settings, nodes: remaining });
     assert(Number.isInteger(candidate.nodes) && candidate.nodes >= 0 && candidate.nodes <= remaining, 'Retry exploration exceeded the remaining node budget');
     const safety = !candidate.knownDead && (candidate.information || candidate.knownProgress > 0)
-      ? describeKnownPath(game, state, candidate.path) : null;
+      ? describeRetryPath(game, state, candidate.path) : null;
     const adopted = candidate.knownWin || !!(safety?.safe && safety.maximumTray <= 3 && safety.finalTray <= 2);
     const selected = adopted ? candidate : primary;
     const reports = [primary, candidate].filter(report => report.continuationProof);

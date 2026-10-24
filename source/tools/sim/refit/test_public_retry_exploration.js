@@ -51,6 +51,12 @@ function test() {
     ? primary : { ...alternative, path: [2, 4] });
   const rejected = crowded(game, state, actions, { nodes: 32 });
   assert.equal(rejected.index, primary.index); assert(!rejected.retryExploration.adopted);
+  const uncertain = { ...game, publicFrontier: position => ({
+    free: position.alive.flatMap((alive, index) => alive ? [index] : []), uncertain: [2].filter(index => position.alive[index]),
+  }) };
+  const stopsAtUnknown = retryExploration((snapshot, position, roots) => roots.some(root => root.index === 0) ? primary : alternative);
+  assert(!stopsAtUnknown(uncertain, state, actions, { nodes: 32 }).retryExploration.adopted,
+    'An unknown role cannot be crossed to invent a later safe suffix');
   const untouched = retryExploration(() => primary)({ ...game, publicRetryCost: () => 0 }, state, actions, {});
   assert.equal(untouched, primary);
   let boundedCalls = 0;
