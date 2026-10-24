@@ -54,16 +54,16 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 Latest runtime:`b2d3c5f`; baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
-**52/52 offline tests pass** in approximately4s, including2688 concealed-world
+**54/54 offline tests pass** in approximately4s, including2688 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
-The shortRoles policy has completed140 levels; the short-probe policy is still
-running. The development gate remains unmet and the unseen20 gate is unopened.
+The shortRoles policy completed140 levels before the public-relief correction;
+the short-probe run was deliberately stopped for that reproduced physics bug.
+The development gate remains unmet and the unseen20 gate is unopened.
 An isolated `public_known_recovery.js` helper now constructs ordinary one/two-tap
 tray matches, open twins and known pairs, including a mate thawed by the first
 removal.144 standalone production/replay checks pass. It is NOT imported by
-the running actor/search and no campaign gain is claimed. The new registry
-test is staged; rerun the complete suite after the frozen full runs finish
-(the last executed complete suite remains52/52).
+the actor/search and no campaign gain is claimed. Its144 controls are now
+included in the complete54-test suite.
 
 The three-action role-payoff screen completed7/8, source unchanged, slowest
 1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
@@ -81,12 +81,17 @@ speedup or proof that every timed action sequence must be identical.
 Source:`5df95cb01cd2179c69fa98495b1b500f69572ff1a8e83fd0f899247f9ac182af`.
 Reports:`HUMAN_REFERENCE_DOMINANCE_CONTROL_2026-10-24.md` and
 `HUMAN_REFERENCE_DOMINANCE_OPTIMIZED_2026-10-24.md`.
-ACTIVE: second full run, full-role short probes with informationDominance enabled.
-Tool session35017; second worker PID39728, started2026-10-23T23:18:52Z.
-Its140-case header matches the same5df95cb source. Last collected snapshot reaches
-43; do NOT extrapolate a whole-catalog score from it. Pending report:
-`HUMAN_REFERENCE_CATALOG_SHORT_PROBES_2026-10-24.md`.
-Hold loaded runtime unchanged until it finishes. One CPU-heavy simulation at a time.
+STOPPED: second full run, full-role short probes with informationDominance enabled.
+Only owned worker39728 was stopped; session35017 has ended. It emitted through69,
+with new failures46/52/69 as well as50, before this actual physics defect was fixed.
+There is no complete full-probe score/report. Do NOT extrapolate from33/42.
+See `HUMAN_REFERENCE_PUBLIC_RELIEF_FIX_2026-10-24.md`: all-visible four-tile
+production wins incorrectly received known-dead certificates because the public
+callback omitted automatic obstacle relief.24 regression worlds now construct
+and independently replay the win; unknown roles/pictures and full trays remain
+guarded. Old successful physical routes remain valid, but their death explanations
+predate the correction. No post-fix catalog gain has yet been measured.
+One CPU-heavy simulation at a time; hold loaded runtime unchanged while running.
 Never restart merely because a polling call times out; never kill app/Gemini helpers.
 
 Research baseline settings (not a released/default/frozen winner):

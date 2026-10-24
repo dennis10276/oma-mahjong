@@ -20,7 +20,7 @@ function validate(game, state, partialOrientation = !!game.publicFrontier) {
 function legal(game, state) {
   if (game.publicFrontier) {
     const allowed = game.publicFrontier(state);
-    return { ...allowed, relieved: !!state.relieved };
+    return { ...allowed, relieved: !!state.relieved || allowed.relieved === true };
   }
   const initial = state.alive.map(() => 1), rules = state.relieved ? null : game.rules;
   let free = state.alive.flatMap((value, index) => value && (rules ? L.takeable(index, state.alive, game.nb, rules, initial)

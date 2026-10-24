@@ -93,15 +93,21 @@ function createHumanController(tiles, options = {}) {
         keys: roles.flatMap((role, index) => role === 'key' ? [index] : []) };
       geometry.publicFrontier = position => {
         Object.freeze(position.alive);
-        const aliveKey = aliveSignature(position.alive), cacheKey = +!!position.relieved + '|' + aliveKey;
+        const aliveKey = aliveSignature(position.alive), cacheKey = +!!position.relieved + '|' + +(position.tray.length < Layouts.SLOTS) + '|' + aliveKey;
         if (frontierCache.has(cacheKey)) return frontierCache.get(cacheKey);
         const queried = frontier.query(position.alive, options.exclusiveRoles === 'clock'
           ? !!(clock && position.alive[clock.i]) : !!options.exclusiveRoles);
         const sameBoard = aliveKey === blockedAlive;
-        const free = position.relieved ? position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : [])
+        let free = position.relieved ? position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : [])
           : [...queried.free, ...queried.uncertain];
-        const result = { free: free.filter(index => !sameBoard || !blocked.has(index)),
-          uncertain: position.relieved ? [] : queried.uncertain.filter(index => !sameBoard || !blocked.has(index)) };
+        free = free.filter(index => !sameBoard || !blocked.has(index));
+        let relieved = !!position.relieved;
+        if (!relieved && !free.length && position.tray.length < Layouts.SLOTS) {
+          free = position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : []);
+          relieved = free.length > 0;
+        }
+        const result = { free, relieved,
+          uncertain: relieved ? [] : queried.uncertain.filter(index => !sameBoard || !blocked.has(index)) };
         frontierCache.set(cacheKey, result); return result;
       };
       const exposure = options.passiveInformation ? createExposureFrontier(geometry.tiles, { ...current, roles },
