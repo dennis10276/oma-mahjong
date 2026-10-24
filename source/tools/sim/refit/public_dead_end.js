@@ -45,6 +45,8 @@ function analyzeContinuation(game, state, actions, nodeLimit = 128, deadline = I
     if (cursor >= nodeLimit || Date.now() >= deadline) return { knownDead: false, reason: 'bounded', nodes: cursor, transitions, path: null };
     const node = queue[cursor];
     if (!node.state.alive.some(Boolean) && !node.state.tray.length) return { knownDead: false, reason: 'knownWin', nodes: cursor + 1, transitions, path: node.path };
+    if (game.publicExposure?.(node.state).length) return { knownDead: false, reason: 'reachablePublicExposure',
+      nodes: cursor + 1, transitions, path: node.path };
     for (const index of physical.legal(game, node.state).free.filter(index => node.path.length || roots.has(index))) {
       if (Date.now() >= deadline) return { knownDead: false, reason: 'bounded', nodes: cursor + 1, transitions, path: null };
       const moved = physical.advance(game, node.state, index), path = node.path.concat(index); transitions++;

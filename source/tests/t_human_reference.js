@@ -50,6 +50,7 @@ const modules = [
   'test_production_session_factory.js',
   'test_public_belief_exact.js',
   'test_public_continuation_pruning.js',
+  'test_public_macro_continuation.js',
   'test_public_dead_end.js',
   'test_public_known_continuation.js',
   'test_public_witness_cache.js',

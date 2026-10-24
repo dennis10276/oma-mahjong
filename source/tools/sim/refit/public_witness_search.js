@@ -207,6 +207,28 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const recoveryRankWidths = new Set();
   const visited = new Map([[stateIdentity(state, []), 0]]);
 
+  const certifiedContinuationLoss = (moved, path) => {
+    if (!settings.pruneDead || !moved.removed || moved.win || !(moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
+      || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) return false;
+    const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
+    const proofKey = cachePublicAnalysis ? keyOf(game, moved.state) : null;
+    let proof = cachePublicAnalysis ? proofCache.get(proofKey) : null;
+    const reusedProof = !!proof;
+    if (reusedProof) { proofHits++; boundedProofHits += +(proof.reason === 'bounded'); }
+    else if (nextActions.length) {
+      proof = (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(game, moved.state, nextActions, settings.proofNodes, deadline);
+      if (cachePublicAnalysis) proofCache.set(proofKey, proof);
+    }
+    if (continuationPruning && proof && !reusedProof) {
+      continuationProof.calls++; continuationProof.nodes += proof.nodes; continuationProof.bounded += +(proof.reason === 'bounded');
+      continuationProof.certified += +proof.knownDead;
+    }
+    if (!proof?.knownDead) return false;
+    deadPrunes++;
+    if (path.length === 1) provedDeadRoots.add(path[0]);
+    return true;
+  };
+
   const evaluate = (position, path, information = false, targetIndex = -1, executesUnknownTap = false, informationTargets = null) => {
     const metricsKey = cachePublicAnalysis ? keyOf(game, position) : null;
     let metrics = cachePublicAnalysis ? metricsCache.get(metricsKey) : null;
@@ -323,25 +345,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         const exposed = exposureFrontier ? exposureFrontier(moved.state) : [];
         assert(Array.isArray(exposed));
         const eligible = eligibleExposure(exposed, path), passiveInformation = eligible.length > 0;
-        if (settings.pruneDead && moved.removed > 0 && !moved.win && (moved.state.tray.length >= (continuationPruning ? continuationTrayMin : 3)
-          || game.clock && moved.state.alive[game.clock.i] && game.clock.n - moved.state.moves <= 2)) {
-          const nextActions = physical.legal(game, moved.state).free.map(index => ({ index }));
-          const proofKey = cachePublicAnalysis ? keyOf(game, moved.state) : null;
-          let proof = cachePublicAnalysis ? proofCache.get(proofKey) : null;
-          const reusedProof = !!proof;
-          if (reusedProof) { proofHits++; boundedProofHits += +(proof.reason === 'bounded'); }
-          else if (nextActions.length) {
-            proof = (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(game, moved.state, nextActions, settings.proofNodes, deadline);
-            if (cachePublicAnalysis) proofCache.set(proofKey, proof);
-          }
-          if (continuationPruning && proof && !reusedProof) {
-            continuationProof.calls++; continuationProof.nodes += proof.nodes; continuationProof.bounded += +(proof.reason === 'bounded');
-            continuationProof.certified += +proof.knownDead;
-          }
-          if (proof?.knownDead) {
-            deadPrunes++; if (!node.path.length) provedDeadRoots.add(index); continue;
-          }
-        }
+        if (certifiedContinuationLoss(moved, path)) continue;
         const candidate = evaluate(moved.state, path, passiveInformation, index, false, passiveInformation ? eligible : null);
         if (moved.win) {
           best = candidate;
@@ -360,9 +364,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
             if (paired.uncertain || paired.lost) continue;
             assert.equal(moved.removed + paired.removed, 2, 'A known pair expansion must contain two actual removals');
             macroPairs++; hasSafeRemoval = true;
+            const pairedPath = path.concat(mate);
+            if (certifiedContinuationLoss(paired, pairedPath)) continue;
             const pairedExposed = exposureFrontier ? exposureFrontier(paired.state) : [];
             assert(Array.isArray(pairedExposed));
-            const pairedPath = path.concat(mate), pairedEligible = eligibleExposure(pairedExposed, pairedPath);
+            const pairedEligible = eligibleExposure(pairedExposed, pairedPath);
             const pairedInformation = pairedEligible.length > 0;
             const pairedCandidate = evaluate(paired.state, pairedPath, pairedInformation, mate, false, pairedInformation ? pairedEligible : null);
             if (paired.win) { best = pairedCandidate; return finish(); }
@@ -375,9 +381,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
           const recovered = keyRecoveryPath(game, settled, index, tapLimit - node.path.length, deadline);
           if (recovered) {
             macroKeys++; hasSafeRemoval = true;
+            const recoveredPath = node.path.concat(recovered.path);
+            if (certifiedContinuationLoss(recovered, recoveredPath)) continue;
             const recoveredExposed = exposureFrontier ? exposureFrontier(recovered.state) : [];
             assert(Array.isArray(recoveredExposed));
-            const recoveredPath = node.path.concat(recovered.path);
             const recoveredEligible = eligibleExposure(recoveredExposed, recoveredPath), recoveredInformation = recoveredEligible.length > 0;
             const recoveredCandidate = evaluate(recovered.state, recoveredPath, recoveredInformation,
               recovered.path.at(-1), false, recoveredInformation ? recoveredEligible : null);
