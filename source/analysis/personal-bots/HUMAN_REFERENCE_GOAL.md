@@ -80,8 +80,8 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`32f493a`, diagnostic context fix:`b1bdbec`;
-last completed full140/155 policy:`32f493a`. Goal ACTIVE, UNMET.
+Runtime:`3081a3a`; last completed full140/155 policy:`32f493a`.
+Goal ACTIVE, UNMET. Current full155 validation is source-frozen below.
 **76/76 offline tests pass** in7s, including7296 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
@@ -158,9 +158,25 @@ rows versus sandbox inner rows. The validator now normalizes BOTH outer and inne
 containers with Array.from before sorting/comparing. No graph edge or physics
 assumption is weakened. A real sandbox-generated full campaign passes; a genuine
 changed-neighborhood fixture still rejects.76/76 tests pass. The failed natural
-phase produced no canonical table. Restart natural42 with the same causal profile
-after this guard fix; keep lab9/15 at its recorded source, do not merge hashes into
-a full score. Retry-risk and clock-learning options are OFF in the causal profile.
+phase produced no canonical table. Its replacement natural42 run, session25830,
+completed34/42 with no previous pass lost, mean63.8ms,max1505.4ms. Report:
+HUMAN_REFERENCE_CAUSAL_AVAILABILITY_CHALLENGE_2026-10-24.md.
+Source3ee9ad33f605375dbb68b7db4fc376bea325c24b7436f7877daa11eb1407eb6e;
+inputc679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5.
+466 successful public proofs in787 queries. Original134/141/143/147 stilltry1.
+Keep lab9/15 at its recorded source; do not merge hashes into a full score.
+Retry-risk and clock-learning options are OFF in the causal profile.
+
+RUNNING:session95132, started2026-10-24T07:29:58.786Z, unchanged-source full155.
+Profile:the full140 policy below plus causalAvailabilityMemory:true, no other flags.
+Source3ee9ad33f605375dbb68b7db4fc376bea325c24b7436f7877daa11eb1407eb6e;
+input00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9.
+Destination:HUMAN_REFERENCE_CATALOG_CAUSAL_AVAILABILITY_2026-10-24.md.
+One CPU-heavy simulation only; keep all loaded source unchanged until terminal.
+Metadata refresh2026-10-24T07:17:56.699Z found140 natural first clears through156,
+zero boards decoded and no newer clears.157+ remains unopened. The earlier
+public-uncertainty diagnostic is no longer live, but its stdout was lost at context
+compaction; no inference or result is claimed from that missing output.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
@@ -220,7 +236,7 @@ Null generations are valid and excluded from role-count coverage, not asserted b
 Read-only metadata refresh2026-10-24T05:53:51.481Z:140 natural clears through156,
 zero boards decoded, no newer clears.157+ remains unopened.
 The unchanged57-task screen and full155 both gained without pass regressions.
-Next research candidate, NOT running:placement profile plus
+Later research candidate, NOT running:placement profile plus
 shortInformation:'recoveryAware',recoveryInformationMinTray:2,
 recoveryInformationBreadth:true. The new sound deduction may interact with earlier
 mixed-result routes; test the whole policy rather than merging past individual wins.
