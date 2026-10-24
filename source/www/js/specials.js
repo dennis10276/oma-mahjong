@@ -169,6 +169,8 @@ function obBlocked(i) {
   toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx('lockedTap'), 2600);
   const show = ice ? G.inb[i].filter(j => G.alive[j] && canTake(j)) : G.ob.keys.filter(k => G.alive[k]);
   show.forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  // the keys light up above the pile, also where other tiles cover them
+  if (!ice) show.forEach(k => spotMark(k, 'key', 2600));
 }
 // never stuck because of ice or locks alone: if nothing at all can be taken, they give way
 function obRelief() {

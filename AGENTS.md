@@ -78,6 +78,14 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   extra-large tiles setting is removed (it changed the level). Keep the table: changing it changes
   levels people are playing.
 
+- Parked, NOT live (Dennis, 2026-10-24; branch `wip/clock-key-hints`, from main): the alarm clock badge
+  points at its tile with a small tail (below the tile when there is no room above, so it never slips under
+  the tray); the tile's outline shows briefly above the pile at the start of a try and when you tap the
+  clock tile while it is covered (no permanent outline, no flash at 5 moves: both distracting); a tap on a
+  locked tile, also a covered one, lights up both keys above the pile. Still to do on it: end a try with
+  "no moves left" when nothing can be taken and the tray is not full (the game only ends on a full tray).
+  Release only when Dennis says so.
+
 ## Predictions on the dashboard
 
 - Release 1.56 only improves tutorials; all boards are identical to 1.55. Current

@@ -172,19 +172,43 @@ function decorate(i) {
   else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
   if (G.clock && G.clock.i === i) clockBadge();
 }
+/* An outline of a tile drawn above the whole pile (a frame, the middle open, so the tiles lying on it
+   stay visible): where the alarm clock is, and, after a tap on a lock, where the keys are, also when
+   other tiles cover them (Dennis, 2026-10-23). kind 'clock' stays until it is switched off (i null);
+   'key' goes away by itself after ms. */
+function spotMark(i, kind, ms) {
+  const board = $('#board'); if (!board) return;
+  const id = 'spot-' + kind + (kind === 'clock' ? '' : '-' + i);
+  let el = document.getElementById(id);
+  if (i === null || i === undefined || !G || !G.tiles[i] || !G.tiles[i].r || !G.alive[i]) { if (el && (kind === 'clock' || i === null)) el.remove(); if (kind === 'clock') document.querySelectorAll('.spot.clock').forEach(e => e.remove()); return; }
+  if (!el) { el = document.createElement('div'); el.id = id; el.className = 'spot ' + kind; board.appendChild(el); }
+  const r = G.tiles[i].r;
+  el.style.left = (r.l - 2).toFixed(1) + 'px'; el.style.top = (r.t - 2).toFixed(1) + 'px';
+  el.style.width = (r.w + 4).toFixed(1) + 'px'; el.style.height = (r.h + 4).toFixed(1) + 'px';
+  el.classList.toggle('covered', !free(i));
+  if (kind !== 'clock') { el.classList.remove('go'); void el.offsetWidth; el.classList.add('go'); clearTimeout(el._t); el._t = setTimeout(() => el.remove(), ms || 2600); }
+}
+function clockFlash() { if (G && G.clock && clockOn()) spotMark(G.clock.i, 'clockflash', 1800); }
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
 function clockBadge() {
   let ck = $('#clockBadge');
   const on = clockOn(), el = on && G.tiles[G.clock.i].el;
   G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
   if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); return; }
+  // which tile it is: the badge points at it, and its outline shows briefly above the pile (also when
+  // other tiles lie on it) when the level starts and when you tap it while covered. (A permanent outline
+  // drew the eye away from the pile, and a flash at 5 moves left was distracting: Dennis, 2026-10-24.)
+  if (!G.ckShown) { G.ckShown = true; setTimeout(clockFlash, 900); }
   if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; $('#board').appendChild(ck); }
   const r = G.tiles[G.clock.i].r, left = clockLeft();
   ck.innerHTML = `<span>⏰</span><b>${left}</b>`;
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
   if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.4)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
   ck.dataset.n = left;
-  ck.style.left = (r.l + r.w * 0.55).toFixed(1) + 'px'; ck.style.top = (r.t - r.h * 0.16).toFixed(1) + 'px';
+  // above the tile, its tail pointing down at it; below the tile when there is no room above (the tray)
+  const below = r.t - r.h * 0.42 < 0;
+  ck.classList.toggle('below', below);
+  ck.style.left = (r.l + r.w * 0.38).toFixed(1) + 'px'; ck.style.top = (below ? r.t + r.h * 0.92 : r.t - r.h * 0.38).toFixed(1) + 'px';
   ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
   ck.classList.toggle('urgent', left <= 5);
 }
@@ -405,6 +429,9 @@ function tapTile(i) {
     G.st.bt++;
     replay(el, 'shake'); showBlockers(i);
     Sound.blocked(); buzz(30);
+    // a covered locked tile: also where its keys are (the tiles in the way get arrows above); the covered clock: where it is
+    if (lockedT(i)) { G.ob.keys.filter(k => G.alive[k]).forEach(k => spotMark(k, 'key', 2600)); toast(tx('lockedTap'), 2600); }
+    if (G.clock && i === G.clock.i) clockFlash();
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
   }
