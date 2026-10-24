@@ -55,7 +55,11 @@ async function loadRecordedClears({ get, raw, cached, buildBoard = reconstructLe
   const replays = cached ?? JSON.parse(fs.readFileSync(path.join(root, 'analysis/archive/replays', PIDS.Dennisisdebeste + '.json')));
   const rows = [];
   for (const { level, campaign } of firstClearCampaigns(events)) {
-    if (!campaign) { rows.push({ level, status: 'unsupportedOlderEventFormat' }); continue; }
+    if (!campaign) {
+      rows.push({ name: 'Dennisisdebeste', lv: level,
+        status: selectedLevels && !selectedLevels.includes(level) ? 'notRequested' : 'unsupportedOlderEventFormat' });
+      continue;
+    }
     const end = campaign.events.at(-1), opening = campaign.opening;
     const labels = normalizeAttempts(campaign.firstCounter, end.at || 1, campaign.confirmedOpening);
     const metadata = { name: 'Dennisisdebeste', lv: level, start: campaign.start, version: (opening || campaign.events[0]).v, ...labels,

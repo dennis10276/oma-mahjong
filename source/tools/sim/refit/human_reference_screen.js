@@ -31,15 +31,25 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
   return rows;
 }
 
+function selectEntries(catalog, selected = null) {
+  assert(Array.isArray(catalog));
+  assert(selected === null || Array.isArray(selected) && selected.every(level => Number.isInteger(level) && level > 0)
+    && new Set(selected).size === selected.length);
+  const entries = catalog.filter(entry => entry.name === 'Dennisisdebeste' && (!selected || selected.includes(entry.lv)));
+  assert(entries.length > 0);
+  assert.equal(new Set(entries.map(entry => entry.lv)).size, entries.length, 'Duplicate Dennis development levels');
+  assert(!selected || selected.every(level => entries.some(entry => entry.lv === level)), 'A requested Dennis level is missing from the catalog');
+  assert(entries.every(entry => entry.game && Number.isInteger(entry.wonOn) && entry.wonOn > 0),
+    'Keep unavailable boards/labels unresolved; do not silently exclude them from the catalog gate');
+  return entries;
+}
+
 async function main(filename, levels, settings, reportFile) {
   const selected = levels ? levels.split(',').map(Number) : null;
   const input = filename === '--development' ? await loadDevelopmentClears({ selectedLevels: selected })
     : filename === '--live' ? await loadRecordedClears({ selectedLevels: selected }) : JSON.parse(fs.readFileSync(filename));
   const catalog = input.rows ?? input.entries ?? input.baseline?.input.entries;
-  assert(Array.isArray(catalog));
-  const entries = catalog.filter(entry => entry.name === 'Dennisisdebeste' && (!selected || selected.includes(entry.lv)));
-  assert(entries.length > 0);
-  assert(entries.every(entry => entry.game && Number.isInteger(entry.wonOn)), 'Keep unavailable boards/labels unresolved; do not silently exclude them from the catalog gate');
+  const entries = selectEntries(catalog, selected);
   const sourceRoot = path.resolve(__dirname, '../../..');
   const files = Object.keys(require.cache).filter(filename => filename.startsWith(sourceRoot + path.sep)).sort();
   const fingerprint = () => crypto.createHash('sha256').update(files.map(filename => path.relative(sourceRoot, filename).replace(/\\/g, '/') + '\0'
@@ -72,4 +82,4 @@ async function main(filename, levels, settings, reportFile) {
 }
 
 if (require.main === module) main(...process.argv.slice(2)).catch(error => { console.error(error); process.exitCode = 1; });
-module.exports = { screen, passes };
+module.exports = { screen, passes, selectEntries };

@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert/strict');
 const { firstClearCampaigns, initialBoard, loadRecordedClears } = require('./human_reference_catalog.js');
-const { passes } = require('./human_reference_screen.js');
+const { passes, selectEntries } = require('./human_reference_screen.js');
 
 async function test() {
   const event = (kind, time, level, at, aid, extra = {}) => ({ k: kind, t: time, lv: level, at, aid, v: '1.55', ...extra });
@@ -31,6 +31,15 @@ async function test() {
   assert.equal(scoped.rows.length, 3); assert.equal(scoped.rows.filter(row => row.status === 'available').length, 1);
   assert(scoped.rows.filter(row => row.lv !== 100).every(row => row.status === 'notRequested'));
   assert(passes(1, 1)); assert(!passes(1, 2)); assert(passes(2, 1)); assert(!passes(2, 2)); assert(!passes(3, null));
+  const unsupported = await loadRecordedClears({ raw: [{ k: 'end', r: 'win', lv: 17, at: 1, t: 1 }], cached: {},
+    get: async () => { throw Error('Unexpected unsupported-board read'); } });
+  assert.deepEqual(unsupported.rows, [{ name: 'Dennisisdebeste', lv: 17, status: 'unsupportedOlderEventFormat' }]);
+  assert.throws(() => selectEntries([...unsupported.rows, hundred]), /unavailable boards/);
+  assert.deepEqual(selectEntries([...unsupported.rows, hundred], [100]), [hundred]);
+  assert.throws(() => selectEntries([hundred], [100, 101]), /missing from the catalog/);
+  assert.throws(() => selectEntries([hundred, hundred]), /Duplicate/);
+  const unrequested = await loadRecordedClears({ raw: [{ k: 'end', r: 'win', lv: 17, at: 1, t: 1 }], cached: {}, selectedLevels: [] });
+  assert.equal(unrequested.rows[0].status, 'notRequested');
   console.log('PASS recorded-clear catalog keeps all levels and missing evidence, uses exact first-opening boards, counts restarts, ignores easier replay wins, and enforces the strict per-level Dennis gate');
 }
 
