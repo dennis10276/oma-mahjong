@@ -57,7 +57,7 @@ Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
   Report requested caps AND actual completed fillings under the shared budget.
 - Check lab32/33/41/52 with salts1-3, retaining actual same-level retry memory.
 - Registered offline tests cover visibility, production replay, scores, paired
-  margins, salts and the48-case adoption harness; 99/99 pass offline.
+  margins, salts, public clock probes and the48-case harness; 100/100 pass offline.
 
 ## Next and completion
 
@@ -66,6 +66,8 @@ Compiled progress19/21 and primitive21 rejected; compiled lab and risk control0/
 Risk control:6 matching decisions,0 penalized choices,0 penalized clock-exit choices.
 Exact visibility parity passes86,016 cases. Exact <=8 count-gate candidate testing
 32x1/12x16 and lab retries, salts1-3; unknown fractions previously disabled this gate.
+Lab41 trace:176 replayed taps, repeated second carrier, clock frontier never tested.
+Test buffered uncertain-clock probes with32x1 progress/paired2SE, salts1-3.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.

@@ -40,6 +40,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
   assert(options.protectOpenTwin === undefined || typeof options.protectOpenTwin === 'boolean');
+  assert(options.probeUnknownClock === undefined || typeof options.probeUnknownClock === 'boolean');
+  assert(options.clockProbeTrayLimit === undefined || options.probeUnknownClock === true
+    && Number.isInteger(options.clockProbeTrayLimit) && options.clockProbeTrayLimit >= 0 && options.clockProbeTrayLimit <= 2);
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
   assert(options.clockRetryLearning === undefined || typeof options.clockRetryLearning === 'boolean');
   assert(!options.clockRetryLearning || options.retryRiskLearning, 'Clock retry exploration requires actual retry learning');
@@ -371,6 +374,19 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           knownProgress: predicted.uncertain ? 0 : predicted.removed, information: !!predicted.uncertain,
           boundary: true, nodes: selected.plan.nodes + ranking.nodes, hypothesisAudit: audit }, predicted };
       };
+      if (options.probeUnknownClock && clock && current.alive[clock.i] && !planner.report()?.knownWin
+        && actions.some(action => action.index === clock.i)) {
+        const freePeek = current.down[clock.i] === 1 && current.openPeek !== clock.i;
+        const trayMatch = current.pictures[clock.i] !== null && current.tray.includes(current.pictures[clock.i]);
+        if (freePeek || trayMatch || current.tray.length <= (options.clockProbeTrayLimit ?? 1)) {
+          const predicted = advance(geometry, current, clock.i);
+          if (predicted.uncertain) {
+            manualChoice = true; resetPlanner();
+            return { plan: { index: clock.i, path: [clock.i], goal: 'publicClockProbe', knownWin: false,
+              knownDead: false, knownProgress: 0, information: true, boundary: true, nodes: 0 }, predicted };
+          }
+        }
+      }
       const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit && !(clock && current.alive[clock.i])
         ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
       manualChoice = false;
