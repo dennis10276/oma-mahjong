@@ -4,6 +4,7 @@ const Layouts = require('../../../www/layouts.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { advance, legal } = require('./known_tray_plan.js');
 const { searchHypothesisContinuation } = require('./public_hypothesis_rollout.js');
+const { informationPlayout } = require('./public_information_playout.js');
 
 function roleAt(game, state, index) {
   if (state.relieved || !game.rules) return 'none';
@@ -21,10 +22,11 @@ function sameFrame(actual, expected) {
     .every(field => JSON.stringify(actual[field]) === JSON.stringify(expected[field]));
 }
 
-function createHypothesisPhysics(input, { random = Math.random, now = Date.now, maximumAssignments = 12 } = {}) {
+function createHypothesisPhysics(input, { random = Math.random, now = Date.now, maximumAssignments = 12, createPolicy = null } = {}) {
   assert(Object.keys(input).every(key => ['tiles', 'rememberedPictures', 'rememberedDown', 'initialRoles',
     'episodes', 'blockedFacts', 'boardMode', 'clock'].includes(key)));
   assert.equal(typeof random, 'function'); assert.equal(typeof now, 'function');
+  assert(createPolicy === null || typeof createPolicy === 'function');
   assert(Number.isInteger(maximumAssignments) && maximumAssignments > 0 && maximumAssignments <= 64);
   const physicalFields = ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving', 'physicalTaps'];
   const physicalCopy = state => {
@@ -84,7 +86,8 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
     return Math.floor(value * limit);
   };
   const stats = { assignments: 0, rejectedAssignments: 0, historyReplays: 0, verifiedHypotheticalClears: 0, deadlineStops: 0,
-    thinRolloutClears: 0, wideRolloutClears: 0, unresolvedRollouts: 0, certifiedRolloutLosses: 0 };
+    thinRolloutClears: 0, wideRolloutClears: 0, unresolvedRollouts: 0, certifiedRolloutLosses: 0,
+    informationEvaluations: 0, informationClears: 0, informationLosses: 0, informationUnresolved: 0 };
   let cachedOrdinal = null, cachedPictures = null, cached = null;
   const replayPrefix = (game, episode, deadline, validateFrames) => {
     if (now() >= deadline) return null;
@@ -174,6 +177,30 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
   };
   return {
     prepare,
+    evaluateInformation({ hypothesis, index, deadline, worldOrdinal }) {
+      assert.equal(typeof createPolicy, 'function');
+      assert(Number.isInteger(index) && index >= 0 && index < size);
+      const result = (status, progress = 0) => ({ kind: 'informationEvaluation', status, progress });
+      if (!prepare({ hypothesis, deadline, worldOrdinal })) return result('unresolved');
+      const { game } = cached;
+      const session = replayPrefix(game, problem.episodes.at(-1), deadline, true);
+      if (!session) return result('unresolved');
+      const report = informationPlayout({ game, session, candidate: index,
+        memory: { pictures: problem.rememberedPictures, down: problem.rememberedDown, initialRoles: problem.initialRoles },
+        createPolicy, roleAt, deadline, now });
+      stats.informationEvaluations++;
+      if (report.status === 'cleared') {
+        const replay = replayPrefix(game, problem.episodes.at(-1), deadline, true);
+        if (!replay) return result('unresolved');
+        for (const target of report.path) {
+          if (now() >= deadline) return result('unresolved');
+          assert(replay.view().legalTiles.includes(target)); replay.tap(target);
+        }
+        assert.equal(replay.view().win, true, 'An information-aware clear failed independent production replay');
+        stats.informationClears++; stats.verifiedHypotheticalClears++;
+      } else stats[report.status === 'lost' ? 'informationLosses' : 'informationUnresolved']++;
+      return result(report.status, report.removed / Math.max(1, report.removed + report.remaining));
+    },
     evaluate({ hypothesis, index, deadline, nodeLimit, worldOrdinal }) {
       const result = (status, nodes) => ({ kind: 'hypothesisEvaluation', status, nodes });
       assert(Number.isInteger(index) && index >= 0 && index < size);

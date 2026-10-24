@@ -26,6 +26,7 @@ const { createAvailabilityTransfer } = require('./public_availability_transfer.j
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
 const { rankBudgetedHypotheses } = require('./public_budgeted_hypotheses.js');
+const { rankInformationActions } = require('./public_information_sampling.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
 
@@ -45,6 +46,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
   assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
+  assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
+  assert(!options.informationSampling || options.hypothesisSampling === true);
+  assert(options.informationPlayoutNodes === undefined || Number.isInteger(options.informationPlayoutNodes)
+    && options.informationPlayoutNodes > 0 && options.informationPlayoutNodes <= 64);
   assert(options.hypothesisActionMs === undefined || options.hypothesisSampling === true
     && Number.isFinite(options.hypothesisActionMs) && options.hypothesisActionMs > 0 && options.hypothesisActionMs <= 1500);
   assert(!options.hypothesisSampling || options.exclusiveRoles === true && ['standard', 'lab'].includes(publicContext.boardMode),
@@ -85,7 +90,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     preferredWorlds: 0, unresolvedWorlds: 0, excludedByWinnabilityPreference: 0, incompleteWorlds: 0,
     verifiedHypotheticalClears: 0, rejectedAssignments: 0, thinRolloutClears: 0, wideRolloutClears: 0,
     unresolvedRollouts: 0, certifiedRolloutLosses: 0, historyReplays: 0, assignments: 0,
-    cycleFilteredRoots: 0, cycleLimitedDecisions: 0, preparationCalls: 0, budgetedActions: 0, actionDeadlineStops: 0 };
+    cycleFilteredRoots: 0, cycleLimitedDecisions: 0, preparationCalls: 0, budgetedActions: 0, actionDeadlineStops: 0,
+    contestedDecisions: 0, informationEvaluations: 0, informationClears: 0, informationLosses: 0, informationUnresolved: 0 };
   const hypothesisVisits = options.hypothesisSampling ? createPublicActionVisits() : null;
   let decisionPosition = null;
   const knowledgeSignature = () => JSON.stringify({ pictures, down, initialRoles, roles,
@@ -94,8 +100,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const frontierCache = new Map();
   const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
   let decisionDeadline = Infinity;
-  const baseSearch = options.hypothesisSampling ? (game, state, actions, searchOptions) => searchPublicWitness(game, state, actions,
-    { ...searchOptions, decisionMs: undefined, deadline: Math.min(decisionDeadline, searchOptions.deadline ?? Infinity) }) : searchPublicWitness;
+  const baseSearch = options.hypothesisSampling ? (game, state, actions, searchOptions) => {
+    const contested = options.informationSampling && state.pictures.some((picture, index) => state.alive[index] && picture === null);
+    return searchPublicWitness(game, state, actions, { ...searchOptions,
+      ...(contested ? { nodes: Math.min(64, searchOptions.nodes) } : {}), decisionMs: undefined,
+      deadline: Math.min(decisionDeadline, searchOptions.deadline ?? Infinity, contested ? Date.now() + 40 : Infinity) });
+  } : searchPublicWitness;
   const retrySearchFactory = options.clockRetryLearning ? clockRetryExploration : retryExploration;
   const runRetrySearch = options.retryRiskLearning ? retrySearchFactory(baseSearch) : null;
   const resetPlanner = () => { planner = runRetrySearch || options.hypothesisSampling
@@ -103,6 +113,17 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
   return {
+    rememberPublic(memory) {
+      assert.equal(attempt, 0, 'Seed a fresh same-level policy before its first frame');
+      assert.deepEqual(Object.keys(memory).sort(), ['down', 'initialRoles', 'pictures']);
+      assert(['pictures', 'down', 'initialRoles'].every(field => Array.isArray(memory[field]) && memory[field].length === tiles.length));
+      assert(memory.pictures.every(value => value === null || Number.isInteger(value) && value >= 0 && value <= 101));
+      assert(memory.down.every(value => value === null || value === 0 || value === 1));
+      assert(memory.initialRoles.every(value => value === null || ['none', 'ice', 'ice2', 'key', 'lock'].includes(value)));
+      for (const [index, picture] of memory.pictures.entries()) pictures[index] = picture;
+      for (const [index, value] of memory.down.entries()) down[index] = value;
+      for (const [index, value] of memory.initialRoles.entries()) initialRoles[index] = value;
+    },
     beginAttempt() {
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
@@ -203,39 +224,63 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       } : exposure;
     },
     decide() {
-      decisionDeadline = options.hypothesisSampling ? Date.now() + 1500 : Infinity;
+      decisionDeadline = options.hypothesisSampling ? Date.now() + (options.informationSampling ? 1300 : 1500) : Infinity;
       const available = geometry.publicFrontier(current);
       let actions = available.free.map(index => ({ index }));
+      const initialActions = actions.slice();
       if (!actions.length) return null;
       if (hypothesisVisits) decisionPosition = JSON.stringify(Object.fromEntries(
         ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving'].map(field => [field, current[field]])));
       const finalize = selected => {
-        if (!options.hypothesisSampling || selected.plan.knownWin || selected.plan.safeClockExit || selected.plan.knownDead
-          || current.tray.length < 2 || !current.pictures.some((picture, index) => current.alive[index] && picture === null)
+        if (!options.hypothesisSampling || !options.informationSampling && (selected.plan.knownWin || selected.plan.safeClockExit
+          || selected.plan.knownDead || current.tray.length < 2) || !current.pictures.some((picture, index) => current.alive[index] && picture === null)
           || Date.now() >= decisionDeadline) return selected;
         const knowledge = knowledgeSignature();
-        const candidates = actions.filter(action => action.index === selected.plan.index
+        const candidates = options.informationSampling ? initialActions.filter(action => {
+          const predicted = advance(geometry, current, action.index);
+          return (predicted.uncertain || !predicted.lost) && !selected.plan.provedDeadRoots?.includes(action.index);
+        }) : actions.filter(action => action.index === selected.plan.index
           || !hypothesisVisits.hasTried(decisionPosition, knowledge, action.index));
-        const removed = actions.length - candidates.length;
+        const removed = options.informationSampling ? 0 : actions.length - candidates.length;
         hypothesisStats.cycleFilteredRoots += removed; hypothesisStats.cycleLimitedDecisions += +(removed > 0);
-        if (candidates.length === 1) return selected;
+        if (candidates.length < 2) {
+          if (options.informationSampling && candidates.length && candidates[0].index !== selected.plan.index) {
+            const index = candidates[0].index, predicted = advance(geometry, current, index);
+            manualChoice = true; resetPlanner();
+            return { plan: { ...selected.plan, index, path: [index], goal: 'onlyUnprovedLosingAction',
+              knownWin: !!predicted.win, knownDead: false, safeClockExit: false }, predicted };
+          }
+          return selected;
+        }
         let publicHash = 2166136261;
         for (const character of JSON.stringify({ tiles: geometry.tiles, pictures, down, initialRoles,
           alive: current.alive, tray: current.tray, moves: current.moves, openPeek: current.openPeek })) {
           publicHash = Math.imul(publicHash ^ character.charCodeAt(0), 16777619) >>> 0;
         }
         const random = Layouts.rng(publicHash);
+        const createPolicy = options.informationSampling ? deadline => createHumanController(geometry.tiles,
+          { ...options, hypothesisSampling: false, informationSampling: false, hypothesisActionMs: undefined,
+            causalAvailabilityMemory: false, rememberAcceptedTaps: false, rememberClearedRoles: false,
+            rememberKnownLosses: false, rememberBlockedTaps: true, keyAccessMacros: false,
+            nodes: options.informationPlayoutNodes ?? 4, beam: 1, taps: 4, finishKnown: false, proofNodes: 2,
+            decisionMs: undefined, deadline }, publicContext) : null;
         const physics = createHypothesisPhysics({ tiles: geometry.tiles, rememberedPictures: pictures, rememberedDown: down,
-          initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random });
-        const problem = { rememberedPictures: pictures, actions: candidates.map(action => action.index), fallbackIndex: selected.plan.index };
+          initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random, createPolicy });
+        const problem = { rememberedPictures: pictures, actions: candidates.map(action => action.index),
+          fallbackIndex: candidates.some(action => action.index === selected.plan.index) ? selected.plan.index : candidates[0].index };
         const rankOptions = { deadline: decisionDeadline, random,
           maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction };
-        const ranking = options.hypothesisActionMs === undefined
+        const ranking = options.informationSampling ? rankInformationActions({ ...problem,
+          unseenFraction: current.pictures.filter((picture, index) => current.alive[index] && picture === null).length
+            / current.alive.reduce((sum, alive) => sum + alive, 0) }, { deadline: decisionDeadline, random, physics,
+          maximumWorlds: options.hypothesisMaximumWorlds ?? 128 }) : options.hypothesisActionMs === undefined
           ? rankHypothesisActions(problem, { ...rankOptions, evaluate: physics.evaluate })
           : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });
         const physicalStats = physics.stats(), predicted = advance(geometry, current, ranking.index);
         const changed = ranking.index !== selected.plan.index && (predicted.uncertain || !predicted.lost);
         hypothesisStats.decisions++; hypothesisStats.changed += +changed;
+        hypothesisStats.contestedDecisions += +!!options.informationSampling;
+        for (const field of ['informationEvaluations', 'informationClears', 'informationLosses', 'informationUnresolved']) hypothesisStats[field] += physicalStats[field];
         for (const field of ['generatedWorlds', 'completeWorlds', 'preferredWorlds', 'unresolvedWorlds',
           'excludedByWinnabilityPreference', 'incompleteWorlds']) hypothesisStats[field] += ranking[field];
         for (const field of ['preparationCalls', 'budgetedActions', 'actionDeadlineStops']) hypothesisStats[field] += ranking[field] ?? 0;
