@@ -2,8 +2,9 @@
 
 Worktree: `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
 Branch: `wip/personal-bots`. Goal ACTIVE and UNMET.
-Recent progress: public key preparation, catalog inclusion repair and a full
-expanded155 result139/155 with no natural-level regressions. Sixteen still fail.
+Recent progress: public standard-game placement deduction improves the natural
+challenge34/42 with no pass regressions; a full155 validation is running.
+The last completed full score remains139/155; sixteen fail that policy.
 Do not redefine completion around a subset, a percentage, or an isolated pass.
 
 ## Contract and completion evidence
@@ -76,21 +77,31 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`32f493a`; last full139/155 policy:`d7778dd`. Goal ACTIVE, UNMET.
+Runtime:`32f493a`, diagnostic context fix:`b1bdbec`;
+last completed full139/155 policy:`d7778dd`. Goal ACTIVE, UNMET.
 **72/72 offline tests pass** in6s, including6912 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
-RUNNING:session44060, started2026-10-24T05:49:18.275Z. Serial natural42 then lab15.
+COMPLETED:session44060, started2026-10-24T05:49:18.275Z. Serial natural42 then lab15.
 Reports:HUMAN_REFERENCE_PLACEMENT_CONTRACT_CHALLENGE_2026-10-24.md and
 HUMAN_REFERENCE_LAB_PLACEMENT_CONTEXT_2026-10-24.md.
 Source:`0c85b8bf0780c4566175c26b15a0afacc32ca4fc35a67520d00c3a87e72df364`.
 Natural input:`c679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5`.
-This is development, NOT unseen20. No other simulation is live. Hold loaded runtime
-fixed until terminal; poll the actual handle, never restart for an observation
-timeout or kill app/Gemini helpers. The emitted natural rows include124try2,
-121try2 (previously3),92try3 (previously2), and147 stilltry1. No new pass regression
-yet, but the complete result is unproven and no full155 score is extrapolated.
+Natural34/42, mean65.3ms, maximum1503.8ms; lab8/15, mean83.6ms,max1212.3ms.
+Both source-unchanged. An independent parser checked matching profile, labels,
+board sources, all lab try counts, strict PASS scoring and timing. No pass
+regressions:124 nowtry2,121 improves3 to2,92 worsens2 to3 but still beatsDennis5;
+147 remains1. No full155 score is extrapolated.
+
+RUNNING:session26989, started2026-10-24T05:57:39.306Z, full --development155 with
+the unchanged profile below. Report:HUMAN_REFERENCE_CATALOG_PLACEMENT_CONTRACT_2026-10-24.md.
+Source remains0c85b8bf0780c4566175c26b15a0afacc32ca4fc35a67520d00c3a87e72df364;
+full input00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9,
+identical to the earlier full155 input. Header confirms155 targets. No other
+CPU-heavy process is live. Hold loaded runtime fixed until this run is terminal;
+poll its actual handle, never restart just for an observation timeout or kill
+app/Gemini helpers. This is development, NOT unseen20;157+ remains unopened.
 
 Frozen current profile:
 ```json
@@ -120,8 +131,8 @@ Null generations are valid and excluded from role-count coverage, not asserted b
 
 Read-only metadata refresh2026-10-24T05:53:51.481Z:140 natural clears through156,
 zero boards decoded, no newer clears.157+ remains unopened.
-If the unchanged57-task screen gains without pass regressions, run full155 before
-promoting. Next research candidate, NOT running:current placement profile plus
+The unchanged57-task screen gained without pass regressions; full155 is now
+running before promotion. Next research candidate, NOT running:placement profile plus
 shortInformation:'recoveryAware',recoveryInformationMinTray:2,
 recoveryInformationBreadth:true. The new sound deduction may interact with earlier
 mixed-result routes; test the whole policy rather than merging past individual wins.
@@ -145,6 +156,7 @@ historical diagnostics remain in the individual reports and this file at a4cb277
 | Previous + early continuation proofs |5/7, identical tries to breadth;147 still fails; max1502.4ms |BREADTH_EARLY_PROOF_CONTROL |
 | Breadth active from one carrier |5/10; gains102/124/lab12, loses121/123/147/150; max1504ms |SINGLE_CARRY_BREADTH_CONTROL |
 | Information endpoint headroom2 |6/22; gainslab12try5, loses147; max1503.5ms |INFORMATION_HEADROOM_SCREEN |
+| Public standard-game placement contract |34/42 natural,8/15 lab; gain124, no pass regressions; max1503.8ms |PLACEMENT_CONTRACT_CHALLENGE;LAB_PLACEMENT_CONTEXT |
 
 These are whole-policy results, never a merged best-of. The two22-task policies
 remain unpromoted. The next breadth experiment refines them rather than discarding
