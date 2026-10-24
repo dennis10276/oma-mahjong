@@ -753,7 +753,9 @@ function checkClock() {
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : coach ? 'clock-help' : 'clock-help coach-help');
     if (review) coachReviewStart(review);
     else if (!coach) coachPlay($('#modalBox .coach-demo'), coachClockClip());
-    const message = recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout');
+    // (only a film or an explanation is logged as help: the plain loss window of a coach level is not
+    // a lesson, and the dashboard showed it as "Uitleg getoond: Wekker" after every lost try; 1.62)
+    const message = review || !coach ? recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout') : () => { };
     $('#sRetry').onclick = () => { message('retry'); closeModal(); restart(); };
     $('#sMenu').onclick = () => { message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);

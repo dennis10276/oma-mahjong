@@ -31,9 +31,19 @@ module.exports = [
       await click(p, '.cz-pick[data-kind="clockFirst"]'); await drain();
       t.eq(messages().at(-1).why, 'manual', 'manually reopened clock explanation is distinguished');
       await click(p, '#ntGo'); await p.evaluate(() => closeModal());
+      // a level with game tips: the plain loss window (no film) is not a lesson and is not logged as help
+      const before = messages().length;
       await p.evaluate(() => { clearCur(); __mj.startLevel(80); });
       await p.evaluate(() => { G.clock.n = G.mv; checkClock(); });
       await p.waitForSelector('#sMenu', { state: 'visible' }); await drain();
+      t.eq(await p.evaluate(() => !!$('#modalBox .coach-demo')), false, 'no film after a timeout without an own film');
+      t.eq(messages().length, before, 'plain loss window of a game-tip level is not logged as help');
+      await click(p, '#sMenu');
+      // without game tips (grandma's track): the explanation with the film is shown and logged
+      await p.evaluate(() => { RULES.coach.fromLevel = 999; clearCur(); __mj.startLevel(80); });
+      await p.evaluate(() => { G.clock.n = G.mv; checkClock(); });
+      await p.waitForSelector('#sMenu', { state: 'visible' }); await drain();
+      await p.evaluate(() => { RULES.coach.fromLevel = 60; });
       const timeout = messages().at(-1);
       t.eq([timeout.topic, timeout.why, timeout.action], ['clock', 'timeout', 'shown'], 'clock timeout is logged after its modal appears');
       t.ok(messageText(timeout).includes(lang === 'en' ? 'still there' : 'lag er nog'), 'timeout includes the actual loss explanation');
@@ -46,14 +56,17 @@ module.exports = [
   { name: 'help messages: live Verloop shows exact escaped text, seconds, language and reason; expanded messages survive updates', async run(t, { serve, FakeDB, browser, WWW }) {
     const site = await serve(path.join(__dirname, '../site'), { '/play/': WWW });
     const now = Date.now(), copy = 'Een aangrenzende steen: ernaast, erboven, erop én eronder. <svg onload="window.__bad=1">';
-    const chunks = Object.fromEntries(copy.match(/[\s\S]{1,40}/g).map((v, i) => ['m' + i, v]));
+    const split = text => Object.fromEntries(text.match(/[\s\S]{1,40}/g).map((v, i) => ['m' + i, v])), chunks = split(copy);
     const base = { k: 'help_msg', v: '1.57', lang: 'nl', lv: 80, at: 4, scr: 'game' };
     const db = new FakeDB({ scores: { pHelp: { name: 'Dennis', level: 80 } }, plays: { pHelp: {
       intro: { ...base, t: now - 9000, mid: 'intro', topic: 'ice', why: 'intro', action: 'shown', title: 'Bevroren stenen', ...chunks },
       ack: { ...base, t: now - 8000, mid: 'intro', topic: 'ice', why: 'intro', action: 'ack' },
       retry: { ...base, t: now - 7000, mid: 'retry', topic: 'lock', why: 'retry', fails: 3, action: 'shown', title: 'Slot en sleutel', ...chunks },
       manual: { ...base, t: now - 6000, mid: 'manual', topic: 'trayPair', why: 'manual', action: 'shown', lang: 'en', title: 'A pair with 3 tiles', ...chunks },
-      timeout: { ...base, t: now - 5000, mid: 'timeout', topic: 'clock', why: 'timeout', action: 'shown', title: 'De wekker ging af!', ...chunks },
+      timeout: { ...base, t: now - 5000, mid: 'timeout', topic: 'clock', why: 'timeout', action: 'shown', title: 'De wekker ging af!', ...split('De wekkersteen lag er nog na 6 zetten.\n\nDe ⏰ wekker telt zetten, geen seconden.') },
+      // 1.59-1.61: the plain loss window of a game-tip level was logged as help; it was not a lesson
+      plain: { ...base, v: '1.61', t: now - 4000, mid: 'plain', topic: 'clock', why: 'timeout', action: 'shown', title: 'De wekker ging af!', ...split('De wekkersteen lag er nog na 6 zetten.') },
+      plainRetry: { ...base, v: '1.61', t: now - 3000, mid: 'plain', topic: 'clock', why: 'timeout', action: 'retry' },
     } } });
     const ctx = await browser.newContext({ viewport: { width: 1400, height: 1000 } });
     await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
@@ -64,6 +77,7 @@ module.exports = [
       const text = await p.locator('#feed').innerText();
       for (const expected of ['Uitleg getoond: IJs', 'Uitleg bevestigd: IJs', 'eerste uitleg', 'herinnering na 3 mislukte pogingen', 'zelf geopend', 'Engels', 'na afloop van de wekker', 'Level 80 · poging 4']) t.ok(text.includes(expected), 'feed contains ' + expected);
       t.eq(await p.locator('[data-message="intro"] p').textContent(), copy, 'full original message is available');
+      t.eq([await p.locator('[data-message="plain"]').count(), (text.match(/Wekker/g) || []).length], [0, 1], 'a plain loss window is not shown as help (only the real explanation)');
       t.eq(await p.locator('#feed svg').count(), 0, 'stored markup is escaped');
       t.ok(/^\d\d:\d\d:\d\d$/.test(await p.locator('#feed li').filter({ has: p.locator('[data-message="intro"]') }).locator('.t').innerText()), 'message time includes seconds');
       await p.locator('[data-message="intro"] summary').click();

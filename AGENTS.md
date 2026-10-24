@@ -104,6 +104,10 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - Release 1.60 fixes the game tips (a better route never takes the clock after its last move) and makes
   the ice, lock and pair explanations real-game films in the player's theme; boards are unchanged
   (predictions are off on the dashboard, predict.json stays at 1.59).
+- Not yet released (wip/clock-loss-not-a-lesson): on a level with game tips the plain "the alarm went
+  off" window (no own film) is no longer logged as help. In 1.59-1.61 it was, so the dashboard showed
+  "Uitleg getoond: Wekker" after every lost try (Mrs. Doubtfire, level 132) although the player only saw
+  one line. The dashboard also leaves those old one-line messages out.
 
 - `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, the prediction for
   their next 60 levels: first try, within 2 and within 4 tries. The dashboard shows it in the card
