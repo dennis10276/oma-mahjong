@@ -65,7 +65,7 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 Runtime:`8055ad6`; lab catalog/screen:`0bc0f3e`; manual twin guard:`cede8f0`;
 public-relief correction:`2d6ec2f`; root adaptive probing:`80491b6`;
 information width:`ae1753f`; experimental pair-headroom cap:`1fe9239`.
-**58/58 offline tests pass** in about4s, including4224 clock/nonclock
+**59/59 offline tests pass** in about4s, including4416 clock/nonclock
 concealed-world controller controls,144 local-recovery and24 relief witnesses.
 No new post-correction full140 score exists. No research option is a released winner.
 
@@ -73,14 +73,22 @@ No new post-correction full140 score exists. No research option is a released wi
 same cached, bounded loss proof as ordinary removals. A production-replayed
 pair suffix demonstrates the prior missing check. Public geometry exposure is
 an information boundary, never a known-dead certificate. No hidden role is read.
-Current57-case serial worker:session29442. Loaded source fingerprint:
+Completed57-case serial worker:session29442. Loaded source fingerprint:
 `734e5ddec8c21ab07ad0649b6b252be6c4b981ec34a6ef08e674dd4182bc2110`.
 Lab15 control COMPLETED7/15, mean66.3ms, slowest910ms; unchanged source.
 Report:`HUMAN_REFERENCE_LAB_MACRO_CONTROL_2026-10-24.md`.
-The42-case natural control is still running; hold runtime fixed until completion.
+Natural42 control COMPLETED32/42, mean60.1ms, slowest1505ms; same ten failures.
+Report:`HUMAN_REFERENCE_MACRO_CONTROL_CHALLENGE_2026-10-24.md`.
 Lab remains7/15: the correctness fix alone does not improve the lab gate.
 All eight failures remain, with repeated actual failures on several boards.
 The expanded gate now requires natural140 AND lab15, then unseen20.
+
+New OPTIONAL `clockRecovery:true` considers tray debt before active-clock digging
+only while a public route estimate leaves more than two spare moves. It also
+orders equal-room exit witnesses by that debt. Urgent and nonclock ordering is
+unchanged, defaults remain off, and the estimate never prunes or certifies safety.
+Tests include a production-replayed clock route, urgent/nonclock equality, private
+getters and192 additional hidden-world controls. No campaign gain is claimed yet.
 
 COMPLETED:serial8-case protected-width1 control, then42-case
 protected-width1 challenge, then42-case protected-width2 challenge.
