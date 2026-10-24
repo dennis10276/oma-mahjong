@@ -57,12 +57,13 @@ Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
   Report requested caps AND actual completed fillings under the shared budget.
 - Check lab32/33/41/52 with salts1-3, retaining actual same-level retry memory.
 - Registered offline tests cover visibility, production replay, scores, paired
-  margins, salts and the48-case adoption harness. Seeded baseline/candidates run now.
+  margins, salts and the48-case adoption harness; 99/99 pass offline.
 
 ## Next and completion
 
-Baseline24/48; 32x1=22 and12x16=20 rejected; lab baseline0/12.
-Finish primitive-root screens and retry-risk labs; isolated horizon16 work is testing.
+Baseline24/48; progress22/20, primitive19/20, long20 and recovery13 all rejected.
+Lab baseline and retry learning both0/12. Exact visibility parity passes86,016 cases.
+Screen compiled public occluders: progress32x1/12x16 and primitive32x1, salts1-3.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.
