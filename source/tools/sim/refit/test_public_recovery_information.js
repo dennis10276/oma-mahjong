@@ -45,6 +45,7 @@ function test() {
   assert.equal(recovering.informationPolicy.recovery.kind, 'trayMatch');
   assert.throws(() => search(game, state, roots, { ...crowdedOptions, recoveryInformationMinTray: -1 }));
   assert.throws(() => search(game, state, roots, { ...crowdedOptions, recoveryInformationMinTray: 4 }));
+  assert.throws(() => search(game, state, roots, { ...crowdedOptions, recoveryAvailableInformation: 1 }));
   const uncertain = { ...game, publicFrontier: () => ({ free: [0, 1, 2, 3, 4, 5], uncertain: [1] }) };
   const apparentPair = { ...stranded, pictures: [1, 1, 3, 4, null, null] };
   assert.equal(knownRecovery(uncertain, apparentPair), null);

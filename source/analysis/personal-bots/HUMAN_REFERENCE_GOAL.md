@@ -210,6 +210,30 @@ Known recoveries, wins and clocks retain their previous treatment.69/69 tests
 pass, including6144 concealed-world controls and threshold/replay checks.
 No development improvement for this refinement has yet been claimed.
 
+COMPLETED:session75598 tested that threshold2 variant on the16 failures plus
+six controls121/123/134/141/143/147 (22). Runtime4787061;
+source1d81237152e1cae95084a5b0383a15143862db62cce837a246a5df3ea2316863.
+Report:HUMAN_REFERENCE_CROWDED_INFORMATION_SCREEN_2026-10-24.md.
+8/22 vs matching control6/22:gain102try1,124try2,125try1; regression147 fails.
+Mean76.3ms, maximum1501.6ms, source unchanged. This variant is NOT promoted.
+An actual double replay of147 (104 versus51 accepted taps, both independently
+verified) finds the first divergence after48 identical taps, tray[9,35].
+Baseline59/59/0/54/40 reaches a guaranteed available unseen picture; candidate
+66/51 reaches an uncertain obstacle role. After its actual reveal, that run
+becomes known dead. This does not prove that earlier position or level impossible.
+
+Optional recoveryAvailableInformation now prefers a guaranteed available unknown
+picture/orientation over an uncertain-role boundary BEFORE shortest-prefix length,
+ONLY while recovery-aware ordering is active. It is a ranking heuristic, not a
+proof that the unseen picture will help. The option defaults false; clocks and
+known local recoveries keep ordinary behavior. A synthetic stacked-pair fixture
+demonstrates the same choice, independently replays the longer physical prefix
+across changed concealed identities, and never crosses its unknown boundary.
+70/70 tests pass, including6336 concealed-world controls. The first new fixture
+needed progressiveReopens:true to admit its constructive remembered-closed
+access route; this was fixed in the fixture rather than weakening the planner.
+No score for this additional preference has yet been measured.
+
 Research conservative control:
 ```json
 {"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true,"passiveInformation":"shortRoles"}

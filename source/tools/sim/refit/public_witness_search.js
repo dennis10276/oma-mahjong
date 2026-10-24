@@ -134,6 +134,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const keyAccessMacros = settings.keyAccessMacros ?? false;
   const shortInformation = settings.shortInformation ?? false;
   const recoveryInformationMinTray = settings.recoveryInformationMinTray ?? 0;
+  const recoveryAvailableInformation = settings.recoveryAvailableInformation ?? false;
   const informationDominance = settings.informationDominance ?? false;
   const informationWidth = settings.informationWidth ?? 0;
   const clockRecovery = settings.clockRecovery ?? false;
@@ -160,6 +161,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof keyAccessMacros, 'boolean');
   assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
   assert(Number.isInteger(recoveryInformationMinTray) && recoveryInformationMinTray >= 0 && recoveryInformationMinTray <= 3);
+  assert.equal(typeof recoveryAvailableInformation, 'boolean');
   assert.equal(typeof informationDominance, 'boolean');
   assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
   assert.equal(typeof clockRecovery, 'boolean');
@@ -320,6 +322,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       if (pairFlexibility) rank.splice(2 + (settings.trayRecovery ? 2 : 0) + (goalRecoveryActive ? riskFirstRecovery ? 3 : 2 : 0), 0, -metrics.pairDebt);
       if (shortInformationActive && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
         -path.length - (shortInformation === 'carrierAware' ? 2 * metrics.depth.unknownWaiting : 0));
+      if (shortInformation === 'recoveryAware' && shortInformationActive && safeInfo && recoveryAvailableInformation) {
+        rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
+          +room.allowed.free.some(index => !room.allowed.uncertain?.includes(index)
+            && position.pictures[index] === null && position.down[index] !== null));
+      }
       if (informationWidth && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
         Math.min(informationWidthTarget, room.allowed.free.filter(index => !room.allowed.uncertain?.includes(index)
           && position.pictures[index] === null && position.down[index] !== null).length));
@@ -506,6 +513,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
       ...(rememberedLoss ? { rememberedLossPrunes } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive, minimumTray: recoveryInformationMinTray,
+        availableFirst: recoveryAvailableInformation,
         recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,
         ...(alternativeRecoveryRoutes ? { alternativeRecoveryRoutes } : {}),

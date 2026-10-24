@@ -22,6 +22,7 @@ const modules = [
   'test_public_information_audit.js',
   'test_public_short_information.js',
   'test_public_recovery_information.js',
+  'test_public_available_information.js',
   'test_public_information_width.js',
   'test_public_information_dominance.js',
   'test_human_information_invariance.js',
