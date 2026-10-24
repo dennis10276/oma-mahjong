@@ -93,11 +93,14 @@ getters and192 additional hidden-world controls. No campaign gain is claimed yet
 ACTIVE:session27372, serial lab15 then natural42 with the conservative control
 plus `clockRecovery:true`. Source held unchanged:
 `c61e6c1e5edfc4806652c304645c9de15306b2df0ac74d714685d2d8df8fcd3d`.
-Reports pending:`HUMAN_REFERENCE_LAB_CLOCK_RECOVERY_2026-10-24.md` and
-`HUMAN_REFERENCE_CLOCK_RECOVERY_CHALLENGE_2026-10-24.md`.
+Lab report completed:`HUMAN_REFERENCE_LAB_CLOCK_RECOVERY_2026-10-24.md`.
+Natural report pending:`HUMAN_REFERENCE_CLOCK_RECOVERY_CHALLENGE_2026-10-24.md`.
 Early actual evidence:lab11 still fails, but reaches50 tiles left rather than82;
 lab41 still fails across6 real attempts, eventually reaching32 rather than52.
-These are not passes and must not replace the try-count gate. Wait for all rows.
+Final lab score regresses7/15 to4/15:44/46/48 newly fail, no new lab passes.
+Mean136.4ms, slowest1503.4ms; unchanged source. This option is not promoted.
+These longer physical runs are not passes and must not replace the try-count
+gate. Natural42 is still running. Keep the source frozen until it finishes.
 
 COMPLETED:serial8-case protected-width1 control, then42-case
 protected-width1 challenge, then42-case protected-width2 challenge.
