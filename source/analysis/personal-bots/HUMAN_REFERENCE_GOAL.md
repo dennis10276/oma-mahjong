@@ -52,12 +52,13 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current code, tests and active experiment
 
-Latest experimental runtime:`ae1753f`; preceding adaptive runtime:`80491b6`;
+Latest experimental runtime:`1fe9239`; preceding width runtime:`ae1753f`;
+preceding adaptive runtime:`80491b6`;
 verified correction:`2d6ec2f`;
 preceding runtime:`b2d3c5f`;
 baseline key recovery:`a5cb7db`;
 dependency route cache:`0ead64d`; information audit:`2c10828`.
-**56/56 offline tests pass** in approximately5s, including3648 concealed-world
+**56/56 offline tests pass** in approximately4s, including3840 concealed-world
 clock/nonclock controls,37 real unseen-identity probes and a neutral-pair reveal.
 The shortRoles policy completed140 levels before the public-relief correction;
 the short-probe run was deliberately stopped for that reproduced physics bug.
@@ -116,6 +117,28 @@ old50/92/150 controls; do not equate this set with earlier different8-case scree
 Fingerprint:`b21239e48e7cbe6b45a4dc7815cab67085b55d3316f986b8338166bb5e041ccc`.
 Reports:`HUMAN_REFERENCE_INFORMATION_WIDTH_1_2026-10-24.md` and
 `HUMAN_REFERENCE_INFORMATION_WIDTH_2_2026-10-24.md`.
+
+Both width controls share41 actual decisions on123 and147. The123 divergence
+has an EMPTY tray:width2 consumes a known pair before peeking43, whilewidth1
+peeks43 first. The147 divergence instead carries[6]:width1 takes79 then probes71,
+whilewidth2 takes36 then probes11. Each comparison starts from equal projections;
+the first difference does not by itself prove that action forces the outcome.
+Optional `informationWidth:'pairHeadroom'` now caps width by
+`max(1,floor((4-currentTrayLength)/2))`:two with an empty tray, one otherwise.
+This is a general headroom-based ordering hypothesis, not per-level selection or
+a claim that every inspection consumes two tray slots. Tests match the fixed
+width controls for0/1/2 carried tiles, preserve clocks and add concealed-world checks.
+ACTIVE:serial8-case control then42-case challenge, session34744, runtime1fe9239,
+fingerprint:`52f073531e13a6356ad9034d59f3b59485c0a63d3bf94fefb5de7ea8de5e6b66`.
+Pending:`HUMAN_REFERENCE_PAIR_HEADROOM_CONTROL_2026-10-24.md` and
+`HUMAN_REFERENCE_PAIR_HEADROOM_CHALLENGE_2026-10-24.md`. Keep loaded source fixed.
+
+A separate actual-production diagnostic of84/99/112/125 finds the clock already
+removed before EACH loss (first post-clock decisions17/12/6/6 respectively).
+Do not blame an active-clock countdown merely because these levels have badges;
+this also does not prove their earlier clock routes were strategically optimal.
+Metadata-only refresh2026-10-24T00:46:27Z still reports140 clears through156,
+no later clears, zero boards decoded/returned.157+ remains unopened.
 
 The three-action role-payoff screen completed7/8, source unchanged, slowest
 1504.5ms. It clears121 on try3 while retaining92try3 and50/147try1; only137
