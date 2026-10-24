@@ -81,14 +81,13 @@ Runtime:`a4cb277`; last full139/155 policy:`d7778dd`.
 availability controls,380 cleared-role subset controls,144 local recoveries,
 24 relief witnesses and original-production replay. No research policy is promoted.
 
-RUNNING:session20129, started2026-10-24T05:29:10.780Z, on22 development tasks:
+COMPLETED:session20129, started2026-10-24T05:29:10.780Z, on22 development tasks:
 all16 failures plus controls121/123/134/141/143/147. This is NOT unseen20.
 Report:`HUMAN_REFERENCE_RECOVERY_BREADTH_SCREEN_2026-10-24.md`.
 Source:`1c0c90b87e2bfebeaaedc297280ccef7e228fc8303d14794f2631992d57968a7`.
 Input:`6b0423fdb713967eaa3a4aee91cee0a19091b273fed1ca48dcac5ee875c64904`.
-Hold loaded runtime files fixed until completion; poll the actual handle before
-another CPU-heavy simulation. Never restart on an observation timeout. No other
-simulation is live; do not kill app/Gemini helpers.157+ remains unopened.
+Result8/22 vs control6/22:gain102try1,124try2,lab12try1; regression147 persists.
+Mean76.8ms, maximum1502.1ms, source unchanged.125 still fails. Not promoted.
 
 Full139/155 profile:
 ```json
@@ -98,8 +97,15 @@ Current candidate adds rememberAcceptedTaps:true,rememberKnownLosses:true,
 rememberClearedRoles:true,shortInformation:'recoveryAware',
 recoveryInformationMinTray:2,recoveryInformationBreadth:true.
 It does NOT add recoveryAvailableInformation or continuationTrayMin:2.
-The first emitted rows include102try1 and124try2, but125 still fails; do not
-extrapolate a completed score or combine individual policy wins.
+Do not extrapolate a full score or combine individual policy wins.
+
+RUNNING:the next serial process tests this breadth policy plus continuationTrayMin:2
+on102/121/123/124/125/147/lab12 (7). Earlier proofs alone did not help the old
+routes, but may protect positions newly reached by this policy. Report:
+HUMAN_REFERENCE_BREADTH_EARLY_PROOF_CONTROL_2026-10-24.md.
+Poll the actual handle before another CPU-heavy simulation. Hold loaded runtime
+fixed while running; never restart for an observation timeout or kill helpers.
+157+ remains unopened. This is a focused development control, not unseen20.
 
 ## Completed research evidence
 
@@ -116,6 +122,7 @@ historical diagnostics remain in the individual reports and this file at a4cb277
 | Previous + two-carrier continuation proofs |4/20; all16 failures persist, max1501.8ms |TWO_CARRIER_PROOF_SCREEN |
 | Crowded recovery-aware information |8/22 versus control6/22; gains102/124/125, loses147; max1501.6ms |CROWDED_INFORMATION_SCREEN |
 | Previous + available discovery preference |7/22; gains124 and lab12try3 vsDennis6, loses147; max1501.9ms |AVAILABLE_RECOVERY_SCREEN |
+| Crowded recovery + safe discovery breadth |8/22; gains102/124/lab12 (try1), loses147; max1502.1ms |RECOVERY_BREADTH_SCREEN |
 
 These are whole-policy results, never a merged best-of. The two22-task policies
 remain unpromoted. The next breadth experiment refines them rather than discarding
