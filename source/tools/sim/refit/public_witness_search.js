@@ -152,7 +152,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof keyRecoveryMacros, 'boolean');
   assert([false, true, 'carrierAware', 'recoveryAware'].includes(shortInformation));
   assert.equal(typeof informationDominance, 'boolean');
-  assert(Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
+  assert(informationWidth === 'pairHeadroom' || Number.isInteger(informationWidth) && informationWidth >= 0 && informationWidth <= 4);
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -190,6 +190,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const roots = new Set(actions.map(action => action.index)), initialAllowed = physical.legal(game, state), initialFree = initialAllowed.free;
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
+  const informationWidthTarget = informationWidth === 'pairHeadroom' ? Math.max(1, Math.floor((4 - state.tray.length) / 2)) : informationWidth;
   const detectedRecovery = shortInformation === 'recoveryAware' && !clocked ? knownRecovery(game, state, 2, deadline) : null;
   const informationRecovery = detectedRecovery && roots.has(detectedRecovery.path[0]) ? detectedRecovery : null;
   const shortInformationActive = shortInformation === 'recoveryAware' ? !clocked && !informationRecovery : !!shortInformation;
@@ -266,7 +267,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       if (shortInformationActive && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
         -path.length - (shortInformation === 'carrierAware' ? 2 * metrics.depth.unknownWaiting : 0));
       if (informationWidth && safeInfo) rank.splice(2 + +(goalRecoveryActive && riskFirstRecovery), 0,
-        Math.min(informationWidth, room.allowed.free.filter(index => !room.allowed.uncertain?.includes(index)
+        Math.min(informationWidthTarget, room.allowed.free.filter(index => !room.allowed.uncertain?.includes(index)
           && position.pictures[index] === null && position.down[index] !== null).length));
     }
 
@@ -445,6 +446,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
       ...(dominanceStop ? { dominanceStop } : {}),
+      ...(informationWidth ? { informationWidthTarget } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive,
         recovery: informationRecovery ? { path: informationRecovery.path, kind: informationRecovery.kind } : null } } : {}),
       ...(obstacleFrontier || goalRecovery ? { goalAudit: { obstacleFrontier, goalRecovery, goalRecoveryActive,

@@ -53,12 +53,21 @@ function test() {
   const informative = search(uncertainRoot, sparse, roots, { ...options, informationWidth: 2, informationDominance: true });
   assert(!informative.dominanceStop, 'The old one-tap rank bound does not apply to a width-sensitive objective');
   assert(informative.information && informative.path.length > 1);
+  for (const tray of [[], [9], [9, 35]]) {
+    const position = { ...state, tray };
+    const target = tray.length ? 1 : 2;
+    const adaptive = search(game, position, roots, { ...options, informationWidth: 'pairHeadroom' });
+    const fixed = search(game, position, roots, { ...options, informationWidth: target });
+    assert.equal(adaptive.informationWidthTarget, target);
+    for (const field of ['index', 'path', 'goal', 'knownWin', 'knownDead']) assert.deepEqual(adaptive[field], fixed[field]);
+  }
   const clocked = { ...game, clock: { i: 0, n: 4 } };
   const fields = ['index', 'path', 'goal', 'knownWin', 'knownDead', 'safeClockExit'];
   const before = search(clocked, state, roots, options), after = search(clocked, state, roots, { ...options, informationWidth: 2 });
   for (const field of fields) assert.deepEqual(after[field], before[field]);
   assert.throws(() => search(game, state, roots, { ...options, informationWidth: -1 }));
   assert.throws(() => search(game, state, roots, { ...options, informationWidth: 5 }));
+  assert.throws(() => search(game, state, roots, { ...options, informationWidth: 'yes' }));
   console.log('PASS public information-width ordering prefers multiple mechanically guaranteed unknown-picture candidates over a narrow uncertain probe, replays the known prefix in production, preserves clocks and disables inapplicable dominance shortcuts');
 }
 

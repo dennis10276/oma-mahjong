@@ -29,6 +29,7 @@ function test() {
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware' });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 2 });
   configurations.push({ ...configurations[1], shortInformation: true, informationWidth: 2, informationDominance: true });
+  configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 'pairHeadroom' });
   const canonical = new Map();
   let controls = 0;
   for (let world = 0; world < 192; world++) {
