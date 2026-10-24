@@ -2,8 +2,8 @@
 
 Worktree: `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
 Branch: `wip/personal-bots`. Goal ACTIVE and UNMET.
-The previous turn made progress: full-catalog evidence, constructive key recovery,
-dependency caching, public information diagnostics and controlled experiments.
+Recent progress: public key preparation, catalog inclusion repair, production
+replay tests and two challenge gains. The full expanded155 run is now active.
 Do not redefine completion around a subset, a percentage, or an isolated pass.
 
 ## Contract and completion evidence
@@ -37,7 +37,7 @@ Do not redefine completion around a subset, a percentage, or an isolated pass.
 The development gate and unseen20 gate are both still open. Do not mark complete
 or blocked. There is useful algorithmic work available, not an external blocker.
 
-## Latest complete development run
+## Last full natural-level result before lab expansion
 
 **130/140**, unchanged source, mean**151.5ms**, slowest**1529.9ms**.
 Report: `HUMAN_REFERENCE_CATALOG_SHORT_ROLES_2026-10-24.md`.
@@ -93,9 +93,28 @@ Mean60.9ms natural and68.9ms lab; no new losses against the corrected control.
 Source:`a137a1aff7d6574fc2e626af4faa9e68e2538f0ccd732b038795f58fc06bc836`.
 Input hashes:lab26e875b6bc204b952e47911465efddc103dd23e158695dcc921095a5cec54a83;
 natural c679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5.
+ACTIVE FULL155:session81740, same unchanged policy and sourcea137a1af above.
+Pending:`HUMAN_REFERENCE_CATALOG_CLOCK_INFORMATION_2026-10-24.md`.
+Full input:
+`00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9`.
+Metadata refresh2026-10-24T03:13:40.853Z confirmed140 natural clears through156,
+zero boards decoded, then the full155 run began2026-10-24T03:13:50.101Z.
+Do not change any loaded runtime/catalog/screen file while this full run lives.
+Do not restart it for a polling timeout. No extrapolated full score is valid.
 One CPU-heavy simulation at a time. Never restart for a polling timeout or kill
-app/Gemini helpers. If this candidate retains the gains broadly, run the entire
-expanded155 unchanged before claiming a new full score.157+ remains unopened.
+app/Gemini helpers.157+ remains unopened.
+
+Standalone research helper14143f5:
+`public_retry_risk_memory.js` and its standalone test are committed but NOT
+integrated into the current actor/search and NOT included in the155 policy.
+Production-replayed loss/clear/capped episodes validate learning only an actual
+third-carrier commitment whose pressure never recovers before physical loss.
+An earlier recovered third carrier is not penalized, caps/clears teach no loss,
+clock resources distinguish states, hidden getters throw and levels do not share
+evidence. After the full run, consider it only as bounded heuristic exploration
+from actual prior failures, never a proof that an action is losing. No campaign
+gain from this helper has been measured. Full actor suite remains61/61; the new
+standalone retry-memory test passes separately.
 
 Research conservative control:
 ```json
