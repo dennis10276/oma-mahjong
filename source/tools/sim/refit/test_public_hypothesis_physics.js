@@ -41,6 +41,11 @@ function test() {
     assert.equal(problem.rememberedPictures[1], null);
     const hypothesis = createPairedPictureSampler(problem.rememberedPictures, { random: () => 0 }).sample();
     const evaluator = createHypothesisPhysics(problem, { random: () => 0 });
+    assert(evaluator.prepare({ hypothesis, deadline: Date.now() + 2000, worldOrdinal: 1 }));
+    const preparationStats = evaluator.stats();
+    assert.equal(preparationStats.verifiedHypotheticalClears, 0, 'Preparing a world cannot count any winning root');
+    assert(evaluator.prepare({ hypothesis: structuredClone(hypothesis), deadline: Date.now() + 2000, worldOrdinal: 1 }));
+    assert.deepEqual(evaluator.stats(), preparationStats, 'Repeated preparation reuses the same independently validated history');
     for (const index of history.length ? [1, 3] : [0, 2]) {
       const result = evaluator.evaluate({ hypothesis, index, deadline: Date.now() + 2000, nodeLimit: 256, worldOrdinal: 1 });
       assert.equal(result.status, 'cleared'); assert.equal(result.kind, 'hypothesisEvaluation');
@@ -56,6 +61,9 @@ function test() {
     const expired = createHypothesisPhysics(problem, { random: () => 0, now: () => 1 });
     assert.equal(expired.evaluate({ hypothesis, index: 0, deadline: 1, nodeLimit: 8, worldOrdinal: 1 }).status, 'unresolved');
     assert.equal(expired.stats().assignments, 0);
+    assert.equal(expired.prepare({ hypothesis, deadline: 1, worldOrdinal: 1 }), false);
+    assert.equal(expired.stats().assignments, 0);
+    assert.throws(() => evaluator.prepare({ hypothesis, deadline: Date.now() + 1000, worldOrdinal: 1, seed: 7 }));
   }
   const changedHistory = problemFrom(actual, [0, 2]); changedHistory.episodes[0].frames.at(-1).state.tray = [5, 6];
   const inconsistent = createHypothesisPhysics(changedHistory, { random: () => 0, maximumAssignments: 2 });
@@ -79,6 +87,7 @@ function test() {
   assert.equal(negative.initialRoles[0], null); assert.equal(negative.rememberedPictures[0], null);
   evaluator.verifySource();
   const changed = structuredClone(sampled); [changed.pictures[0], changed.pictures[2]] = [changed.pictures[2], changed.pictures[0]];
+  assert.throws(() => evaluator.prepare({ hypothesis: changed, deadline: Date.now() + 1000, worldOrdinal: 1 }), /same picture filling/);
   assert.throws(() => evaluator.evaluate({ hypothesis: changed, index: 1, deadline: Date.now() + 1000,
     nodeLimit: 64, worldOrdinal: 1 }), /same picture filling/);
   assert.throws(() => createHypothesisPhysics({ ...negative, faces: frozen.faces }));

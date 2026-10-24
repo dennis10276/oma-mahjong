@@ -159,7 +159,21 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
     if (now() >= deadline) stats.deadlineStops++;
     return null;
   };
+  const prepare = request => {
+    assert(Object.keys(request).every(key => ['hypothesis', 'worldOrdinal', 'deadline'].includes(key)));
+    const { hypothesis, worldOrdinal, deadline } = request;
+    assert(Number.isInteger(worldOrdinal) && worldOrdinal > 0);
+    assert(Number.isFinite(deadline));
+    assert.equal(hypothesis.kind, 'pairedPictureHypothesis'); assert.equal(hypothesis.observedFact, false);
+    if (now() >= deadline) { stats.deadlineStops++; return false; }
+    const signature = JSON.stringify(hypothesis.pictures);
+    if (cachedOrdinal !== worldOrdinal) {
+      cachedOrdinal = worldOrdinal; cachedPictures = signature; cached = completeWorld(hypothesis, deadline);
+    } else assert.equal(signature, cachedPictures, 'Every root in a balanced batch must use the same picture filling');
+    return cached !== null;
+  };
   return {
+    prepare,
     evaluate({ hypothesis, index, deadline, nodeLimit, worldOrdinal }) {
       const result = (status, nodes) => ({ kind: 'hypothesisEvaluation', status, nodes });
       assert(Number.isInteger(index) && index >= 0 && index < size);
@@ -167,11 +181,7 @@ function createHypothesisPhysics(input, { random = Math.random, now = Date.now, 
       assert(Number.isInteger(worldOrdinal) && worldOrdinal > 0);
       assert(Number.isFinite(deadline));
       if (now() >= deadline) { stats.deadlineStops++; return result('unresolved', 0); }
-      const signature = JSON.stringify(hypothesis.pictures);
-      if (cachedOrdinal !== worldOrdinal) {
-        cachedOrdinal = worldOrdinal; cachedPictures = signature; cached = completeWorld(hypothesis, deadline);
-      } else assert.equal(signature, cachedPictures, 'Every root in a balanced batch must use the same picture filling');
-      if (!cached) return result('unresolved', 0);
+      if (!prepare({ hypothesis, worldOrdinal, deadline })) return result('unresolved', 0);
       const { game, state } = cached, available = legal(game, state).free;
       if (!available.includes(index)) return result('unresolved', 0);
       const moved = advance(game, state, index);

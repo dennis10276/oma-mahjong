@@ -11,10 +11,11 @@ function test() {
   const planning = { exclusiveRoles: true, usePlacementContract: true, hypothesisSampling: true,
     hypothesisMaximumWorlds: 4, hypothesisNodesPerAction: 64 };
   const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 64 }, decisions = [];
-  for (const swapped of [false, true]) {
+  for (const actionMs of [undefined, 100]) for (const swapped of [false, true]) {
     const actual = { tiles, nb: Layouts.neighbors(tiles), faces: [0, 1, swapped ? 1 : 0, swapped ? 0 : 1, 2, 2, 3, 3],
       down: [0, 0, 1, 1, 0, 0, 0, 0], rules: null, clock: null };
-    const controller = createHumanController(tiles, planning, { boardMode: 'standard' });
+    const controller = createHumanController(tiles, { ...planning,
+      ...(actionMs === undefined ? {} : { hypothesisActionMs: actionMs }) }, { boardMode: 'standard' });
     controller.beginAttempt(); const session = factory(actual, settings), actions = [];
     const observe = () => {
       const state = session.view().state;
@@ -34,6 +35,11 @@ function test() {
     assert(chosen.plan.hypothesisAudit.verifiedHypotheticalClears > 0);
     assert.equal(chosen.plan.hypothesisAudit.knownWin, false); assert.equal(chosen.plan.hypothesisAudit.knownDead, false);
     assert.equal(chosen.plan.hypothesisAudit.exactLossShares, false);
+    if (actionMs !== undefined) {
+      assert(chosen.plan.hypothesisAudit.preparationCalls > 0);
+      assert(chosen.plan.hypothesisAudit.budgetedActions > 0);
+      assert.equal(chosen.plan.hypothesisAudit.incompleteWorlds, 0);
+    }
     decisions.push({ index: chosen.plan.index, preferredWorlds: chosen.plan.hypothesisAudit.preferredWorlds,
       totals: chosen.plan.hypothesisAudit.totals, memory: controller.known() });
     let selected = chosen;
@@ -48,6 +54,7 @@ function test() {
     assert.equal(verifyAttempt(encodeGame(actual), actions, settings, session.audit()), actions.length);
   }
   assert.deepEqual(decisions[0], decisions[1], 'Private hidden-picture swaps cannot change the same public-state decision or memory');
+  assert.deepEqual(decisions[2], decisions[3], 'Candidate budgets preserve the same hidden-picture invariance');
   const clocked = { tiles, nb: Layouts.neighbors(tiles), faces: [0, 1, 0, 1, 2, 2, 3, 3],
     down: [0, 0, 1, 1, 0, 0, 0, 0], rules: null, clock: { i: 4, n: 4 } };
   const clockController = createHumanController(tiles, planning, { boardMode: 'standard' });
@@ -70,6 +77,9 @@ function test() {
   assert.throws(() => createHumanController(tiles, { hypothesisSampling: true }, { boardMode: 'standard' }), /contracts/);
   assert.throws(() => createHumanController(tiles, planning), /contracts/);
   assert.throws(() => createHumanController(tiles, { ...planning, hypothesisMaximumWorlds: 0 }, { boardMode: 'standard' }));
+  assert.throws(() => createHumanController(tiles, { ...planning, hypothesisActionMs: 0 }, { boardMode: 'standard' }));
+  assert.throws(() => createHumanController(tiles, { ...planning, hypothesisActionMs: 1501 }, { boardMode: 'standard' }));
+  assert.throws(() => createHumanController(tiles, { ...planning, hypothesisSampling: false, hypothesisActionMs: 100 }, { boardMode: 'standard' }));
   const unpaired = { ...fullKnown, faces: [0, 1, 0, 1, 2, 2, 3, 4] };
   assert.throws(() => playHumanCampaign(unpaired, { planning, publicContext: { boardMode: 'standard' } }), /paired initial/);
   factory.verifySource();

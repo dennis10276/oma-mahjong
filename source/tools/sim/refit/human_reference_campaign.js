@@ -25,6 +25,7 @@ const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
 const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
+const { rankBudgetedHypotheses } = require('./public_budgeted_hypotheses.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
 
@@ -44,6 +45,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
   assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
+  assert(options.hypothesisActionMs === undefined || options.hypothesisSampling === true
+    && Number.isFinite(options.hypothesisActionMs) && options.hypothesisActionMs > 0 && options.hypothesisActionMs <= 1500);
   assert(!options.hypothesisSampling || options.exclusiveRoles === true && ['standard', 'lab'].includes(publicContext.boardMode),
     'Hypotheses require declared public board and exclusive obstacle contracts');
   for (const [field, maximum] of [['hypothesisMaximumWorlds', 128], ['hypothesisNodesPerAction', 4096]]) {
@@ -82,7 +85,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     preferredWorlds: 0, unresolvedWorlds: 0, excludedByWinnabilityPreference: 0, incompleteWorlds: 0,
     verifiedHypotheticalClears: 0, rejectedAssignments: 0, thinRolloutClears: 0, wideRolloutClears: 0,
     unresolvedRollouts: 0, certifiedRolloutLosses: 0, historyReplays: 0, assignments: 0,
-    cycleFilteredRoots: 0, cycleLimitedDecisions: 0 };
+    cycleFilteredRoots: 0, cycleLimitedDecisions: 0, preparationCalls: 0, budgetedActions: 0, actionDeadlineStops: 0 };
   const hypothesisVisits = options.hypothesisSampling ? createPublicActionVisits() : null;
   let decisionPosition = null;
   const knowledgeSignature = () => JSON.stringify({ pictures, down, initialRoles, roles,
@@ -224,14 +227,18 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const random = Layouts.rng(publicHash);
         const physics = createHypothesisPhysics({ tiles: geometry.tiles, rememberedPictures: pictures, rememberedDown: down,
           initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random });
-        const ranking = rankHypothesisActions({ rememberedPictures: pictures, actions: candidates.map(action => action.index),
-          fallbackIndex: selected.plan.index }, { deadline: decisionDeadline, random, evaluate: physics.evaluate,
-          maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction });
+        const problem = { rememberedPictures: pictures, actions: candidates.map(action => action.index), fallbackIndex: selected.plan.index };
+        const rankOptions = { deadline: decisionDeadline, random,
+          maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction };
+        const ranking = options.hypothesisActionMs === undefined
+          ? rankHypothesisActions(problem, { ...rankOptions, evaluate: physics.evaluate })
+          : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });
         const physicalStats = physics.stats(), predicted = advance(geometry, current, ranking.index);
         const changed = ranking.index !== selected.plan.index && (predicted.uncertain || !predicted.lost);
         hypothesisStats.decisions++; hypothesisStats.changed += +changed;
         for (const field of ['generatedWorlds', 'completeWorlds', 'preferredWorlds', 'unresolvedWorlds',
           'excludedByWinnabilityPreference', 'incompleteWorlds']) hypothesisStats[field] += ranking[field];
+        for (const field of ['preparationCalls', 'budgetedActions', 'actionDeadlineStops']) hypothesisStats[field] += ranking[field] ?? 0;
         for (const field of ['verifiedHypotheticalClears', 'rejectedAssignments', 'thinRolloutClears', 'wideRolloutClears',
           'unresolvedRollouts', 'certifiedRolloutLosses', 'historyReplays', 'assignments']) hypothesisStats[field] += physicalStats[field];
         const audit = { ...ranking, ...physicalStats, changed, primaryIndex: selected.plan.index,

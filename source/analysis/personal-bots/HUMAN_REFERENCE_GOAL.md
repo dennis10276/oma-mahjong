@@ -94,10 +94,10 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
 Current optional hypothesis candidate adds narrow-first rollout and actual-state visit guards.
 No new full score is claimed. Goal ACTIVE, UNMET. Guarded trial3967 exited0.
-All earlier trial/diagnostic jobs are terminal. New structural legality cache is
-integrated into hypothetical rollouts; comparative trial73067 is live. Keep its
-loaded source unchanged until terminal; only one heavy simulation is running.
-**86/86 offline tests pass** in9s, including7488 concealed-world controls,
+All earlier trial/diagnostic jobs are terminal, including cache trial73067.
+Cache-only candidate regresses124 and is not promoted. Optional per-candidate
+budgeting is now integrated; its targeted real-board comparison is next.
+**88/88 offline tests pass** in10s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -387,23 +387,29 @@ and uses identity memoization only for already frozen arrays. Mutation controls
 pass. Four alternating fixed-work synthetic comparisons (72/120 tiles, with and
 without obstacles,3 measured repetitions each) retain identical paths/node counts
 and reduce total search time by21–36%. These are microbenchmarks, not game scores.
-Budget-scheduler foundation committed10b1871. Standalone fake-clock tests also
+Budget-scheduler foundation committed10b1871. Fake-clock tests also
 reject a callback claiming a clear after its local deadline and verify separate
-preparation for every world. It is not imported by the live actor or full test
-registry yet. Add physics.prepare by factoring the existing cached world setup,
-test physical history consistency, then wire an optional actor budget and register
-its test after the current source freeze ends. Do not replace preparation with a
-dummy evaluated action, which would mix preparation with rollout outcomes/stats.
-RUNNING:session73067, PID15532, started2026-10-24T13:41:13.792Z, runtime06fec3d.
+preparation for every world. Now integrated as optional hypothesisActionMs.
+physics.prepare factors the existing same-world cache/history validation without
+evaluating a dummy root. Idempotent preparation, no clear credit from preparation,
+expired/private-request rejection and shared-world consistency tests pass.
+Both original and budgeted actor modes independently clear concealed-swap controls
+with identical public decisions and no guessed memory. Deadline caps stay unresolved.
+All88 registered tests pass. Prefix validator is registered but not used by actor.
+COMPLETED:session73067, PID15532, started2026-10-24T13:41:13.792Z, runtime06fec3d.
 Report:HUMAN_REFERENCE_CACHED_HYPOTHESIS_CHALLENGE_2026-10-24.md.
 Same18 levels/profile/input02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
 Source33ddd6f6db0af708ea6475e561b3616d71e49187a9443a886c1226f3a49a1c04.
-Last verifiedlive2026-10-24T13:53:28Z, through123.81/93/99/102/112 stillfail;
-92try3,107try1,111try2,121try1,123try1.121 uses103 taps vs130 in the previous
-guarded trial.107 completes613 balanced worlds vs516 previously. No completed
-try-count regression yet; full18 remains unfinished and maxseen1509.3ms.
-Standalone prefix validator committedf88eed3 (not imported by this live run or
-the full registry). It strips a sampled route to non-losing known-memory taps,
+Terminalexit0 verified2026-10-24T14:02:35Z.10/18, mean734.3ms, max1510.2ms,
+unchanged source. Independent parser verifies same18/profile/input/labels/provenance,
+strict scoring and timing. ONLY changed try count vs guarded11/18 is a regression:
+124 now loses both allowed attempts instead of clearing2. Do not promote cache-only
+policy or extrapolate a full155 score.107 still1,121 still1 (103vs130 accepted taps).
+107 completes613 balanced worlds vs516 previously. Other old passing cases remain
+passing. The cache's fixed-node path parity holds, but extra sampled worlds changed
+the online ranking. Next test budgeting first on107/124/137 before the broader set.
+Standalone prefix validator committedf88eed3 (not imported by that live run,
+now in the full registry). It strips a sampled route to non-losing known-memory taps,
 stopping at unknown pictures/orientations/roles/open-twin legality, information
 exposure, illegal moves, actual tray/clock loss, repeated public state or deadline.
 Only an entirely real-known clear can set knownWin. A retained pair prefix and
@@ -415,7 +421,12 @@ prefix integration must be separately measured, not mixed into the cache run.
 Trusted opening-only audit (zero chosen actions) confirms all6 remaining lab
 failures have active public clocks. Keep these and every other eligible lab board
 in the next broader validation; no natural-only subset can satisfy the full goal.
-NEXT:finish/audit the cache on the same18 before changing sampling policy; then inspect
+Further controlled diagnostic: the current hypothetical rollout omits key recovery
+already supported by the primary bot. A fully public4-tile key/lock position after
+one actual tap remains unresolved after2 rollout nodes, whereas existing keyRecovery
+constructs the remaining3 taps in1 node; all4 actual taps independently replay in
+originalHard. Fix this capability gap separately after the budgeting comparison.
+NEXT:compare candidate budgeting, then inspect
 sampling censoring and information dependence.93's7 verified hypothetical
 clears all fell in unfinished batches, so preferredWorlds remained0. Consider fair
 per-root/pairwise budgeting after measuring it. If loops disappear but policy
