@@ -2,8 +2,8 @@
 
 Worktree: `C:\Users\den_k\Idea\OmasMahjong\personal-bot-review`.
 Branch: `wip/personal-bots`. Goal ACTIVE and UNMET.
-Recent progress: public key preparation, catalog inclusion repair, production
-replay tests and two challenge gains. The full expanded155 run is now active.
+Recent progress: public key preparation, catalog inclusion repair and a full
+expanded155 result139/155 with no natural-level regressions. Sixteen still fail.
 Do not redefine completion around a subset, a percentage, or an isolated pass.
 
 ## Contract and completion evidence
@@ -37,7 +37,21 @@ Do not redefine completion around a subset, a percentage, or an isolated pass.
 The development gate and unseen20 gate are both still open. Do not mark complete
 or blocked. There is useful algorithmic work available, not an external blocker.
 
-## Last full natural-level result before lab expansion
+## Latest full expanded development result
+
+**139/155**, unchanged source, mean**80.7ms**, slowest**1506ms**.
+Report:`HUMAN_REFERENCE_CATALOG_CLOCK_INFORMATION_2026-10-24.md`.
+Completed2026-10-24T03:35:02.853Z; runtimed7778dd.
+Natural**131/140**, lab**8/15**. Natural gain84, no previously passing natural
+level regressed. Lab gain45try1 vsDennis6. Original134/141/143/147 alltry1.
+Natural failures:**81,93,99,102,107,112,124,125,137**.
+Lab failures:**11,12,32,33,41,49,52** (encoded10000+id).
+All155 unique rows, natural17–156, lab15, only10031 excluded, strict try scoring,
+input hash, unchanged source, old labels/provenance and maximum timing were
+independently checked from the canonical table. The unseen20 gate is not run.
+The full goal is NOT complete; keep all16 failures in scope.
+
+## Previous full natural result before lab expansion
 
 **130/140**, unchanged source, mean**151.5ms**, slowest**1529.9ms**.
 Report: `HUMAN_REFERENCE_CATALOG_SHORT_ROLES_2026-10-24.md`.
@@ -66,7 +80,7 @@ Runtime:`d7778dd`; key-access helper:`1bb716d`, integration:`6655f50`;
 catalog/gate repair:`820e95a`. **61/61 offline tests pass** in about4s,
 including4992 clock/nonclock concealed-world controls,144 local recoveries,
 24 relief witnesses and production-replayed preparatory key/clock routes.
-Last full natural140 score remains130/140; no full expanded155 run exists yet.
+Latest full score139/155 is recorded above; research helpers are not in that policy.
 The goal is ACTIVE and UNMET. No research option is promoted.
 
 | Unchanged policy | Completed scope | Evidence |
@@ -93,20 +107,19 @@ Mean60.9ms natural and68.9ms lab; no new losses against the corrected control.
 Source:`a137a1aff7d6574fc2e626af4faa9e68e2538f0ccd732b038795f58fc06bc836`.
 Input hashes:lab26e875b6bc204b952e47911465efddc103dd23e158695dcc921095a5cec54a83;
 natural c679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5.
-ACTIVE FULL155:session81740, same unchanged policy and sourcea137a1af above.
-Pending:`HUMAN_REFERENCE_CATALOG_CLOCK_INFORMATION_2026-10-24.md`.
+COMPLETED FULL155:session81740, same unchanged policy and sourcea137a1af above.
+Report:`HUMAN_REFERENCE_CATALOG_CLOCK_INFORMATION_2026-10-24.md`.
 Full input:
 `00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9`.
 Metadata refresh2026-10-24T03:13:40.853Z confirmed140 natural clears through156,
 zero boards decoded, then the full155 run began2026-10-24T03:13:50.101Z.
-Do not change any loaded runtime/catalog/screen file while this full run lives.
-Do not restart it for a polling timeout. No extrapolated full score is valid.
+The155 source freeze has ended. No extrapolated or mixed-policy full score is valid.
 One CPU-heavy simulation at a time. Never restart for a polling timeout or kill
 app/Gemini helpers.157+ remains unopened.
 
-Standalone research helper14143f5:
+Standalone research helpers14143f5 andc994ff5/25dc52a:
 `public_retry_risk_memory.js` and its standalone test are committed but NOT
-integrated into the current actor/search and NOT included in the155 policy.
+integrated into the139/155 actor/search and NOT included in that policy.
 Production-replayed loss/clear/capped episodes validate learning only an actual
 third-carrier commitment whose pressure never recovers before physical loss.
 An earlier recovered third carrier is not penalized, caps/clears teach no loss,
