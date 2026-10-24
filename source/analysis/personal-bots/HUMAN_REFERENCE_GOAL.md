@@ -68,6 +68,7 @@ Exact visibility parity passes86,016 cases. Exact <=8 count-gate candidate testi
 32x1/12x16 and lab retries, salts1-3; unknown fractions previously disabled this gate.
 Lab41 trace:176 replayed taps, repeated second carrier, clock frontier never tested.
 Test buffered uncertain-clock probes with32x1 progress/paired2SE, salts1-3.
+Direct probe rule inactive in lab41; audit its current mechanical frontier next.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.

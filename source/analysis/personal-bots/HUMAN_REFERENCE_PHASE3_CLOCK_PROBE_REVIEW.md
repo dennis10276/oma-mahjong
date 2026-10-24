@@ -25,3 +25,8 @@ offline reference suite passes100/100 in14s. The frozen candidate uses32x1 progr
 scores and paired2SE, with the complete48-case noise screen as its adoption gate.
 The lab profile adds actual retry learning for all four labs and all three salts.
 No improvement or adoption is claimed before those experiments finish.
+The direct lab41 candidate trace later recorded177 accepted taps, four tray losses
+and zero `publicClockProbe` selections. The original diagnosis relied on geometry
+and a hypothetical successor's role boundary, which did not establish current
+mechanical availability. The candidate remains under its complete screen; a separate
+public-frontier audit is needed to explain lab41.
