@@ -95,7 +95,8 @@ Best full runtime:`3081a3a`; full141/155 policy includes causal memory.
 Current optional hypothesis candidate adds narrow-first rollout and actual-state visit guards.
 No new full score is claimed. Goal ACTIVE, UNMET. Guarded trial3967 exited0.
 All earlier trial/diagnostic jobs are terminal. New structural legality cache is
-integrated into hypothetical rollouts; comparative timed validation is next.
+integrated into hypothetical rollouts; comparative trial73067 is live. Keep its
+loaded source unchanged until terminal; only one heavy simulation is running.
 **86/86 offline tests pass** in9s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
@@ -386,9 +387,20 @@ and uses identity memoization only for already frozen arrays. Mutation controls
 pass. Four alternating fixed-work synthetic comparisons (72/120 tiles, with and
 without obstacles,3 measured repetitions each) retain identical paths/node counts
 and reduce total search time by21–36%. These are microbenchmarks, not game scores.
-Two unintegrated budget-scheduler files also pass their standalone fake-clock test;
-they require a separate physical-world preparation API before actor integration.
-NEXT:compare the cache on the same18 before changing sampling policy; then inspect
+Budget-scheduler foundation committed10b1871. Standalone fake-clock tests also
+reject a callback claiming a clear after its local deadline and verify separate
+preparation for every world. It is not imported by the live actor or full test
+registry yet. Add physics.prepare by factoring the existing cached world setup,
+test physical history consistency, then wire an optional actor budget and register
+its test after the current source freeze ends. Do not replace preparation with a
+dummy evaluated action, which would mix preparation with rollout outcomes/stats.
+RUNNING:session73067, PID15532, started2026-10-24T13:41:13.792Z, runtime06fec3d.
+Report:HUMAN_REFERENCE_CACHED_HYPOTHESIS_CHALLENGE_2026-10-24.md.
+Same18 levels/profile/input02d7ec5d8e26fe7684c5b4473c631fe46e5933ea46083078a8044eadd4725a69.
+Source33ddd6f6db0af708ea6475e561b3616d71e49187a9443a886c1226f3a49a1c04.
+Last verifiedlive2026-10-24T13:44:34Z, process204CPU seconds.81 still fails after
+36 accepted taps, max1506.4ms; no other completed rows received yet. Not terminal.
+NEXT:finish/audit the cache on the same18 before changing sampling policy; then inspect
 sampling censoring and information dependence.93's7 verified hypothetical
 clears all fell in unfinished batches, so preferredWorlds remained0. Consider fair
 per-root/pairwise budgeting after measuring it. If loops disappear but policy
