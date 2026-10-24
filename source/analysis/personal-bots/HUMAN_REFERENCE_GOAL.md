@@ -173,6 +173,8 @@ Source3ee9ad33f605375dbb68b7db4fc376bea325c24b7436f7877daa11eb1407eb6e;
 input00883d1f307092113d611f10fc165a7a2e90aa071d6a5381332464530f026ee9.
 Destination:HUMAN_REFERENCE_CATALOG_CAUSAL_AVAILABILITY_2026-10-24.md.
 One CPU-heavy simulation only; keep all loaded source unchanged until terminal.
+Last verified live2026-10-24T07:36:52Z:node PID10800, session95132; output through
+level49, all17–49 pass. This partial result does not replace the full140/155 score.
 Metadata refresh2026-10-24T07:17:56.699Z found140 natural first clears through156,
 zero boards decoded and no newer clears.157+ remains unopened. The earlier
 public-uncertainty diagnostic is no longer live, but its stdout was lost at context
@@ -190,6 +192,8 @@ Its registered standalone test passes35472 public-memory masks in588 exhaustive
 paired worlds,3432 sound deductions including Jokers, and four complete routes
 independently replayed through Hard.play. Standalone runtime0.37s. The latest full
 suite remains76/76 before this addition; do not claim77 until rerun after freeze.
+Committedacc751c, then d8ec5e6 rejects sparse memory arrays rather than skipping
+missing entries; the same standalone controls and production clears pass again.
 Before integration, audit the public opening contract across supported generators
 and all155 development inputs, then run the missing public-uncertainty diagnostic
 after session95132 ends. No campaign gain or initial-contract coverage is claimed.
