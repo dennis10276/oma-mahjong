@@ -33,48 +33,19 @@ the bot is a skill dial: how far ahead it looks, what it remembers of turned-ove
 reasons "this can't work". And whatever bot we use must first prove itself on levels people have
 already played.
 
-## The plan
+## The plan (after Dennis's answers, 2026-10-24)
 
-### A. Now, without waiting (does not depend on how levels are judged)
-
-1. Ground truth from real play. Levels 92-157 have been played by the family (replays and results in
-   Firebase; `dataset.js` on `wip/honest-observer`). Per level: tries to win per player, how a try ended
-   (tray full, clock, gave up), time, and the lab results. This is what any judge must reproduce.
-2. Check the judges we have against it: the frozen test players, the move-based personal bots, the
-   room-for-error measure (`tools/lab/room.js`), the exact clock slack. One table: how well each ranks the
-   levels the way the family's tries do. That tells us how far off we are, in numbers.
-3. A shape catalogue for Dennis to look at: ~40 pile shapes without towers at 54 px, drawn as pictures,
-   including ones with gaps, islands, ridges and different heights (not only outlines). He picks the ones
-   that look different and nice; difficulty plays no part here.
-4. Game improvements already made on the branch, to be released separately when Dennis wants: the clock
-   badge points at its tile (outline only briefly, at the start and when you tap it while covered), a tap
-   on a lock lights up both keys (also covered ones), and still to do: "no moves left" ends a try when
-   everything you can reach is locked or frozen.
-5. Keep the lab: the idea list with ratings and the recorded taps stay as material.
-
-### B. When Codex's bot is there
-
-6. Agree on one interface: `play(board, skill) -> { won, moves, end reason, decisions }`, with skill =
-   lookahead, memory of face-down tiles, deduction on/off. Run it at a few skill levels.
-7. Validate it on the ground truth (A1): it must rank levels 92-157 like the family's tries do (and the
-   lab levels like Dennis's tries), clearly better than the current test players. If it does not, it is
-   not used to judge new levels; we improve it first.
-
-### C. Then build levels 158+ (one generator, judged honestly)
-
-8. Start from the designer that made 132 (pressure in the deal, all game long), on the shapes Dennis chose
-   (A3), with one of his favourite special combinations per level on top (chain of ice, partners behind
-   locks, chain reaction, blind dig, locked clock; ratings in the lab), and the clock from the true
-   shortest way plus a small spare.
-9. Many candidates per level; the validated bot picks the ones in the target band (lab "hard"), and the
-   rules for variety (spots, pairs, specials in new places) keep neighbours different. No tuning loop
-   that chases one number.
-10. Dennis plays a sample (3 per session, spread over the range) in the lab; his tries feed back into the
-    bot's calibration, not straight into the levels.
-11. Release from the first level nobody has reached, with the "no moves left" check in the game and new
-    dashboard predictions.
-
-## Open questions for Dennis
-
-- What exactly is Codex's bot (branch, interface), and when is it ready?
-- Should the game improvements (A4) go out on their own before the new levels?
+- Building levels 158+ waits for Codex's human-like bot (one that plays better than Dennis), being built
+  in the `personal-bots` folder on Dennis's computer (not on GitHub). Codex also has the ground truth from
+  real play. When it is done: adopt it, check it against real results (levels 92-157, the lab levels) and
+  improve it. The personal bots (move-based, dashboard) are not worth building on for this.
+- The old steps 7 and up (start from the designer, many candidates, pick by the bot) were rejected as
+  lazy. The way levels are built gets a new design once the bot is there.
+- Parked on its own branch `wip/clock-key-hints` (from main, not released): the clock badge pointing at
+  its tile, the brief outline, keys lighting up on a lock tap. Still to do there: "no moves left".
+- Shape catalogue for Dennis to judge by look (`tools/lab/shapes.js` -> `shapes-data.js`, page template
+  `tools/lab/shapes-template.html`; published as a private claude.ai page, his picks in its database,
+  collection `picks`): the game's shapes, the added ones, random outlines, today's lab shapes, and flat,
+  tall, two-hill and ridge variations; 42 in all. Several shapes do not fit 86 tiles at 54 px without
+  towers at all (shown with 72 tiles, or left out: tree, ring, wave, arrow, plus, xshape, tshape, chevron,
+  kite and most random outlines).

@@ -1,0 +1,92 @@
+<title>Pile Shape Catalogue</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap">
+<style>
+/* layout: a felt table of pile drawings in a responsive grid, grouped by kind; one look (the game's jade felt) */
+:root {
+  --felt: #0d4a3b; --felt-deep: #08342a; --ivory: #fbf6e9; --ink: #2b2116; --muted: #6f6150;
+  --tile: #fbf3dd; --tile-edge: #c9b48b; --tile-shade: #e8dcbc; --yes: #2f9e63; --no: #b4472f; --line: rgba(255,255,255,.14);
+  --font: 'Nunito', system-ui, sans-serif;
+  color-scheme: dark;
+}
+body { background: var(--felt); color: var(--ivory); font-family: var(--font); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 22px; }
+h1 { font-weight: 900; font-size: 1.9rem; margin: 0; text-wrap: balance; }
+.intro { max-width: 68ch; line-height: 1.5; color: #d9e8e1; margin: 0; font-weight: 600; }
+.tally { font-weight: 800; color: var(--ivory); font-variant-numeric: tabular-nums; }
+h2 { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: #a9d4c3; margin: 8px 0 0; font-weight: 900; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px; }
+.card { background: var(--ivory); color: var(--ink); border-radius: 14px; padding: 10px 10px 12px; display: grid; gap: 8px; box-shadow: 0 6px 16px rgba(0,0,0,.25); border: 3px solid transparent; }
+.card.yes { border-color: var(--yes); } .card.no { opacity: .55; border-color: var(--no); }
+.pic { background: var(--felt-deep); border-radius: 10px; aspect-ratio: 4 / 5; display: grid; place-items: center; padding: 8px; }
+.pic svg { width: 100%; height: 100%; }
+.name { font-weight: 900; font-size: 1rem; }
+.meta { font-size: .8rem; color: var(--muted); font-weight: 600; line-height: 1.35; }
+.row { display: flex; gap: 8px; }
+.row button { flex: 1; border: 2px solid currentColor; background: none; border-radius: 10px; padding: 7px 0; font: 800 .9rem var(--font); cursor: pointer; }
+.row .y { color: var(--yes); } .row .n { color: var(--no); }
+.card.yes .y { background: var(--yes); color: var(--ivory); border-color: var(--yes); }
+.card.no .n { background: var(--no); color: var(--ivory); border-color: var(--no); }
+.row button:focus-visible { outline: 3px solid #f3c64a; outline-offset: 2px; }
+.save { font-size: .78rem; color: #a9d4c3; font-weight: 700; min-height: 1em; }
+svg .t { fill: var(--tile); stroke: var(--tile-edge); stroke-width: .05; }
+svg .s { fill: var(--tile-edge); }
+</style>
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <h1>Pile shape catalogue</h1>
+    <p class="intro">Every pile here has no towers and keeps tiles at least 54 px on a phone. Mark the ones that look different and nice with <b>Like</b>, the rest with <b>No</b>. Only the look counts; difficulty comes later. The "like a played level" number says how many of its tile spots it shares with the most similar level 70–157.</p>
+    <p class="intro tally" id="tally"></p>
+  </header>
+  <main id="groups" class="wrap" style="gap:18px"></main>
+</div>
+<script>
+__DATA__
+(function () {
+  const items = SHAPES_DATA.items, picks = {};
+  let db = null;
+  const svgOf = it => {
+    const S = 10, t = it.tiles.map(([x, y, z]) => ({ x: x / 2 - z * 0.14, y: y / 2 * 1.24 - z * 0.14, z }));
+    const minX = Math.min(...t.map(a => a.x)), minY = Math.min(...t.map(a => a.y)), maxX = Math.max(...t.map(a => a.x + 1)), maxY = Math.max(...t.map(a => a.y + 1.24));
+    t.sort((a, b) => a.z - b.z || a.y - b.y || a.x - b.x);
+    const shade = z => ['#efe3c3', '#f4eacc', '#f8f0d6', '#fbf5e2', '#fdf9ee', '#fffdf6', '#ffffff'][Math.min(6, z)];
+    const parts = t.map(a => `<rect class="s" x="${(a.x - minX + .07).toFixed(2)}" y="${(a.y - minY + .07).toFixed(2)}" width="1" height="1.24" rx=".12"/><rect class="t" x="${(a.x - minX).toFixed(2)}" y="${(a.y - minY).toFixed(2)}" width="1" height="1.24" rx=".12" style="fill:${shade(a.z)}"/>`).join('');
+    return `<svg viewBox="-0.2 -0.2 ${(maxX - minX + .5).toFixed(2)} ${(maxY - minY + .5).toFixed(2)}" role="img" aria-label="${it.name}">${parts}</svg>`;
+  };
+  const groups = [...new Set(items.map(i => i.group))];
+  const main = document.getElementById('groups');
+  main.innerHTML = groups.map(g => `<section style="display:grid;gap:12px"><h2>${g}</h2><div class="grid">${items.map((it, k) => [it, k]).filter(([it]) => it.group === g).map(([it, k]) => `
+    <article class="card" data-k="${k}"><div class="pic">${svgOf(it)}</div>
+      <div class="name">${it.name}</div>
+      <div class="meta">${it.n} tiles${it.small ? ' (86 do not fit)' : ''} · ${it.layers} layers · ${Math.round(it.like * 100)}% like a played level</div>
+      <div class="row"><button class="y" id="y${k}">Like</button><button class="n" id="n${k}">No</button></div>
+      <div class="save" id="s${k}"></div></article>`).join('')}</div></section>`).join('');
+  const tally = () => { const v = Object.values(picks); document.getElementById('tally').textContent = `${v.filter(x => x === 'yes').length} liked · ${v.filter(x => x === 'no').length} no · ${items.length - v.length} still to judge`; };
+  const paint = k => { const c = main.querySelector(`.card[data-k="${k}"]`); c.classList.toggle('yes', picks[k] === 'yes'); c.classList.toggle('no', picks[k] === 'no'); };
+  async function save(k) {
+    const it = items[k], s = document.getElementById('s' + k);
+    try { localStorage.setItem('shapes.picks', JSON.stringify(picks)); } catch (e) { }
+    if (!db) { s.textContent = 'kept on this device'; return; }
+    try { await db.doc('picks/' + it.name.replace(/[^A-Za-z0-9_-]+/g, '_')).set({ name: it.name, group: it.group, shape: it.shape, n: it.n, pick: picks[k] || null, t: Date.now() }); s.textContent = 'saved'; }
+    catch (e) { s.textContent = 'not saved, try again'; }
+  }
+  main.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const k = +b.closest('.card').dataset.k, v = b.classList.contains('y') ? 'yes' : 'no';
+    picks[k] = picks[k] === v ? undefined : v; if (!picks[k]) delete picks[k];
+    paint(k); tally(); save(k);
+  });
+  try { Object.assign(picks, JSON.parse(localStorage.getItem('shapes.picks') || '{}')); } catch (e) { }
+  Object.keys(picks).forEach(paint); tally();
+  (async () => {
+    try {
+      if (!window.claude || !claude.use) return;
+      db = await claude.use('db'); if (!db) return;
+      const snap = await db.collection('picks').get();
+      for (const d of snap.docs) { const x = d.data(), k = items.findIndex(i => i.name === x.name); if (k >= 0 && x.pick) { picks[k] = x.pick; paint(k); } }
+      tally();
+    } catch (e) { db = null; }
+  })();
+})();
+</script>
