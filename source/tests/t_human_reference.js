@@ -3,6 +3,7 @@
 const modules = [
   'test_human_board_visibility.js',
   'test_human_visibility_geometry.js',
+  'test_human_visibility_compiled.js',
   'test_human_reference_campaign.js',
   'test_human_initial_role_memory.js',
   'test_human_winning_role_retention.js',

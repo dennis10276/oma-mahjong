@@ -24,6 +24,7 @@ function clockRetryExploration(runSearch) {
   assert.equal(typeof runSearch, 'function');
   const ordinary = retryExploration(runSearch);
   return (game, state, actions, options = {}) => {
+    assert(options.retryClockExitReplacement === undefined || typeof options.retryClockExitReplacement === 'boolean');
     if (!(game.clock && state.alive[game.clock.i])) return ordinary(game, state, actions, options);
     if (!game.publicRetryCost) return runSearch(game, state, actions, options);
     assert.equal(typeof game.publicRetryCost, 'function');
@@ -37,7 +38,7 @@ function clockRetryExploration(runSearch) {
     const settings = { ...options, decisionMs: undefined, deadline };
     const primary = runSearch(game, state, actions, settings);
     assert(Number.isInteger(primary.nodes) && primary.nodes >= 0 && primary.nodes <= options.nodes, 'The primary clock search exceeded the shared node budget');
-    if (primary.knownWin || primary.knownDead || primary.safeClockExit || !costs.get(primary.index)) return primary;
+    if (primary.knownWin || primary.knownDead || primary.safeClockExit && !options.retryClockExitReplacement || !costs.get(primary.index)) return primary;
     const alternatives = actions.filter(action => costs.get(action.index) < costs.get(primary.index));
     const remaining = options.nodes - primary.nodes;
     if (!alternatives.length || remaining <= 0 || Date.now() >= deadline) return primary;

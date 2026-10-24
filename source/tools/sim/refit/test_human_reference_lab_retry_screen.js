@@ -20,13 +20,17 @@ function test() {
       const attempts = [8, 4, 2].map((unseen, offset) => {
         const ending = offset === 2 ? 0 : unseen / 2;
         return { attempt: offset + 1, status: offset === 2 ? 'cleared' : 'physicalLoss', taps: 2,
-          decisions: [{ state: { alive: tiles.map(() => 1), pictures: tiles.map((unused, index) => index < unseen ? null : 0) } }],
+          decisions: [{ index: 0, retryCosts: offset ? [{ index: 0, cost: 1 }] : [], plan: { safeClockExit: offset === 1 },
+            state: { alive: tiles.map(() => 1), pictures: tiles.map((unused, index) => index < unseen ? null : 0) } }],
           last: { pictures: tiles.map((unused, index) => index < ending ? null : 0) } };
       });
       return { wonOn: 3, status: 'cleared', attempts, verifiedTaps: 6, slowestMs: 10,
         hypothesis: { exactSearchCalls: 1, exactSearchNodes: 2048 } };
     } });
     assert.equal(rows.length, 4); assert.deepEqual(rows[0].attempts.map(attempt => attempt.unseenAtStart), [8, 4, 2]);
+    assert.deepEqual(rows[0].attempts.map(attempt => attempt.riskMatchedDecisions), [0, 1, 1]);
+    assert.deepEqual(rows[0].attempts.map(attempt => attempt.riskSelectedDecisions), [0, 1, 1]);
+    assert.deepEqual(rows[0].attempts.map(attempt => attempt.riskSelectedClockExits), [0, 1, 0]);
     assert(rows.slice(0, 3).every(row => row.strictPass)); assert(!rows[3].strictPass);
     return { schema: 'human-reference-lab-retry-salt-v1', salt, planning, inputHash: input.inputHash,
       sourceHash: 'fixture', sourceUnchanged: true, rows };

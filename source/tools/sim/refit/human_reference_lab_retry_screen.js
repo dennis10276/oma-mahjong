@@ -31,6 +31,10 @@ function runLabSalt(input, planning, salt, { runCampaign = playHumanCampaign, em
         assert(opening, 'Retry audit needs the first public decision of each actual attempt');
         return { attempt: attempt.attempt, status: attempt.status, why: attempt.why, taps: attempt.taps,
           learnedRisk: attempt.learnedRisk,
+          riskMatchedDecisions: attempt.decisions.filter(decision => decision.retryCosts?.length).length,
+          riskSelectedDecisions: attempt.decisions.filter(decision => decision.retryCosts?.some(risk => risk.index === decision.index)).length,
+          riskSelectedClockExits: attempt.decisions.filter(decision => decision.plan?.safeClockExit
+            && decision.retryCosts?.some(risk => risk.index === decision.index)).length,
           unseenAtStart: opening.pictures.filter((picture, index) => opening.alive[index] && picture === null).length,
           unseenAtEnd: attempt.last.pictures.filter(picture => picture === null).length };
       });

@@ -57,6 +57,27 @@ function test() {
     assert.equal(clockRetryExploration(() => { count++; return report; })(game, state, actions, { nodes: 32 }), report);
     assert.equal(count, 1);
   }
+  const safePrimary = { ...primary, path: [0, 1, 5, 4], safeClockExit: true };
+  assert(clockExitPrefix(game, state, safePrimary.path));
+  let replacementCalls = 0;
+  const replacement = clockRetryExploration(() => ++replacementCalls === 1 ? safePrimary : candidate)
+    (game, state, actions, { nodes: 32, retryClockExitReplacement: true });
+  assert.equal(replacementCalls, 2);
+  assert.equal(replacement.index, 1);
+  assert(replacement.clockRetryExploration.adopted);
+  assert.equal(replacement.nodes, 10);
+  let unsafeReplacementCalls = 0;
+  const unsafeReplacement = clockRetryExploration(() => ++unsafeReplacementCalls === 1 ? safePrimary : candidate)
+    (game, { ...state, pictures: state.pictures.map((picture, index) => index === 5 ? null : picture) }, actions,
+      { nodes: 32, retryClockExitReplacement: true });
+  assert.equal(unsafeReplacement.index, safePrimary.index);
+  assert(!unsafeReplacement.clockRetryExploration.adopted);
+  for (const report of [{ ...safePrimary, knownWin: true }, { ...safePrimary, knownDead: true }]) {
+    let protectedCalls = 0;
+    assert.equal(clockRetryExploration(() => { protectedCalls++; return report; })
+      (game, state, actions, { nodes: 32, retryClockExitReplacement: true }), report);
+    assert.equal(protectedCalls, 1);
+  }
   for (const options of [{ nodes: 6 }, { nodes: 32, deadline: 0 }]) {
     let count = 0;
     assert.equal(clockRetryExploration(() => { count++; return primary; })(game, state, actions, options), primary);
@@ -80,6 +101,8 @@ function test() {
   assert.throws(() => clockRetryExploration(() => primary)({ ...game, publicRetryCost: () => -1 }, state, actions, { nodes: 32 }));
   assert.throws(() => createHumanController(tiles, { clockRetryLearning: true }), /requires actual retry learning/);
   assert.throws(() => createHumanController(tiles, { retryRiskLearning: true, clockRetryLearning: 1 }));
+  assert.throws(() => createHumanController(tiles, { retryClockExitReplacement: true }), /requires clock retry learning/);
+  assert.throws(() => createHumanController(tiles, { retryClockExitReplacement: 1 }));
   const completeTiles = tiles.concat([{ x: 32, y: 0, z: 0 }, { x: 36, y: 0, z: 0 }]);
   const complete = { ...actual, tiles: completeTiles, nb: Layouts.neighbors(completeTiles),
     faces: actual.faces.concat([7, 8]), down: actual.down.concat([0, 0]) };

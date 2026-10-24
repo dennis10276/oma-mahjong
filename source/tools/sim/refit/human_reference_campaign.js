@@ -58,6 +58,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
   assert(options.clockRetryLearning === undefined || typeof options.clockRetryLearning === 'boolean');
   assert(!options.clockRetryLearning || options.retryRiskLearning, 'Clock retry exploration requires actual retry learning');
+  assert(options.retryClockExitReplacement === undefined || typeof options.retryClockExitReplacement === 'boolean');
+  assert(!options.retryClockExitReplacement || options.clockRetryLearning, 'Clock-exit replacement requires clock retry learning');
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
@@ -420,7 +422,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         predicted: advance(geometry, current, index) });
       }
       const activeClock = !!(clock && current.alive[clock.i]);
-      const mayExploreRetry = !activeClock || options.clockRetryLearning && !planner.report()?.safeClockExit;
+      const mayExploreRetry = !activeClock || options.clockRetryLearning
+        && (options.retryClockExitReplacement || !planner.report()?.safeClockExit);
       if (retryRiskMemory && mayExploreRetry && !planner.report()?.knownWin
         && actions.some(action => retryRiskMemory.cost(current, action.index) > 0)) resetPlanner();
       planner.physicalTrayPlanning(geometry, current, actions);
@@ -449,6 +452,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       return retryRiskMemory?.finish(status) ?? null;
     },
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
+    retryCosts() { return current && retryRiskMemory ? current.alive.flatMap((alive, index) => {
+      const cost = alive ? retryRiskMemory.cost(current, index) : 0;
+      return cost ? [{ index, cost }] : [];
+    }) : []; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
@@ -557,8 +564,10 @@ function playHumanCampaign(input, options = {}) {
       }
       if (options.captureDecisions) decisions.push({ state: controller.state(), index, accepted,
         knowledgeSignature: controller.knowledgeSignature(),
+        ...(options.planning?.retryRiskLearning ? { retryCosts: controller.retryCosts() } : {}),
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
           boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes,
+          safeClockExit: selected.plan.safeClockExit,
           ...(selected.plan.hypothesisAudit ? { hypothesis: Object.fromEntries(['changed', 'primaryIndex', 'preferredWorlds', 'completeWorlds',
             'index', 'primaryOptionId', 'totals', 'informationWeight', 'unseenCount', 'exactUnknownLimit', 'confidence', 'scoreMode']
             .map(field => [field, selected.plan.hypothesisAudit[field]])) } : {}) },
