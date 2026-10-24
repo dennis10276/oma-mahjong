@@ -35,9 +35,28 @@ function test() {
   const expired = searchHypothesisContinuation(geometry, state, actions, { nodeLimit: 256, deadline: 0 });
   assert.equal(expired.status, 'unresolved'); assert.equal(expired.nodes, 0); assert.deepEqual(expired.stages, []);
   assert.throws(() => searchHypothesisContinuation({ ...geometry, faces: pictures }, state, actions, { nodeLimit: 256, deadline: Date.now() + 1500 }));
+  const keyTiles = [0, 4, 8, 12].map(horizontal => ({ x: horizontal, y: 0, z: 0 }));
+  const keyRules = { iceNb: Layouts.iceNeighbors(keyTiles), ice: {}, keys: [0, 1], locks: new Set([2, 3]) };
+  for (const clock of [null, { i: 3, n: 4 }]) {
+    const keyGeometry = { tiles: keyTiles, nb: Layouts.neighbors(keyTiles), rules: keyRules, clock };
+    const actualKeys = { ...keyGeometry, faces: [1, 2, 1, 2], down: [0, 0, 0, 0] };
+    const keySession = factory(actualKeys, settings); keySession.tap(0);
+    const position = { ...keySession.view().state, pictures: [1, 2, 1, 2] };
+    const primitive = search(keyGeometry, position, [{ index: 1 }], { ...REFERENCE_PARAMETERS,
+      nodes: 1, beam: 1, knownPairMacros: true, progressiveReopens: true, cachePublicAnalysis: true });
+    const recovered = searchHypothesisContinuation(keyGeometry, position, [{ index: 1 }],
+      { nodeLimit: 2, deadline: Date.now() + 1500 });
+    assert.equal(primitive.knownWin, false); assert.equal(primitive.knownDead, false);
+    assert.equal(recovered.status, 'cleared'); assert.equal(recovered.nodes, 1);
+    assert.deepEqual(recovered.path, [1, 2, 3]);
+    assert.equal(recovered.observedFact, false); assert.equal(recovered.productionVerified, false);
+    for (const index of recovered.path) keySession.tap(index);
+    assert(keySession.view().win);
+    assert.equal(verifyAttempt(encodeGame(actualKeys), [0, ...recovered.path], settings, keySession.audit()), 4);
+  }
   factory.verifySource();
   console.log('PASS a public synthetic40-tile route is missed by beam24 at256 nodes but found by a narrow-first hypothesis rollout in'
-    + narrow.nodes + ' nodes, independently replayed in production, and kept distinct from observed knowledge; caps and deadlines stay unresolved');
+    + narrow.nodes + ' nodes; key/lock and exact-clock continuations now clear in one node using existing physical macros, independently replay in production and remain hypothetical; caps and deadlines stay unresolved');
 }
 
 if (require.main === module) test();

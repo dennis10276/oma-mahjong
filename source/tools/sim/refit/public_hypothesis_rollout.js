@@ -18,6 +18,7 @@ function searchHypothesisContinuation(game, state, actions, { nodeLimit, deadlin
     const budget = beam === 1 ? Math.min(remaining, Math.max(1, Math.ceil(nodeLimit / 2))) : remaining;
     const planned = search(cached.geometry, state, actions, { ...REFERENCE_PARAMETERS, nodes: budget, beam,
       knownPairMacros: true, progressiveReopens: true, cachePublicAnalysis: true,
+      keyRecoveryMacros: true, keyAccessMacros: true,
       proofNodes: Math.min(32, budget), deadline, decisionMs: undefined });
     assert(Number.isInteger(planned.nodes) && planned.nodes >= 0 && planned.nodes <= budget);
     nodes += planned.nodes;

@@ -96,8 +96,9 @@ Current optional hypothesis candidate adds narrow-first rollout and actual-state
 No new full score is claimed. Goal ACTIVE, UNMET. Guarded trial3967 exited0.
 All earlier trial/diagnostic jobs are terminal, including cache trial73067.
 Cache-only candidate regresses124 and is not promoted. Optional per-candidate
-budgeting is now integrated; its targeted real-board comparison is next.
-**88/88 offline tests pass** in10s, including7488 concealed-world controls,
+budgeting's first100ms probe is0/3 and is also not promoted. Hypothetical solver
+now includes the primary bot's existing key-recovery/access macros; comparison next.
+**88/88 offline tests pass** in9s, including7488 concealed-world controls,
 675 accepted availability controls,380 cleared-role subset controls,144 local
 recoveries,24 relief witnesses and original-production replay.
 
@@ -425,8 +426,22 @@ Further controlled diagnostic: the current hypothetical rollout omits key recove
 already supported by the primary bot. A fully public4-tile key/lock position after
 one actual tap remains unresolved after2 rollout nodes, whereas existing keyRecovery
 constructs the remaining3 taps in1 node; all4 actual taps independently replay in
-originalHard. Fix this capability gap separately after the budgeting comparison.
-NEXT:compare candidate budgeting, then inspect
+originalHard. This capability gap is now fixed in public_hypothesis_rollout.js:
+keyRecoveryMacros and keyAccessMacros use the existing known-only physical helpers,
+shared node/deadline budgets and independent production replay. New tiny key/lock
+and exact-clock tests both clear in1 node where primitive capped search cannot;
+the original long40-tile/expiry/cap/private-input controls still pass.88/88 pass.
+Budgeting probe44473 exited0, verified2026-10-24T14:08:54Z, runtime7379eea.
+Report:HUMAN_REFERENCE_BUDGETED_HYPOTHESIS_PROBE_2026-10-24.md.
+Source9392e925c432fb85353c7aa0ded5a3c1bef1886c2fba6ed659a223c79a45ea5c;
+inputb0c8844b5ae7ae59ffcb4bd43f1723d4f33e37f424bbe7df53cd5e5d3eb4b8ff.
+Same cached profile plushypothesisActionMs100,107/124/137.0/3, unchanged source,
+max1506.9ms.107 regresses to a tray loss after57 taps;124 still loses both tries;
+137 still loses1.890 complete worlds/125 incomplete, but only117 preferred and
+3060/8318 candidate calls hit local caps. More complete batches alone are not
+better decisions; do not promote or discard solely from that count. Next compare
+the now stronger key-capable rollout WITH and WITHOUT100ms caps on the same3.
+NEXT:compare key-capable rollout and budgeting interaction, then inspect
 sampling censoring and information dependence.93's7 verified hypothetical
 clears all fell in unfinished batches, so preferredWorlds remained0. Consider fair
 per-root/pairwise budgeting after measuring it. If loops disappear but policy
