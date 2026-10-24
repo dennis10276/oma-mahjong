@@ -62,104 +62,70 @@ Old-level replays restart at try1 and do not replace first-clear targets.
 
 ## Current runtime and active experiment
 
-Runtime:`cc2994e`; clock recovery:`f25d374`; uniform continuation proofs:`8055ad6`;
-lab catalog/screen:`0bc0f3e`; manual twin guard:`cede8f0`;
-public-relief correction:`2d6ec2f`; root adaptive probing:`80491b6`;
-information width:`ae1753f`; experimental pair-headroom cap:`1fe9239`.
-**59/59 offline tests pass** in about4s, including4608 clock/nonclock
-concealed-world controller controls,144 local-recovery and24 relief witnesses.
-No new post-correction full140 score exists. No research option is a released winner.
+Runtime:`d7778dd`; key-access helper:`1bb716d`, integration:`6655f50`;
+catalog/gate repair:`820e95a`. **61/61 offline tests pass** in about4s,
+including4992 clock/nonclock concealed-world controls,144 local recoveries,
+24 relief witnesses and production-replayed preparatory key/clock routes.
+Last full natural140 score remains130/140; no full expanded155 run exists yet.
+The goal is ACTIVE and UNMET. No research option is promoted.
 
-8055ad6 fixes a continuation-check gap: pair/key macro endpoints now use the
-same cached, bounded loss proof as ordinary removals. A production-replayed
-pair suffix demonstrates the prior missing check. Public geometry exposure is
-an information boundary, never a known-dead certificate. No hidden role is read.
-Completed57-case serial worker:session29442. Loaded source fingerprint:
-`734e5ddec8c21ab07ad0649b6b252be6c4b981ec34a6ef08e674dd4182bc2110`.
-Lab15 control COMPLETED7/15, mean66.3ms, slowest910ms; unchanged source.
-Report:`HUMAN_REFERENCE_LAB_MACRO_CONTROL_2026-10-24.md`.
-Natural42 control COMPLETED32/42, mean60.1ms, slowest1505ms; same ten failures.
-Report:`HUMAN_REFERENCE_MACRO_CONTROL_CHALLENGE_2026-10-24.md`.
-Lab remains7/15: the correctness fix alone does not improve the lab gate.
-All eight failures remain, with repeated actual failures on several boards.
-The expanded gate now requires natural140 AND lab15, then unseen20.
+| Unchanged policy | Completed scope | Evidence |
+|---|---|---|
+| Corrected conservative control |32/42 natural,7/15 lab |Macro proofs fixed without a count gain |
+| Clock recovery, no carry threshold |32/42 natural,4/15 lab |Gains84,loses144; lab44/46/48 regress |
+| Clock recovery after1 carrier |39/57:32 natural+7 lab |Gains84/lab49; loses142/lab15; max1505.5ms |
+| Known key access preparation |32/42 natural,7/15 lab |Constructs new bounded key routes but no count gain |
+| Key access + information before crowded exits |8/15 lab; natural42 RUNNING |Lab45 nowtry1 vsDennis6, no lab regressions; lab max1194.3ms |
 
-New OPTIONAL `clockRecovery:true` considers tray debt before active-clock digging
-only while a public route estimate leaves more than two spare moves. It also
-orders equal-room exit witnesses by that debt. Urgent and nonclock ordering is
-unchanged, defaults remain off, and the estimate never prunes or certifies safety.
-Tests include a production-replayed clock route, urgent/nonclock equality, private
-getters and192 additional hidden-world controls. No campaign gain is claimed yet.
-COMPLETED:session27372, serial lab15 then natural42 with the conservative control
-plus `clockRecovery:true`. Source held unchanged:
-`c61e6c1e5edfc4806652c304645c9de15306b2df0ac74d714685d2d8df8fcd3d`.
-Lab report completed:`HUMAN_REFERENCE_LAB_CLOCK_RECOVERY_2026-10-24.md`.
-Natural report:`HUMAN_REFERENCE_CLOCK_RECOVERY_CHALLENGE_2026-10-24.md`.
-Early actual evidence:lab11 still fails, but reaches50 tiles left rather than82;
-lab41 still fails across6 real attempts, eventually reaching32 rather than52.
-Final lab score regresses7/15 to4/15:44/46/48 newly fail, no new lab passes.
-Mean136.4ms, slowest1503.4ms; unchanged source. This option is not promoted.
-These longer physical runs are not passes and must not replace the try-count
-gate. Natural42 finished32/42, mean62.8ms, slowest1505.8ms; gain84try1 but
-new loss144. Same source/input fingerprints as declared. The policy is not
-promoted; all-board scores cannot be assembled from different policies' wins.
-COMPLETED diagnostic:actual control/clock trajectories share3 decisions on84;
-the first difference occurs with tray[19]. New144/lab44 losses diverge at the
-empty opening. This motivated using the existing `trayRecoveryClockMin:1`
-threshold to activate recovery ordering only after a carrier is present.
-cc2994e implements that optional threshold, preserving empty-tray openings.
-Control3/3 PASS:84/144/lab44 alltry1; mean69.6ms, slowest1355.2ms; unchanged
-source24847b8cb25a769273361aa8f7807caf997c625cd9a7cb5e8087cc5f70386723.
-Report:`HUMAN_REFERENCE_CARRIED_CLOCK_CONTROL_2026-10-24.md`.
-This is one policy's actual3/3, not a merged score; broad validation is still due.
-ACTIVE:session25643 runs one unchanged57-case expanded comparison via
-`--development` with the preceding42 natural levels and all15 eligible lab boards.
-Use the conservative profile plus `clockRecovery:true,trayRecoveryClockMin:1`.
-Pending report:`HUMAN_REFERENCE_CARRIED_CLOCK_EXPANDED_2026-10-24.md`.
-Runtimecc2994e; source24847b8cb25a769273361aa8f7807caf997c625cd9a7cb5e8087cc5f70386723;
-input850a8e556e44828db5e0bb23c12756ad4c86989315fd5f0bedbe64d45c6fa8b4.
-Do not change loaded catalog/screen/actor/search files before this completes.
+Reports respectively:
+- `HUMAN_REFERENCE_MACRO_CONTROL_CHALLENGE_2026-10-24.md`,
+  `HUMAN_REFERENCE_LAB_MACRO_CONTROL_2026-10-24.md`.
+- `HUMAN_REFERENCE_CLOCK_RECOVERY_CHALLENGE_2026-10-24.md`,
+  `HUMAN_REFERENCE_LAB_CLOCK_RECOVERY_2026-10-24.md`.
+- `HUMAN_REFERENCE_CARRIED_CLOCK_EXPANDED_2026-10-24.md`.
+- `HUMAN_REFERENCE_KEY_ACCESS_CHALLENGE_2026-10-24.md`,
+  `HUMAN_REFERENCE_LAB_KEY_ACCESS_2026-10-24.md`.
+- `HUMAN_REFERENCE_LAB_CLOCK_INFORMATION_2026-10-24.md`; natural report pending:
+  `HUMAN_REFERENCE_CLOCK_INFORMATION_CHALLENGE_2026-10-24.md`.
 
-Next harness repair after that freeze: reproduced an unresolved-row selection
-hole with raw `[{k:'end',r:'win',lv:17,at:1,t:1}]`, cached:{} and no network.
-Catalog correctly returns unsupportedOlderEventFormat, but lacks `name`/`lv`,
-so the screen's person filter drops it. Preserve Dennis identity and level on
-that unresolved row and test that the gate refuses it. No current run's selected
-rows have this problem; this synthetic reproduction must not shrink the test set.
+ACTIVE:session58527, lab15 completed8/15 then natural42 still running.
+Keep loaded catalog/screen/actor/search files fixed until completion.
+Source:`a137a1aff7d6574fc2e626af4faa9e68e2538f0ccd732b038795f58fc06bc836`.
+Input hashes:lab26e875b6bc204b952e47911465efddc103dd23e158695dcc921095a5cec54a83;
+natural c679dc1c90873909039749b8467970652c3973ec4b8c7f6d9f4624c327460ac5.
+One CPU-heavy simulation at a time. Never restart for a polling timeout or kill
+app/Gemini helpers. If this candidate retains the gains broadly, run the entire
+expanded155 unchanged before claiming a new full score.157+ remains unopened.
 
-COMPLETED:serial8-case protected-width1 control, then42-case
-protected-width1 challenge, then42-case protected-width2 challenge.
-Runtimecede8f0; fingerprint:
-`cd0cedc57a268e539245c20cfc69a9bca354f2ed438196c53d6c77d471eec168`.
-Completed reports:
-- `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_1_CONTROL_2026-10-24.md`
-- `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_1_CHALLENGE_2026-10-24.md`
-- `HUMAN_REFERENCE_OPEN_TWIN_WIDTH_2_CHALLENGE_2026-10-24.md`
-
-The old shell handle is missing after the host changed; all three canonical
-reports exist and confirm unchanged source. That old worker is terminal.
-Protected width1:7/8 control,33/42 broad; protected width2:32/42 broad.
-Neither is promoted. Width1 loses84/99/102/107/112/123/125/136/143; width2
-loses50/84/99/102/107/112/123/125/143/147. Slowest1505.1ms across these runs.
-The manual open-twin guard does not universally improve play: width2 previously
-cleared123 without it, and now fails123. Actual trace comparison found45 equal
-decisions; then protected24 consumes open17 (picture11) with tray[33], whereas
-unprotected discovers23. The observed23 matches33, leaving17/24 available for
-later. This is evidence against compulsory pair consumption, not proof of a
-unique winning route or permission to know23's picture before its actual reveal.
-One CPU-heavy simulation at a time. Never restart for a polling timeout, or kill
-app/Gemini helpers.
-The old raw-short full run was deliberately stopped after emitting69 ONLY for
-the reproduced false-certificate physics bug. Failures already included46/50/52/69.
-Session35017 and its owned worker39728 are terminal; no complete raw full score.
-Its successful physical prefixes remain valid, but its explanations predate relief.
-
-Research control settings:
+Research conservative control:
 ```json
 {"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true,"passiveInformation":"shortRoles"}
 ```
-Active candidates add `shortInformation:'recoveryAware'`, `informationWidth:1`
-or2, and `protectOpenTwin:true`. No per-level policy or best-of merging.
+The active candidate adds `keyAccessMacros:true,clockInformationBeforeRisk:true`.
+No per-level policy or best-of merging. Gates include lab15 beside natural140.
+
+Key facts:
+- Pair/key macro endpoints now receive the same cached bounded continuation-loss
+  checks as primitive removals (8055ad6). Public exposure prevents death proofs.
+- Known key access prepares blocked observed keys via observed matching pairs;
+  every witness is physical. It shares nodes/deadline and never fills hidden fields.
+- Lab12 public root keys19/78 have real preparatory routes. The ordinary search
+  already finds69/38/78/19/68/53/1; key access finds78/38/68/19/69/53/1.
+  Both remove the clock with an unsafe tray. New route construction alone does
+  not cure that ordering. No actual later reveal is fed to either search.
+- Optional clockInformationBeforeRisk raises safe information to tier4, above
+  a crowded clock exit3 but below a safe exit5 or win6, only with more than2
+  clock moves remaining. It is opportunity ordering, not a future-outcome proof.
+- Optional clockRecovery uses estimated spare moves and tray debt; urgent/nonclock
+  defaults stay unchanged. Carry threshold1 passed84/144/lab44 but regressed
+  elsewhere; do not combine isolated wins into a fictional all-board score.
+- Gate repair820e95a preserves Dennis name/lv for unsupported old-format rows.
+  The reproduced lv17/no-version record previously vanished in person filtering.
+  Full selection now refuses unresolved or duplicated rows and missing requests.
+- Protected open-twin widths previously completed33/42 (width1) and32/42 (width2);
+  neither is promoted. Reports:`HUMAN_REFERENCE_OPEN_TWIN_WIDTH_{1,2}_CHALLENGE_2026-10-24.md`.
+- Old raw-short full run was deliberately stopped after emitting69 ONLY for the
+  reproduced relief bug (already failing46/50/52/69); no complete raw full score.
 
 ## Latest controlled evidence
 
@@ -235,6 +201,10 @@ Natural-level gains are unmeasured until the current runs finish.
 
 ## Matched-state diagnostic facts
 
+- 123's manual open-twin guard shares45 decisions with unprotected width2, then
+ consumes24/open17 (picture11) while carrying33. The winning unprotected route
+ discovers23, which actually matches33, leaving17/24 for later. This is evidence
+ against compulsory pairing, not permission to know23 before its actual reveal.
 - 147 raw short probing once replaced open80 by unknown82 after six shared actions.
  Full-role recoveryAware instead consumes80/74 first; a different divergence.
  Short-role recoveryAware shares48 decisions with control, then chooses66→51,
