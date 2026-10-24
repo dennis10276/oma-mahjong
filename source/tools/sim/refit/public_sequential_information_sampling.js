@@ -16,7 +16,8 @@ function rankSequentialInformationActions(problem, { physics, random, deadline, 
   const sampler = (picturePrior === 'diverse' ? createDiversePictureSampler : createPairedPictureSampler)(problem.rememberedPictures, { random });
   assert(Number.isInteger(exactUnknownLimit) && exactUnknownLimit >= 0 && exactUnknownLimit <= 512);
   const unseenCount = problem.unseenCount ?? problem.rememberedPictures.filter(picture => picture === null).length;
-  const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(0.75, 2 * problem.unseenFraction);
+  const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(0.95, 2 * problem.unseenFraction);
+  const informationTimeShare = informationWeight === 1 ? 1 : Math.min(0.75, Math.max(0.35, informationWeight));
   const comparison = createInformationComparison(actions, problem.fallbackIndex, { scoreMode, confidenceSE });
   let generatedWorlds = 0, completeWorlds = 0, preferredWorlds = 0, unresolvedWorlds = 0, nodes = 0;
   while (generatedWorlds < maximumWorlds && now() < deadline - 8) {
@@ -25,7 +26,7 @@ function rankSequentialInformationActions(problem, { physics, random, deadline, 
     for (const [offset, index] of actions.entries()) {
       if (now() >= deadline - 8) break;
       const actionDeadline = now() + Math.max(0, (deadline - now() - 8) / (actions.length - offset));
-      const informationDeadline = now() + (actionDeadline - now()) * Math.max(0.35, informationWeight);
+      const informationDeadline = now() + (actionDeadline - now()) * informationTimeShare;
       let honest = { status: 'unresolved', progress: 0 }, exact = { status: 'unresolved', nodes: 0 };
       const path = paths.get(index);
       const request = { hypothesis: structuredClone(hypothesis), index: path[0], candidatePath: path, worldOrdinal: generatedWorlds };
@@ -53,7 +54,7 @@ function rankSequentialInformationActions(problem, { physics, random, deadline, 
   }
   return { kind: 'informationRanking', ...comparison.finish(), nodes, generatedWorlds, completeWorlds, preferredWorlds,
     unresolvedWorlds, excludedByWinnabilityPreference: 0, incompleteWorlds: generatedWorlds - completeWorlds,
-    informationWeight, unseenCount, exactUnknownLimit, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
+    informationWeight, informationTimeShare, unseenCount, exactUnknownLimit, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
 }
 
 module.exports = { rankSequentialInformationActions };

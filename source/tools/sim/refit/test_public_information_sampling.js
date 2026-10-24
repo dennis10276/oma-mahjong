@@ -20,7 +20,7 @@ function test() {
       return { kind: 'hypothesisEvaluation', status: request.index === 0 ? 'cleared' : 'lost', nodes: 2000 };
     } };
   const honest = rankInformationActions(problem, { physics, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1 });
-  assert.equal(honest.index, 1); assert.equal(honest.informationWeight, 0.75); assert.equal(honest.nodes, 4000);
+  assert.equal(honest.index, 1); assert.equal(honest.informationWeight, 0.95); assert.equal(honest.nodes, 4000);
   assert.deepEqual(seen[1][1], seen[2][1]); assert.equal(honest.completeWorlds, 1);
   assert.equal(honest.knownWin, false); assert.equal(honest.exactLossShares, false);
   const interleaved = rankInformationActions(problem, { physics, random: () => 0,

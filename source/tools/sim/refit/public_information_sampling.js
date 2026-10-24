@@ -18,13 +18,14 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
   const sampler = (picturePrior === 'diverse' ? createDiversePictureSampler : createPairedPictureSampler)(problem.rememberedPictures, { random });
   assert(Number.isInteger(exactUnknownLimit) && exactUnknownLimit >= 0 && exactUnknownLimit <= 512);
   const unseenCount = problem.unseenCount ?? problem.rememberedPictures.filter(picture => picture === null).length;
-  const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(0.75, 2 * problem.unseenFraction);
+  const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(0.95, 2 * problem.unseenFraction);
+  const informationTimeShare = informationWeight === 1 ? 1 : Math.min(0.75, Math.max(0.35, informationWeight));
   const comparison = createInformationComparison(actions, problem.fallbackIndex, { scoreMode, confidenceSE });
   let generatedWorlds = 0, completeWorlds = 0, preferredWorlds = 0, unresolvedWorlds = 0, nodes = 0;
   while (generatedWorlds < maximumWorlds && now() < deadline - 8) {
     const hypothesis = sampler.sample(); generatedWorlds++;
     const ready = physics.prepare({ hypothesis, worldOrdinal: generatedWorlds, deadline });
-    const informationDeadline = now() + Math.max(0, deadline - now() - 8) * Math.max(0.35, informationWeight);
+    const informationDeadline = now() + Math.max(0, deadline - now() - 8) * informationTimeShare;
     const runners = actions.map(index => ready ? physics.createInformationEvaluation({
       hypothesis: structuredClone(hypothesis), index: paths.get(index)[0], candidatePath: paths.get(index),
       worldOrdinal: generatedWorlds, deadline: informationDeadline })
@@ -57,7 +58,7 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
   }
   return { kind: 'informationRanking', ...comparison.finish(), nodes, generatedWorlds, completeWorlds, preferredWorlds,
     unresolvedWorlds, excludedByWinnabilityPreference: 0, incompleteWorlds: generatedWorlds - completeWorlds,
-    informationWeight, unseenCount, exactUnknownLimit, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
+    informationWeight, informationTimeShare, unseenCount, exactUnknownLimit, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
 }
 
 function rankInformationActions(problem, { schedule = 'sequential', ...options }) {
