@@ -29,7 +29,8 @@ function runLabSalt(input, planning, salt, { runCampaign = playHumanCampaign, em
       const attempts = result.attempts.map(attempt => {
         const opening = attempt.decisions[0]?.state;
         assert(opening, 'Retry audit needs the first public decision of each actual attempt');
-        return { attempt: attempt.attempt, status: attempt.status, taps: attempt.taps,
+        return { attempt: attempt.attempt, status: attempt.status, why: attempt.why, taps: attempt.taps,
+          learnedRisk: attempt.learnedRisk,
           unseenAtStart: opening.pictures.filter((picture, index) => opening.alive[index] && picture === null).length,
           unseenAtEnd: attempt.last.pictures.filter(picture => picture === null).length };
       });
@@ -39,7 +40,9 @@ function runLabSalt(input, planning, salt, { runCampaign = playHumanCampaign, em
       row = { level: entry.lv, salt, humanTries: entry.wonOn, botTries: result.wonOn,
         strictPass: passes(entry.wonOn, result.wonOn), status: result.status, attempts,
         verifiedTaps: result.verifiedTaps, slowestMs: Math.round(result.slowestMs * 10) / 10,
-        exactSearchCalls: result.hypothesis?.exactSearchCalls ?? 0, exactSearchNodes: result.hypothesis?.exactSearchNodes ?? 0 };
+        exactSearchCalls: result.hypothesis?.exactSearchCalls ?? 0, exactSearchNodes: result.hypothesis?.exactSearchNodes ?? 0,
+        retryRisksLearned: result.retryRisks?.length ?? 0,
+        clockAlternativeDecisions: result.clockRetry?.decisionsUsingAlternative ?? 0 };
     } catch (error) {
       row = { level: entry.lv, salt, humanTries: entry.wonOn, botTries: null, strictPass: false,
         status: 'invalid', slowestMs: null, error: String(error.message).slice(0, 300) };
