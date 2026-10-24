@@ -197,6 +197,13 @@ missing entries; the same standalone controls and production clears pass again.
 Before integration, audit the public opening contract across supported generators
 and all155 development inputs, then run the missing public-uncertainty diagnostic
 after session95132 ends. No campaign gain or initial-contract coverage is claimed.
+Partial trusted opening audit2026-10-24:all15 eligible lab boards and118 cached
+natural openings across63 levels(53–150) have even initial picture counts. No
+picture, inventory or seed was supplied to a policy. This is NOT yet the full155
+input audit. Layouts.makeDeal obtains paired faces from pairFacesFor and deal;
+Hard's hdeal consumes a pair pool, and its optimization swaps preserve counts.
+UI Joker replacement changes an exactly-two picture into two Jokers. These are
+opening properties; no claim about parity of a later remaining board is needed.
 
 Independent work during the completed freeze:public_clock_retry_exploration.js
 was NOT imported by that full140/155 controller. It is now optionally integrated
