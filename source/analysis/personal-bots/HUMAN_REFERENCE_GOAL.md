@@ -103,6 +103,17 @@ CPU-heavy process is live. Hold loaded runtime fixed until this run is terminal;
 poll its actual handle, never restart just for an observation timeout or kill
 app/Gemini helpers. This is development, NOT unseen20;157+ remains unopened.
 
+Independent work while this freeze runs:public_clock_retry_exploration.js and its
+standalone test are new, NOT imported by the frozen controller. The helper permits
+an earlier actual risk to change an active-clock root only if a lower-penalty
+alternative has a known physical safe-exit prefix. It shares deadline/node budget,
+protects known wins/exits/deaths, and rejects unknown transitions or expired clocks.
+The real loss/retry fixture independently replays both physical routes and tests
+both primary and alternative budget overruns. Standalone test PASS in0.2s.
+No campaign score or main-suite increase is claimed. After full155 finishes,
+register its test, integrate optionally with actual retry learning, and test whole
+policies. Do not modify the frozen actor before that run ends.
+
 Frozen current profile:
 ```json
 {"goalRecovery":true,"goalRecoveryMin":1,"riskFirstRecovery":true,"obstacleFrontier":true,"alternativeGoalRoutes":true,"alternativeRecoveryRoutes":true,"safeInformationEscape":true,"inspectBeforeCommit":"recovery","inspectionTrayLimit":1,"exclusiveRoles":true,"cachePublicAnalysis":true,"preservePairFlexibility":true,"knownPairMacros":true,"progressiveReopens":true,"keyRecoveryMacros":true,"passiveInformation":"shortRoles","keyAccessMacros":true,"clockInformationBeforeRisk":true,"rememberAcceptedTaps":true,"rememberKnownLosses":true,"rememberClearedRoles":true,"usePlacementContract":true}
