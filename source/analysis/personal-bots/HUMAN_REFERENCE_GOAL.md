@@ -23,6 +23,16 @@ Do not redefine completion around a subset, a percentage, or an isolated pass.
 5. Small curated commits; one short Markdown table per run, no large analysis logs.
    Final handoff, only when done: one-screen level|Dennis tries|bot tries table,
    planner changes and any required human decision.
+6. User added15 special-heavy lab boards on2026-10-24. Imported exact
+   `source/analysis/lab-clears.json` and the supplied quick baseline table from
+   `origin/wip/level-variety` at7216ac148741593b815b535bf86d63b5509e3404.
+   Keep all16 source rows; exclude ONLY10031 from scoring as explicitly requested
+   because it has overlapping roles. The other15 join natural recorded clears in
+   the development gate with the same tries, production replay, visibility and
+   timing rules. Full combined CLI:`--development`; `--live` alone no longer
+   claims the complete development gate. Final lab results need a separate block.
+   Supplied baseline53f413b:7/15, equal10049, seven uncleared after12 attempts.
+   Identical repeated failures need investigation; they do not establish loss.
 
 The development gate and unseen20 gate are both still open. Do not mark complete
 or blocked. There is useful algorithmic work available, not an external blocker.

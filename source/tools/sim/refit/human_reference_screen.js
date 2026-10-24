@@ -5,7 +5,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { decodeGame } = require('./personal_game_io.js');
 const { playHumanCampaign } = require('./human_reference_campaign.js');
-const { loadRecordedClears } = require('./human_reference_catalog.js');
+const { loadRecordedClears, loadDevelopmentClears } = require('./human_reference_catalog.js');
 
 function passes(dennis, bot) {
   assert(Number.isInteger(dennis) && dennis > 0);
@@ -33,7 +33,8 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
 
 async function main(filename, levels, settings, reportFile) {
   const selected = levels ? levels.split(',').map(Number) : null;
-  const input = filename === '--live' ? await loadRecordedClears({ selectedLevels: selected }) : JSON.parse(fs.readFileSync(filename));
+  const input = filename === '--development' ? await loadDevelopmentClears({ selectedLevels: selected })
+    : filename === '--live' ? await loadRecordedClears({ selectedLevels: selected }) : JSON.parse(fs.readFileSync(filename));
   const catalog = input.rows ?? input.entries ?? input.baseline?.input.entries;
   assert(Array.isArray(catalog));
   const entries = catalog.filter(entry => entry.name === 'Dennisisdebeste' && (!selected || selected.includes(entry.lv)));
@@ -44,21 +45,23 @@ async function main(filename, levels, settings, reportFile) {
   const fingerprint = () => crypto.createHash('sha256').update(files.map(filename => path.relative(sourceRoot, filename).replace(/\\/g, '/') + '\0'
     + crypto.createHash('sha256').update(fs.readFileSync(filename)).digest('hex')).join('\n')).digest('hex');
   const sourceHash = fingerprint(), planning = settings ? JSON.parse(settings) : {};
-  console.log(JSON.stringify({ startedAt: new Date().toISOString(), cases: entries.length, sourceHash, planning }));
+  const inputHash = crypto.createHash('sha256').update(JSON.stringify(entries)).digest('hex');
+  console.log(JSON.stringify({ startedAt: new Date().toISOString(), cases: entries.length, sourceHash, inputHash, planning }));
   const rows = screen(entries, planning);
   const unchanged = fingerprint() === sourceHash;
-  const summary = { cases: rows.length, passed: rows.filter(row => row.pass).length, sourceHash, sourceUnchanged: unchanged,
+  const summary = { cases: rows.length, passed: rows.filter(row => row.pass).length, sourceHash, inputHash, sourceUnchanged: unchanged,
     slowestMs: Math.max(...rows.map(row => row.slowestMs)), completeGate: false,
     meanDecisionMs: Math.round(rows.reduce((sum, row) => sum + row.meanDecisionMs * row.decisionCount, 0)
       / Math.max(1, rows.reduce((sum, row) => sum + row.decisionCount, 0)) * 10) / 10,
     dominanceStops: rows.reduce((sum, row) => sum + row.dominanceStops, 0),
-    developmentGate: filename === '--live' && !selected && unchanged && rows.every(row => row.pass && row.slowestMs < 2000),
+    developmentGate: filename === '--development' && !selected && unchanged && rows.every(row => row.pass && row.slowestMs < 2000),
+    ...(input.excluded ? { excluded: input.excluded } : {}),
     byBoardSource: Object.fromEntries([...new Set(rows.map(row => row.boardSource))].map(source => [source,
       { cases: rows.filter(row => row.boardSource === source).length, passed: rows.filter(row => row.boardSource === source && row.pass).length }])),
     note: 'Development results, not unseen20 validation. Human try labels enter comparison only, never the controller. Board provenance remains explicit; current definitions need not be identical to historical deals.' };
   if (reportFile) {
     const table = ['# Human-information reference development run', '', 'Planning: `' + JSON.stringify(planning) + '`',
-      'Source: `' + sourceHash + '`; unchanged: ' + unchanged + '.', '',
+      'Source: `' + sourceHash + '`; unchanged: ' + unchanged + '.', 'Input: `' + inputHash + '`.', '',
       '| Level | Dennis tries | Bot tries | Pass | Board source | Mean ms | Slowest ms |', '|---:|---:|---:|:---:|---|---:|---:|',
       ...rows.map(row => `| ${row.level} | ${row.dennis} | ${row.bot ?? '>' + row.attemptLimit} | ${row.pass ? 'yes' : 'no'} | ${row.boardSource} | ${row.meanDecisionMs} | ${row.slowestMs} |`),
       '', `Passed ${summary.passed}/${summary.cases}; mean ${summary.meanDecisionMs}ms; slowest ${summary.slowestMs}ms; dominance stops ${summary.dominanceStops}.`,

@@ -75,6 +75,38 @@ async function loadRecordedClears({ get, raw, cached, buildBoard = reconstructLe
     note: 'Every recorded natural-level first clear is accounted for. Dennis authorized comparison with his try counts without old recordings on2026-10-22. Prefer recorded openings, then original-version level tables, then current level definitions. Current classic boards use declared aspect1.5 and are not asserted identical to historical boards. Board provenance/exactness remains explicit; no claim that a different board reproduces the historical trial. Missing starts remain unresolved. Replay episode counters start at1. Raw decks stay trusted-environment-only. Read-only GETs; no large snapshots or traces written.' };
 }
 
+function labDevelopmentClears(input = JSON.parse(fs.readFileSync(path.join(root, 'analysis/lab-clears.json')))) {
+  assert(Array.isArray(input.rows));
+  const levels = new Set();
+  const rows = input.rows.filter(entry => {
+    assert.equal(entry.name, 'Dennisisdebeste');
+    assert.equal(entry.lv, 10000 + entry.lab.id);
+    assert.equal(entry.boardSource, 'levelLab');
+    assert.equal(entry.historicalBoardExact, true);
+    assert(Number.isInteger(entry.wonOn) && entry.wonOn > 0);
+    assert(!levels.has(entry.lv), 'Duplicate lab board');
+    levels.add(entry.lv);
+    if (entry.lv === 10031) {
+      assert.equal(entry.stackedRoles, true);
+      return false;
+    }
+    assert.equal(entry.stackedRoles, false, 'Only lab10031 has an authorized exclusion');
+    return true;
+  });
+  assert.equal(rows.length, 15, 'Keep every authorized lab board in the development gate');
+  assert(levels.has(10031), 'Retain the excluded mixed-role board in the source data');
+  return structuredClone(rows);
+}
+
+async function loadDevelopmentClears(options = {}) {
+  const recorded = await loadRecordedClears(options);
+  const selected = options.selectedLevels;
+  const lab = labDevelopmentClears().map(entry => selected && !selected.includes(entry.lv)
+    ? { ...entry, game: undefined, status: 'notRequested' } : { ...entry, status: 'available' });
+  return { ...recorded, rows: [...recorded.rows, ...lab],
+    excluded: [{ level: 10031, reason: 'User-excluded lab board with overlapping roles' }] };
+}
+
 async function main() {
   const catalog = await loadRecordedClears();
   console.log(JSON.stringify({ observedAt: catalog.observedAt, total: catalog.rows.length,
@@ -85,4 +117,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch(error => { console.error(error); process.exitCode = 1; });
-module.exports = { firstClearCampaigns, initialBoard, reconstructLevel, loadRecordedClears };
+module.exports = { firstClearCampaigns, initialBoard, reconstructLevel, loadRecordedClears, labDevelopmentClears, loadDevelopmentClears };
