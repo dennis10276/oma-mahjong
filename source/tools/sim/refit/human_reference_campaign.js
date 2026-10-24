@@ -50,6 +50,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
   assert(options.informationActionPaths === undefined || typeof options.informationActionPaths === 'boolean');
   assert(options.informationPrimitivePeeks === undefined || typeof options.informationPrimitivePeeks === 'boolean');
+  assert(options.informationExactUnknownLimit === undefined || Number.isInteger(options.informationExactUnknownLimit)
+    && options.informationExactUnknownLimit >= 0 && options.informationExactUnknownLimit <= 512);
   assert(!options.informationSampling || options.hypothesisSampling === true);
   assert(options.informationSchedule === undefined || ['sequential', 'interleaved'].includes(options.informationSchedule));
   assert(options.informationPicturePrior === undefined || ['uniform', 'diverse'].includes(options.informationPicturePrior));
@@ -315,10 +317,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const rankOptions = { deadline: decisionDeadline, random,
           maximumWorlds: options.hypothesisMaximumWorlds, nodesPerAction: options.hypothesisNodesPerAction };
         const ranking = options.informationSampling ? rankInformationActions({ ...samplingProblem,
+          unseenCount: current.pictures.filter((picture, index) => current.alive[index] && picture === null).length,
           unseenFraction: current.pictures.filter((picture, index) => current.alive[index] && picture === null).length
             / current.alive.reduce((sum, alive) => sum + alive, 0) }, {
           deadline: Math.min(decisionDeadline, Date.now() + 1300), random, physics, schedule: options.informationSchedule ?? 'sequential',
           picturePrior: options.informationPicturePrior ?? 'uniform',
+          exactUnknownLimit: options.informationExactUnknownLimit ?? 8,
           maximumWorlds: options.hypothesisMaximumWorlds ?? 128 }) : options.hypothesisActionMs === undefined
           ? rankHypothesisActions(problem, { ...rankOptions, evaluate: physics.evaluate })
           : rankBudgetedHypotheses(problem, { ...rankOptions, physics, actionMs: options.hypothesisActionMs });
@@ -531,7 +535,7 @@ function playHumanCampaign(input, options = {}) {
         plan: { goal: selected.plan.goal, path: selected.plan.path, progress: selected.plan.knownProgress,
           boundary: selected.plan.boundary, knownDead: selected.plan.knownDead, nodes: selected.plan.nodes,
           ...(selected.plan.hypothesisAudit ? { hypothesis: Object.fromEntries(['changed', 'primaryIndex', 'preferredWorlds', 'completeWorlds',
-            'index', 'primaryOptionId', 'totals', 'informationWeight']
+            'index', 'primaryOptionId', 'totals', 'informationWeight', 'unseenCount', 'exactUnknownLimit']
             .map(field => [field, selected.plan.hypothesisAudit[field]])) } : {}) },
         ...(options.captureInformation ? { informationAudit: controller.explainInformation(selected.plan.path) } : {}) });
       controller.acknowledge(index, accepted);

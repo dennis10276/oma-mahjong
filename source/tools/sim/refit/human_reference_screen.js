@@ -51,6 +51,7 @@ function screen(entries, planning = {}, emit = row => console.log(JSON.stringify
             tray: choice.state.tray, moves: choice.state.moves, left: choice.state.alive.reduce((sum, alive) => sum + alive, 0),
             unseen: choice.state.pictures.filter((picture, index) => choice.state.alive[index] && picture === null).length,
             ...(audit ? { sampled: { worlds: audit.completeWorlds, informationWeight: audit.informationWeight,
+              exactUnknownLimit: audit.exactUnknownLimit,
               chosenScore: chosen?.score, primaryScore: primary?.score,
               chosenClears: chosen && [chosen.informationClears, chosen.exactClears],
               primaryClears: primary && [primary.informationClears, primary.exactClears] } } : {}) };

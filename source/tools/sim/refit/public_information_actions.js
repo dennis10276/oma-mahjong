@@ -30,7 +30,9 @@ function informationActions(game, state, roots, settings = {}) {
 }
 
 function candidatePaths(problem) {
-  assert(Object.keys(problem).every(key => ['rememberedPictures', 'actions', 'fallbackIndex', 'unseenFraction', 'actionPaths'].includes(key)));
+  assert(Object.keys(problem).every(key => ['rememberedPictures', 'actions', 'fallbackIndex', 'unseenFraction', 'actionPaths', 'unseenCount'].includes(key)));
+  assert(problem.unseenCount === undefined || Number.isInteger(problem.unseenCount) && problem.unseenCount >= 0
+    && problem.unseenCount <= problem.rememberedPictures.filter(picture => picture === null).length);
   const { actions, actionPaths, rememberedPictures } = problem;
   assert(actions.length > 1 && new Set(actions).size === actions.length && actions.includes(problem.fallbackIndex));
   assert(actions.every(index => Number.isInteger(index) && index >= 0));

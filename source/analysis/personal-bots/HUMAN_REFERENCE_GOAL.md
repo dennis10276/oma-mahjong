@@ -55,7 +55,7 @@ Experimental results, not promoted:
    Looking is a real tap; automatic matches, clocks, obstacles and arrivals still apply.
 3. Use fully informed search chiefly with few unknown pictures and thousands of
    nodes. Use its progress only as a tie-break in already lost fillings.
-4. Weight honest play-outs most when much is unseen; exact planning most on retries.
+4. Exact search only at <=8 alive unseen pictures; below that weight by unseen fraction.
 5. Reference: `origin/wip/det-bot`, `source/tools/sim/detbot/det_bot.js`,
    `rollout.js`, `solver2.js`. Reproduce its81/93/99/137 and lab32/33/41/52 passes
    in the audited pipeline. Its prototype shortcuts need physical/visibility parity.

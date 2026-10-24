@@ -71,6 +71,27 @@ function test() {
     assert.equal(exhausted.totals[1].progress, 0.9);
   }
   const tied = { ...physics, evaluateInformation: () => ({ kind: 'informationEvaluation', status: 'cleared', progress: 1 }) };
+  for (const schedule of ['sequential', 'interleaved']) {
+    let exactCalls = 0;
+    const optimistic = { ...physics,
+      evaluateInformation: () => ({ kind: 'informationEvaluation', status: 'lost', progress: 0 }),
+      evaluate(request) {
+        exactCalls++;
+        return { kind: 'hypothesisEvaluation', status: request.index === 1 ? 'cleared' : 'lost', nodes: 2000, progress: 0 };
+      } };
+    const manyUnknown = { ...problem, rememberedPictures: [...Array(22).fill(0), ...Array(10).fill(null)],
+      unseenFraction: 10 / 32, unseenCount: 10 };
+    const honestOnly = rankInformationActions(manyUnknown, { physics: optimistic, random: () => 0,
+      deadline: Date.now() + 1000, maximumWorlds: 1, schedule });
+    assert.equal(honestOnly.index, 0); assert.equal(honestOnly.informationWeight, 1);
+    assert.equal(honestOnly.exactUnknownLimit, 8); assert.equal(exactCalls, 0);
+    const rememberedRetry = rankInformationActions({ ...manyUnknown, unseenCount: 8, unseenFraction: 8 / 30 },
+      { physics: optimistic, random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1, schedule });
+    assert.equal(rememberedRetry.index, 1); assert.equal(rememberedRetry.unseenCount, 8);
+    assert.equal(exactCalls, 2, 'Only alive unseen pictures count; removed unknowns do not prevent remembered-board exact search');
+    assert.throws(() => rankInformationActions({ ...manyUnknown, unseenCount: 11 }, { physics: optimistic,
+      random: () => 0, deadline: Date.now() + 1000, maximumWorlds: 1, schedule }));
+  }
   assert.equal(rankInformationActions(problem, { physics: tied, random: () => 0,
     deadline: Date.now() + 1000, maximumWorlds: 1 }).index, 0);
   let time = 0;

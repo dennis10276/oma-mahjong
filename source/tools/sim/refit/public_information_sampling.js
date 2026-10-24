@@ -6,7 +6,7 @@ const { interleavePlayouts } = require('./public_interleaved_playouts.js');
 const { rankSequentialInformationActions } = require('./public_sequential_information_sampling.js');
 const { candidatePaths } = require('./public_information_actions.js');
 
-function rankInterleavedInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096, picturePrior = 'uniform' }) {
+function rankInterleavedInformationActions(problem, { physics, random, deadline, now = Date.now, maximumWorlds = 16, exactNodes = 4096, picturePrior = 'uniform', exactUnknownLimit = 8 }) {
   const paths = candidatePaths(problem);
   assert(Number.isFinite(deadline)); assert(Number.isInteger(maximumWorlds) && maximumWorlds > 0 && maximumWorlds <= 128);
   assert(Number.isInteger(exactNodes) && exactNodes >= 1000 && exactNodes <= 4096);
@@ -15,7 +15,9 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
   assert(actions.length > 1 && new Set(actions).size === actions.length && actions.includes(problem.fallbackIndex));
   assert(['uniform', 'diverse'].includes(picturePrior));
   const sampler = (picturePrior === 'diverse' ? createDiversePictureSampler : createPairedPictureSampler)(problem.rememberedPictures, { random });
-  const informationWeight = Math.min(1, 2 * problem.unseenFraction);
+  assert(Number.isInteger(exactUnknownLimit) && exactUnknownLimit >= 0 && exactUnknownLimit <= 512);
+  const unseenCount = problem.unseenCount ?? problem.rememberedPictures.filter(picture => picture === null).length;
+  const informationWeight = unseenCount > exactUnknownLimit ? 1 : Math.min(1, 2 * problem.unseenFraction);
   const totals = actions.map(index => ({ index, score: 0, informationClears: 0, exactClears: 0, unresolved: 0, lost: 0, progress: 0 }));
   let generatedWorlds = 0, completeWorlds = 0, preferredWorlds = 0, unresolvedWorlds = 0, nodes = 0;
   while (generatedWorlds < maximumWorlds && now() < deadline - 8) {
@@ -64,7 +66,7 @@ function rankInterleavedInformationActions(problem, { physics, random, deadline,
     || Math.abs(total.score - selected.score) <= 1e-12 && total.progress > selected.progress) selected = total;
   return { kind: 'informationRanking', index: selected.index, totals, nodes, generatedWorlds, completeWorlds, preferredWorlds,
     unresolvedWorlds, excludedByWinnabilityPreference: 0, incompleteWorlds: generatedWorlds - completeWorlds,
-    informationWeight, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
+    informationWeight, unseenCount, exactUnknownLimit, knownWin: false, knownDead: false, observedFact: false, exactLossShares: false };
 }
 
 function rankInformationActions(problem, { schedule = 'sequential', ...options }) {
