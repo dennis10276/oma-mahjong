@@ -32,6 +32,21 @@ const { saltedPublicSeed } = require('./public_sampling_seed.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
 
+function fastPrimaryOptions(options, deadline) {
+  const recovery = options.informationPlayoutRecovery ?? false;
+  assert(typeof recovery === 'boolean' && Number.isFinite(deadline));
+  return { ...options, hypothesisSampling: false, informationSampling: false, hypothesisActionMs: undefined,
+    causalAvailabilityMemory: false, rememberAcceptedTaps: false, rememberClearedRoles: false,
+    rememberKnownLosses: false, rememberBlockedTaps: true, keyAccessMacros: false,
+    goalRecovery: recovery, goalRecoveryMin: options.goalRecoveryMin ?? 1,
+    obstacleFrontier: false, alternativeGoalRoutes: false, alternativeRecoveryRoutes: false,
+    preservePairFlexibility: false, pruneDead: false, continuationPruning: false,
+    inspectBeforeCommit: recovery ? 'recovery' : true, inspectionTrayLimit: recovery ? 1 : 3,
+    protectOpenTwin: recovery ? true : options.protectOpenTwin,
+    nodes: options.informationPlayoutNodes ?? 1, beam: 1, taps: options.informationPlayoutTaps ?? 4,
+    finishKnown: false, proofNodes: 2, decisionMs: undefined, deadline };
+}
+
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
@@ -64,6 +79,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     && options.informationPrimaryMs > 0 && options.informationPrimaryMs <= 500);
   assert(options.informationPlayoutNodes === undefined || Number.isInteger(options.informationPlayoutNodes)
     && options.informationPlayoutNodes > 0 && options.informationPlayoutNodes <= 64);
+  assert(options.informationPlayoutTaps === undefined || Number.isInteger(options.informationPlayoutTaps)
+    && options.informationPlayoutTaps > 0 && options.informationPlayoutTaps <= 32);
+  assert(options.informationPlayoutRecovery === undefined || typeof options.informationPlayoutRecovery === 'boolean');
   assert(options.hypothesisActionMs === undefined || options.hypothesisSampling === true
     && Number.isFinite(options.hypothesisActionMs) && options.hypothesisActionMs > 0 && options.hypothesisActionMs <= 1500);
   assert(!options.hypothesisSampling || options.exclusiveRoles === true && ['standard', 'lab'].includes(publicContext.boardMode),
@@ -299,14 +317,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         }
         const random = Layouts.rng(saltedPublicSeed(publicHash, options.hypothesisRunSalt ?? 1));
         const createPolicy = options.informationSampling ? deadline => createHumanController(geometry.tiles,
-          { ...options, hypothesisSampling: false, informationSampling: false, hypothesisActionMs: undefined,
-            causalAvailabilityMemory: false, rememberAcceptedTaps: false, rememberClearedRoles: false,
-            rememberKnownLosses: false, rememberBlockedTaps: true, keyAccessMacros: false,
-            goalRecovery: false, obstacleFrontier: false, alternativeGoalRoutes: false, alternativeRecoveryRoutes: false,
-            preservePairFlexibility: false, pruneDead: false, continuationPruning: false,
-            inspectBeforeCommit: true, inspectionTrayLimit: 3,
-            nodes: options.informationPlayoutNodes ?? 1, beam: 1, taps: 4, finishKnown: false, proofNodes: 2,
-            decisionMs: undefined, deadline }, publicContext) : null;
+          fastPrimaryOptions(options, deadline), publicContext) : null;
         const physics = createHypothesisPhysics({ tiles: geometry.tiles, rememberedPictures: pictures, rememberedDown: down,
           initialRoles, episodes, blockedFacts: blockedTapMemory.entries(), boardMode: publicContext.boardMode, clock }, { random, createPolicy });
         const problem = { rememberedPictures: pictures, actions: candidates.map(action => action.index),
@@ -389,7 +400,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         return { plan: { index, path: [index], goal: 'closedTileDiscovery', knownWin: false, knownDead: false,
           knownProgress: 0, information: true, boundary: true, nodes: 0 }, predicted: advance(geometry, current, index) };
       };
-      if (discoveries.length && options.inspectBeforeCommit !== 'recovery') return finalize(discover());
+      if (discoveries.length && (options.inspectBeforeCommit !== 'recovery'
+        || options.protectOpenTwin && openTwinRecovery(geometry, current))) return finalize(discover());
       if (options.patientSingleCarry && current.tray.length === 1 && !(clock && current.alive[clock.i])) {
         const guaranteed = actions.filter(action => !available.uncertain.includes(action.index));
         const ready = guaranteed.filter(action => {
@@ -589,4 +601,4 @@ function playHumanCampaign(input, options = {}) {
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }
 
-module.exports = { createHumanController, playHumanCampaign, visibleRole, verifyAttempt, startingIceHits };
+module.exports = { createHumanController, playHumanCampaign, visibleRole, verifyAttempt, startingIceHits, fastPrimaryOptions };

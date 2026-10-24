@@ -1,7 +1,7 @@
 # Human-information reference: Phase 3
 
-Worktree: C:\Users\den_k\Idea\OmasMahjong\personal-bot-review
-Branch: wip/personal-bots. Goal ACTIVE and UNMET.
+Development: C:\Users\den_k\Idea\OmasMahjong\personal-bot-phase3
+Detached development; integrate into personal-bot-review/wip/personal-bots. Goal UNMET.
 
 ## Rules
 
@@ -62,7 +62,7 @@ Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
 ## Next and completion
 
 Baseline and32x1 screens finished. Finish12x16, primitive-root calibration and
-three-salt lab retry baseline on frozen inputs. No early guard stops.
+three-salt lab retry baseline on frozen inputs. Prepare longer-horizon profiles here.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.

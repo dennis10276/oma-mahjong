@@ -24,6 +24,8 @@ const modules = [
   'test_human_reference_budget.js',
   'test_human_reference_catalog.js',
   'test_human_reference_noise_screen.js',
+  'test_human_reference_lab_retry_screen.js',
+  'test_human_fast_primary.js',
   'test_human_lab_catalog.js',
   'test_human_reference_ablation.js',
   'test_human_reference_compare.js',
