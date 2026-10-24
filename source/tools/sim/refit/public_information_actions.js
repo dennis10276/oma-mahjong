@@ -2,7 +2,10 @@
 const assert = require('assert/strict');
 const { legal, advance } = require('./known_tray_plan.js');
 
-function informationActions(game, state, roots) {
+function informationActions(game, state, roots, settings = {}) {
+  assert(Object.keys(settings).every(key => key === 'primitivePeeks'));
+  const { primitivePeeks = true } = settings;
+  assert(typeof primitivePeeks === 'boolean');
   assert(Object.keys(game).every(key => ['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure'].includes(key)));
   assert(Array.isArray(roots) && new Set(roots).size === roots.length);
   assert(roots.every(index => Number.isInteger(index) && legal(game, state).free.includes(index)));
@@ -13,6 +16,7 @@ function informationActions(game, state, roots) {
     if (first.uncertain || first.lost || first.removed > 0 || first.win) {
       append([index], first.uncertain ? 'information' : 'physical'); continue;
     }
+    if (primitivePeeks) append([index], 'knownPeek');
     const before = options.length;
     for (const target of legal(game, first.state).free) {
       const second = advance(game, first.state, target);
@@ -20,7 +24,7 @@ function informationActions(game, state, roots) {
         append([index, target], second.uncertain ? 'knownPeekThenInformation' : 'knownPeekThenProgress');
       }
     }
-    if (before === options.length) append([index], 'unresolvedPeek');
+    if (!primitivePeeks && before === options.length) append([index], 'unresolvedPeek');
   }
   return options;
 }

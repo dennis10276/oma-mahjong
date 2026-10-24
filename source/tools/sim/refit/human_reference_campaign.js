@@ -49,6 +49,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
   assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
   assert(options.informationActionPaths === undefined || typeof options.informationActionPaths === 'boolean');
+  assert(options.informationPrimitivePeeks === undefined || typeof options.informationPrimitivePeeks === 'boolean');
   assert(!options.informationSampling || options.hypothesisSampling === true);
   assert(options.informationSchedule === undefined || ['sequential', 'interleaved'].includes(options.informationSchedule));
   assert(options.informationPicturePrior === undefined || ['uniform', 'diverse'].includes(options.informationPicturePrior));
@@ -304,7 +305,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           fallbackIndex: candidates.some(action => action.index === selected.plan.index) ? selected.plan.index : candidates[0].index };
         const actionOptions = options.informationSampling && options.informationActionPaths
           ? informationActions(Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure']
-            .map(field => [field, geometry[field]])), current, problem.actions) : null;
+            .map(field => [field, geometry[field]])), current, problem.actions,
+          { primitivePeeks: options.informationPrimitivePeeks ?? true }) : null;
         const fallbackOption = actionOptions && (actionOptions.find(choice => choice.index === problem.fallbackIndex
           && choice.path.every((index, offset) => selected.plan.path?.[offset] === index))
           ?? actionOptions.find(choice => choice.index === problem.fallbackIndex));

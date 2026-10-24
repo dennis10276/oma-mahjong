@@ -14,7 +14,8 @@ function test() {
   const choices = informationActions(geometry, state, [0, 1, 2, 3]);
   assert(choices.some(choice => JSON.stringify(choice.path) === '[0,0]'));
   assert(choices.some(choice => JSON.stringify(choice.path) === '[0,1]'));
-  assert(!choices.some(choice => JSON.stringify(choice.path) === '[0]'));
+  assert(choices.some(choice => JSON.stringify(choice.path) === '[0]'));
+  assert.deepEqual(new Set(choices.map(choice => choice.index)), new Set([0, 1, 2, 3]));
   assert.deepEqual(choices.map(choice => choice.id), choices.map((unused, index) => index));
   const factory = createSessionFactory();
   for (const choice of choices) {
@@ -39,9 +40,9 @@ function test() {
   informationActions(geometry, state, [0, 1]); assert.equal(JSON.stringify(state), originals);
   const clockGeometry = { ...geometry, clock: { i: 2, n: 1 } };
   const clockChoices = informationActions(clockGeometry, state, [0]);
-  assert.deepEqual(clockChoices.map(choice => choice.path), [[0, 2]]);
+  assert.deepEqual(clockChoices.map(choice => choice.path), [[0], [0, 2]]);
   const clockSession = factory({ ...clockGeometry, faces: pictures, down }, { seed: 7, choiceLimit: 32, tapMs: 1000 });
-  for (const index of clockChoices[0].path) clockSession.tap(index);
+  for (const index of clockChoices[1].path) clockSession.tap(index);
   assert.equal(clockSession.view().state.moves, 1); assert.equal(clockSession.view().state.alive[2], 0);
   assert.notEqual(clockSession.view().type, 'productionPhysicalEnd-v1');
   const uncertainRole = { ...geometry, publicFrontier: () => ({ free: [0, 1, 2, 3], uncertain: [0], relieved: false }) };
