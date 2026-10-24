@@ -64,11 +64,12 @@ Seeded baseline24/48; progress32x1=22/48, rejected: +4/-6 and156 loses2 salts.
 Baseline24/48; progress22/20, primitive19/20, long20 and recovery13 all rejected.
 Compiled progress19/21 and primitive21 rejected; compiled lab and risk control0/12.
 Risk control:6 matching decisions,0 penalized choices,0 penalized clock-exit choices.
-Exact visibility parity passes86,016 cases. Exact <=8 count-gate candidate testing
-32x1/12x16 and lab retries, salts1-3; unknown fractions previously disabled this gate.
+Exact visibility parity passes86,016 cases. Exact count-gate screens17/19 rejected;
+lower oracle weights remain open. Clock-probe labs2/12 strict passes, screen finishing.
 Lab41 trace:176 replayed taps, repeated second carrier, clock frontier never tested.
 Test buffered uncertain-clock probes with32x1 progress/paired2SE, salts1-3.
-Direct probe rule inactive in lab41; audit its current mechanical frontier next.
+Lab41 frontier confirms known lock with hidden keys; direct probe is correctly inactive.
+Test clock-time key inspections32x1/12x16 and lab retries, salts1-3;102 tests pass.
 Done only when full155 passes with salt1, salts2/3 each pass >=150, then the
 unseen20 runs ONCE with the unchanged frozen bot. Summarize natural/lab tries,
 planner changes, slowest move and any decision needed. Goal is not complete.
