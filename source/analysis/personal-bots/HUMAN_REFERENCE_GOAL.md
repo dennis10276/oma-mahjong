@@ -134,18 +134,21 @@ Known-witness retention is reset at learned nonclock risks unless winning.
 Real actor replay tests change a subsequent choice, but broad counts stayed
 33/42 and8/15. This heuristic is not proof that the original action loses.
 
-ACTIVE:session55779 runs matched124/lab12 controls with rememberAcceptedTaps
+COMPLETED:session55779 ran matched124/lab12 controls with rememberAcceptedTaps
 off then on, using the last full profile and NO retryRiskLearning. Runtime2f23e47;
 sourcef68c38e22e473affc820b9f93c67595b9d6ae76737fcde584864577232288c14.
-Pending reports:HUMAN_REFERENCE_ACCEPTED_AVAILABILITY_CONTROL_{OFF,ON}_2026-10-24.md.
-Keep loaded code fixed until both finish. Actual accepted taps now optionally
+Reports:HUMAN_REFERENCE_ACCEPTED_AVAILABILITY_CONTROL_{OFF,ON}_2026-10-24.md.
+Both policies scored0/2.124 still fails within2 starts; lab12 still fails within5.
+The remembered policy changes actual retry routes (lab12 reaches36 tiles left on
+try5 vs66 in control), not a pass or an accuracy gain. These are real starts.
+Actual accepted taps now optionally
 prove conditional availability on the same board and subsets of the witnessed
 alive layout. Pictures/initial roles are untouched, after-relief evidence is
 refused, and only actual accepted transitions record a witness.675 rule controls
 and a production retry with hidden initial ice validate the prerequisites. The
 actual blocked tile is NOT declared initially safe on the next try, but its route
 after the observed thawing removal becomes a known winning witness. No campaign
-gain is claimed until the controls/broader tests finish.
+gain is claimed; broader testing is still needed before promotion.
 
 Research conservative control:
 ```json
