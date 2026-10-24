@@ -112,6 +112,20 @@ Control3/3 PASS:84/144/lab44 alltry1; mean69.6ms, slowest1355.2ms; unchanged
 source24847b8cb25a769273361aa8f7807caf997c625cd9a7cb5e8087cc5f70386723.
 Report:`HUMAN_REFERENCE_CARRIED_CLOCK_CONTROL_2026-10-24.md`.
 This is one policy's actual3/3, not a merged score; broad validation is still due.
+ACTIVE:session25643 runs one unchanged57-case expanded comparison via
+`--development` with the preceding42 natural levels and all15 eligible lab boards.
+Use the conservative profile plus `clockRecovery:true,trayRecoveryClockMin:1`.
+Pending report:`HUMAN_REFERENCE_CARRIED_CLOCK_EXPANDED_2026-10-24.md`.
+Runtimecc2994e; source24847b8cb25a769273361aa8f7807caf997c625cd9a7cb5e8087cc5f70386723;
+input850a8e556e44828db5e0bb23c12756ad4c86989315fd5f0bedbe64d45c6fa8b4.
+Do not change loaded catalog/screen/actor/search files before this completes.
+
+Next harness repair after that freeze: reproduced an unresolved-row selection
+hole with raw `[{k:'end',r:'win',lv:17,at:1,t:1}]`, cached:{} and no network.
+Catalog correctly returns unsupportedOlderEventFormat, but lacks `name`/`lv`,
+so the screen's person filter drops it. Preserve Dennis identity and level on
+that unresolved row and test that the gate refuses it. No current run's selected
+rows have this problem; this synthetic reproduction must not shrink the test set.
 
 COMPLETED:serial8-case protected-width1 control, then42-case
 protected-width1 challenge, then42-case protected-width2 challenge.
