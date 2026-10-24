@@ -51,6 +51,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
+  assert(options.inspectDuringClock === undefined || typeof options.inspectDuringClock === 'boolean');
+  assert(!options.inspectDuringClock || options.inspectBeforeCommit, 'Clock inspection requires an inspection policy');
+  assert(options.clockInspectionTrayLimit === undefined || options.inspectDuringClock === true
+    && Number.isInteger(options.clockInspectionTrayLimit) && options.clockInspectionTrayLimit >= 0 && options.clockInspectionTrayLimit <= 3);
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
@@ -384,7 +388,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           knownProgress: predicted.uncertain ? 0 : predicted.removed, information: !!predicted.uncertain,
           boundary: true, nodes: selected.plan.nodes + ranking.nodes, hypothesisAudit: audit }, predicted };
       };
-      const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit && !(clock && current.alive[clock.i])
+      const inspectingClock = !!(clock && current.alive[clock.i]);
+      const discoveryTrayLimit = inspectingClock && options.inspectDuringClock
+        ? options.clockInspectionTrayLimit ?? inspectionTrayLimit : inspectionTrayLimit;
+      const discoveries = options.inspectBeforeCommit && current.tray.length <= discoveryTrayLimit
+        && (!inspectingClock || options.inspectDuringClock && clock.n - current.moves > 2)
         ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
       manualChoice = false;
       const discover = () => {

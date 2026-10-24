@@ -6,6 +6,7 @@ const modules = [
   'test_human_visibility_compiled.js',
   'test_human_reference_campaign.js',
   'test_human_clock_frontier_audit.js',
+  'test_human_clock_inspection.js',
   'test_human_initial_role_memory.js',
   'test_human_winning_role_retention.js',
   'test_human_placement_contract.js',

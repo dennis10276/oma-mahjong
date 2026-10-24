@@ -37,3 +37,5 @@ needs production controls and a complete48-case seeded screen before adoption.
 The subsequent direct candidate trace recorded zero probes across four attempts;
 the original geometric-access diagnosis was too strong. Capture current public
 role, availability and rejected-tap blocking before choosing a further route change.
+The current-frontier diagnostic now confirms a publicly known lock at clock52;
+the actor was correct not to probe it. Key discovery is the relevant next route.
