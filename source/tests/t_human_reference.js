@@ -65,6 +65,7 @@ const modules = [
   'test_human_redeal_oracle.js',
   'test_human_redeal_winnable.js',
   'test_human_redeal_draw_pool.js',
+  'test_human_redeal_dispatch.js',
   'test_public_hypothesis_rollout.js',
   'test_public_known_legal_cache.js',
   'test_public_budgeted_hypotheses.js',

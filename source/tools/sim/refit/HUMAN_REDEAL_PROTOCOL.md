@@ -39,6 +39,14 @@ consolidation records original/range executor provenance under a composite hash 
 freshly production-replays every selected winning route. It does not fabricate an
 original worker footer or erase rejected draws. The public bot never sees this data.
 
+human_redeal_dispatch.js runs an event-driven pool with at most twelve game workers.
+It refills slots on native child-exit events, reserves nonoverlapping draw ranges,
+keeps real-board sanity jobs separate, and records PID/exit/provenance evidence.
+Near-target capped boards use shorter ranges to limit speculative work; the oracle
+cap and accepted prefix do not change. Existing checkpoints are never overwritten.
+A failed child stops new dispatch until its error and checkpoint are reviewed.
+Manual workers must not be started while the dispatcher owns the twelve slots.
+
 The remaining text describes retained v1 provenance and shared benchmark controls.
 
 The authoritative goal is the sunflower re-deal objective in attachment
