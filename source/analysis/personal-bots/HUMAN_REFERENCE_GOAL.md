@@ -60,20 +60,18 @@ Theme: sunflower. User correction2026-10-25: re-deals must be certified winnable
 
 ## Immediate work
 
-Unconditioned v1 baseline332/1550 is archived. Old12 salt screens are excluded.
+Unconditioned v1 baseline332/1550 archived; old12 salt screens excluded.
 Protocolf7773f5; oracle3956ee5; rangesf89abbf; dispatcherb5c3578;106/106 tests pass.
-Certified1550 ordered wins:82859 draws,77920 exhaustive losses,3389 discarded caps.
-All selected routes freshly replay production. Original prefixes and tail evidence kept.
-Manifestda3d05314eb24d6f8068e3eef40ec2f576a8c69aec4fc66690ffa901a4e87efc.
-Frozen certified baseline657/1550(42.4%), complete/valid; all12 workers exited0.
-Same bot real sanity141/155(91.0%);48.6-point material gap reported before experiments.
-Code/profile/try budgets/public context match; slowest certified move1.535s.
-Eligible losses: unseen twins634/893(71.0%,139 boards); safe-match misses200(22.4%).
-Fresh batch<=8 authorized; no-gain counter5. Fit pressure management first.
-Experiment01:658/1550,+0.06points versus2SE0.89;board35-20points;not adopted.
-Experiment05:663/1550,+0.39points versus2SE1.53;six boards>10-point loss;not adopted.
-Experiment02:656/1550,-0.06points versus2SE1.14;five boards>10-point loss;not adopted.
-Experiment03:670/1550,+0.84points versus2SE1.29;three boards>10-point loss;not adopted.
-Experiment04:649/1550,-0.52points versus2SE1.18;four boards>10-point loss;not adopted.
-Frozen source bytes preserved for original0f95e4a and current767865dc5f43 executors.
-Retained profile remains baseline; no luck flags qualified. Raw outputs remain in .codex-runs/.
+Certified1550 wins:82859 ordered draws,77920 exhaustive losses,3389 discarded caps.
+All winning routes independently replayed; manifestda3d05314eb24d6f8068e3eef40ec2f576a8c69aec4fc66690ffa901a4e87efc.
+Original baseline657/1550(42.4%); same bot real141/155(91.0%);48.6-point gap reported before experiments.
+Retained development target rate:42.4%; no-gain counter5; fresh batch<=8.
+Retained loss classes:tray_full_unseen_twins:634;missed_known_safe_match:200.
+experiment-01:0.06points/2SE0.89;drops1;adopted=false.
+experiment-02:-0.06points/2SE1.14;drops5;adopted=false.
+experiment-03:0.84points/2SE1.29;drops3;adopted=false.
+experiment-04:-0.52points/2SE1.18;drops4;adopted=false.
+experiment-05:0.39points/2SE1.53;drops6;adopted=false.
+Next:experiment-06,inspect before a third unmatched carry.
+Frozen bytes:original0f95e4a and current767865dc5f43; raw outputs in ignored .codex-runs/. No qualified luck flags.
+Luck still requires disjoint50-case evidence and every-action proof; goal remains unmet.
