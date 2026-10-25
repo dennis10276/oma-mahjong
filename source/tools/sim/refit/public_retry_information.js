@@ -12,9 +12,15 @@ function retryInformationSearch(primarySearch, options = {}) {
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
     nodes: 0, nodeStops: 0, deadlineStops: 0, maximumExtraMs: 0, overruledDeadCertificates: 0, stallsEndedByInformation: 0 };
   const fingerprint = memory => {
-    assert.deepEqual(Object.keys(memory).sort(), ['down', 'initialRoles', 'pictures']);
+    const expected = ['down', 'initialRoles', 'pictures', ...(memory.keyIdentities === undefined ? [] : ['keyIdentities'])].sort();
+    assert.deepEqual(Object.keys(memory).sort(), expected);
     assert(['down', 'initialRoles', 'pictures'].every(field => Array.isArray(memory[field]) && memory[field].length === memory.pictures.length));
-    return JSON.stringify([memory.pictures, memory.down, memory.initialRoles]);
+    if (memory.keyIdentities !== undefined) {
+      assert(Array.isArray(memory.keyIdentities) && Array.from(memory.keyIdentities).every((index, offset) => Number.isInteger(index)
+        && index >= 0 && index < memory.pictures.length && (!offset || index > memory.keyIdentities[offset - 1])));
+    }
+    return JSON.stringify([memory.pictures, memory.down, memory.initialRoles,
+      ...(memory.keyIdentities === undefined ? [] : [memory.keyIdentities])]);
   };
   return {
     beginAttempt(memory) { assert(!active); attempt++; startKnowledge = fingerprint(memory); active = true; },

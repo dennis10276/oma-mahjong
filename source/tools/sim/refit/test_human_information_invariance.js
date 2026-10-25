@@ -53,6 +53,7 @@ function test() {
   configurations.push({ ...configurations[1], clockInformationBeforeRisk: true });
   configurations.push({ ...configurations[1], clockRecovery: true, trayRecoveryClockMin: 1 });
   configurations.push({ ...configurations[1], clockRecovery: true, trayRecoveryClockMin: 1, clockRecoveryMinSlack: 50 });
+  configurations.push({ ...require('./human_level_measure_profile.json'), rememberKeyIdentities: true });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 1, protectOpenTwin: true });
   const canonical = new Map();
   let controls = 0;
@@ -62,7 +63,7 @@ function test() {
       moves: 0, tray: [], openPeek: -1, relieved: false, arriving: [], physicalTaps: 0 };
     const privateFaces = [world % 36, (world * 7) % 36, 2, 2, 3, 3];
     const privateRoles = [world % 3 === 0 ? 'ice' : world % 3 === 1 ? 'lock' : 'key',
-      world % 3 === 0 ? 'key' : 'none', 'none', 'none', 'none', 'none'];
+      world % 3 === 0 ? 'key' : 'none', 'none', 'none', publicClock ? 'none' : 'key', 'none'];
     const observation = observeBoard(tiles, state, publicClock, {
       picture(index) { assert(visible.includes(index)); return privateFaces[index]; },
       role(index) { assert(visible.includes(index)); return privateRoles[index]; },
@@ -74,7 +75,9 @@ function test() {
     const output = configurations.map(configuration => {
       const controller = createHumanController(tiles, configuration, { boardMode: 'standard' });
       controller.beginAttempt(); controller.observe(publicState, observation);
-      const result = { observation, decision: controller.decide(), memory: controller.known(), clearedRoles: controller.clearedRoleEvidence() };
+      const result = { observation, decision: controller.decide(), memory: controller.known(), clearedRoles: controller.clearedRoleEvidence(),
+        keyIdentities: controller.keyIdentityEvidence() };
+      assert.deepEqual(result.keyIdentities.map(fact => fact.index), configuration.rememberKeyIdentities && !publicClock ? [4] : []);
       assert(result.clearedRoles.every(entry => visible.includes(entry.index)));
       assert.deepEqual(result.memory.pictures.slice(0, 2), [null, null]);
       assert.deepEqual(result.memory.down.slice(0, 2), [null, null]);

@@ -31,6 +31,7 @@ const modules = [
   'test_human_causal_availability.js',
   'test_public_cleared_role_memory.js',
   'test_human_cleared_role_memory.js',
+  'test_human_key_identity_memory.js',
   'test_public_retry_risk_memory.js',
   'test_public_retry_exploration.js',
   'test_public_clock_retry_exploration.js',

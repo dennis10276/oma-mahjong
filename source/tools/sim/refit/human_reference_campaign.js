@@ -22,6 +22,7 @@ const { clockRetryExploration } = require('./public_clock_retry_exploration.js')
 const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
+const { createKeyIdentityMemory } = require('./public_key_identity_memory.js');
 const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
@@ -65,6 +66,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
+  assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
+  assert(!options.rememberKeyIdentities || !options.hypothesisSampling,
+    'Typed key identity memory needs corresponding history constraints before combining with hypothetical worlds');
   assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
   assert(options.hypothesisSampling === undefined || typeof options.hypothesisSampling === 'boolean');
   assert(options.informationSampling === undefined || typeof options.informationSampling === 'boolean');
@@ -119,6 +123,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof }) : null;
   const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
   const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof }) : null;
+  const keyIdentityMemory = options.rememberKeyIdentities ? createKeyIdentityMemory(tiles.length) : null;
+  const typedKeyKnowledge = () => keyIdentityMemory ? { keyIdentities: keyIdentityMemory.keys() } : {};
+  const retryKnowledge = () => ({ pictures, down, initialRoles, ...typedKeyKnowledge() });
   const blockedTapMemory = options.rememberBlockedTaps || options.hypothesisSampling ? createBlockedTapMemory(geometry.tiles,
     { exclusiveRoles: options.exclusiveRoles === true }) : null;
   const episodes = [], hypothesisStats = { decisions: 0, changed: 0, generatedWorlds: 0, completeWorlds: 0,
@@ -135,10 +142,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let decisionPosition = null;
   let observedTakeable = null, observedAliveKey = null, observedArrivingKey = null;
   let pendingInformationAction = null;
-  const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles });
+  const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles, ...typedKeyKnowledge() });
   const physicalSignature = position => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
     .map(field => position[field]));
-  const knowledgeSignature = () => JSON.stringify({ pictures, down, initialRoles, roles,
+  const knowledgeSignature = () => JSON.stringify({ pictures, down, initialRoles, roles, ...typedKeyKnowledge(),
     accepted: acceptedTapMemory?.entries() ?? [], cleared: clearedRoleMemory?.entries() ?? [],
     blocked: blockedTapMemory?.entries() ?? [], knownLosses: knownLossMemory?.entries() ?? [] });
   const frontierCache = new Map();
@@ -176,7 +183,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       for (const [index, value] of memory.initialRoles.entries()) initialRoles[index] = value;
     },
     beginAttempt() {
-      informationRetry?.beginAttempt({ pictures, down, initialRoles });
+      informationRetry?.beginAttempt(retryKnowledge());
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       observedTakeable = null; observedAliveKey = null; observedArrivingKey = null;
@@ -232,7 +239,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       });
       frontier.observe({ alive: state.alive, physicalTaps: state.physicalTaps }, rows);
       clearedRoleMemory?.observe(state, observed.roles);
-      informationRetry?.observe({ pictures, down, initialRoles });
+      keyIdentityMemory?.observe(state, observed.roles, attempt);
+      informationRetry?.observe(retryKnowledge());
       current = { ...structuredClone(state), down: down.map((value, index) => state.alive[index] ? value : 0),
         pictures: pictures.map((picture, index) => state.alive[index] ? picture : null) };
       assert(observed.takeable === undefined || Array.isArray(observed.takeable)
@@ -251,7 +259,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         ? [[index, startingIceHits(role, initialRoles[index], iceNb[index].filter(neighbor => !state.alive[neighbor]).length)]] : [])),
         locks: new Set(roles.flatMap((role, index) => role === 'lock' ? [index] : [])),
         keys: roles.flatMap((role, index) => role === 'key' ? [index] : []) };
-      const observedKeys = initialRoles.flatMap((role, index) => role === 'key' ? [index] : []);
+      let observedKeys = initialRoles.flatMap((role, index) => role === 'key' ? [index] : []);
+      if (keyIdentityMemory) {
+        const knownKeys = keyIdentityMemory.keys();
+        geometry.rules.keys = [...new Set([...geometry.rules.keys, ...knownKeys])].sort((left, right) => left - right);
+        observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
+      }
       geometry.publicFrontier = position => {
         Object.freeze(position.alive);
         const aliveKey = aliveSignature(position.alive);
@@ -493,7 +506,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
     completeAttempt(status) {
       if (options.hypothesisSampling) episodes.at(-1).status = status;
-      informationRetry?.finish(status, { pictures, down, initialRoles });
+      informationRetry?.finish(status, retryKnowledge());
       return retryRiskMemory?.finish(status) ?? null;
     },
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
@@ -502,6 +515,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
+    keyIdentityEvidence() { return keyIdentityMemory?.entries() ?? []; },
     blockedEvidence() { return blockedTapMemory?.entries() ?? []; },
     causalAvailabilityStats() { return { ...transferStats }; },
     hypothesisStats() { return { ...hypothesisStats }; },
@@ -652,6 +666,7 @@ function playHumanCampaign(input, options = {}) {
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     ...(options.planning?.retryCompleteWitness ? { retryCompletion: controller.retryCompletionStats() } : {}),
     ...(options.planning?.retryInformationWitness ? { retryInformation: controller.retryInformationStats() } : {}),
+    ...(options.planning?.rememberKeyIdentities ? { keyIdentityEvidence: controller.keyIdentityEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }
