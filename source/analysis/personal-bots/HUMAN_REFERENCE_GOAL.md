@@ -62,8 +62,9 @@ Theme: sunflower. User correction2026-10-25: re-deals must be certified winnable
 
 Unconditioned v1 baseline332/1550 is archived; it cannot be the new adoption baseline.
 All v1 workers exited0. User authorized solvability filtering, then a fresh batch.
-Oracle/builders3956ee5;104/104 tests pass;12 frozen shards certifying10 per board.
-Completed shards release slots to real-board sanity; total active workers<=12.
+Oracle3956ee5; range schedulingf89abbf;105/105 tests pass. Frozen solver/cap/streams.
+Shard7's terminal checkpoint is preserved; rare draws use ordered parallel ranges.
+Complete prefixes choose earliest10 only. Active original/range/sanity workers<=12.
 Draw protocol was published in f7773f5 before generation. Re-run certified baseline
 and finish real-board sanity before experiments. Start with unseen-twin
 tray losses if they remain>=10% on certified re-deals. Fresh no-gain counter0.
