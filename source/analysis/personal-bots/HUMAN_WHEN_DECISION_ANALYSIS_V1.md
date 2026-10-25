@@ -21,3 +21,24 @@ Level150 has13 recomputed strategy suggestions differing from the recorded traje
 Clock route cost is a public heuristic estimate, not an exact shortest route, lower bound or winning witness. Physical replay and the full retest decide adoption.
 
 All1340 recorded taps independently replayed. The fitting subset(first-attempt clock-on positions) has zero strategy replan drift. Full decision lists, public feature values, input hashes and threshold candidates are in .codex-runs/level-measure/when-v1/.
+
+## Tight-clock follow-up hypothesis; not executed
+
+The earlier minimum-slack-only sweep cannot retain the helpful low-slack144 change.
+Both144 and harmful10045 have differing moves at estimated slack3, but their trays
+hold1 and3 tiles respectively. Reusing only the existing salt1 development traces,
+a separate sweep of tray ceilings1,2,3 and spare-move ceilings5,10,20 selects:
+start tight-clock recovery only with exactly1 tray tile and3-5 estimated spare moves.
+The existing safety guard supplies the lower bound3;5 is the selected round ceiling.
+Exactly two public features are used, with no level IDs or per-level settings.
+
+This retains144's one helpful change(at tap2), no harmful10045 change, and no change
+on the other three trace cases. Among candidates retaining no harmful board, the
+fixed rule maximizes helpful boards then minimizes tray and spare-move ceilings.
+Only one helpful board supports this branch; suggestions remain counterfactuals,
+not individually proved causes. This needs fresh development and full-salt testing
+before any adoption. Preserve the independent ample-clock branch if combining them.
+No full06 outcome enters this fit and no measured actor was changed. Labs remain
+the immediate priority for the prepared key-memory and drawn-role experiments.
+Reproducible script: .codex-runs/level-measure/fit-tight-clock-when.js;
+input hashes, all nine candidates, positions and selection: when-tight-v2/condition-fit.json.
