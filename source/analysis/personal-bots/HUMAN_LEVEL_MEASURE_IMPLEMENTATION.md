@@ -67,3 +67,11 @@ clock moves; a pair can auto-remove two tiles. Tests enumerate all37 possible
 ordinary/Joker pictures at that boundary and replay a deep stacked prefix in
 production. The helper is not yet connected to the campaign. All114 reference
 tests pass(16s): .codex-runs/level-measure/exploration-reference-tests-01.log.
+
+retryInformationSearch() now supplies the opt-in intervention wrapper. It first
+keeps the primary search unchanged, and only intervenes after an actual lost try
+that learned no new picture, orientation or starting-role fact. It preserves known
+wins and safe clock exits, shares an1800ms outer window, adds at most250ms, and
+stops intervening immediately when the real observer learns a new fact. Unknown
+boundary pictures remain null. The wrapper is not connected to the campaign yet.
+All115 reference tests pass(14s), raw retry-information-reference-tests-01.log.

@@ -1,0 +1,65 @@
+'use strict';
+const assert = require('assert/strict');
+const { explorationWitness } = require('./public_exploration_witness.js');
+
+function retryInformationSearch(primarySearch, options = {}) {
+  assert.equal(typeof primarySearch, 'function');
+  const milliseconds = options.milliseconds ?? 250, nodeLimit = options.nodes ?? 2000, choices = options.choices ?? 512;
+  assert(Number.isFinite(milliseconds) && milliseconds > 0 && milliseconds <= 500);
+  assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
+  assert(Number.isInteger(choices) && choices > 0);
+  let attempt = 0, startKnowledge = null, active = false, stalls = 0;
+  const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
+    nodes: 0, nodeStops: 0, deadlineStops: 0, maximumExtraMs: 0, overruledDeadCertificates: 0, stallsEndedByInformation: 0 };
+  const fingerprint = memory => {
+    assert.deepEqual(Object.keys(memory).sort(), ['down', 'initialRoles', 'pictures']);
+    assert(['down', 'initialRoles', 'pictures'].every(field => Array.isArray(memory[field]) && memory[field].length === memory.pictures.length));
+    return JSON.stringify([memory.pictures, memory.down, memory.initialRoles]);
+  };
+  return {
+    beginAttempt(memory) { assert(!active); attempt++; startKnowledge = fingerprint(memory); active = true; },
+    observe(memory) {
+      assert(active);
+      if (stalls && fingerprint(memory) !== startKnowledge) { counters.stallsEndedByInformation++; stalls = 0; }
+    },
+    finish(status, memory) {
+      assert(active);
+      assert(['physicalLoss', 'cleared', 'unresolvedBudget', 'unresolvedPublicFrontier', 'unresolved'].includes(status));
+      const stalled = status === 'physicalLoss' && fingerprint(memory) === startKnowledge;
+      stalls = stalled ? stalls + 1 : 0; counters.stalledAttempts += +stalled; active = false;
+    },
+    search(game, state, actions, settings = {}) {
+      assert(active);
+      const began = Date.now(), primary = primarySearch(game, state, actions, settings);
+      if (attempt < 2 || !stalls || primary.knownWin || primary.safeClockExit) return primary;
+      const remaining = choices - (state.physicalTaps ?? 0);
+      if (remaining <= 0) return primary;
+      counters.considered++;
+      const publicGame = Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure']
+        .filter(field => game[field] !== undefined).map(field => [field, game[field]]));
+      const extraBegan = Date.now();
+      const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining),
+        deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
+      counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
+      counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit');
+      counters.deadlineStops += +(result.reason === 'deadline');
+      if (!result.path?.length) return primary;
+      counters.routes++; counters.wins += +result.knownWin;
+      counters.peekRoutes += +(result.kind === 'actualPeekRequired');
+      counters.exposureRoutes += +(result.kind === 'newPublicExposure');
+      counters.overruledDeadCertificates += +!!primary.knownDead;
+      const report = { ...primary };
+      delete report.deadCertificate; delete report.provedDeadRoots;
+      return { ...report, index: result.path[0], path: result.path,
+        goal: result.knownWin ? 'win' : 'retryInformationWitness', knownWin: result.knownWin, knownDead: false,
+        knownProgress: result.knownProgress, safeClockExit: false, clockRoom: 0,
+        information: !result.knownWin, boundary: !result.knownWin, nodes: (primary.nodes ?? 0) + result.nodes,
+        retryInformationWitness: { attempt, stalls, kind: result.kind, knownPrefixTaps: result.knownPrefixTaps,
+          boundaryIndex: result.boundaryIndex, newlyExposed: result.newlyExposed, imaginedPicturesAdded: 0,
+          source: 'known physical prefix to new public exposure or an actual required peek; no predicted hidden picture' } };
+    },
+    stats() { return { ...counters, consecutiveStalls: stalls }; },
+  };
+}
+
+module.exports = { retryInformationSearch };

@@ -14,6 +14,7 @@ function explorationWitness(game, initial, roots, options = {}) {
   const exposure = createExposureFrontier(game.tiles, initial, 'all');
   const allowedRoots = new Set(roots.map(action => action.index)), visited = new Map();
   let nodes = 0, boundary = false, reason = 'no_known_information_route';
+  const progress = state => initial.alive.reduce((sum, alive, index) => sum + +(alive && !state.alive[index]), 0);
   const stopped = () => {
     if (Date.now() >= deadline) { boundary = true; reason = 'deadline'; return true; }
     if (nodes >= nodeLimit) { boundary = true; reason = 'node_limit'; return true; }
@@ -26,10 +27,10 @@ function explorationWitness(game, initial, roots, options = {}) {
     if (path.length && state.tray.length <= 2) {
       const newlyExposed = exposure(state);
       if (newlyExposed.length) return { path, knownPrefixTaps: path.length, boundaryIndex: null,
-        newlyExposed: Array.from(newlyExposed), knownWin: false, kind: 'newPublicExposure' };
+        newlyExposed: Array.from(newlyExposed), knownProgress: progress(state), knownWin: false, kind: 'newPublicExposure' };
     }
     if (!state.alive.some(Boolean) && !state.tray.length) return { path, knownPrefixTaps: path.length,
-      boundaryIndex: null, newlyExposed: [], knownWin: true, kind: 'completeKnownWin' };
+      boundaryIndex: null, newlyExposed: [], knownProgress: progress(state), knownWin: true, kind: 'completeKnownWin' };
     if (path.length >= maxTaps) { boundary = true; return null; }
     const key = identity(state), earlier = visited.get(key);
     if (earlier !== undefined && earlier <= path.length) return null;
@@ -43,7 +44,7 @@ function explorationWitness(game, initial, roots, options = {}) {
         const clockSafe = !game.clock || !state.alive[game.clock.i] || game.clock.n - state.moves > 2;
         if (moved.reason === 'unseenPicture' && state.down[index] === 1 && state.tray.length <= 1 && clockSafe) {
           return { path: path.concat(index), knownPrefixTaps: path.length, boundaryIndex: index,
-            newlyExposed: [], knownWin: false, kind: 'actualPeekRequired' };
+            newlyExposed: [], knownProgress: progress(state), knownWin: false, kind: 'actualPeekRequired' };
         }
         boundary = true; continue;
       }
