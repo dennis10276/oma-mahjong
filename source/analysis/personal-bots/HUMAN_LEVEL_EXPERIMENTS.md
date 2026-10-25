@@ -43,6 +43,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |---|---|---:|---:|---:|---:|---|
 |01|Complete-memory retry witness|30|0|0|1504ms|Reject; incomplete memory|
 |02|Clock recovery at any tray load|155|2|7|1514ms|Reject; passing levels broken|
+|03|Clock recovery with a carried tile|37|3|1|1509ms|Reject; lab10045 broken|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -87,3 +88,32 @@ worker cap. Trial02 is already disqualified by confirmed regressions; it will no
 dispatch any further phase. No running bot source is edited. If development
 qualifies, run the other118; full155 remains required before adopting anything.
 Raw profile, native exits and outputs: .codex-runs/level-measure/experiment-03/.
+
+Result: all37 valid, repairs144,10015,10041; breaks10045 from3/3/3 to uncleared
+on every salt. Six other regression controls restored. No adoption; no redundant
+118-board remainder. All11 workers closed0; supervisor session75861 exited0.
+Mean1.824 minutes/development board, slowest1509ms. Three consecutive unadopted trials.
+
+## Experiment04: combine carried-tray recovery with information routes
+
+Pre-run design: trial03 global profile plus retryInformationWitness=true,
+retryInformationMs=250 and retryInformationNodes=2000. The added strategy only
+activates after an actual physical loss that learned no new picture, orientation
+or starting-role fact. It preserves the primary known win/safe clock exit, seeks
+a known physical prefix to new public information, and leaves an unknown peek's
+picture unknown until the actual observer learns it. New actual knowledge stops
+the intervention immediately. Failed/capped searches retain the original plan.
+An1800ms shared outer window and remaining real choice budget bound the search.
+
+This tests the combination, retaining the three repairs while trying to rescue
+the stalled lab10045 route and other original failures. No per-level settings,
+target count inputs, imagined picture promotion or free physical restarts.
+Same37-board development selection fd1face920f153e7483e7829b06d44fa62a266deb1eaf05ab5b5e6651a5921d0,
+same original baseline-v2 comparison. Require a repaired failing level and no
+passing regression; only then run the remaining118. Full155 validation is required.
+All prior native runs are terminal; use up to12 game workers.
+Source: ce05009a4d369e0c0ad2723dac15e6b44c80e52184019be429b5c6e60ea42647.
+Profile:39211a414cbe9575b4e34a4b5edc236e6c6ed88d733d2fda18f30ebe6d5cd9ca.
+All116 reference tests pass12s, including actual post-stall hidden-pair swaps and
+independent replay of failed/winning attempts; info-campaign-reference-tests-02.log.
+Raw profile, frozen source and outputs: .codex-runs/level-measure/experiment-04/.
