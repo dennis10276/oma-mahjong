@@ -73,4 +73,5 @@ Fresh batch<=8 authorized; no-gain counter2. Fit pressure management first.
 Experiment01:658/1550,+0.06points versus2SE0.89;board35-20points;not adopted.
 Eight public diagnostic boards reproduced misses; inspect earlier pressure choices.
 Experiment02:656/1550,-0.06points versus2SE1.14;five boards>10-point loss;not adopted.
+Experiment03(1e31c79):combined pressure preferences;full1550-case paired run active.
 No planner change or luck flag adopted. Raw outputs remain in .codex-runs/.
