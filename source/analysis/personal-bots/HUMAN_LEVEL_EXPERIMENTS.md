@@ -57,3 +57,30 @@ as trial01. Existing clock-recovery production tests and hidden-world invariance
 checks are included in the passing113-test suite. No source code changes since
 aa610a7; source3c87db493e0d3d28c865f624e110743b380d570f49d5fd921d074e34c562be01.
 Raw profile and outputs: .codex-runs/level-measure/experiment-02/. Outcome pending.
+
+Development30 passed the preregistered comparison: repaired86 and10015, no broken
+guard. The full run has scored154/155 with six confirmed regressions:96,106,112,
+10044,10046,10048. Thus this profile cannot qualify for adoption. Lab10045 remains
+running; preserve its eventual measurement and native close before final metrics.
+The baseline profile is retained. Final source/profile/timing remain in its raw
+state and summaries; do not treat the development comparison as final adoption.
+
+## Experiment03: recover only with a carried tray tile
+
+Pre-run design: baseline plus clockRecovery=true and trayRecoveryClockMin=1.
+This preserves the ordinary clock ordering with an empty tray and evaluates
+recovery only after carrying a tile, while retaining the public spare-time gate.
+This is a parameter refinement of trial02, not abandonment of that strategy family.
+No algorithm source or original board changes. Tests for this threshold and
+hidden-world invariance are included in the passing114-test suite.
+
+Use the original ten failing levels and twenty fixed passing guards, plus the six
+known trial02 regressions and slow pending lab10045:37 development boards. Extra
+controls:96,106,112,10044,10045,10046,10048. Selection hash:
+fd1face920f153e7483e7829b06d44fa62a266deb1eaf05ab5b5e6651a5921d0.
+Comparator remains unchanged baseline-v2. Same adoption rule and salts1,2,3.
+Use11 workers so the final trial02 worker can finish within the combined12-game
+worker cap. Trial02 is already disqualified by confirmed regressions; it will not
+dispatch any further phase. No running bot source is edited. If development
+qualifies, run the other118; full155 remains required before adopting anything.
+Raw profile, native exits and outputs: .codex-runs/level-measure/experiment-03/.
