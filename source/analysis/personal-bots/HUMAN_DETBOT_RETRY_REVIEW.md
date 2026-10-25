@@ -17,10 +17,11 @@ adopted into the production reference:
   before selecting actions. A physical peek may automatically match a tray/open
   tile and consume clock moves; later repeated peeks also require actual taps.
   Hypothetical simulation must use production transitions and the ONE observer.
-- solver2.js batches a pair as one transition and permits a clock-containing pair
-  through its intermediate-clock check. If the clock is second and the first tap
-  expires it, the real game has already lost. Candidate routes must be checked
-  tap by tap. The new complete public-memory witness uses advance() for every tap.
+- solver2.js represents a pair as an abstract transition, not an executable tap
+  sequence. Expanding it in the wrong order can expire the clock; a different
+  ordering can still win. This alone does not refute its feasibility result.
+  Route integration must choose a physical ordering and check every tap. The new
+  complete public-memory witness uses advance() for every tap.
 - det_bot.js checks its decision deadline before each world, then loops across all
   root actions with separate solves and rollouts. All roots need one shared
   deadline with checks inside each solve and rollout to meet the2s action limit.
@@ -41,3 +42,9 @@ it does not refute the broader sampled-world approach or prove any board impossi
 Raw observed-memory audits retain the saved actual tap sequences. On lab10041,
 salt1 learned76/86 pictures by try3 and learned nothing more through try12;
 salts2 and3 cleared on tries4 and3. No guessed picture was promoted to fill the gap.
+
+Clock expansion sanity check: two free matching tiles, first face-up and second
+face-down holding a one-move clock. Taps0,1 lose after tap0; taps1,0 win. The
+prototype returns feasible, which is correct. Raw evidence:
+.codex-runs/level-measure/detbot-clock-counterexample.log. Do not label this a
+proved solver bug; the requirement is valid expansion to physical taps.
