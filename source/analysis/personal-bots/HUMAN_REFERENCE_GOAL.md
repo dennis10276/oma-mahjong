@@ -7,7 +7,10 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 ## Rules
 
 - ONE visibility function supplies visible pictures/roles and covered clock badges.
-- A rejected free tap establishes ice OR lock; never inspect hidden legality first.
+- Dennis2026-10-25: takeability of EVERY geometrically free tile is public without
+  a tap, face-up or face-down. ONE observer supplies it; future takeability remains unknown.
+- Renderer draws obstacle overlays on backs too; visible overlays are public roles.
+  Back pictures stay hidden. Re-run baseline under this rule before comparisons.
 - Retry memory stays within the same board and salt, using actual observations.
 - Dennis permits certain picture deductions: retain a proof valid for EVERY hidden
   board consistent with observations and rules. Sample agreement is not certainty.
@@ -30,7 +33,7 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 - List10 largest mismatches; underestimating difficulty counts double.
 - No Dennis label enters measure() or the playing policy. Labels evaluate afterward.
 
-## Target API (implementation in progress): ten-line builder contract
+## API: ten-line builder contract
 
 1. Module: source/tools/sim/refit/human_level_measure.js(CommonJS).
 2. Call: measure(board,{salts:[1,2,3],maxTries:12}).
@@ -66,4 +69,5 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 - Seven old re-deal trials completed without adoption; trial08 cancelled incomplete
   and timing-invalid. These are not results under the new real-board gate.
 - detbot prototype reports complementary retry clears; audit and integration pending.
-- measure(), real three-salt baseline, new-gate trials and final freeze are incomplete.
+- API/CLI and public-rule implementation pass110/110 tests. Fresh155-board baseline
+  under new public takeability is next; new-gate trials/final freeze remain incomplete.

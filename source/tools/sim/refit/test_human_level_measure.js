@@ -1,0 +1,53 @@
+'use strict';
+const assert = require('assert/strict');
+const fs = require('fs');
+const path = require('path');
+const { execFileSync } = require('child_process');
+const vm = require('vm');
+const Layouts = require('../../../www/layouts.js');
+const { encodeGame } = require('./personal_game_io.js');
+const { measure } = require('./human_level_measure.js');
+
+function test() {
+  const tiles = Array.from({ length: 6 }, (_, index) => ({ x: index * 4, y: 0, z: 0 }));
+  const board = { tiles, nb: Layouts.neighbors(tiles), faces: [1, 1, 2, 2, 3, 3], down: tiles.map(() => 0), rules: null, clock: null };
+  const original = encodeGame(board);
+  for (const field of ['dennis', 'level', 'wonOn']) Object.defineProperty(board, field, { get() { throw Error('Read an outcome label'); } });
+  const result = measure(board, { salts: [1, 2, 3], maxTries: 12 });
+  assert(result.valid && result.clearedAll);
+  assert.deepEqual(result.triesPerSalt, [1, 1, 1]);
+  assert.equal(result.firstTryWinRate, 1);
+  assert.equal(result.averageTries, 1);
+  assert(result.slowestMove < 2000 && result.minutesPerBoard >= 0);
+  assert(result.runs.every(run => run.verifiedTaps === 6));
+  assert.deepEqual(encodeGame(board), original);
+  const packed = { tiles: tiles.map(tile => [tile.x, tile.y, tile.z]), faces: board.faces, down: [], obst: null, clock: null };
+  for (const field of ['solution', 'seed']) Object.defineProperty(packed, field, { get() { throw Error('Read a private route or board seed'); } });
+  const packedResult = measure(packed, { salts: [1], maxTries: 1 });
+  assert(packedResult.valid && packedResult.clearedAll);
+  assert.equal(packedResult.boardHash, result.boardHash);
+  const historical = vm.runInNewContext('(' + JSON.stringify(original) + ')');
+  const historicalResult = measure(historical, { salts: [1], maxTries: 1 });
+  assert(historicalResult.valid && historicalResult.clearedAll);
+  assert.equal(historicalResult.boardHash, result.boardHash);
+  const impossible = { ...original, faces: [1, 2, 3, 4, 5, 6] };
+  const censored = measure(impossible, { salts: [1], maxTries: 1 });
+  assert(censored.valid && !censored.clearedAll);
+  assert.deepEqual(censored.triesPerSalt, [null]);
+  assert.equal(censored.averageTries, null);
+  assert.equal(censored.firstTryWinRate, 0);
+  assert(Object.values(censored.lossTypes).reduce((sum, count) => sum + count, 0) > 0);
+  assert.throws(() => measure(board, { dennis: 1 }));
+  assert.throws(() => measure(board, { maxTries: 13 }));
+  const directory = path.resolve(__dirname, '../../../../.codex-runs/level-measure/test-cli-' + process.pid + '-' + Date.now());
+  fs.mkdirSync(directory, { recursive: true });
+  const input = path.join(directory, 'unlabeled-board.json'), output = path.join(directory, 'measurement.json');
+  fs.writeFileSync(input, JSON.stringify(original));
+  const cli = JSON.parse(execFileSync(process.execPath, [path.join(__dirname, 'human_level_measure.js'), input,
+    '--salts', '1,2,3', '--max-tries', '12', '--out', output], { encoding: 'utf8', windowsHide: true }));
+  assert.deepEqual(cli.triesPerSalt, result.triesPerSalt);
+  assert.deepEqual(JSON.parse(fs.readFileSync(output)), cli);
+  console.log('PASS label-free API/CLI play unchanged real boards for all salts, independently replay every tap, preserve input, report time, and retain censored failures as null');
+}
+if (require.main === module) test();
+module.exports = test;

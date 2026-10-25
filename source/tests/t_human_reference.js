@@ -2,9 +2,13 @@
 
 const modules = [
   'test_human_board_visibility.js',
+  'test_human_public_takeability.js',
   'test_human_visibility_geometry.js',
   'test_human_visibility_compiled.js',
   'test_human_reference_campaign.js',
+  'test_public_action_order.js',
+  'test_human_level_measure.js',
+  'test_human_level_evaluation.js',
   'test_human_redeal.js',
   'test_human_redeal_benchmark.js',
   'test_human_clock_probe.js',
