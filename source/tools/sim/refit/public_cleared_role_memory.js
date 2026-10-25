@@ -2,8 +2,9 @@
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 
-function createClearedRoleMemory(tiles, { transferProof = null } = {}) {
+function createClearedRoleMemory(tiles, { transferProof = null, transferProofLabel = 'publicObstacleBounds' } = {}) {
   assert(transferProof === null || typeof transferProof === 'function');
+  assert(['publicObstacleBounds', 'observedKeyAndNeighborCount'].includes(transferProofLabel));
   const neighbors = Layouts.neighbors(tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })));
   const witnesses = tiles.map(() => []);
   const validate = alive => assert(Array.isArray(alive) && alive.length === tiles.length
@@ -37,7 +38,7 @@ function createClearedRoleMemory(tiles, { transferProof = null } = {}) {
     entries() {
       return witnesses.flatMap((rows, index) => rows.map(alive => ({ index,
         requiredGone: alive.flatMap((value, target) => value ? [] : [target]),
-        ...(transferProof ? { alternateProof: 'publicObstacleBounds' } : {}) })));
+        ...(transferProof ? { alternateProof: transferProofLabel } : {}) })));
     },
   };
 }

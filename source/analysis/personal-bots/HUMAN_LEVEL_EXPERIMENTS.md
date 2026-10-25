@@ -451,3 +451,33 @@ Track A still has seven open boards; Track B has not started. The next prepared
 strategy is observed-safety transfer, requiring actual integration and a fresh
 development/full test. Keep10015 as a passing regression control;10033 still fails
 full salt2 despite passing salt1, and must remain in the open-failure list.
+
+## Experiment11: observed-key safety transfer without placement bounds
+
+Preregistered: adopted10 plus observedSafetyTransfer:true only. A real safety
+witness while an actually observed key was alive excludes a lock; an equally
+large count of removed starting neighbors discharges any ice sufficient at that
+witness. Candidate geometry must be free. No role exclusivity, key-count cap,
+ice-strength cap, board ID or hidden picture is assumed. Relief witnesses are
+excluded. This expands availability proofs, not remembered picture identities.
+
+Component checks cover9000 production-rule transfers and two actual winning
+routes; the controller controls independently replay a real failed try and a
+different winning retry. The actual full123/123 suite passes14s(native53085
+exit0), including private-data invariance, label-free API counters and isolation.
+Detailed proof: HUMAN_OBSERVED_SAFETY_TRANSFER_DRAFT_REVIEW.md.
+
+Candidate sourceb06c8480613f55dd602725c2d76180b80e6dabeb4e97ebf964516306d7c112fd;
+profile9b3adc9864e7b5fb3c38f263d220a45d44b72c07588bfcab57cebec9f74e741e.
+Comparator: adopted10 full raw shards, measured source97f6aa2ca756fd64e249945053bc3a352d89d1a764bad4212d7d81d5f23db675,
+profile6b6094dc0a84e0e1988a9f3e3585863da68ddc0a2a00d554d8214c18b7bb21a1.
+Selectionv6 keeps all38 levels and20 guards; repaired10015 becomes a passing
+control.10033 remains a full salt2 failure. Selection SHA256
+af55b91518324bf9602f02ba2c4ef76da3f5eab82d4cdc4ca7489a472b96a198.
+
+Refresh targets before launch. Use3 workers, salt1 development, then full155
+salts1-3 only after a development repair without a passing regression. Preserve
+strict2s/move,12 actual tries and independent production replay. Mixed outcomes
+require public WHEN diagnosis; do not reject without comparison. Default10 stays
+unchanged during testing. Counter before11 is0; rejection makes it1.
+Raw evidence: .codex-runs/level-measure/experiment-11/.

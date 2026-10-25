@@ -78,6 +78,7 @@ function createMeasurer(planning = defaultProfile) {
           ...(result.retryCompletion ? { retryCompletion: result.retryCompletion } : {}),
           ...(result.retryInformation ? { retryInformation: result.retryInformation } : {}),
           ...(result.keyIdentityEvidence ? { keyIdentityEvidence: result.keyIdentityEvidence } : {}),
+          ...(result.observedSafetyTransfer ? { observedSafetyTransfer: result.observedSafetyTransfer } : {}),
           attempts: result.attempts.map(attempt => ({ attempt: attempt.attempt, status: attempt.status,
             why: attempt.why, taps: attempt.taps, left: attempt.left, actions: attempt.actions.slice(), lossType: lossType(attempt) })) });
       } catch (error) {

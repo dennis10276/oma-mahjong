@@ -1,7 +1,8 @@
 # Public safety transfer without placement or exclusive-role assumptions
 
-Prepared separately while experiment10 runs. This is not an integrated actor
-feature, an adopted strategy or a played experiment. No timed actor files changed.
+Initially prepared separately while experiment10 ran, preserving its frozen actor.
+After10 was adopted, this became an optional integrated feature with tests below.
+It is not an adopted strategy; campaign performance still requires experiment11.
 
 Suppose the bot actually observed tile T mechanically available under original
 rules, while a key it now positively knows was still alive. That witness proves
@@ -68,5 +69,21 @@ run after actual integration, before a preregistered development/full experiment
 
 Raw isolated source/tests: observed-safety-draft-project-v2/ under the same raw
 directory. Logs: observed-safety-draft-integration-tests-02.log and
-observed-safety-draft-privacy-tests-01.log. observed-safety-integration.patch is
-prepared but unapplied. Keep experiment10's active source frozen until terminal.
+observed-safety-draft-privacy-tests-01.log. observed-safety-integration.patch was
+applied only after all experiment10 workers and the supervisor were verified terminal.
+
+Actual integration: observedSafetyTransfer:true enables the proof callback
+without a placement contract, exclusive-role assumption, global ice bound or
+maximum key count. It requires retained actual keys and original-rule witnesses.
+Accepted/cleared evidence labels distinguish this proof from the old bounded
+transfer, and optional query/proved-transfer counts pass through measure().
+The default remains the adopted10 profile with this new flag absent.
+
+Both new component/controller modules pass directly, then the full123/123
+reference suite passes14s(native53085 exit0). Tests include three-hit ice,
+arbitrary key counts, composite roles, relief and fresh-controller isolation,
+private geometry/outcome getters, original starting-alive masks and concealed-world
+invariance with this feature alone and combined with gated back-symbol planning.
+Sourceb06c8480613f55dd602725c2d76180b80e6dabeb4e97ebf964516306d7c112fd;
+candidate profile9b3adc9864e7b5fb3c38f263d220a45d44b72c07588bfcab57cebec9f74e741e.
+Raw full-suite evidence: .codex-runs/level-measure/observed-safety-reference-tests-01.log.

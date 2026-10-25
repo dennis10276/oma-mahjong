@@ -25,6 +25,7 @@ const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
 const { createKeyIdentityMemory, keyPlanningAllowed } = require('./public_key_identity_memory.js');
 const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
+const { createObservedSafetyTransfer } = require('./public_observed_safety_transfer.js');
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
 const { rankBudgetedHypotheses } = require('./public_budgeted_hypotheses.js');
@@ -101,6 +102,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.causalAvailabilityMemory === undefined || typeof options.causalAvailabilityMemory === 'boolean');
   assert(!options.causalAvailabilityMemory || options.exclusiveRoles === true
     && (options.rememberAcceptedTaps || options.rememberClearedRoles), 'Causal availability requires declared production bounds and actual safety memory');
+  assert(options.observedSafetyTransfer === undefined || typeof options.observedSafetyTransfer === 'boolean');
+  assert(!options.observedSafetyTransfer || !options.causalAvailabilityMemory
+    && options.rememberKeyIdentities === true && (options.rememberAcceptedTaps || options.rememberClearedRoles),
+  'Observed safety transfer requires retained actual keys and original-rule safety witnesses without a bounded placement contract');
   const excludeClosedObstacles = !!options.usePlacementContract && publicContext.boardMode === 'standard';
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles', 'shortAll'].includes(options.passiveInformation));
   assert(options.drawnRoleInformation === undefined || typeof options.drawnRoleInformation === 'boolean');
@@ -120,7 +125,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
   let lastAcceptedIndex = null;
   let retryRiskMemory = null;
-  const transfer = options.causalAvailabilityMemory ? createAvailabilityTransfer(geometry.tiles, { exclusiveRoles: true }) : null;
+  const transfer = options.observedSafetyTransfer ? createObservedSafetyTransfer(geometry.tiles)
+    : options.causalAvailabilityMemory ? createAvailabilityTransfer(geometry.tiles, { exclusiveRoles: true }) : null;
+  const transferProofLabel = options.observedSafetyTransfer ? 'observedKeyAndNeighborCount' : 'publicObstacleBounds';
   const transferStats = { queries: 0, provedTransfers: 0 };
   const transferProof = transfer ? (...args) => {
     transferStats.queries++;
@@ -128,9 +135,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     transferStats.provedTransfers += +!!proof;
     return proof;
   } : null;
-  const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof }) : null;
+  const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof, transferProofLabel }) : null;
   const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
-  const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof }) : null;
+  const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof, transferProofLabel }) : null;
   const keyIdentityMemory = options.rememberKeyIdentities ? createKeyIdentityMemory(tiles.length) : null;
   const typedKeyKnowledge = () => keyIdentityMemory ? { keyIdentities: keyIdentityMemory.keys() } : {};
   const retryKnowledge = () => ({ pictures, down, initialRoles, ...typedKeyKnowledge() });
@@ -277,6 +284,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
         }
       }
+      const availabilityKeys = options.observedSafetyTransfer
+        ? [...new Set([...observedKeys, ...keyIdentityMemory.keys()])].sort((left, right) => left - right) : observedKeys;
       geometry.publicFrontier = position => {
         Object.freeze(position.alive);
         const aliveKey = aliveSignature(position.alive);
@@ -305,8 +314,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const result = { free: orderedIndices(free), relieved,
           uncertain: relieved ? [] : queried.uncertain.filter(index => free.includes(index) && (!sameBoard || !blocked.has(index))
             && !(excludeClosedObstacles && down[index] === 1)
-            && !acceptedTapMemory?.knowsAvailable(index, position.alive, observedKeys)
-            && !clearedRoleMemory?.knowsAvailable(index, position.alive, observedKeys)) };
+            && !acceptedTapMemory?.knowsAvailable(index, position.alive, availabilityKeys)
+            && !clearedRoleMemory?.knowsAvailable(index, position.alive, availabilityKeys)) };
         frontierCache.set(cacheKey, result); return result;
       };
       const drawnRoleActive = options.drawnRoleInformation
@@ -678,6 +687,7 @@ function playHumanCampaign(input, options = {}) {
     dominanceStops, decision, attempts, controls, verifiedTaps, rejected,
     ...(clockRetry ? { clockRetry } : {}),
     ...(options.planning?.causalAvailabilityMemory ? { causalAvailability: controller.causalAvailabilityStats() } : {}),
+    ...(options.planning?.observedSafetyTransfer ? { observedSafetyTransfer: controller.causalAvailabilityStats() } : {}),
     ...(options.planning?.rememberBlockedTaps ? { blockedTapFacts: controller.blockedEvidence().length } : {}),
     ...(options.planning?.hypothesisSampling ? { hypothesis: controller.hypothesisStats() } : {}),
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),

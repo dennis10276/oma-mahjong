@@ -1,9 +1,10 @@
 'use strict';
 const assert = require('assert/strict');
 
-function createAcceptedTapMemory(size, { transferProof = null } = {}) {
+function createAcceptedTapMemory(size, { transferProof = null, transferProofLabel = 'publicObstacleBounds' } = {}) {
   assert(Number.isInteger(size) && size > 0);
   assert(transferProof === null || typeof transferProof === 'function');
+  assert(['publicObstacleBounds', 'observedKeyAndNeighborCount'].includes(transferProofLabel));
   const witnesses = Array.from({ length: size }, () => []);
   const validate = alive => assert(Array.isArray(alive) && alive.length === size && alive.every(value => value === 0 || value === 1));
   const subset = (candidate, witness) => candidate.every((alive, index) => !alive || witness[index]);
@@ -45,7 +46,7 @@ function createAcceptedTapMemory(size, { transferProof = null } = {}) {
     entries() {
       return witnesses.flatMap((rows, index) => rows.map(alive => ({ index,
         requiredGone: alive.flatMap((value, target) => value ? [] : [target]),
-        ...(transferProof ? { alternateProof: 'publicObstacleBounds' } : {}) })));
+        ...(transferProof ? { alternateProof: transferProofLabel } : {}) })));
     },
   };
 }
