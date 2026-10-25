@@ -47,7 +47,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |04|Carried-tray recovery + information routes|37|4|1|1745ms|Unadopted; WHEN analysis required|
 |05|Carried tray + estimated clock slack>=50|155|1|2|1790ms|Reject;53 and112 broken|
 |06 control|Fresh baseline at3 workers|38|0|0|1502ms|All38 try counts identical|
-|06 development|Same WHEN strategy at3 workers|38|1|0|1684ms|Qualified development; full155 running|
+|06|Same WHEN strategy at3 workers|155|1|0|1683ms|Adopted after paired controls and full validation|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -223,3 +223,26 @@ historical passing board broken. Slowest1683.6ms; mean0.408 minutes/board(salt1)
 Mean CPU seconds/wall second1.039(minimum0.999). All3 candidate workers closed0.
 The full155-board candidate run, salts1-3, started2026-10-25T18:17:17Z with3 workers.
 This does not qualify adoption until the full comparison and terminal exits pass.
+
+Final06: all155 valid,149 clear on every salt and146 stay within Dennis+1 on every
+salt. Repaired150(4/2/3), no historical or fresh-control passing regression. All9
+native workers and supervisor55767 exited0. Slowest1682.7ms; mean0.610 minutes/board
+for3 salts. Mean CPU seconds/wall second1.040(minimum0.992). The baseline control
+exactly reproduced all38 historical salt1 try counts before this comparison.
+
+Adoption verification re-summarized the raw full shards, recomputed both comparisons,
+verified all67 actor-source files and all9 native exits, and refreshed every155
+recorded board/count at2026-10-25T18:52:58.716Z without a change. Verifier43116 exited0.
+Default profile now exactly equals tested92b1c12b829d93187b1dc27efd6c8c7760120283ed419f890af879d0b4946049.
+Only the imported default JSON changed from measured source901550e360d574ab5efe898b5ca410f9e7bd7e9a81b2a82ae93e7f666696b6ab
+to adopted9dfcc78af25b327f78747b6dd3c3bc117d9e245b291b6e0b68156457a6ee92bf;
+the policy code and effective configuration are identical to the full tested actor.
+
+Post-adoption119/119 reference tests pass13s(native77445 exit0). Default CLI from an
+unrelated working directory independently clears out-of-cohort lab61 in1/1/1,
+valid, slowest330.3ms(native33181 exit0). Raw adoption-verification.json,
+adopted-profile-mapping.json, adopted-reference-tests-01.log and adopted-lab61.json
+are in experiment-06/. Adopted. Consecutive unadopted count resets to0; rejected
+trials01-05 remain preserved. Track A still has nine open boards and Track B has
+not started. Next priority is the prepared, independently audited typed key-memory
+change; it still requires integration tests and a separate measured experiment.

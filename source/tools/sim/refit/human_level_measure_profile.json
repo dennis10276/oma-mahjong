@@ -22,5 +22,11 @@
   "rememberClearedRoles": true,
   "rememberBlockedTaps": true,
   "usePlacementContract": false,
-  "causalAvailabilityMemory": false
+  "causalAvailabilityMemory": false,
+  "clockRecovery": true,
+  "trayRecoveryClockMin": 1,
+  "clockRecoveryMinSlack": 50,
+  "retryInformationWitness": true,
+  "retryInformationMs": 250,
+  "retryInformationNodes": 2000
 }
