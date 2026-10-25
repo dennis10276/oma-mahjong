@@ -48,6 +48,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |05|Carried tray + estimated clock slack>=50|155|1|2|1790ms|Reject;53 and112 broken|
 |06 control|Fresh baseline at3 workers|38|0|0|1502ms|All38 try counts identical|
 |06|Same WHEN strategy at3 workers|155|1|0|1683ms|Adopted after paired controls and full validation|
+|07|Remember observed key identities|38|1|1|1678ms|Unadopted; public WHEN refinement required|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -286,3 +287,43 @@ WHEN condition with at most2 public features before retesting that strategy.
 Consecutive unadopted count before07 is0; rejection makes it1. Drawn-role planning,
 tight-clock recovery and larger retry budgets remain separate unexecuted candidates.
 Raw outputs and frozen source bytes: .codex-runs/level-measure/experiment-07/.
+
+Result07:38 valid development boards; repaired10041(>12 to3), broke10045(3 to>12).
+Already-failing10011 worsened8 to>12 and is retained as an additional negative
+diagnostic case. Other controls, including150, remain passing. All3 workers and
+supervisor81588 exited0. Slowest1678.2ms; mean0.406 minutes/board; mean CPU/wall1.044.
+No full run or adoption. Consecutive unadopted count1 since06. Keep the key strategy
+family and compare actual public histories before another conditional test.
+
+## Experiment08: ample public clock slack for remembered-key planning
+
+HUMAN_KEY_WHEN_DECISION_ANALYSIS_V1.md documents1068 independently replayed taps
+on repaired10041, broken10045 and worsened10011. Both controllers see the same
+actual history; candidate suggestions have zero replan drift. Public threshold
+fitting retains11/12 helpful differences and none of the14 regression or20
+worsening differences. This is a hypothesis supported by one helpful board,
+not proof of individual move causality or future performance.
+
+Candidate: adopted06 plus rememberKeyIdentities=true and keyPlanningSlackAbove=40.
+Start adding remembered-key planning dependencies only while the live clock has
+more than40 estimated spare moves. One public feature, strict round threshold40.
+The estimate includes actually observed key identities and observed mechanics;
+it is not an exact shortest route or a safety certificate. Actual facts remain
+in memory and new observations remain truthful learning while planning is gated.
+An already constructed valid physical prefix can continue beyond the threshold.
+
+Implementation8f158df;120/120 tests pass13s(native64805 exit0), including40/41
+boundary with known key/lock route cost, missing/taken clocks, private-field guards,
+gated-off memory retention, production failed/winning retries and hidden-world
+invariance. Candidate sourcea1fb03cddd38de5dcaabe63420231a86cf268734a7f2ddaf06137fb442c353dd;
+profile7c0908b9755341f125f58cf96d22da1fd7793efc146d3bcbcf4e33f5b961f0ba.
+WHEN input/fit SHA256 c7379a003c2cb825c8b0e7092884a28db2967c67642a6663634bff47c42ea935.
+
+Reuse adopted06 actual comparator and selection814f23241150ab0645b1e8c48954a3eef28d296544cc52c4c90d701e197aec3b:
+38 development boards, salt1;20 fixed guards and all regression controls retained.
+Three game workers, same250ms/2000-node retry bounds and max12 actual tries.
+Refresh every recorded target before launch. Only a fix with no passing regression
+qualifies for a fresh full155 salts1-3 run and the same adoption rule. Every attempt
+independently replays; every actual move remains strictly under2s. Counter before08
+is1; rejection makes it2. A WHEN trial counts;07 remains preserved as unadopted.
+Raw profiles, source snapshots and native exits: .codex-runs/level-measure/experiment-08/.
