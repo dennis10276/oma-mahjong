@@ -147,7 +147,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const rememberedLoss = game.publicKnownLoss;
   const immediateRoles = settings.passiveInformation === 'immediateRoles', firstExposures = new Map();
   const eligibleExposure = (exposed, path) => {
-    if (settings.passiveInformation === 'shortRoles') return path.length <= 3 ? exposed : [];
+    if (settings.passiveInformation === 'shortRoles' || settings.passiveInformation === 'shortAll') return path.length <= 3 ? exposed : [];
     if (!immediateRoles) return exposed;
     if (path.length === 1) firstExposures.set(path[0], exposed.slice().sort((left, right) => left - right));
     const first = firstExposures.get(path[0]) || [];
