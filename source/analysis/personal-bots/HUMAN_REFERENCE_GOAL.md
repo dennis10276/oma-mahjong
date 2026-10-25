@@ -69,6 +69,6 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 - Seven old re-deal trials completed without adoption; trial08 cancelled incomplete
   and timing-invalid. These are not results under the new real-board gate.
 - detbot prototype reports complementary retry clears; audit and integration pending.
-- API/CLI and public-rule implementation pass111/111 tests. V1 completed155 boards
-  but is superseded by a planner salt tie-breaking fix; fresh v2 is next.
+- Corrected v2:148/155 clear all salts,145/155 within Dennis+1; all gates unmet.
+- Public memory/retry implementation passes113/113 tests; first new-gate trial pending.
 - Unlabeled lab61 API run cleared1/1/1; final-version recheck, new-gate trials and freeze remain incomplete.

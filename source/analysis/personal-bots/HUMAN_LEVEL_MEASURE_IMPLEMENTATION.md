@@ -44,3 +44,18 @@ for public salts1-3; all111 reference tests now pass. The corrected v2 baseline 
 finish before any planner comparison. The original unseen lab61 candidate was
 measured from another working directory with no label:1/1/1,0.291 minutes,329ms
 slowest move. Its supplied solution and seed are not consumed by the API.
+
+Corrected v2 is complete:155 valid boards,148 clear every salt,145 meet Dennis+1
+on every salt. Ten levels fail clearance or Dennis+1. Full totals and correlation
+remain unresolved because some campaigns never cleared; cleared-only diagnostic
+Spearman is -0.1611. Slowest move1523ms; mean0.839 minutes/board for three salts.
+Source596e37bde6e1c996ad068614c888e30ac29d1d14e8670d6d4f7bddf876f48618.
+Full report: HUMAN_LEVEL_BASELINE_V2_ALL.md. This is the algorithm comparator.
+
+The opt-in retry-complete candidate preserves first-try decisions and existing
+winning routes. With complete public picture memory, it adds at most250ms/2000
+nodes to seek a constructive winning path within remaining actual taps. A cap or
+failed search never proves death. Real actions and diagnostic counts are retained
+in measurement records. All113 reference tests pass in12s, including independent
+production replay of a failed attempt and its complete retry witness; raw log:
+.codex-runs/level-measure/retry-complete-tests-08.log. Default policy is unchanged.
