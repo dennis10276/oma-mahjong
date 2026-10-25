@@ -59,3 +59,11 @@ failed search never proves death. Real actions and diagnostic counts are retaine
 in measurement records. All113 reference tests pass in12s, including independent
 production replay of a failed attempt and its complete retry witness; raw log:
 .codex-runs/level-measure/retry-complete-tests-08.log. Default policy is unchanged.
+
+Standalone explorationWitness() searches known physical prefixes to a guaranteed
+new public exposure or an actual required peek. It never supplies the resulting
+picture. Unknown peeks require at most one tray tile and more than two remaining
+clock moves; a pair can auto-remove two tiles. Tests enumerate all37 possible
+ordinary/Joker pictures at that boundary and replay a deep stacked prefix in
+production. The helper is not yet connected to the campaign. All114 reference
+tests pass(16s): .codex-runs/level-measure/exploration-reference-tests-01.log.
