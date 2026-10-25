@@ -35,7 +35,7 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 
 ## API: ten-line builder contract
 
-1. Module: source/tools/sim/refit/human_level_measure.js(CommonJS).
+1. require('C:/Users/den_k/Idea/OmasMahjong/personal-bot-review/source/tools/sim/refit/human_level_measure.js').measure
 2. Call: measure(board,{salts:[1,2,3],maxTries:12}).
 3. Board is production game format, including lab and unreleased candidates.
 4. Salts vary public policy choices; pictures, roles, clock and board stay unchanged.
@@ -43,7 +43,7 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 6. firstTryWinRate includes every salt; averageTries is null if any salt is censored.
 7. lossTypes counts failed attempts; slowestMove is milliseconds.
 8. minutesPerBoard reports total measurement time; valid requires replay and timing.
-9. CLI: node source/tools/sim/refit/human_level_measure.js board.json --salts 1,2,3 --max-tries 12.
+9. CLI: node C:/Users/den_k/Idea/OmasMahjong/personal-bot-review/source/tools/sim/refit/human_level_measure.js board.json --salts 1,2,3 --max-tries 12.
 10. CLI returns JSON; --out .codex-runs/result.json saves it. No Dennis label needed.
 
 ## Development and completion
@@ -70,4 +70,5 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
   and timing-invalid. These are not results under the new real-board gate.
 - detbot prototype reports complementary retry clears; audit and integration pending.
 - API/CLI and public-rule implementation pass110/110 tests. Fresh155-board baseline
-  under new public takeability is next; new-gate trials/final freeze remain incomplete.
+  runs in native session30351/PID23548; policy source8471bd97b185 is frozen.
+- New-gate trials/final freeze and the genuine unseen-lab check remain incomplete.
