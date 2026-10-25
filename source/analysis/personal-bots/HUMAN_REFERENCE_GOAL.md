@@ -74,4 +74,6 @@ Experiment01:658/1550,+0.06points versus2SE0.89;board35-20points;not adopted.
 Eight public diagnostic boards reproduced misses; inspect earlier pressure choices.
 Experiment02:656/1550,-0.06points versus2SE1.14;five boards>10-point loss;not adopted.
 Experiment03:670/1550,+0.84points versus2SE1.29;three boards>10-point loss;not adopted.
-No planner change or luck flag adopted. Raw outputs remain in .codex-runs/.
+Experiment04(72a58e4,c6074da):shortAll picture forecasts;full paired run active.
+Frozen source bytes preserved for original0f95e4a and current767865dc5f43 executors.
+Retained profile remains baseline; no luck flags qualified. Raw outputs remain in .codex-runs/.
