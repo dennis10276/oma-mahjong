@@ -46,6 +46,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |03|Clock recovery with a carried tile|37|3|1|1509ms|Reject; lab10045 broken|
 |04|Carried-tray recovery + information routes|37|4|1|1745ms|Unadopted; WHEN analysis required|
 |05|Carried tray + estimated clock slack>=50|155|1|2|1790ms|Reject;53 and112 broken|
+|06 control|Fresh baseline at3 workers|38|0|0|1502ms|All38 try counts identical; candidate running|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -206,3 +207,12 @@ Foundation commit7e36eb5 adds119/119 passing tests(log role-foundation-reference
 CPU diagnostics and two unused public role components. Neither new component is wired
 into this experiment's policy. Drawn-back-role exposure and positive observed key
 identity retention are future strategy leads, not claimed real-board improvements.
+
+Execution started with codeCommit05f88dd; selection hash
+0e9fe8ae5e7effae4b55feead6ce58f979f99ff41b95dd136b707b4b72b216ac.
+Read-only catalog refresh2026-10-25T18:04:44.130Z confirms155 unchanged boards and
+targets. Fresh baseline control completed38/38 valid; all38 exact try counts match
+the historical salt1 measurements, with zero fixed/broken boards. All3 native
+workers closed0. Slowest1502.3ms; mean CPU seconds/wall second1.048(minimum1.002).
+Candidate development is now running with the same3-worker cap. No adoption yet;
+five completed unadopted experiments remain the count until06 terminates.
