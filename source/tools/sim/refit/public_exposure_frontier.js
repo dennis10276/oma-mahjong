@@ -2,8 +2,9 @@
 const assert = require('assert/strict');
 const { tileVisibility } = require('./human_board_visibility.js');
 
-function createExposureFrontier(tiles, initial, mode = 'all') {
+function createExposureFrontier(tiles, initial, mode = 'all', includeBackRoles = false) {
   assert(['all', 'roles'].includes(mode));
+  assert.equal(typeof includeBackRoles, 'boolean');
   const down = initial.down.slice(), baseline = tileVisibility(tiles, { ...initial, down }, null);
   const targets = initial.alive.flatMap((alive, index) => {
     if (!alive) return [];
@@ -11,7 +12,8 @@ function createExposureFrontier(tiles, initial, mode = 'all') {
     const orientation = mode === 'all' && down[index] === null && !visible.orientation;
     const picture = mode === 'all' && down[index] === 0 && initial.pictures[index] === null && !visible.picture;
     const role = down[index] === 0 && initial.roles?.[index] === null && !visible.role;
-    return orientation || picture || role ? [{ index, orientation, picture, role }] : [];
+    const backRole = includeBackRoles && down[index] !== 0 && initial.roles?.[index] === null && !visible.role;
+    return orientation || picture || role || backRole ? [{ index, orientation, picture, role, backRole }] : [];
   });
   const indices = targets.map(target => target.index);
   const cache = new Map(), empty = Object.freeze([]);
@@ -20,9 +22,12 @@ function createExposureFrontier(tiles, initial, mode = 'all') {
     const signature = position.alive.join('');
     if (cache.has(signature)) return cache.get(signature);
     const projected = tileVisibility(tiles, { alive: position.alive, down, openPeek: -1 }, null, indices);
-    const gained = Object.freeze(targets.filter(target => position.alive[target.index]
+    const ordinary = targets.filter(target => position.alive[target.index]
       && (target.orientation && projected.tiles[target.index].orientation
-        || target.picture && projected.tiles[target.index].picture || target.role && projected.tiles[target.index].role)).map(target => target.index));
+        || target.picture && projected.tiles[target.index].picture || target.role && projected.tiles[target.index].role)).map(target => target.index);
+    const gained = Object.freeze(includeBackRoles ? [...new Set([...ordinary,
+      ...targets.filter(target => target.backRole && position.alive[target.index] && projected.tiles[target.index].role)
+        .map(target => target.index)])] : ordinary);
     cache.set(signature, gained); return gained;
   };
 }

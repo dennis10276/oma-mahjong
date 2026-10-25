@@ -10,8 +10,10 @@ function explorationWitness(game, initial, roots, options = {}) {
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   assert(Number.isInteger(maxTaps) && maxTaps > 0 && maxTaps <= 512);
   assert(Array.isArray(roots) && roots.every(action => Number.isInteger(action.index)));
-  assert(Object.keys(game).every(key => ['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure'].includes(key)));
-  const exposure = createExposureFrontier(game.tiles, initial, 'all');
+  assert(Object.keys(game).every(key => ['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure', 'publicRoleExposure'].includes(key)));
+  assert(game.publicRoleExposure === undefined || typeof game.publicRoleExposure === 'function');
+  const pictureExposure = createExposureFrontier(game.tiles, initial, 'all');
+  const exposure = game.publicRoleExposure ? position => [...new Set([...pictureExposure(position), ...game.publicRoleExposure(position)])] : pictureExposure;
   const allowedRoots = new Set(roots.map(action => action.index)), visited = new Map();
   let nodes = 0, boundary = false, reason = 'no_known_information_route';
   const progress = state => initial.alive.reduce((sum, alive, index) => sum + +(alive && !state.alive[index]), 0);

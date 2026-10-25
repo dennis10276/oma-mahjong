@@ -55,6 +55,8 @@ function test() {
   configurations.push({ ...configurations[1], clockRecovery: true, trayRecoveryClockMin: 1, clockRecoveryMinSlack: 50 });
   configurations.push({ ...require('./human_level_measure_profile.json'), rememberKeyIdentities: true, keyPlanningSlackAbove: undefined });
   configurations.push({ ...require('./human_level_measure_profile.json'), rememberKeyIdentities: true, keyPlanningSlackAbove: 40 });
+  configurations.push({ ...configurations[1], passiveInformation: 'roles', drawnRoleInformation: true });
+  configurations.push({ ...require('./human_level_measure_profile.json'), drawnRoleInformation: true });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 1, protectOpenTwin: true });
   const canonical = new Map();
   let controls = 0;

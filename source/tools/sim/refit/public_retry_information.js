@@ -41,7 +41,7 @@ function retryInformationSearch(primarySearch, options = {}) {
       const remaining = choices - (state.physicalTaps ?? 0);
       if (remaining <= 0) return primary;
       counters.considered++;
-      const publicGame = Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure']
+      const publicGame = Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure', 'publicRoleExposure']
         .filter(field => game[field] !== undefined).map(field => [field, game[field]]));
       const extraBegan = Date.now();
       const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining),

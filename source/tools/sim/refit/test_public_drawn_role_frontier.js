@@ -28,6 +28,14 @@ function test() {
   assert(!tileVisibility(fullyCovered, unknownOrientation, null).tiles[0].orientation);
   assert.deepEqual(createDrawnRoleFrontier(fullyCovered, unknownOrientation, 'roles')(after), [0]);
   assert.equal(unknownOrientation.down[0], null); assert.equal(unknownOrientation.pictures[0], null);
+  const combinedTiles = tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z }));
+  combinedTiles[3] = { x: 8.28, y: 0.28 / 1.24, z: 1 };
+  const combinedInitial = { ...initial, down: initial.down.map((value, index) => index === 2 ? null : value),
+    roles: initial.roles.map((value, index) => index === 2 ? null : value) };
+  const combinedAfter = { ...combinedInitial, alive: combinedInitial.alive.map((alive, index) => index === 1 || index === 3 ? 0 : alive) };
+  assert.deepEqual(createExposureFrontier(combinedTiles, combinedInitial, 'all')(combinedAfter), [2]);
+  assert.deepEqual(createDrawnRoleFrontier(combinedTiles, combinedInitial, 'all')(combinedAfter), [2, 0],
+    'Legacy orientation targets keep their order; a newly readable back role is appended once');
   assert.throws(() => createDrawnRoleFrontier(tiles, initial, 'private'));
   console.log('PASS future drawn-role targets include closed and unknown-orientation tiles through the ONE geometry gate, never disclose pictures or role values, retain immutable public state and ignore already-known/dead targets');
 }

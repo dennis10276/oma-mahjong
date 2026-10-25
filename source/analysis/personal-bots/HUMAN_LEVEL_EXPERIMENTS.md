@@ -358,3 +358,26 @@ Adopted. Consecutive unadopted count resets to0;07 remains preserved as rejected
 Track A still has eight open boards; Track B has not started. Drawn back-role
 information planning is the next prepared strategy, requiring integration tests
 and its own development/full comparison.
+
+## Experiment09: plan to uncover drawn symbols on tile backs
+
+Preregistered: adopted08 plus drawnRoleInformation:true only. The actor predicts
+which symbols a route will expose, never their values or the concealed pictures.
+Actual observations provide those values. The user's certain-picture clarification
+remains: a deduction true in every publicly consistent world may enter trusted
+memory; sampled consensus may not. Existing actual-match inference retains proofs.
+
+All121 reference tests pass15s, native82092 exit0. New controls check ordinary and
+retry information routes, unknown orientations, concealed-picture invariance and
+independent production replay. The default adopted08 profile remains unchanged.
+Source379c955f3f43241b2b1b9dbc42164457a5f34c5e5a68ea8c134949cd0de8456c;
+candidate profilefed1cea23586b8d73b37590dcbe0f51a5c3e840ed2ae16859da087202ea06b32.
+
+Development selectionv5 keeps all38 levels and20 guards;10041 becomes a passing
+regression control. Selection1649eb3c5bb8ed21be4c442f5a0442204f820fede7dbbabd05d4e073c62c4574.
+Comparator: adopted08 full raw shards, sourcea1fb03cddd38de5dcaabe63420231a86cf268734a7f2ddaf06137fb442c353dd,
+profile7c0908b9755341f125f58cf96d22da1fd7793efc146d3bcbcf4e33f5b961f0ba.
+Refresh targets, run3 game workers, salt1 development; only a repair without any
+passing regression qualifies for full salts1-3. Same12-try, strict2s and replay
+gates. Mixed outcomes require public WHEN analysis. Counter before09 is0;
+rejection makes it1. Raw evidence: .codex-runs/level-measure/experiment-09/.
