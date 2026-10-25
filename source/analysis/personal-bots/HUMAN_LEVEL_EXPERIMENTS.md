@@ -381,3 +381,13 @@ Refresh targets, run3 game workers, salt1 development; only a repair without any
 passing regression qualifies for full salts1-3. Same12-try, strict2s and replay
 gates. Mixed outcomes require public WHEN analysis. Counter before09 is0;
 rejection makes it1. Raw evidence: .codex-runs/level-measure/experiment-09/.
+
+Final09 development:38/38 valid, all3 workers and parent29797 exit0. Slowest1503.3ms.
+
+| Scope | Repairs | Passing regressions | Other worsening | Decision |
+|---|---|---|---|---|
+|38 real boards, salt1|10033:>12 to3|102:3 to7;150:4 to6|10011:8 to>12|Reject unrestricted change|
+
+No full run dispatched. Default08 retained; consecutive unadopted count1. Compare
+actual09 public histories on10033,102,150 and the10011 worsening before fitting
+a condition with at most2 public features. Raw comparisons: when-drawn-role-v1/.
