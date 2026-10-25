@@ -3,6 +3,7 @@ const assert = require('assert/strict');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { performance } = require('perf_hooks');
 const { createMeasurer, measurementSource, normalizeBoard } = require('./human_level_measure.js');
 const { loadDevelopmentClears } = require('./human_reference_catalog.js');
 const { evaluate, evaluateTrackA } = require('./human_level_evaluation.js');
@@ -84,8 +85,14 @@ function run(input, planning, scope, shard, count, filename, salts = input.salts
     pid: process.pid, startedAt: new Date().toISOString() }) + '\n', { flag: 'wx' });
   let valid = true;
   for (const entry of entries) {
+    const started = performance.now();
+    const cpuStarted = process.cpuUsage();
     const measurement = measure(entry.game, { salts, maxTries: input.maxTries });
-    const record = { type: 'board', level: entry.lv, measurement };
+    const elapsedMs = performance.now() - started;
+    const cpu = process.cpuUsage(cpuStarted);
+    const cpuMs = (cpu.user + cpu.system) / 1000;
+    const record = { type: 'board', level: entry.lv, measurement,
+      execution: { elapsedMs, cpuMs, cpuSecondsPerWallSecond: cpuMs / Math.max(elapsedMs, 0.001), node: process.version } };
     fs.appendFileSync(output, JSON.stringify(record) + '\n');
     valid &&= measurement.valid;
   }
@@ -112,7 +119,11 @@ function summarize(input, files, scope = 'all', options = {}) {
   for (const header of headers) if (header.salts) assert.deepEqual(header.salts, summary.salts);
   assert.equal(summary.sourceHash, headers[0].sourceHash);
   assert.equal(summary.profileHash, headers[0].profileHash);
-  return { ...summary, catalogHash: input.hash, observedAt: input.observedAt, scope };
+  const cpuShares = records.map(record => record.execution?.cpuSecondsPerWallSecond).filter(Number.isFinite);
+  return { ...summary, catalogHash: input.hash, observedAt: input.observedAt, scope,
+    execution: { recordedBoards: cpuShares.length, meanCpuSecondsPerWallSecond: cpuShares.length
+      ? cpuShares.reduce((sum, share) => sum + share, 0) / cpuShares.length : null,
+    minimumCpuSecondsPerWallSecond: cpuShares.length ? Math.min(...cpuShares) : null } };
 }
 
 function renderReport(summary, title = 'Human-information real-board baseline') {

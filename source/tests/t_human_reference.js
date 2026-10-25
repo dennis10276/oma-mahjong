@@ -55,6 +55,8 @@ const modules = [
   'test_public_diverse_witness.js',
   'test_public_unique_cleanup.js',
   'test_public_exposure_frontier.js',
+  'test_public_drawn_role_frontier.js',
+  'test_public_key_identity_memory.js',
   'test_public_path_budget.js',
   'test_public_key_recovery.js',
   'test_public_key_access.js',
