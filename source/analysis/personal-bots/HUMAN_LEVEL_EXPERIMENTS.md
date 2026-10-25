@@ -481,3 +481,18 @@ strict2s/move,12 actual tries and independent production replay. Mixed outcomes
 require public WHEN diagnosis; do not reject without comparison. Default10 stays
 unchanged during testing. Counter before11 is0; rejection makes it1.
 Raw evidence: .codex-runs/level-measure/experiment-11/.
+
+Final11 development:38/38 valid; all3 native workers and parent31891 exit0.
+Slowest1502.5ms. No formerly passing development board broke, but no full
+Dennis+1 failure was repaired in this salt1 check. No full run dispatched.
+
+| Scope | Partial improvements | Other worsening | Gate repairs | Decision |
+|---|---|---|---|---|
+|38 real boards, salt1|10049:>12 to5;144:5 to4|10011:8 to>12|None|Do not adopt; diagnose mixed behavior|
+
+Actual transfer proofs were used:10049 had8353,144 had1306 and10011 had68276.
+These are query-level proof hits, not unique facts or accuracy measures. The
+improvements still miss their limits(10049<=3,144<=2). Default10 is retained;
+consecutive-unadopted count becomes1. All other development try counts match10.
+Compare actual public histories of144,10049 and10011 before selecting a WHEN
+condition or discarding the strategy. Raw comparisons: when-observed-safety-v1/.
