@@ -1,0 +1,14 @@
+{
+  "schema": "human-reference-winnable-redeal-protocol-v2",
+  "publishedBeforeDraws": "2026-10-25",
+  "sequence": "For split development or luck, board level L, draw D starting at1: SHA256 UTF8 human-reference-winnable-v2/<split>/<L>/<D>; read first4 bytes uint32LE; retain low31 bits; set high bit only for luck. Skip repeated seeds within the same board and split and record the skipped draw.",
+  "prefix": "human-reference-winnable-v2",
+  "developmentCount": 10,
+  "luckCount": 50,
+  "oracleNodeLimit": 200000,
+  "oracleTapMs": 1000,
+  "oracleSeed": 20261111,
+  "selection": "Accept only a winning exact full-information route independently replayed by original production. Reject exhaustive losses and node caps separately. Never condition on the human-information bot's score.",
+  "sanityGapPercentagePoints": 10,
+  "sanity": "Compare the same frozen human-information bot on real boards and accepted development redeals. An absolute gap above10 points must be reported before planner experiments. Historical real-board sanity reference141/155 must also be shown."
+}

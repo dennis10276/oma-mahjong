@@ -2,7 +2,7 @@
 
 ACTIVE and UNMET. Work on wip/personal-bots in personal-bot-review.
 Authoritative objective: attachment9080077f-6d85-47b8-9094-9b6b12fc0345.
-Theme: sunflower. No planner changes before the current-bot re-deal baseline.
+Theme: sunflower. User correction2026-10-25: re-deals must be certified winnable.
 
 ## Information and rules
 
@@ -25,19 +25,23 @@ Theme: sunflower. No planner changes before the current-bot re-deal baseline.
 
 ## Development benchmark and adoption
 
-- Publish fixed disjoint seeds first:10 development re-deals and50 luck re-deals.
+- Publish fixed disjoint draw streams first; select10 development and50 luck re-deals.
 - Preserve opening face-up visible facts; shuffle only hidden picture positions.
   Preserve picture multiset/pairs, roles, clock and geometry. Retries keep that re-deal.
-- First freeze the last accepted141/155 profile and current source; run all development
-  cases. One table: overall target rate and the rate of each failing board.
+- Benchmark-only full-information exact solver may inspect all facts. Accept only
+  production-replayed winning routes; discard exhaustive losses and capped draws.
+  Report draws/accepts/exhaustive losses/caps separately per board. No oracle data
+  reaches the human-information bot. Selection never depends on its performance.
+- Re-run frozen baseline on certified re-deals and real boards; show141/155 sanity
+  reference. Report a large gap before experimenting (predeclared>10 points).
 - Classify every target miss automatically. Only propose mechanisms targeting a
   loss class covering>=10% of losses. No mechanism from one board or trace.
 - Compare identical re-deals. Adopt only if overall paired improvement is>2SE and
   no board's rate drops by>10 percentage points. Up to12 independent workers.
 - After8 consecutive experiments without adoption, stop and report the table,
   loss types and prospective luck flags; the user decides continuation.
-- Keep an explicit experiment ledger. Historical salt-screen results are rejected
-  evidence under the previous measure, not gains under this benchmark.
+- Fresh batch authorized after solvability audit and baseline sanity. Up to8
+  experiments; twelve old salt screens do NOT count toward this stop rule.
 - Small commits on this branch. This file<=80 lines. One short table per experiment.
   New raw inputs/checkpoints/logs live in ignored .codex-runs/, not source/analysis.
 
@@ -56,12 +60,9 @@ Theme: sunflower. No planner changes before the current-bot re-deal baseline.
 
 ## Immediate work
 
-Baseline complete and valid:332/1550 targets (21.4%), natural320/1400, labs12/150.
-All12 workers exited0; unchanged source;88931 production-replayed taps; slowest1.508s.
-Full table: HUMAN_REDEAL_BASELINE.md. Raw checkpoints stay in .codex-runs/redeal-v1/.
-Losses: unseen-twin tray74.4%, immediate-safe-match available17.6%, other tray4.9%,
-clock3.1%. Only the first two classes qualify for new mechanisms. No luck flags.
-Retain the prior12 non-adoption streak. Await the user's continuation decision
-under the eight-experiment stop rule before more planner changes. Proposed next:
-up to8 paired experiments on public exploration/tray pressure and safe matches.
-No new planner mechanism or luck flag has been adopted under this objective.
+Unconditioned v1 baseline332/1550 is archived; it cannot be the new adoption baseline.
+All v1 workers exited0. User authorized solvability filtering, then a fresh batch.
+Build/test benchmark-only exact solver, publish draw streams, certify10 per board,
+re-run baseline and real-board sanity before experiments. Start with unseen-twin
+tray losses if they remain>=10% on certified re-deals. Fresh no-gain counter0.
+No planner change or luck flag has been adopted. Raw outputs remain in .codex-runs/.
