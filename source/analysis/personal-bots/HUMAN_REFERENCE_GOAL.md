@@ -70,4 +70,5 @@ Same bot real sanity141/155(91.0%);48.6-point material gap reported before exper
 Code/profile/try budgets/public context match; slowest certified move1.535s.
 Eligible losses: unseen twins634/893(71.0%,139 boards); safe-match misses200(22.4%).
 Fresh batch<=8 authorized; no-gain counter0. Fit pressure management first.
+Experiment01(235726c):patientSingleCarry=true;full1550-case paired run active.
 No planner change or luck flag adopted. Raw outputs remain in .codex-runs/.
