@@ -68,7 +68,7 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 - Old pipeline, runner and12 workers verified stopped; native session99870 exited1.
 - Seven old re-deal trials completed without adoption; trial08 cancelled incomplete
   and timing-invalid. These are not results under the new real-board gate.
-- detbot prototype reports complementary retry clears; audit and integration pending.
+- detbot audit recorded in HUMAN_DETBOT_RETRY_REVIEW.md; integration remains pending.
 - Corrected v2:148/155 clear all salts,145/155 within Dennis+1; all gates unmet.
-- Public memory/retry implementation passes113/113 tests; first new-gate trial pending.
+- Public memory/retry implementation passes113/113 tests; trial01 rejected, trial02 running.
 - Unlabeled lab61 API run cleared1/1/1; final-version recheck, new-gate trials and freeze remain incomplete.
