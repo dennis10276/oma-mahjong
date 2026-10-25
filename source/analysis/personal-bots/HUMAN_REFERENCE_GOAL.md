@@ -71,7 +71,7 @@ Code/profile/try budgets/public context match; slowest certified move1.535s.
 Eligible losses: unseen twins634/893(71.0%,139 boards); safe-match misses200(22.4%).
 Fresh batch<=8 authorized; no-gain counter4. Fit pressure management first.
 Experiment01:658/1550,+0.06points versus2SE0.89;board35-20points;not adopted.
-Eight public diagnostic boards reproduced misses; inspect earlier pressure choices.
+Experiment05:shortAll plus both pressure flags;full paired test next(5/8).
 Experiment02:656/1550,-0.06points versus2SE1.14;five boards>10-point loss;not adopted.
 Experiment03:670/1550,+0.84points versus2SE1.29;three boards>10-point loss;not adopted.
 Experiment04:649/1550,-0.52points versus2SE1.18;four boards>10-point loss;not adopted.
