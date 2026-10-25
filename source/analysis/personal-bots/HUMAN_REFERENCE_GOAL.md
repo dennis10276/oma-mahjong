@@ -70,5 +70,5 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
   and timing-invalid. These are not results under the new real-board gate.
 - detbot audit recorded in HUMAN_DETBOT_RETRY_REVIEW.md; integration remains pending.
 - Corrected v2:148/155 clear all salts,145/155 within Dennis+1; all gates unmet.
-- Public memory/retry implementation passes113/113 tests; trial01 rejected, trial02 running.
+- 114/114 tests pass; trial01 rejected,02 disqualified(collecting last board),03 running.
 - Unlabeled lab61 API run cleared1/1/1; final-version recheck, new-gate trials and freeze remain incomplete.
