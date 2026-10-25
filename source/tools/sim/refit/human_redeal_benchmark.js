@@ -129,6 +129,7 @@ function summarize(manifest, workers) {
   const boards = manifest.entries.map(entry => {
     const selected = rows.filter(row => row.level === entry.level), wins = selected.filter(row => row.targetMet).length;
     return { level: entry.level, kind: entry.kind, human: entry.human, target: entry.target,
+      boardSource: entry.boardSource, historicalBoardExact: entry.historicalBoardExact,
       completed: selected.length, wins, rate: selected.length === manifest.developmentSeeds.length
         ? wins / manifest.developmentSeeds.length : null };
   });
@@ -153,10 +154,11 @@ function renderReport(report, comparison = null) {
     '| Board | Group | Dennis | Target | Clears/done | Target rate |', '|---:|---|---:|---:|---:|---:|',
     `|Overall|all|—|—|${report.rows.filter(row => row.targetMet).length}/${report.completed}|${report.targetRate === null ? 'pending' : (report.targetRate * 100).toFixed(1) + '%'}|`];
   for (const board of report.boards.filter(board => board.wins < 10)) lines.push(
-    `|${board.level}|${board.kind}|${board.human}|${board.target}|${board.wins}/${board.completed}|${board.rate === null ? 'pending' : (board.rate * 100).toFixed(0) + '%'}|`);
+    `|${board.level}${board.historicalBoardExact === false ? '†' : ''}|${board.kind}|${board.human}|${board.target}|${board.wins}/${board.completed}|${board.rate === null ? 'pending' : (board.rate * 100).toFixed(0) + '%'}|`);
   lines.push('', `Slowest move: ${report.slowestMs.toFixed(1)}ms. Every accepted tap independently replays original production.`,
     'Loss types: ' + report.lossTypes.map(row => `${row.type} ${row.count} (${(row.share * 100).toFixed(1)}%${row.eligibleForChange ? ', eligible >=10%' : ''})`).join('; ') + '.',
     'No luck flags are established by this10-re-deal development run. Missing cases and computation caps are not proofs of impossibility.');
+  lines.push('† Original opening unavailable: the authorized version/current definition is used, with provenance retained in the manifest.');
   if (comparison) lines.push(`Paired gain: ${(comparison.improvement * 100).toFixed(2)} points; SE: ${comparison.standardError === null ? 'unavailable' : (comparison.standardError * 100).toFixed(2)} points; adopted: ${comparison.adopted}.`,
     comparison.method, `Boards losing >10 points: ${comparison.excessiveDrops.map(row => row.level).join(', ') || 'none'}.`);
   return lines.join('\n') + '\n';
@@ -172,6 +174,7 @@ function sourceFingerprint() {
 
 function beginExperiment(ledger, baseline, id, lossType) {
   assert(baseline.complete && baseline.valid, 'Finish and validate the baseline before a planner experiment');
+  assert(!ledger.stopRequired, 'Experiment stop rule requires a user continuation decision');
   assert(ledger.manifestHash === baseline.manifestHash && !ledger.experiments.some(row => row.id === id));
   assert(ledger.consecutiveNoGain + ledger.experiments.filter(row => row.status === 'running').length < 8,
     'Eight-experiment stop rule: report and wait for the user');
@@ -181,6 +184,7 @@ function beginExperiment(ledger, baseline, id, lossType) {
 }
 
 function finishExperiment(ledger, id, baseline, candidate) {
+  assert.equal(ledger.manifestHash, baseline.manifestHash);
   const experiment = ledger.experiments.find(row => row.id === id);
   assert(experiment?.status === 'running');
   const comparison = pairedComparison(baseline, candidate);
@@ -212,16 +216,24 @@ async function main(command, ...args) {
     fs.writeFileSync(args[1], JSON.stringify(manifest), { flag: 'wx' });
     console.log(JSON.stringify({ manifestHash: manifest.hash, boards: manifest.entries.length, cases: casesOf(manifest).length, theme: manifest.theme.id })); return;
   }
-  if (command === 'run') {
+  if (command === 'run' || command === 'resume') {
     assert.equal(args.length, 5);
     const [manifestFile, profileFile, shardText, countText, output] = args;
-    assertRawOutput(output); assert(!fs.existsSync(output));
+    assertRawOutput(output); assert(command === 'resume' || !fs.existsSync(output));
     const manifest = JSON.parse(fs.readFileSync(manifestFile)), planning = JSON.parse(fs.readFileSync(profileFile));
     validateManifest(manifest); const source = sourceFingerprint();
     const header = { type: 'header', manifestHash: manifest.hash, profileHash: digest(planning), sourceHash: source.hash,
-      sourceFiles: source.files, shard: Number(shardText), count: Number(countText), startedAt: new Date().toISOString() };
-    fs.writeFileSync(output, JSON.stringify(header) + '\n', { flag: 'wx' }); console.log(JSON.stringify(header));
-    runShard(manifest, planning, header.shard, header.count, { emit(row) {
+      sourceFiles: source.files, shard: Number(shardText), count: Number(countText), pid: process.pid, startedAt: new Date().toISOString() };
+    const completed = new Set();
+    if (command === 'resume') {
+      const existing = readWorker(output); assert(!existing.footer, 'An ended worker must not be resumed');
+      for (const field of ['manifestHash', 'profileHash', 'sourceHash', 'shard', 'count']) assert.equal(existing.header[field], header[field]);
+      const assigned = new Set(casesOf(manifest).filter((task, index) => index % header.count === header.shard).map(task => task.caseId));
+      for (const row of existing.rows) { assert(assigned.has(row.caseId) && !completed.has(row.caseId)); completed.add(row.caseId); }
+    } else fs.writeFileSync(output, JSON.stringify(header) + '\n', { flag: 'wx' });
+    console.log(JSON.stringify({ type: 'started', manifestHash: header.manifestHash,
+      profileHash: header.profileHash, sourceHash: header.sourceHash, shard: header.shard, count: header.count, completed: completed.size }));
+    runShard(manifest, planning, header.shard, header.count, { completed, emit(row) {
       assert.equal(source.fingerprint(), source.hash, 'Loaded source changed during the frozen benchmark');
       fs.appendFileSync(output, JSON.stringify({ type: 'case', ...row }) + '\n');
       console.log(JSON.stringify({ caseId: row.caseId, targetMet: row.targetMet, bot: row.bot, loss: row.loss?.primary }));
