@@ -62,6 +62,8 @@ const modules = [
   'test_human_information_options.js',
   'test_public_diverse_picture_sampler.js',
   'test_public_filled_search.js',
+  'test_human_redeal_oracle.js',
+  'test_human_redeal_winnable.js',
   'test_public_hypothesis_rollout.js',
   'test_public_known_legal_cache.js',
   'test_public_budgeted_hypotheses.js',

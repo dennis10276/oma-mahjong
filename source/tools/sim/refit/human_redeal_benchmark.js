@@ -9,6 +9,7 @@ const { publicContextFor } = require('./human_reference_screen.js');
 const { loadRecordedClears } = require('./human_reference_catalog.js');
 const { digest, targetTries, sunflowerTheme, makeRedeal, classifyLoss } = require('./human_redeal.js');
 const seeds = require('./human_redeal_seeds.json');
+const { drawSeed, protocol: winnableProtocol } = require('./human_redeal_draws.js');
 const root = path.resolve(__dirname, '../../..');
 
 function assertRawOutput(filename) {
@@ -37,21 +38,40 @@ function makeManifest(catalog) {
 
 function validateManifest(manifest) {
   const { hash, ...payload } = manifest;
-  assert.equal(hash, digest(payload)); assert.equal(manifest.schema, 'human-reference-redeal-manifest-v1');
+  assert.equal(hash, digest(payload));
+  const certified = manifest.schema === 'human-reference-winnable-manifest-v2';
+  assert(certified || manifest.schema === 'human-reference-redeal-manifest-v1');
   assert.equal(manifest.theme.id, 'sunflower'); assert.equal(manifest.theme.sourceHash, sunflowerTheme().sourceHash);
-  assert.equal(manifest.seedManifestHash, digest(seeds)); assert.deepEqual(manifest.developmentSeeds, seeds.development);
-  assert.deepEqual(manifest.luckSeeds, seeds.luck);
+  if (certified) {
+    assert.equal(manifest.seedManifestHash, digest(winnableProtocol));
+    assert.equal(manifest.selection.protocolHash, digest(winnableProtocol));
+  } else {
+    assert.equal(manifest.seedManifestHash, digest(seeds)); assert.deepEqual(manifest.developmentSeeds, seeds.development);
+    assert.deepEqual(manifest.luckSeeds, seeds.luck);
+  }
   assert(new Set(manifest.entries.map(entry => entry.level)).size === manifest.entries.length);
   for (const entry of manifest.entries) {
     assert.equal(entry.boardHash, digest(entry.game)); assert.equal(entry.target, targetTries(entry.human));
     assert(entry.level !== 10031); decodeGame(entry.game);
+    if (certified) for (const split of ['development', 'luck']) {
+      const accepted = entry.redeals[split];
+      assert(Array.isArray(accepted));
+      assert.equal(accepted.length, split === 'development' ? winnableProtocol.developmentCount
+        : manifest.selection.luckComplete ? winnableProtocol.luckCount : 0);
+      assert.equal(new Set(accepted.map(row => row.seed)).size, accepted.length);
+      for (const row of accepted) {
+        assert.equal(row.seed, drawSeed(entry.level, split, row.draw));
+        assert(row.productionVerified && row.witnessHash);
+        assert.equal(row.gameHash, digest(makeRedeal(entry.game, row.seed).game));
+      }
+    }
   }
 }
 
 function casesOf(manifest, split = 'development') {
   assert(['development', 'luck'].includes(split));
-  const values = split === 'development' ? manifest.developmentSeeds : manifest.luckSeeds;
-  return manifest.entries.flatMap(entry => values.map((seed, index) => ({ entry, seed,
+  return manifest.entries.flatMap(entry => (entry.redeals ? entry.redeals[split].map(row => row.seed)
+    : split === 'development' ? manifest.developmentSeeds : manifest.luckSeeds).map((seed, index) => ({ entry, seed,
     ordinal: index + 1, split, caseId: entry.level + ':' + split + ':' + (index + 1) })));
 }
 
@@ -128,15 +148,16 @@ function summarize(manifest, workers) {
   }
   const boards = manifest.entries.map(entry => {
     const selected = rows.filter(row => row.level === entry.level), wins = selected.filter(row => row.targetMet).length;
+    const expectedCount = entry.redeals ? entry.redeals.development.length : manifest.developmentSeeds.length;
     return { level: entry.level, kind: entry.kind, human: entry.human, target: entry.target,
       boardSource: entry.boardSource, historicalBoardExact: entry.historicalBoardExact,
-      completed: selected.length, wins, rate: selected.length === manifest.developmentSeeds.length
-        ? wins / manifest.developmentSeeds.length : null };
+      completed: selected.length, wins, rate: selected.length === expectedCount ? wins / expectedCount : null };
   });
   const counts = {};
   for (const row of rows.filter(row => !row.targetMet)) counts[row.loss.primary] = (counts[row.loss.primary] ?? 0) + 1;
   const losses = rows.filter(row => !row.targetMet).length;
   return { schema: 'human-reference-redeal-summary-v1', manifestHash: manifest.hash, theme: manifest.theme.id,
+    selection: manifest.selection ?? null,
     profileHash: workers[0].header.profileHash, sourceHash: workers[0].header.sourceHash,
     expected: expected.size, completed: rows.length, complete: rows.length === expected.size,
     valid: workers.every(worker => worker.footer?.sourceUnchanged) && rows.every(row => row.valid),
@@ -148,17 +169,26 @@ function summarize(manifest, workers) {
 }
 
 function renderReport(report, comparison = null) {
+  const draws = report.selection?.statistics?.development;
+  const drawColumns = draws ? ' Draws | Proven losses | Node caps |' : '';
+  const totals = draws ? [draws.reduce((sum, row) => sum + row.draws, 0),
+    draws.reduce((sum, row) => sum + row.lost, 0), draws.reduce((sum, row) => sum + row.capped, 0)] : [];
   const lines = ['# Sunflower re-deal benchmark', '',
     `Complete: ${report.complete}; valid: ${report.valid}; completed ${report.completed}/${report.expected}.`,
     `Manifest: ${report.manifestHash}; profile: ${report.profileHash}; source: ${report.sourceHash}.`, '',
-    '| Board | Group | Dennis | Target | Clears/done | Target rate |', '|---:|---|---:|---:|---:|---:|',
-    `|Overall|all|—|—|${report.rows.filter(row => row.targetMet).length}/${report.completed}|${report.targetRate === null ? 'pending' : (report.targetRate * 100).toFixed(1) + '%'}|`];
-  for (const board of report.boards.filter(board => board.wins < 10)) lines.push(
-    `|${board.level}${board.historicalBoardExact === false ? '†' : ''}|${board.kind}|${board.human}|${board.target}|${board.wins}/${board.completed}|${board.rate === null ? 'pending' : (board.rate * 100).toFixed(0) + '%'}|`);
+    '| Board | Group | Dennis | Target | Clears/done | Target rate |' + drawColumns,
+    '|---:|---|---:|---:|---:|---:|' + (draws ? '---:|---:|---:|' : ''),
+    `|Overall|all|—|—|${report.rows.filter(row => row.targetMet).length}/${report.completed}|${report.targetRate === null ? 'pending' : (report.targetRate * 100).toFixed(1) + '%'}|` + (draws ? totals.join('|') + '|' : '')];
+  for (const board of report.boards.filter(board => draws || board.wins < 10)) {
+    const selected = draws?.find(row => row.level === board.level);
+    lines.push(`|${board.level}${board.historicalBoardExact === false ? '†' : ''}|${board.kind}|${board.human}|${board.target}|${board.wins}/${board.completed}|${board.rate === null ? 'pending' : (board.rate * 100).toFixed(0) + '%'}|`
+      + (selected ? [selected.draws, selected.lost, selected.capped].join('|') + '|' : ''));
+  }
   lines.push('', `Slowest move: ${report.slowestMs.toFixed(1)}ms. Every accepted tap independently replays original production.`,
     'Loss types: ' + report.lossTypes.map(row => `${row.type} ${row.count} (${(row.share * 100).toFixed(1)}%${row.eligibleForChange ? ', eligible >=10%' : ''})`).join('; ') + '.',
     'No luck flags are established by this10-re-deal development run. Missing cases and computation caps are not proofs of impossibility.');
   lines.push('† Original opening unavailable: the authorized version/current definition is used, with provenance retained in the manifest.');
+  if (draws) lines.push('Every selected re-deal has a full-information winning route replayed through production. Node caps are discarded unresolved draws, not proofs of loss; acceptance frequency is a capped-solver certification rate, not an exact estimate of solvability. Selection does not use the human-information bot score.');
   if (comparison) lines.push(`Paired gain: ${(comparison.improvement * 100).toFixed(2)} points; SE: ${comparison.standardError === null ? 'unavailable' : (comparison.standardError * 100).toFixed(2)} points; adopted: ${comparison.adopted}.`,
     comparison.method, `Boards losing >10 points: ${comparison.excessiveDrops.map(row => row.level).join(', ') || 'none'}.`);
   return lines.join('\n') + '\n';

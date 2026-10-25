@@ -1,5 +1,35 @@
 # Human-information re-deal benchmark
 
+The user's2026-10-25 correction supersedes unconditioned v1 selection and the old
+history counter. Re-deals must be certified winnable. The twelve old salt-screen
+experiments are archived and excluded from a fresh batch of up to eight experiments.
+The v1 score332/1550 is retained as an unconditioned diagnostic, not an adoption base.
+
+human_redeal_winnable_protocol.json was committed before real candidate draws.
+It publishes deterministic per-board draw streams with disjoint development/luck
+seed ranges and a200000-node exact DFS cap. The benchmark-only oracle knows all
+pictures and roles. It enumerates every legal physical tap, handles automatic
+Joker transitions using production, and independently replays every winning route.
+Exhausted losses and capped unresolved draws are discarded separately. Continue
+the fixed stream until10 development or50 luck witnesses have been accepted per
+board. Keep per-draw checkpoints and per-board draw/loss/cap counts outside analysis.
+Acceptance rates are certification rates, not exact solvability probabilities when
+capped draws remain. Selection never uses the public bot's performance.
+
+Build with human_redeal_winnable.js build <v1-manifest> development <shard>12 <output>.
+Use resume only after the original process has ended. Assemble all finished shards
+with human_redeal_winnable.js assemble <input-manifest> development <new-manifest>
+<shard-files...>. The luck split later extends that certified development manifest.
+Witness paths stay in the oracle sidecars; bot cases receive their usual game and
+public provenance only. V2 manifests retain hashes and selected seeds for auditing.
+
+Re-run the frozen public baseline on certified development boards and on real
+boards. Show the historical141/155 real-board reference too. A gap above10 percentage
+points is predeclared material and must be reported before planner experiments.
+After the solvability audit and sanity check, the user authorized the fresh batch.
+
+The remaining text describes retained v1 provenance and shared benchmark controls.
+
 The authoritative goal is the sunflower re-deal objective in attachment
 9080077f-6d85-47b8-9094-9b6b12fc0345. The working branch is wip/personal-bots.
 
