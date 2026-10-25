@@ -3,6 +3,13 @@
 Complete: true; valid: true; completed 1550/1550.
 Manifest: da3d05314eb24d6f8068e3eef40ec2f576a8c69aec4fc66690ffa901a4e87efc; profile: e7aba7de99b0a770c7ed6873942d06e4533d6c8d6cd0e4b82fd80c34c39c536e; source: 0f95e4a5587f2be5725076d16e4cba70b8cfff047303edf9fd337b2ab0e3c968.
 
+The exact selected draw ordinals, seeds and game hashes are committed in
+[human_redeal_winnable_development_seeds.json](../../tools/sim/refit/human_redeal_winnable_development_seeds.json).
+All1550 seeds were checked against the prepublished SHA256 stream; every board has10 ordered,
+production-verified wins, and all draw/loss/cap totals reconcile. Export SHA256:
+beda47937ad627464e41d2b09fc27b3d0c2bba3299bf4c3ca3e75acb92f920a9.
+This benchmark-only file never enters the policy. The disjoint luck stream remains unselected.
+
 | Board | Group | Dennis | Target | Clears/done | Target rate | Draws | Proven losses | Node caps |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
 |Overall|all|—|—|657/1550|42.4%|82859|77920|3389|
