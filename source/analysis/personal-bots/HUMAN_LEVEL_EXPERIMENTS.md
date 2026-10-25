@@ -30,4 +30,30 @@ all independent replays valid and every move under2s. Default profile remains
 unchanged until full qualification. A valid rejection counts as one unadopted trial.
 
 Raw profiles, frozen source bytes, native process exits, action sequences and
-summaries: .codex-runs/level-measure/experiment-01/. State and outcomes pending.
+summaries: .codex-runs/level-measure/experiment-01/.
+
+Result: valid30-board development check, no fixes and no regressions. Every
+try count matched baseline. Slowest1504ms; mean1.825 minutes/development board.
+All12 native workers closed0; supervisor session64218 exited0. All4722 extra
+search opportunities had incomplete public picture memory, so no complete search
+ran and no route was changed. Increasing its node/time budget cannot address this
+particular bottleneck. Rejected; default unchanged; one consecutive unadopted trial.
+
+| Trial | Change | Boards | Fixed | Broken | Slowest | Decision |
+|---|---|---:|---:|---:|---:|---|
+|01|Complete-memory retry witness|30|0|0|1504ms|Reject; incomplete memory|
+
+## Experiment02: clock recovery before deeper digging
+
+Pre-run design: baseline profile plus clockRecovery=true, with no other profile
+change. Existing strategy evaluates known recovery depth and tray pressure before
+deeper clock digging when the public clock budget has more than two spare moves
+over the route lower bound. Tight clocks and nonclock play retain their existing
+logic. This tests whether improving preparation helps reach unexplored tiles
+without filling the tray. Complete-memory trial01 remains an unadopted candidate.
+
+Same baseline-v2 comparator,30-board selection/hash, salts and adoption conditions
+as trial01. Existing clock-recovery production tests and hidden-world invariance
+checks are included in the passing113-test suite. No source code changes since
+aa610a7; source3c87db493e0d3d28c865f624e110743b380d570f49d5fd921d074e34c562be01.
+Raw profile and outputs: .codex-runs/level-measure/experiment-02/. Outcome pending.
