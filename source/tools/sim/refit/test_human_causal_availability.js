@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const { withholdClosedRoles } = require('./fixtures/withheld_roles.js');
 const vm = require('vm');
 const Layouts = require('../../../www/layouts.js');
 const { createHumanController, visibleRole, verifyAttempt, playHumanCampaign } = require('./human_reference_campaign.js');
@@ -21,7 +22,7 @@ function test() {
     const observe = session => {
       const state = session.view().state;
       const observed = observeBoard(tiles, state, null,
-        { picture: index => actual.faces[index], role: index => visibleRole(actual, state, index) });
+        { picture: index => actual.faces[index], role: withholdClosedRoles(state, index => visibleRole(actual, state, index)) });
       controller.observe(state, observed); return observed;
     };
     const perform = (session, index) => {

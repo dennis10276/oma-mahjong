@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const { withholdClosedRoles } = require('./fixtures/withheld_roles.js');
 const Layouts = require('../../../www/layouts.js');
 const { observeBoard } = require('./human_board_visibility.js');
 const { visibleRole, createHumanController } = require('./human_reference_campaign.js');
@@ -13,7 +14,7 @@ function problemFrom(actual, actions = [], boardMode = 'standard', rejected = nu
   const observe = () => {
     const state = session.view().state;
     const observed = observeBoard(actual.tiles, state, actual.clock,
-      { picture: index => actual.faces[index], role: index => visibleRole(actual, state, index) });
+      { picture: index => actual.faces[index], role: withholdClosedRoles(state, index => visibleRole(actual, state, index)) });
     observed.pictures.forEach((picture, index) => { if (picture !== null) memory[index] = picture; });
     observed.down.forEach((value, index) => { if (value !== null) orientation[index] = value; });
     observed.roles.forEach((role, index) => {

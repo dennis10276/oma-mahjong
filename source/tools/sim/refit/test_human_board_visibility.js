@@ -9,11 +9,11 @@ function test() {
   const state = { alive: [1, 1, 1, 1], down: [0, 1, 0, 0], openPeek: -1, moves: 3 };
   const clock = { i: 0, n: 12 }, reads = [];
   const readers = { picture(index) { assert([2, 3].includes(index)); reads.push(index); return 7; },
-    role(index) { assert([2, 3].includes(index)); return 'none'; } };
+    role(index) { assert([1, 2, 3].includes(index)); return 'none'; } };
   const observed = observeBoard(tiles, state, clock, readers);
   assert.deepEqual(reads, [2, 3]);
   assert.deepEqual(observed.pictures, [null, null, 7, 7]);
-  assert.deepEqual(observed.roles, [null, null, 'none', 'none']);
+  assert.deepEqual(observed.roles, [null, 'none', 'none', 'none']);
   assert.deepEqual(observed.down, [null, 1, 0, 0]);
   assert.deepEqual(observed.clock, { i: 0, n: 12, remaining: 9 });
   assert(tileVisibility(tiles, { ...state, openPeek: 1 }, clock).tiles[1].picture);
@@ -26,7 +26,7 @@ function test() {
     tiles.map((tile, index) => ({ index })), { ...REFERENCE_PARAMETERS, pruneDead: false, trayRecovery: false });
   assert(!planned.knownDead); assert(!planned.knownWin);
   assert(planned.unknownTransitions > 0, 'Remembered pictures cannot bypass unknown mechanical roles');
-  console.log('PASS one game-state visibility gate permits covered clock badges and exposed edges, hides covered/closed pictures and roles, and stops hypothetical routes at unknown roles');
+  console.log('PASS one game-state visibility gate permits back overlays, covered clock badges and exposed edges, hides covered/back pictures and occluded roles, and stops hypothetical routes at unknown roles');
 }
 
 if (require.main === module) test();

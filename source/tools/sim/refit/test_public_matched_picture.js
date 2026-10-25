@@ -20,7 +20,7 @@ function test() {
       clock: kind === 'terminal' ? { i: 4, n: 2 } : null };
     const session = factory(actual, settings); session.tap(0);
     const raw = session.view().state;
-    const board = observeBoard(tiles, raw, actual.clock, { picture: index => actual.faces[index], role: () => 'none' });
+    const board = observeBoard(tiles, raw, actual.clock, { picture: index => actual.faces[index], role: index => index === 1 ? null : 'none' });
     const before = { ...outcome(raw), down: board.down, pictures: board.pictures };
     assert.equal(before.pictures[1], null); assert.equal(before.down[1], 1);
     const after = session.tap(1), publicResult = outcome(after.state);
@@ -40,14 +40,14 @@ function test() {
     down: [0, 1, 0, 0, 0, 0, 1, 1], rules: null, clock: { i: 4, n: 2 } };
   const session = factory(actual, settings), controller = createHumanController(tiles, { exclusiveRoles: true });
   const observe = frame => controller.observe({ ...outcome(frame.state), relieved: frame.state.relieved, arriving: frame.state.arriving },
-    observeBoard(tiles, frame.state, actual.clock, { picture: index => actual.faces[index], role: () => 'none' }));
+    observeBoard(tiles, frame.state, actual.clock, { picture: index => actual.faces[index], role: index => index === 1 ? null : 'none' }));
   controller.beginAttempt(); observe(session.view());
   for (const index of [0, 1]) { controller.decide(); controller.acknowledge(index, true); observe(session.tap(index)); }
   assert.equal(session.view().why, 'clock');
   assert.equal(controller.known().pictures[1], 1, 'A closed tile matched immediately before losing must remain remembered');
   assert.equal(controller.known().initialRoles[1], null, 'Matching does not disclose the hidden key/ice/lock role');
   controller.beginAttempt(); const restarted = factory(actual, settings);
-  const hiddenBoard = observeBoard(tiles, restarted.view().state, actual.clock, { picture: index => actual.faces[index], role: () => 'none' });
+  const hiddenBoard = observeBoard(tiles, restarted.view().state, actual.clock, { picture: index => actual.faces[index], role: index => index === 1 ? null : 'none' });
   assert.equal(hiddenBoard.pictures[1], null); observe(restarted.view());
   assert.equal(controller.known().pictures[1], 1); assert.equal(controller.known().initialRoles[1], null);
   factory.verifySource();

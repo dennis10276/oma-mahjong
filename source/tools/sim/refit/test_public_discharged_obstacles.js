@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const { withholdClosedRoles } = require('./fixtures/withheld_roles.js');
 const Layouts = require('../../../www/layouts.js');
 const { createObstacleFrontier } = require('./public_obstacle_frontier.js');
 const { createSessionFactory } = require('./production_physical_session.js');
@@ -42,7 +43,7 @@ function test() {
     for (const index of [3, 4, 1, 2]) session.tap(index);
     const state = session.view().state;
     const observed = observeBoard(tiles, state, null,
-      { picture: index => game.faces[index], role: index => visibleRole(game, state, index) });
+      { picture: index => game.faces[index], role: withholdClosedRoles(state, index => visibleRole(game, state, index)) });
     assert.equal(observed.pictures[0], null); assert.equal(observed.roles[0], null);
     assert(session.view().legalTiles.includes(0));
     session.tap(0); session.tap(5); assert(session.view().win);

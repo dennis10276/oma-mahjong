@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const Layouts = require('../../../www/layouts.js');
 const geometryCache = new WeakMap();
 
 function visibilityGeometry(tiles) {
@@ -15,7 +16,7 @@ function visibilityGeometry(tiles) {
   const occluders = boxes.map(box => boxes.flatMap((cover, index) => !finite
     || cover.order > box.order && cover.left < box.right && cover.right > box.left
       && cover.top < box.bottom && cover.bottom > box.top ? [index] : []));
-  const compiled = { signature, boxes, occluders };
+  const compiled = { signature, boxes, occluders, neighbors: Layouts.neighbors(tiles) };
   geometryCache.set(tiles, compiled); return compiled;
 }
 
@@ -50,7 +51,7 @@ function tileVisibility(tiles, state, clock, requested = null) {
     ]);
     const overlayExposed = exposedRegion([[box.left + 0.15, box.top + 0.15, box.left + 0.85, box.top + 1.09]]);
     const faceUp = exposed && (!state.down[index] || state.openPeek === index);
-    return { orientation: exposed, picture: faceUp, role: overlayExposed && faceUp };
+    return { orientation: exposed, picture: faceUp, role: overlayExposed };
   });
   return { tiles: tilesVisible, clock: clock && state.alive[clock.i]
     ? { i: clock.i, n: clock.n, remaining: Math.max(0, clock.n - state.moves) } : null };
@@ -62,7 +63,11 @@ function observeBoard(tiles, state, clock, readers) {
   const roles = visibility.tiles.map((visible, index) => visible.role ? readers.role(index) : null);
   assert(pictures.every(picture => picture === null || Number.isInteger(picture) && picture >= 0 && picture <= 101));
   assert(roles.every(role => role === null || ['none', 'ice', 'ice2', 'lock', 'key'].includes(role)));
-  return { pictures, roles, clock: visibility.clock,
+  const neighbors = readers.takeable ? visibilityGeometry(tiles).neighbors : null;
+  const takeable = readers.takeable ? tiles.map((tile, index) => state.alive[index]
+    && Layouts.isFree(index, state.alive, neighbors) ? readers.takeable(index) : null) : null;
+  assert(takeable === null || takeable.every(value => value === null || typeof value === 'boolean'));
+  return { pictures, roles, clock: visibility.clock, ...(takeable ? { takeable } : {}),
     down: visibility.tiles.map((visible, index) => visible.orientation ? state.down[index] : null) };
 }
 

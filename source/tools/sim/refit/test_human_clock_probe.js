@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const { withholdClosedRoles } = require('./fixtures/withheld_roles.js');
 const Layouts = require('../../../www/layouts.js');
 const { createHumanController, playHumanCampaign, visibleRole, verifyAttempt } = require('./human_reference_campaign.js');
 const { observeBoard } = require('./human_board_visibility.js');
@@ -14,7 +15,7 @@ function test() {
   const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 64 };
   const observe = (controller, actual, state, hideClockRole = false) => {
     const board = observeBoard(tiles, state, actual.clock,
-      { picture: index => actual.faces[index], role: index => visibleRole(actual, state, index) });
+      { picture: index => actual.faces[index], role: withholdClosedRoles(state, index => visibleRole(actual, state, index)) });
     if (hideClockRole) board.roles[actual.clock.i] = null;
     controller.observe(Object.fromEntries(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving', 'physicalTaps']
       .map(field => [field, state[field]])), board);
@@ -47,7 +48,7 @@ function test() {
   assert.equal(blockedController.known().initialRoles[6], null, 'A rejected clock probe does not identify ice versus lock');
   assert.notEqual(blockedController.decide().plan.index, 6, 'An unchanged blocked clock cannot be probed repeatedly');
   const unlocked = playHumanCampaign(locked, { planning, publicContext: { boardMode: 'lab' }, maximumAttempts: 1 });
-  assert.equal(unlocked.wonOn, 1); assert(unlocked.rejected >= 1);
+  assert.equal(unlocked.wonOn, 1); assert.equal(unlocked.rejected, 0, 'Public takeability avoids probing a visibly blocked clock');
   assert.equal(unlocked.verifiedTaps, unlocked.attempts[0].taps);
   const pressured = { ...game, faces: [1, 2, 9, 3, 1, 2, 9, 3], down: tiles.map(() => 0) };
   for (const limit of [1, 2]) {

@@ -34,7 +34,7 @@ function referenceVisibility(tiles, state, clock, requested = null) {
       [box.left + 0.05, box.top + 0.15, box.left + 1 + 0.085 - 0.03, box.top + 1.09] ]);
     const overlay = exposed([[box.left + 0.15, box.top + 0.15, box.left + 0.85, box.top + 1.09]]);
     const picture = orientation && (!state.down[index] || state.openPeek === index);
-    return { orientation, picture, role: overlay && picture };
+    return { orientation, picture, role: overlay };
   });
   return { tiles: visible, clock: clock && state.alive[clock.i]
     ? { i: clock.i, n: clock.n, remaining: Math.max(0, clock.n - state.moves) } : null };

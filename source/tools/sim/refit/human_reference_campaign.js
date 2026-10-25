@@ -31,8 +31,11 @@ const { informationActions } = require('./public_information_actions.js');
 const { saltedPublicSeed } = require('./public_sampling_seed.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
+const { publicActionOrder } = require('./public_action_order.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
+  assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
+    && options.publicActionSalt > 0 && options.publicActionSalt <= 0x7fffffff);
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -115,6 +118,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     confidenceDecisions: 0, confidenceOverrides: 0, confidenceSuppressed: 0 };
   const hypothesisVisits = options.hypothesisSampling ? createPublicActionVisits() : null;
   let decisionPosition = null;
+  let observedTakeable = null, observedAliveKey = null, observedArrivingKey = null;
   let pendingInformationAction = null;
   const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles });
   const physicalSignature = position => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
@@ -153,6 +157,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     beginAttempt() {
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
+      observedTakeable = null; observedAliveKey = null; observedArrivingKey = null;
       lastAcceptedIndex = null;
       retryRiskMemory?.beginAttempt();
       blockedTapMemory?.beginAttempt();
@@ -207,6 +212,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       clearedRoleMemory?.observe(state, observed.roles);
       current = { ...structuredClone(state), down: down.map((value, index) => state.alive[index] ? value : 0),
         pictures: pictures.map((picture, index) => state.alive[index] ? picture : null) };
+      assert(observed.takeable === undefined || Array.isArray(observed.takeable)
+        && observed.takeable.length === tiles.length && observed.takeable.every(value => value === null || typeof value === 'boolean'));
+      observedTakeable = observed.takeable?.slice() ?? null;
+      if (observedTakeable) acceptedTapMemory?.observeAvailable(observedTakeable, state);
+      observedAliveKey = aliveSignature(state.alive);
+      observedArrivingKey = (state.arriving ?? []).join(',');
       const aliveKey = state.alive.join('');
       if (aliveKey !== blockedAlive) { blocked.clear(); blockedAlive = aliveKey; }
       const signature = roles.join(',');
@@ -220,8 +231,17 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const observedKeys = initialRoles.flatMap((role, index) => role === 'key' ? [index] : []);
       geometry.publicFrontier = position => {
         Object.freeze(position.alive);
-        const aliveKey = aliveSignature(position.alive), cacheKey = +!!position.relieved + '|' + +(position.tray.length < Layouts.SLOTS) + '|' + aliveKey;
+        const aliveKey = aliveSignature(position.alive);
+        const sameObserved = !!observedTakeable && aliveKey === observedAliveKey && position.moves === current.moves
+          && position.openPeek === current.openPeek && !!position.relieved === !!current.relieved
+          && position.tray.join(',') === current.tray.join(',') && (position.arriving ?? []).join(',') === observedArrivingKey;
+        const cacheKey = +!!position.relieved + '|' + +(position.tray.length < Layouts.SLOTS) + '|' + aliveKey + '|observed:' + +sameObserved;
         if (frontierCache.has(cacheKey)) return frontierCache.get(cacheKey);
+        if (sameObserved) {
+          const result = { free: observedTakeable.flatMap((value, index) => value === true ? [index] : []),
+            uncertain: [], relieved: !!position.relieved };
+          frontierCache.set(cacheKey, result); return result;
+        }
         const queried = frontier.query(position.alive, options.exclusiveRoles === 'clock'
           ? !!(clock && position.alive[clock.i]) : !!options.exclusiveRoles);
         const sameBoard = aliveKey === blockedAlive;
@@ -253,7 +273,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     decide() {
       decisionDeadline = options.hypothesisSampling ? Date.now() + (options.informationSampling ? 1300 : 1500) : Infinity;
       const available = geometry.publicFrontier(current);
-      let actions = available.free.map(index => ({ index }));
+      let actions = publicActionOrder(available.free.map(index => ({ index })), options.publicActionSalt ?? 1);
       const initialActions = actions.slice();
       if (!actions.length) return null;
       if (pendingInformationAction) {
@@ -542,8 +562,10 @@ function playHumanCampaign(input, options = {}) {
     for (;;) {
       const started = performance.now(), actual = session.view(), state = actual.state;
       if (state.physicalTaps > previousTap) {
+        const publicLegal = new Set(actual.legalTiles ?? []);
         const publicBoard = observeBoard(game.tiles, state, game.clock,
-          { picture: index => game.faces[index], role: index => visibleRole(game, state, index) });
+          { picture: index => game.faces[index], role: index => visibleRole(game, state, index),
+            takeable: index => publicLegal.has(index) });
         controller.observe({ alive: state.alive, tray: state.tray, moves: state.moves, openPeek: state.openPeek,
           relieved: state.relieved, arriving: state.arriving, physicalTaps: state.physicalTaps }, publicBoard);
         previousTap = state.physicalTaps;
