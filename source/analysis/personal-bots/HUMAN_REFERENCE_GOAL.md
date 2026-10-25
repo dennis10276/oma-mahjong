@@ -56,10 +56,12 @@ Theme: sunflower. No planner changes before the current-bot re-deal baseline.
 
 ## Immediate work
 
-Superseded workers stopped and queues cleared. Sunflower has36 distinct identities.
-Live catalog refreshed; newest natural clear156. Harness102/102 tests pass, including
-actual production campaigns; CLI run/report/resume controls pass. Seeds/profile/input
-are frozen. All12 workers are running1550 development cases with automatic losses.
-Retain the prior>=8 non-adoption streak; after the required new baseline, report
-the results and obtain the user's continuation decision before more planner changes.
+Baseline complete and valid:332/1550 targets (21.4%), natural320/1400, labs12/150.
+All12 workers exited0; unchanged source;88931 production-replayed taps; slowest1.508s.
+Full table: HUMAN_REDEAL_BASELINE.md. Raw checkpoints stay in .codex-runs/redeal-v1/.
+Losses: unseen-twin tray74.4%, immediate-safe-match available17.6%, other tray4.9%,
+clock3.1%. Only the first two classes qualify for new mechanisms. No luck flags.
+Retain the prior12 non-adoption streak. Await the user's continuation decision
+under the eight-experiment stop rule before more planner changes. Proposed next:
+up to8 paired experiments on public exploration/tray pressure and safe matches.
 No new planner mechanism or luck flag has been adopted under this objective.
