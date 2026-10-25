@@ -76,4 +76,4 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - 121/121 tests pass. Trial09 rejected; consecutive unadopted count1 after adopted08.
 - Existing04 development ran3 salts before revision; subsequent development uses1.
 - Full08 repairs10041 without regressions;6 workers exit0; slowest1696.4ms at3 workers.
-- Trial09 repairs10033 but breaks102/150; next: public WHEN comparison before retesting.
+- Trial10 gated dev repairs10033, no passing regression; full155 salts1-3 running.

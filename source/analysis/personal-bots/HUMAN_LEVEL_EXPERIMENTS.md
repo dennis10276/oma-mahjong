@@ -415,3 +415,12 @@ then all155 salts1-3 only after a repair with no passing regression. Preserve
 strict2s/move,12 actual attempts and independent production replay. Default08
 stays frozen during testing. Counter before10 is1; rejection makes it2.
 Raw evidence: .codex-runs/level-measure/experiment-10/.
+
+Development10:38/38 valid, all3 native workers exit0. Slowest1673.7ms.
+
+| Scope | Repairs | Passing regressions | Previously worsened controls | Decision |
+|---|---|---|---|---|
+|38 real boards, salt1|10033:>12 to5|None|102:3;150:4;10011:8 restored|Run full155 salts1-3|
+
+Parent85182 remains live with3 full-run workers. This is development qualification,
+not adoption. The default stays08 and the counter remains1 pending full results.
