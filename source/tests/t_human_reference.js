@@ -8,6 +8,8 @@ const modules = [
   'test_human_reference_campaign.js',
   'test_public_action_order.js',
   'test_public_complete_witness.js',
+  'test_public_retry_complete.js',
+  'test_human_retry_complete.js',
   'test_human_level_measure.js',
   'test_human_level_evaluation.js',
   'test_human_redeal.js',

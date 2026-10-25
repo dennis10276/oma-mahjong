@@ -62,7 +62,7 @@ function evaluate(entries, records) {
   const dennisTotal = rows.reduce((sum, row) => sum + row.dennis, 0);
   const botTotalsPerSalt = salts.map((salt, index) => rows.every(row => row.tries[index] !== null)
     ? rows.reduce((sum, row) => sum + row.tries[index], 0) : null);
-  const botMeanTotal = clearedAll ? rows.reduce((sum, row) => sum + row.average, 0) : null;
+  const botMeanTotal = clearedAll ? botTotalsPerSalt.reduce((sum, tries) => sum + tries, 0) / salts.length : null;
   const correlation = clearedAll ? diagnosticCorrelation : null;
   const gates = { clearance: valid && clearedAll, dennisPlusOne: valid && rows.every(row => row.withinDennisPlusOne),
     totalTries: valid && botMeanTotal !== null && botMeanTotal <= dennisTotal,

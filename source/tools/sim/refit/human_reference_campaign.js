@@ -32,10 +32,17 @@ const { saltedPublicSeed } = require('./public_sampling_seed.js');
 const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
 const { publicActionOrder } = require('./public_action_order.js');
+const { retryCompleteSearch } = require('./public_retry_complete.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
     && options.publicActionSalt > 0 && options.publicActionSalt <= 0x7fffffff);
+  assert(options.choiceLimit === undefined || Number.isInteger(options.choiceLimit) && options.choiceLimit > 0);
+  assert(options.retryCompleteWitness === undefined || typeof options.retryCompleteWitness === 'boolean');
+  assert(options.retryCompleteMs === undefined || options.retryCompleteWitness === true
+    && Number.isFinite(options.retryCompleteMs) && options.retryCompleteMs > 0 && options.retryCompleteMs <= 500);
+  assert(options.retryCompleteNodes === undefined || options.retryCompleteWitness === true
+    && Number.isInteger(options.retryCompleteNodes) && options.retryCompleteNodes > 0);
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -140,8 +147,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   } : searchPublicWitness;
   const retrySearchFactory = options.clockRetryLearning ? clockRetryExploration : retryExploration;
   const runRetrySearch = options.retryRiskLearning ? retrySearchFactory(baseSearch) : null;
-  const resetPlanner = () => { planner = runRetrySearch || options.hypothesisSampling
-    ? reference(settings, runRetrySearch || baseSearch) : reference(settings); };
+  const completeRetrySearch = options.retryCompleteWitness ? retryCompleteSearch(runRetrySearch || baseSearch, () => attempt,
+    { milliseconds: options.retryCompleteMs ?? 250, nodes: options.retryCompleteNodes ?? 2000, choices: options.choiceLimit ?? 512 }) : null;
+  const resetPlanner = () => { planner = completeRetrySearch || runRetrySearch || options.hypothesisSampling
+    ? reference(settings, completeRetrySearch || runRetrySearch || baseSearch) : reference(settings); };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
   return {
@@ -475,6 +484,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       return retryRiskMemory?.finish(status) ?? null;
     },
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
+    retryCompletionStats() { return completeRetrySearch?.stats() ?? null; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
@@ -529,7 +539,8 @@ function playHumanCampaign(input, options = {}) {
   const settings = { seed: 20261111, choiceLimit: options.choiceLimit ?? 512, tapMs: 1000 };
   const maximumAttempts = options.maximumAttempts ?? 3;
   assert(Number.isInteger(maximumAttempts) && maximumAttempts > 0);
-  const encoded = encodeGame(input), game = decodeGame(encoded), controller = createHumanController(game.tiles, options.planning, options.publicContext);
+  const encoded = encodeGame(input), game = decodeGame(encoded), controller = createHumanController(game.tiles,
+    { ...options.planning, choiceLimit: settings.choiceLimit }, options.publicContext);
   if ((options.planning?.usePlacementContract || options.planning?.hypothesisSampling) && options.publicContext?.boardMode === 'standard') {
     const specials = new Set([...(game.rules?.keys || []), ...(game.rules?.locks || []),
       ...Object.keys(game.rules?.ice || {}).filter(index => game.rules.ice[index] > 0).map(Number)]);
@@ -625,6 +636,7 @@ function playHumanCampaign(input, options = {}) {
     ...(options.planning?.rememberBlockedTaps ? { blockedTapFacts: controller.blockedEvidence().length } : {}),
     ...(options.planning?.hypothesisSampling ? { hypothesis: controller.hypothesisStats() } : {}),
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
+    ...(options.planning?.retryCompleteWitness ? { retryCompletion: controller.retryCompletionStats() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }

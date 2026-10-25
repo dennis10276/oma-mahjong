@@ -54,6 +54,18 @@ function validate(input) {
 
 function scopeEntries(input, scope) {
   validate(input);
+  if (scope.startsWith('selection:') || scope.startsWith('remaining:')) {
+    const selection = JSON.parse(fs.readFileSync(scope.slice(10)));
+    const { hash, ...payload } = selection;
+    assert.equal(hash, digest(payload));
+    assert.equal(selection.catalogHash, input.hash);
+    assert.equal(selection.guards.length, 20);
+    assert.equal(new Set(selection.levels).size, selection.levels.length);
+    assert(selection.levels.every(level => input.entries.some(entry => entry.lv === level)));
+    const levels = new Set(selection.levels), include = scope.startsWith('selection:');
+    return input.entries.filter(entry => levels.has(entry.lv) === include).sort((left, right) =>
+      (CRITICAL_LABS.includes(left.lv) ? 0 : 1) - (CRITICAL_LABS.includes(right.lv) ? 0 : 1) || left.lv - right.lv);
+  }
   const development = new Set([...input.failures, ...input.guards]);
   if (scope === 'all') return input.entries;
   if (scope === 'development') return input.entries.filter(entry => development.has(entry.lv)).sort((left, right) =>

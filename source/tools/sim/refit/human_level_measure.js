@@ -75,8 +75,9 @@ function createMeasurer(planning = defaultProfile) {
         runs.push({ salt, tries: result.wonOn, status: result.status, valid: result.slowestMs < 2000,
           slowestMove: result.slowestMs, minutes: (performance.now() - runStarted) / 60000,
           verifiedTaps: result.verifiedTaps, decisions: result.decisionCount,
+          ...(result.retryCompletion ? { retryCompletion: result.retryCompletion } : {}),
           attempts: result.attempts.map(attempt => ({ attempt: attempt.attempt, status: attempt.status,
-            why: attempt.why, taps: attempt.taps, left: attempt.left, lossType: lossType(attempt) })) });
+            why: attempt.why, taps: attempt.taps, left: attempt.left, actions: attempt.actions.slice(), lossType: lossType(attempt) })) });
       } catch (error) {
         lossTypes.invalid_execution = (lossTypes.invalid_execution ?? 0) + 1;
         runs.push({ salt, tries: null, status: 'invalid', valid: false, slowestMove: null,

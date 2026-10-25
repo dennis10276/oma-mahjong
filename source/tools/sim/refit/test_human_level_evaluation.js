@@ -27,6 +27,11 @@ function test() {
   assert.equal(passing.correlation, 1);
   const oneBadSalt = evaluate(entries, records([[1, 1, 3], [2, 2, 2], [4, 4, 4]]));
   assert(!oneBadSalt.gates.dennisPlusOne, 'A passing average cannot conceal a salt above Dennis+1');
+  const precisionEntries = Array.from({ length: 30 }, (unused, index) => ({ ...entries[0], lv: index + 1, wonOn: 2 }));
+  const precisionCounts = Array.from({ length: 30 }, (unused, index) => index < 10 ? [1, 1, 2] : [2, 2, 3]);
+  const precision = evaluate(precisionEntries, records(precisionCounts));
+  assert.equal(precision.botMeanTotal, 60);
+  assert(precision.gates.totalTries, 'Integer salt totals must preserve an exact equality with Dennis');
   const baseline = evaluate(entries, records([[1, 1, 1], [2, null, 2], [4, 4, 4]]));
   assert(!baseline.gates.clearance && baseline.botMeanTotal === null && baseline.correlation === null);
   assert.deepEqual(compare(baseline, passing).fixes, [2]);
