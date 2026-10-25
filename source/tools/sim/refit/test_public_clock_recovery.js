@@ -30,6 +30,18 @@ function test() {
   assert(carried.clockRecoveryActive);
   const urgent = { ...game, clock: { i: 0, n: 4 } };
   const comparable = result => [result.index, result.path, result.goal, result.knownWin, result.safeClockExit];
+  const gated = search(game, state, roots, { ...options, clockRecovery: true, clockRecoveryMinSlack: 50 });
+  assert(!gated.clockRecoveryActive); assert.deepEqual(comparable(gated), comparable(legacy));
+  const atBoundary = search({ ...game, clock: { i: 0, n: 53 } }, state, roots,
+    { ...options, clockRecovery: true, clockRecoveryMinSlack: 50 });
+  const belowBoundary = search({ ...game, clock: { i: 0, n: 52 } }, state, roots,
+    { ...options, clockRecovery: true, clockRecoveryMinSlack: 50 });
+  assert(atBoundary.clockRecoveryActive && atBoundary.clockRecoveryMinSlack === 50);
+  assert(!belowBoundary.clockRecoveryActive);
+  const jointGate = { ...options, clockRecovery: true, clockRecoveryMinSlack: 50, trayRecoveryClockMin: 1 };
+  assert(!search({ ...game, clock: { i: 0, n: 53 } }, state, roots, jointGate).clockRecoveryActive);
+  assert(search({ ...game, clock: { i: 0, n: 53 } }, { ...state, tray: [9] }, roots, jointGate).clockRecoveryActive);
+  assert(!search({ ...game, clock: { i: 0, n: 52 } }, { ...state, tray: [9] }, roots, jointGate).clockRecoveryActive);
   const urgentPlan = search(urgent, state, roots, { ...options, clockRecovery: true });
   assert(!urgentPlan.clockRecoveryActive);
   assert.deepEqual(comparable(urgentPlan), comparable(search(urgent, state, roots, options)));
@@ -44,6 +56,7 @@ function test() {
   assert.equal(campaign.wonOn, 1);
   assert.equal(campaign.verifiedTaps, campaign.attempts[0].taps);
   assert.throws(() => search(game, state, roots, { ...options, clockRecovery: 'yes' }));
+  assert.throws(() => search(game, state, roots, { ...options, clockRecovery: true, clockRecoveryMinSlack: 2 }));
   console.log('PASS spare-clock recovery ranks public tray debt before digging, respects the configured carried-tile threshold, retains urgent/nonclock ordering and independently replays a production clock route');
 }
 
