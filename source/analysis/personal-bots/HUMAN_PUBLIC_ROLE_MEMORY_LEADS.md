@@ -17,6 +17,15 @@ tray/clock gates. Validate actual production routes, then the fixed development
 cohort and full salts1-3 before adoption. More information targets can change route
 selection; a correct visibility prediction alone does not demonstrate better play.
 
+Integration detail found during full06: explorationWitness receives the physical
+planning state, which has no roles array. Its local exposure frontier therefore
+cannot discover future role targets merely by swapping the helper. The draft
+adds a controller-owned publicRoleExposure callback built from current actual
+role observations, forwards it through retryInformationSearch, and combines its
+readability targets with the existing picture/orientation frontier. It supplies
+no role value or hidden picture. Ordinary passive information uses the new helper
+under the same optional global flag. The old path remains identical when disabled.
+
 Typed key identity is a separate lead. A production replay audit covered9209
 actual taps across11 lab boards from experiment04. It found17 positive key
 identities first observed after opening, before a failed retry, across11 runs:
@@ -49,3 +58,12 @@ Raw evidence: .codex-runs/level-measure/back-role-frontier-repro-01.log,
 observed-role-history-v1.jsonl, key-identity-memory-tests-01.log and
 drawn-role-frontier-tests-01.log. Audit native28941 exited0. Neither component has
 been enabled in an actual benchmark yet. They do not reset the eight-trial stop rule.
+
+Concrete integration drafts are stored under .codex-runs/level-measure/:
+key-memory-draft/integration.patch and drawn-role-draft/integration.patch, with
+draft production-integration tests in the same folders. Preparation scripts
+prepare-key-memory-patch.py and prepare-drawn-role-patch.py reproduce them.
+Syntax checks and git apply --check pass; production integration tests have NOT
+run. Nothing has been applied to the measured actor. After06's native workers
+finish, apply/test the key-memory change first and preregister a separate trial;
+retain the drawn-role change as its own subsequent strategy or justified combination.
