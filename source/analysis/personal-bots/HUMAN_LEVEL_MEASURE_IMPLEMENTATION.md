@@ -35,3 +35,12 @@ detbot2513920 is reviewed as a prototype. Its use of current free-tile legality 
 allowed by the new rule and will flow through the observer. Its action-batch deadline
 and proposed hidden-world/role assumptions still require audit before adoption.
 No new-gate planner experiment or final freeze has yet completed.
+
+The first full run is preserved as HUMAN_LEVEL_BASELINE_V1_ALL.md. It is physically
+valid(149/155 boards clear on every salt,146/155 within Dennis+1), with nine open
+failures. It is superseded because planner index tie-breaking bypassed the intended
+salt priority. A new production integration test proves distinct tied winning routes
+for public salts1-3; all111 reference tests now pass. The corrected v2 baseline must
+finish before any planner comparison. The original unseen lab61 candidate was
+measured from another working directory with no label:1/1/1,0.291 minutes,329ms
+slowest move. Its supplied solution and seed are not consumed by the API.

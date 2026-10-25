@@ -25,6 +25,8 @@ function test() {
   assert.equal(passing.botMeanTotal, 7);
   assert.deepEqual(passing.botTotalsPerSalt, [7, 7, 7]);
   assert.equal(passing.correlation, 1);
+  const oneBadSalt = evaluate(entries, records([[1, 1, 3], [2, 2, 2], [4, 4, 4]]));
+  assert(!oneBadSalt.gates.dennisPlusOne, 'A passing average cannot conceal a salt above Dennis+1');
   const baseline = evaluate(entries, records([[1, 1, 1], [2, null, 2], [4, 4, 4]]));
   assert(!baseline.gates.clearance && baseline.botMeanTotal === null && baseline.correlation === null);
   assert.deepEqual(compare(baseline, passing).fixes, [2]);

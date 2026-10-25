@@ -69,6 +69,6 @@ Use sunflower tiles. Deliver a label-free measuring tool for new levels and less
 - Seven old re-deal trials completed without adoption; trial08 cancelled incomplete
   and timing-invalid. These are not results under the new real-board gate.
 - detbot prototype reports complementary retry clears; audit and integration pending.
-- API/CLI and public-rule implementation pass110/110 tests. Fresh155-board baseline
-  runs in native session30351/PID23548; policy source8471bd97b185 is frozen.
-- New-gate trials/final freeze and the genuine unseen-lab check remain incomplete.
+- API/CLI and public-rule implementation pass111/111 tests. V1 completed155 boards
+  but is superseded by a planner salt tie-breaking fix; fresh v2 is next.
+- Unlabeled lab61 API run cleared1/1/1; final-version recheck, new-gate trials and freeze remain incomplete.
