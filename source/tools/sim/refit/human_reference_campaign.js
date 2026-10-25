@@ -33,6 +33,7 @@ const { createHypothesisPhysics } = require('./public_hypothesis_physics.js');
 const { createPublicActionVisits } = require('./public_action_visits.js');
 const { publicActionOrder } = require('./public_action_order.js');
 const { retryCompleteSearch } = require('./public_retry_complete.js');
+const { retryInformationSearch } = require('./public_retry_information.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
@@ -43,6 +44,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     && Number.isFinite(options.retryCompleteMs) && options.retryCompleteMs > 0 && options.retryCompleteMs <= 500);
   assert(options.retryCompleteNodes === undefined || options.retryCompleteWitness === true
     && Number.isInteger(options.retryCompleteNodes) && options.retryCompleteNodes > 0);
+  assert(options.retryInformationWitness === undefined || typeof options.retryInformationWitness === 'boolean');
+  assert(options.retryInformationMs === undefined || options.retryInformationWitness === true
+    && Number.isFinite(options.retryInformationMs) && options.retryInformationMs > 0 && options.retryInformationMs <= 500);
+  assert(options.retryInformationNodes === undefined || options.retryInformationWitness === true
+    && Number.isInteger(options.retryInformationNodes) && options.retryInformationNodes > 0);
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -149,8 +155,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const runRetrySearch = options.retryRiskLearning ? retrySearchFactory(baseSearch) : null;
   const completeRetrySearch = options.retryCompleteWitness ? retryCompleteSearch(runRetrySearch || baseSearch, () => attempt,
     { milliseconds: options.retryCompleteMs ?? 250, nodes: options.retryCompleteNodes ?? 2000, choices: options.choiceLimit ?? 512 }) : null;
-  const resetPlanner = () => { planner = completeRetrySearch || runRetrySearch || options.hypothesisSampling
-    ? reference(settings, completeRetrySearch || runRetrySearch || baseSearch) : reference(settings); };
+  const informationRetry = options.retryInformationWitness ? retryInformationSearch(completeRetrySearch || runRetrySearch || baseSearch,
+    { milliseconds: options.retryInformationMs ?? 250, nodes: options.retryInformationNodes ?? 2000, choices: options.choiceLimit ?? 512 }) : null;
+  const resetPlanner = () => {
+    const selectedSearch = informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
+    planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);
+  };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
   return {
@@ -166,6 +176,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       for (const [index, value] of memory.initialRoles.entries()) initialRoles[index] = value;
     },
     beginAttempt() {
+      informationRetry?.beginAttempt({ pictures, down, initialRoles });
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       observedTakeable = null; observedAliveKey = null; observedArrivingKey = null;
@@ -221,6 +232,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       });
       frontier.observe({ alive: state.alive, physicalTaps: state.physicalTaps }, rows);
       clearedRoleMemory?.observe(state, observed.roles);
+      informationRetry?.observe({ pictures, down, initialRoles });
       current = { ...structuredClone(state), down: down.map((value, index) => state.alive[index] ? value : 0),
         pictures: pictures.map((picture, index) => state.alive[index] ? picture : null) };
       assert(observed.takeable === undefined || Array.isArray(observed.takeable)
@@ -481,10 +493,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     known() { return { pictures: pictures.slice(), down: down.slice(), initialRoles: initialRoles.slice() }; },
     completeAttempt(status) {
       if (options.hypothesisSampling) episodes.at(-1).status = status;
+      informationRetry?.finish(status, { pictures, down, initialRoles });
       return retryRiskMemory?.finish(status) ?? null;
     },
     retryEvidence() { return retryRiskMemory?.entries() ?? []; },
     retryCompletionStats() { return completeRetrySearch?.stats() ?? null; },
+    retryInformationStats() { return informationRetry?.stats() ?? null; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
@@ -637,6 +651,7 @@ function playHumanCampaign(input, options = {}) {
     ...(options.planning?.hypothesisSampling ? { hypothesis: controller.hypothesisStats() } : {}),
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     ...(options.planning?.retryCompleteWitness ? { retryCompletion: controller.retryCompletionStats() } : {}),
+    ...(options.planning?.retryInformationWitness ? { retryInformation: controller.retryInformationStats() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
 }

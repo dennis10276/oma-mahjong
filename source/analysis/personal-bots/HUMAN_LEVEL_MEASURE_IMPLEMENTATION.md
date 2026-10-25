@@ -75,3 +75,12 @@ wins and safe clock exits, shares an1800ms outer window, adds at most250ms, and
 stops intervening immediately when the real observer learns a new fact. Unknown
 boundary pictures remain null. The wrapper is not connected to the campaign yet.
 All115 reference tests pass(14s), raw retry-information-reference-tests-01.log.
+
+The opt-in retryInformationWitness flag is now integrated into the main campaign
+and measure() diagnostics as runs[].retryInformation. Existing default profile is
+unchanged. The actual controller keeps first-try decisions, distinguishes a lost
+attempt that learned new facts from one that did not, and drops the intervention
+after a real reveal. Two different hidden pairs give identical pre-peek decisions
+after two actual losses. Every failed/successful tap independently replays through
+production. All116 tests pass12s: info-campaign-reference-tests-02.log. Temporary
+draft implementations were archived under .codex-runs/level-measure/information-drafts/.

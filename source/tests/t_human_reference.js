@@ -12,6 +12,7 @@ const modules = [
   'test_public_retry_information.js',
   'test_public_retry_complete.js',
   'test_human_retry_complete.js',
+  'test_human_retry_information.js',
   'test_human_level_measure.js',
   'test_human_level_evaluation.js',
   'test_human_redeal.js',
