@@ -1,5 +1,12 @@
 # Sunflower re-deal benchmark
 
+Historical unconditioned v1 diagnostic. The user's2026-10-25 correction requires
+production-certified winnable re-deals; a new baseline is being constructed under
+human_redeal_winnable_protocol.json. The user authorized a fresh batch of up to8
+experiments after the corrected baseline and real-board sanity check, explicitly
+excluding the twelve old salt screens from the new stop counter. The continuation
+paragraph below records the earlier decision point and is superseded by that reply.
+
 Complete: true; valid: true; completed 1550/1550.
 Manifest: 136fe2e2e4929e99ea6a1542b1fa85cf94a4580f5a6c2df455d9894ac39e85b5; profile: e7aba7de99b0a770c7ed6873942d06e4533d6c8d6cd0e4b82fd80c34c39c536e; source: da7e9dff3a9ff656ef851cc39a33b6c0a5aa559cba45d8e0580d03075eb9e3ee.
 
