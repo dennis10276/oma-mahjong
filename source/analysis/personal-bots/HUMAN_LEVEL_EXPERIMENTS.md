@@ -45,6 +45,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |02|Clock recovery at any tray load|155|2|7|1514ms|Reject; passing levels broken|
 |03|Clock recovery with a carried tile|37|3|1|1509ms|Reject; lab10045 broken|
 |04|Carried-tray recovery + information routes|37|4|1|1745ms|Unadopted; WHEN analysis required|
+|05|Carried tray + estimated clock slack>=50|155|1|2|1790ms|Reject;53 and112 broken|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -166,3 +167,42 @@ All117 reference tests pass27s, including joint threshold boundaries, hidden-wor
 invariance, salt1 development/full-salt transport and the revised Track A contract.
 Raw: .codex-runs/level-measure/when-reference-tests-02.log and experiment-05/.
 This WHEN-condition trial counts toward the eight-trial stop rule; four precede it.
+
+Result: all155 valid;148 clear all salts and144 stay within Dennis+1. Repaired150
+(4/3/4 versus >12/2/>12) but broke53(>12/>12/>12 versus1/1/1) and112(4/11/3
+versus2/2/2). All24 native workers closed0; supervisor7697 exited0. Mean2.700
+minutes/board; slowest1789.7ms. Rejected. Five consecutive unadopted experiments.
+Development qualification alone did not qualify adoption. Original baseline retained.
+
+Execution diagnostic: eight sampled concurrent workers received0.39-0.49 CPU seconds
+per wall second. The cause is not established. Same-source first-try canaries on53
+show baseline and candidate producing identical67-tap losses under load, versus
+identical91-tap first-try wins in quiet runs. Quiet112 controls both clear on try2
+with identical151 taps across attempts. Those canaries are diagnostics, not replacements
+for the rejected full run. No level-specific condition is fitted to these regressions.
+Raw: first-try-equivalence-53.jsonl, first-try-equivalence-quiet-53.jsonl,
+retry-equivalence-quiet-112.jsonl; native71148,58954,12690 all exited0.
+
+## Experiment06: matched execution of the unchanged WHEN strategy
+
+Pre-run: candidate actor/source901550e360d574ab5efe898b5ca410f9e7bd7e9a81b2a82ae93e7f666696b6ab
+and profile92b1c12b829d93187b1dc27efd6c8c7760120283ed419f890af879d0b4946049
+stay identical to05. Exactly3 concurrent single-thread game workers; no overlapping
+owned game audits. Fresh baseline development controls followed by fresh candidate
+development, both salt1 on the same38 boards. Preserve the20 original guards and
+all7 earlier regression controls, adding53;112 is already included. Record per-board
+CPU and elapsed time as execution metadata only, never as policy inputs.
+
+Require a genuine fix against the fresh paired control and no regressions against
+either that control or historical baseline-v2. If development qualifies, run the
+full155 candidate boards, salts1-3, with3 workers. Full qualification requires a
+fix and no historical passing board broken, plus no fresh development pass broken
+on salt1. Preserve independent replay, hashes and under2s/move checks. Qualifying
+is not automatic adoption; inspect source and terminal exits first. This is trial06,
+with five consecutive unadopted experiments before it; failure raises the count to6.
+No new public threshold or policy component is added during this compute control.
+
+Foundation commit7e36eb5 adds119/119 passing tests(log role-foundation-reference-tests-02.log),
+CPU diagnostics and two unused public role components. Neither new component is wired
+into this experiment's policy. Drawn-back-role exposure and positive observed key
+identity retention are future strategy leads, not claimed real-board improvements.
