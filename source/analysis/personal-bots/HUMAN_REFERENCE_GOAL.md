@@ -65,13 +65,14 @@ Protocolf7773f5; oracle3956ee5; rangesf89abbf; dispatcherb5c3578;106/106 tests p
 Certified1550 wins:82859 ordered draws,77920 exhaustive losses,3389 discarded caps.
 All winning routes independently replayed; manifestda3d05314eb24d6f8068e3eef40ec2f576a8c69aec4fc66690ffa901a4e87efc.
 Original baseline657/1550(42.4%); same bot real141/155(91.0%);48.6-point gap reported before experiments.
-Retained development target rate:42.4%; no-gain counter5; fresh batch<=8.
+Retained development target rate:42.4%; no-gain counter6; fresh batch<=8.
 Retained loss classes:tray_full_unseen_twins:634;missed_known_safe_match:200.
 experiment-01:0.06points/2SE0.89;drops1;adopted=false.
 experiment-02:-0.06points/2SE1.14;drops5;adopted=false.
 experiment-03:0.84points/2SE1.29;drops3;adopted=false.
 experiment-04:-0.52points/2SE1.18;drops4;adopted=false.
 experiment-05:0.39points/2SE1.53;drops6;adopted=false.
-Next:experiment-06,inspect before a third unmatched carry.
+experiment-06:-0.45points/2SE0.62;drops1;adopted=false.
+Next:experiment-07,retune inspection and short information routes.
 Frozen bytes:original0f95e4a and current767865dc5f43; raw outputs in ignored .codex-runs/. No qualified luck flags.
 Luck still requires disjoint50-case evidence and every-action proof; goal remains unmet.
