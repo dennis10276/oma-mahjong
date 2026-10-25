@@ -57,6 +57,9 @@ Theme: sunflower. No planner changes before the current-bot re-deal baseline.
 ## Immediate work
 
 Superseded workers stopped and queues cleared. Sunflower has36 distinct identities.
-Live catalog refreshed; newest natural clear156. Build and test the re-deal harness,
-freeze seeds/profile/input, then run the1550 development cases with automatic losses.
+Live catalog refreshed; newest natural clear156. Harness102/102 tests pass, including
+actual production campaigns; CLI run/report/resume controls pass. Seeds/profile/input
+are frozen. Run1550 development cases with automatic losses across12 workers.
+Retain the prior>=8 non-adoption streak; after the required new baseline, report
+the results and obtain the user's continuation decision before more planner changes.
 No new planner mechanism or luck flag has been adopted under this objective.
