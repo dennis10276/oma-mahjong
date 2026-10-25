@@ -66,6 +66,7 @@ Oracle3956ee5; rangesf89abbf; dispatcherb5c3578;106/106 tests pass.
 Shards7/9/10 have verified terminal prefixes preserved. Frozen solver/cap/streams.
 Dispatcher owns<=12 slots and refills on native child exits; no manual duplicate jobs.
 Complete prefixes choose earliest10 only; all original logs and executor evidence kept.
+Fresh real-board sanity reproduces141/155; sources unchanged; slowest1.510s.
 Draw protocol was published in f7773f5 before generation. Re-run certified baseline
 and finish real-board sanity before experiments. Start with unseen-twin
 tray losses if they remain>=10% on certified re-deals. Fresh no-gain counter0.
