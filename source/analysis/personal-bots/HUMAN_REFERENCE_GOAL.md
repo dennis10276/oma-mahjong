@@ -67,9 +67,9 @@ Shards7/9/10 have verified terminal prefixes preserved. Frozen solver/cap/stream
 Dispatcher owns<=12 slots and refills on native child exits; no manual duplicate jobs.
 Complete prefixes choose earliest10 only; all original logs and executor evidence kept.
 Fresh real-board sanity reproduces141/155; sources unchanged; slowest1.510s.
-Certification checkpoint05:13Z:150/155 complete,1537/1550 prefix wins;12 workers.
-Draw protocol was published in f7773f5 before generation. Finish certification, run
-the certified baseline, and compare the completed real sanity before experiments.
+Certification05:59Z:155/155 complete,1550 ordered wins;dispatcher exited0,no children.
+Draw protocol was published in f7773f5 before generation. Assemble/replay, then run
+the certified baseline and compare the completed real sanity before experiments.
 Start with unseen-twin
 tray losses if they remain>=10% on certified re-deals. Fresh no-gain counter0.
 No planner change or luck flag has been adopted. Raw outputs remain in .codex-runs/.
