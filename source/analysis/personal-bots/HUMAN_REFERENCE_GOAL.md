@@ -62,7 +62,8 @@ Theme: sunflower. User correction2026-10-25: re-deals must be certified winnable
 
 Unconditioned v1 baseline332/1550 is archived; it cannot be the new adoption baseline.
 All v1 workers exited0. User authorized solvability filtering, then a fresh batch.
-Build/test benchmark-only exact solver, publish draw streams, certify10 per board,
-re-run baseline and real-board sanity before experiments. Start with unseen-twin
+Oracle/builders3956ee5;104/104 tests pass;12 frozen workers certifying10 per board.
+Draw protocol was published in f7773f5 before generation. Then re-run baseline and
+real-board sanity before experiments. Start with unseen-twin
 tray losses if they remain>=10% on certified re-deals. Fresh no-gain counter0.
 No planner change or luck flag has been adopted. Raw outputs remain in .codex-runs/.
