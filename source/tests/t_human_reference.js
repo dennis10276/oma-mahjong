@@ -15,6 +15,7 @@ const modules = [
   'test_human_retry_information.js',
   'test_human_level_measure.js',
   'test_human_level_evaluation.js',
+  'test_human_track_a_benchmark.js',
   'test_human_redeal.js',
   'test_human_redeal_benchmark.js',
   'test_human_clock_probe.js',

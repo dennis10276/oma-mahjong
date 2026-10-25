@@ -77,6 +77,39 @@ function evaluate(entries, records) {
     minutesPerBoard: rows.reduce((sum, row) => sum + row.minutesPerBoard, 0) / rows.length };
 }
 
+function evaluateTrackA(entries, records) {
+  const legacy = evaluate(entries, records);
+  const gates = { clearance: legacy.gates.clearance, dennisPlusOne: legacy.gates.dennisPlusOne };
+  return { ...legacy, schema: 'human-level-track-a-v2', track: 'A', historicalDiagnosticGates: legacy.gates,
+    gates, passed: Object.values(gates).every(Boolean) };
+}
+
+function projectRecordsToSalts(records, salts) {
+  assert(Array.isArray(salts) && salts.length > 0 && new Set(salts).size === salts.length);
+  return records.map(record => {
+    const original = record.measurement;
+    assert(original.valid, 'Only independently valid frozen records may be projected');
+    assert(salts.every(salt => original.salts.includes(salt)));
+    const runs = salts.map(salt => {
+      const selected = original.runs.filter(run => run.salt === salt);
+      assert.equal(selected.length, 1); assert(selected[0].valid);
+      return structuredClone(selected[0]);
+    });
+    const triesPerSalt = runs.map(run => run.tries), clearedAll = triesPerSalt.every(tries => tries !== null), lossTypes = {};
+    for (const run of runs) for (const attempt of run.attempts) {
+      if (attempt.lossType) lossTypes[attempt.lossType] = (lossTypes[attempt.lossType] ?? 0) + 1;
+    }
+    assert(runs.every(run => Number.isFinite(run.minutes) && Number.isFinite(run.slowestMove)));
+    return { ...record, projection: { fromSalts: original.salts.slice(), toSalts: salts.slice(),
+      method: 'Select existing actual campaigns; shared setup overhead is excluded from projected campaign time' },
+      measurement: { ...original, salts: salts.slice(), runs, triesPerSalt, clearedAll,
+        firstTryWinRate: triesPerSalt.filter(tries => tries === 1).length / salts.length,
+        averageTries: clearedAll ? triesPerSalt.reduce((sum, tries) => sum + tries, 0) / salts.length : null,
+        lossTypes, slowestMove: Math.max(...runs.map(run => run.slowestMove)),
+        minutesPerBoard: runs.reduce((sum, run) => sum + run.minutes, 0) } };
+  });
+}
+
 function compare(baseline, candidate) {
   assert(baseline.valid && candidate.valid);
   assert.deepEqual(baseline.salts, candidate.salts);
@@ -95,4 +128,4 @@ function compare(baseline, candidate) {
     note: 'Adoption requires a repaired failing level and no formerly passing level broken on the same real boards and salts.' };
 }
 
-module.exports = { evaluate, compare, ranks, spearman };
+module.exports = { evaluate, evaluateTrackA, projectRecordsToSalts, compare, ranks, spearman };

@@ -3,7 +3,7 @@ const assert = require('assert/strict');
 const crypto = require('crypto');
 const Layouts = require('../../../www/layouts.js');
 const { encodeGame } = require('./personal_game_io.js');
-const { ranks, spearman, evaluate, compare } = require('./human_level_evaluation.js');
+const { ranks, spearman, evaluate, evaluateTrackA, projectRecordsToSalts, compare } = require('./human_level_evaluation.js');
 
 function test() {
   assert.deepEqual(ranks([10, 20, 20, 30]), [1, 2.5, 2.5, 4]);
@@ -25,6 +25,23 @@ function test() {
   assert.equal(passing.botMeanTotal, 7);
   assert.deepEqual(passing.botTotalsPerSalt, [7, 7, 7]);
   assert.equal(passing.correlation, 1);
+  const trackAExtraTries = evaluateTrackA(entries, records([[2, 2, 2], [3, 3, 3], [6, 6, 6]]));
+  assert(trackAExtraTries.passed && !trackAExtraTries.historicalDiagnosticGates.totalTries);
+  const trackALowCorrelation = evaluateTrackA(entries, records([[2, 2, 2], [1, 1, 1], [1, 1, 1]]));
+  assert(trackALowCorrelation.passed && !trackALowCorrelation.historicalDiagnosticGates.difficulty);
+  assert.deepEqual(Object.keys(trackALowCorrelation.gates), ['clearance', 'dennisPlusOne']);
+  const frozen = records([[1, 2, 3]])[0];
+  frozen.measurement.runs = [1, 2, 3].map(salt => ({ salt, tries: salt, valid: true, slowestMove: salt * 10,
+    minutes: salt, attempts: [{ lossType: salt === 1 ? null : 'tray' }] }));
+  const frozenBefore = JSON.stringify(frozen), projected = projectRecordsToSalts([frozen], [1])[0];
+  assert.deepEqual(projected.measurement.triesPerSalt, [1]); assert.equal(projected.measurement.averageTries, 1);
+  assert.deepEqual(projected.measurement.lossTypes, {}); assert.equal(projected.measurement.slowestMove, 10);
+  assert.equal(projected.measurement.minutesPerBoard, 1); assert.equal(projected.measurement.sourceHash, 'fixed-source');
+  assert.equal(JSON.stringify(frozen), frozenBefore);
+  assert.throws(() => projectRecordsToSalts([frozen], [4])); assert.throws(() => projectRecordsToSalts([frozen], [1, 1]));
+  const censoredFrozen = structuredClone(frozen);
+  censoredFrozen.measurement.runs[0].tries = null;
+  assert.equal(projectRecordsToSalts([censoredFrozen], [1])[0].measurement.averageTries, null);
   const oneBadSalt = evaluate(entries, records([[1, 1, 3], [2, 2, 2], [4, 4, 4]]));
   assert(!oneBadSalt.gates.dennisPlusOne, 'A passing average cannot conceal a salt above Dennis+1');
   const precisionEntries = Array.from({ length: 30 }, (unused, index) => ({ ...entries[0], lv: index + 1, wonOn: 2 }));

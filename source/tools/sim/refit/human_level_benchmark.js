@@ -5,7 +5,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { createMeasurer, measurementSource, normalizeBoard } = require('./human_level_measure.js');
 const { loadDevelopmentClears } = require('./human_reference_catalog.js');
-const { evaluate } = require('./human_level_evaluation.js');
+const { evaluate, evaluateTrackA } = require('./human_level_evaluation.js');
 const digest = value => crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const sourceRoot = path.resolve(__dirname, '../../..');
 const CRITICAL_LABS = Object.freeze([10011, 10032, 10033, 10041, 10052]);
@@ -74,16 +74,17 @@ function scopeEntries(input, scope) {
   throw Error('Unknown scope:' + scope);
 }
 
-function run(input, planning, scope, shard, count, filename) {
+function run(input, planning, scope, shard, count, filename, salts = input.salts) {
   assert(Number.isInteger(shard) && shard >= 0 && Number.isInteger(count) && count > shard && count <= 12);
+  assert(JSON.stringify(salts) === '[1]' || JSON.stringify(salts) === '[1,2,3]');
   const entries = scopeEntries(input, scope).filter((entry, index) => index % count === shard);
   const output = rawOutput(filename), measure = createMeasurer(planning);
   fs.writeFileSync(output, JSON.stringify({ type: 'header', catalogHash: input.hash, profileHash: digest(planning),
-    sourceHash: measurementSource.hash, sourceFiles: measurementSource.files, scope, shard, count,
+    sourceHash: measurementSource.hash, sourceFiles: measurementSource.files, scope, shard, count, salts,
     pid: process.pid, startedAt: new Date().toISOString() }) + '\n', { flag: 'wx' });
   let valid = true;
   for (const entry of entries) {
-    const measurement = measure(entry.game, { salts: input.salts, maxTries: input.maxTries });
+    const measurement = measure(entry.game, { salts, maxTries: input.maxTries });
     const record = { type: 'board', level: entry.lv, measurement };
     fs.appendFileSync(output, JSON.stringify(record) + '\n');
     valid &&= measurement.valid;
@@ -91,7 +92,9 @@ function run(input, planning, scope, shard, count, filename) {
   fs.appendFileSync(output, JSON.stringify({ type: 'footer', completed: entries.length, valid, finishedAt: new Date().toISOString() }) + '\n');
 }
 
-function summarize(input, files, scope = 'all') {
+function summarize(input, files, scope = 'all', options = {}) {
+  assert(Object.keys(options).every(key => key === 'track'));
+  assert(options.track === undefined || options.track === 'A');
   const expected = scopeEntries(input, scope), records = [], headers = [];
   for (const filename of files) {
     const rows = fs.readFileSync(filename, 'utf8').trim().split(/\r?\n/).map(JSON.parse);
@@ -105,7 +108,8 @@ function summarize(input, files, scope = 'all') {
   }
   assert(headers.every(header => header.profileHash === headers[0].profileHash && header.sourceHash === headers[0].sourceHash));
   assert.equal(records.length, expected.length);
-  const summary = evaluate(expected, records);
+  const summary = (options.track === 'A' ? evaluateTrackA : evaluate)(expected, records);
+  for (const header of headers) if (header.salts) assert.deepEqual(header.salts, summary.salts);
   assert.equal(summary.sourceHash, headers[0].sourceHash);
   assert.equal(summary.profileHash, headers[0].profileHash);
   return { ...summary, catalogHash: input.hash, observedAt: input.observedAt, scope };
@@ -115,7 +119,8 @@ function renderReport(summary, title = 'Human-information real-board baseline') 
   const lines = ['# ' + title, '',
     'Public rule: current free-tile takeability and drawn back overlays; hidden pictures remain gated.',
     'Salts:' + summary.salts.join(',') + '; max12 real tries per salt; no re-deals.', '',
-    '| Level | Group | Dennis | Bot salts1/2/3 | Mean | Dennis+1 | Minutes/board |', '|---:|---|---:|---|---:|---|---:|'];
+    '| Level | Group | Dennis | Bot salts' + summary.salts.join('/') + ' | Mean | Dennis+1 | Minutes/board |', '|---:|---|---:|---|---:|---|---:|'];
+  if (summary.track === 'A') lines.splice(2, 0, 'Track A gates are clearance and Dennis+1 only. Strength calibration is deferred until Track A passes.', '');
   for (const row of summary.rows.slice().sort((left, right) => left.level - right.level)) lines.push('|' + row.level
     + (row.historicalBoardExact === false ? '†' : '') + '|' + row.kind + '|' + row.dennis + '|'
     + row.tries.map(tries => tries ?? '>12/unresolved').join('/') + '|' + (row.average === null ? 'unresolved' : row.average.toFixed(2))
@@ -125,7 +130,7 @@ function renderReport(summary, title = 'Human-information real-board baseline') 
       + '; mean bot total:' + (summary.botMeanTotal ?? 'unresolved') + '.',
     'Spearman:' + (summary.correlation ?? 'unresolved') + '; cleared-only diagnostic:' + (summary.clearedOnlyCorrelation ?? 'undefined')
       + '; eligible cleared pairs:' + summary.difficultySampleSize + '.',
-    'Slowest move:' + summary.slowestMove.toFixed(1) + 'ms; mean minutes/board for3 salts:' + summary.minutesPerBoard.toFixed(2) + '.',
+    'Slowest move:' + summary.slowestMove.toFixed(1) + 'ms; mean minutes/board for' + summary.salts.length + ' salts:' + summary.minutesPerBoard.toFixed(2) + '.',
     'Largest mismatches(double underestimates):' + summary.biggestMismatches.map(row => row.level + ':' + (row.mismatch ?? 'uncleared')).join(',') + '.',
     '† No exact historical opening recording; uses the explicitly authorized board definition.',
     'Catalog:' + summary.catalogHash + '; source:' + summary.sourceHash + '; profile:' + summary.profileHash + '.', '');
@@ -139,8 +144,10 @@ async function main() {
     console.log(JSON.stringify({ catalog: inputFile, hash: input.hash, boards: input.entries.length,
       development: scopeEntries(input, 'development').length, criticalLabs: input.criticalLabs, guards: input.guards }));
   } else if (command === 'run') {
-    const [profileFile, scope, shard, count, output] = args;
-    run(JSON.parse(fs.readFileSync(inputFile)), JSON.parse(fs.readFileSync(profileFile)), scope, Number(shard), Number(count), output);
+    const [profileFile, scope, shard, count, output, requestedSalts] = args;
+    const input = JSON.parse(fs.readFileSync(inputFile));
+    run(input, JSON.parse(fs.readFileSync(profileFile)), scope, Number(shard), Number(count), output,
+      requestedSalts === undefined ? input.salts : requestedSalts.split(',').map(Number));
   } else throw Error('Use prepare <catalog> <old-real-summary>, or run <catalog> <profile> <scope> <shard> <count> <output>');
 }
 if (require.main === module) main().catch(error => { console.error(error.stack); process.exitCode = 1; });
