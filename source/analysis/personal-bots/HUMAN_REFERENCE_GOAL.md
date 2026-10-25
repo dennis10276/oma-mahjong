@@ -76,4 +76,4 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - 120/120 tests pass. Trial06 adopted;07 unadopted; consecutive unadopted count1.
 - Existing04 development ran3 salts before revision; subsequent development uses1.
 - Full06 repairs150 with no regressions;9 workers exit0; slowest1682.7ms at3 workers.
-- Adopted06 CLI lab61:1/1/1;08 tests public clock gating of remembered-key planning.
+- Adopted06 CLI lab61:1/1/1;08 dev repairs10041 without regressions; full155 running.

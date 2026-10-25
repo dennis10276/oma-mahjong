@@ -49,6 +49,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |06 control|Fresh baseline at3 workers|38|0|0|1502ms|All38 try counts identical|
 |06|Same WHEN strategy at3 workers|155|1|0|1683ms|Adopted after paired controls and full validation|
 |07|Remember observed key identities|38|1|1|1678ms|Unadopted; public WHEN refinement required|
+|08 development|Public clock gate for remembered keys|38|1|0|1698ms|Qualified development; full155 running|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -327,3 +328,10 @@ qualifies for a fresh full155 salts1-3 run and the same adoption rule. Every att
 independently replays; every actual move remains strictly under2s. Counter before08
 is1; rejection makes it2. A WHEN trial counts;07 remains preserved as unadopted.
 Raw profiles, source snapshots and native exits: .codex-runs/level-measure/experiment-08/.
+
+Development08 completed38/38 valid: repaired10041(>12 to3), restored10045 to3,
+and retained10011's8-try clear. No previously passing board broken, including150.
+Slowest1697.6ms. All3 native development workers exited0; the parent83808 remains
+live and dispatched the full155-board run with salts1-3 at3 concurrent games.
+Development qualification is not adoption; consecutive unadopted count remains1
+until the full result. Default profile remains validated06.
