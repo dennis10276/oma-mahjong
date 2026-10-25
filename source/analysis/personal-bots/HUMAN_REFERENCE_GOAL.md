@@ -1,74 +1,75 @@
-# Human-information level-design measuring bot
+# Human-information reference and Dennis-strength level measuring
 
 ACTIVE and UNMET. Branch wip/personal-bots; checkout personal-bot-review.
-Goal replaced by Dennis2026-10-25: clear every level and measure difficulty like him.
-Use sunflower tiles. Deliver a label-free measuring tool for new levels and lessons.
+Authoritative objective: cc8ea8eb-87e0-48be-a531-eeb68c9d5592/goal-objective.md.
+Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Rules
 
-- ONE visibility function supplies visible pictures/roles and covered clock badges.
-- Dennis2026-10-25: takeability of EVERY geometrically free tile is public without
-  a tap, face-up or face-down. ONE observer supplies it; future takeability remains unknown.
-- Renderer draws obstacle overlays on backs too; visible overlays are public roles.
-  Back pictures stay hidden. Re-run baseline under this rule before comparisons.
-- Retry memory stays within the same board and salt, using actual observations.
-- Dennis permits certain picture deductions: retain a proof valid for EVERY hidden
-  board consistent with observations and rules. Sample agreement is not certainty.
-  Proven deductions may join trusted memory; sampled guesses never do.
-- Every level being winnable is an allowed prior. Never read true hidden pictures,
-  the deck, board seed or future reveals. General planning; no per-level settings.
-- Every attempt independently replays original production. Single-thread games,
-  anytime and under2s/move. Up to12 concurrent game workers; report slowest move.
+- ONE observer: visible face-up pictures, drawn roles on fronts/backs, covered clock
+  badges, and current takeability of every geometrically free tile without tapping.
+- Hidden pictures, deck, board seed and future reveals are forbidden. Only public
+  same-board/salt retry memory. Proven deductions may enter memory; sample consensus is not proof.
+- Every level being winnable is an allowed prior. General planning only: no level
+  IDs, per-level settings or routes. Every attempt independently replays production.
+- Single-thread games, anytime, under2s/move; at most12 concurrent games.
 
-## Test set and finish gates
+## Track A: strongest human-information player
 
-- Every recorded Dennis natural first clear17-156 and later; all15 recorded labs
-  in source/analysis/lab-clears.json, excluding10031. Keep historical provenance.
-- Real boards unchanged; public policy salts1,2,3; at most12 actual tries per salt.
-- 3a: every board clears on every salt. Never clearing is a hard failure.
-- 3b: each salt needs at most Dennis+1 tries, including2 when Dennis needed1.
-- 3c: sum of per-board mean bot tries<=sum of Dennis tries. Show all salt totals.
-- 3d: Spearman>=0.6 on levels with Dennis>=2 or mean bot tries>1; average ranks
-  for ties. Censored attempts do not become invented successful counts.
-- List10 largest mismatches; underestimating difficulty counts double.
-- No Dennis label enters measure() or the playing policy. Labels evaluate afterward.
+- All recorded Dennis natural first clears17-156 and later, plus15 recorded labs
+  from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
+- Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
+- Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
+- Labs first:10011,10015,10032,10033,10041,10049,10052; natural150,86,144 also fail.
+- Development: failing boards plus20 fixed passing guards, salt1. Keep additional
+  regression controls. Full salts1-3 before adopting; repair>=1 and break none.
+- Sum-of-tries and human correlation are not Track A gates under the revised goal.
+
+## Mixed strategies: find WHEN to use them
+
+- Compare changed decisions on repaired and broken games using actual public histories.
+- Record public position features: tray count, clock remaining/slack estimate, unseen
+  fraction, observed roles, retry, known free pairs; never use hidden labels as inputs.
+- Fit one readable condition with at most2 public features and round thresholds.
+- Fit on development only; retest salt1 development then full cohort salts1-3.
+- List adopted strategies, their condition and a one-line reason here. Currently none.
+
+## Track B: calibrate only after A passes
+
+- Run all boards at4-5 fixed strengths, including decision budgets and retry-memory
+  variants. Report exact tries, within+-1, and tied-rank Spearman for each strength.
+- Pick ONE by most boards within+-1; break ties by Spearman. No per-level tuning.
+- Gate: at least80% within+-1 of Dennis AND Spearman>=0.6. Never invent censored counts.
+- measure() uses that calibrated strength for difficulty; strongest remains for lessons.
 
 ## API: ten-line builder contract
 
 1. require('C:/Users/den_k/Idea/OmasMahjong/personal-bot-review/source/tools/sim/refit/human_level_measure.js').measure
-2. Call: measure(board,{salts:[1,2,3],maxTries:12}).
-3. Board is production game format, including lab and unreleased candidates.
-4. Salts vary public policy choices; pictures, roles, clock and board stay unchanged.
-5. triesPerSalt follows salts order; null means no verified clear within the limit.
-6. firstTryWinRate includes every salt; averageTries is null if any salt is censored.
-7. lossTypes counts failed attempts; slowestMove is milliseconds.
-8. minutesPerBoard reports total measurement time; valid requires replay and timing.
+2. Call measure(board,{salts:[1,2,3],maxTries:12}).
+3. Accepts production game format, including unlabeled lab/unreleased candidates.
+4. Salts vary public choices; pictures, roles, clock and board remain unchanged.
+5. triesPerSalt follows salt order; null means no verified clear within the limit.
+6. firstTryWinRate includes every salt; averageTries is null if any run is censored.
+7. lossTypes counts failed tries; slowestMove is milliseconds.
+8. minutesPerBoard is elapsed measurement time; valid requires replay and timing.
 9. CLI: node C:/Users/den_k/Idea/OmasMahjong/personal-bot-review/source/tools/sim/refit/human_level_measure.js board.json --salts 1,2,3 --max-tries 12.
-10. CLI returns JSON; --out .codex-runs/result.json saves it. No Dennis label needed.
+10. Returns JSON; --out .codex-runs/result.json saves it. No Dennis label needed.
 
-## Development and completion
+## Process and completion
 
-- Start with current 3a/3b failures, especially labs10011,10032,10033,10041,10052.
-- Audit origin/wip/det-bot at2513920; adopt useful retry memory/replanning ideas
-  through the existing public observer and independent production replay.
-- First run failing levels plus20 fixed guard levels on salts1-3, then full cohort.
-- Adopt only a change that fixes a failing level without breaking a passing level.
-- After8 consecutive trials without adoption, stop and report table/open failures;
-  Dennis decides continuation. Preserve old trial histories under their old gates.
-- Certified re-deal and luck measurements are STOPPED; code/evidence kept archived.
-- Small commits. This file<=80 lines. One short table/run; raw data in .codex-runs/.
-- Completion requires3a-3d plus working documented measure() on an unseen lab board.
-- Then freeze the bot; run next20 progression levels ONCE when Dennis has played
-  them; report actual tries alongside Dennis and difficulty correlation.
-- Final one-screen table: level|Dennis|bot salts1-3; separate lab block; bot/Dennis
-  totals, correlation, slowest move, minutes/board and decisions for Dennis.
+- After8 consecutive experiments without adoption, stop; report table/open failures
+  and let Dennis decide. A WHEN-condition trial counts. Prior relevant trials remain.
+- Small commits; goal<=80 lines; one short table/run; raw outputs in .codex-runs/.
+- Certified re-deal/luck runs remain STOPPED and archived. detbot audit is recorded.
+- After A and B pass: freeze; run the next20 progression levels once, when Dennis
+  has played them, at BOTH strengths. Keep measure() working on unseen lab boards.
+- Final one-screen table: level|Dennis|strong|calibrated; separate labs; adopted
+  conditions/reasons, slowest move, minutes/board, and decisions for Dennis.
 
 ## Current evidence
 
-- Old pipeline, runner and12 workers verified stopped; native session99870 exited1.
-- Seven old re-deal trials completed without adoption; trial08 cancelled incomplete
-  and timing-invalid. These are not results under the new real-board gate.
-- detbot audit recorded in HUMAN_DETBOT_RETRY_REVIEW.md; integration remains pending.
-- Corrected v2:148/155 clear all salts,145/155 within Dennis+1; all gates unmet.
-- 116/116 tests pass; trials01-03 rejected; combined information-route trial04 running.
-- Unlabeled lab61 API run cleared1/1/1; final-version recheck, new-gate trials and freeze remain incomplete.
+- Retained baseline-v2:148/155 clear every salt,145/155 within Dennis+1; A unmet.
+- 117/117 tests pass. Trials01-04 unadopted;04 repaired4 but broke lab10045.
+- Existing04 development ran3 salts before revision; subsequent development uses1.
+- WHEN comparison complete; condition(tray>=1, estimated clock slack>=50) trial05 next.
+- Unlabeled lab61 cleared1/1/1 on an earlier source; final-version recheck pending.

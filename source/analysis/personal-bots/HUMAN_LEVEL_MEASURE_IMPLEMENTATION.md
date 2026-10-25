@@ -84,3 +84,18 @@ after a real reveal. Two different hidden pairs give identical pre-peek decision
 after two actual losses. Every failed/successful tap independently replays through
 production. All116 tests pass12s: info-campaign-reference-tests-02.log. Temporary
 draft implementations were archived under .codex-runs/level-measure/information-drafts/.
+
+The revised cc8ea8eb goal separates Track A(clear all boards, every salt<=Dennis+1)
+from Track B(later global strength calibration). evaluateTrackA() preserves older
+diagnostics but gates only the two Track A requirements. Benchmark run() accepts
+an explicit salt1 development override; full validation still uses1,2,3.
+projectRecordsToSalts() selects actual frozen campaigns, never reruns or rewrites
+their observations, keeps censoring, and identifies excluded common setup time.
+Transport tests replay21 tiny fixture boards under development and full salts.
+No Track B ladder or fitted strength has been run. All117 tests pass27s.
+
+The opt-in clockRecoveryMinSlack threshold defaults to3, preserving the previous
+integer >2 test. Candidate50 requires a carried tray tile and50 estimated spare
+moves when starting a recovery plan. The estimate uses public geometry/mechanics,
+not true hidden pictures; it is not a route proof. Hidden-world and exact49/50
+boundary tests pass. The default profile stays unchanged until full-cohort adoption.

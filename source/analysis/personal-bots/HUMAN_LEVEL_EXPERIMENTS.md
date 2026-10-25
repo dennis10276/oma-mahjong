@@ -44,6 +44,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |01|Complete-memory retry witness|30|0|0|1504ms|Reject; incomplete memory|
 |02|Clock recovery at any tray load|155|2|7|1514ms|Reject; passing levels broken|
 |03|Clock recovery with a carried tile|37|3|1|1509ms|Reject; lab10045 broken|
+|04|Carried-tray recovery + information routes|37|4|1|1745ms|Unadopted; WHEN analysis required|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -117,3 +118,51 @@ Profile:39211a414cbe9575b4e34a4b5edc236e6c6ed88d733d2fda18f30ebe6d5cd9ca.
 All116 reference tests pass12s, including actual post-stall hidden-pair swaps and
 independent replay of failed/winning attempts; info-campaign-reference-tests-02.log.
 Raw profile, frozen source and outputs: .codex-runs/level-measure/experiment-04/.
+
+Result: all37 valid; repaired144,150,10015,10041; lab10045 remained broken. All12
+workers closed0 and supervisor session12281 exited0. Mean1.906 minutes/development
+board, slowest1745ms. Four consecutive unadopted experiments. This mixed strategy
+is retained for conditional selection, not discarded.
+
+## Revised goal: Track A first and public WHEN conditions
+
+Dennis's cc8ea8eb objective separates strongest clearance from later Dennis-strength
+calibration. Development now uses salt1, with salts1-3 across the full cohort before
+adoption. Track A gates are clearance and Dennis+1; old total/correlation diagnostics
+remain preserved but do not gate Track A. Track B has not started.
+
+## Experiment05: ample-clock-room WHEN condition
+
+The decision comparison is in HUMAN_WHEN_DECISION_ANALYSIS_V1.md. It independently
+replayed1340 actual taps on repaired and broken boards and listed differing moves
+with public position features. First-attempt clock changes isolate this strategy
+from later retry-information search; that fitting subset has zero replan drift.
+The full trace discloses13 replan differences on later clock-off level150 positions.
+
+Condition fitted before execution: start a clock-recovery plan only when the tray
+holds at least1 tile AND estimated spare clock moves are at least50. Exactly two
+public features, round thresholds; no level IDs or hidden information. This retains
+four early changes on lab10041 and no first-attempt changed move on broken lab10045.
+It is a hypothesis requiring retest; no individual changed move is claimed causal.
+The public route-cost estimate is not an exact shortest route or lower bound; the
+earlier trial02 design's lower-bound wording was inaccurate. Production replay is
+the authority. Retry-information search remains separately enabled after a real
+loss with no new remembered tile fact, so the clock-off level150 improvement remains available.
+
+Global profile: retained baseline plus clockRecovery=true, trayRecoveryClockMin=1,
+clockRecoveryMinSlack=50, retryInformationWitness=true, retryInformationMs=250,
+retryInformationNodes=2000. Source901550e360d574ab5efe898b5ca410f9e7bd7e9a81b2a82ae93e7f666696b6ab.
+Profile92b1c12b829d93187b1dc27efd6c8c7760120283ed419f890af879d0b4946049.
+Fit input SHA256 cb11be0bfd00c9e74cd7a270abbb5b5bf51f93ad78611a1bac5481902ae1a5e3.
+
+Run37 development boards from selection fd1face920f153e7483e7829b06d44fa62a266deb1eaf05ab5b5e6651a5921d0,
+salt1. Compare selected actual frozen baseline campaigns, preserving hashes and
+censored outcomes. Only if a failing board is repaired with no passing regression,
+run all155 boards afresh with salts1,2,3. Require the same improvement condition
+and independent replay/under2s timing across the full cohort before adoption.
+Read-only catalog refresh2026-10-25T16:50:45.929Z confirms the same155 records,
+unchanged clear counts and identical normalized board hashes. No targets omitted.
+All117 reference tests pass27s, including joint threshold boundaries, hidden-world
+invariance, salt1 development/full-salt transport and the revised Track A contract.
+Raw: .codex-runs/level-measure/when-reference-tests-02.log and experiment-05/.
+This WHEN-condition trial counts toward the eight-trial stop rule; four precede it.
