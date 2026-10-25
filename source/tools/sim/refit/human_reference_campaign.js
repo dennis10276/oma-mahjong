@@ -22,7 +22,7 @@ const { clockRetryExploration } = require('./public_clock_retry_exploration.js')
 const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
 const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
-const { createKeyIdentityMemory } = require('./public_key_identity_memory.js');
+const { createKeyIdentityMemory, keyPlanningAllowed } = require('./public_key_identity_memory.js');
 const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
@@ -67,6 +67,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
+  assert(options.keyPlanningSlackAbove === undefined || options.rememberKeyIdentities === true
+    && Number.isInteger(options.keyPlanningSlackAbove) && options.keyPlanningSlackAbove >= 0);
   assert(!options.rememberKeyIdentities || !options.hypothesisSampling,
     'Typed key identity memory needs corresponding history constraints before combining with hypothetical worlds');
   assert(options.rememberBlockedTaps === undefined || typeof options.rememberBlockedTaps === 'boolean');
@@ -262,8 +264,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       let observedKeys = initialRoles.flatMap((role, index) => role === 'key' ? [index] : []);
       if (keyIdentityMemory) {
         const knownKeys = keyIdentityMemory.keys();
-        geometry.rules.keys = [...new Set([...geometry.rules.keys, ...knownKeys])].sort((left, right) => left - right);
-        observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
+        const keys = [...new Set([...geometry.rules.keys, ...knownKeys])].sort((left, right) => left - right);
+        const publicKeyGame = { tiles: geometry.tiles, nb: geometry.nb, rules: { ...geometry.rules, keys }, clock };
+        if (keyPlanningAllowed(publicKeyGame, current, options.keyPlanningSlackAbove)) {
+          geometry.rules.keys = keys;
+          observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
+        }
       }
       geometry.publicFrontier = position => {
         Object.freeze(position.alive);

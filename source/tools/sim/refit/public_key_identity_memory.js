@@ -1,5 +1,14 @@
 'use strict';
 const assert = require('assert/strict');
+const { goalRoutes } = require('./public_goal_routes.js');
+
+function keyPlanningAllowed(game, state, slackAbove) {
+  if (slackAbove === undefined) return true;
+  assert(Number.isInteger(slackAbove) && slackAbove >= 0);
+  const clock = game.clock;
+  if (!clock || !state.alive[clock.i]) return false;
+  return clock.n - state.moves - goalRoutes(game, state, clock.i).cost > slackAbove;
+}
 
 function createKeyIdentityMemory(size) {
   assert(Number.isInteger(size) && size > 0);
@@ -29,4 +38,4 @@ function createKeyIdentityMemory(size) {
   };
 }
 
-module.exports = { createKeyIdentityMemory };
+module.exports = { createKeyIdentityMemory, keyPlanningAllowed };

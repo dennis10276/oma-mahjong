@@ -16,8 +16,10 @@ function test() {
     rules: { ice: { 0: 1 }, iceNb: Layouts.iceNeighbors(tiles), locks: null, keys: [0, 9] } };
   const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 64 };
   const firstPlans = [];
-  for (const rememberKeyIdentities of [false, true]) {
-    const controller = createHumanController(tiles, { rememberKeyIdentities, rememberAcceptedTaps: false,
+  for (const configuration of [{ rememberKeyIdentities: false }, { rememberKeyIdentities: true },
+    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40 }]) {
+    const { rememberKeyIdentities } = configuration;
+    const controller = createHumanController(tiles, { ...configuration, rememberAcceptedTaps: false,
       rememberClearedRoles: true, keyAccessMacros: true, keyRecoveryMacros: true, retryInformationWitness: true });
     const observe = session => {
       const view = session.view(), state = view.state, legal = new Set(view.legalTiles ?? []);
@@ -64,8 +66,11 @@ function test() {
     assert.deepEqual(controller.keyIdentityEvidence(), identities, 'Later plain glyphs and removals retain static identity provenance');
   }
   assert.deepEqual(firstPlans[0], firstPlans[1]);
+  assert.deepEqual(firstPlans[0], firstPlans[2]);
   assert.deepEqual(createHumanController(tiles, { rememberKeyIdentities: true }).keyIdentityEvidence(), []);
   assert.throws(() => createHumanController(tiles, { rememberKeyIdentities: 'yes' }));
+  assert.throws(() => createHumanController(tiles, { keyPlanningSlackAbove: 40 }));
+  assert.throws(() => createHumanController(tiles, { rememberKeyIdentities: true, keyPlanningSlackAbove: -1 }));
   assert.throws(() => createHumanController(tiles, { rememberKeyIdentities: true, hypothesisSampling: true }));
 
   const memory = { pictures: [null, null], down: [null, null], initialRoles: [null, null], keyIdentities: [] };
@@ -82,7 +87,7 @@ function test() {
   const flatBoard = { tiles: flatTiles, nb: Layouts.neighbors(flatTiles), faces: [1, 1, 2, 2, 3, 3, 4, 4],
     down: flatTiles.map(() => 0), clock: null,
     rules: { ice: {}, iceNb: Layouts.iceNeighbors(flatTiles), locks: null, keys: [0, 1] } };
-  const measured = createMeasurer({ rememberKeyIdentities: true })(flatBoard, { salts: [1, 2, 3], maxTries: 1 });
+  const measured = createMeasurer({ rememberKeyIdentities: true, keyPlanningSlackAbove: 40 })(flatBoard, { salts: [1, 2, 3], maxTries: 1 });
   assert(measured.valid); assert.deepEqual(measured.triesPerSalt, [1, 1, 1]);
   for (const run of measured.runs) {
     assert.deepEqual(run.keyIdentityEvidence.map(fact => fact.index), [0, 1]);
