@@ -13,7 +13,7 @@ const { advance } = require('./known_tray_plan.js');
 const { aliveSignature } = require('./public_alive_signature.js');
 const { knownCleanup } = require('./public_unique_cleanup.js');
 const { createExposureFrontier } = require('./public_exposure_frontier.js');
-const { createDrawnRoleFrontier } = require('./public_drawn_role_frontier.js');
+const { createDrawnRoleFrontier, drawnRolePlanningAllowed } = require('./public_drawn_role_frontier.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_priority.js');
 const { describeInformation } = require('./public_information_audit.js');
@@ -104,6 +104,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const excludeClosedObstacles = !!options.usePlacementContract && publicContext.boardMode === 'standard';
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles', 'shortAll'].includes(options.passiveInformation));
   assert(options.drawnRoleInformation === undefined || typeof options.drawnRoleInformation === 'boolean');
+  assert(options.drawnRoleClockSlackRange === undefined || options.drawnRoleInformation === true
+    && Array.isArray(options.drawnRoleClockSlackRange) && options.drawnRoleClockSlackRange.length === 2
+    && options.drawnRoleClockSlackRange.every(value => Number.isInteger(value) && value >= 0)
+    && options.drawnRoleClockSlackRange[0] <= options.drawnRoleClockSlackRange[1]);
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
@@ -305,8 +309,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
             && !clearedRoleMemory?.knowsAvailable(index, position.alive, observedKeys)) };
         frontierCache.set(cacheKey, result); return result;
       };
-      const exposureFactory = options.drawnRoleInformation ? createDrawnRoleFrontier : createExposureFrontier;
-      if (options.drawnRoleInformation) geometry.publicRoleExposure = createDrawnRoleFrontier(geometry.tiles, { ...current, roles }, 'roles');
+      const drawnRoleActive = options.drawnRoleInformation
+        && drawnRolePlanningAllowed(geometry, current, options.drawnRoleClockSlackRange, keyIdentityMemory?.keys() ?? []);
+      const exposureFactory = drawnRoleActive ? createDrawnRoleFrontier : createExposureFrontier;
+      if (drawnRoleActive) geometry.publicRoleExposure = createDrawnRoleFrontier(geometry.tiles, { ...current, roles }, 'roles');
+      else delete geometry.publicRoleExposure;
       const exposure = options.passiveInformation ? exposureFactory(geometry.tiles, { ...current, roles },
         ['roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation) ? 'roles' : 'all') : undefined;
       geometry.publicExposure = options.passiveInformation === 'frontierRoles' ? position => {

@@ -5,7 +5,7 @@ const { createHumanController, visibleRole, verifyAttempt } = require('./human_r
 const { observeBoard } = require('./human_board_visibility.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { encodeGame } = require('./personal_game_io.js');
-const { createDrawnRoleFrontier } = require('./public_drawn_role_frontier.js');
+const { createDrawnRoleFrontier, drawnRolePlanningAllowed } = require('./public_drawn_role_frontier.js');
 const { explorationWitness } = require('./public_exploration_witness.js');
 
 function test() {
@@ -57,6 +57,38 @@ function test() {
     assert.equal(route.kind, drawnRoleInformation ? 'newPublicExposure' : 'actualPeekRequired');
     assert.equal(route.imaginedPicturesAdded, 0); assert.equal(JSON.stringify(state), snapshot);
     if (drawnRoleInformation) assert.deepEqual(route.newlyExposed, [0]);
+  }
+  const state = { alive: tiles.map(() => 1), moves: 0, relieved: false };
+  const publicGame = { tiles, nb: actual.nb, rules: null, clock: { i: 7, n: 20 } };
+  for (const field of ['faces', 'deck', 'seed', 'down']) Object.defineProperty(publicGame, field,
+    { get() { throw Error('Private gate ' + field); } });
+  assert(drawnRolePlanningAllowed(publicGame, state, [19, 19]));
+  assert(!drawnRolePlanningAllowed(publicGame, state, [20, 30]));
+  assert(!drawnRolePlanningAllowed(publicGame, state, [0, 18]));
+  assert(!drawnRolePlanningAllowed(publicGame, { ...state, moves: 1 }, [19, 19]));
+  assert(!drawnRolePlanningAllowed(publicGame, { ...state, alive: state.alive.map((alive, index) => index === 7 ? 0 : alive) }, [0, 100]));
+  assert(!drawnRolePlanningAllowed({ ...publicGame, clock: null }, state, [0, 100]));
+  assert(drawnRolePlanningAllowed({ ...publicGame, clock: null }, state));
+  const keyGame = { ...publicGame, rules: { ice: {}, iceNb: Layouts.iceNeighbors(tiles), locks: new Set([7]), keys: [6] } };
+  assert(!drawnRolePlanningAllowed(keyGame, state, [16, 16]));
+  assert(drawnRolePlanningAllowed(keyGame, state, [16, 16], [0]));
+  for (const invalid of [null, [], [20, 10], [1.5, 20], [0, 1, 2]]) {
+    assert.throws(() => drawnRolePlanningAllowed(publicGame, state, invalid));
+    assert.throws(() => createHumanController(tiles, { drawnRoleInformation: true, drawnRoleClockSlackRange: invalid }));
+  }
+  assert.throws(() => createHumanController(tiles, { drawnRoleClockSlackRange: [5, 20] }));
+  for (const [clock, range, expected] of [[{ i: 7, n: 20 }, [19, 19], 1],
+    [{ i: 7, n: 20 }, [20, 30], 0], [{ i: 7, n: 20 }, [0, 18], 0], [null, [0, 100], 0]]) {
+    const game = { ...actual, clock }, session = factory(game, settings);
+    const controller = createHumanController(tiles,
+      { drawnRoleInformation: true, drawnRoleClockSlackRange: range, passiveInformation: 'roles', retryInformationWitness: true });
+    controller.beginAttempt();
+    const view = session.view(), legal = new Set(view.legalTiles ?? []);
+    const observed = observeBoard(tiles, view.state, clock, { picture: index => actual.faces[index],
+      role: index => visibleRole(game, view.state, index), takeable: index => legal.has(index) });
+    controller.observe(view.state, observed);
+    assert.equal(controller.explainInformation([1]).events.length, expected);
+    assert.equal(controller.known().pictures[0], null);
   }
   assert.throws(() => createHumanController(tiles, { drawnRoleInformation: 'yes' }));
   factory.verifySource();

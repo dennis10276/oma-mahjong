@@ -391,3 +391,27 @@ Final09 development:38/38 valid, all3 workers and parent29797 exit0. Slowest1503
 No full run dispatched. Default08 retained; consecutive unadopted count1. Compare
 actual09 public histories on10033,102,150 and the10011 worsening before fitting
 a condition with at most2 public features. Raw comparisons: when-drawn-role-v1/.
+
+## Experiment10: clock-gated drawn-back-symbol information planning
+
+Preregistered after09 public-history comparison: adopted08 plus drawnRoleInformation:true,
+drawnRoleClockSlackRange:[5,20]. Start the added planning only with a live clock and
+5-20 estimated spare moves. One public feature, round endpoints, no board IDs.
+The actual observations and remembered facts remain available outside the gate.
+Detailed fit and limitations: HUMAN_DRAWN_ROLE_WHEN_DECISION_ANALYSIS_V1.md.
+
+All1909 comparison taps independently replayed; four trace commands exit0. The
+implemented predicate matches the fitted feature on all658 differing/drift
+positions. All121 reference tests pass14s(native76506 exit0), including interval
+boundaries, missing/taken clocks, known-key dependencies, invalid settings,
+controller exposure behavior and hidden-picture invariance.
+
+Candidate source97f6aa2ca756fd64e249945053bc3a352d89d1a764bad4212d7d81d5f23db675;
+profile6b6094dc0a84e0e1988a9f3e3585863da68ddc0a2a00d554d8214c18b7bb21a1.
+WHEN fit SHA2560a263696bbd33d29547194b4ed8bb8dda69b292ea9bbebbe9d2a6f8d16403e86.
+Use the same v5 selection,38 development boards and adopted08 full-shard
+comparator as09. Refresh targets before launch;3 game workers, salt1 development,
+then all155 salts1-3 only after a repair with no passing regression. Preserve
+strict2s/move,12 actual attempts and independent production replay. Default08
+stays frozen during testing. Counter before10 is1; rejection makes it2.
+Raw evidence: .codex-runs/level-measure/experiment-10/.
