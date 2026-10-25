@@ -28,6 +28,17 @@ boards. Show the historical141/155 real-board reference too. A gap above10 perce
 points is predeclared material and must be reported before planner experiments.
 After the solvability audit and sanity check, the user authorized the fresh batch.
 
+Rare boards can use human_redeal_draw_pool.js to split the SAME draw stream into
+independent contiguous ranges. This preserves the frozen oracle source,200000-node
+cap and published seed formula. Selection waits for a complete prefix through the
+tenth/fiftieth winning draw; completion order never chooses seeds. Duplicate draws
+must agree exactly. Speculative draws beyond that prefix are excluded and counted.
+Original checkpoints remain untouched. A deliberately rescheduled worker needs a
+verified terminal PID/creation-time transition and unchanged source hashes. Final
+consolidation records original/range executor provenance under a composite hash and
+freshly production-replays every selected winning route. It does not fabricate an
+original worker footer or erase rejected draws. The public bot never sees this data.
+
 The remaining text describes retained v1 provenance and shared benchmark controls.
 
 The authoritative goal is the sunflower re-deal objective in attachment
