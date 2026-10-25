@@ -30,5 +30,10 @@
   "retryInformationMs": 250,
   "retryInformationNodes": 2000,
   "rememberKeyIdentities": true,
-  "keyPlanningSlackAbove": 40
+  "keyPlanningSlackAbove": 40,
+  "drawnRoleInformation": true,
+  "drawnRoleClockSlackRange": [
+    5,
+    20
+  ]
 }

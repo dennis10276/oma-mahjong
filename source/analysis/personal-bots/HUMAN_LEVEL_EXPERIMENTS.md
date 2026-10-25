@@ -424,3 +424,30 @@ Development10:38/38 valid, all3 native workers exit0. Slowest1673.7ms.
 
 Parent85182 remains live with3 full-run workers. This is development qualification,
 not adoption. The default stays08 and the counter remains1 pending full results.
+
+Final10: all155 measurements valid; all6 native workers and parent85182 exit0.
+
+| Scope | Clear every salt | Dennis+1 every salt | Repairs | Passing regressions | Decision |
+|---|---|---|---|---|---|
+|155 real boards, salts1-3|151/155|148/155|10015:1/3/3 instead of1/>12/>12|None|Adopt10|
+
+The development repair10033 is partial in full validation:5/>12/5, so it remains
+open.10011 stays8/8/8,10041 and10045 stay3/3/3, and150 stays4/2/3. Slowest1641.7ms;
+mean0.539 minutes per board for all3 salts. Mean CPU/wall1.0434(minimum1.0015).
+
+Verifier71461 exit0 re-summarized all raw shards/comparisons, checked all69 actor
+files against the frozen snapshot and the unchanged validated harness, and
+refreshed all155 boards/targets at2026-10-25T23:34:45.913Z. The catalog is unchanged.
+Only the default profile JSON changed from measured source97f6aa2ca756fd64e249945053bc3a352d89d1a764bad4212d7d81d5f23db675
+to adopted05fd8d1b70c20af0f66865a8f88dca77abde5799996263644527ee1821d693e5.
+Default profile now exactly matches tested6b6094dc0a84e0e1988a9f3e3585863da68ddc0a2a00d554d8214c18b7bb21a1.
+
+Post-adoption121/121 tests pass14s(native51930 exit0), with an explicitly ungated
+drawn-role privacy control retained after changing the default. CLI from an
+unrelated working directory clears out-of-cohort lab61 in1/1/1, valid,
+slowest361.3ms(native25642 exit0). Raw mapping, verification, CLI and test logs
+are in experiment-10/. Adopted; the consecutive-unadopted counter resets to0.
+Track A still has seven open boards; Track B has not started. The next prepared
+strategy is observed-safety transfer, requiring actual integration and a fresh
+development/full test. Keep10015 as a passing regression control;10033 still fails
+full salt2 despite passing salt1, and must remain in the open-failure list.

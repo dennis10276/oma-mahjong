@@ -21,7 +21,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
   from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
 - Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10015,10032,10033,10049,10052; natural86,144 also fail.
+- Labs first:10011,10032,10033,10049,10052; natural86,144 also fail.
 - Development: failing boards plus20 fixed passing guards, salt1. Keep additional
   regression controls. Full salts1-3 before adopting; repair>=1 and break none.
 - Sum-of-tries and human correlation are not Track A gates under the revised goal.
@@ -37,6 +37,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Adopted06 retry information: after a no-learning physical loss; preserves wins and repairs150.
 - Adopted08 remembered-key planning: live clock estimated slack>40; repairs10041 while
   retaining observed facts and avoiding the unconstrained key-route regression.
+- Adopted10 back-symbol planning: live-clock estimated slack5-20; repairs10015 without regressions.
 
 ## Track B: calibrate only after A passes
 
@@ -72,8 +73,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Current evidence
 
-- Retained08:150/155 clear every salt,147/155 within Dennis+1; A still unmet.
-- 121/121 tests pass. Trial09 rejected; consecutive unadopted count1 after adopted08.
+- Retained10:151/155 clear every salt,148/155 within Dennis+1; A still unmet.
+- 121/121 tests pass. Trial10 adopted; consecutive unadopted count reset to0.
 - Existing04 development ran3 salts before revision; subsequent development uses1.
-- Full08 repairs10041 without regressions;6 workers exit0; slowest1696.4ms at3 workers.
-- Trial10 gated dev repairs10033, no passing regression; full155 salts1-3 running.
+- Full10 repairs10015, no regressions;6 workers exit0; slowest1641.7ms at3 workers.
+- Adopted10 CLI lab61:1/1/1; next: observed-safety transfer without placement bounds.
