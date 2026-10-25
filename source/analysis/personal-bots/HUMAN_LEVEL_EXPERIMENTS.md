@@ -42,6 +42,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 | Trial | Change | Boards | Fixed | Broken | Slowest | Decision |
 |---|---|---:|---:|---:|---:|---|
 |01|Complete-memory retry witness|30|0|0|1504ms|Reject; incomplete memory|
+|02|Clock recovery at any tray load|155|2|7|1514ms|Reject; passing levels broken|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -56,14 +57,16 @@ Same baseline-v2 comparator,30-board selection/hash, salts and adoption conditio
 as trial01. Existing clock-recovery production tests and hidden-world invariance
 checks are included in the passing113-test suite. No source code changes since
 aa610a7; source3c87db493e0d3d28c865f624e110743b380d570f49d5fd921d074e34c562be01.
-Raw profile and outputs: .codex-runs/level-measure/experiment-02/. Outcome pending.
+Raw profile and outputs: .codex-runs/level-measure/experiment-02/.
 
 Development30 passed the preregistered comparison: repaired86 and10015, no broken
-guard. The full run has scored154/155 with six confirmed regressions:96,106,112,
-10044,10046,10048. Thus this profile cannot qualify for adoption. Lab10045 remains
-running; preserve its eventual measurement and native close before final metrics.
-The baseline profile is retained. Final source/profile/timing remain in its raw
-state and summaries; do not treat the development comparison as final adoption.
+guard. The full155-board run is complete and valid: repaired86 and10015 but broke96,
+106,112,10044,10045,10046,10048. Rejected; original baseline retained.146/155 clear
+all salts,140/155 within Dennis+1; all four gates remain unmet. Full totals and
+correlation stay unresolved due to censored campaigns; cleared-only diagnostic
+Spearman-0.2302. Mean1.024 minutes/board; slowest1514ms. All24 native workers closed0
+and supervisor session70871 exited0. Two consecutive unadopted experiments. Raw
+full-summary.json and full-report.md are preserved; development alone never qualified adoption.
 
 ## Experiment03: recover only with a carried tray tile
 
