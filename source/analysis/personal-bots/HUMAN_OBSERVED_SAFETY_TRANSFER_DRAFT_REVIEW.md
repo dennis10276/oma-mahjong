@@ -29,7 +29,7 @@ Without a positively known key alive at the witness, this rule returns no proof.
 Other keys may remain unknown. Existing monotone-subset proofs still apply.
 
 The raw prototype passed500 supported witness/key configurations and9000
-production-rule transfer checks, including5652 that restore unrelated tiles and
+production-rule transfer checks, including5652 that restore tiles and
 100 with three-hit ice. Configurations include composite roles and one to four
 keys. Two actual winning production routes on an eight-tile board with three
 keys and an ice-covered key were independently replayed:16 physical taps total.
@@ -45,3 +45,28 @@ Do not alter experiment10's frozen source before its workers finish.
 
 Raw prototype: .codex-runs/level-measure/observed-safety-transfer-draft.js;
 test-observed-safety-transfer-draft.js and observed-safety-transfer-draft-test-02.log.
+
+An isolated integration copy now uses the frozen experiment10 source as its base,
+outside the active checkout's actor graph. A separate optional flag enables this
+proof callback in accepted/cleared safety memory, using actual retained keys even
+when the separate key-route ranking gate is closed. Diagnostics name the proof
+source accurately and report query/proved-transfer counts through measure().
+
+The draft controller test passes: a real four-tap tray loss establishes safety,
+then an eight-tap winning retry thaws the target by removing a different neighbor.
+Without the new proof, planning stops at the unknown post-thaw role. With it,
+the controller can plan through that boundary. Both controls independently replay
+their loss and win:24 taps total. The test also checks relief exclusion, fresh
+controller isolation, retained starting-role identity, invalid settings and an
+unlabeled three-key composite board whose outcome-label getters throw.
+
+The isolated privacy test passes9600 concealed-world controls, including the new
+flag alone and combined with experiment10's clock-gated back-symbol planning.
+Native commands exit0. No recorded benchmark games ran for this draft, no new
+experiment is counted, and no adoption is claimed. The full reference suite must
+run after actual integration, before a preregistered development/full experiment.
+
+Raw isolated source/tests: observed-safety-draft-project-v2/ under the same raw
+directory. Logs: observed-safety-draft-integration-tests-02.log and
+observed-safety-draft-privacy-tests-01.log. observed-safety-integration.patch is
+prepared but unapplied. Keep experiment10's active source frozen until terminal.
