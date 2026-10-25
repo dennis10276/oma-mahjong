@@ -8,11 +8,11 @@ readable; it records the picture only after the real observation.
 
 | Measure | Frozen baseline | Candidate |
 |---|---:|---:|
-| Target successes |657/1550(42.4%)|pending|
-| Slowest move |1534.6ms|pending|
-| Paired gain /2SE |—|pending|
-| Boards dropping>10 points |—|pending|
-| Adopted |—|pending|
+| Target successes |657/1550(42.4%)|649/1550(41.9%)|
+| Slowest move |1534.6ms|1523.4ms|
+| Paired gain /2SE |—|-0.52 /1.18 points|
+| Boards dropping>10 points |—|4|
+| Adopted |—|false|
 
 Use all1550 identical certified cases, manifestda3d05314eb24d6f8068e3eef40ec2f576a8c69aec4fc66690ffa901a4e87efc.
 Adopt only a complete valid run with paired improvement>2SE(case/board-cluster maximum)
@@ -22,3 +22,7 @@ controls, all37 new picture-exposure cases, unchanged clock/pair witnesses,
 actual-observation-only memory and uncapped three-tap horizon accounting.
 The tested changed-file Git blobs match the working branch; the temporary checkout
 has been removed. Raw test/worker logs and the original frozen source bytes remain in .codex-runs/.
+
+Completed/valid:true/true; all12 native workers exited0. Launch commit:72a58e4935af3432e532827992709d092108b574. No-gain counter:4; fresh batch:4/8.
+Paired identical cases; use the larger of case and board-cluster standard errors. No board may lose more than10 percentage points.
+Boards dropping>10 points:30, 33, 50, 10033.
