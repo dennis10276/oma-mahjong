@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
+const { publicActionOrder } = require('./public_action_order.js');
 const physical = require('./known_tray_plan.js');
 const deadEnd = require('./public_dead_end.js');
 const { guardedSearch } = require('./public_witness_reopen_guard.js');
@@ -127,6 +128,9 @@ function recoveryOf(game, state) {
 
 function searchKnown(game, state, actions, options = PARAMETERS) {
   const settings = { ...PARAMETERS, ...options };
+  const actionTieOrder = settings.publicActionSalt && settings.publicActionSalt !== 1
+    ? new Map(publicActionOrder(game.tiles.map((tile, index) => ({ index })), settings.publicActionSalt)
+      .map((action, index) => [action.index, index])) : null;
   const deadline = settings.deadline ?? Infinity;
   const cachePublicAnalysis = settings.cachePublicAnalysis ?? false;
   const knownPairMacros = settings.knownPairMacros ?? false;
@@ -373,7 +377,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         if (cDiff !== 0) return cDiff;
         const zDiff = (game.tiles[right].z || 0) - (game.tiles[left].z || 0);
         if (zDiff !== 0) return zDiff;
-        return left - right;
+        return actionTieOrder ? actionTieOrder.get(left) - actionTieOrder.get(right) : left - right;
       });
 
       for (const index of indices) {

@@ -86,6 +86,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const inspectionTrayLimit = options.inspectionTrayLimit ?? 3;
   assert(Number.isInteger(inspectionTrayLimit) && inspectionTrayLimit >= 0 && inspectionTrayLimit <= 3);
   const geometry = { tiles: tiles.map(tile => ({ x: tile.x, y: tile.y, z: tile.z })) };
+  const orderedIndices = indices => options.publicActionSalt && options.publicActionSalt !== 1
+    ? publicActionOrder(indices.map(index => ({ index })), options.publicActionSalt).map(action => action.index) : indices;
   geometry.nb = Layouts.neighbors(geometry.tiles);
   const iceNb = Layouts.iceNeighbors(geometry.tiles);
   for (const field of ['faces', 'down', 'deck', 'seed']) Object.defineProperty(geometry, field, { get() { throw Error('Policy accessed private ' + field); } });
@@ -238,7 +240,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const cacheKey = +!!position.relieved + '|' + +(position.tray.length < Layouts.SLOTS) + '|' + aliveKey + '|observed:' + +sameObserved;
         if (frontierCache.has(cacheKey)) return frontierCache.get(cacheKey);
         if (sameObserved) {
-          const result = { free: observedTakeable.flatMap((value, index) => value === true ? [index] : []),
+          const result = { free: orderedIndices(observedTakeable.flatMap((value, index) => value === true ? [index] : [])),
             uncertain: [], relieved: !!position.relieved };
           frontierCache.set(cacheKey, result); return result;
         }
@@ -254,7 +256,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           free = position.alive.flatMap((alive, index) => alive && Layouts.isFree(index, position.alive, geometry.nb) ? [index] : []);
           relieved = free.length > 0;
         }
-        const result = { free, relieved,
+        const result = { free: orderedIndices(free), relieved,
           uncertain: relieved ? [] : queried.uncertain.filter(index => free.includes(index) && (!sameBoard || !blocked.has(index))
             && !(excludeClosedObstacles && down[index] === 1)
             && !acceptedTapMemory?.knowsAvailable(index, position.alive, observedKeys)
