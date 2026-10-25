@@ -28,5 +28,7 @@
   "clockRecoveryMinSlack": 50,
   "retryInformationWitness": true,
   "retryInformationMs": 250,
-  "retryInformationNodes": 2000
+  "retryInformationNodes": 2000,
+  "rememberKeyIdentities": true,
+  "keyPlanningSlackAbove": 40
 }

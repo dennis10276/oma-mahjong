@@ -1,9 +1,9 @@
 # Public role-memory leads awaiting controlled experiments
 
-These leads have not qualified for strategy adoption. Foundation components are
-in7e36eb5. After06 qualified and its native workers exited, optional key-memory
-integration was implemented in138f005;120/120 reference tests pass in
-key-identity-reference-tests-01.log. The separate drawn-role integration is still a draft.
+Observed-key memory with a public clock gate qualified in08 and is now adopted.
+Foundation components are in7e36eb5; key integration is138f005 and its gate is8f158df.
+Post-adoption120/120 tests pass in experiment-08/adopted-reference-tests-01.log.
+The separate drawn-role integration is still a draft awaiting its own experiment.
 
 The ONE observer already exposes drawn back symbols correctly. The planning
 frontier currently restricts future role-exposure targets to known face-up tiles.
@@ -57,18 +57,19 @@ rule-backed fact; a bounded search or sample frequency cannot certify another.
 
 Raw evidence: .codex-runs/level-measure/back-role-frontier-repro-01.log,
 observed-role-history-v1.jsonl, key-identity-memory-tests-01.log and
-drawn-role-frontier-tests-01.log. Audit native28941 exited0. Neither component has
-been adopted as a default strategy yet. Key memory is the isolated candidate for07;
-drawn-role planning stays disabled. Only the validated06 adoption resets the stop count.
+drawn-role-frontier-tests-01.log. Audit native28941 exited0. Key memory alone had
+mixed07 results; the clock-slack-gated08 version repairs10041 in3/3/3 without
+regressions. Drawn-role planning stays disabled. Validated08 adoption resets the stop count.
 
 Concrete integration drafts are stored under .codex-runs/level-measure/:
 key-memory-draft/integration.patch and drawn-role-draft/integration.patch, with
 draft production-integration tests in the same folders. Preparation scripts
-prepare-key-memory-patch.py and prepare-drawn-role-patch.py reproduce the original
-drafts from retained06 base1f4c00e. At preparation time, only syntax and git apply
---check passed. Key integration now also passes physical failed/retry replay,
+prepare-key-memory-patch.py reproduces the original key draft from06 base1f4c00e.
+prepare-drawn-role-patch.py refreshed the role draft against clock-gated actor8f158df;
+its syntax and git apply --check pass, but production integration tests have not run.
+Key integration passes physical failed/retry replay,
 exposed-key and concealed-world invariance, fresh-controller isolation and
 three-salt measurement diagnostics. Key facts carry actual attempt/tap provenance
-through runs[].keyIdentityEvidence. The default profile leaves the optional key
-flag disabled until07 qualifies. Retain drawn-role planning as its own subsequent
-strategy or justified combination.
+through runs[].keyIdentityEvidence. The default profile enables observed-key memory
+with keyPlanningSlackAbove=40. Actual facts stay retained when planning is gated off.
+Retain drawn-role planning as its own subsequent strategy or justified combination.

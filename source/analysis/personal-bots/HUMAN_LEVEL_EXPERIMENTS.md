@@ -49,7 +49,7 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |06 control|Fresh baseline at3 workers|38|0|0|1502ms|All38 try counts identical|
 |06|Same WHEN strategy at3 workers|155|1|0|1683ms|Adopted after paired controls and full validation|
 |07|Remember observed key identities|38|1|1|1678ms|Unadopted; public WHEN refinement required|
-|08 development|Public clock gate for remembered keys|38|1|0|1698ms|Qualified development; full155 running|
+|08|Public clock gate for remembered keys|155|1|0|1696ms|Adopted after full validation|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -334,4 +334,27 @@ and retained10011's8-try clear. No previously passing board broken, including150
 Slowest1697.6ms. All3 native development workers exited0; the parent83808 remains
 live and dispatched the full155-board run with salts1-3 at3 concurrent games.
 Development qualification is not adoption; consecutive unadopted count remains1
-until the full result. Default profile remains validated06.
+until the full result. Default profile remained validated06 during that full run.
+
+Final08: all155 valid;150 clear on every salt and147 meet Dennis+1 on every salt.
+Repaired10041 to3/3/3, no formerly passing board broken.10045 stays3/3/3 and10011
+stays8/8/8;150 retains4/2/3. All6 native workers and supervisor83808 exited0.
+Slowest1696.4ms, mean0.579 minutes/board for3 salts. Mean CPU/wall1.039(minimum0.995).
+
+The post-run verifier re-summarized the raw full shards, recomputed full and
+development comparisons, verified all68 actor files and the unchanged validated
+harness, and refreshed all155 recorded boards/counts at2026-10-25T22:25:48.691Z.
+No target or board changed; verifier71532 exited0. Only the default profile JSON
+changed from measured sourcea1fb03cddd38de5dcaabe63420231a86cf268734a7f2ddaf06137fb442c353dd
+to adoptedddf4f93bb9ed465ed1e125bde235272750a60a07dbf8665632ef02ec4e23ff04.
+The default now exactly matches tested profile7c0908b9755341f125f58cf96d22da1fd7793efc146d3bcbcf4e33f5b961f0ba.
+
+Post-adoption120/120 tests pass19s(native37192 exit0). The privacy test explicitly
+retains both ungated and gated configurations after the default changes. CLI from
+an unrelated working directory clears out-of-cohort lab61 in1/1/1, valid,
+slowest477.1ms(native36319 exit0). Raw evidence: experiment-08/adoption-verification.json,
+adopted-profile-mapping.json, adopted-reference-tests-01.log and adopted-lab61.json.
+Adopted. Consecutive unadopted count resets to0;07 remains preserved as rejected.
+Track A still has eight open boards; Track B has not started. Drawn back-role
+information planning is the next prepared strategy, requiring integration tests
+and its own development/full comparison.

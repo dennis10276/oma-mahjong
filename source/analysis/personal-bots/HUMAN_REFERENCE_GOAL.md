@@ -21,7 +21,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
   from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
 - Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10015,10032,10033,10041,10049,10052; natural86,144 also fail.
+- Labs first:10011,10015,10032,10033,10049,10052; natural86,144 also fail.
 - Development: failing boards plus20 fixed passing guards, salt1. Keep additional
   regression controls. Full salts1-3 before adopting; repair>=1 and break none.
 - Sum-of-tries and human correlation are not Track A gates under the revised goal.
@@ -33,10 +33,10 @@ Track A first; Track B only after A passes. Use sunflower tiles.
   fraction, observed roles, retry, known free pairs; never use hidden labels as inputs.
 - Fit one readable condition with at most2 public features and round thresholds.
 - Fit on development only; retest salt1 development then full cohort salts1-3.
-- Adopted06: clock recovery starts with tray>=1 AND estimated clock slack>=50;
-  avoids the harmful recovery choices while retaining useful preparation.
-- Adopted06: retry information after a real physical loss with no new tile facts;
-  preserves constructive wins/clock exits and repairs150 through further observation.
+- Adopted06 clock recovery: tray>=1 AND estimated clock slack>=50; avoids harmful preparation.
+- Adopted06 retry information: after a no-learning physical loss; preserves wins and repairs150.
+- Adopted08 remembered-key planning: live clock estimated slack>40; repairs10041 while
+  retaining observed facts and avoiding the unconstrained key-route regression.
 
 ## Track B: calibrate only after A passes
 
@@ -72,8 +72,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Current evidence
 
-- Retained06:149/155 clear every salt,146/155 within Dennis+1; A still unmet.
-- 120/120 tests pass. Trial06 adopted;07 unadopted; consecutive unadopted count1.
+- Retained08:150/155 clear every salt,147/155 within Dennis+1; A still unmet.
+- 120/120 tests pass. Trial08 adopted; consecutive unadopted count reset to0.
 - Existing04 development ran3 salts before revision; subsequent development uses1.
-- Full06 repairs150 with no regressions;9 workers exit0; slowest1682.7ms at3 workers.
-- Adopted06 CLI lab61:1/1/1;08 dev repairs10041 without regressions; full155 running.
+- Full08 repairs10041 without regressions;6 workers exit0; slowest1696.4ms at3 workers.
+- Adopted08 CLI lab61:1/1/1; next: drawn back-role information planning.
