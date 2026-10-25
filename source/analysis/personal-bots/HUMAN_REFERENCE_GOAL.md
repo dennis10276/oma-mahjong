@@ -72,5 +72,5 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Retained baseline-v2:148/155 clear every salt,145/155 within Dennis+1; A unmet.
 - 119/119 tests pass. Trials01-05 unadopted;05 repaired150 but broke53 and112.
 - Existing04 development ran3 salts before revision; subsequent development uses1.
-- Trial06: fresh38-board baseline matches every try count;3-worker candidate running.
+- Trial06: paired development repairs150 with no regressions; full155 at3 workers running.
 - Unlabeled lab61 cleared1/1/1 on an earlier source; final-version recheck pending.

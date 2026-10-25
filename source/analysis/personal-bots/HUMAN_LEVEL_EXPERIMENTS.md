@@ -46,7 +46,8 @@ particular bottleneck. Rejected; default unchanged; one consecutive unadopted tr
 |03|Clock recovery with a carried tile|37|3|1|1509ms|Reject; lab10045 broken|
 |04|Carried-tray recovery + information routes|37|4|1|1745ms|Unadopted; WHEN analysis required|
 |05|Carried tray + estimated clock slack>=50|155|1|2|1790ms|Reject;53 and112 broken|
-|06 control|Fresh baseline at3 workers|38|0|0|1502ms|All38 try counts identical; candidate running|
+|06 control|Fresh baseline at3 workers|38|0|0|1502ms|All38 try counts identical|
+|06 development|Same WHEN strategy at3 workers|38|1|0|1684ms|Qualified development; full155 running|
 
 ## Experiment02: clock recovery before deeper digging
 
@@ -216,3 +217,9 @@ the historical salt1 measurements, with zero fixed/broken boards. All3 native
 workers closed0. Slowest1502.3ms; mean CPU seconds/wall second1.048(minimum1.002).
 Candidate development is now running with the same3-worker cap. No adoption yet;
 five completed unadopted experiments remain the count until06 terminates.
+
+Development completed38/38 valid: repaired150 from>12 to4; no fresh-control or
+historical passing board broken. Slowest1683.6ms; mean0.408 minutes/board(salt1).
+Mean CPU seconds/wall second1.039(minimum0.999). All3 candidate workers closed0.
+The full155-board candidate run, salts1-3, started2026-10-25T18:17:17Z with3 workers.
+This does not qualify adoption until the full comparison and terminal exits pass.
