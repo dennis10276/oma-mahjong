@@ -69,9 +69,9 @@ Frozen certified baseline657/1550(42.4%), complete/valid; all12 workers exited0.
 Same bot real sanity141/155(91.0%);48.6-point material gap reported before experiments.
 Code/profile/try budgets/public context match; slowest certified move1.535s.
 Eligible losses: unseen twins634/893(71.0%,139 boards); safe-match misses200(22.4%).
-Fresh batch<=8 authorized; no-gain counter4. Fit pressure management first.
+Fresh batch<=8 authorized; no-gain counter5. Fit pressure management first.
 Experiment01:658/1550,+0.06points versus2SE0.89;board35-20points;not adopted.
-Experiment05:shortAll plus both pressure flags;full paired test next(5/8).
+Experiment05:663/1550,+0.39points versus2SE1.53;six boards>10-point loss;not adopted.
 Experiment02:656/1550,-0.06points versus2SE1.14;five boards>10-point loss;not adopted.
 Experiment03:670/1550,+0.84points versus2SE1.29;three boards>10-point loss;not adopted.
 Experiment04:649/1550,-0.52points versus2SE1.18;four boards>10-point loss;not adopted.
