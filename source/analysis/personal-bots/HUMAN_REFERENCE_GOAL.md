@@ -60,16 +60,14 @@ Theme: sunflower. User correction2026-10-25: re-deals must be certified winnable
 
 ## Immediate work
 
-Unconditioned v1 baseline332/1550 is archived; it cannot be the new adoption baseline.
-All v1 workers exited0. User authorized solvability filtering, then a fresh batch.
-Oracle3956ee5; rangesf89abbf; dispatcherb5c3578;106/106 tests pass.
-Shards7/9/10 have verified terminal prefixes preserved. Frozen solver/cap/streams.
-Dispatcher owns<=12 slots and refills on native child exits; no manual duplicate jobs.
-Complete prefixes choose earliest10 only; all original logs and executor evidence kept.
-Fresh real-board sanity reproduces141/155; sources unchanged; slowest1.510s.
-Certification05:59Z:155/155 complete,1550 ordered wins;dispatcher exited0,no children.
-Draw protocol was published in f7773f5 before generation. Assemble/replay, then run
-the certified baseline and compare the completed real sanity before experiments.
-Start with unseen-twin
-tray losses if they remain>=10% on certified re-deals. Fresh no-gain counter0.
-No planner change or luck flag has been adopted. Raw outputs remain in .codex-runs/.
+Unconditioned v1 baseline332/1550 is archived. Old12 salt screens are excluded.
+Protocolf7773f5; oracle3956ee5; rangesf89abbf; dispatcherb5c3578;106/106 tests pass.
+Certified1550 ordered wins:82859 draws,77920 exhaustive losses,3389 discarded caps.
+All selected routes freshly replay production. Original prefixes and tail evidence kept.
+Manifestda3d05314eb24d6f8068e3eef40ec2f576a8c69aec4fc66690ffa901a4e87efc.
+Frozen certified baseline657/1550(42.4%), complete/valid; all12 workers exited0.
+Same bot real sanity141/155(91.0%);48.6-point material gap reported before experiments.
+Code/profile/try budgets/public context match; slowest certified move1.535s.
+Eligible losses: unseen twins634/893(71.0%,139 boards); safe-match misses200(22.4%).
+Fresh batch<=8 authorized; no-gain counter0. Fit pressure management first.
+No planner change or luck flag adopted. Raw outputs remain in .codex-runs/.
