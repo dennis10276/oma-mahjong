@@ -1,8 +1,9 @@
 # Public role-memory leads awaiting controlled experiments
 
-These are evidence and implementation plans, not adopted strategies. The measured
-actor remains frozen during experiment06. Foundation components are in7e36eb5;
-119/119 reference tests pass in role-foundation-reference-tests-02.log.
+These leads have not qualified for strategy adoption. Foundation components are
+in7e36eb5. After06 qualified and its native workers exited, optional key-memory
+integration was implemented in138f005;120/120 reference tests pass in
+key-identity-reference-tests-01.log. The separate drawn-role integration is still a draft.
 
 The ONE observer already exposes drawn back symbols correctly. The planning
 frontier currently restricts future role-exposure targets to known face-up tiles.
@@ -57,13 +58,17 @@ rule-backed fact; a bounded search or sample frequency cannot certify another.
 Raw evidence: .codex-runs/level-measure/back-role-frontier-repro-01.log,
 observed-role-history-v1.jsonl, key-identity-memory-tests-01.log and
 drawn-role-frontier-tests-01.log. Audit native28941 exited0. Neither component has
-been enabled in an actual benchmark yet. They do not reset the eight-trial stop rule.
+been adopted as a default strategy yet. Key memory is the isolated candidate for07;
+drawn-role planning stays disabled. Only the validated06 adoption resets the stop count.
 
 Concrete integration drafts are stored under .codex-runs/level-measure/:
 key-memory-draft/integration.patch and drawn-role-draft/integration.patch, with
 draft production-integration tests in the same folders. Preparation scripts
-prepare-key-memory-patch.py and prepare-drawn-role-patch.py reproduce them.
-Syntax checks and git apply --check pass; production integration tests have NOT
-run. Nothing has been applied to the measured actor. After06's native workers
-finish, apply/test the key-memory change first and preregister a separate trial;
-retain the drawn-role change as its own subsequent strategy or justified combination.
+prepare-key-memory-patch.py and prepare-drawn-role-patch.py reproduce the original
+drafts from retained06 base1f4c00e. At preparation time, only syntax and git apply
+--check passed. Key integration now also passes physical failed/retry replay,
+exposed-key and concealed-world invariance, fresh-controller isolation and
+three-salt measurement diagnostics. Key facts carry actual attempt/tap provenance
+through runs[].keyIdentityEvidence. The default profile leaves the optional key
+flag disabled until07 qualifies. Retain drawn-role planning as its own subsequent
+strategy or justified combination.

@@ -246,3 +246,43 @@ are in experiment-06/. Adopted. Consecutive unadopted count resets to0; rejected
 trials01-05 remain preserved. Track A still has nine open boards and Track B has
 not started. Next priority is the prepared, independently audited typed key-memory
 change; it still requires integration tests and a separate measured experiment.
+
+## Experiment07: retain positive observed key identities across retries
+
+Pre-run: adopted06 profile plus rememberKeyIdentities=true only. A key identity
+enters memory solely when its glyph actually passes the ONE observer. It survives
+same-board/salt retries and later masking, including removed keys needed to retain
+known group membership. It does not overwrite starting-role enums or prove absent
+ice/locks or future availability. Existing legality and conditional proofs remain
+authoritative. Typed identities feed planning dependencies and observed-key proof
+inputs. Learning a new positive key identity ends the no-learning retry intervention.
+Hypothetical-world sampling is disallowed with this flag until its consistency
+constraints support the same typed facts. No sampled picture is promoted.
+
+Implementation138f005;120/120 reference tests pass13s(native21379 exit0). The new
+production test independently replays a forced failed attempt and a winning retry,
+including an initially concealed ice/key combination. Public observations preserve
+the key identity without pretending its starting ice state was known. Concealed
+picture/role swaps preserve decisions with an actually visible remembered key.
+The three-salt measurement API retains actual fact provenance under optional
+runs[].keyIdentityEvidence. Legacy known() and default profile remain unchanged.
+
+Candidate source635aaa9a0e83f0b77e161fee513d4d108376d1579860aec40fd9b6289175b8b5;
+profile2fc9966413161a1eda9647fa046297961325698cb96b76b83ae70bd5a8f850f3.
+Comparator: adopted06 actual full155 measurements(source901550e360d574ab5efe898b5ca410f9e7bd7e9a81b2a82ae93e7f666696b6ab,
+profile92b1c12b829d93187b1dc27efd6c8c7760120283ed419f890af879d0b4946049)
+on identical real boards/salts with3-worker execution. Reuse those measurements;
+do not rerun unchanged controls without a new unresolved runtime concern.
+
+Keep all20 original guards and nine regression controls, including newly repaired150:
+38 salt1 development boards, selection814f23241150ab0645b1e8c48954a3eef28d296544cc52c4c90d701e197aec3b.
+Nine current failures:86,144,10011,10015,10032,10033,10041,10049,10052. At most3
+single-thread games, unchanged250ms/2000-node retry bounds, max12 actual tries.
+Only a repaired failing board with no formerly passing regression qualifies for
+a fresh full155 run on salts1-3. Adopt only after the same rule, independent replay
+and strict under2s timing pass on the full cohort. Refresh recorded targets before
+launch. If results are mixed, compare actual public histories and fit a readable
+WHEN condition with at most2 public features before retesting that strategy.
+Consecutive unadopted count before07 is0; rejection makes it1. Drawn-role planning,
+tight-clock recovery and larger retry budgets remain separate unexecuted candidates.
+Raw outputs and frozen source bytes: .codex-runs/level-measure/experiment-07/.
