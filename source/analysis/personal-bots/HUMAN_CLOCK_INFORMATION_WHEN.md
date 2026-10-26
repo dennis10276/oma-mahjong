@@ -38,7 +38,7 @@ frontier stays unchanged. Gate changes invalidate a pending exploratory plan;
 constructive complete wins and safe clock exits stay protected. Defaults and
 ungated shortAll are unchanged. Persistent continuation proofs remain optional.
 
-132/132 tests pass17s(native29656 exit0, suite02). Four concealed fixture worlds
+132/132 tests pass17s(native29656 exit0, suite02).72 concealed fixture worlds
 check real exposure behavior on both sides of9/10/11, absent/removed/expired
 clocks and default ungated behavior. Their existing witness paths independently
 replay production. The controller also physically clears with the new option,
