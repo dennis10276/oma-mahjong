@@ -197,7 +197,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     accepted: acceptedTapMemory?.entries() ?? [], cleared: clearedRoleMemory?.entries() ?? [],
     blocked: blockedTapMemory?.entries() ?? [], knownLosses: knownLossMemory?.entries() ?? [] });
   const frontierCache = new Map();
-  const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options };
+  const settings = { ...REFERENCE_PARAMETERS, replanOnInformation: true, decisionMs: 1500, ...options,
+    replanOnRetryCost: options.retryFailedRouteLearning === true };
   let decisionDeadline = Infinity;
   const baseSearch = options.hypothesisSampling ? (game, state, actions, searchOptions) => {
     const contested = options.informationSampling && state.pictures.some((picture, index) => state.alive[index] && picture === null);
@@ -562,7 +563,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       }
       const activeClock = !!(clock && current.alive[clock.i]);
       const mayExploreRetry = !activeClock || options.clockRetryLearning && !planner.report()?.safeClockExit;
-      if (retryRiskMemory && mayExploreRetry && !planner.report()?.knownWin
+      if (retryRiskMemory && !options.retryFailedRouteLearning && mayExploreRetry && !planner.report()?.knownWin
         && actions.some(action => geometry.publicRetryCost(action.index) > 0)) resetPlanner();
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report();

@@ -39,6 +39,7 @@ const modules = [
   'test_human_drawn_role_information.js',
   'test_public_retry_risk_memory.js',
   'test_public_failed_route_memory.js',
+  'test_public_retry_prefix_retention.js',
   'test_public_retry_exploration.js',
   'test_public_clock_retry_exploration.js',
   'test_human_single_carry.js',
