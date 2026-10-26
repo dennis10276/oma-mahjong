@@ -21,8 +21,8 @@ It does not assign pictures to unknown tiles or predict the removal cost of a
 future unknown tap. Separate safeClockInspection uses the worst-case first-tap
 cost bound when deciding whether the inspection itself is safe.
 
-Both new options remain disabled in the default19 profile. No measured
-experiment21 is registered or counted. The consecutive-unadopted count stays1.
+Both new options remain disabled in the default19 profile. The diagnostics below
+do not count as a measured campaign experiment; consecutive-unadopted count1.
 
 ## Controls and diagnostic
 
@@ -47,3 +47,27 @@ Raw artifacts under .codex-runs/level-measure/: clock-slack-ranking-unit-01.log,
 clock-slack-ranking-suite-01.log, find-clock-slack-fixture.js,
 clock-slack-fixture-search-02.log and compare-clock-slack-ranking-decisions.js.
 Current actor source5640bbcdb4e1213659a61f785e5fc7ccb9534658bd94f20e3de26c3b8ceae126.
+
+## Actual-history comparison and preregistered experiment21
+
+The comparison completes97 independently replayed taps with zero baseline
+drift(native47203 exit0). Ten suggestions change over the first four attempts.
+At the previously examined attempt3 tap16 position, the optional rank chooses
+an actual required inspection of23 before removing the known22/80 pair. Its
+report spends zero known clock moves along that prefix. The same rule already
+changes attempt1's opening84->74, so this shared-history suggestion must not be
+presented as the actual trajectory a new campaign will follow.
+
+Register21: retained19 plus safeClockInspection:true and clockSlackRanking:true.
+This tests an interaction with the unadopted20 route, rather than discarding it
+after one failed campaign. Use actual19 baseline records, selectionv9's42 boards
+and20 guards, with157 retained as a passing control. Three workers, development
+salt1 first; full159 boards/salts1-3 only if the preregistered v2 qualifier
+permits it. Adoption still requires a complete target repair, no passing target
+regression, independent production replay and every actual move below2s.
+
+Counter before21 is1; an unadopted21 makes2. No winning campaign or improvement
+is claimed at registration. Pin source/profile, current catalog/selection,
+evaluator, completed native trace and safety evidence before launch. Keep the
+actor and default19 profile frozen during measurement. Record actual changed
+decisions on helpful/harmful boards before fitting a WHEN condition if needed.
