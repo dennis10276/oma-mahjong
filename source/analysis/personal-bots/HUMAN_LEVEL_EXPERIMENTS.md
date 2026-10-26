@@ -628,3 +628,28 @@ full-salt failure and158-160 as passing controls(42 boards total). Its hash is
 The relaunched13 keeps its exact source/profile and qualification rules.
 Its pre-run snapshot pins the catalog path/hash and expanded baseline records
 hash; the adoption auditor independently recomputes that full comparator.
+
+### Experiment13 measured result
+
+All42 salt1 development measurements are valid. Supervisor23081 and all three
+workers exit0; slowest move1644.6ms. The combined strategy repairs144 on salt1
+but breaks the previously passing salt1 result on10033. The development
+qualification rejects advancement; no full13 test or adoption is claimed.
+
+| Level | Dennis | Adopted10 salt1 | Combined13 salt1 |
+|---:|---:|---:|---:|
+|144|1|5|1|
+|157|2|3|3|
+|10011|2|8|8|
+|10033|5|5|9|
+|10041|7|3|3|
+|10045|2|3|3|
+|10049|2|>12|5|
+
+This is unsuccessful experiment3 in a row after adopted10. Retain the current
+default. To investigate WHEN rather than discard the strategy, actual-history
+comparisons are running on existing development144,10033 and10049 salt1,
+with baseline10, bounded-proof-only and combined13 policies observing and
+acknowledging the same recorded physical actions. Every complete attempt is
+independently production-replayed. These comparisons are diagnosis, not new
+campaign results or proof that any individual suggestion caused the outcome.
