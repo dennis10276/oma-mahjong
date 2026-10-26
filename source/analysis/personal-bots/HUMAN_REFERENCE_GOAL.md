@@ -21,7 +21,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
   from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
 - Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10032,10033,10049,10052; natural86,144,157 also fail.
+- Labs first:10011,10032,10033,10049,10052; natural86,157 also fail.
 - Development: failing boards plus20 fixed passing guards, salt1. Keep additional
   regression controls. Full salts1-3 before adopting; repair>=1 and break none.
 - Sum-of-tries and human correlation are not Track A gates under the revised goal.
@@ -35,9 +35,10 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Fit on development only; retest salt1 development then full cohort salts1-3.
 - Adopted06 clock recovery: tray>=1 AND estimated clock slack>=50; avoids harmful preparation.
 - Adopted06 retry information: after a no-learning physical loss; preserves wins and repairs150.
-- Adopted08 remembered-key planning: live clock estimated slack>40; repairs10041 while
-  retaining observed facts and avoiding the unconstrained key-route regression.
+- Adopted08 remembered-key planning: live clock estimated slack>40; repairs10041.
 - Adopted10 back-symbol planning: live-clock estimated slack5-20; repairs10015 without regressions.
+- Adopted14 transfer proofs: live clock AND estimated slack<=30; helps10049, preserves10041.
+- Adopted14 tight-clock recovery: tray=1 AND estimated slack=3; repairs144 without regressions.
 
 ## Track B: calibrate only after A passes
 
@@ -64,8 +65,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 - After8 consecutive experiments without adoption, stop; report table/open failures
   and let Dennis decide. A WHEN-condition trial counts. Prior relevant trials remain.
-- Small commits; goal<=80 lines; one short table/run; raw outputs in .codex-runs/.
-- Certified re-deal/luck runs remain STOPPED and archived. detbot audit is recorded.
+- Small commits; goal<=80; one table/run; raw outputs .codex-runs/. Re-deal/luck runs stay STOPPED.
 - After A and B pass: freeze; run the next20 progression levels once, when Dennis
   has played them, at BOTH strengths. Keep measure() working on unseen lab boards.
 - Final one-screen table: level|Dennis|strong|calibrated; separate labs; adopted
@@ -73,8 +73,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Current evidence
 
-- Retained10 expanded:155/159 clear every salt,151/159 within Dennis+1; A unmet.
-- 123/123 tests pass. Trial13 unadopted; consecutive unadopted count3 after adopted10.
-- Existing04 development ran3 salts before revision; subsequent development uses1.
-- Full10 repairs10015, no regressions;6 workers exit0; slowest1641.7ms at3 workers.
-- Trial14 development42 valid:144 fixed, no regressions; full159 live, default10 retained.
+- Retained14:156/159 clear every salt,152/159 within Dennis+1; A still unmet.
+- 123/123 post-adoption tests pass; consecutive unadopted count0 after adopted14.
+- Full14 repairs144, no regressions;6 workers exit0; slowest1639.9ms at3 workers.
+- Fresh159-board cohort and70 runtime files verified; mean0.541 minutes/board for3 salts.
+- Next: address7 remaining failures; larger retry budget and loss-safety draft are unmeasured.

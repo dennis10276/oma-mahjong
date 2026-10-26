@@ -692,3 +692,47 @@ still adopted10; neither14 adoption nor full-cohort gains are claimed yet.
 
 The10049 gain remains partial and is not a Dennis+1 repair. Full159-board,
 three-salt measurement is running at the same three-worker concurrency.
+
+### Experiment14 full result and adoption
+
+Full159-board measurement is valid on all three salts. All six development/full
+workers, supervisor76365 and independent verifier54311 exit0. The comparison
+repairs144 and has no passing-board regression. The live catalog refresh at
+2026-10-26T03:49:56.212Z still contains exactly the same159 boards and targets.
+The auditor recomputes the expanded baseline and full candidate summaries,
+checks all70 frozen runtime files, pinned profiles, raw worker records and the
+unchanged validated benchmark harness. Native exits are recorded separately.
+
+| Level | Dennis | Adopted10 salts1/2/3 | Adopted14 salts1/2/3 |
+|---:|---:|---|---|
+|86|1|1/1/3|1/1/3|
+|144|1|5/1/1|1/1/1|
+|157|2|3/3/4|3/3/4|
+|10011|2|8/8/8|8/8/8|
+|10032|5|>12/>12/>12|>12/>12/>12|
+|10033|5|5/>12/5|5/>12/5|
+|10041|7|3/3/3|3/3/3|
+|10049|2|>12/>12/>12|5/3/5|
+|10052|3|>12/>12/>12|>12/>12/>12|
+
+Clear every salt:155->156 of159. Within Dennis+1 every salt:151->152 of159.
+Lab10049 now clears every salt but remains above Dennis+1 on two salts, so it
+is not counted as a target repair. Keep the seven remaining target failures.
+Slowest move1639.8925ms; mean0.5405993 minutes/board for three salts.
+Mean CPU seconds/wall second1.039516, minimum1.009557, at three workers.
+These are strongest-bot clearance measures, not personal forecast accuracy.
+
+The tested profile is copied to the default. Only the default profile JSON
+differs from the measured runtime; mapping is recorded in
+experiment-14/adopted-profile-mapping.json. Measured source120aee30205ecb739ccec79c640414b017e304044cd73d8816526f7d5b78f8a0;
+adopted source078e4c55b22e0a29f15ab492fcdc1fcb9aecff1fc4670aca3d3dfb3603514e4c;
+profile89aa97fbaf33ae211c170be5c0c14eabcfac09e89a214693e6349a4667757fc8.
+All123 post-adoption tests pass15s(native76855 exit0), including the new
+arbitrary orphan-Joker deduction controls. The unadopted counter resets to0.
+Track A remains unmet and Track B has not started.
+
+The absolute CLI also passes from C:/Users/den_k outside the checkout on the
+unlabeled lab61 input:1/1/1, valid, slowest338.1ms(native5474 exit0). Its source
+and profile match the adopted mapping. Raw result and CLI output are under
+experiment-14/unseen-lab61.json and unseen-lab61-cli.log. The later recorded
+campaign and budget audits remain preparatory; they do not count as adoptions.

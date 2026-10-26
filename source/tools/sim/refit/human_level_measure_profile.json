@@ -35,5 +35,10 @@
   "drawnRoleClockSlackRange": [
     5,
     20
-  ]
+  ],
+  "observedSafetyTransfer": true,
+  "observedSafetyClockOnly": true,
+  "observedSafetyMaxClockSlack": 30,
+  "tightClockRecovery": true,
+  "tightClockRecoveryMaxSlack": 3
 }
