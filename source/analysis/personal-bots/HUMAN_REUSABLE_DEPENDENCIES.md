@@ -1,0 +1,58 @@
+# Selective public-query validation for retained search jobs
+
+The authorized reusable-planning batch remains0/8 measured. Prior24-31 and their
+stop report stay intact. Default23 remains; no adoption or goal completion.
+
+The first prototype retained jobs in fixtures but created80 separate jobs and
+zero unfinished resumes on actual32's first seven tries. The public context audit
+identified62 otherwise identical contexts whose accepted/cleared availability
+archives genuinely differed. Removing those dependencies blindly is unsound.
+
+## Job dependencies, not a blind archive key
+
+The new mode keys a job by its physical root, allowed roots, horizon, geometry,
+public rules and clock. It separately versions public knowledge and capabilities.
+Every legal-set query, attempted known transition and exposure query records its
+public position and semantic answer. No private deck, seed or hidden picture.
+
+When evidence changes, update only compatible newly OBSERVED public pictures/
+orientations in the job's private calculation arrays. Current live callbacks and
+visibility projections replace old ones. Re-evaluate all previously used query
+answers before resuming. If unchanged, the existing stack, candidate cursor and
+visited set remain valid. If one answer changed, discard that affected job and
+start it under the new model. Other jobs survive. This is job-level selective
+invalidation; branch-level repair/rerooting is not claimed.
+
+Thus a new picture that the saved computation never depended on can be used in
+future steps without restarting prior work. If it changes a prior uncertain
+transition or information target, the affected job restarts. Contradictions or
+forgotten known facts force a fresh job. Proposed pictures never update actual
+memory. All returned paths still independently revalidate current capabilities.
+
+Dependency checking has its own bounded query allowance and shared deadline.
+It can suspend and resume a validation cursor; a validation-only call is NOT an
+unfinished-search resume. Frontier work and dependency queries have separate
+counters. Defaults:128 jobs,8192 visited states/job,65536 total states,
+32768 dependencies/job,131072 total dependencies. Deadline/cap/eviction remains
+unresolved, never an impossibility or complete loss certificate.
+
+## Verification before real histories
+
+135/135 human-reference tests pass17s(native27114 exit0). The prior49 concealed
+worlds and lifetime controls replay69 physical taps. The new dependency suite
+also independently replays a four-tap win after learning an unused covered
+picture. Tests verify unchanged answers preserve work, a changed future-role
+query restarts only the affected job, an interleaved unaffected root resumes,
+used-picture changes invalidate, forgotten facts reset, validation limits do
+not inflate resume counters, and total dependency memory is bounded.
+
+Source a54485043b2e164428344a9ff4e95ae59b4db7452dd6ec8d641145bb0d6535a5,
+73 runtime files. Same proposed diagnostic profile as v1:
+eecea0816bca9702e00c361f768811727434b7ec708a5c7d75bbd0033bc5075d,
+retained23 plus reusablePublicPlanning:true ONLY. No additional priority flag,
+per-level threshold, retry preference or imagined-picture memory is enabled.
+Real32 and passing41 histories must now demonstrate actual unfinished resumed
+work, zero baseline drift, independent replay and<2s before campaign32.
+
+Raw .codex-runs/level-measure/: reusable-dependencies-unit-01.log,
+reusable-dependencies-suite-01.log. Keep all73 actor files frozen during traces.

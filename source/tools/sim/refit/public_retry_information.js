@@ -72,7 +72,7 @@ function retryInformationSearch(primarySearch, options = {}) {
       const extraBegan = Date.now();
       const result = (reusable ? reusable.search : explorationWitness)(publicGame, state, actions,
         { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
-          ...(reusable ? { version: options.contextVersion() } : {}),
+          ...(reusable ? { version: options.contextVersion(), revalidatePublicChanges: true } : {}),
           deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
       counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit' || result.budgetStopReason === 'node_limit');
