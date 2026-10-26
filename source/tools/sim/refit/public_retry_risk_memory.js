@@ -37,4 +37,55 @@ function createRetryRiskMemory(clock = null) {
   };
 }
 
-module.exports = { createRetryRiskMemory };
+function createFailedRouteMemory(clock = null) {
+  assert(clock === null || Number.isInteger(clock.i) && clock.i >= 0 && Number.isInteger(clock.n) && clock.n > 0);
+  const contexts = new Map();
+  let transitions = [], startingKnowledge = null, active = false;
+  const validateKnowledge = knowledge => assert(typeof knowledge === 'string' && knowledge.length > 0);
+  const identity = state => aliveSignature(state.alive) + '|' + JSON.stringify([
+    state.tray.slice().sort((left, right) => left - right), state.openPeek, !!state.relieved,
+    clock && state.alive[clock.i] ? state.moves : null, state.arriving ?? []]);
+  return {
+    beginAttempt(knowledge) {
+      assert(!active); validateKnowledge(knowledge);
+      transitions = []; startingKnowledge = knowledge; active = true;
+    },
+    observeTransition(before, index, after) {
+      assert(active && Number.isInteger(index) && before.alive[index] === 1);
+      assert.equal(after.physicalTaps, before.physicalTaps + 1);
+      assert.equal(before.alive.length, after.alive.length);
+      assert(after.alive.every((alive, target) => alive === 0 || alive === 1 && before.alive[target] === 1));
+      transitions.push({ identity: identity(before), index });
+    },
+    finish(status, knowledge) {
+      assert(['physicalLoss', 'cleared', 'unresolvedBudget', 'unresolvedPublicFrontier', 'unresolved'].includes(status));
+      validateKnowledge(knowledge);
+      if (!active) return 0;
+      active = false;
+      let learned = 0;
+      if (status === 'physicalLoss' && knowledge === startingKnowledge) {
+        if (!contexts.has(knowledge)) contexts.set(knowledge, new Map());
+        const preferences = contexts.get(knowledge), seen = new Set();
+        for (const transition of transitions) {
+          const signature = transition.identity + '|root:' + transition.index;
+          if (seen.has(signature)) continue;
+          seen.add(signature);
+          const penalty = Math.min(3, (preferences.get(signature)?.penalty ?? 0) + 1);
+          preferences.set(signature, { ...transition, penalty }); learned++;
+        }
+      }
+      transitions = [];
+      return learned;
+    },
+    cost(state, index, knowledge) {
+      validateKnowledge(knowledge);
+      return contexts.get(knowledge)?.get(identity(state) + '|root:' + index)?.penalty ?? 0;
+    },
+    entries() {
+      return [...contexts].flatMap(([knowledge, preferences]) => [...preferences.values()].map(entry => ({
+        ...entry, knowledge, kind: 'failedRoutePreference', provedLoss: false })));
+    },
+  };
+}
+
+module.exports = { createRetryRiskMemory, createFailedRouteMemory };

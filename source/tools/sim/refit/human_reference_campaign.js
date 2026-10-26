@@ -17,7 +17,7 @@ const { createDrawnRoleFrontier, drawnRolePlanningAllowed } = require('./public_
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_priority.js');
 const { describeInformation } = require('./public_information_audit.js');
-const { createRetryRiskMemory } = require('./public_retry_risk_memory.js');
+const { createRetryRiskMemory, createFailedRouteMemory } = require('./public_retry_risk_memory.js');
 const { retryExploration } = require('./public_retry_exploration.js');
 const { clockRetryExploration } = require('./public_clock_retry_exploration.js');
 const { createAcceptedTapMemory } = require('./public_accepted_tap_memory.js');
@@ -80,6 +80,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.clockProbeTrayLimit === undefined || options.probeUnknownClock === true
     && Number.isInteger(options.clockProbeTrayLimit) && options.clockProbeTrayLimit >= 0 && options.clockProbeTrayLimit <= 2);
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
+  assert(options.retryFailedRouteLearning === undefined || typeof options.retryFailedRouteLearning === 'boolean');
+  assert(!options.retryFailedRouteLearning || options.retryRiskLearning === true,
+    'Failed-route preferences require the guarded actual-retry exploration');
   assert(options.clockRetryLearning === undefined || typeof options.clockRetryLearning === 'boolean');
   assert(!options.clockRetryLearning || options.retryRiskLearning, 'Clock retry exploration requires actual retry learning');
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
@@ -150,6 +153,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let lastAcceptedIndex = null;
   let observedSafetyPlanningActive = false;
   let retryRiskMemory = null;
+  let failedRouteMemory = null, startingRetryKnowledge = null;
   const transfer = options.observedSafetyTransfer ? createObservedSafetyTransfer(geometry.tiles)
     : options.causalAvailabilityMemory ? createAvailabilityTransfer(geometry.tiles, { exclusiveRoles: true }) : null;
   const transferProofLabel = options.observedSafetyTransfer ? 'observedKeyAndNeighborCount' : 'publicObstacleBounds';
@@ -214,7 +218,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     const selectedSearch = informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);
   };
-  if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? retryRiskMemory.cost(current, index) : 0;
+  if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? Math.max(
+    retryRiskMemory.cost(current, index), failedRouteMemory?.cost(current, index, JSON.stringify(retryKnowledge())) ?? 0) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
   return {
     rememberPublic(memory) {
@@ -229,6 +234,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       for (const [index, value] of memory.initialRoles.entries()) initialRoles[index] = value;
     },
     beginAttempt() {
+      startingRetryKnowledge = JSON.stringify(retryKnowledge());
+      failedRouteMemory?.beginAttempt(startingRetryKnowledge);
       informationRetry?.beginAttempt(retryKnowledge());
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
@@ -248,6 +255,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       assert(!current || state.physicalTaps > current.physicalTaps);
       if (current && lastAcceptedIndex !== null) {
         retryRiskMemory?.observeTransition(current, lastAcceptedIndex, state);
+        failedRouteMemory?.observeTransition(current, lastAcceptedIndex, state);
         acceptedTapMemory?.observeAccepted(lastAcceptedIndex, current, state);
         const inferred = inferMatchedPicture(current, lastAcceptedIndex, { alive: state.alive, tray: state.tray,
           moves: state.moves, openPeek: state.openPeek, physicalTaps: state.physicalTaps });
@@ -266,6 +274,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       });
       if (observed.clock) clock = { i: observed.clock.i, n: observed.clock.n };
       if (options.retryRiskLearning && !retryRiskMemory) retryRiskMemory = createRetryRiskMemory(clock);
+      if (options.retryFailedRouteLearning && !failedRouteMemory) {
+        failedRouteMemory = createFailedRouteMemory(clock);
+        failedRouteMemory.beginAttempt(startingRetryKnowledge);
+      }
       const rows = [];
       observed.roles.forEach((role, index) => {
         const value = role ?? (state.physicalTaps === 0 ? initialRoles[index] : null);
@@ -551,7 +563,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const activeClock = !!(clock && current.alive[clock.i]);
       const mayExploreRetry = !activeClock || options.clockRetryLearning && !planner.report()?.safeClockExit;
       if (retryRiskMemory && mayExploreRetry && !planner.report()?.knownWin
-        && actions.some(action => retryRiskMemory.cost(current, action.index) > 0)) resetPlanner();
+        && actions.some(action => geometry.publicRetryCost(action.index) > 0)) resetPlanner();
       planner.physicalTrayPlanning(geometry, current, actions);
       const plan = planner.report();
       if (knownLossMemory) knownLossMemory.recordActual(current, plan, actions);
@@ -576,9 +588,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     completeAttempt(status) {
       if (options.hypothesisSampling) episodes.at(-1).status = status;
       informationRetry?.finish(status, retryKnowledge());
-      return retryRiskMemory?.finish(status) ?? null;
+      const routePreferences = failedRouteMemory?.finish(status, JSON.stringify(retryKnowledge())) ?? 0;
+      const risk = retryRiskMemory?.finish(status) ?? null;
+      return routePreferences ? { ...risk, failedRoutePreferences: routePreferences } : risk;
     },
-    retryEvidence() { return retryRiskMemory?.entries() ?? []; },
+    retryEvidence() { return [...(retryRiskMemory?.entries() ?? []), ...(failedRouteMemory?.entries() ?? [])]; },
     retryCompletionStats() { return completeRetrySearch?.stats() ?? null; },
     retryInformationStats() { return informationRetry?.stats() ?? null; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },

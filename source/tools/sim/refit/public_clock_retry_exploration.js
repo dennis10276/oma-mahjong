@@ -52,7 +52,7 @@ function clockRetryExploration(runSearch) {
         .map(field => [field, reports.reduce((sum, report) => sum + report.continuationProof[field], 0)])) } : {}),
       clockRetryExploration: { primaryIndex: primary.index, primaryPenalty: costs.get(primary.index),
         alternativeIndex: candidate.index, adopted, proof, sharedNodeLimit: options.nodes,
-        note: 'A real earlier risk may select a lower-penalty root only with a known physical safe clock-exit prefix. Unknowns, physical clock loss and limits cannot become a witness or a free restart.' } };
+        note: 'A real earlier failed-attempt preference may select a lower-penalty root only with a known physical safe clock-exit prefix. Unknowns, physical clock loss and limits cannot become a witness or a free restart.' } };
   };
 }
 

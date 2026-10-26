@@ -47,7 +47,7 @@ function retryExploration(runSearch) {
         .map(field => [field, reports.reduce((sum, report) => sum + report.continuationProof[field], 0)])) } : {}),
       retryExploration: { primaryIndex: primary.index, primaryPenalty: costs.get(primary.index), alternativeIndex: candidate.index,
         adopted, safety, sharedNodeLimit: options.nodes,
-        note: 'A bounded alternative to an actual unrecovered risk from an earlier lost attempt, not a proof that the original action loses. Active clocks and constructive wins remain protected; no hypothetical reveal is supplied.' } };
+        note: 'A bounded alternative to a preference learned from an actual earlier lost attempt, not a proof that the original action loses. Active clocks and constructive wins remain protected; no hypothetical reveal is supplied.' } };
   };
 }
 
