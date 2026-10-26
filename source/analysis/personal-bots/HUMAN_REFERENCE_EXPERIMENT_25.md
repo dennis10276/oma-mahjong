@@ -47,6 +47,24 @@ Raw audit-candidate25-public-cycles.js and candidate25-public-cycles-v1.json/.lo
 retain these facts. The prepared trace-experiment25-cycle-prefix.js refuses to
 run while benchmark workers are active; it has not yet been executed.
 
+A fast observer/memory-only replay reconstructs the retry preferences without
+running any decision search. All699 taps replay; the recorded key-identity
+evidence matches and64 pictures remain known. At tap28/openPeek0 the selected68
+has penalty0, but available78 has risk/route penalties1/1. At tap29/openPeek68,
+selected0 has risk/route penalties0/1, while78 still has1/1. The pattern repeats
+at taps30-33. The controller's reset condition tests whether ANY available root
+has a positive penalty, so it can discard a cached route even when its next
+chosen move is unpenalized. This supports tracing that guard first, rather than
+adding another blind search-budget increase.
+
+This replay reconstructs public memory only, not the actual decision reports,
+pending prefix or known-win guard; it does not yet establish the complete cause
+or demonstrate a fix. Raw audit-experiment25-cycle-preferences-v2.js and
+experiment25-cycle-preferences-v2.json/.log retain the split risk/route costs;
+native exit0. The earlier-v1 output is retained but its broad
+trackedKnowledgeUnchanged label was only an existence check; v2 instead checks
+that a current route cost matches this public-knowledge context.
+
 ## Reproducibility and next action
 
 Candidate source8dbd22174eb21227690589d6042255c24b788625f943ac439c4dffbb75ed1f33;
