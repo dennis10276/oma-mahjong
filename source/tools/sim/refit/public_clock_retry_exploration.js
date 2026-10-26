@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert/strict');
-const { advance } = require('./known_tray_plan.js');
+const { advance, legal } = require('./known_tray_plan.js');
 const { roomOf } = require('./public_witness_search.js');
 const { retryExploration } = require('./public_retry_exploration.js');
 
@@ -10,6 +10,7 @@ function clockExitPrefix(game, state, path, deadline = Infinity) {
   const prefix = [];
   for (const index of path) {
     if (Date.now() >= deadline) return null;
+    if (!legal(game, position).free.includes(index)) return null;
     const moved = advance(game, position, index);
     if (moved.uncertain || moved.lost) return null;
     position = moved.state; prefix.push(index);

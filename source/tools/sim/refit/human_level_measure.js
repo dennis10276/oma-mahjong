@@ -77,6 +77,7 @@ function createMeasurer(planning = defaultProfile) {
           verifiedTaps: result.verifiedTaps, decisions: result.decisionCount,
           ...(result.retryCompletion ? { retryCompletion: result.retryCompletion } : {}),
           ...(result.retryInformation ? { retryInformation: result.retryInformation } : {}),
+          ...(result.knownWitnessPortfolio ? { knownWitnessPortfolio: result.knownWitnessPortfolio } : {}),
           ...(result.keyIdentityEvidence ? { keyIdentityEvidence: result.keyIdentityEvidence } : {}),
           ...(result.observedSafetyTransfer ? { observedSafetyTransfer: result.observedSafetyTransfer } : {}),
           attempts: result.attempts.map(attempt => ({ attempt: attempt.attempt, status: attempt.status,

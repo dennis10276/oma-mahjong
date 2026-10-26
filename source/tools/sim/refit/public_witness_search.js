@@ -248,8 +248,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const clockRecoveryActive = clockRecovery && clocked && (state.tray.length >= (settings.trayRecoveryClockMin ?? 0)
     && rootClockSlack >= clockRecoveryMinSlack || tightClockRecoveryActive);
   const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
+  const finishKnownMaxTaps = settings.finishKnownMaxTaps ?? 96;
+  assert(Number.isInteger(finishKnownMaxTaps) && finishKnownMaxTaps > 0 && finishKnownMaxTaps <= 512);
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
-  const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
+  const tapLimit = finishKnown ? Math.min(finishKnownMaxTaps, Math.max(settings.taps,
     initialLeft + state.down.filter((value, index) => value && state.alive[index]).length)) : settings.taps;
   let best = null, beam = [{ state, path: [] }], nodes = 0, boundary = false, unknown = 0, unsupported = 0, hasSafeRemoval = false, deadPrunes = 0;
   let dominanceStop = null;

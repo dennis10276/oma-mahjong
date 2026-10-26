@@ -38,12 +38,18 @@ const { publicActionOrder } = require('./public_action_order.js');
 const { retryCompleteSearch } = require('./public_retry_complete.js');
 const { retryInformationSearch } = require('./public_retry_information.js');
 const { safeClosedInspection } = require('./public_safe_closed_inspection.js');
+const { createKnownWitnessPortfolio } = require('./public_known_witness_portfolio.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
     && options.publicActionSalt > 0 && options.publicActionSalt <= 0x7fffffff);
   assert(options.choiceLimit === undefined || Number.isInteger(options.choiceLimit) && options.choiceLimit > 0);
   assert(options.retryCompleteWitness === undefined || typeof options.retryCompleteWitness === 'boolean');
+  assert(options.knownWitnessPortfolio === undefined || typeof options.knownWitnessPortfolio === 'boolean');
+  assert(options.knownWitnessMs === undefined || options.knownWitnessPortfolio === true
+    && Number.isFinite(options.knownWitnessMs) && options.knownWitnessMs > 0 && options.knownWitnessMs <= 500);
+  assert(options.knownWitnessNodes === undefined || options.knownWitnessPortfolio === true
+    && Number.isInteger(options.knownWitnessNodes) && options.knownWitnessNodes > 0);
   assert(options.retryCompleteMs === undefined || options.retryCompleteWitness === true
     && Number.isFinite(options.retryCompleteMs) && options.retryCompleteMs > 0 && options.retryCompleteMs <= 500);
   assert(options.retryCompleteNodes === undefined || options.retryCompleteWitness === true
@@ -222,8 +228,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     { milliseconds: options.retryInformationMs ?? 250, nodes: options.retryInformationNodes ?? 2000,
       choices: options.choiceLimit ?? 512, deadEndInformation: options.deadEndInformation,
       peekTrayLimit: options.retryInformationPeekTrayLimit ?? 1, preferActualPeek: options.retryInformationPreferPeek }) : null;
+  const knownPortfolio = options.knownWitnessPortfolio ? createKnownWitnessPortfolio(
+    informationRetry?.search || completeRetrySearch || runRetrySearch || baseSearch,
+    { milliseconds: options.knownWitnessMs ?? 250, nodes: options.knownWitnessNodes ?? 4096,
+      choices: options.choiceLimit ?? 512 }, baseSearch) : null;
   const resetPlanner = () => {
-    const selectedSearch = informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
+    const selectedSearch = knownPortfolio?.search || informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);
   };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? Math.max(
@@ -608,6 +618,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     retryEvidence() { return [...(retryRiskMemory?.entries() ?? []), ...(failedRouteMemory?.entries() ?? [])]; },
     retryCompletionStats() { return completeRetrySearch?.stats() ?? null; },
     retryInformationStats() { return informationRetry?.stats() ?? null; },
+    knownPortfolioStats() { return knownPortfolio?.stats() ?? null; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
@@ -763,6 +774,7 @@ function playHumanCampaign(input, options = {}) {
     ...(options.planning?.retryRiskLearning ? { retryRisks: controller.retryEvidence() } : {}),
     ...(options.planning?.retryCompleteWitness ? { retryCompletion: controller.retryCompletionStats() } : {}),
     ...(options.planning?.retryInformationWitness ? { retryInformation: controller.retryInformationStats() } : {}),
+    ...(options.planning?.knownWitnessPortfolio ? { knownWitnessPortfolio: controller.knownPortfolioStats() } : {}),
     ...(options.planning?.rememberKeyIdentities ? { keyIdentityEvidence: controller.keyIdentityEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };
