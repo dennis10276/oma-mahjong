@@ -27,9 +27,10 @@ loss fact. No hidden picture or role is assigned. A losing child does not make
 its parent lose: a different parent action can still win.
 
 Each retained fact stores the actual-root signature/tap witness, known path and
-certificate with observedSuccessor:false. Paths/certificates are copied. Up to
-8192 positions are retained; a full cache drops new deductions, never invents a
-loss or changes the physical rules. Existing clock/arrival/relief distinctions
+certificate with observedSuccessor:false. Paths/certificates are copied. New
+continuation deductions stop once the cache already holds8192 positions;
+existing actual-root recording remains unchanged. A full cache never invents a
+loss or changes physical rules. Existing clock/arrival/relief distinctions
 remain in the key. Absent the option, default23 behavior remains unchanged.
 
 ## Verification
@@ -63,3 +64,14 @@ full159/salts1-3 repair/no-passing-regression gate before adoption.
 
 Raw .codex-runs/level-measure/: retained-continuation-losses-unit-01/02/03/04.log,
 retained-continuation-losses-suite-01.log and compare-retained-continuation-losses.js.
+
+## Live diagnostic checkpoint
+
+Actor source is frozen while native98936(32/salt1),71840(11/salt1) and
+43269(86/salt3) compare against actual23 histories. The latter uses
+compare-retained-continuation-losses-full.js and full-records-for-next.json;
+the lab traces use actual development records. Outputs are under
+when-retained-continuation-losses-v1/ and
+when-retained-continuation-losses-full-v1/. No campaign28 has been registered.
+Require their terminal native results before interpreting choices or editing
+the actor; partial proof counts alone establish no target gain.
