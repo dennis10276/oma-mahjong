@@ -54,3 +54,20 @@ preregistered campaign. A suggestion change or fixture clear is not adoption.
 
 Raw .codex-runs/level-measure/: clock-orphan-preparation-unit-01/02/03.log,
 clock-orphan-preparation-suite-01.log, adopted23-clock-exit-debt-v1.json/.log.
+
+## Actual-history comparisons completed
+
+Native82959/42813 exit0.32/41 replay242/176 taps independently, zero baseline
+drift, seven/one changed suggestions.32 changes just before taking its clock on
+every inspected try: try1 tap1 clock43/tray1, baseline74, preparation73. Later
+tries prefer81,71 to the immediate clock.41's change is try3 tap32, clock33/tray2,
+baseline52,10 versus preparation10,9. Maximum candidate1633.6/1412.7ms.
+These are suggestions on recorded histories, not new clears or proven benefit.
+
+The11 comparison replays468 taps but has three baseline choice drifts, native
+48898 exit1. Its13 changed suggestions cannot support causal attribution or
+fitting. Preserve the diagnostic and test11 normally in the campaign. No retry
+was done merely to obtain a favorable comparison. All three native jobs terminal.
+
+Raw compare-clock-orphan-preparation-v1.js, clock-orphan-decisions-native.json,
+when-clock-orphan-preparation-v1/clock-orphan/baseline23/ retain all outcomes.
