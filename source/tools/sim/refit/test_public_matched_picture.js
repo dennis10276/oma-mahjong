@@ -50,8 +50,32 @@ function test() {
   const hiddenBoard = observeBoard(tiles, restarted.view().state, actual.clock, { picture: index => actual.faces[index], role: index => index === 1 ? null : 'none' });
   assert.equal(hiddenBoard.pictures[1], null); observe(restarted.view());
   assert.equal(controller.known().pictures[1], 1); assert.equal(controller.known().initialRoles[1], null);
+  let arbitraryBoardTaps = 0;
+  for (const waiting of [1, 101]) for (const hidden of [1, 101]) {
+    const smallTiles = tiles.slice(0, 4);
+    const arbitrary = { tiles: smallTiles, nb: layouts.neighbors(smallTiles), faces: [waiting, hidden, 7, 7],
+      down: [0, 1, 0, 0], rules: null, clock: null };
+    const physical = factory(arbitrary, settings); physical.tap(0);
+    const prior = physical.view().state;
+    const visible = observeBoard(smallTiles, prior, null, { picture: index => arbitrary.faces[index], role: () => 'none' });
+    const publicBefore = { ...outcome(prior), down: visible.down, pictures: visible.pictures };
+    assert.equal(publicBefore.pictures[1], null);
+    const tapped = physical.tap(1);
+    const deduced = inferMatchedPicture(publicBefore, 1, outcome(tapped.state));
+    if (waiting === hidden) assert.deepEqual(deduced, { index: 1, picture: hidden, source: 'observedTrayMatch' });
+    else {
+      assert.equal(deduced, null, 'A closed wildcard mismatch reveals before it can consume an orphan tray picture');
+      assert(tapped.state.alive[1]); assert.equal(tapped.state.openPeek, 1);
+      physical.tap(1);
+    }
+    const route = [0, 1, ...(waiting === hidden ? [] : [1]), 2, 3];
+    physical.tap(2); physical.tap(3); assert(physical.view().win);
+    arbitraryBoardTaps += verifyAttempt(encodeGame(arbitrary), route, settings, physical.audit());
+  }
+  assert.equal(arbitraryBoardTaps, 18);
   factory.verifySource();
   console.log('PASS ' + controls + ' actual tray/twin/terminal match controls infer only identities already visible in prior tray/open tiles, never read removed pictures, independently replay in production, and retain no invented starting role across retries');
+  console.log('PASS four arbitrary paired/orphan-Joker boards clear in18 independently replayed taps; unknown closed wildcards are never falsely deduced as their tray partner');
 }
 
 if (require.main === module) test();

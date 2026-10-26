@@ -28,3 +28,13 @@ a general constraint-based hidden-picture proof engine has been implemented.
 
 The canonical goal already permits proved deductions. This clarification
 does not alter the observer, measured actor or default profile during a run.
+
+Four additional production controls now cover arbitrary boards with a single
+Joker and an orphan ordinary picture, as well as paired controls. Both
+assignments can win, so the deduction cannot assume an initially paired deck.
+With different Joker/ordinary pictures, tapping the unknown closed tile first
+reveals it without removing it; inference returns null. With equal pictures,
+the actual immediate tray match proves that identity. All four boards clear,
+with18 independently replayed taps. The existing222 tray/twin/terminal controls
+also pass(native exit0). Only tests changed; active actor source remains120aee30205ecb739ccec79c640414b017e304044cd73d8816526f7d5b78f8a0.
+Raw output: .codex-runs/level-measure/certain-picture-orphan-joker-tests-01.log.
