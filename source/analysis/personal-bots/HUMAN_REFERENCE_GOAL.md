@@ -9,7 +9,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - ONE observer: visible face-up pictures, drawn roles on fronts/backs, covered clock
   badges, and current takeability of every geometrically free tile without tapping.
 - No hidden pictures, deck, board seed or future reveals. Only public same-board/salt retry memory.
-- Pictures certain across every publicly consistent hidden board may enter memory; sample consensus is not proof.
+- Publicly proved pictures may enter memory and planning like observations; retain proof provenance; sample consensus is not proof.
 - Every level being winnable is an allowed prior. General planning only: no level
   IDs, per-level settings or routes. Every attempt independently replays production.
 - Single-thread games, anytime, under2s/move; at most12 concurrent games.
@@ -74,7 +74,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 ## Current evidence
 
 - Retained23:157/159 clear every salt,154/159 within Dennis+1; A still unmet.
-- 127/127 tests pass17s; trials20-22 unadopted; consecutive count0 after adopted23.
+- 127/127 tests pass17s; trial24 unadopted, no changed clear counts; consecutive count1 after adopted23.
 - Full23 repairs10033, no target regressions;6 new workers exit0; slowest1759.2ms.
 - Fresh159-board cohort and71 runtime files verified; mean0.652 minutes/board for3 salts.
 - Supervisor/auditor exit0; external-cwd unlabeled lab61 clears1/1/1, valid1502.6ms.

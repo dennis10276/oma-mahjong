@@ -136,3 +136,22 @@ suggestions, zero drift and<2s decisions in both traces. Freeze actor sources
 and default23 during measurement. No new campaign gain or adoption is claimed.
 Sourceb4467c67a46379c215d09dedd8dac25cbc56679855703a97706b0410a97d4f94.
 Profile8f1600badabe023732aba5d7c6b8a4a96bbc7d8371ea79ac3379cb1798f5c31f.
+
+## Experiment24 result: retain23
+
+| Development42 real boards, salt1 | Cleared | Within Dennis+1 | Complete repairs | Passing target regressions | Slowest move |
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate24|40/42|38/42|0|0|1801.7ms|
+
+All42 successful-attempt counts, including censored results, are unchanged.
+The changed suggestions in fixed-history diagnostics did not improve the
+executed campaign counts. This does not establish identical trajectories.
+The unchanged v2 qualification rejects development: no partial or off-salt
+development gain justifies a full run. No full24 run or adoption was performed.
+All three development workers and supervisor native81496 exited0; no own
+benchmark worker remains live. Production replay and timing are valid; mean
+CPU/wall1.0471, minimum1.0001. Retain default23. Consecutive unadopted count1.
+Raw dispatch-state.json, development-summary.json, baseline-development-summary.json
+and development-shard00/01/02.jsonl remain under .codex-runs/level-measure/experiment-24/;
+the supervisor log is .codex-runs/level-measure/experiment-24-supervisor-01.log.
