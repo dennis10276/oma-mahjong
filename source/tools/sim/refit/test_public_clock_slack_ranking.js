@@ -29,9 +29,20 @@ function test(){
     const noClock={tiles,nb:actual.nb,rules:null,clock:null};
     assert.deepEqual(search(noClock,state,actions),search(noClock,state,actions,{clockSlackRanking:true}));
     assert.deepEqual(search(game,state,actions),search(game,state,actions,{clockSlackRanking:false}));
+    const gated=search(game,state,actions,{clockSlackRanking:true,clockSlackRankingBudgetRange:[10,30]});
+    assert.equal(gated.clockSlackRankingGate.active,false);
+    assert.equal(gated.clockSlackRankingGate.publicStartingBudget,1);
+    const {clockSlackRankingGate,...unchanged}=gated;
+    assert.deepEqual(unchanged,old);
+    const active=search(game,state,actions,{clockSlackRanking:true,clockSlackRankingBudgetRange:[1,30]});
+    assert.equal(active.clockSlackRankingGate.active,true);
+    assert.equal(active.index,old.index);assert(active.safeClockExit);
     assert.throws(()=>search(game,state,actions,{clockSlackRanking:'yes'}));
+    assert.throws(()=>search(game,state,actions,{clockSlackRankingBudgetRange:[10,30]}));
+    assert.throws(()=>search(game,state,actions,{clockSlackRanking:true,clockSlackRankingBudgetRange:[30,10]}));
   }
   assert.throws(()=>createHumanController(tiles,{clockSlackRanking:'yes'}));
+  assert.throws(()=>createHumanController(tiles,{clockSlackRankingBudgetRange:[10,30]}));
   factory.verifySource();
   console.log('PASS clock-slack ranking preserves urgent physical clock exits across concealed worlds, disabled/nonclock behavior, private-input traps and bounded-search uncertainty; '+verifiedTaps+' taps independently replayed');
 }

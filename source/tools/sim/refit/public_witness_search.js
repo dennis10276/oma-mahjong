@@ -149,6 +149,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const tightClockRecoveryMaxSlack = settings.tightClockRecoveryMaxSlack ?? 5;
   const clockInformationBeforeRisk = settings.clockInformationBeforeRisk ?? false;
   const clockSlackRanking = settings.clockSlackRanking ?? false;
+  const clockSlackRankingBudgetRange = settings.clockSlackRankingBudgetRange;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
@@ -185,6 +186,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     && Number.isInteger(tightClockRecoveryMaxSlack) && tightClockRecoveryMaxSlack >= 3);
   assert.equal(typeof clockInformationBeforeRisk, 'boolean');
   assert.equal(typeof clockSlackRanking, 'boolean');
+  assert(clockSlackRankingBudgetRange === undefined || clockSlackRanking && Array.isArray(clockSlackRankingBudgetRange)
+    && clockSlackRankingBudgetRange.length === 2 && clockSlackRankingBudgetRange.every(value => Number.isInteger(value) && value > 0)
+    && clockSlackRankingBudgetRange[0] <= clockSlackRankingBudgetRange[1]);
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -223,6 +227,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const roots = new Set(actions.map(action => action.index)), initialAllowed = physical.legal(game, state), initialFree = initialAllowed.free;
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
+  const clockSlackRankingActive = clockSlackRanking && clocked && (!clockSlackRankingBudgetRange
+    || game.clock.n >= clockSlackRankingBudgetRange[0] && game.clock.n <= clockSlackRankingBudgetRange[1]);
   const informationWidthTarget = informationWidth === 'pairHeadroom' ? Math.max(1, Math.floor((4 - state.tray.length) / 2)) : informationWidth;
   const recoveryInformationEligible = !clocked && state.tray.length >= recoveryInformationMinTray;
   const detectedRecovery = shortInformation === 'recoveryAware' && recoveryInformationEligible ? knownRecovery(game, state, 2, deadline) : null;
@@ -296,7 +302,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const progress = initialLeft - left;
     const matchedTiles = initialLeft + state.tray.length - left - position.tray.length;
     const estimatedClockSlack = clocked ? game.clock.n - position.moves - metrics.clockDistance : null;
-    const clockRank = clockSlackRanking ? estimatedClockSlack : -metrics.clockDistance;
+    const clockRank = clockSlackRankingActive ? estimatedClockSlack : -metrics.clockDistance;
     const inCone = informationInCone(cone, targetIndex, informationTargets);
 
     const passiveRiskNeutral = informationTargets === null || position.tray.length <= state.tray.length;
@@ -361,7 +367,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     }
 
     const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information,
-      ...(clockSlackRanking && clocked ? { clockBudgetRank: { remaining: game.clock.n - position.moves,
+      ...(clockSlackRankingActive ? { clockBudgetRank: { remaining: game.clock.n - position.moves,
         estimatedAccessCost: metrics.clockDistance, estimatedSlack: estimatedClockSlack, knownClockMovesSpent: position.moves - state.moves,
         heuristicOnly: true } } : {}) };
     if (path.length && (progress > 0 || information || won || exit) && (!best || compare(rank, best.rank) > 0)) best = candidate;
@@ -544,7 +550,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost, clockRecoveryMinSlack } : {}),
       ...(tightClockRecovery ? { tightClockRecoveryActive, tightClockRecoveryMaxSlack } : {}),
       ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
-      ...(clockSlackRanking && clocked ? { clockBudgetRank: selected.clockBudgetRank ?? null } : {}),
+      ...(clockSlackRankingActive ? { clockBudgetRank: selected.clockBudgetRank ?? null } : {}),
+      ...(clockSlackRanking && clockSlackRankingBudgetRange && clocked ? { clockSlackRankingGate: {
+        active: clockSlackRankingActive, publicStartingBudget: game.clock.n, range: clockSlackRankingBudgetRange.slice() } } : {}),
       ...(rememberedLoss ? { rememberedLossPrunes } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive, minimumTray: recoveryInformationMinTray,
         availableFirst: recoveryAvailableInformation,

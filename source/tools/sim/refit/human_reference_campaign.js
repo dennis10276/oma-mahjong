@@ -58,6 +58,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
   assert(options.safeClockInspection === undefined || typeof options.safeClockInspection === 'boolean');
   assert(options.clockSlackRanking === undefined || typeof options.clockSlackRanking === 'boolean');
+  assert(options.clockSlackRankingBudgetRange === undefined || options.clockSlackRanking === true
+    && Array.isArray(options.clockSlackRankingBudgetRange) && options.clockSlackRankingBudgetRange.length === 2
+    && options.clockSlackRankingBudgetRange.every(value => Number.isInteger(value) && value > 0)
+    && options.clockSlackRankingBudgetRange[0] <= options.clockSlackRankingBudgetRange[1]);
   assert(options.safeClockInspection !== true || !!options.inspectBeforeCommit);
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');

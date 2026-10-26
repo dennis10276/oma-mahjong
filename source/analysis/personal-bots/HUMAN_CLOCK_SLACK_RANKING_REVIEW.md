@@ -71,3 +71,48 @@ is claimed at registration. Pin source/profile, current catalog/selection,
 evaluator, completed native trace and safety evidence before launch. Keep the
 actor and default19 profile frozen during measurement. Record actual changed
 decisions on helpful/harmful boards before fitting a WHEN condition if needed.
+
+## Experiment21 result and actual decision comparisons
+
+| Scope | Valid boards | Complete repairs | Target regressions | Partial gain | Slowest move | Mean minutes/board |
+|---|---:|---:|---|---|---:|---:|
+|Development,salt1|42/42|0|144,10045|10033:5->4|1642.7ms|0.403|
+
+All three workers and supervisor13916 exit0. The full run is not launched;
+the mixed result fails qualification. The consecutive-unadopted count is2.
+Additional count changes remain inside target:10041:3->6,105:1->2,
+10015:1->3.10049 worsens5->6 and remains outside target. Default19 is unchanged.
+
+Actual baseline19 comparisons complete without drift on all three selected
+development boards:144 has one changed suggestion over106 replayed taps(native
+49886 exit0);10045 has45 over165 taps(native81533 exit0);10033 has21 over181
+taps(native39930 exit0). These are452 independently replayed taps on shared
+recorded histories, not new candidate campaigns. Original21 counts provide the
+outcome evidence; suggested later changes are not individually labeled causal.
+
+The sole144 change occurs with tray1, five clock moves left and estimated
+access cost2: the previously adopted tight-clock recovery is active.10045's
+first changes occur with estimated slack40, while10033's first change has
+slack9. Later10045 changes overlap10033's tray/slack values, so those features
+do not cleanly separate all suggestions. A condition that merely excludes
+slack3 would not explain or protect10045.
+
+## Candidate WHEN: public starting clock budget10-30
+
+The visible starting clock budgets are6 on144,18 on10033 and48 on10045.
+Testing the ranking only when the clock starts with10-30 moves separates these
+selected boards using one public feature with round thresholds.10052's21-move
+clock remains included. This is a development-fitted hypothesis, not proof of
+generalization or safety; the unchanged fixed guards and full cohort must test it.
+The actor contains no level IDs, per-board overrides or recorded routes.
+
+Optional clockSlackRankingBudgetRange gates only the ranking term using the
+public clock.n value; it does not change known-win/exit priorities or create a
+proof. Inactive-gate controls require exact original search reports apart from
+the gate's audit metadata, and invalid dependencies/ranges are rejected. All
+126 tests pass16s(native49306 exit0). Default19 still enables neither new option.
+
+The next actual-history diagnostic compares the gated candidate against20's
+safe-inspection policy, checking that the ranking itself no longer changes
+144/10045 while preserving changes on10033. Freeze the actor while it runs.
+Source9027bc70dee5194feca7c936379bee38c4e7a3e57bd778702920af9c766f9b34.
