@@ -736,3 +736,35 @@ unlabeled lab61 input:1/1/1, valid, slowest338.1ms(native5474 exit0). Its source
 and profile match the adopted mapping. Raw result and CLI output are under
 experiment-14/unseen-lab61.json and unseen-lab61-cli.log. The later recorded
 campaign and budget audits remain preparatory; they do not count as adoptions.
+
+## Experiment15: larger retry-information node cap
+
+Preregistered single parameter change from adopted14: retryInformationNodes
+2000->8192. Keep the250ms extra-search deadline,1800ms outer search window,
+strict actual under2s move gate, all adopted strategy conditions and max12 tries.
+No new engine, hidden-picture assignment or board-specific policy is introduced.
+
+Fresh adopted14 counters, rather than the older06/10 table, motivate this test:
+the seven failing boards have880 extra search calls,575 node caps, no deadline
+stops and213 returned information routes. Lab10011 has232 caps in251 searches
+and only3 routes;10032 has283 caps in376 calls;157 has29 caps in34 calls.
+Lab10052 instead finds151 routes in167 calls with only4 caps, so this test is
+not presented as a general solution to its tray-management failures. Passing
+controls150/10041/10045 are retained. Raw motivation and source/profile identities:
+.codex-runs/level-measure/adopted14-retry-information-budget-v3.json.
+
+Use catalogv2(159 boards), selectionv8(42 development boards and the same20
+guards), baseline14 full records and three game workers. Selectionv8 retains
+all earlier levels and adds repaired144 to the passing regression controls.
+Its hash is15dc094aa5f6bb3b59ea5c6bdd2cab7bcc1f4a32dba48a2829c46b0ca37cf073.
+Refresh all recorded targets before play. Salt1 development must qualify before
+full salts1/2/3; full adoption still requires an actual Dennis+1 repair and no
+passing regression. The declared off-salt qualification is unchanged.
+
+Current runtime source078e4c55b22e0a29f15ab492fcdc1fcb9aecff1fc4670aca3d3dfb3603514e4c;
+candidate profile4b95e2defabcc95e4e83d3600138f3855899f873f10cfd3602450b0256329b57.
+The adopted14 floor has just passed123 tests and the external-directory CLI.
+This candidate changes an already supported search-budget parameter; actual
+campaign validity/timing remain required evidence. Default14 stays enabled.
+Counter before15 is0; rejection makes1. Raw profile, source snapshot and native
+worker results will be preserved under .codex-runs/level-measure/experiment-15/.
