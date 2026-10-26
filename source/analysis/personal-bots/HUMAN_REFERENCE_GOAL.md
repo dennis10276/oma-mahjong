@@ -21,7 +21,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
   from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
 - Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10032,10033,10049,10052; natural86,144 also fail.
+- Labs first:10011,10032,10033,10049,10052; natural86,144,157 also fail.
 - Development: failing boards plus20 fixed passing guards, salt1. Keep additional
   regression controls. Full salts1-3 before adopting; repair>=1 and break none.
 - Sum-of-tries and human correlation are not Track A gates under the revised goal.
@@ -73,8 +73,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Current evidence
 
-- Retained10:151/155 clear every salt,148/155 within Dennis+1; A still unmet.
+- Retained10 expanded:155/159 clear every salt,151/159 within Dennis+1; A unmet.
 - 123/123 tests pass. Trial12 unadopted; consecutive unadopted count2 after adopted10.
 - Existing04 development ran3 salts before revision; subsequent development uses1.
 - Full10 repairs10015, no regressions;6 workers exit0; slowest1641.7ms at3 workers.
-- Trial13 tests capped safety plus tight-clock recovery; default10 retained pending full gates.
+- Trial13:42 development boards,159 full; capped safety+tight recovery, default10 retained.

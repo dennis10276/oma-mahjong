@@ -593,3 +593,38 @@ unchanged full adoption gate remains an actual three-salt Dennis+1 repair with
 no passing-board regression. Default10 remains unchanged. Counter before13 is2;
 rejection makes it3. Raw profiles, snapshots and exits: experiment-13/ under
 .codex-runs/level-measure/.
+
+### Experiment13 cohort expansion before any games
+
+The initial13 preflight detected four new recorded clears and exited1 before
+launching any game worker. Its dispatch and actor snapshot remain archived as
+experiment-13-startup-catalog-v1 and frozen-120aee30205e-experiment13-startup-catalog-v1.
+No strategy result was measured; the consecutive unadopted count remains2.
+
+Fresh catalog observed2026-10-26T02:48:32.393Z preserves all155 previous boards
+and targets unchanged and adds exact recorded openings157-160. Catalogv2 has159
+boards(144 natural,15 lab), hash216d526976fa5c04bd1696cc5a5e82b71e649ec31d579ea080ba8fe5450bdd8d.
+
+The original frozen adopted10 actor(97f6aa2ca756fd64e249945053bc3a352d89d1a764bad4212d7d81d5f23db675,
+69 files) and its explicit measured profile(6b6094dc0a84e0e1988a9f3e3585863da68ddc0a2a00d554d8214c18b7bb21a1)
+measured the four additions under the same salts1/2/3, max12 and production replay.
+All three supplemental workers and supervisor(native93957) exit0. Existing155
+raw measurements retain their original catalog headers; aggregation verifies
+identical old entries, actor/profile identities and board hashes rather than
+rewriting provenance. Raw evidence: adopted10-cohort-v2/.
+
+| New level | Dennis | Adopted10 salts1/2/3 | Dennis+1 every salt |
+|---:|---:|---|---|
+|157|2|3/3/4|false|
+|158|2|1/1/1|true|
+|159|2|1/1/1|true|
+|160|1|1/1/1|true|
+
+Expanded adopted10:155/159 clear every salt;151/159 within Dennis+1 every salt.
+These are Track A clearance counts, not personal prediction accuracy.
+Selectionv7 retains all38 prior development boards and20 guards, adds157 as a
+full-salt failure and158-160 as passing controls(42 boards total). Its hash is
+22031d85e42cd1c8bec18ad548bc5d3f975285df32e67fcc506e2ef325f6783c.
+The relaunched13 keeps its exact source/profile and qualification rules.
+Its pre-run snapshot pins the catalog path/hash and expanded baseline records
+hash; the adoption auditor independently recomputes that full comparator.
