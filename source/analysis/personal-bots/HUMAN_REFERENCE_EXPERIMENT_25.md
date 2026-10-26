@@ -1,9 +1,9 @@
 # Experiment25: earlier failed-route preferences
 
-Status: full measurement running; no adoption, no full-result claim. Actor and
-default profile are frozen. Supervisor native2850; PID41160. Development's three
-workers are terminal0. Full workers15084/17232/20560 were verified live with
-increasing CPU time. Preserve the same supervisor handle across continuation.
+Status: rejected-full; retain adopted23. All six workers and supervisor
+native2850 exited0. No benchmark worker remains live. Actor sources stayed
+unchanged through measurement; separate diagnostics now keep them frozen while
+running. Consecutive unadopted count2. No goal completion is claimed.
 
 Preregistered in b0d339f; optional implementation1544b7e. See
 HUMAN_FAILED_ROUTE_PREFERENCES.md for mechanism, bounds, tests and actual-history
@@ -20,6 +20,22 @@ unchanged off-salt-full-check-v2 rule advances a partial development gain with
 no target/clearance regressions because86 remains an earlier off-salt failure.
 Full adoption must still repair an entire failing target across all three salts
 and break no passing target. The partial improvement is not an adoption.
+
+## Full159-board result, salts1/2/3
+
+| Policy | Cleared every salt | Within Dennis+1 every salt | Complete repairs | Passing target regressions | Slowest move | Mean minutes/board |
+|---|---:|---:|---:|---|---:|---:|
+|Retained23|157/159|154/159|baseline|—|1759.2ms|0.652|
+|Candidate25|156/159|151/159|0|102,112,124|1760.9ms|0.961|
+
+All159 records are valid; CPU/wall mean0.9992, minimum0.9448. Six native worker
+exits and supervisor2850 exit0 are recorded in supervisor-native-exit.json.
+Full result is not an adoption.10011 changes8/8/8->7/null/6, adding a censored
+salt despite some lower clear counts; the development6 does not reproduce as
+the same full salt1 count.102 changes3/3/3->4/3/3;112 changes2/2/2->2/2/3;
+124 changes4/4/4->5/3/4.92 improves3/3/3->3/2/3 but was already passing.
+The other original failures remain:86 1/1/3,32 null/null/null,49 5/3/5,
+52 null/null/null. New open failures total8. No censored attempt is a clear.
 
 ## An observed candidate defect to investigate after measurement
 
@@ -65,6 +81,38 @@ native exit0. The earlier-v1 output is retained but its broad
 trackedKnowledgeUnchanged label was only an existence check; v2 instead checks
 that a current route cost matches this public-knowledge context.
 
+## Actual-policy trace and regression attribution
+
+The instrumented frozen25 controller reproduces232 accepted taps with zero
+drift(native77651 exit0), covering six complete attempts plus the first45 taps
+of attempt7. At taps28-31 the plans alternate[68,4,78] and[0,4,78]; each next
+step is4, but a reset from decide's retry-penalty guard occurs before that
+step can execute. The reports are not known wins. Role-revision resets do not
+occur in this repeated suffix. This establishes repeated cached-prefix
+interruption by the any-penalized-root reset, not a hypothetical hidden reveal.
+
+On the actual23 baseline histories for102/salt1,112/salt3 and124/salt1, the25
+candidate reproduces580 taps with zero baseline drift and zero changed
+suggestions(native75138/67718/22641 exit0). The full-run regressions therefore
+cannot be attributed to a particular override from those comparisons.
+
+An additional identical-source/identical-profile self-replay of25's102/salt1
+history independently reproduces227 physical taps but disagrees with seven
+recorded choices. First disagreement is attempt3 tap46: recorded37, both
+identical controllers55. The two controllers agree with each other on every
+suggestion; maximum times reach1500.6/1500.2ms. Native3002 exit0, with the
+diagnostic explicitly reporting policyAttributionAllowed:false. This is
+consistent with bounded-search execution sensitivity, not proof of its cause.
+Keep the observed regressions and do not fit a WHEN condition to fabricated
+deterministic differences. Raw comparison scripts/logs and JSONL outputs are
+under when-failed-route-preferences-full-v1/ and
+when-failed-route-record25-selfreplay-v1/, plus trace-experiment25-cycle-prefix-v1.jsonl.
+
+Next fix the verified prefix-interruption defect while preserving existing
+public-information, known-win, clock-safety and move-budget guards. Then test
+the repaired mechanism with actual histories and a new campaign; no25 repair
+or adoption is implied by this diagnosis.
+
 ## Reproducibility and next action
 
 Candidate source8dbd22174eb21227690589d6042255c24b788625f943ac439c4dffbb75ed1f33;
@@ -76,8 +124,9 @@ The source snapshot is frozen-8dbd22174eb2-experiment25/ under the same raw root
 Supervisor/process-event logs, candidate25-retry-information-v1.json/.log and
 audit-candidate25-retry-information.js are also retained there.
 
-Poll native2850 before any actor edit. If qualified, require supervisor exit0,
-generic adoption auditor exit0, fresh cohort/source/worker/replay verification,
-then profile-only adoption and post-adoption tests/CLI. If unadopted, consecutive
-count becomes2, retaining all prior evidence. Track A remains unmet; Track B
-and future20 remain unstarted. No goal completion is claimed.
+Supervisor2850 and all six workers are terminal0;25 is rejected. The subsequent
+policy traces listed above are also terminal0 before actor edits. Retain default23
+and consecutive count2. Track A remains unmet; Track B and future20 remain
+unstarted. Every future adoption still requires full repair/no-regression,
+fresh-cohort/source/native-worker/replay/timing verification, followed by
+profile-only adoption and post-adoption tests/CLI. No goal completion is claimed.
