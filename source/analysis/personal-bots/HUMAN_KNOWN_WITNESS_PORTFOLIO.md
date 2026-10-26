@@ -101,3 +101,26 @@ Certainty must cover every possibility consistent with public evidence and
 declared public rules. A100% sampled agreement or a bounded solver failing to
 find a counterexample is not such a proof. A timed-out alternative remains
 unresolved. Actual hidden pictures never validate or choose a deduction.
+
+## Completed partial-clock and broader-information diagnostics
+
+Native19651/76821/36490 exit0;672 production taps independently replay with
+zero baseline drift. Partial-clock portfolio on52/salt1 searches93 times, all
+with incomplete memory, but obtains no verified replacement and changes no
+suggestion.52 extra searches reach their250ms deadline. Maximum baseline/
+candidate1349.8/1750.3ms. This is bounded-search non-improvement, not impossibility.
+
+The existing shortAll frontier plus retained-continuation memory changes9/249
+suggestions on86/salt3 and12/242 on32/salt1, maximum1556.5/1555.4ms and
+1633.2/1674.0ms respectively. Unlike the old portfolio gate, it changes early
+decisions:86 try1 tap8, tray2,45 unseen;32 try1 tap3, tray2,45 unseen. It targets
+publicly exposing still unknown orientations/pictures within three known taps,
+rather than inventing their values. Candidate profile
+9e7450e793d003ab4e708d77f858ce6b334b3d2640c3861f8ad6c2fcdc7500d0.
+No changed suggestion is an executed candidate outcome. These results justify
+a campaign test of broader information with persistent proofs, not adoption.
+
+Raw compare-known-witness-portfolio-v2.js, known-witness-v2-native.json,
+when-known-witness-portfolio-v2/{partial-clock,short-all}/baseline23/ and three
+policy logs retain complete histories, proof/counter metadata and native exits.
+No campaign counted for the partial-clock portfolio alone; counter still4.
