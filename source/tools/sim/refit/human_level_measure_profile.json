@@ -7,7 +7,7 @@
   "alternativeRecoveryRoutes": true,
   "safeInformationEscape": true,
   "inspectBeforeCommit": "recovery",
-  "inspectionTrayLimit": 1,
+  "inspectionTrayLimit": 2,
   "exclusiveRoles": false,
   "cachePublicAnalysis": true,
   "preservePairFlexibility": true,
@@ -40,5 +40,6 @@
   "observedSafetyClockOnly": true,
   "observedSafetyMaxClockSlack": 30,
   "tightClockRecovery": true,
-  "tightClockRecoveryMaxSlack": 3
+  "tightClockRecoveryMaxSlack": 3,
+  "deadEndInformation": true
 }

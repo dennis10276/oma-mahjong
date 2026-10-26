@@ -1,5 +1,4 @@
 # Human-information reference and Dennis-strength level measuring
-
 ACTIVE and UNMET. Branch wip/personal-bots; checkout personal-bot-review.
 Authoritative objective: cc8ea8eb-87e0-48be-a531-eeb68c9d5592/goal-objective.md.
 Track A first; Track B only after A passes. Use sunflower tiles.
@@ -14,14 +13,13 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Every level being winnable is an allowed prior. General planning only: no level
   IDs, per-level settings or routes. Every attempt independently replays production.
 - Single-thread games, anytime, under2s/move; at most12 concurrent games.
-
 ## Track A: strongest human-information player
 
 - All recorded Dennis natural first clears17-156 and later, plus15 recorded labs
   from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
 - Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10032,10033,10049,10052; natural86,157 also fail.
+- Labs first:10011,10032,10033,10049,10052; natural86 also fails.
 - Development: failing boards plus20 fixed passing guards, salt1. Keep additional
   regression controls. Full salts1-3 before adopting; repair>=1 and break none.
 - Sum-of-tries and human correlation are not Track A gates under the revised goal.
@@ -39,6 +37,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Adopted10 back-symbol planning: live-clock estimated slack5-20; repairs10015 without regressions.
 - Adopted14 transfer proofs: live clock AND estimated slack<=30; helps10049, preserves10041.
 - Adopted14 tight-clock recovery: tray=1 AND estimated slack=3; repairs144 without regressions.
+- Adopted19 closed inspection: no live clock AND tray<=2; repairs157, preserves known recovery.
+- Adopted19 information probe: primary reports known-dead; broader exposure checks prevent false certificates.
 
 ## Track B: calibrate only after A passes
 
@@ -73,8 +73,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Current evidence
 
-- Retained14:156/159 clear every salt,152/159 within Dennis+1; A still unmet.
-- 124/124 tests pass; trials15-18 unadopted, consecutive count4 after adopted14.
-- Full14 repairs144, no regressions;6 workers exit0; slowest1639.9ms at3 workers.
-- Fresh159-board cohort and70 runtime files verified; mean0.541 minutes/board for3 salts.
-- Trial19 fully tests unchanged18 after157's3->2 salt1 gain; original dev records reused.
+- Retained19:156/159 clear every salt,153/159 within Dennis+1; A still unmet.
+- 124/124 tests pass; trials15-18 unadopted, consecutive count0 after adopted19.
+- Full19 repairs157, no regressions;3 new full+3 reused dev workers exit0; slowest1661.4ms.
+- Fresh159-board cohort and70 runtime files verified; mean0.552 minutes/board for3 salts.
+- Full supervisor/auditor exit0; external-cwd unlabeled lab61 clears1/1/1, valid969.8ms.
