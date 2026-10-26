@@ -815,3 +815,30 @@ Source078e4c55b22e0a29f15ab492fcdc1fcb9aecff1fc4670aca3d3dfb3603514e4c;
 profileaa58ced21fbb6cd2821c6a3379f9cd806eccaa91899fc2514c04e22bad8b254e.
 Motivation SHA256820857a279e006068c53594e202d4b69df16c941c517af6d9fa139e72b942b39.
 Raw preregistration: .codex-runs/level-measure/experiment-16-preregistration.json.
+
+### Experiment16 result
+
+All42 development measurements are valid; three workers and supervisor35661
+exit0. No target count improves or regresses and there is no partial gain, so
+the declared qualification rejects full advancement. Slowest move1801.5ms
+remains below2s. Keep adopted14; the consecutive unadopted counter becomes2.
+The larger-node and supported-longer-time variants remain reproducible profiles,
+not adopted defaults or proof that further search could never help.
+
+| Board | Adopted14 salt1 | Trial15 salt1 | Trial16 salt1 |
+|---:|---:|---:|---:|
+|10011|8|8|8|
+|10032|>12|>12|>12|
+|10052|>12|>12|>12|
+|157|3|3|3|
+|150|4|4|4|
+
+The next step is the prepared actual-policy audit of immediate-loss positions,
+before integrating any safety override. Existing search code deliberately
+selects an immediate losing action when it emits an exhausted known-graph death
+certificate. A physically surviving match alone therefore does not establish
+a planner error or a winning continuation. Compare the original certificates,
+both policy suggestions and source-stable actual histories, then decide whether
+the prototype addresses useful information or only delays an inevitable loss.
+Audits run on86 salt3,10032 salt1 and10052 salt1 against retained14 histories;
+the active actor remains unchanged. These are diagnostic, not new campaigns.
