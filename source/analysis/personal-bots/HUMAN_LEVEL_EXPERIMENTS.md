@@ -671,3 +671,24 @@ Catalogv2, selectionv7, frozen adopted10 comparator, three workers,42 developmen
 boards salt1 then159 full boards salts1/2/3 if qualified. Refresh all targets
 before play; preserve existing adoption and timing rules. Counter before14 is3;
 rejection makes4. Raw dispatch, profiles and snapshots: experiment-14/.
+
+### Experiment14 development result
+
+All42 salt1 development measurements are valid. All three native development
+workers exit0; supervisor76365 continues into full testing. Slowest move1639.0ms.
+The ordinary development comparison repairs144 and has no passing regression;
+it qualifies directly, without using the off-salt exception. The default is
+still adopted10; neither14 adoption nor full-cohort gains are claimed yet.
+
+| Level | Dennis | Adopted10 salt1 | Refined14 salt1 |
+|---:|---:|---:|---:|
+|144|1|5|1|
+|157|2|3|3|
+|10011|2|8|8|
+|10033|5|5|5|
+|10041|7|3|3|
+|10045|6|3|3|
+|10049|2|>12|5|
+
+The10049 gain remains partial and is not a Dennis+1 repair. Full159-board,
+three-salt measurement is running at the same three-worker concurrency.

@@ -60,8 +60,8 @@ test command exits0. These synthetic controls do not claim the current planner
 naturally chooses the supplied bad action on those small boards.
 
 This remains outside the active actor and all recorded benchmarks. Controller
-integration, Joker-specific controls and development/full performance checks
-are still required before any adoption. Do not confuse the prototype's small
+integration and development/full performance checks are still required before
+any adoption. Do not confuse the prototype's small
 fixture wins with a winning continuation at the seven audited real positions.
 Raw files: immediate-match-safety-draft.js, test-immediate-match-safety-draft.js
 and immediate-match-safety-draft-tests-02.log under .codex-runs/level-measure/.
