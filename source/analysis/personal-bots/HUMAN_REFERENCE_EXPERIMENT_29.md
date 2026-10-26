@@ -1,7 +1,8 @@
 # Experiment29: broader information while a live clock has ten moves left
 
-Preregistered before measurement. Default remains adopted23; consecutive
-unadopted count5 after trials24-28. A rejected29 makes6. Track A remains unmet.
+Status: rejected-development. Native supervisor46190 and all three development
+workers exit0. Default remains adopted23; consecutive unadopted count6 after
+trials24-29. No full run or adoption. Track A remains unmet.
 
 Experiment28 improved49 5→4 but broke102 3→6. HUMAN_CLOCK_INFORMATION_WHEN.md
 records actual changed decisions and the one-public-feature condition: allow
@@ -37,3 +38,23 @@ frozen-7d6c695d6380-experiment29/, short-all-clock-decisions-native.json,
 when-short-all-clock-decisions-v1/short-all-clock/baseline23/. Capture native
 supervisor/worker exits before interpretation or adoption. Full qualification
 still requires the independent adoption audit and post-adoption checks.
+
+## Completed result
+
+| Development42 real boards, salt1 | Cleared | Within Dennis+1 | Complete repairs | Passing target regressions | Slowest move |
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate29|40/42|37/42|0|1:10033|1636.7ms|
+
+The condition restores102's3 tries and all other changed counts from28, except
+49 retains5→4 and33 regresses4→8 beyond target6. These are the only count
+changes from23. All executions are valid; CPU/wall mean1.04557,min1.00266.
+The unchanged v2 qualifier rejects the passing regression; no full run.
+
+Initial supervisor log01 records a stale evidence path preflight failure before
+any workers started. The corrected log02/native46190 is the actual campaign;
+its candidate profile was checked equal before reuse. Retain both logs and
+supervisor-native-exit.json. No worker was restarted on an observation timeout.
+Counter6; retain23. Next compare actual public decisions on broken33 and helpful
+49 before another readable condition; a verified baseline drift prevents causal
+attribution. Do not silently broaden completion to a partial49 improvement.
