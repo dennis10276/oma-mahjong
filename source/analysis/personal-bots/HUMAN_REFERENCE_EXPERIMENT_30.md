@@ -1,7 +1,8 @@
 # Experiment30: clock information gate with valid prefix retention
 
-Preregistered before measurement. Default remains adopted23; consecutive
-unadopted count6 after24-29. A rejected30 makes7. Track A remains unmet.
+Status: rejected-full. Native supervisor84331 and all six development/full
+workers exit0. Default remains adopted23; consecutive unadopted count7 after
+24-30. No complete target repair or adoption. Track A remains unmet.
 
 29 preserves49's partial improvement but breaks33. Its actual23 history has
 one changed suggestion, exactly at the heuristic ten→nine boundary. Removing
@@ -33,3 +34,21 @@ Raw .codex-runs/level-measure/: run-experiment-30.js, experiment-30/,
 frozen-db390e5cfd78-experiment30/, short-all-clock-prefix-decisions-native.json,
 when-short-all-clock-prefix-decisions-v1/short-all-clock/baseline23/. Preserve
 all failed campaigns and drifted diagnostics; no narrowed completion claim.
+
+## Completed result
+
+| Real-board cohort | Cleared | Within Dennis+1 | Complete repairs | Passing target regressions | Slowest move |
+|---|---:|---:|---:|---:|---:|
+|Development42,salt1|40/42|38/42|0|0|1637.3ms|
+|Full159,salts1-3|157/159|154/159|0|0|1755.0ms|
+
+The corrected prefix retention restores33.49's partial salt1 improvement
+qualifies a full run under unchanged v2, but the full gate finds no complete
+repair. The same five targets remain open:86,11,32,49,52. Preserve the switching
+bug fix and partial improvement as evidence; neither is an adoption.
+
+Full mean0.618784min/board for three salts; CPU/wall mean1.03499,min0.968998.
+Development CPU/wall mean1.04653,min1.01241. All201 recorded executions valid;
+six terminal native workers and supervisor are preserved in dispatch-state.json
+and supervisor-native-exit.json. Counter7. One further unadopted campaign reaches
+the user's eight-experiment stop rule. Do not continue past it without a decision.
