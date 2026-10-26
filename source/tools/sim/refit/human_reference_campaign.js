@@ -66,6 +66,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.clockRetryLearning === undefined || typeof options.clockRetryLearning === 'boolean');
   assert(!options.clockRetryLearning || options.retryRiskLearning, 'Clock retry exploration requires actual retry learning');
   assert(options.rememberAcceptedTaps === undefined || typeof options.rememberAcceptedTaps === 'boolean');
+  assert(options.deadEndInformation === undefined || typeof options.deadEndInformation === 'boolean');
+  assert(!options.deadEndInformation || options.retryInformationWitness === true,
+    'Dead-end information recovery shares the retry-information search budget');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
@@ -187,7 +190,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const completeRetrySearch = options.retryCompleteWitness ? retryCompleteSearch(runRetrySearch || baseSearch, () => attempt,
     { milliseconds: options.retryCompleteMs ?? 250, nodes: options.retryCompleteNodes ?? 2000, choices: options.choiceLimit ?? 512 }) : null;
   const informationRetry = options.retryInformationWitness ? retryInformationSearch(completeRetrySearch || runRetrySearch || baseSearch,
-    { milliseconds: options.retryInformationMs ?? 250, nodes: options.retryInformationNodes ?? 2000, choices: options.choiceLimit ?? 512 }) : null;
+    { milliseconds: options.retryInformationMs ?? 250, nodes: options.retryInformationNodes ?? 2000,
+      choices: options.choiceLimit ?? 512, deadEndInformation: options.deadEndInformation }) : null;
   const resetPlanner = () => {
     const selectedSearch = informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);
@@ -343,6 +347,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const available = geometry.publicFrontier(position);
         return gained.filter(index => available.free.includes(index));
       } : exposure;
+      if (options.deadEndInformation) geometry.publicInformationExposure = createExposureFrontier(
+        geometry.tiles, { ...current, roles }, 'all', true);
+      else delete geometry.publicInformationExposure;
     },
     decide() {
       decisionDeadline = options.hypothesisSampling ? Date.now() + (options.informationSampling ? 1300 : 1500) : Infinity;

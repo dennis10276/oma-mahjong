@@ -10,6 +10,7 @@ const modules = [
   'test_public_complete_witness.js',
   'test_public_exploration_witness.js',
   'test_public_retry_information.js',
+  'test_public_dead_end_information.js',
   'test_public_retry_complete.js',
   'test_human_retry_complete.js',
   'test_human_retry_information.js',

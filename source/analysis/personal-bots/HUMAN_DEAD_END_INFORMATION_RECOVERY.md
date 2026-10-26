@@ -63,9 +63,10 @@ planning priorities must not silently define the scope of an information-free
 death claim. Preserve the useful strategy conditions while distinguishing
 their selected information graph from complete public observability.
 
-## Next prototype, not implemented or measured yet
+## Design used for optional experiment17
 
-Prepare an optional dead-end information recovery in the isolated actor:
+The deadEndInformation flag is now implemented in the controller and shared
+retry-information wrapper. It is disabled in the adopted default profile:
 
 - After a primary known-dead report, look for a constructive known safe prefix
   to any genuinely new public orientation, picture or drawn role, including
@@ -89,6 +90,43 @@ Prepare an optional dead-end information recovery in the isolated actor:
 This is a proposed public-information recovery, not a claim that the prepared
 one-step override is adopted or that the next strategy already repairs a board.
 The retained default remains14; trials15/16 are unadopted, counter2.
+
+## Implementation and validation before measurement
+
+The controller projects orientation, picture and drawn-role exposure through
+createExposureFrontier using the shared tileVisibility routine and remembered
+public state. The broader callback enters explorationWitness only when the
+primary report is known-dead; ordinary stalled-retry behavior uses its existing
+frontier. A win or safe clock exit returns unchanged. First attempts may probe
+without waiting for a stalled failure, with one shared extra-search allowance.
+
+A found route contains known physical taps to an observation boundary, never
+the hidden value revealed there. It removes the inherited death certificate,
+proved roots and exclusion proof. A bounded or otherwise incomplete probe
+returns an unresolved information boundary. A fully exhausted broader graph
+with no boundary may reinforce the original position-specific certificate;
+it does not prove the initial level impossible. The expanded statistics record
+dead-end probes, first-attempt probes, routes, unresolved and confirmed reports.
+
+Four identical public fixtures vary both the covered tile's picture(ordinary
+or Joker) and orientation. The first recovery tap and the public observation
+before it are identical in all four worlds; hidden values remain unassigned.
+All four physical routes clear and independently replay33 taps. The supplied
+primary death report is a synthetic conditional report for this unit control;
+the separate939-tap audit supplies the real recorded-policy evidence.
+
+Budget/expiry controls remove incomplete death claims; an urgent-clock control
+with no safe move retains a certificate only after exhaustive broader search.
+Existing wins, safe clock exits, non-dead first attempts and disabled behavior
+are protected. Flag types and the required shared-search dependency are checked.
+The first unit fixture accidentally left the lower border visible; it was
+corrected to the existing renderer-aligned fully covered geometry. Failed log01
+is preserved; final unit03 and full suite02 pass. All124 tests pass14s,
+native68159 exit0. No candidate17 campaign result is claimed before measurement.
+
+Source90a8b5cfbc2b6e8c247e07f9b5e31a030b7253c601700274f3600e3b25ee9e50;
+candidate profilecbecd1fa08df10ed4372a0d6744622a317bb05c0feecb56403aa2814522a6231.
+The default remains profile14; only the candidate enables deadEndInformation.
 
 Raw comparisons: when-immediate-match-v1/baseline14/ and native logs
 immediate-match-policy14-86-salt3-01.log, -10032-salt1-01.log and -10052-salt1-01.log.

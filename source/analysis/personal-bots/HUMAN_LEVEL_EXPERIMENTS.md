@@ -858,3 +858,33 @@ the same physical actions and one information route. It now reaches the8192
 cap65 times and the deadline3 times. On10032 it explores705881 nodes versus
 216055, returns14 routes versus12, and still does not clear. Thus the two
 budget refinements are substantive tests, not merely relabeled unchanged work.
+
+## Experiment17: information recovery before intentional loss
+
+Preregistered candidate: adopted14 plus deadEndInformation:true. A primary
+known-dead report may trigger constructive public-information search on the
+first attempt or before a no-learning stall. The projection includes unknown
+orientations, pictures and drawn back roles through the shared visibility
+routine. It supplies visibility targets, not future values. Physical taps and
+actual observation remain necessary before any fact enters retry memory.
+
+Keep the existing2000-node/250ms extra allowance and1800ms outer window; do not
+stack another search. Wins, safe clock exits and ordinary non-dead choices
+preserve existing priorities. An incomplete broader probe removes the unsupported
+information-free death claim; a fully exhausted broader graph may confirm the
+existing position-specific death. No level impossibility is inferred.
+
+Detailed motivation and proof limits: HUMAN_DEAD_END_INFORMATION_RECOVERY.md.
+All124 tests pass14s(native68159 exit0), including four hidden-world controls
+with identical public observations and recovery taps,33 independently replayed
+winning physical taps, expiry/node/choice budgets, urgent-clock confirmation,
+preserved winning/clock-exit decisions and legacy disabled behavior.
+
+Source90a8b5cfbc2b6e8c247e07f9b5e31a030b7253c601700274f3600e3b25ee9e50;
+profilecbecd1fa08df10ed4372a0d6744622a317bb05c0feecb56403aa2814522a6231.
+Use catalogv2, selectionv8, baseline14 full records,42 development boards salt1,
+then159 full boards salts1/2/3 if qualified. Three workers, max12 actual tries,
+strict under2s/move and every-attempt independent production replay remain.
+Refresh every recorded target before play; unchanged full adoption requires a
+Dennis+1 repair and no passing regression. Default14 stays enabled. Counter
+before17 is2; rejection makes3. Raw evidence: experiment-17/ under .codex-runs/level-measure/.

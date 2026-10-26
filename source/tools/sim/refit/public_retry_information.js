@@ -8,9 +8,13 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert(Number.isFinite(milliseconds) && milliseconds > 0 && milliseconds <= 500);
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   assert(Number.isInteger(choices) && choices > 0);
+  assert(options.deadEndInformation === undefined || typeof options.deadEndInformation === 'boolean');
+  const deadEndInformation = options.deadEndInformation === true;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
     nodes: 0, nodeStops: 0, deadlineStops: 0, maximumExtraMs: 0, overruledDeadCertificates: 0, stallsEndedByInformation: 0 };
+  if (deadEndInformation) Object.assign(counters, { deadEndConsidered: 0, firstAttemptDeadEndConsidered: 0,
+    deadEndRoutes: 0, unresolvedDeadEndReports: 0, confirmedDeadEndReports: 0 });
   const fingerprint = memory => {
     const expected = ['down', 'initialRoles', 'pictures', ...(memory.keyIdentities === undefined ? [] : ['keyIdentities'])].sort();
     assert.deepEqual(Object.keys(memory).sort(), expected);
@@ -37,25 +41,50 @@ function retryInformationSearch(primarySearch, options = {}) {
     search(game, state, actions, settings = {}) {
       assert(active);
       const began = Date.now(), primary = primarySearch(game, state, actions, settings);
-      if (attempt < 2 || !stalls || primary.knownWin || primary.safeClockExit) return primary;
+      if (primary.knownWin || primary.safeClockExit) return primary;
+      const recoverDeadEnd = deadEndInformation && primary.knownDead;
+      if (!recoverDeadEnd && (attempt < 2 || !stalls)) return primary;
+      const unresolvedDeadEnd = reason => {
+        counters.unresolvedDeadEndReports++;
+        const report = { ...primary };
+        delete report.deadCertificate; delete report.provedDeadRoots; delete report.exclusionProof;
+        return { ...report, knownDead: false, boundary: true, goal: 'unresolvedPublicInformation',
+          deadEndInformation: { attempt, reason, broaderInformationCertificateEstablished: false } };
+      };
       const remaining = choices - (state.physicalTaps ?? 0);
-      if (remaining <= 0) return primary;
+      if (remaining <= 0) return recoverDeadEnd ? unresolvedDeadEnd('choice_budget') : primary;
       counters.considered++;
       const publicGame = Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure', 'publicRoleExposure']
         .filter(field => game[field] !== undefined).map(field => [field, game[field]]));
+      if (recoverDeadEnd) {
+        assert.equal(typeof game.publicInformationExposure, 'function', 'Dead-end recovery requires a public visibility projection');
+        publicGame.publicInformationExposure = game.publicInformationExposure;
+        counters.deadEndConsidered++; counters.firstAttemptDeadEndConsidered += +(attempt === 1);
+      }
       const extraBegan = Date.now();
       const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining),
         deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
       counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit');
       counters.deadlineStops += +(result.reason === 'deadline');
-      if (!result.path?.length) return primary;
+      if (!result.path?.length) {
+        if (!recoverDeadEnd) return primary;
+        if (!result.boundary && result.reason === 'no_known_information_route') {
+          counters.confirmedDeadEndReports++;
+          return { ...primary, nodes: (primary.nodes ?? 0) + result.nodes,
+            deadEndInformation: { attempt, reason: result.reason, broaderInformationCertificateEstablished: true } };
+        }
+        const unresolved = unresolvedDeadEnd(result.reason);
+        return { ...unresolved, nodes: (primary.nodes ?? 0) + result.nodes };
+      }
       counters.routes++; counters.wins += +result.knownWin;
       counters.peekRoutes += +(result.kind === 'actualPeekRequired');
       counters.exposureRoutes += +(result.kind === 'newPublicExposure');
       counters.overruledDeadCertificates += +!!primary.knownDead;
+      if (recoverDeadEnd) counters.deadEndRoutes++;
       const report = { ...primary };
       delete report.deadCertificate; delete report.provedDeadRoots;
+      if (recoverDeadEnd) delete report.exclusionProof;
       return { ...report, index: result.path[0], path: result.path,
         goal: result.knownWin ? 'win' : 'retryInformationWitness', knownWin: result.knownWin, knownDead: false,
         knownProgress: result.knownProgress, safeClockExit: false, clockRoom: 0,
