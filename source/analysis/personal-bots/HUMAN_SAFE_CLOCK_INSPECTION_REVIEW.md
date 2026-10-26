@@ -63,5 +63,31 @@ controller and the optional candidate following the same actual10052 salt1
 history. It must reproduce original choices without drift, pin both sources,
 and independently replay actual taps before interpreting eligibility. The
 candidate suggestions are not executed and imply no new winning campaign.
-Keep actor sources frozen while that trace runs. If eligible decisions exist,
-test real campaigns on development before the full three-salt adoption check.
+The trace is now complete(native95768 exit0):308 actual taps independently
+replay, zero baseline drift, one candidate change. On attempt3 tap15, with
+tray2 and nine clock moves remaining, the baseline takes84 on a retry-information
+route; the candidate instead inspects unknown closed tile22. The baseline
+report is neither a known win nor a safe clock exit. Native constructive-recovery
+priority also permits the override. No other decision changes on this recorded
+salt1 history. Maximum baseline/candidate decision times are1017.1/995.7ms.
+This is an eligible early intervention, not a played candidate continuation.
+
+## Preregistered experiment20
+
+Retained19 plus safeClockInspection:true, with the same tray limit2 and all
+native recovery protections. Use selectionv9: all42 development boards,20 fixed
+guards and157 as a passing control. Baseline is the actual159-board experiment19
+records, not regenerated forecasts or a different picture assignment. Run three
+workers, salt1 development first, then all159 boards on salts1/2/3 only if the
+preregistered off-salt-full-check-v2 qualification permits it. Full adoption
+requires at least one complete Dennis+1 repair, no passing target regression,
+valid independent production replay and every move strictly below2s.
+
+The consecutive-unadopted counter starts0; an unadopted20 makes1. No strategy
+adoption or campaign success is claimed at registration. Pin current actor,
+candidate profile, evaluator, catalog, selection, trace and safety evidence
+before launching. Keep the default19 profile and actor sources frozen during
+measurement. The runner also requires the trace's native exit0/zero-drift footer.
+
+Source4b3aede694eefc6eec1b85b849ccb394f895568916d9a57d3974922c3878b3e6;
+profiled1f05db0d940893e9b0c752cfcdbbf288da193e8bc8937d7c36d21eada26c9e7.
