@@ -36,6 +36,17 @@ trace this actual candidate history and investigate prefix retention/inspection
 cycles before interpreting another route-learning variant as an improvement.
 No unit test or fixed-history choice change demonstrates a campaign repair.
 
+The follow-up public-state replay confirms482 repeated positions in attempt7,
+starting before tap30, which repeats tap28 with tray2/openPeek0 and selected68;
+tap31 repeats tap29 with tray2/openPeek68 and selected0. The full observer output,
+remembered pictures/orientations, alive tiles, tray, moves, peek, relief and arrivals
+are equal at these repeats; only physical-tap budget consumption advances. All699
+taps independently replay again(native exit0). This rules out unseen picture
+or changing visible-role discovery as an explanation for that repeated suffix.
+Raw audit-candidate25-public-cycles.js and candidate25-public-cycles-v1.json/.log
+retain these facts. The prepared trace-experiment25-cycle-prefix.js refuses to
+run while benchmark workers are active; it has not yet been executed.
+
 ## Reproducibility and next action
 
 Candidate source8dbd22174eb21227690589d6042255c24b788625f943ac439c4dffbb75ed1f33;
