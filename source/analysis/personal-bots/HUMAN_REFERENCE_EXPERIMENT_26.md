@@ -1,8 +1,8 @@
 # Experiment26: retain valid retry prefixes
 
-Status: development running, no adoption or campaign-gain claim. Supervisor
-native71724, PID33540; development workers42256/3288/26948 verified live. Poll
-the same supervisor handle before actor edits. Freeze all measured actor files.
+Status: rejected-full; retain adopted23. Supervisor native71724 and all six
+workers exited0; no measured worker remains live. Consecutive unadopted count3.
+Actor source stayed unchanged through measurement. No target repair or adoption.
 
 Implementation0d6f9df; preregistrationa9d7f9f, documented in
 HUMAN_RETRY_PREFIX_RETENTION.md.129/129 tests pass17s(native95400 exit0).
@@ -44,3 +44,24 @@ and unlabeled external-cwd CLI. If rejected, preserve harmful histories and
 investigate actual decisions.25's102 self-replay has drift, so no causal WHEN
 condition is fitted to invented differences. Track A remains unmet; Track B
 and future20 remain unstarted. No completion or perfect-bot claim is made.
+
+## Completed result
+
+| Full159 actual boards, salts1/2/3 | Cleared every salt | Within Dennis+1 every salt | Complete repairs | Passing target regressions | Slowest move | Mean minutes/board |
+|---|---:|---:|---:|---:|---:|---:|
+|Retained23|157/159|154/159|baseline|—|1759.2ms|0.652|
+|Candidate26|157/159|154/159|0|0|1658.5ms|0.538|
+
+All159 records are valid; CPU/wall mean1.0400, minimum1.0057. The original five
+targets remain unmet:86 1/1/4(D1),10011 6/6/6(D2),10032 null/null/null(D5),
+10049 5/3/5(D2),10052 null/null/null(D3). Compared with23,86's last salt worsens
+3->4,10011 improves8/8/8->6/6/6, and150 improves4/1/2->2/1/2 while remaining
+passing. None repairs a complete target.25's passing-target regressions are absent
+in this run, but this does not retroactively erase them or prove their cause.
+
+Development42/salt1 also had no complete repair or passing-target regression;
+10011's partial gain allowed the unchanged v2 off-salt full check. Its slowest
+move1640.9ms. All six workers and the actual supervisor exit0 are recorded in
+experiment-26/supervisor-native-exit.json. Default23 remains unchanged; counter3.
+No adopter or profile replacement was run. Retain all raw results for subsequent
+actual-history comparisons; Track A and all later gates remain unmet.
