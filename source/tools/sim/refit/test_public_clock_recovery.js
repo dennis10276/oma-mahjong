@@ -42,6 +42,18 @@ function test() {
   assert(!search({ ...game, clock: { i: 0, n: 53 } }, state, roots, jointGate).clockRecoveryActive);
   assert(search({ ...game, clock: { i: 0, n: 53 } }, { ...state, tray: [9] }, roots, jointGate).clockRecoveryActive);
   assert(!search({ ...game, clock: { i: 0, n: 52 } }, { ...state, tray: [9] }, roots, jointGate).clockRecoveryActive);
+  const tightSettings = { ...jointGate, tightClockRecovery: true, tightClockRecoveryMaxSlack: 5 };
+  const carriedState = { ...state, tray: [9] };
+  for (const [spare, expected] of [[2, false], [3, true], [5, true], [6, false]]) {
+    const report = search({ ...game, clock: { i: 0, n: spare + 3 } }, carriedState, roots, tightSettings);
+    assert.equal(report.tightClockRecoveryActive, expected);
+    assert.equal(report.clockRecoveryActive, expected);
+  }
+  assert(!search(game, state, roots, tightSettings).tightClockRecoveryActive);
+  assert(!search(game, { ...state, tray: [8, 9] }, roots, tightSettings).tightClockRecoveryActive);
+  assert(!search({ ...game, clock: null }, carriedState, roots, tightSettings).tightClockRecoveryActive);
+  const ampleAndTight = search({ ...game, clock: { i: 0, n: 53 } }, carriedState, roots, tightSettings);
+  assert(ampleAndTight.clockRecoveryActive && !ampleAndTight.tightClockRecoveryActive);
   const urgentPlan = search(urgent, state, roots, { ...options, clockRecovery: true });
   assert(!urgentPlan.clockRecoveryActive);
   assert.deepEqual(comparable(urgentPlan), comparable(search(urgent, state, roots, options)));
@@ -55,6 +67,12 @@ function test() {
   const campaign = playHumanCampaign(actual, { maximumAttempts: 1, planning: { ...options, clockRecovery: true } });
   assert.equal(campaign.wonOn, 1);
   assert.equal(campaign.verifiedTaps, campaign.attempts[0].taps);
+  const tightCampaign = playHumanCampaign(actual, { maximumAttempts: 1, planning: tightSettings });
+  assert.equal(tightCampaign.wonOn, 1);
+  assert.equal(tightCampaign.verifiedTaps, tightCampaign.attempts[0].taps);
+  assert.throws(() => search(game, state, roots, { ...options, tightClockRecovery: true }));
+  assert.throws(() => search(game, state, roots, { ...tightSettings, tightClockRecoveryMaxSlack: 2 }));
+  assert.throws(() => search(game, state, roots, { ...tightSettings, tightClockRecovery: 'yes' }));
   assert.throws(() => search(game, state, roots, { ...options, clockRecovery: 'yes' }));
   assert.throws(() => search(game, state, roots, { ...options, clockRecovery: true, clockRecoveryMinSlack: 2 }));
   console.log('PASS spare-clock recovery ranks public tray debt before digging, respects the configured carried-tile threshold, retains urgent/nonclock ordering and independently replays a production clock route');

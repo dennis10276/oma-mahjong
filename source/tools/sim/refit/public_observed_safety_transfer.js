@@ -1,6 +1,22 @@
 'use strict';
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
+const { goalRoutes } = require('./public_goal_routes.js');
+
+function observedSafetyPlanningAllowed(game, state, clockOnly = false, maximumSlack, rememberedKeys = []) {
+  assert.equal(typeof clockOnly, 'boolean');
+  assert(maximumSlack === undefined || clockOnly && Number.isInteger(maximumSlack) && maximumSlack >= 0);
+  if (!clockOnly) return true;
+  const clock = game.clock;
+  if (!clock || !state.alive[clock.i]) return false;
+  if (maximumSlack === undefined) return true;
+  assert(Array.isArray(rememberedKeys) && Array.from(rememberedKeys).every(index => Number.isInteger(index)
+    && index >= 0 && index < state.alive.length));
+  const rules = game.rules ? { ...game.rules,
+    keys: [...new Set([...(game.rules.keys ?? []), ...rememberedKeys])].sort((left, right) => left - right) } : null;
+  const publicGame = { tiles: game.tiles, nb: game.nb, rules, clock };
+  return clock.n - state.moves - goalRoutes(publicGame, state, clock.i).cost <= maximumSlack;
+}
 
 function createObservedSafetyTransfer(tiles, options = {}) {
   assert(Object.keys(options).every(key => key === 'initialAlive'));
@@ -28,4 +44,4 @@ function createObservedSafetyTransfer(tiles, options = {}) {
   };
 }
 
-module.exports = { createObservedSafetyTransfer };
+module.exports = { createObservedSafetyTransfer, observedSafetyPlanningAllowed };

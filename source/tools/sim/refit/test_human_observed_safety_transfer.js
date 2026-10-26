@@ -18,16 +18,19 @@ function test() {
     rules: { iceNb: Layouts.iceNeighbors(tiles), ice: { 0: 2, 5: 1 }, keys: [4, 5, 6], locks: new Set([7]) } };
   const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 64 };
   let verifiedTaps = 0;
-  for (const { observedSafetyTransfer, observedSafetyClockOnly, clock } of [
-    { observedSafetyTransfer: false, observedSafetyClockOnly: false, clock: null },
-    { observedSafetyTransfer: true, observedSafetyClockOnly: false, clock: null },
-    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: null },
-    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: { i: 4, n: 50 } },
+  for (const { observedSafetyTransfer, observedSafetyClockOnly, maximumSlack, expectedPlanning, clock } of [
+    { observedSafetyTransfer: false, observedSafetyClockOnly: false, clock: null, expectedPlanning: false },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: false, clock: null, expectedPlanning: true },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: null, expectedPlanning: false },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: { i: 4, n: 50 }, expectedPlanning: true },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: { i: 4, n: 50 }, maximumSlack: 47, expectedPlanning: false },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: { i: 4, n: 50 }, maximumSlack: 48, expectedPlanning: true },
   ]) {
     const game = { ...actual, clock };
     const controller = createHumanController(tiles, { exclusiveRoles: false, rememberAcceptedTaps: true,
       rememberClearedRoles: true, rememberKeyIdentities: true, keyPlanningSlackAbove: 40,
-      observedSafetyTransfer, observedSafetyClockOnly, nodes: 64, beam: 8, taps: 4, decisionMs: 30 });
+      observedSafetyTransfer, observedSafetyClockOnly, observedSafetyMaxClockSlack: maximumSlack,
+      nodes: 64, beam: 8, taps: 4, decisionMs: 30 });
     const observe = session => {
       const view = session.view(), legal = new Set(view.legalTiles ?? []);
       const board = observeBoard(tiles, view.state, game.clock, { picture: index => game.faces[index],
@@ -50,11 +53,14 @@ function test() {
     controller.beginAttempt(); const retry = factory(game, settings); observe(retry); perform(retry, 2);
     assert(retry.view().state.alive[1]);
     const audit = controller.explainInformation([3, 0]);
-    if (observedSafetyTransfer && (!observedSafetyClockOnly || clock)) {
+    if (expectedPlanning) {
       assert.equal(audit.boundary, null);
       assert(controller.causalAvailabilityStats().provedTransfers > 0);
       assert(controller.acceptedEvidence().every(proof => proof.alternateProof === 'observedKeyAndNeighborCount'));
-    } else assert.equal(audit.boundary.reason, 'unobservedObstacleRole');
+    } else {
+      assert.equal(audit.boundary.reason, 'unobservedObstacleRole');
+      if (observedSafetyClockOnly) assert(controller.causalAvailabilityStats().clockGateSkips > 0);
+    }
     assert.equal(controller.known().initialRoles[0], 'ice2', 'Availability proof does not invent a different starting role');
     for (const index of [3, 0, 4, 1, 5, 6, 7]) perform(retry, index);
     assert(retry.view().win);
@@ -70,6 +76,9 @@ function test() {
   assert.deepEqual(accepted.entries(), []); assert.deepEqual(cleared.entries(), []);
   assert.throws(() => createHumanController(tiles, { observedSafetyClockOnly: 'yes' }));
   assert.throws(() => createHumanController(tiles, { observedSafetyClockOnly: true }));
+  assert.throws(() => createHumanController(tiles, { observedSafetyMaxClockSlack: 30 }));
+  assert.throws(() => createHumanController(tiles, { observedSafetyTransfer: true, observedSafetyClockOnly: true,
+    observedSafetyMaxClockSlack: -1, rememberAcceptedTaps: true, rememberKeyIdentities: true }));
   assert.throws(() => createHumanController(tiles, { observedSafetyTransfer: 'yes' }));
   assert.throws(() => createHumanController(tiles, { observedSafetyTransfer: true }));
   assert.throws(() => createHumanController(tiles, { observedSafetyTransfer: true, rememberKeyIdentities: true }));

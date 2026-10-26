@@ -25,7 +25,7 @@ const { createKnownLossMemory } = require('./public_known_loss_memory.js');
 const { createClearedRoleMemory } = require('./public_cleared_role_memory.js');
 const { createKeyIdentityMemory, keyPlanningAllowed } = require('./public_key_identity_memory.js');
 const { createAvailabilityTransfer } = require('./public_availability_transfer.js');
-const { createObservedSafetyTransfer } = require('./public_observed_safety_transfer.js');
+const { createObservedSafetyTransfer, observedSafetyPlanningAllowed } = require('./public_observed_safety_transfer.js');
 const { createBlockedTapMemory } = require('./public_blocked_tap_memory.js');
 const { rankHypothesisActions } = require('./public_anytime_hypotheses.js');
 const { rankBudgetedHypotheses } = require('./public_budgeted_hypotheses.js');
@@ -105,6 +105,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.observedSafetyTransfer === undefined || typeof options.observedSafetyTransfer === 'boolean');
   assert(options.observedSafetyClockOnly === undefined || typeof options.observedSafetyClockOnly === 'boolean');
   assert(!options.observedSafetyClockOnly || options.observedSafetyTransfer === true);
+  assert(options.observedSafetyMaxClockSlack === undefined || options.observedSafetyClockOnly === true
+    && Number.isInteger(options.observedSafetyMaxClockSlack) && options.observedSafetyMaxClockSlack >= 0);
   assert(!options.observedSafetyTransfer || !options.causalAvailabilityMemory
     && options.rememberKeyIdentities === true && (options.rememberAcceptedTaps || options.rememberClearedRoles),
   'Observed safety transfer requires retained actual keys and original-rule safety witnesses without a bounded placement contract');
@@ -126,6 +128,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const pictures = tiles.map(() => null), down = tiles.map(() => null), initialRoles = tiles.map(() => null);
   let attempt = 0, frontier, planner, roleSignature, roles, blocked, blockedAlive, current, clock = null, manualChoice = false;
   let lastAcceptedIndex = null;
+  let observedSafetyPlanningActive = false;
   let retryRiskMemory = null;
   const transfer = options.observedSafetyTransfer ? createObservedSafetyTransfer(geometry.tiles)
     : options.causalAvailabilityMemory ? createAvailabilityTransfer(geometry.tiles, { exclusiveRoles: true }) : null;
@@ -133,7 +136,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const transferStats = { queries: 0, provedTransfers: 0,
     ...(options.observedSafetyClockOnly ? { clockGateSkips: 0 } : {}) };
   const transferProof = transfer ? (...args) => {
-    if (options.observedSafetyClockOnly && !(clock && current?.alive[clock.i])) {
+    if (options.observedSafetyClockOnly && !observedSafetyPlanningActive) {
       transferStats.clockGateSkips++; return null;
     }
     transferStats.queries++;
@@ -209,6 +212,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       observedTakeable = null; observedAliveKey = null; observedArrivingKey = null;
       lastAcceptedIndex = null;
+      observedSafetyPlanningActive = false;
       retryRiskMemory?.beginAttempt();
       blockedTapMemory?.beginAttempt();
       if (options.hypothesisSampling) episodes.push({ actions: [], frames: [] });
@@ -290,6 +294,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
         }
       }
+      observedSafetyPlanningActive = !!options.observedSafetyTransfer && observedSafetyPlanningAllowed(geometry, current,
+        !!options.observedSafetyClockOnly, options.observedSafetyMaxClockSlack, keyIdentityMemory.keys());
       const availabilityKeys = options.observedSafetyTransfer
         ? [...new Set([...observedKeys, ...keyIdentityMemory.keys()])].sort((left, right) => left - right) : observedKeys;
       geometry.publicFrontier = position => {

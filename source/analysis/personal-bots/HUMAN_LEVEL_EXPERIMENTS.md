@@ -557,3 +557,39 @@ adoption exception; the unchanged final rule correctly rejects this result.
 Next: compare actual12 histories on existing development boards144(salt1),
 10049(salt1) and regressed10041(salt2). Record this data scope explicitly before
 fitting another public WHEN condition. Raw traces: when-safety-clock-v2/.
+
+## Experiment13: bounded-clock proofs and tight-clock preparation
+
+Preregistered combination against adopted10: observedSafetyTransfer:true,
+observedSafetyClockOnly:true, observedSafetyMaxClockSlack:30,
+tightClockRecovery:true and tightClockRecoveryMaxSlack:5. Expanded safety
+planning requires an active clock with estimated spare moves<=30. The separate
+new recovery branch requires exactly one tray tile and3-5 estimated spare moves;
+the existing ample-clock recovery condition is retained. Each condition uses at
+most2 public features and no board IDs or hypothetical pictures.
+
+The refined proof gate comes from741 actual12 taps on existing development
+boards144/10049 salt1 and regressed10041 salt2. It keeps9 helpful-case changed
+positions and excludes53 regression positions; all trace commands exit0 and
+strategy replan drift is0. The implementation matches the fitted predicate at
+all62 changed positions. Tight-clock preparation uses the earlier published04
+development-only fit. This combination tests interaction; it does not claim
+separate campaign gains before measurement. Detailed data scopes and caveats:
+HUMAN_COMBINED_CLOCK_POLICY_V1.md.
+
+All123 reference tests pass17s(native66393 exit0), including72 actual retry-control
+taps, clock/tray/cap boundaries, preserved ample-clock behavior, a production
+clock clear and standalone/combined concealed-world invariance.
+Source120aee30205ecb739ccec79c640414b017e304044cd73d8816526f7d5b78f8a0;
+profile16dc83e7ac0e06b5b456928684584aa890fe2face5936b4dd2c5ea273e758146.
+Safety fit SHA2560aa16f10d5a74bbf736bb5842df9740187360dc68abdaa8a1f7fe35dccf9fd1d;
+tight fit SHA25613e1c96078e15537ffa018a160fcb08860cbedbd09b1650962e682c657a6fe79.
+
+Same adopted10 full comparator, selectionv6,38 development levels and20 fixed
+guards. Refresh targets,3 game workers, salt1 development, max12 actual tries,
+strict2s/move and independent production replay. The declared off-salt-full-check-v1
+qualification may advance guarded partial gains to full testing, as in12; the
+unchanged full adoption gate remains an actual three-salt Dennis+1 repair with
+no passing-board regression. Default10 remains unchanged. Counter before13 is2;
+rejection makes it3. Raw profiles, snapshots and exits: experiment-13/ under
+.codex-runs/level-measure/.

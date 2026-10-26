@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
-const { createObservedSafetyTransfer } = require('./public_observed_safety_transfer.js');
+const { createObservedSafetyTransfer, observedSafetyPlanningAllowed } = require('./public_observed_safety_transfer.js');
 const { createSessionFactory } = require('./production_physical_session.js');
 const { observeBoard } = require('./human_board_visibility.js');
 const { visibleRole, verifyAttempt } = require('./human_reference_campaign.js');
@@ -72,6 +72,23 @@ assert(earlier.view().win); assert(alternative.view().win);
 const verifiedTaps = verifyAttempt(encodeGame(actual), [1, 3, 0, 4, 5, 6, 2, 7], settings, earlier.audit())
   + verifyAttempt(encodeGame(actual), [2, 3, 0, 4, 1, 5, 6, 7], settings, alternative.audit());
 factory.verifySource();
+const gateState = { alive: initial, moves: 0, relieved: false };
+const publicGame = { tiles, nb: neighbors, rules: null, clock: { i: 4, n: 31 } };
+for (const field of ['faces', 'deck', 'seed', 'down']) Object.defineProperty(publicGame, field,
+  { get() { throw Error('Private safety planning gate ' + field); } });
+assert(observedSafetyPlanningAllowed(publicGame, gateState, true, 30));
+assert(!observedSafetyPlanningAllowed(publicGame, gateState, true, 29));
+assert(observedSafetyPlanningAllowed(publicGame, { ...gateState, moves: 1 }, true, 29));
+assert(!observedSafetyPlanningAllowed({ ...publicGame, clock: null }, gateState, true, 30));
+assert(!observedSafetyPlanningAllowed(publicGame, { ...gateState, alive: initial.map((alive, index) => index === 4 ? 0 : alive) }, true, 30));
+assert(observedSafetyPlanningAllowed({ ...publicGame, clock: null }, gateState));
+const dependencyGame = { ...publicGame, clock: { i: 0, n: 31 },
+  rules: { ice: {}, iceNb, locks: new Set([0]), keys: [4] } };
+assert(!observedSafetyPlanningAllowed(dependencyGame, gateState, true, 28));
+assert(observedSafetyPlanningAllowed(dependencyGame, gateState, true, 28, [5]));
+for (const invalid of [-1, 2.5, '30', NaN]) assert.throws(() => observedSafetyPlanningAllowed(publicGame, gateState, true, invalid));
+assert.throws(() => observedSafetyPlanningAllowed(publicGame, gateState, false, 30));
+assert.throws(() => observedSafetyPlanningAllowed(publicGame, gateState, true, 30, [99]));
 console.log(JSON.stringify({ supportedWorlds, transfers, restoredTiles, unboundedIceChecks,
   passed: true, independentlyVerifiedPhysicalTaps: verifiedTaps,
   limitation: 'Production-rule predicate checks and two actual winning routes; controller integration remains required before any experiment.' }));

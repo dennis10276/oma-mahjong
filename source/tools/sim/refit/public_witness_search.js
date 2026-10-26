@@ -145,6 +145,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const informationWidth = settings.informationWidth ?? 0;
   const clockRecovery = settings.clockRecovery ?? false;
   const clockRecoveryMinSlack = settings.clockRecoveryMinSlack ?? 3;
+  const tightClockRecovery = settings.tightClockRecovery ?? false;
+  const tightClockRecoveryMaxSlack = settings.tightClockRecoveryMaxSlack ?? 5;
   const clockInformationBeforeRisk = settings.clockInformationBeforeRisk ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
@@ -176,6 +178,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert.equal(typeof clockRecovery, 'boolean');
   assert(settings.clockRecoveryMinSlack === undefined || clockRecovery
     && Number.isInteger(clockRecoveryMinSlack) && clockRecoveryMinSlack >= 3);
+  assert.equal(typeof tightClockRecovery, 'boolean');
+  assert(!tightClockRecovery || clockRecovery);
+  assert(settings.tightClockRecoveryMaxSlack === undefined || tightClockRecovery
+    && Number.isInteger(tightClockRecoveryMaxSlack) && tightClockRecoveryMaxSlack >= 3);
   assert.equal(typeof clockInformationBeforeRisk, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
@@ -223,8 +229,11 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const cone = clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).frontier
     : obstacleFrontier ? frontierFor(game, state, game.clock.i) : clockCone(game, state) : null;
   const rootClockCost = clockRecovery && clocked ? alternativeGoalRoutes ? routePlanner(game, state, game.clock.i).cost : clockDistance(game, state) : 0;
-  const clockRecoveryActive = clockRecovery && clocked && state.tray.length >= (settings.trayRecoveryClockMin ?? 0)
-    && game.clock.n - state.moves - rootClockCost >= clockRecoveryMinSlack;
+  const rootClockSlack = clocked ? game.clock.n - state.moves - rootClockCost : null;
+  const tightClockRecoveryActive = tightClockRecovery && clocked && state.tray.length === 1
+    && rootClockSlack >= 3 && rootClockSlack <= tightClockRecoveryMaxSlack;
+  const clockRecoveryActive = clockRecovery && clocked && (state.tray.length >= (settings.trayRecoveryClockMin ?? 0)
+    && rootClockSlack >= clockRecoveryMinSlack || tightClockRecoveryActive);
   const initialKnown = state.pictures.filter((picture, index) => state.alive[index] && picture !== null).length;
   const finishKnown = settings.finishKnown && initialKnown === initialLeft;
   const tapLimit = finishKnown ? Math.min(96, Math.max(settings.taps,
@@ -526,6 +535,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(dominanceStop ? { dominanceStop } : {}),
       ...(informationWidth ? { informationWidthTarget } : {}),
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost, clockRecoveryMinSlack } : {}),
+      ...(tightClockRecovery ? { tightClockRecoveryActive, tightClockRecoveryMaxSlack } : {}),
       ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
       ...(rememberedLoss ? { rememberedLossPrunes } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive, minimumTray: recoveryInformationMinTray,
