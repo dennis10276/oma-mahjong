@@ -1,8 +1,8 @@
 # Experiment27: proved inspection-successor loss memory
 
-Status: development running. No adoption or fresh-campaign gain is claimed.
-Supervisor native66247, PID17664; development workers40760/13932/42720 verified
-live. Poll the same supervisor handle before actor edits; freeze measured files.
+Status: rejected-development; retain23. Supervisor native66247 and all three
+development workers exited0. No measured worker remains live. No full run or
+adoption was performed. Consecutive unadopted count4.
 
 Implementation9ca787a; preregistration217c01b, with trace-coverage wording
 corrected before measurement in734eeec. HUMAN_LOSS_INSPECTION_MEMORY.md records
@@ -47,3 +47,17 @@ still needs the independent adoption audit, fresh cohort/source/worker/replay/
 timing checks, profile-only replacement and post-adoption tests/external-cwd
 unlabeled CLI. Facts cached or a late changed suggestion alone do not satisfy
 the goal. No completion, perfect play or personal accuracy claim is made.
+
+## Completed result
+
+| Development42 real boards, salt1 | Cleared | Within Dennis+1 | Complete repairs | Passing target regressions | Slowest move |
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate27|40/42|38/42|0|0|1647.1ms|
+
+The unchanged v2 qualifier reports no partial or off-salt development gain and
+does not advance. Retain the13/two fixed-history suggestion changes and proved
+fact counts as diagnostics only: they did not produce a measured target repair.
+All42 records are valid; the actual native supervisor and three terminal worker
+exits are retained in supervisor-native-exit.json. Counter4 after27; default23
+unchanged. Track A and later gates remain unmet.
