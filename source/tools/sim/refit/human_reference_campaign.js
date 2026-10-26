@@ -156,6 +156,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     && !options.retryInformationPreferPeek);
   assert(options.reusableContinueAfterInformation === undefined || typeof options.reusableContinueAfterInformation === 'boolean');
   assert(!options.reusableContinueAfterInformation || options.reusablePublicPlanning === true);
+  assert(options.reusablePrepareCrowded === undefined || typeof options.reusablePrepareCrowded === 'boolean');
+  assert(!options.reusablePrepareCrowded || options.reusablePublicPlanning === true);
   assert(options.drawnRoleInformation === undefined || typeof options.drawnRoleInformation === 'boolean');
   assert(options.drawnRoleClockSlackRange === undefined || options.drawnRoleInformation === true
     && Array.isArray(options.drawnRoleClockSlackRange) && options.drawnRoleClockSlackRange.length === 2
@@ -239,6 +241,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       peekTrayLimit: options.retryInformationPeekTrayLimit ?? 1, preferActualPeek: options.retryInformationPreferPeek,
       reusablePlanning: options.reusablePublicPlanning,
       continueAfterInformation: options.reusableContinueAfterInformation,
+      prepareCrowded: options.reusablePrepareCrowded,
       contextVersion: options.reusablePublicPlanning ? () => JSON.stringify([pictures, down, initialRoles, roles,
         typedKeyKnowledge(), acceptedTapMemory?.entries() ?? [], clearedRoleMemory?.entries() ?? [],
         blockedTapMemory?.entries() ?? [], observedTakeable, Array.from(blocked), observedSafetyPlanningActive,

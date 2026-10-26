@@ -19,12 +19,15 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert(!options.reusablePlanning || typeof options.contextVersion === 'function' && !preferActualPeek);
   assert(options.continueAfterInformation === undefined || typeof options.continueAfterInformation === 'boolean');
   assert(!options.continueAfterInformation || options.reusablePlanning === true);
+  assert(options.prepareCrowded === undefined || typeof options.prepareCrowded === 'boolean');
+  assert(!options.prepareCrowded || options.reusablePlanning === true);
   const reusable = options.reusablePlanning ? createReusableExploration() : null;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
     nodes: 0, nodeStops: 0, deadlineStops: 0, maximumExtraMs: 0, overruledDeadCertificates: 0, stallsEndedByInformation: 0 };
   if (deadEndInformation) Object.assign(counters, { deadEndConsidered: 0, firstAttemptDeadEndConsidered: 0,
     deadEndRoutes: 0, unresolvedDeadEndReports: 0, confirmedDeadEndReports: 0 });
+  if (options.prepareCrowded) Object.assign(counters, { proactiveSearches: 0, firstAttemptPreparations: 0 });
   const fingerprint = memory => {
     const expected = ['down', 'initialRoles', 'pictures', ...(memory.keyIdentities === undefined ? [] : ['keyIdentities'])].sort();
     assert.deepEqual(Object.keys(memory).sort(), expected);
@@ -53,7 +56,10 @@ function retryInformationSearch(primarySearch, options = {}) {
       const began = Date.now(), primary = primarySearch(game, state, actions, settings);
       if (primary.knownWin || primary.safeClockExit) return primary;
       const recoverDeadEnd = deadEndInformation && primary.knownDead;
-      if (!recoverDeadEnd && (attempt < 2 || !stalls)) return primary;
+      const previouslyEligible = recoverDeadEnd || attempt >= 2 && stalls > 0;
+      const clockRemaining = game.clock && state.alive[game.clock.i] ? game.clock.n - state.moves : Infinity;
+      const proactive = !!options.prepareCrowded && !previouslyEligible && state.tray.length >= 2 && clockRemaining >= 10;
+      if (!previouslyEligible && !proactive) return primary;
       const unresolvedDeadEnd = reason => {
         counters.unresolvedDeadEndReports++;
         const report = { ...primary };
@@ -64,6 +70,7 @@ function retryInformationSearch(primarySearch, options = {}) {
       const remaining = choices - (state.physicalTaps ?? 0);
       if (remaining <= 0) return recoverDeadEnd ? unresolvedDeadEnd('choice_budget') : primary;
       counters.considered++;
+      if (proactive) { counters.proactiveSearches++; counters.firstAttemptPreparations += +(attempt === 1); }
       const publicGame = Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure', 'publicRoleExposure']
         .filter(field => game[field] !== undefined).map(field => [field, game[field]]));
       if (recoverDeadEnd) {
@@ -103,6 +110,7 @@ function retryInformationSearch(primarySearch, options = {}) {
         knownProgress: result.knownProgress, safeClockExit: false, clockRoom: 0,
         information: !result.knownWin, boundary: !result.knownWin, nodes: (primary.nodes ?? 0) + result.nodes,
         retryInformationWitness: { attempt, stalls, kind: result.kind, knownPrefixTaps: result.knownPrefixTaps,
+          ...(proactive ? { proactive: true, preparationTrayMinimum: 2, preparationClockMinimum: 10 } : {}),
           ...(reusable ? { reusable: result.reusable } : {}),
           ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
           ...(preferActualPeek ? { preferActualPeek, exposureFallbackUsed: result.exposureFallbackUsed,
