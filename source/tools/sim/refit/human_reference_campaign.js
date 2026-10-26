@@ -90,6 +90,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(!options.deadEndInformation || options.retryInformationWitness === true,
     'Dead-end information recovery shares the retry-information search budget');
   assert(options.rememberKnownLosses === undefined || typeof options.rememberKnownLosses === 'boolean');
+  assert(options.rememberLossInspections === undefined || typeof options.rememberLossInspections === 'boolean');
+  assert(!options.rememberLossInspections || options.rememberKnownLosses === true,
+    'Inspection loss deductions require actual exhausted loss memory');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
   assert(options.keyPlanningSlackAbove === undefined || options.rememberKeyIdentities === true
@@ -169,7 +172,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     return proof;
   } : null;
   const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof, transferProofLabel }) : null;
-  const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry) : null;
+  const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry,
+    { inspectionSuccessors: options.rememberLossInspections }) : null;
   const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof, transferProofLabel }) : null;
   const keyIdentityMemory = options.rememberKeyIdentities ? createKeyIdentityMemory(tiles.length) : null;
   const typedKeyKnowledge = () => keyIdentityMemory ? { keyIdentities: keyIdentityMemory.keys() } : {};
