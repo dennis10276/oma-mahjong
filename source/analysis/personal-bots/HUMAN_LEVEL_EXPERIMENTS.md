@@ -983,3 +983,16 @@ Raw helper off-salt-full-qualification-v2.js SHA256
 5a232ee2506e8b932b4c57da56c94a0449b1cf563eeb4833f8e5bff167d8bcc5;
 controls: off-salt-v2-controls-03.log and reused-development-controls-01.log.
 No campaign records or outcomes are fabricated to avoid repeating development.
+
+The first19 startup stopped before any new games because reused workers were
+listed in completion order rather than canonical shard order. Re-summing CPU
+shares changed only the final floating-point decimal, and the exact-summary
+assertion rejected it. Native61417 exits1; running/finished new jobs are empty.
+The failed startup and actor snapshot are preserved with suffix
+startup-unsorted-workers. This is not another measured strategy trial.
+
+The loader and adoption auditor now sort development shards0/1/2 before
+reconstruction. The added actual18 control exactly reproduces the original
+summary without rounding or editing raw data. The12 reuse-corruption controls
+still pass(native exit0); log reused-development-controls-02.log. Actor, profile,
+cohort, counter and full adoption requirements are unchanged for the relaunched19.
