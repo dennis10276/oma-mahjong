@@ -116,3 +116,45 @@ The prototype still needs a recorded-decision audit and development/full
 campaign tests before adoption. No measured strategy experiment is counted.
 Rebase the draft on the retained profile after14 finishes before measuring it;
 its current origin is the frozen14 actor with the prior adopted10 default.
+
+## Retained10 three-salt opportunity audit
+
+The updated audit covers all eight full-salt failures in catalogv2, including
+newly recorded157. It replays176 recorded attempts and6655 original physical
+taps. All162 final losing choices have definite losing one-step public
+predictions; none need a guessed hidden picture to diagnose the immediate loss.
+The prototype identifies16 matching alternatives that survive the next tap.
+Their449 prefix/alternative taps independently replay as well(native exit0,
+about7s). No continuation after an alternative tap is played or claimed.
+
+| Board | Recorded attempts across3 salts | Physical losses | One-tap opportunities |
+|---:|---:|---:|---:|
+|86|5|2|1|
+|144|7|4|0|
+|157|10|7|0|
+|10011|24|21|0|
+|10032|36|36|6|
+|10033|22|20|0|
+|10049|36|36|0|
+|10052|36|36|9|
+
+This audit uses only the normal observer, actual current takeability, retained
+observed pictures and previously validated match deductions. Counterfactual
+one-step legality uses the same current public takeability snapshot; no future
+legality or private obstacle rule is supplied. Automatic Joker effects remain
+uncertain and ineligible. Raw board inputs belong only to the production
+environment and independent replayer.
+
+Original per-decision winning/clock-exit plan flags are absent from the compact
+measurement records. Therefore16 is an opportunity count before those guards,
+not a demonstrated count of actual controller overrides. It does not show a
+recorded planner bug, winning continuation or improved campaign performance.
+A policy-decision audit is still needed after the active timed run completes.
+Lab10049 no longer has such opportunities on the retained10 histories; the
+older08 salt1 opportunities must not be carried forward as current evidence.
+
+Raw records and summary: adopted10-immediate-match-opportunities-v2.jsonl,
+adopted10-immediate-match-opportunities-v2-summary.json and corresponding.log
+under .codex-runs/level-measure/. Source actor97f6aa2ca756fd64e249945053bc3a352d89d1a764bad4212d7d81d5f23db675;
+profile6b6094dc0a84e0e1988a9f3e3585863da68ddc0a2a00d554d8214c18b7bb21a1.
+No actor changed and no measured strategy trial is counted.
