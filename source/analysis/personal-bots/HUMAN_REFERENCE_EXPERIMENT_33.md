@@ -57,3 +57,24 @@ frozen-38c8bac53d80-experiment33/, information-preparation-native-v1.json,
 when-information-preparation-v1/reusable/baseline32/, and
 reusable-preparation-suite-03.log. Exact comparison counts/native terminal exits
 are required in the evidence file before runner33 can launch.
+
+## Completed result
+
+Rejected-development. Native supervisor20190 and all three workers exit0;
+all42 executions valid. No full run and no adoption. Two of eight authorized
+trials are used; six remain. Retained23 stays the default.
+
+| Development42,salt1 | Cleared | Within Dennis+1 | Repairs | Passing regressions | Slowest |
+|---|---:|---:|---|---|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate33|39/42|38/42|10011|10033|1753.5ms|
+
+11 improves8→3 (target3),33 worsens4→unresolved12 (target6),49 improves5→4
+but still misses target3.41 changes3→7 and remains within target8. Mean
+0.312127min/board,salt1. A censored12 is not try13 and proves no impossibility.
+First-divergence-33 audit independently replays24 common-prefix production taps:
+helpful11 first differs with clock35/tray2; harmful33 with clock13/tray1;
+passing41 with clock54/tray1. Tray1 differences can be retained-prefix steps
+from searches started at tray2; do not reset those prefixes at threshold crossings.
+These first differences motivate further diagnostics, not a proven separator.
+All changed-decision comparisons11/33/41 must finish before another actor edit.
