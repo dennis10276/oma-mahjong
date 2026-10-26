@@ -653,3 +653,21 @@ with baseline10, bounded-proof-only and combined13 policies observing and
 acknowledging the same recorded physical actions. Every complete attempt is
 independently production-replayed. These comparisons are diagnosis, not new
 campaign results or proof that any individual suggestion caused the outcome.
+
+## Experiment14: minimum-margin clock recovery
+
+Preregistered refinement of13, changing only tightClockRecoveryMaxSlack5->3.
+All585 comparison taps on144/10033/10049 replay independently, native exits0,
+strategy drift0. Exactly one tray tile and3 estimated spare clock moves keeps
+the helpful144 difference and excludes all four harmful10033 differences at4
+spare moves. Three is the existing smallest integer margin for recovery.
+Bounded proofs and ample-clock recovery remain unchanged. Full diagnosis,
+threshold candidates, input hashes and limits: HUMAN_MINIMUM_MARGIN_POLICY_V2.md.
+
+All123 tests pass15s, native36259 exit0. Source120aee30205ecb739ccec79c640414b017e304044cd73d8816526f7d5b78f8a0;
+profile89aa97fbaf33ae211c170be5c0c14eabcfac09e89a214693e6349a4667757fc8.
+Fit SHA256456588d6fd66980d6995c1d2087065a4a5372f415e0d8d1a37003bdd88c950ee.
+Catalogv2, selectionv7, frozen adopted10 comparator, three workers,42 development
+boards salt1 then159 full boards salts1/2/3 if qualified. Refresh all targets
+before play; preserve existing adoption and timing rules. Counter before14 is3;
+rejection makes4. Raw dispatch, profiles and snapshots: experiment-14/.

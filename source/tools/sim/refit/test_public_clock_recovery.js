@@ -49,6 +49,13 @@ function test() {
     assert.equal(report.tightClockRecoveryActive, expected);
     assert.equal(report.clockRecoveryActive, expected);
   }
+  const minimumMargin = { ...tightSettings, tightClockRecoveryMaxSlack: 3 };
+  const atMinimum = search(game, carriedState, roots, minimumMargin);
+  assert(atMinimum.tightClockRecoveryActive && atMinimum.clockRecoveryActive);
+  const beyondMinimumGame = { ...game, clock: { i: 0, n: 7 } };
+  const beyondMinimum = search(beyondMinimumGame, carriedState, roots, minimumMargin);
+  assert(!beyondMinimum.tightClockRecoveryActive && !beyondMinimum.clockRecoveryActive);
+  assert.deepEqual(comparable(beyondMinimum), comparable(search(beyondMinimumGame, carriedState, roots, jointGate)));
   assert(!search(game, state, roots, tightSettings).tightClockRecoveryActive);
   assert(!search(game, { ...state, tray: [8, 9] }, roots, tightSettings).tightClockRecoveryActive);
   assert(!search({ ...game, clock: null }, carriedState, roots, tightSettings).tightClockRecoveryActive);
