@@ -12,7 +12,7 @@ const { REFERENCE_PARAMETERS, search: searchPublicWitness } = require('./public_
 const { advance } = require('./known_tray_plan.js');
 const { aliveSignature } = require('./public_alive_signature.js');
 const { knownCleanup } = require('./public_unique_cleanup.js');
-const { createExposureFrontier } = require('./public_exposure_frontier.js');
+const { createExposureFrontier, passiveExposureMode } = require('./public_exposure_frontier.js');
 const { createDrawnRoleFrontier, drawnRolePlanningAllowed } = require('./public_drawn_role_frontier.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 const { preferKnownRecovery, openTwinRecovery } = require('./public_recovery_priority.js');
@@ -147,6 +147,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   'Observed safety transfer requires retained actual keys and original-rule safety witnesses without a bounded placement contract');
   const excludeClosedObstacles = !!options.usePlacementContract && publicContext.boardMode === 'standard';
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles', 'shortAll'].includes(options.passiveInformation));
+  assert(options.passiveInformationClockMin === undefined || options.passiveInformation === 'shortAll'
+    && Number.isInteger(options.passiveInformationClockMin) && options.passiveInformationClockMin >= 0);
   assert(options.drawnRoleInformation === undefined || typeof options.drawnRoleInformation === 'boolean');
   assert(options.drawnRoleClockSlackRange === undefined || options.drawnRoleInformation === true
     && Array.isArray(options.drawnRoleClockSlackRange) && options.drawnRoleClockSlackRange.length === 2
@@ -203,6 +205,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let decisionPosition = null;
   let observedTakeable = null, observedAliveKey = null, observedArrivingKey = null;
   let pendingInformationAction = null;
+  let currentExposureMode = null;
   const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles, ...typedKeyKnowledge() });
   const physicalSignature = position => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
     .map(field => position[field]));
@@ -263,6 +266,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       observedTakeable = null; observedAliveKey = null; observedArrivingKey = null;
+      currentExposureMode = null;
       lastAcceptedIndex = null;
       observedSafetyPlanningActive = false;
       retryRiskMemory?.beginAttempt();
@@ -392,8 +396,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const exposureFactory = drawnRoleActive ? createDrawnRoleFrontier : createExposureFrontier;
       if (drawnRoleActive) geometry.publicRoleExposure = createDrawnRoleFrontier(geometry.tiles, { ...current, roles }, 'roles');
       else delete geometry.publicRoleExposure;
+      const nextExposureMode = passiveExposureMode(options.passiveInformation, current, clock, options.passiveInformationClockMin);
+      if (options.passiveInformationClockMin !== undefined && currentExposureMode !== null && currentExposureMode !== nextExposureMode
+        && !planner.report()?.knownWin && !planner.report()?.safeClockExit) resetPlanner();
+      currentExposureMode = nextExposureMode;
       const exposure = options.passiveInformation ? exposureFactory(geometry.tiles, { ...current, roles },
-        ['roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(options.passiveInformation) ? 'roles' : 'all') : undefined;
+        currentExposureMode) : undefined;
       geometry.publicExposure = options.passiveInformation === 'frontierRoles' ? position => {
         const gained = exposure(position);
         if (!gained.length) return gained;

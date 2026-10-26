@@ -36,4 +36,13 @@ function informationInCone(cone, target, newlyReadable = null) {
   return !!cone && (newlyReadable === null ? cone.has(target) : newlyReadable.some(index => cone.has(index)));
 }
 
-module.exports = { createExposureFrontier, informationInCone };
+function passiveExposureMode(information, state, clock, minimumClockMoves) {
+  if (minimumClockMoves !== undefined) {
+    assert.equal(information, 'shortAll');
+    assert(Number.isInteger(minimumClockMoves) && minimumClockMoves >= 0);
+    if (!clock || !state.alive[clock.i] || clock.n - state.moves < minimumClockMoves) return 'roles';
+  }
+  return ['roles', 'frontierRoles', 'immediateRoles', 'shortRoles'].includes(information) ? 'roles' : 'all';
+}
+
+module.exports = { createExposureFrontier, informationInCone, passiveExposureMode };

@@ -19,6 +19,9 @@ function test() {
   assert.throws(() => createHumanController(simple.tiles, { uniqueKnownCleanup: 'yes' }));
   assert.equal(playHumanCampaign(simple, { planning: { passiveInformation: true } }).wonOn, 1);
   assert.equal(playHumanCampaign(simple, { planning: { passiveInformation: 'roles' } }).wonOn, 1);
+  assert.equal(playHumanCampaign(simple, { planning: { passiveInformation: 'shortAll', passiveInformationClockMin: 10 } }).wonOn, 1);
+  assert.throws(() => createHumanController(simple.tiles, { passiveInformation: 'shortRoles', passiveInformationClockMin: 10 }));
+  assert.throws(() => createHumanController(simple.tiles, { passiveInformation: 'shortAll', passiveInformationClockMin: -1 }));
   assert.equal(playHumanCampaign(simple, { planning: { passiveInformation: 'frontierRoles' } }).wonOn, 1);
   assert.throws(() => createHumanController(simple.tiles, { passiveInformation: 'yes' }));
   const hidden = gameOf([1, 1, 2, 2], [1, 1, 1, 1]);

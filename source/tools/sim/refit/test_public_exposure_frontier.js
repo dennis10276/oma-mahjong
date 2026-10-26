@@ -2,7 +2,7 @@
 const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 const { observeBoard, tileVisibility } = require('./human_board_visibility.js');
-const { createExposureFrontier, informationInCone } = require('./public_exposure_frontier.js');
+const { createExposureFrontier, informationInCone, passiveExposureMode } = require('./public_exposure_frontier.js');
 const { createSession } = require('./production_physical_session.js');
 const { verifyAttempt } = require('./human_reference_campaign.js');
 const { encodeGame } = require('./personal_game_io.js');
@@ -64,6 +64,18 @@ function test() {
     assert.equal(Layouts.isFree(0, after.alive, actualGame.nb), false, 'A picture can be revealed before its tile becomes takeable');
     assert.deepEqual(frontier(after), [0]); assert(Object.isFrozen(frontier(after)));
     assert.deepEqual(createExposureFrontier(tiles, state, 'roles')(after), [], 'Orientation discovery alone is not a guaranteed overlay observation');
+    for (const remaining of [9, 10, 11]) {
+      const publicClock = { i: 2, n: state.moves + remaining };
+      const mode = passiveExposureMode('shortAll', state, publicClock, 10);
+      assert.deepEqual(createExposureFrontier(tiles, state, mode)(after), remaining >= 10 ? [0] : []);
+      assert.equal(passiveExposureMode('shortAll', state, publicClock), 'all', 'The ungated experimental policy remains available');
+      assert.equal(passiveExposureMode('shortRoles', state, publicClock), 'roles');
+    }
+    assert.equal(passiveExposureMode('shortAll', state, null, 10), 'roles');
+    assert.equal(passiveExposureMode('shortAll', { ...state, alive: state.alive.map((alive, index) => index === 2 ? 0 : alive) }, { i: 2, n: 100 }, 10), 'roles');
+    assert.equal(passiveExposureMode('shortAll', state, { i: 2, n: state.moves - 1 }, 10), 'roles');
+    assert.throws(() => passiveExposureMode('shortRoles', state, null, 10));
+    assert.throws(() => passiveExposureMode('shortAll', state, null, -1));
     const second = observe(after);
     assert.equal(second.down[0], hiddenDown);
     assert.equal(second.pictures[0], hiddenDown ? null : hiddenPicture);
