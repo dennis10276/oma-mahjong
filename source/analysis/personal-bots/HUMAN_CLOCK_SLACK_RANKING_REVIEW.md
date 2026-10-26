@@ -116,3 +116,27 @@ The next actual-history diagnostic compares the gated candidate against20's
 safe-inspection policy, checking that the ranking itself no longer changes
 144/10045 while preserving changes on10033. Freeze the actor while it runs.
 Source9027bc70dee5194feca7c936379bee38c4e7a3e57bd778702920af9c766f9b34.
+
+## Gated comparison and preregistered experiment22
+
+The gated candidate reproduces20's safe-inspection policy on all106 recorded
+144 taps and166 recorded10045 taps: zero changed suggestions and zero baseline
+drift(native63186/78125 exit0). On10033's first four actual20 attempts,84 taps
+replay without drift and nine suggestions still change(native72067 exit0).
+That is356 independently replayed taps. These controls establish conditional
+activation on actual shared histories, not that new campaigns will win.
+
+Register22: retained19 plus safeClockInspection:true, clockSlackRanking:true
+and clockSlackRankingBudgetRange:[10,30]. Keep the exact42-board selectionv9,
+20 fixed guards, passing157 control, actual19 baseline records and three workers.
+Development salt1 first; full159/salts1-3 only after unchanged v2 qualification.
+Adoption requires a complete target repair, no passing target regression,
+independent production replay and actual moves strictly below2s. This WHEN
+condition trial counts as one experiment; counter before22 is2, rejection makes3.
+
+Pin the completed native traces, source/profile, current catalog/selection,
+evaluator and safety evidence. The runner requires both inactive controls to
+have zero changes/drift and the active10033 trace to have a changed suggestion.
+Freeze the actor and default19 profile throughout measurement. No new campaign
+gain or adoption is claimed at registration; full validation is still required.
+Candidate profile29e4ccf222a8bf36677e8527d24123fcfed36fcd8d2a209dd0bc6c80fcf361c2.
