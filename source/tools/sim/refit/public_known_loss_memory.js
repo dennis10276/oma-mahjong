@@ -4,9 +4,11 @@ const { keyOf } = require('./public_witness_search.js');
 const { legal, advance } = require('./known_tray_plan.js');
 
 function createKnownLossMemory(game, options = {}) {
-  assert(Object.keys(options).every(key => key === 'inspectionSuccessors'));
+  assert(Object.keys(options).every(key => ['inspectionSuccessors', 'provedContinuations'].includes(key)));
   const inspectionSuccessors = options.inspectionSuccessors ?? false;
+  const provedContinuations = options.provedContinuations ?? false;
   assert.equal(typeof inspectionSuccessors, 'boolean');
+  assert.equal(typeof provedContinuations, 'boolean');
   const positions = new Map();
   return {
     recordActual(state, report, actions) {
@@ -37,9 +39,38 @@ function createKnownLossMemory(game, options = {}) {
       }
       return true;
     },
+    recordContinuation(origin, path, target, report) {
+      if (!provedContinuations || !report.knownDead) return false;
+      const certificate = report.certificate;
+      assert.equal(report.reason, 'exhaustedKnownContinuationGraph');
+      assert(certificate?.includesSafeRemovalsAndInspections === true && certificate.reachableUnknown === false
+        && certificate.knownWinningRoute === false && certificate.unsupportedTransition === false
+        && certificate.budgetBoundary === false);
+      assert(Number.isInteger(origin.physicalTaps) && origin.physicalTaps >= 0);
+      assert(Array.isArray(path) && path.length > 0 && path.length <= 512
+        && path.every(index => Number.isInteger(index) && index >= 0 && index < origin.alive.length));
+      const signature = keyOf(game, target);
+      if (positions.has(signature) || positions.size >= 8192) return false;
+      let position = origin;
+      for (const index of path) {
+        if (!legal(game, position).free.includes(index)) return false;
+        const moved = advance(game, position, index);
+        if (moved.uncertain || moved.lost) return false;
+        position = moved.state;
+      }
+      if (keyOf(game, position) !== signature) return false;
+      assert.deepEqual(target.pictures, position.pictures, 'A retained public loss cannot contain imagined pictures');
+      assert.deepEqual(target.down, position.down, 'A retained public loss cannot contain imagined orientations');
+      const free = legal(game, position).free, roots = new Set(certificate.allRequestedRoots);
+      if (roots.size !== free.length || free.some(index => !roots.has(index))) return false;
+      positions.set(signature, { proof: { kind: 'exhaustedKnownContinuationFromActualRoot',
+        parentSignature: keyOf(game, origin), path: path.slice(), actualParentPhysicalTaps: origin.physicalTaps,
+        observedSuccessor: false, certificate: structuredClone(certificate) } });
+      return true;
+    },
     knowsLoss(state) { return positions.has(keyOf(game, state)); },
     entries() { return [...positions].map(([signature, value]) => ({ signature,
-      ...(value.proof ? { proof: { ...value.proof } }
+      ...(value.proof ? { proof: structuredClone(value.proof) }
         : { physicalTaps: value.physicalTaps, certificate: { ...value.certificate } }) })); },
   };
 }

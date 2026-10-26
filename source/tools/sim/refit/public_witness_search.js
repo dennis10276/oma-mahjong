@@ -128,6 +128,11 @@ function recoveryOf(game, state) {
 
 function searchKnown(game, state, actions, options = PARAMETERS) {
   const settings = { ...PARAMETERS, ...options };
+  const retainKnownLoss = game.publicRetainKnownLoss;
+  assert(retainKnownLoss === undefined || typeof retainKnownLoss === 'function');
+  const continuationGame = retainKnownLoss && game.publicInformationExposure ? { ...game,
+    publicExposure: position => [...new Set([...(game.publicExposure?.(position) ?? []),
+      ...game.publicInformationExposure(position)])] } : game;
   const actionTieOrder = settings.publicActionSalt && settings.publicActionSalt !== 1
     ? new Map(publicActionOrder(game.tiles.map((tile, index) => ({ index })), settings.publicActionSalt)
       .map((action, index) => [action.index, index])) : null;
@@ -250,6 +255,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   let dominanceStop = null;
   let clockPreparationFrontiers = 0;
   let rememberedLossPrunes = 0;
+  let retainedContinuationLosses = 0;
   const provedDeadRoots = new Set();
   const continuationProof = { calls: 0, nodes: 0, bounded: 0, certified: 0 };
   const recoveryRankWidths = new Set();
@@ -270,7 +276,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const reusedProof = !!proof;
     if (reusedProof) { proofHits++; boundedProofHits += +(proof.reason === 'bounded'); }
     else if (nextActions.length) {
-      proof = (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(game, moved.state, nextActions, settings.proofNodes, deadline);
+      proof = (continuationPruning ? deadEnd.analyzeContinuation : deadEnd.analyze)(continuationGame, moved.state, nextActions, settings.proofNodes, deadline);
       if (cachePublicAnalysis) proofCache.set(proofKey, proof);
     }
     if (continuationPruning && proof && !reusedProof) {
@@ -278,6 +284,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       continuationProof.certified += +proof.knownDead;
     }
     if (!proof?.knownDead) return false;
+    if (continuationPruning && retainKnownLoss && retainKnownLoss(state, path, moved.state, proof)) retainedContinuationLosses++;
     deadPrunes++;
     if (path.length === 1) provedDeadRoots.add(path[0]);
     return true;
@@ -532,6 +539,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
         safeRemovalsExplored: hasSafeRemoval, unsupported: false, prunedOnlyCertifiedLosses: true,
         allRequestedRoots: [...roots] } : null,
       prunedDeadSuccessors: deadPrunes, provedDeadRoots: [...provedDeadRoots],
+      ...(retainKnownLoss ? { retainedContinuationLosses } : {}),
       safeClockExit: selected.safeClockExit, clockRoom: selected.clockRoom, knownProgress: selected.progress,
       matchedTiles: selected.matchedTiles || 0,
       heuristicExcludedRoots: excludedRoots, exclusionProof,

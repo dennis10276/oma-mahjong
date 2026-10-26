@@ -93,6 +93,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberLossInspections === undefined || typeof options.rememberLossInspections === 'boolean');
   assert(!options.rememberLossInspections || options.rememberKnownLosses === true,
     'Inspection loss deductions require actual exhausted loss memory');
+  assert(options.rememberProvedContinuations === undefined || typeof options.rememberProvedContinuations === 'boolean');
+  assert(!options.rememberProvedContinuations || options.rememberKnownLosses === true && options.deadEndInformation === true,
+    'Continuation loss deductions require actual loss memory and the complete public information frontier');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
   assert(options.keyPlanningSlackAbove === undefined || options.rememberKeyIdentities === true
@@ -173,7 +176,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   } : null;
   const acceptedTapMemory = options.rememberAcceptedTaps ? createAcceptedTapMemory(tiles.length, { transferProof, transferProofLabel }) : null;
   const knownLossMemory = options.rememberKnownLosses ? createKnownLossMemory(geometry,
-    { inspectionSuccessors: options.rememberLossInspections }) : null;
+    { inspectionSuccessors: options.rememberLossInspections, provedContinuations: options.rememberProvedContinuations }) : null;
   const clearedRoleMemory = options.rememberClearedRoles ? createClearedRoleMemory(geometry.tiles, { transferProof, transferProofLabel }) : null;
   const keyIdentityMemory = options.rememberKeyIdentities ? createKeyIdentityMemory(tiles.length) : null;
   const typedKeyKnowledge = () => keyIdentityMemory ? { keyIdentities: keyIdentityMemory.keys() } : {};
@@ -226,6 +229,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? Math.max(
     retryRiskMemory.cost(current, index), failedRouteMemory?.cost(current, index, JSON.stringify(retryKnowledge())) ?? 0) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
+  if (options.rememberProvedContinuations) geometry.publicRetainKnownLoss = (origin, path, target, report) => {
+    assert(current && origin.physicalTaps === current.physicalTaps && physicalSignature(origin) === physicalSignature(current));
+    assert.deepEqual(origin.pictures, current.pictures); assert.deepEqual(origin.down, current.down);
+    return knownLossMemory.recordContinuation(origin, path, target, report);
+  };
   return {
     rememberPublic(memory) {
       assert.equal(attempt, 0, 'Seed a fresh same-level policy before its first frame');

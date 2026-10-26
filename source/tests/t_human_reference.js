@@ -126,6 +126,7 @@ const modules = [
   'test_public_known_continuation.js',
   'test_public_known_loss_memory.js',
   'test_public_loss_inspection_successors.js',
+  'test_public_retained_continuation_losses.js',
   'test_public_witness_cache.js',
   'test_public_witness_integration.js',
   'test_public_witness_reference.js',
