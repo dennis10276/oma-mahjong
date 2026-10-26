@@ -68,3 +68,32 @@ Raw files under .codex-runs/level-measure/: audit-adopted23-unknown-frontiers.js
 adopted23-unknown-frontiers-v1.json/.log, audit-information-transpositions.js,
 information-transpositions23-10032/10052-salt1-v2.jsonl and their logs,
 failed-route-memory-suite-01.log, and compare-failed-route-decisions.js.
+
+## Actual-history comparison and preregistered experiment25
+
+Native89122/97047 exit0. Over the first six actual23 salt1 attempts,10032
+reproduces210 taps with zero drift and eight changed suggestions;10052
+reproduces159 taps with zero drift and no changed suggestions. Both controllers'
+memory agrees after each actual attempt and every actual tap independently replays.
+Maximum baseline/candidate decision times:1585.6/1631.8ms on32 and1269.1/1230.0ms
+on52. Candidate suggestions are not executed in these comparisons.
+
+The first32 change is attempt3 tap2, tray2 and no clock:84->85. Its bounded
+alternative prefix reaches an unobserved obstacle-role frontier with final tray2
+and maximum tray3. It invents neither the role nor a picture. There are29
+learned route preferences at that point. This establishes an earlier choice
+change within Dennis5+1's target, not a guaranteed helpful continuation.
+
+Register25 with the exact source/profile above, actual23 baseline records and
+selectionv10's unchanged42 development boards,20 fixed guards and all retained
+passing controls. Three workers. Development salt1 first; full159/salts1-3 only
+after unchanged off-salt-full-check-v2 qualification. Adoption requires a complete
+target repair, no passing target regression, independent production replay and
+every move strictly below2s. Counter before25 is1; an unadopted25 makes2.
+Freeze actor sources/default23 until all workers and supervisor are terminal.
+
+The runner pins both native trace exits, source/profile hashes, baseline records,
+fresh cohort/catalog/selection, evaluator, unit evidence and this preregistration.
+Raw run-experiment-25.js and log-experiment-25-startup.js are under the same raw
+directory. Trace outputs are when-failed-route-preferences-v1/baseline23/ and
+failed-route-policy23-native.json; failed-route-memory-unit-01.log passes42 taps.
