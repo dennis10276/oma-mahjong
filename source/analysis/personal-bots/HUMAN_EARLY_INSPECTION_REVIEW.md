@@ -80,3 +80,33 @@ Raw artifacts under .codex-runs/level-measure/: public-safe-closed-inspection-v2
 safe-closed-inspection-v2-proof-01.log, adopted14-safe-inspection-opportunities-v6/v7,
 adopted14-pressure-inspection-v9.jsonl and its position-summary.json. The earlier
 conservative proof and its888-case/2666-tap log remain separate evidence.
+
+## Live19: first-divergence diagnostic
+
+An immutable snapshot of the first46 completed full-run board records contains
+36 campaigns whose actions differ from retained14. Their successful-attempt
+counts are unchanged in this partial snapshot. This is not the final full-run
+metric or an adoption verdict;159 boards and all salts must still finish.
+
+The first difference in each campaign has an identical preceding action history,
+including all earlier attempts. Replaying those histories and both alternative
+immediate taps independently through production verifies7275 taps(native exit0).
+At34 first differences, the candidate inspects an unknown closed tile with two
+tray tiles. The other two differences are on25 salts1/3 with one tray tile;
+the candidate takes a remembered picture rather than an unknown inspection.
+No first-difference position has an active clock, and no candidate immediate
+tap loses. A later changed decision may have a different history and is not
+claimed to be a comparison at the same public position.
+
+The diagnostic uses actual recorded campaigns without calling either planner,
+changing the actor, or inferring any private picture. Only the production
+environment holds the complete board. Public features use observeBoard plus
+same-salt observed or proved matched-picture memory. These records prepare the
+required helpful/harmful decision comparison if the eventual full result is
+mixed; they do not establish a useful WHEN condition by themselves.
+
+Raw scripts: compare-recorded-campaign-prefixes.js and
+replay-recorded-first-divergences.js. Inputs/output/logs are under experiment-19:
+partial-prefix-comparison-01.json and partial-first-divergence-replay-01.json.
+Each output pins its input hashes. Both commands exit0; later full records do
+not retroactively change this explicitly partial snapshot.
