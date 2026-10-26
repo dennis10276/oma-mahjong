@@ -75,3 +75,18 @@ when-retained-continuation-losses-v1/ and
 when-retained-continuation-losses-full-v1/. No campaign28 has been registered.
 Require their terminal native results before interpreting choices or editing
 the actor; partial proof counts alone establish no target gain.
+
+## Completed cache-plus-tray2 comparisons
+
+All three native traces are terminal0.32 reproduces242 taps with three changed
+suggestions, all on attempt7 after target6.11 reproduces437 taps with three
+changes starting attempt6 after target3.86/salt3 reproduces249 taps with no
+changed suggestions. All928 taps independently replay, with zero baseline
+drift. Maximum baseline/candidate times:1633.4/1636.6ms on32,1601.3/1591.4ms
+on11 and1554.3/1553.2ms on86. Final logged proof counts165/754/297 are not clears.
+
+These comparisons do not justify claiming an earlier target repair or an
+adoption; no campaign28 is registered for this exact configuration. Retain the
+cache and investigate an additional known-board search route within the existing
+move limit, with constructive wins/exits required before replacing the primary.
+Raw trace output and native98936/71840/43269 exit0 remain preserved.
