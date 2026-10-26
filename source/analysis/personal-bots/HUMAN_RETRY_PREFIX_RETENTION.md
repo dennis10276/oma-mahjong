@@ -62,3 +62,44 @@ cause or claim that this cache fix repairs those targets without new measurement
 
 Raw .codex-runs/level-measure/ contains retry-prefix-retention-unit-01.log,
 retry-prefix-retention-suite-01.log and compare-retry-prefix-decisions.js.
+
+## Real-history and executed-continuation results
+
+Native86880 exit0: the old25 loop history reproduces232 physical taps with zero
+baseline drift. The fixed controller differs on ten suggestions, all on attempt7;
+the first six complete attempts have no suggestion changes. At the repeated
+tap28/30/32/... positions it suggests4 instead of68. The45-tap truncated final
+attempt teaches neither controller an invented outcome. Maximum old/fixed
+decision times1632.0/1630.4ms; public picture memory agrees throughout.
+
+Native83268 exit0: force the same six actual failed attempts and first28 accepted
+taps of attempt7, then physically execute the fixed controller. It takes4,78,4,
+ending in a real tray loss after three continuation taps, with no repeated public
+position and no new known picture(64 before/after). All218 taps across the forced
+history and continuation independently replay; maximum1631.3ms. The forced
+prefix has one different suggestion earlier in attempt7. This is not a fresh
+campaign or a target repair; it verifies removal of the observed inspection loop.
+
+Native62150 exit0:102/salt1's actual23 history reproduces178 taps, zero baseline
+drift and zero changed fixed-controller suggestions; max1332.0/1304.9ms. This
+control is narrower than a full regression check and does not erase25's regression.
+
+Raw when-retry-prefix-retention-v1/baseline25/10032-salt1.jsonl and
+baseline23/102-salt1.jsonl retain the comparisons; retry-prefix-executed-continuation-v1.jsonl
+and execute-retry-prefix-continuation.js retain the physically executed diagnostic.
+
+## Preregistered experiment26
+
+Use the exact source/profile above, actual adopted23 baseline records and the
+same selectionv10:42 development boards,20 fixed guards and all retained passing
+controls. Three workers; salt1 development first; full159/salts1-3 only under
+unchanged off-salt-full-check-v2 qualification. Adoption still requires at least
+one entire failing target repaired, no passing target regression, independent
+production replay and every actual move strictly below2s. No25 result is adopted.
+
+Counter before26 is2; an unadopted26 makes3. Pin completed trace/continuation
+native exits, both source/profile identities, baseline records, evaluator,
+catalog/selection, tests and this preregistration. Refresh the cohort before
+measurement. Freeze actor sources/default23 until all workers and supervisor
+are terminal. Preserve regressions and timing-sensitive evidence; do not claim
+that a unit test or ending one loop establishes a fresh-campaign gain.
