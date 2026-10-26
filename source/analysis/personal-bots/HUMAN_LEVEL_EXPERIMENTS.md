@@ -842,3 +842,19 @@ both policy suggestions and source-stable actual histories, then decide whether
 the prototype addresses useful information or only delays an inevitable loss.
 Audits run on86 salt3,10032 salt1 and10052 salt1 against retained14 histories;
 the active actor remains unchanged. These are diagnostic, not new campaigns.
+
+The completed comparison replays939 taps with original-policy drift0; all three
+native commands exit0. All four differing suggestions replace explicit known
+dead-end reports. Exhaustive one-step matching-alternative enumeration finds
+the same15 opportunities across the seven failing boards; it does not discover
+an overlooked alternative match. A focused public probe on10052 independently
+shows new orientation information after a safe matching tap, despite the
+original reachableUnknown:false declaration. It does not rescue the clock or
+prove a winning continuation. Details, scope and proposed next prototype:
+HUMAN_DEAD_END_INFORMATION_RECOVERY.md. No candidate17 campaign has run.
+
+The completed16 search explores603007 nodes on10011 versus156645 for14, with
+the same physical actions and one information route. It now reaches the8192
+cap65 times and the deadline3 times. On10032 it explores705881 nodes versus
+216055, returns14 routes versus12, and still does not clear. Thus the two
+budget refinements are substantive tests, not merely relabeled unchanged work.

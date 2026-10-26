@@ -77,4 +77,4 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - 123/123 post-adoption tests pass; trial16 unadopted, consecutive count2 after adopted14.
 - Full14 repairs144, no regressions;6 workers exit0; slowest1639.9ms at3 workers.
 - Fresh159-board cohort and70 runtime files verified; mean0.541 minutes/board for3 salts.
-- Actual-policy loss-safety comparisons run on86/10032/10052; default14 retained.
+- Next: full-visibility dead-end information recovery after939 replayed audit taps; default14 retained.
