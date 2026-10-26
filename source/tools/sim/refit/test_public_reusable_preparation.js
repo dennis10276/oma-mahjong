@@ -54,6 +54,21 @@ function test() {
   assert.equal(early.stats().considered, before + 1);
   assert.throws(() => retryInformationSearch(() => primary, { prepareCrowded: true }));
   assert.throws(() => createHumanController(tiles, { reusablePrepareCrowded: true }));
+  const bounded = retryInformationSearch(() => primary, { ...configured, prepareCrowded: true, preparationClockRange: [20, 40] });
+  bounded.beginAttempt(memory);
+  for (const clockMoves of [null, 19, 20, 40, 41]) {
+    const prior = bounded.stats().considered;
+    const game = { ...model, clock: clockMoves === null ? null : { i: 5, n: state.moves + clockMoves } };
+    const report = bounded.search(game, state, actions);
+    assert.equal(bounded.stats().considered, prior + +(clockMoves !== null && clockMoves >= 20 && clockMoves <= 40));
+    if (report.retryInformationWitness?.proactive) {
+      assert.equal(report.retryInformationWitness.preparationStartedAtClockRemaining, clockMoves);
+      assert.equal(report.retryInformationWitness.preparationStartedAtTrayCount, 2);
+    }
+  }
+  for (const range of [[40, 20], [20], [20, Infinity]])
+    assert.throws(() => retryInformationSearch(() => primary, { ...configured, prepareCrowded: true, preparationClockRange: range }));
+  assert.throws(() => createHumanController(tiles, { reusablePreparationClockRange: [20, 40] }));
   const controller = createHumanController(tiles, { retryInformationWitness: true, deadEndInformation: true,
     reusablePublicPlanning: true, reusableContinueAfterInformation: true, reusablePrepareCrowded: true,
     nodes: 128, decisionMs: 50, retryInformationNodes: 10000 });

@@ -21,6 +21,11 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert(!options.continueAfterInformation || options.reusablePlanning === true);
   assert(options.prepareCrowded === undefined || typeof options.prepareCrowded === 'boolean');
   assert(!options.prepareCrowded || options.reusablePlanning === true);
+  const preparationClockRange = options.preparationClockRange;
+  assert(preparationClockRange === undefined || options.prepareCrowded === true
+    && Array.isArray(preparationClockRange) && preparationClockRange.length === 2
+    && preparationClockRange.every(value => Number.isInteger(value) && value >= 0)
+    && preparationClockRange[0] <= preparationClockRange[1]);
   const reusable = options.reusablePlanning ? createReusableExploration() : null;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
@@ -58,7 +63,8 @@ function retryInformationSearch(primarySearch, options = {}) {
       const recoverDeadEnd = deadEndInformation && primary.knownDead;
       const previouslyEligible = recoverDeadEnd || attempt >= 2 && stalls > 0;
       const clockRemaining = game.clock && state.alive[game.clock.i] ? game.clock.n - state.moves : Infinity;
-      const proactive = !!options.prepareCrowded && !previouslyEligible && state.tray.length >= 2 && clockRemaining >= 10;
+      const proactive = !!options.prepareCrowded && !previouslyEligible && state.tray.length >= 2
+        && clockRemaining >= (preparationClockRange?.[0] ?? 10) && clockRemaining <= (preparationClockRange?.[1] ?? Infinity);
       if (!previouslyEligible && !proactive) return primary;
       const unresolvedDeadEnd = reason => {
         counters.unresolvedDeadEndReports++;
@@ -110,7 +116,10 @@ function retryInformationSearch(primarySearch, options = {}) {
         knownProgress: result.knownProgress, safeClockExit: false, clockRoom: 0,
         information: !result.knownWin, boundary: !result.knownWin, nodes: (primary.nodes ?? 0) + result.nodes,
         retryInformationWitness: { attempt, stalls, kind: result.kind, knownPrefixTaps: result.knownPrefixTaps,
-          ...(proactive ? { proactive: true, preparationTrayMinimum: 2, preparationClockMinimum: 10 } : {}),
+          ...(proactive ? { proactive: true, preparationTrayMinimum: 2, preparationClockMinimum: preparationClockRange?.[0] ?? 10,
+            ...(preparationClockRange ? { preparationClockMaximum: preparationClockRange[1] } : {}),
+            preparationStartedAtClockRemaining: Number.isFinite(clockRemaining) ? clockRemaining : null,
+            preparationStartedAtTrayCount: state.tray.length } : {}),
           ...(reusable ? { reusable: result.reusable } : {}),
           ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
           ...(preferActualPeek ? { preferActualPeek, exposureFallbackUsed: result.exposureFallbackUsed,
