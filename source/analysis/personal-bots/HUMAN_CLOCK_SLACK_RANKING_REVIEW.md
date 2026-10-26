@@ -207,3 +207,27 @@ campaign, actual-history parity checks will compare the candidate against19
 on41 and against22 on the repaired33. No new campaign gain is claimed yet.
 Source837dad59c872dc695e2edb24564ef9119e0672c2a3328a03ce41f3f9f8796ac7.
 Proposed profile7a73e26d6089fbb3c8545d8921b679224da42aa38c5b7b28d4b8877619da8a72.
+
+## Paired parity controls and preregistered experiment23
+
+The combined condition reproduces19's lab41 salt1/salt3 actual choices with
+zero changes and drift over176/177 taps(native99527/6799 exit0). On33 salt1,
+it reproduces all162 taps of22's complete four-attempt development campaign
+with zero changes/drift(native53823 exit0). Those515 taps independently replay.
+This validates the intended conditional behavior on those recorded histories;
+the new campaigns and full test remain necessary before claiming a repair.
+
+Register23: retained19 plus safeClockInspection:true, clockSlackRanking:true,
+clockSlackRankingBudgetRange:[10,30], safeClockInspectionBudgetRange:[10,30].
+Use the same159-board catalog,42-board selectionv9/20 fixed guards, passing157
+control and actual19 baseline. Three workers; salt1 development then full
+salts1-3 only if unchanged v2 qualification permits it. Complete repair>=1,
+no passing target regression, independent production replay and strictly<2s
+actual moves remain required. Default19 is unchanged during measurement.
+
+Counter before23 is3; an unadopted23 makes4. The runner pins source/profile,
+catalog/selection, evaluator, safety and completed parity traces. All three
+parity footers and native exits must be zero; the candidate source must match.
+Freeze the actor throughout measurement. No new win or adoption is claimed at
+registration. Both conditions use the same previously fitted public budget
+range, rather than introducing another threshold from full-set outcomes.
