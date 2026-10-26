@@ -63,7 +63,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Process and completion
 
-- After8 unadopted trials in the newly authorized batch, stop for Dennis's decision.
+- The newly authorized batch permits at most8 measured trials; stop for Dennis's decision.
   A WHEN-condition trial counts. Prior unadopted24-31/history remain recorded.
 - Small commits; goal<=80; one table/run; raw outputs .codex-runs/. Re-deal/luck runs stay STOPPED.
 - After A and B pass: freeze; run the next20 progression levels once, when Dennis

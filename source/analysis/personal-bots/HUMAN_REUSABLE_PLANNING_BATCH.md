@@ -37,7 +37,7 @@ eviction. Returned paths are rechecked under current capabilities before selecti
 Keep primary complete wins/safe clock exits and the retained policy as controls.
 Measure actual changed decisions, independent physical outcomes and hit/expansion
 counters. The first campaign is32; at most eight newly measured trials before a
-fresh continuation decision unless adoption changes the stated stop condition.
+fresh continuation decision. Adoption does not extend this explicitly authorized cap.
 The final personal calibration and unseen20 are not replaced by this milestone.
 
 ## First implementation and verification
@@ -106,3 +106,13 @@ Raw compare-reusable-planning-v1.js, when-reusable-planning-v1/reusable/baseline
 reusable-planning-native-v1.json, audit-reusable-context-v1/2.js,
 reusable-context-audit-v1/2.json/.log. All comparison/audit jobs terminal. The
 current default23 profile remains unchanged and the full objective stays unmet.
+
+## Dependency-aware implementation
+
+See HUMAN_REUSABLE_DEPENDENCIES.md, implementation92e172f.135/135 tests pass17s;
+changed public query answers invalidate only affected jobs. Unused new public
+pictures can be adopted into calculation arrays after all previous query answers
+are validated, without changing actual memory. No branch-level reroot claim.
+The real32 comparison now proves five unfinished resumes/10000 work units and
+zero baseline drift;41 remains unchanged. A larger work-unit allowance under
+the same250ms cap is being checked before campaign32. Measured allowance0/8.

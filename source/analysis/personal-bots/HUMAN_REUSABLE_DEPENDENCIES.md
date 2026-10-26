@@ -56,3 +56,31 @@ work, zero baseline drift, independent replay and<2s before campaign32.
 
 Raw .codex-runs/level-measure/: reusable-dependencies-unit-01.log,
 reusable-dependencies-suite-01.log. Keep all73 actor files frozen during traces.
+
+## Actual dependency-preserving work verified
+
+Native92157/10027 exit0.32/41 reproduce242/176 actual23 taps with zero baseline
+drift and independent production replay. Maximum baseline1638.2/1260.3ms and
+candidate1530.7/1335.2ms.32 changes35 suggestions, first try3 tap6;41 changes none.
+Suggestions are not physically executed candidate clears.
+
+32 resumes five unfinished jobs and performs10000 actual resumed work units,
+after8623 dependency queries. Five changed contexts preserve their saved work;
+two affected jobs restart. The first two resumes occur on try6(target6), with
+three more on try7.41 creates two jobs and has no useful reuse to claim. This
+corrects the v1 zero-resume defect without removing public dependencies blindly.
+No new picture or prediction is assigned to observed memory.
+
+The full-history first profile still charges only2000 COOPERATIVE work units per
+secondary call, whereas the old exploration allowance counted expanded states.
+Its maximum secondary slice is34ms of the allowed250ms. Before campaign32,
+diagnose a global32768-work-unit profile under the SAME250ms/shared1800ms caps.
+This is a resource-unit correction, not a board-specific policy threshold.
+Diagnostic profile2058dede9354f48918740c9d725532ae442380d870f11e680c3a5891843e5a00:
+retained23 plus reusablePublicPlanning:true and retryInformationNodes:32768.
+Source remainsa54485043b2e164428344a9ff4e95ae59b4db7452dd6ec8d641145bb0d6535a5.
+The actual v3 profile must verify reuse and timings before any campaign.
+
+Raw reusable-planning-native-v2.json, when-reusable-planning-v2/reusable/baseline23/,
+compare-reusable-planning-v3.js and when-reusable-planning-v3/reusable/baseline23/.
+No campaign registered yet; newly authorized allowance remains0/8 measured.
