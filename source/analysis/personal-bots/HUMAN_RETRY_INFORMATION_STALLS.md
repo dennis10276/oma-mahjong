@@ -51,3 +51,59 @@ adopted19-retry-information-v1.json and adopted19-retry-information-v1.log.
 The JSON retains per-attempt facts, exact-repeat references and source/profile
 hashes. No new strategy experiment, clear, target repair or impossibility proof
 is claimed. This prepares a further diagnosis if full22 leaves these failures.
+
+## Earlier retry-learning work is not a current paired test
+
+The2026-10-24 lab clock-retry report enables retryRiskLearning/clockRetryLearning
+alongside exclusiveRoles and usePlacementContract. It reports8/15 lab passes
+under its older limits and no recorded alternative-search audits. Its natural
+control reports10/10. Those profiles, limits and observer assumptions differ
+from the current unrestricted public19 policy; neither report establishes what
+enabling those flags on current19 would do. Zero alternative-search audits do
+not prove that no risk was learned: early return and budget gates precede the
+audit field. The archived re-deal08 text is a preregistration with a pending
+candidate column, not outcome evidence by itself. The stopped re-deal goal
+is not resumed.
+
+Current public_clock_retry_exploration accepts a lower-penalty alternative only
+with a known physical safe clock-exit prefix. It also returns early for a
+known win/dead report, existing safe exit, no selected-root penalty, no remaining
+nodes or deadline. Thus it does not directly test choosing an unproven
+information-gathering alternative when no known clock exit exists.
+
+## Shadow existing risk memory on actual19 histories
+
+The shadow audit feeds actual accepted transitions and outcomes to the existing
+memory while keeping every recorded action fixed. All136 attempts/5441 taps
+independently replay again(native exit0). This is a trigger-availability audit,
+not a policy run: default19 disables these flags, no planner guards are invoked
+and no alternative is selected or physically played.
+
+| Board | Attempts learning a pressure risk | Attempts selecting a previously penalized root |
+|---:|---:|---:|
+|86|2|0|
+|10011|21|0|
+|10032|36|0|
+|10033|13|0|
+|10049|10|0|
+|10052|35|9|
+
+All nine positive selections are on10052. Three occur on salt2 with seven clock
+moves remaining. Six occur on salt3 with one move remaining, including all five
+exactly repeated failures identified above. For those repeats, the mechanism
+recognizes a penalized action only at the final tap. That is evidence of late
+trigger timing; it does not show that the existing module cannot help other
+positions, or that an earlier branch is safely avoidable.
+
+This supports investigating earlier failed-clock route choices rather than
+assuming a fresh toggle of existing risk learning will solve the observed
+repetitions. Keep preferences from outcomes distinct from exhaustive positional
+loss certificates, and require actual-policy comparison and new campaign
+validation before attributing a gain to any change.
+
+Additional raw files: audit-adopted19-shadow-retry-risk.js and
+adopted19-shadow-retry-risk-v1.json/.log. Earlier reports read for this audit:
+HUMAN_REFERENCE_LAB_CLOCK_RETRY_2026-10-24.md,
+HUMAN_REFERENCE_CLOCK_RETRY_NATURAL_CONTROL_2026-10-24.md,
+HUMAN_REFERENCE_RETRY_LEARNING_CHALLENGE_2026-10-24.md and
+HUMAN_REDEAL_EXPERIMENT_08.md. No new measured experiment is counted.
