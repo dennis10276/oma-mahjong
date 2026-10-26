@@ -153,6 +153,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const tightClockRecovery = settings.tightClockRecovery ?? false;
   const tightClockRecoveryMaxSlack = settings.tightClockRecoveryMaxSlack ?? 5;
   const clockInformationBeforeRisk = settings.clockInformationBeforeRisk ?? false;
+  const clockOrphanPreparation = settings.clockOrphanPreparation ?? false;
   const clockSlackRanking = settings.clockSlackRanking ?? false;
   const clockSlackRankingBudgetRange = settings.clockSlackRankingBudgetRange;
   const progressiveReopens = settings.progressiveReopens ?? false;
@@ -190,6 +191,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert(settings.tightClockRecoveryMaxSlack === undefined || tightClockRecovery
     && Number.isInteger(tightClockRecoveryMaxSlack) && tightClockRecoveryMaxSlack >= 3);
   assert.equal(typeof clockInformationBeforeRisk, 'boolean');
+  assert.equal(typeof clockOrphanPreparation, 'boolean');
+  assert(!clockOrphanPreparation || clockInformationBeforeRisk);
   assert.equal(typeof clockSlackRanking, 'boolean');
   assert(clockSlackRankingBudgetRange === undefined || clockSlackRanking && Array.isArray(clockSlackRankingBudgetRange)
     && clockSlackRankingBudgetRange.length === 2 && clockSlackRankingBudgetRange.every(value => Number.isInteger(value) && value > 0)
@@ -200,6 +203,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const routePlanner = cachePublicAnalysis ? createGoalRouteCache(game) : goalRoutes;
   let metricsHits = 0, proofHits = 0, boundedProofHits = 0, macroPairs = 0, macroKeys = 0;
   let macroAccesses = 0, keyAccessNodes = 0;
+  let orphanClockExits = 0;
   assert(Number.isInteger(settings.taps) && settings.taps > 0 && settings.taps <= 96);
   assert(Number.isInteger(settings.nodes) && settings.nodes > 0 && Number.isInteger(settings.beam) && settings.beam > 0);
   assert(Number.isInteger(settings.progress) && settings.progress > 0);
@@ -324,9 +328,12 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
 
     const clockPreparation = clockInformationBeforeRisk && clocked && !exit && safeInfo && game.clock.n - position.moves > 2;
     clockPreparationFrontiers += +clockPreparation;
+    const orphanClockExit = clockOrphanPreparation && exit && room.safe && recovery.stranded >= 2
+      && game.clock.n - position.moves >= 10;
+    orphanClockExits += +orphanClockExit;
 
     const tier = won ? 6
-      : exit && room.safe ? 5
+      : exit && room.safe && !orphanClockExit ? 5
       : exit ? 3
       : clockPreparation ? 4
       : safeInfo ? 2
@@ -376,6 +383,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     }
 
     const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information,
+      ...(clockOrphanPreparation ? { orphanClockExit } : {}),
       ...(clockSlackRankingActive ? { clockBudgetRank: { remaining: game.clock.n - position.moves,
         estimatedAccessCost: metrics.clockDistance, estimatedSlack: estimatedClockSlack, knownClockMovesSpent: position.moves - state.moves,
         heuristicOnly: true } } : {}) };
@@ -560,6 +568,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost, clockRecoveryMinSlack } : {}),
       ...(tightClockRecovery ? { tightClockRecoveryActive, tightClockRecoveryMaxSlack } : {}),
       ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
+      ...(clockOrphanPreparation ? { orphanClockPreparation: { consideredExits: orphanClockExits,
+        selectedDeferredExit: !!selected.orphanClockExit, minimumRemainingMoves: 10, minimumStrandedSlots: 2 } } : {}),
       ...(clockSlackRankingActive ? { clockBudgetRank: selected.clockBudgetRank ?? null } : {}),
       ...(clockSlackRanking && clockSlackRankingBudgetRange && clocked ? { clockSlackRankingGate: {
         active: clockSlackRankingActive, publicStartingBudget: game.clock.n, range: clockSlackRankingBudgetRange.slice() } } : {}),

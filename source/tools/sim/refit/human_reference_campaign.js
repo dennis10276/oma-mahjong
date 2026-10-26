@@ -149,6 +149,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.passiveInformation === undefined || [false, true, 'roles', 'frontierRoles', 'immediateRoles', 'shortRoles', 'shortAll'].includes(options.passiveInformation));
   assert(options.passiveInformationClockMin === undefined || options.passiveInformation === 'shortAll'
     && Number.isInteger(options.passiveInformationClockMin) && options.passiveInformationClockMin >= 0);
+  assert(options.clockOrphanPreparation === undefined || typeof options.clockOrphanPreparation === 'boolean');
+  assert(!options.clockOrphanPreparation || options.clockInformationBeforeRisk === true);
   assert(options.drawnRoleInformation === undefined || typeof options.drawnRoleInformation === 'boolean');
   assert(options.drawnRoleClockSlackRange === undefined || options.drawnRoleInformation === true
     && Array.isArray(options.drawnRoleClockSlackRange) && options.drawnRoleClockSlackRange.length === 2

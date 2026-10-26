@@ -52,3 +52,8 @@ Development CPU/wall mean1.04653,min1.01241. All201 recorded executions valid;
 six terminal native workers and supervisor are preserved in dispatch-state.json
 and supervisor-native-exit.json. Counter7. One further unadopted campaign reaches
 the user's eight-experiment stop rule. Do not continue past it without a decision.
+
+Full count differences from23:11 8/8/8→8/9/9,49 5/3/5→4/3/6,
+84 1/1/1→1/1/2,12 3/4/3→5/4/6.84/12 still satisfy their passing targets;
+partial49 improvement does not repair its complete three-salt target. The other
+155 board count vectors are unchanged. All five open targets remain unresolved.
