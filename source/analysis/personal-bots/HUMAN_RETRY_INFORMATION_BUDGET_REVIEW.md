@@ -47,3 +47,38 @@ profile92b1c12b829d93187b1dc27efd6c8c7760120283ed419f890af879d0b4946049.
 Raw inputs: .codex-runs/level-measure/experiment-06/development-shard00.jsonl,
 development-shard01.jsonl and development-shard02.jsonl. Values come from each
 board's runs[0].retryInformation counters. No new games ran for this analysis.
+
+## Updated retained10 evidence, catalogv2
+
+This update uses existing measurements of the retained10 actor after the key
+memory and drawn-role fixes, including new157. It covers all eight current
+three-salt failures, rather than reusing the older06 diagnosis as current fact.
+
+| Board | Tries1/2/3 | Extra searches | Node caps | Deadlines | Largest extra time | Information routes |
+|---:|---|---:|---:|---:|---:|---:|
+|86|1/1/3|26|24|0|76ms|2|
+|144|5/1/1|0|0|0|0ms|0|
+|157|3/3/4|34|29|0|130ms|3|
+|10011|8/8/8|251|232|0|131ms|3|
+|10032|>12/>12/>12|376|283|0|165ms|31|
+|10033|5/>12/5|26|3|0|186ms|23|
+|10049|>12/>12/>12|97|45|0|112ms|40|
+|10052|>12/>12/>12|137|2|0|124ms|126|
+
+Across947 extra searches,618 stop at the node cap(65.3%), none at the deadline,
+and228 return information routes. Lab10011 still has232 caps in251 searches
+and just3 information routes. The larger-node-budget hypothesis survives the
+intervening adopted fixes. It remains unmeasured and must not change the live14
+actor. Lab10052 instead finds126 routes in137 calls and has just2 caps, so its
+failure still requires a different explanation; the separate immediate-loss
+audit now identifies nine one-tap opportunities on its retained10 histories.
+
+Keep the250ms extra deadline and existing outer move bound if an8192-node
+candidate is later preregistered. Use the retained actor and updated open
+failures after14 finishes; do not assert this old10 table describes14.
+The same development/full adoption rule and eight-unadopted-trial stop rule
+apply. No new games or strategy experiment ran for this counter aggregation.
+
+Raw summary: .codex-runs/level-measure/retained10-retry-information-budget-v2.json.
+Source97f6aa2ca756fd64e249945053bc3a352d89d1a764bad4212d7d81d5f23db675;
+profile6b6094dc0a84e0e1988a9f3e3585863da68ddc0a2a00d554d8214c18b7bb21a1.
