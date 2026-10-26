@@ -103,6 +103,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(!options.causalAvailabilityMemory || options.exclusiveRoles === true
     && (options.rememberAcceptedTaps || options.rememberClearedRoles), 'Causal availability requires declared production bounds and actual safety memory');
   assert(options.observedSafetyTransfer === undefined || typeof options.observedSafetyTransfer === 'boolean');
+  assert(options.observedSafetyClockOnly === undefined || typeof options.observedSafetyClockOnly === 'boolean');
+  assert(!options.observedSafetyClockOnly || options.observedSafetyTransfer === true);
   assert(!options.observedSafetyTransfer || !options.causalAvailabilityMemory
     && options.rememberKeyIdentities === true && (options.rememberAcceptedTaps || options.rememberClearedRoles),
   'Observed safety transfer requires retained actual keys and original-rule safety witnesses without a bounded placement contract');
@@ -128,8 +130,12 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const transfer = options.observedSafetyTransfer ? createObservedSafetyTransfer(geometry.tiles)
     : options.causalAvailabilityMemory ? createAvailabilityTransfer(geometry.tiles, { exclusiveRoles: true }) : null;
   const transferProofLabel = options.observedSafetyTransfer ? 'observedKeyAndNeighborCount' : 'publicObstacleBounds';
-  const transferStats = { queries: 0, provedTransfers: 0 };
+  const transferStats = { queries: 0, provedTransfers: 0,
+    ...(options.observedSafetyClockOnly ? { clockGateSkips: 0 } : {}) };
   const transferProof = transfer ? (...args) => {
+    if (options.observedSafetyClockOnly && !(clock && current?.alive[clock.i])) {
+      transferStats.clockGateSkips++; return null;
+    }
     transferStats.queries++;
     const proof = transfer(...args);
     transferStats.provedTransfers += +!!proof;

@@ -60,6 +60,7 @@ function test() {
   configurations.push({ ...require('./human_level_measure_profile.json'), drawnRoleInformation: true, drawnRoleClockSlackRange: [5, 20] });
   configurations.push({ ...require('./human_level_measure_profile.json'), observedSafetyTransfer: true, drawnRoleInformation: false, drawnRoleClockSlackRange: undefined });
   configurations.push({ ...require('./human_level_measure_profile.json'), observedSafetyTransfer: true, drawnRoleInformation: true, drawnRoleClockSlackRange: [5, 20] });
+  configurations.push({ ...require('./human_level_measure_profile.json'), observedSafetyTransfer: true, observedSafetyClockOnly: true });
   configurations.push({ ...configurations[1], passiveInformation: 'shortRoles', shortInformation: 'recoveryAware', informationWidth: 1, protectOpenTwin: true });
   const canonical = new Map();
   let controls = 0;

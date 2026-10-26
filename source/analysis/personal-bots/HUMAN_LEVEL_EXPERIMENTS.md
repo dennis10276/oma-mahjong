@@ -496,3 +496,37 @@ improvements still miss their limits(10049<=3,144<=2). Default10 is retained;
 consecutive-unadopted count becomes1. All other development try counts match10.
 Compare actual public histories of144,10049 and10011 before selecting a WHEN
 condition or discarding the strategy. Raw comparisons: when-observed-safety-v1/.
+
+## Experiment12: live-clock observed-key safety transfer
+
+Preregistered: adopted10 plus observedSafetyTransfer:true and
+observedSafetyClockOnly:true. The one-feature condition comes from934 actual
+replayed11 decision-history taps:9 changes on partial improvements were all
+clock-on;97 on the worsening case were all clock-off. Zero strategy replan drift.
+Detailed fit, proof semantics and limitations:
+HUMAN_OBSERVED_SAFETY_WHEN_DECISION_ANALYSIS_V1.md.
+
+All123 reference tests pass14s(native94467 exit0), including live/missing clocks,
+first-attempt isolation,48 independent physical retry-control taps, composite
+roles, private-data invariance and invalid configurations. No hidden fact is
+supplied, and actual memory persists when the planning condition is false.
+Source0036f3233c40087c4db422ea14a103806ceb1177fc04c602be1c5a0e7828df08;
+profilea620f081b9a1efd8c3c6c972c106c4e7746da81f62ffc03f7c1c8d7ef987a110.
+WHEN fit SHA2561a68307ca2ac119579862d57473d64a3696db4a1b68f60bc4b186250e1ec2fb8.
+
+Use the same adopted10 full comparator and v6 selection as11:38 development
+levels,20 fixed guards,10015 retained as a passing control. Refresh all targets,
+run3 game workers, salt1 development, max12 actual tries, strict2s/move and
+independent production replay. Default10 stays unchanged during the experiment.
+
+An ordinary development gate repair without regressions advances to full testing.
+The preregistered off-salt-full-check-v1 protocol also permits a full check after
+partial development gains only when there is no passing regression or lost prior
+clear and an existing other-salt failure(86/10033) cannot be tested by salt1.
+The same final full-repair/no-regression adoption rule remains mandatory. The
+auditor rechecks raw development, source/helper hashes, projected salt1 controls
+and a real full repair of an off-salt target if that exception is used.
+Qualification helper SHA25619db395fc287c558b0678fd13a23c202b5509af86d6252e9f6ced08914fb52ab;
+8 synthetic controls and the real11 rejection check pass. Benchmark/evaluator
+source unchanged. Counter before12 is1; rejection makes it2. Raw profiles,
+snapshots, qualifications and native exits: .codex-runs/level-measure/experiment-12/.

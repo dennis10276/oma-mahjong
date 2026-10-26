@@ -18,32 +18,39 @@ function test() {
     rules: { iceNb: Layouts.iceNeighbors(tiles), ice: { 0: 2, 5: 1 }, keys: [4, 5, 6], locks: new Set([7]) } };
   const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 64 };
   let verifiedTaps = 0;
-  for (const observedSafetyTransfer of [false, true]) {
+  for (const { observedSafetyTransfer, observedSafetyClockOnly, clock } of [
+    { observedSafetyTransfer: false, observedSafetyClockOnly: false, clock: null },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: false, clock: null },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: null },
+    { observedSafetyTransfer: true, observedSafetyClockOnly: true, clock: { i: 4, n: 50 } },
+  ]) {
+    const game = { ...actual, clock };
     const controller = createHumanController(tiles, { exclusiveRoles: false, rememberAcceptedTaps: true,
       rememberClearedRoles: true, rememberKeyIdentities: true, keyPlanningSlackAbove: 40,
-      observedSafetyTransfer, nodes: 64, beam: 8, taps: 4, decisionMs: 30 });
+      observedSafetyTransfer, observedSafetyClockOnly, nodes: 64, beam: 8, taps: 4, decisionMs: 30 });
     const observe = session => {
       const view = session.view(), legal = new Set(view.legalTiles ?? []);
-      const board = observeBoard(tiles, view.state, null, { picture: index => actual.faces[index],
-        role: index => visibleRole(actual, view.state, index), takeable: index => legal.has(index) });
+      const board = observeBoard(tiles, view.state, game.clock, { picture: index => game.faces[index],
+        role: index => visibleRole(game, view.state, index), takeable: index => legal.has(index) });
       controller.observe(view.state, board); return board;
     };
     const perform = (session, index) => {
       assert(session.view().legalTiles.includes(index)); controller.decide(); controller.acknowledge(index, true);
       session.tap(index); observe(session);
     };
-    controller.beginAttempt(); const failed = factory(actual, settings);
+    controller.beginAttempt(); const failed = factory(game, settings);
     assert.equal(observe(failed).roles[6], 'key');
     const loss = [1, 2, 0, 6];
     for (const index of loss) perform(failed, index);
     assert.equal(failed.view().why, 'tray');
-    verifiedTaps += verifyAttempt(encodeGame(actual), loss, settings, failed.audit());
+    verifiedTaps += verifyAttempt(encodeGame(game), loss, settings, failed.audit());
+    assert.equal(controller.causalAvailabilityStats().provedTransfers, 0, 'A first monotone attempt has no cross-retry safety transfer');
     controller.completeAttempt('physicalLoss');
     assert.equal(controller.known().initialRoles[0], 'ice2');
-    controller.beginAttempt(); const retry = factory(actual, settings); observe(retry); perform(retry, 2);
+    controller.beginAttempt(); const retry = factory(game, settings); observe(retry); perform(retry, 2);
     assert(retry.view().state.alive[1]);
     const audit = controller.explainInformation([3, 0]);
-    if (observedSafetyTransfer) {
+    if (observedSafetyTransfer && (!observedSafetyClockOnly || clock)) {
       assert.equal(audit.boundary, null);
       assert(controller.causalAvailabilityStats().provedTransfers > 0);
       assert(controller.acceptedEvidence().every(proof => proof.alternateProof === 'observedKeyAndNeighborCount'));
@@ -52,7 +59,7 @@ function test() {
     for (const index of [3, 0, 4, 1, 5, 6, 7]) perform(retry, index);
     assert(retry.view().win);
     const route = [2, 3, 0, 4, 1, 5, 6, 7];
-    verifiedTaps += verifyAttempt(encodeGame(actual), route, settings, retry.audit());
+    verifiedTaps += verifyAttempt(encodeGame(game), route, settings, retry.audit());
     controller.completeAttempt('cleared');
   }
   const transfer = () => { throw Error('No original-rule witness exists under relief'); };
@@ -61,6 +68,8 @@ function test() {
   assert.equal(accepted.observeAvailable(tiles.map(() => true), { alive: tiles.map(() => 1), relieved: true }), 0);
   assert.equal(cleared.observe({ alive: tiles.map(() => 1), relieved: true, physicalTaps: 0 }, tiles.map(() => 'none')), 0);
   assert.deepEqual(accepted.entries(), []); assert.deepEqual(cleared.entries(), []);
+  assert.throws(() => createHumanController(tiles, { observedSafetyClockOnly: 'yes' }));
+  assert.throws(() => createHumanController(tiles, { observedSafetyClockOnly: true }));
   assert.throws(() => createHumanController(tiles, { observedSafetyTransfer: 'yes' }));
   assert.throws(() => createHumanController(tiles, { observedSafetyTransfer: true }));
   assert.throws(() => createHumanController(tiles, { observedSafetyTransfer: true, rememberKeyIdentities: true }));
