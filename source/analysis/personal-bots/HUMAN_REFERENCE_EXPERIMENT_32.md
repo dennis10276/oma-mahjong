@@ -1,7 +1,8 @@
 # Experiment32: reusable public search with query-dependency validation
 
-Preregistered before measurement. This is trial1 of the eight NEW experiments
-explicitly authorized by Dennis: reusable planning across retries, maximum8.
+Status: rejected-development. Native supervisor36974 and all three development
+workers exit0. This is trial1 of the eight NEW experiments explicitly authorized
+by Dennis: reusable planning across retries, maximum8. Seven trials remain.
 Prior unadopted24-31 and stop report2b122e7 remain. Default retained23 unchanged.
 The new allowance is capped at eight measured trials total, including WHEN
 variants; adoption does not extend it. Goal A then B remains unmet.
@@ -51,3 +52,29 @@ when-reusable-planning-v3/reusable/baseline23/. The runner snapshots the human
 authorization and records spending trial1 only after the fresh cohort check.
 New batch ledger: batch-32-39-authorization.json. An unadopted32 is new count1,
 not erasure of the prior eight failures. No full-goal completion claim.
+
+## Completed result
+
+| Development42 real boards,salt1 | Cleared | Within Dennis+1 | Complete repairs | Passing regressions | Slowest move |
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate32|40/42|38/42|0|0|1753.4ms|
+
+All42 clear-count vectors are unchanged. No partial/off-salt improvement under
+unchanged v2; no full run or adoption. All executions valid; CPU/wall mean1.03724,
+minimum0.99550; mean0.328842min/board,salt1. Native terminal supervisor and three
+workers retained in supervisor-native-exit.json and dispatch-state.json.
+
+Actual32 campaign reuse is real:41 unfinished resumes/1188181 resumed work units,
+48 reused jobs,227130 dependency queries,12 returned exposure routes,72 discarded
+jobs and16 retained jobs. Yet all12 losses remain unseen-partner tray failures.
+Actual11 records18 unfinished resumes but still clears8;52 records51 job reuses,
+only two unfinished resumes,58 exposure-route returns and12 clock losses.
+Counters do not replace clear-count performance. The implementation is not inert,
+but these intermediate goals did not produce a target repair.
+
+Next investigate whether completed information witnesses are repeatedly reused
+after the real attempt remains unproductive. Preserve current source/profile and
+the actual histories; do not immediately discard the architectural route or fit
+an unsubstantiated threshold. No next campaign is registered yet. New batch1/8
+measured,0 adoptions; old24-31 failures remain. Track A and B still unmet.

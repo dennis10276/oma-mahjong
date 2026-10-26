@@ -3,7 +3,7 @@
 Dennis explicitly authorized: "Authorize reusable planning across retries, with
 up to eight new experiments." Prior unadopted24-31 remain in their stop report;
 this is a new allowance, not a retroactive adoption or erased failure history.
-Default23 remains. Goal A then B unchanged and unmet. Trial32 is running;1/8 used.
+Default23 remains. Goal A then B unchanged and unmet. Trial32 rejected;1/8 used.
 
 The architectural change is to suspend and resume unfinished known-only search
 frontiers instead of restarting their visited set and search stack on every
