@@ -55,3 +55,40 @@ complete-target-repair/no-passing-regression gate. No campaign27 is registered y
 
 Raw .codex-runs/level-measure/: loss-inspection-successors-unit-01.log,
 loss-inspection-successors-suite-01.log and compare-loss-inspection-successors.js.
+
+## Completed actual-history comparisons
+
+Native53811/50334 exit0.10032 reproduces242 actual23 taps over seven complete
+attempts with zero baseline drift and13 changed suggestions;10011 reproduces437
+taps over six complete attempts and a truncated43-tap seventh history, zero
+drift and two changed suggestions. Public picture memory agrees throughout.
+Maximum baseline/candidate times1630.3/1634.3ms on32 and1599.0/1615.1ms on11.
+Both histories accumulate26 derived inspection-loss facts by their last logged
+decision. Counts of facts are not target repairs.
+
+32's first change is attempt5 tap27, tray3, where an already proved loss is
+recognized sooner. Most changed suggestions similarly report knownDead; this
+does not rescue that position. A distinct attempt6 tap25 change is bounded
+progress with knownDead:false, tray2, within Dennis5+1's target.11's first change
+is attempt7 tap40, tray2, an information choice after the target3 is already
+missed. No candidate suggestion is physically executed in these comparisons.
+
+Raw when-loss-inspection-successors-v1/baseline23/10032-salt1.jsonl and
+10011-salt1.jsonl retain every logged change and native trace footers. The
+truncated11 prefix teaches neither controller a fake completed outcome.
+
+## Preregistered experiment27
+
+Test retained23 plus rememberLossInspections:true using the exact source/profile
+above. Do not enable unadopted failed-route preferences. Use actual23 baseline
+records and selectionv10's unchanged42 development boards,20 guards and all
+retained passing controls. Three workers. Salt1 development first; full159/salts1-3
+only after unchanged off-salt-full-check-v2 qualification. Adoption still requires
+one complete target repair, no passing target regression, independent production
+replay and every actual move strictly below2s.
+
+Counter before27 is3; an unadopted27 makes4. Pin both completed native trace
+exits, source/profile hashes, baseline records, evaluator, tests, catalog/selection
+and this preregistration. Refresh the cohort; freeze actor sources/default23
+until every worker and supervisor is terminal. Recognizing a losing position or
+changing a late suggestion is not a fresh-campaign clear or an adoption.
