@@ -643,7 +643,7 @@ qualification rejects advancement; no full13 test or adoption is claimed.
 |10011|2|8|8|
 |10033|5|5|9|
 |10041|7|3|3|
-|10045|2|3|3|
+|10045|6|3|3|
 |10049|2|>12|5|
 
 This is unsuccessful experiment3 in a row after adopted10. Retain the current
