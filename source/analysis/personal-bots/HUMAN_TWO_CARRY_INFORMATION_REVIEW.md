@@ -91,3 +91,48 @@ two-carry-prefer-peek-unit-01.log, two-carry-prefer-peek-suite-01.log and
 compare-prefer-peek-information-decisions.js under .codex-runs/level-measure/.
 Sourceb4467c67a46379c215d09dedd8dac25cbc56679855703a97706b0410a97d4f94.
 Proposed profilec8c76e792c609e9f4be140d042b10078df7d74ac18e75c65f9c9101b6ea7d0f0.
+
+## Preference at the original allowance also leaves choices unchanged
+
+The preference plus limit2 reproduces the same210/159 taps over the first six
+attempts on32/52, with zero changed suggestions and zero baseline drift(native
+26661/97159 exit0). It is not registered as a measured campaign experiment.
+The known-loss key was also checked: it already omits picture knowledge by
+default, so no duplicate knowledge-monotonicity change is justified there.
+
+## Larger bounded allowance: an interaction produces actual choice changes
+
+Keep limit2/preference and use the existing validated8192-node/500ms allowance,
+with the shared1800ms outer deadline unchanged. Earlier15/16 tested larger
+allowances on a different search policy without this interaction; their failures
+are retained, not used to declare the new combination impossible or successful.
+
+On the same six actual23 salt1 attempts,32 reproduces210 taps without drift and
+three suggestions change, starting attempt3 tap3. They are known physical
+prefixes to exposure50, with node/deadline fallback metadata.52 reproduces159
+taps without drift and two suggestions change, starting attempt4 tap25: a
+known prefix to an actual required peek. Neither supplies an imagined picture.
+Maximum baseline/candidate times are1585.1/1800.1ms on32 and1246.2/1332.9ms on52.
+Native15584/32161 exit0. These are still suggestions on fixed histories, not
+executed candidate continuations or claimed clears.
+
+## Preregistered experiment24
+
+Retained23 plus retryInformationPeekTrayLimit:2, retryInformationPreferPeek:true,
+retryInformationNodes:8192 and retryInformationMs:500. The outer move deadline,
+clock margin>2 and safety/known-win protections remain unchanged. This measures
+the supported interaction, not another standalone test of the no-effect limit.
+
+Use actual23 baseline records, selectionv10's same42 boards/20 fixed guards,
+with33 and157 retained as passing controls. Three workers; development salt1
+first and full159/salts1-3 only after unchanged v2 qualification. Adoption still
+requires a complete target repair, no passing target regression, independently
+replayed production attempts and every actual move strictly below2s.
+
+Counter before24 is0 after adopted23; an unadopted24 makes1. Pin the current
+source/profile, refreshed catalog/selection, evaluator, safety controls and both
+completed native traces before launch. The runner requires nonzero changed
+suggestions, zero drift and<2s decisions in both traces. Freeze actor sources
+and default23 during measurement. No new campaign gain or adoption is claimed.
+Sourceb4467c67a46379c215d09dedd8dac25cbc56679855703a97706b0410a97d4f94.
+Profile8f1600badabe023732aba5d7c6b8a4a96bbc7d8371ea79ac3379cb1798f5c31f.
