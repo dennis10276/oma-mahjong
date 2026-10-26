@@ -37,6 +37,7 @@ const { createPublicActionVisits } = require('./public_action_visits.js');
 const { publicActionOrder } = require('./public_action_order.js');
 const { retryCompleteSearch } = require('./public_retry_complete.js');
 const { retryInformationSearch } = require('./public_retry_information.js');
+const { safeClosedInspection } = require('./public_safe_closed_inspection.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
@@ -55,6 +56,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
+  assert(options.safeClockInspection === undefined || typeof options.safeClockInspection === 'boolean');
+  assert(options.safeClockInspection !== true || !!options.inspectBeforeCommit);
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
   assert(options.uniqueKnownCleanup === undefined || typeof options.uniqueKnownCleanup === 'boolean');
@@ -488,8 +491,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           }
         }
       }
-      const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit && !(clock && current.alive[clock.i])
-        ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null) : [];
+      const inspectionClockActive = !!(clock && current.alive[clock.i]);
+      const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit
+        && (!inspectionClockActive || options.safeClockInspection)
+        ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null
+          && (!inspectionClockActive || safeClosedInspection(current, action.index, clock, true))) : [];
       manualChoice = false;
       const discover = () => {
         manualChoice = true;
