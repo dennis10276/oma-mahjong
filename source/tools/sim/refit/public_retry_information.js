@@ -5,9 +5,11 @@ const { explorationWitness } = require('./public_exploration_witness.js');
 function retryInformationSearch(primarySearch, options = {}) {
   assert.equal(typeof primarySearch, 'function');
   const milliseconds = options.milliseconds ?? 250, nodeLimit = options.nodes ?? 2000, choices = options.choices ?? 512;
+  const peekTrayLimit = options.peekTrayLimit ?? 1;
   assert(Number.isFinite(milliseconds) && milliseconds > 0 && milliseconds <= 500);
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   assert(Number.isInteger(choices) && choices > 0);
+  assert(Number.isInteger(peekTrayLimit) && peekTrayLimit >= 0 && peekTrayLimit <= 2);
   assert(options.deadEndInformation === undefined || typeof options.deadEndInformation === 'boolean');
   const deadEndInformation = options.deadEndInformation === true;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
@@ -62,7 +64,7 @@ function retryInformationSearch(primarySearch, options = {}) {
         counters.deadEndConsidered++; counters.firstAttemptDeadEndConsidered += +(attempt === 1);
       }
       const extraBegan = Date.now();
-      const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining),
+      const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit,
         deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
       counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit');
@@ -90,6 +92,7 @@ function retryInformationSearch(primarySearch, options = {}) {
         knownProgress: result.knownProgress, safeClockExit: false, clockRoom: 0,
         information: !result.knownWin, boundary: !result.knownWin, nodes: (primary.nodes ?? 0) + result.nodes,
         retryInformationWitness: { attempt, stalls, kind: result.kind, knownPrefixTaps: result.knownPrefixTaps,
+          ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
           boundaryIndex: result.boundaryIndex, newlyExposed: result.newlyExposed, imaginedPicturesAdded: 0,
           source: 'known physical prefix to new public exposure or an actual required peek; no predicted hidden picture' } };
     },

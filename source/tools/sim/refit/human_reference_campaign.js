@@ -53,6 +53,9 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     && Number.isFinite(options.retryInformationMs) && options.retryInformationMs > 0 && options.retryInformationMs <= 500);
   assert(options.retryInformationNodes === undefined || options.retryInformationWitness === true
     && Number.isInteger(options.retryInformationNodes) && options.retryInformationNodes > 0);
+  assert(options.retryInformationPeekTrayLimit === undefined || options.retryInformationWitness === true
+    && Number.isInteger(options.retryInformationPeekTrayLimit) && options.retryInformationPeekTrayLimit >= 0
+    && options.retryInformationPeekTrayLimit <= 2);
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -203,7 +206,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     { milliseconds: options.retryCompleteMs ?? 250, nodes: options.retryCompleteNodes ?? 2000, choices: options.choiceLimit ?? 512 }) : null;
   const informationRetry = options.retryInformationWitness ? retryInformationSearch(completeRetrySearch || runRetrySearch || baseSearch,
     { milliseconds: options.retryInformationMs ?? 250, nodes: options.retryInformationNodes ?? 2000,
-      choices: options.choiceLimit ?? 512, deadEndInformation: options.deadEndInformation }) : null;
+      choices: options.choiceLimit ?? 512, deadEndInformation: options.deadEndInformation,
+      peekTrayLimit: options.retryInformationPeekTrayLimit ?? 1 }) : null;
   const resetPlanner = () => {
     const selectedSearch = informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);

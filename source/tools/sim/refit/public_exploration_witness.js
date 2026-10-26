@@ -6,9 +6,11 @@ const { createExposureFrontier } = require('./public_exposure_frontier.js');
 
 function explorationWitness(game, initial, roots, options = {}) {
   const deadline = options.deadline ?? Date.now() + 250, nodeLimit = options.nodes ?? 2000, maxTaps = options.taps ?? 128;
+  const peekTrayLimit = options.peekTrayLimit ?? 1;
   assert(Number.isFinite(deadline));
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   assert(Number.isInteger(maxTaps) && maxTaps > 0 && maxTaps <= 512);
+  assert(Number.isInteger(peekTrayLimit) && peekTrayLimit >= 0 && peekTrayLimit <= 2);
   assert(Array.isArray(roots) && roots.every(action => Number.isInteger(action.index)));
   assert(Object.keys(game).every(key => ['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure', 'publicRoleExposure', 'publicInformationExposure'].includes(key)));
   assert(game.publicRoleExposure === undefined || typeof game.publicRoleExposure === 'function');
@@ -46,7 +48,7 @@ function explorationWitness(game, initial, roots, options = {}) {
       const moved = advance(game, state, index);
       if (moved.uncertain) {
         const clockSafe = !game.clock || !state.alive[game.clock.i] || game.clock.n - state.moves > 2;
-        if (moved.reason === 'unseenPicture' && state.down[index] === 1 && state.tray.length <= 1 && clockSafe) {
+        if (moved.reason === 'unseenPicture' && state.down[index] === 1 && state.tray.length <= peekTrayLimit && clockSafe) {
           return { path: path.concat(index), knownPrefixTaps: path.length, boundaryIndex: index,
             newlyExposed: [], knownProgress: progress(state), knownWin: false, kind: 'actualPeekRequired' };
         }
