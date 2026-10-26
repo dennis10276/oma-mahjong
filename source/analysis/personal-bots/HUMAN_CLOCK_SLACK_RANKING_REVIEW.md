@@ -140,3 +140,36 @@ have zero changes/drift and the active10033 trace to have a changed suggestion.
 Freeze the actor and default19 profile throughout measurement. No new campaign
 gain or adoption is claimed at registration; full validation is still required.
 Candidate profile29e4ccf222a8bf36677e8527d24123fcfed36fcd8d2a209dd0bc6c80fcf361c2.
+
+## Experiment22 development result: advance to full
+
+| Scope | Valid boards | Complete repairs | Target regressions | Off-salt development gain | Slowest move | Mean minutes/board |
+|---|---:|---:|---:|---|---:|---:|
+|Development,salt1|42/42|0|0|10033:5->4|1640.6ms|0.334|
+
+The fitted condition restores144 to1 try and10045 to3 while retaining10033's
+4-try result. All three development workers exit0. The v2 protocol advances
+to the full check because10033 still failed on an earlier full-run salt; the
+development improvement itself is not a complete repair. Actual full adoption
+remains contingent on repairing at least one complete target and breaking none.
+
+Other count changes remain within target:10041:3->5,105:1->2 and150:2->4.
+Thus this is target-regression parity, not identical attempt counts. The full
+three-salt check must still validate those boards and every other target.
+All159 boards are included and the cohort refresh is unchanged. Three new full
+workers are running; the supervisor and final comparison are not yet terminal.
+Default19 remains enabled and the consecutive-unadopted count stays2 pending
+the experiment's outcome. Actor sources remain frozen.
+
+The first22 startup exited1 in starting phase before any game worker launched,
+without an emitted error. The supervisor PID was confirmed absent and both
+state and snapshot were preserved under startup-unexplained-exit names. Its
+cause remains unknown. The same runner/source/profile was retried with external
+process-event logging; it completed development and launched the full run.
+The zero-game startup does not count as another strategy experiment. Its native
+tool result, preserved state and subsequent monitor log remain separate evidence.
+
+Raw22 evidence: experiment-22/development-summary.json, development-shard*.jsonl,
+dispatch-state.json, catalog-refresh.json, and experiment-22-supervisor-01.log.
+The startup monitor writes experiment-22-process-events.jsonl outside the actor
+graph. Its hooks only log process events and do not change the game or planner.
