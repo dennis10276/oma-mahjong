@@ -12,7 +12,7 @@ explored, all requested roots included and no unsupported transitions.
 | Board/salt | Attempt/tap | Original | Alternative | Immediate observation |
 |---|---|---:|---:|---|
 |86/3|2/61|2|1|no newly visible picture, orientation, role or takeable tile|
-|10032/1|9/28|15|29|no newly visible picture, orientation, role or takeable tile|
+|10032/1|9/27|15|29|no newly visible picture, orientation, role or takeable tile|
 |10032/1|11/28|15|29|same|
 |10052/1|8/32|62|40|tile10 orientation/role becomes visible; tile9 becomes takeable|
 
@@ -43,8 +43,8 @@ surviving that tap alone does not refute the reported death or establish value.
 ## Concrete visibility counterexample
 
 On10052 salt1 attempt8, before tap32: moves19, clock42 still blocked with2 moves
-remaining, tray[18,17,14]. Tile10 has never supplied a visible role in any prior
-recorded attempt/frame; its opening role, current role, picture and orientation
+remaining, tray[18,17,14]. Tile10 supplied no visible role in the earlier frames
+of that salt1 campaign; its opening role, current role, picture and orientation
 are all unknown. Taking the known matching tile40 leaves moves20, tray[18,17],
 and exposes tile10's orientation as closed and its current role as none. Its
 picture remains unknown. Tile9 becomes takeable with visible picture33 and
