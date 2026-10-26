@@ -158,3 +158,30 @@ adopted10-immediate-match-opportunities-v2-summary.json and corresponding.log
 under .codex-runs/level-measure/. Source actor97f6aa2ca756fd64e249945053bc3a352d89d1a764bad4212d7d81d5f23db675;
 profile6b6094dc0a84e0e1988a9f3e3585863da68ddc0a2a00d554d8214c18b7bb21a1.
 No actor changed and no measured strategy trial is counted.
+
+## Refresh after adoption14
+
+The same physical-only audit on the new retained14 histories covers its seven
+target failures:146 attempts,132 physical losses and6138 original replayed taps.
+There are15 one-tap opportunities(86:1,10032:6,10052:8), with439 independently
+replayed prefix/alternative taps. All132 final losing predictions are definite.
+No alternate continuation is played, original plan guards remain unaudited,
+and no campaign gain is claimed(native exit0, about6.5s).
+Raw adopted14-immediate-match-opportunities-v3.jsonl, summary and.log are under
+.codex-runs/level-measure/. Use these14 histories rather than the older10 counts.
+
+The isolated draft's default JSON is rebased to the adopted14 profile. Existing
+code modifications remain exactly the controller and measurement API, plus the
+new safety module. Compared with frozen15's baseline runtime, all other70
+original runtime file bytes match. The new isolated source is
+3cb4bcf7c6ffca6e2a728b20a0ed16ff45e454482ee81cb93ff20b493a3d0ec9;
+the profile-only rebase is recorded in profile14-rebase.json. The active actor
+and profile are untouched. The earlier component/API tests supplied the same
+explicit14 profile; this rebase changes the draft's default data only.
+
+compare-immediate-match-decisions.js is now prepared for the actual-policy
+audit. It uses the selected experiment's frozen baseline and compact real
+histories, compares the isolated enabled controller on those same histories,
+checks original-choice drift and immutable source files, independently replays
+each attempt and records original winning/clock-exit/death certificates.
+It is syntax-checked but has not run; run it after the active timed trial.

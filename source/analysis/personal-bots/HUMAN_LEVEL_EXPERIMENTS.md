@@ -768,3 +768,50 @@ This candidate changes an already supported search-budget parameter; actual
 campaign validity/timing remain required evidence. Default14 stays enabled.
 Counter before15 is0; rejection makes1. Raw profile, source snapshot and native
 worker results will be preserved under .codex-runs/level-measure/experiment-15/.
+
+### Experiment15 result and search diagnosis
+
+All42 development measurements are valid. Three workers and supervisor37280
+exit0. Every target attempt count is unchanged; there is no repair, regression
+or partial gain, so the declared qualification rejects full advancement.
+Slowest move1752.8ms. Keep adopted14; unadopted counter becomes1.
+
+| Board | Baseline14 salt1 | Trial15 salt1 | Search change |
+|---:|---:|---:|---|
+|10011|8|8|78 node caps become74 deadline stops;1 information route unchanged|
+|10032|>12|>12|95 node caps become92 deadline stops; routes12->14, physical actions change|
+|10052|>12|>12|43 information routes unchanged; physical actions identical|
+|157|3|3|2 information routes unchanged; physical actions identical|
+
+On10011 the larger search visits350627 nodes instead of156645 but still
+returns the same one route and identical physical actions. On10032 it visits
+398056 instead of216055 nodes and changes routes without clearing. Both now
+have zero node-cap stops and maximum extra times250-251ms. This shows the
+250ms deadline became the bottleneck; it does not prove no useful route exists.
+Raw per-board before/after counters and action equality are preserved in
+experiment-15/development-search-diagnosis.json.
+
+## Experiment16: give deeper retry search the supported time allowance
+
+Preregistered refinement: adopted14 plus retryInformationNodes8192 and
+retryInformationMs500. Keep the existing absolute1800ms search window and
+strict actual under2s move gate. The additional allowance remains bounded by
+the remaining outer window, so it does not add500ms after an exhausted primary
+search. This tests the same public-information route search more thoroughly;
+there is no new engine, imagined picture or board-specific policy.
+
+Use unchanged catalogv2, selectionv8, baseline14 records, three workers and
+max12 tries. Refresh all current targets. Development42 boards salt1 must
+qualify before full159 boards salts1/2/3. Adoption still requires a complete
+Dennis+1 repair with no passing regression. This refinement counts as another
+experiment: counter before16 is1; rejection makes2.
+The original123 post-adoption tests remain the retained-floor verification;
+candidate performance and actual timing must come from its campaigns.
+Raw evidence for the refinement is the completed15 diagnosis above, pinned
+in the16 source snapshot before play. Profile/source identities are recorded
+in the raw dispatch and preregistration below; default14 remains enabled.
+
+Source078e4c55b22e0a29f15ab492fcdc1fcb9aecff1fc4670aca3d3dfb3603514e4c;
+profileaa58ced21fbb6cd2821c6a3379f9cd806eccaa91899fc2514c04e22bad8b254e.
+Motivation SHA256820857a279e006068c53594e202d4b69df16c941c517af6d9fa139e72b942b39.
+Raw preregistration: .codex-runs/level-measure/experiment-16-preregistration.json.
