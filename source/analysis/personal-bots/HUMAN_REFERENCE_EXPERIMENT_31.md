@@ -1,9 +1,9 @@
 # Experiment31: preparation before a surplus-time two-orphan clock exit
 
-Preregistered before measurement. Default remains adopted23; consecutive
-unadopted count7 after24-30. A rejected31 reaches8: STOP new campaigns and report
-the complete experiment table/open targets for Dennis's continuation decision.
-Do not shrink the objective or call the unmet goal complete.
+Status: rejected-development. Native supervisor97342 and all three development
+workers exit0. Default remains adopted23; consecutive unadopted count8 after
+24-31. STOP new campaigns; report the complete table/open targets for Dennis's
+continuation decision. The full objective remains unmet, not complete.
 
 The actual23 audit independently replays1835 taps/44 attempts.32 reaches its
 clock carrying two unavailable-partner pictures with42 clock moves spare on
@@ -43,3 +43,22 @@ Raw .codex-runs/level-measure/: run-experiment-31.js, experiment-31/,
 frozen-470e2ce107cd-experiment31/, clock-orphan-decisions-native.json,
 when-clock-orphan-preparation-v1/clock-orphan/baseline23/. Preserve mixed outcomes
 and the user's eight-unadopted stop rule; no immediate extra WHEN trial at8.
+
+## Completed result and stop
+
+| Development42 real boards, salt1 | Cleared | Within Dennis+1 | Complete repairs | Passing target regressions | Slowest move |
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate31|40/42|38/42|0|0|1612.4ms|
+
+Only changed clear count:11 worsens8→11, still an existing failed target.
+32/52 remain censored,49 remains5; all other development counts unchanged.
+The shifted clock decisions and fixture improvements do not produce a campaign
+repair. Unchanged v2 reports no partial/off-salt gain and does not qualify full.
+
+All42 records valid; CPU/wall mean1.04727,min1.00683. Native supervisor and three
+terminal workers retained in supervisor-native-exit.json and dispatch-state.json.
+No full run, adoption or post-adoption audit is claimed. Count8 triggers section6
+of the user's objective: no new experiments until a human continuation decision.
+HUMAN_REFERENCE_BATCH_24_31.md reports all eight trials and the five retained
+open targets. Track B and the unseen20 final evaluation remain unstarted.
