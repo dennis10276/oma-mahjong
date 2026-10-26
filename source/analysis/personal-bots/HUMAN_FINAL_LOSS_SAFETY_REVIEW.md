@@ -65,3 +65,24 @@ are still required before any adoption. Do not confuse the prototype's small
 fixture wins with a winning continuation at the seven audited real positions.
 Raw files: immediate-match-safety-draft.js, test-immediate-match-safety-draft.js
 and immediate-match-safety-draft-tests-02.log under .codex-runs/level-measure/.
+
+Four additional Joker component controls now pass(native exit0), independently
+replaying16 physical taps through production. A matching Joker pair may replace
+a certain losing tap; an unknown Joker picture cannot. A wildcard that would
+automatically take an unobserved twin is not certified as a safe alternative.
+An uncertain original tap remains untouched even when an ordinary matching
+alternative exists. Matching Jokers still cannot rescue an expiring clock on
+another tile. Private picture/deck/seed getters throw if accessed.
+
+The settled-Joker control explicitly uses custom settleBefore timing. The first
+raw test failed because the campaign convenience replay does not copy that
+custom timing onto its replay game. The corrected supplemental test supplies
+the identical timing to a direct independent Hard.play replay and compares the
+physical log and trace; no production or actor code was changed. This is a test
+fixture correction, not evidence of a failure in the active fixed1000ms campaign.
+Both failed and passing logs are preserved as immediate-match-safety-jokers-tests-01.log
+and -02.log; the test is test-immediate-match-safety-jokers.js in the raw directory.
+
+Combined component coverage is43 independently replayed taps. Controller
+integration and recorded development/full campaign checks remain unperformed;
+there is no measured strategy experiment or adoption from these controls.
