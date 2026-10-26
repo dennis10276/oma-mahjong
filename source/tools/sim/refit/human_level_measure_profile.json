@@ -41,5 +41,15 @@
   "observedSafetyMaxClockSlack": 30,
   "tightClockRecovery": true,
   "tightClockRecoveryMaxSlack": 3,
-  "deadEndInformation": true
+  "deadEndInformation": true,
+  "safeClockInspection": true,
+  "clockSlackRanking": true,
+  "clockSlackRankingBudgetRange": [
+    10,
+    30
+  ],
+  "safeClockInspectionBudgetRange": [
+    10,
+    30
+  ]
 }

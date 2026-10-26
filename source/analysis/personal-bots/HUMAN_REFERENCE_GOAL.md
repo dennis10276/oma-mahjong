@@ -1,4 +1,5 @@
 # Human-information reference and Dennis-strength level measuring
+
 ACTIVE and UNMET. Branch wip/personal-bots; checkout personal-bot-review.
 Authoritative objective: cc8ea8eb-87e0-48be-a531-eeb68c9d5592/goal-objective.md.
 Track A first; Track B only after A passes. Use sunflower tiles.
@@ -7,9 +8,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 - ONE observer: visible face-up pictures, drawn roles on fronts/backs, covered clock
   badges, and current takeability of every geometrically free tile without tapping.
-- Hidden pictures, deck, board seed and future reveals are forbidden. Only public
-  same-board/salt retry memory. Pictures certain across every publicly consistent
-  hidden board may enter trusted memory as deductions; sample consensus is not proof.
+- No hidden pictures, deck, board seed or future reveals. Only public same-board/salt retry memory.
+- Pictures certain across every publicly consistent hidden board may enter memory; sample consensus is not proof.
 - Every level being winnable is an allowed prior. General planning only: no level
   IDs, per-level settings or routes. Every attempt independently replays production.
 - Single-thread games, anytime, under2s/move; at most12 concurrent games.
@@ -19,16 +19,14 @@ Track A first; Track B only after A passes. Use sunflower tiles.
   from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
 - Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10032,10033,10049,10052; natural86 also fails.
-- Development: failing boards plus20 fixed passing guards, salt1. Keep additional
-  regression controls. Full salts1-3 before adopting; repair>=1 and break none.
+- Labs first:10011,10032,10049,10052; natural86 also fails.
+- Development: failures plus20 fixed guards, salt1; retain regression controls; full salts1-3; repair>=1 and break none.
 - Sum-of-tries and human correlation are not Track A gates under the revised goal.
 
 ## Mixed strategies: find WHEN to use them
 
 - Compare changed decisions on repaired and broken games using actual public histories.
-- Record public position features: tray count, clock remaining/slack estimate, unseen
-  fraction, observed roles, retry, known free pairs; never use hidden labels as inputs.
+- Record public tray/clock/slack, unseen fraction, observed roles, retry and free pairs; no hidden labels.
 - Fit one readable condition with at most2 public features and round thresholds.
 - Fit on development only; retest salt1 development then full cohort salts1-3.
 - Adopted06 clock recovery: tray>=1 AND estimated clock slack>=50; avoids harmful preparation.
@@ -39,6 +37,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Adopted14 tight-clock recovery: tray=1 AND estimated slack=3; repairs144 without regressions.
 - Adopted19 closed inspection: no live clock AND tray<=2; repairs157, preserves known recovery.
 - Adopted19 information probe: primary reports known-dead; broader exposure checks prevent false certificates.
+- Adopted23 clock inspection: starting clock10-30 AND tray<=2; bounded peek cost preserves41 while helping33.
+- Adopted23 clock rank: starting clock10-30; account for spent moves in estimated slack, never as a proof.
 
 ## Track B: calibrate only after A passes
 
@@ -73,8 +73,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Current evidence
 
-- Retained19:156/159 clear every salt,153/159 within Dennis+1; A still unmet.
-- 126/126 tests pass; trials20-22 unadopted; consecutive count3 after adopted19.
-- Full19 repairs157, no regressions;3 new full+3 reused dev workers exit0; slowest1661.4ms.
-- Fresh159-board cohort and70 runtime files verified; mean0.552 minutes/board for3 salts.
-- Full supervisor/auditor exit0; external-cwd unlabeled lab61 clears1/1/1, valid969.8ms.
+- Retained23:157/159 clear every salt,154/159 within Dennis+1; A still unmet.
+- 126/126 tests pass36s; trials20-22 unadopted; consecutive count0 after adopted23.
+- Full23 repairs10033, no target regressions;6 new workers exit0; slowest1759.2ms.
+- Fresh159-board cohort and71 runtime files verified; mean0.652 minutes/board for3 salts.
+- Supervisor/auditor exit0; external-cwd unlabeled lab61 clears1/1/1, valid1502.6ms.
