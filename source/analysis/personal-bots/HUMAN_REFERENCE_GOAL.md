@@ -74,7 +74,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 ## Current evidence
 
 - Retained14:156/159 clear every salt,152/159 within Dennis+1; A still unmet.
-- 124/124 tests pass; trials15-17 unadopted, consecutive count3 after adopted14.
+- 124/124 tests pass; trials15-18 unadopted, consecutive count4 after adopted14.
 - Full14 repairs144, no regressions;6 workers exit0; slowest1639.9ms at3 workers.
 - Fresh159-board cohort and70 runtime files verified; mean0.541 minutes/board for3 salts.
-- Trial18 tests earlier inspection at tray2 without a clock plus17 recovery; default14 retained.
+- Trial19 fully tests unchanged18 after157's3->2 salt1 gain; original dev records reused.

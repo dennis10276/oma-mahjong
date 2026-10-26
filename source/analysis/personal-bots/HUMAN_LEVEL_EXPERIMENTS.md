@@ -931,3 +931,55 @@ The existing124-test pass(native68159 exit0) covers this runtime;18 changes
 supported profile settings only. Actual combined behavior and timing still
 require the development/full measurements. Source snapshot also pins the
 pressure-position summary and safety-proof log before play.
+
+### Experiment18 development result
+
+All42 development measurements are valid. Three workers and supervisor44024
+exit0; slowest1633.5ms. No salt1 Dennis+1 target is newly repaired or broken.
+The screening protocolv1 therefore stops before full testing; retain that
+dispatch unchanged and count18 as unadopted experiment4 after adopted14.
+
+| Board | Dennis | Adopted14 salt1 | Combined18 salt1 | Target status |
+|---:|---:|---:|---:|---|
+|157|2|3|2|still passes salt1; full baseline3/3/4 fails salt3|
+|159|2|1|2|still within Dennis+1; slower, not a target regression|
+
+The original screen's partial-gain rule requires the earlier salt1 result to
+fail. It excludes157's actual3->2 improvement because that salt already passes,
+even though157 remains a full-cohort failure. That warrants a new declared
+full-check extension, not an adoption claim or a silent rewrite of18's result.
+
+## Experiment19: full-check extension of unchanged18
+
+No actor or profile change from18. Source90a8b5cfbc2b6e8c247e07f9b5e31a030b7253c601700274f3600e3b25ee9e50;
+profile5d05b10f0b786db09cffa2ff4ec40f1d72925f3e1351f9962f4549137ca554f1.
+The separately preregistered off-salt-full-check-v2 screen also permits a genuine
+salt1 attempt reduction on a board that fails the full three-salt gate. It
+preserves the earlier guarded-partial path and blocks passing target regressions,
+lost clears, unchanged results, gains confined to fully passing boards, invalid
+data and changed boards. Eleven controls pass(native exit0); originalv1 stays
+unchanged for earlier runs. On actual18 data, only157 is the new qualifying gain.
+
+The full adoption rule is unchanged: repair at least one full three-salt
+Dennis+1 failure and break no passing board. The independent auditor must also
+find a full repair among the previously declared off-salt targets. Qualification
+alone is not adoption or evidence that the personal accuracy gate has passed.
+
+Reuse the existing42 valid development measurements without changing their
+headers, PIDs, source/profile identifiers or raw files. Pin the original18
+dispatch, native supervisor exit record, three worker records and every raw
+file hash in19's pre-run snapshot. The reuse verifier passes12 corruption
+controls, including actor/profile/catalog/selection/runtime mismatches, edited
+files, wrong origin, missing workers and forged worker exits/PIDs. Native18
+supervisor exit0 is recorded separately from the old dispatch. The19 report
+will distinguish reused development workers from newly executed full workers.
+
+Refresh all159 boards and targets before starting three fresh full workers on
+salts1/2/3. Keep max12 tries and strict under2s/move. Source files, profile, v2
+qualification logic, reuse verifier and evaluator bytes are pinned before play.
+Counter before19 is4; a failed extension makes5. Default14 remains enabled.
+
+Raw helper off-salt-full-qualification-v2.js SHA256
+5a232ee2506e8b932b4c57da56c94a0449b1cf563eeb4833f8e5bff167d8bcc5;
+controls: off-salt-v2-controls-03.log and reused-development-controls-01.log.
+No campaign records or outcomes are fabricated to avoid repeating development.
