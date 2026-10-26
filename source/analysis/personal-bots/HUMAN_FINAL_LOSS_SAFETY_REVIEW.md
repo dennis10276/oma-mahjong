@@ -41,3 +41,27 @@ for this audit and no measured strategy experiment is counted.
 Raw evidence: .codex-runs/level-measure/retry-final-public-loss-v1.jsonl,
 retry-final-public-loss-v1-summary.json and
 retry-final-public-match-alternatives-v1.json. Both native audit commands exit0.
+
+A separate component prototype is now prepared in the raw directory. It replaces
+only a certain immediate losing prediction, while preserving uncertain choices
+and constructive winning/clock-exit plans. Alternatives must be currently legal,
+have a remembered matching tray picture, and produce a definite nonlosing public
+physical prediction. Among them it prefers taking the visible clock, then the
+existing public action order. It clears stale route/death metadata on an override
+and retains the nodes already spent by the original search.
+
+Four synthetic planner/clock controls pass: no clock; an urgent clock with no
+surviving match; an urgent clock rescued by taking its known matching tile; and
+clock removal preferred over another surviving match. There are15 counted
+preservation controls, including missing pictures and uncertain obstacle roles.
+Three resulting winning physical routes and one unchanged unfinished prefix
+independently replay27 taps total. Private game fields throw if read. Native
+test command exits0. These synthetic controls do not claim the current planner
+naturally chooses the supplied bad action on those small boards.
+
+This remains outside the active actor and all recorded benchmarks. Controller
+integration, Joker-specific controls and development/full performance checks
+are still required before any adoption. Do not confuse the prototype's small
+fixture wins with a winning continuation at the seven audited real positions.
+Raw files: immediate-match-safety-draft.js, test-immediate-match-safety-draft.js
+and immediate-match-safety-draft-tests-02.log under .codex-runs/level-measure/.

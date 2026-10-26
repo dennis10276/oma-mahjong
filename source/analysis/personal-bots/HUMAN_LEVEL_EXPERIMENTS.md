@@ -530,3 +530,30 @@ Qualification helper SHA25619db395fc287c558b0678fd13a23c202b5509af86d6252e9f6ced
 8 synthetic controls and the real11 rejection check pass. Benchmark/evaluator
 source unchanged. Counter before12 is1; rejection makes it2. Raw profiles,
 snapshots, qualifications and native exits: .codex-runs/level-measure/experiment-12/.
+
+Development12: all38 valid, all3 native development workers exit0. Slowest1639.2ms.
+
+| Scope | Partial gains | Restored earlier clear | Passing regressions | Full-test decision |
+|---|---|---|---|---|
+|38 real boards, salt1|144:5 to4;10049:>12 to5|10011 stays8|None|Check other-salt failures under preregistered protocol|
+
+There is no formal salt1 Dennis+1 repair. The recorded qualification has no
+clearance regression, partial gains144/10049 and existing off-salt targets86/10033.
+Parent46925 remains live with3 full-run workers. This is testing eligibility,
+not adoption; default10 stays retained and the unadopted counter remains1.
+
+Final12: all155 valid, all6 native workers and parent46925 exit0. Slowest1640.2ms;
+mean0.536 minutes/board for3 salts. Full comparison has no Dennis+1 repair and a
+passing regression on10041. The other-salt targets86/10033 were not repaired.
+
+| Scope | Partial improvements | Passing regression | Clear every salt | Dennis+1 every salt | Decision |
+|---|---|---|---|---|---|
+|155 real boards, salts1-3|144:4/1/1;10049:5/3/5|10041:3/>12/6 instead of3/3/3|151/155|147/155|Reject; retain10|
+
+The clock condition restores10011 to8/8/8 but does not protect10041 on salt2.
+10049 now clears all three salts, yet5/3/5 still misses its<=3 limit. Counter
+becomes2. The declared off-salt qualification triggered a full test, not an
+adoption exception; the unchanged final rule correctly rejects this result.
+Next: compare actual12 histories on existing development boards144(salt1),
+10049(salt1) and regressed10041(salt2). Record this data scope explicitly before
+fitting another public WHEN condition. Raw traces: when-safety-clock-v2/.
