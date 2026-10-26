@@ -59,3 +59,23 @@ complete-target-repair/no-passing-regression adoption. The full goal stays unmet
 Raw .codex-runs/level-measure/: known-witness-portfolio-unit-01/02.log,
 known-witness-portfolio-suite-01/02.log, compare-known-witness-portfolio.js and
 compare-known-witness-portfolio-full.js. No forecast or personal accuracy claim.
+
+## First real-history results: eligibility, not a failed secondary search
+
+Native21786/97753/56045 exit0. The86/salt3,32/salt1 and102/salt1 comparisons
+reproduce249/242/178 physical taps, zero baseline drift, and0/3/0 changed
+suggestions respectively. The32 differences occur late, as in the cache-only
+diagnostic. All669 taps independently replay; maximum baseline/candidate times
+1552.7/1556.0ms,1642.5/1640.1ms and1292.5/762.4ms. They establish no target repair.
+
+The portfolio searches zero times: every otherwise eligible decision is filtered
+by incomplete memory(110/119/65 cases). The actual86/salt3 history ends try1 and
+try2 at85/88 known pictures, and reaches88 only on its third, already winning
+attempt. Therefore a fully known-board solver alone cannot address its earlier
+failure; this result must not be reported as a failed diverse-beam search.
+
+Next retain constructive validation while permitting a live public clock's
+known safe exit even if unrelated pictures remain unknown. Separately investigate
+the existing broader public-information frontier, rather than assigning those
+unknown pictures or discarding the alternate strategy after it never ran.
+No campaign28 has been registered for the original configuration.
