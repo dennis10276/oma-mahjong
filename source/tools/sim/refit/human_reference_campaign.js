@@ -205,7 +205,6 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let decisionPosition = null;
   let observedTakeable = null, observedAliveKey = null, observedArrivingKey = null;
   let pendingInformationAction = null;
-  let currentExposureMode = null;
   const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles, ...typedKeyKnowledge() });
   const physicalSignature = position => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
     .map(field => position[field]));
@@ -266,7 +265,6 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       observedTakeable = null; observedAliveKey = null; observedArrivingKey = null;
-      currentExposureMode = null;
       lastAcceptedIndex = null;
       observedSafetyPlanningActive = false;
       retryRiskMemory?.beginAttempt();
@@ -396,12 +394,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const exposureFactory = drawnRoleActive ? createDrawnRoleFrontier : createExposureFrontier;
       if (drawnRoleActive) geometry.publicRoleExposure = createDrawnRoleFrontier(geometry.tiles, { ...current, roles }, 'roles');
       else delete geometry.publicRoleExposure;
-      const nextExposureMode = passiveExposureMode(options.passiveInformation, current, clock, options.passiveInformationClockMin);
-      if (options.passiveInformationClockMin !== undefined && currentExposureMode !== null && currentExposureMode !== nextExposureMode
-        && !planner.report()?.knownWin && !planner.report()?.safeClockExit) resetPlanner();
-      currentExposureMode = nextExposureMode;
       const exposure = options.passiveInformation ? exposureFactory(geometry.tiles, { ...current, roles },
-        currentExposureMode) : undefined;
+        passiveExposureMode(options.passiveInformation, current, clock, options.passiveInformationClockMin)) : undefined;
       geometry.publicExposure = options.passiveInformation === 'frontierRoles' ? position => {
         const gained = exposure(position);
         if (!gained.length) return gained;
