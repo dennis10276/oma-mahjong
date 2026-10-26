@@ -888,3 +888,46 @@ strict under2s/move and every-attempt independent production replay remain.
 Refresh every recorded target before play; unchanged full adoption requires a
 Dennis+1 repair and no passing regression. Default14 stays enabled. Counter
 before17 is2; rejection makes3. Raw evidence: experiment-17/ under .codex-runs/level-measure/.
+
+### Experiment17 result
+
+All42 development measurements are valid. Three workers and supervisor64448
+exit0; slowest1641.1ms. No target count improves or regresses; there is no
+partial gain, so the declared qualification rejects full advancement. Keep
+adopted14; consecutive unadopted count3. The information-recovery flag remains
+optional and available for testing interactions, with its proved/unresolved
+certificate distinction intact.
+
+On10011 and10032 all7 and14 dead-end probes respectively confirm the broader
+dead end and find no additional route. On10052,13 probes include one constructive
+route and12 confirmations, but the campaign still fails within12 tries. The
+new route does not establish a target repair or personal forecast accuracy.
+
+## Experiment18: inspect before committing a third tray tile
+
+Preregistered combination: adopted14 plus deadEndInformation:true and
+inspectionTrayLimit:2. It retains17's public-information recovery for interaction
+with earlier decisions; separate component gains are not claimed. The proactive
+change uses the existing recovery-style inspection branch at tray count2 with
+no active clock. Constructive winning/clock-exit/known-recovery protections remain.
+
+Physical-only motivation:106 distinct nonclock positions on the seven failing
+boards offer a safe inspection before a known third-slot commit. All original
+attempts and11036 alternate-prefix taps independently replay. The separate
+1480-case safety check spans all37 hidden pictures, tray occupancies and tight
+clock contexts. None of these is a candidate campaign win. Full rationale,
+limits and raw paths: HUMAN_EARLY_INSPECTION_REVIEW.md.
+
+Use unchanged catalogv2, selectionv8, baseline14 full records and three workers.
+Development42 salt1 must qualify before full159 salts1/2/3. Max12 actual tries,
+strict actual under2s and independent production replay remain. Refresh every
+recorded target; full adoption still needs a Dennis+1 repair and no passing
+regression. Counter before18 is3; rejection makes4. Default14 stays enabled.
+
+Runtime source is unchanged from17:
+90a8b5cfbc2b6e8c247e07f9b5e31a030b7253c601700274f3600e3b25ee9e50.
+Profile5d05b10f0b786db09cffa2ff4ec40f1d72925f3e1351f9962f4549137ca554f1.
+The existing124-test pass(native68159 exit0) covers this runtime;18 changes
+supported profile settings only. Actual combined behavior and timing still
+require the development/full measurements. Source snapshot also pins the
+pressure-position summary and safety-proof log before play.
