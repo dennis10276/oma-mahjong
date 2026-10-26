@@ -36,3 +36,12 @@ short-all-clock-prefix-suite-01.log. Campaign30 must use the same42 development
 boards/20 guards, fresh159-target cohort, and unchanged full159/salts1-3 gate.
 A full adoption still needs complete repair, no passing-target regression,
 independent replay, strict<2s and terminal native audit. A rejected30 makes7.
+
+## Corrected actual-history comparison
+
+Native74104/29162 exit0.33/49 replay162/218 actual23 taps independently with
+zero baseline drift. Removing the heuristic-mode reset removes33's sole change
+and retains all six early49 changes. Maximum candidate1500.2/780.4ms. This
+supports the switching-bug diagnosis on these histories, not a campaign repair.
+Raw short-all-clock-prefix-decisions-native.json and
+when-short-all-clock-prefix-decisions-v1/short-all-clock/baseline23/ retain it.
