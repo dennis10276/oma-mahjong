@@ -1,6 +1,7 @@
 'use strict';
 const assert = require('assert/strict');
 const { explorationWitness } = require('./public_exploration_witness.js');
+const { createReusableExploration } = require('./public_reusable_exploration.js');
 
 function retryInformationSearch(primarySearch, options = {}) {
   assert.equal(typeof primarySearch, 'function');
@@ -14,6 +15,9 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert.equal(typeof preferActualPeek, 'boolean');
   assert(options.deadEndInformation === undefined || typeof options.deadEndInformation === 'boolean');
   const deadEndInformation = options.deadEndInformation === true;
+  assert(options.reusablePlanning === undefined || typeof options.reusablePlanning === 'boolean');
+  assert(!options.reusablePlanning || typeof options.contextVersion === 'function' && !preferActualPeek);
+  const reusable = options.reusablePlanning ? createReusableExploration() : null;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
     nodes: 0, nodeStops: 0, deadlineStops: 0, maximumExtraMs: 0, overruledDeadCertificates: 0, stallsEndedByInformation: 0 };
@@ -66,8 +70,10 @@ function retryInformationSearch(primarySearch, options = {}) {
         counters.deadEndConsidered++; counters.firstAttemptDeadEndConsidered += +(attempt === 1);
       }
       const extraBegan = Date.now();
-      const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
-        deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
+      const result = (reusable ? reusable.search : explorationWitness)(publicGame, state, actions,
+        { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
+          ...(reusable ? { version: options.contextVersion() } : {}),
+          deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
       counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit' || result.budgetStopReason === 'node_limit');
       counters.deadlineStops += +(result.reason === 'deadline' || result.budgetStopReason === 'deadline');
@@ -100,7 +106,7 @@ function retryInformationSearch(primarySearch, options = {}) {
           boundaryIndex: result.boundaryIndex, newlyExposed: result.newlyExposed, imaginedPicturesAdded: 0,
           source: 'known physical prefix to new public exposure or an actual required peek; no predicted hidden picture' } };
     },
-    stats() { return { ...counters, consecutiveStalls: stalls }; },
+    stats() { return { ...counters, consecutiveStalls: stalls, ...(reusable ? { reusable: reusable.stats() } : {}) }; },
   };
 }
 
