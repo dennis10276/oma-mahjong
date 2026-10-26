@@ -91,3 +91,45 @@ measurement. The runner also requires the trace's native exit0/zero-drift footer
 
 Source4b3aede694eefc6eec1b85b849ccb394f895568916d9a57d3974922c3878b3e6;
 profiled1f05db0d940893e9b0c752cfcdbbf288da193e8bc8937d7c36d21eada26c9e7.
+
+## Experiment20 result: not adopted
+
+| Scope | Valid boards | Target repairs | Passing target regressions | Slowest move | Mean minutes/board | Native exit |
+|---|---:|---:|---:|---:|---:|---:|
+|Development,42 boards,salt1|42/42|0|0|1647.5ms|0.322|0|
+
+All three development workers and supervisor37852 exit0. The v2 qualifier finds
+neither a complete development repair nor a qualifying partial/off-salt gain;
+the full run is not launched. This is one unadopted measured experiment after
+adopted19, so the consecutive counter is1. Default19 remains enabled. Full-set
+gates remain unmet with the same six open failures; development success counts
+must not be substituted for those full-set gates.
+
+The sole attempt-count difference is10041 salt1:3->5, still within Dennis+1
+because Dennis needed7. Thus no target regression does not mean all counts
+were unchanged or improved.10052 still fails all12 development attempts.
+
+## The new information is used, but the clock still expires
+
+The actual20 continuation independently replays318 taps across all12 attempts.
+On attempt3, tap15 reveals picture25 on tile22, using zero clock moves and
+leaving tray[4,18]. It establishes a known free pair with80. Tap16 selects80,
+removing the pair and consuming two clock moves:9 remaining becomes7. Taps17
+and18 inspect68 and23, revealing30 and34 without consuming clock moves. The
+bot then continues removing tiles and runs out of clock time at tap27.
+
+Reconstructing the actual candidate controller over the first three attempts
+reproduces all75 selected taps with zero drift(native4479 exit0). At tap16 its
+report is goal information, knownProgress2, safeClockExit:false. The new picture
+was not ignored. The selected pair supplies progress and another information
+boundary without proving a timely exit to the clock. This does not establish
+that the pair is the causal mistake or that any alternative from that position
+can win. It identifies the next planning question: how information routes
+balance clock moves spent against estimated public clock-access progress.
+Those estimates must remain ranking heuristics, never impossibility proofs.
+
+Raw evidence under experiment-20/: dispatch-state.json, development-shard*.jsonl,
+development-summary.json, supervisor-native-exit.json,
+lab52-public-continuation-01.json/.log and lab52-plan-trace-01.json/.log.
+The actual-history plan trace and physical continuation are separate from the
+earlier candidate suggestions on the unchanged retained19 history.
