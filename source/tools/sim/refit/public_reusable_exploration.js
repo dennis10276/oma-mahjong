@@ -17,6 +17,7 @@ function createReusableExploration(options = {}) {
   const counters = { calls: 0, createdJobs: 0, reusedJobs: 0, resumedUnfinished: 0, workUnits: 0,
     expandedStates: 0, evictedJobs: 0, returnedRoutes: 0, rejectedRoutes: 0, maximumSliceMs: 0,
     dependencyQueries: 0, preservedAfterValidation: 0, dependencyRestarts: 0, knowledgeResets: 0, resumedWorkUnits: 0 };
+  counters.yieldedInformation = 0; counters.cachedIntermediateReturns = 0;
   const remove = key => {
     const job = jobs.get(key); job.iterator.return(); storedStates -= job.visited.size;
     storedDependencies -= job.dependencies.size;
@@ -30,8 +31,10 @@ function createReusableExploration(options = {}) {
     assert(Number.isInteger(peekTrayLimit) && peekTrayLimit >= 0 && peekTrayLimit <= 2);
     assert.equal(typeof settings.version, 'string'); assert(settings.version.length > 0);
     const dependencyAware = settings.revalidatePublicChanges ?? false;
+    const continueAfterInformation = settings.continueAfterInformation ?? false;
     const validationLimit = settings.validationQueries ?? maximumDependencies;
     assert.equal(typeof dependencyAware, 'boolean'); assert(Number.isInteger(validationLimit) && validationLimit > 0);
+    assert.equal(typeof continueAfterInformation, 'boolean');
     assert(!settings.preferActualPeek, 'Reusable exploration currently preserves the exposure-first information policy');
     assert(Object.keys(game).every(key => ['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure',
       'publicRoleExposure', 'publicInformationExposure'].includes(key)));
@@ -44,7 +47,7 @@ function createReusableExploration(options = {}) {
       .map(field => position[field] ?? null);
     const rules = game.rules ? [game.rules.ice, Array.from(game.rules.locks ?? []), game.rules.keys] : null;
     const key = JSON.stringify([dependencyAware ? 'dependency-aware' : settings.version,
-      dependencyAware ? physicalFields(state) : stateFields(state), roots.map(action => action.index), taps, peekTrayLimit,
+      dependencyAware ? physicalFields(state) : stateFields(state), roots.map(action => action.index), taps, peekTrayLimit, continueAfterInformation,
       game.tiles.map(tile => [tile.x, tile.y, tile.z]), game.nb, rules, game.clock]);
     const revision = JSON.stringify([settings.version, state.pictures, state.down,
       ['publicFrontier', 'publicInformationExposure', 'publicRoleExposure'].map(field => typeof game[field])]);
@@ -94,7 +97,7 @@ function createReusableExploration(options = {}) {
       while (jobs.size >= maximumJobs) remove(jobs.keys().next().value);
       job = { initial: structuredClone(state), visited: new Map(), work: 0, found: null, exhausted: false,
         unknownBoundary: false, depthBoundary: false, capped: false, dependencies: new Map(), currentGame: game,
-        revision, validation: null, dependencyCap: false };
+        revision, validation: null, dependencyCap: false, pendingOffer: null };
       const initial = job.initial;
       job.refreshExposure = () => {
         const model = job.currentGame, pictureExposure = createExposureFrontier(model.tiles, initial, 'all');
@@ -129,16 +132,24 @@ function createReusableExploration(options = {}) {
       const identity = position => aliveSignature(position.alive) + '|' + JSON.stringify([position.tray,
         position.openPeek, !!position.relieved, position.arriving ?? [],
         game.clock && position.alive[game.clock.i] ? position.moves : 0]);
+      const rememberVisit = (position, path) => {
+        const signature = identity(position), previous = job.visited.get(signature);
+        if (previous !== undefined && previous <= path.length) return false;
+        if (previous === undefined && job.visited.size >= maximumStates) { job.capped = true; return false; }
+        if (previous === undefined) { storedStates++; counters.expandedStates++; }
+        job.visited.set(signature, path.length); return true;
+      };
       function* visit(position, path) {
         yield null;
         if (!position.alive.some(Boolean) && !position.tray.length) return { path, kind: 'completeKnownWin', knownWin: true };
-        if (path.length && position.tray.length <= 2 && query('exposure', position).length) return { path, kind: 'newPublicExposure', knownWin: false };
+        if (path.length && position.tray.length <= 2 && query('exposure', position).length) {
+          const witness = { path, kind: 'newPublicExposure', knownWin: false };
+          if (!continueAfterInformation) return witness;
+          if (!rememberVisit(position, path)) return null;
+          yield witness; return null;
+        }
         if (path.length >= taps) { job.depthBoundary = true; return null; }
-        const signature = identity(position), previous = job.visited.get(signature);
-        if (previous !== undefined && previous <= path.length) return null;
-        if (previous === undefined && job.visited.size >= maximumStates) { job.capped = true; return null; }
-        if (previous === undefined) { storedStates++; counters.expandedStates++; }
-        job.visited.set(signature, path.length);
+        if (!rememberVisit(position, path)) return null;
         const candidates = [];
         for (const index of query('legal', position).free) {
           yield null;
@@ -149,7 +160,9 @@ function createReusableExploration(options = {}) {
             job.unknownBoundary = true;
             const clockSafe = !game.clock || !position.alive[game.clock.i] || game.clock.n - position.moves > 2;
             if (moved.reason === 'unseenPicture' && position.down[index] === 1 && position.tray.length <= peekTrayLimit && clockSafe) {
-              return { path: path.concat(index), kind: 'actualPeekRequired', knownWin: false };
+              const witness = { path: path.concat(index), kind: 'actualPeekRequired', knownWin: false };
+              if (!continueAfterInformation) return witness;
+              yield witness;
             }
             continue;
           }
@@ -199,22 +212,27 @@ function createReusableExploration(options = {}) {
     }
     let nodes = 0;
     const unfinished = !job.exhausted && !job.found;
-    while (!job.exhausted && !job.found && nodes < units && Date.now() < deadline) {
+    while (!job.exhausted && !job.found && !job.pendingOffer && nodes < units && Date.now() < deadline) {
       const result = job.iterator.next(); nodes++; job.work++; counters.workUnits++;
       if (result.done) { job.exhausted = true; job.found = result.value; }
-      if (job.capped) { job.iterator.return(); job.exhausted = true; job.found = null; }
+      else if (result.value?.kind) { job.pendingOffer = result.value; counters.yieldedInformation++; }
+      if (job.capped) { job.iterator.return(); job.exhausted = true; job.found = null; job.pendingOffer = null; }
       while ((storedStates > maximumTotalStates || storedDependencies > maximumTotalDependencies) && jobs.size > 1) {
         const victim = Array.from(jobs.keys()).find(candidate => candidate !== key); remove(victim);
       }
     }
     if (resumed && unfinished && nodes) { counters.resumedUnfinished++; counters.resumedWorkUnits += nodes; }
-    if (job.found) {
-      const validated = job.validate(job.found, game, state, deadline);
+    const candidate = job.found ?? job.pendingOffer;
+    if (candidate) {
+      const validated = job.validate(candidate, game, state, deadline);
       if (validated) {
         counters.returnedRoutes++;
+        counters.cachedIntermediateReturns += +(resumed && !!job.found && !job.found.knownWin && nodes === 0);
+        const continuing = !!job.pendingOffer; job.pendingOffer = null;
         counters.maximumSliceMs = Math.max(counters.maximumSliceMs, Date.now() - began);
         return { ...validated, nodes, boundary: !validated.knownWin, reason: 'constructive_public_information_route',
           imaginedPicturesAdded: 0, reusable: { resumed, cumulativeWork: job.work, expandedStates: job.visited.size,
+            ...(continueAfterInformation ? { informationContinued: continuing, iteratorOpen: !job.exhausted } : {}),
             ...(dependencyAware ? { dependencyQueries, pendingDependencyChecks: 0 } : {}) } };
       }
       if (Date.now() >= deadline) return empty('deadline', nodes, job, resumed);

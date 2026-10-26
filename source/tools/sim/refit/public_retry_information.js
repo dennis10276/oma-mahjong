@@ -17,6 +17,8 @@ function retryInformationSearch(primarySearch, options = {}) {
   const deadEndInformation = options.deadEndInformation === true;
   assert(options.reusablePlanning === undefined || typeof options.reusablePlanning === 'boolean');
   assert(!options.reusablePlanning || typeof options.contextVersion === 'function' && !preferActualPeek);
+  assert(options.continueAfterInformation === undefined || typeof options.continueAfterInformation === 'boolean');
+  assert(!options.continueAfterInformation || options.reusablePlanning === true);
   const reusable = options.reusablePlanning ? createReusableExploration() : null;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
@@ -72,7 +74,8 @@ function retryInformationSearch(primarySearch, options = {}) {
       const extraBegan = Date.now();
       const result = (reusable ? reusable.search : explorationWitness)(publicGame, state, actions,
         { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
-          ...(reusable ? { version: options.contextVersion(), revalidatePublicChanges: true } : {}),
+          ...(reusable ? { version: options.contextVersion(), revalidatePublicChanges: true,
+            continueAfterInformation: options.continueAfterInformation === true } : {}),
           deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
       counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit' || result.budgetStopReason === 'node_limit');
@@ -100,6 +103,7 @@ function retryInformationSearch(primarySearch, options = {}) {
         knownProgress: result.knownProgress, safeClockExit: false, clockRoom: 0,
         information: !result.knownWin, boundary: !result.knownWin, nodes: (primary.nodes ?? 0) + result.nodes,
         retryInformationWitness: { attempt, stalls, kind: result.kind, knownPrefixTaps: result.knownPrefixTaps,
+          ...(reusable ? { reusable: result.reusable } : {}),
           ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
           ...(preferActualPeek ? { preferActualPeek, exposureFallbackUsed: result.exposureFallbackUsed,
             budgetStopReason: result.budgetStopReason } : {}),
