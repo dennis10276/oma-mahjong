@@ -10,18 +10,21 @@ function createKnownWitnessPortfolio(primarySearch, options = {}, secondarySearc
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   assert(Number.isInteger(choices) && choices > 0);
   const counters = { considered: 0, incomplete: 0, searched: 0, wins: 0, clockExits: 0,
-    rejectedWitnesses: 0, deadlineStops: 0, extraNodes: 0, maximumExtraMs: 0 };
+    rejectedWitnesses: 0, deadlineStops: 0, extraNodes: 0, maximumExtraMs: 0, partialClockSearches: 0 };
   const search = (game, state, actions, settings = {}) => {
     const began = Date.now(), deadline = Math.min(settings.deadline ?? Infinity, began + 1800);
     const primary = primarySearch(game, state, actions, settings);
     if (primary.knownWin || primary.safeClockExit || primary.knownDead) return primary;
     counters.considered++;
-    if (state.alive.some((alive, index) => alive && (state.pictures[index] === null || state.down[index] === null))) {
+    const incomplete = state.alive.some((alive, index) => alive && (state.pictures[index] === null || state.down[index] === null));
+    const activeClock = !!(game.clock && state.alive[game.clock.i]);
+    if (incomplete && !activeClock) {
       counters.incomplete++; return primary;
     }
     const remaining = choices - (state.physicalTaps ?? 0);
     if (remaining <= 0 || Date.now() >= deadline) return primary;
     const extraBegan = Date.now(), extraDeadline = Math.min(deadline, extraBegan + milliseconds);
+    counters.partialClockSearches += +incomplete;
     const alternative = secondarySearch(game, state, actions, { ...settings, decisionMs: undefined,
       deadline: extraDeadline, nodes: nodeLimit, diverseWitness: false, diverseBeam: true,
       finishKnownMaxTaps: Math.min(256, remaining) });
@@ -58,7 +61,8 @@ function createKnownWitnessPortfolio(primarySearch, options = {}, secondarySearc
     return { ...(verified ?? primary), nodes: (primary.nodes ?? 0) + alternative.nodes,
       knownWitnessPortfolio: { selected: !!verified, primaryIndex: primary.index, alternativeIndex: alternative.index,
         primaryNodes: primary.nodes ?? 0, extraNodes: alternative.nodes, extraNodeLimit: nodeLimit,
-        source: 'secondary diverse beam through fully known public pictures/orientations; only a validated complete win or safe clock-exit prefix replaces the primary' } };
+        fullyKnownBoard: !incomplete, publicClockActive: activeClock,
+        source: 'secondary diverse beam through known public transitions; only a validated complete win or safe clock-exit prefix replaces the primary' } };
   };
   return { search, stats: () => ({ ...counters }) };
 }

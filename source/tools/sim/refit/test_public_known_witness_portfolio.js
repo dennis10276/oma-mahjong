@@ -62,6 +62,21 @@ function test() {
   const clockSession = factory(clockActual, settings), clockActions = [...clockResult.path, 3, 0, 1];
   for (const index of clockActions) clockSession.tap(index);
   assert(clockSession.view().win); verified += verifyAttempt(encodeGame(clockActual), clockActions, settings, clockSession.audit());
+  const partialActual = { ...clockActual, down: [1, 0, 0, 0] }, partialSession = factory(partialActual, settings);
+  const partialFrame = partialSession.view(), partialSeen = observeBoard(tiles, partialFrame.state, partialActual.clock,
+    { picture: index => partialActual.faces[index], role: () => 'none' });
+  assert.equal(partialSeen.pictures[0], null);
+  const partialState = { ...partialFrame.state, pictures: partialSeen.pictures, down: partialSeen.down };
+  const partialPortfolio = createKnownWitnessPortfolio(() => primary, {}, () => exit);
+  const partialResult = partialPortfolio.search(clockGame, partialState, actions);
+  assert(partialResult.safeClockExit && partialResult.knownWitnessPortfolio.selected);
+  assert.equal(partialResult.knownWitnessPortfolio.fullyKnownBoard, false);
+  assert.equal(partialPortfolio.stats().partialClockSearches, 1);
+  const partialActions = [...partialResult.path, 3, 0, 1];
+  for (const index of partialActions) partialSession.tap(index);
+  assert(partialSession.view().win); verified += verifyAttempt(encodeGame(partialActual), partialActions, settings, partialSession.audit());
+  assert(!createKnownWitnessPortfolio(() => primary, {}, () => ({ ...win, index: 2, path: [2, 3, 0, 1] }))
+    .search(clockGame, partialState, actions).knownWitnessPortfolio.selected);
   assert(!createKnownWitnessPortfolio(() => primary, {}, () => ({ ...exit, index: 0, path: [0] }))
     .search(clockGame, state, actions).knownWitnessPortfolio.selected);
   assert(!createKnownWitnessPortfolio(() => primary, {}, () => ({ ...exit, path: [2, 99] }))

@@ -79,3 +79,25 @@ known safe exit even if unrelated pictures remain unknown. Separately investigat
 the existing broader public-information frontier, rather than assigning those
 unknown pictures or discarding the alternate strategy after it never ran.
 No campaign28 has been registered for the original configuration.
+
+## Public-clock eligibility extension
+
+The optional secondary search now also runs with a live public clock, even if
+unrelated pictures/orientations are unknown. Acceptance still requires a fully
+verified known-only complete win or safe clock-exit prefix; the extra search
+cannot promote an imagined picture into memory. Metadata distinguishes a fully
+known board from a partial public-clock search.
+
+Unit03 independently replays112 physical witness taps, including a partial-clock
+fixture with an actually unknown picture: its known clock exit is accepted and
+a supposed complete route through the unknown picture is rejected. Suite03:
+132/132 tests pass17s. No benchmark workers or policy comparisons were live while
+the actor changed. Source bf4cb21f8444da8d24462c1c1f23b04b116db3132556a6fd4fc400b1ff314167,
+72 files. Default23 and the four-unadopted-experiment count remain unchanged.
+
+Dennis clarified the memory contract: a hidden picture that is logically certain
+may be used like an observed picture, with its deduction provenance retained.
+Certainty must cover every possibility consistent with public evidence and
+declared public rules. A100% sampled agreement or a bounded solver failing to
+find a counterexample is not such a proof. A timed-out alternative remains
+unresolved. Actual hidden pictures never validate or choose a deduction.
