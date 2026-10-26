@@ -53,3 +53,13 @@ Raw .codex-runs/level-measure/: short-all-decisions-native.json,
 compare-short-all-decisions-v1.js, when-short-all-decisions-v1/short-all/baseline23/,
 short-all-clock-gate-suite-01/02.log. Next verify the gated actual-history choices
 on49 and102, then preregister a real campaign with the unchanged full gate.
+
+## Gated comparison completed
+
+Native73099/46594 exit0:218/178 taps independently replay with zero baseline
+drift. The gated candidate retains exactly six49 suggestion changes and none
+on102. Maximum candidate757.5/754.4ms. All measured source files remain frozen
+through these comparisons. This validates the condition's application on the
+recorded histories; it does not yet demonstrate preserved physical gains.
+Raw short-all-clock-decisions-native.json, compare-short-all-clock-decisions-v1.js
+and when-short-all-clock-decisions-v1/short-all-clock/baseline23/ retain evidence.
