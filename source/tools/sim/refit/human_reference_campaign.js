@@ -56,6 +56,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.retryInformationPeekTrayLimit === undefined || options.retryInformationWitness === true
     && Number.isInteger(options.retryInformationPeekTrayLimit) && options.retryInformationPeekTrayLimit >= 0
     && options.retryInformationPeekTrayLimit <= 2);
+  assert(options.retryInformationPreferPeek === undefined || typeof options.retryInformationPreferPeek === 'boolean');
+  assert(options.retryInformationPreferPeek !== true || options.retryInformationWitness === true);
   assert(Object.keys(publicContext).every(key => key === 'boardMode'));
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
@@ -207,7 +209,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const informationRetry = options.retryInformationWitness ? retryInformationSearch(completeRetrySearch || runRetrySearch || baseSearch,
     { milliseconds: options.retryInformationMs ?? 250, nodes: options.retryInformationNodes ?? 2000,
       choices: options.choiceLimit ?? 512, deadEndInformation: options.deadEndInformation,
-      peekTrayLimit: options.retryInformationPeekTrayLimit ?? 1 }) : null;
+      peekTrayLimit: options.retryInformationPeekTrayLimit ?? 1, preferActualPeek: options.retryInformationPreferPeek }) : null;
   const resetPlanner = () => {
     const selectedSearch = informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);

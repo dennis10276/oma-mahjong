@@ -6,10 +6,12 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert.equal(typeof primarySearch, 'function');
   const milliseconds = options.milliseconds ?? 250, nodeLimit = options.nodes ?? 2000, choices = options.choices ?? 512;
   const peekTrayLimit = options.peekTrayLimit ?? 1;
+  const preferActualPeek = options.preferActualPeek ?? false;
   assert(Number.isFinite(milliseconds) && milliseconds > 0 && milliseconds <= 500);
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   assert(Number.isInteger(choices) && choices > 0);
   assert(Number.isInteger(peekTrayLimit) && peekTrayLimit >= 0 && peekTrayLimit <= 2);
+  assert.equal(typeof preferActualPeek, 'boolean');
   assert(options.deadEndInformation === undefined || typeof options.deadEndInformation === 'boolean');
   const deadEndInformation = options.deadEndInformation === true;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
@@ -64,11 +66,11 @@ function retryInformationSearch(primarySearch, options = {}) {
         counters.deadEndConsidered++; counters.firstAttemptDeadEndConsidered += +(attempt === 1);
       }
       const extraBegan = Date.now();
-      const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit,
+      const result = explorationWitness(publicGame, state, actions, { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
         deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
-      counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit');
-      counters.deadlineStops += +(result.reason === 'deadline');
+      counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit' || result.budgetStopReason === 'node_limit');
+      counters.deadlineStops += +(result.reason === 'deadline' || result.budgetStopReason === 'deadline');
       if (!result.path?.length) {
         if (!recoverDeadEnd) return primary;
         if (!result.boundary && result.reason === 'no_known_information_route') {
@@ -93,6 +95,8 @@ function retryInformationSearch(primarySearch, options = {}) {
         information: !result.knownWin, boundary: !result.knownWin, nodes: (primary.nodes ?? 0) + result.nodes,
         retryInformationWitness: { attempt, stalls, kind: result.kind, knownPrefixTaps: result.knownPrefixTaps,
           ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
+          ...(preferActualPeek ? { preferActualPeek, exposureFallbackUsed: result.exposureFallbackUsed,
+            budgetStopReason: result.budgetStopReason } : {}),
           boundaryIndex: result.boundaryIndex, newlyExposed: result.newlyExposed, imaginedPicturesAdded: 0,
           source: 'known physical prefix to new public exposure or an actual required peek; no predicted hidden picture' } };
     },

@@ -49,3 +49,45 @@ audit-adopted23-retry-information.js, two-carry-information-unit-01.log,
 two-carry-information-suite-01.log and compare-two-carry-information-decisions.js.
 Source9b3dbe5f8dd8e64c9a2c4df5a0859c1dfd95e0162dabaf9c3f6322e96d6da987.
 Proposed profile80af4e99bae57a5a9c15509c4a0118bdcad2ecc107193d305cbfd6ce8050edc7.
+
+## Cap-only actual-history result: no changed move
+
+The first six actual23 salt1 attempts on10032 reproduce210 taps with zero
+baseline drift and zero changed suggestions(native21964 exit0).10052 reproduces
+159 taps with zero drift/changes(native84773 exit0). These369 independent replay
+taps do not support spending a benchmark experiment on the cap alone. No
+measured experiment is counted, and the optional implementation is retained
+for interaction testing rather than treated as disproved by this diagnostic.
+
+## Optional preference for a real picture inspection
+
+The search returns the first new public exposure, which may reveal orientation
+or a role instead of a picture. retryInformationPreferPeek:true retains the
+first such constructive route as a fallback and continues the same bounded
+search for an actual required picture inspection or a known win. It never
+assigns the newly exposed role/orientation/picture to the search state; it can
+continue only through already-known physical transitions. Nodes, deadline,
+clock margin and choice/tap limits remain unchanged.
+
+On a cap or deadline, the valid exposure fallback remains usable and the stop
+reason is recorded. The retry wrapper counts that bound even when a fallback
+is selected. No fallback or exhausted preference search establishes that a
+position is dead. The option defaults false and requires the existing retry
+information feature, so default23 behavior remains unchanged.
+
+Four additional renderer-projected fixtures expose a covered tile's orientation
+after the known pair. The preference-free search ends there; the optional search
+finds the actual peek without assuming that exposed tile's unknown value. A
+three-node cap returns the original valid exposure route with honest bounded
+metadata. Combined with the74 earlier worlds,850 winning-route taps replay.
+All127 tests pass17s(native89527 exit0). These are fixture/guard results, not a
+real-board strategy success.
+
+Next compare limit2 plus the preference on the same actual23 development
+histories, with zero baseline drift and independent replay required. No new
+campaign experiment is registered yet. Keep actor sources frozen during the
+trace; retain default23 and counter0. Raw follow-up files are
+two-carry-prefer-peek-unit-01.log, two-carry-prefer-peek-suite-01.log and
+compare-prefer-peek-information-decisions.js under .codex-runs/level-measure/.
+Sourceb4467c67a46379c215d09dedd8dac25cbc56679855703a97706b0410a97d4f94.
+Proposed profilec8c76e792c609e9f4be140d042b10078df7d74ac18e75c65f9c9101b6ea7d0f0.
