@@ -42,6 +42,7 @@ const modules = [
   'test_human_single_carry.js',
   'test_human_crowded_discovery.js',
   'test_public_safe_closed_inspection.js',
+  'test_public_clock_slack_ranking.js',
   'test_human_reference_budget.js',
   'test_human_reference_catalog.js',
   'test_human_reference_noise_screen.js',

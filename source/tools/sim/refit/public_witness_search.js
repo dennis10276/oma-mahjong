@@ -148,6 +148,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const tightClockRecovery = settings.tightClockRecovery ?? false;
   const tightClockRecoveryMaxSlack = settings.tightClockRecoveryMaxSlack ?? 5;
   const clockInformationBeforeRisk = settings.clockInformationBeforeRisk ?? false;
+  const clockSlackRanking = settings.clockSlackRanking ?? false;
   const progressiveReopens = settings.progressiveReopens ?? false;
   const diverseBeam = settings.diverseBeam ?? false;
   const exposureFrontier = game.publicExposure;
@@ -183,6 +184,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   assert(settings.tightClockRecoveryMaxSlack === undefined || tightClockRecovery
     && Number.isInteger(tightClockRecoveryMaxSlack) && tightClockRecoveryMaxSlack >= 3);
   assert.equal(typeof clockInformationBeforeRisk, 'boolean');
+  assert.equal(typeof clockSlackRanking, 'boolean');
   assert.equal(typeof progressiveReopens, 'boolean');
   assert.equal(typeof diverseBeam, 'boolean');
   const metricsCache = new Map(), proofCache = new Map();
@@ -293,6 +295,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const won = left === 0 && position.tray.length === 0, exit = clocked && !position.alive[game.clock.i];
     const progress = initialLeft - left;
     const matchedTiles = initialLeft + state.tray.length - left - position.tray.length;
+    const estimatedClockSlack = clocked ? game.clock.n - position.moves - metrics.clockDistance : null;
+    const clockRank = clockSlackRanking ? estimatedClockSlack : -metrics.clockDistance;
     const inCone = informationInCone(cone, targetIndex, informationTargets);
 
     const passiveRiskNeutral = informationTargets === null || position.tray.length <= state.tray.length;
@@ -320,9 +324,9 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       rank = [tier, -room.pressure, room.room, -path.length, progress, -recovery.stranded, recovery.immediate];
       if (clockRecoveryActive) rank.splice(3, 0, -(metrics.depth.maximumOverflow ?? 0), -metrics.depth.unknownWaiting, -metrics.depth.knownCost);
     } else if (clocked) {
-      rank = [tier, inCone ? 1 : 0, -room.pressure, -metrics.clockDistance, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
+      rank = [tier, inCone ? 1 : 0, -room.pressure, clockRank, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       if (clockRecoveryActive) rank = [tier, -room.pressure, -(metrics.depth.maximumOverflow ?? 0),
-        -metrics.depth.unknownWaiting, -metrics.depth.knownCost, inCone ? 1 : 0, -metrics.clockDistance,
+        -metrics.depth.unknownWaiting, -metrics.depth.knownCost, inCone ? 1 : 0, clockRank,
         safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
       if (settings.trayRecovery && (!clocked || !position.alive[game.clock.i])) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
@@ -356,7 +360,10 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
           && position.pictures[index] === null && position.down[index] !== null).length));
     }
 
-    const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information };
+    const candidate = { state: position, path, rank, goal, won, safeClockExit: exit && room.safe, clockRoom: exit ? room.room : 0, progress, matchedTiles, information,
+      ...(clockSlackRanking && clocked ? { clockBudgetRank: { remaining: game.clock.n - position.moves,
+        estimatedAccessCost: metrics.clockDistance, estimatedSlack: estimatedClockSlack, knownClockMovesSpent: position.moves - state.moves,
+        heuristicOnly: true } } : {}) };
     if (path.length && (progress > 0 || information || won || exit) && (!best || compare(rank, best.rank) > 0)) best = candidate;
     return candidate;
   };
@@ -537,6 +544,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost, clockRecoveryMinSlack } : {}),
       ...(tightClockRecovery ? { tightClockRecoveryActive, tightClockRecoveryMaxSlack } : {}),
       ...(clockInformationBeforeRisk ? { clockPreparationFrontiers } : {}),
+      ...(clockSlackRanking && clocked ? { clockBudgetRank: selected.clockBudgetRank ?? null } : {}),
       ...(rememberedLoss ? { rememberedLossPrunes } : {}),
       ...(shortInformation === 'recoveryAware' ? { informationPolicy: { active: shortInformationActive, minimumTray: recoveryInformationMinTray,
         availableFirst: recoveryAvailableInformation,

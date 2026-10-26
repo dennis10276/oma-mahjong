@@ -57,6 +57,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
   assert(options.safeClockInspection === undefined || typeof options.safeClockInspection === 'boolean');
+  assert(options.clockSlackRanking === undefined || typeof options.clockSlackRanking === 'boolean');
   assert(options.safeClockInspection !== true || !!options.inspectBeforeCommit);
   assert(options.exclusiveRoles === undefined || [false, true, 'clock'].includes(options.exclusiveRoles));
   assert(options.patientSingleCarry === undefined || typeof options.patientSingleCarry === 'boolean');
