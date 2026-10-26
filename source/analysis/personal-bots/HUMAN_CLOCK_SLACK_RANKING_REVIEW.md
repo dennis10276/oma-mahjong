@@ -143,9 +143,10 @@ Candidate profile29e4ccf222a8bf36677e8527d24123fcfed36fcd8d2a209dd0bc6c80fcf361c
 
 ## Experiment22 development result: advance to full
 
-| Scope | Valid boards | Complete repairs | Target regressions | Off-salt development gain | Slowest move | Mean minutes/board |
+| Scope | Valid boards | Complete repairs | Target regressions | Gain | Slowest move | Mean minutes/board |
 |---|---:|---:|---:|---|---:|---:|
 |Development,salt1|42/42|0|0|10033:5->4|1640.6ms|0.334|
+|Full,salts1/2/3|159/159|1|10041|10033:4/3/6|1638.4ms|0.552|
 
 The fitted condition restores144 to1 try and10045 to3 while retaining10033's
 4-try result. All three development workers exit0. The v2 protocol advances
@@ -155,11 +156,9 @@ remains contingent on repairing at least one complete target and breaking none.
 
 Other count changes remain within target:10041:3->5,105:1->2 and150:2->4.
 Thus this is target-regression parity, not identical attempt counts. The full
-three-salt check must still validate those boards and every other target.
-All159 boards are included and the cohort refresh is unchanged. Three new full
-workers are running; the supervisor and final comparison are not yet terminal.
-Default19 remains enabled and the consecutive-unadopted count stays2 pending
-the experiment's outcome. Actor sources remain frozen.
+three-salt check was still required at this development checkpoint. All159
+boards were included and the cohort refresh was unchanged. The completed full
+result below supersedes that checkpoint. Default19 remains enabled.
 
 The first22 startup exited1 in starting phase before any game worker launched,
 without an emitted error. The supervisor PID was confirmed absent and both
@@ -173,3 +172,38 @@ Raw22 evidence: experiment-22/development-summary.json, development-shard*.jsonl
 dispatch-state.json, catalog-refresh.json, and experiment-22-supervisor-01.log.
 The startup monitor writes experiment-22-process-events.jsonl outside the actor
 graph. Its hooks only log process events and do not change the game or planner.
+
+## Experiment22 full result: repaired33, regressed41, not adopted
+
+All six development/full workers and supervisor54295 exit0. The full run is
+valid:157/159 clear all salts and153/159 meet Dennis+1.10033 improves from
+5/null/5 to4/3/6, meeting its target6 on every salt.10041 worsens from3/3/3
+to5/8/12, missing its target8 on salt3. The repair cannot be adopted because
+a previously passing target breaks. Counter becomes3; default19 stays enabled
+with its original six open failures. Neither overall goal gate has passed.
+
+The first auxiliary comparison accidentally used21's ungated profile on41
+salt2. It is preserved separately, not used as the measured22 diagnosis. The
+corrected comparator asserts its candidate profile hash equals22. On actual
+baseline19 histories it reproduces177 taps on41 salt3 with zero drift and20
+changed suggestions, all unknown closed inspections(native79378 exit0).
+The development-salt comparison reproduces176 taps with zero drift and18
+changes(native24883 exit0).41's61-move starting clock already disables the new
+ranking, so the inspection component is the remaining changed behavior.
+
+## Apply the existing budget condition to inspection as well
+
+Optional safeClockInspectionBudgetRange now uses the same public starting-clock
+budget gate as ranking. The proposed range remains10-30; no new threshold is
+fitted from the full run.41's development slowdown3->5 and the earlier20 result
+already supplied negative development evidence.33's18-move clock retains both
+features;41's61-move clock restores19's ordinary active-clock discovery policy.
+This is still one public numeric feature, with no level IDs or per-level setup.
+
+126/126 tests pass16s(native84220 exit0), including active/inactive inspection
+gate parity, hidden-picture invariance, urgent-clock rejection and flag/range
+validation. The default profile remains unchanged. Before registering a new
+campaign, actual-history parity checks will compare the candidate against19
+on41 and against22 on the repaired33. No new campaign gain is claimed yet.
+Source837dad59c872dc695e2edb24564ef9119e0672c2a3328a03ce41f3f9f8796ac7.
+Proposed profile7a73e26d6089fbb3c8545d8921b679224da42aa38c5b7b28d4b8877619da8a72.

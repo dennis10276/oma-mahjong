@@ -87,6 +87,12 @@ for (const hidden of [...Array(36).keys(), 101]) {
     const disabled = choose({ inspectBeforeCommit: true, safeClockInspection: false });
     assert.equal(defaultChoice.plan.index, disabled.plan.index);
     assert.notEqual(disabled.plan.goal, 'closedTileDiscovery');
+    const gated = choose({ inspectBeforeCommit: true, safeClockInspection: true, safeClockInspectionBudgetRange: [10, 30] });
+    assert.equal(gated.plan.index, defaultChoice.plan.index);
+    assert.equal(gated.plan.goal, defaultChoice.plan.goal);
+    const activeGate = choose({ inspectBeforeCommit: true, safeClockInspection: true, safeClockInspectionBudgetRange: [1, 30] });
+    assert.equal(activeGate.plan.index, candidate.plan.index);
+    assert.equal(activeGate.plan.goal, candidate.plan.goal);
     const recovery = choose({ inspectBeforeCommit: 'recovery', safeClockInspection: true });
     assert(recovery.plan.knownWin || recovery.plan.safeClockExit);
     assert.notEqual(recovery.plan.goal, 'closedTileDiscovery');
@@ -95,6 +101,8 @@ for (const hidden of [...Array(36).keys(), 101]) {
 }
 assert.throws(() => createHumanController(tiles, { inspectBeforeCommit: 'recovery', safeClockInspection: 'yes' }));
 assert.throws(() => createHumanController(tiles, { safeClockInspection: true }));
+assert.throws(() => createHumanController(tiles, { inspectBeforeCommit: true, safeClockInspectionBudgetRange: [10, 30] }));
+assert.throws(() => createHumanController(tiles, { inspectBeforeCommit: true, safeClockInspection: true, safeClockInspectionBudgetRange: [30, 10] }));
 factory.verifySource();
 console.log(JSON.stringify({ passed: true, controls, provedControls, publicGroups: publicGroupSafety.size, negativeGroupsWithActualCounterexamples: [...publicGroupSafety.values()].filter(group => !group.proved).length, independentlyVerifiedTaps: verifiedTaps,
   maximumMoveIncrease, clockCounterexampleReplayed: true, controllerControls, controllerReplayedTaps,

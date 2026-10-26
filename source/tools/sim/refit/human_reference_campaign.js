@@ -57,6 +57,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(publicContext.boardMode === undefined || ['standard', 'lab'].includes(publicContext.boardMode));
   assert(options.inspectBeforeCommit === undefined || [false, true, 'recovery'].includes(options.inspectBeforeCommit));
   assert(options.safeClockInspection === undefined || typeof options.safeClockInspection === 'boolean');
+  assert(options.safeClockInspectionBudgetRange === undefined || options.safeClockInspection === true
+    && Array.isArray(options.safeClockInspectionBudgetRange) && options.safeClockInspectionBudgetRange.length === 2
+    && options.safeClockInspectionBudgetRange.every(value => Number.isInteger(value) && value > 0)
+    && options.safeClockInspectionBudgetRange[0] <= options.safeClockInspectionBudgetRange[1]);
   assert(options.clockSlackRanking === undefined || typeof options.clockSlackRanking === 'boolean');
   assert(options.clockSlackRankingBudgetRange === undefined || options.clockSlackRanking === true
     && Array.isArray(options.clockSlackRankingBudgetRange) && options.clockSlackRankingBudgetRange.length === 2
@@ -497,8 +501,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         }
       }
       const inspectionClockActive = !!(clock && current.alive[clock.i]);
+      const inspectionBudgetRange = options.safeClockInspectionBudgetRange;
+      const clockInspectionAllowed = inspectionClockActive && options.safeClockInspection
+        && (!inspectionBudgetRange || clock.n >= inspectionBudgetRange[0] && clock.n <= inspectionBudgetRange[1]);
       const discoveries = options.inspectBeforeCommit && current.tray.length <= inspectionTrayLimit
-        && (!inspectionClockActive || options.safeClockInspection)
+        && (!inspectionClockActive || clockInspectionAllowed)
         ? actions.filter(action => current.down[action.index] === 1 && current.openPeek !== action.index && current.pictures[action.index] === null
           && (!inspectionClockActive || safeClosedInspection(current, action.index, clock, true))) : [];
       manualChoice = false;
