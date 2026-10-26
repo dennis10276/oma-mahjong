@@ -83,6 +83,36 @@ fixture correction, not evidence of a failure in the active fixed1000ms campaign
 Both failed and passing logs are preserved as immediate-match-safety-jokers-tests-01.log
 and -02.log; the test is test-immediate-match-safety-jokers.js in the raw directory.
 
-Combined component coverage is43 independently replayed taps. Controller
-integration and recorded development/full campaign checks remain unperformed;
-there is no measured strategy experiment or adoption from these controls.
+Combined component coverage is43 independently replayed taps. These components
+alone do not establish controller behavior or recorded campaign performance.
+
+## Isolated controller draft
+
+The prototype is now wired into a separate raw copy of the frozen14 runtime,
+without changing the active benchmark actor. The optional immediateMatchSafety
+flag applies the check after sampling finalization, clears retained planner
+state on an override, marks the replacement as a manual choice before the
+actual acknowledgment, and reports considered/override/clock-removal counts.
+The per-salt measurement API carries those diagnostics only when enabled.
+
+The isolated component controls pass43 replayed taps. Four controller wiring
+controls pass24 additional independently replayed taps: enabled rescue and
+subsequent production clear; disabled preservation; expiry of an unrelated
+clock; and rescue by taking the matching clock tile. The initial bad planner
+choice is deliberately injected on these toy boards, so these controls prove
+wiring and continuation, not a naturally occurring current-planner failure.
+
+An arbitrary unlabeled four-tile board additionally passes the measurement API
+with the flag absent/false/true across three salts:36 independently replayed
+taps, identical winning actions in all modes, zero overrides, and diagnostics
+only in enabled runs. These isolated checks total103 production-replayed taps.
+Both native commands exit0. Current actor source remains120aee30205ecb739ccec79c640414b017e304044cd73d8816526f7d5b78f8a0;
+isolated draft source is717628eacc48859c09f5078869332c4707b9bf9e94a43d91d7bd1cfb0432e476(71 runtime files).
+
+Raw draft, manifest and API results are in immediate-match-safety-integration-draft/;
+preparation script is prepare-immediate-match-integration.js; API log is
+isolated-immediate-match-api-tests-01.log, all under .codex-runs/level-measure/.
+The prototype still needs a recorded-decision audit and development/full
+campaign tests before adoption. No measured strategy experiment is counted.
+Rebase the draft on the retained profile after14 finishes before measuring it;
+its current origin is the frozen14 actor with the prior adopted10 default.
