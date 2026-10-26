@@ -84,3 +84,23 @@ The actual v3 profile must verify reuse and timings before any campaign.
 Raw reusable-planning-native-v2.json, when-reusable-planning-v2/reusable/baseline23/,
 compare-reusable-planning-v3.js and when-reusable-planning-v3/reusable/baseline23/.
 No campaign registered yet; newly authorized allowance remains0/8 measured.
+
+## Resource-profile checks completed before campaign32
+
+Native54979/3477 exit0;32/41 independently replay242/176 actual23 taps with
+zero baseline drift. Resource-profile changes four/zero suggestions. Maximum
+baseline1626.4/1242.2ms and candidate1749.9/1325.1ms.32 returns12 public-exposure
+routes, three unfinished resumes/83014 resumed work units,23854 dependency checks
+and three contexts preserved after validation. These remain fixed-history
+suggestions, not executed candidate clears or evidence of improved attempts.
+
+The secondary now uses its250ms budget(max251ms from cooperative-step granularity)
+while the measured whole decisions stay strictly<2s.32 retains27 jobs,8943 states,
+123435 dependencies;24 discarded jobs include three affected-job restarts. Bounds
+remain explicit; no hidden inventory or speculative picture enters memory.
+
+Profile2058dede9354f48918740c9d725532ae442380d870f11e680c3a5891843e5a00 is the
+preregistered campaign32 candidate. All diagnostic jobs are terminal; actor source
+remainsa54485043b2e164428344a9ff4e95ae59b4db7452dd6ec8d641145bb0d6535a5.
+Raw reusable-planning-native-v3.json and the v3 comparison files retain exact
+profile/source snapshots, actual histories, all counters and native exits.
