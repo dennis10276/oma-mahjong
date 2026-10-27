@@ -36,3 +36,9 @@ by topology;one frozen model for all targets/future boards.149 tests pass19s,
 including a tray3 on-pile key pair unlocking tray relief and8 replayed winning
 taps. Feature/label foundation only;actor not yet changed. Full specification:
 HUMAN_LEARNED_ESCAPE_PLANNING.md. Curriculum collection is not a measured variant.
+
+Native7545 now collecting72 earlier bot-game experiences with3 workers,critic
+disabled. Getter-only instrumentation preserves decisions and replays8 winning
+control taps. Freeze actor/features while live. Metadata-only fit plan is sealed
+before label inspection and reserves a clock topology in validation. No48 run
+or adoption yet;0/8 measured,8 remain. Default40 and all original gates retained.

@@ -67,3 +67,16 @@ actor and feature files during collection,and independently replay every actual
 attempt. Raw escape-training-board-inventory-v1.json,escape-experience-v1/.
 After collection:audit labels/exclusions,fit/freeze critic,integrate bounded
 route ranking,run meaningful controls,then count the first measured48 trial.
+
+Collection native7545 is live with3 workers;getter-only parity control passes
+8 independently replayed winning taps with identical original/instrumented
+decisions. Actor source remains8b40b45eaeab…;feature source61feb851fb86….
+All72 boards also have distinct topologies from one another. Initial collection
+split57/15 has no validation clock board. BEFORE reading any experience labels,
+seal a separate metadata-only fit plan reserving the lexicographically first
+training clock board's entire topology for validation. Running collection manifest
+is unchanged. Fit must join fit-plan-v1.json,not silently use raw shard splits.
+One held-out clock board gives limited evidence;report that limit honestly.
+The first fixed critic uses board-balanced L2 logistic fitting(800 epochs,
+step0.5,L2=0.01),26 public features plus5 fixed contextual interactions. Fit
+and initialize only from training outcomes. No benchmark-driven threshold fit.
