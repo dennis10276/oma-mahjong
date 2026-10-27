@@ -58,3 +58,21 @@ space. Distinguish a proved forced route from a conditional plan through unknown
 Timeouts and sampled agreement never prove uniqueness or supply observed memory.
 Use actual public states and production-replayed forced-route controls before
 claiming that capability. No new per-level exception or hidden-picture oracle.
+
+## Actual-history result and strategy follow-up
+
+Implementation c7e142c. Native35295/66851 exit0: actual32 histories32/41 replay
+238/176 taps independently, zero baseline drift, zero changed moves. Maximum
+candidate1750.6/1341.9ms.32 now prepares73 extra times and resumes six unfinished
+searches, but constructs no new known win or selected continuation.41 prepares114
+times without a decision change. More work is not a repaired target. No35 campaign
+is spent;3/8 used,5 available. Raw warm-planning-native-v1.json and
+when-warm-planning-v1/reusable/baseline32/ preserve the negative evidence.
+
+Do not repeat a speculative last-loss inspection patch: the prior early-inspection
+review already found zero safe inspection alternatives at132 retained14 final
+losses. Re-audit current actual positions if revisiting that idea. The stronger
+question is earlier necessity: which pair, space or ordering must be preserved
+for a future continuation to remain feasible? Existing goal-route costs and pair
+debt are explicitly heuristics, not necessity/lower-bound proofs. Treat forced
+continuation as a substantive strategy requirement, not a new name for caching.
