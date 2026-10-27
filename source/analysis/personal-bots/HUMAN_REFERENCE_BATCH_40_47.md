@@ -143,3 +143,13 @@ Supervisor24497 and6 workers exit0;independent77-source/profile,519-opening-
 selection and42+159-summary audit exit0.1742.4ms slowest,0.557156min/board.
 Retain40;6/8 used,2 remain. Next revisit28/29's broader information condition,
 excluding earlier clock8/18 regression regimes and high-lock heavy family.
+
+RUNNING46:clock20–40 AND visible locks<=4 selects shortAll information plus
+retained public continuation-loss proofs,inheriting40's existing light/baseline
+families. No heavy/retry options. Covers49/52 in dev,80/81 outside dev(public
+inventory only).148 tests pass22s,native69698 exit0;120 production fixture taps.
+Actual40 target windows49/52 and complete33/102 controls replay532 taps,zero
+drift,6/4/0/0 changes;supervisor52472 and4 children exit0. Source
+d91fcd536820ce9956ddcb5539771b2a47a8b8bdef187d386af4520a22c0b71a,
+profile63cea5d181e19c44765eaf4b0ce54ac3956e1212304eb264113bc5d1522f5945.
+Fixed42 development live;source frozen.7/8 used,1 remains;default40,no adoption.
