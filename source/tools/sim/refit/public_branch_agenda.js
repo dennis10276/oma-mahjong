@@ -6,7 +6,9 @@ function createBranchAgenda(size, options = {}) {
   const width = options.width ?? 3, maximumCheckpoints = options.maximumCheckpoints ?? 128;
   const maximumOutcomes = options.maximumOutcomes ?? 32;
   const backtracking = options.backtracking ?? false;
+  const earlyForks = options.earlyForks ?? false;
   assert.equal(typeof backtracking, 'boolean');
+  assert.equal(typeof earlyForks, 'boolean'); assert(!earlyForks || backtracking);
   assert(Number.isInteger(size) && size > 0);
   assert(Number.isInteger(width) && width > 0 && width <= 8);
   assert(Number.isInteger(maximumCheckpoints) && maximumCheckpoints > 0);
@@ -89,7 +91,9 @@ function createBranchAgenda(size, options = {}) {
       if (outcomes.length > maximumOutcomes) outcomes.shift();
       if (backtracking && status === 'physicalLoss') {
         request = null;
-        for (let offset = forks.length - 1; offset >= 0; offset--) {
+        const offsets = Array.from({ length: forks.length }, (value, offset) => offset);
+        if (!earlyForks) offsets.reverse();
+        for (const offset of offsets) {
           const fork = forks[offset];
           if (!checkpoints.has(fork.key)) continue;
           const counts = failedChildren.get(fork.key) ?? new Map();

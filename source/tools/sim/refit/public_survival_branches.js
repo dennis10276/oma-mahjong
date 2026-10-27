@@ -14,6 +14,7 @@ function survivalBranchSearch(primarySearch, options = {}) {
   assert(Number.isFinite(milliseconds) && milliseconds > 0 && milliseconds <= 250);
   assert(Number.isInteger(width) && width > 0 && width <= 8);
   const backtracking = options.backtracking ?? false; assert.equal(typeof backtracking, 'boolean');
+  const earlyForks = options.earlyForks ?? false; assert.equal(typeof earlyForks, 'boolean'); assert(!earlyForks || backtracking);
   let agenda = null, size = null, actualActions = null;
   const counters = { calls: 0, graphNodes: 0, forcedPlans: 0, vetoes: 0, knownWins: 0, unresolvedDeadReports: 0,
     incompleteProofs: 0, closedPositions: 0, maximumExtraMs: 0 };
@@ -43,7 +44,7 @@ function survivalBranchSearch(primarySearch, options = {}) {
       if (primary.knownWin || primary.safeClockExit) return primary;
       const deadline = Math.min(settings.deadline ?? Infinity, began + 1800, Date.now() + milliseconds);
       if (Date.now() >= deadline) return primary;
-      if (agenda === null) { size = game.tiles.length; agenda = createBranchAgenda(size, { width, backtracking }); agenda.beginAttempt(); }
+      if (agenda === null) { size = game.tiles.length; agenda = createBranchAgenda(size, { width, backtracking, earlyForks }); agenda.beginAttempt(); }
       assert.equal(game.tiles.length, size, 'A branch agenda belongs to one board and salt');
       const model = Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure',
         'publicRoleExposure', 'publicInformationExposure'].filter(field => game[field] !== undefined).map(field => [field, game[field]]));

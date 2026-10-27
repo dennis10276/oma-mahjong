@@ -87,6 +87,26 @@ function test() {
   assert.equal(retryAgenda.stats().allocatedWorkingSetsPassed, 1);
   assert(retryAgenda.priorities(retryOpening, retryActions).includes(3));
   assert(!retryAgenda.accept(retryOpening, retryActions, retryProof).rejectedNow.length);
+  const earlyAgenda = createBranchAgenda(16, { backtracking: true, earlyForks: true, width: 3 });
+  earlyAgenda.beginAttempt();
+  const earlySession = factory(retryActual, settings), earlyOpening = retryObserve(earlySession);
+  earlyAgenda.accept(earlyOpening, retryActions, retryProof);
+  earlyAgenda.noteFork(earlyOpening, [6, 7], [6], 0);
+  for (const index of [6, 6]) { earlySession.tap(index); earlyAgenda.acknowledge(index, true); }
+  const earlyFork = retryObserve(earlySession), earlyActions = earlySession.view().legalTiles.map(index => ({ index }));
+  earlyAgenda.accept(earlyFork, earlyActions, analyzeSurvival(retryModel, earlyFork, earlyActions, { nodes: 256 }));
+  earlyAgenda.noteFork(earlyFork, [0, 1, 2, 3, 4, 5, 7], [0, 1, 2, 3, 4, 5, 7], 2);
+  const earlyRoute = [6, 6, 0, 0, 3, 3, 7, 7];
+  for (const index of earlyRoute.slice(2)) { earlySession.tap(index); earlyAgenda.acknowledge(index, true); }
+  assert.equal(earlySession.view().why, 'tray');
+  replayedTaps += verifyAttempt(encodeGame(retryActual), earlyRoute, settings, earlySession.audit());
+  earlyAgenda.recordOutcome(earlyRoute, 'physicalLoss');
+  assert.equal(earlyAgenda.stats().pendingRequest.index, 7);
+  assert.equal(earlyAgenda.stats().pendingRequest.prefixLength, 0);
+  assert.equal(earlyAgenda.stats().pendingRequest.rejectsWholeBranch, false);
+  assert.equal(earlyAgenda.stats().earlierForkSelections, 1);
+  assert(!earlyAgenda.accept(earlyOpening, retryActions, retryProof).rejectedNow.length);
+  assert.throws(() => createBranchAgenda(16, { earlyForks: true }));
   factory.verifySource();
   console.log('PASS bounded three-branch agendas retain their working set and every deferred alternative, apply only current complete exclusions, preserve a winning shared opening after an actual failed play, bound checkpoints and independently replay ' + replayedTaps + ' production taps');
 }

@@ -65,6 +65,7 @@ function test() {
   const clocked = scenario(true, true); assert.equal(clocked.stats.agenda.requestsScheduled, 0);
   const unresolved = scenario(true, false, true); assert.equal(unresolved.stats.agenda.requestsScheduled, 0);
   assert.throws(() => createHumanController(tiles, { survivalBacktracking: true }));
+  assert.throws(() => createHumanController(tiles, { survivalEarlyForks: true }));
   factory.verifySource();
   console.log('PASS one observed failed play schedules one deeper alternative on a retry, preserves the shared opening and viable old child, labels exploration separately from proof, leaves legacy/active-clock/unresolved cases unchanged and independently replays ' + replayedTaps + ' production taps');
 }

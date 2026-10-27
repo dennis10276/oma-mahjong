@@ -167,6 +167,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.survivalBranches === undefined || typeof options.survivalBranches === 'boolean');
   assert(options.survivalBacktracking === undefined || typeof options.survivalBacktracking === 'boolean');
   assert(!options.survivalBacktracking || options.survivalBranches === true);
+  assert(options.survivalEarlyForks === undefined || typeof options.survivalEarlyForks === 'boolean');
+  assert(!options.survivalEarlyForks || options.survivalBacktracking === true);
   assert(options.drawnRoleInformation === undefined || typeof options.drawnRoleInformation === 'boolean');
   assert(options.drawnRoleClockSlackRange === undefined || options.drawnRoleInformation === true
     && Array.isArray(options.drawnRoleClockSlackRange) && options.drawnRoleClockSlackRange.length === 2
@@ -265,7 +267,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   const survivalSearch = options.survivalBranches ? survivalBranchSearch(knownPortfolio?.search || informationRetry?.search
     || completeRetrySearch || runRetrySearch || baseSearch,
   { nodes: options.survivalNodes ?? 2048, milliseconds: options.survivalMs ?? 100, width: options.survivalBranchWidth ?? 3,
-    backtracking: options.survivalBacktracking }) : null;
+    backtracking: options.survivalBacktracking, earlyForks: options.survivalEarlyForks }) : null;
   const resetPlanner = () => {
     const selectedSearch = survivalSearch?.search || knownPortfolio?.search || informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);
