@@ -56,6 +56,7 @@ const modules = [
   'test_public_survival_continuation.js',
   'test_public_branch_agenda.js',
   'test_public_survival_branches.js',
+  'test_public_survival_backtracking.js',
   'test_human_reference_budget.js',
   'test_human_reference_catalog.js',
   'test_human_reference_noise_screen.js',
