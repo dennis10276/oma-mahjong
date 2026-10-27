@@ -6,6 +6,7 @@ const modules = [
   'test_human_visibility_geometry.js',
   'test_human_visibility_compiled.js',
   'test_human_reference_campaign.js',
+  'test_public_opening_planning.js',
   'test_public_action_order.js',
   'test_public_complete_witness.js',
   'test_public_exploration_witness.js',

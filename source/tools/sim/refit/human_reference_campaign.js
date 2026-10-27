@@ -40,8 +40,12 @@ const { retryInformationSearch } = require('./public_retry_information.js');
 const { safeClosedInspection } = require('./public_safe_closed_inspection.js');
 const { survivalBranchSearch } = require('./public_survival_branches.js');
 const { createKnownWitnessPortfolio } = require('./public_known_witness_portfolio.js');
+const { openingPlanningController } = require('./public_opening_planning.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
+  assert(options.openingConditionalPlanning === undefined || typeof options.openingConditionalPlanning === 'boolean');
+  if (options.openingConditionalPlanning) return openingPlanningController(options,
+    planning => createHumanController(tiles, planning, publicContext));
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
     && options.publicActionSalt > 0 && options.publicActionSalt <= 0x7fffffff);
   assert(options.choiceLimit === undefined || Number.isInteger(options.choiceLimit) && options.choiceLimit > 0);
@@ -815,7 +819,8 @@ function playHumanCampaign(input, options = {}) {
     ...(options.planning?.retryCompleteWitness ? { retryCompletion: controller.retryCompletionStats() } : {}),
     ...(options.planning?.retryInformationWitness ? { retryInformation: controller.retryInformationStats() } : {}),
     ...(options.planning?.knownWitnessPortfolio ? { knownWitnessPortfolio: controller.knownPortfolioStats() } : {}),
-    ...(options.planning?.survivalBranches ? { survivalBranches: controller.survivalBranchStats() } : {}),
+    ...(options.planning?.survivalBranches || options.planning?.openingConditionalPlanning ? { survivalBranches: controller.survivalBranchStats() } : {}),
+    ...(options.planning?.openingConditionalPlanning ? { openingPlanning: controller.openingSelectionStats() } : {}),
     ...(options.planning?.rememberKeyIdentities ? { keyIdentityEvidence: controller.keyIdentityEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };

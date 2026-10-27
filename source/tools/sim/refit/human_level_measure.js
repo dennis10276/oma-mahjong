@@ -79,6 +79,7 @@ function createMeasurer(planning = defaultProfile) {
           ...(result.retryInformation ? { retryInformation: result.retryInformation } : {}),
           ...(result.knownWitnessPortfolio ? { knownWitnessPortfolio: result.knownWitnessPortfolio } : {}),
           ...(result.survivalBranches ? { survivalBranches: result.survivalBranches } : {}),
+          ...(result.openingPlanning ? { openingPlanning: result.openingPlanning } : {}),
           ...(result.keyIdentityEvidence ? { keyIdentityEvidence: result.keyIdentityEvidence } : {}),
           ...(result.observedSafetyTransfer ? { observedSafetyTransfer: result.observedSafetyTransfer } : {}),
           attempts: result.attempts.map(attempt => ({ attempt: attempt.attempt, status: attempt.status,

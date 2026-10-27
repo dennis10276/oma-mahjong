@@ -1,6 +1,6 @@
 # Human-information reference and Dennis-strength level measuring
 
-ACTIVE and UNMET;8/8 new trials32-39 unadopted; STOP new trials pending Dennis. wip/personal-bots.
+ACTIVE and UNMET; Dennis authorized up to8 conditional trials40-47. wip/personal-bots.
 Authoritative objective: cc8ea8eb-87e0-48be-a531-eeb68c9d5592/goal-objective.md.
 Track A first; Track B only after A passes. Use sunflower tiles.
 
@@ -63,8 +63,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Process and completion
 
-- The newly authorized batch permits at most8 measured trials; stop for Dennis's decision.
-  A WHEN-condition trial counts. Prior unadopted24-31/history remain recorded.
+- The newly authorized40-47 batch permits at most8 measured trials; stop for Dennis's decision.
+  A WHEN-condition trial counts. Prior unadopted24-39/history remain recorded.
 - Small commits; goal<=80; one table/run; raw outputs .codex-runs/. Re-deal/luck runs stay STOPPED.
 - After A and B pass: freeze; run the next20 progression levels once, when Dennis
   has played them, at BOTH strengths. Keep measure() working on unseen lab boards.
@@ -74,7 +74,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 ## Current evidence
 
 - Retained23:157/159 clear every salt,154/159 within Dennis+1; A still unmet.
-- 143/143 tests pass18s; prior24-31 unadopted8; new batch32-39 unadopted8/8; retained23; await decision.
+- Prior24-39 unadopted16; new conditional batch40-47 has0/8 measured; retained23; goal unmet.
 - Full23 repairs10033, no target regressions;6 new workers exit0; slowest1759.2ms.
 - Adopted23's fresh159-board cohort and71 source files verified; mean0.652 minutes/board for3 salts.
 - Supervisor/auditor exit0; external-cwd unlabeled lab61 clears1/1/1, valid1502.6ms.
