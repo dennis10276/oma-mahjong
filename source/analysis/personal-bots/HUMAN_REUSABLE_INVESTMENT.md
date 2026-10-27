@@ -44,3 +44,16 @@ stay frozen while actual-policy comparisons run. Fixtures are not target repairs
 Raw .codex-runs/level-measure/: invested-cache-prototype-v1.json/.log,
 reusable-scan-eviction-v1.json/.log, reusable-investment-suite-01/02.log,
 compare-invested-cache-v1.js and prospective when-invested-cache-v1/.
+
+## Exact-profile comparison: no decision benefit yet
+
+Commit f2c9427. Native70677/25661 both exit0:32/41 independently replay238/176
+actual32-history taps, zero baseline drift, zero changed suggestions. Candidate
+max1750.0/1347.5ms.32 resumes three unfinished searches,81660 work units,
+with26 evictions and21 retained jobs. The fixture mechanism is real but it does
+not change any within-target decision through try7. No campaign35 is registered
+or spent; authorization remains3/8 used,5 available. Default23 unchanged.
+All73 files stayed frozen while those two comparisons ran. Next diagnose whether
+public root identity/allowed-root ordering prevents supported cross-retry reuse;
+do not assume it is a bug before inspecting actual calls. This is continued
+architecture refinement rather than a target-repair claim or task completion.
