@@ -126,3 +126,13 @@ ignored the primary planner's learned root costs;corrected in dacd4f4.
 penalized-but-only constructive roots. Fresh v2 comparisons native57050 live;
 sourcee489af5b241eb5091f5c921d76a25846027fddd82f8e56ad5abbbff76f8c23ae.
 No measured45 yet;5/8 used,3 remain. Freeze actors until all comparisons terminate.
+
+The v2 root-cost-only preflight also finishes984 taps with zero drift/changes;
+supervisor57050 and5 children exit0. Observer-only563-tap replay verifies
+failed-picture recurrence in different public positions;exact-position cost0.
+Add conditional picture preference,never a loss proof.147 tests pass18s,
+native2694 exit0. Fresh v3 comparisons984 taps,zero drift;target changes4/4/3,
+complete32/33 controls unchanged;supervisor4994 and5 children exit0.
+RUNNING45 sourcefcec18dd44d841d5603a23a1d4e14849b851d03d5cab8fdb1a69e9c871ccdf25,
+profilea4c1f9ff0601887fc6e602472cb3a5caf755e44cbc934c529982224ef5c49af7.
+Fixed42 development live;source frozen.6/8 used,2 remain;default40,no adoption.

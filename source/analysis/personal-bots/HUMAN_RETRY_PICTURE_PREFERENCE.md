@@ -42,3 +42,10 @@ available-partner/tray-match/unknown/low-pressure suppression,caps,recovered
 carriers and controller isolation. Existing route tests retain penalized-only
 constructive roots. Fresh actual-history comparisons are required before a
 counted45 campaign;earlier v1/v2 zero-change outputs must remain untouched.
+
+Implementationba49ff1;native2694 exits0 on the final147-test/18s suite. Current
+runtime sourcefcec18dd44d841d5603a23a1d4e14849b851d03d5cab8fdb1a69e9c871ccdf25,
+77 files;profilea4c1f9ff0601887fc6e602472cb3a5caf755e44cbc934c529982224ef5c49af7.
+Fresh v3 native4994 and5 children exit0:984 replayed taps,zero baseline drift,
+11 changes4/4/3 suggestions,32/33 unchanged. Fixed42 campaign45 is now live;
+6/8 measured,2 remain. No adoption or successful-target claim yet.
