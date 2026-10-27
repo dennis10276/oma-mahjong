@@ -3,7 +3,7 @@
 Dennis authorized: "Authorize reusable planning across retries, with up to eight
 new experiments." Maximum eight NEW measured trials total; WHEN variants count.
 Previous unadopted24–31 and stop report2b122e7 remain. Adoption does not replenish
-this allowance. Eight trials used,none available;32–38 rejected,39 running.
+this allowance. Eight trials used,none available;32–38 rejected,39 full running.
 Strong Track A then calibrated Track B objective remains unmet. Default retained23.
 
 |Trial|Mechanism|Latest scope/status|Complete repairs|Passing regressions|
@@ -15,7 +15,7 @@ Strong Track A then calibrated Track B objective remains unmet. Default retained
 |36|One failed-play backtrack at a retained productive fork|Dev42 rejected|0|0|
 |37|Three-child retry allocation at the earliest retained eligible fork|Dev42 rejected|0|0 target;clearance regression10011|
 |38|Pre-clock preparation combined with early retry branches|Dev42 rejected|0|0|
-|39|Clock recovery at occupied tray and slack30+ with preparation/retry|Development running|pending|pending|
+|39|Clock recovery at occupied tray and slack30+ with preparation/retry|Full159/salts1–3 running|Dev10032|Dev0 target;clearance regression10011|
 
 33 improved11 from8→3 on salt1 but broke33 from4→unresolved12. Full mixed
 decision comparisons11/33/41 exited0 with no baseline drift, independent replay
@@ -105,3 +105,15 @@ continuation proof or constructive deeper route evidence before spending39;
 safe-clock-exit protection currently bypasses broader survival analysis. A
 bounded search/unknown picture is never an impossibility certificate. One trial
 remains,no39 registered. Goal A/B/unseen20 unmet; default23 unchanged.
+
+39 development completes40/42 clear,39/42 targets;32 repairs unresolved12→5,
+target6.11 worsens8→unresolved12;41 changes3→6 within target8;1501→2;452→1.
+Other37 counts unchanged. All three dev workers exit0; independent development
+audit checks all76 frozen/current sources and recomputes the exact42-record
+summary.1649.3ms slowest,0.361705min/board,CPU/wall mean1.04784,min0.98745.
+The unchanged protocol advances to full159/salts1–3 because there is a target
+repair and zero passing-target regressions. This is NOT adoption. Report11's
+lost clear separately against the user's clear-every-board/break-none objective.
+Full supervisor19962 and three workers are live; source/default profile frozen.
+After all full/native/audit evidence,report the batch for Dennis's decision.
+No40 authorized,zero trials remain. Default23 and full goal remain unchanged.

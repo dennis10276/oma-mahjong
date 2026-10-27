@@ -69,3 +69,34 @@ independently replay238/320/178 physical taps,zero original-choice drift,
 35/22/20 changed suggestions. All decisions<2s,maximum1717.9ms.32 changes
 within target6;41 also changes its passing trajectory and remains a campaign
 risk. Forced-history suggestions prove neither a clear nor an improvement.
+
+## Completed development: qualified for full check,not adopted
+
+|Development42,salt1|Cleared|Within Dennis+1|Complete repairs|Passing target regressions|Slowest|
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate39|40/42|39/42|10032|0|1649.3ms|
+
+32 clears5(target6) instead of unresolved12.11 changes8→unresolved12: a material
+CLEARANCE regression on an already failed Dennis+1 target.41 changes3→6,still
+within target8;150 changes1→2,still passing;45 changes2→1. Other37 counts unchanged.
+The fixed v2 protocol advances because a complete target repair exists and no
+passing target breaks. Its comparison.adopted:true here means DEVELOPMENT
+qualification,not an adopted profile or full-cohort success. The lost clear on11
+must remain visible against the objective's clear-every-board/break-none wording;
+do not silently dismiss it merely because11 already missed its attempt target.
+
+All three development workers exit0. Independent development-only audit
+re-summarizes42 records against23,checks all76 frozen/current source hashes and
+profile,and confirms qualification. Mean0.361705min/board,salt1;CPU/wall
+mean1.04784,min0.98745;all executions valid. First audit log retains a2e-16
+CPU-average ordering mismatch; sorting input jobs by shard to match the runner
+reproduces the entire summary exactly in audit02. No actor or metric changed.
+
+Full159/salts1–3 is RUNNING under supervisor session19962,three full workers.
+At the audit, native process IDs13752/43988/38316 are confirmed live. Their
+terminal exits and the supervisor's exit remain UNVERIFIED while live. Full
+qualification still needs all159 real boards and independent audit; do not
+change any actor/default profile while these workers run. Default23 unchanged.
+Do not run40:all eight authorized trials are consumed. After full results,report
+the complete batch and material clearance/attempt tradeoffs for Dennis's decision.
