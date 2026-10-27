@@ -3,7 +3,7 @@
 Dennis authorized: "Authorize reusable planning across retries, with up to eight
 new experiments." Maximum eight NEW measured trials total; WHEN variants count.
 Previous unadopted24–31 and stop report2b122e7 remain. Adoption does not replenish
-this allowance. Five trials used, three available,32–36 rejected.
+this allowance. Six trials used,two available;32–36 rejected,37 running.
 Strong Track A then calibrated Track B objective remains unmet. Default retained23.
 
 |Trial|Mechanism|Latest scope/status|Complete repairs|Passing regressions|
@@ -13,6 +13,7 @@ Strong Track A then calibrated Track B objective remains unmet. Default retained
 |34|Fresh preparation only tray2,active clock20–40|Full159/salts1–3 rejected|0|0|
 |35|Necessary continuations and persistent three-branch agenda|Dev42 rejected|0|0|
 |36|One failed-play backtrack at a retained productive fork|Dev42 rejected|0|0|
+|37|Three-child retry allocation at the earliest retained eligible fork|Development running|pending|pending|
 
 33 improved11 from8→3 on salt1 but broke33 from4→unresolved12. Full mixed
 decision comparisons11/33/41 exited0 with no baseline drift, independent replay
@@ -69,3 +70,13 @@ it gains one picture on try12,still failing target6 and all12 actual attempts.
 bound the retry working set itself to a few children and move earlier after its
 budget is spent. Current width3 limits priorities,not noteFork's entire viable
 list. Budget-spent never means proved impossible. No37 registered;three remain.
+
+Follow-up diagnostic independently replays238/177 taps on actual36 histories32/41,
+zero drift or policy changes; native12081 and both children exit0.32 repeatedly
+returns to the same early two-tap checkpoint on tries2–7; late allocation never
+changes that child. No move-count-only checkpoint variants exist.9269691 adds
+optional earliest-fork allocation.143/143 tests pass18s,native65567 exit0.
+Actual-history comparisons now change six/zero suggestions,including32 tap2 on
+tries3–6; all<2s,native94910 and both children exit0. No candidate clear inferred.
+37 preregisteredaf33d31,baselineactual23,fixed42 selection/protocol unchanged.
+See HUMAN_REFERENCE_EXPERIMENT_37.md. Six trials used,two remain; default23.
