@@ -7,6 +7,7 @@ const { createSessionFactory } = require('./production_physical_session.js');
 const { encodeGame } = require('./personal_game_io.js');
 const { createHumanController, playHumanCampaign, verifyAttempt } = require('./human_reference_campaign.js');
 const { search } = require('./public_witness_search.js');
+const { survivalBranchSearch } = require('./public_survival_branches.js');
 
 function test() {
   const tiles = [{ x: 0, y: 0, z: 0 }, { x: .28, y: .28 / 1.24, z: 1 }, { x: 1, y: 0, z: 1 },
@@ -45,14 +46,23 @@ function test() {
     const before = structuredClone(state), actions = frame.legalTiles.map(index => ({ index }));
     const baseline = search(game, state, actions, options);
     const prepared = search(game, state, actions, { ...options, clockOrphanPreparation: true });
+    const combinedSearch = survivalBranchSearch((publicGame, position, roots) => search(publicGame, position, roots,
+      { ...options, clockOrphanPreparation: true }), { backtracking: true, earlyForks: true, nodes: 512, milliseconds: 100 });
+    combinedSearch.beginAttempt();
+    const combined = combinedSearch.search(game, state, actions);
     assert.equal(baseline.index, 7); assert(baseline.safeClockExit);
     assert.notEqual(prepared.index, 7); assert(prepared.information);
     assert(!prepared.knownWin && !prepared.knownDead && !prepared.safeClockExit);
     assert(prepared.orphanClockPreparation.consideredExits > 0);
+    assert.deepEqual(combined.path, prepared.path, 'Active-clock preparation must not be replaced by a retry exploration request');
+    assert.equal(combinedSearch.stats().agenda?.requestsScheduled ?? 0, 0);
     assert.deepEqual(state, before, 'Ranking must not promote hypothetical pictures to memory');
     if (canonicalPlan === null) canonicalPlan = prepared; else assert.deepEqual(prepared, canonicalPlan);
     const exited = execute(actual, [10, ...baseline.path]); assert.equal(exited.state.alive[7], 0);
     const discovered = execute(actual, [10, ...prepared.path]);
+    const combinedDiscovery = execute(actual, [10, ...combined.path]);
+    assert(combinedDiscovery.state.alive[7] && !combinedDiscovery.win
+      && combinedDiscovery.why !== 'tray' && combinedDiscovery.why !== 'clock');
     assert(discovered.state.alive[7]); assert(!discovered.win && discovered.why !== 'tray' && discovered.why !== 'clock');
     const hiddenIndex = picture => [0, 4, 9][hidden.indexOf(picture)];
     assert(execute(actual, [10, 1, 3, 2, 5, 6, 8, hiddenIndex(11), 7, hiddenIndex(17), 11, hiddenIndex(1)]).win);
@@ -75,7 +85,8 @@ function test() {
   const visibleGame = { tiles: visibleTiles, nb: Layouts.neighbors(visibleTiles), faces: [7, 7, 9, 9],
     down: [0, 0, 0, 0], rules: null, clock: { i: 1, n: 10 } };
   const winning = playHumanCampaign(visibleGame, { planning: { clockOrphanPreparation: true,
-    clockInformationBeforeRisk: true, finishKnown: true }, captureDecisions: true });
+    clockInformationBeforeRisk: true, finishKnown: true, survivalBranches: true,
+    survivalBacktracking: true, survivalEarlyForks: true }, captureDecisions: true });
   assert.equal(winning.wonOn, 1); assert.equal(winning.verifiedTaps, 4);
   assert(winning.attempts[0].decisions.every(decision => decision.plan.goal === 'win'));
   replayedTaps += winning.verifiedTaps;
