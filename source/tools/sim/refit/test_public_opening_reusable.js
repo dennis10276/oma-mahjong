@@ -48,9 +48,10 @@ function test() {
   assert.equal(custom.known().retryInformationNodes, 32768);
   for (const [budget,locks,retained] of [[37,6,true],[44,3,false],[61,1,false]]) {
     const routePolicy=openingPlanningController({...baseline,openingConditionalPlanning:true,openingReusablePlanning:true,
-      reusableRetainRoute:true},options=>({beginAttempt(){},observe(){},known(){return options;}}));
+      reusableRetainRoute:true,reusableSimplifyPrefixes:true},options=>({beginAttempt(){},observe(){},known(){return options;}}));
     routePolicy.beginAttempt();routePolicy.observe(state,{clock:{i:0,n:budget},roles:Array(locks).fill('lock')});
     assert.equal(!!routePolicy.known().reusableRetainRoute,retained);
+    assert.equal(!!routePolicy.known().reusableSimplifyPrefixes,retained);
   }
   const tiles = Array.from({ length: 12 }, (tile, index) => ({ x: index * 8, y: 0, z: 0 }));
   let taps = 0;

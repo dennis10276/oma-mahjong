@@ -84,6 +84,8 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert(!options.warmPlanning || options.reusablePlanning === true && options.continueAfterInformation === true);
   assert(options.retainRoute === undefined || typeof options.retainRoute === 'boolean');
   assert(!options.retainRoute || options.reusablePlanning === true);
+  assert(options.simplifyPrefixes === undefined || typeof options.simplifyPrefixes === 'boolean');
+  assert(!options.simplifyPrefixes || options.reusablePlanning === true);
   const retainedRoute = options.retainRoute ? createRetainedInformationRoute() : null;
   let lastKnowledge = null;
   const reusable = options.reusablePlanning ? createReusableExploration({ preferInvestedWork: options.retainInvestedWork }) : null;
@@ -95,6 +97,7 @@ function retryInformationSearch(primarySearch, options = {}) {
   if (options.prepareCrowded) Object.assign(counters, { proactiveSearches: 0, firstAttemptPreparations: 0 });
   if (options.warmPlanning) Object.assign(counters, { warmSearches: 0, warmInformationHeld: 0, warmKnownWins: 0 });
   if (retainedRoute) counters.retainedRouteTaps = 0;
+  if (options.simplifyPrefixes) Object.assign(counters,{simplifiedRouteOffers:0,redundantPeeksRemovedFromOffers:0});
   const fingerprint = memory => {
     const expected = ['down', 'initialRoles', 'pictures', ...(memory.keyIdentities === undefined ? [] : ['keyIdentities'])].sort();
     assert.deepEqual(Object.keys(memory).sort(), expected);
@@ -160,6 +163,7 @@ function retryInformationSearch(primarySearch, options = {}) {
         { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
           ...(reusable ? { version: options.contextVersion(), revalidatePublicChanges: true,
             continueAfterInformation: options.continueAfterInformation === true,
+            ...(options.simplifyPrefixes ? {simplifyPrefixes:true} : {}),
             ...(warmOnly ? { consumeInformation: false } : {}) } : {}),
           deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
@@ -180,6 +184,7 @@ function retryInformationSearch(primarySearch, options = {}) {
         return { ...unresolved, nodes: (primary.nodes ?? 0) + result.nodes };
       }
       retainedRoute?.remember(publicGame, state, result);
+      if (!retained && result.removedKnownPeeks) { counters.simplifiedRouteOffers++; counters.redundantPeeksRemovedFromOffers+=result.removedKnownPeeks; }
       if (retained) counters.retainedRouteTaps++;
       counters.routes++; counters.wins += +result.knownWin;
       counters.peekRoutes += +(result.kind === 'actualPeekRequired');
@@ -200,6 +205,7 @@ function retryInformationSearch(primarySearch, options = {}) {
             preparationStartedAtTrayCount: state.tray.length } : {}),
           ...(reusable ? { reusable: result.reusable } : {}),
           ...(retained ? { retainedRoute: true } : {}),
+          ...(result.removedKnownPeeks ? {removedKnownPeeks:result.removedKnownPeeks} : {}),
           ...(warmOnly ? { warmedCompleteWin: true } : {}),
           ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
           ...(preferActualPeek ? { preferActualPeek, exposureFallbackUsed: result.exposureFallbackUsed,

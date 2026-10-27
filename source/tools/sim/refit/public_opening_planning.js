@@ -2,11 +2,14 @@
 const assert = require('assert/strict');
 
 function openingPlanningController(options, createController) {
-  const { openingConditionalPlanning, openingReusablePlanning = false, reusableRetainRoute = false, ...baseline } = options;
+  const { openingConditionalPlanning, openingReusablePlanning = false, reusableRetainRoute = false,
+    reusableSimplifyPrefixes = false, ...baseline } = options;
   assert.equal(openingConditionalPlanning, true);
   assert.equal(typeof openingReusablePlanning, 'boolean');
   assert.equal(typeof reusableRetainRoute, 'boolean');
   assert(!reusableRetainRoute || openingReusablePlanning);
+  assert.equal(typeof reusableSimplifyPrefixes, 'boolean');
+  assert(!reusableSimplifyPrefixes || openingReusablePlanning);
   assert.equal(typeof createController, 'function');
   let delegate = createController(baseline), selection = null, begun = false;
   const api = Object.fromEntries(Object.keys(delegate).map(method => {
@@ -30,7 +33,8 @@ function openingPlanningController(options, createController) {
       if (enhanced || reusable) {
         delegate = createController(reusable ? { ...baseline, reusablePublicPlanning: true,
           reusableContinueAfterInformation: true, reusablePrepareCrowded: true, retryInformationNodes: 32768,
-          ...(reusableRetainRoute ? { reusableRetainRoute: true } : {}) } : { ...baseline, survivalBranches: true, survivalBacktracking: true,
+          ...(reusableRetainRoute ? { reusableRetainRoute: true } : {}),
+          ...(reusableSimplifyPrefixes ? {reusableSimplifyPrefixes:true} : {}) } : { ...baseline, survivalBranches: true, survivalBacktracking: true,
           survivalEarlyForks: true, clockOrphanPreparation: true, clockRecoveryMinSlack: 30 });
         delegate.beginAttempt();
       }

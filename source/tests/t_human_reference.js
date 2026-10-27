@@ -13,6 +13,7 @@ const modules = [
   'test_public_exploration_witness.js',
   'test_public_retry_information.js',
   'test_public_retained_information_route.js',
+  'test_public_simplify_information_prefix.js',
   'test_public_two_carry_information.js',
   'test_public_dead_end_information.js',
   'test_public_retry_complete.js',

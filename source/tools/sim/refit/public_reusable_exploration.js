@@ -4,6 +4,32 @@ const { legal, advance } = require('./known_tray_plan.js');
 const { aliveSignature } = require('./public_alive_signature.js');
 const { createExposureFrontier } = require('./public_exposure_frontier.js');
 
+function simplifyKnownPrefix(game, state, path, knownPrefixTaps, roots, deadline) {
+  const result = path.slice(); let position = state, offset = 0, removed = 0;
+  const same = (left,right) => JSON.stringify(['alive','tray','moves','openPeek','relieved','arriving']
+    .map(field=>left[field]??null)) === JSON.stringify(['alive','tray','moves','openPeek','relieved','arriving']
+    .map(field=>right[field]??null));
+  while (offset < knownPrefixTaps && Date.now() < deadline) {
+    const allowed = legal(game,position), index = result[offset];
+    if (!allowed.free.includes(index) || allowed.uncertain?.includes(index)) break;
+    const first = advance(game,position,index);
+    if (first.uncertain || first.lost) break;
+    const next = result[offset+1];
+    if (first.removed === 0 && offset+1 < knownPrefixTaps && (offset !== 0 || roots.has(next))
+      && allowed.free.includes(next) && !allowed.uncertain?.includes(next)) {
+      const afterFirst = legal(game,first.state);
+      if (afterFirst.free.includes(next) && !afterFirst.uncertain?.includes(next)) {
+        const both = advance(game,first.state,next), direct = advance(game,position,next);
+        if (!both.uncertain && !both.lost && !direct.uncertain && !direct.lost && same(both.state,direct.state)) {
+          result.splice(offset,1); knownPrefixTaps--; removed++; continue;
+        }
+      }
+    }
+    position = first.state; offset++;
+  }
+  return {path:result,knownPrefixTaps,removedKnownPeeks:removed};
+}
+
 function createReusableExploration(options = {}) {
   const maximumJobs = options.maximumJobs ?? 128, maximumStates = options.maximumStates ?? 8192;
   const maximumTotalStates = options.maximumTotalStates ?? 65536;
@@ -45,10 +71,12 @@ function createReusableExploration(options = {}) {
     const dependencyAware = settings.revalidatePublicChanges ?? false;
     const continueAfterInformation = settings.continueAfterInformation ?? false;
     const consumeInformation = settings.consumeInformation ?? true;
+    const simplifyPrefixes = settings.simplifyPrefixes ?? false;
     const validationLimit = settings.validationQueries ?? maximumDependencies;
     assert.equal(typeof dependencyAware, 'boolean'); assert(Number.isInteger(validationLimit) && validationLimit > 0);
     assert.equal(typeof continueAfterInformation, 'boolean');
     assert.equal(typeof consumeInformation, 'boolean');
+    assert.equal(typeof simplifyPrefixes, 'boolean');
     assert(consumeInformation || continueAfterInformation);
     assert(!settings.preferActualPeek, 'Reusable exploration currently preserves the exposure-first information policy');
     assert(Object.keys(game).every(key => ['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure',
@@ -63,7 +91,7 @@ function createReusableExploration(options = {}) {
     const rules = game.rules ? [game.rules.ice, Array.from(game.rules.locks ?? []), game.rules.keys] : null;
     const key = JSON.stringify([dependencyAware ? 'dependency-aware' : settings.version,
       dependencyAware ? physicalFields(state) : stateFields(state), roots.map(action => action.index), taps, peekTrayLimit, continueAfterInformation,
-      game.tiles.map(tile => [tile.x, tile.y, tile.z]), game.nb, rules, game.clock]);
+      game.tiles.map(tile => [tile.x, tile.y, tile.z]), game.nb, rules, game.clock, simplifyPrefixes]);
     const revision = JSON.stringify([settings.version, state.pictures, state.down,
       ['publicFrontier', 'publicInformationExposure', 'publicRoleExposure'].map(field => typeof game[field])]);
     let dependencyQueries = 0;
@@ -193,6 +221,12 @@ function createReusableExploration(options = {}) {
       }
       job.iterator = visit(initial, []);
       job.validate = (found, currentGame, current, currentDeadline) => {
+        let removedKnownPeeks = 0;
+        if (simplifyPrefixes) {
+          const prefix = found.kind === 'actualPeekRequired' ? found.path.length - 1 : found.path.length;
+          const simplified = simplifyKnownPrefix(currentGame,current,found.path,prefix,allowedRoots,currentDeadline);
+          found = {...found,path:simplified.path}; removedKnownPeeks = simplified.removedKnownPeeks;
+        }
         let position = current;
         const prefixLength = found.kind === 'actualPeekRequired' ? found.path.length - 1 : found.path.length;
         for (const index of found.path.slice(0, prefixLength)) {
@@ -221,6 +255,7 @@ function createReusableExploration(options = {}) {
         }
         if (Date.now() >= currentDeadline) return null;
         return { ...found, path: found.path.slice(), newlyExposed, boundaryIndex, knownPrefixTaps: prefixLength,
+          ...(simplifyPrefixes ? {removedKnownPeeks} : {}),
           knownProgress: progress(position) };
       };
       jobs.set(key, job); counters.createdJobs++;
@@ -262,4 +297,4 @@ function createReusableExploration(options = {}) {
     jobsValidating: Array.from(jobs.values()).filter(job => job.validation).length }) };
 }
 
-module.exports = { createReusableExploration };
+module.exports = { createReusableExploration, simplifyKnownPrefix };

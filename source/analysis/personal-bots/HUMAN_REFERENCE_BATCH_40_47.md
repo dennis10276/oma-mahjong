@@ -95,3 +95,9 @@ changed suggestions0/0/5. Complete32/33 controls unchanged. Default40 retained.
 Source d12882506298e593ad52c67f46613e98002aa147054809113dbebb7e9210e657,
 profile392591108c0b2ad461f93bf66c5b0e8dbe68ad0ec52d0eed3de15ad5c6aeb4ef.
 Fixed42 development live;source frozen.4/8 used,4 remain;no adoption/outcome yet.
+
+FINAL43 unadopted:11=3/10/3,49=4/5/5,15=1/6/9;all other counts unchanged.
+Full158/159 clear,155/159 targets;zero complete repairs,passing-target OR
+clearance regressions. Supervisor84735 and6 workers exit0;independent77-source/
+profile,519-opening-selection and42+159-summary audit exit0.1751.0ms slowest,
+0.537703min/board. Retain40;4/8 used,4 remain. No worker remains live.

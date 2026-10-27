@@ -63,3 +63,23 @@ adoption does not replenish. No outcome is claimed at preregistration.
 Raw .codex-runs/level-measure/:run-experiment-43.js,experiment-43/,
 when-retained-information-route-v1/,retained-route-native-v1.json,
 retained-information-route-suite-02.log. No automatic trial48.
+
+## Final measured result: unadopted
+
+Supervisor84735 and all six fresh workers exit0. Independent complete audit
+exit0 verifies77 source hashes/profile,42+159 summaries and519 opening selections.
+Development repairs11 in3,zero regressions. Full does not repair all three salts:
+
+|Target|Retained40 salts1/2/3|Trial43 salts1/2/3|
+|---|---|---|
+|86|1/1/3|1/1/3|
+|10011|8/8/8|3/10/3|
+|10049|5/3/5|4/5/5|
+|10052|censored/censored/censored|censored/censored/censored|
+
+Full158/159 clear,155/159 targets;zero complete repairs and zero passing-target/
+clearance regressions. Only other changed board15=1/6/9,still within target12.
+Slowest1751.0ms,0.537703min/board for3 salts,CPU/wall mean1.04379,min1.01069.
+Retain40;4/8 measured,4 remain;unadopted since40:3. Raw experiment-43/
+complete-independent-audit.json and supervisor-native-exit.json. Improvement
+on two salts motivates continued general planning work;it is not adoption.

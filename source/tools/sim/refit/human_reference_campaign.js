@@ -172,6 +172,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(!options.reusableWarmPlanning || options.reusablePublicPlanning === true && options.reusableContinueAfterInformation === true);
   assert(options.reusableRetainRoute === undefined || typeof options.reusableRetainRoute === 'boolean');
   assert(!options.reusableRetainRoute || options.reusablePublicPlanning === true);
+  assert(options.reusableSimplifyPrefixes === undefined || typeof options.reusableSimplifyPrefixes === 'boolean');
+  assert(!options.reusableSimplifyPrefixes || options.reusablePublicPlanning === true);
   assert(options.survivalBranches === undefined || typeof options.survivalBranches === 'boolean');
   assert(options.survivalBacktracking === undefined || typeof options.survivalBacktracking === 'boolean');
   assert(!options.survivalBacktracking || options.survivalBranches === true);
@@ -265,6 +267,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       retainInvestedWork: options.reusableRetainInvestedWork,
       warmPlanning: options.reusableWarmPlanning,
       retainRoute: options.reusableRetainRoute,
+      simplifyPrefixes: options.reusableSimplifyPrefixes,
       contextVersion: options.reusablePublicPlanning ? () => JSON.stringify([pictures, down, initialRoles, roles,
         typedKeyKnowledge(), acceptedTapMemory?.entries() ?? [], clearedRoleMemory?.entries() ?? [],
         blockedTapMemory?.entries() ?? [], observedTakeable, Array.from(blocked), observedSafetyPlanningActive,
