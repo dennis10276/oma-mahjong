@@ -26,7 +26,9 @@ function retryInformationSearch(primarySearch, options = {}) {
     && Array.isArray(preparationClockRange) && preparationClockRange.length === 2
     && preparationClockRange.every(value => Number.isInteger(value) && value >= 0)
     && preparationClockRange[0] <= preparationClockRange[1]);
-  const reusable = options.reusablePlanning ? createReusableExploration() : null;
+  assert(options.retainInvestedWork === undefined || typeof options.retainInvestedWork === 'boolean');
+  assert(!options.retainInvestedWork || options.reusablePlanning === true);
+  const reusable = options.reusablePlanning ? createReusableExploration({ preferInvestedWork: options.retainInvestedWork }) : null;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
     nodes: 0, nodeStops: 0, deadlineStops: 0, maximumExtraMs: 0, overruledDeadCertificates: 0, stallsEndedByInformation: 0 };

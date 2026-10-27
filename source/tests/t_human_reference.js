@@ -51,6 +51,7 @@ const modules = [
   'test_public_reusable_dependencies.js',
   'test_public_reusable_information_continuation.js',
   'test_public_reusable_preparation.js',
+  'test_public_reusable_investment.js',
   'test_human_reference_budget.js',
   'test_human_reference_catalog.js',
   'test_human_reference_noise_screen.js',

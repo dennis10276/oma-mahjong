@@ -13,6 +13,18 @@ function createReusableExploration(options = {}) {
   assert(maximumStates <= maximumTotalStates);
   assert(maximumDependencies <= maximumTotalDependencies);
   const jobs = new Map();
+  const preferInvestedWork = options.preferInvestedWork ?? false;
+  assert.equal(typeof preferInvestedWork, 'boolean');
+  const evictionVictim = (protectedKey = null) => {
+    const candidates = Array.from(jobs.keys()).filter(candidate => candidate !== protectedKey);
+    assert(candidates.length);
+    if (!preferInvestedWork) return candidates[0];
+    const value = key => {
+      const retained = jobs.get(key);
+      return retained.found?.knownWin ? Infinity : retained.exhausted || retained.capped ? -1 : retained.work;
+    };
+    return candidates.reduce((selected, candidate) => value(candidate) < value(selected) ? candidate : selected);
+  };
   let storedStates = 0, storedDependencies = 0;
   const counters = { calls: 0, createdJobs: 0, reusedJobs: 0, resumedUnfinished: 0, workUnits: 0,
     expandedStates: 0, evictedJobs: 0, returnedRoutes: 0, rejectedRoutes: 0, maximumSliceMs: 0,
@@ -94,7 +106,7 @@ function createReusableExploration(options = {}) {
       counters.reusedJobs++; job.currentGame = game;
       jobs.delete(key); jobs.set(key, job);
     } else {
-      while (jobs.size >= maximumJobs) remove(jobs.keys().next().value);
+      while (jobs.size >= maximumJobs) remove(evictionVictim());
       job = { initial: structuredClone(state), visited: new Map(), work: 0, found: null, exhausted: false,
         unknownBoundary: false, depthBoundary: false, capped: false, dependencies: new Map(), currentGame: game,
         revision, validation: null, dependencyCap: false, pendingOffer: null };
@@ -218,7 +230,7 @@ function createReusableExploration(options = {}) {
       else if (result.value?.kind) { job.pendingOffer = result.value; counters.yieldedInformation++; }
       if (job.capped) { job.iterator.return(); job.exhausted = true; job.found = null; job.pendingOffer = null; }
       while ((storedStates > maximumTotalStates || storedDependencies > maximumTotalDependencies) && jobs.size > 1) {
-        const victim = Array.from(jobs.keys()).find(candidate => candidate !== key); remove(victim);
+        remove(evictionVictim(key));
       }
     }
     if (resumed && unfinished && nodes) { counters.resumedUnfinished++; counters.resumedWorkUnits += nodes; }
