@@ -15,7 +15,7 @@ generalization of the new heavy family;the eventual unseen20 remains necessary.
 openingReusablePlanning:true requires openingConditionalPlanning:true. The
 wrapper removes BOTH selector flags before constructing a policy. When the
 heavy condition holds,override only reusablePublicPlanning,
-reusableContinueAfterInformation,reusablePrepareCrowded. Otherwise preserve
+reusableContinueAfterInformation,reusablePrepareCrowded,and retryInformationNodes32768. Otherwise preserve
 adopted40's light-clock condition and baseline. The gates are disjoint by lock
 count. One selected controller persists for the entire board/salt campaign;
 new clock states/unlocks/retries never change the family or discard its memory.
