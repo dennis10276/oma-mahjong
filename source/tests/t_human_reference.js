@@ -53,6 +53,7 @@ const modules = [
   'test_public_reusable_preparation.js',
   'test_public_reusable_investment.js',
   'test_public_reusable_warm_planning.js',
+  'test_public_survival_continuation.js',
   'test_human_reference_budget.js',
   'test_human_reference_catalog.js',
   'test_human_reference_noise_screen.js',
