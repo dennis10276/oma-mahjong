@@ -63,3 +63,9 @@ all3 workers exit0. Full159/salts1–3 now running;2/8 used,6 remain. No adoptio
 Resolved-options audit found inherited retryInformationNodes2000 versus old33's
 32768;retain41 as a smaller-budget variant. Restore only in a separately counted
 candidate after41 terminates and is audited,with a full configuration guard.
+
+FINAL41 unadopted:full158/159 clear,155/159 targets;zero repaired targets,
+zero passing-target/clearance regressions.11=9/9/3,49=4/3/6,15=1/8/2;
+all others unchanged versus40. Supervisor68207 and six workers exit0;independent
+77-source/profile/42+159-record/519-opening-selection audit exit0.1716.1ms
+slowest,0.531006min/board.2/8 used,6 remain;retained40. All processes terminal.

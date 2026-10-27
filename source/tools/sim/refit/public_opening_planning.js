@@ -27,7 +27,7 @@ function openingPlanningController(options, createController) {
         ...(openingReusablePlanning ? { reusable, family: reusable ? 'reusable33' : enhanced ? 'survival39' : 'retained23' } : {}) };
       if (enhanced || reusable) {
         delegate = createController(reusable ? { ...baseline, reusablePublicPlanning: true,
-          reusableContinueAfterInformation: true, reusablePrepareCrowded: true } : { ...baseline, survivalBranches: true, survivalBacktracking: true,
+          reusableContinueAfterInformation: true, reusablePrepareCrowded: true, retryInformationNodes: 32768 } : { ...baseline, survivalBranches: true, survivalBacktracking: true,
           survivalEarlyForks: true, clockOrphanPreparation: true, clockRecoveryMinSlack: 30 });
         delegate.beginAttempt();
       }

@@ -77,3 +77,23 @@ After native termination and audit,a separate counted candidate may restore32768
 and must first check the complete resolved configuration against archived33.
 The current helper implementation also differs;profile equality alone cannot
 guarantee the old result. Raw diagnosis:reusable41-options-source-audit.json.
+
+## Final measured result: unadopted
+
+Supervisor68207 and all six fresh workers exited0. Independent complete audit
+exited0 and verified77 source hashes,profile,42/159 summaries and519 opening
+selections. Full158/159 clear,155/159 targets;zero complete target repairs,
+zero passing-target/clearance regressions. Slowest1716.1ms,0.531006min/board for
+three salts;CPU/wall mean1.04314,min1.00869. Full heavy family9 runs,light111,
+baseline357. No actor edits occurred before terminal verification and audit.
+
+| Target | Retained40 salts1/2/3 | Trial41 salts1/2/3 |
+|---|---|---|
+|86|1/1/3|1/1/3|
+|10011|8/8/8|9/9/3|
+|10049|5/3/5|4/3/6|
+|10052|censored/censored/censored|censored/censored/censored|
+
+Only other changed board15 remains passing:1/1/2 becomes1/8/2;Dennis+1 target8.
+Control32 remains5/5/3. Retain40. Batch2/8 used,6 remain;unadopted since40:1.
+Raw experiment-41/complete-independent-audit.json and supervisor-native-exit.json.
