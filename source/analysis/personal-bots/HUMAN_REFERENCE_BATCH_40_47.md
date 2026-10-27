@@ -110,3 +110,9 @@ comparisons replay1068 taps,zero drift;supervisor48800 and5 children exit0.
 Source cb4ae20c467ecf87a19c1f7f629bf3e6db035b43ebd066335ddc2a5178549f65,
 profiled713042c454cd93f974370aa83142eadeee98e3050101543955c7fafd3571f2f.
 Fixed42 development live;source frozen.5/8 used,3 remain;retained40,no adoption.
+
+FINAL44 unadopted:full clear counts exactly43;11=3/10/3,49=4/5/5,15=1/6/9.
+158/159 clear,155/159 targets;zero complete repairs,passing-target OR clearance
+regressions. Supervisor17287 and6 workers exit0;independent77-source/profile,
+519-opening-selection and42+159-summary audit exit0.1751.1ms slowest,
+0.537771min/board. Retain40;5/8 used,3 remain. No measured worker remains live.

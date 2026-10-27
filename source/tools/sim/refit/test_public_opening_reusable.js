@@ -48,10 +48,12 @@ function test() {
   assert.equal(custom.known().retryInformationNodes, 32768);
   for (const [budget,locks,retained] of [[37,6,true],[44,3,false],[61,1,false]]) {
     const routePolicy=openingPlanningController({...baseline,openingConditionalPlanning:true,openingReusablePlanning:true,
-      reusableRetainRoute:true,reusableSimplifyPrefixes:true},options=>({beginAttempt(){},observe(){},known(){return options;}}));
+      reusableRetainRoute:true,reusableSimplifyPrefixes:true,openingRetryRiskLearning:true},options=>({beginAttempt(){},observe(){},known(){return options;}}));
     routePolicy.beginAttempt();routePolicy.observe(state,{clock:{i:0,n:budget},roles:Array(locks).fill('lock')});
     assert.equal(!!routePolicy.known().reusableRetainRoute,retained);
     assert.equal(!!routePolicy.known().reusableSimplifyPrefixes,retained);
+    assert.equal(!!routePolicy.known().retryRiskLearning,retained);
+    assert.equal(routePolicy.known().openingRetryRiskLearning,undefined);
   }
   const tiles = Array.from({ length: 12 }, (tile, index) => ({ x: index * 8, y: 0, z: 0 }));
   let taps = 0;
@@ -68,6 +70,8 @@ function test() {
     taps += conditional.verifiedTaps + direct.verifiedTaps;
   }
   assert.throws(() => createHumanController(tiles, { openingReusablePlanning: true }));
+  assert.throws(() => createHumanController(tiles, { openingRetryRiskLearning: true }));
+  assert.throws(() => createHumanController(tiles, { openingConditionalPlanning:true,openingReusablePlanning:true,openingRetryRiskLearning:'yes' }));
   assert.throws(() => createHumanController(tiles, { openingConditionalPlanning: true, openingReusablePlanning: 'yes' }));
   console.log('PASS public heavy-lock reusable planning separates clock30/29 and locks4/3, preserves adopted40 families and retry latching, rejects invalid options and independently replays '+taps+' key/lock/clock production taps against both direct policies');
 }

@@ -46,6 +46,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.openingConditionalPlanning === undefined || typeof options.openingConditionalPlanning === 'boolean');
   assert(options.openingReusablePlanning === undefined || typeof options.openingReusablePlanning === 'boolean');
   assert(!options.openingReusablePlanning || options.openingConditionalPlanning === true);
+  assert(options.openingRetryRiskLearning === undefined || typeof options.openingRetryRiskLearning === 'boolean');
+  assert(!options.openingRetryRiskLearning || options.openingReusablePlanning === true);
   if (options.openingConditionalPlanning) return openingPlanningController(options,
     planning => createHumanController(tiles, planning, publicContext));
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
