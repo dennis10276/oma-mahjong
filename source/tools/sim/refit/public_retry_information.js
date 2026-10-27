@@ -28,6 +28,8 @@ function retryInformationSearch(primarySearch, options = {}) {
     && preparationClockRange[0] <= preparationClockRange[1]);
   assert(options.retainInvestedWork === undefined || typeof options.retainInvestedWork === 'boolean');
   assert(!options.retainInvestedWork || options.reusablePlanning === true);
+  assert(options.warmPlanning === undefined || typeof options.warmPlanning === 'boolean');
+  assert(!options.warmPlanning || options.reusablePlanning === true && options.continueAfterInformation === true);
   const reusable = options.reusablePlanning ? createReusableExploration({ preferInvestedWork: options.retainInvestedWork }) : null;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
@@ -35,6 +37,7 @@ function retryInformationSearch(primarySearch, options = {}) {
   if (deadEndInformation) Object.assign(counters, { deadEndConsidered: 0, firstAttemptDeadEndConsidered: 0,
     deadEndRoutes: 0, unresolvedDeadEndReports: 0, confirmedDeadEndReports: 0 });
   if (options.prepareCrowded) Object.assign(counters, { proactiveSearches: 0, firstAttemptPreparations: 0 });
+  if (options.warmPlanning) Object.assign(counters, { warmSearches: 0, warmInformationHeld: 0, warmKnownWins: 0 });
   const fingerprint = memory => {
     const expected = ['down', 'initialRoles', 'pictures', ...(memory.keyIdentities === undefined ? [] : ['keyIdentities'])].sort();
     assert.deepEqual(Object.keys(memory).sort(), expected);
@@ -67,7 +70,8 @@ function retryInformationSearch(primarySearch, options = {}) {
       const clockRemaining = game.clock && state.alive[game.clock.i] ? game.clock.n - state.moves : Infinity;
       const proactive = !!options.prepareCrowded && !previouslyEligible && state.tray.length >= 2
         && clockRemaining >= (preparationClockRange?.[0] ?? 10) && clockRemaining <= (preparationClockRange?.[1] ?? Infinity);
-      if (!previouslyEligible && !proactive) return primary;
+      const warmOnly = !!options.warmPlanning && !previouslyEligible && !proactive;
+      if (!previouslyEligible && !proactive && !warmOnly) return primary;
       const unresolvedDeadEnd = reason => {
         counters.unresolvedDeadEndReports++;
         const report = { ...primary };
@@ -79,6 +83,7 @@ function retryInformationSearch(primarySearch, options = {}) {
       if (remaining <= 0) return recoverDeadEnd ? unresolvedDeadEnd('choice_budget') : primary;
       counters.considered++;
       if (proactive) { counters.proactiveSearches++; counters.firstAttemptPreparations += +(attempt === 1); }
+      if (warmOnly) counters.warmSearches++;
       const publicGame = Object.fromEntries(['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure', 'publicRoleExposure']
         .filter(field => game[field] !== undefined).map(field => [field, game[field]]));
       if (recoverDeadEnd) {
@@ -90,11 +95,16 @@ function retryInformationSearch(primarySearch, options = {}) {
       const result = (reusable ? reusable.search : explorationWitness)(publicGame, state, actions,
         { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
           ...(reusable ? { version: options.contextVersion(), revalidatePublicChanges: true,
-            continueAfterInformation: options.continueAfterInformation === true } : {}),
+            continueAfterInformation: options.continueAfterInformation === true,
+            ...(warmOnly ? { consumeInformation: false } : {}) } : {}),
           deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);
       counters.nodes += result.nodes; counters.nodeStops += +(result.reason === 'node_limit' || result.budgetStopReason === 'node_limit');
       counters.deadlineStops += +(result.reason === 'deadline' || result.budgetStopReason === 'deadline');
+      if (warmOnly) {
+        if (!result.knownWin) { counters.warmInformationHeld += +!!result.path?.length; return primary; }
+        counters.warmKnownWins++;
+      }
       if (!result.path?.length) {
         if (!recoverDeadEnd) return primary;
         if (!result.boundary && result.reason === 'no_known_information_route') {
@@ -123,6 +133,7 @@ function retryInformationSearch(primarySearch, options = {}) {
             preparationStartedAtClockRemaining: Number.isFinite(clockRemaining) ? clockRemaining : null,
             preparationStartedAtTrayCount: state.tray.length } : {}),
           ...(reusable ? { reusable: result.reusable } : {}),
+          ...(warmOnly ? { warmedCompleteWin: true } : {}),
           ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
           ...(preferActualPeek ? { preferActualPeek, exposureFallbackUsed: result.exposureFallbackUsed,
             budgetStopReason: result.budgetStopReason } : {}),

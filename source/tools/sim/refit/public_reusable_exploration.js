@@ -44,9 +44,12 @@ function createReusableExploration(options = {}) {
     assert.equal(typeof settings.version, 'string'); assert(settings.version.length > 0);
     const dependencyAware = settings.revalidatePublicChanges ?? false;
     const continueAfterInformation = settings.continueAfterInformation ?? false;
+    const consumeInformation = settings.consumeInformation ?? true;
     const validationLimit = settings.validationQueries ?? maximumDependencies;
     assert.equal(typeof dependencyAware, 'boolean'); assert(Number.isInteger(validationLimit) && validationLimit > 0);
     assert.equal(typeof continueAfterInformation, 'boolean');
+    assert.equal(typeof consumeInformation, 'boolean');
+    assert(consumeInformation || continueAfterInformation);
     assert(!settings.preferActualPeek, 'Reusable exploration currently preserves the exposure-first information policy');
     assert(Object.keys(game).every(key => ['tiles', 'nb', 'rules', 'clock', 'publicFrontier', 'publicExposure',
       'publicRoleExposure', 'publicInformationExposure'].includes(key)));
@@ -240,7 +243,8 @@ function createReusableExploration(options = {}) {
       if (validated) {
         counters.returnedRoutes++;
         counters.cachedIntermediateReturns += +(resumed && !!job.found && !job.found.knownWin && nodes === 0);
-        const continuing = !!job.pendingOffer; job.pendingOffer = null;
+        const continuing = !!job.pendingOffer;
+        if (consumeInformation) job.pendingOffer = null;
         counters.maximumSliceMs = Math.max(counters.maximumSliceMs, Date.now() - began);
         return { ...validated, nodes, boundary: !validated.knownWin, reason: 'constructive_public_information_route',
           imaginedPicturesAdded: 0, reusable: { resumed, cumulativeWork: job.work, expandedStates: job.visited.size,
