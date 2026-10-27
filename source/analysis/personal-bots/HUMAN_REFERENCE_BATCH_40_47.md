@@ -116,3 +116,13 @@ FINAL44 unadopted:full clear counts exactly43;11=3/10/3,49=4/5/5,15=1/6/9.
 regressions. Supervisor17287 and6 workers exit0;independent77-source/profile,
 519-opening-selection and42+159-summary audit exit0.1751.1ms slowest,
 0.537771min/board. Retain40;5/8 used,3 remain. No measured worker remains live.
+
+UNMEASURED45 study:enable actual failed-third-carrier retry memory only in the
+existing heavy family. First all-salt target/control comparisons replay984 taps,
+zero drift/changed choices;supervisor32506 and5 children exit0. Do not spend a
+campaign on that negative preflight. Audit found reusable information routing
+ignored the primary planner's learned root costs;corrected in dacd4f4.
+147 tests pass18s(native10717 exit0),including8 production taps and preserving
+penalized-but-only constructive roots. Fresh v2 comparisons native57050 live;
+sourcee489af5b241eb5091f5c921d76a25846027fddd82f8e56ad5abbbff76f8c23ae.
+No measured45 yet;5/8 used,3 remain. Freeze actors until all comparisons terminate.

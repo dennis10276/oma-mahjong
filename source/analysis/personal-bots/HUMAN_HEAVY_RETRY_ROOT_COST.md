@@ -51,3 +51,10 @@ taps independently replay in that test;all prior visibility/learning tests pass.
 Next compare actual44 first3 histories at all salts and complete32/33 controls
 with a new v2 output path before registering the still-unused measured45 trial.
 Keep sources frozen during comparisons. Default40 remains retained;A/B unmet.
+
+Implementationdacd4f4;current runtime source
+e489af5b241eb5091f5c921d76a25846027fddd82f8e56ad5abbbff76f8c23ae,
+77 files;profile remains2aef8603f82169555eda4e0a2e0dd2e30629030fb4b8b28d2a0e16b993a68c28.
+Fresh v2 comparisons live under native session57050;source frozen. Prepared45
+runner now points to v2 evidence and the root-cost suite. Its still-unused
+source argument must use this NEW hash. No measured45/adoption claim is made.
