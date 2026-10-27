@@ -160,3 +160,15 @@ Supervisor91023 and6 workers exit0;independent77-source/profile,519-opening-
 selection and42+159-summary audit exit0. Full slowest1715.4ms,dev1806.0ms;
 0.549781min/board. Retain40;7/8 used,1 remains. Next test broader information
 together with reusable proactive/retained prefixes under the same condition.
+
+RUNNING47 combines46 broad information with reusable proactive/retained known
+prefix planning and simplification under the SAME20–40/locks<=4 condition.
+No45 penalties or high-lock selector.148 tests pass20s,native80946 exit0;
+240 production fixture taps. Six actual-history comparisons735 taps,zero drift,
+101 target suggestion changes,controls33/102 unchanged;supervisor78061 and6
+children exit0,max1546.9ms. Source
+8b40b45eaeab9e8bbd855558458ef5841d81423782a35c8cd7902d04415b1b2f,
+profiled74a1d0618b03e4ae29534f63cb33238e1431f7e952ba7a033463d030d64acf8.
+Fixed42 development live;source frozen.8/8 used,ZERO remain;default40,no adoption.
+After terminal audit/adoption checks and full batch report,STOP new trials;Dennis
+decides continuation. No48 even if47 is adopted. Goal remains unmet.
