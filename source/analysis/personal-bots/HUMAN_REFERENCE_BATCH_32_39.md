@@ -3,7 +3,7 @@
 Dennis authorized: "Authorize reusable planning across retries, with up to eight
 new experiments." Maximum eight NEW measured trials total; WHEN variants count.
 Previous unadopted24–31 and stop report2b122e7 remain. Adoption does not replenish
-this allowance. Seven trials used,one available;32–37 rejected,38 running.
+this allowance. Seven trials used,one available;32–38 rejected.
 Strong Track A then calibrated Track B objective remains unmet. Default retained23.
 
 |Trial|Mechanism|Latest scope/status|Complete repairs|Passing regressions|
@@ -14,7 +14,7 @@ Strong Track A then calibrated Track B objective remains unmet. Default retained
 |35|Necessary continuations and persistent three-branch agenda|Dev42 rejected|0|0|
 |36|One failed-play backtrack at a retained productive fork|Dev42 rejected|0|0|
 |37|Three-child retry allocation at the earliest retained eligible fork|Dev42 rejected|0|0 target;clearance regression10011|
-|38|Pre-clock preparation combined with early retry branches|Development running|pending|pending|
+|38|Pre-clock preparation combined with early retry branches|Dev42 rejected|0|0|
 
 33 improved11 from8→3 on salt1 but broke33 from4→unresolved12. Full mixed
 decision comparisons11/33/41 exited0 with no baseline drift, independent replay
@@ -91,3 +91,16 @@ hashes. CPU/wall mean1.04577,min0.98113;all executions valid.1367 independently
 replayed taps audit11/32/52.32 executes early alternatives but remains64/86 known
 pictures after try4;52 still has12 clock losses while incrementally learning to
 66/86. No full run or adoption. No38 registered;two measured trials remain.
+
+38 rejected-development:40/42 clear,38/42 targets,all42 counts match23;11 restored
+from37's unresolved12 to8 but no repair of23.1625.3ms slowest,0.342367min/board,
+CPU/wall mean1.04763,min1.00263;all executions valid. Supervisor88039 and all
+three workers exit0. Independent negative audit verifies76 frozen/current source
+hashes and recomputes42 records.1128 independent replay taps audit learning:
+32 improves64→77/86 known pictures by try3,but still fails12 and repeats tries
+10–12.1688 replay taps audit clock exits:later32 exits still carry two or three
+stranded pictures,while52 never reaches its clock. Need positive complete public
+continuation proof or constructive deeper route evidence before spending39;
+safe-clock-exit protection currently bypasses broader survival analysis. A
+bounded search/unknown picture is never an impossibility certificate. One trial
+remains,no39 registered. Goal A/B/unseen20 unmet; default23 unchanged.

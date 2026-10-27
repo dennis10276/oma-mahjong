@@ -60,3 +60,41 @@ replay246/177 taps,zero baseline drift,seven/one changed suggestions,all<2s.
 clock43,tray1.41 changes try3 tap32,clock33,tray2,on its winning attempt. That
 control change is explicitly retained for campaign validation. Suggestions
 remain unexecuted; no partial or complete gain is inferred.
+
+## Completed development result: rejected
+
+|Development42,salt1|Cleared|Within Dennis+1|Complete repairs|Passing regressions|Slowest|
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate38|40/42|38/42|0|0|1625.3ms|
+
+All42 clear-count vectors match23.11 returns from37's unresolved12 to8,but this
+is restoration,not a repair of23. No partial/off-salt gains;unchanged qualification
+rejects development. No full run or adoption. Supervisor88039 and all three
+workers exit0. Independent audit recomputes42 records against23 and verifies
+all76 frozen/current source hashes,profile and evaluator. All executions valid;
+CPU/wall mean1.04763,min1.00263;mean0.342367min/board,salt1. Seven of eight
+authorized trials used,one remains. Default23 unchanged; goal remains unmet.
+
+Public-learning audit independently replays1128 actual taps on11/32/52.32 now
+learns76/86 pictures on try1,77 on try3,then plateaus. This is substantially more
+information than37's64,without a target repair. Tries10–12 repeat the same full
+failed play. Therefore combining failed components changes what is learned,but
+additional observations alone do not provide a successful continuation.
+
+A separate actual-clock-exit audit independently replays1688 taps/44 attempts
+on11/32/33/41/49/52.32's later exits carry two or three stranded pictures. On
+tries10–12 the tray is[16,10,6] with33 clock moves still spare. Known partners of
+16/10 are covered(unknown takeability),and no partner of6 has yet been seen.
+This does not prove no hidden partner exists or that the board is impossible.
+On tries3/4 it fails before removing the clock.52 still never exits its clock.
+
+Before spending39,investigate whether a supposedly safe clock exit has a proved
+closed continuation under the complete public-information model. Current survival
+wrapper protects every primary safeClockExit before running its broader proof.
+Any rejection would need a positive complete public certificate,not a budget
+stop,heuristic stranded count,or unseen-picture assumption. Reaching the clock
+does not itself prove the level can be finished. Also inspect whether public
+clock/recovery search misses a deeper constructive route. No39 registered.
+All campaign/comparison processes terminal. Keep the final trial reserved for
+useful within-target evidence; no TrackB or unseen20 freeze has begun.
