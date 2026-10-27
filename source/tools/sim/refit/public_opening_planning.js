@@ -3,7 +3,7 @@ const assert = require('assert/strict');
 
 function openingPlanningController(options, createController) {
   const { openingConditionalPlanning, openingReusablePlanning = false, reusableRetainRoute = false,
-    reusableSimplifyPrefixes = false, openingRetryRiskLearning = false, ...baseline } = options;
+    reusableSimplifyPrefixes = false, openingRetryRiskLearning = false, openingRetryPictureLearning = false, ...baseline } = options;
   assert.equal(openingConditionalPlanning, true);
   assert.equal(typeof openingReusablePlanning, 'boolean');
   assert.equal(typeof reusableRetainRoute, 'boolean');
@@ -12,6 +12,8 @@ function openingPlanningController(options, createController) {
   assert(!reusableSimplifyPrefixes || openingReusablePlanning);
   assert.equal(typeof openingRetryRiskLearning, 'boolean');
   assert(!openingRetryRiskLearning || openingReusablePlanning);
+  assert.equal(typeof openingRetryPictureLearning,'boolean');
+  assert(!openingRetryPictureLearning||openingRetryRiskLearning);
   assert.equal(typeof createController, 'function');
   let delegate = createController(baseline), selection = null, begun = false;
   const api = Object.fromEntries(Object.keys(delegate).map(method => {
@@ -37,7 +39,8 @@ function openingPlanningController(options, createController) {
           reusableContinueAfterInformation: true, reusablePrepareCrowded: true, retryInformationNodes: 32768,
           ...(reusableRetainRoute ? { reusableRetainRoute: true } : {}),
           ...(reusableSimplifyPrefixes ? {reusableSimplifyPrefixes:true} : {}),
-          ...(openingRetryRiskLearning ? {retryRiskLearning:true} : {}) } : { ...baseline, survivalBranches: true, survivalBacktracking: true,
+          ...(openingRetryRiskLearning ? {retryRiskLearning:true} : {}),
+          ...(openingRetryPictureLearning ? {retryPictureLearning:true} : {}) } : { ...baseline, survivalBranches: true, survivalBacktracking: true,
           survivalEarlyForks: true, clockOrphanPreparation: true, clockRecoveryMinSlack: 30 });
         delegate.beginAttempt();
       }

@@ -2,9 +2,11 @@
 const assert = require('assert/strict');
 const { aliveSignature } = require('./public_alive_signature.js');
 
-function createRetryRiskMemory(clock = null) {
+function createRetryRiskMemory(clock = null, options = {}) {
   assert(clock === null || Number.isInteger(clock.i) && clock.i >= 0 && Number.isInteger(clock.n) && clock.n > 0);
   const clockIndex = clock?.i ?? -1, risks = new Map();
+  const generalizePictures = options.generalizePictures ?? false, pictureRisks = new Map();
+  assert.equal(typeof generalizePictures,'boolean');
   let transitions = [];
   const identity = state => aliveSignature(state.alive) + '|' + state.tray.slice().sort((left, right) => left - right).join(',')
     + '|' + state.openPeek + '|' + +!!state.relieved + '|' + (clockIndex >= 0 && state.alive[clockIndex] ? state.moves : '-')
@@ -16,7 +18,9 @@ function createRetryRiskMemory(clock = null) {
       assert.equal(after.physicalTaps, before.physicalTaps + 1, 'Learn only an actual accepted physical tap');
       assert.equal(before.alive.length, after.alive.length);
       assert(after.alive.every((alive, target) => alive === 0 || alive === 1 && before.alive[target] === 1));
-      transitions.push({ identity: identity(before), index, beforeTray: before.tray.length, afterTray: after.tray.length });
+      transitions.push({ identity: identity(before), index, beforeTray: before.tray.length, afterTray: after.tray.length,
+        ...(generalizePictures && before.tray.length < 3 && after.tray.length === 3
+          ? {picture:after.tray.find(picture=>!before.tray.includes(picture))} : {}) });
     },
     finish(status) {
       assert(['physicalLoss', 'cleared', 'unresolvedBudget', 'unresolvedPublicFrontier', 'unresolved'].includes(status));
@@ -30,10 +34,18 @@ function createRetryRiskMemory(clock = null) {
       const signature = risk.identity + '|root:' + risk.index;
       const penalty = Math.min(3, (risks.get(signature)?.penalty ?? 0) + 1);
       risks.set(signature, { identity: risk.identity, index: risk.index, penalty });
+      if (generalizePictures && Number.isInteger(risk.picture)) pictureRisks.set(risk.picture,
+        Math.min(3,(pictureRisks.get(risk.picture)??0)+1));
       return { index: risk.index, penalty };
     },
     cost(state, index) { return risks.get(identity(state) + '|root:' + index)?.penalty ?? 0; },
-    entries() { return [...risks.values()].map(entry => ({ ...entry })); },
+    pictureCost(state,picture,hasAvailablePartner) {
+      assert.equal(typeof hasAvailablePartner,'boolean');
+      return generalizePictures && state.tray.length >= 2 && picture !== null && !state.tray.includes(picture)
+        && !hasAvailablePartner ? pictureRisks.get(picture)??0 : 0;
+    },
+    entries() { return [...risks.values()].map(entry => ({ ...entry })).concat([...pictureRisks].map(([picture,penalty])=>({
+      picture,penalty,kind:'failedThirdPicturePreference',provedLoss:false}))); },
   };
 }
 

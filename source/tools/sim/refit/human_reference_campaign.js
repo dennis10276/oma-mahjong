@@ -48,6 +48,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(!options.openingReusablePlanning || options.openingConditionalPlanning === true);
   assert(options.openingRetryRiskLearning === undefined || typeof options.openingRetryRiskLearning === 'boolean');
   assert(!options.openingRetryRiskLearning || options.openingReusablePlanning === true);
+  assert(options.openingRetryPictureLearning === undefined || typeof options.openingRetryPictureLearning === 'boolean');
+  assert(!options.openingRetryPictureLearning || options.openingRetryRiskLearning === true);
   if (options.openingConditionalPlanning) return openingPlanningController(options,
     planning => createHumanController(tiles, planning, publicContext));
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
@@ -95,6 +97,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.clockProbeTrayLimit === undefined || options.probeUnknownClock === true
     && Number.isInteger(options.clockProbeTrayLimit) && options.clockProbeTrayLimit >= 0 && options.clockProbeTrayLimit <= 2);
   assert(options.retryRiskLearning === undefined || typeof options.retryRiskLearning === 'boolean');
+  assert(options.retryPictureLearning === undefined || typeof options.retryPictureLearning === 'boolean');
+  assert(!options.retryPictureLearning || options.retryRiskLearning === true);
   assert(options.retryFailedRouteLearning === undefined || typeof options.retryFailedRouteLearning === 'boolean');
   assert(!options.retryFailedRouteLearning || options.retryRiskLearning === true,
     'Failed-route preferences require the guarded actual-retry exploration');
@@ -288,7 +292,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);
   };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? Math.max(
-    retryRiskMemory.cost(current, index), failedRouteMemory?.cost(current, index, JSON.stringify(retryKnowledge())) ?? 0) : 0;
+    retryRiskMemory.cost(current, index),
+    options.retryPictureLearning ? retryRiskMemory.pictureCost(current,pictures[index],!observedTakeable || observedTakeable.some((yes,mate)=>
+      yes&&mate!==index&&current.alive[mate]&&pictures[mate]===pictures[index])) : 0,
+    failedRouteMemory?.cost(current, index, JSON.stringify(retryKnowledge())) ?? 0) : 0;
   if (knownLossMemory) geometry.publicKnownLoss = position => knownLossMemory.knowsLoss(position);
   if (options.rememberProvedContinuations) geometry.publicRetainKnownLoss = (origin, path, target, report) => {
     assert(current && origin.physicalTaps === current.physicalTaps && physicalSignature(origin) === physicalSignature(current));
@@ -348,7 +355,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         if (observed.down[index] !== null) { assert(down[index] === null || down[index] === observed.down[index]); down[index] = observed.down[index]; }
       });
       if (observed.clock) clock = { i: observed.clock.i, n: observed.clock.n };
-      if (options.retryRiskLearning && !retryRiskMemory) retryRiskMemory = createRetryRiskMemory(clock);
+      if (options.retryRiskLearning && !retryRiskMemory) retryRiskMemory = createRetryRiskMemory(clock,{generalizePictures:options.retryPictureLearning});
       if (options.retryFailedRouteLearning && !failedRouteMemory) {
         failedRouteMemory = createFailedRouteMemory(clock);
         failedRouteMemory.beginAttempt(startingRetryKnowledge);

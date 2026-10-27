@@ -49,6 +49,26 @@ function test() {
   assert.equal(memory.finish('physicalLoss'), null, 'A completed attempt cannot be counted twice');
   const independent = createRetryRiskMemory();
   assert.equal(independent.cost(failed.before[2], 2), 0, 'Risk memory cannot leak to a new level controller');
+  const generalized=createRetryRiskMemory(null,{generalizePictures:true});
+  const pictureSettings={seed:1,tapMs:1000,choiceLimit:32},pictureSession=factory(game,pictureSettings);
+  generalized.beginAttempt();
+  for(const index of [0,1,2,3]){
+    const before=publicState(pictureSession.view().state);
+    generalized.observeTransition(before,index,publicState(pictureSession.tap(index).state));
+  }
+  assert.equal(verifyAttempt(encodeGame(game),[0,1,2,3],pictureSettings,pictureSession.audit()),4);
+  generalized.finish('physicalLoss');
+  const different={...failed.before[2],openPeek:6};
+  assert.equal(generalized.cost(different,2),0);
+  assert.equal(generalized.pictureCost(different,3,false),1,'A failed third picture is a soft preference in other actual public positions');
+  assert.equal(generalized.pictureCost(different,3,true),0,'An available remembered partner removes the picture preference');
+  assert.equal(generalized.pictureCost({...different,tray:[1]},3,false),0);
+  assert.equal(generalized.pictureCost(different,null,false),0,'Never score an unknown picture using future knowledge');
+  assert.equal(generalized.pictureCost({...different,tray:[1,3]},3,false),0,'Never penalize an immediate tray match');
+  assert.equal(independent.pictureCost(different,3,false),0,'No cross-controller picture preferences');
+  assert(generalized.entries().some(row=>row.kind==='failedThirdPicturePreference'&&row.picture===3&&row.provedLoss===false));
+  const learnedPictures=generalized.entries();
+  generalized.beginAttempt();generalized.finish('unresolvedBudget');assert.deepEqual(generalized.entries(),learnedPictures);
   const clockGame = { ...game, clock: { i: 3, n: 8 } }, clockSettings = { seed: 1, tapMs: 1000, choiceLimit: 32 };
   const clockSession = factory(clockGame, clockSettings), clocked = createRetryRiskMemory(clockGame.clock);
   clocked.beginAttempt();
@@ -64,7 +84,7 @@ function test() {
   const widerTiles = Array.from({ length: 10 }, (_, index) => ({ x: index * 4, y: 0, z: 0 }));
   const widerGame = { tiles: widerTiles, nb: Layouts.neighbors(widerTiles), faces: [1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
     down: widerTiles.map(() => 0), rules: null, clock: null };
-  const recoveredMemory = createRetryRiskMemory(), widerSession = factory(widerGame, clockSettings);
+  const recoveredMemory = createRetryRiskMemory(null,{generalizePictures:true}), widerSession = factory(widerGame, clockSettings);
   const widerActions = [0, 1, 2, 7, 3, 4], snapshots = [];
   for (const index of widerActions) {
     const before = publicState(widerSession.view().state); snapshots.push(before);
@@ -73,6 +93,8 @@ function test() {
   assert.equal(widerSession.view().why, 'tray');
   assert.deepEqual(recoveredMemory.finish('physicalLoss'), { index: 3, penalty: 1 });
   assert.equal(recoveredMemory.cost(snapshots[2], 2), 0, 'An earlier third carrier that was actually recovered must not be penalized');
+  assert.equal(recoveredMemory.pictureCost(snapshots[2],3,false),0);
+  assert.equal(recoveredMemory.pictureCost(snapshots[2],4,false),1);
   assert.equal(verifyAttempt(encodeGame(widerGame), widerActions, clockSettings, widerSession.audit()), widerActions.length);
   assert.throws(() => independent.observeTransition(failed.before[2], 2, failed.before[2]));
   factory.verifySource();
