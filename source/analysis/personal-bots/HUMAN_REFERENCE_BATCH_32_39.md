@@ -3,14 +3,14 @@
 Dennis authorized: "Authorize reusable planning across retries, with up to eight
 new experiments." Maximum eight NEW measured trials total; WHEN variants count.
 Previous unadopted24–31 and stop report2b122e7 remain. Adoption does not replenish
-this allowance. Three trials used, five available,34 full check still running.
+this allowance. Three trials used, five available,32–34 rejected.
 Strong Track A then calibrated Track B objective remains unmet. Default retained23.
 
 |Trial|Mechanism|Latest scope/status|Complete repairs|Passing regressions|
 |---|---|---|---|---|
 |32|Dependency-validated unfinished public search|Dev42 rejected|0|0|
 |33|Continue after information; prepare at tray2,clock10+ or absent|Dev42 rejected|10011|10033|
-|34|Fresh preparation only tray2,active clock20–40|Dev42 passed to full159/salts1–3; running|0 on dev|0 on dev|
+|34|Fresh preparation only tray2,active clock20–40|Full159/salts1–3 rejected|0|0|
 
 33 improved11 from8→3 on salt1 but broke33 from4→unresolved12. Full mixed
 decision comparisons11/33/41 exited0 with no baseline drift, independent replay
@@ -21,8 +21,11 @@ qualification to CHECK the full set, never qualification to adopt or a repair.
 
 34 development:40/42 clear,38/42 targets,1751.7ms slowest,
 0.341443min/board,salt1; all42 valid, CPU/wall mean1.03723,min1.00268.
-All three development workers exit0; supervisor continues full and must be polled
-to authoritative terminal exit before any actor edit, next trace or trial launch.
+Supervisor76296 and all six development/full workers exit0, running0. Full34:
+157/159 clear,154/159 targets,1752.6ms slowest,0.575340min/board for three salts;
+CPU/wall mean1.04376,min1.00211. Independent negative audit verifies all159
+records, comparison and all73 current/frozen source hashes.11 worsens8→9 on
+every salt;49 changes5/3/5→4/5/8, missing its target. No adoption or goal completion.
 Source b9dcf92ed31151e0bd20c335c97f09a73f0b39af1143b5923453e74637f45078;
 profile4476ef8a82a1ab66927218086f54e126ba719b15f84740723bfa89ace37f3ec7.
 137/137 tests pass37s(native7634 exit0). Raw outputs remain .codex-runs/level-measure/.

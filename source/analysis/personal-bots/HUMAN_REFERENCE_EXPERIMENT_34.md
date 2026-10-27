@@ -57,3 +57,33 @@ frozen-b9dcf92ed311-experiment34/, information-window-native-v1.json,
 when-information-window-v1/reusable/baseline33/,
 reusable-preparation-window-suite-01.log. No campaign is registered before the
 native comparison evidence file is complete and terminal.
+
+## Completed full result: rejected
+
+|Scope|Cleared|Within Dennis+1|Complete repairs|Passing regressions|Slowest|
+|---|---:|---:|---:|---:|---:|
+|Development42,salt1|40/42|38/42|0|0|1751.7ms|
+|Full159,salts1–3|157/159|154/159|0|0|1752.6ms|
+
+Supervisor76296 and all six development/full workers exit0; no worker remains.
+Independent negative-result-audit.json re-summarizes all159 records, recomputes
+the unchanged comparison against actual23, and verifies current/frozen hashes of
+all73 source files. Full execution valid; CPU/wall mean1.04376,min1.00211;
+mean0.575340min/board for three salts. No adoption. Three of eight trials used,
+five remain. Default23 unchanged. Both tracks' objective remains unmet.
+
+Full11 is9/9/9 versus8/8/8;49 is4/5/8 versus5/3/5. Thus49's salt1 gain does
+not transfer across salts.15 is1/11/2 versus1/3/3, still within target12;41 is
+7/2/3 versus3/3/3, still within target8. The other155 vectors are unchanged.
+Open86 stays1/1/3;32 and52 remain censored after12 on every salt.33 remains
+4/3/6 within target6. No censored value is treated as13 or impossibility.
+
+Next unregistered architectural hypothesis: retain more computationally invested
+unfinished jobs instead of recency alone at the same memory bounds. A scratch
+in-memory fork changes no measured files. Under controlled capacity2 scans, LRU
+repeatedly discards an8-unit job, while investment priority resumes eight times
+and constructs a4-tap production-winning witness. This is a fixture, not a
+campaign repair. Raw invested-cache-prototype-v1.json/.log and
+prototype-invested-cache-v1.js retain fork/original hashes. Integrate, add physical/
+dependency/cap protections, test, commit and compare actual decisions before
+spending35. Keep the information-need condition as a separate unmeasured option.
