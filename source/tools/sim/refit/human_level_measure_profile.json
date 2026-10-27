@@ -51,5 +51,6 @@
   "safeClockInspectionBudgetRange": [
     10,
     30
-  ]
+  ],
+  "openingConditionalPlanning": true
 }

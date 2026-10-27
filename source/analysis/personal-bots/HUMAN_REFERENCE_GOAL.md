@@ -19,7 +19,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
   from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
 - Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10032,10049,10052; natural86 also fails.
+- Labs first:10011,10049,10052; natural86 also fails. Repaired10032 remains a control.
 - Development: failures plus20 fixed guards, salt1; retain regression controls; full salts1-3; repair>=1 and break none.
 - Sum-of-tries and human correlation are not Track A gates under the revised goal.
 
@@ -29,7 +29,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Record public tray/clock/slack, unseen fraction, observed roles, retry and free pairs; no hidden labels.
 - Fit one readable condition with at most2 public features and round thresholds.
 - Fit on development only; retest salt1 development then full cohort salts1-3.
-- Adopted06 clock recovery: tray>=1 AND estimated clock slack>=50; avoids harmful preparation.
+- Adopted06 base clock recovery: tray>=1 AND estimated slack>=50; avoids harmful preparation.
 - Adopted06 retry information: after a no-learning physical loss; preserves wins and repairs150.
 - Adopted08 remembered-key planning: live clock estimated slack>40; repairs10041.
 - Adopted10 back-symbol planning: live-clock estimated slack5-20; repairs10015 without regressions.
@@ -39,6 +39,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Adopted19 information probe: primary reports known-dead; broader exposure checks prevent false certificates.
 - Adopted23 clock inspection: starting clock10-30 AND tray<=2; bounded peek cost preserves41 while helping33.
 - Adopted23 clock rank: starting clock10-30; account for spent moves in estimated slack, never as a proof.
+- Adopted40: opening clock<=50 AND visible locks<=3 selects39,otherwise23; latch memory; repairs32,preserves11/41.
 
 ## Track B: calibrate only after A passes
 
@@ -63,8 +64,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Process and completion
 
-- The newly authorized40-47 batch permits at most8 measured trials; stop for Dennis's decision.
-  A WHEN-condition trial counts. Prior unadopted24-39/history remain recorded.
+- Batch40-47 permits at most8 measured trials; WHEN trials count; adoption does not replenish; prior24-39 retained.
 - Small commits; goal<=80; one table/run; raw outputs .codex-runs/. Re-deal/luck runs stay STOPPED.
 - After A and B pass: freeze; run the next20 progression levels once, when Dennis
   has played them, at BOTH strengths. Keep measure() working on unseen lab boards.
@@ -73,8 +73,8 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Current evidence
 
-- Retained23:157/159 clear every salt,154/159 within Dennis+1; A still unmet.
-- 144/144 tests pass18s; prior24-39 unadopted16; batch40-47 has1/8 running; retained23; goal unmet.
-- Full23 repairs10033, no target regressions;6 new workers exit0; slowest1759.2ms.
-- Adopted23's fresh159-board cohort and71 source files verified; mean0.652 minutes/board for3 salts.
-- Supervisor/auditor exit0; external-cwd unlabeled lab61 clears1/1/1, valid1502.6ms.
+- Retained40:158/159 clear every salt,155/159 within Dennis+1; A still unmet; four targets remain.
+- 144/144 tests pass18s; prior24-39 unadopted16; batch40-47 used1/8,adopted40;7 remain.
+- Full40 repairs10032,no target/clearance regressions;6 fresh workers exit0;slowest1717.6ms.
+- Adopted40's fresh159-board cohort,77 sources and477 opening selections verified;mean0.5358min/board for3 salts.
+- Supervisor/auditor exit0; external-cwd unlabeled board clears1/1/1,valid990.4ms;measured/default source mapping saved.

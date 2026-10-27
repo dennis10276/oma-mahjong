@@ -3,7 +3,7 @@
 Human answer:"Authorize up to 8 conditional trials (Recommended)" to the proposal
 following mixed39. Maximum8 newly measured trials total,including WHEN variants;
 adoption does not replenish it. Previous24–39 unadopted16 remain fully recorded.
-1/8 measured,7 remain;40 full running. Default23 unchanged. Full goal unmet.
+1/8 measured,7 remain;40 ADOPTED. New default40;full goal remains unmet.
 
 First candidate:39 only when opening public clock<=50 and<=3 drawn lock symbols;
 otherwise23. Latch for board/salt campaign. No per-level settings or route IDs.
@@ -23,7 +23,7 @@ After at most8,stop and report for Dennis's decision. No automatic48 authorized.
 
 |Trial|Condition|Scope/result|Repairs|Regressions|
 |---|---|---|---|---|
-|40|Opening clock<=50 AND visible locks<=3|Full159/salts1–3 running|Dev10032|Dev0 target/clearance|
+|40|Opening clock<=50 AND visible locks<=3|Adopted,full159/salts1–3|10032|0 target/clearance|
 
 Runtime source01bea873572afd74ca2d0bf56671f343717913c95795028732c8f445c62e7710,
 77 files. Profile63c5e6924e8ef42a5e46e14d9520b71d6ec47b6c545402a0681b950b9c65c4b4.
@@ -39,3 +39,15 @@ default profile. After full completion,require all477 run metadata checks,
 zero passing-target AND clearance regressions,independent fresh-cohort/source
 audit,native supervisor/verifier exit0,suite and unlabeled external-cwd API check.
 No adoption or goal completion yet.1/8 used,7 remain.
+
+FINAL40 adopted:158/159 clear every salt,155/159 targets,32 clears5/5/3 while
+11 remains8/8/8 and41 remains3/3/3;zero passing-target or clearance regressions.
+1717.6ms slowest,0.535804min/board for3 salts,CPU/wall mean1.04193,min1.01161.
+All six fresh workers,supervisor94711,independent verifier77021 exit0. Fresh159
+cohort unchanged;77 source files and477 opening selections verified. Profile
+63c5e6924e8ef42a5e46e14d9520b71d6ec47b6c545402a0681b950b9c65c4b4 becomes
+the default;only profile JSON differs from tested snapshot and mapping is saved.
+Post-adoption144 tests pass18s(natives45159 exit0);external-cwd label-stripped
+board CLI1/1/1,valid990.4ms(native19699 exit0). Goal remains unmet on86/11/49/52.
+Use40's original full-records-for-next.json and selectionv11(same42/20 guards)
+for remaining41–47.1 measured,1 adopted,7 remain;no allowance replenishment.
