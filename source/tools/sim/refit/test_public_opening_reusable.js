@@ -46,6 +46,12 @@ function test() {
   assert.equal(custom.known().retryInformationMs, 80, 'Preserve caller strength instead of loading the frozen fixture');
   assert.equal(custom.known().publicActionSalt, 3);
   assert.equal(custom.known().retryInformationNodes, 32768);
+  for (const [budget,locks,retained] of [[37,6,true],[44,3,false],[61,1,false]]) {
+    const routePolicy=openingPlanningController({...baseline,openingConditionalPlanning:true,openingReusablePlanning:true,
+      reusableRetainRoute:true},options=>({beginAttempt(){},observe(){},known(){return options;}}));
+    routePolicy.beginAttempt();routePolicy.observe(state,{clock:{i:0,n:budget},roles:Array(locks).fill('lock')});
+    assert.equal(!!routePolicy.known().reusableRetainRoute,retained);
+  }
   const tiles = Array.from({ length: 12 }, (tile, index) => ({ x: index * 8, y: 0, z: 0 }));
   let taps = 0;
   for (const budget of [29, 30]) {

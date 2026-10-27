@@ -50,3 +50,30 @@ profile audit. Then full suite and external-cwd unlabeled measure() check.
 No source/default edits while comparisons or measured workers run. Preserve
 negative evidence,including41. Batch allowance is consumed once per measured
 trial;adoption does not replenish. No outcome is claimed at preregistration.
+
+## Final: unadopted
+
+Supervisor60301 and six fresh workers exit0. Independent audit exit0 verifies
+77 source hashes,profile,42+159 summaries and519 public opening selections.
+Development repairs11:3 tries,no passing-target/clearance regressions;full
+does not retain that repair across salts. Full158/159 clear,155/159 targets,
+zero complete repairs and zero passing-target/clearance regressions.
+
+|Target|Retained40 salts1/2/3|Trial42 salts1/2/3|
+|---|---|---|
+|86|1/1/3|1/1/3|
+|10011|8/8/8|3/10/10|
+|10049|5/3/5|4/5/5|
+|10052|censored/censored/censored|censored/censored/censored|
+
+Other changed board15:1/1/2 becomes1/11/2,still within Dennis+1=12.
+Slowest1750.6ms,0.545438min/board for3 salts,CPU/wall mean1.04256,min1.01402.
+Retain40;3/8 measured,5 remain;unadopted since40:2. Raw experiment-42/
+complete-independent-audit.json and supervisor-native-exit.json.
+
+Unscored actual41 first3-try comparisons across salts independently replay
+195/191/206 taps,zero drift,8/2/8 different suggestions,all native children
+and supervisor12066 exit0. Larger search offers post-clock known prefixes up
+to36 taps,then replans each tap instead of retaining the route. These are
+forced-history suggestions,not executed candidate wins or causal proof of a
+specific loss. Investigate validated prefix retention as a separate trial.

@@ -2,6 +2,58 @@
 const assert = require('assert/strict');
 const { explorationWitness } = require('./public_exploration_witness.js');
 const { createReusableExploration } = require('./public_reusable_exploration.js');
+const { legal, advance } = require('./known_tray_plan.js');
+const { createExposureFrontier } = require('./public_exposure_frontier.js');
+
+// A constructive prefix is a plan, never a source of imagined observations.
+function createRetainedInformationRoute() {
+  let pending = null;
+  const physical = state => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
+    .map(field => state[field] ?? null));
+  return {
+    clear() { pending = null; },
+    remember(game, state, result) {
+      pending = null;
+      if (!result.path || result.path.length < 2 || !Number.isInteger(result.knownPrefixTaps) || result.knownPrefixTaps < 1
+        || !['newPublicExposure', 'actualPeekRequired'].includes(result.kind)) return;
+      const moved = advance(game, state, result.path[0]);
+      if (moved.uncertain || moved.lost) return;
+      pending = { expected: physical(moved.state), expectedTaps: Number.isInteger(state.physicalTaps) ? state.physicalTaps + 1 : null, result: { ...result,
+        path: result.path.slice(1), knownPrefixTaps: result.knownPrefixTaps - 1 } };
+    },
+    take(game, state, actions, deadline, peekTrayLimit) {
+      const saved = pending; pending = null;
+      if (!saved || saved.expected !== physical(state) || saved.expectedTaps !== null && state.physicalTaps !== saved.expectedTaps
+        || !actions.some(action => action.index === saved.result.path[0])) return null;
+      let position = state;
+      for (const index of saved.result.path.slice(0, saved.result.knownPrefixTaps)) {
+        if (Date.now() >= deadline) return null;
+        const allowed = legal(game, position);
+        if (!allowed.free.includes(index) || allowed.uncertain?.includes(index)) return null;
+        const moved = advance(game, position, index);
+        if (moved.uncertain || moved.lost) return null;
+        position = moved.state;
+      }
+      let newlyExposed = [], boundaryIndex = null;
+      if (saved.result.kind === 'newPublicExposure') {
+        const exposure = createExposureFrontier(game.tiles, state, 'all');
+        newlyExposed = Array.from(game.publicInformationExposure ? game.publicInformationExposure(position)
+          : new Set([...exposure(position), ...(game.publicRoleExposure?.(position) ?? [])]));
+        if (position.tray.length > 2 || !newlyExposed.length) return null;
+      } else if (saved.result.kind === 'actualPeekRequired') {
+        boundaryIndex = saved.result.path.at(-1);
+        const allowed = legal(game, position);
+        if (!allowed.free.includes(boundaryIndex) || allowed.uncertain?.includes(boundaryIndex)
+          || position.pictures[boundaryIndex] !== null || position.down[boundaryIndex] !== 1
+          || position.tray.length > peekTrayLimit || game.clock && position.alive[game.clock.i]
+            && game.clock.n - position.moves <= 2) return null;
+      } else return null;
+      if (Date.now() >= deadline) return null;
+      return { ...saved.result, newlyExposed, boundaryIndex, nodes: 0, retainedRoute: true,
+        knownProgress: state.alive.reduce((total, alive, index) => total + +(alive && !position.alive[index]), 0) };
+    },
+  };
+}
 
 function retryInformationSearch(primarySearch, options = {}) {
   assert.equal(typeof primarySearch, 'function');
@@ -30,6 +82,10 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert(!options.retainInvestedWork || options.reusablePlanning === true);
   assert(options.warmPlanning === undefined || typeof options.warmPlanning === 'boolean');
   assert(!options.warmPlanning || options.reusablePlanning === true && options.continueAfterInformation === true);
+  assert(options.retainRoute === undefined || typeof options.retainRoute === 'boolean');
+  assert(!options.retainRoute || options.reusablePlanning === true);
+  const retainedRoute = options.retainRoute ? createRetainedInformationRoute() : null;
+  let lastKnowledge = null;
   const reusable = options.reusablePlanning ? createReusableExploration({ preferInvestedWork: options.retainInvestedWork }) : null;
   let attempt = 0, startKnowledge = null, active = false, stalls = 0;
   const counters = { stalledAttempts: 0, considered: 0, routes: 0, wins: 0, peekRoutes: 0, exposureRoutes: 0,
@@ -38,6 +94,7 @@ function retryInformationSearch(primarySearch, options = {}) {
     deadEndRoutes: 0, unresolvedDeadEndReports: 0, confirmedDeadEndReports: 0 });
   if (options.prepareCrowded) Object.assign(counters, { proactiveSearches: 0, firstAttemptPreparations: 0 });
   if (options.warmPlanning) Object.assign(counters, { warmSearches: 0, warmInformationHeld: 0, warmKnownWins: 0 });
+  if (retainedRoute) counters.retainedRouteTaps = 0;
   const fingerprint = memory => {
     const expected = ['down', 'initialRoles', 'pictures', ...(memory.keyIdentities === undefined ? [] : ['keyIdentities'])].sort();
     assert.deepEqual(Object.keys(memory).sort(), expected);
@@ -50,13 +107,19 @@ function retryInformationSearch(primarySearch, options = {}) {
       ...(memory.keyIdentities === undefined ? [] : [memory.keyIdentities])]);
   };
   return {
-    beginAttempt(memory) { assert(!active); attempt++; startKnowledge = fingerprint(memory); active = true; },
+    beginAttempt(memory) { assert(!active); attempt++; startKnowledge = fingerprint(memory); lastKnowledge = startKnowledge; retainedRoute?.clear(); active = true; },
     observe(memory) {
       assert(active);
+      if (retainedRoute) {
+        const knowledge = fingerprint(memory);
+        if (knowledge !== lastKnowledge) retainedRoute.clear();
+        lastKnowledge = knowledge;
+      }
       if (stalls && fingerprint(memory) !== startKnowledge) { counters.stallsEndedByInformation++; stalls = 0; }
     },
     finish(status, memory) {
       assert(active);
+      retainedRoute?.clear();
       assert(['physicalLoss', 'cleared', 'unresolvedBudget', 'unresolvedPublicFrontier', 'unresolved'].includes(status));
       const stalled = status === 'physicalLoss' && fingerprint(memory) === startKnowledge;
       stalls = stalled ? stalls + 1 : 0; counters.stalledAttempts += +stalled; active = false;
@@ -64,14 +127,15 @@ function retryInformationSearch(primarySearch, options = {}) {
     search(game, state, actions, settings = {}) {
       assert(active);
       const began = Date.now(), primary = primarySearch(game, state, actions, settings);
-      if (primary.knownWin || primary.safeClockExit) return primary;
+      if (primary.knownWin || primary.safeClockExit) { retainedRoute?.clear(); return primary; }
       const recoverDeadEnd = deadEndInformation && primary.knownDead;
       const previouslyEligible = recoverDeadEnd || attempt >= 2 && stalls > 0;
       const clockRemaining = game.clock && state.alive[game.clock.i] ? game.clock.n - state.moves : Infinity;
       const proactive = !!options.prepareCrowded && !previouslyEligible && state.tray.length >= 2
         && clockRemaining >= (preparationClockRange?.[0] ?? 10) && clockRemaining <= (preparationClockRange?.[1] ?? Infinity);
       const warmOnly = !!options.warmPlanning && !previouslyEligible && !proactive;
-      if (!previouslyEligible && !proactive && !warmOnly) return primary;
+      const retained = retainedRoute?.take(game, state, actions, Math.min(settings.deadline ?? Infinity, began + 1800), peekTrayLimit);
+      if (!previouslyEligible && !proactive && !warmOnly && !retained) return primary;
       const unresolvedDeadEnd = reason => {
         counters.unresolvedDeadEndReports++;
         const report = { ...primary };
@@ -92,7 +156,7 @@ function retryInformationSearch(primarySearch, options = {}) {
         counters.deadEndConsidered++; counters.firstAttemptDeadEndConsidered += +(attempt === 1);
       }
       const extraBegan = Date.now();
-      const result = (reusable ? reusable.search : explorationWitness)(publicGame, state, actions,
+      const result = retained ?? (reusable ? reusable.search : explorationWitness)(publicGame, state, actions,
         { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
           ...(reusable ? { version: options.contextVersion(), revalidatePublicChanges: true,
             continueAfterInformation: options.continueAfterInformation === true,
@@ -115,6 +179,8 @@ function retryInformationSearch(primarySearch, options = {}) {
         const unresolved = unresolvedDeadEnd(result.reason);
         return { ...unresolved, nodes: (primary.nodes ?? 0) + result.nodes };
       }
+      retainedRoute?.remember(publicGame, state, result);
+      if (retained) counters.retainedRouteTaps++;
       counters.routes++; counters.wins += +result.knownWin;
       counters.peekRoutes += +(result.kind === 'actualPeekRequired');
       counters.exposureRoutes += +(result.kind === 'newPublicExposure');
@@ -133,6 +199,7 @@ function retryInformationSearch(primarySearch, options = {}) {
             preparationStartedAtClockRemaining: Number.isFinite(clockRemaining) ? clockRemaining : null,
             preparationStartedAtTrayCount: state.tray.length } : {}),
           ...(reusable ? { reusable: result.reusable } : {}),
+          ...(retained ? { retainedRoute: true } : {}),
           ...(warmOnly ? { warmedCompleteWin: true } : {}),
           ...(peekTrayLimit !== 1 ? { peekTrayLimit } : {}),
           ...(preferActualPeek ? { preferActualPeek, exposureFallbackUsed: result.exposureFallbackUsed,
@@ -144,4 +211,4 @@ function retryInformationSearch(primarySearch, options = {}) {
   };
 }
 
-module.exports = { retryInformationSearch };
+module.exports = { retryInformationSearch, createRetainedInformationRoute };

@@ -77,3 +77,12 @@ taps,zero baseline drift,21/0/0 changed suggestions;wrapper3855 and3 children
 exit0. Sourceb3236132098172c5861232b12e4ed8be2d36dcdb7dab7a3bd2f0fd5d9d6ee490,
 profileb117b3c21f2cf341c2b5d742bca64042bf73cf91e0996cf9ecb86c1ce12bfa59.
 Fixed42 development live;no complete outcome/adoption claim.3/8 used,5 remain.
+
+FINAL42 unadopted:development repairs11 in3;full11=3/10/10,49=4/5/5,
+15=1/11/2,all others unchanged.158/159 clear,155/159 targets;no complete repair
+or passing-target/clearance regression. Supervisor60301 and6 workers exit0;
+independent source/profile/519-opening-selection and42+159 summaries audit exit0.
+1750.6ms slowest,0.545438min/board;retained40.3/8 used,5 remain.
+Unscored all-salt comparisons of41 vs42 independently replay592 taps,zero drift;
+offer long known prefixes which are replanned every tap. Investigate safe route
+retention before a separate counted43;no campaign gain claimed from suggestions.
