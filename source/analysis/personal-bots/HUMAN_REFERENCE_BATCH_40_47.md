@@ -86,3 +86,12 @@ independent source/profile/519-opening-selection and42+159 summaries audit exit0
 Unscored all-salt comparisons of41 vs42 independently replay592 taps,zero drift;
 offer long known prefixes which are replanned every tap. Investigate safe route
 retention before a separate counted43;no campaign gain claimed from suggestions.
+
+RUNNING43:retain fully revalidated known information prefixes in the same heavy
+family until actual discoveries.146 tests pass18s,native32898 exit0. Five actual
+history comparisons independently replay1021 taps,zero drift;supervisor86824 and
+five children exit0. Prefix retention exercised1/3/5 times on11 salts1/2/3;
+changed suggestions0/0/5. Complete32/33 controls unchanged. Default40 retained.
+Source d12882506298e593ad52c67f46613e98002aa147054809113dbebb7e9210e657,
+profile392591108c0b2ad461f93bf66c5b0e8dbe68ad0ec52d0eed3de15ad5c6aeb4ef.
+Fixed42 development live;source frozen.4/8 used,4 remain;no adoption/outcome yet.
