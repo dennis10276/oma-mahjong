@@ -15,7 +15,8 @@ function createBranchAgenda(size, options = {}) {
   const failedChildren = new Map();
   let forks = [], pendingFork = null, request = null, consumed = false;
   const counters = { updates: 0, retainedWorkingSets: 0, evictedCheckpoints: 0, observedFailedPlays: 0 };
-  if (backtracking) Object.assign(counters, { forksRecorded: 0, requestsScheduled: 0, requestsTaken: 0, requestsInvalidated: 0 });
+  if (backtracking) Object.assign(counters, { forksRecorded: 0, requestsScheduled: 0, requestsTaken: 0, requestsInvalidated: 0,
+    allocatedWorkingSetsPassed: 0, earlierForkSelections: 0 });
   const signature = state => {
     assert(state.alive.length === size);
     return aliveSignature(state.alive) + '|' + JSON.stringify([state.tray, state.moves, state.openPeek,
@@ -42,7 +43,8 @@ function createBranchAgenda(size, options = {}) {
       assert(choices.every(index => Number.isInteger(index) && index >= 0 && index < size));
       assert(eligibleChosen.every(index => choices.includes(index)));
       assert(Number.isInteger(prefixLength) && prefixLength >= 0);
-      pendingFork = { key: signature(state), choices: choices.slice(), eligibleChosen: eligibleChosen.slice(), prefixLength };
+      const working = choices.slice(0, width);
+      pendingFork = { key: signature(state), choices: working, eligibleChosen: eligibleChosen.filter(index => working.includes(index)), prefixLength };
     },
     acknowledge(index, accepted) {
       if (backtracking && accepted && pendingFork) {
@@ -90,14 +92,14 @@ function createBranchAgenda(size, options = {}) {
         for (let offset = forks.length - 1; offset >= 0; offset--) {
           const fork = forks[offset];
           if (!checkpoints.has(fork.key)) continue;
-          const alternatives = fork.choices.filter(index => index !== fork.selected);
-          if (!alternatives.length) continue;
           const counts = failedChildren.get(fork.key) ?? new Map();
           counts.set(fork.selected, (counts.get(fork.selected) ?? 0) + 1); failedChildren.set(fork.key, counts);
+          const alternatives = fork.choices.filter(index => index !== fork.selected && !(counts.get(index) > 0));
+          if (!alternatives.length) { counters.allocatedWorkingSetsPassed++; continue; }
           alternatives.sort((left, right) => (counts.get(left) ?? 0) - (counts.get(right) ?? 0));
           request = { key: fork.key, index: alternatives[0], failedChoice: fork.selected,
             prefixLength: fork.prefixLength, kind: 'explore_another_continuation', rejectsWholeBranch: false };
-          counters.requestsScheduled++; break;
+          counters.requestsScheduled++; counters.earlierForkSelections += +(offset < forks.length - 1); break;
         }
       } else if (backtracking && status === 'cleared') request = null;
       forks = []; pendingFork = null;

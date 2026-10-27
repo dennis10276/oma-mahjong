@@ -52,6 +52,41 @@ function test() {
   replayedTaps += verifyAttempt(encodeGame(knownActual), [7], settings, clockSession.audit());
   assert.throws(() => createBranchAgenda(8, { width: 0 }));
   assert.throws(() => createBranchAgenda(8, { maximumCheckpoints: 0 }));
+  const retryTiles = Array.from({ length: 16 }, (tile, index) => ({ x: index * 8, y: 0, z: 0 }));
+  const retryModel = { tiles: retryTiles, nb: Layouts.neighbors(retryTiles), rules: null, clock: null };
+  const retryActual = { ...retryModel, faces: retryTiles.map((tile, index) => index % 8 + 1), down: retryTiles.map(() => 1) };
+  const retryObserve = session => {
+    const frame = session.view(), packet = observeBoard(retryTiles, frame.state, null,
+      { picture: index => retryActual.faces[index], role: () => 'none' });
+    return { ...frame.state, pictures: packet.pictures, down: packet.down };
+  };
+  const retryAgenda = createBranchAgenda(16, { backtracking: true, width: 3 });
+  let retryOpening = null, retryActions = null, retryProof = null;
+  for (const choice of [0, 1, 2]) {
+    retryAgenda.beginAttempt();
+    const session = factory(retryActual, settings), opening = retryObserve(session);
+    retryOpening = opening; retryActions = session.view().legalTiles.map(index => ({ index }));
+    retryProof = analyzeSurvival(retryModel, opening, retryActions, { nodes: 256 });
+    retryAgenda.accept(opening, retryActions, retryProof);
+    retryAgenda.noteFork(opening, [6, 7], [6], 0);
+    for (const index of [6, 6]) { session.tap(index); retryAgenda.acknowledge(index, true); }
+    const fork = retryObserve(session), available = session.view().legalTiles.map(index => ({ index }));
+    retryAgenda.accept(fork, available, analyzeSurvival(retryModel, fork, available, { nodes: 256 }));
+    retryAgenda.noteFork(fork, [0, 1, 2, 3, 4, 5, 7], [0, 1, 2, 3, 4, 5, 7], 2);
+    for (const index of [choice, choice, 3, 3, 7, 7]) { session.tap(index); retryAgenda.acknowledge(index, true); }
+    assert.equal(session.view().why, 'tray');
+    const route = [6, 6, choice, choice, 3, 3, 7, 7];
+    replayedTaps += verifyAttempt(encodeGame(retryActual), route, settings, session.audit());
+    retryAgenda.recordOutcome(route, 'physicalLoss');
+    const request = retryAgenda.stats().pendingRequest;
+    assert.equal(request.index, choice < 2 ? choice + 1 : 7);
+    assert.equal(request.prefixLength, choice < 2 ? 2 : 0);
+    assert.equal(request.rejectsWholeBranch, false);
+  }
+  assert.equal(retryAgenda.stats().earlierForkSelections, 1);
+  assert.equal(retryAgenda.stats().allocatedWorkingSetsPassed, 1);
+  assert(retryAgenda.priorities(retryOpening, retryActions).includes(3));
+  assert(!retryAgenda.accept(retryOpening, retryActions, retryProof).rejectedNow.length);
   factory.verifySource();
   console.log('PASS bounded three-branch agendas retain their working set and every deferred alternative, apply only current complete exclusions, preserve a winning shared opening after an actual failed play, bound checkpoints and independently replay ' + replayedTaps + ' production taps');
 }

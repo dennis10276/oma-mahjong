@@ -67,8 +67,9 @@ function survivalBranchSearch(primarySearch, options = {}) {
           if (inspection || !moved.uncertain && !moved.lost && moved.state.tray.length > state.tray.length) eligibleChosen.push(index);
         }
         if (choices.length >= 2) {
-          agenda.noteFork(state, choices, eligibleChosen, actualActions?.length ?? 0);
-          requested = agenda.backtrackChoice(state, choices);
+          const ordered = [...new Set([primary.index, ...bank.active, ...bank.deferred])].filter(index => choices.includes(index));
+          agenda.noteFork(state, ordered, eligibleChosen, actualActions?.length ?? 0);
+          requested = agenda.backtrackChoice(state, ordered);
           if (requested === primary.index) counters.backtrackingNaturalChoices++;
         }
       }
