@@ -63,3 +63,24 @@ Raw .codex-runs/level-measure/:run-experiment-40.js,experiment-40/,
 batch-40-47-authorization.json,opening-conditional-native-v1.json,
 when-opening-conditional-v1/,opening-conditional-suite-02.log.
 No outcome,adoption,TrackB calibration or goal completion at preregistration.
+
+## Development complete: qualified,not adopted
+
+|Development42,salt1|Cleared|Within Dennis+1|Complete repairs|Target/clearance regressions|Slowest|
+|---|---:|---:|---|---|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Conditional40|41/42|39/42|10032|0/0|1642.8ms|
+
+32 clears5,target6.11 retains8 and41 retains3,restoring39's regressions on this
+salt. No passing or clearance regression. All three development workers exit0.
+Independent development-only audit recomputes42 records against23,verifies all77
+current/frozen source hashes and profile,and checks EVERY run's opening branch
+against the independent public opening inventory.13 enhanced,29 baseline runs.
+All executions valid;CPU/wall mean1.04814,min1.00175;0.291708min/board,salt1.
+
+Full159/salts1–3 is running under supervisor session94711,three live full workers
+22120/8188/22176 confirmed by process inventory. Full/native supervisor exits and
+adoption remain unverified. Freeze all77 actor files/default profile while live.
+Record opening metadata checks across all477 full runs and explicit zero
+clearance regressions before any adoption. Default23 unchanged; goal remains
+unmet.1/8 new trials used,7 remain. Qualification is not adoption.
