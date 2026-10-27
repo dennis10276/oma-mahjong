@@ -3,7 +3,7 @@
 Human answer:"Authorize up to 8 conditional trials (Recommended)" to the proposal
 following mixed39. Maximum8 newly measured trials total,including WHEN variants;
 adoption does not replenish it. Previous24–39 unadopted16 remain fully recorded.
-0/8 measured,8 remain. Default23 unchanged. Full A/B/unseen20 goal remains unmet.
+1/8 measured,7 remain;40 development running. Default23 unchanged. Full goal unmet.
 
 First candidate:39 only when opening public clock<=50 and<=3 drawn lock symbols;
 otherwise23. Latch for board/salt campaign. No per-level settings or route IDs.
@@ -23,7 +23,7 @@ After at most8,stop and report for Dennis's decision. No automatic48 authorized.
 
 |Trial|Condition|Scope/result|Repairs|Regressions|
 |---|---|---|---|---|
-|40|Opening clock<=50 AND visible locks<=3|Implementation/tests only|unmeasured|unmeasured|
+|40|Opening clock<=50 AND visible locks<=3|Development running|pending|pending|
 
 Runtime source01bea873572afd74ca2d0bf56671f343717913c95795028732c8f445c62e7710,
 77 files. Profile63c5e6924e8ef42a5e46e14d9520b71d6ec47b6c545402a0681b950b9c65c4b4.
