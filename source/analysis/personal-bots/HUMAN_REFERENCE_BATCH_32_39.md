@@ -3,7 +3,7 @@
 Dennis authorized: "Authorize reusable planning across retries, with up to eight
 new experiments." Maximum eight NEW measured trials total; WHEN variants count.
 Previous unadopted24–31 and stop report2b122e7 remain. Adoption does not replenish
-this allowance. Four trials used, four available,32–35 rejected.
+this allowance. Five trials used, three available,32–36 rejected.
 Strong Track A then calibrated Track B objective remains unmet. Default retained23.
 
 |Trial|Mechanism|Latest scope/status|Complete repairs|Passing regressions|
@@ -12,6 +12,7 @@ Strong Track A then calibrated Track B objective remains unmet. Default retained
 |33|Continue after information; prepare at tray2,clock10+ or absent|Dev42 rejected|10011|10033|
 |34|Fresh preparation only tray2,active clock20–40|Full159/salts1–3 rejected|0|0|
 |35|Necessary continuations and persistent three-branch agenda|Dev42 rejected|0|0|
+|36|One failed-play backtrack at a retained productive fork|Dev42 rejected|0|0|
 
 33 improved11 from8→3 on salt1 but broke33 from4→unresolved12. Full mixed
 decision comparisons11/33/41 exited0 with no baseline drift, independent replay
@@ -57,3 +58,14 @@ tries9–12 repeat the same failed play.1251 replayed taps verify the public-lea
 audit on11/32/52. Need real fork backtracking from failed-play evidence,not only
 outcome bookkeeping or a penalty on every action of an old failed route. No36
 registered; all benchmark and policy-comparison processes from35 are terminal.
+
+36 completes40/42 clear,38/42 targets,all counts unchanged,no partial gains.
+All42 executions valid,1648.6ms slowest,0.365138min/board;CPU/wall mean1.04802,
+min0.98786. Supervisor18728 and three workers exit0. Independent audit verifies
+all76 frozen/current source hashes and recomputes the comparison against23.
+32 takes five scheduled alternatives and no longer repeats a full failed play;
+it gains one picture on try12,still failing target6 and all12 actual attempts.
+1214 independently replayed taps audit11/32/52. Next unmeasured allocation fix:
+bound the retry working set itself to a few children and move earlier after its
+budget is spent. Current width3 limits priorities,not noteFork's entire viable
+list. Budget-spent never means proved impossible. No37 registered;three remain.

@@ -52,3 +52,35 @@ No actor edits while comparisons/campaigns run; no TrackB or unseen20 freeze yet
 Raw under .codex-runs/level-measure/:run-experiment-36.js,experiment-36/,
 survival-backtracking-native-v2.json,when-survival-backtracking-v2/,
 survival-backtracking-suite-01.log. No outcome claimed at preregistration.
+
+## Completed development result: rejected
+
+|Development42,salt1|Cleared|Within Dennis+1|Complete repairs|Passing regressions|Slowest|
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate36|40/42|38/42|0|0|1648.6ms|
+
+All42 clear-count vectors unchanged. Unchanged qualification finds no partial or
+off-salt gain, so no full run or adoption. Supervisor18728 and all three workers
+exit0. Independent negative-result-audit.json recomputes42 records against23,
+checks all76 frozen/current source hashes, profile and evaluator. All executions
+valid; CPU/wall mean1.04802,min0.98786;mean0.365138min/board,salt1.
+Five of eight authorized trials used,three remain. Default23 unchanged.
+
+Actual32 takes five scheduled backtracking choices, records66 accepted forks,
+and still suffers12 physical tray losses. Every attempt's full action sequence
+is now different. The public-learning audit independently replays1214 actual
+taps on11/32/52:32 still knows64/86 pictures through try11,then65/86 on try12.
+Thus variation gains one late picture but does not repair target6.11 remains8,
+49 remains5,52 remains unresolved12. No clear or personal accuracy claim.
+
+Code inspection identifies an allocation mismatch: width3 limits agenda priority,
+but noteFork receives every productive viable root and recordOutcome selects an
+alternative from that whole list. It always starts at the deepest fork. This can
+spread failed plays across many late children instead of testing a small working
+set and moving to an earlier retained fork. Next unmeasured refinement should
+bound that working set and move earlier once its allocation is spent, while
+retaining every deferred/live branch. Spending a heuristic search allocation is
+NOT proving the subtree impossible. Preserve current public-proof exclusions,
+protected prefixes, native completion and within-target comparison requirements.
+No37 registered. Goal A/B/unseen20 remains unmet; no benchmark workers remain.
