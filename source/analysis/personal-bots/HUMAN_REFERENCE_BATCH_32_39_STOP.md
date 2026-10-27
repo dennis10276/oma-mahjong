@@ -53,6 +53,8 @@ hashes,profile,evaluator and unchanged retained profile. All runs valid;slowest
 Source e4085f9243f55fb0a39cd5febd76740a8af3b298493454df0ed915f5fbfe1bd8;
 unadopted profile9662aac6e321b77dad7ac47e9432d59b5d81b5744e0f9f7051ab965c01554e5f.
 Raw experiment-39/negative-result-audit.json and supervisor-native-exit.json.
+Final read-only cohort refresh2026-10-27T06:01:37Z confirms159 boards,no changed
+targets/boards and none missing. No new campaign was run for that check.
 
 ## Actual changed decisions and a proposed WHEN condition
 
