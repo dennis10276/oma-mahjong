@@ -53,8 +53,13 @@ board CLI1/1/1,valid990.4ms(native19699 exit0). Goal remains unmet on86/11/49/52
 Use40's original full-records-for-next.json and selectionv11(same42/20 guards)
 for remaining41–47.1 measured,1 adopted,7 remain;no allowance replenishment.
 
-Unmeasured41 extension keeps40's light family and adds reusable33 planning only
+Measured41 extension keeps40's light family and adds reusable planning only
 for clock>=30/visible locks>=4,latched at opening. Coverage11/15/49(all in dev);
 excludes the previously broken18-move33.145 tests pass18s,native80168 exit0,
 48 new production control taps. No source/default change is adopted. Compare
-11's declared target window1–3 and full33/32 passing histories before spending41.
+11's declared target window1–3 and full33/32 passing histories verified with zero drift.
+41 development is valid,has a partial49 gain,no complete repair/no regression;
+all3 workers exit0. Full159/salts1–3 now running;2/8 used,6 remain. No adoption.
+Resolved-options audit found inherited retryInformationNodes2000 versus old33's
+32768;retain41 as a smaller-budget variant. Restore only in a separately counted
+candidate after41 terminates and is audited,with a full configuration guard.

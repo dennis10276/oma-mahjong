@@ -61,3 +61,19 @@ Freeze actor/default files while live. New batch max8 total;no automatic48.
 Raw .codex-runs/level-measure/:run-experiment-41.js,experiment-41/,
 opening-reusable-native-v1.json,when-opening-reusable-v1/,opening-reusable-suite-
 01.log,opening-reusable-unit-01.log. No outcome or adoption at preregistration.
+
+## Running checkpoint and configuration diagnosis
+
+All three development workers exited0. The fixed42 check is valid,slowest
+1647.7ms;no complete target repair or passing-target/clearance regression.
+Lab49 has a partial gain,so the unchanged qualification advances to full159
+on salts1–3. Full workers are live;no adoption or final outcome is claimed.
+
+An unscored resolved-options audit found that the heavy family inherits
+retryInformationNodes:2000,whereas archived33 used32768. This trial therefore
+tests a smaller-budget variant despite the reusable33 family shorthand. Preserve
+its measured outcome and allowance consumption. Do not change its frozen source.
+After native termination and audit,a separate counted candidate may restore32768
+and must first check the complete resolved configuration against archived33.
+The current helper implementation also differs;profile equality alone cannot
+guarantee the old result. Raw diagnosis:reusable41-options-source-audit.json.
