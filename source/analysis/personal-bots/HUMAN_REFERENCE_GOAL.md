@@ -1,6 +1,6 @@
 # Human-information reference and Dennis-strength level measuring
 
-ACTIVE and UNMET; Dennis authorized reusable planning, up to8 new trials(32-39). wip/personal-bots.
+ACTIVE and UNMET;8/8 new trials32-39 unadopted; STOP new trials pending Dennis. wip/personal-bots.
 Authoritative objective: cc8ea8eb-87e0-48be-a531-eeb68c9d5592/goal-objective.md.
 Track A first; Track B only after A passes. Use sunflower tiles.
 
@@ -74,7 +74,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 ## Current evidence
 
 - Retained23:157/159 clear every salt,154/159 within Dennis+1; A still unmet.
-- 143/143 tests pass18s; prior24-31 unadopted8; new batch8/8 used(32-38 rejected,39 running); retained23.
+- 143/143 tests pass18s; prior24-31 unadopted8; new batch32-39 unadopted8/8; retained23; await decision.
 - Full23 repairs10033, no target regressions;6 new workers exit0; slowest1759.2ms.
 - Adopted23's fresh159-board cohort and71 source files verified; mean0.652 minutes/board for3 salts.
 - Supervisor/auditor exit0; external-cwd unlabeled lab61 clears1/1/1, valid1502.6ms.

@@ -1,5 +1,8 @@
 # Experiment39: public tray recovery with thirty spare clock moves
 
+Final status:REJECTED FULL. All six workers and supervisor exit0; independent
+159-board audit passes. Stop new trials pending Dennis's decision. Default23.
+
 Preregister the EIGHTH and FINAL authorized trial32–39. Seven used before launch,
 zero remain afterward. Stop new trials after this campaign and report the full
 table/open targets for Dennis's decision. No adoption replenishes this allowance.
@@ -79,7 +82,7 @@ risk. Forced-history suggestions prove neither a clear nor an improvement.
 
 32 clears5(target6) instead of unresolved12.11 changes8→unresolved12: a material
 CLEARANCE regression on an already failed Dennis+1 target.41 changes3→6,still
-within target8;150 changes1→2,still passing;45 changes2→1. Other37 counts unchanged.
+within target8;150 changes4→2,still passing;45 changes3→1. Other37 counts unchanged.
 The fixed v2 protocol advances because a complete target repair exists and no
 passing target breaks. Its comparison.adopted:true here means DEVELOPMENT
 qualification,not an adopted profile or full-cohort success. The lost clear on11
@@ -100,3 +103,34 @@ qualification still needs all159 real boards and independent audit; do not
 change any actor/default profile while these workers run. Default23 unchanged.
 Do not run40:all eight authorized trials are consumed. After full results,report
 the complete batch and material clearance/attempt tradeoffs for Dennis's decision.
+
+## Completed full result: mixed,rejected
+
+|Full159,salts1–3|Clear every salt|Within Dennis+1 every salt|Complete repair|Passing regression|Slowest|
+|---|---:|---:|---|---|---:|
+|Retained23|157/159|154/159|baseline|—|1759.2ms|
+|Candidate39|156/159|154/159|10032|10041|1719.6ms|
+
+|Changed board|Dennis|Retained23 tries|Candidate39 tries|
+|---|---:|---|---|
+|150|3|4/1/2|2/1/2|
+|10011|2|8/8/8|unresolved/unresolved/unresolved|
+|10032|5|unresolved/unresolved/unresolved|5/5/3|
+|10041|7|3/3/3|6/unresolved/5|
+|10045|6|3/3/3|1/1/1|
+
+All other154 count vectors unchanged.32's repair holds all three salts,but41
+loses a previously passing salt and11 loses all its former clears. Therefore
+the frozen adoption comparison rejects; no default change or post-adoption
+claim. Null means no clear within12,not13 or a proof of impossibility.
+
+Supervisor19962 and all six dev/full workers exit0. Independent full audit
+recomputes all159 records against23,checks all76 current/frozen source hashes,
+profile,evaluator and unchanged default23 profile. CPU/wall mean1.04002,
+min0.98989;all executions valid. Mean0.679122min/board for three salts. Audit:
+experiment-39/negative-result-audit.json,experiment39-full-audit.log.
+
+Read-only mixed-result diagnosis and the unmeasured two-feature proposal are
+documented in HUMAN_REFERENCE_BATCH_32_39_STOP.md. No40 implemented or run;
+all eight authorized trials ended unadopted. User section6 decision is required
+before another measured WHEN trial. Full A/B/unseen20 objective remains unmet.
