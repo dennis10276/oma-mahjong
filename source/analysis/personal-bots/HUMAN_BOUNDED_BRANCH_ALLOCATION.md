@@ -32,3 +32,23 @@ on32. Require actual-history target/control comparisons before registering37.
 Default23 unchanged. Five of eight authorized measured trials used,three remain;
 no37 registered. Track A/B/unseen20 goal remains unmet. Raw suite log:
 .codex-runs/level-measure/survival-bounded-working-set-suite-01.log.
+
+## Actual-history check: not ready for a campaign
+
+Implementation3460b20. Source
+afffe6a9e70427a3d4eb63d1630ab23b4277e70db22d144e06cc9c25dbb2415e,
+76 files. Profile remains
+ea5390b5b3ea18a961cd41ffdc3415922278c9f744ee748a813bf291fd79ef11.
+Wrapper58370 and both children exit0, persisted in bounded-branch-native-v1.json.
+Actual36 histories32/41 independently replay238/177 physical taps with zero
+original-choice drift and zero changed suggestions. Maximum candidate decisions
+1643.6/1454.0ms.32 includes seven attempts;41 includes its three-attempt clear.
+No candidate campaign was played. Neither proof nor ordering telemetry is a repair.
+
+32 reports zero allocated working sets passed and zero earlier-fork selections
+through try7. Thus the new branch-allocation rule is physically controlled but
+does not affect the recorded target trajectory early enough. Do not register37
+on this evidence. Investigate earlier checkpoint eligibility and whether the
+same working set is revisited; do not assume an earlier move is reachable or
+discard a valid clock route without an independently verified replacement.
+All comparisons terminal; five measured trials used, three still available.
