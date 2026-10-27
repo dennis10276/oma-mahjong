@@ -3,7 +3,7 @@
 Dennis authorized: "Authorize reusable planning across retries, with up to eight
 new experiments." Maximum eight NEW measured trials total; WHEN variants count.
 Previous unadopted24–31 and stop report2b122e7 remain. Adoption does not replenish
-this allowance. Three trials used, five available,32–34 rejected.
+this allowance. Four trials used, four available,32–35 rejected.
 Strong Track A then calibrated Track B objective remains unmet. Default retained23.
 
 |Trial|Mechanism|Latest scope/status|Complete repairs|Passing regressions|
@@ -11,6 +11,7 @@ Strong Track A then calibrated Track B objective remains unmet. Default retained
 |32|Dependency-validated unfinished public search|Dev42 rejected|0|0|
 |33|Continue after information; prepare at tray2,clock10+ or absent|Dev42 rejected|10011|10033|
 |34|Fresh preparation only tray2,active clock20–40|Full159/salts1–3 rejected|0|0|
+|35|Necessary continuations and persistent three-branch agenda|Dev42 rejected|0|0|
 
 33 improved11 from8→3 on salt1 but broke33 from4→unresolved12. Full mixed
 decision comparisons11/33/41 exited0 with no baseline drift, independent replay
@@ -46,3 +47,13 @@ decision comparisons before spending35. Cache eviction is another separate
 unmeasured diagnosis:32 retains16 jobs,127349 dependencies and evicts72;41 actual
 unfinished resumes do not by themselves establish adequate useful cross-retry
 retention or a target repair. No cache-policy fix is claimed yet.
+
+35 completes40/42 clear,38/42 targets,zero partial gains,all clear-count vectors
+unchanged.1652.3ms slowest,0.364427min/board,salt1;all42 valid,CPU/wall
+mean1.04794,min0.99877. Native supervisor96423 and three workers exit0. Independent
+negative audit verifies all76 frozen/current sources and recomputes the result.
+The actual32 campaign has six vetoes but still plateaus at64/86 known pictures;
+tries9–12 repeat the same failed play.1251 replayed taps verify the public-learning
+audit on11/32/52. Need real fork backtracking from failed-play evidence,not only
+outcome bookkeeping or a penalty on every action of an old failed route. No36
+registered; all benchmark and policy-comparison processes from35 are terminal.

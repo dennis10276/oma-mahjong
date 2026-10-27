@@ -65,3 +65,36 @@ Raw .codex-runs/level-measure/: run-experiment-35.js,experiment-35/,
 frozen-4cb12f1cd0ac-experiment35/,survival-branches-native-v1.json,
 when-survival-branches-v1/reusable/baseline23/,survival-branches-suite-03.log.
 No Track B calibration or next20 freeze until Track A passes. No goal completion.
+
+## Completed development result: rejected
+
+|Development42,salt1|Cleared|Within Dennis+1|Complete repairs|Passing regressions|Slowest|
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate35|40/42|38/42|0|0|1652.3ms|
+
+All42 clear-count vectors unchanged; unchanged qualification finds no partial or
+off-salt gain, so no full run and no adoption. Supervisor96423 and all three
+workers exit0,running0. Independent negative-result-audit.json re-summarizes all
+42 records,compares actual23 and verifies all76 current/frozen source hashes.
+All executions valid,CPU/wall mean1.04794,min0.99877;mean0.364427min/board,salt1.
+Four of eight new measured trials used,four remain. Default23 unchanged.
+
+The actual32 campaign executes six vetoes and retrieves checkpoint working sets
+216 times,but still loses physically to tray pressure in all12 attempts. No
+decision-limit/reset surrogate is substituted for a loss.52 remains12 clock
+losses;11 still clears8. A separate public-learning audit independently replays
+1251 actual taps on11/32/52.32 learns62 pictures on try1,one each on tries3/4,
+then stays64/86. Tries9–12 repeat exactly the same full failed action sequence.
+Thus the local recoveries do not gain new pictures or repair the stalled route.
+Role/availability observations can still matter; picture plateau alone does not
+prove that every later observation is useless.
+
+Next missing mechanism: use observed failed plays to schedule a different
+continuation at an earlier genuine fork,without condemning its whole opening.
+The current agenda records outcomes but does not yet use them for such
+backtracking. This must preserve verified wins/clock exits,valid prefixes,all
+unresolved/deferred branches and the distinction between one failed play and a
+proved exhausted subtree. Do not merely reintroduce penalties on every action
+of an old failed route:25/26 already tested that failure mode. Require within-
+target actual decision changes and physical controls before spending36.
