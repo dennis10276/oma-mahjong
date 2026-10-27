@@ -55,7 +55,7 @@ clock-retry-combination-suite-01.log,clock-retry-combination-unit-02.log.
 No TrackB,next20 freeze,adoption or goal completion at preregistration.
 
 Native wrapper64289 and both children exit0. Actual37 histories32/41 independently
-replay244/177 taps,zero baseline drift,seven/one changed suggestions,all<2s.
+replay246/177 taps,zero baseline drift,seven/one changed suggestions,all<2s.
 32 changes the pre-clock choice at tap1 on tries1–7,including every target try;
 clock43,tray1.41 changes try3 tap32,clock33,tray2,on its winning attempt. That
 control change is explicitly retained for campaign validation. Suggestions
