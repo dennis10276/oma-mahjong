@@ -172,3 +172,10 @@ profiled74a1d0618b03e4ae29534f63cb33238e1431f7e952ba7a033463d030d64acf8.
 Fixed42 development live;source frozen.8/8 used,ZERO remain;default40,no adoption.
 After terminal audit/adoption checks and full batch report,STOP new trials;Dennis
 decides continuation. No48 even if47 is adopted. Goal remains unmet.
+
+FINAL47 unadopted:only49 changes to4/5/5;158/159 clear,155/159 targets;zero
+complete repairs/target/clearance regressions. Supervisor23071 and6 workers
+exit0;independent77-source/profile,519-opening-selection and42+159-summary audit
+exit0.1751.9ms full slowest,0.535618min/board. ALL8 authorized trials used.
+STOP new trials;retained40. Full table/open failures and exact next decision:
+HUMAN_REFERENCE_BATCH_40_47_STOP.md. All batch supervisors/workers terminal.

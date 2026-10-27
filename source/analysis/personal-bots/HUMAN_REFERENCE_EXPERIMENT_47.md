@@ -67,3 +67,23 @@ No completion claim while A/B/unseen20 are unmet. No outcome at preregistration.
 
 Raw experiment-47/,run-experiment-47.js,opening-broad-reusable-native-v1.json,
 when-opening-broad-reusable-v1/,opening-broad-reusable-suite-01.log.
+
+## Final: unadopted;authorized batch exhausted
+
+Supervisor23071 and6 workers exit0. Independent complete audit exit0 verifies77
+source hashes/profile,42+159 summaries and519 opening selections,including
+broadReusable=broadInformation in every run. Development49=4,52 censored;full
+does not repair any failed target and has zero target/clearance regressions.
+
+|Target|Retained40 salts1/2/3|Trial47 salts1/2/3|
+|---|---|---|
+|86|1/1/3|1/1/3|
+|10011|8/8/8|8/8/8|
+|10049|5/3/5|4/5/5|
+|10052|censored/censored/censored|censored/censored/censored|
+
+All other clear counts unchanged. Full158/159 clear,155/159 targets;slowest
+1751.9ms,0.535618min/board,CPU/wall mean1.03991,min1.00911. Retain40;
+8/8 used,ZERO remain;unadopted since40:7. STOP new experiments and report the
+whole batch for Dennis's continuation decision. No48 or goal-completion claim.
+Raw experiment-47/complete-independent-audit.json and supervisor-native-exit.json.
