@@ -107,7 +107,7 @@ bounded search/unknown picture is never an impossibility certificate. One trial
 remains,no39 registered. Goal A/B/unseen20 unmet; default23 unchanged.
 
 39 development completes40/42 clear,39/42 targets;32 repairs unresolved12→5,
-target6.11 worsens8→unresolved12;41 changes3→6 within target8;1501→2;452→1.
+target6.11 worsens8→unresolved12;41 changes3→6 within target8;level150:1→2;lab10045:2→1.
 Other37 counts unchanged. All three dev workers exit0; independent development
 audit checks all76 frozen/current sources and recomputes the exact42-record
 summary.1649.3ms slowest,0.361705min/board,CPU/wall mean1.04784,min0.98745.
