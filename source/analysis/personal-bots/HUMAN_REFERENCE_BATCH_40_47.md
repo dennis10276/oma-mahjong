@@ -136,3 +136,10 @@ complete32/33 controls unchanged;supervisor4994 and5 children exit0.
 RUNNING45 sourcefcec18dd44d841d5603a23a1d4e14849b851d03d5cab8fdb1a69e9c871ccdf25,
 profilea4c1f9ff0601887fc6e602472cb3a5caf755e44cbc934c529982224ef5c49af7.
 Fixed42 development live;source frozen.6/8 used,2 remain;default40,no adoption.
+
+FINAL45 unadopted:11=3/censored/3,49=4/5/10,15=1/6/9.157/159 clear,155/159
+targets;zero complete repairs/target regressions,but1 clearance regression11.
+Supervisor24497 and6 workers exit0;independent77-source/profile,519-opening-
+selection and42+159-summary audit exit0.1742.4ms slowest,0.557156min/board.
+Retain40;6/8 used,2 remain. Next revisit28/29's broader information condition,
+excluding earlier clock8/18 regression regimes and high-lock heavy family.

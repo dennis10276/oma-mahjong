@@ -69,3 +69,23 @@ measure() check. Freeze actors throughout measured runs. Negative trials count,
 adoption does not replenish. No outcome is claimed at preregistration.
 Raw experiment-45/,run-experiment-45.js,when-heavy-retry-risk-v3/,
 heavy-retry-risk-native-v3.json,retry-picture-preference-suite-02.log.
+
+## Final: unadopted with a clearance regression
+
+Supervisor24497 and six fresh workers exit0. Independent complete audit exit0
+verifies77 source hashes/profile,42+159 summaries and519 opening selections.
+Development repairs11 in3;full loses its salt2 clear within the12-try cap.
+
+|Target|Retained40 salts1/2/3|Trial45 salts1/2/3|
+|---|---|---|
+|86|1/1/3|1/1/3|
+|10011|8/8/8|3/censored/3|
+|10049|5/3/5|4/5/10|
+|10052|censored/censored/censored|censored/censored/censored|
+
+Other changed board15=1/6/9,still within target12. Full157/159 clear,155/159
+targets;zero complete target repairs,zero passing-target regressions,but ONE
+clearance regression(11). Both adoption requirements must hold,so reject45.
+Slowest1742.4ms,0.557156min/board,CPU/wall mean1.04200,min1.00943.
+Retain40;6/8 used,2 remain;unadopted since40:5. No worker remains live.
+Raw experiment-45/complete-independent-audit.json and supervisor-native-exit.json.

@@ -50,6 +50,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(!options.openingRetryRiskLearning || options.openingReusablePlanning === true);
   assert(options.openingRetryPictureLearning === undefined || typeof options.openingRetryPictureLearning === 'boolean');
   assert(!options.openingRetryPictureLearning || options.openingRetryRiskLearning === true);
+  assert(options.openingBroadInformationPlanning === undefined || typeof options.openingBroadInformationPlanning === 'boolean');
+  assert(!options.openingBroadInformationPlanning || options.openingConditionalPlanning === true);
   if (options.openingConditionalPlanning) return openingPlanningController(options,
     planning => createHumanController(tiles, planning, publicContext));
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
