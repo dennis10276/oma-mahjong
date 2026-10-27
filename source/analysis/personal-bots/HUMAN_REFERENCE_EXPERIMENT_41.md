@@ -94,6 +94,6 @@ baseline357. No actor edits occurred before terminal verification and audit.
 |10049|5/3/5|4/3/6|
 |10052|censored/censored/censored|censored/censored/censored|
 
-Only other changed board15 remains passing:1/1/2 becomes1/8/2;Dennis+1 target8.
+Only other changed board15 remains passing:1/1/2 becomes1/8/2;Dennis+1 target12.
 Control32 remains5/5/3. Retain40. Batch2/8 used,6 remain;unadopted since40:1.
 Raw experiment-41/complete-independent-audit.json and supervisor-native-exit.json.

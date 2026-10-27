@@ -69,3 +69,11 @@ zero passing-target/clearance regressions.11=9/9/3,49=4/3/6,15=1/8/2;
 all others unchanged versus40. Supervisor68207 and six workers exit0;independent
 77-source/profile/42+159-record/519-opening-selection audit exit0.1716.1ms
 slowest,0.531006min/board.2/8 used,6 remain;retained40. All processes terminal.
+
+RUNNING42 restores original33's32768-node budget under the same heavy public
+condition;full resolved dictionary now checked by a hashed test-only fixture.
+145 tests pass18s(native22503 exit0). Actual40 history comparisons210/162/259
+taps,zero baseline drift,21/0/0 changed suggestions;wrapper3855 and3 children
+exit0. Sourceb3236132098172c5861232b12e4ed8be2d36dcdb7dab7a3bd2f0fd5d9d6ee490,
+profileb117b3c21f2cf341c2b5d742bca64042bf73cf91e0996cf9ecb86c1ce12bfa59.
+Fixed42 development live;no complete outcome/adoption claim.3/8 used,5 remain.
