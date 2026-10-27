@@ -84,6 +84,9 @@ function createReusableExploration(options = {}) {
     assert(Array.isArray(roots) && roots.every(action => Number.isInteger(action.index)));
     const allowedRoots = new Set(roots.map(action => action.index));
     assert.equal(allowedRoots.size, roots.length);
+    const rootCosts = new Map(settings.rootCosts ?? []);
+    assert.equal(rootCosts.size,(settings.rootCosts ?? []).length);
+    assert([...rootCosts].every(([index,cost])=>allowedRoots.has(index)&&Number.isInteger(cost)&&cost>=0&&cost<=3));
     const stateFields = position => ['alive', 'pictures', 'down', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
       .map(field => position[field] ?? null);
     const physicalFields = position => ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
@@ -91,7 +94,7 @@ function createReusableExploration(options = {}) {
     const rules = game.rules ? [game.rules.ice, Array.from(game.rules.locks ?? []), game.rules.keys] : null;
     const key = JSON.stringify([dependencyAware ? 'dependency-aware' : settings.version,
       dependencyAware ? physicalFields(state) : stateFields(state), roots.map(action => action.index), taps, peekTrayLimit, continueAfterInformation,
-      game.tiles.map(tile => [tile.x, tile.y, tile.z]), game.nb, rules, game.clock, simplifyPrefixes]);
+      game.tiles.map(tile => [tile.x, tile.y, tile.z]), game.nb, rules, game.clock, simplifyPrefixes, [...rootCosts]]);
     const revision = JSON.stringify([settings.version, state.pictures, state.down,
       ['publicFrontier', 'publicInformationExposure', 'publicRoleExposure'].map(field => typeof game[field])]);
     let dependencyQueries = 0;
@@ -204,6 +207,7 @@ function createReusableExploration(options = {}) {
             const clockSafe = !game.clock || !position.alive[game.clock.i] || game.clock.n - position.moves > 2;
             if (moved.reason === 'unseenPicture' && position.down[index] === 1 && position.tray.length <= peekTrayLimit && clockSafe) {
               const witness = { path: path.concat(index), kind: 'actualPeekRequired', knownWin: false };
+              if (!path.length && rootCosts.size) { candidates.push({index,peek:witness}); continue; }
               if (!continueAfterInformation) return witness;
               yield witness;
             }
@@ -211,9 +215,12 @@ function createReusableExploration(options = {}) {
           }
           if (!moved.lost) candidates.push({ index, moved });
         }
-        candidates.sort((left, right) => left.moved.state.tray.length - right.moved.state.tray.length
-          || right.moved.removed - left.moved.removed);
+        candidates.sort((left, right) => (!path.length ? (rootCosts.get(left.index)??0)-(rootCosts.get(right.index)??0) : 0)
+          || (left.peek ? -1 : 0)-(right.peek ? -1 : 0)
+          || (left.moved?.state.tray.length??0)-(right.moved?.state.tray.length??0)
+          || (right.moved?.removed??0)-(left.moved?.removed??0));
         for (const candidate of candidates) {
+          if (candidate.peek) { if (!continueAfterInformation) return candidate.peek; yield candidate.peek; continue; }
           const result = yield* visit(candidate.moved.state, path.concat(candidate.index));
           if (result) return result;
         }

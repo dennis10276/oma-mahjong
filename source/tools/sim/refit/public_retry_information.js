@@ -86,6 +86,7 @@ function retryInformationSearch(primarySearch, options = {}) {
   assert(!options.retainRoute || options.reusablePlanning === true);
   assert(options.simplifyPrefixes === undefined || typeof options.simplifyPrefixes === 'boolean');
   assert(!options.simplifyPrefixes || options.reusablePlanning === true);
+  assert(options.rootCost === undefined || options.reusablePlanning === true && typeof options.rootCost === 'function');
   const retainedRoute = options.retainRoute ? createRetainedInformationRoute() : null;
   let lastKnowledge = null;
   const reusable = options.reusablePlanning ? createReusableExploration({ preferInvestedWork: options.retainInvestedWork }) : null;
@@ -159,11 +160,13 @@ function retryInformationSearch(primarySearch, options = {}) {
         counters.deadEndConsidered++; counters.firstAttemptDeadEndConsidered += +(attempt === 1);
       }
       const extraBegan = Date.now();
+      const rootCosts = options.rootCost ? actions.map(({index}) => [index,options.rootCost(index)]) : null;
       const result = retained ?? (reusable ? reusable.search : explorationWitness)(publicGame, state, actions,
         { nodes: nodeLimit, taps: Math.min(128, remaining), peekTrayLimit, preferActualPeek,
           ...(reusable ? { version: options.contextVersion(), revalidatePublicChanges: true,
             continueAfterInformation: options.continueAfterInformation === true,
             ...(options.simplifyPrefixes ? {simplifyPrefixes:true} : {}),
+            ...(rootCosts?.some(([,cost])=>cost>0) ? {rootCosts} : {}),
             ...(warmOnly ? { consumeInformation: false } : {}) } : {}),
           deadline: Math.min(settings.deadline ?? Infinity, began + 1800, extraBegan + milliseconds) });
       counters.maximumExtraMs = Math.max(counters.maximumExtraMs, Date.now() - extraBegan);

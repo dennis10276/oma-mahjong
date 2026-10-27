@@ -35,6 +35,18 @@ function test(){
  observed.pictures.forEach((p,i)=>{if(p!==null)pictures[i]=p;});policy.observe(memory);
  assert.equal(pictures[2],7,'Only the actual production reveal supplies the picture');
  const replayed=verifyAttempt(encodeGame(actual),[4,5,0,2],settings,session.audit());
+ const beforeLearning={pictures:[5,6,null,null,5,6],down,initialRoles};
+ const rootAware=retryInformationSearch(()=>primary,{reusablePlanning:true,contextVersion:()=> 'known',continueAfterInformation:true,
+  prepareCrowded:true,rootCost:index=>index===0?1:0,nodes:10000,milliseconds:100,choices:64});
+ rootAware.beginAttempt(beforeLearning);
+ const alternative=rootAware.search(model,state,[0,1,2,3].map(index=>({index})));
+ assert.deepEqual(alternative.path,[1,2],'Information routing must honor actual-root preferences instead of overriding them');
+ const alternateSession=factory(actual,settings);
+ for(const index of [4,5,...alternative.path]){assert(alternateSession.view().legalTiles.includes(index));alternateSession.tap(index);}
+ assert(!alternateSession.view().lost);
+ const alternateTaps=verifyAttempt(encodeGame(actual),[4,5,...alternative.path],settings,alternateSession.audit());
+ const onlyPenalized=rootAware.search(model,state,[{index:0}]);
+ assert.deepEqual(onlyPenalized.path,[0,2],'A penalty never forbids the only constructive root');
  policy.finish('unresolved',memory);
  const route={path:[0,2],knownPrefixTaps:1,kind:'actualPeekRequired',knownWin:false};
  const expected={...advance(model,state,0).state,physicalTaps:state.physicalTaps+1};
@@ -59,6 +71,6 @@ function test(){
  }
  assert.throws(()=>retryInformationSearch(()=>primary,{retainRoute:true}));
  assert.throws(()=>createHumanController(tiles,{reusableRetainRoute:true}));
- factory.verifySource();console.log('PASS retained public information prefixes follow verified production taps, stop on discoveries/history/clock/legality/deadline changes and protect constructive wins; '+replayed+' independently replayed taps');
+ factory.verifySource();console.log('PASS retained public information prefixes follow verified production taps, respect actual-root preferences without forbidding roots, stop on discoveries/history/clock/legality/deadline changes and protect constructive wins; '+(replayed+alternateTaps)+' independently replayed taps');
 }
 if(require.main===module)test();module.exports=test;

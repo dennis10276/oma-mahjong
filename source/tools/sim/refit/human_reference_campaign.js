@@ -270,6 +270,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       warmPlanning: options.reusableWarmPlanning,
       retainRoute: options.reusableRetainRoute,
       simplifyPrefixes: options.reusableSimplifyPrefixes,
+      rootCost: options.reusablePublicPlanning && options.retryRiskLearning ? index => geometry.publicRetryCost(index) : undefined,
       contextVersion: options.reusablePublicPlanning ? () => JSON.stringify([pictures, down, initialRoles, roles,
         typedKeyKnowledge(), acceptedTapMemory?.entries() ?? [], clearedRoleMemory?.entries() ?? [],
         blockedTapMemory?.entries() ?? [], observedTakeable, Array.from(blocked), observedSafetyPlanningActive,
