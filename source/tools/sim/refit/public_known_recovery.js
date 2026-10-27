@@ -2,13 +2,15 @@
 const assert = require('assert/strict');
 const { featuresOf, legal, advance } = require('./known_tray_plan.js');
 
-function knownRecovery(game, state, tapLimit = 2, deadline = Infinity) {
+function knownRecovery(game, state, tapLimit = 2, deadline = Infinity, rootIndices = null) {
   assert(Number.isInteger(tapLimit) && tapLimit >= 1 && tapLimit <= 2);
   assert(deadline === Infinity || Number.isFinite(deadline));
   featuresOf(game, state, [], { taps: 1, nodes: 1, progress: 1 });
   if (Date.now() >= deadline) return null;
   const allowed = legal(game, state), firstMoves = [];
-  for (const index of allowed.free) {
+  assert(rootIndices === null || Array.isArray(rootIndices) && rootIndices.every(index => allowed.free.includes(index)));
+  const roots = rootIndices === null ? null : new Set(rootIndices);
+  for (const index of allowed.free.filter(index => roots === null || roots.has(index))) {
     if (Date.now() >= deadline) return null;
     const picture = state.pictures[index];
     if (picture === null || picture === 101 || allowed.uncertain?.includes(index)) continue;

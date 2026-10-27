@@ -38,6 +38,7 @@ const { publicActionOrder } = require('./public_action_order.js');
 const { retryCompleteSearch } = require('./public_retry_complete.js');
 const { retryInformationSearch } = require('./public_retry_information.js');
 const { safeClosedInspection } = require('./public_safe_closed_inspection.js');
+const { survivalBranchSearch } = require('./public_survival_branches.js');
 const { createKnownWitnessPortfolio } = require('./public_known_witness_portfolio.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
@@ -163,6 +164,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(!options.reusableRetainInvestedWork || options.reusablePublicPlanning === true);
   assert(options.reusableWarmPlanning === undefined || typeof options.reusableWarmPlanning === 'boolean');
   assert(!options.reusableWarmPlanning || options.reusablePublicPlanning === true && options.reusableContinueAfterInformation === true);
+  assert(options.survivalBranches === undefined || typeof options.survivalBranches === 'boolean');
   assert(options.drawnRoleInformation === undefined || typeof options.drawnRoleInformation === 'boolean');
   assert(options.drawnRoleClockSlackRange === undefined || options.drawnRoleInformation === true
     && Array.isArray(options.drawnRoleClockSlackRange) && options.drawnRoleClockSlackRange.length === 2
@@ -258,8 +260,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     informationRetry?.search || completeRetrySearch || runRetrySearch || baseSearch,
     { milliseconds: options.knownWitnessMs ?? 250, nodes: options.knownWitnessNodes ?? 4096,
       choices: options.choiceLimit ?? 512 }, baseSearch) : null;
+  const survivalSearch = options.survivalBranches ? survivalBranchSearch(knownPortfolio?.search || informationRetry?.search
+    || completeRetrySearch || runRetrySearch || baseSearch,
+  { nodes: options.survivalNodes ?? 2048, milliseconds: options.survivalMs ?? 100, width: options.survivalBranchWidth ?? 3 }) : null;
   const resetPlanner = () => {
-    const selectedSearch = knownPortfolio?.search || informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
+    const selectedSearch = survivalSearch?.search || knownPortfolio?.search || informationRetry?.search || completeRetrySearch || runRetrySearch || (options.hypothesisSampling ? baseSearch : null);
     planner = selectedSearch ? reference(settings, selectedSearch) : reference(settings);
   };
   if (options.retryRiskLearning) geometry.publicRetryCost = index => retryRiskMemory && current ? Math.max(
@@ -286,6 +291,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       startingRetryKnowledge = JSON.stringify(retryKnowledge());
       failedRouteMemory?.beginAttempt(startingRetryKnowledge);
       informationRetry?.beginAttempt(retryKnowledge());
+      survivalSearch?.beginAttempt();
       attempt++; frontier = createObstacleFrontier(tiles, { exclusiveRoles: !!options.exclusiveRoles }); roleSignature = null;
       roles = tiles.map(() => null); blocked = new Set(); blockedAlive = null; current = null;
       observedTakeable = null; observedAliveKey = null; observedArrivingKey = null;
@@ -622,6 +628,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       return finalize({ plan: structuredClone(plan), predicted });
     },
     acknowledge(index, accepted) {
+      survivalSearch?.acknowledge(index, accepted);
       lastAcceptedIndex = accepted ? index : null;
       if (accepted && hypothesisVisits) hypothesisVisits.recordActual(decisionPosition, knowledgeSignature(), index);
       if (accepted && options.hypothesisSampling) episodes.at(-1).actions.push(index);
@@ -637,6 +644,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     completeAttempt(status) {
       if (options.hypothesisSampling) episodes.at(-1).status = status;
       informationRetry?.finish(status, retryKnowledge());
+      survivalSearch?.finish(status);
       const routePreferences = failedRouteMemory?.finish(status, JSON.stringify(retryKnowledge())) ?? 0;
       const risk = retryRiskMemory?.finish(status) ?? null;
       return routePreferences ? { ...risk, failedRoutePreferences: routePreferences } : risk;
@@ -645,6 +653,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     retryCompletionStats() { return completeRetrySearch?.stats() ?? null; },
     retryInformationStats() { return informationRetry?.stats() ?? null; },
     knownPortfolioStats() { return knownPortfolio?.stats() ?? null; },
+    survivalBranchStats() { return survivalSearch?.stats() ?? null; },
     acceptedEvidence() { return acceptedTapMemory?.entries() ?? []; },
     knownLossEvidence() { return knownLossMemory?.entries() ?? []; },
     clearedRoleEvidence() { return clearedRoleMemory?.entries() ?? []; },
@@ -801,6 +810,7 @@ function playHumanCampaign(input, options = {}) {
     ...(options.planning?.retryCompleteWitness ? { retryCompletion: controller.retryCompletionStats() } : {}),
     ...(options.planning?.retryInformationWitness ? { retryInformation: controller.retryInformationStats() } : {}),
     ...(options.planning?.knownWitnessPortfolio ? { knownWitnessPortfolio: controller.knownPortfolioStats() } : {}),
+    ...(options.planning?.survivalBranches ? { survivalBranches: controller.survivalBranchStats() } : {}),
     ...(options.planning?.rememberKeyIdentities ? { keyIdentityEvidence: controller.keyIdentityEvidence() } : {}),
     ...(options.planning?.rememberKnownLosses ? { rememberedLosses: controller.knownLossEvidence() } : {}),
     note: 'Game-state visibility gate; no pixels or full hidden rules. Search stops at unobserved identities, orientations and roles. Rejected uncertain taps do not advance moves or create retries. Retry memory uses actual board observations and unambiguous actual matches to previously seen tray/open pictures; no removed hidden picture is read. Starting-role memory uses observations and rule-supported deductions, never late none as starting safety. Completed attempts independently replayed through unmodified production. Finite failure is not impossibility.' };

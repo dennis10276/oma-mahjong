@@ -86,6 +86,18 @@ function test() {
     assert(proof.rootStatuses.filter(root => root.status !== 'rejected').length > 1);
     assert(fixture.actions.every(action => legal(geometry, fixture.state).free.includes(action.index)));
   }
+  const flatTiles = [0, 8, 16, 24].map(position => ({ x: position, y: 0, z: 0 }));
+  const flat = { tiles: flatTiles, nb: Layouts.neighbors(flatTiles), rules: null, clock: null };
+  const flatActual = { ...flat, faces: [1, 1, 2, 2], down: [0, 0, 0, 0] };
+  const flatInitial = factory(flatActual, settings).view().state;
+  const packet = observeBoard(flatTiles, flatInitial, null, { picture: index => flatActual.faces[index], role: () => 'none' });
+  const known = { ...flatInitial, pictures: packet.pictures, down: packet.down }, flatRoots = flatTiles.map((tile, index) => ({ index }));
+  const broad = analyzeSurvival(flat, known, flatRoots, { nodes: 10, milliseconds: 500 });
+  const deep = analyzeSurvival(flat, known, flatRoots, { nodes: 10, milliseconds: 500, depthFirst: true, rootPriority: [0] });
+  assert(!broad.knownWin && broad.boundary && !broad.knownDead);
+  assert(deep.knownWin && deep.searchOrder === 'branch_depth_first');
+  assert(replay(flatActual, deep.winningPath).view().win);
+  assert.throws(() => analyzeSurvival(flat, known, flatRoots, { depthFirst: true, rootPriority: [9] }));
   factory.verifySource();
   console.log('PASS conditional necessary prefixes reject only exhausted alternatives, stop at real new information, preserve a shared opening after one failed continuation, reopen partial-root cycles, keep bounds unresolved, match independent loss proofs and replay ' + replayedTaps + ' production taps across37 concealed worlds');
 }

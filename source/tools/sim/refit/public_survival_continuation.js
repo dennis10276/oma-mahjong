@@ -21,6 +21,11 @@ function analyzeSurvival(game, state, actions, options = {}) {
   const allowed = legal(game, state).free, requested = new Set(actions.map(action => action.index));
   assert(requested.size === actions.length && [...requested].every(index => allowed.includes(index)));
   const completeRootCoverage = allowed.every(index => requested.has(index));
+  const depthFirst = options.depthFirst ?? false, rootPriority = options.rootPriority ?? actions.map(action => action.index);
+  assert.equal(typeof depthFirst, 'boolean');
+  assert(Array.isArray(rootPriority) && new Set(rootPriority).size === rootPriority.length
+    && rootPriority.every(index => requested.has(index)));
+  const order = new Map([...new Set([...rootPriority, ...requested])].map((index, rank) => [index, rank]));
   const pictureExposure = createExposureFrontier(game.tiles, state, 'all');
   const exposed = game.publicInformationExposure ?? (position => [...new Set([...pictureExposure(position),
     ...(game.publicExposure?.(position) ?? []), ...(game.publicRoleExposure?.(position) ?? [])])]);
@@ -34,12 +39,16 @@ function analyzeSurvival(game, state, actions, options = {}) {
     while (graph[node].parent !== null) { path.push(graph[node].via); node = graph[node].parent; }
     return path.reverse();
   };
-  for (let cursor = 0; cursor < graph.length; cursor++) {
+  const pending = [0]; let breadthCursor = 0;
+  while (depthFirst ? pending.length : breadthCursor < graph.length) {
     if (Date.now() >= deadline) break;
+    const cursor = depthFirst ? pending.pop() : breadthCursor++;
     const node = graph[cursor], position = node.state;
     if (!position.alive.some(Boolean) && !position.tray.length) { node.win = true; node.expanded = true; continue; }
     if (cursor && exposed(position).length) { node.boundary = true; node.expanded = true; boundaryCount++; continue; }
     const candidates = legal(game, position).free.filter(index => cursor || requested.has(index));
+    if (!cursor) candidates.sort((left, right) => order.get(left) - order.get(right));
+    const discovered = [];
     for (const index of candidates) {
       if (Date.now() >= deadline) break;
       const moved = advance(game, position, index); transitions++;
@@ -47,6 +56,7 @@ function analyzeSurvival(game, state, actions, options = {}) {
         node.edges.push({ index, boundary: true, reason: moved.reason }); boundaryCount++; continue;
       }
       if (moved.lost) { node.edges.push({ index, lost: true }); continue; }
+      if (moved.win && firstWin === null) firstWin = pathTo(cursor).concat(index);
       const signature = identity(moved.state);
       let target = identities.get(signature);
       if (target === undefined) {
@@ -56,12 +66,13 @@ function analyzeSurvival(game, state, actions, options = {}) {
         target = graph.length; identities.set(signature, target);
         graph.push({ state: moved.state, edges: [], parents: [], parent: cursor, via: index,
           boundary: false, expanded: false, win: !!moved.win });
+        discovered.push(target);
       }
       node.edges.push({ index, target }); graph[target].parents.push(cursor);
-      if (moved.win && firstWin === null) firstWin = pathTo(cursor).concat(index);
     }
     node.expanded = node.edges.length === candidates.length;
     if (!cursor) rootExpanded = node.expanded;
+    if (depthFirst) for (let offset = discovered.length - 1; offset >= 0; offset--) pending.push(discovered[offset]);
   }
   const possible = new Set(), queue = [];
   for (let index = 0; index < graph.length; index++) {
@@ -109,7 +120,7 @@ function analyzeSurvival(game, state, actions, options = {}) {
     completeRootCoverage, propagationComplete: propagated, nodes: graph.length, transitions,
     boundary: boundaryCount > 0 || graph.some(node => !node.expanded),
     closedDeadStates: propagated ? graph.length - possible.size : 0,
-    elapsedMs: Date.now() - began,
+    elapsedMs: Date.now() - began, searchOrder: depthFirst ? 'branch_depth_first' : 'breadth_first',
     reason: !propagated ? 'propagation_deadline' : !rootExpanded ? 'root_deadline' : 'public_survival_graph',
     proof: { allRejectedRootsExhausted: propagated, unknownsRemainPossible: true,
       unfinishedStatesRemainPossible: true, survivingRouteMayBeUnresolved: !firstWin,
