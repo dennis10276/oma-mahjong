@@ -4,7 +4,7 @@ const assert = require('assert/strict');
 function openingPlanningController(options, createController) {
   const { openingConditionalPlanning, openingReusablePlanning = false, reusableRetainRoute = false,
     reusableSimplifyPrefixes = false, openingRetryRiskLearning = false, openingRetryPictureLearning = false,
-    openingBroadInformationPlanning = false, ...baseline } = options;
+    openingBroadInformationPlanning = false, openingBroadReusablePlanning = false, ...baseline } = options;
   assert.equal(openingConditionalPlanning, true);
   assert.equal(typeof openingReusablePlanning, 'boolean');
   assert.equal(typeof reusableRetainRoute, 'boolean');
@@ -17,6 +17,8 @@ function openingPlanningController(options, createController) {
   assert(!openingRetryPictureLearning||openingRetryRiskLearning);
   assert.equal(typeof openingBroadInformationPlanning,'boolean');
   assert(!openingBroadInformationPlanning||!openingReusablePlanning,'Broad and heavy opening candidates must be evaluated separately');
+  assert.equal(typeof openingBroadReusablePlanning,'boolean');
+  assert(!openingBroadReusablePlanning||openingBroadInformationPlanning);
   assert.equal(typeof createController, 'function');
   let delegate = createController(baseline), selection = null, begun = false;
   const api = Object.fromEntries(Object.keys(delegate).map(method => {
@@ -38,7 +40,8 @@ function openingPlanningController(options, createController) {
       selection = { kind: 'publicOpeningClockLockV1', startingClockBudget: budget,
         visibleLockSymbols: locks, enhanced, latchedForCampaign: true,
         ...(openingReusablePlanning ? { reusable, family: reusable ? 'reusable33' : enhanced ? 'survival39' : 'retained23' } : {}),
-        ...(openingBroadInformationPlanning ? {broadInformation:broad,family:broad ? enhanced ? 'broadSurvival39':'broad23' : enhanced ? 'survival39':'retained23'} : {}) };
+        ...(openingBroadInformationPlanning ? {broadInformation:broad,family:broad ? enhanced ? 'broadSurvival39':'broad23' : enhanced ? 'survival39':'retained23'} : {}),
+        ...(openingBroadReusablePlanning ? {broadReusable:broad} : {}) };
       if (enhanced || reusable || broad) {
         const selected = reusable ? { ...baseline, reusablePublicPlanning: true,
           reusableContinueAfterInformation: true, reusablePrepareCrowded: true, retryInformationNodes: 32768,
@@ -49,7 +52,9 @@ function openingPlanningController(options, createController) {
           survivalEarlyForks: true, clockOrphanPreparation: true, clockRecoveryMinSlack: 30 };
         // A broad baseline selection must not accidentally inherit the light-clock family.
         const base = !reusable && !enhanced ? baseline : selected;
-        delegate = createController(broad ? {...base,passiveInformation:'shortAll',rememberProvedContinuations:true} : base);
+        delegate = createController(broad ? {...base,passiveInformation:'shortAll',rememberProvedContinuations:true,
+          ...(openingBroadReusablePlanning ? {reusablePublicPlanning:true,reusableContinueAfterInformation:true,
+            reusablePrepareCrowded:true,retryInformationNodes:32768,reusableRetainRoute:true,reusableSimplifyPrefixes:true} : {})} : base);
         delegate.beginAttempt();
       }
     }

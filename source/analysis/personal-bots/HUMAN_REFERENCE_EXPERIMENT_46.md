@@ -59,3 +59,25 @@ allowance;adoption does not replenish. No outcome at preregistration;no automati
 
 Raw experiment-46/,run-experiment-46.js,opening-broad-info-native-v1.json,
 when-opening-broad-info-v1/,opening-broad-information-suite-01.log.
+
+## Final: unadopted
+
+Supervisor91023 and6 fresh workers exit0. Independent audit exit0 verifies77
+source hashes/profile,42+159 summaries and519 opening selections,including12
+broad full runs(3 broad23,9 broadSurvival39). Development49 improves5→4 with
+no regression;unchanged v2 advances a partial gain to full. Full has no complete
+repair and no passing-target/clearance regressions.
+
+|Target|Retained40 salts1/2/3|Trial46 salts1/2/3|
+|---|---|---|
+|86|1/1/3|1/1/3|
+|10011|8/8/8|8/8/8|
+|10049|5/3/5|4/3/6|
+|10052|censored/censored/censored|censored/censored/censored|
+
+Every other clear count is unchanged,including outside-development80/81.
+Full158/159 clear,155/159 targets. Full slowest1715.4ms,development slowest1806.0ms,
+mean0.549781min/board for3 salts;full CPU/wall mean1.04119,min0.99937.
+Development CPU/wall mean1.02468,min0.86258;execution remains valid and<2s.
+Retain40;7/8 used,1 remains;unadopted since40:6. Raw experiment-46/
+complete-independent-audit.json and supervisor-native-exit.json. No worker live.
