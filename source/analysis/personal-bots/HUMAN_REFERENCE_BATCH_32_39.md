@@ -3,7 +3,7 @@
 Dennis authorized: "Authorize reusable planning across retries, with up to eight
 new experiments." Maximum eight NEW measured trials total; WHEN variants count.
 Previous unadopted24–31 and stop report2b122e7 remain. Adoption does not replenish
-this allowance. Six trials used,two available;32–36 rejected,37 running.
+this allowance. Six trials used,two available;32–37 rejected.
 Strong Track A then calibrated Track B objective remains unmet. Default retained23.
 
 |Trial|Mechanism|Latest scope/status|Complete repairs|Passing regressions|
@@ -13,7 +13,7 @@ Strong Track A then calibrated Track B objective remains unmet. Default retained
 |34|Fresh preparation only tray2,active clock20–40|Full159/salts1–3 rejected|0|0|
 |35|Necessary continuations and persistent three-branch agenda|Dev42 rejected|0|0|
 |36|One failed-play backtrack at a retained productive fork|Dev42 rejected|0|0|
-|37|Three-child retry allocation at the earliest retained eligible fork|Development running|pending|pending|
+|37|Three-child retry allocation at the earliest retained eligible fork|Dev42 rejected|0|0 target;clearance regression10011|
 
 33 improved11 from8→3 on salt1 but broke33 from4→unresolved12. Full mixed
 decision comparisons11/33/41 exited0 with no baseline drift, independent replay
@@ -80,3 +80,13 @@ Actual-history comparisons now change six/zero suggestions,including32 tap2 on
 tries3–6; all<2s,native94910 and both children exit0. No candidate clear inferred.
 37 preregisteredaf33d31,baselineactual23,fixed42 selection/protocol unchanged.
 See HUMAN_REFERENCE_EXPERIMENT_37.md. Six trials used,two remain; default23.
+
+37 rejected-development:39/42 clear,38/42 targets,1670.0ms slowest,
+0.384466min/board,salt1.11 worsens8→unresolved12;other41 counts unchanged.
+No partial/off-salt gains. This clearance regression is material even though11
+already failed the Dennis+1 target. Supervisor78262 and all three workers exit0;
+independent audit recomputes42 records and verifies all76 frozen/current source
+hashes. CPU/wall mean1.04577,min0.98113;all executions valid.1367 independently
+replayed taps audit11/32/52.32 executes early alternatives but remains64/86 known
+pictures after try4;52 still has12 clock losses while incrementally learning to
+66/86. No full run or adoption. No38 registered;two measured trials remain.

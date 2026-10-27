@@ -63,3 +63,36 @@ replay238/177 physical taps,zero original-choice drift,six/zero changed suggesti
 All decisions<2s;32 candidate maximum1641.9ms. On32,tries3–6 propose another
 retained child at tap2,within target6; tray2,clock gone.41's winning route remains
 unchanged. These are forced-history suggestions,not executed improvements.
+
+## Completed development result: rejected
+
+|Development42,salt1|Cleared|Within Dennis+1|Complete repairs|Passing target regressions|Slowest|
+|---|---:|---:|---:|---:|---:|
+|Retained23|40/42|38/42|baseline|—|—|
+|Candidate37|39/42|38/42|0|0|1670.0ms|
+
+11 worsens from8 to unresolved12: a clearance regression on an already failing
+target,even though the passing-target regression count is zero. Every other
+clear-count vector stays unchanged. Unchanged qualification rejects development:
+no partial/off-salt gains and clearance regression11. No full run or adoption.
+Supervisor78262 and all three workers exit0. Independent negative audit
+recomputes42 records against23 and verifies all76 frozen/current source hashes,
+profile and evaluator. All executions valid;CPU/wall mean1.04577,min0.98113;
+mean0.384466min/board,salt1. Six of eight trials used,two remain. Default23.
+
+Actual32 consumes six scheduled alternatives and passes ten allocated working
+sets. Its tries3/4 actually change the early two-tap continuation. Yet every
+attempt still loses physically to tray pressure. Independent public-learning
+audit replays1367 actual taps on11/32/52:32 remains64/86 known pictures from try4
+through12,no repeated full sequence,but no additional picture gain. Its same
+first two taps enter the clock exit carrying two stranded pictures before any
+of these fork choices. This suggests examining that earlier commitment,not
+claiming all post-clock continuations impossible. Prior31 tested pre-clock
+preparation alone without a repair; a combined strategy needs interaction
+controls and actual-history evidence before spending another trial.
+
+52 remains12 physical clock losses. It learns57/86 pictures on try1,61 on try2,
+then incrementally to66 on try12; thus neither a fully known board nor an
+exhausted information search. No human-information impossibility claim. Both
+unresolved boards and11 remain research failures. Goal A/B/unseen20 unmet.
+All campaign/comparison processes terminal; no38 registered.
