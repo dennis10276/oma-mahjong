@@ -27,3 +27,12 @@ Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 Current:0/8 measured,8 remain. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
+
+Additional steering:plan by the highest chance of an out,learned from earlier
+levels the BOT played. Build a shared escape critic from bot-generated public
+experience on72 recorded boards/topologies disjoint from every benchmark board,
+including16 key boards. No human count/action labels. Train/validation grouped
+by topology;one frozen model for all targets/future boards.149 tests pass19s,
+including a tray3 on-pile key pair unlocking tray relief and8 replayed winning
+taps. Feature/label foundation only;actor not yet changed. Full specification:
+HUMAN_LEARNED_ESCAPE_PLANNING.md. Curriculum collection is not a measured variant.

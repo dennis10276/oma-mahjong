@@ -21,7 +21,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 - Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
 - Labs first:10011,10049,10052; natural86 also fails. Repaired10032 remains a control.
 - Development: failures plus20 fixed guards, salt1; retain regression controls; full salts1-3; repair>=1 and break none.
-- Survival/key logic:avoid proved dead ends;preserve on-pile/tray matching escapes;target all4 with general logic.
+- Survival/key logic:avoid proved dead ends,preserve matching escapes;rank outs learned from earlier BOT games,without target leakage.
 
 ## Mixed strategies: find WHEN to use them
 
@@ -74,7 +74,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 ## Current evidence
 
 - Retained40:158/159 clear every salt,155/159 within Dennis+1; A still unmet; four targets remain.
-- 148/148 tests pass20s; batch48-55 used0/8;40-47 audited/retained;new focus public survival,matching escape and key logic.
+- 149/149 tests pass19s;batch48-55 used0/8;shared escape-learning curriculum72 nonbenchmark topologies,16 key boards;default40 retained.
 - Full40 repairs10032,no target/clearance regressions;6 fresh workers exit0;slowest1717.6ms.
 - Adopted40's fresh159-board cohort,77 sources and477 opening selections verified;mean0.5358min/board for3 salts.
 - Batch audit:48 workers/616 archived sources/4152 opening selections verified;default477 configs match40;unlabeled API1/1/1,998.4ms.
