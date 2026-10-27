@@ -101,3 +101,12 @@ Full158/159 clear,155/159 targets;zero complete repairs,passing-target OR
 clearance regressions. Supervisor84735 and6 workers exit0;independent77-source/
 profile,519-opening-selection and42+159-summary audit exit0.1751.0ms slowest,
 0.537703min/board. Retain40;4/8 used,4 remain. No worker remains live.
+
+RUNNING44:remove only state-equivalent abandoned known peeks from heavy-family
+information prefixes.147 tests pass18s,native95664 exit0;two original/shortened
+production routes both win,15 independently replayed taps. Five actual-history
+comparisons replay1068 taps,zero drift;supervisor48800 and5 children exit0.
+11 salt2 changes18 suggestions;passing32/33 unchanged. These are not clears.
+Source cb4ae20c467ecf87a19c1f7f629bf3e6db035b43ebd066335ddc2a5178549f65,
+profiled713042c454cd93f974370aa83142eadeee98e3050101543955c7fafd3571f2f.
+Fixed42 development live;source frozen.5/8 used,3 remain;retained40,no adoption.
