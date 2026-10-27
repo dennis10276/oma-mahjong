@@ -64,3 +64,28 @@ invalidate proofs after relevant discoveries, and separate exact failed plays,
 fully exhausted branches and unresolved budgets. No sampled unanimity, cap,
 single failed path or forgotten alternative may become a loss proof. These are
 strategy requirements, not a new name for the already-tested cache changes.
+
+## Real-position diagnostic
+
+Audit uses the frozen retained23 actor, its one observer and captured public
+model. Analysis occurs after the original decision and before the actual recorded
+tap.32 native43336 exit0:210 independent replay taps/first six attempts,zero
+original-choice drift. Two selected roots are immediately losing while other
+branches remain possible (try3 tap49 and try4 tap31), both within target6. They
+include a matching open-twin alternative that preserves tray capacity. One forced
+position and four already-closed positions occur; no missed complete win found.
+
+Passing41 native28834 exit0:176 replay taps/three attempts,zero drift,one such
+alternative on failed try2,zero on its actual winning continuation. No rejected
+winning move assertion failed.11 native14658 exit1:211 original taps replay,
+but TWO source-identical original-choice deviations. Preserve and exclude11's
+policy-attribution counts; do not rerun for a favorable result or call all three
+audits successful. Unknown/capped frontiers dominate and are never ruled out.
+
+This is no candidate clear. The possible alternatives can still fail later.
+Raw necessary-continuation-audit-v1/ holds frames,native-summary.json and the
+exact five-file helper snapshot(commit4a79b62). The actor source remains frozen
+at retained23 and current analysis module is not wired into the measured policy.
+No35 trial spent. Next use the proved exclusions and real frontier paths to
+maintain a small active branch agenda, preserving deferred possibilities and
+distinguishing one observed failed play from an exhausted branch.
