@@ -5,7 +5,7 @@ const { playHumanCampaign, createHumanController, verifyAttempt } = require('./h
 const { createSessionFactory } = require('./production_physical_session.js');
 const { observeBoard } = require('./human_board_visibility.js');
 const { encodeGame } = require('./personal_game_io.js');
-const profile = require('./human_level_measure_profile.json');
+const profile = { ...require('./human_level_measure_profile.json'), openingReusablePlanning: false };
 const Layouts = require('../../../www/layouts.js');
 
 function test() {

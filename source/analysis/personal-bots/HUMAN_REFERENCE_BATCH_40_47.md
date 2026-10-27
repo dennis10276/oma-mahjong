@@ -24,6 +24,7 @@ After at most8,stop and report for Dennis's decision. No automatic48 authorized.
 |Trial|Condition|Scope/result|Repairs|Regressions|
 |---|---|---|---|---|
 |40|Opening clock<=50 AND visible locks<=3|Adopted,full159/salts1–3|10032|0 target/clearance|
+|41|Opening clock>=30 AND visible locks>=4 selects reusable planning|Unmeasured implementation/tests|unmeasured|unmeasured|
 
 Runtime source01bea873572afd74ca2d0bf56671f343717913c95795028732c8f445c62e7710,
 77 files. Profile63c5e6924e8ef42a5e46e14d9520b71d6ec47b6c545402a0681b950b9c65c4b4.
@@ -51,3 +52,9 @@ Post-adoption144 tests pass18s(natives45159 exit0);external-cwd label-stripped
 board CLI1/1/1,valid990.4ms(native19699 exit0). Goal remains unmet on86/11/49/52.
 Use40's original full-records-for-next.json and selectionv11(same42/20 guards)
 for remaining41–47.1 measured,1 adopted,7 remain;no allowance replenishment.
+
+Unmeasured41 extension keeps40's light family and adds reusable33 planning only
+for clock>=30/visible locks>=4,latched at opening. Coverage11/15/49(all in dev);
+excludes the previously broken18-move33.145 tests pass18s,native80168 exit0,
+48 new production control taps. No source/default change is adopted. Compare
+11's declared target window1–3 and full33/32 passing histories before spending41.

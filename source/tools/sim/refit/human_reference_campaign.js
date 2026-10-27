@@ -44,6 +44,8 @@ const { openingPlanningController } = require('./public_opening_planning.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.openingConditionalPlanning === undefined || typeof options.openingConditionalPlanning === 'boolean');
+  assert(options.openingReusablePlanning === undefined || typeof options.openingReusablePlanning === 'boolean');
+  assert(!options.openingReusablePlanning || options.openingConditionalPlanning === true);
   if (options.openingConditionalPlanning) return openingPlanningController(options,
     planning => createHumanController(tiles, planning, publicContext));
   assert(options.publicActionSalt === undefined || Number.isInteger(options.publicActionSalt)
