@@ -48,6 +48,8 @@ const { createCleanupIntention } = require('./public_cleanup_intention.js');
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
   assert(options.avoidThirdTrayInformation === undefined || typeof options.avoidThirdTrayInformation === 'boolean');
+  assert(options.openingTrayGuardPlanning === undefined || typeof options.openingTrayGuardPlanning === 'boolean');
+  assert(!options.openingTrayGuardPlanning||options.openingConditionalPlanning===true);
   assert(options.retainCleanupIntention === undefined || typeof options.retainCleanupIntention === 'boolean');
   assert(options.learnedEscapeContinuationRanking === undefined || typeof options.learnedEscapeContinuationRanking === 'boolean');
   assert(options.openingLearnedEscapePlanning === undefined || typeof options.openingLearnedEscapePlanning === 'boolean');

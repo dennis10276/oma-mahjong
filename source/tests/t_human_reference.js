@@ -17,6 +17,7 @@ const modules = [
   'test_public_escape_information_prefix.js',
   'test_public_tray_information_guard.js',
   'test_public_cleanup_intention.js',
+  'test_public_opening_tray_guard.js',
   'test_public_pile_pair_habit.js',
   'test_public_action_order.js',
   'test_public_complete_witness.js',

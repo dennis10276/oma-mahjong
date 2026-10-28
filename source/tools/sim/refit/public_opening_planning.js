@@ -5,7 +5,7 @@ function openingPlanningController(options, createController) {
   const { openingConditionalPlanning, openingReusablePlanning = false, reusableRetainRoute = false,
     reusableSimplifyPrefixes = false, openingRetryRiskLearning = false, openingRetryPictureLearning = false,
     openingBroadInformationPlanning = false, openingBroadReusablePlanning = false,
-    openingLearnedEscapePlanning = false, ...baseline } = options;
+    openingLearnedEscapePlanning = false, openingTrayGuardPlanning = false, ...baseline } = options;
   assert.equal(openingConditionalPlanning, true);
   assert.equal(typeof openingReusablePlanning, 'boolean');
   assert.equal(typeof reusableRetainRoute, 'boolean');
@@ -21,6 +21,8 @@ function openingPlanningController(options, createController) {
   assert.equal(typeof openingBroadReusablePlanning,'boolean');
   assert(!openingBroadReusablePlanning||openingBroadInformationPlanning);
   assert.equal(typeof openingLearnedEscapePlanning,'boolean');
+  assert.equal(typeof openingTrayGuardPlanning,'boolean');
+  assert(!openingTrayGuardPlanning||baseline.avoidThirdTrayInformation===undefined,'Choose global or conditional tray planning explicitly');
   assert(!openingLearnedEscapePlanning||baseline.learnedEscapePlanning===undefined,
     'Choose global or conditional learned planning explicitly');
   assert.equal(typeof createController, 'function');
@@ -42,13 +44,15 @@ function openingPlanningController(options, createController) {
       const reusable = openingReusablePlanning && budget !== null && budget >= 30 && locks >= 4;
       const broad = openingBroadInformationPlanning && budget !== null && budget >= 20 && budget <= 40 && locks <= 4;
       const learned = openingLearnedEscapePlanning && budget !== null && budget >= 20 && budget <= 40 && locks <= 4;
+      const trayGuard = openingTrayGuardPlanning && budget !== null && budget >= 20 && budget <= 40 && locks <= 4;
       selection = { kind: 'publicOpeningClockLockV1', startingClockBudget: budget,
         visibleLockSymbols: locks, enhanced, latchedForCampaign: true,
         ...(openingReusablePlanning ? { reusable, family: reusable ? 'reusable33' : enhanced ? 'survival39' : 'retained23' } : {}),
         ...(openingBroadInformationPlanning ? {broadInformation:broad,family:broad ? enhanced ? 'broadSurvival39':'broad23' : enhanced ? 'survival39':'retained23'} : {}),
         ...(openingBroadReusablePlanning ? {broadReusable:broad} : {}),
-        ...(openingLearnedEscapePlanning ? {learnedEscape:learned} : {}) };
-      if (enhanced || reusable || broad || learned) {
+        ...(openingLearnedEscapePlanning ? {learnedEscape:learned} : {}),
+        ...(openingTrayGuardPlanning ? {trayGuard} : {}) };
+      if (enhanced || reusable || broad || learned || trayGuard) {
         const selected = reusable ? { ...baseline, reusablePublicPlanning: true,
           reusableContinueAfterInformation: true, reusablePrepareCrowded: true, retryInformationNodes: 32768,
           ...(reusableRetainRoute ? { reusableRetainRoute: true } : {}),
@@ -61,7 +65,7 @@ function openingPlanningController(options, createController) {
         const chosen = broad ? {...base,passiveInformation:'shortAll',rememberProvedContinuations:true,
           ...(openingBroadReusablePlanning ? {reusablePublicPlanning:true,reusableContinueAfterInformation:true,
             reusablePrepareCrowded:true,retryInformationNodes:32768,reusableRetainRoute:true,reusableSimplifyPrefixes:true} : {})} : base;
-        delegate = createController(learned ? {...chosen,learnedEscapePlanning:true} : chosen);
+        delegate = createController({...chosen,...(learned?{learnedEscapePlanning:true}:{}),...(trayGuard?{avoidThirdTrayInformation:true}:{})});
         delegate.beginAttempt();
       }
     }
