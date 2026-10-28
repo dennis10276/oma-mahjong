@@ -74,7 +74,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 ## Current evidence
 
 - Retained40:158/159 clear every salt,155/159 within Dennis+1; A still unmet; four targets remain.
-- 149/149 tests pass19s;batch48-55 used0/8;shared escape-learning curriculum72 nonbenchmark topologies,16 key boards;default40 retained.
+- 150/150 tests pass19s;batch48-55 used0/8;critic fit53/validate17 nonbenchmark boards,14 key boards;runtime pending,default40 retained.
 - Full40 repairs10032,no target/clearance regressions;6 fresh workers exit0;slowest1717.6ms.
 - Adopted40's fresh159-board cohort,77 sources and477 opening selections verified;mean0.5358min/board for3 salts.
 - Batch audit:48 workers/616 archived sources/4152 opening selections verified;default477 configs match40;unlabeled API1/1/1,998.4ms.

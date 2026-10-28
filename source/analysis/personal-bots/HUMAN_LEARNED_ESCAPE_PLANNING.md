@@ -10,8 +10,10 @@ retained until a candidate passes. No measured48 trial yet.
 
 Inventory455 full recorded openings without reading human action/results/count
 labels. Exclude every exact benchmark board;also exclude every topology used by
-any of the159 benchmark boards. This leaves72 distinct recorded boards,including
-16 with keys and5 with clocks. Existing gamesOf() filters key pictures out,so
+any of the159 benchmark boards. The initial72-board inventory needed correction:
+tile-order-invariant topology audit excluded2 overlaps and grouped a duplicate.
+The eligible70 boards have69 topologies,14 key boards and3 clock boards.
+Existing gamesOf() filters key pictures out,so
 use recorded initialBoard() directly instead. Original private board setup goes
 only to the production engine;the bot and features use ONE public observer.
 
@@ -53,7 +55,7 @@ whether the bot actually improves. Do not simply fit attempt-count thresholds.
 
 ## Foundation verification
 
-149/149 tests pass19s(native81687 exit0). A production fixture at tray3 matches
+150/150 tests pass19s(native30802 exit0). A production fixture at tray3 matches
 two known closed key tiles on the pile,unlocks a waiting tray partner,and clears;
 8 taps independently replay. Features read no private fields or mutate state.
 Horizon-label tests distinguish relief followed by loss,clearance,censoring and
@@ -68,15 +70,30 @@ attempt. Raw escape-training-board-inventory-v1.json,escape-experience-v1/.
 After collection:audit labels/exclusions,fit/freeze critic,integrate bounded
 route ranking,run meaningful controls,then count the first measured48 trial.
 
-Collection native7545 is live with3 workers;getter-only parity control passes
+Collection native7545 and all3 workers exited0;getter-only parity control passes
 8 independently replayed winning taps with identical original/instrumented
 decisions. Actor source remains8b40b45eaeab…;feature source61feb851fb86….
-All72 boards also have distinct topologies from one another. Initial collection
-split57/15 has no validation clock board. BEFORE reading any experience labels,
-seal a separate metadata-only fit plan reserving the lexicographically first
-training clock board's entire topology for validation. Running collection manifest
-is unchanged. Fit must join fit-plan-v1.json,not silently use raw shard splits.
+The original topology audit failed on tile-order permutations;retain that failed
+audit. BEFORE reading labels,seal corrected fit-plan-v2.json:53 training boards
+(8 keys,2 clocks),17 validation boards(6 keys,1 clock),no benchmark or split
+topology overlaps. Keep original collection manifest/raw split unchanged;join v2.
 One held-out clock board gives limited evidence;report that limit honestly.
 The first fixed critic uses board-balanced L2 logistic fitting(800 epochs,
 step0.5,L2=0.01),26 public features plus5 fixed contextual interactions. Fit
 and initialize only from training outcomes. No benchmark-driven threshold fit.
+
+Completed collection:6581 independently production-replayed taps,73 attempts,
+1241 examples;97 excluded with the2 overlapping boards. Eligible training has
+794 labeled rows(28 negatives);validation350(15 negatives),no censored rows.
+Independent artifact audit checks source hashes,format,horizon/status consistency;
+full numerical offline label recomputation is unavailable because full frames
+were not retained. Physical replay occurred inside each collector.
+
+Frozen escape-model-v1.json SHA256:
+2f4924e3b6dd14b86e49360d9a8301d1643369f2501ab4bb9ddb33a99054717e.
+Fresh deterministic refit exactly reproduces weights and metrics(native exit0).
+Validation board-balanced Brier0.017698 vs constant0.018993;log loss0.072650 vs
+0.095686;unweighted AUC0.88199. Sparse failures and mostly easy experience limit
+transfer evidence;all predictions remain above0.8,so coarse calibration bins
+cannot establish calibration on difficult positions. No benchmark gain claimed.
+Model is fitted;actor integration and first measured48 remain pending.

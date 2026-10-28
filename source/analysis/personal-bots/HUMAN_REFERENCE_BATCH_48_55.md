@@ -30,15 +30,19 @@ original full-records-for-next.json and unchanged development-selection-v11.json
 
 Additional steering:plan by the highest chance of an out,learned from earlier
 levels the BOT played. Build a shared escape critic from bot-generated public
-experience on72 recorded boards/topologies disjoint from every benchmark board,
-including16 key boards. No human count/action labels. Train/validation grouped
-by topology;one frozen model for all targets/future boards.149 tests pass19s,
+experience on70 eligible recorded boards/69 canonical topologies disjoint from
+every benchmark board,including14 key boards. Two initial overlaps are excluded;
+duplicate topology grouped before label inspection. No human count/action labels.
+Train/validation grouped by topology;one model for all targets.150 tests pass19s,
 including a tray3 on-pile key pair unlocking tray relief and8 replayed winning
 taps. Feature/label foundation only;actor not yet changed. Full specification:
 HUMAN_LEARNED_ESCAPE_PLANNING.md. Curriculum collection is not a measured variant.
 
-Native7545 now collecting72 earlier bot-game experiences with3 workers,critic
-disabled. Getter-only instrumentation preserves decisions and replays8 winning
-control taps. Freeze actor/features while live. Metadata-only fit plan is sealed
-before label inspection and reserves a clock topology in validation. No48 run
-or adoption yet;0/8 measured,8 remain. Default40 and all original gates retained.
+Native7545/all3 workers exited0;6581 taps/73 attempts replayed with critic disabled.
+Corrected metadata-only fit-plan-v2 was sealed before inspecting labels:53 training
+boards/17 validation boards,including one held-out clock board. Frozen logistic
+critic exactly reproduces on refit;validation Brier0.017698 vs constant0.018993,
+AUC0.88199,only15 negative validation examples. These are escape metrics,not
+attempt accuracy or benchmark gains. Actor integration pending;0/8 measured,
+8 remain. Default40 and all original gates retained. Raw audits/model in
+escape-experience-v1/;see HUMAN_LEARNED_ESCAPE_PLANNING.md for limitations.
