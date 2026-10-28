@@ -131,3 +131,16 @@ salt2's first3 complete physical losses stay unchanged,so do NOT spend51 on this
 cycle fix alone expecting a complete repair. Next audit earlier tray/key/clock
 commitments in those losses and strengthen route safety/clock planning before
 the next measured variant. Keep models/labels frozen;3/8 used,5 remain;default40.
+
+Early salt2 diagnostic exits0:52 taps,zero actual-history drift,getter-only parity.
+The losing routes carry3 unmatched pictures to reveal an unknown tile. Learned
+planner rejected many known-prefix information routes,so primary alone selected
+these commitments. Prototypee068e75 adds optional learnedEscapeContinuationRanking:
+enumerate known prefixes to safe unknown closed inspections,score the public
+pre-inspection state with the same frozen Q,and use min(rootQ,inspectionQ)as a
+heuristic bottleneck,not independent probabilities/proofs. Compare multiple roots
+within the existing budget;preserve pile-pair priority and parent-state cycle fix.
+No imagined pictures or benchmark refit.155 tests pass19s(native29714 exit0).
+v7 actual50-history comparisons on10049 salts1/2/3 now live:53321/18275/87394.
+Actor frozen;no measured51 yet,3/8 used,5 remain;default40. This is a route-
+ranking prototype,not evidence of a candidate clear or calibrated probability.

@@ -212,3 +212,16 @@ or model weights changed. Replay auditv6:467 taps,zero drift,3 native exits0,
 max534.003ms;salts1/2 unchanged,salt3 changes21 loop suggestions. These are not
 new candidate wins. Salt2 first3 physical losses unchanged:next audit earlier
 key/tray/clock commitments before measuring51.3/8 used,5 remain;default40.
+
+Early salt2 replay(52 taps,zero drift,getter parity)shows pressure3 information
+commitments where no tray match is currently available. The old learned planner
+filters known-prefix routes to unknown inspections unless they already deliver
+relief/progress,leaving primary to choose these routes without learned comparison.
+Prototypee068e75 adds optional continuation ranking:construct public known prefixes
+ending at a safe unknown closed inspection,and score that pre-inspection state
+with the same frozen critic. Use min(root Q,inspection Q)as a heuristic bottleneck;
+these correlated estimates are not multiplied or claimed calibrated. Compare
+multiple eligible root routes within512 nodes/70ms,protect pile-pair priority,
+clock/win proofs and exact-parent cycle exclusion. Never invent the unknown face.
+155 tests pass19s(native29714 exit0). v7 comparisons now live on all10049 salts
+(53321/18275/87394);actor frozen. No measured51 or candidate win claim.3/8 used.
