@@ -21,10 +21,19 @@ attempt independently replays production. Candidate suggestions are not wins.
 All158 tests pass19s(native39642 exit0), including a public-clock fixture where
 unrelated cleanup consumes slack and a no-clock control where it stays useful.
 
-Freeze84 sources and profile. Refresh159 targets read-only, then fixed42 salt1
+Freeze84 sources and profile. Refresh160 targets read-only, then fixed43 salt1
 development,max12 actual tries,3 workers. Existing qualifier and prespecified
-regression-free unchanged off-salt confirmation path remain. Full159×salts1–3
+regression-free unchanged off-salt confirmation path remain. Full160×salts1–3
 before adoption:repair at least one complete failed target and zero passing-
 target or clearance regressions, every decision under2s, independent production
 replay/source integrity and recorded worker/supervisor native exits. Default40
 remains until adoption. Starting56 consumes one new trial;5 remain57–61. No62.
+
+Preflight found newly recorded161 (Dennis5), so the initial dispatch stopped
+before any worker launched or allowance was consumed. Preserve its failed state
+and archive. Frozen40 measures161 at2/2/2;all6 attempts/429 taps independently
+production-replayed, native35513 exit0, slowest1501.131ms. Keep original159 boards
+and labels identical, append161 and all original42 development boards/20 guards.
+Catalogv3/selectionv12 now160/43. Baseline is159/160 clears,156/160 targets.
+Relaunch exactly the same candidate as experiment-56-r1; no new variant or charge
+for the preflight failure. All original trial55 results retain their159 scope.
