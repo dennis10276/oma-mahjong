@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:5/8 measured,3 remain;48–52 rejected;known-relief-first prototype under audit. Raw authorization ledger:
+Current:6/8 measured,2 remain;48–52 rejected;53 running. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -238,3 +238,11 @@ profile unchanged5b1db6a3… . Clock-order correction now changes102's first3-lo
 window,unlike relief-only version. Counterfactuals do not prove repair. Next
 fresh53 with unchanged fixed42/full159×3 gates;no model refit. No actor processes
 live;5/8 used,3 remain. Auditclock-order-independent-audit-v14.json. Default40.
+
+Fresh53 launched native51046,3 workers,fixed42 development/salt1;catalog refreshed
+read-only with159 unchanged targets. Source1a14f7965f7b37e0d228da05f005831f439e20e1257da39edd2e4f6851f611ce;
+profile5b1db6a313adc4454b7aa8641f6355bf2646d7d59c95448fc1a3284c648d2583.
+Same frozen model,known-relief-first and completed clock/key goal-order correction;
+no new flags vs52. Protocol276be9c;84 source files frozen. Unchanged qualifier
+then full159×3 before adoption.6/8 used,2 remain;do not edit actor until terminal.
+Default40 retained;Track A/B/unseen20 unmet. No54/55 renewal or56 authorized.
