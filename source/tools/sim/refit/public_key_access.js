@@ -4,10 +4,12 @@ const { legal, advance } = require('./known_tray_plan.js');
 const { goalRoutes } = require('./public_goal_routes.js');
 const { aliveSignature } = require('./public_alive_signature.js');
 
-function keyAccessPath(game, state, firstIndex, tapLimit, nodeLimit = 64, deadline = Infinity) {
+function keyAccessPath(game, state, firstIndex, tapLimit, nodeLimit = 64, deadline = Infinity, trayCeiling = 3, shortestKnown = false) {
   assert(Number.isInteger(tapLimit) && tapLimit >= 1 && tapLimit <= 96);
   assert(Number.isInteger(nodeLimit) && nodeLimit > 0);
   assert(deadline === Infinity || Number.isFinite(deadline));
+  assert(Number.isInteger(trayCeiling) && trayCeiling >= 0 && trayCeiling <= 3);
+  assert.equal(typeof shortestKnown,'boolean');
   const keys = game.rules?.keys;
   const report = (nodes, boundary, selected = null) => ({ nodes, boundary,
     path: selected?.path ?? null, state: selected?.state ?? null,
@@ -18,13 +20,14 @@ function keyAccessPath(game, state, firstIndex, tapLimit, nodeLimit = 64, deadli
   const initialPictures = new Set([...initialDependencies].map(index => state.pictures[index]).filter(picture => picture !== null));
   if (!initialDependencies.has(firstIndex) && !initialPictures.has(state.pictures[firstIndex])) return report(0, false);
   const root = advance(game, state, firstIndex);
-  if (root.uncertain || root.lost) return report(0, false);
+  if (root.uncertain || root.lost || root.state.tray.length > trayCeiling) return report(0, false);
   const identity = position => aliveSignature(position.alive) + '|' + position.tray.slice().sort((left, right) => left - right).join(',')
     + '|' + position.openPeek + '|' + +!!position.relieved + '|' + (game.clock && position.alive[game.clock.i] ? position.moves : '-');
   const queue = [{ state: root.state, path: [firstIndex] }], seen = new Map([[identity(root.state), 1]]);
   let nodes = 0, boundary = false;
   const remaining = position => keys.filter(index => position.alive[index]);
-  const rank = node => [remaining(node.state).length, node.state.tray.length, node.path.length];
+  const rank = node => shortestKnown ? [node.path.length,node.state.tray.length,remaining(node.state).length]
+    : [remaining(node.state).length,node.state.tray.length,node.path.length];
   while (queue.length) {
     if (nodes >= nodeLimit || Date.now() >= deadline) return report(nodes, true);
     queue.sort((left, right) => {
@@ -44,7 +47,7 @@ function keyAccessPath(game, state, firstIndex, tapLimit, nodeLimit = 64, deadli
     for (const index of candidates) {
       if (Date.now() >= deadline) return report(nodes, true);
       const moved = advance(game, node.state, index);
-      if (moved.uncertain || moved.lost) continue;
+      if (moved.uncertain || moved.lost || moved.state.tray.length > trayCeiling) continue;
       const paths = [{ state: moved.state, path: node.path.concat(index) }];
       if (node.path.length + 1 < tapLimit) {
         const partners = legal(game, moved.state);

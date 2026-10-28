@@ -23,6 +23,15 @@ function test(){
  assert.equal(clockKeyPairPlan(publicGame,state,{...primary,safeClockExit:true},options),null);
  assert.equal(clockKeyPairPlan(publicGame,state,primary,{...options,deadline:0}),null);
  assert.throws(()=>createHumanController(tiles,{clockKeyPairPreparation:true}));assert.throws(()=>createHumanController(tiles,{rememberKeyIdentities:true,clockKeyPairPreparation:'yes'}));
+ const buriedTiles=[{x:0,y:0,z:0},{x:8,y:0,z:0},{x:0,y:0,z:1},{x:12,y:0,z:0},{x:16,y:0,z:0},{x:20,y:0,z:0}];
+ const buried={tiles:buriedTiles,nb:L.neighbors(buriedTiles),rules:{ice:{},iceNb:L.iceNeighbors(buriedTiles),keys:[0,1],locks:new Set([4,5])},clock:{i:4,n:6}};
+ const remembered={alive:buriedTiles.map(()=>1),pictures:[7,7,8,8,9,9],down:[1,1,1,1,0,0],tray:[],moves:0,openPeek:-1,relieved:false,arriving:[]};
+ const access=clockKeyPairPlan(buried,remembered,{index:1,path:[1],nodes:0},{knownKeys:[0,1],deadline:Date.now()+500});
+ assert(access?.clockKeyPairPreparation.knownKeyAccess,'Buried keys require a complete known access route rather than an already-free pair');
+ assert([2,3].includes(access.index),'Clear the blocking pair before repeatedly opening a key');
+ const buriedActual={...buried,faces:remembered.pictures,down:remembered.down},deep=factory(buriedActual,settings);
+ for(const i of access.path){deep.tap(i);assert(deep.view().state.tray.length<=2);}assert(!deep.view().state.alive[0]&&!deep.view().state.alive[1]);
+ for(const i of [4,5])deep.tap(i);assert(deep.view().win);verifyAttempt(encodeGame(buriedActual),[...access.path,4,5],settings,deep.audit());
  factory.verifySource();console.log('PASS known closed-first key pair unlocks public clock without added tray pressure;4 winning production taps replay;unknown pictures,unrelated keys,expired clocks and protected wins stay untouched');
 }
 if(require.main===module)test();module.exports=test;

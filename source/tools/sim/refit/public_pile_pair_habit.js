@@ -2,6 +2,7 @@
 const {legal,advance}=require('./known_tray_plan.js');
 const {analyzeSurvival}=require('./public_survival_continuation.js');
 const {goalRoutes}=require('./public_goal_routes.js');
+const {keyAccessPath}=require('./public_key_access.js');
 
 // Open the known closed member first. Taking its face-up mate first would
 // unnecessarily occupy the tray. An already open peek needs only its mate.
@@ -43,7 +44,8 @@ function pilePairRoutes(game,state,{deadline=Date.now()+30,excluded=[]}={}){
  }
  return routes;
 }
-function clockKeyPairPlan(game,state,primary,{knownKeys=[],deadline=Date.now()+30}={}){
+function clockKeyPairPlan(game,state,primary,{knownKeys=[],deadline=Date.now()+80,nodes=512,taps=20}={}){
+ deadline=Math.min(deadline,Date.now()+80);
  if(!game.clock||!state.alive[game.clock.i]||state.tray.length>2||Date.now()>=deadline)return null;
  if(primary.knownWin||primary.safeClockExit||primary.survivalBranches?.necessaryIfSolvable||primary.deadCertificate?.exhaustedKnownGraph)return null;
  const keys=[...new Set(knownKeys)];
@@ -65,6 +67,28 @@ function clockKeyPairPlan(game,state,primary,{knownKeys=[],deadline=Date.now()+3
     startingEstimatedClockSlack:startingSlack,endingEstimatedClockSlack:endingSlack,
     routeRelevanceAndSlackAreHeuristicsNotProofs:true}};
  }
+ // A useful key pair may still be buried. Search only actual known transitions,
+ // with a hard two-tile tray ceiling, and stop at every unknown picture or role.
+ let best=null,used=0;
+ const allowed=legal(publicGame,state),excluded=new Set(primary.provedDeadRoots??[]);
+ for(const index of allowed.free){
+  if(Date.now()>=deadline||used>=nodes)break;
+  if(allowed.uncertain?.includes(index)||excluded.has(index)||state.pictures[index]===null)continue;
+  const route=keyAccessPath(publicGame,state,index,taps,Math.min(128,nodes-used),deadline,2,true);used+=route.nodes;
+  if(!route.path)continue;
+  const exited=!route.state.alive[game.clock.i];
+  const endingSlack=exited?null:game.clock.n-route.state.moves-goalRoutes(publicGame,route.state,game.clock.i).cost;
+  if(!exited&&endingSlack<0)continue;
+  const rank=[+exited,exited?0:endingSlack,-route.path.length];
+  if(best){let difference=0;for(let k=0;k<rank.length&&!difference;k++)difference=rank[k]-best.rank[k];if(difference<=0)continue;}
+  best={route,exited,endingSlack,rank};
+ }
+ if(best)return {index:best.route.path[0],path:best.route.path,goal:'knownClockKeyAccess',knownWin:!best.route.state.alive.some(Boolean)&&!best.route.state.tray.length,
+  knownDead:false,safeClockExit:best.exited,knownProgress:best.route.removed,information:false,boundary:true,nodes:(primary.nodes??0)+used,
+  clockKeyPairPreparation:{knownKeys:keys,knownKeyAccess:true,maximumTray:2,returnsToStartingPressure:true,
+   startingEstimatedClockSlack:startingSlack,endingEstimatedClockSlack:best.endingSlack,
+   searchNodes:used,searchCapped:used>=nodes||Date.now()>=deadline,shortestKnownWithinSearchGraph:true,
+   routeRelevanceAndSlackAreHeuristicsNotProofs:true}};
  return null;
 }
 module.exports={pilePairRoutes,clockKeyPairPlan};

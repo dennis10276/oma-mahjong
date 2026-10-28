@@ -56,6 +56,13 @@ function test() {
   assert.equal(keyAccessPath(game, state, 1, 6, 64, 0).path, null);
   assert.equal(keyAccessPath({ ...game, clock: { i: 4, n: 2 } }, state, 1, 6).path, null);
   assert.throws(() => keyAccessPath(game, state, 1, 6, 0));
+  const lowTray=keyAccessPath(game,state,1,6,64,Infinity,2);assert(lowTray.path);
+  let lowPosition=state;for(const i of lowTray.path){lowPosition=advance(game,lowPosition,i).state;assert(lowPosition.tray.length<=2);}
+  assert.equal(keyAccessPath(game,{...state,tray:[20,21]},1,6,64,Infinity,2).path,null,'A low-tray access search rejects a root that fills the third slot');
+  assert.throws(()=>keyAccessPath(game,state,1,6,64,Infinity,4));
+  const shortest=keyAccessPath(game,remembered,2,8,128,Infinity,2,true);
+  assert(shortest.path);assert.equal(shortest.path.length,4,'Open and match the blocking pair before the known key pair');
+  assert.throws(()=>keyAccessPath(game,state,1,6,64,Infinity,2,'yes'));
   assert.deepEqual(state, snapshot);
   const roots = [1, 2, 3].map(index => ({ index }));
   const planned = search(game, state, roots, { ...REFERENCE_PARAMETERS, keyAccessMacros: true, nodes: 64, beam: 2, taps: 6 });
