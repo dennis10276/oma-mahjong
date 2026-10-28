@@ -43,3 +43,10 @@ ACTIVE and UNMET. The current goal replaces per-level attempt matching.
   that all board features lack predictive information.
 - Archived canonical91 clears1/1/1, unlike the supplied3-try comparison;
   preserve that discrepancy until the board/version can be reconciled.
+
+## Current evidence
+
+- Freeze648172a/a9e541e; human implementation8df79c5;160 offline checks pass.
+- Six human-pattern trials: Dennis22.15% first try, family18.75% on92-163.
+- Targets UNMET; phase shares and full campaigns need further calibration.
+- See HUMAN_STYLE_PROGRESS.md and HUMAN_STYLE_EXPERIMENTS.json for evidence.
