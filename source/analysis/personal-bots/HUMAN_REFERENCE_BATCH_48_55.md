@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:4/8 measured,4 remain;48–51 rejected;real-out guard correction tested. Raw authorization ledger:
+Current:5/8 measured,3 remain;48–51 rejected;52 running. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -198,3 +198,15 @@ spend52 on it unchanged. Next investigate retaining/revalidating the selected
 useful continuation through opportunistic cleanup instead of resetting planner
 intention after each pair. Cleanup remains useful per explicit human instruction;
 do not reintroduce its rejected general ban. No actor process live;4/8 used.
+
+Intention memoryb3d9657 now remembers the selected public information prefix
+through cleanup,consumes actual taps,revalidates every known step,stops at unknown
+inspection,and drops on new knowledge,rejected/blocked taps,proof conflicts,new
+proved wins/exits and retry reset. Tray safety still applies to resumed routes.
+157 tests19s(native42966 exit0). v12 replays392 taps,zero drift,native25430/14957
+and immediate20f673 exit0;changes102/10011/10049=3/13/3,max1500.051ms.84 sources
+verified. Counterfactuals are not wins. Trial52 now running(native6317,3 workers),
+fixed42 development/salt1 then unchanged qualifier/full159×3 before adoption.
+Source9bec3d5506b42cedd1eb778012ceb54dc6a6a6c96e0dd16943ebcdff32b449bc;
+profile5b1db6a313adc4454b7aa8641f6355bf2646d7d59c95448fc1a3284c648d2583.
+Protocol2576559.5/8 used,3 remain;actor frozen until terminal. Default40 retained.

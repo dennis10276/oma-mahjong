@@ -56,3 +56,10 @@ preferred. Goal cones use public geometry/rules only and are heuristics,not proo
 156 tests pass19s(native12290 exit0),including useful unrelated cleanup,no-clock
 and clock-priority contrast,and a closed key pair that unlocks actual tray relief.
 Current replays do not prove clears;no52 campaign yet.4/8 used,4 remain. Default40.
+
+Intention memoryb3d9657 keeps useful route continuity through cleanup instead of
+resetting strategy each time. Actual taps consume its prefix;new facts/rejected
+taps/proof conflicts/retry reset invalidate it. Known-only steps revalidate and
+stop at unknown information;no hidden face enters memory.157 tests19s,392 replayed
+audit taps with zero drift and all native exits0. Measured52 now running6317,
+3 workers,fixed42 then unchanged full qualification;5/8 used,3 remain. Default40.
