@@ -28,9 +28,13 @@ veto the only useful information route. Regression fails before fix and passes
 after;closed key-pair unlocking real tray relief remains valid.156 tests pass19s
 (native28202 exit0),with6 independently replayed production fixture taps.
 
-This fix is independent of pending strategy-scope clarification. Dennis said to
-refrain from filling the tray as much as possible,and then "Ye but ONLY for clock
-or keys". An asynchronous question is pending:does that restrict carry-building
-exceptions to reaching clocks/keys,or restrict the low-tray preference to clock/
-key levels? Do not infer an answer or launch a dependent policy change yet.
+That interim correctionb57e145 was superseded after Dennis clarified:unrelated
+pair clearing is useful for tray emptiness in general;clock/key routes are the
+exception when they require carrying tiles. This is NOT a low-tray preference
+limited to special levels. Currentd90fa66 restores useful unrelated cleanup and
+gives the selected public clock/key dependency route priority over unrelated
+alternatives. Known key identities come from observed glyph memory. Dependency
+cones are explicitly heuristic,not necessity/impossibility certificates. Safe
+same-goal cleanup/information remains preferred.156 tests19s(native12290 exit0).
+Replay audits are running;do not call this adopted or measured52 yet.
 Raw:experiment-51/,trial51-guard102-information-debug.json,guard51-102-debug.*.

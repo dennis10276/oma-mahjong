@@ -179,3 +179,13 @@ leaf goals require actual information,less carry,clock exit or clear;closed key
 pair can still unlock real tray relief.156 tests19s(native28202 exit0). Scope
 clarification pending on latest "ONLY for clock or keys";do not launch dependent
 policy change before answer. Independent fix reviewable;no52 measured.4 remain.
+
+Clarification answered:keep tray clean in general;unrelated cleanup remains
+useful. Carry-building exception concerns clock/key routes,not special-level-only
+scope. Interim unrelated-cleanup rejectionb57e145 superseded by d90fa66:restore
+cleanup,prefer alternatives also advancing the selected visible clock/remembered
+key dependency route. Cone membership is heuristic,not a necessity proof.156
+tests19s(native12290 exit0). v10 replay102 first2 and10049 first2 exits0 with
+zero drift;10011 comparator52974 exits0. Extra102 first3 replay72526 is live to
+check whether existing target regression can actually change before spending52.
+Actor frozen during replay.4/8 used,4 remain. Default40 retained;A/B/unseen20 unmet.

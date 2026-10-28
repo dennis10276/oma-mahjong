@@ -45,3 +45,14 @@ attempt left its retry agenda open. Preserve failure;fixed complete-attempt86
 comparison58660 exits0. No bot campaign ran during these checks. Measured51 now
 running native27334,three workers,fixed42 development/salt1 then unchanged full
 qualification. Protocol2ba43f8;4/8 used,4 remain. Actor frozen;default40 retained.
+
+51 failed development(39 clears/38 targets vs41/39;102 target regression;10011
+and10049 clearance regressions). No full run/adoption. Interim pair-utility
+restrictionb57e145 superseded after explicit clarification:unrelated cleanup
+IS useful,not a bad habit. Keep tray clean generally;clock/key routes may justify
+carry. Currentd90fa66 restores cleanup and prioritizes the selected visible-clock/
+remembered-key route over unrelated alternatives. Same-goal low-carry routes stay
+preferred. Goal cones use public geometry/rules only and are heuristics,not proofs.
+156 tests pass19s(native12290 exit0),including useful unrelated cleanup,no-clock
+and clock-priority contrast,and a closed key pair that unlocks actual tray relief.
+Current replays do not prove clears;no52 campaign yet.4/8 used,4 remain. Default40.
