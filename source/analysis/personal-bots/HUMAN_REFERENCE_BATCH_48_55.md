@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:7/8 measured,1 remains;48–54 unadopted;55 conditional prototype under audit. Additional56–61 separately authorized. Raw authorization ledger:
+Current:8/8 measured;48–54 unadopted;55 conditional tray-only campaign running. Six additional56–61 separately authorized. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -277,3 +277,10 @@ run/adoption. Conditional prototype54b14cb reuses opening clock20–40 AND locks
 only for tray guard(no learned/intention policies). Applies80/81/10049/10052;
 preserves40 elsewhere.158 tests19s(native13741 exit0). Actual repair/control
 replays live77488/34599/53285;actor frozen. No55 benchmark yet;7 total remain.
+
+55 dispatched under protocol b8844e4, native53183 with3 workers. Source1922c6538027…
+profile4faa75ee6d8e…;84 sources archived. v16 controls:428 taps,zero choice
+changes/drift on54's10049 and40's10011/10033;production replays verified.
+Native control exit output unavailable after truncated prior poll;no exit inferred.
+158 tests19s;measured55 worker exits will be recorded explicitly. After55 starts,
+original allowance exhausted;6 additional56–61 remain;no62. Default40 retained.
