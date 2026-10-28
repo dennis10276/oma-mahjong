@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:6/8 measured,2 remain;48–52 rejected;53 running. Raw authorization ledger:
+Current:6/8 measured,2 remain;48–53 rejected. Additional56–61 authorized separately. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -246,3 +246,15 @@ Same frozen model,known-relief-first and completed clock/key goal-order correcti
 no new flags vs52. Protocol276be9c;84 source files frozen. Unchanged qualifier
 then full159×3 before adoption.6/8 used,2 remain;do not edit actor until terminal.
 Default40 retained;Track A/B/unseen20 unmet. No54/55 renewal or56 authorized.
+
+53 rejected development:38 clears/37 targets vs retained41/39;10032/102 target
+and10011/10032/10049 clearance regressions. Native51046/all3 exit0;84 sources,
+93 attempts/6457 taps independently audited/replayed;slowest1720.276ms. No full
+run/adoption. See53_RESULT.md. Next54 ablates retained40+tray guard alone;model
+and intention research retained but inactive in that candidate. v15 actual53
+history controls live71981/53486/13303 for102/10011/10049;actor frozen.
+
+NEW DIRECT AUTHORIZATION:"Authorizing 6 more experiments". Separate reserved
+batch56–61 created without altering this ledger. Existing2+new6=8 total remaining.
+No auto-renewal or62. See HUMAN_REFERENCE_ADDITIONAL_56_61.md. Goal scope/gates
+unchanged;continue through61 under this authorization,not a new request at55.
