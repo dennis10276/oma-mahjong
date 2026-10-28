@@ -65,6 +65,7 @@ function test() {
   assert.throws(()=>keyAccessPath(game,state,1,6,64,Infinity,2,'yes'));
   assert.deepEqual(state, snapshot);
   const roots = [1, 2, 3].map(index => ({ index }));
+  assert.throws(()=>search(game,state,roots,{...REFERENCE_PARAMETERS,shortestKeyAccess:'yes'}));
   const planned = search(game, state, roots, { ...REFERENCE_PARAMETERS, keyAccessMacros: true, nodes: 64, beam: 2, taps: 6 });
   assert(planned.expandedKeyAccesses > 0);
   assert(planned.keyAccessNodes > 0 && planned.keyAccessNodes <= planned.nodes && planned.nodes <= 64);

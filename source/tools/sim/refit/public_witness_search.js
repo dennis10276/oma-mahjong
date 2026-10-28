@@ -141,6 +141,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const knownPairMacros = settings.knownPairMacros ?? false;
   const keyRecoveryMacros = settings.keyRecoveryMacros ?? false;
   const keyAccessMacros = settings.keyAccessMacros ?? false;
+  const shortestKeyAccess = settings.shortestKeyAccess ?? false;
+  assert.equal(typeof shortestKeyAccess,'boolean');
   const shortInformation = settings.shortInformation ?? false;
   const recoveryInformationMinTray = settings.recoveryInformationMinTray ?? 0;
   const recoveryAvailableInformation = settings.recoveryAvailableInformation ?? false;
@@ -236,6 +238,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
   const roots = new Set(actions.map(action => action.index)), initialAllowed = physical.legal(game, state), initialFree = initialAllowed.free;
   assert([...roots].every(index => initialFree.includes(index)));
   const initialLeft = state.alive.reduce((sum, value) => sum + value, 0), clocked = !!(game.clock && state.alive[game.clock.i]);
+  const shortestKeyAccessActive=shortestKeyAccess&&!clocked&&state.tray.length>=2&&state.tray.length<=3;
   const clockSlackRankingActive = clockSlackRanking && clocked && (!clockSlackRankingBudgetRange
     || game.clock.n >= clockSlackRankingBudgetRange[0] && game.clock.n <= clockSlackRankingBudgetRange[1]);
   const informationWidthTarget = informationWidth === 'pairHeadroom' ? Math.max(1, Math.floor((4 - state.tray.length) / 2)) : informationWidth;
@@ -471,7 +474,8 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
           }
         }
         if (keyAccessMacros && !node.path.length && path.length < tapLimit && nodes < settings.nodes) {
-          const accessed = keyAccessPath(game, settled, index, tapLimit, Math.min(64, settings.nodes - nodes), deadline);
+          const accessed = keyAccessPath(game, settled, index, tapLimit,
+            Math.min(shortestKeyAccessActive?256:64, settings.nodes - nodes), deadline,3,shortestKeyAccessActive);
           nodes += accessed.nodes; keyAccessNodes += accessed.nodes;
           if (accessed.path && !certifiedContinuationLoss(accessed, accessed.path)) {
             macroAccesses++; hasSafeRemoval = true;
@@ -563,6 +567,7 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       ...(knownPairMacros ? { expandedKnownPairs: macroPairs } : {}),
       ...(keyRecoveryMacros ? { expandedKeyRecoveries: macroKeys } : {}),
       ...(keyAccessMacros ? { expandedKeyAccesses: macroAccesses, keyAccessNodes } : {}),
+      ...(shortestKeyAccess ? {shortestKeyAccessActive} : {}),
       ...(dominanceStop ? { dominanceStop } : {}),
       ...(informationWidth ? { informationWidthTarget } : {}),
       ...(clockRecovery ? { clockRecoveryActive, rootClockCost, clockRecoveryMinSlack } : {}),

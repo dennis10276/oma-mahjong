@@ -50,6 +50,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
   assert(options.clockKeyPairPreparation === undefined || typeof options.clockKeyPairPreparation === 'boolean');
   assert(!options.clockKeyPairPreparation || options.rememberKeyIdentities === true);
+  assert(options.shortestKeyAccess === undefined || typeof options.shortestKeyAccess === 'boolean');
+  assert(!options.shortestKeyAccess || options.keyPlanningCrowdedAfterClock === true);
   assert(options.avoidThirdTrayInformation === undefined || typeof options.avoidThirdTrayInformation === 'boolean');
   assert(options.trayGuardClockSlack === undefined || typeof options.trayGuardClockSlack === 'boolean');
   assert(options.openingTrayGuardPlanning === undefined || typeof options.openingTrayGuardPlanning === 'boolean');

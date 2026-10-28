@@ -21,7 +21,8 @@ function test() {
     { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true },
     { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningBeforeCrowding: true },
     { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true, keyAwareTrayRecovery: true },
-    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true, keyAwareTrayRecovery: true, keyPlanningCrowdedTrayMin:3 }]) {
+    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true, keyAwareTrayRecovery: true, keyPlanningCrowdedTrayMin:3 },
+    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true, shortestKeyAccess:true }]) {
     const { rememberKeyIdentities } = configuration;
     const controller = createHumanController(tiles, { ...configuration, rememberAcceptedTaps: false,
       rememberClearedRoles: true, keyAccessMacros: true, keyRecoveryMacros: true, retryInformationWitness: true });
@@ -75,6 +76,9 @@ function test() {
   assert.deepEqual(firstPlans[0], firstPlans[4], 'Before any retry discovery, proactive mode has no extra starting identities');
   assert.deepEqual(firstPlans[0], firstPlans[5], 'Key-aware tray guard also leaves an empty starting tray alone');
   assert.deepEqual(firstPlans[0], firstPlans[6], 'Emergency mode also leaves an empty starting tray alone');
+  assert.deepEqual(firstPlans[0], firstPlans[7], 'Shorter access routing has no extra first-opening knowledge');
+  assert.throws(()=>createHumanController(tiles,{shortestKeyAccess:true}));
+  assert.throws(()=>createHumanController(tiles,{rememberKeyIdentities:true,keyPlanningCrowdedAfterClock:true,shortestKeyAccess:'yes'}));
   for(const minimum of [0,1,4,2.5,'3'])assert.throws(()=>createHumanController(tiles,{rememberKeyIdentities:true,keyPlanningCrowdedAfterClock:true,keyPlanningCrowdedTrayMin:minimum}));
   assert.throws(()=>createHumanController(tiles,{rememberKeyIdentities:true,keyPlanningCrowdedTrayMin:3}));
   assert.throws(() => createHumanController(tiles, { rememberKeyIdentities:true, keyAwareTrayRecovery:true }));

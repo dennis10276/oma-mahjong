@@ -42,3 +42,18 @@ mode used only by this preparation strategy;ordinary planner default stays
 unchanged. The fixture now finds the four-tap known key-access route and wins
 production while keeping every prefix<=2. All159 normal offline tests pass19s
 in suite-02(native35363 exit0). No campaign/allowance consumed yet.
+
+The extended clock helper also changes no choices in those five actual windows;
+all729 taps reproduce and independently replay,native6435/53121/99626/25426/72492
+exit0. Preserve frozen-7e3ac0988e4f-clock-key-access-prototype and
+clock-key-access-unmeasured-audit-v25.json. Park without charging60. Current
+read-only refresh still162 boards,no additions or changed earlier targets.
+
+Reuse the tested route-order correction in the earlier post-clock key strategy:
+optional shortestKeyAccess activates only with no live clock AND tray>=2,using
+the same public facts as57. Key-access macros use shortest-first ordering with
+up to256 nodes per root inside the existing shared node/deadline budget. Ordinary
+clock and uncrowded behavior keep the legacy64-node greedy order. Keep the tray
+guard and clock helper inactive in this ablation. All159 offline fixtures pass19s
+(native58604 exit0),including real failed/winning replay across8 configurations.
+This is an unmeasured preparation;validate actual target interventions before60.
