@@ -38,6 +38,16 @@ function test() {
   assert(keyPlanningAllowed(game, position, 40), '41 spare moves, including both known key dependencies, passes');
   assert(!keyPlanningAllowed(game, { ...position, alive: [0, 1, 1, 1] }, 40));
   game.clock = null; assert(!keyPlanningAllowed(game, position, 40));
+  for (const count of [0,1,2,3,4]) {
+    const crowded = { ...position, tray:Array(count).fill(1) };
+    assert.equal(keyPlanningAllowed(game,crowded,40,true),count>=2&&count<=3,'Only live crowded states gain post-clock planning; terminal overflow stays inactive');
+    assert.equal(keyPlanningAllowed(game,crowded,40,false),false,'Default gate remains unchanged');
+    game.clock={i:0,n:2};
+    assert.equal(keyPlanningAllowed(game,crowded,40,true),false,'Live tight clocks retain the original priority');
+    assert.equal(keyPlanningAllowed(game,{...crowded,alive:[0,1,1,1]},40,true),count>=2&&count<=3,'A removed public clock admits the same two-feature condition');
+    game.clock=null;
+  }
+  assert.throws(()=>keyPlanningAllowed(game,{...position,tray:[]},40,'yes'));
   assert(keyPlanningAllowed(game, position), 'An absent gate retains the ungated experimental strategy');
   assert.throws(() => keyPlanningAllowed(game, position, -1));
   assert.throws(() => keyPlanningAllowed(game, position, 0.5));

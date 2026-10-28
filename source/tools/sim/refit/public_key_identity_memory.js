@@ -2,10 +2,13 @@
 const assert = require('assert/strict');
 const { goalRoutes } = require('./public_goal_routes.js');
 
-function keyPlanningAllowed(game, state, slackAbove) {
+function keyPlanningAllowed(game, state, slackAbove, crowdedAfterClock = false) {
+  assert.equal(typeof crowdedAfterClock, 'boolean');
+  if (crowdedAfterClock) assert(Array.isArray(state.tray));
   if (slackAbove === undefined) return true;
   assert(Number.isInteger(slackAbove) && slackAbove >= 0);
   const clock = game.clock;
+  if (crowdedAfterClock && (!clock || !state.alive[clock.i]) && state.tray.length >= 2 && state.tray.length <= 3) return true;
   if (!clock || !state.alive[clock.i]) return false;
   return clock.n - state.moves - goalRoutes(game, state, clock.i).cost > slackAbove;
 }

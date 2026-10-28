@@ -17,7 +17,8 @@ function test() {
   const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 64 };
   const firstPlans = [];
   for (const configuration of [{ rememberKeyIdentities: false }, { rememberKeyIdentities: true },
-    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40 }]) {
+    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40 },
+    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true }]) {
     const { rememberKeyIdentities } = configuration;
     const controller = createHumanController(tiles, { ...configuration, rememberAcceptedTaps: false,
       rememberClearedRoles: true, keyAccessMacros: true, keyRecoveryMacros: true, retryInformationWitness: true });
@@ -67,6 +68,9 @@ function test() {
   }
   assert.deepEqual(firstPlans[0], firstPlans[1]);
   assert.deepEqual(firstPlans[0], firstPlans[2]);
+  assert.deepEqual(firstPlans[0], firstPlans[3], 'Empty-tray opening behavior is unchanged');
+  assert.throws(() => createHumanController(tiles, { keyPlanningCrowdedAfterClock:true }));
+  assert.throws(() => createHumanController(tiles, { rememberKeyIdentities:true, keyPlanningCrowdedAfterClock:'yes' }));
   assert.deepEqual(createHumanController(tiles, { rememberKeyIdentities: true }).keyIdentityEvidence(), []);
   assert.throws(() => createHumanController(tiles, { rememberKeyIdentities: 'yes' }));
   assert.throws(() => createHumanController(tiles, { keyPlanningSlackAbove: 40 }));

@@ -133,6 +133,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
     'Continuation loss deductions require actual loss memory and the complete public information frontier');
   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
   assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
+  assert(options.keyPlanningCrowdedAfterClock === undefined || typeof options.keyPlanningCrowdedAfterClock === 'boolean');
+  assert(!options.keyPlanningCrowdedAfterClock || options.rememberKeyIdentities === true);
   assert(options.keyPlanningSlackAbove === undefined || options.rememberKeyIdentities === true
     && Number.isInteger(options.keyPlanningSlackAbove) && options.keyPlanningSlackAbove >= 0);
   assert(!options.rememberKeyIdentities || !options.hypothesisSampling,
@@ -426,7 +428,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const knownKeys = keyIdentityMemory.keys();
         const keys = [...new Set([...geometry.rules.keys, ...knownKeys])].sort((left, right) => left - right);
         const publicKeyGame = { tiles: geometry.tiles, nb: geometry.nb, rules: { ...geometry.rules, keys }, clock };
-        if (keyPlanningAllowed(publicKeyGame, current, options.keyPlanningSlackAbove)) {
+        if (keyPlanningAllowed(publicKeyGame, current, options.keyPlanningSlackAbove, !!options.keyPlanningCrowdedAfterClock)) {
           geometry.rules.keys = keys;
           observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
         }
