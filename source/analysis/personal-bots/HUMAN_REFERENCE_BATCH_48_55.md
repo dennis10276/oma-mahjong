@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:7/8 measured,1 remains;48–53 rejected;54 running. Additional56–61 authorized separately. Raw authorization ledger:
+Current:7/8 measured,1 remains;48–54 unadopted;55 conditional prototype under audit. Additional56–61 separately authorized. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -269,3 +269,11 @@ Prespecified full off-salt confirmation is allowed after regression-free unchang
 development because86 salt1 already1;existing qualifier output remains intact.
 Full adoption criteria unchanged. Actor frozen until terminal. Original7/8 used,
 1 left plus6 additional=7 remaining. Default40 retained;A/B/unseen20 unmet.
+
+54 completed:39 clears/39 targets vs41/39.10049 reaches salt1 target;10033
+target regresses,10011/10033 clearance lost. Native40781/all3 exit0;84 sources,
+82 attempts/6319 taps independently verified/replayed,slowest1601.056ms. No full
+run/adoption. Conditional prototype54b14cb reuses opening clock20–40 AND locks<=4
+only for tray guard(no learned/intention policies). Applies80/81/10049/10052;
+preserves40 elsewhere.158 tests19s(native13741 exit0). Actual repair/control
+replays live77488/34599/53285;actor frozen. No55 benchmark yet;7 total remain.
