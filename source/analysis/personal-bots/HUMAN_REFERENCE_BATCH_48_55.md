@@ -189,3 +189,12 @@ tests19s(native12290 exit0). v10 replay102 first2 and10049 first2 exits0 with
 zero drift;10011 comparator52974 exits0. Extra102 first3 replay72526 is live to
 check whether existing target regression can actually change before spending52.
 Actor frozen during replay.4/8 used,4 remain. Default40 retained;A/B/unseen20 unmet.
+
+v10/v11 replays completed:all usable natives0(including52974 and72526),zero
+baseline drift/physical replay.102's first3 complete losses are unchanged(106
+taps),10011 first2 unchanged(152),10049 first2 has1 change(40). Thus current
+clock/key-scope clarification alone cannot remove102's target regression;do not
+spend52 on it unchanged. Next investigate retaining/revalidating the selected
+useful continuation through opportunistic cleanup instead of resetting planner
+intention after each pair. Cleanup remains useful per explicit human instruction;
+do not reintroduce its rejected general ban. No actor process live;4/8 used.
