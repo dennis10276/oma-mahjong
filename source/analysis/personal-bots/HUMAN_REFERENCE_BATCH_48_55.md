@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:2/8 measured,6 remain;48 rejected,49 running. Raw authorization ledger:
+Current:2/8 measured,6 remain;48/49 rejected;conditional50 prototype under audit. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -85,3 +85,14 @@ now running(native21910,3 workers)on unchanged fixed42 development/salt1. Source
 b031a14759e639175f419e1a3d5a45d5b9241d1a957faf798510a6e51746b057;profile e9360ec3….
 Model weights/pile habit unchanged. No actor edits until terminal.2/8 used,6 remain.
 Protocol HUMAN_REFERENCE_EXPERIMENT_49.md;default40 retained pending full gates.
+
+49 completed:28/42 clears/targets vs retained41 clears/39 targets;10049 salt1
+improves5→3,but12 target/13 clearance regressions. Native21910/all3 workers exit0;
+independent audit replays175 attempts/9100 taps and verifies82 sources. No full run.
+Four censored alternating tails remain;do not call the actor globally cycle-free.
+Actual retained40 comparisons on10049 and five broken controls verify source,
+zero drift/timing/native exits(95805). Use previous broad WHEN condition unchanged:
+opening clock20–40 AND visible locks<=4. Coverage80/81/10049/10052 in159 openings.
+Conditional prototype1572f73 preserves40 families/model weights/pile habit;154
+tests pass19s. Native91511 now compares its choices on10049/10052 and five broken
+controls. Actor frozen;no50 measurement yet,2/8 used,6 remain. See49_RESULT.md.

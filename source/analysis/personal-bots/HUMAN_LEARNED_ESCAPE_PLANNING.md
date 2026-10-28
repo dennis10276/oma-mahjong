@@ -4,7 +4,7 @@ Dennis's additional steering:make the bot plan for the highest chance of an out,
 learned from previous levels it played. Combine this with the new eight-trial
 survival/key-logic authorization48–55. Keep all original repair/no-regression,
 public-information,production-replay and strict2s requirements. Default40 stays
-retained until a candidate passes.48 is rejected;49 running;2/8 used,6 remain.
+retained until a candidate passes.48/49 rejected;conditional50 under audit;2/8 used.
 
 ## Shared experience without benchmark leakage
 
@@ -181,3 +181,15 @@ attempt),699 replayed taps,zero baseline drift,251 changed suggestions,max451.06
 Native85338/all8 workers exit0;all82 sources verified. Measured49 now running
 native21910,3 workers,fixed42 development/salt1;actor frozen.2/8 used,6 remain.
 No adoption or new campaign improvement claimed until the run and audits finish.
+
+49 result:28/42 clears vs41/42;10049 salt1 improves5→3,but12 target and13
+clearance regressions. Native21910/all3 workers exit0;175 attempts/9100 taps
+independently replayed,82 sources verified. Four alternating censored tails remain.
+Same-history comparison of repaired10049 and broken10032/10041/10015/105/110
+finds early opening changes at tray0/live clock;native95805/all6 exit0,zero drift.
+Try the already-declared broad WHEN thresholds,unchanged:opening clock20–40 AND
+at most4 visible locks. This covers80/81/10049/10052,excludes the inspected broken
+controls,and requires fresh fixed42/full159×3 validation. No per-level selector.
+Prototype1572f73 latches this selection,retains40 families and unchanged model;
+154 tests pass19s. Native91511 now audits seven actual retained40 histories.
+No measured50 yet;2/8 used,6 remain. Default40 retained;A/B/unseen20 unmet.
