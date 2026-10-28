@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:5/8 measured,3 remain;48–51 rejected;52 running. Raw authorization ledger:
+Current:5/8 measured,3 remain;48–52 rejected;known-relief-first prototype under audit. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -210,3 +210,13 @@ fixed42 development/salt1 then unchanged qualifier/full159×3 before adoption.
 Source9bec3d5506b42cedd1eb778012ceb54dc6a6a6c96e0dd16943ebcdff32b449bc;
 profile5b1db6a313adc4454b7aa8641f6355bf2646d7d59c95448fc1a3284c648d2583.
 Protocol2576559.5/8 used,3 remain;actor frozen until terminal. Default40 retained.
+
+52 rejected:37 clears/36 targets vs41/39;regressions10032/10033/102 and four
+clearance regressions. Native6317/all3 workers exit0;84 sources/102 attempts/
+6578 taps independently audited/replayed. New-info diagnostic confirms cleanup
+revealed surviving pictures15/21,so intention invalidation was correct. Do not
+weaken it. Prototype326f2b1 instead searches known tray relief before returning
+fallback cleanup/safe information. User's cleanup preference and clock/key
+priority preserved.157 tests19s(native90550 exit0),including key-pair-to-relief
+contrast. v13 actual52-history checks live67086/20128/67383 for102/10011/10049.
+Actor frozen,no53 measured.5/8 used,3 remain. See52_RESULT.md. Default40 retained.
