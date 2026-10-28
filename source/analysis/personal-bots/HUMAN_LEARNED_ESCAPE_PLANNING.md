@@ -55,12 +55,12 @@ whether the bot actually improves. Do not simply fit attempt-count thresholds.
 
 ## Foundation verification
 
-150/150 tests pass19s(native30802 exit0). A production fixture at tray3 matches
+151/151 tests pass30s(native47815 exit0). A production fixture at tray3 matches
 two known closed key tiles on the pile,unlocks a waiting tray partner,and clears;
 8 taps independently replay. Features read no private fields or mutate state.
 Horizon-label tests distinguish relief followed by loss,clearance,censoring and
-observed no-relief windows. New features are not yet imported by the runtime
-actor;no default-policy adoption or benchmark-gain claim.
+observed no-relief windows. Runtime now imports the frozen model and planner,
+behind disabled-by-default learnedEscapePlanning;no adoption/benchmark-gain claim.
 
 Training-only getter instrumentation exposes the existing public model/roles,
 changes no decision code,and must pass an original/instrumented production
@@ -96,4 +96,27 @@ Validation board-balanced Brier0.017698 vs constant0.018993;log loss0.072650 vs
 0.095686;unweighted AUC0.88199. Sparse failures and mostly easy experience limit
 transfer evidence;all predictions remain above0.8,so coarse calibration bins
 cannot establish calibration on difficult positions. No benchmark gain claimed.
-Model is fitted;actor integration and first measured48 remain pending.
+Model fit committed dd72ddd;runtime integration committed2751cef. First measured48
+remains pending. Frozen experience weights are tracked as public_escape_model_v1.json.
+
+## Candidate runtime behavior
+
+When tray>=2 OR clock live(the training domain),rank public guaranteed root
+actions by the shared learned escape Q. Discard only existing certified dead
+roots or immediate known-physics losses. A70ms/512-node bounded search builds
+a known prefix of up to12 taps toward tray relief or clock removal;stop at
+unknown pictures/roles. Scores are estimates under the earlier follow-up policy,
+not new-policy causal guarantees. Highest chance means highest estimate among
+evaluated eligible roots within budget. Do not turn caps into impossibility.
+
+Existing proven wins,safe clock exits and necessary survival continuations are
+protected. Retain a selected known prefix only while the expected physical state,
+public picture/orientation/role knowledge and actual takeability still agree;
+replan after new information,blocked taps or retry reset. Deadline includes the
+earlier planner's elapsed decision time. Full benchmark must verify the2s gate.
+
+Production controls cover a tray3 closed key-pair chain unlocking tray relief,
+complete independent replay,controller actually invoking learned planning,
+protected proofs,private-field guards,model-weight-dependent root ordering and
+caps remaining unresolved. Actual retained40-history comparisons now running on
+the four target windows plus10033/102/10041 controls;no candidate campaigns yet.
