@@ -1,6 +1,7 @@
 'use strict';
 const {legal,advance}=require('./known_tray_plan.js');
 const {analyzeSurvival}=require('./public_survival_continuation.js');
+const {goalRoutes}=require('./public_goal_routes.js');
 
 // Open the known closed member first. Taking its face-up mate first would
 // unnecessarily occupy the tray. An already open peek needs only its mate.
@@ -42,4 +43,28 @@ function pilePairRoutes(game,state,{deadline=Date.now()+30,excluded=[]}={}){
  }
  return routes;
 }
-module.exports={pilePairRoutes};
+function clockKeyPairPlan(game,state,primary,{knownKeys=[],deadline=Date.now()+30}={}){
+ if(!game.clock||!state.alive[game.clock.i]||state.tray.length>2||Date.now()>=deadline)return null;
+ if(primary.knownWin||primary.safeClockExit||primary.survivalBranches?.necessaryIfSolvable||primary.deadCertificate?.exhaustedKnownGraph)return null;
+ const keys=[...new Set(knownKeys)];
+ if(keys.length!==2||keys.some(i=>!state.alive[i]||state.pictures[i]===null))return null;
+ const publicGame=Object.fromEntries(['tiles','nb','rules','clock','publicFrontier','publicExposure',
+  'publicRoleExposure','publicInformationExposure'].filter(f=>game[f]!==undefined).map(f=>[f,game[f]]));
+ publicGame.rules={...publicGame.rules,keys};
+ const clockRoute=goalRoutes(publicGame,state,game.clock.i);
+ if(!clockRoute.alternatives.some(route=>keys.some(i=>route.has(i))))return null;
+ const startingSlack=game.clock.n-state.moves-clockRoute.cost;
+ for(const route of pilePairRoutes(publicGame,state,{deadline:Math.min(deadline,Date.now()+30),excluded:primary.provedDeadRoots??[]})){
+  if(!keys.every(i=>!route.state.alive[i]))continue;
+  const exited=!route.state.alive[game.clock.i];
+  const endingSlack=exited?null:game.clock.n-route.state.moves-goalRoutes(publicGame,route.state,game.clock.i).cost;
+  if(!exited&&endingSlack<startingSlack)continue;
+  return {index:route.index,path:route.path,goal:'knownClockKeyPair',knownWin:route.knownWin,
+   knownDead:false,safeClockExit:exited,knownProgress:route.removed,information:false,boundary:true,nodes:primary.nodes??0,
+   clockKeyPairPreparation:{knownKeys:keys,closedMemberFirst:true,zeroAdditionalTraySlots:true,
+    startingEstimatedClockSlack:startingSlack,endingEstimatedClockSlack:endingSlack,
+    routeRelevanceAndSlackAreHeuristicsNotProofs:true}};
+ }
+ return null;
+}
+module.exports={pilePairRoutes,clockKeyPairPlan};

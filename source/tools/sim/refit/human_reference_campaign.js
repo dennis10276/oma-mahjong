@@ -43,10 +43,13 @@ const { createKnownWitnessPortfolio } = require('./public_known_witness_portfoli
 const { openingPlanningController } = require('./public_opening_planning.js');
 const { learnedEscapePlan } = require('./public_learned_escape.js');
 const { trayInformationGuard } = require('./public_tray_information_guard.js');
+const { clockKeyPairPlan } = require('./public_pile_pair_habit.js');
 const { createCleanupIntention } = require('./public_cleanup_intention.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
+  assert(options.clockKeyPairPreparation === undefined || typeof options.clockKeyPairPreparation === 'boolean');
+  assert(!options.clockKeyPairPreparation || options.rememberKeyIdentities === true);
   assert(options.avoidThirdTrayInformation === undefined || typeof options.avoidThirdTrayInformation === 'boolean');
   assert(options.trayGuardClockSlack === undefined || typeof options.trayGuardClockSlack === 'boolean');
   assert(options.openingTrayGuardPlanning === undefined || typeof options.openingTrayGuardPlanning === 'boolean');
@@ -520,6 +523,11 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       if (hypothesisVisits) decisionPosition = JSON.stringify(Object.fromEntries(
         ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving'].map(field => [field, current[field]])));
       const finalizeStrategy = selected => {
+        if(options.clockKeyPairPreparation){
+          const pair=clockKeyPairPlan(geometry,current,selected.plan,{knownKeys:keyIdentityMemory?.keys()??[],deadline:escapeDeadline});
+          if(pair&&pair.index!==selected.plan.index){manualChoice=true;resetPlanner();pendingEscapePlan=null;pendingInformationAction=null;
+            return {plan:pair,predicted:advance(geometry,current,pair.index)};}
+        }
         if (options.learnedEscapePlanning) {
           const protectedPlan = selected.plan.knownWin || selected.plan.safeClockExit
             || selected.plan.survivalBranches?.necessaryIfSolvable || selected.plan.deadCertificate?.exhaustedKnownGraph;
