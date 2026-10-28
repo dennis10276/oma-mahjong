@@ -284,3 +284,9 @@ changes/drift on54's10049 and40's10011/10033;production replays verified.
 Native control exit output unavailable after truncated prior poll;no exit inferred.
 158 tests19s;measured55 worker exits will be recorded explicitly. After55 starts,
 original allowance exhausted;6 additional56–61 remain;no62. Default40 retained.
+
+55 development passed:41/42 clear,40/42 within Dennis+1 vs40's41/39;10049
+5 to3 tries,no target/clearance regressions. All3 development workers exit0.
+Full159x3 launched at15:34UTC,supervisor53183;default40 unchanged. Full-result
+claims/adoption pending terminal exits and independent audit. Six56–61 remain.
+
