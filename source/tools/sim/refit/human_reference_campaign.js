@@ -135,6 +135,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
   assert(options.keyPlanningCrowdedAfterClock === undefined || typeof options.keyPlanningCrowdedAfterClock === 'boolean');
   assert(!options.keyPlanningCrowdedAfterClock || options.rememberKeyIdentities === true);
+  assert(options.keyPlanningCrowdedTrayMin === undefined || options.keyPlanningCrowdedAfterClock === true
+    && Number.isInteger(options.keyPlanningCrowdedTrayMin) && options.keyPlanningCrowdedTrayMin >= 2 && options.keyPlanningCrowdedTrayMin <= 3);
   assert(options.keyPlanningBeforeCrowding === undefined || typeof options.keyPlanningBeforeCrowding === 'boolean');
   assert(!options.keyPlanningBeforeCrowding || options.rememberKeyIdentities === true);
   assert(!options.keyPlanningCrowdedAfterClock || !options.keyPlanningBeforeCrowding);
@@ -435,7 +437,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const knownKeys = keyIdentityMemory.keys();
         const keys = [...new Set([...geometry.rules.keys, ...knownKeys])].sort((left, right) => left - right);
         const publicKeyGame = { tiles: geometry.tiles, nb: geometry.nb, rules: { ...geometry.rules, keys }, clock };
-        if (keyPlanningAllowed(publicKeyGame, current, options.keyPlanningSlackAbove, !!options.keyPlanningCrowdedAfterClock, !!options.keyPlanningBeforeCrowding)) {
+        if (keyPlanningAllowed(publicKeyGame, current, options.keyPlanningSlackAbove, !!options.keyPlanningCrowdedAfterClock, !!options.keyPlanningBeforeCrowding, options.keyPlanningCrowdedTrayMin??2)) {
           geometry.rules.keys = keys;
           observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
         }
@@ -647,7 +649,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const resumed=cleanupIntention?.propose(geometry,current,selected.plan,cleanupKnowledge());
         if(resumed){manualChoice=true;resetPlanner();pendingEscapePlan=null;pendingInformationAction=null;}
         const chosen = resumed?{plan:resumed,predicted:advance(geometry,current,resumed.index)}:finalizeStrategy(selected);
-        const keyAwareRecovery=options.keyAwareTrayRecovery&&(!clock||!current.alive[clock.i])&&current.tray.length>=2;
+        const keyAwareRecovery=options.keyAwareTrayRecovery&&(!clock||!current.alive[clock.i])
+          &&current.tray.length>=(options.keyPlanningCrowdedTrayMin??2)&&current.tray.length<=3;
         if (!options.avoidThirdTrayInformation&&!keyAwareRecovery) return chosen;
         const guarded = trayInformationGuard(geometry,current,chosen.plan,
           {deadline:escapeDeadline,knownKeys:keyIdentityMemory?.keys()??[],preserveClockSlack:!!options.trayGuardClockSlack});
