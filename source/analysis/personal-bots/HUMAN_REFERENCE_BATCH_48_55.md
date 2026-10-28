@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:6/8 measured,2 remain;48–53 rejected. Additional56–61 authorized separately. Raw authorization ledger:
+Current:7/8 measured,1 remains;48–53 rejected;54 running. Additional56–61 authorized separately. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -258,3 +258,14 @@ NEW DIRECT AUTHORIZATION:"Authorizing 6 more experiments". Separate reserved
 batch56–61 created without altering this ledger. Existing2+new6=8 total remaining.
 No auto-renewal or62. See HUMAN_REFERENCE_ADDITIONAL_56_61.md. Goal scope/gates
 unchanged;continue through61 under this authorization,not a new request at55.
+
+v15 controls completed369 taps,zero drift,all native71981/53486/13303 exit0,
+max1439.048ms,84 sources verified. Guard-only profile54 differs from combined53
+on102/10011/10049 by2/9/27 suggestions;no candidate wins inferred. Fresh54 now
+running(native40781,3 workers),retained40+avoidThirdTrayInformation only. Source
+1a14f7965f7b37e0d228da05f005831f439e20e1257da39edd2e4f6851f611ce;profile
+9d4d78cce576fc8ba62a2e3710c59cc57389394cc862a5596518da462fb4254b. Protocol641232b.
+Prespecified full off-salt confirmation is allowed after regression-free unchanged
+development because86 salt1 already1;existing qualifier output remains intact.
+Full adoption criteria unchanged. Actor frozen until terminal. Original7/8 used,
+1 left plus6 additional=7 remaining. Default40 retained;A/B/unseen20 unmet.

@@ -64,7 +64,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 
 ## Process and completion
 
-- Batch48-55 has2 left; six additional56-61 authorized; WHEN trials count; adoption never replenishes; no62.
+- Batch48-55 has1 left after54 start; six additional56-61 authorized; WHEN trials count; no replenishment or62.
 - Small commits; goal<=80; one table/run; raw outputs .codex-runs/. Re-deal/luck runs stay STOPPED.
 - After A and B pass: freeze; run the next20 progression levels once, when Dennis
   has played them, at BOTH strengths. Keep measure() working on unseen lab boards.
@@ -74,7 +74,7 @@ Track A first; Track B only after A passes. Use sunflower tiles.
 ## Current evidence
 
 - Retained40:158/159 clear every salt,155/159 within Dennis+1; A still unmet; four targets remain.
-- 157/157 tests pass19s;53 rejected;guard-only ablation under replay audit;8 authorized trials remain through61;default40 retained.
+- 157/157 tests pass19s;53 rejected;guard-only54 running(native40781);7 authorized trials remain through61;default40 retained.
 - Full40 repairs10032,no target/clearance regressions;6 fresh workers exit0;slowest1717.6ms.
 - Adopted40's fresh159-board cohort,77 sources and477 opening selections verified;mean0.5358min/board for3 salts.
 - Batch audit:48 workers/616 archived sources/4152 opening selections verified;default477 configs match40;unlabeled API1/1/1,998.4ms.
