@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:4/8 measured,4 remain;48–50 rejected;51 running. Raw authorization ledger:
+Current:4/8 measured,4 remain;48–51 rejected;real-out guard correction tested. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -170,3 +170,12 @@ harness error. No measured variant consumed by that diagnostic. Candidate change
 Source7be2d99caee29381a02d002fe1f05009b1e64d468432a74b9d0f93109d52550d;
 profile74aed52003951c0dbc2808adee524ff6320d7a7d59f36d747cb2b88eb74fbf9d.
 Protocol2ba43f8;4/8 used,4 remain. No actor edits until terminal. Default40 retained.
+
+51 rejected:39/42 clears/38 targets vs retained41/39;102 regresses2→4,10011/10049
+lose clearance. Native27334/all3 exit0;83 sources/97 attempts/6294 taps independently
+verified/replayed;slowest1701.604ms. No full run.102 replay64 taps shows guard
+mistook unrelated pair removal at unchanged pressure2 for an out. Corrected
+leaf goals require actual information,less carry,clock exit or clear;closed key
+pair can still unlock real tray relief.156 tests19s(native28202 exit0). Scope
+clarification pending on latest "ONLY for clock or keys";do not launch dependent
+policy change before answer. Independent fix reviewable;no52 measured.4 remain.

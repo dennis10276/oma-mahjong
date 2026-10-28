@@ -26,6 +26,17 @@ function test(){
  const capped=trayInformationGuard(small,last,{index:0,path:[0,1],information:true},{nodes:0,milliseconds:500});assert(capped.traySafety.searchCapped);
  assert.equal(trayInformationGuard(game,state,{...bad,knownWin:true}),null);assert.equal(trayInformationGuard(game,state,{...bad,safeClockExit:true}),null);
  assert.equal(trayInformationGuard(flat,{...crowded,tray:[2,3]}, {index:0,path:[0,1]}),null,'A known completed pair ending at pressure2 need not be vetoed');
+ const unrelated={tiles:tiles.slice(2,4).concat([{x:32,y:0,z:0},{x:40,y:0,z:0}]),rules:null,clock:null};
+ unrelated.nb=L.neighbors(unrelated.tiles);
+ const idle={alive:[1,1,1,1],pictures:[8,null,7,7],down:[0,1,1,0],tray:[1,2],moves:0,openPeek:2,relieved:false,arriving:[]};
+ const idleResult=trayInformationGuard(unrelated,idle,{index:0,path:[0,1],information:true},{milliseconds:500});
+ assert(idleResult.noOverride,'An unrelated zero-slot pair with no new information or headroom is not an escape from the only useful information route');
+ const keyTiles=Array.from({length:5},(_,i)=>({x:i*8,y:0,z:0}));
+ const keyed={tiles:keyTiles,nb:L.neighbors(keyTiles),clock:null,rules:{ice:{},iceNb:L.iceNeighbors(keyTiles),keys:[0,1],locks:new Set([2,3,4])}};
+ const keyState={alive:[1,1,1,1,1],pictures:[100,100,1,2,3],down:[1,1,0,0,0],tray:[1,2,3],moves:0,openPeek:-1,relieved:false,arriving:[]};
+ const keyOut=trayInformationGuard(keyed,keyState,{index:0,path:[0],information:true},{milliseconds:500});
+ assert(keyOut&&!keyOut.noOverride);assert.equal(keyOut.path.length,3);assert(keyOut.path.includes(2));
+ assert.equal(keyOut.traySafety.projectedPressure,2,'Continue the zero-slot key pair until it unlocks genuine waiting-tray relief');
  factory.verifySource();console.log('PASS third tray spot is last resort for information,pressure3 gets shortest known relief,unknown pictures remain unknown,caps are not proofs and6 winning production taps independently replay');
 }
 if(require.main===module)test();module.exports=test;
