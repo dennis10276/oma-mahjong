@@ -151,3 +151,12 @@ cycle-only fix,this changes the earlier salt2 losses. No candidate campaign play
 Sourceebcb530432037db468c4d5a1ff7e33c96948fff09c0918452b9f877e565e5962.
 Next audit selected80/81 controls and52,then count measured51 only on campaign
 start. All owned diagnostics terminal;no actor campaign live.3/8 used,5 remain.
+
+New steering:third-slot information is last resort;restore pressure<=2 ASAP.
+Global candidate guard0b57b1c searches public alternatives and shortest known
+relief after strategy selection,so Q cannot override this preference.60ms/512
+nodes/max12 taps;bounded misses keep primary with explicit non-proof audit flag.
+Preserve wins/clock exits/necessary routes.156 tests19s(native62968 exit0),including
+6 independently replayed production taps. See HUMAN_THIRD_TRAY_LAST_RESORT.md.
+v8 actual50-history comparisons live:35123(10049 salt2),29656(10011 salt1),60012
+(86 salt3). Actor frozen,no51 campaign yet;3/8 used,5 remain,default40 retained.
