@@ -18,7 +18,8 @@ function test() {
   const firstPlans = [];
   for (const configuration of [{ rememberKeyIdentities: false }, { rememberKeyIdentities: true },
     { rememberKeyIdentities: true, keyPlanningSlackAbove: 40 },
-    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true }]) {
+    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true },
+    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningBeforeCrowding: true }]) {
     const { rememberKeyIdentities } = configuration;
     const controller = createHumanController(tiles, { ...configuration, rememberAcceptedTaps: false,
       rememberClearedRoles: true, keyAccessMacros: true, keyRecoveryMacros: true, retryInformationWitness: true });
@@ -69,6 +70,10 @@ function test() {
   assert.deepEqual(firstPlans[0], firstPlans[1]);
   assert.deepEqual(firstPlans[0], firstPlans[2]);
   assert.deepEqual(firstPlans[0], firstPlans[3], 'Empty-tray opening behavior is unchanged');
+  assert.deepEqual(firstPlans[0], firstPlans[4], 'Before any retry discovery, proactive mode has no extra starting identities');
+  assert.throws(() => createHumanController(tiles, { keyPlanningBeforeCrowding:true }));
+  assert.throws(() => createHumanController(tiles, { rememberKeyIdentities:true, keyPlanningBeforeCrowding:'yes' }));
+  assert.throws(() => createHumanController(tiles, { rememberKeyIdentities:true, keyPlanningCrowdedAfterClock:true, keyPlanningBeforeCrowding:true }));
   assert.throws(() => createHumanController(tiles, { keyPlanningCrowdedAfterClock:true }));
   assert.throws(() => createHumanController(tiles, { rememberKeyIdentities:true, keyPlanningCrowdedAfterClock:'yes' }));
   assert.deepEqual(createHumanController(tiles, { rememberKeyIdentities: true }).keyIdentityEvidence(), []);
