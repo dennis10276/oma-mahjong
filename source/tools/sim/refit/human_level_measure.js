@@ -12,6 +12,11 @@ const { captureSources } = require('./human_level_sources.js');
 const sourceSnapshot = captureSources(module);
 
 const digest = value => crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
+const sourceRoot=path.resolve(__dirname,'../../..');
+// Git may check the same text out with LF or CRLF. Pin semantic source text
+// across checkouts; sourceSnapshot.verify still detects live byte changes.
+const canonicalSourceHash=digest(sourceSnapshot.files.map(file=>[file,
+  crypto.createHash('sha256').update(fs.readFileSync(path.join(sourceRoot,file),'utf8').replace(/\r\n/g,'\n')).digest('hex')]));
 
 function finishableWithinThree(runs,maxTries){
  const canonical=[1,2,3].map(salt=>runs.find(run=>run.salt===salt));
@@ -44,7 +49,7 @@ function createMeasurer(planning = defaultProfile) {
     const frozen=fs.existsSync(manifestFile)?JSON.parse(fs.readFileSync(manifestFile)):null;
     if(frozen&&(isDefault||digest(frozenProfile)===frozen.profileHash)){
       assert.equal(digest(frozenProfile),frozen.profileHash,'Frozen reference profile changed');
-      assert.equal(sourceSnapshot.hash,frozen.sourceHash,'Frozen reference source changed; keep human-model work separate');
+      assert.equal(canonicalSourceHash,frozen.canonicalSourceHash,'Frozen reference source changed; keep human-model work separate');
     }
     assert(Object.keys(options).every(key => ['salts', 'maxTries'].includes(key)), 'Unknown measure option');
     const salts = options.salts ?? [1, 2, 3], maxTries = options.maxTries ?? 3;
@@ -127,4 +132,4 @@ if (require.main === module) {
   try { main(); } catch (error) { console.error(error.message); process.exitCode = 1; }
 }
 module.exports = { measure, createMeasurer, lossType, normalizeBoard,finishableWithinThree,
-  measurementSource: { hash: sourceSnapshot.hash, files: sourceSnapshot.files.slice() } };
+  measurementSource: { hash: sourceSnapshot.hash,canonicalHash:canonicalSourceHash, files: sourceSnapshot.files.slice() } };

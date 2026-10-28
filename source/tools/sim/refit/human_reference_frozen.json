@@ -3,7 +3,7 @@
   "version": "public-reference40-frozen-20261028",
   "adoptedPolicy": 40,
   "profileHash": "63c5e6924e8ef42a5e46e14d9520b71d6ec47b6c545402a0681b950b9c65c4b4",
-  "sourceHash": "08d087966c5a3b5439f686270e815932222cfcf0225ac3d26536329f4215a2a3",
+  "sourceHash": "7b671976bf54408b4f0137fcc3a7007c9ac5c08d299c14118dbffa54da0da196",
   "sourceFiles": [
     "tools/sim/refit/human_board_visibility.js",
     "tools/sim/refit/human_level_measure.js",
@@ -99,5 +99,7 @@
     ],
     "maxTries": 3,
     "failureIsNotImpossibility": true
-  }
+  },
+  "canonicalSourceHash": "3e3ce018f9e4a9495cc205bd2de5775e6ff45bd50b982550614e4455f3c28642",
+  "hashNote": "canonicalSourceHash normalizes CRLF to LF for Git checkouts; runtime additionally verifies exact bytes"
 }
