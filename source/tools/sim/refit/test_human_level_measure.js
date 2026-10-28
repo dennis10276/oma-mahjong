@@ -6,7 +6,7 @@ const { execFileSync } = require('child_process');
 const vm = require('vm');
 const Layouts = require('../../../www/layouts.js');
 const { encodeGame } = require('./personal_game_io.js');
-const { measure } = require('./human_level_measure.js');
+const { measure,finishableWithinThree } = require('./human_level_measure.js');
 
 function test() {
   const tiles = Array.from({ length: 6 }, (_, index) => ({ x: index * 4, y: 0, z: 0 }));
@@ -18,6 +18,12 @@ function test() {
   assert.deepEqual(result.triesPerSalt, [1, 1, 1]);
   assert.equal(result.firstTryWinRate, 1);
   assert.equal(result.averageTries, 1);
+  assert.equal(result.finishable,true);
+  assert.equal(measure(board).maxTries,3,'Frozen finishable check defaults to three real tries');
+  assert.equal(finishableWithinThree([{salt:1,tries:1}],1),null,'One salt cannot certify all three');
+  assert.equal(finishableWithinThree([{salt:1,tries:null}],1),null,'A one-try loss is not a three-try failure');
+  assert.equal(finishableWithinThree([{salt:1,tries:null}],3),false);
+  assert.equal(finishableWithinThree([1,2,3].map(salt=>({salt,tries:3})),3),true);
   assert(result.slowestMove < 2000 && result.minutesPerBoard >= 0);
   assert(result.runs.every(run => run.verifiedTaps === 6));
   assert.deepEqual(encodeGame(board), original);

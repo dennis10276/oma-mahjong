@@ -1,80 +1,45 @@
-# Human-information reference and Dennis-strength level measuring
+# Frozen reference and human-like player calibration
 
-ACTIVE and UNMET; Dennis authorized48-55 plus6 additional trials56-61. wip/personal-bots.
-Authoritative objective: cc8ea8eb-87e0-48be-a531-eeb68c9d5592/goal-objective.md.
-Track A first; Track B only after A passes. Use sunflower tiles.
+ACTIVE and UNMET. The current goal replaces per-level attempt matching.
 
-## Rules
+## Frozen Track A
 
-- ONE observer: visible face-up pictures, drawn roles on fronts/backs, covered clock
-  badges, and current takeability of every geometrically free tile without tapping.
-- No hidden pictures, deck, board seed or future reveals. Only public same-board/salt retry memory.
-- Publicly proved pictures may enter memory and planning like observations; retain proof provenance; sample consensus is not proof.
-- Every level being winnable is an allowed prior. General planning only: no level
-  IDs, per-level settings or routes. Every attempt independently replays production.
-- Single-thread games, anytime, under2s/move; at most12 concurrent games.
-## Track A: strongest human-information player
+- Policy40 is frozen in human_reference_frozen.json, with source/profile hashes.
+- measure(board) defaults to three actual tries on salts1,2,3.
+- finishable=true means all three clear within3; false is a bounded failure,
+  never proof of impossibility; invalid/incomplete coverage returns null.
+- Preserve human-visible information, observed retry memory and production replay.
+- No new WHEN conditions. Experiments60/61 from the old goal are retired.
+- Historical162-board policy40 baseline:155 clear within3 on every salt;
+  161 clear within12 on every salt. These are different gates.
 
-- All recorded Dennis natural first clears17-156 and later, plus15 recorded labs
-  from lab-clears.json(10011-10053 excluding10031). Preserve board provenance.
-- Real boards unchanged. Max12 actual tries per board/salt; censored is not a clear.
-- Full gates: every board clears on salts1,2,3; each run at most Dennis+1 tries.
-- Labs first:10011,10049,10052; natural86 also fails. Repaired10032 remains a control.
-- Development: failures plus20 fixed guards, salt1; retain regression controls; full salts1-3; repair>=1 and break none.
-- Survival/key logic:third-slot information is last resort;restore tray<=2 ASAP;prefer pile pairs;rank outs learned from earlier BOT games.
+## Independent Track B
 
-## Mixed strategies: find WHEN to use them
+- Build a human-like controller with short clock planning, limited tray lookahead,
+  forgetting of previously seen closed pictures and stochastic legal choices.
+- Same production physics and one validated observer; no exact route solver.
+- Two global settings: Dennis and weaker family. No per-level settings or routes.
+- Fit patterns, never per-level successful attempt counts.
+- a: Dennis first-try rate50-55% across92-163; family about30%.
+- b: failed attempts55-60% before clock, about40% mid, under10% late.
+- c: risk cohort132/144/91/89/99/122/142/96/143/94 must lose clearly more
+  than10 fixed levels with no observed human losses;132/135/142/144 lose
+  predominantly before clock.
+- Predeclare late threshold, tolerances, cohorts and seeds before experiments.
+- Report uncertainty, board provenance, actual losses and computational censoring.
+- measureHuman(board,{runs:20}) returns first-try rate, average tries,
+  phase shares for both settings, censoring and minutes/board.
+- Retries require an actual completed physical loss. No free restarts at caps.
+- Stop after8 experiments without progress on a-c; honest baseline is only a start.
+- Once a-c hold, freeze and check subsequent unopened Dennis progression levels.
+- Completion requires that prospective check, with a one-screen summary.
 
-- Compare changed decisions on repaired and broken games using actual public histories.
-- Record public tray/clock/slack, unseen fraction, observed roles, retry and free pairs; no hidden labels.
-- Fit one readable condition with at most2 public features and round thresholds.
-- Fit on development only; retest salt1 development then full cohort salts1-3.
-- Adopted06 base clock recovery: tray>=1 AND estimated slack>=50; avoids harmful preparation.
-- Adopted06 retry information: after a no-learning physical loss; preserves wins and repairs150.
-- Adopted08 remembered-key planning: live clock estimated slack>40; repairs10041.
-- Adopted10 back-symbol planning: live-clock estimated slack5-20; repairs10015 without regressions.
-- Adopted14 transfer proofs: live clock AND estimated slack<=30; helps10049, preserves10041.
-- Adopted14 tight-clock recovery: tray=1 AND estimated slack=3; repairs144 without regressions.
-- Adopted19 closed inspection: no live clock AND tray<=2; repairs157, preserves known recovery.
-- Adopted19 information probe: primary reports known-dead; broader exposure checks prevent false certificates.
-- Adopted23 clock inspection: starting clock10-30 AND tray<=2; bounded peek cost preserves41 while helping33.
-- Adopted23 clock rank: starting clock10-30; account for spent moves in estimated slack, never as a proof.
-- Adopted40: opening clock<=50 AND visible locks<=3 selects39,otherwise23; latch memory; repairs32,preserves11/41.
+## Boundaries and accounting
 
-## Track B: calibrate only after A passes
-
-- Run all boards at4-5 fixed strengths, including decision budgets and retry-memory
-  variants. Report exact tries, within+-1, and tied-rank Spearman for each strength.
-- Pick ONE by most boards within+-1; break ties by Spearman. No per-level tuning.
-- Gate: at least80% within+-1 of Dennis AND Spearman>=0.6. Never invent censored counts.
-- measure() uses that calibrated strength for difficulty; strongest remains for lessons.
-
-## API: ten-line builder contract
-
-1. require('C:/Users/den_k/Idea/OmasMahjong/personal-bot-review/source/tools/sim/refit/human_level_measure.js').measure
-2. Call measure(board,{salts:[1,2,3],maxTries:12}).
-3. Accepts production game format, including unlabeled lab/unreleased candidates.
-4. Salts vary public choices; pictures, roles, clock and board remain unchanged.
-5. triesPerSalt follows salt order; null means no verified clear within the limit.
-6. firstTryWinRate includes every salt; averageTries is null if any run is censored.
-7. lossTypes counts failed tries; slowestMove is milliseconds.
-8. minutesPerBoard is elapsed measurement time; valid requires replay and timing.
-9. CLI: node C:/Users/den_k/Idea/OmasMahjong/personal-bot-review/source/tools/sim/refit/human_level_measure.js board.json --salts 1,2,3 --max-tries 12.
-10. Returns JSON; --out .codex-runs/result.json saves it. No Dennis label needed.
-
-## Process and completion
-
-- Batch48-55 fully dispatched through55; 59 running,2 authorized60-61 remain; WHEN trials count; no replenishment or62.
-- Small commits; goal<=80; one table/run; raw outputs .codex-runs/. Re-deal/luck runs stay STOPPED.
-- After A and B pass: freeze; run the next20 progression levels once, when Dennis
-  has played them, at BOTH strengths. Keep measure() working on unseen lab boards.
-- Final one-screen table: level|Dennis|strong|calibrated; separate labs; adopted
-  conditions/reasons, slowest move, minutes/board, and decisions for Dennis.
-
-## Current evidence
-
-- Retained40:161/162 clear every salt,158/162 within Dennis+1; A still unmet; four targets remain.
-- 58 audited,10011 loses clearance;59 emergency-only45-board development running;162 targets,158 tests pass;2 trials remain60-61.
-- Full40 repairs10032,no target/clearance regressions;6 fresh workers exit0;slowest1717.6ms.
-- Adopted40's fresh159-board cohort,77 sources and477 opening selections verified;mean0.5358min/board for3 salts.
-- Batch audit:48 workers/616 archived sources/4152 opening selections verified;default477 configs match40;unlabeled API1/1/1,998.4ms.
+- Source-only small commits; raw run artifacts in .codex-runs/.
+- No Firebase writes, publication or pushes. Preserve unrelated experiments.
+- One game per worker; keep timing and production replay validation.
+- User-supplied Claude findings motivate the target patterns; they do not prove
+  that all board features lack predictive information.
+- Archived canonical91 clears1/1/1, unlike the supplied3-try comparison;
+  preserve that discrepancy until the board/version can be reconciled.
