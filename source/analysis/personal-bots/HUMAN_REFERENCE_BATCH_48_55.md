@@ -33,7 +33,7 @@ levels the BOT played. Build a shared escape critic from bot-generated public
 experience on70 eligible recorded boards/69 canonical topologies disjoint from
 every benchmark board,including14 key boards. Two initial overlaps are excluded;
 duplicate topology grouped before label inspection. No human count/action labels.
-Train/validation grouped by topology;one model for all targets.151 tests pass30s,
+Train/validation grouped by topology;one model for all targets.152 tests pass23s,
 including a tray3 on-pile key pair unlocking tray relief and8 replayed winning
 taps. Runtime option integrated but disabled by default. Full specification:
 HUMAN_LEARNED_ESCAPE_PLANNING.md. Curriculum collection is not a measured variant.
@@ -49,7 +49,17 @@ escape-experience-v1/;see HUMAN_LEARNED_ESCAPE_PLANNING.md for limitations.
 
 Pre-measurement actual-history comparison native83685:four target windows through
 Dennis+1 attempts(86 salt3,other targets salt1),three complete control histories
-(10033/102/10041 salt1). Actor/model frozen while3 workers run. These compare
+(10033/102/10041 salt1). All7 workers exited0;1070 taps replayed,zero drift,
+max1602.922ms. Supervisor finalizer exited1 on a nonexistent method;independent
+native0 finalizer verifies all81 sources/footers and preserves the original error.
+These compare
 suggestions on the same physically replayed baseline actions;they do not show
 candidate clearance or consume a measured variant. Require zero baseline drift,
 native terminal exits and source integrity before interpreting differences.
+
+Additional user steering:build the habit of matching known pairs on the pile when
+one/both are face down to prevent tray pressure. New public habit opens a closed
+member first,validates a zero-slot physical match and rejects clock-expiring or
+proved-dead continuations. Learned scores rank eligible matching/tray-relief outs;
+no learned probability is claimed outside the training domain.152 tests pass23s.
+Combined-habit history audit is next;0/8 measured,8 remain;default40 retained.

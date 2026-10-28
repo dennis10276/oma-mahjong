@@ -12,6 +12,7 @@ const modules = [
   'test_public_escape_features.js',
   'test_public_escape_critic.js',
   'test_public_learned_escape.js',
+  'test_public_pile_pair_habit.js',
   'test_public_action_order.js',
   'test_public_complete_witness.js',
   'test_public_exploration_witness.js',

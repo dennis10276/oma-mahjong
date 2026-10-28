@@ -4,14 +4,26 @@ const {publicEscapeFeatures}=require('./public_escape_features.js');
 const {predict}=require('./public_escape_critic.js');
 const {safeClosedInspection}=require('./public_safe_closed_inspection.js');
 const frozenModel=require('./public_escape_model_v1.json');
+const {pilePairRoutes}=require('./public_pile_pair_habit.js');
 
 // Q estimates describe the root action under the earlier behavior policy. A
 // known prefix is a constructive route to relief, not a learned proof of a win.
 function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
   if(primary.knownWin||primary.safeClockExit||primary.survivalBranches?.necessaryIfSolvable
     ||primary.deadCertificate?.exhaustedKnownGraph)return null;
-  if(state.tray.length<2&&!(game.clock&&state.alive[game.clock.i]))return null;
   const deadline=Math.min(settings.deadline??Infinity,Date.now()+(settings.milliseconds??70));
+  const learnedDomain=state.tray.length>=2||!!(game.clock&&state.alive[game.clock.i]);
+  const pairs=pilePairRoutes(game,state,{deadline:Math.min(deadline,Date.now()+25),excluded:primary.provedDeadRoots??[]})
+    .filter(pair=>actions.some(a=>a.index===pair.index));
+  if(!learnedDomain){
+    if(!pairs.length)return null;
+    const best=pairs.find(pair=>pair.knownWin)??pairs[0];
+    return{index:best.index,path:best.path,goal:'publicPilePairHabit',knownWin:best.knownWin,knownDead:false,
+      safeClockExit:!!(game.clock&&state.alive[game.clock.i]&&!best.state.alive[game.clock.i]),
+      knownProgress:best.removed,information:false,boundary:!best.knownWin,nodes:primary.nodes??0,
+      pilePairHabit:{faceDownMember:true,newTraySpots:0,knownPrefixOnly:true},
+      learnedEscape:{probability:null,estimatedNotProved:true,outsideTrainingDomain:true,ranking:'public matching habit'}};
+  }
   const maxNodes=settings.nodes??512,model=settings.model??frozenModel;
   const allowed=legal(game,state),uncertain=new Set(allowed.uncertain??[]),excluded=new Set(primary.provedDeadRoots??[]);
   const candidates=[];let nodes=0;
@@ -24,17 +36,23 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     if(!moved.uncertain&&moved.lost)continue;
     const x=publicEscapeFeatures(game,state,index,context),probability=predict(model,x);
     if(Date.now()>=deadline)break;
-    candidates.push({index,probability,moved});
+    const pair=pairs.find(p=>p.index===index);
+    candidates.push({index,probability,moved,pair,
+      preservesTrayHabit:!!pair||!moved.uncertain&&moved.state.tray.length<state.tray.length});
   }
   // Search safe known prefixes in learned root order. Unknown pictures/roles,
   // deadlines and caps remain boundaries. They never reject a branch.
-  candidates.sort((a,b)=>b.probability-a.probability||+(b.index===primary.index)-+(a.index===primary.index));
+  // Known zero-slot pile matches and immediate tray relief take precedence over
+  // speculative commitments. Learn which of those outs is most promising.
+  const preferHabit=candidates.some(c=>c.pair);
+  candidates.sort((a,b)=>+(preferHabit&&b.preservesTrayHabit)-+(preferHabit&&a.preservesTrayHabit)
+    ||b.probability-a.probability||+(b.index===primary.index)-+(a.index===primary.index));
   const relief=p=>p.tray.length<state.tray.length
     ||!!(game.clock&&state.alive[game.clock.i]&&!p.alive[game.clock.i]);
   const routes=[];
   for(const root of candidates){
     if(Date.now()>=deadline)break;
-    let path=[root.index],position=root.moved.state??state,removed=root.moved.removed??0;
+    let path=root.pair?.path??[root.index],position=root.pair?.state??root.moved.state??state,removed=root.pair?.removed??root.moved.removed??0;
     let found=!root.moved.uncertain&&(root.moved.win||relief(position));
     const queue=root.moved.uncertain?[]:[{state:position,path,removed}],seen=new Set();
     for(let cursor=0;!found&&cursor<queue.length&&nodes<maxNodes&&Date.now()<deadline;cursor++){
@@ -66,6 +84,7 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
   const clockExit=best.knownRelief&&!!(game.clock&&state.alive[game.clock.i]&&!best.position.alive[game.clock.i]);
   return{index:best.index,path:best.path,goal:'learnedEscapePlan',knownWin:won,knownDead:false,safeClockExit:clockExit,
     knownProgress:best.removed,information:!!best.moved.uncertain,boundary:!won&&!clockExit,nodes:(primary.nodes??0)+nodes,
+    ...(best.pair?{pilePairHabit:{faceDownMember:true,newTraySpots:0,knownPrefixOnly:true}}:{}),
     learnedEscape:{probability:best.probability,horizonPhysicalTaps:12,knownRelief:best.knownRelief,
       estimatedNotProved:true,behaviorPolicyEstimate:true,scoredRoots:candidates.length,searchNodes:nodes,
       capped:nodes>=maxNodes||Date.now()>=deadline,modelKind:model.kind}};

@@ -34,9 +34,9 @@ function test(){
  // learned ranking, rather than an ignored score or hand-coded key preference.
  const weights=Array(NAMES.length+1).fill(0);weights[1+NAMES.indexOf('rootKey')]=-10;
  const adversarial={kind:'public-escape-logistic-v1',features:[...NAMES],weights};
- const spare={...state,tray:[1,2],alive:state.alive.slice()};spare.alive[2]=1;
- const choice=learnedEscapePlan(game,spare,[{index:3},{index:2}],{index:3,path:[3]},context,{model:adversarial,milliseconds:500});
- assert.equal(choice.index,2,'Shared learned Q,not hard-coded key identity,orders eligible alternatives');
+ const spare={...state,tray:[1,2],alive:state.alive.slice(),down:state.down.slice()};spare.alive[2]=1;spare.down[8]=spare.down[9]=1;
+ const choice=learnedEscapePlan(game,spare,[{index:3},{index:8}],{index:3,path:[3]},context,{model:adversarial,milliseconds:500});
+ assert.equal(choice.index,8,'Shared learned Q orders alternatives within the zero-slot matching habit');
  // The completed physical fixture above supplies same-board retry memory.
  // Feed actual production observations through the controller integration.
  const controller=createHumanController(tiles,{learnedEscapePlanning:true,nodes:1,proofNodes:1,taps:1,finishKnown:false,decisionMs:10});

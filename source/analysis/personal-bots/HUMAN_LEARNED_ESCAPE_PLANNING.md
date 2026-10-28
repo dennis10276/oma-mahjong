@@ -55,7 +55,7 @@ whether the bot actually improves. Do not simply fit attempt-count thresholds.
 
 ## Foundation verification
 
-151/151 tests pass30s(native47815 exit0). A production fixture at tray3 matches
+152/152 tests pass23s(native28435 exit0). A production fixture at tray3 matches
 two known closed key tiles on the pile,unlocks a waiting tray partner,and clears;
 8 taps independently replay. Features read no private fields or mutate state.
 Horizon-label tests distinguish relief followed by loss,clearance,censoring and
@@ -118,5 +118,28 @@ earlier planner's elapsed decision time. Full benchmark must verify the2s gate.
 Production controls cover a tray3 closed key-pair chain unlocking tray relief,
 complete independent replay,controller actually invoking learned planning,
 protected proofs,private-field guards,model-weight-dependent root ordering and
-caps remaining unresolved. Actual retained40-history comparisons now running on
-the four target windows plus10033/102/10041 controls;no candidate campaigns yet.
+caps remaining unresolved. Seven actual retained40-history comparisons completed
+1070 replayed taps,zero baseline drift,485 changed suggestions,max1602.922ms.
+All7 child processes exited0;supervisor83685 exited1 only because its final source
+check called a nonexistent verify method. A separate native0 finalizer verified
+all81 source hashes and every footer;preserve the original failed finalization.
+These are counterfactual suggestions,not candidate campaigns or clearance gains.
+
+## Face-down pile-pair habit(user steering after first history comparisons)
+
+Prefer a known matching pair on the pile when one or both members are face down.
+Open the closed member first;then tap its mate to remove both without occupying
+any tray slot. Never invent the picture of an unknown hidden tile. Existing tray
+matches follow production tray priority and remain pressure-reducing alternatives.
+Among zero-slot pair routes and immediate tray relief,rank learned-domain actions
+by the same frozen escape critic. This explicit user habit takes precedence over
+speculative commitments. Below tray2 with no clock,apply the public matching habit
+without claiming a learned probability outside the training domain.
+
+Validate both physical taps,clock survival and actual takeability;check the
+resulting public continuation with bounded survival search. Reject only proved
+dead continuations;unknown/capped checks remain possible. Existing proven wins,
+safe clock exits and necessary survival continuations remain protected. Controls
+cover one/both down,zero tray occupancy at every tap,unknown-picture rejection,
+clock expiration,proved dead ends,and8 additional independently replayed taps.
+Re-run the seven history comparisons for the combined model+habit before trial48.
