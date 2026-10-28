@@ -25,6 +25,7 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
       learnedEscape:{probability:null,estimatedNotProved:true,outsideTrainingDomain:true,ranking:'public matching habit'}};
   }
   const maxNodes=settings.nodes??512,model=settings.model??frozenModel;
+  const continuationRanking=settings.continuationRanking===true;
   const allowed=legal(game,state),uncertain=new Set(allowed.uncertain??[]),excluded=new Set(primary.provedDeadRoots??[]);
   const candidates=[];let nodes=0;
   // Score the incumbent first so budget exhaustion cannot silently remove it.
@@ -58,6 +59,7 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     const progresses=item=>item.removed>0&&item.state.tray.length<=state.tray.length;
     let progressPrefix=!root.moved.uncertain&&progresses({state:position,removed})?{state:position,path,removed}:null;
     let rootNodes=0;
+    let informationPrefix=null;
     // Known peeks can return to the exact starting state. Such a prefix adds
     // no information and must not smuggle an excluded initial root into a
     // supposedly different route. Keep the parent in each root's visited set.
@@ -67,6 +69,17 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
       const key=identity(item.state);
       if(seen.has(key))continue;seen.add(key);nodes++;rootNodes++;
       const nextAllowed=legal(game,item.state);
+      if(continuationRanking){
+        for(const index of nextAllowed.free){
+          if(Date.now()>=deadline)break;
+          if(nextAllowed.uncertain?.includes(index)||!safeClosedInspection(item.state,index,game.clock,true))continue;
+          // Score the still-unknown inspection from its publicly projected
+          // state. No hypothetical picture is supplied to the model.
+          const probability=Math.min(root.probability,predict(model,publicEscapeFeatures(game,item.state,index,context)));
+          if(!informationPrefix||probability>informationPrefix.probability)informationPrefix={path:[...item.path,index],
+            state:item.state,removed:item.removed,probability};
+        }
+      }
       const nextRoots=nextAllowed.free.filter(i=>!nextAllowed.uncertain?.includes(i)&&item.state.pictures[i]!==null);
       nextRoots.sort((a,b)=>+item.state.tray.includes(item.state.pictures[b])-+item.state.tray.includes(item.state.pictures[a]));
       for(const index of nextRoots){
@@ -83,24 +96,30 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     // actual public clock/availability permits all possible match effects.
     if(root.moved.uncertain&&!safeClosedInspection(state,root.index,game.clock,true))continue;
     if(!found&&progressPrefix)({path,state:position,removed}=progressPrefix);
+    let probability=root.probability,informationBoundary=!!root.moved.uncertain;
+    if(!found&&informationPrefix){({path,state:position,removed,probability}=informationPrefix);informationBoundary=true;}
     // A remembered-picture peek alone is not an out. Q was learned under the
     // earlier follow-up policy; repeatedly selecting its safest-looking peek
     // changes that policy and can cycle forever without new information.
-    if(!found&&!progressPrefix&&!root.moved.uncertain)continue;
-    routes.push({...root,path,position,removed,knownRelief:found,
+    if(!found&&!progressPrefix&&!informationBoundary)continue;
+    routes.push({...root,path,position,removed,probability,informationBoundary,knownRelief:found,
       constructiveProgress:!!progressPrefix||found,rootSearchCapped:rootNodes>=64});
     // Root ranking is fixed by the learned Q. Further lower-ranked routes
     // cannot improve that estimate; caps do not pretend to prove them worse.
-    break;
+    if(!continuationRanking)break;
   }
+  if(continuationRanking)routes.sort((a,b)=>+(preferHabit&&b.preservesTrayHabit)-+(preferHabit&&a.preservesTrayHabit)
+    ||b.probability-a.probability||a.path.length-b.path.length||+(b.index===primary.index)-+(a.index===primary.index));
   const best=routes[0];if(!best)return null;
   const won=best.knownRelief&&!best.position.alive.some(Boolean)&&!best.position.tray.length;
   const clockExit=best.knownRelief&&!!(game.clock&&state.alive[game.clock.i]&&!best.position.alive[game.clock.i]);
   return{index:best.index,path:best.path,goal:'learnedEscapePlan',knownWin:won,knownDead:false,safeClockExit:clockExit,
-    knownProgress:best.removed,information:!!best.moved.uncertain,boundary:!won&&!clockExit,nodes:(primary.nodes??0)+nodes,
+    knownProgress:best.removed,information:!!best.informationBoundary,boundary:!won&&!clockExit,nodes:(primary.nodes??0)+nodes,
     ...(best.pair?{pilePairHabit:{faceDownMember:true,newTraySpots:0,knownPrefixOnly:true}}:{}),
     learnedEscape:{probability:best.probability,horizonPhysicalTaps:12,knownRelief:best.knownRelief,
       constructiveProgress:best.constructiveProgress,rootSearchCapped:best.rootSearchCapped,
+      ...(continuationRanking?{continuationRanking:true,rootProbability:candidates.find(c=>c.index===best.index).probability,
+        scoreMeaning:'Minimum of root Q and projected unknown-inspection Q,when present;heuristic bottleneck estimate,not independent probabilities or a proof'}:{}),
       estimatedNotProved:true,behaviorPolicyEstimate:true,scoredRoots:candidates.length,searchNodes:nodes,
       capped:nodes>=maxNodes||Date.now()>=deadline,modelKind:model.kind}};
 }

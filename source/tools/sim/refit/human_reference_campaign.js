@@ -45,6 +45,7 @@ const { learnedEscapePlan } = require('./public_learned_escape.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
+  assert(options.learnedEscapeContinuationRanking === undefined || typeof options.learnedEscapeContinuationRanking === 'boolean');
   assert(options.openingLearnedEscapePlanning === undefined || typeof options.openingLearnedEscapePlanning === 'boolean');
   assert(!options.openingLearnedEscapePlanning || options.openingConditionalPlanning === true);
   assert(options.openingConditionalPlanning === undefined || typeof options.openingConditionalPlanning === 'boolean');
@@ -513,7 +514,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
               index: retained.plan.path[0], learnedEscape: { ...retained.plan.learnedEscape, retainedKnownPrefix: true } };
           }
           if (!replacement && !protectedPlan) replacement = learnedEscapePlan(geometry, current, initialActions,
-            selected.plan, { roles, knownKeys: keyIdentityMemory?.keys() ?? [] }, { deadline: escapeDeadline });
+            selected.plan, { roles, knownKeys: keyIdentityMemory?.keys() ?? [] },
+            { deadline: escapeDeadline, continuationRanking: options.learnedEscapeContinuationRanking });
           if (replacement) {
             const predicted = advance(geometry, current, replacement.index);
             if (replacement.path.length > 1 && !predicted.uncertain && !predicted.lost) pendingEscapePlan = {
