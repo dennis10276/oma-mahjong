@@ -1,0 +1,86 @@
+diff --git a/source/tools/sim/refit/public_key_identity_memory.js b/source/tools/sim/refit/public_key_identity_memory.js
+index cc3db2c..8146018 100644
+--- a/source/tools/sim/refit/public_key_identity_memory.js
++++ b/source/tools/sim/refit/public_key_identity_memory.js
+@@ -2,10 +2,13 @@
+ const assert = require('assert/strict');
+ const { goalRoutes } = require('./public_goal_routes.js');
+ 
+-function keyPlanningAllowed(game, state, slackAbove) {
++function keyPlanningAllowed(game, state, slackAbove, crowdedAfterClock = false) {
++  assert.equal(typeof crowdedAfterClock, 'boolean');
++  if (crowdedAfterClock) assert(Array.isArray(state.tray));
+   if (slackAbove === undefined) return true;
+   assert(Number.isInteger(slackAbove) && slackAbove >= 0);
+   const clock = game.clock;
++  if (crowdedAfterClock && (!clock || !state.alive[clock.i]) && state.tray.length >= 2 && state.tray.length <= 3) return true;
+   if (!clock || !state.alive[clock.i]) return false;
+   return clock.n - state.moves - goalRoutes(game, state, clock.i).cost > slackAbove;
+ }
+diff --git a/source/tools/sim/refit/human_reference_campaign.js b/source/tools/sim/refit/human_reference_campaign.js
+index 8688909..2e764cb 100644
+--- a/source/tools/sim/refit/human_reference_campaign.js
++++ b/source/tools/sim/refit/human_reference_campaign.js
+@@ -133,6 +133,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
+     'Continuation loss deductions require actual loss memory and the complete public information frontier');
+   assert(options.rememberClearedRoles === undefined || typeof options.rememberClearedRoles === 'boolean');
+   assert(options.rememberKeyIdentities === undefined || typeof options.rememberKeyIdentities === 'boolean');
++  assert(options.keyPlanningCrowdedAfterClock === undefined || typeof options.keyPlanningCrowdedAfterClock === 'boolean');
++  assert(!options.keyPlanningCrowdedAfterClock || options.rememberKeyIdentities === true);
+   assert(options.keyPlanningSlackAbove === undefined || options.rememberKeyIdentities === true
+     && Number.isInteger(options.keyPlanningSlackAbove) && options.keyPlanningSlackAbove >= 0);
+   assert(!options.rememberKeyIdentities || !options.hypothesisSampling,
+@@ -426,7 +428,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
+         const knownKeys = keyIdentityMemory.keys();
+         const keys = [...new Set([...geometry.rules.keys, ...knownKeys])].sort((left, right) => left - right);
+         const publicKeyGame = { tiles: geometry.tiles, nb: geometry.nb, rules: { ...geometry.rules, keys }, clock };
+-        if (keyPlanningAllowed(publicKeyGame, current, options.keyPlanningSlackAbove)) {
++        if (keyPlanningAllowed(publicKeyGame, current, options.keyPlanningSlackAbove, !!options.keyPlanningCrowdedAfterClock)) {
+           geometry.rules.keys = keys;
+           observedKeys = [...new Set([...observedKeys, ...knownKeys])].sort((left, right) => left - right);
+         }
+diff --git a/source/tools/sim/refit/test_public_key_identity_memory.js b/source/tools/sim/refit/test_public_key_identity_memory.js
+index 0884d84..5acc6e1 100644
+--- a/source/tools/sim/refit/test_public_key_identity_memory.js
++++ b/source/tools/sim/refit/test_public_key_identity_memory.js
+@@ -38,6 +38,16 @@ function test() {
+   assert(keyPlanningAllowed(game, position, 40), '41 spare moves, including both known key dependencies, passes');
+   assert(!keyPlanningAllowed(game, { ...position, alive: [0, 1, 1, 1] }, 40));
+   game.clock = null; assert(!keyPlanningAllowed(game, position, 40));
++  for (const count of [0,1,2,3,4]) {
++    const crowded = { ...position, tray:Array(count).fill(1) };
++    assert.equal(keyPlanningAllowed(game,crowded,40,true),count>=2&&count<=3,'Only live crowded states gain post-clock planning; terminal overflow stays inactive');
++    assert.equal(keyPlanningAllowed(game,crowded,40,false),false,'Default gate remains unchanged');
++    game.clock={i:0,n:2};
++    assert.equal(keyPlanningAllowed(game,crowded,40,true),false,'Live tight clocks retain the original priority');
++    assert.equal(keyPlanningAllowed(game,{...crowded,alive:[0,1,1,1]},40,true),count>=2&&count<=3,'A removed public clock admits the same two-feature condition');
++    game.clock=null;
++  }
++  assert.throws(()=>keyPlanningAllowed(game,{...position,tray:[]},40,'yes'));
+   assert(keyPlanningAllowed(game, position), 'An absent gate retains the ungated experimental strategy');
+   assert.throws(() => keyPlanningAllowed(game, position, -1));
+   assert.throws(() => keyPlanningAllowed(game, position, 0.5));
+diff --git a/source/tools/sim/refit/test_human_key_identity_memory.js b/source/tools/sim/refit/test_human_key_identity_memory.js
+index 82743d1..f26a533 100644
+--- a/source/tools/sim/refit/test_human_key_identity_memory.js
++++ b/source/tools/sim/refit/test_human_key_identity_memory.js
+@@ -17,7 +17,8 @@ function test() {
+   const factory = createSessionFactory(), settings = { seed: 1, tapMs: 1000, choiceLimit: 64 };
+   const firstPlans = [];
+   for (const configuration of [{ rememberKeyIdentities: false }, { rememberKeyIdentities: true },
+-    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40 }]) {
++    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40 },
++    { rememberKeyIdentities: true, keyPlanningSlackAbove: 40, keyPlanningCrowdedAfterClock: true }]) {
+     const { rememberKeyIdentities } = configuration;
+     const controller = createHumanController(tiles, { ...configuration, rememberAcceptedTaps: false,
+       rememberClearedRoles: true, keyAccessMacros: true, keyRecoveryMacros: true, retryInformationWitness: true });
+@@ -67,6 +68,9 @@ function test() {
+   }
+   assert.deepEqual(firstPlans[0], firstPlans[1]);
+   assert.deepEqual(firstPlans[0], firstPlans[2]);
++  assert.deepEqual(firstPlans[0], firstPlans[3], 'Empty-tray opening behavior is unchanged');
++  assert.throws(() => createHumanController(tiles, { keyPlanningCrowdedAfterClock:true }));
++  assert.throws(() => createHumanController(tiles, { rememberKeyIdentities:true, keyPlanningCrowdedAfterClock:'yes' }));
+   assert.deepEqual(createHumanController(tiles, { rememberKeyIdentities: true }).keyIdentityEvidence(), []);
+   assert.throws(() => createHumanController(tiles, { rememberKeyIdentities: 'yes' }));
+   assert.throws(() => createHumanController(tiles, { keyPlanningSlackAbove: 40 }));

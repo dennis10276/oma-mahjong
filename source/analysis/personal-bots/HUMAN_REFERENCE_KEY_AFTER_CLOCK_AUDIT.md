@@ -45,3 +45,10 @@ changed code/test files, actor source/profile hashes and fixture evidence.
 All84 main actor files still match the frozen56 source. No actual-policy
 comparisons or timed candidate campaign were run alongside56. No57 allowance
 consumed; five trials57–61 remain. Candidate campaign benefit remains unproven.
+
+The tested four-file change is saved as HUMAN_REFERENCE_KEY_AFTER_CLOCK57.patch.
+git apply --check passes against the pinned working actor without modifying it.
+Raw candidate-key57/patch-audit.json records the patch hash, candidate profile and
+all four original/candidate file hashes. Apply only after56 is terminal and its
+independent audit is complete; then run the full offline suite and actual-history
+comparisons before counting57 as a measured experiment.
