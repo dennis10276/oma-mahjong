@@ -231,3 +231,10 @@ Cleanup/known-relief fallback still applies generally;cone focus remains heurist
 not a necessity certificate.157 tests19s(native23030 exit0),red/green ordering
 fixture. v14 actual52-history replays now live33776/94249/33867 for102/10011/10049.
 Actor frozen;no53 campaign yet.5/8 used,3 remain. Default40 retained.
+
+v14 completed all3 native0;403 taps replayed,zero drift,84 source hashes verified.
+Changes102/10011/10049=1/1/3,max1426.805ms. Source1a14f7965f7b37e0d228da05f005831f439e20e1257da39edd2e4f6851f611ce;
+profile unchanged5b1db6a3… . Clock-order correction now changes102's first3-loss
+window,unlike relief-only version. Counterfactuals do not prove repair. Next
+fresh53 with unchanged fixed42/full159×3 gates;no model refit. No actor processes
+live;5/8 used,3 remain. Auditclock-order-independent-audit-v14.json. Default40.
