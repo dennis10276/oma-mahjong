@@ -16,6 +16,11 @@ function test(){
  assert.equal(learnedEscapePlan(game,single,[{index:0},{index:1}],{index:0,path:[0]}, {},{milliseconds:500}),null);
  const capped=learnedEscapePlan(game,single,[{index:0},{index:1}],{index:0,path:[0]}, {},{milliseconds:500,nodes:0});
  assert.equal(capped,null,'Capped lack of a constructive out falls back;it is not a death proof or permission to cycle');
+ const loopGame={tiles:tiles.slice(0,4),nb:L.neighbors(tiles.slice(0,4)),rules:null,clock:null};
+ const loopState={alive:[1,1,1,1],pictures:[7,8,8,null],down:[1,1,0,1],tray:[1,2,3],moves:0,openPeek:1,relieved:false,arriving:[]};
+ const guarded=learnedEscapePlan(loopGame,loopState,[0,1,2,3].map(index=>({index})),
+  {index:3,path:[3],provedDeadRoots:[2]}, {},{milliseconds:500,nodes:512});
+ assert(guarded&&guarded.index===3,'Do not disguise an excluded root as [known peek,return to original peek,excluded root];choose actual information');
  console.log('PASS learned escape known-singleton cycle regression:every override reaches new information,relief or safe board removal;otherwise retain the original planner without claiming death');
 }
 if(require.main===module)test();module.exports=test;

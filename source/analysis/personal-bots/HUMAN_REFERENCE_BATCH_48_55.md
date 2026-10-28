@@ -112,3 +112,13 @@ unchanged. Independent audit verifies82 sources/519 opening selections and
 replays729 attempts/60706 taps. Slowest1723.493ms. No adoption. Getter-only
 diagnostic33530 now replays actual10049 salt3 to identify the surviving35/49
 loop and route invalidations. Actor frozen during diagnostic;3/8 used,5 remain.
+
+Diagnostic33530 exited0:176 actual taps replayed,zero baseline drift,getter-only
+instrumentation parity. In the loop path[35,49,46]restarts instead of consuming
+pending[46],despite matching physical/knowledge signatures. The prefix35/49
+returns to the exact starting state;root search failed to pre-mark its parent
+visited,allowing an excluded root to hide behind redundant known peeks. New
+generic regression fails before the fix,passes after;154 tests pass19s(native
+31002 exit0). Pre-seed each root's visited set with the complete starting physical
+identity;caps still unknown,models/habit/condition unchanged. Correction unmeasured;
+actual50 salt3 counterfactual replay next,then51 if verified.3/8 used,5 remain.

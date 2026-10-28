@@ -49,6 +49,7 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     ||b.probability-a.probability||+(b.index===primary.index)-+(a.index===primary.index));
   const relief=p=>p.tray.length<state.tray.length
     ||!!(game.clock&&state.alive[game.clock.i]&&!p.alive[game.clock.i]);
+  const identity=p=>JSON.stringify([p.alive,p.tray,p.moves,p.openPeek,p.relieved,p.arriving]);
   const routes=[];
   for(const root of candidates){
     if(Date.now()>=deadline)break;
@@ -57,10 +58,13 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     const progresses=item=>item.removed>0&&item.state.tray.length<=state.tray.length;
     let progressPrefix=!root.moved.uncertain&&progresses({state:position,removed})?{state:position,path,removed}:null;
     let rootNodes=0;
-    const queue=root.moved.uncertain?[]:[{state:position,path,removed}],seen=new Set();
+    // Known peeks can return to the exact starting state. Such a prefix adds
+    // no information and must not smuggle an excluded initial root into a
+    // supposedly different route. Keep the parent in each root's visited set.
+    const queue=root.moved.uncertain?[]:[{state:position,path,removed}],seen=new Set([identity(state)]);
     for(let cursor=0;!found&&cursor<queue.length&&nodes<maxNodes&&rootNodes<64&&Date.now()<deadline;cursor++){
       const item=queue[cursor];if(item.path.length>=12)continue;
-      const key=JSON.stringify([item.state.alive,item.state.tray,item.state.moves,item.state.openPeek,item.state.relieved,item.state.arriving]);
+      const key=identity(item.state);
       if(seen.has(key))continue;seen.add(key);nodes++;rootNodes++;
       const nextAllowed=legal(game,item.state);
       const nextRoots=nextAllowed.free.filter(i=>!nextAllowed.uncertain?.includes(i)&&item.state.pictures[i]!==null);
