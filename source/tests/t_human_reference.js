@@ -15,6 +15,7 @@ const modules = [
   'test_public_learned_escape_progress.js',
   'test_public_opening_escape_condition.js',
   'test_public_escape_information_prefix.js',
+  'test_public_tray_information_guard.js',
   'test_public_pile_pair_habit.js',
   'test_public_action_order.js',
   'test_public_complete_witness.js',

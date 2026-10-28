@@ -1,0 +1,31 @@
+'use strict';
+const assert=require('assert/strict'),L=require('../../../www/layouts.js');
+const {trayInformationGuard}=require('./public_tray_information_guard.js');
+const {createSessionFactory}=require('./production_physical_session.js'),{encodeGame}=require('./personal_game_io.js');
+const {verifyAttempt}=require('./human_reference_campaign.js');
+function test(){
+ const tiles=[{x:0,y:0,z:0},{x:8,y:0,z:0},{x:16,y:0,z:1},{x:16,y:0,z:0},{x:32,y:0,z:0},{x:40,y:0,z:0}];
+ const game={tiles,nb:L.neighbors(tiles),rules:null,clock:null},actual={...game,faces:[1,2,7,7,1,2],down:[0,0,0,1,1,0]};
+ for(const field of ['faces','deck','seed'])Object.defineProperty(game,field,{get(){throw Error('Private '+field);}});
+ const factory=createSessionFactory(),settings={seed:1,tapMs:1000,choiceLimit:32},session=factory(actual,settings);
+ session.tap(0);session.tap(1);const state={...session.view().state,pictures:[1,2,7,null,null,2],down:actual.down.slice()};
+ const bad={index:2,path:[2,3],information:true};
+ const guarded=trayInformationGuard(game,state,bad,{milliseconds:500});assert(guarded&&!guarded.noOverride);
+ assert.equal(guarded.index,4,'Inspect an available unknown at pressure2 before taking a third unmatched tile to expose another');
+ assert(guarded.traySafety.projectedPressure<=2);assert(!guarded.knownDead);
+ for(const index of [4,5,2,3])session.tap(index);assert(session.view().win);
+ assert.equal(verifyAttempt(encodeGame(actual),[0,1,4,5,2,3],settings,session.audit()),6);
+ const flatTiles=tiles.slice(0,3).map((t,i)=>({x:i*8,y:0,z:0})),flat={tiles:flatTiles,nb:L.neighbors(flatTiles),rules:null,clock:null};
+ const crowded={alive:[1,1,1],pictures:[7,7,1],down:[1,1,0],tray:[1,2,3],moves:0,openPeek:-1,relieved:false,arriving:[]};
+ const relief=trayInformationGuard(flat,crowded,{index:0,path:[0,1],information:true},{milliseconds:500});
+ assert.equal(relief.index,2);assert.equal(relief.path.length,1,'At pressure3 restore headroom immediately instead of removing an unrelated pile pair');
+ const small={tiles:tiles.slice(2,4),nb:L.neighbors(tiles.slice(2,4)),rules:null,clock:null};
+ const last={alive:[1,1],pictures:[7,null],down:[0,1],tray:[1,2],moves:0,openPeek:-1,relieved:false,arriving:[]};
+ const fallback=trayInformationGuard(small,last,{index:0,path:[0,1],information:true},{milliseconds:500});
+ assert(fallback.noOverride&&fallback.traySafety.thirdSpotLastResortWithinBudget&&fallback.traySafety.noAlternativeFoundIsNotImpossibility);
+ const capped=trayInformationGuard(small,last,{index:0,path:[0,1],information:true},{nodes:0,milliseconds:500});assert(capped.traySafety.searchCapped);
+ assert.equal(trayInformationGuard(game,state,{...bad,knownWin:true}),null);assert.equal(trayInformationGuard(game,state,{...bad,safeClockExit:true}),null);
+ assert.equal(trayInformationGuard(flat,{...crowded,tray:[2,3]}, {index:0,path:[0,1]}),null,'A known completed pair ending at pressure2 need not be vetoed');
+ factory.verifySource();console.log('PASS third tray spot is last resort for information,pressure3 gets shortest known relief,unknown pictures remain unknown,caps are not proofs and6 winning production taps independently replay');
+}
+if(require.main===module)test();module.exports=test;

@@ -42,9 +42,11 @@ const { survivalBranchSearch } = require('./public_survival_branches.js');
 const { createKnownWitnessPortfolio } = require('./public_known_witness_portfolio.js');
 const { openingPlanningController } = require('./public_opening_planning.js');
 const { learnedEscapePlan } = require('./public_learned_escape.js');
+const { trayInformationGuard } = require('./public_tray_information_guard.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
+  assert(options.avoidThirdTrayInformation === undefined || typeof options.avoidThirdTrayInformation === 'boolean');
   assert(options.learnedEscapeContinuationRanking === undefined || typeof options.learnedEscapeContinuationRanking === 'boolean');
   assert(options.openingLearnedEscapePlanning === undefined || typeof options.openingLearnedEscapePlanning === 'boolean');
   assert(!options.openingLearnedEscapePlanning || options.openingConditionalPlanning === true);
@@ -498,7 +500,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       }
       if (hypothesisVisits) decisionPosition = JSON.stringify(Object.fromEntries(
         ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving'].map(field => [field, current[field]])));
-      const finalize = selected => {
+      const finalizeStrategy = selected => {
         if (options.learnedEscapePlanning) {
           const protectedPlan = selected.plan.knownWin || selected.plan.safeClockExit
             || selected.plan.survivalBranches?.necessaryIfSolvable || selected.plan.deadCertificate?.exhaustedKnownGraph;
@@ -623,6 +625,15 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         return { plan: { index: rankedIndex, path: rankedPath, goal: rankedPath.length > 1 ? 'hypothesisOption' : 'hypothesisChoice', knownWin: false, knownDead: false,
           knownProgress: predicted.uncertain ? 0 : predicted.removed, information: !!predicted.uncertain,
           boundary: true, nodes: selected.plan.nodes + ranking.nodes, hypothesisAudit: audit }, predicted };
+      };
+      const finalize = selected => {
+        const chosen = finalizeStrategy(selected);
+        if (!options.avoidThirdTrayInformation) return chosen;
+        const guarded = trayInformationGuard(geometry,current,chosen.plan,{deadline:escapeDeadline});
+        if (!guarded) return chosen;
+        if (guarded.noOverride) return {...chosen,plan:{...chosen.plan,traySafety:guarded.traySafety}};
+        pendingEscapePlan=null;pendingInformationAction=null;manualChoice=true;resetPlanner();
+        return {plan:guarded,predicted:advance(geometry,current,guarded.index)};
       };
       if (options.probeUnknownClock && clock && current.alive[clock.i] && !planner.report()?.knownWin
         && actions.some(action => action.index === clock.i)) {
