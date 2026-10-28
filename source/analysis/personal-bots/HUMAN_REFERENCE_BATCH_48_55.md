@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:3/8 measured,5 remain;48/49 rejected;conditional50 running. Raw authorization ledger:
+Current:3/8 measured,5 remain;48–50 rejected;50 salt3 cycle under audit. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -104,3 +104,11 @@ verified. Measured50 now running(native22724,3 workers),fixed42 development/salt
 Source e4460f2a0a9df6db69338f40bfacc01b80d191362f2e3c70b6e5fa0ffd7292cd;
 profile78efedcbe84a961c4b056f82cd805b321dc20dca748da0787ff421a004dfbdfc.
 Protocol50 sealed22ef412.3/8 used,5 remain;no actor edits until terminal. Retain40.
+
+50 completed:native22724/all6 workers exit0. Development41 clears/40 targets,
+no regressions;full157 clears/155 targets vs retained158/155.10049=3/4/censored,
+so no full repair and one clearance regression.80/81 remain1/1/1;other targets
+unchanged. Independent audit verifies82 sources/519 opening selections and
+replays729 attempts/60706 taps. Slowest1723.493ms. No adoption. Getter-only
+diagnostic33530 now replays actual10049 salt3 to identify the surviving35/49
+loop and route invalidations. Actor frozen during diagnostic;3/8 used,5 remain.
