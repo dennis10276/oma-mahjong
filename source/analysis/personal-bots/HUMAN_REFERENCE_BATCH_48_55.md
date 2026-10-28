@@ -220,3 +220,14 @@ fallback cleanup/safe information. User's cleanup preference and clock/key
 priority preserved.157 tests19s(native90550 exit0),including key-pair-to-relief
 contrast. v13 actual52-history checks live67086/20128/67383 for102/10011/10049.
 Actor frozen,no53 measured.5/8 used,3 remain. See52_RESULT.md. Default40 retained.
+
+v13 ended all native0:403 taps,zero drift,max1419.759ms.102/10011 first3 losses
+unchanged;10049 changes2. Do not spend53 on known-relief-only version expecting
+102 repair. New generic clock-cone regression shows partial progress elsewhere
+in the same dependency cone can still disrupt the selected route's ordering.
+Correction12b407b allows overriding a clock/key-focused route only with a known
+completed relevant goal,not speculative information/partial cone progress.
+Cleanup/known-relief fallback still applies generally;cone focus remains heuristic,
+not a necessity certificate.157 tests19s(native23030 exit0),red/green ordering
+fixture. v14 actual52-history replays now live33776/94249/33867 for102/10011/10049.
+Actor frozen;no53 campaign yet.5/8 used,3 remain. Default40 retained.

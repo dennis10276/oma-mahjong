@@ -31,3 +31,11 @@ fixture expected the unknown peek instead of the now-preferred known tray match;
 preserve that failure and corrected fixture. No53 measured yet. v13 actual52
 history checks now live on102/10011/10049(67086/20128/67383);actor frozen. These
 compare suggestions,not candidate clears. Full gates still required for adoption.
+
+v13 all native0,403 taps/zero drift/max1419.759ms.102 and10011 first3 physical
+losses unchanged;10049 changes2 suggestions. No53 measurement consumed.
+Following ordering correction12b407b:sharing a clock/key dependency cone is not
+sufficient to replace a selected focused route. Require a constructively completed
+goal for that override. Keep known-relief priority and generally useful cleanup.
+157 tests19s(native23030 exit0);v14 actual52-history replays live33776/94249/33867.
+No candidate clear or adoption inferred from these checks;5/8 used,3 remain.
