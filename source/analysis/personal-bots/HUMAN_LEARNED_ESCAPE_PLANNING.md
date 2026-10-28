@@ -4,7 +4,7 @@ Dennis's additional steering:make the bot plan for the highest chance of an out,
 learned from previous levels it played. Combine this with the new eight-trial
 survival/key-logic authorization48–55. Keep all original repair/no-regression,
 public-information,production-replay and strict2s requirements. Default40 stays
-retained until a candidate passes.48/49 rejected;conditional50 running;3/8 used.
+retained until a candidate passes.48–50 rejected;root-return fix verified;3/8 used.
 
 ## Shared experience without benchmark leakage
 
@@ -198,3 +198,17 @@ Conditional audit complete:91511/all7 workers exit0,562 replayed taps,zero drift
 79 changed suggestions,max1524.922ms,all82 sources verified. Five broken controls
 unchanged;10049 keeps45 changed suggestions. Measured50 now runs(native22724,
 3 workers,fixed42 development/salt1);3/8 used,5 remain. Actor frozen. Default40.
+
+50 full audit rejects adoption:157/159 clears vs158 retained,155 targets unchanged;
+10049=3/4/censored. Independent audit replays729 attempts/60706 taps across both
+scopes,82 source hashes/519 opening selections verified;native22724/all6 exit0.
+Getter-only diagnostic33530 reproduces actual salt3 loop with zero drift:the
+proposed prefix35/49 returns to the exact initial state before trying46. The
+planner did not initially mark its parent visited,so root exclusions could be
+bypassed by redundant known peeks;controller vetoed continuation and restarted.
+Generic regression fails before correctiond582038,passes afterward;154 tests19s.
+Seed each root's visited set with full parent physical identity;no guesses/proofs
+or model weights changed. Replay auditv6:467 taps,zero drift,3 native exits0,
+max534.003ms;salts1/2 unchanged,salt3 changes21 loop suggestions. These are not
+new candidate wins. Salt2 first3 physical losses unchanged:next audit earlier
+key/tray/clock commitments before measuring51.3/8 used,5 remain;default40.

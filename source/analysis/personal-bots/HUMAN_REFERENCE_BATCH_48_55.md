@@ -122,3 +122,12 @@ generic regression fails before the fix,passes after;154 tests pass19s(native
 31002 exit0). Pre-seed each root's visited set with the complete starting physical
 identity;caps still unknown,models/habit/condition unchanged. Correction unmeasured;
 actual50 salt3 counterfactual replay next,then51 if verified.3/8 used,5 remain.
+
+Correctiond582038 replay auditv6 completed on all10049 salts:467 taps independently
+replayed,zero baseline drift,all3 native exits0(75534/53293/80686). Source08fbafbe…,
+82 files verified. Salt1/2 suggestions unchanged; salt3 has21 changes where the
+loop appeared. Max534.003ms. This does not show a candidate clear. In particular,
+salt2's first3 complete physical losses stay unchanged,so do NOT spend51 on this
+cycle fix alone expecting a complete repair. Next audit earlier tray/key/clock
+commitments in those losses and strengthen route safety/clock planning before
+the next measured variant. Keep models/labels frozen;3/8 used,5 remain;default40.
