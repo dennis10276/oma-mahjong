@@ -4,7 +4,7 @@ Dennis's additional steering:make the bot plan for the highest chance of an out,
 learned from previous levels it played. Combine this with the new eight-trial
 survival/key-logic authorization48–55. Keep all original repair/no-regression,
 public-information,production-replay and strict2s requirements. Default40 stays
-retained until a candidate passes. Measured48 is now running;1/8 used,7 remain.
+retained until a candidate passes. Measured48 is rejected;1/8 used,7 remain.
 
 ## Shared experience without benchmark leakage
 
@@ -55,7 +55,7 @@ whether the bot actually improves. Do not simply fit attempt-count thresholds.
 
 ## Foundation verification
 
-152/152 tests pass23s(native28435 exit0). A production fixture at tray3 matches
+153/153 tests pass19s(native21362 exit0). A production fixture at tray3 matches
 two known closed key tiles on the pile,unlocks a waiting tray partner,and clears;
 8 taps independently replay. Features read no private fields or mutate state.
 Horizon-label tests distinguish relief followed by loss,clearance,censoring and
@@ -97,7 +97,7 @@ Validation board-balanced Brier0.017698 vs constant0.018993;log loss0.072650 vs
 transfer evidence;all predictions remain above0.8,so coarse calibration bins
 cannot establish calibration on difficult positions. No benchmark gain claimed.
 Model fit committed dd72ddd;runtime integration2751cef,pile habit12ef793. Measured48
-is running. Frozen experience weights are tracked as public_escape_model_v1.json.
+is rejected. Frozen experience weights are tracked as public_escape_model_v1.json.
 
 ## Candidate runtime behavior
 
@@ -169,4 +169,9 @@ the reproduced singleton-peek cycle cannot recur. Investigate repeated physical
 losses on10041/10032 separately,using actual first-divergence public histories.
 No adopted policy or baseline accuracy changes. Trial48 still running;1/8 used.
 Raw diagnostic:learned-escape-known-peek-cycle-probe-v1.json;actual tails:
-inspect-trial48-repeats.js. Full outcome/independent audit still pending.
+inspect-trial48-repeats.js. Outcome/audit now complete:10/42 clears vs41/42,
+no repairs,30 target/31 clearance regressions,27 alternating-peek censored runs.
+All3 workers/native48101 exit0;102 attempts/15328 taps independently replayed;
+82 frozen sources verified. No full run or adoption. The described correction
+is now implemented,unmeasured,and153 tests pass19s. Actual48-history audit next,
+including repeated physical losses on10041/10032;then authorized49. Default40.

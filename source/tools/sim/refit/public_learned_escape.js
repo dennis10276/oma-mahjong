@@ -54,11 +54,14 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     if(Date.now()>=deadline)break;
     let path=root.pair?.path??[root.index],position=root.pair?.state??root.moved.state??state,removed=root.pair?.removed??root.moved.removed??0;
     let found=!root.moved.uncertain&&(root.moved.win||relief(position));
+    const progresses=item=>item.removed>0&&item.state.tray.length<=state.tray.length;
+    let progressPrefix=!root.moved.uncertain&&progresses({state:position,removed})?{state:position,path,removed}:null;
+    let rootNodes=0;
     const queue=root.moved.uncertain?[]:[{state:position,path,removed}],seen=new Set();
-    for(let cursor=0;!found&&cursor<queue.length&&nodes<maxNodes&&Date.now()<deadline;cursor++){
+    for(let cursor=0;!found&&cursor<queue.length&&nodes<maxNodes&&rootNodes<64&&Date.now()<deadline;cursor++){
       const item=queue[cursor];if(item.path.length>=12)continue;
       const key=JSON.stringify([item.state.alive,item.state.tray,item.state.moves,item.state.openPeek,item.state.relieved,item.state.arriving]);
-      if(seen.has(key))continue;seen.add(key);nodes++;
+      if(seen.has(key))continue;seen.add(key);nodes++;rootNodes++;
       const nextAllowed=legal(game,item.state);
       const nextRoots=nextAllowed.free.filter(i=>!nextAllowed.uncertain?.includes(i)&&item.state.pictures[i]!==null);
       nextRoots.sort((a,b)=>+item.state.tray.includes(item.state.pictures[b])-+item.state.tray.includes(item.state.pictures[a]));
@@ -67,6 +70,7 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
         const moved=advance(game,item.state,index);if(moved.uncertain||moved.lost)continue;
         const next={state:moved.state,path:[...item.path,index],removed:item.removed+moved.removed};
         if(moved.win||relief(next.state)){({path,state:position,removed}=next);found=true;break;}
+        if(!progressPrefix&&progresses(next))progressPrefix=next;
         // Never expand a non-progressing peek repeatedly into a large queue.
         if(queue.length<maxNodes)queue.push(next);
       }
@@ -74,7 +78,13 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     // An unseen closed tile is a safe information boundary only when its
     // actual public clock/availability permits all possible match effects.
     if(root.moved.uncertain&&!safeClosedInspection(state,root.index,game.clock,true))continue;
-    routes.push({...root,path,position,removed,knownRelief:found});
+    if(!found&&progressPrefix)({path,state:position,removed}=progressPrefix);
+    // A remembered-picture peek alone is not an out. Q was learned under the
+    // earlier follow-up policy; repeatedly selecting its safest-looking peek
+    // changes that policy and can cycle forever without new information.
+    if(!found&&!progressPrefix&&!root.moved.uncertain)continue;
+    routes.push({...root,path,position,removed,knownRelief:found,
+      constructiveProgress:!!progressPrefix||found,rootSearchCapped:rootNodes>=64});
     // Root ranking is fixed by the learned Q. Further lower-ranked routes
     // cannot improve that estimate; caps do not pretend to prove them worse.
     break;
@@ -86,6 +96,7 @@ function learnedEscapePlan(game,state,actions,primary,context={},settings={}) {
     knownProgress:best.removed,information:!!best.moved.uncertain,boundary:!won&&!clockExit,nodes:(primary.nodes??0)+nodes,
     ...(best.pair?{pilePairHabit:{faceDownMember:true,newTraySpots:0,knownPrefixOnly:true}}:{}),
     learnedEscape:{probability:best.probability,horizonPhysicalTaps:12,knownRelief:best.knownRelief,
+      constructiveProgress:best.constructiveProgress,rootSearchCapped:best.rootSearchCapped,
       estimatedNotProved:true,behaviorPolicyEstimate:true,scoredRoots:candidates.length,searchNodes:nodes,
       capped:nodes>=maxNodes||Date.now()>=deadline,modelKind:model.kind}};
 }

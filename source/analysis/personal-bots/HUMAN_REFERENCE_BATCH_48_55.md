@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:1/8 measured,7 remain;trial48 development is running. Raw authorization ledger:
+Current:1/8 measured,7 remain;trial48 rejected at development. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -65,6 +65,15 @@ no learned probability is claimed outside the training domain.152 tests pass23s.
 Combined-habit history audit passed(native6659 exit0,all7 workers exit0):1070
 replayed taps,zero baseline drift,528 changed suggestions,max1545.681ms. Current
 82-file source cf3369693c54d75a2e62846008afe3ca4da4d6e65ab4410bfbcf35b152285016
-is frozen for measured48(native48101),three development workers. Catalog refreshed
+was frozen for measured48(native48101),three development workers. Catalog refreshed
 read-only with159 unchanged targets.1/8 used,7 remain;default40 retained. Protocol
 HUMAN_REFERENCE_EXPERIMENT_48.md;full159×3 only after unchanged development qualifier.
+
+Completed48:10/42 clears vs retained41/42,9/42 targets vs39/42;no fixes,30 target
+and31 clearance regressions. Slowest1119.067ms. Native48101/all3 workers exit0;
+independent audit replays102 attempts/15328 taps and verifies82 frozen sources.
+27 censored attempts repeat two known peeks. Public-state probe confirms Q≈0.94
+without relief/removal. Corrected unmeasured prototype now requires information
+or a prefix ending in relief/safe board progress,then tries other roots or uses
+the original planner;caps never imply death. Same model/pile habit.153 tests19s.
+Next history audit,then49. See HUMAN_REFERENCE_EXPERIMENT_48_RESULT.md. Default40.
