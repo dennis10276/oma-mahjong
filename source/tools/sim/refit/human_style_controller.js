@@ -10,11 +10,13 @@ function createStyleController(tiles,profile,seed){
  const p={...profile},random=Layouts.rng(seed),nb=Layouts.neighbors(tiles),iceNb=Layouts.iceNeighbors(tiles);
  let memory=tiles.map(()=>null),roles=tiles.map(()=>null),state,seen,visits=new Map(),attempt=0;
  assert(Number.isInteger(seed));
- const allowed=['clockHorizon','partnerHorizon','clockWeight','clockUrgencyPower','trayCost','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
+ const allowed=['clockHorizon','clockTrayDepth','partnerHorizon','clockWeight','clockUrgencyPower','keyUnlockBelief','trayCost','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
  assert(Object.entries(p).every(([key,value])=>allowed.includes(key)&&Number.isFinite(value)&&value>=0),'Only finite global behavioral parameters are allowed');
  for(const key of ['clockHorizon','partnerHorizon'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4);
- assert(p.trayDepth===undefined||Number.isInteger(p.trayDepth)&&p.trayDepth>=0&&p.trayDepth<=4);
+ assert(p.trayDepth===undefined||Number.isInteger(p.trayDepth)&&p.trayDepth>=0&&p.trayDepth<=6);
+ assert(p.clockTrayDepth===undefined||Number.isInteger(p.clockTrayDepth)&&p.clockTrayDepth>=0&&p.clockTrayDepth<=4);
  assert(p.clockUrgencyPower===undefined||p.clockUrgencyPower>=0&&p.clockUrgencyPower<=2);
+ assert(p.keyUnlockBelief===undefined||p.keyUnlockBelief>=0&&p.keyUnlockBelief<=1);
  for(const key of ['memoryDecay','retryRetention','lapse'])assert(p[key]>=0&&p[key]<=1);
  assert(p.temperature>0&&p.peekPatience>=0);
  function begin(){
@@ -56,7 +58,8 @@ function createStyleController(tiles,profile,seed){
   if(needsKeys)for(let i=0;i<tiles.length;i++)
    if(alive[i]&&roles[i]==='key')attract(i,p.clockHorizon,p.clockWeight*.8);
   const signature=alive.join('')+'|'+tray.join(',');
-  const future=p.trayDepth?trayHorizon(tiles,nb,state,seen,memory,roles,p.trayDepth):new Map();
+  const depth=clock?Math.min(p.trayDepth??0,p.clockTrayDepth??4):p.trayDepth;
+  const future=depth?trayHorizon(tiles,nb,state,seen,memory,roles,depth,{keyUnlockBelief:p.keyUnlockBelief??0}):new Map();
   const scored=legal.map(i=>{
    const face=memory[i],down=seen.down[i]===1,peek=down&&openPeek!==i;
    const trayMatch=face!==null&&tray.includes(face);

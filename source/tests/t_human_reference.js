@@ -34,6 +34,7 @@ const modules = [
   'test_human_level_measure.js',
   'test_human_style.js',
   'test_human_style_immediate_outs.js',
+  'test_human_style_key_experience.js',
   'test_human_style_parallel.js',
   'test_human_level_evaluation.js',
   'test_human_track_a_benchmark.js',

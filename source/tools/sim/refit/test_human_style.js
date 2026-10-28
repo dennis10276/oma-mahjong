@@ -67,7 +67,7 @@ function test(){
  const horizon=trayHorizon(tiles,Layouts.neighbors(tiles),s,o,o.pictures,o.roles,3);
  assert([...horizon.values()].every(Number.isFinite));
  assert.equal(JSON.stringify({s,o}),before,'Thinking must not mutate the real observation');
- assert.throws(()=>trayHorizon(tiles,Layouts.neighbors(tiles),s,o,o.pictures,o.roles,5));
+ assert.throws(()=>trayHorizon(tiles,Layouts.neighbors(tiles),s,o,o.pictures,o.roles,7));
  const blocked=createStyleController(tiles.slice(0,4),{...profiles.Dennis,outWeight:9,trayDepth:0,lapse:0,temperature:.01},71);
  blocked.beginAttempt();blocked.observe({...s,alive:[1,1,1,1]},
   {pictures:[7,1,2,7],roles:['none','none','none','lock'],down:[0,0,0,0],takeable:[true,true,true,false],clock:null});
@@ -126,6 +126,23 @@ function test(){
   'A closed member permits an on-pile pair with three occupied tray slots');
  assert(!certainlyTrappedAfterTake(exitsTiles,exitNb,exitIce,exitState,{...exitPacket,pictures:[1,null,2,7]},[1,null,2,7],exitPacket.roles,0),
   'An unknown available picture is uncertainty, never a proven dead end');
+ const keyPacket={pictures:[1,2,2],roles:['none','key','lock'],down:[0,0,0],takeable:[true,true,false],clock:null};
+ const keyBefore=JSON.stringify({triState,keyPacket}),keyNb=Layouts.neighbors(triple);
+ const certain=trayHorizon(triple,keyNb,triState,keyPacket,keyPacket.pictures,keyPacket.roles,3).get(0);
+ const belief=trayHorizon(triple,keyNb,triState,keyPacket,keyPacket.pictures,keyPacket.roles,3,{keyUnlockBelief:.8});
+ assert.equal(certain,12);assert(Math.abs(belief.get(0)-17.6)<1e-9,'Expected unlocking must be probability weighted, not treated as certain');
+ assert(!belief.has(2),'Imagined unlocking must never expose a locked root action');
+ assert.equal(JSON.stringify({triState,keyPacket}),keyBefore,'Beliefs must not mutate observed roles or pictures');
+ assert.equal(trayHorizon(triple,keyNb,triState,{...keyPacket,pictures:[1,2,null]},[1,2,null],keyPacket.roles,3,{keyUnlockBelief:1}).get(0),12,
+  'Even a strong key belief cannot supply the concealed lock picture');
+ const clockLimited={...o,clock:{i:0,n:12,remaining:12}};
+ const decisionsByDepth=[3,6].map(trayDepth=>{
+  const c=createStyleController(tiles,{...profiles.Dennis,trayDepth,clockTrayDepth:3,lapse:0},42);
+  c.beginAttempt();c.observe(s,clockLimited);return c.decide();
+ });
+ assert.deepEqual(decisionsByDepth[0],decisionsByDepth[1],'Longer post-clock pair plans must not extend the clock planning horizon');
+ const beam=trayHorizon(tiles,Layouts.neighbors(tiles),s,o,o.pictures,o.roles,6);
+ assert([...beam.values()].every(value=>value===24),'A bounded six-tap plan can complete three known pairs on a tiny fully observed board');
  console.log('PASS human-style stochastic choices, forgetting, public-only API, replay, phase accounting and no free retry at computational cap');
 }
 if(require.main===module)test();module.exports=test;
