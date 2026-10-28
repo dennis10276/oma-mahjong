@@ -31,3 +31,11 @@ The preparer58-combination exists but is unexecuted. Do not launch a numbered
 campaign merely because a different policy differs on57's failed trajectory;
 check that there is an actual target-window intervention against retained40.
 Four measured trials58–61 remain. No62. Default40 and all completion gates remain.
+
+Both direct sessions completed exit0. Compared362 actual40 taps:10011 changes6,
+86 salt3 changes3;zero drift,independent replay and maximum1500.374ms. The target
+audit pins both raw-file hashes and source/profile, and its hash is sealed into
+the dispatcher state. Fresh58 is now running(native70376),45 development boards
+on the refreshed162-board catalog. Source42137331e1bd…,profile09c98ae97215…,
+84 source files archived. All code stays frozen until terminal. Three trials59–61
+remain after launch;no62. A repair/adoption is still unproven.
