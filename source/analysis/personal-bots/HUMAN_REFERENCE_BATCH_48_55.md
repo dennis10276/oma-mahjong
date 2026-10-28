@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:2/8 measured,6 remain;48/49 rejected;conditional50 prototype under audit. Raw authorization ledger:
+Current:3/8 measured,5 remain;48/49 rejected;conditional50 running. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -96,3 +96,11 @@ opening clock20–40 AND visible locks<=4. Coverage80/81/10049/10052 in159 openi
 Conditional prototype1572f73 preserves40 families/model weights/pile habit;154
 tests pass19s. Native91511 now compares its choices on10049/10052 and five broken
 controls. Actor frozen;no50 measurement yet,2/8 used,6 remain. See49_RESULT.md.
+
+Conditional audit91511/all7 workers exit0:562 taps replayed,zero baseline drift,
+79 changed suggestions,max1524.922ms. All five excluded broken controls have zero
+changes;10049 retains45 changed suggestions,10052 has34. All82 source hashes
+verified. Measured50 now running(native22724,3 workers),fixed42 development/salt1.
+Source e4460f2a0a9df6db69338f40bfacc01b80d191362f2e3c70b6e5fa0ffd7292cd;
+profile78efedcbe84a961c4b056f82cd805b321dc20dca748da0787ff421a004dfbdfc.
+Protocol50 sealed22ef412.3/8 used,5 remain;no actor edits until terminal. Retain40.

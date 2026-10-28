@@ -4,7 +4,7 @@ Dennis's additional steering:make the bot plan for the highest chance of an out,
 learned from previous levels it played. Combine this with the new eight-trial
 survival/key-logic authorization48–55. Keep all original repair/no-regression,
 public-information,production-replay and strict2s requirements. Default40 stays
-retained until a candidate passes.48/49 rejected;conditional50 under audit;2/8 used.
+retained until a candidate passes.48/49 rejected;conditional50 running;3/8 used.
 
 ## Shared experience without benchmark leakage
 
@@ -193,3 +193,8 @@ controls,and requires fresh fixed42/full159×3 validation. No per-level selector
 Prototype1572f73 latches this selection,retains40 families and unchanged model;
 154 tests pass19s. Native91511 now audits seven actual retained40 histories.
 No measured50 yet;2/8 used,6 remain. Default40 retained;A/B/unseen20 unmet.
+
+Conditional audit complete:91511/all7 workers exit0,562 replayed taps,zero drift,
+79 changed suggestions,max1524.922ms,all82 sources verified. Five broken controls
+unchanged;10049 keeps45 changed suggestions. Measured50 now runs(native22724,
+3 workers,fixed42 development/salt1);3/8 used,5 remain. Actor frozen. Default40.
