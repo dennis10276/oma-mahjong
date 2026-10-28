@@ -7,7 +7,7 @@ bad habit. You almost never want to do this only if its the only plausible path"
 
 Candidate flag avoidThirdTrayInformation applies globally,independently of the
 two-feature opening condition for learned Q. Default40 remains retained until
-the fixed42/full159×3 repair/no-regression/<2s gates pass. No measured51 yet.
+the fixed42/full159×3 repair/no-regression/<2s gates pass. Measured51 now running.
 
 Before a prefix reaches pressure3 before unknown information,search public known
 prefixes for an alternative ending at pressure<=2:a safe unknown closed inspection,
@@ -38,3 +38,10 @@ a sole known information route,keep proofs and mark caps unknown.
 v8 real-history comparisons now live against frozen50:10049 salt2(native35123),
 10011 salt1(29656),86 salt3(60012). Source frozen. Suggestions are not wins. Then
 audit and count51 only on campaign start.3/8 used,5 remain;A/B/unseen20 unmet.
+
+Completed controls:431 taps,zero drift,83 source hashes,max1452.581ms. Native
+35123/29656 exit0;the first86 comparator60012 failed because truncating a prior
+attempt left its retry agenda open. Preserve failure;fixed complete-attempt86
+comparison58660 exits0. No bot campaign ran during these checks. Measured51 now
+running native27334,three workers,fixed42 development/salt1 then unchanged full
+qualification. Protocol2ba43f8;4/8 used,4 remain. Actor frozen;default40 retained.

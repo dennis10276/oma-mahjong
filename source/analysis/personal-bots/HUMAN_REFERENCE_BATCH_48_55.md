@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:3/8 measured,5 remain;48–50 rejected;50 salt3 cycle under audit. Raw authorization ledger:
+Current:4/8 measured,4 remain;48–50 rejected;51 running. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -160,3 +160,13 @@ Preserve wins/clock exits/necessary routes.156 tests19s(native62968 exit0),inclu
 6 independently replayed production taps. See HUMAN_THIRD_TRAY_LAST_RESORT.md.
 v8 actual50-history comparisons live:35123(10049 salt2),29656(10011 salt1),60012
 (86 salt3). Actor frozen,no51 campaign yet;3/8 used,5 remain,default40 retained.
+
+Guard preflight completed:431 taps,zero drift,max1452.581ms,83 source hashes
+verified. Usable natives35123/29656/58660 exit0.60012 exit1 is preserved:truncated
+86 attempt left its retry agenda open;v9 complete-attempt comparator fixes this
+harness error. No measured variant consumed by that diagnostic. Candidate changes
+10049/10011/86 suggestions28/11/3;not proof of clears. Measured51 now running
+(native27334,3 workers),same fixed42 development/salt1 and unchanged qualifier.
+Source7be2d99caee29381a02d002fe1f05009b1e64d468432a74b9d0f93109d52550d;
+profile74aed52003951c0dbc2808adee524ff6320d7a7d59f36d747cb2b88eb74fbf9d.
+Protocol2ba43f8;4/8 used,4 remain. No actor edits until terminal. Default40 retained.
