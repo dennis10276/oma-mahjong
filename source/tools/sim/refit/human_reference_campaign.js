@@ -138,6 +138,10 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.keyPlanningBeforeCrowding === undefined || typeof options.keyPlanningBeforeCrowding === 'boolean');
   assert(!options.keyPlanningBeforeCrowding || options.rememberKeyIdentities === true);
   assert(!options.keyPlanningCrowdedAfterClock || !options.keyPlanningBeforeCrowding);
+  assert(options.keyAwareTrayRecovery === undefined || typeof options.keyAwareTrayRecovery === 'boolean');
+  assert(!options.keyAwareTrayRecovery || options.keyPlanningCrowdedAfterClock === true);
+  assert(!options.keyAwareTrayRecovery || !options.avoidThirdTrayInformation,
+    'Choose conditional key-aware or global tray recovery explicitly');
   assert(options.keyPlanningSlackAbove === undefined || options.rememberKeyIdentities === true
     && Number.isInteger(options.keyPlanningSlackAbove) && options.keyPlanningSlackAbove >= 0);
   assert(!options.rememberKeyIdentities || !options.hypothesisSampling,
@@ -643,7 +647,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const resumed=cleanupIntention?.propose(geometry,current,selected.plan,cleanupKnowledge());
         if(resumed){manualChoice=true;resetPlanner();pendingEscapePlan=null;pendingInformationAction=null;}
         const chosen = resumed?{plan:resumed,predicted:advance(geometry,current,resumed.index)}:finalizeStrategy(selected);
-        if (!options.avoidThirdTrayInformation) return chosen;
+        const keyAwareRecovery=options.keyAwareTrayRecovery&&(!clock||!current.alive[clock.i])&&current.tray.length>=2;
+        if (!options.avoidThirdTrayInformation&&!keyAwareRecovery) return chosen;
         const guarded = trayInformationGuard(geometry,current,chosen.plan,
           {deadline:escapeDeadline,knownKeys:keyIdentityMemory?.keys()??[],preserveClockSlack:!!options.trayGuardClockSlack});
         if (!guarded) return chosen;
