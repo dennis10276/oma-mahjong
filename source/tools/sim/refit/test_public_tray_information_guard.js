@@ -11,10 +11,10 @@ function test(){
  session.tap(0);session.tap(1);const state={...session.view().state,pictures:[1,2,7,null,null,2],down:actual.down.slice()};
  const bad={index:2,path:[2,3],information:true};
  const guarded=trayInformationGuard(game,state,bad,{milliseconds:500});assert(guarded&&!guarded.noOverride);
- assert.equal(guarded.index,4,'Inspect an available unknown at pressure2 before taking a third unmatched tile to expose another');
+ assert.equal(guarded.index,5,'A known waiting tray match is even better than a safe unknown inspection or third-slot commitment');
  assert(guarded.traySafety.projectedPressure<=2);assert(!guarded.knownDead);
- for(const index of [4,5,2,3])session.tap(index);assert(session.view().win);
- assert.equal(verifyAttempt(encodeGame(actual),[0,1,4,5,2,3],settings,session.audit()),6);
+ for(const index of [5,4,2,3])session.tap(index);assert(session.view().win);
+ assert.equal(verifyAttempt(encodeGame(actual),[0,1,5,4,2,3],settings,session.audit()),6);
  const flatTiles=tiles.slice(0,3).map((t,i)=>({x:i*8,y:0,z:0})),flat={tiles:flatTiles,nb:L.neighbors(flatTiles),rules:null,clock:null};
  const crowded={alive:[1,1,1],pictures:[7,7,1],down:[1,1,0],tray:[1,2,3],moves:0,openPeek:-1,relieved:false,arriving:[]};
  const relief=trayInformationGuard(flat,crowded,{index:0,path:[0,1],information:true},{milliseconds:500});
@@ -40,6 +40,10 @@ function test(){
  const keyOut=trayInformationGuard(keyed,keyState,{index:0,path:[0],information:true},{milliseconds:500});
  assert(keyOut&&!keyOut.noOverride);assert.equal(keyOut.path.length,3);assert(keyOut.path.includes(2));
  assert.equal(keyOut.traySafety.projectedPressure,2,'Continue the zero-slot key pair until it unlocks genuine waiting-tray relief');
+ const reliefState={...keyState,tray:[1,2],pictures:[null,100,100,1,8],down:[1,1,1,0,0]};
+ const reliefGame={...keyed,rules:{...keyed.rules,keys:[1,2],locks:new Set([3])}};
+ const deeper=trayInformationGuard(reliefGame,reliefState,{index:4,path:[4],information:true},{milliseconds:500});
+ assert([1,2].includes(deeper.index),'Prefer known key-pair-to-tray relief over an immediately available unknown peek');
  factory.verifySource();console.log('PASS third tray spot is last resort for information,pressure3 gets shortest known relief,unknown pictures remain unknown,caps are not proofs and6 winning production taps independently replay');
 }
 if(require.main===module)test();module.exports=test;

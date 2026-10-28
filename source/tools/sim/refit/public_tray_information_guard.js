@@ -24,7 +24,7 @@ function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,mi
   ||[...g.route.frontier].some(i=>state.alive[i]&&!item.state.alive[i])
   ||item.informationIndex!==undefined&&g.route.frontier.has(item.informationIndex));
  const excluded=new Set(primary.provedDeadRoots??[]);
- const queue=[{state,path:[],removed:0}],seen=new Set();let expanded=0,depthCapped=false;
+ const queue=[{state,path:[],removed:0}],seen=new Set();let expanded=0,depthCapped=false,fallback=null;
  const identity=p=>JSON.stringify([p.alive,p.tray,p.moves,p.openPeek,p.relieved,p.arriving]);
  const report=(item,information)=>({index:item.path[0],path:item.path,goal:state.tray.length===3?'restoreTrayHeadroom':'avoidThirdSpotInformation',
   knownWin:!item.state.alive.some(Boolean)&&!item.state.tray.length,knownDead:false,safeClockExit:false,
@@ -42,7 +42,7 @@ function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,mi
    const moved=advance(game,position,index),path=[...item.path,index];
    if(moved.uncertain){
     if(state.tray.length<=2&&position.tray.length<=2&&safeClosedInspection(position,index,game.clock,true)
-      &&goalProgress({...item,informationIndex:index}))return report({...item,path},true);
+      &&goalProgress({...item,informationIndex:index})&&!fallback)fallback={item:{...item,path},information:true};
     continue;
    }
    if(moved.lost)continue;
@@ -55,13 +55,18 @@ function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,mi
     // clock/key route over unrelated cleanup;the dependency cone is a planning
     // preference,never a necessity or impossibility certificate.
     if(goalProgress(next)&&(next.removed>0||gained.length||clockExit||moved.win)){
-     const result=report(next,!!gained.length);
-     result.safeClockExit=clockExit;result.traySafety.realOut=true;return result;
+     if(moved.state.tray.length<state.tray.length||clockExit||moved.win){
+      const result=report(next,!!gained.length);
+      result.safeClockExit=clockExit;result.traySafety.realOut=true;return result;
+     }
+     if(!fallback)fallback={item:next,information:!!gained.length};
     }
    }
    if(queue.length<nodes)queue.push(next);
   }
  }
+ if(fallback){const result=report(fallback.item,fallback.information);
+  result.traySafety.searchedKnownReliefFirst=true;result.traySafety.searchCapped=expanded>=nodes||depthCapped||Date.now()>=deadline;return result;}
  return {noOverride:true,traySafety:{startingPressure:state.tray.length,projectedPressure:pressure,
   thirdSpotLastResortWithinBudget:true,searchNodes:expanded,
   searchCapped:expanded>=nodes||queue.length>=nodes||depthCapped||Date.now()>=deadline,
