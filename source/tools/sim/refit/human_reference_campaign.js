@@ -41,8 +41,10 @@ const { safeClosedInspection } = require('./public_safe_closed_inspection.js');
 const { survivalBranchSearch } = require('./public_survival_branches.js');
 const { createKnownWitnessPortfolio } = require('./public_known_witness_portfolio.js');
 const { openingPlanningController } = require('./public_opening_planning.js');
+const { learnedEscapePlan } = require('./public_learned_escape.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
+  assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
   assert(options.openingConditionalPlanning === undefined || typeof options.openingConditionalPlanning === 'boolean');
   assert(options.openingReusablePlanning === undefined || typeof options.openingReusablePlanning === 'boolean');
   assert(!options.openingReusablePlanning || options.openingConditionalPlanning === true);
@@ -245,6 +247,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let decisionPosition = null;
   let observedTakeable = null, observedAliveKey = null, observedArrivingKey = null;
   let pendingInformationAction = null;
+  let pendingEscapePlan = null;
   const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles, ...typedKeyKnowledge() });
   const physicalSignature = position => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
     .map(field => position[field]));
@@ -333,6 +336,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       if (options.hypothesisSampling) episodes.push({ actions: [], frames: [] });
       hypothesisVisits?.beginAttempt(); decisionPosition = null;
       pendingInformationAction = null;
+      pendingEscapePlan = null;
       resetPlanner();
     },
     observe(state, observed) {
@@ -468,6 +472,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       else delete geometry.publicInformationExposure;
     },
     decide() {
+      const escapeDeadline = Date.now() + 1900;
       decisionDeadline = options.hypothesisSampling ? Date.now() + (options.informationSampling ? 1300 : 1500) : Infinity;
       const available = geometry.publicFrontier(current);
       let actions = publicActionOrder(available.free.map(index => ({ index })), options.publicActionSalt ?? 1);
@@ -491,6 +496,30 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       if (hypothesisVisits) decisionPosition = JSON.stringify(Object.fromEntries(
         ['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving'].map(field => [field, current[field]])));
       const finalize = selected => {
+        if (options.learnedEscapePlanning) {
+          const protectedPlan = selected.plan.knownWin || selected.plan.safeClockExit
+            || selected.plan.survivalBranches?.necessaryIfSolvable || selected.plan.deadCertificate?.exhaustedKnownGraph;
+          const retained = pendingEscapePlan; pendingEscapePlan = null;
+          let replacement = null;
+          if (!protectedPlan && retained?.expected === physicalSignature(current)
+            && retained.knowledge === informationSignature()
+            && initialActions.some(action => action.index === retained.plan.path[0])
+            && !available.uncertain.includes(retained.plan.path[0])
+            && !selected.plan.provedDeadRoots?.includes(retained.plan.path[0])) {
+            const moved = advance(geometry, current, retained.plan.path[0]);
+            if (!moved.uncertain && !moved.lost) replacement = { ...retained.plan,
+              index: retained.plan.path[0], learnedEscape: { ...retained.plan.learnedEscape, retainedKnownPrefix: true } };
+          }
+          if (!replacement && !protectedPlan) replacement = learnedEscapePlan(geometry, current, initialActions,
+            selected.plan, { roles, knownKeys: keyIdentityMemory?.keys() ?? [] }, { deadline: escapeDeadline });
+          if (replacement) {
+            const predicted = advance(geometry, current, replacement.index);
+            if (replacement.path.length > 1 && !predicted.uncertain && !predicted.lost) pendingEscapePlan = {
+              expected: physicalSignature(predicted.state), knowledge: informationSignature(),
+              plan: { ...replacement, path: replacement.path.slice(1) } };
+            manualChoice = true; resetPlanner(); selected = { plan: replacement, predicted };
+          }
+        }
         if (options.informationSampling && selected.plan.knownDead && selected.plan.deadCertificate?.exhaustedKnownGraph) return selected;
         if (!options.hypothesisSampling || !options.informationSampling && (selected.plan.knownWin || selected.plan.safeClockExit
           || selected.plan.knownDead || current.tray.length < 2) || !current.pictures.some((picture, index) => current.alive[index] && picture === null)
