@@ -148,3 +148,25 @@ source hashes verified independently. Actual48 now runs fixed42 development
 salt1(native48101,3 workers),then the unchanged qualifier/full159 salts1–3.
 No adoption or repaired-target claim yet;default40 retained. Raw protocol and
 trial artifacts are separate from the completed experience/model fit evidence.
+
+## Trial48 investigation while frozen development completes
+
+Early completed boards show severe regressions,including unresolved512-tap
+cycles:10011 alternates41/40,10052 alternates60/61,49 alternates56/5. Preserve
+the whole fixed42 run;do not modify actor files while workers remain live.
+Independent synthetic public-state probe reproduces the mechanism:remembered
+closed singletons alternate with learned P≈0.94,knownRelief:false,removed:0.
+The model's earlier-policy estimate was wrongly allowed to rank a bare known
+peek as a route. No new picture,board removal or tray/clock relief follows.
+
+Next correction AFTER native48101 terminates:do not discard the shared critic
+or pile habit on this first failure. Require an override to construct a public
+prefix ending in relief or real board progress without increased tray pressure,
+or an actual new-information boundary. Search another eligible root if the
+highest-scored root has no such prefix;caps stay unknown and fall back to the
+retained planner,never to repeating a known peek. Add a regression test proving
+the reproduced singleton-peek cycle cannot recur. Investigate repeated physical
+losses on10041/10032 separately,using actual first-divergence public histories.
+No adopted policy or baseline accuracy changes. Trial48 still running;1/8 used.
+Raw diagnostic:learned-escape-known-peek-cycle-probe-v1.json;actual tails:
+inspect-trial48-repeats.js. Full outcome/independent audit still pending.
