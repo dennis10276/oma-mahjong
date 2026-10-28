@@ -44,6 +44,11 @@ function test(){
  const reliefGame={...keyed,rules:{...keyed.rules,keys:[1,2],locks:new Set([3])}};
  const deeper=trayInformationGuard(reliefGame,reliefState,{index:4,path:[4],information:true},{milliseconds:500});
  assert([1,2].includes(deeper.index),'Prefer known key-pair-to-tray relief over an immediately available unknown peek');
+ const goalTiles=[{x:0,y:0,z:1},{x:0,y:0,z:0},{x:0,y:0,z:1},{x:8,y:0,z:0}];
+ const clocked={tiles:goalTiles,nb:L.neighbors(goalTiles),rules:null,clock:{i:1,n:20}};
+ const branch={alive:[1,1,1,1],pictures:[8,null,7,7],down:[0,1,0,1],tray:[1,2],moves:0,openPeek:3,relieved:false,arriving:[]};
+ const kept=trayInformationGuard(clocked,branch,{index:0,path:[0,2,1],information:true},{milliseconds:500});
+ assert(kept.noOverride,'Partial progress elsewhere in the clock cone is not a reason to replace the selected clock-route ordering');
  factory.verifySource();console.log('PASS third tray spot is last resort for information,pressure3 gets shortest known relief,unknown pictures remain unknown,caps are not proofs and6 winning production taps independently replay');
 }
 if(require.main===module)test();module.exports=test;

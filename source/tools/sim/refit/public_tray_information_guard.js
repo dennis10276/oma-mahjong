@@ -20,9 +20,9 @@ function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,mi
  deadline=Math.min(deadline,Date.now()+milliseconds);
  const targets=[...new Set([...(game.clock&&state.alive[game.clock.i]?[game.clock.i]:[]),...knownKeys.filter(i=>state.alive[i])])];
  const focused=targets.map(index=>({index,route:goalRoutes(game,state,index)})).filter(g=>g.route.frontier.has(primary.index));
- const goalProgress=item=>!focused.length||focused.some(g=>!item.state.alive[g.index]
-  ||[...g.route.frontier].some(i=>state.alive[i]&&!item.state.alive[i])
-  ||item.informationIndex!==undefined&&g.route.frontier.has(item.informationIndex));
+ // Sharing a dependency cone does not preserve a selected route's ordering.
+ // Only a constructive completed goal justifies overriding clock/key focus.
+ const goalProgress=item=>!focused.length||focused.some(g=>!item.state.alive[g.index]);
  const excluded=new Set(primary.provedDeadRoots??[]);
  const queue=[{state,path:[],removed:0}],seen=new Set();let expanded=0,depthCapped=false,fallback=null;
  const identity=p=>JSON.stringify([p.alive,p.tray,p.moves,p.openPeek,p.relieved,p.arriving]);
@@ -31,7 +31,7 @@ function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,mi
   knownProgress:item.removed,information,boundary:true,nodes:(primary.nodes??0)+expanded,
   traySafety:{startingPressure:state.tray.length,projectedPressure:item.state.tray.length,searchNodes:expanded,
    returnsToAtMostTwo:true,shortestKnownTapPrefix:true,unknownPicturesNeverAssumed:true,
-   clockOrKeyRoutePriority:!!focused.length,routeConeIsHeuristicNotNecessityProof:true}});
+   clockOrKeyRoutePriority:!!focused.length,completedGoalRequiredForOverride:!!focused.length,routeConeIsHeuristicNotNecessityProof:true}});
  for(let cursor=0;cursor<queue.length&&expanded<nodes&&Date.now()<deadline;cursor++){
   const item=queue[cursor],position=item.state,key=identity(position);if(seen.has(key))continue;seen.add(key);expanded++;
   if(item.path.length>=12){depthCapped=true;continue;}
