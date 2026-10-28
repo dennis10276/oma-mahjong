@@ -225,3 +225,9 @@ multiple eligible root routes within512 nodes/70ms,protect pile-pair priority,
 clock/win proofs and exact-parent cycle exclusion. Never invent the unknown face.
 155 tests pass19s(native29714 exit0). v7 comparisons now live on all10049 salts
 (53321/18275/87394);actor frozen. No measured51 or candidate win claim.3/8 used.
+
+v7 finished:all3 native0,467 taps replayed,zero drift,82 source hashes verified.
+Changes35/20/36 across salts1/2/3,max580.169ms. Early salt2 choices now differ;
+this is not clearance evidence. Next selected80/81 and52 history controls,then
+fresh51 measurement under unchanged fixed42/full159×3/repair/no-regression gates.
+No campaign currently live.3/8 used,5 remain;default40 retained. Sourceebcb5304….

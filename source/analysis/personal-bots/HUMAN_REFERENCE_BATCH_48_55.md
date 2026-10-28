@@ -144,3 +144,10 @@ No imagined pictures or benchmark refit.155 tests pass19s(native29714 exit0).
 v7 actual50-history comparisons on10049 salts1/2/3 now live:53321/18275/87394.
 Actor frozen;no measured51 yet,3/8 used,5 remain;default40. This is a route-
 ranking prototype,not evidence of a candidate clear or calibrated probability.
+
+v7 completed:53321/18275/87394 all native0;467 taps replayed,zero baseline drift,
+82 sources verified. Salt1/2/3 changed suggestions35/20/36,max580.169ms. Unlike
+cycle-only fix,this changes the earlier salt2 losses. No candidate campaign played.
+Sourceebcb530432037db468c4d5a1ff7e33c96948fff09c0918452b9f877e565e5962.
+Next audit selected80/81 controls and52,then count measured51 only on campaign
+start. All owned diagnostics terminal;no actor campaign live.3/8 used,5 remain.
