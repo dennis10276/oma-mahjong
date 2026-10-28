@@ -629,7 +629,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       const finalize = selected => {
         const chosen = finalizeStrategy(selected);
         if (!options.avoidThirdTrayInformation) return chosen;
-        const guarded = trayInformationGuard(geometry,current,chosen.plan,{deadline:escapeDeadline});
+        const guarded = trayInformationGuard(geometry,current,chosen.plan,
+          {deadline:escapeDeadline,knownKeys:keyIdentityMemory?.keys()??[]});
         if (!guarded) return chosen;
         if (guarded.noOverride) return {...chosen,plan:{...chosen.plan,traySafety:guarded.traySafety}};
         pendingEscapePlan=null;pendingInformationAction=null;manualChoice=true;resetPlanner();

@@ -30,7 +30,10 @@ function test(){
  unrelated.nb=L.neighbors(unrelated.tiles);
  const idle={alive:[1,1,1,1],pictures:[8,null,7,7],down:[0,1,1,0],tray:[1,2],moves:0,openPeek:2,relieved:false,arriving:[]};
  const idleResult=trayInformationGuard(unrelated,idle,{index:0,path:[0,1],information:true},{milliseconds:500});
- assert(idleResult.noOverride,'An unrelated zero-slot pair with no new information or headroom is not an escape from the only useful information route');
+ assert(!idleResult.noOverride&&idleResult.knownProgress===2,'Unrelated zero-slot cleanup is useful even without new information');
+ const urgent={...unrelated,clock:{i:1,n:20}};
+ const priority=trayInformationGuard(urgent,idle,{index:0,path:[0,1],information:true},{milliseconds:500});
+ assert(priority.noOverride&&priority.traySafety.clockOrKeyRoutePriority,'Unrelated cleanup must not replace the selected route toward the public clock');
  const keyTiles=Array.from({length:5},(_,i)=>({x:i*8,y:0,z:0}));
  const keyed={tiles:keyTiles,nb:L.neighbors(keyTiles),clock:null,rules:{ice:{},iceNb:L.iceNeighbors(keyTiles),keys:[0,1],locks:new Set([2,3,4])}};
  const keyState={alive:[1,1,1,1,1],pictures:[100,100,1,2,3],down:[1,1,0,0,0],tray:[1,2,3],moves:0,openPeek:-1,relieved:false,arriving:[]};
