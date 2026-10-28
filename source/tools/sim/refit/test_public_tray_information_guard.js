@@ -49,6 +49,18 @@ function test(){
  const branch={alive:[1,1,1,1],pictures:[8,null,7,7],down:[0,1,0,1],tray:[1,2],moves:0,openPeek:3,relieved:false,arriving:[]};
  const kept=trayInformationGuard(clocked,branch,{index:0,path:[0,2,1],information:true},{milliseconds:500});
  assert(kept.noOverride,'Partial progress elsewhere in the clock cone is not a reason to replace the selected clock-route ordering');
+ const raceTiles=Array.from({length:4},(_,i)=>({x:i*8,y:0,z:0}));
+ const race={tiles:raceTiles,nb:L.neighbors(raceTiles),rules:null,clock:{i:0,n:5}};
+ const racing={alive:[1,1,1,1],pictures:[null,1,7,null],down:[1,0,0,1],tray:[1,2],moves:0,openPeek:-1,relieved:false,arriving:[]};
+ const commitment={index:2,path:[2,3],information:true};
+ const ordinary=trayInformationGuard(race,racing,commitment,{milliseconds:500});
+ assert.equal(ordinary.index,1,'Original guard cleans the waiting tray match first');
+ const clockFirst=trayInformationGuard(race,racing,commitment,{milliseconds:500,preserveClockSlack:true});
+ assert.equal(clockFirst.index,0,'Preserve clock-route slack by inspecting the public clock before unrelated cleanup');
+ assert(clockFirst.traySafety.preservesEstimatedClockSlack&&clockFirst.traySafety.clockSlackIsHeuristicNotProof);
+ assert.equal(clockFirst.traySafety.endingEstimatedClockSlack,clockFirst.traySafety.startingEstimatedClockSlack);
+ const noClock=trayInformationGuard({...race,clock:null},racing,commitment,{milliseconds:500,preserveClockSlack:true});
+ assert.equal(noClock.index,1,'Unrelated cleanup remains useful without a live clock');
  factory.verifySource();console.log('PASS third tray spot is last resort for information,pressure3 gets shortest known relief,unknown pictures remain unknown,caps are not proofs and6 winning production taps independently replay');
 }
 if(require.main===module)test();module.exports=test;

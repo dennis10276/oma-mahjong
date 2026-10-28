@@ -48,6 +48,7 @@ const { createCleanupIntention } = require('./public_cleanup_intention.js');
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
   assert(options.avoidThirdTrayInformation === undefined || typeof options.avoidThirdTrayInformation === 'boolean');
+  assert(options.trayGuardClockSlack === undefined || typeof options.trayGuardClockSlack === 'boolean');
   assert(options.openingTrayGuardPlanning === undefined || typeof options.openingTrayGuardPlanning === 'boolean');
   assert(!options.openingTrayGuardPlanning||options.openingConditionalPlanning===true);
   assert(options.retainCleanupIntention === undefined || typeof options.retainCleanupIntention === 'boolean');
@@ -639,7 +640,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
         const chosen = resumed?{plan:resumed,predicted:advance(geometry,current,resumed.index)}:finalizeStrategy(selected);
         if (!options.avoidThirdTrayInformation) return chosen;
         const guarded = trayInformationGuard(geometry,current,chosen.plan,
-          {deadline:escapeDeadline,knownKeys:keyIdentityMemory?.keys()??[]});
+          {deadline:escapeDeadline,knownKeys:keyIdentityMemory?.keys()??[],preserveClockSlack:!!options.trayGuardClockSlack});
         if (!guarded) return chosen;
         if (guarded.noOverride) return {...chosen,plan:{...chosen.plan,traySafety:guarded.traySafety}};
         cleanupIntention?.remember(chosen.plan,cleanupKnowledge());

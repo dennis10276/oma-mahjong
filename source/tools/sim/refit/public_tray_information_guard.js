@@ -1,7 +1,7 @@
 'use strict';
 const {legal,advance}=require('./known_tray_plan.js');
 const {safeClosedInspection}=require('./public_safe_closed_inspection.js');
-const {goalRoutes}=require('./public_goal_routes.js');
+const {goalRoutes,createGoalRouteCache}=require('./public_goal_routes.js');
 const protectedPlan=p=>p.knownWin||p.safeClockExit||p.survivalBranches?.necessaryIfSolvable||p.deadCertificate?.exhaustedKnownGraph;
 function projectedPressure(game,state,plan){
  let position=state;
@@ -12,7 +12,7 @@ function projectedPressure(game,state,plan){
  }
  return position.tray.length;
 }
-function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,milliseconds=60,knownKeys=game.rules?.keys??[]}={}){
+function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,milliseconds=60,knownKeys=game.rules?.keys??[],preserveClockSlack=false}={}){
  if(protectedPlan(primary))return null;
  const pressure=projectedPressure(game,state,primary);
  if(state.tray.length<3&&pressure<3)return null;
@@ -22,7 +22,12 @@ function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,mi
  const focused=targets.map(index=>({index,route:goalRoutes(game,state,index)})).filter(g=>g.route.frontier.has(primary.index));
  // Sharing a dependency cone does not preserve a selected route's ordering.
  // Only a constructive completed goal justifies overriding clock/key focus.
- const goalProgress=item=>!focused.length||focused.some(g=>!item.state.alive[g.index]);
+ const clockActive=preserveClockSlack&&game.clock&&state.alive[game.clock.i];
+ const clockRoutes=clockActive?createGoalRouteCache(game):null;
+ const slack=position=>game.clock.n-position.moves-clockRoutes(game,position,game.clock.i).cost;
+ const startingSlack=clockActive?slack(state):null;
+ const clockProgress=item=>!clockActive||!item.state.alive[game.clock.i]||slack(item.state)>=startingSlack;
+ const goalProgress=item=>(!focused.length||focused.some(g=>!item.state.alive[g.index]))&&clockProgress(item);
  const excluded=new Set(primary.provedDeadRoots??[]);
  const queue=[{state,path:[],removed:0}],seen=new Set();let expanded=0,depthCapped=false,fallback=null;
  const identity=p=>JSON.stringify([p.alive,p.tray,p.moves,p.openPeek,p.relieved,p.arriving]);
@@ -31,7 +36,9 @@ function trayInformationGuard(game,state,primary,{deadline=Infinity,nodes=512,mi
   knownProgress:item.removed,information,boundary:true,nodes:(primary.nodes??0)+expanded,
   traySafety:{startingPressure:state.tray.length,projectedPressure:item.state.tray.length,searchNodes:expanded,
    returnsToAtMostTwo:true,shortestKnownTapPrefix:true,unknownPicturesNeverAssumed:true,
-   clockOrKeyRoutePriority:!!focused.length,completedGoalRequiredForOverride:!!focused.length,routeConeIsHeuristicNotNecessityProof:true}});
+   clockOrKeyRoutePriority:!!focused.length,completedGoalRequiredForOverride:!!focused.length,routeConeIsHeuristicNotNecessityProof:true,
+   ...(clockActive?{preservesEstimatedClockSlack:true,startingEstimatedClockSlack:startingSlack,
+    endingEstimatedClockSlack:item.state.alive[game.clock.i]?slack(item.state):null,clockSlackIsHeuristicNotProof:true}:{})}});
  for(let cursor=0;cursor<queue.length&&expanded<nodes&&Date.now()<deadline;cursor++){
   const item=queue[cursor],position=item.state,key=identity(position);if(seen.has(key))continue;seen.add(key);expanded++;
   if(item.path.length>=12){depthCapped=true;continue;}
