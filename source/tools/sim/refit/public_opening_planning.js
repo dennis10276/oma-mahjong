@@ -4,7 +4,8 @@ const assert = require('assert/strict');
 function openingPlanningController(options, createController) {
   const { openingConditionalPlanning, openingReusablePlanning = false, reusableRetainRoute = false,
     reusableSimplifyPrefixes = false, openingRetryRiskLearning = false, openingRetryPictureLearning = false,
-    openingBroadInformationPlanning = false, openingBroadReusablePlanning = false, ...baseline } = options;
+    openingBroadInformationPlanning = false, openingBroadReusablePlanning = false,
+    openingLearnedEscapePlanning = false, ...baseline } = options;
   assert.equal(openingConditionalPlanning, true);
   assert.equal(typeof openingReusablePlanning, 'boolean');
   assert.equal(typeof reusableRetainRoute, 'boolean');
@@ -19,6 +20,9 @@ function openingPlanningController(options, createController) {
   assert(!openingBroadInformationPlanning||!openingReusablePlanning,'Broad and heavy opening candidates must be evaluated separately');
   assert.equal(typeof openingBroadReusablePlanning,'boolean');
   assert(!openingBroadReusablePlanning||openingBroadInformationPlanning);
+  assert.equal(typeof openingLearnedEscapePlanning,'boolean');
+  assert(!openingLearnedEscapePlanning||baseline.learnedEscapePlanning===undefined,
+    'Choose global or conditional learned planning explicitly');
   assert.equal(typeof createController, 'function');
   let delegate = createController(baseline), selection = null, begun = false;
   const api = Object.fromEntries(Object.keys(delegate).map(method => {
@@ -37,12 +41,14 @@ function openingPlanningController(options, createController) {
       const enhanced = budget !== null && budget <= 50 && locks <= 3;
       const reusable = openingReusablePlanning && budget !== null && budget >= 30 && locks >= 4;
       const broad = openingBroadInformationPlanning && budget !== null && budget >= 20 && budget <= 40 && locks <= 4;
+      const learned = openingLearnedEscapePlanning && budget !== null && budget >= 20 && budget <= 40 && locks <= 4;
       selection = { kind: 'publicOpeningClockLockV1', startingClockBudget: budget,
         visibleLockSymbols: locks, enhanced, latchedForCampaign: true,
         ...(openingReusablePlanning ? { reusable, family: reusable ? 'reusable33' : enhanced ? 'survival39' : 'retained23' } : {}),
         ...(openingBroadInformationPlanning ? {broadInformation:broad,family:broad ? enhanced ? 'broadSurvival39':'broad23' : enhanced ? 'survival39':'retained23'} : {}),
-        ...(openingBroadReusablePlanning ? {broadReusable:broad} : {}) };
-      if (enhanced || reusable || broad) {
+        ...(openingBroadReusablePlanning ? {broadReusable:broad} : {}),
+        ...(openingLearnedEscapePlanning ? {learnedEscape:learned} : {}) };
+      if (enhanced || reusable || broad || learned) {
         const selected = reusable ? { ...baseline, reusablePublicPlanning: true,
           reusableContinueAfterInformation: true, reusablePrepareCrowded: true, retryInformationNodes: 32768,
           ...(reusableRetainRoute ? { reusableRetainRoute: true } : {}),
@@ -52,9 +58,10 @@ function openingPlanningController(options, createController) {
           survivalEarlyForks: true, clockOrphanPreparation: true, clockRecoveryMinSlack: 30 };
         // A broad baseline selection must not accidentally inherit the light-clock family.
         const base = !reusable && !enhanced ? baseline : selected;
-        delegate = createController(broad ? {...base,passiveInformation:'shortAll',rememberProvedContinuations:true,
+        const chosen = broad ? {...base,passiveInformation:'shortAll',rememberProvedContinuations:true,
           ...(openingBroadReusablePlanning ? {reusablePublicPlanning:true,reusableContinueAfterInformation:true,
-            reusablePrepareCrowded:true,retryInformationNodes:32768,reusableRetainRoute:true,reusableSimplifyPrefixes:true} : {})} : base);
+            reusablePrepareCrowded:true,retryInformationNodes:32768,reusableRetainRoute:true,reusableSimplifyPrefixes:true} : {})} : base;
+        delegate = createController(learned ? {...chosen,learnedEscapePlanning:true} : chosen);
         delegate.beginAttempt();
       }
     }

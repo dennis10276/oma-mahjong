@@ -45,6 +45,8 @@ const { learnedEscapePlan } = require('./public_learned_escape.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
+  assert(options.openingLearnedEscapePlanning === undefined || typeof options.openingLearnedEscapePlanning === 'boolean');
+  assert(!options.openingLearnedEscapePlanning || options.openingConditionalPlanning === true);
   assert(options.openingConditionalPlanning === undefined || typeof options.openingConditionalPlanning === 'boolean');
   assert(options.openingReusablePlanning === undefined || typeof options.openingReusablePlanning === 'boolean');
   assert(!options.openingReusablePlanning || options.openingConditionalPlanning === true);
