@@ -2,6 +2,7 @@
 const assert=require('assert/strict');
 const Layouts=require('../../../www/layouts.js');
 const {trayHorizon}=require('./human_style_tray_horizon.js');
+const {certainlyTrappedAfterTake}=require('./human_style_immediate_outs.js');
 
 // Only geometry and observed packets enter this policy. No board identity,
 // hidden deck, exact route solver, or human attempt labels are available here.
@@ -9,10 +10,11 @@ function createStyleController(tiles,profile,seed){
  const p={...profile},random=Layouts.rng(seed),nb=Layouts.neighbors(tiles),iceNb=Layouts.iceNeighbors(tiles);
  let memory=tiles.map(()=>null),roles=tiles.map(()=>null),state,seen,visits=new Map(),attempt=0;
  assert(Number.isInteger(seed));
- const allowed=['clockHorizon','partnerHorizon','clockWeight','trayCost','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
+ const allowed=['clockHorizon','partnerHorizon','clockWeight','clockUrgencyPower','trayCost','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
  assert(Object.entries(p).every(([key,value])=>allowed.includes(key)&&Number.isFinite(value)&&value>=0),'Only finite global behavioral parameters are allowed');
  for(const key of ['clockHorizon','partnerHorizon'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4);
- assert(p.trayDepth===undefined||Number.isInteger(p.trayDepth)&&p.trayDepth>=0&&p.trayDepth<=3);
+ assert(p.trayDepth===undefined||Number.isInteger(p.trayDepth)&&p.trayDepth>=0&&p.trayDepth<=4);
+ assert(p.clockUrgencyPower===undefined||p.clockUrgencyPower>=0&&p.clockUrgencyPower<=2);
  for(const key of ['memoryDecay','retryRetention','lapse'])assert(p[key]>=0&&p[key]<=1);
  assert(p.temperature>0&&p.peekPatience>=0);
  function begin(){
@@ -60,20 +62,29 @@ function createStyleController(tiles,profile,seed){
    const trayMatch=face!==null&&tray.includes(face);
    const twin=face===null?null:legal.find(j=>j!==i&&memory[j]===face);
    const openTwin=openPeek>=0&&openPeek!==i&&face!==null&&memory[openPeek]===face;
+   const hasTwin=twin!==undefined&&twin!==null;
+   const knownDig=peek&&face!==null&&!trayMatch&&!openTwin&&!hasTwin&&!(face===101&&tray.length);
+   const knownFatal=tray.length>=3&&face!==null&&!trayMatch&&!openTwin&&face!==101&&!tray.includes(101)&&(!peek||knownDig);
    const reachable=face===null?false:memory.some((other,j)=>j!==i&&alive[j]&&other===face&&roles[j]!==null&&roles[j]!=='lock'&&blockers(j).length<=p.partnerHorizon);
    const visitsKey=signature+'|'+i,count=visits.get(visitsKey)??0;
-   let score=(attraction.get(i)??0)*(clock&&clock.remaining<=p.clockHorizon?1.5:1)+nb.above.filter(row=>row.includes(i)).length*.2;
+   // Human deadline pressure over the same short cone, not an exact route
+   // solver. An optional tray match must not consume the clock's final move.
+   const urgency=clock?Math.max(1,(p.clockHorizon/Math.max(1,clock.remaining))**(p.clockUrgencyPower??2)):1;
+   let score=(knownFatal?0:(attraction.get(i)??0)*urgency)+nb.above.filter(row=>row.includes(i)).length*.2;
    if(trayMatch)score+=p.pairReward*2;
    else if(face===101&&tray.length)score+=p.pairReward*2;
    else if(openTwin)score+=p.pairReward*2.2;
-   else if(twin!==undefined&&twin!==null)score+=p.pairReward+(down||seen.down[twin]===1?3:0);
-   else if(peek)score+=(face===null?p.exploration:-2)+(tray.length>=2?3:0);
+   else if(hasTwin)score+=p.pairReward+(down||seen.down[twin]===1?3:0);
+   else if(peek&&face===null)score+=p.exploration+(tray.length>=2?3:0);
    else{
     score-=p.trayCost*Math.max(1,tray.length*2);
     if(reachable)score+=p.trayCost*.8;
     if(tray.length>=2&&!reachable)score-=p.trayCost*2;
    }
-   if(p.outWeight&&!peek){
+   // Reopening an already known, unmatched tile is preparation for a take,
+   // not new information. Evaluate its intended removal and its tray pressure.
+   if(knownDig)score-=.25;
+   if(p.outWeight&&(!peek||knownDig)){
     // One hypothetical removal, then at most one partner/blocker: no route
     // search and no guessed pictures. The preference is for visible outs.
     const next=alive.slice();next[i]=0;if(openTwin)next[openPeek]=0;
@@ -99,6 +110,8 @@ function createStyleController(tiles,profile,seed){
    if(peek)score-=Math.max(0,count-p.peekPatience+1)*8;
    if(!peek&&count)score-=count;
    score+=(future.get(i)??0)*(p.futureWeight??1)*(clock ? .25 : 1);
+   if(knownDig&&tray.length>=3)score-=100*(p.futureWeight??1)*(clock ? .25 : 1);
+   if((!peek||knownDig)&&certainlyTrappedAfterTake(tiles,nb,iceNb,state,seen,memory,roles,i))score-=800;
    const noisy=score-p.temperature*Math.log(-Math.log(Math.max(1e-12,Math.min(1-1e-12,random()))));
    return {index:i,score,noisy,visitsKey};
   });

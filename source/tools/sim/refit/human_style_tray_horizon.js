@@ -2,10 +2,10 @@
 const assert=require('assert/strict');
 const Layouts=require('../../../www/layouts.js');
 // A deliberately short public-picture thought experiment. Stops at unknown
-// faces/orientations/roles and at depth<=3. It never seeks a clock route or
+// faces/orientations/roles and at depth<=4. It never seeks a clock route or
 // claims a proof. Actual choices still execute in original production physics.
 function trayHorizon(tiles,nb,state,seen,pictures,roles,depth){
- assert(Number.isInteger(depth)&&depth>=1&&depth<=3);
+ assert(Number.isInteger(depth)&&depth>=1&&depth<=4);
  const size=tiles.length;
  const value=s=>(size-s.alive.reduce((a,b)=>a+b,0))*4-s.tray.length*(s.tray.length+1)*4;
  const initial={alive:state.alive.slice(),tray:state.tray.slice(),peek:state.openPeek};
@@ -23,7 +23,11 @@ function trayHorizon(tiles,nb,state,seen,pictures,roles,depth){
  function continuation(s,left){
   let best=value(s);if(!left)return best;
   const choices=[];
-  for(let i=0;i<size;i++)if(s.alive[i]&&Layouts.isFree(i,s.alive,nb)&&roles[i]==='none'){
+  // Production removals are monotone: a currently legal tile cannot become
+  // obstructed by removing another one. The public tap affordance itself is
+  // enough here, even if its role symbol is a key or is not visible.
+  for(let i=0;i<size;i++)if(s.alive[i]&&Layouts.isFree(i,s.alive,nb)&&
+   (seen.takeable[i]===true||roles[i]==='none'||roles[i]==='key')){
    const n=move(s,i);if(n)choices.push({n,rank:value(n)});
   }
   choices.sort((a,b)=>b.rank-a.rank);

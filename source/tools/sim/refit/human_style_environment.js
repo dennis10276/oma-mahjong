@@ -38,7 +38,7 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
  const controller=createStyleController(game.tiles,profile,seed),attempts=[];
  const settings={seed:20261111,choiceLimit,tapMs:1000};let verifiedTaps=0,slowestMove=0;
  for(let attempt=1;attempt<=maxAttempts;attempt++){
-  controller.beginAttempt();const session=factory(game,settings),actions=[];
+  controller.beginAttempt();const session=factory(game,settings),actions=[],decisions=[];
   let frame=session.view();
   while(frame.type!=='productionPhysicalEnd-v1'){
    const start=performance.now(),state=frame.state,legal=new Set(frame.legalTiles);
@@ -46,6 +46,9 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
    controller.observe({alive:state.alive,tray:state.tray,moves:state.moves,openPeek:state.openPeek,
     relieved:state.relieved,arriving:state.arriving,physicalTaps:state.physicalTaps},observed);
    const selected=controller.decide();assert(selected&&legal.has(selected.index));
+   if(capture)decisions.push({state:{alive:state.alive.slice(),tray:state.tray.slice(),moves:state.moves,
+    openPeek:state.openPeek,physicalTaps:state.physicalTaps},observed:structuredClone(observed),
+    remembered:controller.remembered(),index:selected.index,score:selected.score});
    slowestMove=Math.max(slowestMove,performance.now()-start);
    actions.push(selected.index);frame=session.tap(selected.index);
   }
@@ -53,7 +56,7 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
   const censored=frame.computationCensored||!frame.win&&!['tray','clock','stuck'].includes(frame.why);
   attempts.push({attempt,win:frame.win,why:frame.why,censored,
    phase:frame.win||censored?null:lossPhase(frame.state,game.clock),
-   left:frame.state.alive.reduce((a,b)=>a+b,0),taps:actions.length,...(capture?{actions}: {})});
+   left:frame.state.alive.reduce((a,b)=>a+b,0),taps:actions.length,...(capture?{actions,decisions}: {})});
   if(frame.win||censored)break; // Only actual completed losses permit retry.
  }
  factory.verifySource();
