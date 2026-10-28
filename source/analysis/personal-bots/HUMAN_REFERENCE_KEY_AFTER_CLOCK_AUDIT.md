@@ -52,3 +52,16 @@ Raw candidate-key57/patch-audit.json records the patch hash, candidate profile a
 all four original/candidate file hashes. Apply only after56 is terminal and its
 independent audit is complete; then run the full offline suite and actual-history
 comparisons before counting57 as a measured experiment.
+
+Broad isolated validation now passes all158 registered human-reference offline
+fixtures, same names/order as the normal test registry, native80658 exit0. First
+broad run148/158 failed solely because the isolated copy lacked five JSON fixture
+files; preserve those failures. Supplied fixture data and reran without policy
+edits:158/158. Independent full-fixture-audit.json rehashes all84 candidate runtime
+files, verifies the candidate hash3ffa2efc1502… and every unchanged main runtime
+file, and records the terminal exit. Standard working-tree suite remains required
+after patch installation. No benchmark result or new experiment is claimed.
+
+Prepared, syntax-checked v20 actual-history comparison harness targeting retained40
+histories. It refuses execution unless56 has no running workers, a terminal native
+exit0 and a completed independent audit. No comparisons have been launched.
