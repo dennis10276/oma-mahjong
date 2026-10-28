@@ -26,5 +26,22 @@ occupancy0/1, no known keys, removed keys and separate controller instances.
 Compare actual10011 histories and regression controls before measuring. Run the
 unchanged43 development/160 full, three salts, repair/no-regression and2s gates.
 
-This is a proposed unmeasured variant. Trial56 actor sources remain frozen while
-its full campaign runs. No57 allowance consumed, no next trial started yet.
+The unmeasured prototype is implemented in an isolated84-source copy at
+.codex-runs/level-measure/candidate-key57/. It changes the key gate and controller
+option only. Existing high-slack behavior and default stay unchanged. Unit matrix
+covers occupancy0–4, absent/removed/live clocks, default off and invalid options.
+Production integration replays failed/winning attempts through four controller
+configurations, checks retry provenance/isolation and preserves empty-tray opening
+choices. Both tests pass(native exec4fc89b exit0); full158 suite is still pending
+installation into the working actor after56 terminates.
+
+First integration exposed terminal overflow: production sends tray length4 after
+loss. The prototype initially rejected that observation; corrected to accept it
+without enabling new planning in a terminal overflow. Preserve failed01 logs;
+rerun02 unit/integration logs pass. This was a prototype failure, not a production
+physics change. Prototype manifest pins original/candidate hashes of all four
+changed code/test files, actor source/profile hashes and fixture evidence.
+
+All84 main actor files still match the frozen56 source. No actual-policy
+comparisons or timed candidate campaign were run alongside56. No57 allowance
+consumed; five trials57–61 remain. Candidate campaign benefit remains unproven.
