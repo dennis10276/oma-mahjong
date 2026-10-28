@@ -4,7 +4,7 @@ Dennis's additional steering:make the bot plan for the highest chance of an out,
 learned from previous levels it played. Combine this with the new eight-trial
 survival/key-logic authorization48–55. Keep all original repair/no-regression,
 public-information,production-replay and strict2s requirements. Default40 stays
-retained until a candidate passes. Measured48 is rejected;1/8 used,7 remain.
+retained until a candidate passes.48 is rejected;49 running;2/8 used,6 remain.
 
 ## Shared experience without benchmark leakage
 
@@ -175,3 +175,9 @@ All3 workers/native48101 exit0;102 attempts/15328 taps independently replayed;
 82 frozen sources verified. No full run or adoption. The described correction
 is now implemented,unmeasured,and153 tests pass19s. Actual48-history audit next,
 including repeated physical losses on10041/10032;then authorized49. Default40.
+
+Update:correction4983f36 passes the eight actual48-history checks(first80 taps per
+attempt),699 replayed taps,zero baseline drift,251 changed suggestions,max451.064ms.
+Native85338/all8 workers exit0;all82 sources verified. Measured49 now running
+native21910,3 workers,fixed42 development/salt1;actor frozen.2/8 used,6 remain.
+No adoption or new campaign improvement claimed until the run and audits finish.

@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:1/8 measured,7 remain;trial48 rejected at development. Raw authorization ledger:
+Current:2/8 measured,6 remain;48 rejected,49 running. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -77,3 +77,11 @@ without relief/removal. Corrected unmeasured prototype now requires information
 or a prefix ending in relief/safe board progress,then tries other roots or uses
 the original planner;caps never imply death. Same model/pile habit.153 tests19s.
 Next history audit,then49. See HUMAN_REFERENCE_EXPERIMENT_48_RESULT.md. Default40.
+
+Correction4983f36 now passes eight actual48-history comparisons(first80 taps per
+attempt):699 taps replayed,zero drift,251 changed suggestions,max451.064ms. Native
+85338/all8 workers exit0;82 source hashes independently verified. Measured49 is
+now running(native21910,3 workers)on unchanged fixed42 development/salt1. Source
+b031a14759e639175f419e1a3d5a45d5b9241d1a957faf798510a6e51746b057;profile e9360ec3….
+Model weights/pile habit unchanged. No actor edits until terminal.2/8 used,6 remain.
+Protocol HUMAN_REFERENCE_EXPERIMENT_49.md;default40 retained pending full gates.
