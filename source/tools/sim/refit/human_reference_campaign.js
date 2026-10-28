@@ -43,10 +43,12 @@ const { createKnownWitnessPortfolio } = require('./public_known_witness_portfoli
 const { openingPlanningController } = require('./public_opening_planning.js');
 const { learnedEscapePlan } = require('./public_learned_escape.js');
 const { trayInformationGuard } = require('./public_tray_information_guard.js');
+const { createCleanupIntention } = require('./public_cleanup_intention.js');
 
 function createHumanController(tiles, options = {}, publicContext = {}) {
   assert(options.learnedEscapePlanning === undefined || typeof options.learnedEscapePlanning === 'boolean');
   assert(options.avoidThirdTrayInformation === undefined || typeof options.avoidThirdTrayInformation === 'boolean');
+  assert(options.retainCleanupIntention === undefined || typeof options.retainCleanupIntention === 'boolean');
   assert(options.learnedEscapeContinuationRanking === undefined || typeof options.learnedEscapeContinuationRanking === 'boolean');
   assert(options.openingLearnedEscapePlanning === undefined || typeof options.openingLearnedEscapePlanning === 'boolean');
   assert(!options.openingLearnedEscapePlanning || options.openingConditionalPlanning === true);
@@ -253,6 +255,8 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
   let observedTakeable = null, observedAliveKey = null, observedArrivingKey = null;
   let pendingInformationAction = null;
   let pendingEscapePlan = null;
+  const cleanupIntention=options.retainCleanupIntention?createCleanupIntention():null;
+  const cleanupKnowledge=()=>JSON.stringify([pictures,down,initialRoles,typedKeyKnowledge()]);
   const informationSignature = () => JSON.stringify({ pictures, down, initialRoles, roles, ...typedKeyKnowledge() });
   const physicalSignature = position => JSON.stringify(['alive', 'tray', 'moves', 'openPeek', 'relieved', 'arriving']
     .map(field => position[field]));
@@ -342,6 +346,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       hypothesisVisits?.beginAttempt(); decisionPosition = null;
       pendingInformationAction = null;
       pendingEscapePlan = null;
+      cleanupIntention?.clear();
       resetPlanner();
     },
     observe(state, observed) {
@@ -627,12 +632,15 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
           boundary: true, nodes: selected.plan.nodes + ranking.nodes, hypothesisAudit: audit }, predicted };
       };
       const finalize = selected => {
-        const chosen = finalizeStrategy(selected);
+        const resumed=cleanupIntention?.propose(geometry,current,selected.plan,cleanupKnowledge());
+        if(resumed){manualChoice=true;resetPlanner();pendingEscapePlan=null;pendingInformationAction=null;}
+        const chosen = resumed?{plan:resumed,predicted:advance(geometry,current,resumed.index)}:finalizeStrategy(selected);
         if (!options.avoidThirdTrayInformation) return chosen;
         const guarded = trayInformationGuard(geometry,current,chosen.plan,
           {deadline:escapeDeadline,knownKeys:keyIdentityMemory?.keys()??[]});
         if (!guarded) return chosen;
         if (guarded.noOverride) return {...chosen,plan:{...chosen.plan,traySafety:guarded.traySafety}};
+        cleanupIntention?.remember(chosen.plan,cleanupKnowledge());
         pendingEscapePlan=null;pendingInformationAction=null;manualChoice=true;resetPlanner();
         return {plan:guarded,predicted:advance(geometry,current,guarded.index)};
       };
@@ -704,6 +712,7 @@ function createHumanController(tiles, options = {}, publicContext = {}) {
       return finalize({ plan: structuredClone(plan), predicted });
     },
     acknowledge(index, accepted) {
+      cleanupIntention?.acknowledge(index,accepted);
       survivalSearch?.acknowledge(index, accepted);
       lastAcceptedIndex = accepted ? index : null;
       if (accepted && hypothesisVisits) hypothesisVisits.recordActual(decisionPosition, knowledgeSignature(), index);
