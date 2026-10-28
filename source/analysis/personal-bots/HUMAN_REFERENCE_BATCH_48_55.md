@@ -24,7 +24,7 @@ strictly<2s/decision. Adopt only a complete failed-target repair,zero passing-
 target AND clearance regressions,independent audits and native terminal exits.
 Small exact-path commits onwip/personal-bots;no pushes/Firebase writes.
 
-Current:0/8 measured,8 remain. Raw authorization ledger:
+Current:1/8 measured,7 remain;trial48 development is running. Raw authorization ledger:
 .codex-runs/level-measure/batch-48-55-authorization.json. Baseline retained40's
 original full-records-for-next.json and unchanged development-selection-v11.json.
 
@@ -62,4 +62,9 @@ one/both are face down to prevent tray pressure. New public habit opens a closed
 member first,validates a zero-slot physical match and rejects clock-expiring or
 proved-dead continuations. Learned scores rank eligible matching/tray-relief outs;
 no learned probability is claimed outside the training domain.152 tests pass23s.
-Combined-habit history audit is next;0/8 measured,8 remain;default40 retained.
+Combined-habit history audit passed(native6659 exit0,all7 workers exit0):1070
+replayed taps,zero baseline drift,528 changed suggestions,max1545.681ms. Current
+82-file source cf3369693c54d75a2e62846008afe3ca4da4d6e65ab4410bfbcf35b152285016
+is frozen for measured48(native48101),three development workers. Catalog refreshed
+read-only with159 unchanged targets.1/8 used,7 remain;default40 retained. Protocol
+HUMAN_REFERENCE_EXPERIMENT_48.md;full159×3 only after unchanged development qualifier.

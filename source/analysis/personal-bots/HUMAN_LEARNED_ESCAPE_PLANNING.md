@@ -4,7 +4,7 @@ Dennis's additional steering:make the bot plan for the highest chance of an out,
 learned from previous levels it played. Combine this with the new eight-trial
 survival/key-logic authorization48–55. Keep all original repair/no-regression,
 public-information,production-replay and strict2s requirements. Default40 stays
-retained until a candidate passes. No measured48 trial yet.
+retained until a candidate passes. Measured48 is now running;1/8 used,7 remain.
 
 ## Shared experience without benchmark leakage
 
@@ -96,8 +96,8 @@ Validation board-balanced Brier0.017698 vs constant0.018993;log loss0.072650 vs
 0.095686;unweighted AUC0.88199. Sparse failures and mostly easy experience limit
 transfer evidence;all predictions remain above0.8,so coarse calibration bins
 cannot establish calibration on difficult positions. No benchmark gain claimed.
-Model fit committed dd72ddd;runtime integration committed2751cef. First measured48
-remains pending. Frozen experience weights are tracked as public_escape_model_v1.json.
+Model fit committed dd72ddd;runtime integration2751cef,pile habit12ef793. Measured48
+is running. Frozen experience weights are tracked as public_escape_model_v1.json.
 
 ## Candidate runtime behavior
 
@@ -142,4 +142,9 @@ dead continuations;unknown/capped checks remain possible. Existing proven wins,
 safe clock exits and necessary survival continuations remain protected. Controls
 cover one/both down,zero tray occupancy at every tap,unknown-picture rejection,
 clock expiration,proved dead ends,and8 additional independently replayed taps.
-Re-run the seven history comparisons for the combined model+habit before trial48.
+Combined model+habit history comparisons completed1070 replayed taps,zero baseline
+drift,528 changed suggestions,max1545.681ms;native6659/all7 workers exit0. All82
+source hashes verified independently. Actual48 now runs fixed42 development
+salt1(native48101,3 workers),then the unchanged qualifier/full159 salts1–3.
+No adoption or repaired-target claim yet;default40 retained. Raw protocol and
+trial artifacts are separate from the completed experience/model fit evidence.
