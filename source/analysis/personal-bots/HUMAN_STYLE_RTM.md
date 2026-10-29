@@ -5,7 +5,7 @@ source/profile version. Tests alone do not establish human calibration.
 
 | ID | Requirement | Evidence | Status |
 |---|---|---|---|
-|A1|Frozen policy40; no new WHEN rules|648172a/a9e541e; unchanged frozen manifest checks in175-test suite|VERIFIED|
+|A1|Frozen policy40; no new WHEN rules|648172a/a9e541e; unchanged frozen manifest checks in176-test suite|VERIFIED|
 |A2|measure() arbitrary boards;3-6 actual tries, salts1-3|Default3 retained; maxTries6 supported; false is bounded failure, never impossibility|VERIFIED|
 |B1|One public observer and actual earlier-try memory|Shared observeBoard/session; hidden-getter tests; inference requires a real observed match|VERIFIED|
 |B2|Production rules and replay;move<2s|Every accepted tap replays through original engine; release-check max6.34ms|VERIFIED FOR v0|
@@ -21,7 +21,7 @@ source/profile version. Tests alone do not establish human calibration.
 |M2.b|Loss shares clock55-60%,mid30-45%,late<10%|C4 clock55.41/54.57%; C5 clock50.40/54.57%; original phase targets under source audit|UNMET|
 |M2.c|Risk/control gap>=10pp;132/135/142/144 majority clock|C4/C5 gaps11/9.5pp; several clock-case majorities fail; human evidence conflicts with case premise|UNMET|
 |M2.keep|Retain d/e when releasing human-v1|Frozen v0 five-board release benchmark retained|REQUIRED|
-|M3.f|Lab Spearman ranking,no per-board fitting|Recorded-target lab cohort still to evaluate under v0|UNMET|
+|M3.f|Lab Spearman ranking,no per-board fitting|15-target protocol/scorer prepared;actual run requires passed M2;0 lab predictions|UNMET|
 |M3.keep|Human-v2 retains all earlier gates|Milestone2 prerequisite unmet|UNMET|
 |Final|Frozen check on next Dennis progression/factory games|No prospective success claimed; development boards explicitly labeled|NOT STARTED|
 |Stop|After8 no-progress trials on current milestone|Six authorized19-24 retained; factory22 baseline,23 side-access progress,24 tradeoff; audited external adoption passes M1|ACTIVE|
@@ -38,3 +38,7 @@ the clock. Original gates are unchanged while the user question is pending.
 Five bounded candidate trials are complete; score anchor4, no-progress counter1.
 Research profiles are explicit options; default v0 and the frozen reference stay
 unchanged. Trial5 restores all100 factory clears with hard-board mean3.6.
+
+Lab preparation: HUMAN_LAB_RANKING_PREPARATION.md and the preregistered JSON
+contract.176/176 tests pass;M3 actual ranking and prospective validation remain
+unverified. No calibration trial or stop-counter reset was claimed for preparation.

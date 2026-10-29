@@ -59,7 +59,8 @@ Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-
 - M2 candidates4/5: first51.39/29.17%; all factory d/e pass; no new tag.
 - Retry candidate5 clears all100 factory campaigns; hard mean3.6 tries.
 - Clock-phase/case targets disputed by fresh logs; user clarification pending.
--175/175 tests pass;5 M2 trials complete; original-score anchor4,counter1.
+-176/176 tests pass;5 M2 trials complete; original-score anchor4,counter1.
+- Lab15 cohort/ranking protocol prepared;0 model runs; actual lab gate still unmet.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
 - Small source commits; raw logs/snapshots under .codex-runs/human-style/.
 - No Firebase writes, publication or pushes. Preserve unrelated experiments.

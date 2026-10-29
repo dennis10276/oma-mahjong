@@ -1,6 +1,6 @@
 'use strict';
 const fs=require('fs'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto');
-const {measureHuman}=require('./human_style_measure.js');
+const {measureHuman}=require('./human_bot.js');
 const {captureSources}=require('./human_level_sources.js');
 const KEYS=['factory1-175','factory1-189','factory2-184','factory2-192','factory2-175'];
 function main(){
