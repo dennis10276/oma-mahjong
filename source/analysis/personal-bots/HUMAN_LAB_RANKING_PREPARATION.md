@@ -14,7 +14,7 @@ human controller on the lab boards.
 |Threshold|rho>=0.5 across every board; tied values use average ranks|
 |Incomplete/capped result|Primary unresolved; never drop a board or substitute the retry cap as its clear time|
 |Secondary|First-failure and restricted-mean ranks are diagnostics only|
-|Current model measurements|Zero|
+|Current model measurements|15 boards,300 baseline campaigns;9 means unresolved; no ranking pass|
 
 The exact input/catalog hashes and settings are committed in
 HUMAN_LAB_RANKING_CONTRACT.json. Newly recorded positive lab targets join through

@@ -37,6 +37,6 @@ Latest valid coverage:74 boards,20 campaigns per setting,12 actual attempts; zer
 
 The rejected earlier key-outs-full run remains in history (worker exit2/censoring); it never counted as success. Clock-timing annotation parity and100 default-v0 release outcomes were checked earlier; latest frozen defaults are unchanged. Historical contract1 scores remain attached to their original targets.
 
-Retained progress anchor: **family-clock-outs-balance-full**. Consecutive no-progress experiments: **0/8**. A tradeoff that loses a previously passed check is not progress. human-v1 is tagged18f0348; human-v2, a lab ranking pass and prospective accuracy are not claimed. The first15-board lab run is underway. Raw source snapshots, profiles, campaigns, native exits and preregistrations: .codex-runs/human-style/phase-v2/.
+Retained progress anchor: **family-clock-outs-balance-full**. Consecutive no-progress experiments: **0/8**. A tradeoff that loses a previously passed check is not progress. human-v1 is tagged18f0348; human-v2, a lab ranking pass and prospective accuracy are not claimed. The first15-board lab baseline is complete:9 means unresolved, primary rank null. Raw source snapshots, profiles, campaigns, native exits and preregistrations: .codex-runs/human-style/phase-v2/.
 
 Final release:183/183 tests (suite10-release), all2960 calibration and100 factory campaigns reproduced from the selected candidate. Source-exact default checks passed before tag18f0348. Slowest8.87ms; maximum20-campaign measurement0.673minutes. HUMAN_V1_RELEASE.md gives the API and proof.

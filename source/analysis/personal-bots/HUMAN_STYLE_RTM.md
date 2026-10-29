@@ -19,10 +19,10 @@ ACTIVE and UNMET. All behavioral gates must pass on the same version and profile
 |M2.c|Separate person top10-loss vs10-zero-observed-loss; gap>=10pp|23.50/11.50pp|PASSED AND TAGGED 18f0348|
 |M2.142|Dennis majority first; family majority clear within12|Dennis 19/20first,20/20clear; family 2/20first,20/20clear|PASSED AND TAGGED 18f0348|
 |M2.keep|Same candidate passes M2 and retained d/e; final default verification|Factory100/100 and source-exact default M2 pass; tag18f0348|PASSED AND TAGGED|
-|M3.f|15 recorded lab targets, Spearman>=.5, no per-board fitting|15-board/300-campaign baseline complete;9 unresolved means; primary rank null|UNMET|
+|M3.f|15 recorded lab targets, Spearman>=.5, no per-board fitting|Trial2 retains M1/M2; complete lab means6->7/15;8 unresolved; primary rank null|UNMET|
 |M3.keep|Human-v2 retains all earlier gates|human-v1 tagged; v2 ranking not passed|UNMET|
 |Final|Frozen next Dennis progression/factory validation|No prospective accuracy claimed|NOT STARTED|
-|Stop|Stop after8 consecutive no-progress trials|Anchor family-clock-outs-balance-full; counter 0/8; historical trials retained|ACTIVE|
+|Stop|Stop after8 consecutive no-progress trials|M3 anchor retry-clock-tray-02-lab; counter0/8; trial3 pending; historical trials retained|ACTIVE|
 |Housekeeping|Small commits, goal<80lines, tables/raw logs separate|wip/personal-bots; HUMAN_PHASE_V2_PROGRESS.md and results JSON|IMPLEMENTED|
 
 The user approved amended targets on2026-10-29. No clarification is pending. Historical contract1 trials are preserved under their original contract; current scoring uses human_style_contract_v2.json. Raw immutable source snapshots, profiles, campaign results, preregistrations and native exits are under .codex-runs/human-style/phase-v2/.
@@ -30,3 +30,5 @@ The user approved amended targets on2026-10-29. No clarification is pending. His
 Source8df9a86/baa07d1 repairs public clock/ice outs and exact event timing;9801bf5/6932e2e adds public mate-budget and personal clock completion/horizon behavior.183/183 offline tests pass (suite09).29 real recorded family choices on132/144 replay exactly. These tests and development outcomes do not establish future attempt-count accuracy.
 
 Release proof: HUMAN_V1_RELEASE.md and HUMAN_PHASE_V2_RESULTS.json.releaseVerification.183/183 release tests;2960 calibration and100 factory campaigns; default outcomes exactly match the selected candidate. M3 and future frozen validation remain.
+
+M3 research: HUMAN_LAB_V2_PROGRESS.md. Typed key-memory integration b2bc48f passes184/184 tests and factory gates, but remains an explicit candidate pending full calibration/lab evaluation. The release tag stays18f0348.

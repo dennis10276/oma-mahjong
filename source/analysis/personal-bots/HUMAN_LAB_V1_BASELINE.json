@@ -402,12 +402,1140 @@
   "classification": "Milestone3 baseline prerequisite, not an algorithmic improvement",
   "stopLedger": {
     "milestone": 3,
-    "experiments": [],
+    "experiments": [
+      {
+        "key": "retry-clock-tray-01",
+        "sourceCommit": "f6f53e4",
+        "valid": true,
+        "native": {
+          "factory": 0,
+          "calibration": 0,
+          "suite": 0
+        },
+        "summary": {
+          "settings": {
+            "Dennis": {
+              "firstTryRate": 0.5479166666666667,
+              "samples": 1440,
+              "lossCounts": {
+                "clock": 406,
+                "mid": 899,
+                "late": 28
+              },
+              "lossShares": {
+                "clock": 0.304576144036009,
+                "mid": 0.6744186046511628,
+                "late": 0.021005251312828207
+              },
+              "riskLoss": 0.63,
+              "controlLoss": 0.395,
+              "clockCases": {
+                "132": 0,
+                "135": 0,
+                "142": 1,
+                "144": 0
+              },
+              "lossTiming": {
+                "complete": true,
+                "consistent": true,
+                "counts": {
+                  "beforeClock": 406,
+                  "clockContact": 11,
+                  "mid": 888,
+                  "late": 28
+                },
+                "shares": {
+                  "beforeClock": 0.304576144036009,
+                  "clockContact": 0.008252063015753939,
+                  "mid": 0.6661665416354089,
+                  "late": 0.021005251312828207
+                }
+              },
+              "checks": {
+                "a": true,
+                "b": false,
+                "c": true,
+                "level142": true
+              }
+            },
+            "family": {
+              "firstTryRate": 0.33958333333333335,
+              "samples": 1440,
+              "lossCounts": {
+                "clock": 1470,
+                "mid": 1761,
+                "late": 55
+              },
+              "lossShares": {
+                "clock": 0.44735240413877053,
+                "mid": 0.5359099208764455,
+                "late": 0.016737674984783932
+              },
+              "riskLoss": 0.7150000000000001,
+              "controlLoss": 0.6,
+              "clockCases": {
+                "132": 0.5705521472392638,
+                "135": 0.21212121212121213,
+                "142": 0.7647058823529411,
+                "144": 0.1875
+              },
+              "lossTiming": {
+                "complete": true,
+                "consistent": true,
+                "counts": {
+                  "beforeClock": 1470,
+                  "clockContact": 151,
+                  "mid": 1610,
+                  "late": 55
+                },
+                "shares": {
+                  "beforeClock": 0.44735240413877053,
+                  "clockContact": 0.04595252586731589,
+                  "mid": 0.48995739500912966,
+                  "late": 0.016737674984783932
+                }
+              },
+              "checks": {
+                "a": true,
+                "b": true,
+                "c": true,
+                "level142": true
+              }
+            }
+          },
+          "developmentScreen": false,
+          "patternGatesMet": false,
+          "finalGatesMet": false,
+          "contractSchema": "human-style-pattern-contract-v2",
+          "valid": true,
+          "minutesPerBoard": 0.16890414090090086,
+          "model": "human-v1",
+          "workers": 4,
+          "wallMinutes": 3.5615642600000004
+        },
+        "factoryChecks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "labMeasured": false,
+        "progress": false,
+        "reason": "Retained first rates/cohort gap/142/factory, but Dennis before-clock30.46% exceeds30%; no candidate lab measurements allowed",
+        "firstAttemptOutcomeParity": {
+          "boards": 74,
+          "campaigns": 1480,
+          "passed": true
+        },
+        "consecutiveNoProgress": 1
+      },
+      {
+        "key": "retry-clock-tray-02",
+        "sourceCommit": "8908cc0",
+        "valid": true,
+        "native": {
+          "factory": 0,
+          "calibration": 0,
+          "lab": 0,
+          "suite": 0
+        },
+        "summary": {
+          "settings": {
+            "Dennis": {
+              "firstTryRate": 0.5479166666666667,
+              "samples": 1440,
+              "lossCounts": {
+                "clock": 379,
+                "mid": 891,
+                "late": 28
+              },
+              "lossShares": {
+                "clock": 0.29198767334360554,
+                "mid": 0.6864406779661016,
+                "late": 0.02157164869029276
+              },
+              "riskLoss": 0.63,
+              "controlLoss": 0.395,
+              "clockCases": {
+                "132": 0,
+                "135": 0,
+                "142": 1,
+                "144": 0
+              },
+              "lossTiming": {
+                "complete": true,
+                "consistent": true,
+                "counts": {
+                  "beforeClock": 379,
+                  "clockContact": 10,
+                  "mid": 881,
+                  "late": 28
+                },
+                "shares": {
+                  "beforeClock": 0.29198767334360554,
+                  "clockContact": 0.007704160246533128,
+                  "mid": 0.6787365177195686,
+                  "late": 0.02157164869029276
+                }
+              },
+              "checks": {
+                "a": true,
+                "b": true,
+                "c": true,
+                "level142": true
+              }
+            },
+            "family": {
+              "firstTryRate": 0.33958333333333335,
+              "samples": 1440,
+              "lossCounts": {
+                "clock": 1470,
+                "mid": 1761,
+                "late": 55
+              },
+              "lossShares": {
+                "clock": 0.44735240413877053,
+                "mid": 0.5359099208764455,
+                "late": 0.016737674984783932
+              },
+              "riskLoss": 0.7150000000000001,
+              "controlLoss": 0.6,
+              "clockCases": {
+                "132": 0.5705521472392638,
+                "135": 0.21212121212121213,
+                "142": 0.7647058823529411,
+                "144": 0.1875
+              },
+              "lossTiming": {
+                "complete": true,
+                "consistent": true,
+                "counts": {
+                  "beforeClock": 1470,
+                  "clockContact": 151,
+                  "mid": 1610,
+                  "late": 55
+                },
+                "shares": {
+                  "beforeClock": 0.44735240413877053,
+                  "clockContact": 0.04595252586731589,
+                  "mid": 0.48995739500912966,
+                  "late": 0.016737674984783932
+                }
+              },
+              "checks": {
+                "a": true,
+                "b": true,
+                "c": true,
+                "level142": true
+              }
+            }
+          },
+          "developmentScreen": false,
+          "patternGatesMet": true,
+          "finalGatesMet": true,
+          "contractSchema": "human-style-pattern-contract-v2",
+          "valid": true,
+          "minutesPerBoard": 0.16671733162162167,
+          "model": "human-v1",
+          "workers": 4,
+          "wallMinutes": 3.4952182850000004
+        },
+        "factoryChecks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "labMeasured": true,
+        "lab": {
+          "contract": {
+            "schema": "human-lab-ranking-v1",
+            "setting": "dennis",
+            "runs": 20,
+            "seed": 20261029,
+            "maxAttempts": 12,
+            "primary": "Spearman(human recorded tries, complete simulated averageTries)",
+            "minimumSpearman": 0.5,
+            "requiredCoverage": "Every recorded Dennis lab target; no missing, censored or constant primary ranking can pass",
+            "excludedLevels": [
+              10031
+            ],
+            "exclusionReason": "Explicit user-defined lab cohort excludes10031",
+            "secondary": "First-try failure rank and restricted-mean-attempt rank are diagnostics only, never substitutes for an unresolved primary",
+            "prerequisite": "A passing milestone2 model and retained factory gates; no held-out measurements before human-v1 exists",
+            "levels": [
+              10011,
+              10012,
+              10015,
+              10032,
+              10033,
+              10041,
+              10042,
+              10044,
+              10045,
+              10046,
+              10047,
+              10048,
+              10049,
+              10052,
+              10053
+            ],
+            "boards": 15,
+            "dataHash": "c031ffdf74c395963596d95ce62b9755b228a16da4b60afb0ecf5b50bd8bb68e",
+            "catalogHash": "cd9f22d824d45fd2641558b9092a7d843cf636889d6e795cb22417259f9eb6cc"
+          },
+          "version": "human-v1-development",
+          "profileHash": "cf6b57069328a1aa5894243249a18d8e374c3cddbf214f105f7b9ef2eb2333d2",
+          "issues": [],
+          "rows": [
+            {
+              "lv": 10011,
+              "humanTries": 2,
+              "averageTries": null,
+              "restrictedMeanAttempts": 12,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 20,
+              "slowestMove": 6.254100000000051,
+              "minutes": 0.8300766883333334,
+              "issues": []
+            },
+            {
+              "lv": 10012,
+              "humanTries": 6,
+              "averageTries": null,
+              "restrictedMeanAttempts": 9.8,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 8,
+              "slowestMove": 4.8576000000030035,
+              "minutes": 0.6807348850000001,
+              "issues": []
+            },
+            {
+              "lv": 10015,
+              "humanTries": 11,
+              "averageTries": null,
+              "restrictedMeanAttempts": 12,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 20,
+              "slowestMove": 4.684399999998277,
+              "minutes": 0.8190628333333334,
+              "issues": []
+            },
+            {
+              "lv": 10032,
+              "humanTries": 5,
+              "averageTries": null,
+              "restrictedMeanAttempts": 12,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 20,
+              "slowestMove": 4.364100000006147,
+              "minutes": 0.5503845300000001,
+              "issues": []
+            },
+            {
+              "lv": 10033,
+              "humanTries": 5,
+              "averageTries": 6.2,
+              "restrictedMeanAttempts": 6.2,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 0,
+              "slowestMove": 6.975500000000466,
+              "minutes": 0.26647318333333336,
+              "issues": []
+            },
+            {
+              "lv": 10041,
+              "humanTries": 7,
+              "averageTries": null,
+              "restrictedMeanAttempts": 4.6,
+              "firstTryFailureRate": 0.85,
+              "rightCensoredCampaigns": 1,
+              "slowestMove": 3.220499999995809,
+              "minutes": 0.1763944499999998,
+              "issues": []
+            },
+            {
+              "lv": 10042,
+              "humanTries": 4,
+              "averageTries": 1,
+              "restrictedMeanAttempts": 1,
+              "firstTryFailureRate": 0,
+              "rightCensoredCampaigns": 0,
+              "slowestMove": 3.150099999998929,
+              "minutes": 0.21121148666666656,
+              "issues": []
+            },
+            {
+              "lv": 10044,
+              "humanTries": 1,
+              "averageTries": 1.1,
+              "restrictedMeanAttempts": 1.1,
+              "firstTryFailureRate": 0.050000000000000044,
+              "rightCensoredCampaigns": 0,
+              "slowestMove": 2.8056999999971595,
+              "minutes": 0.058283635000000264,
+              "issues": []
+            },
+            {
+              "lv": 10045,
+              "humanTries": 6,
+              "averageTries": null,
+              "restrictedMeanAttempts": 8.8,
+              "firstTryFailureRate": 0.8,
+              "rightCensoredCampaigns": 14,
+              "slowestMove": 5.699099999997998,
+              "minutes": 0.39722550499999976,
+              "issues": []
+            },
+            {
+              "lv": 10046,
+              "humanTries": 1,
+              "averageTries": 1,
+              "restrictedMeanAttempts": 1,
+              "firstTryFailureRate": 0,
+              "rightCensoredCampaigns": 0,
+              "slowestMove": 2.1379000000015367,
+              "minutes": 0.030992190000000117,
+              "issues": []
+            },
+            {
+              "lv": 10047,
+              "humanTries": 1,
+              "averageTries": 1,
+              "restrictedMeanAttempts": 1,
+              "firstTryFailureRate": 0,
+              "rightCensoredCampaigns": 0,
+              "slowestMove": 2.4755999999761116,
+              "minutes": 0.03164277666666652,
+              "issues": []
+            },
+            {
+              "lv": 10048,
+              "humanTries": 2,
+              "averageTries": 4.4,
+              "restrictedMeanAttempts": 4.4,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 0,
+              "slowestMove": 4.49210000000312,
+              "minutes": 0.35163127166666674,
+              "issues": []
+            },
+            {
+              "lv": 10049,
+              "humanTries": 2,
+              "averageTries": null,
+              "restrictedMeanAttempts": 12,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 20,
+              "slowestMove": 3.5653999999631196,
+              "minutes": 0.12208024666666654,
+              "issues": []
+            },
+            {
+              "lv": 10052,
+              "humanTries": 3,
+              "averageTries": null,
+              "restrictedMeanAttempts": 12,
+              "firstTryFailureRate": 1,
+              "rightCensoredCampaigns": 20,
+              "slowestMove": 3.194499999983236,
+              "minutes": 0.15802412500000015,
+              "issues": []
+            },
+            {
+              "lv": 10053,
+              "humanTries": 2,
+              "averageTries": 2.05,
+              "restrictedMeanAttempts": 2.05,
+              "firstTryFailureRate": 0.7,
+              "rightCensoredCampaigns": 0,
+              "slowestMove": 4.320899999991525,
+              "minutes": 0.051764948333333206,
+              "issues": []
+            }
+          ],
+          "status": "unresolved-right-censoring",
+          "primarySpearman": null,
+          "secondary": {
+            "firstTryFailureSpearman": 0.4499501467898542,
+            "restrictedMeanSpearman": 0.49075420468962294,
+            "diagnosticOnly": true
+          },
+          "rankingGateMet": false,
+          "milestone3Met": false,
+          "note": "Prospective validation is still required even when the lab ranking passes",
+          "priorMilestonesVerified": true
+        },
+        "progress": true,
+        "reason": "Retains all M1/M2 gates; complete-mean board coverage6->7;10033 now20/20 clears. Primary rank still unresolved and M3 not passed.",
+        "completeBoardsBefore": 6,
+        "completeBoardsAfter": 7,
+        "consecutiveNoProgress": 0
+      }
+    ],
     "consecutiveNoProgress": 0,
-    "stopAfter": 8
+    "stopAfter": 8,
+    "retainedAnchor": "retry-clock-tray-02-lab",
+    "completeBoards": 7,
+    "stopRequired": false
   },
   "diagnostics": [
     ".codex-runs/human-style/lab-ranking/human-v1-10011-trace.json",
     ".codex-runs/human-style/lab-ranking/human-v1-10049-trace.json"
-  ]
+  ],
+  "nextExperiment": {
+    "key": "retry-clock-tray-01",
+    "sourceCommit": "f6f53e4",
+    "profiles": {
+      "Dennis": {
+        "clockHorizon": 3,
+        "partnerHorizon": 3,
+        "clockWeight": 42,
+        "postClockKeyWeight": 32,
+        "clockUrgencyPower": 2,
+        "trayCost": 6,
+        "pairReward": 15,
+        "exploration": 4,
+        "freePeekBonus": 18,
+        "zWeight": 1.8,
+        "temperature": 0.8,
+        "lapse": 0.005,
+        "memoryDecay": 0.0005,
+        "retryRetention": 0.88,
+        "peekPatience": 2,
+        "outWeight": 9,
+        "trayDepth": 4,
+        "clockTrayDepth": 3,
+        "futureWeight": 3.5,
+        "strictClockSlack": true,
+        "flippedBlockerBalk0": 12.8,
+        "flippedBlockerBalk1": -5,
+        "deadlineAttentionProbability": 0.35,
+        "deadlineLearningRate": 0.7,
+        "clockRowPreview": 1,
+        "sharedClockIce": 1,
+        "clockOutsPlan": 1,
+        "retryClockTrayDepth": 4
+      },
+      "family": {
+        "clockHorizon": 2,
+        "partnerHorizon": 1,
+        "clockWeight": 42,
+        "postClockKeyWeight": 20,
+        "clockUrgencyPower": 1.6,
+        "trayCost": 4.8,
+        "pairReward": 16,
+        "exploration": 5,
+        "freePeekBonus": 12,
+        "zWeight": 1.2,
+        "temperature": 1.8,
+        "lapse": 0.04,
+        "memoryDecay": 0.015,
+        "retryRetention": 0.65,
+        "peekPatience": 2,
+        "outWeight": 8,
+        "trayDepth": 2,
+        "clockTrayDepth": 2,
+        "futureWeight": 1.8,
+        "strictClockSlack": false,
+        "flippedBlockerBalk0": 6,
+        "flippedBlockerBalk1": -2,
+        "extraClockLookProbability": 0.1,
+        "clockRowPreview": 1,
+        "sharedClockIce": 1,
+        "clockOutsPlan": 1,
+        "clockCompletionBonus": 40
+      }
+    },
+    "preregistration": {
+      "milestone": 3,
+      "experiment": 1,
+      "hypothesis": "After an actual before-clock loss, Dennis increases clock-active tray foresight3->4 physical actions, within the existing maximum horizon. Early clock/key route tray traps repeat on10049 and other lab boards despite prior knowledge. Keep all first attempts identical; retain M1/M2 before interpreting any lab improvement. Family unchanged. This is general per-person learning, no level labels or routes.",
+      "validation": "183-test suite; same74-board/20-campaign M2 cohort and100 factory campaigns; only then the complete15-board/20-campaign lab gate",
+      "progressRule": "Retain all previous M1/M2 gates. M3 progress requires the number of complete20/20-clear boards to increase against the retained best anchor (strictly greater, not an equal-count swap), or an already-complete primary rank to improve by>=.05. Valid full coverage and all15 targets required. Invalid/regressed runs cannot count. All histories retained.",
+      "stopAfterConsecutiveNoProgress": 8,
+      "seeds": {
+        "calibration": 20261028,
+        "factoryAndLab": 20261029
+      },
+      "maxAttempts": 12,
+      "preEvaluationClarification": "Before this candidate has any lab measurements: require a strict increase in completed-board count, preventing equal-count swaps from resetting the stop rule."
+    },
+    "status": "Complete: no lab measurements; rejected for Dennis phase regression30.46%",
+    "calibrationDirectory": ".codex-runs/human-style/lab-ranking/retry-clock-tray-01-calibration"
+  },
+  "experiments": [
+    {
+      "key": "retry-clock-tray-01",
+      "sourceCommit": "f6f53e4",
+      "valid": true,
+      "native": {
+        "factory": 0,
+        "calibration": 0,
+        "suite": 0
+      },
+      "summary": {
+        "settings": {
+          "Dennis": {
+            "firstTryRate": 0.5479166666666667,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 406,
+              "mid": 899,
+              "late": 28
+            },
+            "lossShares": {
+              "clock": 0.304576144036009,
+              "mid": 0.6744186046511628,
+              "late": 0.021005251312828207
+            },
+            "riskLoss": 0.63,
+            "controlLoss": 0.395,
+            "clockCases": {
+              "132": 0,
+              "135": 0,
+              "142": 1,
+              "144": 0
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 406,
+                "clockContact": 11,
+                "mid": 888,
+                "late": 28
+              },
+              "shares": {
+                "beforeClock": 0.304576144036009,
+                "clockContact": 0.008252063015753939,
+                "mid": 0.6661665416354089,
+                "late": 0.021005251312828207
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": false,
+              "c": true,
+              "level142": true
+            }
+          },
+          "family": {
+            "firstTryRate": 0.33958333333333335,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 1470,
+              "mid": 1761,
+              "late": 55
+            },
+            "lossShares": {
+              "clock": 0.44735240413877053,
+              "mid": 0.5359099208764455,
+              "late": 0.016737674984783932
+            },
+            "riskLoss": 0.7150000000000001,
+            "controlLoss": 0.6,
+            "clockCases": {
+              "132": 0.5705521472392638,
+              "135": 0.21212121212121213,
+              "142": 0.7647058823529411,
+              "144": 0.1875
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 1470,
+                "clockContact": 151,
+                "mid": 1610,
+                "late": 55
+              },
+              "shares": {
+                "beforeClock": 0.44735240413877053,
+                "clockContact": 0.04595252586731589,
+                "mid": 0.48995739500912966,
+                "late": 0.016737674984783932
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          }
+        },
+        "developmentScreen": false,
+        "patternGatesMet": false,
+        "finalGatesMet": false,
+        "contractSchema": "human-style-pattern-contract-v2",
+        "valid": true,
+        "minutesPerBoard": 0.16890414090090086,
+        "model": "human-v1",
+        "workers": 4,
+        "wallMinutes": 3.5615642600000004
+      },
+      "factoryChecks": {
+        "d": true,
+        "e": true,
+        "timing": true,
+        "valid": true
+      },
+      "labMeasured": false,
+      "progress": false,
+      "reason": "Retained first rates/cohort gap/142/factory, but Dennis before-clock30.46% exceeds30%; no candidate lab measurements allowed",
+      "firstAttemptOutcomeParity": {
+        "boards": 74,
+        "campaigns": 1480,
+        "passed": true
+      },
+      "consecutiveNoProgress": 1
+    },
+    {
+      "key": "retry-clock-tray-02",
+      "sourceCommit": "8908cc0",
+      "valid": true,
+      "native": {
+        "factory": 0,
+        "calibration": 0,
+        "lab": 0,
+        "suite": 0
+      },
+      "summary": {
+        "settings": {
+          "Dennis": {
+            "firstTryRate": 0.5479166666666667,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 379,
+              "mid": 891,
+              "late": 28
+            },
+            "lossShares": {
+              "clock": 0.29198767334360554,
+              "mid": 0.6864406779661016,
+              "late": 0.02157164869029276
+            },
+            "riskLoss": 0.63,
+            "controlLoss": 0.395,
+            "clockCases": {
+              "132": 0,
+              "135": 0,
+              "142": 1,
+              "144": 0
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 379,
+                "clockContact": 10,
+                "mid": 881,
+                "late": 28
+              },
+              "shares": {
+                "beforeClock": 0.29198767334360554,
+                "clockContact": 0.007704160246533128,
+                "mid": 0.6787365177195686,
+                "late": 0.02157164869029276
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          },
+          "family": {
+            "firstTryRate": 0.33958333333333335,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 1470,
+              "mid": 1761,
+              "late": 55
+            },
+            "lossShares": {
+              "clock": 0.44735240413877053,
+              "mid": 0.5359099208764455,
+              "late": 0.016737674984783932
+            },
+            "riskLoss": 0.7150000000000001,
+            "controlLoss": 0.6,
+            "clockCases": {
+              "132": 0.5705521472392638,
+              "135": 0.21212121212121213,
+              "142": 0.7647058823529411,
+              "144": 0.1875
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 1470,
+                "clockContact": 151,
+                "mid": 1610,
+                "late": 55
+              },
+              "shares": {
+                "beforeClock": 0.44735240413877053,
+                "clockContact": 0.04595252586731589,
+                "mid": 0.48995739500912966,
+                "late": 0.016737674984783932
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          }
+        },
+        "developmentScreen": false,
+        "patternGatesMet": true,
+        "finalGatesMet": true,
+        "contractSchema": "human-style-pattern-contract-v2",
+        "valid": true,
+        "minutesPerBoard": 0.16671733162162167,
+        "model": "human-v1",
+        "workers": 4,
+        "wallMinutes": 3.4952182850000004
+      },
+      "factoryChecks": {
+        "d": true,
+        "e": true,
+        "timing": true,
+        "valid": true
+      },
+      "labMeasured": true,
+      "lab": {
+        "contract": {
+          "schema": "human-lab-ranking-v1",
+          "setting": "dennis",
+          "runs": 20,
+          "seed": 20261029,
+          "maxAttempts": 12,
+          "primary": "Spearman(human recorded tries, complete simulated averageTries)",
+          "minimumSpearman": 0.5,
+          "requiredCoverage": "Every recorded Dennis lab target; no missing, censored or constant primary ranking can pass",
+          "excludedLevels": [
+            10031
+          ],
+          "exclusionReason": "Explicit user-defined lab cohort excludes10031",
+          "secondary": "First-try failure rank and restricted-mean-attempt rank are diagnostics only, never substitutes for an unresolved primary",
+          "prerequisite": "A passing milestone2 model and retained factory gates; no held-out measurements before human-v1 exists",
+          "levels": [
+            10011,
+            10012,
+            10015,
+            10032,
+            10033,
+            10041,
+            10042,
+            10044,
+            10045,
+            10046,
+            10047,
+            10048,
+            10049,
+            10052,
+            10053
+          ],
+          "boards": 15,
+          "dataHash": "c031ffdf74c395963596d95ce62b9755b228a16da4b60afb0ecf5b50bd8bb68e",
+          "catalogHash": "cd9f22d824d45fd2641558b9092a7d843cf636889d6e795cb22417259f9eb6cc"
+        },
+        "version": "human-v1-development",
+        "profileHash": "cf6b57069328a1aa5894243249a18d8e374c3cddbf214f105f7b9ef2eb2333d2",
+        "issues": [],
+        "rows": [
+          {
+            "lv": 10011,
+            "humanTries": 2,
+            "averageTries": null,
+            "restrictedMeanAttempts": 12,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 20,
+            "slowestMove": 6.254100000000051,
+            "minutes": 0.8300766883333334,
+            "issues": []
+          },
+          {
+            "lv": 10012,
+            "humanTries": 6,
+            "averageTries": null,
+            "restrictedMeanAttempts": 9.8,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 8,
+            "slowestMove": 4.8576000000030035,
+            "minutes": 0.6807348850000001,
+            "issues": []
+          },
+          {
+            "lv": 10015,
+            "humanTries": 11,
+            "averageTries": null,
+            "restrictedMeanAttempts": 12,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 20,
+            "slowestMove": 4.684399999998277,
+            "minutes": 0.8190628333333334,
+            "issues": []
+          },
+          {
+            "lv": 10032,
+            "humanTries": 5,
+            "averageTries": null,
+            "restrictedMeanAttempts": 12,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 20,
+            "slowestMove": 4.364100000006147,
+            "minutes": 0.5503845300000001,
+            "issues": []
+          },
+          {
+            "lv": 10033,
+            "humanTries": 5,
+            "averageTries": 6.2,
+            "restrictedMeanAttempts": 6.2,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 0,
+            "slowestMove": 6.975500000000466,
+            "minutes": 0.26647318333333336,
+            "issues": []
+          },
+          {
+            "lv": 10041,
+            "humanTries": 7,
+            "averageTries": null,
+            "restrictedMeanAttempts": 4.6,
+            "firstTryFailureRate": 0.85,
+            "rightCensoredCampaigns": 1,
+            "slowestMove": 3.220499999995809,
+            "minutes": 0.1763944499999998,
+            "issues": []
+          },
+          {
+            "lv": 10042,
+            "humanTries": 4,
+            "averageTries": 1,
+            "restrictedMeanAttempts": 1,
+            "firstTryFailureRate": 0,
+            "rightCensoredCampaigns": 0,
+            "slowestMove": 3.150099999998929,
+            "minutes": 0.21121148666666656,
+            "issues": []
+          },
+          {
+            "lv": 10044,
+            "humanTries": 1,
+            "averageTries": 1.1,
+            "restrictedMeanAttempts": 1.1,
+            "firstTryFailureRate": 0.050000000000000044,
+            "rightCensoredCampaigns": 0,
+            "slowestMove": 2.8056999999971595,
+            "minutes": 0.058283635000000264,
+            "issues": []
+          },
+          {
+            "lv": 10045,
+            "humanTries": 6,
+            "averageTries": null,
+            "restrictedMeanAttempts": 8.8,
+            "firstTryFailureRate": 0.8,
+            "rightCensoredCampaigns": 14,
+            "slowestMove": 5.699099999997998,
+            "minutes": 0.39722550499999976,
+            "issues": []
+          },
+          {
+            "lv": 10046,
+            "humanTries": 1,
+            "averageTries": 1,
+            "restrictedMeanAttempts": 1,
+            "firstTryFailureRate": 0,
+            "rightCensoredCampaigns": 0,
+            "slowestMove": 2.1379000000015367,
+            "minutes": 0.030992190000000117,
+            "issues": []
+          },
+          {
+            "lv": 10047,
+            "humanTries": 1,
+            "averageTries": 1,
+            "restrictedMeanAttempts": 1,
+            "firstTryFailureRate": 0,
+            "rightCensoredCampaigns": 0,
+            "slowestMove": 2.4755999999761116,
+            "minutes": 0.03164277666666652,
+            "issues": []
+          },
+          {
+            "lv": 10048,
+            "humanTries": 2,
+            "averageTries": 4.4,
+            "restrictedMeanAttempts": 4.4,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 0,
+            "slowestMove": 4.49210000000312,
+            "minutes": 0.35163127166666674,
+            "issues": []
+          },
+          {
+            "lv": 10049,
+            "humanTries": 2,
+            "averageTries": null,
+            "restrictedMeanAttempts": 12,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 20,
+            "slowestMove": 3.5653999999631196,
+            "minutes": 0.12208024666666654,
+            "issues": []
+          },
+          {
+            "lv": 10052,
+            "humanTries": 3,
+            "averageTries": null,
+            "restrictedMeanAttempts": 12,
+            "firstTryFailureRate": 1,
+            "rightCensoredCampaigns": 20,
+            "slowestMove": 3.194499999983236,
+            "minutes": 0.15802412500000015,
+            "issues": []
+          },
+          {
+            "lv": 10053,
+            "humanTries": 2,
+            "averageTries": 2.05,
+            "restrictedMeanAttempts": 2.05,
+            "firstTryFailureRate": 0.7,
+            "rightCensoredCampaigns": 0,
+            "slowestMove": 4.320899999991525,
+            "minutes": 0.051764948333333206,
+            "issues": []
+          }
+        ],
+        "status": "unresolved-right-censoring",
+        "primarySpearman": null,
+        "secondary": {
+          "firstTryFailureSpearman": 0.4499501467898542,
+          "restrictedMeanSpearman": 0.49075420468962294,
+          "diagnosticOnly": true
+        },
+        "rankingGateMet": false,
+        "milestone3Met": false,
+        "note": "Prospective validation is still required even when the lab ranking passes",
+        "priorMilestonesVerified": true
+      },
+      "progress": true,
+      "reason": "Retains all M1/M2 gates; complete-mean board coverage6->7;10033 now20/20 clears. Primary rank still unresolved and M3 not passed.",
+      "completeBoardsBefore": 6,
+      "completeBoardsAfter": 7,
+      "consecutiveNoProgress": 0
+    }
+  ],
+  "activeExperiment": {
+    "key": "retry-key-memory-03",
+    "sourceCommit": "b2bc48f",
+    "status": "184 tests/factory gates pass; full74-board M2 calibration running; no new lab score",
+    "profiles": {
+      "Dennis": {
+        "clockHorizon": 3,
+        "partnerHorizon": 3,
+        "clockWeight": 42,
+        "postClockKeyWeight": 32,
+        "clockUrgencyPower": 2,
+        "trayCost": 6,
+        "pairReward": 15,
+        "exploration": 4,
+        "freePeekBonus": 18,
+        "zWeight": 1.8,
+        "temperature": 0.8,
+        "lapse": 0.005,
+        "memoryDecay": 0.0005,
+        "retryRetention": 0.88,
+        "peekPatience": 2,
+        "outWeight": 9,
+        "trayDepth": 4,
+        "clockTrayDepth": 3,
+        "futureWeight": 3.5,
+        "strictClockSlack": true,
+        "flippedBlockerBalk0": 12.8,
+        "flippedBlockerBalk1": -5,
+        "deadlineAttentionProbability": 0.35,
+        "deadlineLearningRate": 0.7,
+        "clockRowPreview": 1,
+        "sharedClockIce": 1,
+        "clockOutsPlan": 1,
+        "retryClockTrayDepth": 4,
+        "retryClockHorizon": 4,
+        "retryKeyIdentityMemory": 1
+      },
+      "family": {
+        "clockHorizon": 2,
+        "partnerHorizon": 1,
+        "clockWeight": 42,
+        "postClockKeyWeight": 20,
+        "clockUrgencyPower": 1.6,
+        "trayCost": 4.8,
+        "pairReward": 16,
+        "exploration": 5,
+        "freePeekBonus": 12,
+        "zWeight": 1.2,
+        "temperature": 1.8,
+        "lapse": 0.04,
+        "memoryDecay": 0.015,
+        "retryRetention": 0.65,
+        "peekPatience": 2,
+        "outWeight": 8,
+        "trayDepth": 2,
+        "clockTrayDepth": 2,
+        "futureWeight": 1.8,
+        "strictClockSlack": false,
+        "flippedBlockerBalk0": 6,
+        "flippedBlockerBalk1": -2,
+        "extraClockLookProbability": 0.1,
+        "clockRowPreview": 1,
+        "sharedClockIce": 1,
+        "clockOutsPlan": 1,
+        "clockCompletionBonus": 40
+      }
+    },
+    "preregistration": {
+      "milestone": 3,
+      "experiment": 3,
+      "hypothesis": "Keep observed key membership across retries as typed location facts. The limited factory controller currently resets roles to null every attempt and does not retain observed key identities, unlike its picture memory. Reuse the existing createKeyIdentityMemory helper proven by public_key_identity_memory tests. Only facts from an earlier actual attempt may add remembered key targets; never relabel a hidden initial ice/lock overlay as currently key or infer an unseen picture. Retain the previous bounded retry-planning candidate; Dennis only, family unchanged.",
+      "validation": "Unit provenance/hidden-role/no-first-attempt-change tests;184-test suite; exact M1/M2 before complete15-board lab run. No target IDs or counts enter controller.",
+      "progressRule": "Retain all previous M1/M2 gates. M3 progress requires the number of complete20/20-clear boards to increase against the retained best anchor (strictly greater, not an equal-count swap), or an already-complete primary rank to improve by>=.05. Valid full coverage and all15 targets required. Invalid/regressed runs cannot count. All histories retained.",
+      "observedEvidence": "Controller beginAttempt clears roles; helper key identity facts are static and separately typed, expressly not proof of unobserved initial ice state.",
+      "runs": 20,
+      "seeds": {
+        "calibration": 20261028,
+        "factoryAndLab": 20261029
+      },
+      "maxAttempts": 12,
+      "unitEvidence": "New physical counterexample test uses typed previously observed key membership, leaves the opening ice role hidden and not takeable, changes retry cover priority, and independently replays the resulting win. The fresh choice is identical to control."
+    },
+    "session": 73302,
+    "rawDirectory": ".codex-runs/human-style/lab-ranking/retry-key-memory-03-calibration"
+  },
+  "nextProposedExperiment": {
+    "key": "retry-key-memory-03",
+    "preregistration": {
+      "milestone": 3,
+      "experiment": 3,
+      "hypothesis": "Keep observed key membership across retries as typed location facts. The limited factory controller currently resets roles to null every attempt and does not retain observed key identities, unlike its picture memory. Reuse the existing createKeyIdentityMemory helper proven by public_key_identity_memory tests. Only facts from an earlier actual attempt may add remembered key targets; never relabel a hidden initial ice/lock overlay as currently key or infer an unseen picture. Retain the previous bounded retry-planning candidate; Dennis only, family unchanged.",
+      "validation": "Unit provenance/hidden-role/no-first-attempt-change tests;183-test suite; exact M1/M2 before complete15-board lab run. No target IDs or counts enter controller.",
+      "progressRule": "Retain all previous M1/M2 gates. M3 progress requires the number of complete20/20-clear boards to increase against the retained best anchor (strictly greater, not an equal-count swap), or an already-complete primary rank to improve by>=.05. Valid full coverage and all15 targets required. Invalid/regressed runs cannot count. All histories retained.",
+      "observedEvidence": "Controller beginAttempt clears roles; helper key identity facts are static and separately typed, expressly not proof of unobserved initial ice state.",
+      "runs": 20,
+      "seeds": {
+        "calibration": 20261028,
+        "factoryAndLab": 20261029
+      },
+      "maxAttempts": 12
+    },
+    "status": "Preregistered next source integration; no progress claimed yet"
+  }
 }
