@@ -7,20 +7,20 @@ function summarize(rows,maxAttempts){
  const result={};
  for(const name of ['Dennis','family']){
   const main=rows.filter(r=>r.lv>=92&&r.lv<=163),samples=main.reduce((a,r)=>a+r.measure.settings[name].runs,0);
-  const first=main.reduce((a,r)=>a+r.measure.settings[name].firstTryWins,0)/samples;
+  const first=main.some(r=>r.measure.settings[name].firstTryCensored>0)?null:main.reduce((a,r)=>a+r.measure.settings[name].firstTryWins,0)/samples;
   const counts={clock:0,mid:0,late:0};
   for(const r of main)for(const k of Object.keys(counts))counts[k]+=r.measure.settings[name].lossCounts[k];
   const total=Object.values(counts).reduce((a,b)=>a+b,0),shares=Object.fromEntries(Object.entries(counts).map(([k,n])=>[k,total?n/total:null]));
-  const cohortLoss=ids=>{const rs=ids.map(lv=>rows.find(r=>r.lv===lv));assert(rs.every(Boolean));return rs.reduce((a,r)=>a+1-r.measure.settings[name].firstTryRate,0)/rs.length;};
+  const cohortLoss=ids=>{const rs=ids.map(lv=>rows.find(r=>r.lv===lv));assert(rs.every(Boolean));return rs.some(r=>r.measure.settings[name].firstTryRate===null)?null:rs.reduce((a,r)=>a+1-r.measure.settings[name].firstTryRate,0)/rs.length;};
   const riskLoss=cohortLoss(CONTRACT.cohorts[name].risk),controlLoss=cohortLoss(CONTRACT.cohorts[name].controls);
   const clockCases=Object.fromEntries(CONTRACT.clockCases.map(lv=>[lv,rows.find(r=>r.lv===lv).measure.settings[name].lossShares.clock]));
   const interval=name==='Dennis'?CONTRACT.gates.DennisFirst:CONTRACT.gates.familyFirst;
   const phaseInterval=CONTRACT.gates.beforeClock[name],level142=rows.find(r=>r.lv===142)?.measure.settings[name];
   const timingCounts={beforeClock:0,clockContact:0,mid:0,late:0};let timingComplete=true,timingConsistent=true;
   for(const r of main){const t=r.measure.settings[name].lossTiming;if(!t){timingComplete=false;continue;}const values=Object.keys(timingCounts).map(k=>t.counts?.[k]);if(!values.every(v=>Number.isInteger(v)&&v>=0)||values.reduce((a,b)=>a+b,0)!==Object.values(r.measure.settings[name].lossCounts).reduce((a,b)=>a+b,0)||t.counts.beforeClock!==r.measure.settings[name].lossCounts.clock)timingConsistent=false;for(const k of Object.keys(timingCounts))timingCounts[k]+=t.counts[k];}
-  const checks={a:first>=interval[0]&&first<=interval[1],
+  const checks={a:first!==null&&first>=interval[0]&&first<=interval[1],
    b:shares.clock!==null&&shares.clock>=phaseInterval[0]&&shares.clock<=phaseInterval[1],
-   c:riskLoss-controlLoss>=CONTRACT.gates.riskMinusControlLossAtLeast,
+   c:riskLoss!==null&&controlLoss!==null&&riskLoss-controlLoss>=CONTRACT.gates.riskMinusControlLossAtLeast,
    level142:name==='Dennis'?level142?.firstTryRate>CONTRACT.gates.level142.DennisFirstAbove:level142?.cleared/level142?.runs>=CONTRACT.gates.level142.familyClearedRateAtLeast};
   const lossTiming={complete:timingComplete,consistent:timingConsistent,counts:timingComplete?timingCounts:null,shares:timingComplete?Object.fromEntries(Object.entries(timingCounts).map(([k,n])=>[k,total?n/total:null])):null};
   result[name]={firstTryRate:first,samples,lossCounts:counts,lossShares:shares,riskLoss,controlLoss,clockCases,lossTiming,checks};

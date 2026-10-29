@@ -52,7 +52,11 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
     remembered:controller.remembered(),index:selected.index,score:selected.score});
    slowestMove=Math.max(slowestMove,performance.now()-start);
    actions.push(selected.index);frame=session.tap(selected.index);
-   if(game.clock&&state.alive[game.clock.i]&&!frame.state.alive[game.clock.i])clockLeft=frame.state.alive.reduce((a,b)=>a+b,0);
+   if(game.clock&&state.alive[game.clock.i]&&!frame.state.alive[game.clock.i]){
+    // UI takeOff removes the selected tile first, then its peek/joker mate.
+    // Match the saved-clock event even when that same tap removes two tiles.
+    clockLeft=selected.index===game.clock.i?state.alive.reduce((a,b)=>a+b,0)-1:frame.state.alive.reduce((a,b)=>a+b,0);
+   }
   }
   verifiedTaps+=verify(encoded,actions,settings,session.audit());
   const terminal={state:{alive:frame.state.alive.slice(),tray:frame.state.tray.slice(),moves:frame.state.moves,

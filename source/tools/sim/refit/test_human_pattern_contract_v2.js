@@ -9,6 +9,7 @@ function test(){
  bad=clone(rows);bad.find(r=>r.lv===142).measure.settings.family.cleared=0;assert(!summarize(bad,12).settings.family.checks.level142);
  bad=clone(rows);delete bad[4].measure.settings.Dennis.lossTiming;assert(!summarize(bad,12).finalGatesMet,'Legacy rows cannot invent clock-contact coverage');
  bad=clone(rows);bad[4].measure.settings.Dennis.lossTiming.counts.clockContact++;assert(!summarize(bad,12).finalGatesMet,'Duplicated contact losses cannot produce a passing gate');
+ bad=clone(rows);const censor=bad.find(r=>r.lv===CONTRACT.cohorts.Dennis.risk[0]);censor.measure.valid=false;censor.measure.settings.Dennis.firstTryCensored=1;censor.measure.settings.Dennis.firstTryRate=null;const incomplete=summarize(bad,12);assert.equal(incomplete.settings.Dennis.firstTryRate,null);assert.equal(incomplete.settings.Dennis.riskLoss,null);assert(!incomplete.finalGatesMet);
  for(const name of ['Dennis','family']){const c=CONTRACT.cohorts[name];assert.equal(c.risk.length,10);assert.equal(c.controls.length,10);assert(c.risk.every(lv=>!c.controls.includes(lv)));}
  console.log('PASS approved person-specific phases/cohorts, independent clock-contact accounting, unchanged first rates, replacement risk gate and142 repair gate; statistical fixtures do not assert physical model success');
 }

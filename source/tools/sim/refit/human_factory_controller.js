@@ -77,7 +77,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -86,7 +86,7 @@ function createBotController(tiles, profile, seed) {
   assert(p.temperature>0);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
-  for(const key of ['clockRowPreview','sharedClockIce'])assert(p[key]===undefined||p[key]===0||p[key]===1);
+  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan'])assert(p[key]===undefined||p[key]===0||p[key]===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
@@ -349,6 +349,12 @@ function createBotController(tiles, profile, seed) {
     }
 
     const attraction = new Map(), clock = seen.clock;
+    const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'));
+    let clockBlockingMate=false;
+    if(p.clockOutsPlan && clock && openPeek>=0 && alive[openPeek] && memory[clock.i]!==null && memory[openPeek]===memory[clock.i] && roles[clock.i]==='none' && !seen.takeable[clock.i] && tray.length<=2 && clock.remaining>=2){
+      const after=alive.slice();after[openPeek]=0;
+      clockBlockingMate=Layouts.isFree(clock.i,after,nb);
+    }
     function attract(i, depth, weight, maxDepth, isSideRow = false, path = new Set()) {
       if (path.has(i)) return;
       attraction.set(i, Math.max(attraction.get(i) ?? 0, weight));
@@ -405,12 +411,12 @@ function createBotController(tiles, profile, seed) {
       clockMovesNeeded = needSet.size;
     }
 
-    const clockNeedsKeys = clock && [...attraction.keys()].some(i => alive[i] && roles[i] === 'lock');
+    const clockNeedsKeys = clock && (clockMateLocked || [...attraction.keys()].some(i => alive[i] && roles[i] === 'lock'));
     const boardHasLocks = roles.some((role, i) => alive[i] && role === 'lock');
     const visibleKeys = tiles.map((_, i) => i).filter(i => alive[i] && roles[i] === 'key');
     const freeKeys = visibleKeys.filter(i => legal.includes(i));
     if (clockNeedsKeys) {
-      const keyW = p.clockWeight * 0.92;
+      const keyW = p.clockWeight * (clockMateLocked ? 1.35 : 0.92);
       const keyD = clockHorizon + (clockLosses > 0 ? 1 : 0);
       for (const i of visibleKeys) attract(i, 0, keyW, keyD, false);
     } else if (!clock && boardHasLocks) {
@@ -574,6 +580,26 @@ function createBotController(tiles, profile, seed) {
         }
       }
 
+      if(p.clockOutsPlan && clock && seen.takeable[clock.i] && memory[clock.i]!==null && tray.includes(memory[clock.i])){
+        if(i===clock.i)score+=p.pairReward*2.6;
+        else if(trayMatch&&face===memory[clock.i])score-=p.pairReward*2.6;
+      }
+      if(clockBlockingMate){
+        // Preserve the observed matching blocker for the clock immediately
+        // behind it; pairing it elsewhere can consume the only short out.
+        if(i===openPeek && !peek)score+=p.pairReward*2.6;
+        else if(openTwin && i!==clock.i)score-=p.pairReward*2.6;
+      }
+      if(p.clockOutsPlan && clock){
+        // An immediate pair can consume both last clock ticks. Free inspection
+        // remains possible; this local budget check needs no deep search.
+        const removes = !peek || trayMatch || openTwin;
+        const containsClock = i===clock.i || openTwin && openPeek===clock.i;
+        const ticks = openTwin || hasTwin && !trayMatch && offClock ? 2 : 1;
+        if(removes && !containsClock && ticks>=clock.remaining)score-=2000;
+        const setsUpClock=face!==null && face===memory[clock.i] && seen.takeable[clock.i];
+        if(clock.remaining<=2 && peek && face!==null && !trayMatch && !openTwin && count>=1 && !setsUpClock)score-=2400;
+      }
       if (knownDig) {
         score -= 0.5;
       } else if (down && openPeek === i && !trayMatch && !openTwin && !hasTwin) {
