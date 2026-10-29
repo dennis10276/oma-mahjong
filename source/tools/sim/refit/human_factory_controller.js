@@ -3,6 +3,7 @@ const assert = require('assert/strict');
 
 const Layouts = require('../../../www/layouts.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
+const {clockMateRouteBudget}=require('./public_clock_mate_budget.js');
 
 // Behavioral controller adapted from238f5ec. The trusted shared runner owns
 // terminal classification, capped means and independent production replay.
@@ -349,7 +350,7 @@ function createBotController(tiles, profile, seed) {
     }
 
     const attraction = new Map(), clock = seen.clock;
-    const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'));
+    const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'&&clockMateRouteBudget({alive,nb,clock,mate:i,roles,down:seen.down}).fits));
     let clockBlockingMate=false;
     if(p.clockOutsPlan && clock && openPeek>=0 && alive[openPeek] && memory[clock.i]!==null && memory[openPeek]===memory[clock.i] && roles[clock.i]==='none' && !seen.takeable[clock.i] && tray.length<=2 && clock.remaining>=2){
       const after=alive.slice();after[openPeek]=0;
