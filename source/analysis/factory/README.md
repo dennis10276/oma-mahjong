@@ -50,3 +50,16 @@ salts 2 and 3: every run clears within 6 tries, at most one run wins first try, 
 aim (2.0 at 175 rising to 3.0 at 270). The test players' rating does not predict the bot at all
 (deals at 3% and 99% for the test player both came out at 2 bot tries). Result: 15 levels at 2-2.3
 tries, 183 at 3, 188 4-5, 191 2-6, 192 5. For Dennis: 175, 184, 192 (lab ids 2175, 2184, 2192).
+
+## Batch 2 verdict (Dennis, 2026-10-29): 175 "right" (4 tries, 4 stars), 184 "easy" (1st try), 192 "way too easy" (1st try)
+"The bot is struggling for no reason." Compared with his taps (`dennis-plays.json`):
+- 192 (bot 5/5/5, Dennis 1): the clock (12 moves) has nothing on top but is blocked on both sides; the
+  way to it digs along a row (10 moves). Dennis went straight there; the bot spent its moves elsewhere
+  and ran out of time 10 times, until it remembered the board. Same pattern where the bot lost to the
+  clock in this batch: 180, 188, 194 (side-blocked, routes of 9-11 moves). Short side routes are fine.
+- 184 (bot 2/2/2, Dennis 1) and 175: the bot reached the clock at once but lost with a full tray at
+  34-44 tiles left on its first try, waiting on unseen twins; Dennis kept the tray under control.
+- 175 is the other way round: Dennis lost three times on the opening (clock 6, four tiles on top, one
+  spare move) before he saw the order; the bot found it at once.
+So the bot is weak where Dennis is strong (long sideways clock routes, mid-game tray) and strong where
+he is weak (short exact clock puzzles). Its tries are not a difficulty measure yet.
