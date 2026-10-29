@@ -60,8 +60,8 @@ Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited ph
 - Clock-contact disjoint;132 family has93 before,57 contact,13 later losses.
 - Lab-v1 baseline:15 boards,300 campaigns;9 means unresolved; primary rank null; M3 unmet.
 - M2 anchor family-clock-outs-balance-full; counter0; release verification is not a new trial.
-- M3 trial3 retains M1/M2; lab complete means6->7->8/15; rank null; counter0/8.
-- Trial4 learned locked-carry key dependency:349fefb;185 tests/factory pass; M2 run active.
+- M3 trial4 retains M1/M2; complete lab means6->7->8->9/15; rank null; counter0/8.
+- Trial4 dependency349fefb passes185 tests; trial5 preemptive key preparation preregistered.
 - M3/future remain unmet; preserve historical contracts and every failed/invalid trial.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
 -29 real family choices132/144 replay exactly; exact recorded board parity verified.

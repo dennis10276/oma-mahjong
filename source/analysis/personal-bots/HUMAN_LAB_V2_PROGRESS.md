@@ -8,7 +8,7 @@ ACTIVE and UNMET. The latest release remains human-v1 (18f0348), which passes M1
 |1: retry tray depth4|FAIL phase|30.46%|not measured|not measured|no; counter1|
 |2: retry tray/clock depth4|pass|29.20%|7|unresolved|yes; counter0|
 |3: remember observed key identities|pass|29.20%|8|unresolved|yes; counter0|
-|4: learn locked-carry key dependencies|factory/test pass; calibration running|pending|not measured|not measured|pending|
+|4: learn locked-carry key dependencies|pass|29.20%|9|unresolved|yes; counter0|
 
 Trial2 improves10033 from18/20 to20/20 clears, mean6.2 against human5. Eight complete means remain unresolved. This is progress toward M3, not a ranking pass. Restricted-mean or first-failure correlations are diagnostics only. Caps never become wins or mean attempts.
 
@@ -16,4 +16,6 @@ Trial3 reuses createKeyIdentityMemory for key locations actually observed on ear
 
 Source:f6f53e4 retry tray foresight;8908cc0 combined bounded clock foresight;b2bc48f typed key history. Preregistrations, profiles, source archives and native outputs are under .codex-runs/human-style/lab-ranking/. Full summaries and the monotonic progress ledger are in HUMAN_LAB_V1_BASELINE.json. Progress requires a strict increase in complete-board coverage or an improvement of an already-complete primary rank, with all M1/M2 gates retained. Equal-count swaps, invalid runs and infrastructure work cannot reset the8-experiment stop rule.
 
-Trial3 completes10041 (20/20, mean4.3), improves10049 from0 to16 clears, and gives10011 its first clear. Seven means remain unresolved. Trial4 learns only from a real terminal tray plus an observed/remembered locked matching partner. It prioritizes the known key route on later tries, preserving current hidden-role uncertainty and restricting extra pre-clock goals by public remaining-move slack.185 tests and factory checks pass; full M2 pending. Source349fefb.
+Trial3 completes10041 (20/20, mean4.3), improves10049 from0 to16 clears, and gives10011 its first clear. Seven means remain unresolved. Trial4 learns only from a real terminal tray plus an observed/remembered locked matching partner. It prioritizes the known key route on later tries, preserving current hidden-role uncertainty and restricting extra pre-clock goals by public remaining-move slack.185 tests and all M1/M2 gates pass. Full lab run raises complete means8->9;10045 clears20/20 at mean3;10011 regresses1->0. Six means remain unresolved. Source349fefb.
+
+Next trial5 is preregistered: prepare a key route before taking an exposed face associated with an actual earlier locked-partner trap. The controller option is not yet implemented or evaluated. The existing public clock-slack bound remains; first attempts/family stay unchanged. Current retained research anchor:retry-locked-carry-04-lab; complete means9/15; counter0/8.
