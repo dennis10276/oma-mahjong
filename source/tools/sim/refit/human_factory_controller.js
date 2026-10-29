@@ -81,20 +81,21 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
   for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
   for(const key of ['lapse','memoryDecay','retryRetention'])assert(p[key]>=0&&p[key]<=1);
   assert(p.temperature>0);
+  assert(!p.retryKeyRouteValue||p.retryLockedCarryKeys===1,'Key-route value requires actual-loss dependency learning');
   assert(!p.retryPrepareKeyOuts||p.retryLockedCarryKeys===1,'Key preparation requires actual-loss dependency learning');
   assert(p.retryClockHorizon===undefined||Number.isInteger(p.retryClockHorizon)&&p.retryClockHorizon>=p.clockHorizon&&p.retryClockHorizon<=4);
   assert(p.retryClockTrayDepth===undefined||Number.isInteger(p.retryClockTrayDepth)&&p.retryClockTrayDepth>=p.clockTrayDepth&&p.retryClockTrayDepth<=p.trayDepth&&p.retryClockTrayDepth<=4);
   assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
-  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts'])assert(p[key]===undefined||p[key]===0||p[key]===1);
+  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue'])assert(p[key]===undefined||p[key]===0||p[key]===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
@@ -237,9 +238,9 @@ function createBotController(tiles, profile, seed) {
     return false;
   }
 
-  function computeTrayHorizon(depth) {
+  function computeTrayHorizon(depth,keyWork=[],knownKeyIds=null) {
     if (!depth) return new Map();
-    const val = s => (n - s.alive.reduce((a, b) => a + b, 0)) * 4 - s.tray.length * (s.tray.length + 1) * 4;
+    const val = s => (n - s.alive.reduce((a, b) => a + b, 0)) * 4 - s.tray.length * (s.tray.length + 1) * 4 + p.pairReward*keyWork.reduce((v,i)=>v+(!s.alive[i]?1:0),0);
     const initial = { alive: state.alive.slice(), tray: state.tray.slice(), peek: state.openPeek, unlock: false };
     const base = val(initial), scores = new Map();
 
@@ -272,7 +273,7 @@ function createBotController(tiles, profile, seed) {
         next.alive[i] = 0; next.tray.push(f); if (next.peek === i) next.peek = -1;
       }
       if (!next.alive[i] && (roles[i] === 'key' || (mate && roles[s.peek] === 'key'))) {
-        if (!roles.some((r, j) => r === 'key' && next.alive[j])) next.unlock = true;
+        if (!(knownKeyIds?knownKeyIds.some(j=>next.alive[j]):roles.some((r,j)=>r==='key'&&next.alive[j]))) next.unlock = true;
       }
       return next.tray.length >= 4 ? null : next;
     }
@@ -489,7 +490,17 @@ function createBotController(tiles, profile, seed) {
     }
 
     const depth = clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3);
-    const future = computeTrayHorizon(depth);
+    const keyWork=new Set();
+    if(p.retryKeyRouteValue&&learnedKeyOut&&(!clock||clockNeedsKeys)){
+      for(const k of knownKeys){
+        for(const i of [k,...aboveTrans[k]])if(alive[i])keyWork.add(i);
+        if(nb.left[k].some(i=>alive[i])&&nb.right[k].some(i=>alive[i])){
+          const left=sideChain(k,-1),right=sideChain(k,1),row=sideChainCost(k,left)<=sideChainCost(k,right)?left:right;
+          for(const i of row)for(const j of [i,...aboveTrans[i]])if(alive[j])keyWork.add(j);
+        }
+      }
+    }
+    const future = computeTrayHorizon(depth,[...keyWork],keyWork.size?knownKeys:null);
 
     const effectiveNeed = strictClockSlack ? Math.max(clockHorizon, clockMovesNeeded) : clockHorizon;
     const clockSlack = clock ? clock.remaining - clockMovesNeeded : 99;

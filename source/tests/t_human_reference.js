@@ -47,6 +47,7 @@ const modules = [
   'test_human_retry_key_memory.js',
   'test_human_locked_carry_learning.js',
   'test_human_prepare_key_outs.js',
+  'test_human_key_route_value.js',
   'test_human_factory_rows.js',
   'test_human_shared_clock_ice.js',
   'test_human_clock_outs.js',
