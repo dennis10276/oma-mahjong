@@ -3,6 +3,9 @@ const fs=require('fs'),assert=require('assert/strict'),path=require('path');
 const {measureHuman}=require('./human_style_measure.js');
 const {captureSources}=require('./human_level_sources.js');
 const CONTRACT=require('./human_style_contract_v2.json');
+function meetsRiskGap(risk,control,threshold){
+ return Number.isFinite(risk)&&Number.isFinite(control)&&risk-control>=threshold-8*Number.EPSILON;
+}
 function summarize(rows,maxAttempts){
  const result={};
  for(const name of ['Dennis','family']){
@@ -20,7 +23,7 @@ function summarize(rows,maxAttempts){
   for(const r of main){const t=r.measure.settings[name].lossTiming;if(!t){timingComplete=false;continue;}const values=Object.keys(timingCounts).map(k=>t.counts?.[k]);if(!values.every(v=>Number.isInteger(v)&&v>=0)||values.reduce((a,b)=>a+b,0)!==Object.values(r.measure.settings[name].lossCounts).reduce((a,b)=>a+b,0)||t.counts.beforeClock!==r.measure.settings[name].lossCounts.clock)timingConsistent=false;for(const k of Object.keys(timingCounts))timingCounts[k]+=t.counts[k];}
   const checks={a:first!==null&&first>=interval[0]&&first<=interval[1],
    b:shares.clock!==null&&shares.clock>=phaseInterval[0]&&shares.clock<=phaseInterval[1],
-   c:riskLoss!==null&&controlLoss!==null&&riskLoss-controlLoss>=CONTRACT.gates.riskMinusControlLossAtLeast,
+   c:meetsRiskGap(riskLoss,controlLoss,CONTRACT.gates.riskMinusControlLossAtLeast),
    level142:name==='Dennis'?level142?.firstTryRate>CONTRACT.gates.level142.DennisFirstAbove:level142?.cleared/level142?.runs>=CONTRACT.gates.level142.familyClearedRateAtLeast};
   const lossTiming={complete:timingComplete,consistent:timingConsistent,counts:timingComplete?timingCounts:null,shares:timingComplete?Object.fromEntries(Object.entries(timingCounts).map(([k,n])=>[k,total?n/total:null])):null};
   result[name]={firstTryRate:first,samples,lossCounts:counts,lossShares:shares,riskLoss,controlLoss,clockCases,lossTiming,checks};
@@ -56,4 +59,4 @@ function main(){
  console.log(JSON.stringify(summary));if(!summary.valid)process.exitCode=2;
 }
 if(require.main===module)main();
-module.exports={CONTRACT,summarize};
+module.exports={CONTRACT,summarize,meetsRiskGap};
