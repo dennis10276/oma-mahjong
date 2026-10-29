@@ -12,8 +12,9 @@ ACTIVE and UNMET. Released human-v1 (18f0348) passes M1/M2. No human-v2 tag exis
 |retry-prepare-keys-05|pass|29.20%|9|unresolved|no / 1|
 |retry-key-route-value-06|pass|29.20%|9|unresolved|no / 2|
 |retry-key-relations-07|pass|29.20%|9|unresolved|no / 3|
+|retry-access-08|pass|29.57%|9|unresolved|no / 4|
 
-Retained research anchor: **retry-locked-carry-04-lab**,9 complete means. Counter **3/8**. Strictly greater completed-board coverage or a qualifying complete primary-rank improvement is required to reset it; infrastructure, individual extra clears and equal-count swaps cannot count.
+Retained research anchor: **retry-locked-carry-04-lab**,9 complete means. Counter **4/8**. Strictly greater completed-board coverage or a qualifying complete primary-rank improvement is required to reset it; infrastructure, individual extra clears and equal-count swaps cannot count.
 
 Typed key identity memory completed10041 and raised10049 from0 to16 clears. Learned locked-carry dependencies completed10045 (20/20, mean3). Trial6 gives10011 one clear and10049 seventeen clears, but six boards still lack complete means:10011,10012,10015,10032,10049,10052. Primary Spearman remains null, not a pass. Restricted-mean/first-failure ranks are diagnostics only.
 
@@ -25,4 +26,8 @@ Trial7 (0ee5b0e) is implemented and passes188 tests/factory gates; all M1/M2 gat
 
 Raw immutable sources, profiles, native exits, preregistrations and the full15-board measurements are under .codex-runs/human-style/lab-ranking/. Complete summaries and monotonic ledger: HUMAN_LAB_V1_BASELINE.json. Factory100/100 clears remain retained. No future forecast accuracy or ranking pass is claimed.
 
-Trial8 (a4455e7) tests remembered live down orientation plus actual public availability witnesses across retries. A witness transfers only when every earlier removed prerequisite is still removed and any required relief is present; no initial hidden role is invented. The physical counterexample wins, fresh choices stay unchanged,189/189 tests pass and factory gates pass. Full M2 calibration is running; no new lab result or progress is claimed.
+Trial8 (a4455e7) tests remembered live down orientation plus actual public availability witnesses across retries. A witness transfers only when every earlier removed prerequisite is still removed and any required relief is present; no initial hidden role is invented. The physical counterexample wins, fresh choices stay unchanged,189/189 tests pass and factory gates pass. Full M2 and all15 lab boards completed natively; see the trial8 result below.
+
+Trial8 (a4455e7): actual access/orientation memory retains all M1/M2 gates and100 factory clears;189/189 tests. Complete lab means 9/15; primary rank null; no-progress counter4/8; retained anchor retry-locked-carry-04-lab. All15 boards remain included; no human-v2 or future accuracy claimed.
+
+Next proposed trial9 (not implemented/measured): after an actual earlier loss, discourage repeated no-information peeks in the same alive/tray state, preserving the first inspection and immediate matching continuations. The production-replayed10011 trace takes309 taps but still leaves40 tiles. Counter remains4/8; this proposal does not count as progress.
