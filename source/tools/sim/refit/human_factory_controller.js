@@ -4,6 +4,7 @@ const assert = require('assert/strict');
 const Layouts = require('../../../www/layouts.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 const {clockMateRouteBudget}=require('./public_clock_mate_budget.js');
+const {createKeyIdentityMemory}=require('./public_key_identity_memory.js');
 
 // Behavioral controller adapted from238f5ec. The trusted shared runner owns
 // terminal classification, capped means and independent production replay.
@@ -80,7 +81,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -92,12 +93,13 @@ function createBotController(tiles, profile, seed) {
   assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
-  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan'])assert(p[key]===undefined||p[key]===0||p[key]===1);
+  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory'])assert(p[key]===undefined||p[key]===0||p[key]===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
   const nb = Layouts.neighbors(tiles), iceNb = Layouts.iceNeighbors(tiles);
   const n = tiles.length;
+  const retryKeyMemory=p.retryKeyIdentityMemory?createKeyIdentityMemory(n):null;
   const aboveTrans = tiles.map((_, i) => {
     const set = new Set(), stack = [...nb.above[i]];
     while (stack.length) {
@@ -114,6 +116,10 @@ function createBotController(tiles, profile, seed) {
   let clockLosses = 0;
   const failedDigs = new Map();
   let attemptDigs = [];
+
+  function rememberedKeyTargets(){
+    return retryKeyMemory?retryKeyMemory.entries().filter(f=>f.attempt<attempt&&state?.alive[f.index]).map(f=>f.index):[];
+  }
 
   function clockTrayPlanningDepth(){
     return Math.min(p.trayDepth??0,clockLosses>0&&p.retryClockTrayDepth!==undefined?p.retryClockTrayDepth:(p.clockTrayDepth??3));
@@ -168,6 +174,7 @@ function createBotController(tiles, profile, seed) {
     };
     memory = memory.map((v, i) => o.pictures[i] !== null ? o.pictures[i] : s.alive[i] && random() < p.memoryDecay ? null : v);
     roles = roles.map((v, i) => o.roles[i] ?? v);
+    retryKeyMemory?.observe(state,seen.roles,attempt);
   }
 
   function suggestsNoEasyEscape(index) {
@@ -293,6 +300,7 @@ function createBotController(tiles, profile, seed) {
     const { alive, tray, openPeek } = state;
     const legal = seen.takeable.flatMap((v, i) => v === true ? [i] : []);
     if (!legal.length) return null;
+    const priorKeyTargets=new Set(rememberedKeyTargets());
 
     function sideChain(i, dir) {
       const chain = [], visited = new Set([i]);
@@ -418,22 +426,23 @@ function createBotController(tiles, profile, seed) {
         }
       }
       if ([...needSet].some(u => roles[u] === 'lock')) {
-        for (let k = 0; k < n; k++) if (alive[k] && roles[k] === 'key') needSet.add(k);
+        for (let k = 0; k < n; k++) if (alive[k] && (roles[k] === 'key'||priorKeyTargets.has(k))) needSet.add(k);
       }
       clockMovesNeeded = needSet.size;
     }
 
     const clockNeedsKeys = clock && (clockMateLocked || [...attraction.keys()].some(i => alive[i] && roles[i] === 'lock'));
     const boardHasLocks = roles.some((role, i) => alive[i] && role === 'lock');
-    const visibleKeys = tiles.map((_, i) => i).filter(i => alive[i] && roles[i] === 'key');
-    const freeKeys = visibleKeys.filter(i => legal.includes(i));
+    // Remembered membership is a goal location, never a current role/takeability claim.
+    const knownKeys = tiles.map((_, i) => i).filter(i => alive[i] && (roles[i] === 'key'||priorKeyTargets.has(i)));
+    const freeKeys = knownKeys.filter(i => legal.includes(i));
     if (clockNeedsKeys) {
       const keyW = p.clockWeight * (clockMateLocked ? 1.35 : 0.92);
       const keyD = clockHorizon + (clockLosses > 0 ? 1 : 0);
-      for (const i of visibleKeys) attract(i, 0, keyW, keyD, false);
+      for (const i of knownKeys) attract(i, 0, keyW, keyD, false);
     } else if (!clock && boardHasLocks) {
       const keyW = p.postClockKeyWeight ?? p.clockWeight * 0.75;
-      for (const i of visibleKeys) {
+      for (const i of knownKeys) {
         if (!legal.includes(i) || freeKeys.length >= 2 || tray.length <= 1) {
           attract(i, 0, keyW, clockHorizon, false);
         }
@@ -638,7 +647,7 @@ function createBotController(tiles, profile, seed) {
     return { index: selected.index, score: selected.score };
   }
 
-  return { beginAttempt, endAttempt, observe, decide, remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack,clockTrayDepth:clockTrayPlanningDepth()}) };
+  return { beginAttempt, endAttempt, observe, decide, rememberedKeyTargets, keyIdentityEvidence:()=>retryKeyMemory?.entries()??[], remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack,clockTrayDepth:clockTrayPlanningDepth()}) };
 }
 
 module.exports={createFactoryController:createBotController,PROFILES};

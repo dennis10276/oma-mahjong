@@ -44,6 +44,7 @@ const modules = [
   'test_human_v0_parallel.js',
   'test_human_factory_profiles.js',
   'test_human_factory_attention.js',
+  'test_human_retry_key_memory.js',
   'test_human_factory_rows.js',
   'test_human_shared_clock_ice.js',
   'test_human_clock_outs.js',
