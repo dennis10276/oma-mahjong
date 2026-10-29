@@ -556,7 +556,9 @@ function nudge(b, target, seed, keep, spare, kind, steps = +(process.env.STEPS |
 const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 }, brutal: { Dennisisdebeste: 0.02, 'Mrs. Doubtfire': 0.01 }, honest: null }, SPARE = { hard: 2, veryhard: 1, brutal: 1, honest: 2 };
 const OUTD = path.join(__dirname, 'ideas-out');
 const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 80 }, (_, k) => 'blob' + (9001 + k * 37))];
-if (process.argv[2] === 'merge') {
+module.exports = { IDEAS, ctxOf, fix, valid, clone, rngOf, measure, setExact: v => { EXACT = v; } };
+if (require.main !== module) { /* used as a module by tools/factory/plan.js */ }
+else if (process.argv[2] === 'merge') {
   const ideas = fs.readdirSync(OUTD).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8'))).filter(x => x.id >= +(process.argv[3] || 0)).sort((a, b) => a.id - b.id);
   fs.writeFileSync(path.join(__dirname, 'lab-ideas.js'), '/* made by tools/lab/ideas.js */\nconst LAB_IDEAS = ' + JSON.stringify({ made: new Date().toISOString(), levels: LEVELS, ideas }) + ';\n');
   console.log(`lab-ideas.js: ${ideas.length} ideas`);

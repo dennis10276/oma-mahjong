@@ -74,3 +74,16 @@ games; the frozen strong bot must clear within 6 in each of 3 runs. Deals are bi
 14 of 20 levels done (human 38-62% first try); 185, 191, 192 found no deal in band (new piles
 needed), 181, 190, 194 still running. For Dennis: 176, 182, 193 (175 is the same board as batch 2's,
 which he already called "right").
+
+## Batch 3 verdict (Dennis, 2026-10-29): 176 "way too easy" (1 star, won first try in under 2 minutes)
+"The strong bot needing 1/1/1 tries is a bad sign. I shouldn't be able to make it without thinking.
+Don't focus on deals but really plan the levels."
+
+## Batch 4: planned levels (`tools/factory/plan.js`, `batch-175-planned.jsonl`)
+Each level is built around the lab puzzles Dennis rated 4-5 stars (tools/lab/ideas.js, now usable as a
+module): chainReaction, iceChain, lockedPartners, deepKeys, lockedClock, dontGrab, trayJuggleLocked,
+alone or as key puzzle + clock puzzle. The clock is the exact shortest way plus 2 spare moves. Kept
+only if the strong bot fails its first try in at least 2 of 3 runs (no 1/1/1) and clears every run
+within 6. Pilot: 175 chainReaction (bot 2/2/2), 176 lockedClock (3/2/2), 178 deepKeys + iceChain
+(2/2/1). lockedPartners + iceChain came out with no way out within 6 (too tight); lockedClock alone
+is often 1/1/1.
