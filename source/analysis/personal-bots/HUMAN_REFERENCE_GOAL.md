@@ -56,10 +56,10 @@ Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-
 -19:32.99/27.92%;20:32.71/25.35%;21:35.97/27.92% first try (Dennis/family).
 - Audited release check passes d/e/timing; slowest6.34ms;20 runs1.4-4.1s/board.
 - human-v0 tag=bcac396; default100-campaign outcomes reproduced exactly.
-- M2 candidates4/5: first51.39/29.17%; all factory d/e pass; no new tag.
-- Retry candidate5 clears all100 factory campaigns; hard mean3.6 tries.
+- M2 candidate10: first51.39/29.17%; both a/b pass; c unmet; no new tag.
+- Retry candidate10 clears all100 factory campaigns; hard mean3.55 tries.
 - Clock-phase/case targets disputed by fresh logs; user clarification pending.
--176/176 tests pass;5 M2 trials complete; original-score anchor4,counter1.
+-177/177 tests pass;11 M2 trials complete; original-score anchor10,counter1.
 - Lab15 cohort/ranking protocol prepared;0 model runs; actual lab gate still unmet.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
 - Small source commits; raw logs/snapshots under .codex-runs/human-style/.

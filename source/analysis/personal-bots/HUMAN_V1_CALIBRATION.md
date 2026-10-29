@@ -18,7 +18,7 @@ and clock-case evidence is pending. No human-v1 tag is justified yet.
 |4: equal family attention split|51.39%|29.17%|55.41/54.57%|pass|
 |5: learn deadline attention after losses|51.39%|29.17%|50.40/54.57%|pass|
 
-All five are complete74-board,20-campaign,up-to12-actual-try evaluations.
+All eleven are complete74-board,20-campaign,up-to12-actual-try evaluations.
 Every tap independently replays; all native workers exit0. The same profiles and
 actor/physics sources are verified between each factory and calibration run.
 
@@ -95,3 +95,12 @@ Source support committed47e79b2. Final175/175 suite completed with native exit0;
 all five factory/calibration process pairs and their four-worker groups exited0.
 The score anchor remains4;5 is retained as the retry-repair research candidate.
 The default release is still human-v0 atbcac396.
+
+## Authorized continuation6-11
+
+See HUMAN_V1_BATCH_06_11.md and milestone2.currentBatch in the experiment
+report for the six complete evaluations and original progress accounting.
+Trial10 gains family.b while retaining Dennis.a/b, family.a and M1; current
+score anchor10. Source support610deb8, explicit research profileec518c6.
+No human-v1 release: original.c remains unmet and phase-target clarification
+is pending. All177 tests pass; default v0 factory campaign outcomes preserved.

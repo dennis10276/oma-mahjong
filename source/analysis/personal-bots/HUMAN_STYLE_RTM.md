@@ -35,10 +35,14 @@ Its escape-aversion estimate is a heuristic, not an exhaustive death certificate
 
 M2 target clarification: HUMAN_PHASE_TARGET_AUDIT.md. Clock logs record saving
 the clock. Original gates are unchanged while the user question is pending.
-Five bounded candidate trials are complete; score anchor4, no-progress counter1.
+Eleven bounded candidate trials are complete; score anchor10, no-progress counter1.
 Research profiles are explicit options; default v0 and the frozen reference stay
-unchanged. Trial5 restores all100 factory clears with hard-board mean3.6.
+unchanged. Trial10 retains all100 factory clears with hard-board mean3.55.
 
 Lab preparation: HUMAN_LAB_RANKING_PREPARATION.md and the preregistered JSON
-contract.176/176 tests pass;M3 actual ranking and prospective validation remain
+contract.177/177 tests pass;M3 actual ranking and prospective validation remain
 unverified. No calibration trial or stop-counter reset was claimed for preparation.
+
+Authorized batch6-11: HUMAN_V1_BATCH_06_11.md. Trial10 passes M2.a/b for
+both settings and retains M1; M2.c remains UNMET. Six completed, no new release
+tag, no actual lab score, no frozen prospective claim. Test suite177/177.
