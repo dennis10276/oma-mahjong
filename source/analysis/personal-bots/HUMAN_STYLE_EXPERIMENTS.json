@@ -1,6 +1,6 @@
 {
   "schema": "human-style-experiment-report-v2",
-  "status": "MILESTONE2_FIRST_RATE_AND_PHASE_GATES_PASS_CASE_GATE_UNMET",
+  "status": "CURRENT_APPROVED_CONTRACT_V2_ACTIVE_AND_UNMET",
   "goal": "Frozen reference plus human-like pattern calibration; per-level attempt matching cancelled",
   "boardsPerTrial": 74,
   "progressionBoards": 72,
@@ -8866,7 +8866,7 @@
         ]
       }
     },
-    "targetEvidenceStatus": "Original gates retained; clock-save event semantics and person-specific evidence require user clarification. No replacement tag.",
+    "targetEvidenceStatus": "Resolved by Dennis: use audited person-specific phases and cohorts; preserve first/factory gates; repair142",
     "phaseAudit": {
       "OmaHanny": {
         "levels": 37,
@@ -11240,5 +11240,11 @@
     "runsPerSettingBoard": 20,
     "maxAttempts": 12,
     "screenOnly": false
+  },
+  "currentApprovedEvaluation": {
+    "contract": "human_style_contract_v2.json",
+    "report": "HUMAN_PHASE_V2_RESULTS.json",
+    "readable": "HUMAN_PHASE_V2_PROGRESS.md",
+    "note": "The existing milestone2 calibrationLedger and batch6-11 remain historical contract1 scores; do not interpret their phase passes as passing v2"
   }
 }

@@ -57,11 +57,12 @@ Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited ph
 -19:32.99/27.92%;20:32.71/25.35%;21:35.97/27.92% first try (Dennis/family).
 - Audited release check passes d/e/timing; slowest6.34ms;20 runs1.4-4.1s/board.
 - human-v0 tag=bcac396; default100-campaign outcomes reproduced exactly.
-- M2 candidate10: first51.39/29.17%; both a/b pass; c unmet; no new tag.
-- Retry candidate10 clears all100 factory campaigns; hard mean3.55 tries.
+- Current v1 research: first51.18/29.51%; a passes; b/c still partial; no tag.
+- Current research retains all100 factory clears; hard mean2.5 tries.
 - Dennis approved person-specific phase/cohort replacement; v2 contract preregistered.
--179/179 tests pass;11 historical trials complete; original-score anchor10,counter1.
-- Shared-ice repair retains d/e and100 factory clears; v2 full cohort running.
+-181/181 tests; all histories retained; approved-v2 score anchor key-outs-repair,counter1.
+-142 fixed:19/20 Dennis first wins;18/20 family clear (shared-ice-only20/20).
+- Before-clock50.94/50.39% still fails person targets; family risk gap3pp<10pp.
 - Lab15 cohort/ranking protocol prepared;0 model runs; actual lab gate still unmet.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
 - Small source commits; raw logs/snapshots under .codex-runs/human-style/.

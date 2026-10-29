@@ -1,4 +1,7 @@
-# Milestone2 calibration and source audit
+# Historical contract1 calibration and source audit
+
+Current requirements and results are HUMAN_PHASE_V2_PROGRESS.md. Dennis approved
+the phase/cohort replacement; pending-question references below are historical.
 
 ACTIVE and UNMET. human-v0 remains the released factory version (bcac396).
 The previous goal turn made concrete progress: first release, source audit and

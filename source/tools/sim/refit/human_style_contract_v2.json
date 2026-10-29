@@ -37,7 +37,7 @@
     142,
     144
   ],
-  "controlsSource": "first ten ascending levels92-163 with >=1 win and zero observed clock/tray/stuck losses across all cached plays.json players; archival coverage ends Dennis150, Mrs103; absence of observed loss is not proof nobody ever lost",
+  "controlsSource": "Separate frozen Dennis/Mrs. Doubtfire natural-first-clear audits92-163: top ten completed-loss counts, ties ascending ID; first ten ascending positive-win/zero-observed-loss controls. Exact counts/missing coverage and input SHA are in cohorts.",
   "lateDefinition": "after clock, at most10 remaining tiles",
   "gates": {
     "DennisFirst": [
@@ -65,10 +65,11 @@
     }
   },
   "caveats": [
-    "risk labels supplied by user; archived plays coverage is incomplete",
-    "89 and91 may use reconstructed boards; preserve provenance",
-    "one-attempt screens are development only; final aggregate requires multi-attempt campaigns",
-    "no per-level policy parameters"
+    "Observed-zero-loss controls are not proof of lifetime loss-free play",
+    "Mrs. Doubtfire phase/cohort reference does not pool Gerda or OmaHanny",
+    "89 and91 retained only for compatibility diagnostics; per-person risk/controls are within92-163",
+    "One-attempt screens cannot certify complete campaigns",
+    "No per-board policy parameters"
   ],
   "stopRule": "Stop after eight experiments without progress on a-c. Baseline is prerequisite, not completion.",
   "approvedChange": "Dennis,2026-10-29: audited person-specific phases; retain first/factory gates; replace clock cases by per-person risk controls; repair142",

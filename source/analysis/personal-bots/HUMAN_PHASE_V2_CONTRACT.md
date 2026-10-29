@@ -39,5 +39,14 @@ Default human-v0 and frozen Track A remain unchanged.
 
 179/179 offline tests pass. One recorded counterexample wins with independent
 production replay; its frozen-profile control expires. All100 factory campaigns
-clear and d/e pass. Full74-board,20-campaign-per-setting evaluation is running;
-one counterexample does not certify the cohort or human-v1 milestone.
+clear and d/e pass. Full74-board evaluation is complete:142 Dennis19/20 first,20/20 by try2;
+family1/20 first,20/20 within12. Overall first52.71/29.24%; before-clock
+45.40/53.71% still miss the approved ranges. Risk gaps26.5/0.5pp.
+The level142 repair is verified; M2 remains unmet.
+
+Subsequent clock-out planning is experimental: preserve a known clock match,
+unlock its visible partner, and avoid pairs that consume the remaining clock
+budget. Its first full run was rejected (five censored campaigns; worker3
+exit2). All five exact seeds now reach actual outcomes after repairing known-
+peek stagnation;180 tests pass. A fresh full cohort run is in progress.
+No cap is counted as a loss or allowed to supply a free retry.

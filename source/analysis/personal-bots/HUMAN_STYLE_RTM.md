@@ -17,10 +17,10 @@ source/profile version. Tests alone do not establish human calibration.
 |M1.e|Hard factory2-175 lower and loses mostly at clock|8/20 first;19/23 losses at clock (82.61%); at least35pp lower than each easy|PASSED|
 |M1.time|20 runs per board<5min|Release1.4-4.1s/board, up to12 actual tries; no censoring|PASSED|
 |M1.release|Commit/tag human-v0;10-line API note|Human-v0 release check passes; goal-file API note; tag human-v0 points tobcac396 after verified release|RELEASE VERIFIED|
-|M2.a|Dennis50-55%,weaker family25-35% on92-163|Candidates4/5: Dennis51.39%,family29.17%; fixed full74-board campaigns|VERIFIED FOR C4/C5|
-|M2.b|Approved before-clock shares Dennis20-30%,family35-45%; disjoint clock-contact report|V2 contract frozen;179 tests pass; new full cohort running|UNMET|
-|M2.c|Per-person top10 vs10 observed-zero-loss controls;gap>=10pp|Audited separate cohorts frozen in v2 contract; no forced clock-case majority|UNMET|
-|M2.142|Repair public clock failure; majority Dennis first wins and family clear coverage|Single independently replayed repair wins;20-run full cohort pending|UNMET|
+|M2.a|Dennis50-55%,family25-35% on92-163|Current exact-timing candidate51.18/29.51%; full fixed cohort|PASSED FOR RESEARCH|
+|M2.b|Approved before-clock shares Dennis20-30%,family35-45%; disjoint clock-contact report|Current50.94/50.39%; exact removal order and counts validated|UNMET|
+|M2.c|Per-person top10 vs10 observed-zero-loss controls;gap>=10pp|Current Dennis35pp passes; family3pp fails|PARTIAL|
+|M2.142|Repair public clock failure; majority Dennis first wins and family clear coverage|Current Dennis19/20 first,20/20 clear;family18/20 clear within12|PASSED FOR RESEARCH|
 |M2.keep|Retain d/e when releasing human-v1|Frozen v0 five-board release benchmark retained|REQUIRED|
 |M3.f|Lab Spearman ranking,no per-board fitting|15-target protocol/scorer prepared;actual run requires passed M2;0 lab predictions|UNMET|
 |M3.keep|Human-v2 retains all earlier gates|Milestone2 prerequisite unmet|UNMET|
@@ -53,3 +53,10 @@ batch6-11 results above retain their original contract; current requirements
 are HUMAN_PHASE_V2_CONTRACT.md and human_style_contract_v2.json. No previous
 score is relabeled as passing the amended goal. Shared-ice factory100/100 and
 d/e pass;179/179 tests; full cohort and M2 gates remain unverified.
+
+Current verified state: HUMAN_PHASE_V2_PROGRESS.md / HUMAN_PHASE_V2_RESULTS.json.
+Source8df9a86 and baa07d1;181 tests; all100 current factory campaigns clear.
+The invalid worker-exit2 run is retained; five caps never become losses.
+Exact clock timing preserves2960 legacy outcomes; default v0 preserves100
+release outcomes. Approved-v2 counter1; score anchor key-outs-repair-full.
+No human-v1/v2 tag, actual lab ranking or prospective success is claimed.
