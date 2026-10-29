@@ -80,13 +80,14 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
   for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
   for(const key of ['lapse','memoryDecay','retryRetention'])assert(p[key]>=0&&p[key]<=1);
   assert(p.temperature>0);
+  assert(p.retryClockTrayDepth===undefined||Number.isInteger(p.retryClockTrayDepth)&&p.retryClockTrayDepth>=p.clockTrayDepth&&p.retryClockTrayDepth<=p.trayDepth&&p.retryClockTrayDepth<=4);
   assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
@@ -112,6 +113,10 @@ function createBotController(tiles, profile, seed) {
   let clockLosses = 0;
   const failedDigs = new Map();
   let attemptDigs = [];
+
+  function clockTrayPlanningDepth(){
+    return Math.min(p.trayDepth??0,clockLosses>0&&p.retryClockTrayDepth!==undefined?p.retryClockTrayDepth:(p.clockTrayDepth??3));
+  }
 
   function beginAttempt() {
     clockHorizon=p.clockHorizon+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0);
@@ -460,7 +465,7 @@ function createBotController(tiles, profile, seed) {
       }
     }
 
-    const depth = clock ? Math.min(p.trayDepth ?? 0, p.clockTrayDepth ?? 3) : (p.trayDepth ?? 3);
+    const depth = clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3);
     const future = computeTrayHorizon(depth);
 
     const effectiveNeed = strictClockSlack ? Math.max(clockHorizon, clockMovesNeeded) : clockHorizon;
@@ -632,7 +637,7 @@ function createBotController(tiles, profile, seed) {
     return { index: selected.index, score: selected.score };
   }
 
-  return { beginAttempt, endAttempt, observe, decide, remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack}) };
+  return { beginAttempt, endAttempt, observe, decide, remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack,clockTrayDepth:clockTrayPlanningDepth()}) };
 }
 
 module.exports={createFactoryController:createBotController,PROFILES};

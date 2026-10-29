@@ -13,6 +13,13 @@ function test(){
  const learner=createFactoryController(tiles,{...PROFILES.dennis,deadlineAttentionProbability:0,deadlineLearningRate:.5},31);learner.beginAttempt();assert.equal(learner.planningAttention().strictClockSlack,false);
  learner.endAttempt('mid',[]);learner.beginAttempt();assert.equal(learner.planningAttention().strictClockSlack,false,'A mid-game loss does not fabricate clock-learning evidence');
  learner.endAttempt('beforeClock',[]);learner.endAttempt('beforeClock',[]);learner.beginAttempt();assert.equal(learner.planningAttention().strictClockSlack,true,'Repeated actual clock losses raise deadline attention');
+ const retryProfile={...PROFILES.dennis,trayDepth:4,retryClockTrayDepth:4};
+ const trayLearner=createFactoryController(tiles,retryProfile,31);trayLearner.beginAttempt();assert.equal(trayLearner.planningAttention().clockTrayDepth,3);
+ trayLearner.endAttempt('mid',[]);trayLearner.beginAttempt();assert.equal(trayLearner.planningAttention().clockTrayDepth,3,'Later tray losses cannot invent pre-clock learning');
+ trayLearner.endAttempt('beforeClock',[]);trayLearner.beginAttempt();assert.equal(trayLearner.planningAttention().clockTrayDepth,4,'A real pre-clock loss permits one additional physical tray action on retry');
+ const baseRetry={...retryProfile};delete baseRetry.retryClockTrayDepth;
+ for(const seed of [1,31,85])assert.deepEqual(science(campaign(game,retryProfile,seed,{maxAttempts:1,controllerFactory:createFactoryController})),science(campaign(game,baseRetry,seed,{maxAttempts:1,controllerFactory:createFactoryController})),'Retry foresight must preserve actual first-attempt choices and physical outcomes');
+ assert.throws(()=>createFactoryController(tiles,{...retryProfile,retryClockTrayDepth:5},1));
  assert.equal(modes.size,4,'Fixed personal attention variability must allow both limited horizons and deadline-attention states');
  assert.throws(()=>createFactoryController(tiles,{...PROFILES.dennis,extraClockLookProbability:1.01},1));
  assert.throws(()=>createFactoryController(tiles,{...PROFILES.dennis,deadlineAttentionProbability:-.01},1));
