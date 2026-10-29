@@ -49,6 +49,7 @@ const modules = [
   'test_human_prepare_key_outs.js',
   'test_human_key_route_value.js',
   'test_human_key_picture_relations.js',
+  'test_human_retry_access_memory.js',
   'test_human_factory_rows.js',
   'test_human_shared_clock_ice.js',
   'test_human_clock_outs.js',
@@ -200,3 +201,4 @@ module.exports = modules.map(filename => ({
     else if (typeof loaded.test === 'function') await loaded.test();
   },
 }));
+

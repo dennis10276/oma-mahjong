@@ -5,6 +5,7 @@ const Layouts = require('../../../www/layouts.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 const {clockMateRouteBudget}=require('./public_clock_mate_budget.js');
 const {createKeyIdentityMemory}=require('./public_key_identity_memory.js');
+const {createRetryAccessMemory}=require('./public_retry_access_memory.js');
 
 // Behavioral controller adapted from238f5ec. The trusted shared runner owns
 // terminal classification, capped means and independent production replay.
@@ -81,7 +82,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -96,7 +97,7 @@ function createBotController(tiles, profile, seed) {
   assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
-  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations'])assert(p[key]===undefined||p[key]===0||p[key]===1);
+  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory'])assert(p[key]===undefined||p[key]===0||p[key]===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
@@ -104,6 +105,7 @@ function createBotController(tiles, profile, seed) {
   const n = tiles.length;
   const retryKeyMemory=p.retryKeyIdentityMemory?createKeyIdentityMemory(n):null;
   const keyPictureRelations=new Map();
+  const retryAccess=p.retryAccessMemory?createRetryAccessMemory(n):null;
   const aboveTrans = tiles.map((_, i) => {
     const set = new Set(), stack = [...nb.above[i]];
     while (stack.length) {
@@ -186,6 +188,7 @@ function createBotController(tiles, profile, seed) {
     memory = memory.map((v, i) => o.pictures[i] !== null ? o.pictures[i] : s.alive[i] && random() < p.memoryDecay ? null : v);
     roles = roles.map((v, i) => o.roles[i] ?? v);
     retryKeyMemory?.observe(state,seen.roles,attempt);
+    retryAccess?.observe(state,seen,attempt);
     if(p.retryKeyPictureRelations){
       const keys=retryKeyMemory.keys();
       for(let a=0;a<keys.length;a++)for(let b=a+1;b<keys.length;b++){
@@ -258,7 +261,9 @@ function createBotController(tiles, profile, seed) {
     if (!depth) return new Map();
     const val = s => (n - s.alive.reduce((a, b) => a + b, 0)) * 4 - s.tray.length * (s.tray.length + 1) * 4 + p.pairReward*keyWork.reduce((v,i)=>v+(!s.alive[i]?1:0),0);
     const initial = { alive: state.alive.slice(), tray: state.tray.slice(), peek: state.openPeek, unlock: false };
-    const base = val(initial), scores = new Map();
+    const base = val(initial), scores = new Map(),accessMasks=new WeakMap();
+    const rememberedDown=i=>seen.down[i]??retryAccess?.downValue(i,attempt)??null;
+    const accessProved=(s,i)=>{if(!retryAccess)return false;let mask=accessMasks.get(s);if(mask===undefined){mask=retryAccess.removedMask(s.alive);accessMasks.set(s,mask);}return retryAccess.canTake(i,mask,state.relieved,attempt);};
 
     function iceReady(s, i) {
       const need = roles[i] === 'ice' ? 1 : roles[i] === 'ice2' ? 2 : 0;
@@ -268,11 +273,11 @@ function createBotController(tiles, profile, seed) {
     function isFreeAndUsable(s, i) {
       if (!s.alive[i] || !Layouts.isFree(i, s.alive, nb)) return false;
       return seen.takeable[i] === true || roles[i] === 'none' || roles[i] === 'key' ||
-        (roles[i] === 'lock' && s.unlock) || iceReady(s, i);
+        (roles[i] === 'lock' && s.unlock) || iceReady(s, i) || accessProved(s,i);
     }
 
     function stepMove(s, i) {
-      if (seen.down[i] === null || s.tray.includes(101)) return null;
+      if (rememberedDown(i) === null || s.tray.includes(101)) return null;
       const f = memory[i];
       if (f === null || f === 101) return null;
       const next = { alive: s.alive.slice(), tray: s.tray.slice(), peek: s.peek, unlock: s.unlock };
@@ -282,13 +287,13 @@ function createBotController(tiles, profile, seed) {
         next.alive[i] = 0; next.tray.splice(q, 1); if (next.peek === i) next.peek = -1;
       } else if (mate) {
         next.alive[i] = 0; next.alive[s.peek] = 0; next.peek = -1;
-      } else if (seen.down[i] === 1 && s.peek !== i) {
+      } else if (rememberedDown(i) === 1 && s.peek !== i) {
         // A known closed picture still needs its physical peek before a take.
         next.peek = i;
       } else {
         next.alive[i] = 0; next.tray.push(f); if (next.peek === i) next.peek = -1;
       }
-      if (!next.alive[i] && (roles[i] === 'key' || (mate && roles[s.peek] === 'key'))) {
+      if (!next.alive[i] && (roles[i] === 'key' || retryAccess&&knownKeyIds?.includes(i) || mate&&(roles[s.peek]==='key'||retryAccess&&knownKeyIds?.includes(s.peek)))) {
         if (!(knownKeyIds?knownKeyIds.some(j=>next.alive[j]):roles.some((r,j)=>r==='key'&&next.alive[j]))) next.unlock = true;
       }
       return next.tray.length >= 4 ? null : next;
@@ -314,7 +319,7 @@ function createBotController(tiles, profile, seed) {
     for (let i = 0; i < n; i++) {
       if (seen.takeable[i] === true) {
         const nxt = stepMove(initial, i);
-        const known = memory[i] !== null && seen.down[i] !== null && memory[i] !== 101 && !initial.tray.includes(101);
+        const known = memory[i] !== null && rememberedDown(i) !== null && memory[i] !== 101 && !initial.tray.includes(101);
         scores.set(i, nxt ? search(nxt, depth - 1) - base : known ? -100 : 0);
       }
     }
@@ -516,7 +521,7 @@ function createBotController(tiles, profile, seed) {
         }
       }
     }
-    const future = computeTrayHorizon(depth,[...keyWork],keyWork.size?knownKeys:null);
+    const future = computeTrayHorizon(depth,[...keyWork],keyWork.size||retryAccess?knownKeys:null);
 
     const effectiveNeed = strictClockSlack ? Math.max(clockHorizon, clockMovesNeeded) : clockHorizon;
     const clockSlack = clock ? clock.remaining - clockMovesNeeded : 99;
@@ -687,7 +692,7 @@ function createBotController(tiles, profile, seed) {
     return { index: selected.index, score: selected.score };
   }
 
-  return { beginAttempt, endAttempt, observe, decide, keyPictureRelationEvidence:()=>[...keyPictureRelations.values()].map(f=>({...f})), lockedCarryEvidence:()=>[...learnedLockedCarry.values()].map(f=>({...f})), rememberedKeyTargets, keyIdentityEvidence:()=>retryKeyMemory?.entries()??[], remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack,clockTrayDepth:clockTrayPlanningDepth()}) };
+  return { beginAttempt, endAttempt, observe, decide, retryAccessEvidence:()=>retryAccess?.evidence()??[], keyPictureRelationEvidence:()=>[...keyPictureRelations.values()].map(f=>({...f})), lockedCarryEvidence:()=>[...learnedLockedCarry.values()].map(f=>({...f})), rememberedKeyTargets, keyIdentityEvidence:()=>retryKeyMemory?.entries()??[], remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack,clockTrayDepth:clockTrayPlanningDepth()}) };
 }
 
 module.exports={createFactoryController:createBotController,PROFILES};
