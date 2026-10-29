@@ -54,7 +54,8 @@ const PROFILES = {
     futureWeight: 1.8,
     strictClockSlack: false,
     flippedBlockerBalk0: 6.0,
-    flippedBlockerBalk1: -2.0
+    flippedBlockerBalk1: -2.0,
+    extraClockLookProbability: 0.5
   }
 };
 
