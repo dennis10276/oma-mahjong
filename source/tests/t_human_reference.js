@@ -48,6 +48,7 @@ const modules = [
   'test_human_shared_clock_ice.js',
   'test_human_clock_outs.js',
   'test_public_clock_mate_budget.js',
+  'test_human_clock_completion.js',
   'test_human_pattern_contract_v2.js',
   'test_human_clock_loss_timing.js',
   'test_human_event_phase_audit.js',

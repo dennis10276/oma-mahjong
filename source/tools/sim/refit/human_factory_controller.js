@@ -78,13 +78,14 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
   for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
   for(const key of ['lapse','memoryDecay','retryRetention'])assert(p[key]>=0&&p[key]<=1);
   assert(p.temperature>0);
+  assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
   for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan'])assert(p[key]===undefined||p[key]===0||p[key]===1);
@@ -350,7 +351,9 @@ function createBotController(tiles, profile, seed) {
     }
 
     const attraction = new Map(), clock = seen.clock;
-    const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'&&clockMateRouteBudget({alive,nb,clock,mate:i,roles,down:seen.down}).fits));
+    // A short cone may pursue a useful-looking key/mate goal without
+    // considering all three links (clock, mate, keys) and their full cost.
+    const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'&&(clockHorizon<3||clockMateRouteBudget({alive,nb,clock,mate:i,roles,down:seen.down}).fits)));
     let clockBlockingMate=false;
     if(p.clockOutsPlan && clock && openPeek>=0 && alive[openPeek] && memory[clock.i]!==null && memory[openPeek]===memory[clock.i] && roles[clock.i]==='none' && !seen.takeable[clock.i] && tray.length<=2 && clock.remaining>=2){
       const after=alive.slice();after[openPeek]=0;
@@ -585,6 +588,7 @@ function createBotController(tiles, profile, seed) {
         if(i===clock.i)score+=p.pairReward*2.6;
         else if(trayMatch&&face===memory[clock.i])score-=p.pairReward*2.6;
       }
+      if(clock && (i===clock.i || openTwin && openPeek===clock.i))score+=p.clockCompletionBonus??0;
       if(clockBlockingMate){
         // Preserve the observed matching blocker for the clock immediately
         // behind it; pairing it elsewhere can consume the only short out.
