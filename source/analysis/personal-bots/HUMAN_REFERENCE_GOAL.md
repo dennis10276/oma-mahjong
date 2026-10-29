@@ -52,19 +52,16 @@ Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited ph
 10. human-v0 passes factory milestone1 only; family and later milestones remain experimental.
 
 ## Accounting and current evidence
-- Progress:29c94dc, six trials19-24 audited,238f5ec controller adopted with fixes.
-- Milestone1: easy75/75/95/100%; hard40%,clock82.61%; all100 campaigns clear.
--19:32.99/27.92%;20:32.71/25.35%;21:35.97/27.92% first try (Dennis/family).
-- Audited release check passes d/e/timing; slowest6.34ms;20 runs1.4-4.1s/board.
-- human-v0 tag=bcac396; default100-campaign outcomes reproduced exactly.
-- Current v1 research: first51.18/29.51%; a passes; b/c still partial; no tag.
-- Current research retains all100 factory clears; hard mean2.5 tries.
-- Dennis approved person-specific phase/cohort replacement; v2 contract preregistered.
--181/181 tests; all histories retained; approved-v2 score anchor key-outs-repair,counter1.
--142 fixed:19/20 Dennis first wins;18/20 family clear (shared-ice-only20/20).
-- Before-clock50.94/50.39% still fails person targets; family risk gap3pp<10pp.
-- Lab15 cohort/ranking protocol prepared;0 model runs; actual lab gate still unmet.
-- Stop after8 experiments without progress on the current milestone; honest ledger.
-- Small source commits; raw logs/snapshots under .codex-runs/human-style/.
-- No Firebase writes, publication or pushes. Preserve unrelated experiments.
-- Final report: per-milestone gates,minutes/board,slowest move,and decisions for Dennis.
+- Milestone1 release human-v0=bcac396; unchanged default profiles; factory100/100.
+- Current approved-v2 research: key-priority-refinement-full; all100 factory campaigns clear.
+- First 54.79/34.31%; before-clock 29.66/37.22% (Dennis/family).
+- Risk/control gap 23.50/7.50pp; required10pp per person.
+-142 repair: Dennis 19/20first,20/20clear; family 6/20first,20/20clear.
+-183/183 tests; clock-contact disjoint; production replay and concealed-picture tests pass.
+- Public mate-budget9801bf5; personal clock strategy6932e2e; boundary fix74f6f15.
+-29 real family action choices132/144 independently replayed; exact board parity.
+- Approved-v2 score anchor key-priority-refinement-full; counter 0/8.
+- Historical contract1 scores and invalid trials retained; no metric/counter relabeling.
+- Lab15 protocol prepared;0 model measurements; M2 unmet, no v1/v2 tag or prospective claim.
+- Stop after8 experiments without progress on current milestone; no hidden exclusions.
+- Small commits on wip/personal-bots; raw .codex-runs/human-style/; no pushes or Firebase writes.

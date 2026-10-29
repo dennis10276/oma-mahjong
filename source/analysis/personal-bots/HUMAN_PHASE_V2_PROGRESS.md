@@ -1,14 +1,8 @@
-# Human simulator: approved targets and verified repairs
+# Human simulator: approved person-specific calibration
 
-ACTIVE and UNMET. Source8df9a86 repairs shared ice prerequisites; baa07d1 adds
-short public clock/key outs, stagnation protection, honest censoring summaries
-and exact clock-event timing. These are explicit human-v1-development profiles;
-human-v0 remains the released tag and frozen policy40 is unchanged.
+ACTIVE and UNMET. human-v0 (bcac396) remains the released default. Track A policy40 remains frozen. Custom research profiles are human-v1-development.
 
-Dennis approved person-specific before-clock targets:20-30% near his audited
-25%; family35-45%, referencing Mrs. Doubtfire. First-try and factory gates stay
-fixed. Separate audited top10-loss/10-zero-observed-loss cohorts replace the
-old four-case pre-clock-majority rule. Clock-contact is its own disjoint class.
+Dennis approved before-clock shares20-30% and family35-45%, replacing the incorrect pooled55-60% claim. First-try/factory gates are unchanged. Each person has an audited top10-loss and10-zero-observed-loss cohort; the required loss-rate gap is10 percentage points. Clock-contact losses are reported separately, on clock removal or within two further removals.
 
 |Candidate|Dennis first|Family first|Before-clock D/F|Risk gap D/F|Factory d/e|
 |---|---:|---:|---:|---:|---|
@@ -16,44 +10,28 @@ old four-case pre-clock-majority rule. Clock-contact is its own disjoint class.
 |key-outs-repair-full|51.04%|29.10%|50.96/50.19%|35.00/4.00pp|pass|
 |clock-outs-refined-full|51.18%|29.51%|50.94/50.39%|35.00/3.00pp|pass|
 |clock-order-full|51.18%|29.51%|50.94/50.39%|35.00/3.00pp|pass|
+|mate-budget-full|53.96%|31.46%|33.09/44.45%|26.50/0.50pp|pass|
+|family-clock-priority-full|53.96%|41.04%|33.09/22.96%|26.50/-0.50pp|pass|
+|clock-completion-full|54.37%|31.81%|32.30/44.06%|25.50/-0.50pp|pass|
+|personal-short-goal-full|54.37%|34.51%|31.12/33.86%|25.50/9.50pp|pass|
+|personal-refinement-full|55.21%|33.68%|28.99/37.42%|23.00/9.00pp|pass|
+|key-priority-refinement-full|54.79%|34.31%|29.66/37.22%|23.50/7.50pp|pass|
 
-The earlier key-outs-full run was REJECTED: supervisor exit1, worker3 exit2,
-five censored campaigns. Caps were never losses or free retries. The exact five
-seeds now produce real outcomes; all three subsequent full runs are valid.
+Latest: **key-priority-refinement-full**. Checks: Dennis {"a":true,"b":true,"c":true,"level142":true}; family {"a":true,"b":true,"c":false,"level142":true}. The same candidate must pass all checks; outcomes are not combined across versions. All100 latest factory campaigns clear.
 
-Current142: Dennis19/20 first wins,20/20 clear;
-family1/20 first,20/20 clear within12. Null success
-entries in the JSON are unfinished campaigns, not successes at the cap.
-The simpler shared-ice candidate cleared all20 family campaigns on142.
+|Setting|Before clock|On/right after clock|Later mid-game|Late|
+|---|---:|---:|---:|---:|
+|Dennis|29.66%|0.84%|67.38%|2.13%|
+|family|37.22%|5.64%|55.24%|1.90%|
 
-Current136: Dennis18/20 clear, versus0 in the shared-ice baseline;
-current141: Dennis20/20 clear, versus0. The rule preserves a matching
-out for the clock rather than consuming it in another pair. It can deliberately
-use a temporary third spot, then match the clock and recover tray space.
+Level142: Dennis 19/20 first, 20/20 clear within12; family 6/20 first, 20/20 clear within12. This repairs v0's0/20 clears, while retaining the factory checks. It does not certify human-v1 calibration.
 
-Factory: all100 campaigns clear; easy first rates75/70/95/100%; hard first0%,
-mean2.5. Gates d/e pass. Max20-campaign measurement0.777minutes;
-slowest decision10.02ms. All181 offline tests pass. All100 default
-v0 campaign outcomes reproduce the archived release. Exact clock-removal timing
-changed no legacy outcome in2960 campaigns; only annotations changed.
+The public clock/ice repair reuses required removals. The optional clock-mate route has a public lower-bound budget, applied only when the sampled planning horizon considers the full chain. A personal completion preference models the observed early clock rush without forcing failures. Retry attention increases only after real losses. Source commits:8df9a86, baa07d1,9801bf5,6932e2e; evaluator boundary74f6f15.183/183 offline tests pass (suite09).
 
-M2 still fails: before-clock50.94/50.39% misses20-30/35-45%.
-Family risk/control gap3.00pp misses10pp. Neither a release tag, an
-actual lab ranking nor prospective accuracy is claimed. Current score anchor
-key-outs-repair-full; no-progress counter1. Historical contract1 trials are kept intact;
-the metadata-only timing rerun does not count as another experiment/reset.
+Four actual family attempts on132/144 supplied29 independently replayed action choices and exact board parity. On144 the first attempt saved the clock after three removals, then lost under tray pressure; later retries sometimes prepared pairs first. Unknown pictures stay unknown until visible or remembered. The115 key-taking prefix is incomplete and is action evidence only. No per-board routes or settings enter the actor.
 
-Reproduce via human_bot.js with profiles loaded explicitly from
-human_v1_shared_ice_profiles.json or human_v1_clock_outs_profiles.json. Both
-accept arbitrary unlabeled boards. The first is the minimal142 repair; the
-second is current research, not a calibrated default. Raw execution imports,
-profiles, all campaigns and native exits are in .codex-runs/human-style/phase-v2.
+Latest valid coverage:74 boards,20 campaigns per setting,12 actual attempts; zero censored campaigns; 867,180 independently verified taps. Slowest decision 10.49ms; longest20-campaign measurement 0.699minutes. Null averageTries denotes uncleared campaigns, never a cap success.
 
-Next: rule out optional clock-mate/key routes that cannot fit the public clock
-budget. The optional locked-mate route on132 needs at least seven ordinary removals
-with six clock moves when both mates are face up. The level itself is winnable
-through another opening; this is not an impossibility claim about the board. Keep the
-136/141/142 repairs and d/e, then test the complete paired cohort. Family logs
-also show clock rush/contact losses that this model rarely reproduces; tuning
-the same short-horizon probabilities alone has not created the required risk
-gap (historical corrected-cohort diagnostic is retained, not a new evaluation).
+The rejected earlier key-outs-full run remains in history (worker exit2/censoring); it never counted as success. Clock-timing annotation parity and100 default-v0 release outcomes were checked earlier; latest frozen defaults are unchanged. Historical contract1 scores remain attached to their original targets.
+
+Retained progress anchor: **key-priority-refinement-full**. Consecutive no-progress experiments: **0/8**. A tradeoff that loses a previously passed check is not progress. No human-v1/v2 tag, lab score or prospective accuracy is claimed; actual model lab measurements remain0. Raw source snapshots, profiles, campaigns, native exits and preregistrations: .codex-runs/human-style/phase-v2/.
