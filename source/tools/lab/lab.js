@@ -66,7 +66,7 @@
       <p class="sub">${LAB.intro ? esc(LAB.intro) : 'New piles without towers, normal tile size. Each idea combines the specials in its own way. Play it as often as you like, then rate how clever the combination is.'} These levels are not in the game, and playing here changes nothing in the game or on the dashboard.<br><span id="labSync">${db ? '' : 'Ratings are kept on this device.'}</span></p>
       ${IDEAS.map(it => { const r = rec(it.id), m = it.m || {}, d = m.Dennisisdebeste, md = m['Mrs. Doubtfire'];
         return `<div class="lab-card" data-id="${it.id}">
-        <h2>${LAB.factory ? 'Level ' + it.id : 'Idea ' + it.id} · ${esc(it.title)}</h2>
+        <h2>${LAB.factory ? 'Level ' + (it.lv || it.id) : 'Idea ' + it.id} · ${esc(it.title)}</h2>
         <p>${esc(it.idea)}</p>
         <div class="lab-meta">${it.tiles} tiles${it.specials ? ` · ${it.specials.down} face down, ${it.specials.ice} frozen, ${it.specials.locks} locked${it.specials.clockSpare !== null && it.specials.clockSpare !== undefined ? `, clock with ${it.specials.clockSpare} spare move${it.specials.clockSpare === 1 ? '' : 's'}` : ''}` : ''} · test players win the first try: Dennis ${d ? pct(d.first) : '?'}, Mrs. Doubtfire ${md ? pct(md.first) : '?'}${it.bot ? ` · strong bot needed ${it.bot.join(', ')} tries` : ''}${r.starts || r.tries ? ` · you: started ${r.starts || 0}×, finished ${r.tries}, won ${r.wins}` : ''}</div>
         <div class="lab-row"><button class="lab-play">Play</button>
@@ -101,7 +101,7 @@
   function play(it) {
     panel.classList.add('hidden');
     rec(it.id).starts = (rec(it.id).starts || 0) + 1; push(it.id);
-    begin({ mode: 'lab', lab: it.id, key: 'X' + it.id, track: '', level: it.lv || 201, title: (LAB.factory ? 'Level ' : 'Idea ') + it.id, fixedAspect: 1.6, makeSpec: () => specOf(it) });
+    begin({ mode: 'lab', lab: it.id, key: 'X' + it.id, track: '', level: it.lv || 201, title: LAB.factory ? 'Level ' + (it.lv || it.id) : 'Idea ' + it.id, fixedAspect: 1.6, makeSpec: () => specOf(it) });
   }
   // a finished try: counted for the idea; a win shows the lab's own end screen (no stars, no next level)
   const endLevel0 = window.endLevel;
@@ -160,7 +160,7 @@
     Sound.win(); FX.confetti();
     const id = G.o.lab;
     setTimeout(() => {
-      openModal(`<h2>${LAB.factory ? 'Level' : 'Idea'} ${id}: won!</h2><p>${LAB.winText || 'How clever was this combination? Rate it in the lab.'}</p>
+      openModal(`<h2>${LAB.factory ? 'Level ' + ((IDEAS.find(x => x.id === id) || {}).lv || id) : 'Idea ' + id}: won!</h2><p>${LAB.winText || 'How clever was this combination? Rate it in the lab.'}</p>
         <button class="big-btn play" id="labRate"><span class="bb-text"><b>Rate it</b></span></button>
         <button class="link-btn" id="labAgain">Play again</button>`, false);
       document.getElementById('labRate').onclick = () => { closeModal(); show('home'); panel.classList.remove('hidden'); render(); const c = panel.querySelector(`.lab-card[data-id="${id}"]`); if (c) c.scrollIntoView({ block: 'center' }); };

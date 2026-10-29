@@ -39,3 +39,14 @@ Doubtfire player within 4 tries 0.34-0.85; strong bot 1-3 tries everywhere. For 
 - Read Dennis's verdicts; shift the aim if "too easy/too hard".
 - Swap in Codex's human-like bot (when ready) for the difficulty measure.
 - Shipping later needs a `designVersions` entry in levels-hard.js so only changed levels restart saves.
+
+## Batch 1 verdict (Dennis, 2026-10-29): all three "too easy" (won 175 and 189 first try, 184 on the 2nd)
+The calibrated test players misjudge him (their 36-46% first try was a walk-over). His rule: tune to
+Codex's bot; a level it clears on the first try is too easy.
+
+## Batch 2: tuned to Codex's bot (`tools/factory/design_bot.js`, `batch-175-bot.json`)
+Same piles. 12-20 designer deals per pile; the bot plays salt 1, kept only if it needs 2+ tries, then
+salts 2 and 3: every run clears within 6 tries, at most one run wins first try, average at least the
+aim (2.0 at 175 rising to 3.0 at 270). The test players' rating does not predict the bot at all
+(deals at 3% and 99% for the test player both came out at 2 bot tries). Result: 15 levels at 2-2.3
+tries, 183 at 3, 188 4-5, 191 2-6, 192 5. For Dennis: 175, 184, 192 (lab ids 2175, 2184, 2192).
