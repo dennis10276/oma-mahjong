@@ -579,7 +579,7 @@ function createBotController(tiles, profile, seed) {
       if (!peek && count) score -= count * 2;
 
       score += (future.get(i) ?? 0) * (p.futureWeight ?? 1) * (clock ? 0.15 : 1);
-      if ((!peek || knownDig) && suggestsNoEasyEscape(i)) score -= 1200;
+      if ((!peek || knownDig) && !(clock && i === clock.i) && suggestsNoEasyEscape(i)) score -= 1200;
 
       const u = Math.max(1e-12, Math.min(1 - 1e-12, random()));
       const noisy = score - p.temperature * Math.log(-Math.log(u));
