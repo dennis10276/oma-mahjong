@@ -3,20 +3,25 @@ const assert=require('assert/strict');
 const Layouts=require('../../../www/layouts.js');
 const {trayHorizon}=require('./human_style_tray_horizon.js');
 const {certainlyTrappedAfterTake}=require('./human_style_immediate_outs.js');
+const {inferMatchedPicture}=require('./public_matched_picture.js');
 
 // Only geometry and observed packets enter this policy. No board identity,
 // hidden deck, exact route solver, or human attempt labels are available here.
 function createStyleController(tiles,profile,seed){
  const p={...profile},random=Layouts.rng(seed),nb=Layouts.neighbors(tiles),iceNb=Layouts.iceNeighbors(tiles);
- let memory=tiles.map(()=>null),roles=tiles.map(()=>null),state,seen,visits=new Map(),attempt=0;
+ let memory=tiles.map(()=>null),roles=tiles.map(()=>null),state,seen,visits=new Map(),attempt=0,lastDecision=null;
  assert(Number.isInteger(seed));
- const allowed=['clockHorizon','clockTrayDepth','partnerHorizon','clockWeight','clockUrgencyPower','keyUnlockBelief','trayCost','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
+ const allowed=['clockHorizon','clockTrayDepth','partnerHorizon','clockWeight','postClockKeyWeight','clockUrgencyPower','keyUnlockBelief','keyPictureBelief','iceReleaseBelief','trayCost','trayRestoreBonus','safePeekBonus','safePeekMinTray','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
  assert(Object.entries(p).every(([key,value])=>allowed.includes(key)&&Number.isFinite(value)&&value>=0),'Only finite global behavioral parameters are allowed');
+ assert(['clockWeight','trayCost','pairReward','exploration'].every(key=>Number.isFinite(p[key])),'Missing required behavioral weight');
  for(const key of ['clockHorizon','partnerHorizon'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4);
  assert(p.trayDepth===undefined||Number.isInteger(p.trayDepth)&&p.trayDepth>=0&&p.trayDepth<=6);
  assert(p.clockTrayDepth===undefined||Number.isInteger(p.clockTrayDepth)&&p.clockTrayDepth>=0&&p.clockTrayDepth<=4);
  assert(p.clockUrgencyPower===undefined||p.clockUrgencyPower>=0&&p.clockUrgencyPower<=2);
  assert(p.keyUnlockBelief===undefined||p.keyUnlockBelief>=0&&p.keyUnlockBelief<=1);
+ assert(p.iceReleaseBelief===undefined||p.iceReleaseBelief>=0&&p.iceReleaseBelief<=1);
+ assert(p.keyPictureBelief===undefined||p.keyPictureBelief>=0&&p.keyPictureBelief<=1);
+ assert(p.safePeekMinTray===undefined||Number.isInteger(p.safePeekMinTray)&&p.safePeekMinTray>=0&&p.safePeekMinTray<=3);
  for(const key of ['memoryDecay','retryRetention','lapse'])assert(p[key]>=0&&p[key]<=1);
  assert(p.temperature>0&&p.peekPatience>=0);
  function begin(){
@@ -24,10 +29,19 @@ function createStyleController(tiles,profile,seed){
   // Ice/lock state resets on a real retry. A late 'none' observation cannot
   // certify an occluded starting role. Picture identity is unchanged.
   roles=tiles.map(()=>null);
-  visits=new Map();
+  visits=new Map();lastDecision=null;
  }
  function observe(s,o){
-  state=structuredClone(s);seen=structuredClone(o);
+  if(lastDecision){
+   const proof=inferMatchedPicture(lastDecision,lastDecision.index,
+    {alive:s.alive,moves:s.moves,openPeek:s.openPeek,physicalTaps:s.physicalTaps,tray:s.tray});
+   if(proof){memory=memory.slice();memory[proof.index]=proof.picture;}
+   lastDecision=null;
+  }
+  state={alive:Array.from(s.alive),tray:Array.from(s.tray),moves:s.moves,openPeek:s.openPeek,
+   relieved:!!s.relieved,arriving:Array.from(s.arriving??[]),physicalTaps:s.physicalTaps};
+  seen={pictures:Array.from(o.pictures),roles:Array.from(o.roles),down:Array.from(o.down),takeable:Array.from(o.takeable),
+   clock:o.clock?{i:o.clock.i,n:o.clock.n,remaining:o.clock.remaining}:null};
   memory=memory.map((value,i)=>o.pictures[i]!==null?o.pictures[i]:s.alive[i]&&random()<p.memoryDecay?null:value);
   roles=roles.map((value,i)=>o.roles[i]??value);
  }
@@ -56,10 +70,13 @@ function createStyleController(tiles,profile,seed){
   const needsKeys=clock?[...attraction.keys()].some(i=>alive[i]&&roles[i]==='lock'):
    roles.some((role,i)=>alive[i]&&role==='lock');
   if(needsKeys)for(let i=0;i<tiles.length;i++)
-   if(alive[i]&&roles[i]==='key')attract(i,p.clockHorizon,p.clockWeight*.8);
+   if(alive[i]&&roles[i]==='key')attract(i,p.clockHorizon,(clock?p.clockWeight*.8:p.postClockKeyWeight??p.clockWeight*.8));
   const signature=alive.join('')+'|'+tray.join(',');
   const depth=clock?Math.min(p.trayDepth??0,p.clockTrayDepth??4):p.trayDepth;
-  const future=depth?trayHorizon(tiles,nb,state,seen,memory,roles,depth,{keyUnlockBelief:p.keyUnlockBelief??0}):new Map();
+  const future=depth?trayHorizon(tiles,nb,state,seen,memory,roles,depth,
+   {keyUnlockBelief:p.keyUnlockBelief??0,keyPictureBelief:p.keyPictureBelief??0,iceReleaseBelief:p.iceReleaseBelief??0,iceNb}):new Map();
+  const matchingNow=legal.some(i=>memory[i]!==null&&(tray.includes(memory[i])||
+   openPeek>=0&&i!==openPeek&&memory[i]===memory[openPeek]));
   const scored=legal.map(i=>{
    const face=memory[i],down=seen.down[i]===1,peek=down&&openPeek!==i;
    const trayMatch=face!==null&&tray.includes(face);
@@ -73,17 +90,20 @@ function createStyleController(tiles,profile,seed){
    // Human deadline pressure over the same short cone, not an exact route
    // solver. An optional tray match must not consume the clock's final move.
    const urgency=clock?Math.max(1,(p.clockHorizon/Math.max(1,clock.remaining))**(p.clockUrgencyPower??2)):1;
-   let score=(knownFatal?0:(attraction.get(i)??0)*urgency)+nb.above.filter(row=>row.includes(i)).length*.2;
+   const goal=Math.max(attraction.get(i)??0,openTwin?attraction.get(openPeek)??0:0);
+   let score=(knownFatal?0:goal*urgency)+nb.above.filter(row=>row.includes(i)).length*.2;
    if(trayMatch)score+=p.pairReward*2;
    else if(face===101&&tray.length)score+=p.pairReward*2;
    else if(openTwin)score+=p.pairReward*2.2;
    else if(hasTwin)score+=p.pairReward+(down||seen.down[twin]===1?3:0);
-   else if(peek&&face===null)score+=p.exploration+(tray.length>=2?3:0);
+   else if(peek&&face===null)score+=p.exploration+(tray.length>=2?3:0)+
+    (!clock&&!matchingNow&&tray.length>=(p.safePeekMinTray??0)?(p.safePeekBonus??0):0);
    else{
     score-=p.trayCost*Math.max(1,tray.length*2);
     if(reachable)score+=p.trayCost*.8;
     if(tray.length>=2&&!reachable)score-=p.trayCost*2;
    }
+   if(trayMatch&&!clock&&tray.length>=2)score+=(p.trayRestoreBonus??0)*(tray.length-1);
    // Reopening an already known, unmatched tile is preparation for a take,
    // not new information. Evaluate its intended removal and its tray pressure.
    if(knownDig)score-=.25;
@@ -120,6 +140,7 @@ function createStyleController(tiles,profile,seed){
   });
   const selected=random()<p.lapse?scored[Math.floor(random()*scored.length)]:scored.reduce((a,b)=>a.noisy>=b.noisy?a:b);
   visits.set(selected.visitsKey,(visits.get(selected.visitsKey)??0)+1);
+  lastDecision={...state,pictures:memory.slice(),down:seen.down.slice(),index:selected.index};
   return {index:selected.index,score:selected.score};
  }
  return {beginAttempt:begin,observe,decide,remembered:()=>memory.slice()};

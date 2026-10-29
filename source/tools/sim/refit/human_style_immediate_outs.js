@@ -12,7 +12,8 @@ function certainlyTrappedAfterTake(tiles,nb,iceNb,state,seen,pictures,roles,inde
  const onPile=peek>=0&&peek!==index&&alive[peek]&&pictures[peek]===face&&seen.takeable[peek]===true;
  if(q>=0)tray.splice(q,1);else if(onPile)alive[peek]=0;else tray.push(face);
  if(tray.length<3)return false;if(tray.length>=4)return true;
- const couldUnlock=roles[index]==='key'||seen.roles[index]===null;
+ const couldUnlock=roles[index]==='key'||seen.roles[index]===null||
+  onPile&&(roles[peek]==='key'||seen.roles[peek]===null);
  const candidates=[];
  for(let i=0;i<tiles.length;i++)if(alive[i]&&Layouts.isFree(i,alive,nb)){
   if(seen.takeable[i]!==true&&!state.relieved){

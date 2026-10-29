@@ -13,6 +13,8 @@ function test(){
  const selections=new Set();
  assert.throws(()=>createStyleController(tiles,{...profiles.Dennis,perLevelOverrides:{}},1));
  assert.throws(()=>createStyleController(tiles,{...profiles.Dennis,clockWeight:Infinity},1));
+ const incomplete={...profiles.Dennis};delete incomplete.pairReward;
+ assert.throws(()=>createStyleController(tiles,incomplete,1),'Missing required weights must fail instead of producing NaN-ranked forecasts');
  for(let seed=1;seed<=30;seed++){
   const c=createStyleController(tiles,profiles.Dennis,seed);c.beginAttempt();c.observe(s,o);selections.add(c.decide().index);
  }
@@ -33,6 +35,7 @@ function test(){
   assert.equal(a.decisions.length,a.taps);
   assert(a.decisions.every(d=>!Object.hasOwn(d.state,'faces')&&!Object.hasOwn(d.state,'down')),
    'Decision diagnostics must use the public projection, never actual hidden down flags or deck');
+  assert(!Object.hasOwn(a.terminal.state,'faces')&&!Object.hasOwn(a.terminal.state,'down'));
  }
  const limited=measureHuman(board,{runs:1,maxAttempts:3,seed:37,choiceLimit:1});
  for(const setting of Object.values(limited.settings)){

@@ -34,6 +34,17 @@ function test(){
   }
  }
  assert(certified>=3&&uncertain>=3&&branches>20);
+ const specialTiles=Array.from({length:8},(_,i)=>({x:i*4,y:0,z:0})),specialNb=Layouts.neighbors(specialTiles),specialIce=Layouts.iceNeighbors(specialTiles);
+ const special={tiles:specialTiles,nb:specialNb,faces:[7,8,9,2,2,7,8,9],down:Uint8Array.from([0,0,0,1,0,0,0,0]),
+  rules:{ice:{},iceNb:specialIce,keys:[3],locks:new Set([5,6,7])},clock:null};
+ const session=createSession(special,{seed:20261111,tapMs:1000,choiceLimit:64});let view=session.view();
+ for(const index of [0,1,2,3])view=session.tap(index);
+ const observed={pictures:[null,null,null,2,2,7,8,9],roles:[null,null,null,'key','none','lock','lock','lock'],
+  down:[null,null,null,1,0,0,0,0],takeable:specialTiles.map((_,i)=>view.legalTiles.includes(i)),clock:null};
+ assert(!certainlyTrappedAfterTake(specialTiles,specialNb,specialIce,view.state,observed,observed.pictures,observed.roles,4),
+  'An on-pile match removes the open key indirectly and can unlock the only remaining tray exits');
+ for(const index of [4,5,6,7])view=session.tap(index);
+ assert(view.win,'Original production must validate the claimed key-pile escape all the way to a clear');
  console.log('PASS public immediate-out certifications vs '+branches+' original-production branches across36 mixed key/lock/ice/closed-picture states ('+certified+' certified, '+uncertain+' uncertain)');
 }
 if(require.main===module)test();module.exports=test;

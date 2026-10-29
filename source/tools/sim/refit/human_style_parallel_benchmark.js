@@ -1,11 +1,13 @@
 'use strict';
-const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto');
 const {spawn}=require('child_process'),{performance}=require('perf_hooks');
 const {measureHuman}=require('./human_style_measure.js');
 const {CONTRACT,summarize}=require('./human_style_benchmark.js');
 const {captureSources}=require('./human_level_sources.js');
 const snapshot=captureSources(module);
 function json(file,value){fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n',{flag:'wx'});}
+function archiveHash(root,files){return crypto.createHash('sha256').update(JSON.stringify(files.map(file=>[file,
+ crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')]))).digest('hex');}
 function worker(file){
  const job=JSON.parse(fs.readFileSync(file));assert.equal(snapshot.hash,job.sourceHash);
  let valid=true;
@@ -29,7 +31,9 @@ async function main(args=process.argv.slice(2)){
  fs.mkdirSync(output,{recursive:true});
  const root=path.resolve(__dirname,'../../..');
  for(const file of snapshot.files){const to=path.join(output,'sources',file);fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(path.join(root,file),to,fs.constants.COPYFILE_EXCL);}
- json(path.join(output,'source-manifest.json'),{hash:snapshot.hash,files:snapshot.files});
+ const archive=path.join(output,'sources'),workerEntry=path.join(archive,path.relative(root,__filename));
+ snapshot.verify();assert.equal(archiveHash(archive,snapshot.files),snapshot.hash,'Source copy changed during archiving');
+ json(path.join(output,'source-manifest.json'),{hash:snapshot.hash,files:snapshot.files,execution:'immutable-import-snapshot'});
  const catalog=JSON.parse(fs.readFileSync(catalogFile)),profiles=profileFile?JSON.parse(fs.readFileSync(profileFile)):require('./human_style_profiles.json');
  const entries=catalog.entries.filter(e=>e.lv>=92&&e.lv<=163||CONTRACT.risk.includes(e.lv)).sort((a,b)=>a.lv-b.lv);
  assert.equal(entries.length,74);assert.equal(new Set(entries.map(e=>e.lv)).size,74);
@@ -41,12 +45,13 @@ async function main(args=process.argv.slice(2)){
   const dir=path.join(output,'worker-'+i);fs.mkdirSync(dir);
   const task=path.join(dir,'task.json');json(task,{sourceHash:snapshot.hash,maxAttempts,profiles,entries:entries.filter((_,n)=>n%workers===i)});
   const log=fs.openSync(path.join(dir,'native.log'),'wx');
-  const child=spawn(process.execPath,[__filename,'--worker',task],{windowsHide:true,stdio:['ignore',log,log]});
+  const child=spawn(process.execPath,[workerEntry,'--worker',task],{windowsHide:true,stdio:['ignore',log,log]});
   fs.closeSync(log);children.push(child);
   child.on('error',error=>{for(const own of children)if(own!==child)own.kill();resolve({worker:i,exitCode:null,error:error.message});});
-  child.on('close',(code,signal)=>resolve({worker:i,pid:child.pid,exitCode:code,signal}));
+  child.on('close',(code,signal)=>resolve({worker:i,pid:child.pid,exitCode:code,signal,entrypoint:workerEntry}));
  })));
- json(path.join(output,'worker-exits.json'),exits);snapshot.verify();
+ json(path.join(output,'worker-exits.json'),exits);
+ assert.equal(archiveHash(archive,snapshot.files),snapshot.hash,'Archived source changed during the run');
  assert(exits.every(e=>e.exitCode===0),'A worker failed; inspect worker-exits.json and native.log; no final summary produced');
  const rows=exits.flatMap(e=>fs.readFileSync(path.join(output,'worker-'+e.worker,'records.jsonl'),'utf8').trim().split('\n').map(JSON.parse)).sort((a,b)=>a.lv-b.lv);
  assert.deepEqual(rows.map(r=>r.lv),entries.map(e=>e.lv),'Missing or duplicate board result');

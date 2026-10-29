@@ -53,10 +53,14 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
    actions.push(selected.index);frame=session.tap(selected.index);
   }
   verifiedTaps+=verify(encoded,actions,settings,session.audit());
+  const terminal={state:{alive:frame.state.alive.slice(),tray:frame.state.tray.slice(),moves:frame.state.moves,
+   openPeek:frame.state.openPeek,physicalTaps:frame.state.physicalTaps},
+   observed:observeBoard(game.tiles,frame.state,game.clock,{picture:i=>game.faces[i],role:i=>visibleRole(game,frame.state,i),takeable:()=>false})};
+  controller.observe({...terminal.state,relieved:frame.state.relieved,arriving:frame.state.arriving},terminal.observed);
   const censored=frame.computationCensored||!frame.win&&!['tray','clock','stuck'].includes(frame.why);
   attempts.push({attempt,win:frame.win,why:frame.why,censored,
    phase:frame.win||censored?null:lossPhase(frame.state,game.clock),
-   left:frame.state.alive.reduce((a,b)=>a+b,0),taps:actions.length,...(capture?{actions,decisions}: {})});
+   left:frame.state.alive.reduce((a,b)=>a+b,0),taps:actions.length,...(capture?{actions,decisions,terminal}: {})});
   if(frame.win||censored)break; // Only actual completed losses permit retry.
  }
  factory.verifySource();
