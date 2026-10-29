@@ -55,14 +55,18 @@ for (const p of piles) {
     const verdict = t[0] === 1 ? 'too easy (first try)' : !clear ? 'no way out' : fails1 < 2 ? 'too easy (strong bot ' + t.join('/') + ')' : 'ok';
     tried.push(recipe.join('+') + ': strong bot ' + t.join('/') + ' ' + verdict);
     console.log(lv, 'attempt', attempt, recipe.join('+'), 'strong bot', t.join('/'), JSON.stringify(m.lossTypes), verdict);
-    if (verdict !== 'ok') continue;
+    // TIGHT=1 (Dennis 2026-10-29: "let the too tight ones through so I can test those too; maybe that's what
+    // we want, new ideas the bot hasn't learned yet"): a level the strong bot cannot clear is kept too. It
+    // is still winnable: the stored way through passes every rule and the clock.
+    const tight = process.env.TIGHT && verdict === 'no way out' && I.valid(z);
+    if (verdict !== 'ok' && !tight) continue;
     let h = null; try { const r = measureHuman(boardOf(z), { runs: 20, setting: 'dennis', seed: 4242 + lv }); h = { first: r.firstTryRate, avg: r.averageTries, phase: r.lossPhase }; } catch (e) { h = { error: String(e.message).slice(0, 120) }; }
     const ck = z.clock ? z.clock.n - (z.solution.indexOf(z.clock.i) + 1) : null;
-    row = { level: lv, ok: true, shape: p.shape, n: z.tiles.length, px: p.px, recipe, bot: t, botLoss: m.lossTypes, human: h,
+    row = { level: lv, ok: true, tight: !!tight, shape: p.shape, n: z.tiles.length, px: p.px, recipe, bot: t, botLoss: m.lossTypes, human: h,
       down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length, keys: keys(z).length, clock: z.clock && z.clock.n, clockSpare: ck,
       s: Math.round((Date.now() - t0) / 1000), tried,
       design: { level: lv, aspect: 1.6, tiles: z.tiles, faces: z.faces, down: z.down, gold: z.gold, obst: z.obst, clock: z.clock, solution: z.solution } };
   }
   fs.appendFileSync(outFile, JSON.stringify(row || { level: lv, ok: false, shape: p.shape, tried }) + '\n');
-  console.log(lv, row ? 'KEPT ' + row.recipe.join('+') + ' strong ' + row.bot.join('/') + ' human ' + (row.human && row.human.first) : 'NONE');
+  console.log(lv, row ? (row.tight ? 'KEPT (tight) ' : 'KEPT ') + row.recipe.join('+') + ' strong ' + row.bot.join('/') + ' human ' + (row.human && row.human.first) : 'NONE');
 }

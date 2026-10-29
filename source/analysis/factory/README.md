@@ -87,3 +87,9 @@ only if the strong bot fails its first try in at least 2 of 3 runs (no 1/1/1) an
 within 6. Pilot: 175 chainReaction (bot 2/2/2), 176 lockedClock (3/2/2), 178 deepKeys + iceChain
 (2/2/1). lockedPartners + iceChain came out with no way out within 6 (too tight); lockedClock alone
 is often 1/1/1.
+
+## Batch 5: the "too tight" ones too (Dennis 2026-10-29: "let them through so I can test those; maybe
+that's what we want, new ideas the bot hasn't learned yet"). `TIGHT=1 plan.js` keeps a level the strong
+bot cannot clear within 4 tries (still winnable: the stored way through passes every rule). In the lab:
+176 lockedPartners + iceChain (bot 2/2/2), 177 deepKeys + iceChain (tight; human-v0 wins 95% first
+try, so the strong bot may just have a blind spot there), 180 chainReaction (tight; human-v0 5%).
