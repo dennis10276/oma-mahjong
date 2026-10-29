@@ -53,14 +53,14 @@ Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited ph
 
 ## Accounting and current evidence
 - Milestone1 release human-v0=bcac396; unchanged default profiles; factory100/100.
-- Current approved-v2 research: key-priority-refinement-full; all100 factory campaigns clear.
-- First 54.79/34.31%; before-clock 29.66/37.22% (Dennis/family).
-- Risk/control gap 23.50/7.50pp; required10pp per person.
--142 repair: Dennis 19/20first,20/20clear; family 6/20first,20/20clear.
+- Current approved-v2 research: family-balanced-outs-full; all100 factory campaigns clear.
+- First 54.79/32.29%; before-clock 29.66/43.28% (Dennis/family).
+- Risk/control gap 23.50/5.50pp; required10pp per person.
+-142 repair: Dennis 19/20first,20/20clear; family 2/20first,20/20clear.
 -183/183 tests; clock-contact disjoint; production replay and concealed-picture tests pass.
 - Public mate-budget9801bf5; personal clock strategy6932e2e; boundary fix74f6f15.
 -29 real family action choices132/144 independently replayed; exact board parity.
-- Approved-v2 score anchor key-priority-refinement-full; counter 0/8.
+- Approved-v2 score anchor key-priority-refinement-full; counter 2/8.
 - Historical contract1 scores and invalid trials retained; no metric/counter relabeling.
 - Lab15 protocol prepared;0 model measurements; M2 unmet, no v1/v2 tag or prospective claim.
 - Stop after8 experiments without progress on current milestone; no hidden exclusions.
