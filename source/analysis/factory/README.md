@@ -63,3 +63,14 @@ tries, 183 at 3, 188 4-5, 191 2-6, 192 5. For Dennis: 175, 184, 192 (lab ids 217
   spare move) before he saw the order; the bot found it at once.
 So the bot is weak where Dennis is strong (long sideways clock routes, mid-game tray) and strong where
 he is weak (short exact clock puzzles). Its tries are not a difficulty measure yet.
+
+## Batch 3: tuned to the human-like bot (`tools/factory/design_human.js`, `batch-175-human.json`)
+Codex's human-v0 (measureHuman 'dennis', from Gemini's controller with Codex's fixes) passes
+Dennis's factory games. Up to 32 designer deals per pile; human-v0 rates each (a 10-game look, then
+2 seeds x 20 games: games within one seed vary 0.2-0.45 on the same deal, so one seed is not enough);
+kept near the aim (50% first try at 175 -> 40% at 270, +-0.10), late losses under 25%; final 3 x 20
+games; the frozen strong bot must clear within 6 in each of 3 runs. Deals are bimodal for human-v0
+(most at 0% or 100%), so about 1 in 6 is in band; picture swaps rarely help.
+14 of 20 levels done (human 38-62% first try); 185, 191, 192 found no deal in band (new piles
+needed), 181, 190, 194 still running. For Dennis: 176, 182, 193 (175 is the same board as batch 2's,
+which he already called "right").
