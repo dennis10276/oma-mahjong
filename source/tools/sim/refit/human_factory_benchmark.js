@@ -5,7 +5,7 @@ const {captureSources}=require('./human_level_sources.js');
 const KEYS=['factory1-175','factory1-189','factory2-184','factory2-192','factory2-175'];
 function main(){
  const [input,out,runsText='20',profileFile]=process.argv.slice(2);assert(input&&out&&!fs.existsSync(out));fs.mkdirSync(out,{recursive:true});
- const profiles=profileFile?JSON.parse(fs.readFileSync(profileFile)):undefined;
+ const profiles=profileFile?JSON.parse(fs.readFileSync(profileFile)):require('./human_release.js').profiles;
  const raw=fs.readFileSync(input),data=JSON.parse(raw),source=captureSources(module),root=path.resolve(__dirname,'../../..');
  const contract={milestone:'human-v0',dataRef:'586f970ba01a4f75a65a17b98e4c7864e683d1b2',dataSha256:crypto.createHash('sha256').update(raw).digest('hex'),keys:KEYS,profiles:profiles??null,runs:Number(runsText),seed:20261029,maxAttempts:12,gates:{easyFirstStrictAbove:.5,hardBelowEveryEasyBy:.20,hardClockStrictAbove:.5,minutesStrictBelow:5,slowestMoveStrictBelow:2000},note:'Factory development benchmark, not prospective evidence; thresholds declared before runs; no labels or reference solutions passed to policy'};
  fs.writeFileSync(path.join(out,'contract.json'),JSON.stringify(contract,null,2));fs.writeFileSync(path.join(out,'input.json'),raw);

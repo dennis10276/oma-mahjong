@@ -3,7 +3,7 @@ const assert=require('assert/strict'),board=require('./human_shared_ice_fixture.
 const {measureHuman}=require('./human_bot.js'),{PROFILES,createFactoryController}=require('./human_factory_controller.js');
 function test(){
  const options={setting:'dennis',runs:1,maxAttempts:1,seed:20261028,capture:true};
- const control=measureHuman(board,options),profiles={Dennis:{...PROFILES.dennis,sharedClockIce:1},family:PROFILES.family},fixed=measureHuman(board,{...options,profiles});
+ const control=measureHuman(board,{...options,profiles:{Dennis:PROFILES.dennis,family:PROFILES.family}}),profiles={Dennis:{...PROFILES.dennis,sharedClockIce:1},family:PROFILES.family},fixed=measureHuman(board,{...options,profiles});
  assert.equal(control.results[0].attempts[0].why,'clock');assert.equal(fixed.firstTryRate,1);assert(fixed.verifiedTaps>0);
  assert.equal(fixed.results[0].attempts[0].left,0);assert.equal(fixed.lossTiming.counts.beforeClock,0);
  assert(fixed.results[0].attempts[0].clockLeft>0,'A real clock-removal transition must be recorded, even in a winning attempt');

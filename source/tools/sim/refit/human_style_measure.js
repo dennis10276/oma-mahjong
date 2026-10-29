@@ -3,7 +3,8 @@ const assert=require('assert/strict'),crypto=require('crypto'),{performance}=req
 const {normalizeBoard}=require('./public_board_input.js');
 const {campaign}=require('./human_style_environment.js');
 const defaults=require('./human_style_profiles.json');
-const {createFactoryController,PROFILES:factoryProfiles}=require('./human_factory_controller.js');
+const {createFactoryController}=require('./human_factory_controller.js');
+const release=require('./human_release.js');
 const hash=value=>crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function measureHuman(board,options={}){
  assert(Object.keys(options).every(key=>['runs','seed','maxAttempts','profiles','capture','choiceLimit','setting'].includes(key)));
@@ -15,7 +16,7 @@ function measureHuman(board,options={}){
  assert.deepEqual(Object.keys(profiles).sort(),['Dennis','family']);
  assert(options.setting===undefined||['dennis','family'].includes(options.setting));
  const encoded=normalizeBoard(board),start=performance.now(),settings={};
- const releasedProfiles={Dennis:factoryProfiles.dennis,family:factoryProfiles.family};
+ const releasedProfiles=release.profiles;
  const selectedProfiles=options.setting&&!options.profiles?releasedProfiles:profiles;
  const isReleased=Object.entries(releasedProfiles).every(([name,reference])=>Object.keys(selectedProfiles[name]).length===Object.keys(reference).length&&Object.entries(reference).every(([key,value])=>selectedProfiles[name][key]===value));
  for(const [name,profile] of Object.entries(selectedProfiles)){
@@ -38,7 +39,7 @@ function measureHuman(board,options={}){
    slowestMove:Math.max(...results.map(r=>r.slowestMove)),verifiedTaps:results.reduce((a,r)=>a+r.verifiedTaps,0),
    minutesPerBoard:(performance.now()-started)/60000,results};
  }
- if(options.setting){const r=settings[options.setting==='dennis'?'Dennis':'family'];return {firstTryRate:r.firstTryRate,averageTries:r.averageTries,lossPhase:{beforeClock:r.lossShares.clock,mid:r.lossShares.mid,late:r.lossShares.late},runs,slowestMove:r.slowestMove,minutes:r.minutesPerBoard,version:isReleased?'human-v0':'human-v1-development',calibrationStatus:isReleased&&options.setting==='dennis'?'milestone1-factory-validated':'experimental-not-calibrated',valid:r.slowestMove<2000&&r.censoredCampaigns===0,seed,boardHash:hash(encoded),profileHash:hash(selectedProfiles),...r};}
+ if(options.setting){const r=settings[options.setting==='dennis'?'Dennis':'family'];return {firstTryRate:r.firstTryRate,averageTries:r.averageTries,lossPhase:{beforeClock:r.lossShares.clock,mid:r.lossShares.mid,late:r.lossShares.late},runs,slowestMove:r.slowestMove,minutes:r.minutesPerBoard,version:isReleased?release.version:'human-v1-development',calibrationStatus:isReleased?release.calibrationStatus:'experimental-not-calibrated',valid:r.slowestMove<2000&&r.censoredCampaigns===0,seed,boardHash:hash(encoded),profileHash:hash(selectedProfiles),...r};}
  return {schema:'human-style-measure-v1',calibrationStatus:'experimental-not-calibrated',seed,runs,maxAttempts,boardHash:hash(encoded),profileHash:hash(profiles),
   lateDefinition:'after clock, at most 10 tiles remaining',settings,minutesPerBoard:(performance.now()-start)/60000,
   valid:Object.values(settings).every(s=>s.slowestMove<2000&&s.censoredCampaigns===0)};

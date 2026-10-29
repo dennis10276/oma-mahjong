@@ -8,6 +8,8 @@ const {clockMateRouteBudget}=require('./public_clock_mate_budget.js');
 // Behavioral controller adapted from238f5ec. The trusted shared runner owns
 // terminal classification, capped means and independent production replay.
 
+// Frozen human-v0 profiles remain counterfactual controls and define base fields.
+// Released API defaults are versioned separately in human_release.js.
 const PROFILES = {
   dennis: {
     clockHorizon: 3,
