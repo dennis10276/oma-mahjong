@@ -80,13 +80,14 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
   for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
   for(const key of ['lapse','memoryDecay','retryRetention'])assert(p[key]>=0&&p[key]<=1);
   assert(p.temperature>0);
+  assert(p.retryClockHorizon===undefined||Number.isInteger(p.retryClockHorizon)&&p.retryClockHorizon>=p.clockHorizon&&p.retryClockHorizon<=4);
   assert(p.retryClockTrayDepth===undefined||Number.isInteger(p.retryClockTrayDepth)&&p.retryClockTrayDepth>=p.clockTrayDepth&&p.retryClockTrayDepth<=p.trayDepth&&p.retryClockTrayDepth<=4);
   assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
@@ -119,7 +120,7 @@ function createBotController(tiles, profile, seed) {
   }
 
   function beginAttempt() {
-    clockHorizon=p.clockHorizon+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0);
+    clockHorizon=Math.min(4,(clockLosses>0&&p.retryClockHorizon!==undefined?p.retryClockHorizon:p.clockHorizon)+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0));
     strictClockSlack=p.deadlineAttentionProbability===undefined?p.strictClockSlack:attentionRandom()<Math.min(1,p.deadlineAttentionProbability+clockLosses*(p.deadlineLearningRate??0));
     if (attempt++) {
       memory = memory.map(v => random() < p.retryRetention ? v : null);
