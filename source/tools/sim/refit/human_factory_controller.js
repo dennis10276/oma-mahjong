@@ -81,13 +81,14 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
   for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
   for(const key of ['lapse','memoryDecay','retryRetention'])assert(p[key]>=0&&p[key]<=1);
   assert(p.temperature>0);
+  assert(!p.retryKeyPictureRelations||p.retryKeyIdentityMemory===1,'Picture relationships require observed key identities');
   assert(!p.retryKeyRouteValue||p.retryLockedCarryKeys===1,'Key-route value requires actual-loss dependency learning');
   assert(!p.retryPrepareKeyOuts||p.retryLockedCarryKeys===1,'Key preparation requires actual-loss dependency learning');
   assert(p.retryClockHorizon===undefined||Number.isInteger(p.retryClockHorizon)&&p.retryClockHorizon>=p.clockHorizon&&p.retryClockHorizon<=4);
@@ -95,13 +96,14 @@ function createBotController(tiles, profile, seed) {
   assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
-  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue'])assert(p[key]===undefined||p[key]===0||p[key]===1);
+  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations'])assert(p[key]===undefined||p[key]===0||p[key]===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
   const nb = Layouts.neighbors(tiles), iceNb = Layouts.iceNeighbors(tiles);
   const n = tiles.length;
   const retryKeyMemory=p.retryKeyIdentityMemory?createKeyIdentityMemory(n):null;
+  const keyPictureRelations=new Map();
   const aboveTrans = tiles.map((_, i) => {
     const set = new Set(), stack = [...nb.above[i]];
     while (stack.length) {
@@ -184,6 +186,20 @@ function createBotController(tiles, profile, seed) {
     memory = memory.map((v, i) => o.pictures[i] !== null ? o.pictures[i] : s.alive[i] && random() < p.memoryDecay ? null : v);
     roles = roles.map((v, i) => o.roles[i] ?? v);
     retryKeyMemory?.observe(state,seen.roles,attempt);
+    if(p.retryKeyPictureRelations){
+      const keys=retryKeyMemory.keys();
+      for(let a=0;a<keys.length;a++)for(let b=a+1;b<keys.length;b++){
+        const i=keys[a],j=keys[b],id=i+'|'+j;
+        if(memory[i]!==null&&memory[i]===memory[j]&&!keyPictureRelations.has(id))keyPictureRelations.set(id,{a:i,b:j,attempt,physicalTaps:state.physicalTaps,source:'actual known pictures of observed key identities matched; static relationship only'});
+      }
+      for(const [id,fact]of keyPictureRelations){
+        if(fact.attempt>=attempt)continue;
+        const a=memory[fact.a],b=memory[fact.b];
+        if(a!==null&&b!==null&&a!==b){keyPictureRelations.delete(id);continue;}
+        if(a!==null&&b===null&&state.alive[fact.b])memory[fact.b]=a;
+        else if(b!==null&&a===null&&state.alive[fact.a])memory[fact.a]=b;
+      }
+    }
   }
 
   function suggestsNoEasyEscape(index) {
@@ -671,7 +687,7 @@ function createBotController(tiles, profile, seed) {
     return { index: selected.index, score: selected.score };
   }
 
-  return { beginAttempt, endAttempt, observe, decide, lockedCarryEvidence:()=>[...learnedLockedCarry.values()].map(f=>({...f})), rememberedKeyTargets, keyIdentityEvidence:()=>retryKeyMemory?.entries()??[], remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack,clockTrayDepth:clockTrayPlanningDepth()}) };
+  return { beginAttempt, endAttempt, observe, decide, keyPictureRelationEvidence:()=>[...keyPictureRelations.values()].map(f=>({...f})), lockedCarryEvidence:()=>[...learnedLockedCarry.values()].map(f=>({...f})), rememberedKeyTargets, keyIdentityEvidence:()=>retryKeyMemory?.entries()??[], remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack,clockTrayDepth:clockTrayPlanningDepth()}) };
 }
 
 module.exports={createFactoryController:createBotController,PROFILES};
