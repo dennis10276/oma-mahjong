@@ -4075,6 +4075,143 @@
           }
         ]
       }
-    }
+    },
+    "tag": "human-v0",
+    "commit": "bcac396b6ce189be08d1d126dcf313e5782048e9"
+  },
+  "milestone2": {
+    "status": "UNMET",
+    "baseline": {
+      "version": "human-v0",
+      "nativeExit": 0,
+      "sourceManifest": {
+        "hash": "5329eca085dbcbecd7eec440446da24eed93e072b2c82c0d03a5260e076f63bc",
+        "files": [
+          "tools/sim/refit/human_board_visibility.js",
+          "tools/sim/refit/human_bot.js",
+          "tools/sim/refit/human_factory_controller.js",
+          "tools/sim/refit/human_level_sources.js",
+          "tools/sim/refit/human_style_benchmark.js",
+          "tools/sim/refit/human_style_controller.js",
+          "tools/sim/refit/human_style_environment.js",
+          "tools/sim/refit/human_style_immediate_outs.js",
+          "tools/sim/refit/human_style_measure.js",
+          "tools/sim/refit/human_style_parallel_benchmark.js",
+          "tools/sim/refit/human_style_profiles.json",
+          "tools/sim/refit/human_style_tray_horizon.js",
+          "tools/sim/refit/personal_game_io.js",
+          "tools/sim/refit/personal_public_picture_prior.js",
+          "tools/sim/refit/production_physical_session.js",
+          "tools/sim/refit/public_alive_signature.js",
+          "tools/sim/refit/public_board_input.js",
+          "tools/sim/refit/public_goal_routes.js",
+          "tools/sim/refit/public_matched_picture.js",
+          "www/hard.js",
+          "www/js/board.js",
+          "www/js/specials.js",
+          "www/layouts.js",
+          "www/style.css",
+          "www/tiles.js"
+        ],
+        "execution": "immutable-import-snapshot"
+      },
+      "workerExits": [
+        {
+          "worker": 0,
+          "pid": 32028,
+          "exitCode": 0,
+          "signal": null,
+          "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\human-v0-milestone2-baseline\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+        },
+        {
+          "worker": 1,
+          "pid": 33456,
+          "exitCode": 0,
+          "signal": null,
+          "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\human-v0-milestone2-baseline\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+        },
+        {
+          "worker": 2,
+          "pid": 33784,
+          "exitCode": 0,
+          "signal": null,
+          "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\human-v0-milestone2-baseline\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+        },
+        {
+          "worker": 3,
+          "pid": 24656,
+          "exitCode": 0,
+          "signal": null,
+          "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\human-v0-milestone2-baseline\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+        }
+      ],
+      "summary": {
+        "settings": {
+          "Dennis": {
+            "firstTryRate": 0.5555555555555556,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 891,
+              "mid": 1015,
+              "late": 49
+            },
+            "lossShares": {
+              "clock": 0.45575447570332484,
+              "mid": 0.5191815856777494,
+              "late": 0.02506393861892583
+            },
+            "riskLoss": 0.44499999999999995,
+            "controlLoss": 0.43,
+            "clockCases": {
+              "132": 0,
+              "135": 0,
+              "142": 1,
+              "144": 0
+            },
+            "checks": {
+              "a": false,
+              "b": false,
+              "c": false
+            }
+          },
+          "family": {
+            "firstTryRate": 0.2569444444444444,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 3233,
+              "mid": 1709,
+              "late": 50
+            },
+            "lossShares": {
+              "clock": 0.647636217948718,
+              "mid": 0.3423477564102564,
+              "late": 0.010016025641025642
+            },
+            "riskLoss": 0.76,
+            "controlLoss": 0.67,
+            "clockCases": {
+              "132": 0.19444444444444445,
+              "135": 0.4406779661016949,
+              "142": 0.9942196531791907,
+              "144": 0.8260869565217391
+            },
+            "checks": {
+              "a": true,
+              "b": false,
+              "c": false
+            }
+          }
+        },
+        "developmentScreen": false,
+        "patternGatesMet": false,
+        "finalGatesMet": false,
+        "valid": true,
+        "minutesPerBoard": 0.13936279779279284,
+        "model": "human-v0",
+        "workers": 4,
+        "wallMinutes": 3.01775592
+      }
+    },
+    "experimentsSinceBaseline": 0
   }
 }

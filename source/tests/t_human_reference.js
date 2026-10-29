@@ -41,6 +41,7 @@ const modules = [
   'test_human_style_clock_rows.js',
   'test_human_limited_reference.js',
   'test_human_factory_controller.js',
+  'test_human_v0_parallel.js',
   'test_human_style_tray_habit.js',
   'test_human_style_information.js',
   'test_human_style_parallel.js',

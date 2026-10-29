@@ -52,3 +52,29 @@ Those measurements explain development progress; they do not calibrate v0.
 Milestone3 lab Spearman ranking and the frozen future progression/factory check
 remain outstanding. Raw contracts, profiles, source snapshots and logs are in
 .codex-runs/human-style/. CPU-only; no CUDA acceleration claim.
+
+## Complete human-v0 milestone2 baseline
+
+74 boards (72 levels92-163 plus89/91 for the fixed risk cohort),20 campaigns
+per setting/board, up to12 actual tries, fixed seed20261028. All four native
+workers exit0. Every accepted tap replays:860,010 taps across9,696 attempts;
+slowest decision7.24ms; total wall time3.02min, mean0.139min/board for both settings.
+
+| Full-campaign metric | Dennis | Family | Required |
+|---|---:|---:|---|
+|First-try rate|55.56%|25.69%|Dennis50-55%;family25-35%|
+|Clock loss share|45.58%|64.76%|55-60%|
+|Mid loss share|51.92%|34.23%|30-45%|
+|Late loss share|2.51%|1.00%|<10%|
+|Risk minus control loss|1.5pp|9pp|>=10pp|
+
+Dennis's clock-loss fractions on132/135/142/144 are0/0/100/0%; family's are
+19.44/44.07/99.42/82.61%. The strict majority requirement therefore fails for
+both settings. Factory milestone1 is retained; human-v1 is NOT released.
+These are aggregate actual-retry results, not first-attempt phase screens.
+
+The next calibration work must improve the pattern of mistakes while retaining
+all five factory gates. Post-clock partner access and tray judgment, clock-route
+commitment under pressure, and learning after actual losses are behavioral
+hypotheses to investigate. Do not manufacture clock failures or fit per-level
+successful-attempt counts merely to satisfy the table.

@@ -55,7 +55,8 @@ Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-
 - Milestone1: easy75/75/95/100%; hard40%,clock82.61%; all100 campaigns clear.
 -19:32.99/27.92%;20:32.71/25.35%;21:35.97/27.92% first try (Dennis/family).
 - Audited release check passes d/e/timing; slowest6.34ms;20 runs1.4-4.1s/board.
--171/171 checks pass; HUMAN_V0_FACTORY_REPORT.md documents API and replay evidence.
+-172/172 current checks pass; human-v0 tag=bcac396; factory API/report ready.
+- M2 baseline: Dennis55.56%,family25.69%; clock shares45.58/64.76%; all a-c not joint.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
 - Small source commits; raw logs/snapshots under .codex-runs/human-style/.
 - No Firebase writes, publication or pushes. Preserve unrelated experiments.
