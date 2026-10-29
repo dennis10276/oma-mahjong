@@ -1,52 +1,62 @@
-# Frozen reference and human-like player calibration
+# Frozen reference and human-like difficulty meter
 
-ACTIVE and UNMET. The current goal replaces per-level attempt matching.
+ACTIVE and UNMET. Updated objective: deliver usable milestones for the level factory.
+Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-objective.md.
 
 ## Frozen Track A
+- Policy40 remains frozen; no new WHEN rules or repairs to reference blind spots.
+- measure() works on arbitrary unlabeled boards, salts1/2/3, default3 tries.
+- Optional maxTries6 supplies the requested3-6-try check without changing policy.
+- A bounded failure never proves impossibility. Invalid/incomplete coverage is null.
 
-- Policy40 is frozen in human_reference_frozen.json, with source/profile hashes.
-- measure(board) defaults to three actual tries on salts1,2,3.
-- finishable=true means all three clear within3; false is a bounded failure,
-  never proof of impossibility; invalid/incomplete coverage returns null.
-- Preserve human-visible information, observed retry memory and production replay.
-- No new WHEN conditions. Experiments60/61 from the old goal are retired.
-- Historical162-board policy40 baseline:155 clear within3 on every salt;
-  161 clear within12 on every salt. These are different gates.
+## Shared rules
+- Only human-visible information and actual earlier-try memory; one observer.
+- Accurate production rules, every tap independently replayed, under2 seconds/move.
+- General planning only; no per-board settings, routes or successful-try fitting.
+- Short clock action planning must still recognize visible side access along rows.
+- Limited tray lookahead, forgetting some closed pictures, stochastic choices.
 
-## Independent Track B
+## Milestone1: human-v0 PASSED
+- Derive from frozen reference with human limits; Dennis setting only initially.
+- d: First-try wins in most runs on factory1-175/factory1-189/factory2-184/factory2-192.
+- e: factory2-175 clearly lower first-try rate, losses mostly before clock.
+- Predeclared development gates: every easy>.5; hard at least.20 below each;
+  hard clock loss share>.5;20 campaigns per board under5 minutes.
+- Commit and tag human-v0 only after d/e/timing/public-information checks pass.
+- Data: origin/wip/level-factory, source/analysis/factory/dennis-plays.json.
+- Snapshot586f970 includes6 factory boards and lab counts/tap histories.
 
-- Build a human-like controller with short clock planning, limited tray lookahead,
-  forgetting of previously seen closed pictures and stochastic legal choices.
-- Same production physics and one validated observer; no exact route solver.
-- Two global settings: Dennis and weaker family. No per-level settings or routes.
-- Fit patterns, never per-level successful attempt counts.
-- a: Dennis first-try rate50-55% across92-163; family about30%.
-- b: failed attempts55-60% before clock, about40% mid, under10% late.
-- c: risk cohort132/144/91/89/99/122/142/96/143/94 must lose clearly more
-  than10 fixed levels with no observed human losses;132/135/142/144 lose
-  predominantly before clock.
-- Predeclare late threshold, tolerances, cohorts and seeds before experiments.
-- Report uncertainty, board provenance, actual losses and computational censoring.
-- measureHuman(board,{runs:20}) returns first-try rate, average tries,
-  phase shares for both settings, censoring and minutes/board.
-- Retries require an actual completed physical loss. No free restarts at caps.
-- Stop after8 experiments without progress on a-c; honest baseline is only a start.
-- Once a-c hold, freeze and check subsequent unopened Dennis progression levels.
-- Completion requires that prospective check, with a one-screen summary.
+## Milestone2: human-v1; retain d/e
+- Dennis first-try50-55% on92-163; weaker family25-35% (about30%).
+- Failed actual attempts: clock55-60%,mid30-45%,late<10% (late<=10 pile tiles).
+- Risk132/144/91/89/99/122/142/96/143/94 loss rate>=10pp above fixed controls.
+-132/135/142/144 failures strictly predominantly before clock.
+- Same candidate must satisfy all checks; no metrics combined across versions.
 
-## Boundaries and accounting
+## Milestone3: human-v2; retain all earlier gates
+- Lab difficulty roughly ranks as Dennis's tries (Spearman); no per-board fitting.
+- Freeze and check later unopened Dennis progression/factory levels for completion.
+- Tag only versions preserving every preceding milestone; factory uses newest tag.
 
-- Source-only small commits; raw run artifacts in .codex-runs/.
+## API contract (10-line usage note; human-v0)
+1. Repository: personal-bot-review, branch wip/personal-bots.
+2. Module: source/tools/sim/refit/human_bot.js.
+3. Import: const {measureHuman}=require('./source/tools/sim/refit/human_bot.js').
+4. Call: measureHuman(board,{runs:20,setting:'dennis'}).
+5. Board accepts the same packed/object format as measure(), including factory boards.
+6. Output: firstTryRate,averageTries,lossPhase:{beforeClock,mid,late}.
+7. Also: runs,slowestMove(milliseconds),minutes,version,valid and replay diagnostics.
+8. Optional seed gives reproducible campaigns; omit for independently sampled runs.
+9. averageTries=null if any campaign is uncleared; caps never become physical losses.
+10. human-v0 passes factory milestone1 only; family and later milestones remain experimental.
+
+## Accounting and current evidence
+- Progress:29c94dc, six trials19-24 audited,238f5ec controller adopted with fixes.
+- Milestone1: easy75/75/95/100%; hard40%,clock82.61%; all100 campaigns clear.
+-19:32.99/27.92%;20:32.71/25.35%;21:35.97/27.92% first try (Dennis/family).
+- Audited release check passes d/e/timing; slowest6.34ms;20 runs1.4-4.1s/board.
+-171/171 checks pass; HUMAN_V0_FACTORY_REPORT.md documents API and replay evidence.
+- Stop after8 experiments without progress on the current milestone; honest ledger.
+- Small source commits; raw logs/snapshots under .codex-runs/human-style/.
 - No Firebase writes, publication or pushes. Preserve unrelated experiments.
-- One game per worker; keep timing and production replay validation.
-- User-supplied Claude findings motivate the target patterns; they do not prove
-  that all board features lack predictive information.
-- Archived canonical91 clears1/1/1, unlike the supplied3-try comparison;
-  preserve that discrepancy until the board/version can be reconciled.
-
-## Current evidence
-
-- Freeze648172a/a9e541e; human implementation8df79c5;160 offline checks pass.
-- Six human-pattern trials: Dennis22.15% first try, family18.75% on92-163.
-- Targets UNMET; phase shares and full campaigns need further calibration.
-- See HUMAN_STYLE_PROGRESS.md and HUMAN_STYLE_EXPERIMENTS.json for evidence.
+- Final report: per-milestone gates,minutes/board,slowest move,and decisions for Dennis.
