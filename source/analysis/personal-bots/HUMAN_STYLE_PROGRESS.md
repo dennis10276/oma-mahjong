@@ -1,77 +1,96 @@
-# Human-like bot: six-experiment development report
+# Human-bot progress
 
-**EXPERIMENTAL; calibration and prospective gates are unmet.** Track A stays
-frozen. This work follows the replacement goal: human behavior and loss patterns,
-not matching a particular historical successful-attempt number.
+**human-v0 passes factory milestone1. Overall goal remains ACTIVE and UNMET.**
+Use source/tools/sim/refit/human_bot.js:
+`measureHuman(board,{runs:20,setting:'dennis'})`.
 
-All trials used the same 74 unchanged boards, 20 seeds per setting and one actual
-attempt per seed. The main rate uses only levels92-163 (72 boards). Two additional
-boards complete the fixed risk group. These are development screens, not the
-required full retry-campaign calibration or prospective validation.
+| Fixed factory board | First try | Mean tries |
+|---|---:|---:|
+|factory1-175|75%|1.25|
+|factory1-189|75%|1.30|
+|factory2-184|95%|1.05|
+|factory2-192|100%|1.00|
+|factory2-175|40%|2.15|
 
-Implementation:8df79c5. Reference freeze:648172a plus portable hash repair
-a9e541e. Verification: `.codex-runs/human-style/suite-final-02.log`,
-160/160 tests, native exit0; retry validation log also native exit0.
+Twenty campaigns each; all100 clear. The hard board loses before clock19/23
+actual losses (82.61%). Release check uses1.4-4.1s/board, slowest move6.34ms.
+All taps independently replay;171/171 offline tests pass. This is development
+validation, not a prospective result. See HUMAN_V0_FACTORY_REPORT.md and RTM.
 
-| Trial | Change | Dennis first try | Family first try |
-|---|---|---:|---:|
-| Baseline | Independent short-sighted policy | 0.28% | 0.35% |
-| 1 | Clock attraction and memory calibration | 1.53% | 0.97% |
-| 2 | Fix side cycles; local outs | 6.46% | 6.39% |
-| 3 | Clock-relevant keys first | 8.89% | 9.44% |
-| 4 | Two/three-move tray horizon; visible joker | 11.18% | 14.44% |
-| 5 | Short pre-clock foresight; global parameters | 16.25% | 19.38% |
-| 6 | Fix locked mates and imaginary unlock rewards | **22.15%** | **18.75%** |
+The useful238f5ec controller was adopted with a physical closed-tile lookahead
+fix and the shared audited runner. We corrected capped means, computational
+loss/retry accounting and output shape, preserved the product README, and made
+fixed model profiles immutable. All five behavioral gates still pass after fixes.
 
-The locked-out bug was reproduced with a failing test: an unrelated move scored
-25.8 because a geometrically free **locked** partner was counted as an out.
-The corrected score is -6. No level-specific route or parameter was added.
+## Authorized six-experiment batch19-24
 
-Trial6 Dennis losses: clock42.997%, mid56.913%, late0.089%. Its risk/control
-first-attempt loss rates are90%/69.5%, and all four clock cases lose predominantly
-before the clock. Thus its risk-pattern screen passes, but first-try and phase
-targets fail. Family also fails the strict clock-case screen (135 is exactly50%,
-not a majority). Neither setting is calibrated.
-Trial6 independently replays517,087 taps; its slowest decision is8.56ms.
-The one-attempt screen takes3.62seconds/board for both settings together.
+| Trial | Change/cohort | Dennis first try | Result |
+|---|---|---:|---|
+|19|Learned public ice release;74-board screen|32.99%|Family27.92%; Dennis clock-case gate lost|
+|20|More weight on short future outs;74-board screen|32.71%|Family25.35%; both risk/clock-case screens pass|
+|21|Lower choice temperature;74-board screen|35.97%|Family27.92%; Dennis clock-case gate lost|
+|22|New M1: initial four-tap reference handicap|0/5/45/0% easy|d/e fail; timing passes|
+|23|Visible sideways access; restore reference tray heuristics|0/0/35/75% easy|d/e fail; repairs192 clock blind spot|
+|24|Clock-margin urgency; safer third-slot arbitration|0/0/20/85% easy|d/e fail; hard board loses mostly mid-game|
 
-## What is implemented
+The last three use the new factory objective and five required boards. Their
+source snapshots remain available; no board-specific routes or rules were added.
+An independent acceptance audit of external238f5ec then supplied the passing v0.
 
-| Requirement | Evidence/status |
-|---|---|
-| Freeze strong reference | Policy40 pinned; measure() defaults to3 tries/salts1-3; false never proves impossible |
-| Same rules and observer | Original production engine; every physical tap independently replayed |
-| Human planning limits | Clock dependency cone<=3; tray horizon<=3 with beam6; stops at unknown information |
-| Two global settings | Fixed JSON profiles, no level identity/outcome input to controller |
-| Random choices and imperfect memory | Seeded stochastic legal choices; closed-picture decay and retry retention tested |
-| Honest retries | Only actual completed physical losses restart; caps produce null rates/means, not losses |
-| Pattern calibration | Six trials complete; targets still UNMET |
-| Frozen future check | NOT STARTED; blocked by unmet calibration gates |
+## Later milestones
 
-Retry validation after the final role-reset repair:20 campaigns, up to12 actual
-tries, both settings, no computation censoring. On103 Dennis clears20/20 with
-mean1 try; family clears20/20 with mean2.3. On132 neither clears within12: means
-remain null. This exposes a real remaining limitation in short-route choice and
-retry adaptation; it is not evidence of impossibility. Retries retain observed
-pictures but do not yet learn a reusable alternative route from their failures.
+Milestone2 requires Dennis50-55% and family25-35% first try on92-163,
+clock55-60%/mid30-45%/late<10% loss shares across actual retries, and fixed risk
+and clock-case gates. They remain unproven for v0. Do not combine old candidate
+metrics with the new controller.
 
-Dynamic roles reset on retry: a late melted-ice `none` observation cannot certify
-an unseen starting role. First-attempt actions still match archived trial6 on
-97/103/132 for both settings. All160 offline human-reference tests pass.
+Historical full campaigns: trial12 first29.17/25.83%, both c gates pass;
+trial14 first34.24/26.39%, Dennis b passes but c fails; trial17 first33.19/26.67%,
+Dennis b passes but135 clock share=.50 fails strict majority. Family b fails.
+Those measurements explain development progress; they do not calibrate v0.
 
-## Reproduce and inspect
+Milestone3 lab Spearman ranking and the frozen future progression/factory check
+remain outstanding. Raw contracts, profiles, source snapshots and logs are in
+.codex-runs/human-style/. CPU-only; no CUDA acceleration claim.
 
-- API: `require('./source/tools/sim/refit/human_style_measure.js').measureHuman(board,{runs:20,seed:20261028})`.
-- Returns both settings, first-try rate, average tries (null if any campaign fails
-  to clear within its limit), loss shares, censoring, replay taps and minutes.
-- Full campaign benchmark: `node source/tools/sim/refit/human_style_benchmark.js .codex-runs/level-measure/catalog-v4.json .codex-runs/human-style/new-full-run 12`.
-- `HUMAN_STYLE_EXPERIMENTS.json` contains exact global profiles and results.
-- Raw source snapshots/logs: `.codex-runs/human-style/`. Full import snapshots and
-  live byte-change guards begin with trial5; earlier actor versions are archived.
-- Board provenance:64 recorded openings and10 historical versionTable boards.
-  Controls have zero **observed** losses in incomplete cached human data.
-- CPU-only, sequential games. No GPU acceleration or CUDA parity claim.
+## Complete human-v0 milestone2 baseline
 
-The next model improvement should fix public short-route/exit choice and learn
-from actual failed retry branches. Continue comparing both settings and all
-patterns; do not deliberately manufacture losses to match phase percentages.
+74 boards (72 levels92-163 plus89/91 for the fixed risk cohort),20 campaigns
+per setting/board, up to12 actual tries, fixed seed20261028. All four native
+workers exit0. Every accepted tap replays:860,010 taps across9,696 attempts;
+slowest decision7.24ms; total wall time3.02min, mean0.139min/board for both settings.
+
+| Full-campaign metric | Dennis | Family | Required |
+|---|---:|---:|---|
+|First-try rate|55.56%|25.69%|Dennis50-55%;family25-35%|
+|Clock loss share|45.58%|64.76%|55-60%|
+|Mid loss share|51.92%|34.23%|30-45%|
+|Late loss share|2.51%|1.00%|<10%|
+|Risk minus control loss|1.5pp|9pp|>=10pp|
+
+Dennis's clock-loss fractions on132/135/142/144 are0/0/100/0%; family's are
+19.44/44.07/99.42/82.61%. The strict majority requirement therefore fails for
+both settings. Factory milestone1 is retained; human-v1 is NOT released.
+These are aggregate actual-retry results, not first-attempt phase screens.
+
+The next calibration work must improve the pattern of mistakes while retaining
+all five factory gates. Post-clock partner access and tray judgment, clock-route
+commitment under pressure, and learning after actual losses are behavioral
+hypotheses to investigate. Do not manufacture clock failures or fit per-level
+successful-attempt counts merely to satisfy the table.
+
+## Milestone2 follow-up: research only
+
+Five full candidate trials retain the five factory d/e checks. Candidates4/5
+reach first-try51.39% Dennis and29.17% family. Candidate4 clock shares55.41/54.57%
+pass Dennis.b but narrowly fail family.b. Candidate5 learns attention from actual
+clock losses: all100 factory campaigns clear, hard-board mean3.6; its first
+attempts are unchanged, but original Dennis.b becomes a tradeoff (50.40% clock).
+175/175 tests pass. Default human-v0 still reproduces all100 release campaigns;
+no human-v1 tag or default replacement is made.
+
+A fresh read-only audit shows that clock events mean saved clocks. Dennis
+won135/142/144 first try in the natural records;132 losses occurred after saving
+the clock. The requested before-clock case target therefore needs clarification.
+The original targets remain unchanged while the user question is pending. See
+HUMAN_PHASE_TARGET_AUDIT.md and HUMAN_V1_CALIBRATION.md for evidence and ledgers.

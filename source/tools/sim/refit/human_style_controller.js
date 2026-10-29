@@ -3,6 +3,7 @@ const assert=require('assert/strict');
 const Layouts=require('../../../www/layouts.js');
 const {trayHorizon}=require('./human_style_tray_horizon.js');
 const {certainlyTrappedAfterTake}=require('./human_style_immediate_outs.js');
+const {goalRoutes}=require('./public_goal_routes.js');
 const {inferMatchedPicture}=require('./public_matched_picture.js');
 
 // Only geometry and observed packets enter this policy. No board identity,
@@ -11,7 +12,7 @@ function createStyleController(tiles,profile,seed){
  const p={...profile},random=Layouts.rng(seed),nb=Layouts.neighbors(tiles),iceNb=Layouts.iceNeighbors(tiles);
  let memory=tiles.map(()=>null),roles=tiles.map(()=>null),state,seen,visits=new Map(),attempt=0,lastDecision=null;
  assert(Number.isInteger(seed));
- const allowed=['clockHorizon','clockTrayDepth','partnerHorizon','clockWeight','postClockKeyWeight','clockUrgencyPower','keyUnlockBelief','keyPictureBelief','iceReleaseBelief','trayCost','trayRestoreBonus','safePeekBonus','safePeekMinTray','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
+ const allowed=['clockHorizon','clockRowPreview','clockRowUrgency','clockTrayDepth','partnerHorizon','clockWeight','postClockKeyWeight','clockUrgencyPower','keyUnlockBelief','keyPictureBelief','iceReleaseBelief','trayCost','trayRestoreBonus','safePeekBonus','safePeekMinTray','pairReward','exploration','temperature','lapse','memoryDecay','retryRetention','peekPatience','outWeight','trayDepth','futureWeight'];
  assert(Object.entries(p).every(([key,value])=>allowed.includes(key)&&Number.isFinite(value)&&value>=0),'Only finite global behavioral parameters are allowed');
  assert(['clockWeight','trayCost','pairReward','exploration'].every(key=>Number.isFinite(p[key])),'Missing required behavioral weight');
  for(const key of ['clockHorizon','partnerHorizon'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4);
@@ -67,6 +68,14 @@ function createStyleController(tiles,profile,seed){
    if(depth>0)for(const j of blockers(i))attract(j,depth-1,weight*.8,new Set([...path,i]));
   }
   if(clock)attract(clock.i,p.clockHorizon,p.clockWeight);
+  let clockGeometryCost=null;
+  if(clock&&p.clockRowPreview){
+   const ice=Object.fromEntries(roles.flatMap((role,i)=>role==='ice'||role==='ice2'?[[i,(role==='ice2'?2:1)+iceNb[i].filter(j=>!alive[j]).length]]:[]));
+   const game={tiles,nb,rules:{ice,iceNb,locks:new Set(roles.flatMap((r,i)=>r==='lock'?[i]:[])),keys:roles.flatMap((r,i)=>r==='key'?[i]:[])}};
+   // See the visible row's geometry, not a solved sequence of physical taps.
+   const route=goalRoutes(game,state,clock.i);clockGeometryCost=route.cost;
+   for(const i of route.frontier)attraction.set(i,Math.max(attraction.get(i)??0,p.clockWeight*.8));
+  }
   const needsKeys=clock?[...attraction.keys()].some(i=>alive[i]&&roles[i]==='lock'):
    roles.some((role,i)=>alive[i]&&role==='lock');
   if(needsKeys)for(let i=0;i<tiles.length;i++)
@@ -89,7 +98,8 @@ function createStyleController(tiles,profile,seed){
    const visitsKey=signature+'|'+i,count=visits.get(visitsKey)??0;
    // Human deadline pressure over the same short cone, not an exact route
    // solver. An optional tray match must not consume the clock's final move.
-   const urgency=clock?Math.max(1,(p.clockHorizon/Math.max(1,clock.remaining))**(p.clockUrgencyPower??2)):1;
+   const urgency=clock?Math.max(1,(p.clockHorizon/Math.max(1,clock.remaining))**(p.clockUrgencyPower??2),
+    p.clockRowUrgency&&clockGeometryCost!==null?1+p.clockRowUrgency/Math.max(1,clock.remaining-clockGeometryCost):1):1;
    const goal=Math.max(attraction.get(i)??0,openTwin?attraction.get(openPeek)??0:0);
    let score=(knownFatal?0:goal*urgency)+nb.above.filter(row=>row.includes(i)).length*.2;
    if(trayMatch)score+=p.pairReward*2;

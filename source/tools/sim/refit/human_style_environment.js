@@ -33,9 +33,9 @@ function lossPhase(state,clock){
  if(clock&&state.alive[clock.i])return 'clock';
  return state.alive.reduce((a,b)=>a+b,0)<=10?'late':'mid';
 }
-function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=false}={}){
+function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=false,controllerFactory=createStyleController}={}){
  const game=decodeGame(encoded),factory=createSessionFactory();
- const controller=createStyleController(game.tiles,profile,seed),attempts=[];
+ const controller=controllerFactory(game.tiles,profile,seed),attempts=[];
  const settings={seed:20261111,choiceLimit,tapMs:1000};let verifiedTaps=0,slowestMove=0;
  for(let attempt=1;attempt<=maxAttempts;attempt++){
   controller.beginAttempt();const session=factory(game,settings),actions=[],decisions=[];
@@ -58,6 +58,7 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
    observed:observeBoard(game.tiles,frame.state,game.clock,{picture:i=>game.faces[i],role:i=>visibleRole(game,frame.state,i),takeable:()=>false})};
   controller.observe({...terminal.state,relieved:frame.state.relieved,arriving:frame.state.arriving},terminal.observed);
   const censored=frame.computationCensored||!frame.win&&!['tray','clock','stuck'].includes(frame.why);
+  if(!censored)controller.endAttempt?.(frame.win?null:lossPhase(frame.state,game.clock)==='clock'?'beforeClock':lossPhase(frame.state,game.clock),frame.state.tray);
   attempts.push({attempt,win:frame.win,why:frame.why,censored,
    phase:frame.win||censored?null:lossPhase(frame.state,game.clock),
    left:frame.state.alive.reduce((a,b)=>a+b,0),taps:actions.length,...(capture?{actions,decisions,terminal}: {})});

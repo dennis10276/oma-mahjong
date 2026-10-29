@@ -1,0 +1,20 @@
+{
+  "schema": "frozen-factory-milestone1-contract-v1",
+  "sourceCommit": "bcac396b6ce189be08d1d126dcf313e5782048e9",
+  "runs": 20,
+  "seed": 20261029,
+  "gates": {
+    "easyFirstStrictAbove": 0.5,
+    "hardBelowEveryEasyBy": 0.2,
+    "hardClockStrictAbove": 0.5,
+    "minutesStrictBelow": 5,
+    "slowestMoveStrictBelow": 2000
+  },
+  "boards": {
+    "factory1-175": "039508ca70f1577ec4bf902f3fffad644334895113a45324492538a7caf3e724",
+    "factory1-189": "e56e70699a38c8a84269ef2a516f0ce8bb694a9bc409b83981664a93faab5253",
+    "factory2-184": "7544be978baf19d90b89f3494517d03073250d42dec7530ca53d988269534d92",
+    "factory2-192": "0928a59eee869905ec694896f99917a4f90ea0f472ab6e9f9570aee1ce67bba3",
+    "factory2-175": "2a5915eaee3808aea3bae5874d927ed313f437819ae062721c0ff6d50b6e41ba"
+  }
+}

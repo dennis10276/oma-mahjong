@@ -1,0 +1,36 @@
+{
+  "schema": "human-lab-ranking-v1",
+  "setting": "dennis",
+  "runs": 20,
+  "seed": 20261029,
+  "maxAttempts": 12,
+  "primary": "Spearman(human recorded tries, complete simulated averageTries)",
+  "minimumSpearman": 0.5,
+  "requiredCoverage": "Every recorded Dennis lab target; no missing, censored or constant primary ranking can pass",
+  "excludedLevels": [
+    10031
+  ],
+  "exclusionReason": "Explicit user-defined lab cohort excludes10031",
+  "secondary": "First-try failure rank and restricted-mean-attempt rank are diagnostics only, never substitutes for an unresolved primary",
+  "prerequisite": "A passing milestone2 model and retained factory gates; no held-out measurements before human-v1 exists",
+  "levels": [
+    10011,
+    10012,
+    10015,
+    10032,
+    10033,
+    10041,
+    10042,
+    10044,
+    10045,
+    10046,
+    10047,
+    10048,
+    10049,
+    10052,
+    10053
+  ],
+  "boards": 15,
+  "dataHash": "c031ffdf74c395963596d95ce62b9755b228a16da4b60afb0ecf5b50bd8bb68e",
+  "catalogHash": "cd9f22d824d45fd2641558b9092a7d843cf636889d6e795cb22417259f9eb6cc"
+}
