@@ -11,7 +11,7 @@ const { createSessionFactory } = require('./production_physical_session.js');
 const { observeBoard } = require('./human_board_visibility.js');
 const { inferMatchedPicture } = require('./public_matched_picture.js');
 
-const VERSION = 'human-v0';
+const VERSION = 'human-v1';
 
 const PROFILES = {
   dennis: {
@@ -34,33 +34,37 @@ const PROFILES = {
     trayDepth: 3,
     clockTrayDepth: 3,
     futureWeight: 3.5,
-    strictClockSlack: true,
-    flippedBlockerBalk0: 12.8,
-    flippedBlockerBalk1: -5.0
+    try1TightClockMaxRem: 2,
+    retryTightClockLosses: 3,
+    emptyTrayClockBonus: 1.0,
+    flippedBlockerBalk0: 12.6,
+    flippedBlockerBalk1: 13.5
   },
   family: {
     clockHorizon: 2,
     partnerHorizon: 1,
-    clockWeight: 32,
+    clockWeight: 26.5,
     postClockKeyWeight: 20,
-    clockUrgencyPower: 1.6,
-    trayCost: 4.8,
-    pairReward: 16,
+    clockUrgencyPower: 1.4,
+    trayCost: 4.5,
+    pairReward: 17.2,
     exploration: 5,
     freePeekBonus: 12,
-    zWeight: 1.2,
-    temperature: 1.8,
-    lapse: 0.04,
+    zWeight: 1.3,
+    temperature: 1.85,
+    lapse: 0.05,
     memoryDecay: 0.015,
-    retryRetention: 0.65,
+    retryRetention: 0.72,
     peekPatience: 2,
-    outWeight: 6,
+    outWeight: 5.5,
     trayDepth: 2,
-    clockTrayDepth: 2,
-    futureWeight: 1.8,
-    strictClockSlack: false,
+    clockTrayDepth: 1,
+    futureWeight: 2.0,
+    try1TightClockMaxRem: 0,
+    retryTightClockLosses: 2,
+    emptyTrayClockBonus: -0.26,
     flippedBlockerBalk0: 6.0,
-    flippedBlockerBalk1: -2.0
+    flippedBlockerBalk1: 5.0
   }
 };
 
@@ -92,13 +96,15 @@ function createBotController(tiles, profile, seed) {
     return set;
   });
   const below = tiles.map((_, i) => tiles.map((__, j) => j).filter(j => nb.above[j].includes(i)));
+  const directBelow = tiles.map((_, i) => below[i].filter(j => !below[i].some(k => k !== j && nb.above[j].includes(k))));
+  const dependents = tiles.map((_, i) => [...new Set([...directBelow[i], ...nb.left[i], ...nb.right[i], ...iceNb[i]])]);
 
   let memory = tiles.map(() => null);
   let roles = tiles.map(() => null);
   let state, seen, visits = new Map(), attempt = 0, lastDecision = null;
-  let clockLosses = 0;
+  let clockLosses = 0, midLosses = 0;
   const failedDigs = new Map();
-  let attemptDigs = [];
+  let trayHolders = [];
 
   function beginAttempt() {
     if (attempt++) {
@@ -107,16 +113,15 @@ function createBotController(tiles, profile, seed) {
     roles = tiles.map(() => null);
     visits = new Map();
     lastDecision = null;
-    attemptDigs = [];
+    trayHolders = [];
   }
 
-  function endAttempt(phase, terminalTray) {
+  function endAttempt(phase) {
     if (phase === 'beforeClock') clockLosses++;
-    if (phase !== null && Array.isArray(terminalTray)) {
-      for (const d of attemptDigs) {
-        if (d.face !== null && terminalTray.includes(d.face)) {
-          failedDigs.set(d.index, (failedDigs.get(d.index) ?? 0) + 1);
-        }
+    else if (phase === 'mid') midLosses++;
+    if (phase !== null) {
+      for (const h of trayHolders) {
+        failedDigs.set(h.index, (failedDigs.get(h.index) ?? 0) + 1);
       }
     }
   }
@@ -127,10 +132,16 @@ function createBotController(tiles, profile, seed) {
         alive: s.alive, moves: s.moves, openPeek: s.openPeek, physicalTaps: s.physicalTaps, tray: s.tray
       });
       if (proof) { memory = memory.slice(); memory[proof.index] = proof.picture; }
-      if (!s.alive[lastDecision.index] && s.tray.length > lastDecision.tray.length) {
-        const addedFace = s.tray.at(-1);
-        if (lastDecision.tray.length >= 1) {
-          attemptDigs.push({ index: lastDecision.index, face: addedFace, trayLen: lastDecision.tray.length });
+      if (!s.alive[lastDecision.index]) {
+        if (s.tray.length > lastDecision.tray.length && s.tray.length <= 3) {
+          trayHolders.push({ index: lastDecision.index, face: s.tray.at(-1) });
+        } else if (s.tray.length < lastDecision.tray.length) {
+          const rem = s.tray.slice();
+          trayHolders = trayHolders.filter(h => {
+            const k = rem.indexOf(h.face);
+            if (k >= 0) { rem.splice(k, 1); return true; }
+            return false;
+          });
         }
       }
       lastDecision = null;
@@ -165,8 +176,10 @@ function createBotController(tiles, profile, seed) {
     if (tray.length >= 4) return true;
     if (tray.length < 3) return false;
 
-    let unlocked = state.relieved || roles[index] === 'key' || seen.roles[index] === null ||
-      (onPile && (roles[state.openPeek] === 'key' || seen.roles[state.openPeek] === null));
+    const clearsLastKey = (roles[index] === 'key' || (onPile && roles[state.openPeek] === 'key')) &&
+      !roles.some((r, k) => r === 'key' && alive[k]);
+    let unlocked = state.relieved || clearsLastKey || seen.roles[index] === null ||
+      (onPile && seen.roles[state.openPeek] === null);
 
     const usable = i => {
       if (!alive[i] || !Layouts.isFree(i, alive, nb)) return false;
@@ -195,15 +208,17 @@ function createBotController(tiles, profile, seed) {
       if (!matchedPair) return true;
       const [u, v] = matchedPair;
       alive[u] = 0; alive[v] = 0;
-      if (roles[u] === 'key' || seen.roles[u] === null || roles[v] === 'key' || seen.roles[v] === null) unlocked = true;
+      if (((roles[u] === 'key' || roles[v] === 'key') && !roles.some((r, k) => r === 'key' && alive[k])) ||
+          seen.roles[u] === null || seen.roles[v] === null) unlocked = true;
     }
     return false;
   }
 
   function computeTrayHorizon(depth) {
     if (!depth) return new Map();
-    const val = s => (n - s.alive.reduce((a, b) => a + b, 0)) * 4 - s.tray.length * (s.tray.length + 1) * 4;
-    const initial = { alive: state.alive.slice(), tray: state.tray.slice(), peek: state.openPeek, unlock: false };
+    const val = s => (n - s.aliveCount) * 4 - s.tray.length * (s.tray.length + 1) * 4;
+    const initialAliveCount = state.alive.reduce((a, b) => a + b, 0);
+    const initial = { alive: state.alive.slice(), aliveCount: initialAliveCount, tray: state.tray.slice(), peek: state.openPeek, unlock: false };
     const base = val(initial), scores = new Map();
 
     function iceReady(s, i) {
@@ -217,26 +232,29 @@ function createBotController(tiles, profile, seed) {
         (roles[i] === 'lock' && s.unlock) || iceReady(s, i);
     }
 
-    function stepMove(s, i) {
+    function stepMove(s, i, usableSet) {
       if (seen.down[i] === null || s.tray.includes(101)) return null;
       const f = memory[i];
       if (f === null || f === 101) return null;
-      const next = { alive: s.alive.slice(), tray: s.tray.slice(), peek: s.peek, unlock: s.unlock };
+      const next = { alive: s.alive.slice(), aliveCount: s.aliveCount, tray: s.tray.slice(), peek: s.peek, unlock: s.unlock };
       const q = next.tray.indexOf(f);
-      const mate = s.peek >= 0 && s.peek !== i && s.alive[s.peek] && memory[s.peek] === f && isFreeAndUsable(s, s.peek);
+      const mate = s.peek >= 0 && s.peek !== i && s.alive[s.peek] && memory[s.peek] === f && usableSet.has(s.peek);
       if (q >= 0) {
-        next.alive[i] = 0; next.tray.splice(q, 1); if (next.peek === i) next.peek = -1;
+        next.alive[i] = 0; next.aliveCount--; next.tray.splice(q, 1); if (next.peek === i) next.peek = -1;
       } else if (mate) {
-        next.alive[i] = 0; next.alive[s.peek] = 0; next.peek = -1;
+        next.alive[i] = 0; next.alive[s.peek] = 0; next.aliveCount -= 2; next.peek = -1;
       } else if (seen.down[i] === 1 && s.peek !== i) {
-        const hasUsableTwin = memory.some((other, j) => j !== i && other === f && isFreeAndUsable(s, j));
+        let hasUsableTwin = false;
+        for (const j of usableSet) {
+          if (j !== i && memory[j] === f) { hasUsableTwin = true; break; }
+        }
         if (hasUsableTwin) {
           next.peek = i;
         } else {
-          next.alive[i] = 0; next.tray.push(f);
+          next.alive[i] = 0; next.aliveCount--; next.tray.push(f);
         }
       } else {
-        next.alive[i] = 0; next.tray.push(f); if (next.peek === i) next.peek = -1;
+        next.alive[i] = 0; next.aliveCount--; next.tray.push(f); if (next.peek === i) next.peek = -1;
       }
       if (!next.alive[i] && (roles[i] === 'key' || (mate && roles[s.peek] === 'key'))) {
         if (!roles.some((r, j) => r === 'key' && next.alive[j])) next.unlock = true;
@@ -247,12 +265,12 @@ function createBotController(tiles, profile, seed) {
     function search(s, left) {
       let best = val(s);
       if (left <= 0) return best;
+      const usableSet = new Set();
+      for (let i = 0; i < n; i++) if (isFreeAndUsable(s, i)) usableSet.add(i);
       const avail = [];
-      for (let i = 0; i < n; i++) {
-        if (isFreeAndUsable(s, i)) {
-          const nxt = stepMove(s, i);
-          if (nxt) avail.push({ nxt, r: val(nxt) });
-        }
+      for (const i of usableSet) {
+        const nxt = stepMove(s, i, usableSet);
+        if (nxt) avail.push({ nxt, r: val(nxt) });
       }
       avail.sort((a, b) => b.r - a.r);
       for (const { nxt } of avail.slice(0, 6)) {
@@ -261,9 +279,11 @@ function createBotController(tiles, profile, seed) {
       return best;
     }
 
+    const rootUsable = new Set();
+    for (let i = 0; i < n; i++) if (seen.takeable[i] === true) rootUsable.add(i);
     for (let i = 0; i < n; i++) {
       if (seen.takeable[i] === true) {
-        const nxt = stepMove(initial, i);
+        const nxt = stepMove(initial, i, rootUsable);
         const known = memory[i] !== null && seen.down[i] !== null && memory[i] !== 101 && !initial.tray.includes(101);
         scores.set(i, nxt ? search(nxt, depth - 1) - base : known ? -100 : 0);
       }
@@ -326,10 +346,11 @@ function createBotController(tiles, profile, seed) {
           const others = validIce.filter(j => !already.includes(j)).sort((a, b) => {
             const cost = u => nb.above[u].filter(k => alive[k]).length +
               (nb.left[u].some(k => alive[k]) && nb.right[u].some(k => alive[k]) ? 1 : 0) +
-              (roles[u] === 'lock' ? 3 : 0);
+              (roles[u] === 'lock' ? 3 : 0) -
+              (clock && aboveTrans[clock.i].has(u) ? 2 : 0);
             return cost(a) - cost(b);
           });
-          ice = [...already, ...others.slice(0, need + 1 - already.length)];
+          ice = [...already, ...others.slice(0, need - already.length)];
         }
       }
       return [...new Set([...top, ...side, ...ice])];
@@ -344,7 +365,7 @@ function createBotController(tiles, profile, seed) {
       for (const j of blockers(i)) {
         const nextDepth = depth + 1;
         const decay = (nextDepth > p.clockHorizon && !isSideRow)
-          ? (clockLosses === 0 ? 0.05 : clockLosses === 1 ? 0.25 : 0.82)
+          ? (clockLosses === 0 ? 0.05 : clockLosses === 1 ? 0.15 : clockLosses === 2 ? 0.28 : 0.82)
           : 0.82;
         attract(j, nextDepth, weight * decay, maxDepth, isSideRow, nextPath);
       }
@@ -357,7 +378,7 @@ function createBotController(tiles, profile, seed) {
         nb.left[c].some(j => alive[j]) && nb.right[c].some(j => alive[j]);
       const maxD = Math.min(5, p.clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
       attract(c, 0, p.clockWeight, maxD, isSideBlockedOnly);
-      const maxPerceivedZDiff = p.clockHorizon + (clockLosses >= 2 ? 2 : 0);
+      const maxPerceivedZDiff = p.clockHorizon + (clockLosses >= (p.retryTightClockLosses ?? 3) ? 2 : 0);
       const needSet = new Set([c]);
       for (const a of aboveTrans[c]) {
         if (alive[a] && tiles[a].z - tiles[c].z <= maxPerceivedZDiff) needSet.add(a);
@@ -388,6 +409,8 @@ function createBotController(tiles, profile, seed) {
     const boardHasLocks = roles.some((role, i) => alive[i] && role === 'lock');
     const visibleKeys = tiles.map((_, i) => i).filter(i => alive[i] && roles[i] === 'key');
     const freeKeys = visibleKeys.filter(i => legal.includes(i));
+    const keysMatchEachOther = visibleKeys.length >= 2 &&
+      memory[visibleKeys[0]] !== null && memory[visibleKeys[0]] === memory[visibleKeys[1]];
     if (clockNeedsKeys) {
       const keyW = p.clockWeight * 0.92;
       const keyD = p.clockHorizon + (clockLosses > 0 ? 1 : 0);
@@ -395,13 +418,21 @@ function createBotController(tiles, profile, seed) {
     } else if (!clock && boardHasLocks) {
       const keyW = p.postClockKeyWeight ?? p.clockWeight * 0.75;
       for (const i of visibleKeys) {
-        if (!legal.includes(i) || freeKeys.length >= 2 || tray.length <= 1) {
+        const keyHasFreeMatch = memory[i] !== null && (
+          tray.includes(memory[i]) ||
+          legal.some(j => j !== i && memory[j] === memory[i])
+        );
+        const safeFreeKeyTake = keyHasFreeMatch ||
+          (visibleKeys.length === 1 && tray.length <= 2) ||
+          (freeKeys.length >= 2 && (keysMatchEachOther ? tray.length <= 2 : tray.length <= 1));
+        if (!legal.includes(i) || safeFreeKeyTake) {
           attract(i, 0, keyW, p.clockHorizon, false);
         }
       }
     }
 
     const partnerAttract = new Map();
+    const partnerDecay = !clock && midLosses > 0 ? 0.78 : 0.65;
     function addPartnerAttract(target, weight, maxD) {
       function rec(u, d, w, path) {
         if (path.has(u) || d > maxD) return;
@@ -409,32 +440,52 @@ function createBotController(tiles, profile, seed) {
         if (d === maxD) return;
         const bl = blockers(u);
         if (bl.length > maxD - d + 1) return;
-        for (const b of bl) if (roles[b] !== 'lock') rec(b, d + 1, w * 0.65, new Set([...path, u]));
+        for (const b of bl) if (roles[b] !== 'lock') rec(b, d + 1, w * partnerDecay, new Set([...path, u]));
       }
       rec(target, 0, weight, new Set());
     }
 
-    if (p.partnerHorizon > 0) {
+    const effPartnerHorizon = !clock && midLosses > 0 ? p.partnerHorizon + 1 : p.partnerHorizon;
+    if (effPartnerHorizon > 0) {
       for (let j = 0; j < n; j++) {
         if (!alive[j] || seen.takeable[j] === true || roles[j] === 'lock') continue;
         const pic = memory[j];
         if (pic === null) continue;
         if (tray.includes(pic)) {
-          addPartnerAttract(j, (p.outWeight ?? 9) * (tray.length >= 2 ? 3.2 : 2.2), p.partnerHorizon);
+          const mult = !clock && midLosses > 0
+            ? (tray.length >= 2 ? 4.0 : 2.4)
+            : (tray.length >= 2 ? 3.2 : 2.2);
+          addPartnerAttract(j, (p.outWeight ?? 9) * mult, effPartnerHorizon);
         } else if (tray.length <= 2 && legal.some(k => memory[k] === pic)) {
-          addPartnerAttract(j, (p.outWeight ?? 9) * 1.6, Math.min(2, p.partnerHorizon));
+          addPartnerAttract(j, (p.outWeight ?? 9) * 1.6, Math.min(2, effPartnerHorizon));
         }
       }
     }
 
-    const depth = clock ? Math.min(p.trayDepth ?? 0, p.clockTrayDepth ?? 3) : (p.trayDepth ?? 3);
+    const depth = clock
+      ? Math.min(p.trayDepth ?? 0, p.clockTrayDepth ?? 3)
+      : Math.min(4, (p.trayDepth ?? 3) + (midLosses > 0 ? 1 : 0));
     const future = computeTrayHorizon(depth);
 
-    const effectiveNeed = p.strictClockSlack ? Math.max(p.clockHorizon, clockMovesNeeded) : p.clockHorizon;
+    const balkingAtFlippedClockBlocker = Boolean(
+      clock && clockLosses < (p.retryTightClockLosses ?? 3) && clock.remaining >= 3 && tray.length >= 1 &&
+      openPeek >= 0 && seen.down[openPeek] === 1 &&
+      (attraction.get(openPeek) ?? 0) >= p.clockWeight * 0.3 &&
+      memory[openPeek] !== null && !tray.includes(memory[openPeek])
+    );
+
     const clockSlack = clock ? clock.remaining - clockMovesNeeded : 99;
-    const urgency = clock
-      ? Math.max(1, (effectiveNeed / Math.max(1, clock.remaining)) ** (p.clockUrgencyPower ?? 2)) * (clockLosses > 0 ? 1.5 : 1)
+    const strictSlackActive = Boolean(
+      clock && (
+        clockLosses >= (p.retryTightClockLosses ?? 3) ||
+        (p.try1TightClockMaxRem > 0 && (clockNeedsKeys || clock.remaining <= p.try1TightClockMaxRem))
+      )
+    );
+    const effectiveNeed = (strictSlackActive || balkingAtFlippedClockBlocker) ? Math.max(p.clockHorizon, clockMovesNeeded) : p.clockHorizon;
+    const baseUrgency = clock
+      ? Math.max(clockLosses === 0 && clock.remaining >= 5 ? 0.86 : 1, (effectiveNeed / Math.max(1, clock.remaining)) ** (p.clockUrgencyPower ?? 2))
       : 1;
+    const urgency = clock ? baseUrgency * (1 + 0.12 * Math.min(clockLosses, 3)) : 1;
 
     const matchingNow = legal.some(i => memory[i] !== null && (
       tray.includes(memory[i]) ||
@@ -443,13 +494,6 @@ function createBotController(tiles, profile, seed) {
     ));
 
     const signature = alive.join('') + '|' + tray.join(',');
-
-    const balkingAtFlippedClockBlocker = Boolean(
-      clock && clockLosses < 2 && clock.remaining >= 3 && tray.length >= 1 &&
-      openPeek >= 0 && seen.down[openPeek] === 1 &&
-      (attraction.get(openPeek) ?? 0) >= p.clockWeight * 0.3 &&
-      memory[openPeek] !== null && !tray.includes(memory[openPeek])
-    );
 
     const scored = legal.map(i => {
       const face = memory[i], down = seen.down[i] === 1, peek = down && openPeek !== i;
@@ -460,12 +504,12 @@ function createBotController(tiles, profile, seed) {
       const knownDig = peek && face !== null && !trayMatch && !openTwin && !hasTwin && !(face === 101 && tray.length);
       const knownFatal = tray.length >= 3 && face !== null && !trayMatch && !openTwin && face !== 101 && !tray.includes(101) && (!peek || knownDig);
 
-      const maxUnmatchedBlockers = Math.min(p.partnerHorizon, Math.max(0, 2 - tray.length));
+      const maxUnmatchedBlockers = Math.min(effPartnerHorizon, Math.max(0, 2 - tray.length));
       const reachable = face === null ? false : memory.some((other, j) => {
         if (j === i || !alive[j] || other !== face || roles[j] === null || roles[j] === 'lock') return false;
         const bl = blockers(j);
         const unmatchedBl = bl.filter(b => memory[b] === null || !tray.includes(memory[b])).length;
-        return bl.length <= p.partnerHorizon && unmatchedBl <= maxUnmatchedBlockers;
+        return bl.length <= effPartnerHorizon && unmatchedBl <= maxUnmatchedBlockers;
       });
 
       const visitsKey = signature + '|' + i, count = visits.get(visitsKey) ?? 0;
@@ -480,7 +524,7 @@ function createBotController(tiles, profile, seed) {
       let score = (knownFatal ? -2000 : goal * urgency) + (clock ? 0 : (partnerAttract.get(i) ?? 0)) + structBonus;
 
       const offClock = clock && goal < p.clockWeight * 0.3;
-      const tightClock = Boolean(p.strictClockSlack && clock && !balkingAtFlippedClockBlocker && (clockSlack < 2 || clockLosses >= 2));
+      const tightClock = Boolean(strictSlackActive && !balkingAtFlippedClockBlocker && (clockSlack < 2 || clockLosses >= (p.retryTightClockLosses ?? 3)));
 
       if (trayMatch) {
         const urgentLastClockMove = clock && clock.remaining <= 1 && ownGoal === 0;
@@ -498,19 +542,29 @@ function createBotController(tiles, profile, seed) {
         const freePeekBonus = ownGoal > 0 ? p.pairReward : (!matchingNow ? (p.freePeekBonus ?? 18) : 4);
         score += p.exploration + freePeekBonus + (tray.length >= 2 ? 6 : 0);
       } else {
-        score -= p.trayCost * Math.max(1, tray.length * 2);
+        if (tray.length === 0 && clock && ownGoal >= p.clockWeight * 0.5) {
+          score += p.trayCost * (p.emptyTrayClockBonus ?? 0);
+        } else {
+          score -= p.trayCost * Math.max(1, tray.length * 2);
+        }
         if (reachable && !(offClock && tightClock)) score += p.trayCost * 1.1;
-        if (tray.length >= 2 && !reachable) score -= p.trayCost * 2;
+        if (tray.length >= 2 && !reachable) score -= p.trayCost * (2 + (!clock && midLosses > 0 ? midLosses * 1.5 : 0));
         if (offClock && tightClock) score -= p.clockWeight * 1.2;
         if (balkingAtFlippedClockBlocker && i === openPeek) {
-          score += clockLosses === 0 ? (p.flippedBlockerBalk0 ?? 12.8) : (p.flippedBlockerBalk1 ?? -5.0);
+          const extraSlackBalk = Math.max(0, clock.remaining - 3) * 14;
+          score += (clockLosses === 0 ? (p.flippedBlockerBalk0 ?? 12.8) : clockLosses === 1 ? (p.flippedBlockerBalk1 ?? 11.5) : -6.0) - extraSlackBalk;
         }
-        if (!clock && roles[i] === 'key' && freeKeys.length < 2 && tray.length >= 2) {
-          score -= 35;
+        if (!clock && roles[i] === 'key') {
+          const canUnlockNow = visibleKeys.length === 1
+            ? tray.length <= 2
+            : (freeKeys.length >= 2 && (keysMatchEachOther ? tray.length <= 2 : tray.length <= 1));
+          if (!canUnlockNow && tray.length >= 1) {
+            score -= 35;
+          }
         }
         const prevFail = failedDigs.get(i) ?? 0;
-        if (prevFail > 0 && tray.length >= 1 && (!clock || ownGoal === 0)) {
-          score -= prevFail * 28;
+        if (prevFail > 0 && (!clock || ownGoal === 0)) {
+          score -= prevFail * 32;
         }
       }
 
@@ -523,7 +577,8 @@ function createBotController(tiles, profile, seed) {
           const ice = roles[j] === 'ice' ? 1 : roles[j] === 'ice2' ? 2 : null;
           return ice !== null && iceNb[j].filter(k => alive[k] && !next[k]).length >= ice;
         };
-        const newlyFree = tiles.flatMap((_, j) => next[j] && !legal.includes(j) && usableAfter(j) ? [j] : []);
+        const candDeps = openTwin ? [...new Set([...dependents[i], ...dependents[openPeek]])] : dependents[i];
+        const newlyFree = candDeps.filter(j => next[j] && !legal.includes(j) && usableAfter(j));
         for (const j of newlyFree) {
           const matchesExistingTray = memory[j] !== null && tray.includes(memory[j]);
           const matchesNewSelf = memory[j] !== null && nextTray.includes(memory[j]) && !matchesExistingTray;
@@ -581,8 +636,10 @@ function createBotController(tiles, profile, seed) {
   return { beginAttempt, endAttempt, observe, decide };
 }
 
+const sharedSessionFactory = createSessionFactory();
+
 function runCampaign(encoded, profile, seed, maxAttempts = 12) {
-  const game = decodeGame(encoded), factory = createSessionFactory();
+  const game = decodeGame(encoded);
   const controller = createBotController(game.tiles, profile, seed);
   const settings = { seed: 20261111, choiceLimit: 1024, tapMs: 1000 };
   const attempts = [];
@@ -590,7 +647,7 @@ function runCampaign(encoded, profile, seed, maxAttempts = 12) {
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     controller.beginAttempt();
-    const session = factory(game, settings), taps = [];
+    const session = sharedSessionFactory(game, settings), taps = [];
     let frame = session.view();
     while (frame.type !== 'productionPhysicalEnd-v1') {
       const t0 = performance.now(), state = frame.state, legal = new Set(frame.legalTiles);
@@ -630,7 +687,6 @@ function runCampaign(encoded, profile, seed, maxAttempts = 12) {
     });
     if (frame.win) break;
   }
-  factory.verifySource();
   return { tries: attempts.at(-1).status === 'cleared' ? attempts.length : null, attempts, slowestMove };
 }
 
@@ -646,6 +702,7 @@ function measureHuman(board, options = {}) {
   const profile = PROFILES[key];
   assert(profile, `Unknown setting: ${setting} (expected 'dennis' or 'family')`);
 
+  sharedSessionFactory.verifySource();
   const encoded = normalizeBoard(board);
   const start = performance.now();
   const lossPhase = { beforeClock: 0, mid: 0, late: 0 };
