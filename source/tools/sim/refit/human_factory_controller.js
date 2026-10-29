@@ -76,7 +76,19 @@ function lossPhaseName(state, clock) {
 }
 
 function createBotController(tiles, profile, seed) {
+  assert(Number.isInteger(seed));
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate']);
+  assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
+  assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
+  for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
+  for(const key of ['lapse','memoryDecay','retryRetention'])assert(p[key]>=0&&p[key]<=1);
+  assert(p.temperature>0);
+  for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
+  for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
+  // A separate attention stream leaves the released move-noise sequence intact.
+  const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
+  let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
   const nb = Layouts.neighbors(tiles), iceNb = Layouts.iceNeighbors(tiles);
   const n = tiles.length;
   const aboveTrans = tiles.map((_, i) => {
@@ -97,6 +109,8 @@ function createBotController(tiles, profile, seed) {
   let attemptDigs = [];
 
   function beginAttempt() {
+    clockHorizon=p.clockHorizon+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0);
+    strictClockSlack=p.deadlineAttentionProbability===undefined?p.strictClockSlack:attentionRandom()<Math.min(1,p.deadlineAttentionProbability+clockLosses*(p.deadlineLearningRate??0));
     if (attempt++) {
       memory = memory.map(v => random() < p.retryRetention ? v : null);
     }
@@ -336,7 +350,7 @@ function createBotController(tiles, profile, seed) {
       const nextPath = new Set([...path, i]);
       for (const j of blockers(i)) {
         const nextDepth = depth + 1;
-        const decay = (nextDepth > p.clockHorizon && !isSideRow)
+        const decay = (nextDepth > clockHorizon && !isSideRow)
           ? (clockLosses === 0 ? 0.05 : clockLosses === 1 ? 0.25 : 0.82)
           : 0.82;
         attract(j, nextDepth, weight * decay, maxDepth, isSideRow, nextPath);
@@ -348,9 +362,9 @@ function createBotController(tiles, profile, seed) {
       const c = clock.i;
       const isSideBlockedOnly = nb.above[c].every(j => !alive[j]) &&
         nb.left[c].some(j => alive[j]) && nb.right[c].some(j => alive[j]);
-      const maxD = Math.min(5, p.clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
+      const maxD = Math.min(5, clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
       attract(c, 0, p.clockWeight, maxD, isSideBlockedOnly);
-      const maxPerceivedZDiff = p.clockHorizon + (clockLosses >= 2 ? 2 : 0);
+      const maxPerceivedZDiff = clockHorizon + (clockLosses >= 2 ? 2 : 0);
       const needSet = new Set([c]);
       for (const a of aboveTrans[c]) {
         if (alive[a] && tiles[a].z - tiles[c].z <= maxPerceivedZDiff) needSet.add(a);
@@ -383,13 +397,13 @@ function createBotController(tiles, profile, seed) {
     const freeKeys = visibleKeys.filter(i => legal.includes(i));
     if (clockNeedsKeys) {
       const keyW = p.clockWeight * 0.92;
-      const keyD = p.clockHorizon + (clockLosses > 0 ? 1 : 0);
+      const keyD = clockHorizon + (clockLosses > 0 ? 1 : 0);
       for (const i of visibleKeys) attract(i, 0, keyW, keyD, false);
     } else if (!clock && boardHasLocks) {
       const keyW = p.postClockKeyWeight ?? p.clockWeight * 0.75;
       for (const i of visibleKeys) {
         if (!legal.includes(i) || freeKeys.length >= 2 || tray.length <= 1) {
-          attract(i, 0, keyW, p.clockHorizon, false);
+          attract(i, 0, keyW, clockHorizon, false);
         }
       }
     }
@@ -423,7 +437,7 @@ function createBotController(tiles, profile, seed) {
     const depth = clock ? Math.min(p.trayDepth ?? 0, p.clockTrayDepth ?? 3) : (p.trayDepth ?? 3);
     const future = computeTrayHorizon(depth);
 
-    const effectiveNeed = p.strictClockSlack ? Math.max(p.clockHorizon, clockMovesNeeded) : p.clockHorizon;
+    const effectiveNeed = strictClockSlack ? Math.max(clockHorizon, clockMovesNeeded) : clockHorizon;
     const clockSlack = clock ? clock.remaining - clockMovesNeeded : 99;
     const urgency = clock
       ? Math.max(1, (effectiveNeed / Math.max(1, clock.remaining)) ** (p.clockUrgencyPower ?? 2)) * (clockLosses > 0 ? 1.5 : 1)
@@ -473,7 +487,7 @@ function createBotController(tiles, profile, seed) {
       let score = (knownFatal ? -2000 : goal * urgency) + (clock ? 0 : (partnerAttract.get(i) ?? 0)) + structBonus;
 
       const offClock = clock && goal < p.clockWeight * 0.3;
-      const tightClock = Boolean(p.strictClockSlack && clock && !balkingAtFlippedClockBlocker && (clockSlack < 2 || clockLosses >= 2));
+      const tightClock = Boolean(strictClockSlack && clock && !balkingAtFlippedClockBlocker && (clockSlack < 2 || clockLosses >= 2));
 
       if (trayMatch) {
         const urgentLastClockMove = clock && clock.remaining <= 1 && ownGoal === 0;
@@ -571,7 +585,7 @@ function createBotController(tiles, profile, seed) {
     return { index: selected.index, score: selected.score };
   }
 
-  return { beginAttempt, endAttempt, observe, decide, remembered:()=>memory.slice() };
+  return { beginAttempt, endAttempt, observe, decide, remembered:()=>memory.slice(), planningAttention:()=>({clockHorizon,strictClockSlack}) };
 }
 
 module.exports={createFactoryController:createBotController,PROFILES};

@@ -17,6 +17,8 @@ function test(){
  let finishes=0;const game=require('./public_board_input.js').normalizeBoard(board);
  campaign(game,PROFILES.dennis,1,{choiceLimit:1,maxAttempts:12,controllerFactory(t,p,s){const actor=createFactoryController(t,p,s);return {...actor,endAttempt(){finishes++;}};}});
  assert.equal(finishes,0,'Retry strategy learning needs an actual completed attempt');
+ const candidate=measureHuman(board,{runs:2,seed:1,profiles:{Dennis:{...PROFILES.dennis,lapse:0},family:PROFILES.family}});
+ assert.equal(candidate.version,'human-v1-development');assert.equal(candidate.calibrationStatus,'experimental-not-calibrated','Tuned candidate profiles cannot inherit a released calibration claim');
  const valid=measureHuman(board,{runs:2,seed:1});assert.equal(valid.version,'human-v0');assert(valid.valid&&valid.verifiedTaps>0&&valid.firstTryRate===1);
  console.log('PASS audited factory API, physical closed-tile tap count, capped null means, no fabricated losses/retries, terminal learning and independent replay');
 }
