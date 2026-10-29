@@ -1,21 +1,25 @@
 # Human-v2 lab work
 
-ACTIVE and UNMET. The latest release remains human-v1 (18f0348), which passes M1/M2. Experimental settings below are explicit profiles; no human-v2 tag exists. Every candidate must retain M1/M2 before consuming a lab score. All15 targets remain included.
+ACTIVE and UNMET. Released human-v1 (18f0348) passes M1/M2. No human-v2 tag exists. Every candidate retains M1/M2 before lab evaluation; all15 targets remain included.
 
-|Run|M1/M2|Dennis before-clock|Complete lab means/15|Primary rank|Progress|
+|Run|M1/M2|Dennis before-clock|Complete means/15|Primary rank|Progress/counter|
 |---|---|---:|---:|---|---|
 |Released v1 baseline|pass|29.66%|6|unresolved|baseline prerequisite|
-|1: retry tray depth4|FAIL phase|30.46%|not measured|not measured|no; counter1|
-|2: retry tray/clock depth4|pass|29.20%|7|unresolved|yes; counter0|
-|3: remember observed key identities|pass|29.20%|8|unresolved|yes; counter0|
-|4: learn locked-carry key dependencies|pass|29.20%|9|unresolved|yes; counter0|
+|retry-clock-tray-01|FAIL phase|30.46%|not measured|not measured|no / 1|
+|retry-clock-tray-02|pass|29.20%|7|unresolved|yes / 0|
+|retry-key-memory-03|pass|29.20%|8|unresolved|yes / 0|
+|retry-locked-carry-04|pass|29.20%|9|unresolved|yes / 0|
+|retry-prepare-keys-05|pass|29.20%|9|unresolved|no / 1|
+|retry-key-route-value-06|pass|29.20%|9|unresolved|no / 2|
 
-Trial2 improves10033 from18/20 to20/20 clears, mean6.2 against human5. Eight complete means remain unresolved. This is progress toward M3, not a ranking pass. Restricted-mean or first-failure correlations are diagnostics only. Caps never become wins or mean attempts.
+Retained research anchor: **retry-locked-carry-04-lab**,9 complete means. Counter **2/8**. Strictly greater completed-board coverage or a qualifying complete primary-rank improvement is required to reset it; infrastructure, individual extra clears and equal-count swaps cannot count.
 
-Trial3 reuses createKeyIdentityMemory for key locations actually observed on earlier tries. It does not relabel the current hidden obstacle or invent its picture. A physical counterexample test retains hidden initial ice, preserves the fresh choice, changes a retry cover objective and independently replays the resulting win.184/184 tests pass; factory100/100 and d/e pass; full M2 passes and its complete15-board run raised complete means to8.
+Typed key identity memory completed10041 and raised10049 from0 to16 clears. Learned locked-carry dependencies completed10045 (20/20, mean3). Trial6 gives10011 one clear and10049 seventeen clears, but six boards still lack complete means:10011,10012,10015,10032,10049,10052. Primary Spearman remains null, not a pass. Restricted-mean/first-failure ranks are diagnostics only.
 
-Source:f6f53e4 retry tray foresight;8908cc0 combined bounded clock foresight;b2bc48f typed key history. Preregistrations, profiles, source archives and native outputs are under .codex-runs/human-style/lab-ranking/. Full summaries and the monotonic progress ledger are in HUMAN_LAB_V1_BASELINE.json. Progress requires a strict increase in complete-board coverage or an improvement of an already-complete primary rank, with all M1/M2 gates retained. Equal-count swaps, invalid runs and infrastructure work cannot reset the8-experiment stop rule.
+Sources:f6f53e4 retry tray foresight;8908cc0 bounded clock foresight;b2bc48f typed key identities;349fefb actual-loss key dependencies;59995b9 preparation before a learned trap;ab912ab public key-route value inside the unchanged depth4/beam6 planner. Latest research187/187 tests pass and all M1/M2 gates are retained. Latest release remains18f0348.
 
-Trial3 completes10041 (20/20, mean4.3), improves10049 from0 to16 clears, and gives10011 its first clear. Seven means remain unresolved. Trial4 learns only from a real terminal tray plus an observed/remembered locked matching partner. It prioritizes the known key route on later tries, preserving current hidden-role uncertainty and restricting extra pre-clock goals by public remaining-move slack.185 tests and all M1/M2 gates pass. Full lab run raises complete means8->9;10045 clears20/20 at mean3;10011 regresses1->0. Six means remain unresolved. Source349fefb.
+I fetched origin/wip/level-factory at16c6e3d. Its gameplay export is byte-identical to the original snapshot: no new lab11 winning taps exist. The available lab49 winning play replays165 accepted taps with matching kinds/legality and a physical win, using actual tap timing. Recorded intermediate board snapshots are unavailable, so this is not an independent per-frame tray-state match. Dennis takes the keys at moves9/10, saves the clock at27, and uses25 on-pile pair taps.
 
-Next trial5 is preregistered: prepare a key route before taking an exposed face associated with an actual earlier locked-partner trap. The controller option is not yet implemented or evaluated. The existing public clock-slack bound remains; first attempts/family stay unchanged. Current retained research anchor:retry-locked-carry-04-lab; complete means9/15; counter0/8.
+Next trial7 is preregistered, not implemented: remember a same-picture relationship only after both key pictures have actually been known on this board. On a later try, one known picture may recover its related forgotten picture in remembered knowledge. Both-unknown and different-key pictures must remain uninferred; current hidden ice/role/picture masks must remain unchanged. This tests the user-authorized100%-certain inference principle, not a universal assumption that all keys match.
+
+Raw immutable sources, profiles, native exits, preregistrations and the full15-board measurements are under .codex-runs/human-style/lab-ranking/. Complete summaries and monotonic ledger: HUMAN_LAB_V1_BASELINE.json. Factory100/100 clears remain retained. No future forecast accuracy or ranking pass is claimed.

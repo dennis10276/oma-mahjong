@@ -22,7 +22,7 @@ ACTIVE and UNMET. All behavioral gates must pass on the same version and profile
 |M3.f|15 recorded lab targets, Spearman>=.5, no per-board fitting|Trial4 retains M1/M2; complete lab means9/15;6 unresolved; primary rank null|UNMET|
 |M3.keep|Human-v2 retains all earlier gates|human-v1 tagged; v2 ranking not passed|UNMET|
 |Final|Frozen next Dennis progression/factory validation|No prospective accuracy claimed|NOT STARTED|
-|Stop|Stop after8 consecutive no-progress trials|M3 anchor retry-locked-carry-04-lab; counter0/8; trial5 preregistered; historical trials retained|ACTIVE|
+|Stop|Stop after8 consecutive no-progress trials|M3 anchor retry-locked-carry-04-lab; counter2/8; trial7 preregistered; historical trials retained|ACTIVE|
 |Housekeeping|Small commits, goal<80lines, tables/raw logs separate|wip/personal-bots; HUMAN_PHASE_V2_PROGRESS.md and results JSON|IMPLEMENTED|
 
 The user approved amended targets on2026-10-29. No clarification is pending. Historical contract1 trials are preserved under their original contract; current scoring uses human_style_contract_v2.json. Raw immutable source snapshots, profiles, campaign results, preregistrations and native exits are under .codex-runs/human-style/phase-v2/.

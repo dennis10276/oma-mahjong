@@ -61,7 +61,7 @@ Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited ph
 - Lab-v1 baseline:15 boards,300 campaigns;9 means unresolved; primary rank null; M3 unmet.
 - M2 anchor family-clock-outs-balance-full; counter0; release verification is not a new trial.
 - M3 trial4 retains M1/M2; complete lab means6->7->8->9/15; rank null; counter0/8.
-- Trial4 dependency349fefb passes185 tests; trial5 preemptive key preparation preregistered.
+- Trials5/6 retain M1/M2 but no new complete mean; counter2/8; trial7 relation memory planned.
 - M3/future remain unmet; preserve historical contracts and every failed/invalid trial.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
 -29 real family choices132/144 replay exactly; exact recorded board parity verified.
