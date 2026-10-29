@@ -337,7 +337,7 @@ function createBotController(tiles, profile, seed) {
               (roles[u] === 'lock' ? 3 : 0);
             return cost(a) - cost(b);
           });
-          ice = [...already, ...others.slice(0, need + 1 - already.length)];
+          ice = [...already, ...others.slice(0, Math.max(0, need - already.length))];
         }
       }
       return [...new Set([...top, ...side, ...ice])];
