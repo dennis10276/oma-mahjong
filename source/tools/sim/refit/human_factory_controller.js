@@ -77,7 +77,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -86,6 +86,7 @@ function createBotController(tiles, profile, seed) {
   assert(p.temperature>0);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
+  assert(p.clockRowPreview===undefined||p.clockRowPreview===0||p.clockRowPreview===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
@@ -364,6 +365,14 @@ function createBotController(tiles, profile, seed) {
         nb.left[c].some(j => alive[j]) && nb.right[c].some(j => alive[j]);
       const maxD = Math.min(5, clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
       attract(c, 0, p.clockWeight, maxD, isSideBlockedOnly);
+      if(p.clockRowPreview&&isSideBlockedOnly){
+        // A visible sideways row remains a clock goal beyond the short thought
+        // cone. This is geometry recognition, not a solved physical route.
+        const left=sideChain(c,-1),right=sideChain(c,1);
+        const row=sideChainCost(c,left)<=sideChainCost(c,right)?left:right;
+        for(const index of row)if((attraction.get(index)??0)<p.clockWeight*.3)
+          attract(index,0,p.clockWeight*.82,clockHorizon,false);
+      }
       const maxPerceivedZDiff = clockHorizon + (clockLosses >= 2 ? 2 : 0);
       const needSet = new Set([c]);
       for (const a of aboveTrans[c]) {
