@@ -31,4 +31,4 @@ Source8df9a86/baa07d1 repairs public clock/ice outs and exact event timing;9801b
 
 Release proof: HUMAN_V1_RELEASE.md and HUMAN_PHASE_V2_RESULTS.json.releaseVerification.183/183 release tests;2960 calibration and100 factory campaigns; default outcomes exactly match the selected candidate. M3 and future frozen validation remain.
 
-M3 research: HUMAN_LAB_V2_PROGRESS.md. Typed key-memory integration b2bc48f passes184/184 tests and factory gates, but remains an explicit candidate pending full calibration/lab evaluation. The release tag stays18f0348.
+M3 research: HUMAN_LAB_V2_PROGRESS.md. Typed key-memory integration b2bc48f passes184/184 tests and all M1/M2 gates, but remains an explicit candidate pending full lab evaluation. The release tag stays18f0348.

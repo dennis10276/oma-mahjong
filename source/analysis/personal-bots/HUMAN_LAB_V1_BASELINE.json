@@ -1438,7 +1438,7 @@
   "activeExperiment": {
     "key": "retry-key-memory-03",
     "sourceCommit": "b2bc48f",
-    "status": "184 tests/factory gates pass; full74-board M2 calibration running; no new lab score",
+    "status": "M1/M2 and184 tests pass; all15-board lab run active; no lab score claimed",
     "profiles": {
       "Dennis": {
         "clockHorizon": 3,
@@ -1517,8 +1517,123 @@
       "maxAttempts": 12,
       "unitEvidence": "New physical counterexample test uses typed previously observed key membership, leaves the opening ice role hidden and not takeable, changes retry cover priority, and independently replays the resulting win. The fresh choice is identical to control."
     },
-    "session": 73302,
-    "rawDirectory": ".codex-runs/human-style/lab-ranking/retry-key-memory-03-calibration"
+    "session": 77430,
+    "rawDirectory": ".codex-runs/human-style/lab-ranking/retry-key-memory-03-lab",
+    "preLabProof": {
+      "calibration": {
+        "settings": {
+          "Dennis": {
+            "firstTryRate": 0.5479166666666667,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 379,
+              "mid": 891,
+              "late": 28
+            },
+            "lossShares": {
+              "clock": 0.29198767334360554,
+              "mid": 0.6864406779661016,
+              "late": 0.02157164869029276
+            },
+            "riskLoss": 0.63,
+            "controlLoss": 0.395,
+            "clockCases": {
+              "132": 0,
+              "135": 0,
+              "142": 1,
+              "144": 0
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 379,
+                "clockContact": 10,
+                "mid": 881,
+                "late": 28
+              },
+              "shares": {
+                "beforeClock": 0.29198767334360554,
+                "clockContact": 0.007704160246533128,
+                "mid": 0.6787365177195686,
+                "late": 0.02157164869029276
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          },
+          "family": {
+            "firstTryRate": 0.33958333333333335,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 1470,
+              "mid": 1761,
+              "late": 55
+            },
+            "lossShares": {
+              "clock": 0.44735240413877053,
+              "mid": 0.5359099208764455,
+              "late": 0.016737674984783932
+            },
+            "riskLoss": 0.7150000000000001,
+            "controlLoss": 0.6,
+            "clockCases": {
+              "132": 0.5705521472392638,
+              "135": 0.21212121212121213,
+              "142": 0.7647058823529411,
+              "144": 0.1875
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 1470,
+                "clockContact": 151,
+                "mid": 1610,
+                "late": 55
+              },
+              "shares": {
+                "beforeClock": 0.44735240413877053,
+                "clockContact": 0.04595252586731589,
+                "mid": 0.48995739500912966,
+                "late": 0.016737674984783932
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          }
+        },
+        "developmentScreen": false,
+        "patternGatesMet": true,
+        "finalGatesMet": true,
+        "contractSchema": "human-style-pattern-contract-v2",
+        "valid": true,
+        "minutesPerBoard": 0.16688250231981985,
+        "model": "human-v1",
+        "workers": 4,
+        "wallMinutes": 3.5098954266666667
+      },
+      "factoryChecks": {
+        "d": true,
+        "e": true,
+        "timing": true,
+        "valid": true
+      },
+      "native": {
+        "factory": 0,
+        "calibration": 0,
+        "suite": 0
+      },
+      "tests": 184
+    }
   },
   "nextProposedExperiment": {
     "key": "retry-key-memory-03",
