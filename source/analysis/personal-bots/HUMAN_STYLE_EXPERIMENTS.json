@@ -1,6 +1,6 @@
 {
   "schema": "human-style-experiment-report-v2",
-  "status": "MILESTONE1_PASSED_LATER_GATES_UNMET",
+  "status": "MILESTONE2_CANDIDATES_FIRST_RATE_PASS_PHASE_TARGETS_DISPUTED",
   "goal": "Frozen reference plus human-like pattern calibration; per-level attempt matching cancelled",
   "boardsPerTrial": 74,
   "progressionBoards": 72,
@@ -4212,6 +4212,2337 @@
         "wallMinutes": 3.01775592
       }
     },
-    "experimentsSinceBaseline": 0
+    "experimentsSinceBaseline": 5,
+    "calibrationLedger": {
+      "milestone": 2,
+      "priorTurn": "progress: human-v0 tagged bcac396; full74-board baseline committed5f2e6bc",
+      "sourceBaseline": "human-v0",
+      "baselineDirectory": ".codex-runs/human-style/human-v0-milestone2-baseline",
+      "fixedEvaluation": {
+        "campaignsPerSettingBoard": 20,
+        "maxAttempts": 12,
+        "seed": 20261028,
+        "boards": 74,
+        "mainRange": [
+          92,
+          163
+        ],
+        "factorySeed": 20261029,
+        "factoryBoards": 5
+      },
+      "stopAfterConsecutiveNoProgress": 8,
+      "progressRule": "Must retain all M1 d/e/timing/valid and every previously passing M2 a/b/c check. Progress means gain a whole check or reduce total fractional constraint distance by at least0.01 from the retained anchor. Clock-case deficits averaged over four cases; missing/null share scores0.5 deficit. No generation of artificial failures and no per-level fitted parameters.",
+      "retained": 4,
+      "consecutiveNoProgress": 1,
+      "experiments": [
+        {
+          "number": 1,
+          "hypothesis": "Dennis uses a short deadline estimate rather than a full geometric slack estimate, with four-tap tray and three-step partner access. Family uses a three-step clock cone and geometric slack, retaining its two-tap tray. Test realistic allocation of limited planning effort.",
+          "native": {
+            "factory": 0,
+            "full": 0,
+            "source": "native session completion observed by tools"
+          },
+          "profilesSha256": "3883e8573a27680b8a3791563591f40f9567d9fd2afb7d0b7ee52675073fc975",
+          "factoryChecks": {
+            "d": true,
+            "e": true,
+            "timing": true,
+            "valid": true
+          },
+          "factoryPassed": true,
+          "comparisonAnchor": "baseline",
+          "gained": [],
+          "lost": [
+            "family.a"
+          ],
+          "distanceBefore": 0.7778395308421633,
+          "distanceAfter": 1.0627993459073257,
+          "progress": false,
+          "summary": {
+            "settings": {
+              "Dennis": {
+                "firstTryRate": 0.49722222222222223,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 1587,
+                  "mid": 921,
+                  "late": 29
+                },
+                "lossShares": {
+                  "clock": 0.6255419787150177,
+                  "mid": 0.3630271974773354,
+                  "late": 0.011430823807646828
+                },
+                "riskLoss": 0.5450000000000002,
+                "controlLoss": 0.4149999999999999,
+                "clockCases": {
+                  "132": 0,
+                  "135": 0,
+                  "142": 1,
+                  "144": 0.25
+                },
+                "checks": {
+                  "a": false,
+                  "b": false,
+                  "c": false
+                }
+              },
+              "family": {
+                "firstTryRate": 0.3729166666666667,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 1004,
+                  "mid": 2176,
+                  "late": 65
+                },
+                "lossShares": {
+                  "clock": 0.3093990755007704,
+                  "mid": 0.6705701078582434,
+                  "late": 0.020030816640986132
+                },
+                "riskLoss": 0.635,
+                "controlLoss": 0.5700000000000001,
+                "clockCases": {
+                  "132": 0.21621621621621623,
+                  "135": 0.1388888888888889,
+                  "142": 0.9942528735632183,
+                  "144": 0.3333333333333333
+                },
+                "checks": {
+                  "a": false,
+                  "b": false,
+                  "c": false
+                }
+              }
+            },
+            "developmentScreen": false,
+            "patternGatesMet": false,
+            "finalGatesMet": false,
+            "valid": true,
+            "minutesPerBoard": 0.21314824731981985,
+            "model": "human-v0",
+            "workers": 4,
+            "wallMinutes": 4.412970043333334
+          }
+        },
+        {
+          "number": 2,
+          "hypothesis": "Isolate Dennis short clock estimation without extending post-clock planning. Family gains visible clock reach (horizon3) while keeping its short subjective deadline estimate. Separates two mechanisms coupled in trial1.",
+          "native": {
+            "factory": 0,
+            "full": 0,
+            "source": "native session completion observed by tools"
+          },
+          "profilesSha256": "c8bd924aabbac5c716bab3a14a928ba8306ddcbbfe7b7cefcdbb06121504bdfd",
+          "factoryChecks": {
+            "d": true,
+            "e": true,
+            "timing": true,
+            "valid": true
+          },
+          "factoryPassed": true,
+          "comparisonAnchor": "baseline",
+          "gained": [],
+          "lost": [],
+          "distanceBefore": 0.7778395308421633,
+          "distanceAfter": 0.5973432577118122,
+          "progress": true,
+          "summary": {
+            "settings": {
+              "Dennis": {
+                "firstTryRate": 0.4909722222222222,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 1645,
+                  "mid": 982,
+                  "late": 50
+                },
+                "lossShares": {
+                  "clock": 0.614493836384012,
+                  "mid": 0.3668285394097871,
+                  "late": 0.01867762420620097
+                },
+                "riskLoss": 0.5449999999999999,
+                "controlLoss": 0.43,
+                "clockCases": {
+                  "132": 0,
+                  "135": 0,
+                  "142": 1,
+                  "144": 0.25
+                },
+                "checks": {
+                  "a": false,
+                  "b": false,
+                  "c": false
+                }
+              },
+              "family": {
+                "firstTryRate": 0.33402777777777776,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 1956,
+                  "mid": 2001,
+                  "late": 56
+                },
+                "lossShares": {
+                  "clock": 0.4874158983304261,
+                  "mid": 0.4986294542736108,
+                  "late": 0.01395464739596312
+                },
+                "riskLoss": 0.6799999999999999,
+                "controlLoss": 0.5750000000000001,
+                "clockCases": {
+                  "132": 0.19444444444444445,
+                  "135": 0.20512820512820512,
+                  "142": 1,
+                  "144": 0.7777777777777778
+                },
+                "checks": {
+                  "a": true,
+                  "b": false,
+                  "c": false
+                }
+              }
+            },
+            "developmentScreen": false,
+            "patternGatesMet": false,
+            "finalGatesMet": false,
+            "valid": true,
+            "minutesPerBoard": 0.1682956703153153,
+            "model": "human-v0",
+            "workers": 4,
+            "wallMinutes": 3.4451207299999997
+          }
+        },
+        {
+          "number": 3,
+          "hypothesis": "Fixed per-person attention variability: Dennis sometimes checks geometric deadline (p=.2), otherwise uses short estimate; family sometimes extends its short clock cone by one move (p=.6). Separate attention RNG preserves original move noise. Target first-try calibration while original phase targets await source audit clarification; no phase-gate redefinition.",
+          "native": {
+            "factory": 0,
+            "full": 0,
+            "source": "native session completion observed by tools"
+          },
+          "profilesSha256": "ffee92f522c41be8cbed6269359f29547a3dff13e4a6febd07515adb2ec271b4",
+          "factoryChecks": {
+            "d": true,
+            "e": true,
+            "timing": true,
+            "valid": true
+          },
+          "factoryPassed": true,
+          "comparisonAnchor": 2,
+          "gained": [
+            "Dennis.a",
+            "Dennis.b"
+          ],
+          "lost": [],
+          "distanceBefore": 0.5973432577118122,
+          "distanceAfter": 0.451286118318529,
+          "progress": true,
+          "summary": {
+            "settings": {
+              "Dennis": {
+                "firstTryRate": 0.5138888888888888,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 1235,
+                  "mid": 966,
+                  "late": 28
+                },
+                "lossShares": {
+                  "clock": 0.554060116644235,
+                  "mid": 0.43337819650067294,
+                  "late": 0.01256168685509197
+                },
+                "riskLoss": 0.525,
+                "controlLoss": 0.4149999999999999,
+                "clockCases": {
+                  "132": 0,
+                  "135": 0,
+                  "142": 1,
+                  "144": 0.25
+                },
+                "checks": {
+                  "a": true,
+                  "b": true,
+                  "c": false
+                }
+              },
+              "family": {
+                "firstTryRate": 0.3,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 2307,
+                  "mid": 1913,
+                  "late": 58
+                },
+                "lossShares": {
+                  "clock": 0.5392706872370266,
+                  "mid": 0.4471715755025713,
+                  "late": 0.013557737260402058
+                },
+                "riskLoss": 0.705,
+                "controlLoss": 0.615,
+                "clockCases": {
+                  "132": 0.19444444444444445,
+                  "135": 0.3333333333333333,
+                  "142": 0.9951690821256038,
+                  "144": 0.7692307692307693
+                },
+                "checks": {
+                  "a": true,
+                  "b": false,
+                  "c": false
+                }
+              }
+            },
+            "developmentScreen": false,
+            "patternGatesMet": false,
+            "finalGatesMet": false,
+            "valid": true,
+            "minutesPerBoard": 0.16257482094594594,
+            "model": "human-v0",
+            "workers": 4,
+            "wallMinutes": 3.4882603616666668
+          }
+        },
+        {
+          "number": 4,
+          "hypothesis": "Retain trial3 Dennis profile unchanged; family extends clock planning in half of attempts rather than probability.6. This tests a coarser equal attention split while keeping short horizons and M1. First-try/factory fitting continues; no disputed human-phase target is silently changed.",
+          "native": {
+            "factory": 0,
+            "full": 0,
+            "source": "native session completion observed by tools"
+          },
+          "profilesSha256": "0e0d86b9811b6921a449eb3c3b39e552edd7e2799582595e00671c180962195d",
+          "factoryChecks": {
+            "d": true,
+            "e": true,
+            "timing": true,
+            "valid": true
+          },
+          "factoryPassed": true,
+          "comparisonAnchor": 3,
+          "gained": [],
+          "lost": [],
+          "distanceBefore": 0.451286118318529,
+          "distanceAfter": 0.4398510721915217,
+          "progress": true,
+          "summary": {
+            "settings": {
+              "Dennis": {
+                "firstTryRate": 0.5138888888888888,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 1235,
+                  "mid": 966,
+                  "late": 28
+                },
+                "lossShares": {
+                  "clock": 0.554060116644235,
+                  "mid": 0.43337819650067294,
+                  "late": 0.01256168685509197
+                },
+                "riskLoss": 0.525,
+                "controlLoss": 0.4149999999999999,
+                "clockCases": {
+                  "132": 0,
+                  "135": 0,
+                  "142": 1,
+                  "144": 0.25
+                },
+                "checks": {
+                  "a": true,
+                  "b": true,
+                  "c": false
+                }
+              },
+              "family": {
+                "firstTryRate": 0.2916666666666667,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 2370,
+                  "mid": 1913,
+                  "late": 60
+                },
+                "lossShares": {
+                  "clock": 0.545705733364034,
+                  "mid": 0.44047893161409163,
+                  "late": 0.01381533502187428
+                },
+                "riskLoss": 0.725,
+                "controlLoss": 0.6300000000000001,
+                "clockCases": {
+                  "132": 0.19444444444444445,
+                  "135": 0.3333333333333333,
+                  "142": 1,
+                  "144": 0.75
+                },
+                "checks": {
+                  "a": true,
+                  "b": false,
+                  "c": false
+                }
+              }
+            },
+            "developmentScreen": false,
+            "patternGatesMet": false,
+            "finalGatesMet": false,
+            "valid": true,
+            "minutesPerBoard": 0.17010519806306312,
+            "model": "human-v0",
+            "workers": 4,
+            "wallMinutes": 3.5972535933333334
+          }
+        },
+        {
+          "number": 5,
+          "hypothesis": "Repair observed retry weakness while preserving first attempts: Dennis deadline attention rises by.4 after each actual before-clock loss, saturating at1. No clock learning from caps or mid-game losses. Family profile unchanged. Tests whether repeated real failures lead to focused planning, without touching disputed phase targets.",
+          "native": {
+            "factory": 0,
+            "full": 0,
+            "source": "native session completion observed by tools"
+          },
+          "profilesSha256": "7b8d490b63701836273d636c5b45abf6821f6d217d09849aaa2d65625b49875c",
+          "factoryChecks": {
+            "d": true,
+            "e": true,
+            "timing": true,
+            "valid": true
+          },
+          "factoryPassed": true,
+          "comparisonAnchor": 4,
+          "gained": [],
+          "lost": [
+            "Dennis.b"
+          ],
+          "distanceBefore": 0.4398510721915217,
+          "distanceAfter": 0.5185945771513706,
+          "progress": false,
+          "summary": {
+            "settings": {
+              "Dennis": {
+                "firstTryRate": 0.5138888888888888,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 1067,
+                  "mid": 1022,
+                  "late": 28
+                },
+                "lossShares": {
+                  "clock": 0.5040151157298063,
+                  "mid": 0.4827586206896552,
+                  "late": 0.013226263580538498
+                },
+                "riskLoss": 0.525,
+                "controlLoss": 0.4149999999999999,
+                "clockCases": {
+                  "132": 0,
+                  "135": 0,
+                  "142": 1,
+                  "144": 0.25
+                },
+                "checks": {
+                  "a": true,
+                  "b": false,
+                  "c": false
+                }
+              },
+              "family": {
+                "firstTryRate": 0.2916666666666667,
+                "samples": 1440,
+                "lossCounts": {
+                  "clock": 2370,
+                  "mid": 1913,
+                  "late": 60
+                },
+                "lossShares": {
+                  "clock": 0.545705733364034,
+                  "mid": 0.44047893161409163,
+                  "late": 0.01381533502187428
+                },
+                "riskLoss": 0.725,
+                "controlLoss": 0.6300000000000001,
+                "clockCases": {
+                  "132": 0.19444444444444445,
+                  "135": 0.3333333333333333,
+                  "142": 1,
+                  "144": 0.75
+                },
+                "checks": {
+                  "a": true,
+                  "b": false,
+                  "c": false
+                }
+              }
+            },
+            "developmentScreen": false,
+            "patternGatesMet": false,
+            "finalGatesMet": false,
+            "valid": true,
+            "minutesPerBoard": 0.16549139344594596,
+            "model": "human-v0",
+            "workers": 4,
+            "wallMinutes": 3.5365624033333334
+          }
+        }
+      ],
+      "hypotheses": {
+        "1": "Dennis uses a short deadline estimate rather than a full geometric slack estimate, with four-tap tray and three-step partner access. Family uses a three-step clock cone and geometric slack, retaining its two-tap tray. Test realistic allocation of limited planning effort.",
+        "2": "Isolate Dennis short clock estimation without extending post-clock planning. Family gains visible clock reach (horizon3) while keeping its short subjective deadline estimate. Separates two mechanisms coupled in trial1.",
+        "3": "Fixed per-person attention variability: Dennis sometimes checks geometric deadline (p=.2), otherwise uses short estimate; family sometimes extends its short clock cone by one move (p=.6). Separate attention RNG preserves original move noise. Target first-try calibration while original phase targets await source audit clarification; no phase-gate redefinition.",
+        "4": "Retain trial3 Dennis profile unchanged; family extends clock planning in half of attempts rather than probability.6. This tests a coarser equal attention split while keeping short horizons and M1. First-try/factory fitting continues; no disputed human-phase target is silently changed.",
+        "5": "Repair observed retry weakness while preserving first attempts: Dennis deadline attention rises by.4 after each actual before-clock loss, saturating at1. No clock learning from caps or mid-game losses. Family profile unchanged. Tests whether repeated real failures lead to focused planning, without touching disputed phase targets."
+      },
+      "stopRequired": false,
+      "adoptionCaveats": [
+        "Trial4 retains declared M1 d/e but only17/20 hard factory campaigns clear within12, versus20/20 for released v0. Keep this regression visible and repair before release."
+      ]
+    },
+    "candidateProfiles": {
+      "1": {
+        "Dennis": {
+          "clockHorizon": 3,
+          "partnerHorizon": 3,
+          "clockWeight": 42,
+          "postClockKeyWeight": 32,
+          "clockUrgencyPower": 2,
+          "trayCost": 6,
+          "pairReward": 15,
+          "exploration": 4,
+          "freePeekBonus": 18,
+          "zWeight": 1.8,
+          "temperature": 0.8,
+          "lapse": 0.005,
+          "memoryDecay": 0.0005,
+          "retryRetention": 0.88,
+          "peekPatience": 2,
+          "outWeight": 9,
+          "trayDepth": 4,
+          "clockTrayDepth": 3,
+          "futureWeight": 3.5,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 12.8,
+          "flippedBlockerBalk1": -5
+        },
+        "family": {
+          "clockHorizon": 3,
+          "partnerHorizon": 1,
+          "clockWeight": 32,
+          "postClockKeyWeight": 20,
+          "clockUrgencyPower": 1.6,
+          "trayCost": 4.8,
+          "pairReward": 16,
+          "exploration": 5,
+          "freePeekBonus": 12,
+          "zWeight": 1.2,
+          "temperature": 1.8,
+          "lapse": 0.04,
+          "memoryDecay": 0.015,
+          "retryRetention": 0.65,
+          "peekPatience": 2,
+          "outWeight": 6,
+          "trayDepth": 2,
+          "clockTrayDepth": 2,
+          "futureWeight": 1.8,
+          "strictClockSlack": true,
+          "flippedBlockerBalk0": 6,
+          "flippedBlockerBalk1": -2
+        }
+      },
+      "2": {
+        "Dennis": {
+          "clockHorizon": 3,
+          "partnerHorizon": 2,
+          "clockWeight": 42,
+          "postClockKeyWeight": 32,
+          "clockUrgencyPower": 2,
+          "trayCost": 6,
+          "pairReward": 15,
+          "exploration": 4,
+          "freePeekBonus": 18,
+          "zWeight": 1.8,
+          "temperature": 0.8,
+          "lapse": 0.005,
+          "memoryDecay": 0.0005,
+          "retryRetention": 0.88,
+          "peekPatience": 2,
+          "outWeight": 9,
+          "trayDepth": 3,
+          "clockTrayDepth": 3,
+          "futureWeight": 3.5,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 12.8,
+          "flippedBlockerBalk1": -5
+        },
+        "family": {
+          "clockHorizon": 3,
+          "partnerHorizon": 1,
+          "clockWeight": 32,
+          "postClockKeyWeight": 20,
+          "clockUrgencyPower": 1.6,
+          "trayCost": 4.8,
+          "pairReward": 16,
+          "exploration": 5,
+          "freePeekBonus": 12,
+          "zWeight": 1.2,
+          "temperature": 1.8,
+          "lapse": 0.04,
+          "memoryDecay": 0.015,
+          "retryRetention": 0.65,
+          "peekPatience": 2,
+          "outWeight": 6,
+          "trayDepth": 2,
+          "clockTrayDepth": 2,
+          "futureWeight": 1.8,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 6,
+          "flippedBlockerBalk1": -2
+        }
+      },
+      "3": {
+        "Dennis": {
+          "clockHorizon": 3,
+          "partnerHorizon": 3,
+          "clockWeight": 42,
+          "postClockKeyWeight": 32,
+          "clockUrgencyPower": 2,
+          "trayCost": 6,
+          "pairReward": 15,
+          "exploration": 4,
+          "freePeekBonus": 18,
+          "zWeight": 1.8,
+          "temperature": 0.8,
+          "lapse": 0.005,
+          "memoryDecay": 0.0005,
+          "retryRetention": 0.88,
+          "peekPatience": 2,
+          "outWeight": 9,
+          "trayDepth": 4,
+          "clockTrayDepth": 3,
+          "futureWeight": 3.5,
+          "strictClockSlack": true,
+          "flippedBlockerBalk0": 12.8,
+          "flippedBlockerBalk1": -5,
+          "deadlineAttentionProbability": 0.2
+        },
+        "family": {
+          "clockHorizon": 2,
+          "partnerHorizon": 1,
+          "clockWeight": 32,
+          "postClockKeyWeight": 20,
+          "clockUrgencyPower": 1.6,
+          "trayCost": 4.8,
+          "pairReward": 16,
+          "exploration": 5,
+          "freePeekBonus": 12,
+          "zWeight": 1.2,
+          "temperature": 1.8,
+          "lapse": 0.04,
+          "memoryDecay": 0.015,
+          "retryRetention": 0.65,
+          "peekPatience": 2,
+          "outWeight": 6,
+          "trayDepth": 2,
+          "clockTrayDepth": 2,
+          "futureWeight": 1.8,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 6,
+          "flippedBlockerBalk1": -2,
+          "extraClockLookProbability": 0.6
+        }
+      },
+      "4": {
+        "Dennis": {
+          "clockHorizon": 3,
+          "partnerHorizon": 3,
+          "clockWeight": 42,
+          "postClockKeyWeight": 32,
+          "clockUrgencyPower": 2,
+          "trayCost": 6,
+          "pairReward": 15,
+          "exploration": 4,
+          "freePeekBonus": 18,
+          "zWeight": 1.8,
+          "temperature": 0.8,
+          "lapse": 0.005,
+          "memoryDecay": 0.0005,
+          "retryRetention": 0.88,
+          "peekPatience": 2,
+          "outWeight": 9,
+          "trayDepth": 4,
+          "clockTrayDepth": 3,
+          "futureWeight": 3.5,
+          "strictClockSlack": true,
+          "flippedBlockerBalk0": 12.8,
+          "flippedBlockerBalk1": -5,
+          "deadlineAttentionProbability": 0.2
+        },
+        "family": {
+          "clockHorizon": 2,
+          "partnerHorizon": 1,
+          "clockWeight": 32,
+          "postClockKeyWeight": 20,
+          "clockUrgencyPower": 1.6,
+          "trayCost": 4.8,
+          "pairReward": 16,
+          "exploration": 5,
+          "freePeekBonus": 12,
+          "zWeight": 1.2,
+          "temperature": 1.8,
+          "lapse": 0.04,
+          "memoryDecay": 0.015,
+          "retryRetention": 0.65,
+          "peekPatience": 2,
+          "outWeight": 6,
+          "trayDepth": 2,
+          "clockTrayDepth": 2,
+          "futureWeight": 1.8,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 6,
+          "flippedBlockerBalk1": -2,
+          "extraClockLookProbability": 0.5
+        }
+      },
+      "5": {
+        "Dennis": {
+          "clockHorizon": 3,
+          "partnerHorizon": 3,
+          "clockWeight": 42,
+          "postClockKeyWeight": 32,
+          "clockUrgencyPower": 2,
+          "trayCost": 6,
+          "pairReward": 15,
+          "exploration": 4,
+          "freePeekBonus": 18,
+          "zWeight": 1.8,
+          "temperature": 0.8,
+          "lapse": 0.005,
+          "memoryDecay": 0.0005,
+          "retryRetention": 0.88,
+          "peekPatience": 2,
+          "outWeight": 9,
+          "trayDepth": 4,
+          "clockTrayDepth": 3,
+          "futureWeight": 3.5,
+          "strictClockSlack": true,
+          "flippedBlockerBalk0": 12.8,
+          "flippedBlockerBalk1": -5,
+          "deadlineAttentionProbability": 0.2,
+          "deadlineLearningRate": 0.4
+        },
+        "family": {
+          "clockHorizon": 2,
+          "partnerHorizon": 1,
+          "clockWeight": 32,
+          "postClockKeyWeight": 20,
+          "clockUrgencyPower": 1.6,
+          "trayCost": 4.8,
+          "pairReward": 16,
+          "exploration": 5,
+          "freePeekBonus": 12,
+          "zWeight": 1.2,
+          "temperature": 1.8,
+          "lapse": 0.04,
+          "memoryDecay": 0.015,
+          "retryRetention": 0.65,
+          "peekPatience": 2,
+          "outWeight": 6,
+          "trayDepth": 2,
+          "clockTrayDepth": 2,
+          "futureWeight": 1.8,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 6,
+          "flippedBlockerBalk1": -2,
+          "extraClockLookProbability": 0.5
+        }
+      }
+    },
+    "factorySummaries": {
+      "1": {
+        "contract": {
+          "milestone": "human-v0",
+          "dataRef": "586f970ba01a4f75a65a17b98e4c7864e683d1b2",
+          "dataSha256": "260a674cae804e87642210c2e677ac250465deb31924d3a5982fe69f63ac512f",
+          "keys": [
+            "factory1-175",
+            "factory1-189",
+            "factory2-184",
+            "factory2-192",
+            "factory2-175"
+          ],
+          "profiles": {
+            "Dennis": {
+              "clockHorizon": 3,
+              "partnerHorizon": 3,
+              "clockWeight": 42,
+              "postClockKeyWeight": 32,
+              "clockUrgencyPower": 2,
+              "trayCost": 6,
+              "pairReward": 15,
+              "exploration": 4,
+              "freePeekBonus": 18,
+              "zWeight": 1.8,
+              "temperature": 0.8,
+              "lapse": 0.005,
+              "memoryDecay": 0.0005,
+              "retryRetention": 0.88,
+              "peekPatience": 2,
+              "outWeight": 9,
+              "trayDepth": 4,
+              "clockTrayDepth": 3,
+              "futureWeight": 3.5,
+              "strictClockSlack": false,
+              "flippedBlockerBalk0": 12.8,
+              "flippedBlockerBalk1": -5
+            },
+            "family": {
+              "clockHorizon": 3,
+              "partnerHorizon": 1,
+              "clockWeight": 32,
+              "postClockKeyWeight": 20,
+              "clockUrgencyPower": 1.6,
+              "trayCost": 4.8,
+              "pairReward": 16,
+              "exploration": 5,
+              "freePeekBonus": 12,
+              "zWeight": 1.2,
+              "temperature": 1.8,
+              "lapse": 0.04,
+              "memoryDecay": 0.015,
+              "retryRetention": 0.65,
+              "peekPatience": 2,
+              "outWeight": 6,
+              "trayDepth": 2,
+              "clockTrayDepth": 2,
+              "futureWeight": 1.8,
+              "strictClockSlack": true,
+              "flippedBlockerBalk0": 6,
+              "flippedBlockerBalk1": -2
+            }
+          },
+          "runs": 20,
+          "seed": 20261029,
+          "maxAttempts": 12,
+          "gates": {
+            "easyFirstStrictAbove": 0.5,
+            "hardBelowEveryEasyBy": 0.2,
+            "hardClockStrictAbove": 0.5,
+            "minutesStrictBelow": 5,
+            "slowestMoveStrictBelow": 2000
+          },
+          "note": "Factory development benchmark, not prospective evidence; thresholds declared before runs; no labels or reference solutions passed to policy"
+        },
+        "checks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "passed": true,
+        "rows": [
+          {
+            "key": "factory1-175",
+            "firstTryRate": 0.75,
+            "averageTries": 2,
+            "lossPhase": {
+              "beforeClock": 0.75,
+              "mid": 0.25,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 5.1888000000000005,
+            "minutes": 0.06537963000000001,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "039508ca70f1577ec4bf902f3fffad644334895113a45324492538a7caf3e724",
+            "profileHash": "04fc27c405b35c1240563a836ea194fdc601fb86ad587b408d9bccf26995c0b5",
+            "firstTryWins": 15,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 2,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 15,
+              "mid": 5,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0.75,
+              "mid": 0.25,
+              "late": 0
+            },
+            "verifiedTaps": 4201,
+            "minutesPerBoard": 0.06537963000000001
+          },
+          {
+            "key": "factory1-189",
+            "firstTryRate": 0.7,
+            "averageTries": 1.4,
+            "lossPhase": {
+              "beforeClock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 3.821700000000419,
+            "minutes": 0.15258664333333333,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "e56e70699a38c8a84269ef2a516f0ce8bb694a9bc409b83981664a93faab5253",
+            "profileHash": "04fc27c405b35c1240563a836ea194fdc601fb86ad587b408d9bccf26995c0b5",
+            "firstTryWins": 14,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.4,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 8,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "verifiedTaps": 8006,
+            "minutesPerBoard": 0.15258664333333333
+          },
+          {
+            "key": "factory2-184",
+            "firstTryRate": 0.95,
+            "averageTries": 1.05,
+            "lossPhase": {
+              "beforeClock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 4.682800000000498,
+            "minutes": 0.06837887166666669,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "7544be978baf19d90b89f3494517d03073250d42dec7530ca53d988269534d92",
+            "profileHash": "04fc27c405b35c1240563a836ea194fdc601fb86ad587b408d9bccf26995c0b5",
+            "firstTryWins": 19,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.05,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "verifiedTaps": 2499,
+            "minutesPerBoard": 0.06837887166666669
+          },
+          {
+            "key": "factory2-192",
+            "firstTryRate": 1,
+            "averageTries": 1,
+            "lossPhase": {
+              "beforeClock": null,
+              "mid": null,
+              "late": null
+            },
+            "runs": 20,
+            "slowestMove": 1.9474000000009255,
+            "minutes": 0.029736090000000028,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "0928a59eee869905ec694896f99917a4f90ea0f472ab6e9f9570aee1ce67bba3",
+            "profileHash": "04fc27c405b35c1240563a836ea194fdc601fb86ad587b408d9bccf26995c0b5",
+            "firstTryWins": 20,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": null,
+              "mid": null,
+              "late": null
+            },
+            "verifiedTaps": 2004,
+            "minutesPerBoard": 0.029736090000000028
+          },
+          {
+            "key": "factory2-175",
+            "firstTryRate": 0,
+            "averageTries": null,
+            "lossPhase": {
+              "beforeClock": 0.9325842696629213,
+              "mid": 0.056179775280898875,
+              "late": 0.011235955056179775
+            },
+            "runs": 20,
+            "slowestMove": 2.2730999999985215,
+            "minutes": 0.04007109166666663,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "2a5915eaee3808aea3bae5874d927ed313f437819ae062721c0ff6d50b6e41ba",
+            "profileHash": "04fc27c405b35c1240563a836ea194fdc601fb86ad587b408d9bccf26995c0b5",
+            "firstTryWins": 0,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 2.933333333333333,
+            "cleared": 15,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 5,
+            "lossCounts": {
+              "clock": 83,
+              "mid": 5,
+              "late": 1
+            },
+            "lossShares": {
+              "clock": 0.9325842696629213,
+              "mid": 0.056179775280898875,
+              "late": 0.011235955056179775
+            },
+            "verifiedTaps": 3199,
+            "minutesPerBoard": 0.04007109166666663
+          }
+        ]
+      },
+      "2": {
+        "contract": {
+          "milestone": "human-v0",
+          "dataRef": "586f970ba01a4f75a65a17b98e4c7864e683d1b2",
+          "dataSha256": "260a674cae804e87642210c2e677ac250465deb31924d3a5982fe69f63ac512f",
+          "keys": [
+            "factory1-175",
+            "factory1-189",
+            "factory2-184",
+            "factory2-192",
+            "factory2-175"
+          ],
+          "profiles": {
+            "Dennis": {
+              "clockHorizon": 3,
+              "partnerHorizon": 2,
+              "clockWeight": 42,
+              "postClockKeyWeight": 32,
+              "clockUrgencyPower": 2,
+              "trayCost": 6,
+              "pairReward": 15,
+              "exploration": 4,
+              "freePeekBonus": 18,
+              "zWeight": 1.8,
+              "temperature": 0.8,
+              "lapse": 0.005,
+              "memoryDecay": 0.0005,
+              "retryRetention": 0.88,
+              "peekPatience": 2,
+              "outWeight": 9,
+              "trayDepth": 3,
+              "clockTrayDepth": 3,
+              "futureWeight": 3.5,
+              "strictClockSlack": false,
+              "flippedBlockerBalk0": 12.8,
+              "flippedBlockerBalk1": -5
+            },
+            "family": {
+              "clockHorizon": 3,
+              "partnerHorizon": 1,
+              "clockWeight": 32,
+              "postClockKeyWeight": 20,
+              "clockUrgencyPower": 1.6,
+              "trayCost": 4.8,
+              "pairReward": 16,
+              "exploration": 5,
+              "freePeekBonus": 12,
+              "zWeight": 1.2,
+              "temperature": 1.8,
+              "lapse": 0.04,
+              "memoryDecay": 0.015,
+              "retryRetention": 0.65,
+              "peekPatience": 2,
+              "outWeight": 6,
+              "trayDepth": 2,
+              "clockTrayDepth": 2,
+              "futureWeight": 1.8,
+              "strictClockSlack": false,
+              "flippedBlockerBalk0": 6,
+              "flippedBlockerBalk1": -2
+            }
+          },
+          "runs": 20,
+          "seed": 20261029,
+          "maxAttempts": 12,
+          "gates": {
+            "easyFirstStrictAbove": 0.5,
+            "hardBelowEveryEasyBy": 0.2,
+            "hardClockStrictAbove": 0.5,
+            "minutesStrictBelow": 5,
+            "slowestMoveStrictBelow": 2000
+          },
+          "note": "Factory development benchmark, not prospective evidence; thresholds declared before runs; no labels or reference solutions passed to policy"
+        },
+        "checks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "passed": true,
+        "rows": [
+          {
+            "key": "factory1-175",
+            "firstTryRate": 0.75,
+            "averageTries": 1.9,
+            "lossPhase": {
+              "beforeClock": 0.6666666666666666,
+              "mid": 0.3333333333333333,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 5.525800000000004,
+            "minutes": 0.058995429999999995,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "039508ca70f1577ec4bf902f3fffad644334895113a45324492538a7caf3e724",
+            "profileHash": "54db7d98f7cb2f02c0704814d9676c28a5ad907bcdbe90ce226802b70430855e",
+            "firstTryWins": 15,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.9,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 12,
+              "mid": 6,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0.6666666666666666,
+              "mid": 0.3333333333333333,
+              "late": 0
+            },
+            "verifiedTaps": 4245,
+            "minutesPerBoard": 0.058995429999999995
+          },
+          {
+            "key": "factory1-189",
+            "firstTryRate": 0.75,
+            "averageTries": 1.3,
+            "lossPhase": {
+              "beforeClock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 3.404000000000451,
+            "minutes": 0.08998409166666667,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "e56e70699a38c8a84269ef2a516f0ce8bb694a9bc409b83981664a93faab5253",
+            "profileHash": "54db7d98f7cb2f02c0704814d9676c28a5ad907bcdbe90ce226802b70430855e",
+            "firstTryWins": 15,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.3,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 6,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "verifiedTaps": 6873,
+            "minutesPerBoard": 0.08998409166666667
+          },
+          {
+            "key": "factory2-184",
+            "firstTryRate": 0.95,
+            "averageTries": 1.05,
+            "lossPhase": {
+              "beforeClock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 2.211699999999837,
+            "minutes": 0.045828713333333354,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "7544be978baf19d90b89f3494517d03073250d42dec7530ca53d988269534d92",
+            "profileHash": "54db7d98f7cb2f02c0704814d9676c28a5ad907bcdbe90ce226802b70430855e",
+            "firstTryWins": 19,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.05,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "verifiedTaps": 2443,
+            "minutesPerBoard": 0.045828713333333354
+          },
+          {
+            "key": "factory2-192",
+            "firstTryRate": 1,
+            "averageTries": 1,
+            "lossPhase": {
+              "beforeClock": null,
+              "mid": null,
+              "late": null
+            },
+            "runs": 20,
+            "slowestMove": 1.75840000000062,
+            "minutes": 0.02957582999999998,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "0928a59eee869905ec694896f99917a4f90ea0f472ab6e9f9570aee1ce67bba3",
+            "profileHash": "54db7d98f7cb2f02c0704814d9676c28a5ad907bcdbe90ce226802b70430855e",
+            "firstTryWins": 20,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": null,
+              "mid": null,
+              "late": null
+            },
+            "verifiedTaps": 2038,
+            "minutesPerBoard": 0.02957582999999998
+          },
+          {
+            "key": "factory2-175",
+            "firstTryRate": 0,
+            "averageTries": null,
+            "lossPhase": {
+              "beforeClock": 0.9367088607594937,
+              "mid": 0.06329113924050633,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 3.9289000000007945,
+            "minutes": 0.04245524000000002,
+            "version": "human-v0",
+            "calibrationStatus": "milestone1-factory-validated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "2a5915eaee3808aea3bae5874d927ed313f437819ae062721c0ff6d50b6e41ba",
+            "profileHash": "54db7d98f7cb2f02c0704814d9676c28a5ad907bcdbe90ce226802b70430855e",
+            "firstTryWins": 0,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 2.9375,
+            "cleared": 16,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 4,
+            "lossCounts": {
+              "clock": 74,
+              "mid": 5,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0.9367088607594937,
+              "mid": 0.06329113924050633,
+              "late": 0
+            },
+            "verifiedTaps": 3252,
+            "minutesPerBoard": 0.04245524000000002
+          }
+        ]
+      },
+      "3": {
+        "contract": {
+          "milestone": "human-v0",
+          "dataRef": "586f970ba01a4f75a65a17b98e4c7864e683d1b2",
+          "dataSha256": "260a674cae804e87642210c2e677ac250465deb31924d3a5982fe69f63ac512f",
+          "keys": [
+            "factory1-175",
+            "factory1-189",
+            "factory2-184",
+            "factory2-192",
+            "factory2-175"
+          ],
+          "profiles": {
+            "Dennis": {
+              "clockHorizon": 3,
+              "partnerHorizon": 3,
+              "clockWeight": 42,
+              "postClockKeyWeight": 32,
+              "clockUrgencyPower": 2,
+              "trayCost": 6,
+              "pairReward": 15,
+              "exploration": 4,
+              "freePeekBonus": 18,
+              "zWeight": 1.8,
+              "temperature": 0.8,
+              "lapse": 0.005,
+              "memoryDecay": 0.0005,
+              "retryRetention": 0.88,
+              "peekPatience": 2,
+              "outWeight": 9,
+              "trayDepth": 4,
+              "clockTrayDepth": 3,
+              "futureWeight": 3.5,
+              "strictClockSlack": true,
+              "flippedBlockerBalk0": 12.8,
+              "flippedBlockerBalk1": -5,
+              "deadlineAttentionProbability": 0.2
+            },
+            "family": {
+              "clockHorizon": 2,
+              "partnerHorizon": 1,
+              "clockWeight": 32,
+              "postClockKeyWeight": 20,
+              "clockUrgencyPower": 1.6,
+              "trayCost": 4.8,
+              "pairReward": 16,
+              "exploration": 5,
+              "freePeekBonus": 12,
+              "zWeight": 1.2,
+              "temperature": 1.8,
+              "lapse": 0.04,
+              "memoryDecay": 0.015,
+              "retryRetention": 0.65,
+              "peekPatience": 2,
+              "outWeight": 6,
+              "trayDepth": 2,
+              "clockTrayDepth": 2,
+              "futureWeight": 1.8,
+              "strictClockSlack": false,
+              "flippedBlockerBalk0": 6,
+              "flippedBlockerBalk1": -2,
+              "extraClockLookProbability": 0.6
+            }
+          },
+          "runs": 20,
+          "seed": 20261029,
+          "maxAttempts": 12,
+          "gates": {
+            "easyFirstStrictAbove": 0.5,
+            "hardBelowEveryEasyBy": 0.2,
+            "hardClockStrictAbove": 0.5,
+            "minutesStrictBelow": 5,
+            "slowestMoveStrictBelow": 2000
+          },
+          "note": "Factory development benchmark, not prospective evidence; thresholds declared before runs; no labels or reference solutions passed to policy"
+        },
+        "checks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "passed": true,
+        "rows": [
+          {
+            "key": "factory1-175",
+            "firstTryRate": 0.75,
+            "averageTries": 1.75,
+            "lossPhase": {
+              "beforeClock": 0.6666666666666666,
+              "mid": 0.3333333333333333,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 4.7324999999999875,
+            "minutes": 0.06554688,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "039508ca70f1577ec4bf902f3fffad644334895113a45324492538a7caf3e724",
+            "profileHash": "25092ceb023c7a3a34742af96a3ca9222f8694e27c972a642be10798c3c343b9",
+            "firstTryWins": 15,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.75,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 10,
+              "mid": 5,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0.6666666666666666,
+              "mid": 0.3333333333333333,
+              "late": 0
+            },
+            "verifiedTaps": 4198,
+            "minutesPerBoard": 0.06554688
+          },
+          {
+            "key": "factory1-189",
+            "firstTryRate": 0.7,
+            "averageTries": 1.4,
+            "lossPhase": {
+              "beforeClock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 5.478799999999865,
+            "minutes": 0.15028820833333334,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "e56e70699a38c8a84269ef2a516f0ce8bb694a9bc409b83981664a93faab5253",
+            "profileHash": "25092ceb023c7a3a34742af96a3ca9222f8694e27c972a642be10798c3c343b9",
+            "firstTryWins": 14,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.4,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 8,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "verifiedTaps": 8006,
+            "minutesPerBoard": 0.15028820833333334
+          },
+          {
+            "key": "factory2-184",
+            "firstTryRate": 0.95,
+            "averageTries": 1.05,
+            "lossPhase": {
+              "beforeClock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 6.067000000000917,
+            "minutes": 0.06739085833333334,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "7544be978baf19d90b89f3494517d03073250d42dec7530ca53d988269534d92",
+            "profileHash": "25092ceb023c7a3a34742af96a3ca9222f8694e27c972a642be10798c3c343b9",
+            "firstTryWins": 19,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.05,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "verifiedTaps": 2499,
+            "minutesPerBoard": 0.06739085833333334
+          },
+          {
+            "key": "factory2-192",
+            "firstTryRate": 1,
+            "averageTries": 1,
+            "lossPhase": {
+              "beforeClock": null,
+              "mid": null,
+              "late": null
+            },
+            "runs": 20,
+            "slowestMove": 3.440500000000611,
+            "minutes": 0.029924784999999975,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "0928a59eee869905ec694896f99917a4f90ea0f472ab6e9f9570aee1ce67bba3",
+            "profileHash": "25092ceb023c7a3a34742af96a3ca9222f8694e27c972a642be10798c3c343b9",
+            "firstTryWins": 20,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": null,
+              "mid": null,
+              "late": null
+            },
+            "verifiedTaps": 2004,
+            "minutesPerBoard": 0.029924784999999975
+          },
+          {
+            "key": "factory2-175",
+            "firstTryRate": 0,
+            "averageTries": null,
+            "lossPhase": {
+              "beforeClock": 0.8586956521739131,
+              "mid": 0.13043478260869565,
+              "late": 0.010869565217391304
+            },
+            "runs": 20,
+            "slowestMove": 3.323099999997794,
+            "minutes": 0.05237696666666664,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "2a5915eaee3808aea3bae5874d927ed313f437819ae062721c0ff6d50b6e41ba",
+            "profileHash": "25092ceb023c7a3a34742af96a3ca9222f8694e27c972a642be10798c3c343b9",
+            "firstTryWins": 0,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 4.294117647058823,
+            "cleared": 17,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 3,
+            "lossCounts": {
+              "clock": 79,
+              "mid": 12,
+              "late": 1
+            },
+            "lossShares": {
+              "clock": 0.8586956521739131,
+              "mid": 0.13043478260869565,
+              "late": 0.010869565217391304
+            },
+            "verifiedTaps": 4241,
+            "minutesPerBoard": 0.05237696666666664
+          }
+        ]
+      },
+      "4": {
+        "contract": {
+          "milestone": "human-v0",
+          "dataRef": "586f970ba01a4f75a65a17b98e4c7864e683d1b2",
+          "dataSha256": "260a674cae804e87642210c2e677ac250465deb31924d3a5982fe69f63ac512f",
+          "keys": [
+            "factory1-175",
+            "factory1-189",
+            "factory2-184",
+            "factory2-192",
+            "factory2-175"
+          ],
+          "profiles": {
+            "Dennis": {
+              "clockHorizon": 3,
+              "partnerHorizon": 3,
+              "clockWeight": 42,
+              "postClockKeyWeight": 32,
+              "clockUrgencyPower": 2,
+              "trayCost": 6,
+              "pairReward": 15,
+              "exploration": 4,
+              "freePeekBonus": 18,
+              "zWeight": 1.8,
+              "temperature": 0.8,
+              "lapse": 0.005,
+              "memoryDecay": 0.0005,
+              "retryRetention": 0.88,
+              "peekPatience": 2,
+              "outWeight": 9,
+              "trayDepth": 4,
+              "clockTrayDepth": 3,
+              "futureWeight": 3.5,
+              "strictClockSlack": true,
+              "flippedBlockerBalk0": 12.8,
+              "flippedBlockerBalk1": -5,
+              "deadlineAttentionProbability": 0.2
+            },
+            "family": {
+              "clockHorizon": 2,
+              "partnerHorizon": 1,
+              "clockWeight": 32,
+              "postClockKeyWeight": 20,
+              "clockUrgencyPower": 1.6,
+              "trayCost": 4.8,
+              "pairReward": 16,
+              "exploration": 5,
+              "freePeekBonus": 12,
+              "zWeight": 1.2,
+              "temperature": 1.8,
+              "lapse": 0.04,
+              "memoryDecay": 0.015,
+              "retryRetention": 0.65,
+              "peekPatience": 2,
+              "outWeight": 6,
+              "trayDepth": 2,
+              "clockTrayDepth": 2,
+              "futureWeight": 1.8,
+              "strictClockSlack": false,
+              "flippedBlockerBalk0": 6,
+              "flippedBlockerBalk1": -2,
+              "extraClockLookProbability": 0.5
+            }
+          },
+          "runs": 20,
+          "seed": 20261029,
+          "maxAttempts": 12,
+          "gates": {
+            "easyFirstStrictAbove": 0.5,
+            "hardBelowEveryEasyBy": 0.2,
+            "hardClockStrictAbove": 0.5,
+            "minutesStrictBelow": 5,
+            "slowestMoveStrictBelow": 2000
+          },
+          "note": "Factory development benchmark, not prospective evidence; thresholds declared before runs; no labels or reference solutions passed to policy"
+        },
+        "checks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "passed": true,
+        "rows": [
+          {
+            "key": "factory1-175",
+            "firstTryRate": 0.75,
+            "averageTries": 1.75,
+            "lossPhase": {
+              "beforeClock": 0.6666666666666666,
+              "mid": 0.3333333333333333,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 4.968200000000024,
+            "minutes": 0.06556356166666666,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "039508ca70f1577ec4bf902f3fffad644334895113a45324492538a7caf3e724",
+            "profileHash": "0e74cf5c09f47ebe0a5ada06caace2bc7858096bb5144625097320b4e708222e",
+            "firstTryWins": 15,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.75,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 10,
+              "mid": 5,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0.6666666666666666,
+              "mid": 0.3333333333333333,
+              "late": 0
+            },
+            "verifiedTaps": 4198,
+            "minutesPerBoard": 0.06556356166666666
+          },
+          {
+            "key": "factory1-189",
+            "firstTryRate": 0.7,
+            "averageTries": 1.4,
+            "lossPhase": {
+              "beforeClock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 5.421200000000681,
+            "minutes": 0.15186179500000002,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "e56e70699a38c8a84269ef2a516f0ce8bb694a9bc409b83981664a93faab5253",
+            "profileHash": "0e74cf5c09f47ebe0a5ada06caace2bc7858096bb5144625097320b4e708222e",
+            "firstTryWins": 14,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.4,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 8,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "verifiedTaps": 8006,
+            "minutesPerBoard": 0.15186179500000002
+          },
+          {
+            "key": "factory2-184",
+            "firstTryRate": 0.95,
+            "averageTries": 1.05,
+            "lossPhase": {
+              "beforeClock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 3.5301999999974214,
+            "minutes": 0.06689170333333332,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "7544be978baf19d90b89f3494517d03073250d42dec7530ca53d988269534d92",
+            "profileHash": "0e74cf5c09f47ebe0a5ada06caace2bc7858096bb5144625097320b4e708222e",
+            "firstTryWins": 19,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.05,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "verifiedTaps": 2499,
+            "minutesPerBoard": 0.06689170333333332
+          },
+          {
+            "key": "factory2-192",
+            "firstTryRate": 1,
+            "averageTries": 1,
+            "lossPhase": {
+              "beforeClock": null,
+              "mid": null,
+              "late": null
+            },
+            "runs": 20,
+            "slowestMove": 1.7803000000021711,
+            "minutes": 0.029470008333333318,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "0928a59eee869905ec694896f99917a4f90ea0f472ab6e9f9570aee1ce67bba3",
+            "profileHash": "0e74cf5c09f47ebe0a5ada06caace2bc7858096bb5144625097320b4e708222e",
+            "firstTryWins": 20,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": null,
+              "mid": null,
+              "late": null
+            },
+            "verifiedTaps": 2004,
+            "minutesPerBoard": 0.029470008333333318
+          },
+          {
+            "key": "factory2-175",
+            "firstTryRate": 0,
+            "averageTries": null,
+            "lossPhase": {
+              "beforeClock": 0.8586956521739131,
+              "mid": 0.13043478260869565,
+              "late": 0.010869565217391304
+            },
+            "runs": 20,
+            "slowestMove": 3.2774999999965075,
+            "minutes": 0.053230158333333326,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "2a5915eaee3808aea3bae5874d927ed313f437819ae062721c0ff6d50b6e41ba",
+            "profileHash": "0e74cf5c09f47ebe0a5ada06caace2bc7858096bb5144625097320b4e708222e",
+            "firstTryWins": 0,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 4.294117647058823,
+            "cleared": 17,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 3,
+            "lossCounts": {
+              "clock": 79,
+              "mid": 12,
+              "late": 1
+            },
+            "lossShares": {
+              "clock": 0.8586956521739131,
+              "mid": 0.13043478260869565,
+              "late": 0.010869565217391304
+            },
+            "verifiedTaps": 4241,
+            "minutesPerBoard": 0.053230158333333326
+          }
+        ]
+      },
+      "5": {
+        "contract": {
+          "milestone": "human-v0",
+          "dataRef": "586f970ba01a4f75a65a17b98e4c7864e683d1b2",
+          "dataSha256": "260a674cae804e87642210c2e677ac250465deb31924d3a5982fe69f63ac512f",
+          "keys": [
+            "factory1-175",
+            "factory1-189",
+            "factory2-184",
+            "factory2-192",
+            "factory2-175"
+          ],
+          "profiles": {
+            "Dennis": {
+              "clockHorizon": 3,
+              "partnerHorizon": 3,
+              "clockWeight": 42,
+              "postClockKeyWeight": 32,
+              "clockUrgencyPower": 2,
+              "trayCost": 6,
+              "pairReward": 15,
+              "exploration": 4,
+              "freePeekBonus": 18,
+              "zWeight": 1.8,
+              "temperature": 0.8,
+              "lapse": 0.005,
+              "memoryDecay": 0.0005,
+              "retryRetention": 0.88,
+              "peekPatience": 2,
+              "outWeight": 9,
+              "trayDepth": 4,
+              "clockTrayDepth": 3,
+              "futureWeight": 3.5,
+              "strictClockSlack": true,
+              "flippedBlockerBalk0": 12.8,
+              "flippedBlockerBalk1": -5,
+              "deadlineAttentionProbability": 0.2,
+              "deadlineLearningRate": 0.4
+            },
+            "family": {
+              "clockHorizon": 2,
+              "partnerHorizon": 1,
+              "clockWeight": 32,
+              "postClockKeyWeight": 20,
+              "clockUrgencyPower": 1.6,
+              "trayCost": 4.8,
+              "pairReward": 16,
+              "exploration": 5,
+              "freePeekBonus": 12,
+              "zWeight": 1.2,
+              "temperature": 1.8,
+              "lapse": 0.04,
+              "memoryDecay": 0.015,
+              "retryRetention": 0.65,
+              "peekPatience": 2,
+              "outWeight": 6,
+              "trayDepth": 2,
+              "clockTrayDepth": 2,
+              "futureWeight": 1.8,
+              "strictClockSlack": false,
+              "flippedBlockerBalk0": 6,
+              "flippedBlockerBalk1": -2,
+              "extraClockLookProbability": 0.5
+            }
+          },
+          "runs": 20,
+          "seed": 20261029,
+          "maxAttempts": 12,
+          "gates": {
+            "easyFirstStrictAbove": 0.5,
+            "hardBelowEveryEasyBy": 0.2,
+            "hardClockStrictAbove": 0.5,
+            "minutesStrictBelow": 5,
+            "slowestMoveStrictBelow": 2000
+          },
+          "note": "Factory development benchmark, not prospective evidence; thresholds declared before runs; no labels or reference solutions passed to policy"
+        },
+        "checks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "passed": true,
+        "rows": [
+          {
+            "key": "factory1-175",
+            "firstTryRate": 0.75,
+            "averageTries": 1.45,
+            "lossPhase": {
+              "beforeClock": 0.3333333333333333,
+              "mid": 0.6666666666666666,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 4.689999999999998,
+            "minutes": 0.072334955,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "039508ca70f1577ec4bf902f3fffad644334895113a45324492538a7caf3e724",
+            "profileHash": "42bfd2ee0efcdc4b1d8f5c3df0293a1de10fe586262c9e452acbfddd0fcd545e",
+            "firstTryWins": 15,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.45,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 3,
+              "mid": 6,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0.3333333333333333,
+              "mid": 0.6666666666666666,
+              "late": 0
+            },
+            "verifiedTaps": 4590,
+            "minutesPerBoard": 0.072334955
+          },
+          {
+            "key": "factory1-189",
+            "firstTryRate": 0.7,
+            "averageTries": 1.4,
+            "lossPhase": {
+              "beforeClock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 7.173999999999978,
+            "minutes": 0.15187666333333333,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "e56e70699a38c8a84269ef2a516f0ce8bb694a9bc409b83981664a93faab5253",
+            "profileHash": "42bfd2ee0efcdc4b1d8f5c3df0293a1de10fe586262c9e452acbfddd0fcd545e",
+            "firstTryWins": 14,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.4,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 8,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 0,
+              "mid": 1,
+              "late": 0
+            },
+            "verifiedTaps": 8006,
+            "minutesPerBoard": 0.15187666333333333
+          },
+          {
+            "key": "factory2-184",
+            "firstTryRate": 0.95,
+            "averageTries": 1.05,
+            "lossPhase": {
+              "beforeClock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "runs": 20,
+            "slowestMove": 3.530399999999645,
+            "minutes": 0.06656059166666664,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "7544be978baf19d90b89f3494517d03073250d42dec7530ca53d988269534d92",
+            "profileHash": "42bfd2ee0efcdc4b1d8f5c3df0293a1de10fe586262c9e452acbfddd0fcd545e",
+            "firstTryWins": 19,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1.05,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            },
+            "verifiedTaps": 2499,
+            "minutesPerBoard": 0.06656059166666664
+          },
+          {
+            "key": "factory2-192",
+            "firstTryRate": 1,
+            "averageTries": 1,
+            "lossPhase": {
+              "beforeClock": null,
+              "mid": null,
+              "late": null
+            },
+            "runs": 20,
+            "slowestMove": 3.9135999999998603,
+            "minutes": 0.03012603666666667,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "0928a59eee869905ec694896f99917a4f90ea0f472ab6e9f9570aee1ce67bba3",
+            "profileHash": "42bfd2ee0efcdc4b1d8f5c3df0293a1de10fe586262c9e452acbfddd0fcd545e",
+            "firstTryWins": 20,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 1,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 0,
+              "late": 0
+            },
+            "lossShares": {
+              "clock": null,
+              "mid": null,
+              "late": null
+            },
+            "verifiedTaps": 2004,
+            "minutesPerBoard": 0.03012603666666667
+          },
+          {
+            "key": "factory2-175",
+            "firstTryRate": 0,
+            "averageTries": 3.6,
+            "lossPhase": {
+              "beforeClock": 0.75,
+              "mid": 0.23076923076923078,
+              "late": 0.019230769230769232
+            },
+            "runs": 20,
+            "slowestMove": 4.717000000000553,
+            "minutes": 0.055149513333333317,
+            "version": "human-v1-development",
+            "calibrationStatus": "experimental-not-calibrated",
+            "valid": true,
+            "seed": 20261029,
+            "boardHash": "2a5915eaee3808aea3bae5874d927ed313f437819ae062721c0ff6d50b6e41ba",
+            "profileHash": "42bfd2ee0efcdc4b1d8f5c3df0293a1de10fe586262c9e452acbfddd0fcd545e",
+            "firstTryWins": 0,
+            "firstTryCensored": 0,
+            "averageTriesAmongCleared": 3.6,
+            "cleared": 20,
+            "censoredCampaigns": 0,
+            "unclearedAtAttemptLimit": 0,
+            "lossCounts": {
+              "clock": 39,
+              "mid": 12,
+              "late": 1
+            },
+            "lossShares": {
+              "clock": 0.75,
+              "mid": 0.23076923076923078,
+              "late": 0.019230769230769232
+            },
+            "verifiedTaps": 4481,
+            "minutesPerBoard": 0.055149513333333317
+          }
+        ]
+      }
+    },
+    "targetEvidenceStatus": "Original gates retained; clock-save event semantics and person-specific evidence require user clarification. No replacement tag.",
+    "phaseAudit": {
+      "OmaHanny": {
+        "levels": 37,
+        "attempts": 97,
+        "wins": 36,
+        "losses": 61,
+        "counts": {
+          "beforeClock": 0,
+          "mid": 0,
+          "late": 0,
+          "unknown": 61
+        },
+        "phaseShareBounds": {
+          "beforeClock": {
+            "lower": 0,
+            "upper": 1
+          },
+          "mid": {
+            "lower": 0,
+            "upper": 1
+          },
+          "late": {
+            "lower": 0,
+            "upper": 1
+          }
+        },
+        "clockContactFailures": 0,
+        "quality": {
+          "excludedNonLevelEvents": 0,
+          "missingLevels": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139,
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163
+          ],
+          "missingStart": 0,
+          "missingEnd": 0,
+          "multipleEnds": 0,
+          "winsWithoutSave": 0,
+          "afterFirstWinGroups": 0
+        }
+      },
+      "Dennisisdebeste": {
+        "levels": 71,
+        "attempts": 129,
+        "wins": 71,
+        "losses": 58,
+        "counts": {
+          "beforeClock": 14,
+          "mid": 42,
+          "late": 0,
+          "unknown": 2
+        },
+        "phaseShareBounds": {
+          "beforeClock": {
+            "lower": 0.2413793103448276,
+            "upper": 0.27586206896551724
+          },
+          "mid": {
+            "lower": 0.7241379310344828,
+            "upper": 0.7586206896551724
+          },
+          "late": {
+            "lower": 0,
+            "upper": 0.034482758620689655
+          }
+        },
+        "clockContactFailures": 7,
+        "quality": {
+          "excludedNonLevelEvents": 24,
+          "missingLevels": [
+            98
+          ],
+          "missingStart": 0,
+          "missingEnd": 5,
+          "multipleEnds": 0,
+          "winsWithoutSave": 0,
+          "afterFirstWinGroups": 23
+        }
+      },
+      "Mrs. Doubtfire": {
+        "levels": 53,
+        "attempts": 197,
+        "wins": 52,
+        "losses": 145,
+        "counts": {
+          "beforeClock": 50,
+          "mid": 77,
+          "late": 0,
+          "unknown": 18
+        },
+        "phaseShareBounds": {
+          "beforeClock": {
+            "lower": 0.3448275862068966,
+            "upper": 0.4689655172413793
+          },
+          "mid": {
+            "lower": 0.5310344827586206,
+            "upper": 0.6551724137931034
+          },
+          "late": {
+            "lower": 0,
+            "upper": 0.12413793103448276
+          }
+        },
+        "clockContactFailures": 17,
+        "quality": {
+          "excludedNonLevelEvents": 3,
+          "missingLevels": [
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163
+          ],
+          "missingStart": 0,
+          "missingEnd": 1,
+          "multipleEnds": 0,
+          "winsWithoutSave": 0,
+          "afterFirstWinGroups": 0
+        }
+      },
+      "Gerda": {
+        "levels": 58,
+        "attempts": 552,
+        "wins": 57,
+        "losses": 495,
+        "counts": {
+          "beforeClock": 168,
+          "mid": 274,
+          "late": 6,
+          "unknown": 47
+        },
+        "phaseShareBounds": {
+          "beforeClock": {
+            "lower": 0.3393939393939394,
+            "upper": 0.43434343434343436
+          },
+          "mid": {
+            "lower": 0.5535353535353535,
+            "upper": 0.6484848484848484
+          },
+          "late": {
+            "lower": 0.012121212121212121,
+            "upper": 0.10707070707070707
+          }
+        },
+        "clockContactFailures": 25,
+        "quality": {
+          "excludedNonLevelEvents": 0,
+          "missingLevels": [
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163
+          ],
+          "missingStart": 0,
+          "missingEnd": 0,
+          "multipleEnds": 4,
+          "winsWithoutSave": 0,
+          "afterFirstWinGroups": 0
+        }
+      }
+    },
+    "sourceSupportCommit": "47e79b2",
+    "verification": {
+      "testsPassed": 175,
+      "testsTotal": 175,
+      "nativeExit": 0,
+      "log": ".codex-runs/human-style/milestone2/suite-03.log",
+      "defaultReleaseCampaignParity": 100,
+      "unchangedDennisFirstAttemptsAcrossTrials4And5": 1480,
+      "factoryTrial5AllCleared": 100,
+      "factoryTrial5HardMean": 3.6
+    }
   }
 }

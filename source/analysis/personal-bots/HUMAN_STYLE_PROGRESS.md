@@ -78,3 +78,19 @@ all five factory gates. Post-clock partner access and tray judgment, clock-route
 commitment under pressure, and learning after actual losses are behavioral
 hypotheses to investigate. Do not manufacture clock failures or fit per-level
 successful-attempt counts merely to satisfy the table.
+
+## Milestone2 follow-up: research only
+
+Five full candidate trials retain the five factory d/e checks. Candidates4/5
+reach first-try51.39% Dennis and29.17% family. Candidate4 clock shares55.41/54.57%
+pass Dennis.b but narrowly fail family.b. Candidate5 learns attention from actual
+clock losses: all100 factory campaigns clear, hard-board mean3.6; its first
+attempts are unchanged, but original Dennis.b becomes a tradeoff (50.40% clock).
+175/175 tests pass. Default human-v0 still reproduces all100 release campaigns;
+no human-v1 tag or default replacement is made.
+
+A fresh read-only audit shows that clock events mean saved clocks. Dennis
+won135/142/144 first try in the natural records;132 losses occurred after saving
+the clock. The requested before-clock case target therefore needs clarification.
+The original targets remain unchanged while the user question is pending. See
+HUMAN_PHASE_TARGET_AUDIT.md and HUMAN_V1_CALIBRATION.md for evidence and ledgers.
