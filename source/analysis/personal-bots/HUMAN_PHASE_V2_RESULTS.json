@@ -12,7 +12,8 @@
     "clockOutsAndExactTiming": "baa07d1",
     "publicMateBudget": "9801bf5",
     "personalClockCompletionAndHorizon": "6932e2e",
-    "exactRiskBoundary": "74f6f15"
+    "exactRiskBoundary": "74f6f15",
+    "humanV1Release": "18f0348082d276bbb07292067a3c6c98d1822c1e"
   },
   "legacySixExperiments": "HUMAN_V1_BATCH_06_11.md",
   "humanAudit": {
@@ -3165,10 +3166,700 @@
         "slowestMoveMs": 10.494500000000698,
         "verifiedTaps": 867180
       }
+    },
+    {
+      "key": "family-balanced-outs-full",
+      "summary": {
+        "settings": {
+          "Dennis": {
+            "firstTryRate": 0.5479166666666667,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 390,
+              "mid": 897,
+              "late": 28
+            },
+            "lossShares": {
+              "clock": 0.2965779467680608,
+              "mid": 0.68212927756654,
+              "late": 0.02129277566539924
+            },
+            "riskLoss": 0.63,
+            "controlLoss": 0.395,
+            "clockCases": {
+              "132": 0,
+              "135": 0,
+              "142": 1,
+              "144": 0
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 390,
+                "clockContact": 11,
+                "mid": 886,
+                "late": 28
+              },
+              "shares": {
+                "beforeClock": 0.2965779467680608,
+                "clockContact": 0.008365019011406844,
+                "mid": 0.6737642585551331,
+                "late": 0.02129277566539924
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          },
+          "family": {
+            "firstTryRate": 0.3229166666666667,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 1474,
+              "mid": 1872,
+              "late": 60
+            },
+            "lossShares": {
+              "clock": 0.4327657075748679,
+              "mid": 0.549618320610687,
+              "late": 0.017615971814445096
+            },
+            "riskLoss": 0.685,
+            "controlLoss": 0.63,
+            "clockCases": {
+              "132": 0.5828877005347594,
+              "135": 0.14814814814814814,
+              "142": 0.8372093023255814,
+              "144": 0.15
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 1474,
+                "clockContact": 158,
+                "mid": 1714,
+                "late": 60
+              },
+              "shares": {
+                "beforeClock": 0.4327657075748679,
+                "clockContact": 0.04638872577803876,
+                "mid": 0.5032295948326483,
+                "late": 0.017615971814445096
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": false,
+              "level142": true
+            }
+          }
+        },
+        "developmentScreen": false,
+        "patternGatesMet": false,
+        "finalGatesMet": false,
+        "contractSchema": "human-style-pattern-contract-v2",
+        "valid": true,
+        "minutesPerBoard": 0.1683849235585585,
+        "model": "human-v0",
+        "workers": 4,
+        "wallMinutes": 3.5064185266666663
+      },
+      "profiles": {
+        "Dennis": {
+          "clockHorizon": 3,
+          "partnerHorizon": 3,
+          "clockWeight": 42,
+          "postClockKeyWeight": 32,
+          "clockUrgencyPower": 2,
+          "trayCost": 6,
+          "pairReward": 15,
+          "exploration": 4,
+          "freePeekBonus": 18,
+          "zWeight": 1.8,
+          "temperature": 0.8,
+          "lapse": 0.005,
+          "memoryDecay": 0.0005,
+          "retryRetention": 0.88,
+          "peekPatience": 2,
+          "outWeight": 9,
+          "trayDepth": 4,
+          "clockTrayDepth": 3,
+          "futureWeight": 3.5,
+          "strictClockSlack": true,
+          "flippedBlockerBalk0": 12.8,
+          "flippedBlockerBalk1": -5,
+          "deadlineAttentionProbability": 0.35,
+          "deadlineLearningRate": 0.7,
+          "clockRowPreview": 1,
+          "sharedClockIce": 1,
+          "clockOutsPlan": 1
+        },
+        "family": {
+          "clockHorizon": 2,
+          "partnerHorizon": 1,
+          "clockWeight": 40,
+          "postClockKeyWeight": 20,
+          "clockUrgencyPower": 1.6,
+          "trayCost": 4.8,
+          "pairReward": 16,
+          "exploration": 5,
+          "freePeekBonus": 12,
+          "zWeight": 1.2,
+          "temperature": 1.8,
+          "lapse": 0.04,
+          "memoryDecay": 0.015,
+          "retryRetention": 0.65,
+          "peekPatience": 2,
+          "outWeight": 7,
+          "trayDepth": 2,
+          "clockTrayDepth": 2,
+          "futureWeight": 1.8,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 6,
+          "flippedBlockerBalk1": -2,
+          "extraClockLookProbability": 0.1,
+          "clockRowPreview": 1,
+          "sharedClockIce": 1,
+          "clockOutsPlan": 1,
+          "clockCompletionBonus": 40
+        }
+      },
+      "cases": {
+        "132": {
+          "Dennis": {
+            "firstTryRate": 0.85,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.15,
+            "successfulAttempts": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              2,
+              2,
+              1,
+              1,
+              1,
+              2,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 0,
+                "clockContact": 0,
+                "mid": 3,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0,
+                "clockContact": 0,
+                "mid": 1,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0,
+            "cleared": 8,
+            "runs": 20,
+            "averageTries": null,
+            "successfulAttempts": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              8,
+              4,
+              6,
+              null,
+              10,
+              null,
+              null,
+              4,
+              8,
+              9,
+              null,
+              null,
+              null,
+              null,
+              2
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 109,
+                "clockContact": 62,
+                "mid": 16,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.5828877005347594,
+                "clockContact": 0.3315508021390374,
+                "mid": 0.0855614973262032,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "136": {
+          "Dennis": {
+            "firstTryRate": 0.9,
+            "cleared": 18,
+            "runs": 20,
+            "averageTries": null,
+            "successfulAttempts": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              null,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              null,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 16,
+                "clockContact": 7,
+                "mid": 1,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.6666666666666666,
+                "clockContact": 0.2916666666666667,
+                "mid": 0.041666666666666664,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.45,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 3,
+            "successfulAttempts": [
+              2,
+              1,
+              1,
+              6,
+              4,
+              4,
+              2,
+              3,
+              1,
+              1,
+              8,
+              5,
+              1,
+              1,
+              1,
+              10,
+              1,
+              1,
+              4,
+              3
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 9,
+                "clockContact": 22,
+                "mid": 6,
+                "late": 3
+              },
+              "shares": {
+                "beforeClock": 0.225,
+                "clockContact": 0.55,
+                "mid": 0.15,
+                "late": 0.075
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "141": {
+          "Dennis": {
+            "firstTryRate": 0.05,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 2.4,
+            "successfulAttempts": [
+              4,
+              2,
+              2,
+              2,
+              2,
+              3,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              1,
+              3,
+              4,
+              3,
+              3,
+              2,
+              3,
+              2
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 7,
+                "clockContact": 0,
+                "mid": 21,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.25,
+                "clockContact": 0,
+                "mid": 0.75,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.1,
+            "cleared": 18,
+            "runs": 20,
+            "averageTries": null,
+            "successfulAttempts": [
+              1,
+              3,
+              5,
+              10,
+              10,
+              8,
+              6,
+              4,
+              9,
+              null,
+              3,
+              3,
+              3,
+              null,
+              3,
+              1,
+              5,
+              2,
+              8,
+              3
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 27,
+                "clockContact": 1,
+                "mid": 64,
+                "late": 1
+              },
+              "shares": {
+                "beforeClock": 0.2903225806451613,
+                "clockContact": 0.010752688172043012,
+                "mid": 0.6881720430107527,
+                "late": 0.010752688172043012
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "142": {
+          "Dennis": {
+            "firstTryRate": 0.95,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.05,
+            "successfulAttempts": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              2,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 1,
+                "clockContact": 0,
+                "mid": 0,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 1,
+                "clockContact": 0,
+                "mid": 0,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.1,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 3.15,
+            "successfulAttempts": [
+              3,
+              2,
+              4,
+              2,
+              8,
+              2,
+              2,
+              2,
+              6,
+              2,
+              3,
+              4,
+              1,
+              4,
+              3,
+              6,
+              2,
+              2,
+              4,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 36,
+                "clockContact": 0,
+                "mid": 7,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.8372093023255814,
+                "clockContact": 0,
+                "mid": 0.16279069767441862,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "144": {
+          "Dennis": {
+            "firstTryRate": 0.9,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.1,
+            "successfulAttempts": [
+              2,
+              1,
+              2,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 0,
+                "clockContact": 1,
+                "mid": 1,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0,
+                "clockContact": 0.5,
+                "mid": 0.5,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.05,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 3,
+            "successfulAttempts": [
+              1,
+              3,
+              3,
+              7,
+              2,
+              2,
+              4,
+              2,
+              2,
+              2,
+              8,
+              3,
+              4,
+              2,
+              2,
+              2,
+              2,
+              3,
+              2,
+              4
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 6,
+                "clockContact": 32,
+                "mid": 1,
+                "late": 1
+              },
+              "shares": {
+                "beforeClock": 0.15,
+                "clockContact": 0.8,
+                "mid": 0.025,
+                "late": 0.025
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        }
+      },
+      "rawDirectory": ".codex-runs/human-style/phase-v2/family-balanced-outs-full",
+      "sourceArchiveHash": "1afd8f779bc4aba3a576f5922ff81301eb771d7a9f687307e66398954c6e5f66",
+      "native": {
+        "factory": 0,
+        "full": 0,
+        "source": "Factory17874 exit0; full9096 exit0 and4 workers0"
+      },
+      "factory": {
+        "passed": true,
+        "checks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "rows": [
+          {
+            "key": "factory1-175",
+            "firstTryRate": 0.75,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.45,
+            "lossCounts": {
+              "clock": 3,
+              "mid": 6,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory1-189",
+            "firstTryRate": 0.7,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.4,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 8,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory2-184",
+            "firstTryRate": 0.95,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.05,
+            "lossCounts": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory2-192",
+            "firstTryRate": 1,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 0,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory2-175",
+            "firstTryRate": 0.1,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 2.2,
+            "lossCounts": {
+              "clock": 22,
+              "mid": 2,
+              "late": 0
+            }
+          }
+        ]
+      },
+      "stats": {
+        "censoredCampaigns": 0,
+        "maxTwentyCampaignMinutes": 0.6860467133333332,
+        "slowestMoveMs": 8.782800000000861,
+        "verifiedTaps": 849822
+      }
     }
   ],
   "currentCandidate": {
-    "key": "family-balanced-outs-full",
+    "key": "family-clock-outs-balance-full",
     "summary": {
       "settings": {
         "Dennis": {
@@ -3216,59 +3907,59 @@
           }
         },
         "family": {
-          "firstTryRate": 0.3229166666666667,
+          "firstTryRate": 0.33958333333333335,
           "samples": 1440,
           "lossCounts": {
-            "clock": 1474,
-            "mid": 1872,
-            "late": 60
+            "clock": 1470,
+            "mid": 1761,
+            "late": 55
           },
           "lossShares": {
-            "clock": 0.4327657075748679,
-            "mid": 0.549618320610687,
-            "late": 0.017615971814445096
+            "clock": 0.44735240413877053,
+            "mid": 0.5359099208764455,
+            "late": 0.016737674984783932
           },
-          "riskLoss": 0.685,
-          "controlLoss": 0.63,
+          "riskLoss": 0.7150000000000001,
+          "controlLoss": 0.6,
           "clockCases": {
-            "132": 0.5828877005347594,
-            "135": 0.14814814814814814,
-            "142": 0.8372093023255814,
-            "144": 0.15
+            "132": 0.5705521472392638,
+            "135": 0.21212121212121213,
+            "142": 0.7647058823529411,
+            "144": 0.1875
           },
           "lossTiming": {
             "complete": true,
             "consistent": true,
             "counts": {
-              "beforeClock": 1474,
-              "clockContact": 158,
-              "mid": 1714,
-              "late": 60
+              "beforeClock": 1470,
+              "clockContact": 151,
+              "mid": 1610,
+              "late": 55
             },
             "shares": {
-              "beforeClock": 0.4327657075748679,
-              "clockContact": 0.04638872577803876,
-              "mid": 0.5032295948326483,
-              "late": 0.017615971814445096
+              "beforeClock": 0.44735240413877053,
+              "clockContact": 0.04595252586731589,
+              "mid": 0.48995739500912966,
+              "late": 0.016737674984783932
             }
           },
           "checks": {
             "a": true,
             "b": true,
-            "c": false,
+            "c": true,
             "level142": true
           }
         }
       },
       "developmentScreen": false,
-      "patternGatesMet": false,
-      "finalGatesMet": false,
+      "patternGatesMet": true,
+      "finalGatesMet": true,
       "contractSchema": "human-style-pattern-contract-v2",
       "valid": true,
-      "minutesPerBoard": 0.1683849235585585,
+      "minutesPerBoard": 0.1651603084234234,
       "model": "human-v0",
       "workers": 4,
-      "wallMinutes": 3.5064185266666663
+      "wallMinutes": 3.44583314
     },
     "profiles": {
       "Dennis": {
@@ -3303,7 +3994,7 @@
       "family": {
         "clockHorizon": 2,
         "partnerHorizon": 1,
-        "clockWeight": 40,
+        "clockWeight": 42,
         "postClockKeyWeight": 20,
         "clockUrgencyPower": 1.6,
         "trayCost": 4.8,
@@ -3316,7 +4007,7 @@
         "memoryDecay": 0.015,
         "retryRetention": 0.65,
         "peekPatience": 2,
-        "outWeight": 7,
+        "outWeight": 8,
         "trayDepth": 2,
         "clockTrayDepth": 2,
         "futureWeight": 1.8,
@@ -3377,42 +4068,42 @@
         },
         "family": {
           "firstTryRate": 0,
-          "cleared": 8,
+          "cleared": 11,
           "runs": 20,
           "averageTries": null,
           "successfulAttempts": [
             null,
-            null,
-            null,
-            null,
-            null,
-            8,
-            4,
             6,
             null,
-            10,
+            7,
             null,
-            null,
-            4,
             8,
+            4,
+            9,
+            3,
+            null,
+            5,
+            7,
+            2,
+            6,
             9,
             null,
             null,
             null,
             null,
-            2
+            null
           ],
           "lossTiming": {
             "counts": {
-              "beforeClock": 109,
-              "clockContact": 62,
-              "mid": 16,
+              "beforeClock": 93,
+              "clockContact": 57,
+              "mid": 13,
               "late": 0
             },
             "shares": {
-              "beforeClock": 0.5828877005347594,
-              "clockContact": 0.3315508021390374,
-              "mid": 0.0855614973262032,
+              "beforeClock": 0.5705521472392638,
+              "clockContact": 0.3496932515337423,
+              "mid": 0.07975460122699386,
               "late": 0
             },
             "clockContactMaxRemovedTiles": 2
@@ -3464,44 +4155,44 @@
           }
         },
         "family": {
-          "firstTryRate": 0.45,
-          "cleared": 20,
+          "firstTryRate": 0.3,
+          "cleared": 19,
           "runs": 20,
-          "averageTries": 3,
+          "averageTries": null,
           "successfulAttempts": [
             2,
             1,
+            3,
+            8,
             1,
-            6,
             4,
+            2,
+            1,
+            3,
+            5,
+            null,
+            1,
+            1,
             4,
             2,
             3,
-            1,
-            1,
-            8,
-            5,
-            1,
-            1,
-            1,
-            10,
-            1,
+            12,
             1,
             4,
             3
           ],
           "lossTiming": {
             "counts": {
-              "beforeClock": 9,
-              "clockContact": 22,
-              "mid": 6,
-              "late": 3
+              "beforeClock": 17,
+              "clockContact": 24,
+              "mid": 12,
+              "late": 1
             },
             "shares": {
-              "beforeClock": 0.225,
-              "clockContact": 0.55,
-              "mid": 0.15,
-              "late": 0.075
+              "beforeClock": 0.3148148148148148,
+              "clockContact": 0.4444444444444444,
+              "mid": 0.2222222222222222,
+              "late": 0.018518518518518517
             },
             "clockContactMaxRemovedTiles": 2
           }
@@ -3552,44 +4243,44 @@
           }
         },
         "family": {
-          "firstTryRate": 0.1,
-          "cleared": 18,
+          "firstTryRate": 0.2,
+          "cleared": 19,
           "runs": 20,
           "averageTries": null,
           "successfulAttempts": [
-            1,
-            3,
-            5,
-            10,
-            10,
-            8,
             6,
-            4,
-            9,
-            null,
-            3,
-            3,
-            3,
-            null,
-            3,
             1,
-            5,
+            6,
             2,
+            1,
+            11,
+            2,
+            1,
+            2,
+            4,
+            2,
+            4,
+            4,
+            3,
+            4,
             8,
+            null,
+            11,
+            1,
             3
           ],
           "lossTiming": {
             "counts": {
-              "beforeClock": 27,
-              "clockContact": 1,
-              "mid": 64,
-              "late": 1
+              "beforeClock": 14,
+              "clockContact": 0,
+              "mid": 55,
+              "late": 0
             },
             "shares": {
-              "beforeClock": 0.2903225806451613,
-              "clockContact": 0.010752688172043012,
-              "mid": 0.6881720430107527,
-              "late": 0.010752688172043012
+              "beforeClock": 0.2028985507246377,
+              "clockContact": 0,
+              "mid": 0.7971014492753623,
+              "late": 0
             },
             "clockContactMaxRemovedTiles": 2
           }
@@ -3643,41 +4334,41 @@
           "firstTryRate": 0.1,
           "cleared": 20,
           "runs": 20,
-          "averageTries": 3.15,
+          "averageTries": 2.7,
           "successfulAttempts": [
             3,
             2,
             4,
             2,
-            8,
-            2,
-            2,
-            2,
-            6,
+            3,
             2,
             3,
+            2,
+            2,
+            2,
             4,
+            2,
             1,
+            3,
             4,
             3,
-            6,
             2,
             2,
-            4,
-            1
+            1,
+            7
           ],
           "lossTiming": {
             "counts": {
-              "beforeClock": 36,
+              "beforeClock": 26,
               "clockContact": 0,
-              "mid": 7,
-              "late": 0
+              "mid": 6,
+              "late": 2
             },
             "shares": {
-              "beforeClock": 0.8372093023255814,
+              "beforeClock": 0.7647058823529411,
               "clockContact": 0,
-              "mid": 0.16279069767441862,
-              "late": 0
+              "mid": 0.17647058823529413,
+              "late": 0.058823529411764705
             },
             "clockContactMaxRemovedTiles": 2
           }
@@ -3731,53 +4422,53 @@
           "firstTryRate": 0.05,
           "cleared": 20,
           "runs": 20,
-          "averageTries": 3,
+          "averageTries": 2.6,
           "successfulAttempts": [
             1,
             3,
+            2,
+            2,
+            2,
             3,
-            7,
+            3,
+            2,
+            2,
+            2,
+            6,
+            3,
+            3,
+            2,
+            2,
+            2,
             2,
             2,
             4,
-            2,
-            2,
-            2,
-            8,
-            3,
-            4,
-            2,
-            2,
-            2,
-            2,
-            3,
-            2,
             4
           ],
           "lossTiming": {
             "counts": {
               "beforeClock": 6,
-              "clockContact": 32,
-              "mid": 1,
-              "late": 1
+              "clockContact": 26,
+              "mid": 0,
+              "late": 0
             },
             "shares": {
-              "beforeClock": 0.15,
-              "clockContact": 0.8,
-              "mid": 0.025,
-              "late": 0.025
+              "beforeClock": 0.1875,
+              "clockContact": 0.8125,
+              "mid": 0,
+              "late": 0
             },
             "clockContactMaxRemovedTiles": 2
           }
         }
       }
     },
-    "rawDirectory": ".codex-runs/human-style/phase-v2/family-balanced-outs-full",
+    "rawDirectory": ".codex-runs/human-style/phase-v2/family-clock-outs-balance-full",
     "sourceArchiveHash": "1afd8f779bc4aba3a576f5922ff81301eb771d7a9f687307e66398954c6e5f66",
     "native": {
       "factory": 0,
       "full": 0,
-      "source": "Factory17874 exit0; full9096 exit0 and4 workers0"
+      "source": "Factory61898 exit0; full37973 exit0;4workers0"
     },
     "factory": {
       "passed": true,
@@ -3852,9 +4543,9 @@
     },
     "stats": {
       "censoredCampaigns": 0,
-      "maxTwentyCampaignMinutes": 0.6860467133333332,
-      "slowestMoveMs": 8.782800000000861,
-      "verifiedTaps": 849822
+      "maxTwentyCampaignMinutes": 0.6880132983333331,
+      "slowestMoveMs": 10.880400000000009,
+      "verifiedTaps": 831914
     }
   },
   "progressLedger": {
@@ -4032,10 +4723,24 @@
         "distanceAfter": 0.04499999999999996,
         "retainsFactory": true,
         "consecutiveNoProgress": 2
+      },
+      {
+        "key": "family-clock-outs-balance-full",
+        "valid": true,
+        "progress": true,
+        "anchor": "key-priority-refinement-full",
+        "gained": [
+          "family.c"
+        ],
+        "lost": [],
+        "distanceBefore": 0.02500000000000005,
+        "distanceAfter": 0,
+        "retainsFactory": true,
+        "consecutiveNoProgress": 0
       }
     ],
-    "retainedScoreAnchor": "key-priority-refinement-full",
-    "consecutiveNoProgress": 2,
+    "retainedScoreAnchor": "family-clock-outs-balance-full",
+    "consecutiveNoProgress": 0,
     "stopRequired": false,
     "implementedResearchCandidate": "clock-order-full",
     "annotationOnlyRerun": {
@@ -4059,7 +4764,7 @@
     "currentNativeExits": {
       "factory": 0,
       "full": 0,
-      "source": "Factory17874 exit0; full9096 exit0 and4 workers0"
+      "source": "Factory61898 exit0; full37973 exit0;4workers0"
     },
     "outcomeParity": {
       "passed": true,
@@ -4075,18 +4780,21 @@
       "nativeExit": 0,
       "comparison": "Exact archived release legacy campaign outcomes; timing, documented profile-hash shape and added clock annotations excluded. Frozen PROFILES independently deep-equal.",
       "sourceCommit": "baa07d1"
-    }
+    },
+    "passed": 183,
+    "log": ".codex-runs/human-style/phase-v2/suite10-release.log",
+    "releaseDefaultProof": ".codex-runs/human-style/phase-v2/human-v1-release-proof.json"
   },
   "release": {
-    "defaultTag": "human-v0",
-    "defaultTagCommit": "bcac396",
-    "humanV1": false,
+    "defaultTag": "human-v1",
+    "defaultTagCommit": "18f0348082d276bbb07292067a3c6c98d1822c1e",
+    "humanV1": true,
     "humanV2": false,
     "trackA": "policy40 unchanged",
-    "actualLabMeasurements": 0,
-    "prospectiveValidation": "not started; M2 unmet"
+    "actualLabMeasurements": 15,
+    "prospectiveValidation": "not started; milestone3 ranking unmet"
   },
-  "next": "Continue within the existing eight-no-progress rule, retaining all previously passed checks and factory100 clears. No release until one candidate passes every approved M2 gate; then verify exact promoted defaults before tagging.",
+  "next": "Complete the preregistered15-board lab baseline; no dropped or uncleared targets. Preserve M1/M2 and the8-no-progress stop rule; frozen prospective validation follows.",
   "additionalTrials": [
     {
       "key": "mate-budget-full",
@@ -9609,9 +10317,699 @@
         "slowestMoveMs": 8.782800000000861,
         "verifiedTaps": 849822
       }
+    },
+    {
+      "key": "family-clock-outs-balance-full",
+      "summary": {
+        "settings": {
+          "Dennis": {
+            "firstTryRate": 0.5479166666666667,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 390,
+              "mid": 897,
+              "late": 28
+            },
+            "lossShares": {
+              "clock": 0.2965779467680608,
+              "mid": 0.68212927756654,
+              "late": 0.02129277566539924
+            },
+            "riskLoss": 0.63,
+            "controlLoss": 0.395,
+            "clockCases": {
+              "132": 0,
+              "135": 0,
+              "142": 1,
+              "144": 0
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 390,
+                "clockContact": 11,
+                "mid": 886,
+                "late": 28
+              },
+              "shares": {
+                "beforeClock": 0.2965779467680608,
+                "clockContact": 0.008365019011406844,
+                "mid": 0.6737642585551331,
+                "late": 0.02129277566539924
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          },
+          "family": {
+            "firstTryRate": 0.33958333333333335,
+            "samples": 1440,
+            "lossCounts": {
+              "clock": 1470,
+              "mid": 1761,
+              "late": 55
+            },
+            "lossShares": {
+              "clock": 0.44735240413877053,
+              "mid": 0.5359099208764455,
+              "late": 0.016737674984783932
+            },
+            "riskLoss": 0.7150000000000001,
+            "controlLoss": 0.6,
+            "clockCases": {
+              "132": 0.5705521472392638,
+              "135": 0.21212121212121213,
+              "142": 0.7647058823529411,
+              "144": 0.1875
+            },
+            "lossTiming": {
+              "complete": true,
+              "consistent": true,
+              "counts": {
+                "beforeClock": 1470,
+                "clockContact": 151,
+                "mid": 1610,
+                "late": 55
+              },
+              "shares": {
+                "beforeClock": 0.44735240413877053,
+                "clockContact": 0.04595252586731589,
+                "mid": 0.48995739500912966,
+                "late": 0.016737674984783932
+              }
+            },
+            "checks": {
+              "a": true,
+              "b": true,
+              "c": true,
+              "level142": true
+            }
+          }
+        },
+        "developmentScreen": false,
+        "patternGatesMet": true,
+        "finalGatesMet": true,
+        "contractSchema": "human-style-pattern-contract-v2",
+        "valid": true,
+        "minutesPerBoard": 0.1651603084234234,
+        "model": "human-v0",
+        "workers": 4,
+        "wallMinutes": 3.44583314
+      },
+      "profiles": {
+        "Dennis": {
+          "clockHorizon": 3,
+          "partnerHorizon": 3,
+          "clockWeight": 42,
+          "postClockKeyWeight": 32,
+          "clockUrgencyPower": 2,
+          "trayCost": 6,
+          "pairReward": 15,
+          "exploration": 4,
+          "freePeekBonus": 18,
+          "zWeight": 1.8,
+          "temperature": 0.8,
+          "lapse": 0.005,
+          "memoryDecay": 0.0005,
+          "retryRetention": 0.88,
+          "peekPatience": 2,
+          "outWeight": 9,
+          "trayDepth": 4,
+          "clockTrayDepth": 3,
+          "futureWeight": 3.5,
+          "strictClockSlack": true,
+          "flippedBlockerBalk0": 12.8,
+          "flippedBlockerBalk1": -5,
+          "deadlineAttentionProbability": 0.35,
+          "deadlineLearningRate": 0.7,
+          "clockRowPreview": 1,
+          "sharedClockIce": 1,
+          "clockOutsPlan": 1
+        },
+        "family": {
+          "clockHorizon": 2,
+          "partnerHorizon": 1,
+          "clockWeight": 42,
+          "postClockKeyWeight": 20,
+          "clockUrgencyPower": 1.6,
+          "trayCost": 4.8,
+          "pairReward": 16,
+          "exploration": 5,
+          "freePeekBonus": 12,
+          "zWeight": 1.2,
+          "temperature": 1.8,
+          "lapse": 0.04,
+          "memoryDecay": 0.015,
+          "retryRetention": 0.65,
+          "peekPatience": 2,
+          "outWeight": 8,
+          "trayDepth": 2,
+          "clockTrayDepth": 2,
+          "futureWeight": 1.8,
+          "strictClockSlack": false,
+          "flippedBlockerBalk0": 6,
+          "flippedBlockerBalk1": -2,
+          "extraClockLookProbability": 0.1,
+          "clockRowPreview": 1,
+          "sharedClockIce": 1,
+          "clockOutsPlan": 1,
+          "clockCompletionBonus": 40
+        }
+      },
+      "cases": {
+        "132": {
+          "Dennis": {
+            "firstTryRate": 0.85,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.15,
+            "successfulAttempts": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              2,
+              2,
+              1,
+              1,
+              1,
+              2,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 0,
+                "clockContact": 0,
+                "mid": 3,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0,
+                "clockContact": 0,
+                "mid": 1,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0,
+            "cleared": 11,
+            "runs": 20,
+            "averageTries": null,
+            "successfulAttempts": [
+              null,
+              6,
+              null,
+              7,
+              null,
+              8,
+              4,
+              9,
+              3,
+              null,
+              5,
+              7,
+              2,
+              6,
+              9,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 93,
+                "clockContact": 57,
+                "mid": 13,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.5705521472392638,
+                "clockContact": 0.3496932515337423,
+                "mid": 0.07975460122699386,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "136": {
+          "Dennis": {
+            "firstTryRate": 0.9,
+            "cleared": 18,
+            "runs": 20,
+            "averageTries": null,
+            "successfulAttempts": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              null,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              null,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 16,
+                "clockContact": 7,
+                "mid": 1,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.6666666666666666,
+                "clockContact": 0.2916666666666667,
+                "mid": 0.041666666666666664,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.3,
+            "cleared": 19,
+            "runs": 20,
+            "averageTries": null,
+            "successfulAttempts": [
+              2,
+              1,
+              3,
+              8,
+              1,
+              4,
+              2,
+              1,
+              3,
+              5,
+              null,
+              1,
+              1,
+              4,
+              2,
+              3,
+              12,
+              1,
+              4,
+              3
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 17,
+                "clockContact": 24,
+                "mid": 12,
+                "late": 1
+              },
+              "shares": {
+                "beforeClock": 0.3148148148148148,
+                "clockContact": 0.4444444444444444,
+                "mid": 0.2222222222222222,
+                "late": 0.018518518518518517
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "141": {
+          "Dennis": {
+            "firstTryRate": 0.05,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 2.4,
+            "successfulAttempts": [
+              4,
+              2,
+              2,
+              2,
+              2,
+              3,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              1,
+              3,
+              4,
+              3,
+              3,
+              2,
+              3,
+              2
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 7,
+                "clockContact": 0,
+                "mid": 21,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.25,
+                "clockContact": 0,
+                "mid": 0.75,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.2,
+            "cleared": 19,
+            "runs": 20,
+            "averageTries": null,
+            "successfulAttempts": [
+              6,
+              1,
+              6,
+              2,
+              1,
+              11,
+              2,
+              1,
+              2,
+              4,
+              2,
+              4,
+              4,
+              3,
+              4,
+              8,
+              null,
+              11,
+              1,
+              3
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 14,
+                "clockContact": 0,
+                "mid": 55,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.2028985507246377,
+                "clockContact": 0,
+                "mid": 0.7971014492753623,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "142": {
+          "Dennis": {
+            "firstTryRate": 0.95,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.05,
+            "successfulAttempts": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              2,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 1,
+                "clockContact": 0,
+                "mid": 0,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 1,
+                "clockContact": 0,
+                "mid": 0,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.1,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 2.7,
+            "successfulAttempts": [
+              3,
+              2,
+              4,
+              2,
+              3,
+              2,
+              3,
+              2,
+              2,
+              2,
+              4,
+              2,
+              1,
+              3,
+              4,
+              3,
+              2,
+              2,
+              1,
+              7
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 26,
+                "clockContact": 0,
+                "mid": 6,
+                "late": 2
+              },
+              "shares": {
+                "beforeClock": 0.7647058823529411,
+                "clockContact": 0,
+                "mid": 0.17647058823529413,
+                "late": 0.058823529411764705
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        },
+        "144": {
+          "Dennis": {
+            "firstTryRate": 0.9,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.1,
+            "successfulAttempts": [
+              2,
+              1,
+              2,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 0,
+                "clockContact": 1,
+                "mid": 1,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0,
+                "clockContact": 0.5,
+                "mid": 0.5,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          },
+          "family": {
+            "firstTryRate": 0.05,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 2.6,
+            "successfulAttempts": [
+              1,
+              3,
+              2,
+              2,
+              2,
+              3,
+              3,
+              2,
+              2,
+              2,
+              6,
+              3,
+              3,
+              2,
+              2,
+              2,
+              2,
+              2,
+              4,
+              4
+            ],
+            "lossTiming": {
+              "counts": {
+                "beforeClock": 6,
+                "clockContact": 26,
+                "mid": 0,
+                "late": 0
+              },
+              "shares": {
+                "beforeClock": 0.1875,
+                "clockContact": 0.8125,
+                "mid": 0,
+                "late": 0
+              },
+              "clockContactMaxRemovedTiles": 2
+            }
+          }
+        }
+      },
+      "rawDirectory": ".codex-runs/human-style/phase-v2/family-clock-outs-balance-full",
+      "sourceArchiveHash": "1afd8f779bc4aba3a576f5922ff81301eb771d7a9f687307e66398954c6e5f66",
+      "native": {
+        "factory": 0,
+        "full": 0,
+        "source": "Factory61898 exit0; full37973 exit0;4workers0"
+      },
+      "factory": {
+        "passed": true,
+        "checks": {
+          "d": true,
+          "e": true,
+          "timing": true,
+          "valid": true
+        },
+        "rows": [
+          {
+            "key": "factory1-175",
+            "firstTryRate": 0.75,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.45,
+            "lossCounts": {
+              "clock": 3,
+              "mid": 6,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory1-189",
+            "firstTryRate": 0.7,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.4,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 8,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory2-184",
+            "firstTryRate": 0.95,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1.05,
+            "lossCounts": {
+              "clock": 1,
+              "mid": 0,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory2-192",
+            "firstTryRate": 1,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 1,
+            "lossCounts": {
+              "clock": 0,
+              "mid": 0,
+              "late": 0
+            }
+          },
+          {
+            "key": "factory2-175",
+            "firstTryRate": 0.1,
+            "cleared": 20,
+            "runs": 20,
+            "averageTries": 2.2,
+            "lossCounts": {
+              "clock": 22,
+              "mid": 2,
+              "late": 0
+            }
+          }
+        ]
+      },
+      "stats": {
+        "censoredCampaigns": 0,
+        "maxTwentyCampaignMinutes": 0.6880132983333331,
+        "slowestMoveMs": 10.880400000000009,
+        "verifiedTaps": 831914
+      }
     }
   ],
-  "latestEvaluation": "family-balanced-outs-full",
+  "latestEvaluation": "family-clock-outs-balance-full",
   "actionAudit": {
     "directory": ".codex-runs/human-style/phase-v2/family-replay-audit",
     "productionVerifiedChoices": 29,
@@ -9623,5 +11021,175 @@
     "boardParity": "Exact public geometry, faces, down flags and rules matched catalog; every recorded action state matched production. Parse raw chunks directly, because JSON serialization does not preserve Sets.",
     "clockContactAudit": ".codex-runs/human-style/phase-v2/human-clock-contact-audit.json",
     "keyPriorityPrefix": "Mrs115 raw prefix shows keys taken at removals5/6; incomplete prefix supports actions only, not a validated clear."
+  },
+  "releaseVerification": {
+    "version": "human-v1",
+    "calibration": {
+      "settings": {
+        "Dennis": {
+          "firstTryRate": 0.5479166666666667,
+          "samples": 1440,
+          "lossCounts": {
+            "clock": 390,
+            "mid": 897,
+            "late": 28
+          },
+          "lossShares": {
+            "clock": 0.2965779467680608,
+            "mid": 0.68212927756654,
+            "late": 0.02129277566539924
+          },
+          "riskLoss": 0.63,
+          "controlLoss": 0.395,
+          "clockCases": {
+            "132": 0,
+            "135": 0,
+            "142": 1,
+            "144": 0
+          },
+          "lossTiming": {
+            "complete": true,
+            "consistent": true,
+            "counts": {
+              "beforeClock": 390,
+              "clockContact": 11,
+              "mid": 886,
+              "late": 28
+            },
+            "shares": {
+              "beforeClock": 0.2965779467680608,
+              "clockContact": 0.008365019011406844,
+              "mid": 0.6737642585551331,
+              "late": 0.02129277566539924
+            }
+          },
+          "checks": {
+            "a": true,
+            "b": true,
+            "c": true,
+            "level142": true
+          }
+        },
+        "family": {
+          "firstTryRate": 0.33958333333333335,
+          "samples": 1440,
+          "lossCounts": {
+            "clock": 1470,
+            "mid": 1761,
+            "late": 55
+          },
+          "lossShares": {
+            "clock": 0.44735240413877053,
+            "mid": 0.5359099208764455,
+            "late": 0.016737674984783932
+          },
+          "riskLoss": 0.7150000000000001,
+          "controlLoss": 0.6,
+          "clockCases": {
+            "132": 0.5705521472392638,
+            "135": 0.21212121212121213,
+            "142": 0.7647058823529411,
+            "144": 0.1875
+          },
+          "lossTiming": {
+            "complete": true,
+            "consistent": true,
+            "counts": {
+              "beforeClock": 1470,
+              "clockContact": 151,
+              "mid": 1610,
+              "late": 55
+            },
+            "shares": {
+              "beforeClock": 0.44735240413877053,
+              "clockContact": 0.04595252586731589,
+              "mid": 0.48995739500912966,
+              "late": 0.016737674984783932
+            }
+          },
+          "checks": {
+            "a": true,
+            "b": true,
+            "c": true,
+            "level142": true
+          }
+        }
+      },
+      "developmentScreen": false,
+      "patternGatesMet": true,
+      "finalGatesMet": true,
+      "contractSchema": "human-style-pattern-contract-v2",
+      "valid": true,
+      "minutesPerBoard": 0.16215462653153156,
+      "model": "human-v1",
+      "workers": 4,
+      "wallMinutes": 3.39417687
+    },
+    "factory": {
+      "d": true,
+      "e": true,
+      "timing": true,
+      "valid": true
+    },
+    "factoryClears": 100,
+    "boards": 74,
+    "campaigns": 2960,
+    "verifiedTaps": 831914,
+    "slowestMoveMs": 8.87039999999979,
+    "maxTwentyCampaignMinutes": 0.6730346400000002,
+    "profileHash": "d1e170df9cdb487de2b63d4cfb6fec19cf09ece6e00338dc4e5920dd650bda6e",
+    "modelSourceHash": "3d8499e323e8bd50f129825419a732ee67fd4342317923fc3ad895f94ab2a57a",
+    "fullSourceHash": "6395e44cd04d5ac75644580a192ba6baf94dc5bf2b9c57106a61df256838b0bf",
+    "defaultOutcomeParity": true,
+    "workerExits": [
+      {
+        "worker": 0,
+        "pid": 28236,
+        "exitCode": 0,
+        "signal": null,
+        "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\phase-v2\\human-v1-release-full\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+      },
+      {
+        "worker": 1,
+        "pid": 19908,
+        "exitCode": 0,
+        "signal": null,
+        "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\phase-v2\\human-v1-release-full\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+      },
+      {
+        "worker": 2,
+        "pid": 9712,
+        "exitCode": 0,
+        "signal": null,
+        "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\phase-v2\\human-v1-release-full\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+      },
+      {
+        "worker": 3,
+        "pid": 7180,
+        "exitCode": 0,
+        "signal": null,
+        "entrypoint": "C:\\Users\\den_k\\Idea\\OmasMahjong\\personal-bot-review\\.codex-runs\\human-style\\phase-v2\\human-v1-release-full\\sources\\tools\\sim\\refit\\human_style_parallel_benchmark.js"
+      }
+    ],
+    "suite": {
+      "passed": 183,
+      "total": 183,
+      "log": ".codex-runs/human-style/phase-v2/suite10-release.log",
+      "nativeExit": 0
+    },
+    "native": {
+      "factory": 0,
+      "full": 0
+    },
+    "note": "Final default API uses these exact source files/profiles; same2960 full campaigns and100 factory campaigns as prerelease candidate; no prospective accuracy claim"
+  },
+  "milestone2": "PASSED_AND_TAGGED",
+  "labBaseline": {
+    "file": "HUMAN_LAB_V1_BASELINE.json",
+    "primarySpearman": null,
+    "rankingGateMet": false,
+    "boards": 15,
+    "campaigns": 300,
+    "unclearedAt12": 126
   }
 }

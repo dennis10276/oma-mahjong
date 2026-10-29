@@ -1,0 +1,413 @@
+{
+  "schema": "human-lab-v1-baseline-audit",
+  "summary": {
+    "contract": {
+      "schema": "human-lab-ranking-v1",
+      "setting": "dennis",
+      "runs": 20,
+      "seed": 20261029,
+      "maxAttempts": 12,
+      "primary": "Spearman(human recorded tries, complete simulated averageTries)",
+      "minimumSpearman": 0.5,
+      "requiredCoverage": "Every recorded Dennis lab target; no missing, censored or constant primary ranking can pass",
+      "excludedLevels": [
+        10031
+      ],
+      "exclusionReason": "Explicit user-defined lab cohort excludes10031",
+      "secondary": "First-try failure rank and restricted-mean-attempt rank are diagnostics only, never substitutes for an unresolved primary",
+      "prerequisite": "A passing milestone2 model and retained factory gates; no held-out measurements before human-v1 exists",
+      "levels": [
+        10011,
+        10012,
+        10015,
+        10032,
+        10033,
+        10041,
+        10042,
+        10044,
+        10045,
+        10046,
+        10047,
+        10048,
+        10049,
+        10052,
+        10053
+      ],
+      "boards": 15,
+      "dataHash": "c031ffdf74c395963596d95ce62b9755b228a16da4b60afb0ecf5b50bd8bb68e",
+      "catalogHash": "cd9f22d824d45fd2641558b9092a7d843cf636889d6e795cb22417259f9eb6cc"
+    },
+    "version": "human-v1",
+    "profileHash": "d1e170df9cdb487de2b63d4cfb6fec19cf09ece6e00338dc4e5920dd650bda6e",
+    "issues": [],
+    "rows": [
+      {
+        "lv": 10011,
+        "humanTries": 2,
+        "averageTries": null,
+        "restrictedMeanAttempts": 12,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 20,
+        "slowestMove": 6.803899999999999,
+        "minutes": 0.8387866933333333,
+        "issues": []
+      },
+      {
+        "lv": 10012,
+        "humanTries": 6,
+        "averageTries": null,
+        "restrictedMeanAttempts": 9.85,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 8,
+        "slowestMove": 5.0512000000017,
+        "minutes": 0.6815711983333334,
+        "issues": []
+      },
+      {
+        "lv": 10015,
+        "humanTries": 11,
+        "averageTries": null,
+        "restrictedMeanAttempts": 12,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 20,
+        "slowestMove": 3.5896000000066124,
+        "minutes": 0.4761602350000001,
+        "issues": []
+      },
+      {
+        "lv": 10032,
+        "humanTries": 5,
+        "averageTries": null,
+        "restrictedMeanAttempts": 12,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 20,
+        "slowestMove": 10.778399999981048,
+        "minutes": 0.5502076716666667,
+        "issues": []
+      },
+      {
+        "lv": 10033,
+        "humanTries": 5,
+        "averageTries": null,
+        "restrictedMeanAttempts": 6.8,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 2,
+        "slowestMove": 5.497899999987567,
+        "minutes": 0.2645391083333331,
+        "issues": []
+      },
+      {
+        "lv": 10041,
+        "humanTries": 7,
+        "averageTries": null,
+        "restrictedMeanAttempts": 4.9,
+        "firstTryFailureRate": 0.85,
+        "rightCensoredCampaigns": 3,
+        "slowestMove": 2.0930999999982305,
+        "minutes": 0.12806382166666688,
+        "issues": []
+      },
+      {
+        "lv": 10042,
+        "humanTries": 4,
+        "averageTries": 1,
+        "restrictedMeanAttempts": 1,
+        "firstTryFailureRate": 0,
+        "rightCensoredCampaigns": 0,
+        "slowestMove": 3.2025999999896158,
+        "minutes": 0.20846767166666685,
+        "issues": []
+      },
+      {
+        "lv": 10044,
+        "humanTries": 1,
+        "averageTries": 1.1,
+        "restrictedMeanAttempts": 1.1,
+        "firstTryFailureRate": 0.050000000000000044,
+        "rightCensoredCampaigns": 0,
+        "slowestMove": 2.3409999999857973,
+        "minutes": 0.05715598500000003,
+        "issues": []
+      },
+      {
+        "lv": 10045,
+        "humanTries": 6,
+        "averageTries": null,
+        "restrictedMeanAttempts": 8.3,
+        "firstTryFailureRate": 0.8,
+        "rightCensoredCampaigns": 13,
+        "slowestMove": 3.3466999999945983,
+        "minutes": 0.3090257433333332,
+        "issues": []
+      },
+      {
+        "lv": 10046,
+        "humanTries": 1,
+        "averageTries": 1,
+        "restrictedMeanAttempts": 1,
+        "firstTryFailureRate": 0,
+        "rightCensoredCampaigns": 0,
+        "slowestMove": 2.8539999999920838,
+        "minutes": 0.03172552999999995,
+        "issues": []
+      },
+      {
+        "lv": 10047,
+        "humanTries": 1,
+        "averageTries": 1,
+        "restrictedMeanAttempts": 1,
+        "firstTryFailureRate": 0,
+        "rightCensoredCampaigns": 0,
+        "slowestMove": 2.261899999983143,
+        "minutes": 0.030465756666666614,
+        "issues": []
+      },
+      {
+        "lv": 10048,
+        "humanTries": 2,
+        "averageTries": 4.3,
+        "restrictedMeanAttempts": 4.3,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 0,
+        "slowestMove": 7.733499999972992,
+        "minutes": 0.3376712683333336,
+        "issues": []
+      },
+      {
+        "lv": 10049,
+        "humanTries": 2,
+        "averageTries": null,
+        "restrictedMeanAttempts": 12,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 20,
+        "slowestMove": 3.4346000000077765,
+        "minutes": 0.07852959999999973,
+        "issues": []
+      },
+      {
+        "lv": 10052,
+        "humanTries": 3,
+        "averageTries": null,
+        "restrictedMeanAttempts": 12,
+        "firstTryFailureRate": 1,
+        "rightCensoredCampaigns": 20,
+        "slowestMove": 2.991299999994226,
+        "minutes": 0.1058619650000003,
+        "issues": []
+      },
+      {
+        "lv": 10053,
+        "humanTries": 2,
+        "averageTries": 1.95,
+        "restrictedMeanAttempts": 1.95,
+        "firstTryFailureRate": 0.7,
+        "rightCensoredCampaigns": 0,
+        "slowestMove": 2.975399999995716,
+        "minutes": 0.04597359500000021,
+        "issues": []
+      }
+    ],
+    "status": "unresolved-right-censoring",
+    "primarySpearman": null,
+    "secondary": {
+      "firstTryFailureSpearman": 0.4499501467898542,
+      "restrictedMeanSpearman": 0.49075420468962294,
+      "diagnosticOnly": true
+    },
+    "rankingGateMet": false,
+    "milestone3Met": false,
+    "note": "Prospective validation is still required even when the lab ranking passes",
+    "priorMilestonesVerified": true
+  },
+  "nativeExit": 0,
+  "rawDirectory": ".codex-runs/human-style/lab-ranking/human-v1-first",
+  "sourceManifest": {
+    "hash": "44f71dbb802c97708a9a7a7cd1cf5ac571f042b9f8812ea83dcce62baecc9c04",
+    "files": [
+      "tools/sim/refit/human_board_visibility.js",
+      "tools/sim/refit/human_bot.js",
+      "tools/sim/refit/human_clock_loss_timing.js",
+      "tools/sim/refit/human_factory_contract.json",
+      "tools/sim/refit/human_factory_controller.js",
+      "tools/sim/refit/human_lab_benchmark.js",
+      "tools/sim/refit/human_lab_ranking.js",
+      "tools/sim/refit/human_level_sources.js",
+      "tools/sim/refit/human_release.js",
+      "tools/sim/refit/human_release_profiles.json",
+      "tools/sim/refit/human_style_benchmark.js",
+      "tools/sim/refit/human_style_contract_v2.json",
+      "tools/sim/refit/human_style_controller.js",
+      "tools/sim/refit/human_style_environment.js",
+      "tools/sim/refit/human_style_immediate_outs.js",
+      "tools/sim/refit/human_style_measure.js",
+      "tools/sim/refit/human_style_profiles.json",
+      "tools/sim/refit/human_style_tray_horizon.js",
+      "tools/sim/refit/personal_game_io.js",
+      "tools/sim/refit/personal_public_picture_prior.js",
+      "tools/sim/refit/production_physical_session.js",
+      "tools/sim/refit/public_alive_signature.js",
+      "tools/sim/refit/public_board_input.js",
+      "tools/sim/refit/public_clock_mate_budget.js",
+      "tools/sim/refit/public_goal_routes.js",
+      "tools/sim/refit/public_matched_picture.js",
+      "www/hard.js",
+      "www/js/board.js",
+      "www/js/specials.js",
+      "www/layouts.js",
+      "www/style.css",
+      "www/tiles.js"
+    ],
+    "modelHash": "3d8499e323e8bd50f129825419a732ee67fd4342317923fc3ad895f94ab2a57a"
+  },
+  "campaigns": 300,
+  "unclearedAt12": 126,
+  "computationCensored": 0,
+  "phases": [
+    {
+      "lv": 10011,
+      "cleared": 0,
+      "lossCounts": {
+        "clock": 6,
+        "mid": 234,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10012,
+      "cleared": 12,
+      "lossCounts": {
+        "clock": 20,
+        "mid": 165,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10015,
+      "cleared": 0,
+      "lossCounts": {
+        "clock": 240,
+        "mid": 0,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10032,
+      "cleared": 0,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 240,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10033,
+      "cleared": 18,
+      "lossCounts": {
+        "clock": 70,
+        "mid": 48,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10041,
+      "cleared": 17,
+      "lossCounts": {
+        "clock": 76,
+        "mid": 5,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10042,
+      "cleared": 20,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10044,
+      "cleared": 20,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 1,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10045,
+      "cleared": 7,
+      "lossCounts": {
+        "clock": 73,
+        "mid": 86,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10046,
+      "cleared": 20,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10047,
+      "cleared": 20,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10048,
+      "cleared": 20,
+      "lossCounts": {
+        "clock": 40,
+        "mid": 26,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10049,
+      "cleared": 0,
+      "lossCounts": {
+        "clock": 240,
+        "mid": 0,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10052,
+      "cleared": 0,
+      "lossCounts": {
+        "clock": 240,
+        "mid": 0,
+        "late": 0
+      }
+    },
+    {
+      "lv": 10053,
+      "cleared": 20,
+      "lossCounts": {
+        "clock": 14,
+        "mid": 5,
+        "late": 0
+      }
+    }
+  ],
+  "classification": "Milestone3 baseline prerequisite, not an algorithmic improvement",
+  "stopLedger": {
+    "milestone": 3,
+    "experiments": [],
+    "consecutiveNoProgress": 0,
+    "stopAfter": 8
+  },
+  "diagnostics": [
+    ".codex-runs/human-style/lab-ranking/human-v1-10011-trace.json",
+    ".codex-runs/human-style/lab-ranking/human-v1-10049-trace.json"
+  ]
+}

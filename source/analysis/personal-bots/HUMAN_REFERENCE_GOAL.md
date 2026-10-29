@@ -26,7 +26,7 @@ Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited ph
 - Data: origin/wip/level-factory, source/analysis/factory/dennis-plays.json.
 - Snapshot586f970 includes6 factory boards and lab counts/tap histories.
 
-## Milestone2: human-v1; retain d/e
+## Milestone2 PASSED: human-v1 18f0348; d/e retained
 - Dennis first-try50-55% on92-163; weaker family25-35% (about30%).
 - Audited before-clock shares: Dennis20-30% (near25%); family35-45%.
 - Per-person audited top10 loss boards: loss rate>=10pp above10 observed-zero controls.
@@ -39,29 +39,29 @@ Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited ph
 - Freeze and check later unopened Dennis progression/factory levels for completion.
 - Tag only versions preserving every preceding milestone; factory uses newest tag.
 
-## API contract (10-line usage note; human-v0)
+## API contract (10-line usage note; human-v1)
 1. Repository: personal-bot-review, branch wip/personal-bots.
 2. Module: source/tools/sim/refit/human_bot.js.
 3. Import: const {measureHuman}=require('./source/tools/sim/refit/human_bot.js').
 4. Call: measureHuman(board,{runs:20,setting:'dennis'}).
 5. Board accepts the same packed/object format as measure(), including factory boards.
-6. Output: firstTryRate,averageTries,lossPhase:{beforeClock,mid,late}.
+6. Output:firstTryRate,averageTries,lossPhase:{beforeClock,mid,late},lossTiming.
 7. Also: runs,slowestMove(milliseconds),minutes,version,valid and replay diagnostics.
 8. Optional seed gives reproducible campaigns; omit for independently sampled runs.
 9. averageTries=null if any campaign is uncleared; caps never become physical losses.
-10. human-v0 passes factory milestone1 only; family and later milestones remain experimental.
+10. human-v1 passes milestones1/2; lab ranking and future prediction remain unverified.
 
 ## Accounting and current evidence
-- Milestone1 release human-v0=bcac396; unchanged default profiles; factory100/100.
-- Current approved-v2 research: family-balanced-outs-full; all100 factory campaigns clear.
-- First 54.79/32.29%; before-clock 29.66/43.28% (Dennis/family).
-- Risk/control gap 23.50/5.50pp; required10pp per person.
--142 repair: Dennis 19/20first,20/20clear; family 2/20first,20/20clear.
--183/183 tests; clock-contact disjoint; production replay and concealed-picture tests pass.
-- Public mate-budget9801bf5; personal clock strategy6932e2e; boundary fix74f6f15.
--29 real family action choices132/144 independently replayed; exact board parity.
-- Approved-v2 score anchor key-priority-refinement-full; counter 2/8.
-- Historical contract1 scores and invalid trials retained; no metric/counter relabeling.
-- Lab15 protocol prepared;0 model measurements; M2 unmet, no v1/v2 tag or prospective claim.
-- Stop after8 experiments without progress on current milestone; no hidden exclusions.
-- Small commits on wip/personal-bots; raw .codex-runs/human-style/; no pushes or Firebase writes.
+- human-v1 tag=18f0348; source-exact default and candidate outcomes reproduced.
+- First54.79/33.96%; before-clock29.66/44.74%; risk gap23.5/11.5pp (Dennis/family).
+-142: Dennis19/20 first; both settings20/20 clear within12; repaired without level rules.
+- Factory100/100 clear; d/e pass; easy75/70/95/100%; hard10%,clock91.67%.
+-183/183 tests;2960 calibration campaigns; slowest8.87ms; max20-campaign.673min.
+- Clock-contact disjoint;132 family has93 before,57 contact,13 later losses.
+- Lab-v1 baseline:15 boards,300 campaigns;9 means unresolved; primary rank null; M3 unmet.
+- M2 anchor family-clock-outs-balance-full; counter0; release verification is not a new trial.
+- M3/future gates remain unmet. Preserve historical contracts and every failed/invalid trial.
+- Stop after8 experiments without progress on the current milestone; honest ledger.
+-29 real family choices132/144 replay exactly; exact recorded board parity verified.
+- Raw logs/snapshots under .codex-runs/human-style/; release note HUMAN_V1_RELEASE.md.
+- Small commits on wip/personal-bots; no Firebase writes, publication or pushes.

@@ -1,7 +1,7 @@
 # Lab ranking preparation: no model score yet
 
-Milestone3 remains UNMET. The current phase-target question prevents a milestone2
-release; human-v0 is still the only released human model. This preparation fixes
+Milestone3 remains UNMET. human-v1 (18f0348) now passes the amended calibration
+and retained factory gates; the first actual lab baseline is complete and ranking remains unresolved. This preparation fixes
 the future lab cohort and statistical protocol without evaluating a current
 human controller on the lab boards.
 
