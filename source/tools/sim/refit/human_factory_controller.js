@@ -77,7 +77,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -86,7 +86,7 @@ function createBotController(tiles, profile, seed) {
   assert(p.temperature>0);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
-  assert(p.clockRowPreview===undefined||p.clockRowPreview===0||p.clockRowPreview===1);
+  for(const key of ['clockRowPreview','sharedClockIce'])assert(p[key]===undefined||p[key]===0||p[key]===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
@@ -315,6 +315,8 @@ function createBotController(tiles, profile, seed) {
       return chain.length + extraAbove.size + locks + icePen;
     }
 
+    // Geometry shared by every clock access route; no unknown picture is used.
+    const requiredClockTop = new Set(seen.clock ? [seen.clock.i,...aboveTrans[seen.clock.i]].filter(i=>alive[i]) : []);
     function blockers(i) {
       const top = nb.above[i].filter(j => alive[j]);
       const left = nb.left[i].filter(j => alive[j]), right = nb.right[i].filter(j => alive[j]);
@@ -326,6 +328,7 @@ function createBotController(tiles, profile, seed) {
       let ice = [];
       if (roles[i] === 'ice' || roles[i] === 'ice2') {
         const need = roles[i] === 'ice2' ? 2 : 1;
+        const sharedClock = p.sharedClockIce && requiredClockTop.has(i);
         const validIce = iceNb[i].filter(j => alive[j] && !aboveTrans[j].has(i));
         const already = validIce.filter(j => top.includes(j) || side.includes(j));
         if (already.length >= need) {
@@ -335,9 +338,11 @@ function createBotController(tiles, profile, seed) {
             const cost = u => nb.above[u].filter(k => alive[k]).length +
               (nb.left[u].some(k => alive[k]) && nb.right[u].some(k => alive[k]) ? 1 : 0) +
               (roles[u] === 'lock' ? 3 : 0);
+            const reuse = sharedClock;
+            if(reuse && requiredClockTop.has(a)!==requiredClockTop.has(b))return requiredClockTop.has(a)?-1:1;
             return cost(a) - cost(b);
           });
-          ice = [...already, ...others.slice(0, need + 1 - already.length)];
+          ice = [...already, ...others.slice(0, need + (sharedClock ? 0 : 1) - already.length)];
         }
       }
       return [...new Set([...top, ...side, ...ice])];

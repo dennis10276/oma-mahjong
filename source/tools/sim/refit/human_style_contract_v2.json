@@ -1,0 +1,392 @@
+{
+  "schema": "human-style-pattern-contract-v2",
+  "seed": 20261028,
+  "runs": 20,
+  "progression": {
+    "from": 92,
+    "to": 163,
+    "count": 72
+  },
+  "risk": [
+    132,
+    144,
+    91,
+    89,
+    99,
+    122,
+    142,
+    96,
+    143,
+    94
+  ],
+  "controls": [
+    97,
+    102,
+    103,
+    105,
+    107,
+    110,
+    112,
+    113,
+    114,
+    117
+  ],
+  "clockCases": [
+    132,
+    135,
+    142,
+    144
+  ],
+  "controlsSource": "first ten ascending levels92-163 with >=1 win and zero observed clock/tray/stuck losses across all cached plays.json players; archival coverage ends Dennis150, Mrs103; absence of observed loss is not proof nobody ever lost",
+  "lateDefinition": "after clock, at most10 remaining tiles",
+  "gates": {
+    "DennisFirst": [
+      0.5,
+      0.55
+    ],
+    "familyFirst": [
+      0.25,
+      0.35
+    ],
+    "beforeClock": {
+      "Dennis": [
+        0.2,
+        0.3
+      ],
+      "family": [
+        0.35,
+        0.45
+      ]
+    },
+    "riskMinusControlLossAtLeast": 0.1,
+    "level142": {
+      "DennisFirstAbove": 0.5,
+      "familyClearedRateAtLeast": 0.5
+    }
+  },
+  "caveats": [
+    "risk labels supplied by user; archived plays coverage is incomplete",
+    "89 and91 may use reconstructed boards; preserve provenance",
+    "one-attempt screens are development only; final aggregate requires multi-attempt campaigns",
+    "no per-level policy parameters"
+  ],
+  "stopRule": "Stop after eight experiments without progress on a-c. Baseline is prerequisite, not completion.",
+  "approvedChange": "Dennis,2026-10-29: audited person-specific phases; retain first/factory gates; replace clock cases by per-person risk controls; repair142",
+  "cohorts": {
+    "Dennis": {
+      "person": "Dennisisdebeste",
+      "risk": [
+        96,
+        99,
+        109,
+        115,
+        121,
+        122,
+        132,
+        161,
+        100,
+        104
+      ],
+      "controls": [
+        92,
+        93,
+        95,
+        97,
+        101,
+        103,
+        105,
+        107,
+        110,
+        112
+      ],
+      "riskEvidence": [
+        {
+          "lv": 96,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 99,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 109,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 115,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 121,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 122,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 132,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 161,
+          "wins": 1,
+          "losses": 3
+        },
+        {
+          "lv": 100,
+          "wins": 1,
+          "losses": 2
+        },
+        {
+          "lv": 104,
+          "wins": 1,
+          "losses": 2
+        }
+      ],
+      "controlEvidence": [
+        {
+          "lv": 92,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 93,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 95,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 97,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 101,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 103,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 105,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 107,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 110,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 112,
+          "wins": 1,
+          "losses": 0
+        }
+      ],
+      "quality": {
+        "excludedNonLevelEvents": 24,
+        "missingLevels": [
+          98
+        ],
+        "missingStart": 0,
+        "missingEnd": 5,
+        "multipleEnds": 0,
+        "winsWithoutSave": 0,
+        "afterFirstWinGroups": 23
+      }
+    },
+    "family": {
+      "person": "Mrs. Doubtfire",
+      "risk": [
+        144,
+        132,
+        142,
+        143,
+        126,
+        135,
+        94,
+        96,
+        99,
+        101
+      ],
+      "controls": [
+        97,
+        100,
+        102,
+        103,
+        104,
+        108,
+        111,
+        113,
+        115,
+        116
+      ],
+      "riskEvidence": [
+        {
+          "lv": 144,
+          "wins": 0,
+          "losses": 31
+        },
+        {
+          "lv": 132,
+          "wins": 1,
+          "losses": 30
+        },
+        {
+          "lv": 142,
+          "wins": 1,
+          "losses": 7
+        },
+        {
+          "lv": 143,
+          "wins": 1,
+          "losses": 6
+        },
+        {
+          "lv": 126,
+          "wins": 1,
+          "losses": 5
+        },
+        {
+          "lv": 135,
+          "wins": 1,
+          "losses": 5
+        },
+        {
+          "lv": 94,
+          "wins": 1,
+          "losses": 4
+        },
+        {
+          "lv": 96,
+          "wins": 1,
+          "losses": 4
+        },
+        {
+          "lv": 99,
+          "wins": 1,
+          "losses": 4
+        },
+        {
+          "lv": 101,
+          "wins": 1,
+          "losses": 4
+        }
+      ],
+      "controlEvidence": [
+        {
+          "lv": 97,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 100,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 102,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 103,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 104,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 108,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 111,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 113,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 115,
+          "wins": 1,
+          "losses": 0
+        },
+        {
+          "lv": 116,
+          "wins": 1,
+          "losses": 0
+        }
+      ],
+      "quality": {
+        "excludedNonLevelEvents": 3,
+        "missingLevels": [
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163
+        ],
+        "missingStart": 0,
+        "missingEnd": 1,
+        "multipleEnds": 0,
+        "winsWithoutSave": 0,
+        "afterFirstWinGroups": 0
+      }
+    }
+  },
+  "cohortEvidenceSha256": "56744f09105d188b4e7166426dc253483a36f54a83ca28e420cf2bdbeed492ee",
+  "clockCasesDiagnosticOnly": true,
+  "clockContactDefinition": {
+    "maxRemovedTilesAfterClock": 2,
+    "meaning": "Loss on clock removal or within two subsequent tile removals; disjoint from pre-clock/mid/late"
+  },
+  "phaseNotes": [
+    "Dennis14/58=24.14% explicit before-clock; two unknown phases retained by source audit",
+    "Family reference=Mrs. Doubtfire; approved35-45% interval, not pooled with Gerda/OmaHanny",
+    "Late and clock-contact shares are reported independently; obsolete mid/late intervals are not retained as new hidden requirements",
+    "Fixed20-run level142 check: Dennis majority first wins; family majority clear within12; all outcomes reported",
+    "Old experiment scores stay attached to v1 contract; v2 rescoring is not a new model improvement"
+  ]
+}

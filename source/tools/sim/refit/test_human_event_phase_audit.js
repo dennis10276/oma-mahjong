@@ -9,6 +9,7 @@ function test(){
  {aid:'daily',lv:132,m:'d',d:'2026-10-29',k:'start',ck:6,t:0},{aid:'daily',lv:132,m:'d',d:'2026-10-29',k:'end',r:'win',left:0,t:.5},
  {aid:'unfinished',lv:136,k:'start',at:1,ck:8,t:13}];
  const r=auditEvents(rows,{from:132,to:136});assert.equal(r.summary.losses,3);assert.deepEqual(r.summary.counts,{beforeClock:1,mid:1,late:0,unknown:1});
+ assert.deepEqual(r.summary.lossTimingCounts,{beforeClock:1,clockContact:1,mid:0,late:0,unknown:1});
  assert.equal(r.summary.clockContactFailures,1);assert.equal(r.attempts[0].phase,'mid','Clock-tile tray loss happens after the saved-clock event, even with zero moves left');
  assert.equal(r.summary.quality.afterFirstWinGroups,1);assert.equal(r.summary.quality.missingEnd,1);assert.equal(r.summary.quality.excludedNonLevelEvents,2);assert.equal(r.attempts[0].maxTray,4);assert.equal(r.summary.phaseShareBounds.beforeClock.lower,1/3);assert.equal(r.summary.phaseShareBounds.beforeClock.upper,2/3);
  assert.deepEqual(r.summary.quality.missingLevels,[133,134]);

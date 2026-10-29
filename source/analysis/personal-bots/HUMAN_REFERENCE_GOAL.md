@@ -1,7 +1,7 @@
 # Frozen reference and human-like difficulty meter
 
 ACTIVE and UNMET. Updated objective: deliver usable milestones for the level factory.
-Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-objective.md.
+Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited phases/142).
 
 ## Frozen Track A
 - Policy40 remains frozen; no new WHEN rules or repairs to reference blind spots.
@@ -28,9 +28,10 @@ Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-
 
 ## Milestone2: human-v1; retain d/e
 - Dennis first-try50-55% on92-163; weaker family25-35% (about30%).
-- Failed actual attempts: clock55-60%,mid30-45%,late<10% (late<=10 pile tiles).
-- Risk132/144/91/89/99/122/142/96/143/94 loss rate>=10pp above fixed controls.
--132/135/142/144 failures strictly predominantly before clock.
+- Audited before-clock shares: Dennis20-30% (near25%); family35-45%.
+- Per-person audited top10 loss boards: loss rate>=10pp above10 observed-zero controls.
+- Report clock-contact separately (on clock removal or within2 subsequent tile removals).
+-142 development repair: Dennis>50% first; family>=50% clear within12; report all20.
 - Same candidate must satisfy all checks; no metrics combined across versions.
 
 ## Milestone3: human-v2; retain all earlier gates
@@ -58,8 +59,9 @@ Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-
 - human-v0 tag=bcac396; default100-campaign outcomes reproduced exactly.
 - M2 candidate10: first51.39/29.17%; both a/b pass; c unmet; no new tag.
 - Retry candidate10 clears all100 factory campaigns; hard mean3.55 tries.
-- Clock-phase/case targets disputed by fresh logs; user clarification pending.
--177/177 tests pass;11 M2 trials complete; original-score anchor10,counter1.
+- Dennis approved person-specific phase/cohort replacement; v2 contract preregistered.
+-179/179 tests pass;11 historical trials complete; original-score anchor10,counter1.
+- Shared-ice repair retains d/e and100 factory clears; v2 full cohort running.
 - Lab15 cohort/ranking protocol prepared;0 model runs; actual lab gate still unmet.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
 - Small source commits; raw logs/snapshots under .codex-runs/human-style/.

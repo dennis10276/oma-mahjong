@@ -18,8 +18,9 @@ source/profile version. Tests alone do not establish human calibration.
 |M1.time|20 runs per board<5min|Release1.4-4.1s/board, up to12 actual tries; no censoring|PASSED|
 |M1.release|Commit/tag human-v0;10-line API note|Human-v0 release check passes; goal-file API note; tag human-v0 points tobcac396 after verified release|RELEASE VERIFIED|
 |M2.a|Dennis50-55%,weaker family25-35% on92-163|Candidates4/5: Dennis51.39%,family29.17%; fixed full74-board campaigns|VERIFIED FOR C4/C5|
-|M2.b|Loss shares clock55-60%,mid30-45%,late<10%|C4 clock55.41/54.57%; C5 clock50.40/54.57%; original phase targets under source audit|UNMET|
-|M2.c|Risk/control gap>=10pp;132/135/142/144 majority clock|C4/C5 gaps11/9.5pp; several clock-case majorities fail; human evidence conflicts with case premise|UNMET|
+|M2.b|Approved before-clock shares Dennis20-30%,family35-45%; disjoint clock-contact report|V2 contract frozen;179 tests pass; new full cohort running|UNMET|
+|M2.c|Per-person top10 vs10 observed-zero-loss controls;gap>=10pp|Audited separate cohorts frozen in v2 contract; no forced clock-case majority|UNMET|
+|M2.142|Repair public clock failure; majority Dennis first wins and family clear coverage|Single independently replayed repair wins;20-run full cohort pending|UNMET|
 |M2.keep|Retain d/e when releasing human-v1|Frozen v0 five-board release benchmark retained|REQUIRED|
 |M3.f|Lab Spearman ranking,no per-board fitting|15-target protocol/scorer prepared;actual run requires passed M2;0 lab predictions|UNMET|
 |M3.keep|Human-v2 retains all earlier gates|Milestone2 prerequisite unmet|UNMET|
@@ -46,3 +47,9 @@ unverified. No calibration trial or stop-counter reset was claimed for preparati
 Authorized batch6-11: HUMAN_V1_BATCH_06_11.md. Trial10 passes M2.a/b for
 both settings and retains M1; M2.c remains UNMET. Six completed, no new release
 tag, no actual lab score, no frozen prospective claim. Test suite177/177.
+
+Dennis approved audited phase/cohort targets on2026-10-29. The historical
+batch6-11 results above retain their original contract; current requirements
+are HUMAN_PHASE_V2_CONTRACT.md and human_style_contract_v2.json. No previous
+score is relabeled as passing the amended goal. Shared-ice factory100/100 and
+d/e pass;179/179 tests; full cohort and M2 gates remain unverified.

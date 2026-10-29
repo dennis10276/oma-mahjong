@@ -1,0 +1,70 @@
+{
+  "schema": "human-style-pattern-contract-v1",
+  "seed": 20261028,
+  "runs": 20,
+  "progression": {
+    "from": 92,
+    "to": 163,
+    "count": 72
+  },
+  "risk": [
+    132,
+    144,
+    91,
+    89,
+    99,
+    122,
+    142,
+    96,
+    143,
+    94
+  ],
+  "controls": [
+    97,
+    102,
+    103,
+    105,
+    107,
+    110,
+    112,
+    113,
+    114,
+    117
+  ],
+  "clockCases": [
+    132,
+    135,
+    142,
+    144
+  ],
+  "controlsSource": "first ten ascending levels92-163 with >=1 win and zero observed clock/tray/stuck losses across all cached plays.json players; archival coverage ends Dennis150, Mrs103; absence of observed loss is not proof nobody ever lost",
+  "lateDefinition": "after clock, at most10 remaining tiles",
+  "gates": {
+    "DennisFirst": [
+      0.5,
+      0.55
+    ],
+    "familyFirst": [
+      0.25,
+      0.35
+    ],
+    "clock": [
+      0.55,
+      0.6
+    ],
+    "mid": [
+      0.3,
+      0.45
+    ],
+    "lateBelow": 0.1,
+    "riskMinusControlLossAtLeast": 0.1,
+    "eachClockCaseClockShareAbove": 0.5
+  },
+  "caveats": [
+    "risk labels supplied by user; archived plays coverage is incomplete",
+    "89 and91 may use reconstructed boards; preserve provenance",
+    "one-attempt screens are development only; final aggregate requires multi-attempt campaigns",
+    "no per-level policy parameters"
+  ],
+  "stopRule": "Stop after eight experiments without progress on a-c. Baseline is prerequisite, not completion."
+}

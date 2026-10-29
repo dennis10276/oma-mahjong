@@ -5,6 +5,7 @@ const Hard=require('../../../www/hard.js');
 const {decodeGame}=require('./personal_game_io.js');
 const {createSessionFactory,parameters}=require('./production_physical_session.js');
 const {observeBoard}=require('./human_board_visibility.js');
+const {clockLossTiming}=require('./human_clock_loss_timing.js');
 const {createStyleController}=require('./human_style_controller.js');
 
 function visibleRole(game,state,index){
@@ -39,7 +40,7 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
  const settings={seed:20261111,choiceLimit,tapMs:1000};let verifiedTaps=0,slowestMove=0;
  for(let attempt=1;attempt<=maxAttempts;attempt++){
   controller.beginAttempt();const session=factory(game,settings),actions=[],decisions=[];
-  let frame=session.view();
+  let frame=session.view(),clockLeft=null;
   while(frame.type!=='productionPhysicalEnd-v1'){
    const start=performance.now(),state=frame.state,legal=new Set(frame.legalTiles);
    const observed=observeBoard(game.tiles,state,game.clock,{picture:i=>game.faces[i],role:i=>visibleRole(game,state,i),takeable:i=>legal.has(i)});
@@ -51,6 +52,7 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
     remembered:controller.remembered(),index:selected.index,score:selected.score});
    slowestMove=Math.max(slowestMove,performance.now()-start);
    actions.push(selected.index);frame=session.tap(selected.index);
+   if(game.clock&&state.alive[game.clock.i]&&!frame.state.alive[game.clock.i])clockLeft=frame.state.alive.reduce((a,b)=>a+b,0);
   }
   verifiedTaps+=verify(encoded,actions,settings,session.audit());
   const terminal={state:{alive:frame.state.alive.slice(),tray:frame.state.tray.slice(),moves:frame.state.moves,
@@ -61,6 +63,7 @@ function campaign(encoded,profile,seed,{maxAttempts=12,choiceLimit=1024,capture=
   if(!censored)controller.endAttempt?.(frame.win?null:lossPhase(frame.state,game.clock)==='clock'?'beforeClock':lossPhase(frame.state,game.clock),frame.state.tray);
   attempts.push({attempt,win:frame.win,why:frame.why,censored,
    phase:frame.win||censored?null:lossPhase(frame.state,game.clock),
+   clockTiming:clockLossTiming(frame.win||censored?null:lossPhase(frame.state,game.clock),clockLeft,frame.state.alive.reduce((a,b)=>a+b,0)),clockLeft,
    left:frame.state.alive.reduce((a,b)=>a+b,0),taps:actions.length,...(capture?{actions,decisions,terminal}: {})});
   if(frame.win||censored)break; // Only actual completed losses permit retry.
  }

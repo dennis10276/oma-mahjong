@@ -45,6 +45,8 @@ const modules = [
   'test_human_factory_profiles.js',
   'test_human_factory_attention.js',
   'test_human_factory_rows.js',
+  'test_human_shared_clock_ice.js',
+  'test_human_pattern_contract_v2.js',
   'test_human_event_phase_audit.js',
   'test_human_lab_ranking.js',
   'test_human_style_tray_habit.js',
