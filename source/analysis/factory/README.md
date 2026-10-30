@@ -93,3 +93,21 @@ that's what we want, new ideas the bot hasn't learned yet"). `TIGHT=1 plan.js` k
 bot cannot clear within 4 tries (still winnable: the stored way through passes every rule). In the lab:
 176 lockedPartners + iceChain (bot 2/2/2), 177 deepKeys + iceChain (tight; human-v0 wins 95% first
 try, so the strong bot may just have a blind spot there), 180 chainReaction (tight; human-v0 5%).
+
+## Batches 4-5 verdicts (Dennis, 2026-10-30)
+175 chainReaction (bot 2/2/2): 5 stars "very fun", right. 176 lockedClock (3/2/2): 4 stars, right.
+178 deepKeys + iceChain: "a bit easy, feels like the clock has more than 2 spare moves". 5176
+lockedPartners + iceChain: "a bit too easy but about right, fun original". 5177 (tight): "seems easy,
+idk why the strong bot struggled; original, so a good level, just place it better on difficulty". 5180
+chainReaction (tight): "hard but manageable", right. Summary: the levels the strong bot could not
+clear are not that hard; the 2/3-try ones are the hardest so far.
+
+## Gemini's g1 (wip/gemini-human-bot 2f6b903): adopted as the factory's difficulty meter (pending Codex audit)
+measureHuman now returns expectedTries and easy/right/hard (2 seeds x 20 games) and turns on retry
+memory for 'dennis'. On all 14 factory boards Dennis played (Claude's check, other seed): his 8 easy
+boards 1.0-2.0, his 3 right/hardest 3.7-4.8; misses: factory2-175 (Dennis 4, g1 2.0) and factory5-176
+(Dennis 1, g1 3.4). `planned-candidates.json`: all planned candidates with g1. Most of the newest
+planned levels (1 spare move on ice chains, iceLockClock) come out at 10-24 expected tries (very hard
+or a g1 blind spot). Calibration round for Dennis: 188 (g1 1.0), 184 (6.9), 190 (15.7).
+Next: plan.js with g1 in the loop (fast, ~20 s) picking each slot's target, the strong bot only as
+the way-out check.
