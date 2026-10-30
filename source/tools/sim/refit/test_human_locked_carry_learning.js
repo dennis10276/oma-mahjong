@@ -10,7 +10,7 @@ function test(){
  function observe(c,session){const v=session.view(),legal=new Set(v.legalTiles),o=observeBoard(tiles,v.state,null,{picture:i=>game.faces[i],role:i=>visibleRole(game,v.state,i),takeable:i=>legal.has(i)});c.observe(v.state,o);return {v,o};}
  const choices=[],freshChoices=[];
  for(const enabled of [0,1]){
-  const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryLockedCarryKeys:enabled,postClockKeyWeight:60};
+  const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryLockedCarryKeys:enabled,postClockKeyWeight:60,retryPrepareKeyOuts:0,retryKeyRouteValue:0,retryKeyPictureRelations:0,retryAccessMemory:0};
   const c=createFactoryController(tiles,p,31);c.beginAttempt();const first=factory(game,settings);observe(c,first);assert.deepEqual(c.lockedCarryEvidence(),[]);
   const fresh=createFactoryController(tiles,p,31);fresh.beginAttempt();observe(fresh,first);freshChoices.push(fresh.decide());
   for(const i of [1,9,2,3]){assert(first.view().legalTiles.includes(i));first.tap(i);observe(c,first);}

@@ -12,7 +12,7 @@ function test(){
  const factory=createSessionFactory(),settings={seed:1,tapMs:1000,choiceLimit:64};function observe(c,s){const v=s.view(),legal=new Set(v.legalTiles),o=observeBoard(tiles,v.state,null,{picture:i=>game.faces[i],role:i=>visibleRole(game,v.state,i),takeable:i=>legal.has(i)});const copy=structuredClone(o);c.observe(v.state,o);assert.deepEqual(o,copy);return o;}
  const fresh=[],choices=[];
  for(const enabled of [0,1]){
-  const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryAccessMemory:enabled,retryRetention:1,memoryDecay:0,outWeight:0,lapse:0,temperature:.001};
+  const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryAccessMemory:enabled,retryRetention:1,memoryDecay:0,outWeight:0,lapse:0,temperature:.001,retryLockedCarryKeys:0,retryPrepareKeyOuts:0,retryKeyRouteValue:0,retryKeyPictureRelations:0};
   const first=factory(game,settings),a=createFactoryController(tiles,p,31);a.beginAttempt();observe(a,first);fresh.push(a.decide());
   const c=createFactoryController(tiles,p,31);c.beginAttempt();observe(c,first);const prefix=[1,0,2,3,4];for(const i of prefix){assert(first.view().legalTiles.includes(i));first.tap(i);observe(c,first);}assert.equal(first.view().why,'tray');assert.equal(verifyAttempt(encodeGame(game),prefix,settings,first.audit()),prefix.length);c.endAttempt('mid',first.view().state.tray);
   if(enabled){const f=c.retryAccessEvidence().find(f=>f.index===0);assert.equal(f.orientation.value,1);assert(f.witnesses.some(w=>w.removed.length===1&&w.removed[0]===1));assert(!Object.hasOwn(f,'initialRole'));}

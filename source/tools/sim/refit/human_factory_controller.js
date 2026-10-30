@@ -120,7 +120,7 @@ function createBotController(tiles, profile, seed) {
   let memory = tiles.map(() => null);
   let roles = tiles.map(() => null);
   let state, seen, visits = new Map(), attempt = 0, lastDecision = null;
-  let clockLosses = 0;
+  let clockLosses = 0, initialClock = null, earlyClockLosses = 0, tookEarlyClockThisAttempt = false;
   const failedDigs = new Map();
   const learnedLockedCarry=new Map();
   let attemptDigs = [];
@@ -134,6 +134,7 @@ function createBotController(tiles, profile, seed) {
   }
 
   function beginAttempt() {
+    tookEarlyClockThisAttempt = false;
     clockHorizon=Math.min(4,(clockLosses>0&&p.retryClockHorizon!==undefined?p.retryClockHorizon:p.clockHorizon)+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0));
     strictClockSlack=p.deadlineAttentionProbability===undefined?p.strictClockSlack:attentionRandom()<Math.min(1,p.deadlineAttentionProbability+clockLosses*(p.deadlineLearningRate??0));
     if (attempt++) {
@@ -147,6 +148,7 @@ function createBotController(tiles, profile, seed) {
 
   function endAttempt(phase, terminalTray) {
     if (phase === 'beforeClock') clockLosses++;
+    if (phase !== null && tookEarlyClockThisAttempt) earlyClockLosses++;
     if(p.retryLockedCarryKeys&&['beforeClock','mid','late'].includes(phase)&&Array.isArray(terminalTray)){
       for(const face of terminalTray){
         const partner=memory.findIndex((f,i)=>f===face&&state.alive[i]&&roles[i]==='lock');
@@ -163,6 +165,7 @@ function createBotController(tiles, profile, seed) {
   }
 
   function observe(s, o) {
+    if (o.clock && !initialClock) initialClock = { i: o.clock.i, n: o.clock.n };
     if (lastDecision) {
       const proof = inferMatchedPicture(lastDecision, lastDecision.index, {
         alive: s.alive, moves: s.moves, openPeek: s.openPeek, physicalTaps: s.physicalTaps, tray: s.tray
@@ -170,6 +173,12 @@ function createBotController(tiles, profile, seed) {
       if (proof) { memory = memory.slice(); memory[proof.index] = proof.picture; }
       if (!s.alive[lastDecision.index] && s.tray.length > lastDecision.tray.length) {
         const addedFace = s.tray.at(-1);
+        if (initialClock && lastDecision.index === initialClock.i) {
+          initialClock.face = addedFace;
+          if (initialClock.n >= 14 && (initialClock.n - lastDecision.moves) >= 8) {
+            tookEarlyClockThisAttempt = true;
+          }
+        }
         if (lastDecision.tray.length >= 1) {
           attemptDigs.push({ index: lastDecision.index, face: addedFace, trayLen: lastDecision.tray.length });
         }
@@ -511,10 +520,8 @@ function createBotController(tiles, profile, seed) {
       }
     }
 
-    const urgentClock = clock && clock.remaining <= 8;
-    const depth = (!urgentClock && (attempt === 1 || (attempt === 2 && clockLosses === 0)))
-      ? (p.firstTryTrayDepth ?? 1)
-      : (clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3));
+    const unmatchedClockInTray = tookEarlyClockThisAttempt && initialClock && initialClock.face !== undefined && tray.includes(initialClock.face);
+    const depth = unmatchedClockInTray ? (p.firstTryTrayDepth ?? 1) : (clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3));
     const keyWork=new Set();
     if(p.retryKeyRouteValue&&learnedKeyOut&&(!clock||clockNeedsKeys)){
       for(const k of knownKeys){
@@ -654,7 +661,10 @@ function createBotController(tiles, profile, seed) {
         if(i===clock.i)score+=p.pairReward*2.6;
         else if(trayMatch&&face===memory[clock.i])score-=p.pairReward*2.6;
       }
-      if (clock && clock.n >= 12 && i === clock.i && !trayMatch && tray.length >= 2 && clock.remaining >= 5) score -= p.clockWeight * 1.1;
+      if (clock && clock.n >= 14 && i === clock.i && !trayMatch && clock.remaining >= 5) {
+        if (earlyClockLosses > 0 && random() < Math.min(0.85, earlyClockLosses * 0.45)) score -= p.clockWeight * 1.5;
+        else if (tray.length >= 2) score -= p.clockWeight * 1.1;
+      }
       if(clock && (i===clock.i || openTwin && openPeek===clock.i))score+=p.clockCompletionBonus??0;
       if(clockBlockingMate){
         // Preserve the observed matching blocker for the clock immediately

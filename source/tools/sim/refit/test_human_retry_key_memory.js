@@ -12,7 +12,7 @@ function test(){
  function observed(session){const v=session.view(),legal=new Set(v.legalTiles);return {v,o:observeBoard(tiles,v.state,null,{picture:i=>game.faces[i],role:i=>visibleRole(game,v.state,i),takeable:i=>legal.has(i)})};}
  const outcomes=[];
  for(const enabled of [0,1]){
-  const p={...release.profiles.Dennis,postClockKeyWeight:120,retryKeyIdentityMemory:enabled};
+  const p={...release.profiles.Dennis,postClockKeyWeight:120,retryKeyIdentityMemory:enabled,retryLockedCarryKeys:0,retryPrepareKeyOuts:0,retryKeyRouteValue:0,retryKeyPictureRelations:0,retryAccessMemory:0};
   const c=createFactoryController(tiles,p,31),first=factory(game,settings);c.beginAttempt();let {v,o}=observed(first);c.observe(v.state,o);
   assert.deepEqual(c.rememberedKeyTargets(),[],'A current-attempt observation cannot create a prior-attempt advantage');
   const firstChoice=c.decide();outcomes.push({firstChoice});

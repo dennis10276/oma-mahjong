@@ -15,7 +15,7 @@ function test(){
   function normal(c,s){const v=s.view(),legal=new Set(v.legalTiles),o=observeBoard(tiles,v.state,null,{picture:i=>faces[i],role:i=>visibleRole(game,v.state,i),takeable:i=>legal.has(i)});c.observe(v.state,o);return o;}
   const firstChoices=[];
   for(const enabled of [0,1]){
-   const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryKeyPictureRelations:enabled,retryRetention:0,memoryDecay:0,lapse:0,temperature:.001};
+   const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryKeyPictureRelations:enabled,retryRetention:0,memoryDecay:0,lapse:0,temperature:.001,retryLockedCarryKeys:0,retryPrepareKeyOuts:0,retryKeyRouteValue:0,retryAccessMemory:0};
    const first=factory(game,settings),fresh=createFactoryController(tiles,p,31);fresh.beginAttempt();normal(fresh,first);firstChoices.push(fresh.decide());
    const c=createFactoryController(tiles,p,31);c.beginAttempt();normal(c,first);const prefix=scenario==='both-forgotten'?[9,1,2,3,4]:[1,2,3,4];
    for(const i of prefix){assert(first.view().legalTiles.includes(i));first.tap(i);normal(c,first);}assert.equal(first.view().why,'tray');assert.equal(verifyAttempt(encodeGame(game),prefix,settings,first.audit()),prefix.length);c.endAttempt('mid',first.view().state.tray);
@@ -27,7 +27,7 @@ function test(){
   }
   assert.deepEqual(firstChoices[0],firstChoices[1],'A current-attempt observation cannot activate a prior-attempt relation');
  }
- assert.throws(()=>createFactoryController(tiles,{...release.profiles.Dennis,retryKeyPictureRelations:1},1));
+ assert.throws(()=>createFactoryController(tiles,{...release.profiles.Dennis,retryKeyIdentityMemory:0,retryKeyPictureRelations:1},1));
  console.log('PASS observed-history key-picture equality, zero-valued inference, both-forgotten/different-picture negatives, hidden-ice visibility, fresh-choice parity and independently replayed physical wins');
 }
 if(require.main===module)test();module.exports=test;

@@ -11,7 +11,7 @@ function test(){
  const choices=[],freshChoices=[];
  for(const enabled of [0,1]){
   // Isolate bounded key-route lookahead from the independent generic out bonus.
-  const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryLockedCarryKeys:1,retryPrepareKeyOuts:1,retryKeyRouteValue:enabled,postClockKeyWeight:32,outWeight:0};
+  const p={...release.profiles.Dennis,retryKeyIdentityMemory:1,retryLockedCarryKeys:1,retryPrepareKeyOuts:1,retryKeyRouteValue:enabled,postClockKeyWeight:32,outWeight:0,retryKeyPictureRelations:0,retryAccessMemory:0};
   const first=factory(game,settings),fresh=createFactoryController(tiles,p,31);fresh.beginAttempt();observe(fresh,first);freshChoices.push(fresh.decide());
   const c=createFactoryController(tiles,p,31);c.beginAttempt();observe(c,first);
   for(const i of [1,10,4,2]){assert(first.view().legalTiles.includes(i));first.tap(i);observe(c,first);}
@@ -22,7 +22,7 @@ function test(){
   if(enabled){assert.equal(next,10,'Value a visible key prerequisite over unrelated pairs inside the unchanged short horizon');const actions=[next];retry.tap(next);observe(c,retry);while(retry.view().type!=='productionPhysicalEnd-v1'){assert(actions.length<64);const i=c.decide().index;assert(retry.view().legalTiles.includes(i));actions.push(i);retry.tap(i);observe(c,retry);}assert(retry.view().win);assert.equal(verifyAttempt(encodeGame(game),actions,settings,retry.audit()),actions.length);}
  }
  assert.equal(choices[0],2,'Without goal progress value the same bounded planner prefers unrelated pairs');assert.deepEqual(freshChoices[0],freshChoices[1],'No prior loss means no change to the complete fresh choice');
- assert.throws(()=>createFactoryController(tiles,{...release.profiles.Dennis,retryKeyRouteValue:1},1));
+ assert.throws(()=>createFactoryController(tiles,{...release.profiles.Dennis,retryLockedCarryKeys:0,retryKeyRouteValue:1},1));
  console.log('PASS short-horizon key-route value selects a real public prerequisite, preserves fresh choices, respects remembered-key/hidden-role boundaries and physically replays its winning continuation');
 }
 if(require.main===module)test();module.exports=test;
