@@ -168,9 +168,12 @@ function obBlocked(i) {
   Sound.blocked(); buzz(30);
   const ice = frozen(i);
   toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx('lockedTap'), 2600);
-  const show = ice ? G.inb[i].filter(j => G.alive[j] && canTake(j)) : G.ob.keys.filter(k => G.alive[k]);
-  show.forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  if (ice) G.inb[i].filter(j => G.alive[j] && canTake(j)).forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  else showKeys();
 }
+// the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
+// Dennis 2026-10-30: "when you click a locked tile even when buried I want the keys to shake")
+function showKeys() { G.ob.keys.filter(k => G.alive[k]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300)); }
 // never stuck because of ice or locks alone: if nothing at all can be taken, they give way
 function obRelief() {
   if (!G || !G.ob || G.done || G.overShown || G.flights || G.tray.length >= SLOTS) return;
