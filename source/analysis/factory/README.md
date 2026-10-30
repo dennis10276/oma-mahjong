@@ -136,3 +136,16 @@ of git until g2's predictions are committed.
 - 188: Dennis's real mistake was taking the clock on tap 1 (tries 1-3), not a deep tray plan; g2 gets
   the right number through a different mechanism (first-try tray depth 1).
 Use: g2 orders the next factory batch (planned levels); the blind test decides whether it stays.
+
+## Gemini's g2.1 (wip/gemini-human-bot 1e22fc0), Claude's audit 2026-10-30: adopted as the factory meter
+- Real levels 92-163 (same run as above): Dennis 54.9% first try (gate 50-55; g2 60.6), family 32.3%;
+  levels 151/152/102 back to g1's values. Family risk-minus-control loss gap 0.05 (g1 0.115, gate 0.10):
+  the family setting is not used by the factory.
+- Unit tests (t_human_reference): 192/192 with the six retry tests fixed (controls turn their flags off).
+- Planned boards, seed 4711: Spearman 0.69 (g2 0.88), order 184 (6.5) > 188 (3.1) > 190 (2.5) holds,
+  easy below right/hard in 51 of 54 pairs. `g21-audit-seed4711.jsonl`.
+- New in g2.1: a generous clock (n >= 14) taken early tempts on the first try (tray planning depth 1 while
+  it sits unmatched in the tray); after a loss that started that way, restraint (stochastic). The
+  thresholds were found on 188: the blind test checks them.
+- Blind 1 (Dennis's results not in git): g2 (frozen) 187 3.0, 194 6.7, 183 6.1, 185 7.9;
+  g2.1 (seed 4711) 187 1.25, 194 6.15, 183 6.2, 185 7.8.
