@@ -173,7 +173,14 @@ function obBlocked(i) {
 }
 // the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
 // Dennis 2026-10-30: "when you click a locked tile even when buried I want the keys to shake")
-function showKeys() { G.ob.keys.filter(k => G.alive[k]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300)); }
+// A key under the pile shows through it: every tile lying on top of it turns see-through for a moment
+// (Dennis 2026-10-30: "I can't see the other key under the pile ... I want to see it through the pile").
+function showKeys() {
+  const keys = G.ob.keys.filter(k => G.alive[k]), over = new Set(), todo = [...keys];
+  while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }
+  over.forEach(j => replay(G.tiles[j].el, 'xray', 1500));
+  keys.forEach(j => replay(G.tiles[j].el, 'obhint', 1500));
+}
 // never stuck because of ice or locks alone: if nothing at all can be taken, they give way
 function obRelief() {
   if (!G || !G.ob || G.done || G.overShown || G.flights || G.tray.length >= SLOTS) return;
