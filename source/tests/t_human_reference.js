@@ -44,10 +44,22 @@ const modules = [
   'test_human_v0_parallel.js',
   'test_human_factory_profiles.js',
   'test_human_factory_attention.js',
+  'test_human_retry_key_memory.js',
+  'test_human_locked_carry_learning.js',
+  'test_human_prepare_key_outs.js',
+  'test_human_key_route_value.js',
+  'test_human_key_picture_relations.js',
+  'test_human_retry_access_memory.js',
   'test_human_factory_rows.js',
   'test_human_factory_ice_blockers.js',
   'test_human_factory_clock_escape.js',
   'test_human_factory_family_attention.js',
+  'test_human_shared_clock_ice.js',
+  'test_human_clock_outs.js',
+  'test_public_clock_mate_budget.js',
+  'test_human_clock_completion.js',
+  'test_human_pattern_contract_v2.js',
+  'test_human_clock_loss_timing.js',
   'test_human_event_phase_audit.js',
   'test_human_lab_ranking.js',
   'test_human_style_tray_habit.js',
@@ -192,3 +204,4 @@ module.exports = modules.map(filename => ({
     else if (typeof loaded.test === 'function') await loaded.test();
   },
 }));
+

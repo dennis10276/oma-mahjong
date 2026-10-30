@@ -1,6 +1,6 @@
 'use strict';
 const assert=require('assert/strict'),{createFactoryController,PROFILES}=require('./human_factory_controller.js');
-const {measureHuman}=require('./human_bot.js'),{campaign}=require('./human_style_environment.js');
+const {measureHuman,VERSION}=require('./human_bot.js'),{campaign}=require('./human_style_environment.js');
 function test(){
  const tiles=[{x:0,y:0,z:0},{x:4,y:0,z:0}];
  const p={...PROFILES.dennis,clockWeight:0,postClockKeyWeight:0,trayCost:0,pairReward:0,exploration:0,zWeight:0,
@@ -19,7 +19,7 @@ function test(){
  assert.equal(finishes,0,'Retry strategy learning needs an actual completed attempt');
  const candidate=measureHuman(board,{runs:2,seed:1,profiles:{Dennis:{...PROFILES.dennis,lapse:0},family:PROFILES.family}});
  assert.equal(candidate.version,'human-v1-development');assert.equal(candidate.calibrationStatus,'experimental-not-calibrated','Tuned candidate profiles cannot inherit a released calibration claim');
- const valid=measureHuman(board,{runs:2,seed:1});assert.equal(valid.version,'human-v0');assert(valid.valid&&valid.verifiedTaps>0&&valid.firstTryRate===1);
+ const valid=measureHuman(board,{runs:2,seed:1});assert.equal(valid.version,VERSION);assert(valid.valid&&valid.verifiedTaps>0&&valid.firstTryRate===1);
  console.log('PASS audited factory API, physical closed-tile tap count, capped null means, no fabricated losses/retries, terminal learning and independent replay');
 }
 if(require.main===module)test();module.exports=test;

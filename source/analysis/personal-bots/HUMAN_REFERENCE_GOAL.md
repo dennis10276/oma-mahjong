@@ -1,7 +1,7 @@
 # Frozen reference and human-like difficulty meter
 
 ACTIVE and UNMET. Updated objective: deliver usable milestones for the level factory.
-Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-objective.md.
+Canonical original: Codex attachment; amended by Dennis on2026-10-29 (audited phases/142).
 
 ## Frozen Track A
 - Policy40 remains frozen; no new WHEN rules or repairs to reference blind spots.
@@ -26,11 +26,12 @@ Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-
 - Data: origin/wip/level-factory, source/analysis/factory/dennis-plays.json.
 - Snapshot586f970 includes6 factory boards and lab counts/tap histories.
 
-## Milestone2: human-v1; retain d/e
+## Milestone2 PASSED: human-v1 18f0348; d/e retained
 - Dennis first-try50-55% on92-163; weaker family25-35% (about30%).
-- Failed actual attempts: clock55-60%,mid30-45%,late<10% (late<=10 pile tiles).
-- Risk132/144/91/89/99/122/142/96/143/94 loss rate>=10pp above fixed controls.
--132/135/142/144 failures strictly predominantly before clock.
+- Audited before-clock shares: Dennis20-30% (near25%); family35-45%.
+- Per-person audited top10 loss boards: loss rate>=10pp above10 observed-zero controls.
+- Report clock-contact separately (on clock removal or within2 subsequent tile removals).
+-142 development repair: Dennis>50% first; family>=50% clear within12; report all20.
 - Same candidate must satisfy all checks; no metrics combined across versions.
 
 ## Milestone3: human-v2; retain all earlier gates
@@ -38,30 +39,31 @@ Canonical objective: Codex attachment 0afb6767-286f-4c93-b852-73fceca7bb38/goal-
 - Freeze and check later unopened Dennis progression/factory levels for completion.
 - Tag only versions preserving every preceding milestone; factory uses newest tag.
 
-## API contract (10-line usage note; human-v0)
+## API contract (10-line usage note; human-v1)
 1. Repository: personal-bot-review, branch wip/personal-bots.
 2. Module: source/tools/sim/refit/human_bot.js.
 3. Import: const {measureHuman}=require('./source/tools/sim/refit/human_bot.js').
 4. Call: measureHuman(board,{runs:20,setting:'dennis'}).
 5. Board accepts the same packed/object format as measure(), including factory boards.
-6. Output: firstTryRate,averageTries,lossPhase:{beforeClock,mid,late}.
+6. Output:firstTryRate,averageTries,lossPhase:{beforeClock,mid,late},lossTiming.
 7. Also: runs,slowestMove(milliseconds),minutes,version,valid and replay diagnostics.
 8. Optional seed gives reproducible campaigns; omit for independently sampled runs.
 9. averageTries=null if any campaign is uncleared; caps never become physical losses.
-10. human-v0 passes factory milestone1 only; family and later milestones remain experimental.
+10. human-v1 passes milestones1/2; lab ranking and future prediction remain unverified.
 
 ## Accounting and current evidence
-- Progress:29c94dc, six trials19-24 audited,238f5ec controller adopted with fixes.
-- Milestone1: easy75/75/95/100%; hard40%,clock82.61%; all100 campaigns clear.
--19:32.99/27.92%;20:32.71/25.35%;21:35.97/27.92% first try (Dennis/family).
-- Audited release check passes d/e/timing; slowest6.34ms;20 runs1.4-4.1s/board.
-- human-v0 tag=bcac396; default100-campaign outcomes reproduced exactly.
-- M2 candidates4/5: first51.39/29.17%; all factory d/e pass; no new tag.
-- Retry candidate5 clears all100 factory campaigns; hard mean3.6 tries.
-- Clock-phase/case targets disputed by fresh logs; user clarification pending.
--176/176 tests pass;5 M2 trials complete; original-score anchor4,counter1.
-- Lab15 cohort/ranking protocol prepared;0 model runs; actual lab gate still unmet.
+- human-v1 tag=18f0348; source-exact default and candidate outcomes reproduced.
+- First54.79/33.96%; before-clock29.66/44.74%; risk gap23.5/11.5pp (Dennis/family).
+-142: Dennis19/20 first; both settings20/20 clear within12; repaired without level rules.
+- Factory100/100 clear; d/e pass; easy75/70/95/100%; hard10%,clock91.67%.
+-183/183 tests;2960 calibration campaigns; slowest8.87ms; max20-campaign.673min.
+- Clock-contact disjoint;132 family has93 before,57 contact,13 later losses.
+- Lab-v1 baseline:15 boards,300 campaigns;9 means unresolved; primary rank null; M3 unmet.
+- M2 anchor family-clock-outs-balance-full; counter0; release verification is not a new trial.
+- M3 trial4 retains M1/M2; complete lab means6->7->8->9/15; rank null; counter0/8.
+- Trial8 a4455e7: all M1/M2 retained; 9/15 complete lab means; counter4/8.
+- M3/future remain unmet; preserve historical contracts and every failed/invalid trial.
 - Stop after8 experiments without progress on the current milestone; honest ledger.
-- Small source commits; raw logs/snapshots under .codex-runs/human-style/.
-- No Firebase writes, publication or pushes. Preserve unrelated experiments.
-- Final report: per-milestone gates,minutes/board,slowest move,and decisions for Dennis.
+-29 real family choices132/144 replay exactly; exact recorded board parity verified.
+- Raw logs/snapshots under .codex-runs/human-style/; release note HUMAN_V1_RELEASE.md.
+- Small commits on wip/personal-bots; no Firebase writes, publication or pushes.

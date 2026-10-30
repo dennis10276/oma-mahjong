@@ -2,35 +2,34 @@
 const fs=require('fs'),assert=require('assert/strict'),path=require('path');
 const {measureHuman}=require('./human_style_measure.js');
 const {captureSources}=require('./human_level_sources.js');
-const CONTRACT={schema:'human-style-pattern-contract-v1',seed:20261028,runs:20,
- progression:{from:92,to:163,count:72},risk:[132,144,91,89,99,122,142,96,143,94],
- controls:[97,102,103,105,107,110,112,113,114,117],clockCases:[132,135,142,144],
- controlsSource:'first ten ascending levels92-163 with >=1 win and zero observed clock/tray/stuck losses across all cached plays.json players; archival coverage ends Dennis150, Mrs103; absence of observed loss is not proof nobody ever lost',
- lateDefinition:'after clock, at most10 remaining tiles',
- gates:{DennisFirst:[.50,.55],familyFirst:[.25,.35],clock:[.55,.60],mid:[.30,.45],lateBelow:.10,
-  riskMinusControlLossAtLeast:.10,eachClockCaseClockShareAbove:.50},
- caveats:['risk labels supplied by user; archived plays coverage is incomplete','89 and91 may use reconstructed boards; preserve provenance',
- 'one-attempt screens are development only; final aggregate requires multi-attempt campaigns','no per-level policy parameters'],
- stopRule:'Stop after eight experiments without progress on a-c. Baseline is prerequisite, not completion.'};
+const CONTRACT=require('./human_style_contract_v2.json');
+function meetsRiskGap(risk,control,threshold){
+ return Number.isFinite(risk)&&Number.isFinite(control)&&risk-control>=threshold-8*Number.EPSILON;
+}
 function summarize(rows,maxAttempts){
  const result={};
  for(const name of ['Dennis','family']){
   const main=rows.filter(r=>r.lv>=92&&r.lv<=163),samples=main.reduce((a,r)=>a+r.measure.settings[name].runs,0);
-  const first=main.reduce((a,r)=>a+r.measure.settings[name].firstTryWins,0)/samples;
+  const first=main.some(r=>r.measure.settings[name].firstTryCensored>0)?null:main.reduce((a,r)=>a+r.measure.settings[name].firstTryWins,0)/samples;
   const counts={clock:0,mid:0,late:0};
   for(const r of main)for(const k of Object.keys(counts))counts[k]+=r.measure.settings[name].lossCounts[k];
   const total=Object.values(counts).reduce((a,b)=>a+b,0),shares=Object.fromEntries(Object.entries(counts).map(([k,n])=>[k,total?n/total:null]));
-  const cohortLoss=ids=>{const rs=ids.map(lv=>rows.find(r=>r.lv===lv));assert(rs.every(Boolean));return rs.reduce((a,r)=>a+1-r.measure.settings[name].firstTryRate,0)/rs.length;};
-  const riskLoss=cohortLoss(CONTRACT.risk),controlLoss=cohortLoss(CONTRACT.controls);
+  const cohortLoss=ids=>{const rs=ids.map(lv=>rows.find(r=>r.lv===lv));assert(rs.every(Boolean));return rs.some(r=>r.measure.settings[name].firstTryRate===null)?null:rs.reduce((a,r)=>a+1-r.measure.settings[name].firstTryRate,0)/rs.length;};
+  const riskLoss=cohortLoss(CONTRACT.cohorts[name].risk),controlLoss=cohortLoss(CONTRACT.cohorts[name].controls);
   const clockCases=Object.fromEntries(CONTRACT.clockCases.map(lv=>[lv,rows.find(r=>r.lv===lv).measure.settings[name].lossShares.clock]));
   const interval=name==='Dennis'?CONTRACT.gates.DennisFirst:CONTRACT.gates.familyFirst;
-  const checks={a:first>=interval[0]&&first<=interval[1],
-   b:shares.clock>=.55&&shares.clock<=.60&&shares.mid>=.30&&shares.mid<=.45&&shares.late<.10,
-   c:riskLoss-controlLoss>=.10&&Object.values(clockCases).every(value=>value!==null&&value>.5)};
-  result[name]={firstTryRate:first,samples,lossCounts:counts,lossShares:shares,riskLoss,controlLoss,clockCases,checks};
+  const phaseInterval=CONTRACT.gates.beforeClock[name],level142=rows.find(r=>r.lv===142)?.measure.settings[name];
+  const timingCounts={beforeClock:0,clockContact:0,mid:0,late:0};let timingComplete=true,timingConsistent=true;
+  for(const r of main){const t=r.measure.settings[name].lossTiming;if(!t){timingComplete=false;continue;}const values=Object.keys(timingCounts).map(k=>t.counts?.[k]);if(!values.every(v=>Number.isInteger(v)&&v>=0)||values.reduce((a,b)=>a+b,0)!==Object.values(r.measure.settings[name].lossCounts).reduce((a,b)=>a+b,0)||t.counts.beforeClock!==r.measure.settings[name].lossCounts.clock)timingConsistent=false;for(const k of Object.keys(timingCounts))timingCounts[k]+=t.counts[k];}
+  const checks={a:first!==null&&first>=interval[0]&&first<=interval[1],
+   b:shares.clock!==null&&shares.clock>=phaseInterval[0]&&shares.clock<=phaseInterval[1],
+   c:meetsRiskGap(riskLoss,controlLoss,CONTRACT.gates.riskMinusControlLossAtLeast),
+   level142:name==='Dennis'?level142?.firstTryRate>CONTRACT.gates.level142.DennisFirstAbove:level142?.cleared/level142?.runs>=CONTRACT.gates.level142.familyClearedRateAtLeast};
+  const lossTiming={complete:timingComplete,consistent:timingConsistent,counts:timingComplete?timingCounts:null,shares:timingComplete?Object.fromEntries(Object.entries(timingCounts).map(([k,n])=>[k,total?n/total:null])):null};
+  result[name]={firstTryRate:first,samples,lossCounts:counts,lossShares:shares,riskLoss,controlLoss,clockCases,lossTiming,checks};
  }
- const valid=rows.every(r=>r.measure.valid),patterns=valid&&Object.values(result).every(s=>Object.values(s.checks).every(Boolean));
- return {settings:result,developmentScreen:maxAttempts<12,patternGatesMet:patterns,finalGatesMet:maxAttempts===12&&patterns,
+ const valid=rows.every(r=>r.measure.valid),patterns=valid&&Object.values(result).every(s=>Object.values(s.checks).every(Boolean)&&s.lossTiming.complete&&s.lossTiming.consistent);
+ return {settings:result,developmentScreen:maxAttempts<12,patternGatesMet:patterns,finalGatesMet:maxAttempts===12&&patterns&&Object.values(result).every(r=>r.lossTiming.complete),contractSchema:CONTRACT.schema,
   valid,minutesPerBoard:rows.reduce((a,r)=>a+r.measure.minutesPerBoard,0)/rows.length};
 }
 function main(){
@@ -60,4 +59,4 @@ function main(){
  console.log(JSON.stringify(summary));if(!summary.valid)process.exitCode=2;
 }
 if(require.main===module)main();
-module.exports={CONTRACT,summarize};
+module.exports={CONTRACT,summarize,meetsRiskGap};

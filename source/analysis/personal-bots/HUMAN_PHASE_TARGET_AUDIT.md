@@ -65,3 +65,9 @@ The requested decision is whether to replace the phase/difficult-level targets
 with audited person-specific ones, retaining the existing first-try and factory
 gates. Until answered, calibration reports show the original gates as written;
 no human-v1 release or completion is claimed.
+
+Decision received2026-10-29: Dennis approved replacing the incorrect pooled
+phase/case targets with separate audited targets, retaining first/factory gates,
+reporting clock-contact separately and repairing142. Current contract/results:
+HUMAN_PHASE_V2_CONTRACT.md and HUMAN_PHASE_V2_PROGRESS.md. No further approval
+for that change is pending.
