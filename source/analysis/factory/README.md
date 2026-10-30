@@ -111,3 +111,14 @@ planned levels (1 spare move on ice chains, iceLockClock) come out at 10-24 expe
 or a g1 blind spot). Calibration round for Dennis: 188 (g1 1.0), 184 (6.9), 190 (15.7).
 Next: plan.js with g1 in the loop (fast, ~20 s) picking each slot's target, the strong bot only as
 the way-out check.
+
+## Batch 6 verdicts (Dennis, 2026-10-30): g1's order was upside down on planned levels
+- 188 dontGrab + lockedPartners (g1 1.0 "easy"; strong bot could not clear): 4 tries, right, 4 stars.
+  "Hard to see but fun. I like easy looking shapes with hard problems." Lost once late (17 left), twice early.
+- 184 chainReaction (g1 6.9; strong 2/2/3): 5 tries, not won, hard, 2 stars. "Digging without seeing
+  exactly where is not very engaging. The ending is annoying to finish. The clock can have an extra move.
+  When you tap a locked tile, even when buried, I want the keys to shake."
+- 190 chainReaction (g1 15.7; strong 3/3/3): 2 tries. "Hard but nowhere near 15 tries. 184 and 188 harder."
+Dennis: 184 > 188 > 190; g1: 190 > 184 > 188. Codex will not audit g1. Next: a new goal for Gemini (g2)
+and a blind test (`blind-1.json`, lab ids 7183/7185/7187/7194): Dennis plays them, his results stay out
+of git until g2's predictions are committed.
