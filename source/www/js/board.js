@@ -404,6 +404,7 @@ function tapTile(i) {
   if (!free(i)) {
     G.st.bt++;
     replay(el, 'shake'); showBlockers(i);
+    if (lockedT(i)) showKeys();       // a covered locked tile: the keys show too
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
