@@ -122,3 +122,17 @@ the way-out check.
 Dennis: 184 > 188 > 190; g1: 190 > 184 > 188. Codex will not audit g1. Next: a new goal for Gemini (g2)
 and a blind test (`blind-1.json`, lab ids 7183/7185/7187/7194): Dennis plays them, his results stay out
 of git until g2's predictions are committed.
+
+## Gemini's g2 (wip/gemini-human-bot 4568bb2), Claude's audit 2026-10-30
+- Reproduced with another seed (4711, 2 x 20 is its default): planned boards Spearman 0.88 (Gemini 0.90),
+  Dennis's order 184 (7.1) > 188 (3.7) > 190 (2.6) holds, easy below right/hard in 53 of 54 pairs.
+  `g2-audit-seed4711.jsonl`. Blind predictions (committed before Dennis played): 187 3.0, 194 6.7,
+  183 6.1, 185 7.9 (my seed: 3.3, 6.2, 6.4, 7.8).
+- Not reported by Gemini: real levels 92-163 (74 boards, Codex catalog trial21, seed 20261028, 1 attempt):
+  Dennis first try 60.6% (gate 50-55%; g1 54.8% on the same run), family 30.8% (g1 34.0%). Per level it
+  swings a lot (151: 100% -> 0%, 152: 5% -> 95%): the first-try "tray depth 1" rule is broad.
+- Unit tests: 6 retry-memory tests fail in g2 and already in g1 (g1's profile switch broke their
+  controls); g1's "180/180" was wrong too. lab tests not run here (lab-clears.json not staged).
+- 188: Dennis's real mistake was taking the clock on tap 1 (tries 1-3), not a deep tray plan; g2 gets
+  the right number through a different mechanism (first-try tray depth 1).
+Use: g2 orders the next factory batch (planned levels); the blind test decides whether it stays.
