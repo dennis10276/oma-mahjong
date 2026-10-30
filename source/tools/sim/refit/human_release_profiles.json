@@ -1,7 +1,7 @@
 {
   "schema": "human-person-release-v1",
-  "version": "human-g1",
-  "calibrationStatus": "human-g1-factory-difficulty-validated",
+  "version": "human-g2",
+  "calibrationStatus": "human-g2-factory-difficulty-validated",
   "profiles": {
     "Dennis": {
       "clockHorizon": 3,

@@ -511,7 +511,10 @@ function createBotController(tiles, profile, seed) {
       }
     }
 
-    const depth = clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3);
+    const urgentClock = clock && clock.remaining <= 8;
+    const depth = (!urgentClock && (attempt === 1 || (attempt === 2 && clockLosses === 0)))
+      ? (p.firstTryTrayDepth ?? 1)
+      : (clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3));
     const keyWork=new Set();
     if(p.retryKeyRouteValue&&learnedKeyOut&&(!clock||clockNeedsKeys)){
       for(const k of knownKeys){
@@ -651,6 +654,7 @@ function createBotController(tiles, profile, seed) {
         if(i===clock.i)score+=p.pairReward*2.6;
         else if(trayMatch&&face===memory[clock.i])score-=p.pairReward*2.6;
       }
+      if (clock && clock.n >= 12 && i === clock.i && !trayMatch && tray.length >= 2 && clock.remaining >= 5) score -= p.clockWeight * 1.1;
       if(clock && (i===clock.i || openTwin && openPeek===clock.i))score+=p.clockCompletionBonus??0;
       if(clockBlockingMate){
         // Preserve the observed matching blocker for the clock immediately
@@ -674,7 +678,7 @@ function createBotController(tiles, profile, seed) {
         score += 1.5;
       }
 
-      if (peek) score -= Math.max(0, count - p.peekPatience + 1) * 8;
+      if (peek) score -= Math.max(0, count - p.peekPatience + 1) * 8 + (count >= 4 ? (count - 3) * 30 : 0);
       if (!peek && count) score -= count * 2;
 
       score += (future.get(i) ?? 0) * (p.futureWeight ?? 1) * (clock ? 0.15 : 1);

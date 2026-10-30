@@ -21,7 +21,7 @@ function estimateDifficulty(campaigns){
   return {expectedTries:Number(exp.toFixed(2)),label};
  }
  const h=clearedCount/Math.max(1,totalAttempts);
- const tailMean=12+Math.min(12,1/Math.max(0.04,h));
+ const tailMean=Math.min(8.0,4.5+1/Math.max(0.2,h*2.5));
  const exp=(clearedSum+unclearedCount*tailMean)/N;
  const label=(exp<=2.2&&firstTryRate>=0.25)||firstTryRate>=0.45?'easy':exp<=5.0?'right':'hard';
  return {expectedTries:Number(exp.toFixed(2)),label};
