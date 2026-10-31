@@ -1,0 +1,12 @@
+o183    3.35  lockedPartners+iceChain    ice -1.22  locks -0.35  clock -1.27
+o185    4.7   lockedClock                ice -3.63  locks --0.43 IDLE  clock -3.65
+o186    4.85  dontGrab+lockedPartners    ice -0.72  locks -3.35  clock -3.53
+n923    3.58  chainReaction              ice -0.85  locks -1.81  clock -2.58
+o189s3  3.4   deepKeys+iceChain          ice -0.35  locks -1.13  clock -2.35
+n942    4.78  chainReaction              ice --1.37 IDLE  locks --3.07 IDLE  clock -2.01
+n946    4.78  iceLockClock               ice -3.78  locks -3.63  clock -3.76
+n948    3.85  lockedClock                ice -0 IDLE  locks --3.7 IDLE  clock -1.97
+n943    3.67  iceLockClock               ice -2.67  locks -1.99  clock -2.62
+n958    5.17  deepKeys+iceChain          ice -0.15 IDLE  locks -4.15  clock -2.59
+
+[exited with code 0]

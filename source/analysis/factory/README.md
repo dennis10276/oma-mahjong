@@ -270,3 +270,7 @@ each kind (ice, locks with keys, clock) in turn and measures with the full g2.1 
 games): it matters when the expected tries drop by 0.3+ or the first-try rate rises by 0.15+. A board
 where a special is idle gets that special re-placed (or, for the clock, fewer spare moves) before it can
 go into a batch.
+First run of specials_matter on the 10 middle candidates (`matter-mid1.jsonl`): every clock matters (drop
+2-3.8 tries without it); idle ice on 948 (0.0) and 958 (0.15). On several boards removing the locks or the
+ice makes the level HARDER (942: +3.1 without locks): they show the way. So a special counts either way.
+Idle ice/locks are taken off and the board measured again.

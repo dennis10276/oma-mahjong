@@ -3,9 +3,10 @@
    Levels shouldn't get this flag." Gemini's critic tests this with 10-game ablations (noisy: it fired on half
    of the old 1.63 levels); here every special kind (ice, locks with their keys, the clock) is removed in turn
    and the board measured with the full g2.1 measure (2 seeds x 20 games, seed 4711), like the board itself.
-   A special matters when removing it lowers the expected tries by at least MIN (0.3) or raises the first-try
-   rate by at least 0.15. The clock cannot go (every level from 80 has one), so a clock that does not matter
-   has to be made to matter (fewer spare moves, or placed elsewhere).
+   A special matters when removing it changes the expected tries by at least MIN (0.3) or the first-try rate
+   by at least 0.15, either way (first run: on several boards removing the locks made the level HARDER - the
+   locks show the way, as Dennis said of 187: "the locks put you in the right direction"). The clock cannot go (every level from 80 has one), so a clock that does not matter
+   has to be made to matter (fewer spare moves, or placed elsewhere); idle ice or locks are simply taken off.
      const { specialsMatter } = require('./specials_matter.js');  specialsMatter(board, base?)            */
 'use strict';
 const MIN = +(process.env.MATTER_MIN || 0.3), MIN_FIRST = 0.15;
@@ -15,7 +16,7 @@ function specialsMatter(board, base, measureHuman = require(process.env.HUMAN_BO
   const out = { exp: m0.expectedTries, first: m0.firstTryRate, kinds: {} };
   const test = (kind, b) => {
     const m = meas(b), d = +(m0.expectedTries - m.expectedTries).toFixed(2), df = +(m.firstTryRate - m0.firstTryRate).toFixed(2);
-    out.kinds[kind] = { without: m.expectedTries, drop: d, firstUp: df, matters: d >= MIN || df >= MIN_FIRST };
+    out.kinds[kind] = { without: m.expectedTries, drop: d, firstUp: df, matters: Math.abs(d) >= MIN || Math.abs(df) >= MIN_FIRST };
   };
   if (ob.ice && Object.keys(ob.ice).length) test('ice', { ...board, obst: { ...ob, ice: {} } });
   if (ob.locks && ob.locks.length) test('locks', { ...board, obst: { ...ob, locks: [], keys: [] } });
