@@ -4,7 +4,7 @@
    easy 1-1.6, normal 1.6-2.8, tricky 2.8-4.2, peak 4.2-6 (the live 8s become peaks; harder boards wait).
    Rules: big boards (more than 88 tiles) on every 10th level and only there; no base shape twice within 10
    levels; tile spots shared <= 75% with any level within 10 (and the live levels before the batch);
-   neighbours preferably use different puzzles; critic warnings count against a board.
+   neighbours preferably use different puzzles, no puzzle more than MAXR (7) times; critic warnings count against a board.
      node source/tools/factory/assign_curve.js <from> <to> <inventory.jsonl> <out.jsonl>               */
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm');
@@ -24,24 +24,34 @@ const before = {}; for (let lv = from - 10; lv < from; lv++) before[lv] = F.spot
 const levels = []; for (let lv = from; lv <= to; lv++) levels.push(lv);
 const target = lv => Math.min(5.5, live[lv]);
 const cost = (r, lv) => (r._class === classOf(target(lv)) ? 0 : 3) + Math.abs(r.g2.exp - target(lv)) + ((r.critic && r.critic.flags && r.critic.flags.length) ? 1.5 : 0);
-const pick = [], used = new Set();
+// (fast: every pair checked once; a lower bound on what the remaining levels can still cost)
+const N = inv.length, compat = inv.map(() => new Uint8Array(N));
+for (let a = 0; a < N; a++) for (let b = a + 1; b < N; b++) {
+  const okp = inv[a]._base !== inv[b]._base && F.share(inv[a]._t, inv[b]._s) <= 0.75 && F.share(inv[b]._t, inv[a]._s) <= 0.75;
+  compat[a][b] = compat[b][a] = okp ? 1 : 0;
+}
+const fitsBefore = inv.map(r => levels.map(lv => Object.entries(before).every(([blv, s]) => lv - blv > 10 || F.share(r._t, s) <= 0.75)));
+const C = inv.map(r => levels.map(lv => cost(r, lv)));
+const minRest = levels.map((_, k) => levels.slice(k).reduce((a, __, m) => a + Math.min(...inv.map((r, i) => (r._big === (levels[k + m] % 10 === 0) ? C[i][k + m] : 99))), 0));
+const pick = [], used = new Uint8Array(N), perRecipe = {}, MAXR = +(process.env.MAXR || 7);   // (no puzzle more than MAXR times: variety)
 let nodes = 0, best = null;
-function ok(r, k) {
-  const lv = levels[k];
-  if (r._big !== (lv % 10 === 0)) return false;
-  for (let j = Math.max(0, k - 10); j < k; j++) { const o = pick[j]; if (o._base === r._base || F.share(r._t, o._s) > 0.75) return false; }
-  for (const [blv, s] of Object.entries(before)) if (lv - blv <= 10 && F.share(r._t, s) > 0.75) return false;
+function ok(i, k) {
+  const lv = levels[k], r = inv[i];
+  if (r._big !== (lv % 10 === 0) || !fitsBefore[i][k]) return false;
+  for (let j = Math.max(0, k - 10); j < k; j++) if (!compat[i][pick[j]]) return false;
   return true;
 }
 function dfs(k, total) {
-  if (++nodes > 400000) return;
-  if (best && total >= best.total) return;
+  if (++nodes > 2000000) return;
+  if (best && total + (k < levels.length ? minRest[k] : 0) >= best.total) return;
   if (k === levels.length) { best = { total, pick: pick.slice() }; return; }
-  const lv = levels[k];
-  const cands = inv.filter(r => !used.has(r)).map(r => [r, cost(r, lv) + (k && pick[k - 1]._recipe === r._recipe ? 0.8 : 0)]).sort((a, b) => a[1] - b[1]).slice(0, 8);
-  for (const [r, c] of cands) { if (!ok(r, k)) continue; used.add(r); pick[k] = r; dfs(k + 1, total + c); used.delete(r); }
+  const cands = [];
+  for (let i = 0; i < N; i++) if (!used[i] && (perRecipe[inv[i]._recipe] || 0) < MAXR && ok(i, k)) cands.push([i, C[i][k] + (k && inv[pick[k - 1]]._recipe === inv[i]._recipe ? 1.5 : 0)]);
+  cands.sort((a, b) => a[1] - b[1]);
+  for (const [i, c] of cands.slice(0, 6)) { const rc = inv[i]._recipe; used[i] = 1; pick[k] = i; perRecipe[rc] = (perRecipe[rc] || 0) + 1; dfs(k + 1, total + c); perRecipe[rc]--; used[i] = 0; }
 }
 dfs(0, 0);
+if (best) best.pick = best.pick.map(i => inv[i]);
 if (!best) { console.log('no arrangement found (' + nodes + ' tried)'); process.exit(1); }
 const rows = best.pick.map((r, k) => { const lv = levels[k]; const { _t, _s, _base, _big, _class, _recipe, ...rest } = r;
   return { ...rest, builtAs: r.builtAs || r.level, level: lv, liveExp: live[lv], cls: _class, design: { ...r.design, level: lv } }; });
