@@ -175,3 +175,14 @@ recipes: lockedPartners+iceChain 5, deepKeys+iceChain 4, lockedClock 4, iceLockC
 dontGrab+lockedPartners 3, chainReaction 1. For Dennis (lab ids 8175, 8185, 8193, no bot numbers shown):
 175 first (chainReaction, letterH, 7.1), 185 middle (deepKeys+iceChain, vase, 5.9), 193 hardest
 (deepKeys+iceChain, ushape, 7.85). A second blind check of the meter at the same time.
+
+## Order: easier first, then middle, then hard (Dennis 2026-10-31: "the breathers at the start; the curve
+should get harder and harder: breathers 175-x, middle x-y, hard y-194")
+Two new piles on unused shapes (diamond, block; `piles-mid.json`) were built for the middle band 3.6-4.8,
+but the bot rarely lands there: diamond came out 1.0 (chainReaction), block 6.9 (chainReaction).
+`reorder_batch.js` -> `batch-175-ordered.jsonl` (all shape/overlap checks pass):
+breathers 175-182 (1.0-2.8), middle 183-187 (3.3-5.9), hard 188-194 (6.1-7.85); within a tier the
+puzzles alternate. Left out: old 179 and 189 (locked-clock breathers; their shapes stay at 176/194).
+For Dennis (lab ids 9175, 9185, 9194): 175 diamond chainReaction (1.0), 185 butterfly
+lockedPartners+iceChain (3.45), 194 ushape deepKeys+iceChain (7.85). Release: with the key changes
+(wip/key-shake), once he approves these.
