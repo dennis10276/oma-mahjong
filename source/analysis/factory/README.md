@@ -227,3 +227,14 @@ g2.1 on every live level 150-269 (`curve-live-g21.jsonl`, seed 4711, 2 x 20): tr
 exp = 0.157 + 0.00989 * level: 1.89 at 175, 2.14 at 200, 2.82 at 269, 3.13 at 300. Live 175-200: p25 1.32,
 median 2.1, p75 2.77, p90 3.73, 3 of 26 at the bot's maximum 8 (177, 192, 196). The batch 175-200 copies
 that spread (most 1.3-2.8, a few 3-4, a couple of peaks 4-6); the hard boards (6-7.5) wait for ~270-300.
+
+## Batch 175-200 on the live curve (`batch-175-200.jsonl`, `tools/factory/assign_curve.js`)
+Inventory (`inventory-175-200.jsonl`): the earlier factory boards up to 6 tries, plus new builds
+(`fill-builds.jsonl`): 10 easy levels, 2 big ones, 6 easy ones without the locked clock (the bot rates the
+locked clock easy, so the first arrangement had 11 of them). The solver gives each level the class of
+the live level it replaces (easy 1-1.6, normal 1.6-2.8, tricky 2.8-4.2, peak 4.2-6; the live 8s at 177,
+192, 196 become peaks 5.9, 4.7, 4.85), big boards on 180/190/200 only, no base shape twice within 10, overlap
+<= 75%, at most 7 of one puzzle, neighbours differ. Mean 2.16 tries (live 2.38 with 8s counted as 5.5).
+Puzzles: lockedClock 7, dontGrab+lockedPartners 5, deepKeys+iceChain 5, iceLockClock 5, lockedPartners+
+iceChain 2, chainReaction 2. 190 and 200 are a bit easier than live (no big tricky board came out).
+One critic warning: 199 (late squeeze). Waits for Gemini's critic (g3) before Dennis judges.
