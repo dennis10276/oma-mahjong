@@ -38,7 +38,7 @@ for (let a = 0; a < N; a++) for (let b = a + 1; b < N; b++) {
 const fitsBefore = inv.map(r => levels.map(lv => Object.entries(before).every(([blv, s]) => lv - blv > 10 || F.share(r._t, s) <= 0.75)));
 const C = inv.map(r => levels.map(lv => cost(r, lv)));
 const minRest = levels.map((_, k) => levels.slice(k).reduce((a, __, m) => a + Math.min(...inv.map((r, i) => (r._big === (levels[k + m] % 10 === 0) ? C[i][k + m] : 99))), 0));
-const pick = [], used = new Uint8Array(N), perRecipe = {}, MAXR = +(process.env.MAXR || 7);   // (no puzzle more than MAXR times: variety)
+const pick = [], used = new Uint8Array(N), perRecipe = {}, MAXR = +(process.env.MAXR || 7), MONO = +(process.env.MONO || 0);   // (no puzzle more than MAXR times: variety)
 let nodes = 0, best = null;
 function ok(i, k) {
   const lv = levels[k], r = inv[i];
@@ -51,7 +51,10 @@ function dfs(k, total) {
   if (best && total + (k < levels.length ? minRest[k] : 0) >= best.total) return;
   if (k === levels.length) { best = { total, pick: pick.slice() }; return; }
   const cands = [];
-  for (let i = 0; i < N; i++) if (!used[i] && (perRecipe[inv[i]._recipe] || 0) < MAXR && ok(i, k)) cands.push([i, C[i][k] + (k && inv[pick[k - 1]]._recipe === inv[i]._recipe ? 1.5 : 0)]);
+  // MONO: harder and harder (Dennis): a level easier than the one before costs MONO per try (not around the
+  // levels set by TARGET_AT, e.g. the big breather on 190, nor at a curve jump)
+  const prevExp = k ? inv[pick[k - 1]].g2.exp : null, free = k === 0 || AT[levels[k]] != null || AT[levels[k - 1]] != null || (CURVE && CURVE[2] === levels[k]);
+  for (let i = 0; i < N; i++) if (!used[i] && (perRecipe[inv[i]._recipe] || 0) < MAXR && ok(i, k)) cands.push([i, C[i][k] + (k && inv[pick[k - 1]]._recipe === inv[i]._recipe ? 1.5 : 0) + (free ? 0 : MONO * Math.max(0, prevExp - inv[i].g2.exp))]);
   cands.sort((a, b) => a[1] - b[1]);
   for (const [i, c] of cands.slice(0, 6)) { const rc = inv[i]._recipe; used[i] = 1; pick[k] = i; perRecipe[rc] = (perRecipe[rc] || 0) + 1; dfs(k + 1, total + c); perRecipe[rc]--; used[i] = 0; }
 }

@@ -2,12 +2,12 @@
 // boards whose ice was idle with that ice taken off (their difficulty is the measured "without ice" value)
 const fs=require('fs');const R=process.argv[2];const rd=f=>fs.existsSync(f)?fs.readFileSync(f,'utf8').trim().split('\n').filter(Boolean).map(JSON.parse):[];
 const inv=rd(R+'inventory.jsonl');const tune=rd(R+'spare-tune.jsonl');
-for(const f of ['m2a','m2b','m2c','m3a','m3b'])for(const r of rd(R+f+'.jsonl'))if(r.ok)inv.push({...r,id:'n'+r.level,builtAs:r.level});
+for(const f of ['m2a','m2b','m2c','m3a','m3b','m4a','m4b','m4c'])for(const r of rd(R+f+'.jsonl'))if(r.ok)inv.push({...r,id:'n'+r.level,builtAs:r.level});
 // spare variants (from tune_spare): keep the ones that landed 3-6
 for(const t of tune){if(t.exp<3||t.exp>6)continue;const r=inv.find(x=>x.id===t.id);if(!r)continue;const route=r.design.solution.indexOf(r.design.clock.i)+1;
   inv.push({...r,id:t.id+'s'+t.spare,design:{...r.design,clock:{...r.design.clock,n:route+t.spare}},clockSpare:t.spare,clock:route+t.spare,g2:{exp:t.exp,first:t.first,version:'human-g2'},critic:t.critic});}
 // specials results
-const matter={};for(const f of ['matter1.jsonl','matter2.jsonl'])for(const m of rd(R+f))matter[m.id]=m;
+const matter={};for(const f of ['matter1.jsonl','matter2.jsonl','matter3.jsonl'])for(const m of rd(R+f))matter[m.id]=m;
 const out=[];
 for(const r of inv){const m=matter[r.id];
   if(m&&m.idle&&m.idle.length&&m.idle.every(k=>k==='ice')){   // idle ice: take it off
