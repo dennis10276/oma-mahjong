@@ -8,9 +8,10 @@ const rd=f=>fs.readFileSync(f,'utf8').trim().split('\n').filter(Boolean).map(JSO
 const B=Object.fromEntries(rd(ROOT+'/analysis/factory/batch-175-g2.jsonl').map(r=>['b'+r.level,r]));
 const [m1,m2,big]=process.argv.slice(2,5).map(f=>rd(f)[0]);B.m1=m1;B.m2=m2;B.big=big;
 // built-as level -> new level. m1 (diamond) came out easy, m2 (block) hard (the bot rarely lands in the
-// middle), so: 8 breathers, 5 middle, 7 hard. Old 179 and 189 are left out (two more locked-clock breathers
-// whose shapes, hourglass and cross, 194 and 176 keep).
-const ORDER=['m1','b192','b184','b187','b186','b176','b181','b194',  'b177','b182','b183','b191','b185',  'b178','b180','b190','m2','b188','b175','b193'];
+// middle), so: 8 breathers, 5 middle, 7 hard. Big boards (more than 88 tiles) only on every 10th level:
+// 180 is a new big breather (twins, 96), 190 the big steps board. Left out: old 179, 189 and 192
+// (locked-clock breathers; the hourglass and cross shapes stay at 181 and 179).
+const ORDER=['m1','b184','b187','b186','b176','big','b194','b181',  'b177','b182','b183','b191','b185',  'b178','b190','b180','m2','b188','b175','b193'];
 const tier=k=>k<8?'breather':k<13?'middle':'hard';
 const rows=ORDER.map((id,k)=>{const r=B[id];const lv=175+k;return {...r,builtAs:r.level,level:lv,tier:tier(k),design:{...r.design,level:lv}};});
 const base=s=>s.split(' · ')[0];let bad=0;

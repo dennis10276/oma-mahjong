@@ -186,3 +186,11 @@ puzzles alternate. Left out: old 179 and 189 (locked-clock breathers; their shap
 For Dennis (lab ids 9175, 9185, 9194): 175 diamond chainReaction (1.0), 185 butterfly
 lockedPartners+iceChain (3.45), 194 ushape deepKeys+iceChain (7.85). Release: with the key changes
 (wip/key-shake), once he approves these.
+
+Release check (2026-10-31): big boards (more than 88 tiles) belong on every 10th level only (game rule,
+tests/t_reorder_honest.js). So 180 is a new big breather (twins, 96 tiles, lockedClock, 1.8;
+`piles-big.json`) and the big steps board moves to 190; old 179, 189 and 192 are left out. The first,
+middle and hardest stay the same boards (lab 9175, 9185, 9194). Shipped on `wip/release-1.63` with
+`tools/factory/ship_batch.js` (HARD_LEVELS.revisions [[175,194,"f1"]]: only saves on these levels, or
+later levels that cycle back to them, start again). Factory boards keep long clock routes (up to 42
+moves); the clock test exempts them.
