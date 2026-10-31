@@ -11,6 +11,10 @@
    Every candidate is valid by construction (the stored way through passes every rule and the clock).
    Aim (expectedTries): 2.5 at level 175 rising to 4.0 at 194 and 5.0 at 270; a level is kept when it
    is within BAND of the aim, else the closest of its attempts.
+   First run (2026-10-31): the bot's ratings are mostly 1-2 or 6-8 tries, and the easy locked clock won
+   4 of the first 7 levels as "closest". So now: each level starts with its own recipe (the list rotates
+   with the level, so neighbours differ), and the clock spare is the fine knob: too hard -> one more
+   spare move (up to +3), too easy -> one fewer (never below 1), each measured again.
      node source/tools/factory/plan_g2.js <piles.json> <out.jsonl> <human_bot.js> [levels]       */
 'use strict';
 const fs = require('fs'), path = require('path');
@@ -51,14 +55,25 @@ for (const p of piles) {
     for (const k of recipe) { const y = I.IDEAS[k].make(x, I.ctxOf(x), I.rngOf(lv * 31 + salt * 7 + k.length)); if (!y) { ok = false; break; } x = y; }
     if (!ok) { pg.tried.push(recipe.join('+') + ': no place'); continue; }
     if (keys(x).length && x.obst.keys.some(kk => I.ctxOf(x).free0[kk]) && recipe.every(k => !['lockedClock', 'clockOnTopLocked'].includes(k))) { pg.tried.push('free keys'); continue; }
-    const z = I.fix(x, SPARE_OF(recipe)); if (!z || !I.valid(z)) { pg.tried.push(recipe.join('+') + ': no exact clock route'); continue; }
-    let m; try { m = measureHuman(boardOf(z), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { pg.tried.push('bot error ' + String(e.message).slice(0, 80)); continue; }
+    // the spare knob: start at the recipe's spare, step towards the aim while the rating moves that way
+    const rate = sp => { const z = I.fix(x, sp); if (!z || !I.valid(z)) return null; try { return { z, sp, m: measureHuman(boardOf(z), { runs: 20, setting: 'dennis', seed: 4711 }) }; } catch (e) { return null; } };
+    const base = SPARE_OF(recipe); let r = rate(base);
+    if (!r) { pg.tried.push(recipe.join('+') + ': no exact clock route'); continue; }
+    pg.tried.push(recipe.join('+') + ' spare ' + base + ': ' + r.m.expectedTries);
+    for (let step = 0; step < 3 && Math.abs(r.m.expectedTries - a) > BAND; step++) {
+      const sp = r.m.expectedTries > a ? r.sp + 1 : r.sp - 1;
+      if (sp < 1 || sp > base + 3 || !r.z.clock) break;
+      const q = rate(sp); if (!q) break;
+      pg.tried.push(recipe.join('+') + ' spare ' + sp + ': ' + q.m.expectedTries);
+      if (Math.abs(q.m.expectedTries - a) >= Math.abs(r.m.expectedTries - a) && (q.m.expectedTries - a) * (r.m.expectedTries - a) > 0 && step) break;
+      if (Math.abs(q.m.expectedTries - a) < Math.abs(r.m.expectedTries - a)) r = q; else break;
+    }
+    const z = r.z, m = r.m;
     const ck = z.clock ? z.clock.n - (z.solution.indexOf(z.clock.i) + 1) : null;
     const row = { level: lv, ok: true, shape: p.shape, n: z.tiles.length, px: p.px, recipe, aim: +a.toFixed(2), g2: { exp: m.expectedTries, label: m.label, first: m.firstTryRate, version: m.version },
       down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length, keys: keys(z).length, clock: z.clock && z.clock.n, clockSpare: ck,
       design: { level: lv, aspect: 1.6, tiles: z.tiles, faces: z.faces, down: z.down, gold: z.gold, obst: z.obst, clock: z.clock, solution: z.solution } };
-    pg.tried.push(recipe.join('+') + ': ' + m.expectedTries);
-    console.log(lv, 'aim', a.toFixed(2), 'attempt', attempt, recipe.join('+'), 'exp', m.expectedTries, m.label, 'first', m.firstTryRate);
+    console.log(lv, 'aim', a.toFixed(2), 'attempt', attempt, recipe.join('+'), 'spare', ck, 'exp', m.expectedTries, m.label, 'first', m.firstTryRate);
     if (!pg.best || Math.abs(row.g2.exp - a) < Math.abs(pg.best.g2.exp - a)) { pg.best = { ...row, exp: row.g2.exp }; }
     save();
   }
