@@ -104,6 +104,14 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - Release 1.60 fixes the game tips (a better route never takes the clock after its last move) and makes
   the ice, lock and pair explanations real-game films in the player's theme; boards are unchanged
   (predictions are off on the dashboard, predict.json stays at 1.59).
+- Not yet released (wip/release-1.63, waits for Dennis's verdict on 175/185/194): levels 175-194 are the
+  level factory's batch (branch wip/level-factory, `source/analysis/factory/`): planned around the lab
+  puzzles Dennis rated highly, ordered easier -> middle -> hard by Gemini's difficulty bot g2.1. They are
+  recorded in HARD_LEVELS.revisions ([[175,194,"f1"]]): only saved games on those levels (or later levels
+  that cycle back to them) start again; designVersion is "8.f1" there. Their clock routes may be long
+  (up to 42 moves; t_clocks exempts them). Tapping a locked tile also lights up the keys, and a key under
+  the pile shows through it. Gemini's locked forecasts for Dennisisdebeste 175-177 were made for the old
+  boards.
 - Release 1.62: on a level with game tips the plain "the alarm went
   off" window (no own film) is no longer logged as help. In 1.59-1.61 it was, so the dashboard showed
   "Uitleg getoond: Wekker" after every lost try (Mrs. Doubtfire, level 132) although the player only saw
