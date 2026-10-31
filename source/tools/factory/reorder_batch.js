@@ -6,7 +6,7 @@ const L=require(ROOT+'/www/layouts.js');global.Layouts=L;global.HARD_LEVELS=vm.r
 const Hard=require(ROOT+'/www/hard.js');const F=require(ROOT+'/tools/factory/piles_for.js');
 const rd=f=>fs.readFileSync(f,'utf8').trim().split('\n').filter(Boolean).map(JSON.parse);
 const B=Object.fromEntries(rd(ROOT+'/analysis/factory/batch-175-g2.jsonl').map(r=>['b'+r.level,r]));
-const [m1,m2]=process.argv.slice(2,4).map(f=>rd(f)[0]);B.m1=m1;B.m2=m2;
+const [m1,m2,big]=process.argv.slice(2,5).map(f=>rd(f)[0]);B.m1=m1;B.m2=m2;B.big=big;
 // built-as level -> new level. m1 (diamond) came out easy, m2 (block) hard (the bot rarely lands in the
 // middle), so: 8 breathers, 5 middle, 7 hard. Old 179 and 189 are left out (two more locked-clock breathers
 // whose shapes, hourglass and cross, 194 and 176 keep).
@@ -20,7 +20,8 @@ rows.forEach((r,k)=>{const t=r.design.tiles.map(x=>Array.isArray(x)?x:[x.x,x.y,x
   for(const o of rows.slice(Math.max(0,k-10),k)){if(base(o.shape)===base(r.shape)){console.log('shape twice',o.level,r.level,r.shape);bad++;}
     const s=F.share(t,F.spots(o.design.tiles.map(x=>Array.isArray(x)?x:[x.x,x.y,x.z]))[0]);if(s>0.75){console.log('share',o.level,r.level,s.toFixed(2));bad++;}}
   for(const [lv,lt] of Object.entries(live))if(r.level-lv<=10){const s=F.share(t,F.spots(lt)[0]);if(s>0.75){console.log('share live',lv,r.level,s.toFixed(2));bad++;}}
+  if((t.length>88)!==(r.level%10===0)){console.log('big board rule (only every 10th level, and there always)',r.level,t.length);bad++;}
   const w=Math.max(...played.map(q=>F.share(t,q)));if(w>0.75){console.log('share played',r.level,w.toFixed(2));bad++;}});
 for(const r of rows)console.log(r.level,r.tier.padEnd(8),String(r.g2.exp).padEnd(5),r.recipe.join('+').padEnd(26),r.shape,'(built as '+r.builtAs+')');
 console.log(bad?bad+' problems':'all checks pass');
-if(process.argv[4]&&!bad)fs.writeFileSync(process.argv[4],rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
+if(process.argv[5]&&!bad)fs.writeFileSync(process.argv[5],rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
