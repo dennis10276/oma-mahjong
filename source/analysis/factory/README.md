@@ -194,3 +194,20 @@ middle and hardest stay the same boards (lab 9175, 9185, 9194). Shipped on `wip/
 `tools/factory/ship_batch.js` (HARD_LEVELS.revisions [[175,194,"f1"]]: only saves on these levels, or
 later levels that cycle back to them, start again). Factory boards keep long clock routes (up to 42
 moves); the clock test exempts them.
+
+## Dennis on the 1.63 picks (2026-10-31) and critic v1
+175 (diamond, chainReaction): 1 try, right, 4 stars "fine". 185 (butterfly, lockedPartners+iceChain): 2 tries,
+gave up, 1 star: "frustrating cause the hard part is tray pressure at the very end to get the keys.
+Replace." 194 (ushape, deepKeys+iceChain): 8 tries, never won: "I don't see how I can take the clock
+faster than this route. Give +2 spare moves."
+Dennis: "think how we can make the bot do what I do now". What he does: difficulty (g2.1 does it) plus
+judgements in his notes, sorted in `dennis-notes-labels.json`. The bot's own games already show two:
+- late squeeze: share of the bot's losses with a third or less of the tiles left. 185: 0.75 (losses at
+  14-36 left, his at 21 and 25); every other rated board 0.21 or less (`critic-probe-rated.jsonl`).
+- clock out of reach: share of the bot's tries in which it takes the clock in time. 194: 1 of 233; the
+  5-star blind 194: 8%. With Dennis's +2 the new 194 drops from 7.85 to 2.5 tries (reach 41%).
+The repeat-the-same-loss share did not separate (high on levels he loved too).
+Critic v1 over 1.63 (`critic-1.63.jsonl`): late squeeze also on 178 (moon, lockedPartners+iceChain, 0.72)
+and 180 (twins big breather, 0.94); clock out of reach only 194. plan_g2 now rejects both (and > 7.2).
+Rebuilding: the top hard slot (moon pile), the middle slot (butterfly pile), the big breather (twins);
+194 with +2 (2.5 tries) becomes a breather.

@@ -55,7 +55,7 @@ for (const p of piles) {
   // designer deals already made for this pile (DEALS_DIR), only when they are for this very pile
   const cf = process.env.DEALS_DIR && path.join(process.env.DEALS_DIR, lv + '.json');
   const cached = cf && fs.existsSync(cf) ? JSON.parse(fs.readFileSync(cf, 'utf8')).deals.filter(d => d && sameTiles(d.tiles, tiles)) : [];
-  for (let attempt = pg.next; attempt < ATTEMPTS && !(pg.best && off(pg.best.exp, band) === 0); attempt++) {
+  for (let attempt = pg.next; attempt < ATTEMPTS && !(pg.best && off(pg.best.exp, band) === 0 && !pg.best.critic.flags.length); attempt++) {
     pg.next = attempt + 1; save();
     const recipe = RECIPES[(lv + attempt) % RECIPES.length], salt = 50 + attempt + (+process.env.SALT || 0);
     if ((AVOID[lv] || []).includes(recipe.join('+'))) continue;
@@ -69,16 +69,26 @@ for (const p of piles) {
     if (keys(x).length && x.obst.keys.some(kk => I.ctxOf(x).free0[kk]) && recipe.every(k => !['lockedClock', 'clockOnTopLocked'].includes(k))) { pg.tried.push('free keys'); continue; }
     const z = I.fix(x, SPARE_OF(recipe)); if (!z || !I.valid(z)) { pg.tried.push(recipe.join('+') + ': no exact clock route'); continue; }
     let m; try { m = measureHuman(boardOf(z), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { pg.tried.push('bot error ' + String(e.message).slice(0, 80)); continue; }
-    pg.tried.push(recipe.join('+') + ': ' + m.expectedTries);
+    // critic v1 (Dennis's notes, checked on every board he rated; analysis/factory/README.md): no late squeeze
+    // (lost with a third or less of the tiles left in more than 30% of the bot's losses: 185 in 1.63, "tray
+    // pressure at the very end", the only rated board above 0.21) and a clock a person can reach (the bot
+    // takes it in time in at least 5% of its tries: 194 in 1.63 had 0.4%, "I don't see a faster route";
+    // the 5-star blind 194 had 8%)
+    const nT = z.tiles.length, at = m.results.flatMap(q => q.attempts), lost = at.filter(q => !q.win && !q.censored);
+    const late = lost.filter(q => q.left <= 0.35 * nT).length / Math.max(1, lost.length);
+    const reach = z.clock ? at.filter(q => q.clockLeft != null && q.clockLeft < nT).length / Math.max(1, at.length) : 1;
+    const critic = { late: +late.toFixed(2), reach: +reach.toFixed(2), flags: [late > 0.3 && 'late squeeze', reach < 0.05 && 'clock out of reach', m.expectedTries > 7.2 && 'too hard'].filter(Boolean) };
+    pg.tried.push(recipe.join('+') + ': ' + m.expectedTries + (critic.flags.length ? ' (' + critic.flags.join(', ') + ')' : ''));
     const ck = z.clock ? z.clock.n - (z.solution.indexOf(z.clock.i) + 1) : null;
-    const row = { level: lv, ok: true, shape: p.shape, n: z.tiles.length, px: p.px, recipe, role: isHard(lv) ? 'hard' : 'breather', band, g2: { exp: m.expectedTries, label: m.label, first: m.firstTryRate, version: m.version },
+    const row = { level: lv, ok: true, shape: p.shape, n: z.tiles.length, px: p.px, recipe, role: isHard(lv) ? 'hard' : 'breather', band, g2: { exp: m.expectedTries, label: m.label, first: m.firstTryRate, version: m.version }, critic,
       down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length, keys: keys(z).length, clock: z.clock && z.clock.n, clockSpare: ck,
       design: { level: lv, aspect: 1.6, tiles: z.tiles, faces: z.faces, down: z.down, gold: z.gold, obst: z.obst, clock: z.clock, solution: z.solution } };
-    console.log(lv, 'band', band.join('-'), 'attempt', attempt, recipe.join('+'), 'spare', ck, 'exp', m.expectedTries, m.label, 'first', m.firstTryRate);
-    if (!pg.best || off(row.g2.exp, band) < off(pg.best.g2.exp, band)) { pg.best = { ...row, exp: row.g2.exp }; }
+    console.log(lv, 'band', band.join('-'), 'attempt', attempt, recipe.join('+'), 'spare', ck, 'exp', m.expectedTries, m.label, 'first', m.firstTryRate, 'late', critic.late, 'reach', critic.reach, critic.flags.join(','));
+    const score = r => off(r.g2.exp, band) + (r.critic && r.critic.flags.length ? 5 : 0);   // (a flagged level only when nothing else came)
+    if (!pg.best || score(row) < score(pg.best)) { pg.best = { ...row, exp: row.g2.exp }; }
     save();
   }
-  const best = pg.best ? { ...pg.best, inBand: off(pg.best.exp, band) === 0, tried: pg.tried, s: Math.round((Date.now() - t0) / 1000) } : { level: lv, ok: false, shape: p.shape, tried: pg.tried };
+  const best = pg.best ? { ...pg.best, inBand: off(pg.best.exp, band) === 0 && !pg.best.critic.flags.length, tried: pg.tried, s: Math.round((Date.now() - t0) / 1000) } : { level: lv, ok: false, shape: p.shape, tried: pg.tried };
   delete best.exp;
   fs.appendFileSync(outFile, JSON.stringify(best) + '\n');
   console.log(lv, best.ok ? 'KEPT ' + best.recipe.join('+') + ' exp ' + best.g2.exp + ' (' + (isHard(lv) ? 'hard ' : 'breather ') + band.join('-') + (best.inBand ? '' : ', closest') + ')' : 'NONE');
