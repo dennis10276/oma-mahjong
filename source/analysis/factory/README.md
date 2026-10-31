@@ -274,3 +274,7 @@ First run of specials_matter on the 10 middle candidates (`matter-mid1.jsonl`): 
 2-3.8 tries without it); idle ice on 948 (0.0) and 958 (0.15). On several boards removing the locks or the
 ice makes the level HARDER (942: +3.1 without locks): they show the way. So a special counts either way.
 Idle ice/locks are taken off and the board measured again.
+Middle builds so far (`mid-builds.jsonl`, plan_g2 TUNE=1, band 3.4-4.9): 28 tries, 12 in band, the rest at
+1-2.3 or 5-7 (the bot's ratings stay bimodal). Second specials check (`matter-mid2.jsonl`): idle ice on 940,
+949, 956 and old 184; taken off. First arrangement on the new curve: the 4.0-4.5 range is almost empty, so
+the batch zig-zagged 3.0-5.9 around the line; building 20 more aimed at 3.7-4.6 (`piles-mid4.json`).
