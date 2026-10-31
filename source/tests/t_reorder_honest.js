@@ -19,8 +19,18 @@ module.exports = [
     }
     const previousBand = { true: -1, false: -1 };
     t.eq(report.moves.map(m => m.lv), Array.from({ length: 178 }, (_, i) => 92 + i), 'every destination present exactly once');
+    // level-factory batches replace some boards on purpose (now.revisions): those get their own saved-game
+    // generation and rating label; everything else must be exactly the reordered 1.54 board
+    const revised = lv => (now.revisions || []).find(([a, b]) => lv >= a && lv <= b);
     for (const m of report.moves) {
       const r = now.levels[m.lv - now.from], old = before.levels[m.was - before.from];
+      const rev = revised(m.lv);
+      if (rev) {
+        t.eq(r[0].length / 3 > 88, m.lv % 10 === 0, 'large-board placement ' + m.lv);
+        t.eq(H.designVersion(m.lv), now.v + '.' + rev[2], 'replaced board uses its own saved-game generation ' + m.lv);
+        t.eq(now.ratingModels[m.lv - now.from], 'human-g2.1', 'replaced board carries its rating label ' + m.lv);
+        continue;
+      }
       t.ok(m.was >= 92 && m.was <= 269, 'source within authorized range ' + m.lv);
       t.eq(hash(r), hash(old), 'whole packed board preserved ' + m.lv);
       t.eq(hash(r), m.hash, 'measurement identifies this board ' + m.lv);
