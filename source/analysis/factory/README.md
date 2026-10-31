@@ -253,3 +253,13 @@ Spare tuning (`spare-tune.jsonl`, 40 variants): the spare is a strong but errati
 Middle boards so far: heart 3.35, arch chainReaction 3.58, hourglass +2 3.4, butterfly 4.7, castle 4.85,
 (bowtie 3.27, frame -1 3.1). Building 18 more middle (3.4-4.9) and 2 big for 200 (4.4-5.4) with plan_g2
 TUNE=1 (spare steps towards the band) on new piles (`piles-mid2.json`).
+
+## Gemini's critic g3 (wip/gemini-human-bot 78de423), Claude's review 2026-10-31: adopted as warnings
+`critique(board)` in human_bot.js (human_critic.js); measureHuman unchanged (engine files identical to g2.1).
+Check A as reported: 5 kinds with 3+ labelled boards each fire on 2-3 of 3, at most 1 of 14 fun boards
+(factory4-176 is that one for 3 kinds). Claude's re-run (seed 4711 and 99): 1.63-179, -189 and blind1-194
+flag only "fun" both times; 1.63-177 flips "guessing" between seeds (thresholds sit close to the data).
+Caveats: thresholds were fitted on 2-3 boards per kind; specialAddsNothing uses 10-game ablations and
+fires on 10 of the 20 old 1.63 levels; BLIND2_CRITIC.json is not blind for 175/185/194 (Dennis's results
+were in its data) and the other 17 levels are being replaced. Use: warnings in the factory, recorded
+before Dennis plays the new batch (that is blind test 2), never a gate (Dennis: "maybe some are doable").
