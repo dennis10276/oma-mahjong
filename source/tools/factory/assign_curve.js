@@ -17,13 +17,18 @@ const rd = f => fs.readFileSync(f, 'utf8').trim().split('\n').filter(Boolean).ma
 const live = Object.fromEntries(rd(path.join(ROOT, 'analysis', 'factory', 'curve-live-g21.jsonl')).map(r => [r.level, r.exp]));
 const CLASSES = [['easy', 1, 1.6], ['normal', 1.6, 2.8], ['tricky', 2.8, 4.2], ['peak', 4.2, 6]];
 const classOf = e => (CLASSES.find(([, a, b]) => e <= b) || CLASSES[3])[0];
-const inv = rd(invFile).filter(r => r.g2 && r.g2.exp <= 6);
+const inv = rd(invFile).filter(r => r.g2 && r.g2.exp <= +(process.env.MAX_EXP || 6));
 const tilesOf = r => r.design.tiles.map(t => Array.isArray(t) ? t : [t.x, t.y, t.z]);
 for (const r of inv) { r._t = tilesOf(r); r._s = F.spots(r._t)[0]; r._base = r.shape.split(' · ')[0]; r._big = r._t.length > 88; r._class = classOf(r.g2.exp); r._recipe = r.recipe.join('+'); }
 const before = {}; for (let lv = from - 10; lv < from; lv++) before[lv] = F.spots(Hard.get(lv).tiles)[0];
 const levels = []; for (let lv = from; lv <= to; lv++) levels.push(lv);
-const target = lv => Math.min(5.5, live[lv]);
-const cost = (r, lv) => (r._class === classOf(target(lv)) ? 0 : 3) + Math.abs(r.g2.exp - target(lv)) + ((r.critic && r.critic.flags && r.critic.flags.length) ? 1.5 : 0);
+// CURVE='start,slope[,jumpAt,jump]' (Dennis 2026-10-31: no copying of the old curve's ups and downs: pick it up
+// at 175 at the hardest judged level of 150-175 (155: 3.85) and keep getting harder; 200 a small jump, 201 on
+// from there). TARGET_AT='{"190":2.3}' sets single levels (190: a big breather is fine). Without CURVE: the
+// class of the live level, as before.
+const CURVE = process.env.CURVE ? process.env.CURVE.split(',').map(Number) : null, AT = JSON.parse(process.env.TARGET_AT || '{}');
+const target = lv => AT[lv] != null ? AT[lv] : CURVE ? CURVE[0] + CURVE[1] * (lv - from) + (CURVE[2] && lv >= CURVE[2] ? CURVE[3] : 0) : Math.min(5.5, live[lv]);
+const cost = (r, lv) => (CURVE ? 0 : r._class === classOf(target(lv)) ? 0 : 3) + Math.abs(r.g2.exp - target(lv)) + ((r.critic && r.critic.flags && r.critic.flags.length) ? 1.5 : 0) + (r.idle && r.idle.length ? 3 : 0);
 // (fast: every pair checked once; a lower bound on what the remaining levels can still cost)
 const N = inv.length, compat = inv.map(() => new Uint8Array(N));
 for (let a = 0; a < N; a++) for (let b = a + 1; b < N; b++) {
@@ -55,6 +60,6 @@ if (best) best.pick = best.pick.map(i => inv[i]);
 if (!best) { console.log('no arrangement found (' + nodes + ' tried)'); process.exit(1); }
 const rows = best.pick.map((r, k) => { const lv = levels[k]; const { _t, _s, _base, _big, _class, _recipe, ...rest } = r;
   return { ...rest, builtAs: r.builtAs || r.level, level: lv, liveExp: live[lv], cls: _class, design: { ...r.design, level: lv } }; });
-for (const r of rows) console.log(r.level, String(r.liveExp).padEnd(5), '->', String(r.g2.exp).padEnd(5), r.cls.padEnd(7), r.recipe.join('+').padEnd(26), r.shape, r.critic && r.critic.flags && r.critic.flags.length ? '(' + r.critic.flags.join(', ') + ')' : '');
+for (const r of rows) console.log(r.level, String(+target(r.level).toFixed(2)).padEnd(5), '->', String(r.g2.exp).padEnd(5), r.cls.padEnd(7), r.recipe.join('+').padEnd(26), r.shape, r.critic && r.critic.flags && r.critic.flags.length ? '(' + r.critic.flags.join(', ') + ')' : '');
 console.log('cost', best.total.toFixed(2), 'searched', nodes);
 if (out) fs.writeFileSync(out, rows.map(r => JSON.stringify(r)).join('\n') + '\n');
