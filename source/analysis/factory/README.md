@@ -238,3 +238,11 @@ the live level it replaces (easy 1-1.6, normal 1.6-2.8, tricky 2.8-4.2, peak 4.2
 Puzzles: lockedClock 7, dontGrab+lockedPartners 5, deepKeys+iceChain 5, iceLockClock 5, lockedPartners+
 iceChain 2, chainReaction 2. 190 and 200 are a bit easier than live (no big tricky board came out).
 One critic warning: 199 (late squeeze). Waits for Gemini's critic (g3) before Dennis judges.
+
+## New curve (Dennis 2026-10-31: "The old curve was not quite right: many levels are suddenly harder and then
+easier again. We have a new judger now that places them better starting from 175. Don't mimic the old curve:
+pick it up at 175 like the difficulty of the hardest judged level in 150-175.")
+Hardest live level 150-174 by g2.1: 155 (3.85; then 162 3.3, 166 2.98). Target: a smooth rise from 3.85 at
+175 to about 6.5 at 300 (the hard boards; Dennis: "keep the hard ones for 300 or so"): about 4.4 at 200.
+So 175-200 is all middle (3.3-5). Source of middle boards: the clock spare (1-3, the game's rule) moves many
+boards a lot (194: 7.85 -> 2.5 with +2): `tools/factory/tune_spare.js` tries it on every board we have.
