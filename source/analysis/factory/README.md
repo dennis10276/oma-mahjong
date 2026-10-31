@@ -214,3 +214,8 @@ Rebuilding: the top hard slot (moon pile), the middle slot (butterfly pile), the
 194 with +2 (2.5 tries) becomes a breather.
 Dennis: "I liked the old one [194]": the blind-test 194 (hourglass, deepKeys+iceChain, 5 stars) goes into 1.63
 as a hard level; arch (7.47) stays (no cap); the moon hard rebuild was stopped.
+1.63 order after Dennis's picks (`batch-175-ordered.jsonl`, all checks pass): easier 175-182 (diamond, pyramid
+tall, star, house, cross, twins big (new, no warning), ushape = his 194 with +2, frame), middle 183-187
+(heart, bowtie, butterfly (new, lockedClock 4.7), castle, vase), hard 188-194 (pyramid, the blind-test 194
+on hourglass, steps big, block, octagon, letterH, arch 7.47). In the lab (batch 10): new 185, new 194, 181
+(his +2 version) and the two critic tests (moon and the first twins: the bot loses near the end).

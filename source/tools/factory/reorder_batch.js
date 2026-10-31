@@ -9,11 +9,11 @@ const B=Object.fromEntries(rd(ROOT+'/analysis/factory/batch-175-g2.jsonl').map(r
 // extra boards as id=file.jsonl (first row), and --out=file to write the batch when every check passes
 const args=process.argv.slice(2),outArg=(args.find(a=>a.startsWith('--out='))||'').slice(6);
 for(const a of args.filter(a=>a.includes('=')&&!a.startsWith('--'))){const [id,f]=a.split('=');B[id]=rd(f)[0];}
-// built-as level -> new level. m1 (diamond) came out easy, m2 (block) hard (the bot rarely lands in the
-// middle), so: 8 breathers, 5 middle, 7 hard. Big boards (more than 88 tiles) only on every 10th level:
-// 180 is a new big breather (twins, 96), 190 the big steps board. Left out: old 179, 189 and 192
-// (locked-clock breathers; the hourglass and cross shapes stay at 181 and 179).
-const ORDER=['m1','b184','b187','b186','b176','big','b194','b181',  'b177','b182','b183','b191','b185',  'b178','b190','b180','m2','b188','b175','b193'];
+// built-as level -> new level (Dennis 2026-10-31 on the 1.63 picks: 185 "replace" (late squeeze) -> a new
+// butterfly middle level (but2); 194 "+2 spare" -> u194, now an easy one; "I liked the old one" -> old194,
+// the blind-test 194, as a hard level). The critic's late-squeeze levels 178 (moon) and the first big 180
+// are out of the release (big2 is the new big breather). 8 easier, 5 middle, 7 hard; big boards on 180/190.
+const ORDER=['m1','b192','b184','b187','b176','big2','u194','b181',  'b177','b182','but2','b191','b185',  'b178','old194','b180','m2','b190','b175','b188'];
 const tier=k=>k<8?'breather':k<13?'middle':'hard';
 const rows=ORDER.map((id,k)=>{const r=B[id];const lv=175+k;return {...r,builtAs:r.level,level:lv,tier:tier(k),design:{...r.design,level:lv}};});
 const base=s=>s.split(' · ')[0];let bad=0;
