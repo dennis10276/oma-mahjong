@@ -219,3 +219,11 @@ tall, star, house, cross, twins big (new, no warning), ushape = his 194 with +2,
 (heart, bowtie, butterfly (new, lockedClock 4.7), castle, vase), hard 188-194 (pyramid, the blind-test 194
 on hourglass, steps big, block, octagon, letterH, arch 7.47). In the lab (batch 10): new 185, new 194, 181
 (his +2 version) and the two critic tests (moon and the first twins: the bot loses near the end).
+
+## The curve (Dennis 2026-10-31: "We are now making a batch for 175-200 but this should be how we build levels
+from now on. Also after 200. Maybe make more easy/middle and the hard ones keep for 300 or so. The
+difficulty curve should stay the same from before.")
+g2.1 on every live level 150-269 (`curve-live-g21.jsonl`, seed 4711, 2 x 20): trend (values capped at 5)
+exp = 0.157 + 0.00989 * level: 1.89 at 175, 2.14 at 200, 2.82 at 269, 3.13 at 300. Live 175-200: p25 1.32,
+median 2.1, p75 2.77, p90 3.73, 3 of 26 at the bot's maximum 8 (177, 192, 196). The batch 175-200 copies
+that spread (most 1.3-2.8, a few 3-4, a couple of peaks 4-6); the hard boards (6-7.5) wait for ~270-300.
