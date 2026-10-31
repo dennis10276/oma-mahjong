@@ -54,7 +54,8 @@ for (const p of piles) {
   for (let attempt = pg.next; attempt < ATTEMPTS && !(pg.best && off(pg.best.exp, band) === 0); attempt++) {
     pg.next = attempt + 1; save();
     const recipe = RECIPES[(lv + attempt) % RECIPES.length], salt = 50 + attempt;
-    const d = cached.length > attempt ? cached[attempt] : Hard.makeNow(lv, 1.6, 1, salt, { tiles });
+    // (the designer can hang on some piles: once its cached deals are used, they are used again with the next recipe)
+    const d = cached.length ? cached[attempt % cached.length] : Hard.makeNow(lv, 1.6, 1, salt, { tiles });
     if (!d.solution || !I.valid(d)) { pg.tried.push('designer: no deal'); continue; }
     let x = { tiles: d.tiles, faces: d.faces.slice(), down: d.down.slice(), gold: (d.gold || []).slice(), obst: d.obst ? I.clone(d.obst) : { ice: {}, locks: [], keys: [] }, clock: d.clock ? { ...d.clock } : null, solution: d.solution.slice() };
     let ok = true;
