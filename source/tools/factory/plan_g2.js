@@ -32,7 +32,9 @@ const hardShare = lv => Math.min(0.7, 0.3 + 0.3 * (lv - 175) / 19);
 const isHard = lv => ((lv * 0.6180339887) % 1) < hardShare(lv);     // (spread evenly, not in clumps)
 const BANDS = { hard: [5, 7.9], breather: [1.8, 3.5] };
 const bandOf = lv => BANDS[isHard(lv) ? 'hard' : 'breather'];
-const off = (e, b) => e < b[0] ? b[0] - e : e > b[1] ? e - b[1] : 0;
+const off = (e, b) => e >= 8 ? 3 : e < b[0] ? b[0] - e : e > b[1] ? e - b[1] : 0;   // (8: the bot hardly ever clears it)
+// AVOID='{"182":["lockedClock"]}': recipes a level must not use (variety fix-ups after a run)
+const AVOID = JSON.parse(process.env.AVOID || '{}');
 I.setExact(true);
 const want = only ? only.split(',').map(Number) : null;
 const piles = JSON.parse(fs.readFileSync(pilesFile, 'utf8')).filter(p => !want || want.includes(p.level));
@@ -53,7 +55,8 @@ for (const p of piles) {
   const cached = cf && fs.existsSync(cf) ? JSON.parse(fs.readFileSync(cf, 'utf8')).deals.filter(d => d && sameTiles(d.tiles, tiles)) : [];
   for (let attempt = pg.next; attempt < ATTEMPTS && !(pg.best && off(pg.best.exp, band) === 0); attempt++) {
     pg.next = attempt + 1; save();
-    const recipe = RECIPES[(lv + attempt) % RECIPES.length], salt = 50 + attempt;
+    const recipe = RECIPES[(lv + attempt) % RECIPES.length], salt = 50 + attempt + (+process.env.SALT || 0);
+    if ((AVOID[lv] || []).includes(recipe.join('+'))) continue;
     // (the designer can hang on some piles: once its cached deals are used, they are used again with the next recipe)
     const d = cached.length ? cached[attempt % cached.length] : Hard.makeNow(lv, 1.6, 1, salt, { tiles });
     if (!d.solution || !I.valid(d)) { pg.tried.push('designer: no deal'); continue; }
