@@ -263,3 +263,10 @@ Caveats: thresholds were fitted on 2-3 boards per kind; specialAddsNothing uses 
 fires on 10 of the 20 old 1.63 levels; BLIND2_CRITIC.json is not blind for 175/185/194 (Dennis's results
 were in its data) and the other 17 levels are being replaced. Use: warnings in the factory, recorded
 before Dennis plays the new batch (that is blind test 2), never a gate (Dennis: "maybe some are doable").
+Dennis on that warning: "how the old levels were built a special often didn't add anything. I want to change
+that from now. Levels shouldn't get this flag. I feel like the bot can be used to design levels better as
+well." New rule for factory levels: every special must matter. `tools/factory/specials_matter.js` removes
+each kind (ice, locks with keys, clock) in turn and measures with the full g2.1 measure (2 x 20, not 10
+games): it matters when the expected tries drop by 0.3+ or the first-try rate rises by 0.15+. A board
+where a special is idle gets that special re-placed (or, for the clock, fewer spare moves) before it can
+go into a batch.
