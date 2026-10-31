@@ -149,3 +149,21 @@ Use: g2 orders the next factory batch (planned levels); the blind test decides w
   thresholds were found on 188: the blind test checks them.
 - Blind 1 (Dennis's results not in git): g2 (frozen) 187 3.0, 194 6.7, 183 6.1, 185 7.9;
   g2.1 (seed 4711) 187 1.25, 194 6.15, 183 6.2, 185 7.8.
+
+## Blind test 1 scored (Dennis 2026-10-31)
+| board | recipe | Dennis | g1 | g2 (frozen, before he played) | g2.1 (seed 4711, also unseen) |
+|---|---|---|---|---|---|
+| 187 house | deepKeys + iceChain, spare 1 | 3 tries, 4 stars "the locks put you in the right direction" | 1.3 | 3.0 | 1.25 |
+| 194 hourglass | deepKeys + iceChain, spare 1 | 4, 5 stars, right, "very hard but fun hard" | 7.7 | 6.7 | 6.15 |
+| 183 blob | chainReaction, spare 2 | 5 | 17.0 | 6.1 | 6.2 |
+| 185 vase | iceLockClock, spare 2 | 6, 4 stars "hard but I like the pile shape better than blobs" | 22.8 | 7.9 | 7.8 |
+Order: g1 and g2.1 exact, g2 one swap (Spearman 0.8). Size of the miss (mean |bot - Dennis|): g1 8.6,
+g2 1.4, g2.1 1.7; the bots run about 1.3x high on the hard ones. g2.1 stays the meter.
+Dennis: "Get rid of the blob levels": the blob shapes are out of `piles_for.js`; `piles-175-noblob.json`
+keeps every non-blob pile and gives 178 pyramid, 182 bowtie, 183 butterfly, 190 octagon, 191 castle ·
+two islands (piles now try every variation against the overlap rule).
+
+## Batch 8: planned levels picked by g2.1 (`tools/factory/plan_g2.js`)
+Recipes rotate per attempt; the clock spare follows his notes (chainReaction 3, with iceChain 1, others 2);
+g2.1 expectedTries (2 x 20 games, seed 4711) picks: aim 2.5 at 175 rising to 4.0 at 194 (+-0.6), else the
+closest attempt. The strong bot is no longer a gate. Every level stays valid by construction.
