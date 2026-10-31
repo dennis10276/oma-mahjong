@@ -1,0 +1,1122 @@
+{
+  "version": "human-g3",
+  "generatedAt": "2026-10-31T16:02:40.166Z",
+  "batch": "batch-175-ordered",
+  "levels": [
+    {
+      "level": 175,
+      "recipe": "chainReaction",
+      "shape": "diamond",
+      "role": "breather",
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "label": "easy",
+      "flags": [
+        "boringAfterClock",
+        "tooEasy"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": true,
+          "value": 1,
+          "reason": "once the clock is taken it is just collecting with no tension left (0 post-clock losses)"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 0,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": true,
+          "value": 1,
+          "reason": "won without having to think (expected 1 tries, 100% first-try wins)"
+        },
+        "fun": {
+          "flag": false,
+          "value": 1,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 3
+    },
+    {
+      "level": 176,
+      "recipe": "lockedPartners+iceChain",
+      "shape": "star",
+      "role": "breather",
+      "expectedTries": 2.17,
+      "firstTryRate": 0,
+      "label": "right",
+      "flags": [
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.524,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 1.6,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0.23,
+          "reason": "locks does not change how you play (difficulty shifts by 0.23 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 2.17,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 2.17,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 38
+    },
+    {
+      "level": 177,
+      "recipe": "dontGrab+lockedPartners",
+      "shape": "house",
+      "role": "breather",
+      "expectedTries": 2.23,
+      "firstTryRate": 0,
+      "label": "right",
+      "flags": [
+        "clockTooLoose",
+        "guessing",
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": true,
+          "value": 5.6,
+          "reason": "the clock has more spare than it needs (average spare 5.6 moves upon reach)"
+        },
+        "guessing": {
+          "flag": true,
+          "value": 1,
+          "reason": "progress depends on blind digging or guessing rather than deduction"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0.07,
+          "reason": "ice does not change how you play (difficulty shifts by 0.07 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 2.23,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 2.23,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 19
+    },
+    {
+      "level": 178,
+      "recipe": "lockedPartners+iceChain",
+      "shape": "moon",
+      "role": "breather",
+      "expectedTries": 2.2,
+      "firstTryRate": 0.25,
+      "label": "right",
+      "flags": [
+        "lateSqueeze",
+        "guessing",
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": true,
+          "value": 0.84,
+          "reason": "frustrating tray pressure at the very end (84% of losses with <=45% tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.978,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0.2,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": true,
+          "value": 1,
+          "reason": "progress depends on blind digging or guessing rather than deduction"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0.1,
+          "reason": "locks does not change how you play (difficulty shifts by 0.1 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 2.2,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 2.2,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 57
+    },
+    {
+      "level": 179,
+      "recipe": "iceLockClock",
+      "shape": "cross",
+      "role": "breather",
+      "expectedTries": 2.3,
+      "firstTryRate": 0,
+      "label": "right",
+      "flags": [
+        "fun"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.435,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 2.3,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 1.25,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 2.3,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": true,
+          "value": 2.3,
+          "reason": "satisfying and fair challenge with engaging puzzle mechanics"
+        }
+      },
+      "seconds": 16
+    },
+    {
+      "level": 180,
+      "recipe": "lockedClock",
+      "shape": "twins",
+      "role": "hard",
+      "expectedTries": 1.8,
+      "firstTryRate": 0.25,
+      "label": "right",
+      "flags": [
+        "lateSqueeze",
+        "guessing",
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": true,
+          "value": 0.94,
+          "reason": "frustrating tray pressure at the very end (94% of losses with <=45% tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0.6,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": true,
+          "value": 1,
+          "reason": "progress depends on blind digging or guessing rather than deduction"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0,
+          "reason": "ice does not change how you play (difficulty shifts by 0 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 1.8,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 1.8,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 43
+    },
+    {
+      "level": 181,
+      "recipe": "iceLockClock",
+      "shape": "hourglass",
+      "role": "breather",
+      "expectedTries": 2.83,
+      "firstTryRate": 0.05,
+      "label": "right",
+      "flags": [
+        "guessing",
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.364,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0.2,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": true,
+          "value": 1,
+          "reason": "progress depends on blind digging or guessing rather than deduction"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0.03,
+          "reason": "ice does not change how you play (difficulty shifts by 0.03 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 2.83,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 2.83,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 14
+    },
+    {
+      "level": 182,
+      "recipe": "lockedClock",
+      "shape": "frame",
+      "role": "breather",
+      "expectedTries": 2.83,
+      "firstTryRate": 0,
+      "label": "right",
+      "flags": [
+        "lateSqueeze",
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": true,
+          "value": 0.88,
+          "reason": "frustrating tray pressure at the very end (88% of losses with <=45% tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.962,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0.8,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0.17,
+          "reason": "ice does not change how you play (difficulty shifts by 0.17 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 2.83,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 2.83,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 59
+    },
+    {
+      "level": 183,
+      "recipe": "lockedPartners+iceChain",
+      "shape": "heart · flat",
+      "role": "breather",
+      "expectedTries": 3.35,
+      "firstTryRate": 0,
+      "label": "right",
+      "flags": [
+        "lateSqueeze"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": true,
+          "value": 0.15,
+          "reason": "frustrating tray pressure at the very end (100% of post-clock losses late)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.409,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 0.4,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 3.35,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 3.35,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 27
+    },
+    {
+      "level": 184,
+      "recipe": "dontGrab+lockedPartners",
+      "shape": "bowtie",
+      "role": "breather",
+      "expectedTries": 3.27,
+      "firstTryRate": 0,
+      "label": "right",
+      "flags": [
+        "clockTooLoose",
+        "guessing",
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0.05,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": true,
+          "value": 5.9,
+          "reason": "the clock has more spare than it needs (average spare 5.9 moves upon reach)"
+        },
+        "guessing": {
+          "flag": true,
+          "value": 1,
+          "reason": "progress depends on blind digging or guessing rather than deduction"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0.07,
+          "reason": "ice does not change how you play (difficulty shifts by 0.07 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 3.27,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 3.27,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 29
+    },
+    {
+      "level": 185,
+      "recipe": "lockedPartners+iceChain",
+      "shape": "butterfly",
+      "role": "breather",
+      "expectedTries": 3.45,
+      "firstTryRate": 0,
+      "label": "right",
+      "flags": [
+        "lateSqueeze",
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": true,
+          "value": 0.95,
+          "reason": "frustrating tray pressure at the very end (95% of losses with <=45% tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0,
+          "reason": "ice does not change how you play (difficulty shifts by 0 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 3.45,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 3.45,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 49
+    },
+    {
+      "level": 186,
+      "recipe": "dontGrab+lockedPartners",
+      "shape": "castle · two islands",
+      "role": "hard",
+      "expectedTries": 4.85,
+      "firstTryRate": 0,
+      "label": "hard",
+      "flags": [
+        "clockTooLoose",
+        "fun"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0.03,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": true,
+          "value": 11.1,
+          "reason": "the clock has more spare than it needs (average spare 11.1 moves upon reach)"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 0.35,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 4.85,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": true,
+          "value": 4.85,
+          "reason": "satisfying and fair challenge with engaging puzzle mechanics"
+        }
+      },
+      "seconds": 36
+    },
+    {
+      "level": 187,
+      "recipe": "deepKeys+iceChain",
+      "shape": "vase",
+      "role": "hard",
+      "expectedTries": 5.92,
+      "firstTryRate": 0.2,
+      "label": "hard",
+      "flags": [
+        "fun"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.873,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0.9,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 4.57,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 5.92,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": true,
+          "value": 5.92,
+          "reason": "satisfying and fair challenge with engaging puzzle mechanics"
+        }
+      },
+      "seconds": 22
+    },
+    {
+      "level": 188,
+      "recipe": "lockedPartners+iceChain",
+      "shape": "pyramid",
+      "role": "hard",
+      "expectedTries": 6.1,
+      "firstTryRate": 0.35,
+      "label": "hard",
+      "flags": [
+        "clockTooTight",
+        "guessing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": true,
+          "value": 0.123,
+          "reason": "no route to the clock a person can find in time (reach rate 12%, wants more spare moves)"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": true,
+          "value": 1,
+          "reason": "progress depends on blind digging or guessing rather than deduction"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 1.55,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 6.1,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 6.1,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 59
+    },
+    {
+      "level": 189,
+      "recipe": "deepKeys+iceChain",
+      "shape": "octagon",
+      "role": "hard",
+      "expectedTries": 6.95,
+      "firstTryRate": 0.15,
+      "label": "hard",
+      "flags": [
+        "specialAddsNothing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0.11,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.896,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": true,
+          "value": 0.1,
+          "reason": "clock does not change how you play (difficulty shifts by 0.1 when removed)"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 6.95,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 6.95,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 47
+    },
+    {
+      "level": 190,
+      "recipe": "iceLockClock",
+      "shape": "steps · ridges",
+      "role": "hard",
+      "expectedTries": 6.65,
+      "firstTryRate": 0,
+      "label": "hard",
+      "flags": [
+        "clockTooTight",
+        "guessing"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": true,
+          "value": 0.06,
+          "reason": "no route to the clock a person can find in time (reach rate 6%, wants more spare moves)"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 0.2,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": true,
+          "value": 1,
+          "reason": "progress depends on blind digging or guessing rather than deduction"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 5.6,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 6.65,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 6.65,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 22
+    },
+    {
+      "level": 191,
+      "recipe": "chainReaction",
+      "shape": "block",
+      "role": "breather",
+      "expectedTries": 6.92,
+      "firstTryRate": 0,
+      "label": "hard",
+      "flags": [
+        "fun"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.079,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 3,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 0.98,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 6.92,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": true,
+          "value": 6.92,
+          "reason": "satisfying and fair challenge with engaging puzzle mechanics"
+        }
+      },
+      "seconds": 16
+    },
+    {
+      "level": 192,
+      "recipe": "deepKeys+iceChain",
+      "shape": "arch",
+      "role": "hard",
+      "expectedTries": 7.47,
+      "firstTryRate": 0,
+      "label": "hard",
+      "flags": [
+        "fun"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.559,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 4.2,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 0,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 7.47,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": true,
+          "value": 7.47,
+          "reason": "satisfying and fair challenge with engaging puzzle mechanics"
+        }
+      },
+      "seconds": 14
+    },
+    {
+      "level": 193,
+      "recipe": "chainReaction",
+      "shape": "letterH",
+      "role": "hard",
+      "expectedTries": 7.1,
+      "firstTryRate": 0,
+      "label": "hard",
+      "flags": [
+        "fun"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": false,
+          "value": 0.562,
+          "reason": "clock allows enough time for viable routes"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 1.9,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 0,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 7.1,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": true,
+          "value": 7.1,
+          "reason": "satisfying and fair challenge with engaging puzzle mechanics"
+        }
+      },
+      "seconds": 11
+    },
+    {
+      "level": 194,
+      "recipe": "deepKeys+iceChain",
+      "shape": "ushape",
+      "role": "hard",
+      "expectedTries": 7.85,
+      "firstTryRate": 0,
+      "label": "hard",
+      "flags": [
+        "clockTooTight"
+      ],
+      "judgments": {
+        "lateSqueeze": {
+          "flag": false,
+          "value": 0,
+          "reason": "no late squeeze (losses occur with plenty of tiles left)"
+        },
+        "boringAfterClock": {
+          "flag": false,
+          "value": 0,
+          "reason": "maintains engagement after clock"
+        },
+        "clockTooTight": {
+          "flag": true,
+          "value": 0.004,
+          "reason": "no route to the clock a person can find in time (reach rate 0%, wants more spare moves)"
+        },
+        "clockTooLoose": {
+          "flag": false,
+          "value": 1,
+          "reason": "clock timer matches route distance well"
+        },
+        "guessing": {
+          "flag": false,
+          "value": 0,
+          "reason": "routes and obstacles can be worked out visually"
+        },
+        "specialAddsNothing": {
+          "flag": false,
+          "value": 0,
+          "reason": "specials meaningfully contribute to the puzzle"
+        },
+        "tooEasy": {
+          "flag": false,
+          "value": 7.85,
+          "reason": "requires thoughtful planning"
+        },
+        "fun": {
+          "flag": false,
+          "value": 7.85,
+          "reason": "imbalanced difficulty or unengaging obstacle structure"
+        }
+      },
+      "seconds": 7
+    }
+  ]
+}
