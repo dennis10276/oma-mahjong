@@ -167,3 +167,11 @@ two islands (piles now try every variation against the overlap rule).
 Recipes rotate per attempt; the clock spare follows his notes (chainReaction 3, with iceChain 1, others 2);
 g2.1 expectedTries (2 x 20 games, seed 4711) picks: aim 2.5 at 175 rising to 4.0 at 194 (+-0.6), else the
 closest attempt. The strong bot is no longer a gate. Every level stays valid by construction.
+Runs (2026-10-31): the bot's ratings are bimodal (1-2 or 6-8 tries) and the clock spare hardly moves
+them, so the batch mixes hard levels (5-7.9) and breathers (1.8-3.5), the hard share rising 30% -> 60%;
+recipes rotate per level; a fix-up pass (AVOID) rebuilt 180, 182, 183, 184, 185, 191 for variety and to
+get off the bot's maximum (8). Result `batch-175-g2.jsonl`: 9 hard (4.9-7.9), 11 breathers (1.8-3.5);
+recipes: lockedPartners+iceChain 5, deepKeys+iceChain 4, lockedClock 4, iceLockClock 3,
+dontGrab+lockedPartners 3, chainReaction 1. For Dennis (lab ids 8175, 8185, 8193, no bot numbers shown):
+175 first (chainReaction, letterH, 7.1), 185 middle (deepKeys+iceChain, vase, 5.9), 193 hardest
+(deepKeys+iceChain, ushape, 7.85). A second blind check of the meter at the same time.
