@@ -246,3 +246,10 @@ Hardest live level 150-174 by g2.1: 155 (3.85; then 162 3.3, 166 2.98). Target: 
 175 to about 6.5 at 300 (the hard boards; Dennis: "keep the hard ones for 300 or so"): about 4.4 at 200.
 So 175-200 is all middle (3.3-5). Source of middle boards: the clock spare (1-3, the game's rule) moves many
 boards a lot (194: 7.85 -> 2.5 with +2): `tools/factory/tune_spare.js` tries it on every board we have.
+Dennis on the big levels: 190 may be easier (a breather on a big board); 200 a small jump above the curve
+(about +0.5), and 201 on continue from there.
+Spare tuning (`spare-tune.jsonl`, 40 variants): the spare is a strong but erratic knob (vase 5.92 -> 1.07 with
++1; hourglass (Dennis's old 194) 6.15 -> 3.4 with +2; octagon 6.95 -> 6.9 and 7.03; steps (big) 6.65 -> 1.73).
+Middle boards so far: heart 3.35, arch chainReaction 3.58, hourglass +2 3.4, butterfly 4.7, castle 4.85,
+(bowtie 3.27, frame -1 3.1). Building 18 more middle (3.4-4.9) and 2 big for 200 (4.4-5.4) with plan_g2
+TUNE=1 (spare steps towards the band) on new piles (`piles-mid2.json`).

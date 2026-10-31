@@ -67,8 +67,22 @@ for (const p of piles) {
     for (const k of recipe) { const y = I.IDEAS[k].make(x, I.ctxOf(x), I.rngOf(lv * 31 + salt * 7 + k.length)); if (!y) { ok = false; break; } x = y; }
     if (!ok) { pg.tried.push(recipe.join('+') + ': no place'); continue; }
     if (keys(x).length && x.obst.keys.some(kk => I.ctxOf(x).free0[kk]) && recipe.every(k => !['lockedClock', 'clockOnTopLocked'].includes(k))) { pg.tried.push('free keys'); continue; }
-    const z = I.fix(x, SPARE_OF(recipe)); if (!z || !I.valid(z)) { pg.tried.push(recipe.join('+') + ': no exact clock route'); continue; }
+    let z = I.fix(x, SPARE_OF(recipe)); if (!z || !I.valid(z)) { pg.tried.push(recipe.join('+') + ': no exact clock route'); continue; }
     let m; try { m = measureHuman(boardOf(z), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { pg.tried.push('bot error ' + String(e.message).slice(0, 80)); continue; }
+    // TUNE=1: outside the band, try the clock spare one and two steps towards it (1-3, the game's rule; Dennis's
+    // +2 on 194 took it from 7.85 to 2.5). Kept when it lands closer.
+    if (process.env.TUNE && z.clock) {
+      const route = z.solution.indexOf(z.clock.i) + 1;
+      for (const step of [1, 2]) {
+        if (off(m.expectedTries, band) === 0) break;
+        const sp = (z.clock.n - route) + (m.expectedTries > band[1] ? 1 : -1);
+        if (sp < 1 || sp > 3) break;
+        const z2 = { ...z, clock: { ...z.clock, n: route + sp } };
+        let m2; try { m2 = measureHuman(boardOf(z2), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { break; }
+        pg.tried.push(recipe.join('+') + ' spare ' + sp + ': ' + m2.expectedTries);
+        if (off(m2.expectedTries, band) < off(m.expectedTries, band)) { z = z2; m = m2; } else break;
+      }
+    }
     // critic v1, warnings only (Dennis's notes, checked on every board he rated; analysis/factory/README.md): late squeeze
     // (lost with a third or less of the tiles left in more than 30% of the bot's losses: 185 in 1.63, "tray
     // pressure at the very end", the only rated board above 0.21) and a clock a person can reach (the bot
