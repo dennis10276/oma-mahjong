@@ -208,6 +208,9 @@ judgements in his notes, sorted in `dennis-notes-labels.json`. The bot's own gam
   5-star blind 194: 8%. With Dennis's +2 the new 194 drops from 7.85 to 2.5 tries (reach 41%).
 The repeat-the-same-loss share did not separate (high on levels he loved too).
 Critic v1 over 1.63 (`critic-1.63.jsonl`): late squeeze also on 178 (moon, lockedPartners+iceChain, 0.72)
-and 180 (twins big breather, 0.94); clock out of reach only 194. plan_g2 now rejects both (and > 7.2).
+and 180 (twins big breather, 0.94); clock out of reach only 194. Dennis 2026-10-31: no rejecting ("Maybe some
+are doable"): plan_g2 records the flags as warnings only; flagged levels can be tested.
 Rebuilding: the top hard slot (moon pile), the middle slot (butterfly pile), the big breather (twins);
 194 with +2 (2.5 tries) becomes a breather.
+Dennis: "I liked the old one [194]": the blind-test 194 (hourglass, deepKeys+iceChain, 5 stars) goes into 1.63
+as a hard level; arch (7.47) stays (no cap); the moon hard rebuild was stopped.
