@@ -31,7 +31,9 @@ const ATTEMPTS = +(process.env.ATTEMPTS || 10);
 const hardShare = lv => Math.min(0.7, 0.3 + 0.3 * (lv - 175) / 19);
 const isHard = lv => ((lv * 0.6180339887) % 1) < hardShare(lv);     // (spread evenly, not in clumps)
 const BANDS = { hard: [5, 7.9], breather: [1.8, 3.5] };
-const bandOf = lv => BANDS[isHard(lv) ? 'hard' : 'breather'];
+// BAND='3.6,4.8': one band for every level of this run (Dennis 2026-10-31: breathers first, then middle
+// ones, then hard ones; the bot rarely lands in the middle, so middle levels are built on their own)
+const bandOf = lv => process.env.BAND ? process.env.BAND.split(',').map(Number) : BANDS[isHard(lv) ? 'hard' : 'breather'];
 const off = (e, b) => e >= 8 ? 3 : e < b[0] ? b[0] - e : e > b[1] ? e - b[1] : 0;   // (8: the bot hardly ever clears it)
 // AVOID='{"182":["lockedClock"]}': recipes a level must not use (variety fix-ups after a run)
 const AVOID = JSON.parse(process.env.AVOID || '{}');

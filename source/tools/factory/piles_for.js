@@ -80,4 +80,4 @@ if (require.main === module) {
   }
   fs.writeFileSync(out, JSON.stringify(result));
 }
-module.exports = { SHAPES, tilePx, towers, spots, share };
+module.exports = { SHAPES, tilePx, towers, spots, share, candidate };
