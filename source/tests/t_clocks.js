@@ -60,7 +60,10 @@ module.exports=[
       // (from 90 the boards were re-ordered in 1.52: each keeps the clock margin it was designed with)
       const spare=d.clock.n-d.solution.indexOf(d.clock.i)-1;
       t.ok(lv<90?H.clockSpare(lv).includes(spare):spare>=1&&spare<=3,'approved clock margin '+lv);
-      t.ok(d.clock.n <= (lv<90?22:19),'early clock planning '+lv);
+      // (level-factory boards (T.revisions) are built around a long clock route on purpose: Dennis gave 4-5
+      //  stars to factory boards with the clock at 24-43 moves; they keep the 1-3 spare moves above)
+      const factory=(T.revisions||[]).some(([a,b])=>lv>=a&&lv<=b);
+      t.ok(factory||d.clock.n <= (lv<90?22:19),'early clock planning '+lv);
     }
     const context={};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/layouts.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/hard.js'),'utf8')+'\n'+fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+'\nthis.get=Hard.get;',context);
     const last=T.from+T.levels.length-1,span=last-T.cycleFrom+1;

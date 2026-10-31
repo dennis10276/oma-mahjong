@@ -497,8 +497,15 @@ const Hard = (() => {
   }
   const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);
   // Reordering 92+ must not discard a saved game on an unchanged earlier board.
+  // `revisions` ([[from, to, tag], ...]): boards replaced later (e.g. the level factory's 175-194). A saved
+  // game on such a level, or on a later level that cycles back to it, starts again; all others are kept.
   const designVersion = level => {
     const T = table();
+    if (T && T.revisions) {
+      const last = T.from + T.levels.length - 1;
+      const base = level <= last ? level : T.cycleFrom + (level - T.cycleFrom) % (last - T.cycleFrom + 1);
+      for (const [a, b, tag] of T.revisions) if (base >= a && base <= b) return GENV + '.' + tag;
+    }
     return T && T.reorderFrom && level < T.reorderFrom ? T.previousVersion : GENV;
   };
   // Packed chances travel with each board, including their original calibration model.
