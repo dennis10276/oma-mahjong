@@ -6,7 +6,9 @@ const L=require(ROOT+'/www/layouts.js');global.Layouts=L;global.HARD_LEVELS=vm.r
 const Hard=require(ROOT+'/www/hard.js');const F=require(ROOT+'/tools/factory/piles_for.js');
 const rd=f=>fs.readFileSync(f,'utf8').trim().split('\n').filter(Boolean).map(JSON.parse);
 const B=Object.fromEntries(rd(ROOT+'/analysis/factory/batch-175-g2.jsonl').map(r=>['b'+r.level,r]));
-const [m1,m2,big]=process.argv.slice(2,5).map(f=>rd(f)[0]);B.m1=m1;B.m2=m2;B.big=big;
+// extra boards as id=file.jsonl (first row), and --out=file to write the batch when every check passes
+const args=process.argv.slice(2),outArg=(args.find(a=>a.startsWith('--out='))||'').slice(6);
+for(const a of args.filter(a=>a.includes('=')&&!a.startsWith('--'))){const [id,f]=a.split('=');B[id]=rd(f)[0];}
 // built-as level -> new level. m1 (diamond) came out easy, m2 (block) hard (the bot rarely lands in the
 // middle), so: 8 breathers, 5 middle, 7 hard. Big boards (more than 88 tiles) only on every 10th level:
 // 180 is a new big breather (twins, 96), 190 the big steps board. Left out: old 179, 189 and 192
@@ -25,4 +27,4 @@ rows.forEach((r,k)=>{const t=r.design.tiles.map(x=>Array.isArray(x)?x:[x.x,x.y,x
   const w=Math.max(...played.map(q=>F.share(t,q)));if(w>0.75){console.log('share played',r.level,w.toFixed(2));bad++;}});
 for(const r of rows)console.log(r.level,r.tier.padEnd(8),String(r.g2.exp).padEnd(5),r.recipe.join('+').padEnd(26),r.shape,'(built as '+r.builtAs+')');
 console.log(bad?bad+' problems':'all checks pass');
-if(process.argv[5]&&!bad)fs.writeFileSync(process.argv[5],rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
+if(outArg&&!bad)fs.writeFileSync(outArg,rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
