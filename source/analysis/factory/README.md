@@ -278,3 +278,8 @@ Middle builds so far (`mid-builds.jsonl`, plan_g2 TUNE=1, band 3.4-4.9): 28 trie
 1-2.3 or 5-7 (the bot's ratings stay bimodal). Second specials check (`matter-mid2.jsonl`): idle ice on 940,
 949, 956 and old 184; taken off. First arrangement on the new curve: the 4.0-4.5 range is almost empty, so
 the batch zig-zagged 3.0-5.9 around the line; building 20 more aimed at 3.7-4.6 (`piles-mid4.json`).
+Draft on the new curve (`batch-175-200-draft3.jsonl`, `tools/factory/assign_anneal.js`; 93 boards, 35 of them at
+3-5.5 tries): all rules kept, mostly rising, but it starts at 2.7 (curve: 3.85) and runs to 5.05 at 199; 180
+is a big easy board (2.0, no big board near 4 exists), 190 the big breather (2.2), 200 the big 5.0. The bot
+still rarely rates a board 3.8-4.3 (of the last 20 aimed at 3.7-4.6: 5 in, 4 near). Next: more boards around
+3.8-4.3, best from Gemini's bot-designer (it is meant to hit a band directly).
