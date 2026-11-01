@@ -1,0 +1,1101 @@
+{
+"about": "Real play on the live boards (app 1.54+, where 92-269 have their current boards), from Firebase plays/ (public): per level and player the tries until the first win ('won': false = not won yet, tries so far). 'g21': Gemini's g2.1 expectedTries (seed 4711, 2 x 20) where measured (125-269). Made by Claude 2026-11-01 for calibrating the difficulty bot. Dennis 2026-11-01: 150 should come out 3.2-4.5 tries for him (he needed 3; Gerda and Mrs. Doubtfire 8+); 132: everyone struggled, the bot should find it harder than the levels around it.",
+"levels": [
+{
+"level": 92,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 93,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 6,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 94,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 3,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 5,
+"won": true
+},
+"g21": null
+},
+{
+"level": 95,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 9,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 96,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 5,
+"won": true
+},
+"g21": null
+},
+{
+"level": 97,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 7,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 98,
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 99,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"Gerda": {
+"tries": 5,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 5,
+"won": true
+},
+"g21": null
+},
+{
+"level": 100,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 14,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 101,
+"Gerda": {
+"tries": 3,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 5,
+"won": true
+},
+"g21": null
+},
+{
+"level": 102,
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 103,
+"Gerda": {
+"tries": 3,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 104,
+"Gerda": {
+"tries": 3,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 105,
+"Gerda": {
+"tries": 6,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 106,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 2,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 107,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 7,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 3,
+"won": true
+},
+"g21": null
+},
+{
+"level": 108,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 2,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 109,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"Gerda": {
+"tries": 7,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 110,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 18,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 111,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 12,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 112,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 4,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 4,
+"won": true
+},
+"g21": null
+},
+{
+"level": 113,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 15,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 114,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 4,
+"won": true
+},
+"g21": null
+},
+{
+"level": 115,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 116,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 20,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 117,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 4,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 118,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 2,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 119,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 14,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 120,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 4,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 4,
+"won": true
+},
+"g21": null
+},
+{
+"level": 121,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"Gerda": {
+"tries": 21,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": null
+},
+{
+"level": 122,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"Gerda": {
+"tries": 26,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 5,
+"won": true
+},
+"g21": null
+},
+{
+"level": 123,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 36,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": null
+},
+{
+"level": 124,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 7,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 5,
+"won": true
+},
+"g21": null
+},
+{
+"level": 125,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 19,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": 1.73
+},
+{
+"level": 126,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 4,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 6,
+"won": true
+},
+"g21": 1.05
+},
+{
+"level": 127,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 4,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": 1.18
+},
+{
+"level": 128,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 11,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 4,
+"won": true
+},
+"g21": 1.15
+},
+{
+"level": 129,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 3,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": 1.07
+},
+{
+"level": 130,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 6,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": 1.3
+},
+{
+"level": 131,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 5,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": 1.02
+},
+{
+"level": 132,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"Gerda": {
+"tries": 73,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 31,
+"won": true
+},
+"g21": 1.13
+},
+{
+"level": 133,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": 2.8
+},
+{
+"level": 134,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 2,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": 1
+},
+{
+"level": 135,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 20,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 6,
+"won": true
+},
+"g21": 1.27
+},
+{
+"level": 136,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 4,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": 1.21
+},
+{
+"level": 137,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 3,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 3,
+"won": true
+},
+"g21": 1.07
+},
+{
+"level": 138,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 9,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": 1.95
+},
+{
+"level": 139,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 7,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 3,
+"won": true
+},
+"g21": 1.02
+},
+{
+"level": 140,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 4,
+"won": true
+},
+"g21": 2
+},
+{
+"level": 141,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 12,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 3,
+"won": true
+},
+"g21": 2.83
+},
+{
+"level": 142,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 1,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 8,
+"won": true
+},
+"g21": 1.05
+},
+{
+"level": 143,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 18,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 7,
+"won": true
+},
+"g21": 1.18
+},
+{
+"level": 144,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 6,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 39,
+"won": true
+},
+"g21": 1.05
+},
+{
+"level": 145,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 2,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 3,
+"won": true
+},
+"g21": 2.05
+},
+{
+"level": 146,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 6,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": 1.02
+},
+{
+"level": 147,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 3,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 2,
+"won": true
+},
+"g21": 4.45
+},
+{
+"level": 148,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 2,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 1,
+"won": true
+},
+"g21": 1.73
+},
+{
+"level": 149,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 76,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 3,
+"won": true
+},
+"g21": 3.45
+},
+{
+"level": 150,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 82,
+"won": true
+},
+"Mrs. Doubtfire": {
+"tries": 7,
+"won": false
+},
+"g21": 2.65
+},
+{
+"level": 151,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 5,
+"won": true
+},
+"g21": 1.1
+},
+{
+"level": 152,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"Gerda": {
+"tries": 4,
+"won": true
+},
+"g21": 2.55
+},
+{
+"level": 153,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"Gerda": {
+"tries": 9,
+"won": true
+},
+"g21": 1.02
+},
+{
+"level": 154,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"Gerda": {
+"tries": 2,
+"won": false
+},
+"g21": 1.73
+},
+{
+"level": 155,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 3.85
+},
+{
+"level": 156,
+"Dennisisdebeste": {
+"tries": 3,
+"won": true
+},
+"g21": 1.32
+},
+{
+"level": 157,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 2.02
+},
+{
+"level": 158,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"g21": 1.07
+},
+{
+"level": 159,
+"Dennisisdebeste": {
+"tries": 2,
+"won": true
+},
+"g21": 1
+},
+{
+"level": 160,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 1.38
+},
+{
+"level": 161,
+"Dennisisdebeste": {
+"tries": 4,
+"won": true
+},
+"g21": 2.15
+},
+{
+"level": 162,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 3.3
+},
+{
+"level": 163,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 1.13
+},
+{
+"level": 164,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 2
+},
+{
+"level": 165,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 1.1
+},
+{
+"level": 166,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 2.98
+},
+{
+"level": 167,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 1.07
+},
+{
+"level": 168,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 1.35
+},
+{
+"level": 169,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 1.75
+},
+{
+"level": 170,
+"Dennisisdebeste": {
+"tries": 1,
+"won": true
+},
+"g21": 1.2
+}
+]
+}
