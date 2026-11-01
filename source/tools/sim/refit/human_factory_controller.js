@@ -138,7 +138,8 @@ function createBotController(tiles, profile, seed) {
     clockHorizon=Math.min(4,(clockLosses>0&&p.retryClockHorizon!==undefined?p.retryClockHorizon:p.clockHorizon)+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0));
     strictClockSlack=p.deadlineAttentionProbability===undefined?p.strictClockSlack:attentionRandom()<Math.min(1,p.deadlineAttentionProbability+clockLosses*(p.deadlineLearningRate??0));
     if (attempt++) {
-      memory = memory.map(v => random() < p.retryRetention ? v : null);
+      const effRet = p.retryRetention * Math.pow(Math.min(1.0, 64 / tiles.length), 3.0);
+      memory = memory.map(v => random() < effRet ? v : null);
     }
     roles = tiles.map(() => null);
     visits = new Map();
@@ -196,6 +197,12 @@ function createBotController(tiles, profile, seed) {
       clock: o.clock ? { i: o.clock.i, n: o.clock.n, remaining: o.clock.remaining } : null
     };
     memory = memory.map((v, i) => o.pictures[i] !== null ? o.pictures[i] : s.alive[i] && random() < p.memoryDecay ? null : v);
+    const cap = tiles.length >= 88 ? 7 : 9;
+    const downRemembered = [];
+    for (let i = 0; i < n; i++) if (memory[i] !== null && seen.down[i] === 1 && s.alive[i]) downRemembered.push(i);
+    if (downRemembered.length > cap) {
+      for (let i = 0; i < downRemembered.length - cap; i++) memory[downRemembered[i]] = null;
+    }
     roles = roles.map((v, i) => o.roles[i] ?? v);
     retryKeyMemory?.observe(state,seen.roles,attempt);
     retryAccess?.observe(state,seen,attempt);
@@ -387,7 +394,9 @@ function createBotController(tiles, profile, seed) {
       if (roles[i] === 'ice' || roles[i] === 'ice2') {
         const need = roles[i] === 'ice2' ? 2 : 1;
         const sharedClock = p.sharedClockIce && requiredClockTop.has(i);
-        const validIce = iceNb[i].filter(j => alive[j] && !aboveTrans[j].has(i));
+        const validIce = iceNb[i].filter(j => alive[j] && !aboveTrans[j].has(i) &&
+          !(nb.left[j].includes(i) && nb.right[j].some(k => alive[k])) &&
+          !(nb.right[j].includes(i) && nb.left[j].some(k => alive[k])));
         const already = validIce.filter(j => top.includes(j) || side.includes(j));
         if (already.length >= need) {
           ice = already;
@@ -483,7 +492,7 @@ function createBotController(tiles, profile, seed) {
     const clockNeedsKeys = clock && (clockMateLocked || [...attraction.keys()].some(i=>alive[i]&&roles[i]==='lock') || learnedKeyOut&&clock.remaining-clockMovesNeeded>=knownKeys.length);
     if (clockNeedsKeys) {
       const keyW = p.clockWeight * (clockMateLocked||learnedKeyOut ? 1.35 : 0.92);
-      const keyD = clockHorizon + (clockLosses > 0 ? 1 : 0);
+      const keyD = Math.min(5, clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
       for (const i of knownKeys) attract(i, 0, keyW, keyD, false);
     } else if (!clock && boardHasLocks) {
       const keyW = (p.postClockKeyWeight ?? p.clockWeight * 0.75)*(learnedKeyOut?1.35:1);
@@ -521,7 +530,7 @@ function createBotController(tiles, profile, seed) {
     }
 
     const unmatchedClockInTray = tookEarlyClockThisAttempt && initialClock && initialClock.face !== undefined && tray.includes(initialClock.face);
-    const depth = unmatchedClockInTray ? (p.firstTryTrayDepth ?? 1) : (clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3));
+    const depth = unmatchedClockInTray ? (p.firstTryTrayDepth ?? 1) : (clock ? clockTrayPlanningDepth() : (tiles.length >= 90 ? 1 : (p.trayDepth ?? 3)));
     const keyWork=new Set();
     if(p.retryKeyRouteValue&&learnedKeyOut&&(!clock||clockNeedsKeys)){
       for(const k of knownKeys){
@@ -573,6 +582,7 @@ function createBotController(tiles, profile, seed) {
       });
 
       const visitsKey = signature + '|' + i, count = visits.get(visitsKey) ?? 0;
+      const statePeeks = visits.get(signature + '|peeks') ?? 0;
       const ownGoal = attraction.get(i) ?? 0;
       const goal = Math.max(
         ownGoal,
@@ -618,7 +628,7 @@ function createBotController(tiles, profile, seed) {
         }
       }
 
-      if (p.outWeight && (!peek || knownDig)) {
+      if (p.outWeight && !peek) {
         const next = alive.slice(); next[i] = 0; if (openTwin) next[openPeek] = 0;
         const nextTray = trayMatch ? tray.filter(f => f !== face) : openTwin ? tray : tray.concat(face === null ? [-1] : [face]);
         const usableAfter = j => {
@@ -683,7 +693,7 @@ function createBotController(tiles, profile, seed) {
         if(clock.remaining<=2 && peek && face!==null && !trayMatch && !openTwin && count>=1 && !setsUpClock)score-=2400;
       }
       if (knownDig) {
-        score -= 0.5;
+        score -= 0.5 + (count > 0 ? count * 12 : 0) + (statePeeks > 0 ? statePeeks * 6 : 0);
       } else if (down && openPeek === i && !trayMatch && !openTwin && !hasTwin) {
         score += 1.5;
       }
@@ -692,17 +702,18 @@ function createBotController(tiles, profile, seed) {
       if (!peek && count) score -= count * 2;
 
       score += (future.get(i) ?? 0) * (p.futureWeight ?? 1) * (clock ? 0.15 : 1);
-      if ((!peek || knownDig) && !(clock && i === clock.i) && suggestsNoEasyEscape(i)) score -= 1200;
+      if ((!peek || knownDig) && !(clock && i === clock.i) && suggestsNoEasyEscape(i)) score -= (!clock ? Math.max(120, 1200 - statePeeks * 200) : 1200);
 
       const u = Math.max(1e-12, Math.min(1 - 1e-12, random()));
       const noisy = score - p.temperature * Math.log(-Math.log(u));
-      return { index: i, score, noisy, visitsKey };
+      return { index: i, score, noisy, visitsKey, peek };
     });
 
     const selected = random() < p.lapse
       ? scored[Math.floor(random() * scored.length)]
       : scored.reduce((a, b) => a.noisy >= b.noisy ? a : b);
     visits.set(selected.visitsKey, (visits.get(selected.visitsKey) ?? 0) + 1);
+    if (selected.peek) { const pk = signature + '|peeks'; visits.set(pk, (visits.get(pk) ?? 0) + 1); }
     lastDecision = { ...state, pictures: memory.slice(), down: seen.down.slice(), index: selected.index };
     return { index: selected.index, score: selected.score };
   }

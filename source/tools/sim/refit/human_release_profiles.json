@@ -4,7 +4,7 @@
   "calibrationStatus": "human-g2-factory-difficulty-validated",
   "profiles": {
     "Dennis": {
-      "clockHorizon": 3,
+      "clockHorizon": 2,
       "partnerHorizon": 3,
       "clockWeight": 42,
       "postClockKeyWeight": 32,
@@ -21,13 +21,13 @@
       "peekPatience": 2,
       "outWeight": 9,
       "trayDepth": 4,
-      "clockTrayDepth": 3,
+      "clockTrayDepth": 2,
       "futureWeight": 3.5,
       "strictClockSlack": true,
       "flippedBlockerBalk0": 12.8,
       "flippedBlockerBalk1": -5,
-      "deadlineAttentionProbability": 0.35,
-      "deadlineLearningRate": 0.7,
+      "deadlineAttentionProbability": 0.4,
+      "deadlineLearningRate": 0.2,
       "clockRowPreview": 1,
       "sharedClockIce": 1,
       "clockOutsPlan": 1,
@@ -36,7 +36,9 @@
       "retryPrepareKeyOuts": 1,
       "retryKeyRouteValue": 1,
       "retryKeyPictureRelations": 1,
-      "retryAccessMemory": 1
+      "retryAccessMemory": 1,
+      "retryClockHorizon": 3,
+      "retryClockTrayDepth": 3
     },
     "family": {
       "clockHorizon": 2,
