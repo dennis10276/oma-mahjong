@@ -20,7 +20,8 @@ const MONO = +(process.env.MONO || 1.5), MAXR = +(process.env.MAXR || 7), MAX_EX
 const target = lv => AT[lv] != null ? AT[lv] : CURVE[0] + CURVE[1] * (lv - from) + (CURVE[2] && lv >= CURVE[2] ? CURVE[3] : 0);
 // Dennis 2026-11-01, after playing 176, 189 and 193 (all 'Don't grab the clock'): "too loose is no pass level
 // from now on. The clock is just free to take and no reason for it to be there." So a board with Gemini's
-// clockTooLoose flag (critic3, from plan_g2 with CRITIC_BOT) never goes into a batch; nor a "Don't grab the clock"
+// clockTooLoose flag (critic3, from plan_g2 with CRITIC_BOT: there a loose clock is tightened and tested again, and
+// only a "Don't grab the clock" board or one still loose at 1 spare is dropped) never goes into a batch; nor a "Don't grab the clock"
 // board that has not shown grabbing first is worse (grabFirst, plan_g2's GRAB_MIN check; boards built before it have none).
 const banned = r => (r.critic3 || []).includes('clockTooLoose') || ((r.recipe || []).includes('dontGrab') && r.grabFirst == null);
 const inv = rd(invFile).filter(r => r.g2 && r.g2.exp <= MAX_EXP && !banned(r));

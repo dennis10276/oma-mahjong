@@ -344,3 +344,7 @@ tries well (Spearman 0.79): bot up to ~4 = Dennis 1-4, bot 6-8 = Dennis 4-9.
   the human bot made to take it first needs no more tries, mostly fewer: 176 3.27 -> 2.90, 189 4.85 -> 1.23 (95%
   first try), 193 3.98 -> 3.07. The blocked tray slot costs less than the alarm risk of waiting, so the puzzle's
   "don't grab it" never holds; the best play is the obvious one.
+- Dennis (2026-11-01): "too loose is a no for don't grab the clock levels. On most it should be a flag to make the
+  clock stricter maybe and test again." plan_g2 (CRITIC_BOT): a loose clock on a dontGrab board is out; on other
+  boards the spare goes down one move at a time (to 1), measured and criticised again each time; still loose at 1:
+  out. The dontGrab early-grab check runs on the final clock.

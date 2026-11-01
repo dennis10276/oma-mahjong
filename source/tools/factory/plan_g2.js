@@ -92,6 +92,35 @@ for (const p of piles) {
         if (off(m2.expectedTries, band) < off(m.expectedTries, band)) { z = z2; m = m2; } else break;
       }
     }
+    // Gemini's critic (CRITIC_BOT). A clock too loose (Dennis 2026-11-01): on a "Don't grab the clock" board it is
+    // out ("too loose is a no for don't grab the clock levels"); on the others "a flag to make the clock stricter
+    // and test again": the spare goes down one move at a time (to 1, the game's rule from 90) with a new measure
+    // and critic each time; still too loose at 1 spare: out (the clock would be free to take).
+    let critic3 = null;
+    const crit = b => { try { return critique(boardOf(b), { runs: 20, seed: 4711 }).flags; } catch (e) { return null; } };
+    if (critique) {
+      critic3 = crit(z);
+      if (critic3 && critic3.includes('clockTooLoose') && z.clock) {
+        if (recipe.includes('dontGrab')) { pg.tried.push(recipe.join('+') + ': clock too loose (out)'); save(); continue; }
+        const route = z.solution.indexOf(z.clock.i) + 1;
+        for (let sp = z.clock.n - route - 1; sp >= 1 && critic3 && critic3.includes('clockTooLoose'); sp--) {
+          const z2 = { ...z, clock: { ...z.clock, n: route + sp } };
+          if (!I.valid(z2)) break;
+          let m2; try { m2 = measureHuman(boardOf(z2), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { break; }
+          const c2 = crit(z2);
+          pg.tried.push(recipe.join('+') + ' clock too loose, spare ' + sp + ': ' + m2.expectedTries + (c2 && c2.includes('clockTooLoose') ? ' (still too loose)' : ''));
+          z = z2; m = m2; critic3 = c2;
+        }
+        if (critic3 && critic3.includes('clockTooLoose')) { pg.tried.push(recipe.join('+') + ': clock too loose even at the tightest (out)'); save(); continue; }
+      }
+    }
+    // "Don't grab the clock" must be true (GRAB_MIN): checked on the final clock
+    let grabFirst = null;
+    if (recipe.includes('dontGrab') && z.clock) {
+      let mg; try { mg = measureHuman({ ...boardOf(z), clock: { i: z.clock.i, n: 1 } }, { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { mg = null; }
+      grabFirst = mg && mg.expectedTries;
+      if (!mg || mg.expectedTries < m.expectedTries + GRAB_MIN) { pg.tried.push(recipe.join('+') + ': grabbing the clock first is not worse (' + m.expectedTries + ' -> ' + grabFirst + ', out)'); save(); continue; }
+    }
     // critic v1, warnings only (Dennis's notes, checked on every board he rated; analysis/factory/README.md): late squeeze
     // (lost with a third or less of the tiles left in more than 30% of the bot's losses: 185 in 1.63, "tray
     // pressure at the very end", the only rated board above 0.21) and a clock a person can reach (the bot
@@ -101,15 +130,6 @@ for (const p of piles) {
     const late = lost.filter(q => q.left <= 0.35 * nT).length / Math.max(1, lost.length);
     const reach = z.clock ? at.filter(q => q.clockLeft != null && q.clockLeft < nT).length / Math.max(1, at.length) : 1;
     const critic = { late: +late.toFixed(2), reach: +reach.toFixed(2), flags: [late > 0.3 && 'late squeeze', reach < 0.05 && 'clock out of reach'].filter(Boolean) };
-    let grabFirst = null;
-    if (recipe.includes('dontGrab') && z.clock) {
-      let mg; try { mg = measureHuman({ ...boardOf(z), clock: { i: z.clock.i, n: 1 } }, { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { mg = null; }
-      grabFirst = mg && mg.expectedTries;
-      if (!mg || mg.expectedTries < m.expectedTries + GRAB_MIN) { pg.tried.push(recipe.join('+') + ': grabbing the clock first is not worse (' + m.expectedTries + ' -> ' + grabFirst + ', out)'); save(); continue; }
-    }
-    let critic3 = null;
-    if (critique) { try { critic3 = critique(boardOf(z), { runs: 20, seed: 4711 }).flags; } catch (e) { critic3 = null; } }
-    if (critic3 && critic3.includes('clockTooLoose')) { pg.tried.push(recipe.join('+') + ': clock too loose (out)'); save(); continue; }
     pg.tried.push(recipe.join('+') + ': ' + m.expectedTries + (critic.flags.length ? ' (' + critic.flags.join(', ') + ')' : ''));
     const ck = z.clock ? z.clock.n - (z.solution.indexOf(z.clock.i) + 1) : null;
     const row = { level: lv, ok: true, shape: p.shape, n: z.tiles.length, px: p.px, recipe, role: isHard(lv) ? 'hard' : 'breather', band, g2: { exp: m.expectedTries, label: m.label, first: m.firstTryRate, version: m.version }, critic, critic3, grabFirst,
