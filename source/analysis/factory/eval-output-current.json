@@ -1,0 +1,1800 @@
+{
+  "metrics": {
+    "combined": {
+      "name": "Live (85-174) + Factory",
+      "count": 103,
+      "mae": 1.0785,
+      "within15": 70.87,
+      "spearman": 0.3861
+    },
+    "evenLive": {
+      "name": "Even Live Levels",
+      "count": 39,
+      "mae": 1.2656,
+      "within15": 66.67,
+      "spearman": 0.1662
+    },
+    "oddLive": {
+      "name": "Odd Live Levels",
+      "count": 40,
+      "mae": 1.0082,
+      "within15": 72.5,
+      "spearman": 0.2276
+    },
+    "factory": {
+      "name": "Factory Boards Alone",
+      "count": 24,
+      "mae": 0.8917,
+      "within15": 75,
+      "spearman": 0.7953
+    }
+  },
+  "checkA": {
+    "level150": {
+      "exp": 5.04,
+      "target": 5,
+      "passDist": true,
+      "passRank": true,
+      "countBelow": 10
+    },
+    "level132": {
+      "exp": 5.1,
+      "target": 6,
+      "max127_137": 3.17,
+      "pass": true
+    }
+  },
+  "results": [
+    {
+      "id": "live-85",
+      "kind": "live",
+      "level": 85,
+      "target": 1,
+      "expectedTries": 2.15,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0,
+      "medianTrayLeft": 36,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 22,
+        "late": 0
+      },
+      "elapsed": 51.014
+    },
+    {
+      "id": "live-99",
+      "kind": "live",
+      "level": 99,
+      "target": 4,
+      "expectedTries": 1.07,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 16.439
+    },
+    {
+      "id": "live-112",
+      "kind": "live",
+      "level": 112,
+      "target": 1,
+      "expectedTries": 2.38,
+      "firstTryRate": 0.1,
+      "firstTryWins": 2,
+      "clockLossShare": 0.036,
+      "medianTrayLeft": 34,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 27,
+        "late": 0
+      },
+      "elapsed": 35.915
+    },
+    {
+      "id": "live-120",
+      "kind": "live",
+      "level": 120,
+      "target": 3,
+      "expectedTries": 7.25,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 121,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 23.286
+    },
+    {
+      "id": "live-128",
+      "kind": "live",
+      "level": 128,
+      "target": 1,
+      "expectedTries": 3.17,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.933,
+      "medianTrayLeft": 24,
+      "lossCounts": {
+        "clock": 42,
+        "mid": 3,
+        "late": 0
+      },
+      "elapsed": 12.92
+    },
+    {
+      "id": "live-136",
+      "kind": "live",
+      "level": 136,
+      "target": 1,
+      "expectedTries": 1.28,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 0.143,
+      "medianTrayLeft": 70,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 6,
+        "late": 0
+      },
+      "elapsed": 15.449
+    },
+    {
+      "id": "live-144",
+      "kind": "live",
+      "level": 144,
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 0,
+      "medianTrayLeft": 82,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 12.544
+    },
+    {
+      "id": "live-152",
+      "kind": "live",
+      "level": 152,
+      "target": 2,
+      "expectedTries": 4.17,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.672,
+      "medianTrayLeft": 30,
+      "lossCounts": {
+        "clock": 41,
+        "mid": 20,
+        "late": 0
+      },
+      "elapsed": 41.407
+    },
+    {
+      "id": "live-160",
+      "kind": "live",
+      "level": 160,
+      "target": 1,
+      "expectedTries": 1.7,
+      "firstTryRate": 0.55,
+      "firstTryWins": 11,
+      "clockLossShare": 0,
+      "medianTrayLeft": 34,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 15,
+        "late": 0
+      },
+      "elapsed": 17.742
+    },
+    {
+      "id": "live-168",
+      "kind": "live",
+      "level": 168,
+      "target": 1,
+      "expectedTries": 1.25,
+      "firstTryRate": 0.8,
+      "firstTryWins": 16,
+      "clockLossShare": 0.5,
+      "medianTrayLeft": 44,
+      "lossCounts": {
+        "clock": 4,
+        "mid": 4,
+        "late": 0
+      },
+      "elapsed": 18.058
+    },
+    {
+      "id": "factory1-184",
+      "kind": "factory",
+      "key": "factory1-184",
+      "target": 2,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 7.924
+    },
+    {
+      "id": "factory4-176",
+      "kind": "factory",
+      "key": "factory4-176",
+      "target": 2,
+      "expectedTries": 3.73,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.736,
+      "medianTrayLeft": 34,
+      "lossCounts": {
+        "clock": 40,
+        "mid": 13,
+        "late": 0
+      },
+      "elapsed": 16.982
+    },
+    {
+      "id": "blind1-187",
+      "kind": "factory",
+      "key": "blind1-187",
+      "target": 3,
+      "expectedTries": 1.2,
+      "firstTryRate": 0.8,
+      "firstTryWins": 16,
+      "clockLossShare": 0,
+      "medianTrayLeft": 66,
+      "lossCounts": {
+        "clock": 5,
+        "mid": 2,
+        "late": 0
+      },
+      "elapsed": 5.324
+    },
+    {
+      "id": "live-91",
+      "kind": "live",
+      "level": 91,
+      "target": 7,
+      "expectedTries": 2.27,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0,
+      "medianTrayLeft": 36,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 28,
+        "late": 0
+      },
+      "elapsed": 38.059
+    },
+    {
+      "id": "live-100",
+      "kind": "live",
+      "level": 100,
+      "target": 1,
+      "expectedTries": 4.68,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0.177,
+      "medianTrayLeft": 52,
+      "lossCounts": {
+        "clock": 14,
+        "mid": 65,
+        "late": 0
+      },
+      "elapsed": 31.918
+    },
+    {
+      "id": "live-113",
+      "kind": "live",
+      "level": 113,
+      "target": 1,
+      "expectedTries": 1.15,
+      "firstTryRate": 0.9,
+      "firstTryWins": 18,
+      "clockLossShare": 0.333,
+      "medianTrayLeft": 20,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 2,
+        "late": 0
+      },
+      "elapsed": 14.557
+    },
+    {
+      "id": "live-121",
+      "kind": "live",
+      "level": 121,
+      "target": 4,
+      "expectedTries": 4.55,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.225,
+      "medianTrayLeft": 46,
+      "lossCounts": {
+        "clock": 20,
+        "mid": 69,
+        "late": 0
+      },
+      "elapsed": 37.003
+    },
+    {
+      "id": "live-129",
+      "kind": "live",
+      "level": 129,
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 15.121
+    },
+    {
+      "id": "live-137",
+      "kind": "live",
+      "level": 137,
+      "target": 2,
+      "expectedTries": 1.07,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 0,
+      "medianTrayLeft": 54,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 2,
+        "late": 0
+      },
+      "elapsed": 7.66
+    },
+    {
+      "id": "live-145",
+      "kind": "live",
+      "level": 145,
+      "target": 1,
+      "expectedTries": 2.2,
+      "firstTryRate": 0.45,
+      "firstTryWins": 9,
+      "clockLossShare": 0,
+      "medianTrayLeft": 34,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 27,
+        "late": 0
+      },
+      "elapsed": 30.703
+    },
+    {
+      "id": "live-153",
+      "kind": "live",
+      "level": 153,
+      "target": 1,
+      "expectedTries": 1.02,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 10.396
+    },
+    {
+      "id": "live-161",
+      "kind": "live",
+      "level": 161,
+      "target": 4,
+      "expectedTries": 2.27,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0,
+      "medianTrayLeft": 52,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 30,
+        "late": 0
+      },
+      "elapsed": 39.669
+    },
+    {
+      "id": "live-169",
+      "kind": "live",
+      "level": 169,
+      "target": 1,
+      "expectedTries": 1.75,
+      "firstTryRate": 0.35,
+      "firstTryWins": 7,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 13,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 11.211
+    },
+    {
+      "id": "factory1-189",
+      "kind": "factory",
+      "key": "factory1-189",
+      "target": 1,
+      "expectedTries": 1.38,
+      "firstTryRate": 0.75,
+      "firstTryWins": 15,
+      "clockLossShare": 0,
+      "medianTrayLeft": 28,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 6,
+        "late": 0
+      },
+      "elapsed": 21.118
+    },
+    {
+      "id": "factory4-178",
+      "kind": "factory",
+      "key": "factory4-178",
+      "target": 1,
+      "expectedTries": 2.42,
+      "firstTryRate": 0.3,
+      "firstTryWins": 6,
+      "clockLossShare": 0.643,
+      "medianTrayLeft": 80,
+      "lossCounts": {
+        "clock": 25,
+        "mid": 1,
+        "late": 2
+      },
+      "elapsed": 13.555
+    },
+    {
+      "id": "blind1-183",
+      "kind": "factory",
+      "key": "blind1-183",
+      "target": 6,
+      "expectedTries": 6.2,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.177,
+      "medianTrayLeft": 48,
+      "lossCounts": {
+        "clock": 138,
+        "mid": 9,
+        "late": 0
+      },
+      "elapsed": 29.491
+    },
+    {
+      "id": "live-92",
+      "kind": "live",
+      "level": 92,
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 8.479
+    },
+    {
+      "id": "live-106",
+      "kind": "live",
+      "level": 106,
+      "target": 1,
+      "expectedTries": 3.7,
+      "firstTryRate": 0.2,
+      "firstTryWins": 4,
+      "clockLossShare": 0.036,
+      "medianTrayLeft": 26,
+      "lossCounts": {
+        "clock": 2,
+        "mid": 53,
+        "late": 0
+      },
+      "elapsed": 44.118
+    },
+    {
+      "id": "live-114",
+      "kind": "live",
+      "level": 114,
+      "target": 1,
+      "expectedTries": 1.57,
+      "firstTryRate": 0.65,
+      "firstTryWins": 13,
+      "clockLossShare": 0.917,
+      "medianTrayLeft": 62,
+      "lossCounts": {
+        "clock": 11,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 10.365
+    },
+    {
+      "id": "live-122",
+      "kind": "live",
+      "level": 122,
+      "target": 4,
+      "expectedTries": 3.02,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.881,
+      "medianTrayLeft": 66,
+      "lossCounts": {
+        "clock": 42,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 8.856
+    },
+    {
+      "id": "live-130",
+      "kind": "live",
+      "level": 130,
+      "target": 2,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 9.451
+    },
+    {
+      "id": "live-138",
+      "kind": "live",
+      "level": 138,
+      "target": 1,
+      "expectedTries": 1.55,
+      "firstTryRate": 0.45,
+      "firstTryWins": 9,
+      "clockLossShare": 0.091,
+      "medianTrayLeft": 26,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 10,
+        "late": 0
+      },
+      "elapsed": 24.587
+    },
+    {
+      "id": "live-146",
+      "kind": "live",
+      "level": 146,
+      "target": 1,
+      "expectedTries": 1.02,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 8.013
+    },
+    {
+      "id": "live-154",
+      "kind": "live",
+      "level": 154,
+      "target": 3,
+      "expectedTries": 1.4,
+      "firstTryRate": 0.65,
+      "firstTryWins": 13,
+      "clockLossShare": 0,
+      "medianTrayLeft": 40,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 8,
+        "late": 0
+      },
+      "elapsed": 14.487
+    },
+    {
+      "id": "live-162",
+      "kind": "live",
+      "level": 162,
+      "target": 1,
+      "expectedTries": 3.65,
+      "firstTryRate": 0.15,
+      "firstTryWins": 3,
+      "clockLossShare": 0,
+      "medianTrayLeft": 28,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 53,
+        "late": 0
+      },
+      "elapsed": 42
+    },
+    {
+      "id": "live-170",
+      "kind": "live",
+      "level": 170,
+      "target": 1,
+      "expectedTries": 1.27,
+      "firstTryRate": 0.9,
+      "firstTryWins": 18,
+      "clockLossShare": 0.571,
+      "medianTrayLeft": 42,
+      "lossCounts": {
+        "clock": 4,
+        "mid": 3,
+        "late": 0
+      },
+      "elapsed": 23.608
+    },
+    {
+      "id": "factory2-175",
+      "kind": "factory",
+      "key": "factory2-175",
+      "target": 4,
+      "expectedTries": 2.25,
+      "firstTryRate": 0.3,
+      "firstTryWins": 6,
+      "clockLossShare": 0.882,
+      "medianTrayLeft": 78,
+      "lossCounts": {
+        "clock": 15,
+        "mid": 2,
+        "late": 0
+      },
+      "elapsed": 13.344
+    },
+    {
+      "id": "factory5-177",
+      "kind": "factory",
+      "key": "factory5-177",
+      "target": 1,
+      "expectedTries": 1.13,
+      "firstTryRate": 0.8,
+      "firstTryWins": 16,
+      "clockLossShare": 0,
+      "medianTrayLeft": 42,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 4,
+        "late": 0
+      },
+      "elapsed": 6.94
+    },
+    {
+      "id": "blind1-194",
+      "kind": "factory",
+      "key": "blind1-194",
+      "target": 4,
+      "expectedTries": 6.15,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.714,
+      "medianTrayLeft": 64,
+      "lossCounts": {
+        "clock": 154,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 21.233
+    },
+    {
+      "id": "live-93",
+      "kind": "live",
+      "level": 93,
+      "target": 1,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 8.94
+    },
+    {
+      "id": "live-107",
+      "kind": "live",
+      "level": 107,
+      "target": 1,
+      "expectedTries": 2.83,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0,
+      "medianTrayLeft": 36,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 34,
+        "late": 0
+      },
+      "elapsed": 23.988
+    },
+    {
+      "id": "live-115",
+      "kind": "live",
+      "level": 115,
+      "target": 4,
+      "expectedTries": 4.05,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0,
+      "medianTrayLeft": 36,
+      "lossCounts": {
+        "clock": 3,
+        "mid": 58,
+        "late": 0
+      },
+      "elapsed": 51.998
+    },
+    {
+      "id": "live-123",
+      "kind": "live",
+      "level": 123,
+      "target": 1,
+      "expectedTries": 1.63,
+      "firstTryRate": 0.5,
+      "firstTryWins": 10,
+      "clockLossShare": 0,
+      "medianTrayLeft": 28,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 12,
+        "late": 0
+      },
+      "elapsed": 33.454
+    },
+    {
+      "id": "live-131",
+      "kind": "live",
+      "level": 131,
+      "target": 3,
+      "expectedTries": 1.02,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 0,
+      "medianTrayLeft": 58,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 6.923
+    },
+    {
+      "id": "live-139",
+      "kind": "live",
+      "level": 139,
+      "target": 3,
+      "expectedTries": 2.8,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0.974,
+      "medianTrayLeft": 48,
+      "lossCounts": {
+        "clock": 38,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 12.974
+    },
+    {
+      "id": "live-147",
+      "kind": "live",
+      "level": 147,
+      "target": 1,
+      "expectedTries": 4.5,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0,
+      "medianTrayLeft": 36,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 66,
+        "late": 2
+      },
+      "elapsed": 74.363
+    },
+    {
+      "id": "live-155",
+      "kind": "live",
+      "level": 155,
+      "target": 1,
+      "expectedTries": 4.23,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.293,
+      "medianTrayLeft": 20,
+      "lossCounts": {
+        "clock": 22,
+        "mid": 53,
+        "late": 0
+      },
+      "elapsed": 28.656
+    },
+    {
+      "id": "live-163",
+      "kind": "live",
+      "level": 163,
+      "target": 1,
+      "expectedTries": 1.1,
+      "firstTryRate": 0.8,
+      "firstTryWins": 16,
+      "clockLossShare": 0,
+      "medianTrayLeft": 20,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 4,
+        "late": 0
+      },
+      "elapsed": 7.601
+    },
+    {
+      "id": "live-171",
+      "kind": "live",
+      "level": 171,
+      "target": 1,
+      "expectedTries": 1.15,
+      "firstTryRate": 0.85,
+      "firstTryWins": 17,
+      "clockLossShare": 0,
+      "medianTrayLeft": 28,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 4,
+        "late": 0
+      },
+      "elapsed": 17.607
+    },
+    {
+      "id": "factory2-184",
+      "kind": "factory",
+      "key": "factory2-184",
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 13.289
+    },
+    {
+      "id": "factory5-180",
+      "kind": "factory",
+      "key": "factory5-180",
+      "target": 2,
+      "expectedTries": 3.98,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.908,
+      "medianTrayLeft": 68,
+      "lossCounts": {
+        "clock": 64,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 15.834
+    },
+    {
+      "id": "blind1-185",
+      "kind": "factory",
+      "key": "blind1-185",
+      "target": 6,
+      "expectedTries": 7.88,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.009,
+      "medianTrayLeft": 60,
+      "lossCounts": {
+        "clock": 3,
+        "mid": 227,
+        "late": 0
+      },
+      "elapsed": 33.056
+    },
+    {
+      "id": "live-94",
+      "kind": "live",
+      "level": 94,
+      "target": 2,
+      "expectedTries": 1.02,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 10.271
+    },
+    {
+      "id": "live-108",
+      "kind": "live",
+      "level": 108,
+      "target": 2,
+      "expectedTries": 1.02,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 17.234
+    },
+    {
+      "id": "live-116",
+      "kind": "live",
+      "level": 116,
+      "target": 2,
+      "expectedTries": 1.2,
+      "firstTryRate": 0.8,
+      "firstTryWins": 16,
+      "clockLossShare": 0,
+      "medianTrayLeft": 66,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 4,
+        "late": 0
+      },
+      "elapsed": 21.309
+    },
+    {
+      "id": "live-124",
+      "kind": "live",
+      "level": 124,
+      "target": 3,
+      "expectedTries": 7.8,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.336,
+      "medianTrayLeft": 30,
+      "lossCounts": {
+        "clock": 41,
+        "mid": 81,
+        "late": 0
+      },
+      "elapsed": 100.508
+    },
+    {
+      "id": "live-132",
+      "kind": "live",
+      "level": 132,
+      "target": 6,
+      "expectedTries": 5.1,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.5,
+      "medianTrayLeft": 76,
+      "lossCounts": {
+        "clock": 60,
+        "mid": 20,
+        "late": 0
+      },
+      "elapsed": 20.296
+    },
+    {
+      "id": "live-140",
+      "kind": "live",
+      "level": 140,
+      "target": 1,
+      "expectedTries": 2,
+      "firstTryRate": 0.25,
+      "firstTryWins": 5,
+      "clockLossShare": 0.85,
+      "medianTrayLeft": 28,
+      "lossCounts": {
+        "clock": 17,
+        "mid": 3,
+        "late": 0
+      },
+      "elapsed": 28.44
+    },
+    {
+      "id": "live-148",
+      "kind": "live",
+      "level": 148,
+      "target": 1,
+      "expectedTries": 1.73,
+      "firstTryRate": 0.35,
+      "firstTryWins": 7,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 13,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 15.105
+    },
+    {
+      "id": "live-156",
+      "kind": "live",
+      "level": 156,
+      "target": 3,
+      "expectedTries": 1.32,
+      "firstTryRate": 0.9,
+      "firstTryWins": 18,
+      "clockLossShare": 0.333,
+      "medianTrayLeft": 28,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 2,
+        "late": 0
+      },
+      "elapsed": 11.379
+    },
+    {
+      "id": "live-164",
+      "kind": "live",
+      "level": 164,
+      "target": 1,
+      "expectedTries": 2,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 20,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 8.096
+    },
+    {
+      "id": "live-172",
+      "kind": "live",
+      "level": 172,
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 0,
+      "medianTrayLeft": 68,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 7.775
+    },
+    {
+      "id": "factory2-192",
+      "kind": "factory",
+      "key": "factory2-192",
+      "target": 1,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 6.714
+    },
+    {
+      "id": "factory5-176",
+      "kind": "factory",
+      "key": "factory5-176",
+      "target": 2,
+      "expectedTries": 3.23,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0.614,
+      "medianTrayLeft": 38,
+      "lossCounts": {
+        "clock": 27,
+        "mid": 17,
+        "late": 0
+      },
+      "elapsed": 25.631
+    },
+    {
+      "id": "release163-175",
+      "kind": "factory",
+      "key": "release163-175",
+      "target": 1,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 4.208
+    },
+    {
+      "id": "live-95",
+      "kind": "live",
+      "level": 95,
+      "target": 1,
+      "expectedTries": 2,
+      "firstTryRate": 0.25,
+      "firstTryWins": 5,
+      "clockLossShare": 0,
+      "medianTrayLeft": 24,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 19,
+        "late": 0
+      },
+      "elapsed": 30.16
+    },
+    {
+      "id": "live-109",
+      "kind": "live",
+      "level": 109,
+      "target": 4,
+      "expectedTries": 3.25,
+      "firstTryRate": 0.15,
+      "firstTryWins": 3,
+      "clockLossShare": 0,
+      "medianTrayLeft": 56,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 42,
+        "late": 0
+      },
+      "elapsed": 29.427
+    },
+    {
+      "id": "live-117",
+      "kind": "live",
+      "level": 117,
+      "target": 1,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 9.79
+    },
+    {
+      "id": "live-125",
+      "kind": "live",
+      "level": 125,
+      "target": 1,
+      "expectedTries": 1.68,
+      "firstTryRate": 0.35,
+      "firstTryWins": 7,
+      "clockLossShare": 0,
+      "medianTrayLeft": 38,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 13,
+        "late": 0
+      },
+      "elapsed": 22.897
+    },
+    {
+      "id": "live-133",
+      "kind": "live",
+      "level": 133,
+      "target": 1,
+      "expectedTries": 2.8,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.97,
+      "medianTrayLeft": 10,
+      "lossCounts": {
+        "clock": 32,
+        "mid": 0,
+        "late": 1
+      },
+      "elapsed": 27.983
+    },
+    {
+      "id": "live-141",
+      "kind": "live",
+      "level": 141,
+      "target": 1,
+      "expectedTries": 2.9,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0.314,
+      "medianTrayLeft": 20,
+      "lossCounts": {
+        "clock": 11,
+        "mid": 24,
+        "late": 0
+      },
+      "elapsed": 31.153
+    },
+    {
+      "id": "live-149",
+      "kind": "live",
+      "level": 149,
+      "target": 2,
+      "expectedTries": 2.6,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0.083,
+      "medianTrayLeft": 14,
+      "lossCounts": {
+        "clock": 3,
+        "mid": 20,
+        "late": 13
+      },
+      "elapsed": 32.899
+    },
+    {
+      "id": "live-157",
+      "kind": "live",
+      "level": 157,
+      "target": 1,
+      "expectedTries": 3.52,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.723,
+      "medianTrayLeft": 26,
+      "lossCounts": {
+        "clock": 34,
+        "mid": 13,
+        "late": 0
+      },
+      "elapsed": 29.468
+    },
+    {
+      "id": "live-165",
+      "kind": "live",
+      "level": 165,
+      "target": 1,
+      "expectedTries": 1.07,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 0,
+      "medianTrayLeft": 40,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 17.704
+    },
+    {
+      "id": "live-173",
+      "kind": "live",
+      "level": 173,
+      "target": 1,
+      "expectedTries": 1.1,
+      "firstTryRate": 0.9,
+      "firstTryWins": 18,
+      "clockLossShare": 0,
+      "medianTrayLeft": 58,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 2,
+        "late": 0
+      },
+      "elapsed": 8.506
+    },
+    {
+      "id": "factory3-176",
+      "kind": "factory",
+      "key": "factory3-176",
+      "target": 1,
+      "expectedTries": 1.82,
+      "firstTryRate": 0.6,
+      "firstTryWins": 12,
+      "clockLossShare": 0.5,
+      "medianTrayLeft": 46,
+      "lossCounts": {
+        "clock": 7,
+        "mid": 7,
+        "late": 0
+      },
+      "elapsed": 10.28
+    },
+    {
+      "id": "factory6-188",
+      "kind": "factory",
+      "key": "factory6-188",
+      "target": 4,
+      "expectedTries": 3.38,
+      "firstTryRate": 0.05,
+      "firstTryWins": 1,
+      "clockLossShare": 0,
+      "medianTrayLeft": 60,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 44,
+        "late": 0
+      },
+      "elapsed": 22.564
+    },
+    {
+      "id": "release163-185",
+      "kind": "factory",
+      "key": "release163-185",
+      "target": 3,
+      "expectedTries": 3.67,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.041,
+      "medianTrayLeft": 24,
+      "lossCounts": {
+        "clock": 2,
+        "mid": 47,
+        "late": 0
+      },
+      "elapsed": 31.568
+    },
+    {
+      "id": "live-96",
+      "kind": "live",
+      "level": 96,
+      "target": 4,
+      "expectedTries": 1.93,
+      "firstTryRate": 0.1,
+      "firstTryWins": 2,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 19,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 12.182
+    },
+    {
+      "id": "live-110",
+      "kind": "live",
+      "level": 110,
+      "target": 1,
+      "expectedTries": 4.1,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.967,
+      "medianTrayLeft": 88,
+      "lossCounts": {
+        "clock": 60,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 13.889
+    },
+    {
+      "id": "live-118",
+      "kind": "live",
+      "level": 118,
+      "target": 3,
+      "expectedTries": 1.05,
+      "firstTryRate": 0.9,
+      "firstTryWins": 18,
+      "clockLossShare": 0,
+      "medianTrayLeft": 52,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 2,
+        "late": 0
+      },
+      "elapsed": 13.567
+    },
+    {
+      "id": "live-126",
+      "kind": "live",
+      "level": 126,
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 0.9,
+      "firstTryWins": 18,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 2,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 11.086
+    },
+    {
+      "id": "live-134",
+      "kind": "live",
+      "level": 134,
+      "target": 1,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 7.53
+    },
+    {
+      "id": "live-142",
+      "kind": "live",
+      "level": 142,
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 6.904
+    },
+    {
+      "id": "live-150",
+      "kind": "live",
+      "level": 150,
+      "target": 5,
+      "expectedTries": 5.04,
+      "firstTryRate": 0.2,
+      "firstTryWins": 4,
+      "clockLossShare": 0.165,
+      "medianTrayLeft": 56,
+      "lossCounts": {
+        "clock": 16,
+        "mid": 81,
+        "late": 0
+      },
+      "elapsed": 48.288
+    },
+    {
+      "id": "live-158",
+      "kind": "live",
+      "level": 158,
+      "target": 2,
+      "expectedTries": 1.02,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 10.556
+    },
+    {
+      "id": "live-166",
+      "kind": "live",
+      "level": 166,
+      "target": 1,
+      "expectedTries": 2.98,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.974,
+      "medianTrayLeft": 12,
+      "lossCounts": {
+        "clock": 38,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 17.387
+    },
+    {
+      "id": "live-174",
+      "kind": "live",
+      "level": 174,
+      "target": 2,
+      "expectedTries": 1.1,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 9.549
+    },
+    {
+      "id": "factory3-182",
+      "kind": "factory",
+      "key": "factory3-182",
+      "target": 1,
+      "expectedTries": 1.68,
+      "firstTryRate": 0.45,
+      "firstTryWins": 9,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 11,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 12.32
+    },
+    {
+      "id": "factory6-184",
+      "kind": "factory",
+      "key": "factory6-184",
+      "target": 6,
+      "expectedTries": 6.7,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.627,
+      "medianTrayLeft": 38,
+      "lossCounts": {
+        "clock": 94,
+        "mid": 24,
+        "late": 0
+      },
+      "elapsed": 52.949
+    },
+    {
+      "id": "release163-194",
+      "kind": "factory",
+      "key": "release163-194",
+      "target": 9,
+      "expectedTries": 7.85,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.185,
+      "medianTrayLeft": 70,
+      "lossCounts": {
+        "clock": 232,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 15.769
+    },
+    {
+      "id": "live-97",
+      "kind": "live",
+      "level": 97,
+      "target": 1,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 6.426
+    },
+    {
+      "id": "live-111",
+      "kind": "live",
+      "level": 111,
+      "target": 3,
+      "expectedTries": 2.99,
+      "firstTryRate": 0.15,
+      "firstTryWins": 3,
+      "clockLossShare": 0.032,
+      "medianTrayLeft": 34,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 30,
+        "late": 0
+      },
+      "elapsed": 44.595
+    },
+    {
+      "id": "live-119",
+      "kind": "live",
+      "level": 119,
+      "target": 1,
+      "expectedTries": 1.02,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 1,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 14.951
+    },
+    {
+      "id": "live-127",
+      "kind": "live",
+      "level": 127,
+      "target": 1,
+      "expectedTries": 1.15,
+      "firstTryRate": 0.9,
+      "firstTryWins": 18,
+      "clockLossShare": 0.5,
+      "medianTrayLeft": 30,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 11.296
+    },
+    {
+      "id": "live-135",
+      "kind": "live",
+      "level": 135,
+      "target": 1,
+      "expectedTries": 1.32,
+      "firstTryRate": 0.8,
+      "firstTryWins": 16,
+      "clockLossShare": 0.2,
+      "medianTrayLeft": 28,
+      "lossCounts": {
+        "clock": 1,
+        "mid": 4,
+        "late": 0
+      },
+      "elapsed": 22.488
+    },
+    {
+      "id": "live-143",
+      "kind": "live",
+      "level": 143,
+      "target": 1,
+      "expectedTries": 4.15,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.984,
+      "medianTrayLeft": 16,
+      "lossCounts": {
+        "clock": 60,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 18.921
+    },
+    {
+      "id": "live-151",
+      "kind": "live",
+      "level": 151,
+      "target": 2,
+      "expectedTries": 1.65,
+      "firstTryRate": 0.7,
+      "firstTryWins": 14,
+      "clockLossShare": 0.417,
+      "medianTrayLeft": 32,
+      "lossCounts": {
+        "clock": 5,
+        "mid": 7,
+        "late": 0
+      },
+      "elapsed": 16.689
+    },
+    {
+      "id": "live-159",
+      "kind": "live",
+      "level": 159,
+      "target": 2,
+      "expectedTries": 1,
+      "firstTryRate": 1,
+      "firstTryWins": 20,
+      "clockLossShare": 0,
+      "medianTrayLeft": null,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 18.285
+    },
+    {
+      "id": "live-167",
+      "kind": "live",
+      "level": 167,
+      "target": 1,
+      "expectedTries": 1.05,
+      "firstTryRate": 0.95,
+      "firstTryWins": 19,
+      "clockLossShare": 0,
+      "medianTrayLeft": 22,
+      "lossCounts": {
+        "clock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "elapsed": 10.933
+    },
+    {
+      "id": "factory1-175",
+      "kind": "factory",
+      "key": "factory1-175",
+      "target": 1,
+      "expectedTries": 1.5,
+      "firstTryRate": 0.7,
+      "firstTryWins": 14,
+      "clockLossShare": 0.308,
+      "medianTrayLeft": 40,
+      "lossCounts": {
+        "clock": 4,
+        "mid": 9,
+        "late": 0
+      },
+      "elapsed": 15.324
+    },
+    {
+      "id": "factory4-175",
+      "kind": "factory",
+      "key": "factory4-175",
+      "target": 4,
+      "expectedTries": 4.08,
+      "firstTryRate": 0,
+      "firstTryWins": 0,
+      "clockLossShare": 0.803,
+      "medianTrayLeft": 52,
+      "lossCounts": {
+        "clock": 61,
+        "mid": 0,
+        "late": 0
+      },
+      "elapsed": 20.159
+    },
+    {
+      "id": "factory6-190",
+      "kind": "factory",
+      "key": "factory6-190",
+      "target": 2,
+      "expectedTries": 2.48,
+      "firstTryRate": 0.25,
+      "firstTryWins": 5,
+      "clockLossShare": 0.704,
+      "medianTrayLeft": 6,
+      "lossCounts": {
+        "clock": 20,
+        "mid": 2,
+        "late": 5
+      },
+      "elapsed": 19.065
+    }
+  ]
+}

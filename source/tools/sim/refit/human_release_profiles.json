@@ -1,7 +1,7 @@
 {
   "schema": "human-person-release-v1",
-  "version": "human-g2",
-  "calibrationStatus": "human-g2-factory-difficulty-validated",
+  "version": "human-g5",
+  "calibrationStatus": "human-g5-validated",
   "profiles": {
     "Dennis": {
       "clockHorizon": 3,
@@ -36,7 +36,8 @@
       "retryPrepareKeyOuts": 1,
       "retryKeyRouteValue": 1,
       "retryKeyPictureRelations": 1,
-      "retryAccessMemory": 1
+      "retryAccessMemory": 1,
+      "clockClusterSalience": 1
     },
     "family": {
       "clockHorizon": 2,
@@ -65,7 +66,8 @@
       "clockRowPreview": 1,
       "sharedClockIce": 1,
       "clockOutsPlan": 1,
-      "clockCompletionBonus": 40
+      "clockCompletionBonus": 40,
+      "clockClusterSalience": 1
     }
   }
 }

@@ -83,7 +83,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockClusterSalience']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -98,7 +98,7 @@ function createBotController(tiles, profile, seed) {
   assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
   for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
   for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
-  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory'])assert(p[key]===undefined||p[key]===0||p[key]===1);
+  for(const key of ['clockRowPreview','sharedClockIce','clockOutsPlan','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockClusterSalience'])assert(p[key]===undefined||p[key]===0||p[key]===1);
   // A separate attention stream leaves the released move-noise sequence intact.
   const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
   let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
@@ -124,6 +124,7 @@ function createBotController(tiles, profile, seed) {
   const failedDigs = new Map();
   const learnedLockedCarry=new Map();
   let attemptDigs = [];
+  let initDownCount = null;
 
   function rememberedKeyTargets(){
     return retryKeyMemory?retryKeyMemory.entries().filter(f=>f.attempt<attempt&&state?.alive[f.index]).map(f=>f.index):[];
@@ -138,7 +139,10 @@ function createBotController(tiles, profile, seed) {
     clockHorizon=Math.min(4,(clockLosses>0&&p.retryClockHorizon!==undefined?p.retryClockHorizon:p.clockHorizon)+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0));
     strictClockSlack=p.deadlineAttentionProbability===undefined?p.strictClockSlack:attentionRandom()<Math.min(1,p.deadlineAttentionProbability+clockLosses*(p.deadlineLearningRate??0));
     if (attempt++) {
-      memory = memory.map(v => random() < p.retryRetention ? v : null);
+      const effRet = (tiles.length >= 92 && initDownCount !== null && initDownCount >= 28)
+        ? p.retryRetention * (82 / tiles.length)
+        : p.retryRetention;
+      memory = memory.map(v => random() < effRet ? v : null);
     }
     roles = tiles.map(() => null);
     visits = new Map();
@@ -196,6 +200,17 @@ function createBotController(tiles, profile, seed) {
       clock: o.clock ? { i: o.clock.i, n: o.clock.n, remaining: o.clock.remaining } : null
     };
     memory = memory.map((v, i) => o.pictures[i] !== null ? o.pictures[i] : s.alive[i] && random() < p.memoryDecay ? null : v);
+    if (initDownCount === null && seen && seen.down) {
+      initDownCount = seen.down.reduce((a, b) => a + b, 0);
+    }
+    if (tiles.length >= 92 && initDownCount >= 28) {
+      const cap = 7;
+      const downRemembered = [];
+      for (let i = 0; i < n; i++) if (memory[i] !== null && seen.down[i] === 1 && s.alive[i]) downRemembered.push(i);
+      if (downRemembered.length > cap) {
+        for (let i = 0; i < downRemembered.length - cap; i++) memory[downRemembered[i]] = null;
+      }
+    }
     roles = roles.map((v, i) => o.roles[i] ?? v);
     retryKeyMemory?.observe(state,seen.roles,attempt);
     retryAccess?.observe(state,seen,attempt);
@@ -407,6 +422,8 @@ function createBotController(tiles, profile, seed) {
     }
 
     const attraction = new Map(), clock = seen.clock;
+    const cIdx = initialClock ? initialClock.i : (clock ? clock.i : -1);
+    const isClockChokepoint = Boolean(initialClock && initialClock.n <= 7 && nb.above[cIdx]?.length >= 2 && nb.left[cIdx]?.length > 0 && nb.right[cIdx]?.length > 0);
     // A short cone may pursue a useful-looking key/mate goal without
     // considering all three links (clock, mate, keys) and their full cost.
     const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'&&(clockHorizon<3||clockMateRouteBudget({alive,nb,clock,mate:i,roles,down:seen.down}).fits)));
@@ -420,11 +437,15 @@ function createBotController(tiles, profile, seed) {
       attraction.set(i, Math.max(attraction.get(i) ?? 0, weight));
       if (depth >= maxDepth) return;
       const nextPath = new Set([...path, i]);
+      const clockIsFree = clock && Layouts.isFree(clock.i, alive, nb);
+      const earlyCoveredTightClock = p.clockClusterSalience && clock && !clockIsFree && isClockChokepoint && clockLosses < 3;
       for (const j of blockers(i)) {
         const nextDepth = depth + 1;
-        const decay = (nextDepth > clockHorizon && !isSideRow)
-          ? (clockLosses === 0 ? 0.05 : clockLosses === 1 ? 0.25 : 0.82)
-          : 0.82;
+        const decay = earlyCoveredTightClock
+          ? Math.min(0.82, 0.38 + clockLosses * 0.16)
+          : (nextDepth > clockHorizon && !isSideRow)
+            ? (clockLosses === 0 ? 0.05 : clockLosses === 1 ? 0.25 : 0.82)
+            : 0.82;
         attract(j, nextDepth, weight * decay, maxDepth, isSideRow, nextPath);
       }
     }
@@ -436,6 +457,14 @@ function createBotController(tiles, profile, seed) {
         nb.left[c].some(j => alive[j]) && nb.right[c].some(j => alive[j]);
       const maxD = Math.min(5, clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
       attract(c, 0, p.clockWeight, maxD, isSideBlockedOnly);
+      if (p.clockClusterSalience && isClockChokepoint && clockLosses < 3) {
+        const clusterW = Math.max(0, p.clockWeight * (0.65 - clockLosses * 0.22));
+        for (let j = 0; j < n; j++) {
+          if (j !== c && alive[j] && Math.abs(tiles[j].x - tiles[c].x) <= 2 && Math.abs(tiles[j].y - tiles[c].y) <= 2) {
+            attract(j, 1, clusterW, 1, false);
+          }
+        }
+      }
       if(p.clockRowPreview&&isSideBlockedOnly){
         // A visible sideways row remains a clock goal beyond the short thought
         // cone. This is geometry recognition, not a solved physical route.
@@ -520,8 +549,10 @@ function createBotController(tiles, profile, seed) {
       }
     }
 
-    const unmatchedClockInTray = tookEarlyClockThisAttempt && initialClock && initialClock.face !== undefined && tray.includes(initialClock.face);
-    const depth = unmatchedClockInTray ? (p.firstTryTrayDepth ?? 1) : (clock ? clockTrayPlanningDepth() : (p.trayDepth ?? 3));
+    const fogOfWar = tiles.length >= 92 && initDownCount !== null && initDownCount >= 28;
+    const unmatchedClockInTray = (tookEarlyClockThisAttempt && initialClock && initialClock.face !== undefined && tray.includes(initialClock.face)) ||
+      (fogOfWar && tray.length >= 2 && state.moves <= 16);
+    const depth = unmatchedClockInTray ? (p.firstTryTrayDepth ?? 1) : (clock ? clockTrayPlanningDepth() : (fogOfWar ? 2 : (p.trayDepth ?? 3)));
     const keyWork=new Set();
     if(p.retryKeyRouteValue&&learnedKeyOut&&(!clock||clockNeedsKeys)){
       for(const k of knownKeys){
@@ -584,7 +615,10 @@ function createBotController(tiles, profile, seed) {
       let score = (knownFatal ? -2000 : goal * urgency) + (clock ? 0 : (partnerAttract.get(i) ?? 0)) + structBonus;
 
       const offClock = clock && goal < p.clockWeight * 0.3;
-      const tightClock = Boolean(strictClockSlack && clock && !balkingAtFlippedClockBlocker && (clockSlack < 2 || clockLosses >= 2));
+      const clockIsFree = clock && Layouts.isFree(clock.i, alive, nb);
+      const tightClock = Boolean(strictClockSlack && clock && !balkingAtFlippedClockBlocker &&
+        (!p.clockClusterSalience || clockIsFree || clockLosses >= 2 || !isClockChokepoint) &&
+        (clockSlack < 2 || clockLosses >= 2));
 
       if (trayMatch) {
         const urgentLastClockMove = clock && clock.remaining <= 1 && ownGoal === 0;
@@ -597,7 +631,10 @@ function createBotController(tiles, profile, seed) {
         const sidePairPenalty = offClock
           ? (tightClock ? p.clockWeight * 1.3 : p.pairReward * 0.25)
           : 0;
-        score += p.pairReward + (down || seen.down[twin] === 1 ? 3 : 0) - sidePairPenalty;
+        const openPairBonus = (p.clockClusterSalience && clock && !clockIsFree && isClockChokepoint && !down && seen.down[twin] === 0)
+          ? Math.max(0, 32 - clockLosses * 8)
+          : 0;
+        score += p.pairReward + (down || seen.down[twin] === 1 ? 3 : 0) - sidePairPenalty + openPairBonus;
       } else if (peek && face === null) {
         const freePeekBonus = ownGoal > 0 ? p.pairReward : (!matchingNow ? (p.freePeekBonus ?? 18) : 4);
         score += p.exploration + freePeekBonus + (tray.length >= 2 ? 6 : 0);
@@ -692,7 +729,9 @@ function createBotController(tiles, profile, seed) {
       if (!peek && count) score -= count * 2;
 
       score += (future.get(i) ?? 0) * (p.futureWeight ?? 1) * (clock ? 0.15 : 1);
-      if ((!peek || knownDig) && !(clock && i === clock.i) && suggestsNoEasyEscape(i)) score -= 1200;
+      if ((!peek || knownDig) && !(clock && i === clock.i) && suggestsNoEasyEscape(i)) {
+        score -= (!clock ? Math.max(120, 1200 - count * 250) : 1200);
+      }
 
       const u = Math.max(1e-12, Math.min(1 - 1e-12, random()));
       const noisy = score - p.temperature * Math.log(-Math.log(u));
