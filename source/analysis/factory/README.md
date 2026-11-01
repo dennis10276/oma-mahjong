@@ -359,5 +359,8 @@ Out of sample it does not help: of the boards whose rating moved by 0.3+, leavin
 to the target and 11 further (total error +4.75 tries), with large misses on levels Dennis won first try: 110
 1.05 -> 4.10, 143 1.18 -> 4.15, 128 1.15 -> 3.17, 152 2.55 -> 4.17, 120 5.63 -> 7.25. Its own all-board MAE is
 worse than g2.1 (1.079 vs 1.067), within 1.5 tries fewer (70.9% vs 71.8%); only the rank correlation rose
-(0.39 vs 0.34). And every big factory board (96 tiles, 34-35 face-down) meets the fog gate, which no board
-Dennis played tested. g2.1 stays the factory meter.
+(0.39 vs 0.34). g2.1 stays the factory meter.
+The 175-200 candidate measured with g5 (g5-candidate.jsonl): the big boards 180, 190, 200 do NOT meet the fog gate
+(it counts face-down tiles in view at the start, fewer than the 34-36 on the board; first note here was wrong).
+But g5 moves unfitted factory boards a lot, both ways: 195 4.50 -> 7.67, 194 4.40 -> 3.28, 196 4.65 -> 3.58,
+200 5.02 -> 4.25, 178 +0.63, 175 +0.50; 15 of 26 within 0.15.
