@@ -283,3 +283,11 @@ Draft on the new curve (`batch-175-200-draft3.jsonl`, `tools/factory/assign_anne
 is a big easy board (2.0, no big board near 4 exists), 190 the big breather (2.2), 200 the big 5.0. The bot
 still rarely rates a board 3.8-4.3 (of the last 20 aimed at 3.7-4.6: 5 in, 4 near). Next: more boards around
 3.8-4.3, best from Gemini's bot-designer (it is meant to hit a band directly).
+
+## Gemini's bot-designer (wip/gemini-human-bot 3642d85), Claude's hold-out check 2026-11-01
+Report: 60% of piles-mid2 in band (3.4-4.9 and 4.4-5.4) within 10 tries, every special matters, 7% warnings,
+~5 min per level. Hold-out (`designer-holdout.jsonl`, `tools/factory/designer_holdout.js`): 6 piles it never
+saw (piles-mid4, 72-82 tiles), band 3.7-4.6, 6 tries each: 1 hit (982 pyramid, lockedClock 3.92, valid,
+2 spare, only "fun"), 5 misses at 23-30 minutes per pile. Two of the misses again with its own band 3.4-4.9:
+still no hit. The two big piles for 180 did not finish (2-hour limit). So the 60% does not carry over to new
+piles yet; its hits are good boards. Not adopted as the factory's builder yet; a fix goal for Gemini.
