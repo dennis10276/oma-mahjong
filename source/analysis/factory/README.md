@@ -325,3 +325,15 @@ levels 85-155 + 23 factory boards, leave-one-out. MAE 1.09 vs 1.14 for raw g2.1;
 what makes those levels hard (the recordings show it: the bot plays the clock opening and the middle game better
 than people), so the fix has to be in how the bot plays: goal g5. On factory boards g2.1 already ranks Dennis's
 tries well (Spearman 0.79): bot up to ~4 = Dennis 1-4, bot 6-8 = Dennis 4-9.
+
+## Clock warnings checked by Dennis (lab batch 11, 2026-11-01)
+- 176, 189, 193 (all "Don't grab the clock + Partners behind locks"; Gemini's critic: clock too loose, the bot reaches
+  the clock with 6-11 moves to spare): Dennis "too loose and it adds nothing", "Time to take this flag seriously",
+  "too loose is no pass level from now on. The clock is just free to take and no reason for it to be there."
+  So clockTooLoose is now a rejection: plan_g2 (with CRITIC_BOT) drops such boards, assign_anneal never lays them,
+  and the dontGrab puzzle (its clock is free from the start) is out of the recipes. The full g2.1 specials test had
+  called these clocks useful (taking the clock off changed the bot's result), so that test alone does not catch it.
+  Boards built before this have no critic3 field: the final check on every batch must run the critic and replace any
+  board it flags as too loose.
+- 198 ("Ice, lock, then the clock"; critic: clock too tight, the bot reaches it in time in 8% of its tries): Dennis
+  "Seems fine. Flag for tight needs work." Too tight stays a warning only.

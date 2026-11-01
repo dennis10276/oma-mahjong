@@ -25,7 +25,12 @@ const I = require(path.join(ROOT, 'tools', 'lab', 'ideas.js'));   // (sets its o
 const Hard = require(path.join(ROOT, 'www', 'hard.js'));
 const [pilesFile, outFile, humanPath, only] = process.argv.slice(2);
 const { measureHuman } = require(path.resolve(humanPath));
-const RECIPES = [['chainReaction'], ['deepKeys', 'iceChain'], ['iceLockClock'], ['dontGrab', 'lockedPartners'], ['lockedPartners', 'iceChain'], ['lockedClock'], ['trayJuggleLocked'], ['deepKeys', 'iceChain']];
+// (dontGrab+lockedPartners is out, Dennis 2026-11-01: its clock is free from the start, "no reason for it to be
+//  there"; all three in the 175-200 candidate were too loose. Its slot is taken by lockedPartners+iceChain.)
+const RECIPES = [['chainReaction'], ['deepKeys', 'iceChain'], ['iceLockClock'], ['lockedPartners', 'iceChain'], ['lockedPartners', 'iceChain'], ['lockedClock'], ['trayJuggleLocked'], ['deepKeys', 'iceChain']];
+// CRITIC_BOT=<Gemini's g3 human_bot.js>: its critic on every candidate; clockTooLoose is a rejection (Dennis
+// 2026-11-01 "too loose is no pass level from now on"), the other flags stay warnings
+const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITIC_BOT)).critique : null;
 const SPARE_OF = r => (r.includes('chainReaction') ? 3 : r.includes('iceChain') ? 1 : 2);
 const ATTEMPTS = +(process.env.ATTEMPTS || 10);
 const hardShare = lv => Math.min(0.7, 0.3 + 0.3 * (lv - 175) / 19);
@@ -92,9 +97,12 @@ for (const p of piles) {
     const late = lost.filter(q => q.left <= 0.35 * nT).length / Math.max(1, lost.length);
     const reach = z.clock ? at.filter(q => q.clockLeft != null && q.clockLeft < nT).length / Math.max(1, at.length) : 1;
     const critic = { late: +late.toFixed(2), reach: +reach.toFixed(2), flags: [late > 0.3 && 'late squeeze', reach < 0.05 && 'clock out of reach'].filter(Boolean) };
+    let critic3 = null;
+    if (critique) { try { critic3 = critique(boardOf(z), { runs: 20, seed: 4711 }).flags; } catch (e) { critic3 = null; } }
+    if (critic3 && critic3.includes('clockTooLoose')) { pg.tried.push(recipe.join('+') + ': clock too loose (out)'); save(); continue; }
     pg.tried.push(recipe.join('+') + ': ' + m.expectedTries + (critic.flags.length ? ' (' + critic.flags.join(', ') + ')' : ''));
     const ck = z.clock ? z.clock.n - (z.solution.indexOf(z.clock.i) + 1) : null;
-    const row = { level: lv, ok: true, shape: p.shape, n: z.tiles.length, px: p.px, recipe, role: isHard(lv) ? 'hard' : 'breather', band, g2: { exp: m.expectedTries, label: m.label, first: m.firstTryRate, version: m.version }, critic,
+    const row = { level: lv, ok: true, shape: p.shape, n: z.tiles.length, px: p.px, recipe, role: isHard(lv) ? 'hard' : 'breather', band, g2: { exp: m.expectedTries, label: m.label, first: m.firstTryRate, version: m.version }, critic, critic3,
       down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length, keys: keys(z).length, clock: z.clock && z.clock.n, clockSpare: ck,
       design: { level: lv, aspect: 1.6, tiles: z.tiles, faces: z.faces, down: z.down, gold: z.gold, obst: z.obst, clock: z.clock, solution: z.solution } };
     console.log(lv, 'band', band.join('-'), 'attempt', attempt, recipe.join('+'), 'spare', ck, 'exp', m.expectedTries, m.label, 'first', m.firstTryRate, 'late', critic.late, 'reach', critic.reach, critic.flags.join(','));

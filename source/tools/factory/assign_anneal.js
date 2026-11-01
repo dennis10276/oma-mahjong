@@ -18,7 +18,11 @@ const rd = f => fs.readFileSync(f, 'utf8').trim().split('\n').filter(Boolean).ma
 const CURVE = (process.env.CURVE || '3.85,0.0212,200,0.5').split(',').map(Number), AT = JSON.parse(process.env.TARGET_AT || '{}');
 const MONO = +(process.env.MONO || 1.5), MAXR = +(process.env.MAXR || 7), MAX_EXP = +(process.env.MAX_EXP || 6);
 const target = lv => AT[lv] != null ? AT[lv] : CURVE[0] + CURVE[1] * (lv - from) + (CURVE[2] && lv >= CURVE[2] ? CURVE[3] : 0);
-const inv = rd(invFile).filter(r => r.g2 && r.g2.exp <= MAX_EXP);
+// Dennis 2026-11-01, after playing 176, 189 and 193 (all 'Don't grab the clock'): "too loose is no pass level
+// from now on. The clock is just free to take and no reason for it to be there." So a board with Gemini's
+// clockTooLoose flag (critic3, from plan_g2 with CRITIC_BOT) or built with dontGrab never goes into a batch.
+const banned = r => (r.critic3 || []).includes('clockTooLoose') || (r.recipe || []).includes('dontGrab');
+const inv = rd(invFile).filter(r => r.g2 && r.g2.exp <= MAX_EXP && !banned(r));
 for (const r of inv) { r._t = r.design.tiles.map(t => Array.isArray(t) ? t : [t.x, t.y, t.z]); r._s = F.spots(r._t)[0]; r._base = r.shape.split(' · ')[0]; r._big = r._t.length > 88; r._recipe = r.recipe.join('+'); }
 const N = inv.length, levels = []; for (let lv = from; lv <= to; lv++) levels.push(lv);
 const K = levels.length;
