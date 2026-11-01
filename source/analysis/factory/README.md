@@ -331,7 +331,9 @@ tries well (Spearman 0.79): bot up to ~4 = Dennis 1-4, bot 6-8 = Dennis 4-9.
   the clock with 6-11 moves to spare): Dennis "too loose and it adds nothing", "Time to take this flag seriously",
   "too loose is no pass level from now on. The clock is just free to take and no reason for it to be there."
   So clockTooLoose is now a rejection: plan_g2 (with CRITIC_BOT) drops such boards, assign_anneal never lays them,
-  and the dontGrab puzzle (its clock is free from the start) is out of the recipes. The full g2.1 specials test had
+  and (Dennis: "You can make levels where it would be counterproductive to grab the clock early. These just weren't
+  that") the dontGrab puzzle stays, but a board made with it is only kept when the human bot made to take the clock
+  first needs at least 1 try more than on the board as built (plan_g2 GRAB_MIN). The full g2.1 specials test had
   called these clocks useful (taking the clock off changed the bot's result), so that test alone does not catch it.
   Boards built before this have no critic3 field: the final check on every batch must run the critic and replace any
   board it flags as too loose.
