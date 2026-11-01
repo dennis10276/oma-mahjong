@@ -348,3 +348,16 @@ tries well (Spearman 0.79): bot up to ~4 = Dennis 1-4, bot 6-8 = Dennis 4-9.
   clock stricter maybe and test again." plan_g2 (CRITIC_BOT): a loose clock on a dontGrab board is out; on other
   boards the spare goes down one move at a time (to 1), measured and criticised again each time; still loose at 1:
   out. The dontGrab early-grab check runs on the final clock.
+
+## Gemini g5 (wip/gemini-g5 10cee30, 2026-11-01): reviewed, not adopted
+g5 changes how the bot plays in two narrow cases: boards of 92+ tiles with 28+ face-down tiles in view (memory capped
+at 7 hidden tiles, less memory between tries, tray lookahead 2), and a clock of 7 or fewer moves buried under 2+
+tiles with tiles on both sides (drawn to open pairs near the clock until it has lost to the clock 3 times). Both
+thresholds were set by looking at 150 and 132 (its report: "Calibrated the threshold to >= 28, properly activating
+Fog of War on Level 150"), so its 150 = 5.04 and 132 = 5.10 are fitted, not predicted.
+Out of sample it does not help: of the boards whose rating moved by 0.3+, leaving out 150 and 132, 10 got closer
+to the target and 11 further (total error +4.75 tries), with large misses on levels Dennis won first try: 110
+1.05 -> 4.10, 143 1.18 -> 4.15, 128 1.15 -> 3.17, 152 2.55 -> 4.17, 120 5.63 -> 7.25. Its own all-board MAE is
+worse than g2.1 (1.079 vs 1.067), within 1.5 tries fewer (70.9% vs 71.8%); only the rank correlation rose
+(0.39 vs 0.34). And every big factory board (96 tiles, 34-35 face-down) meets the fog gate, which no board
+Dennis played tested. g2.1 stays the factory meter.
