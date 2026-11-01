@@ -1,4 +1,6 @@
-[
+{
+"about": "Dennis's targets (2026-11-01): his tries until his first win (not won yet: +1), +2 when BOTH Gerda and Mrs. Doubtfire needed 8 or more (not won yet counts as one more). Live boards: app 1.52+ for 85-91, 1.54+ for 92+. Refreshed from Firebase plays/ 2026-11-01 18:20.",
+"levels": [
 {
 "level": 85,
 "dennis": 1,
@@ -599,8 +601,8 @@
 "dennisWon": true,
 "gerda": 82,
 "gerdaWon": true,
-"mrsd": 7,
-"mrsdWon": false,
+"mrsd": 21,
+"mrsdWon": true,
 "target": 5,
 "plus2": true
 },
@@ -610,8 +612,8 @@
 "dennisWon": true,
 "gerda": 5,
 "gerdaWon": true,
-"mrsd": null,
-"mrsdWon": null,
+"mrsd": 4,
+"mrsdWon": true,
 "target": 2,
 "plus2": false
 },
@@ -621,8 +623,8 @@
 "dennisWon": true,
 "gerda": 4,
 "gerdaWon": true,
-"mrsd": null,
-"mrsdWon": null,
+"mrsd": 2,
+"mrsdWon": true,
 "target": 2,
 "plus2": false
 },
@@ -632,8 +634,8 @@
 "dennisWon": true,
 "gerda": 9,
 "gerdaWon": true,
-"mrsd": null,
-"mrsdWon": null,
+"mrsd": 2,
+"mrsdWon": true,
 "target": 1,
 "plus2": false
 },
@@ -641,15 +643,37 @@
 "level": 154,
 "dennis": 3,
 "dennisWon": true,
-"gerda": 2,
-"gerdaWon": false,
-"mrsd": null,
-"mrsdWon": null,
+"gerda": 11,
+"gerdaWon": true,
+"mrsd": 1,
+"mrsdWon": true,
 "target": 3,
 "plus2": false
 },
 {
 "level": 155,
+"dennis": 1,
+"dennisWon": true,
+"gerda": 3,
+"gerdaWon": true,
+"mrsd": 7,
+"mrsdWon": true,
+"target": 1,
+"plus2": false
+},
+{
+"level": 156,
+"dennis": 3,
+"dennisWon": true,
+"gerda": 3,
+"gerdaWon": false,
+"mrsd": 9,
+"mrsdWon": false,
+"target": 3,
+"plus2": false
+},
+{
+"level": 157,
 "dennis": 1,
 "dennisWon": true,
 "gerda": null,
@@ -658,5 +682,193 @@
 "mrsdWon": null,
 "target": 1,
 "plus2": false
+},
+{
+"level": 158,
+"dennis": 2,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 2,
+"plus2": false
+},
+{
+"level": 159,
+"dennis": 2,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 2,
+"plus2": false
+},
+{
+"level": 160,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 161,
+"dennis": 4,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 4,
+"plus2": false
+},
+{
+"level": 162,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 163,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 164,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 165,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 166,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 167,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 168,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 169,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 170,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 171,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 172,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 173,
+"dennis": 1,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 1,
+"plus2": false
+},
+{
+"level": 174,
+"dennis": 2,
+"dennisWon": true,
+"gerda": null,
+"gerdaWon": null,
+"mrsd": null,
+"mrsdWon": null,
+"target": 2,
+"plus2": false
 }
 ]
+}
