@@ -1,5 +1,5 @@
 {
-"about": "Real play on the live boards (app 1.54+, where 92-269 have their current boards), from Firebase plays/ (public): per level and player the tries until the first win ('won': false = not won yet, tries so far). 'g21': Gemini's g2.1 expectedTries (seed 4711, 2 x 20) where measured (125-269). Made by Claude 2026-11-01 for calibrating the difficulty bot. Dennis 2026-11-01: 150 should come out 3.2-4.5 tries for him (he needed 3; Gerda and Mrs. Doubtfire 8+); 132: everyone struggled, the bot should find it harder than the levels around it. 'target' (Dennis 2026-11-01): the tries the bot should match: Dennis's tries, +1 when he needed 1 or 2 and BOTH Gerda and Mrs. Doubtfire needed 7 or more.",
+"about": "Real play on the live boards (app 1.54+, where 92-269 have their current boards), from Firebase plays/ (public): per level and player the tries until the first win ('won': false = not won yet, tries so far). 'g21': Gemini's g2.1 expectedTries (seed 4711, 2 x 20) where measured (125-269). Made by Claude 2026-11-01 for calibrating the difficulty bot. Dennis 2026-11-01: 150 should come out 3.2-4.5 tries for him (he needed 3; Gerda and Mrs. Doubtfire 8+); 132: everyone struggled, the bot should find it harder than the levels around it. 'target' (Dennis 2026-11-01): the tries the bot should match: Dennis's tries, +2 for every 8 tries the slower of Gerda and Mrs. Doubtfire needed, at most +4.",
 "levels": [
 {
 "level": 92,
@@ -67,7 +67,8 @@
 "won": true
 },
 "g21": null,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 9"
 },
 {
 "level": 96,
@@ -147,7 +148,8 @@
 "won": true
 },
 "g21": null,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 14"
 },
 {
 "level": 101,
@@ -292,7 +294,8 @@
 "won": true
 },
 "g21": null,
-"target": 1
+"target": 5,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 18"
 },
 {
 "level": 111,
@@ -309,7 +312,8 @@
 "won": true
 },
 "g21": null,
-"target": 3
+"target": 5,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 12"
 },
 {
 "level": 112,
@@ -343,7 +347,8 @@
 "won": true
 },
 "g21": null,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 15"
 },
 {
 "level": 114,
@@ -394,7 +399,8 @@
 "won": true
 },
 "g21": null,
-"target": 2
+"target": 6,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 20"
 },
 {
 "level": 117,
@@ -445,7 +451,8 @@
 "won": true
 },
 "g21": null,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 14"
 },
 {
 "level": 120,
@@ -479,7 +486,8 @@
 "won": true
 },
 "g21": null,
-"target": 4
+"target": 8,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 21"
 },
 {
 "level": 122,
@@ -496,7 +504,8 @@
 "won": true
 },
 "g21": null,
-"target": 4
+"target": 8,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 26"
 },
 {
 "level": 123,
@@ -513,7 +522,8 @@
 "won": true
 },
 "g21": null,
-"target": 1
+"target": 5,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 36"
 },
 {
 "level": 124,
@@ -547,7 +557,8 @@
 "won": true
 },
 "g21": 1.73,
-"target": 1
+"target": 5,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 19"
 },
 {
 "level": 126,
@@ -598,7 +609,8 @@
 "won": true
 },
 "g21": 1.15,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 11"
 },
 {
 "level": 129,
@@ -666,7 +678,8 @@
 "won": true
 },
 "g21": 1.13,
-"target": 4
+"target": 8,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 73"
 },
 {
 "level": 133,
@@ -717,7 +730,8 @@
 "won": true
 },
 "g21": 1.27,
-"target": 1
+"target": 5,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 20"
 },
 {
 "level": 136,
@@ -768,7 +782,8 @@
 "won": true
 },
 "g21": 1.95,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 9"
 },
 {
 "level": 139,
@@ -819,7 +834,8 @@
 "won": true
 },
 "g21": 2.83,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 12"
 },
 {
 "level": 142,
@@ -836,7 +852,8 @@
 "won": true
 },
 "g21": 1.05,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 8"
 },
 {
 "level": 143,
@@ -853,8 +870,8 @@
 "won": true
 },
 "g21": 1.18,
-"target": 2,
-"targetNote": "Dennis +1: Gerda and Mrs. Doubtfire both 7+"
+"target": 5,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 18"
 },
 {
 "level": 144,
@@ -871,7 +888,8 @@
 "won": true
 },
 "g21": 1.05,
-"target": 1
+"target": 5,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 39"
 },
 {
 "level": 145,
@@ -956,7 +974,8 @@
 "won": true
 },
 "g21": 3.45,
-"target": 2
+"target": 6,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 76"
 },
 {
 "level": 150,
@@ -973,7 +992,8 @@
 "won": false
 },
 "g21": 2.65,
-"target": 3
+"target": 7,
+"targetNote": "Dennis +4: the slower of Gerda/Mrs. Doubtfire needed 82"
 },
 {
 "level": 151,
@@ -1012,7 +1032,8 @@
 "won": true
 },
 "g21": 1.02,
-"target": 1
+"target": 3,
+"targetNote": "Dennis +2: the slower of Gerda/Mrs. Doubtfire needed 9"
 },
 {
 "level": 154,
