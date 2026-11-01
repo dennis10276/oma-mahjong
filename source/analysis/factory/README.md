@@ -316,3 +316,12 @@ FIRST win only (Dennis: replays after a win don't count; 23 such tries left out)
 - 150 (clock 7, shortest 6): the clock is taken almost always; then the tray fills in the middle (tiles left at
   the loss: Dennis 58, Gerda 72, Mrs. Doubtfire 54 of 96). The bot loses there too but much later (42 left) and
   wins about 1 in 2.7 tries (Gerda 1 in 81).
+
+## The judge on top of g2.1: not adopted (2026-11-01)
+`tools/factory/judge_fit.py` -> `judge-fit-1.json`: a small linear model from what g2.1 sees (expected tries, first-try
+rate, clock losses, late losses, clock reach, spare, size, face-down share, ice, locks) to Dennis's targets, 60 live
+levels 85-155 + 23 factory boards, leave-one-out. MAE 1.09 vs 1.14 for raw g2.1; ranking of the live levels
+(Spearman 0.17 vs 0.18) no better; 150 -> 2.9 (target 5), 132 -> 1.2 (target 6). The bot's own numbers do not hold
+what makes those levels hard (the recordings show it: the bot plays the clock opening and the middle game better
+than people), so the fix has to be in how the bot plays: goal g5. On factory boards g2.1 already ranks Dennis's
+tries well (Spearman 0.79): bot up to ~4 = Dennis 1-4, bot 6-8 = Dennis 4-9.
