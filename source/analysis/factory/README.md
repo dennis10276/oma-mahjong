@@ -305,3 +305,14 @@ Dennis played in the factory its order and size held in two blind tests.
 The start of 3.85 cannot be reached with the boards there are (and was taken from level 155, which g2.1
 overrates: Dennis won it first try). Candidate: 175-189 rise 3.0-4.85, 180 a big 2.7, 190 the big breather 2.25,
 191-192 2.6 and 3.0, then 4.0-5.05, 200 the big 5.0. Includes the bot-designer's pyramid (186, 3.92).
+
+## The family's recordings (2026-11-01)
+Dennis: "Why can't it find out from the data the players gave?" Every try is recorded tap by tap (Firebase
+`replays/`, 30 days; the dashboard plays them in `site/dash/watch.js`). Raw export: `analysis/archive/replays-2026-11-01/`
+(git-ignored). `tools/factory/real_losses.js` -> `real-losses-85-174.json`: per level and player, tries up to the
+FIRST win only (Dennis: replays after a win don't count; 23 such tries left out), and how each lost try ended.
+- 132 (clock 6 moves, shortest way 5): an opening problem. Gerda 54 of 70 losses and Mrs. Doubtfire 18 of 30 were
+  the clock running out; the tray losses too came after only 6 of 82 tiles. The bot finds the way 90% first try.
+- 150 (clock 7, shortest 6): the clock is taken almost always; then the tray fills in the middle (tiles left at
+  the loss: Dennis 58, Gerda 72, Mrs. Doubtfire 54 of 96). The bot loses there too but much later (42 left) and
+  wins about 1 in 2.7 tries (Gerda 1 in 81).

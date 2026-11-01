@@ -1,0 +1,3817 @@
+{
+ "about": "How Dennis, Gerda and Mrs. Doubtfire lost each level 85-174, from the recordings (tools/factory/real_losses.js); tries up to the first win only.",
+ "levels": [
+  {
+   "level": 85,
+   "tiles": 88,
+   "clock": {
+    "i": 65,
+    "n": 11
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 2,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 5,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 38,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 86,
+   "tiles": 88,
+   "clock": {
+    "i": 17,
+    "n": 8
+   },
+   "players": {
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 4,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 56,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 87,
+   "tiles": 88,
+   "clock": {
+    "i": 24,
+    "n": 10
+   },
+   "players": {
+    "Gerda": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 64,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 88,
+   "tiles": 80,
+   "clock": {
+    "i": 62,
+    "n": 9
+   },
+   "players": {
+    "Gerda": {
+     "recordedTries": 8,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 7,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 36,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 89,
+   "tiles": 78,
+   "clock": {
+    "i": 38,
+    "n": 8
+   },
+   "players": {
+    "MrsD": {
+     "recordedTries": 11,
+     "firstRecordedTry": 3,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 7,
+     "restart": 0,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": 46,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 14,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 12,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 56,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 90,
+   "tiles": 96,
+   "clock": {
+    "i": 7,
+    "n": 8
+   },
+   "players": {
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 46,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 91,
+   "tiles": 80,
+   "clock": {
+    "i": 49,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 5,
+     "firstRecordedTry": 2,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 2,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 40,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 21,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 12,
+     "restart": 4,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": 52,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 68,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 7,
+     "tray": 60,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 52,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 92,
+   "tiles": 76,
+   "clock": {
+    "i": 62,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 6,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 42,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 93,
+   "tiles": 80,
+   "clock": {
+    "i": 68,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 2,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 44,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 94,
+   "tiles": 86,
+   "clock": {
+    "i": 3,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 2,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 76,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 95,
+   "tiles": 88,
+   "clock": {
+    "i": 69,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 3,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 42,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 9,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 8,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 80,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 96,
+   "tiles": 86,
+   "clock": {
+    "i": 18,
+    "n": 13
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 2,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 76,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 4,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 76,
+     "trayLossClockTakenShare": 0.5
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 97,
+   "tiles": 70,
+   "clock": {
+    "i": 58,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 4,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 7,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 24,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 98,
+   "tiles": 72,
+   "clock": {
+    "i": 43,
+    "n": 8
+   },
+   "players": {
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 24,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 99,
+   "tiles": 88,
+   "clock": {
+    "i": 2,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 3,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 76,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 40,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 82,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 100,
+   "tiles": 96,
+   "clock": {
+    "i": 62,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 2,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 88,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 14,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 11,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 64,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 101,
+   "tiles": 80,
+   "clock": {
+    "i": 68,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 52,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 40,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 102,
+   "tiles": 86,
+   "clock": {
+    "i": 65,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 103,
+   "tiles": 86,
+   "clock": {
+    "i": 3,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 80,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 104,
+   "tiles": 72,
+   "clock": {
+    "i": 43,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 1,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 78,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 105,
+   "tiles": 86,
+   "clock": {
+    "i": 18,
+    "n": 13
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 36,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 52,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 106,
+   "tiles": 76,
+   "clock": {
+    "i": 7,
+    "n": 18
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 107,
+   "tiles": 76,
+   "clock": {
+    "i": 71,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 54,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 7,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 5,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 44,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 108,
+   "tiles": 88,
+   "clock": {
+    "i": 65,
+    "n": 13
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 44,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 38,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 109,
+   "tiles": 82,
+   "clock": {
+    "i": 49,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 62,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 62,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 4,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 62,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 110,
+   "tiles": 94,
+   "clock": {
+    "i": 85,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 3,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 18,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 16,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 90,
+     "trayLossClockTakenShare": 0
+    }
+   }
+  },
+  {
+   "level": 111,
+   "tiles": 74,
+   "clock": {
+    "i": 62,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 40,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 12,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 11,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 48,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 112,
+   "tiles": 80,
+   "clock": {
+    "i": 37,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 28,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 46,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 113,
+   "tiles": 88,
+   "clock": {
+    "i": 31,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 13,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 10,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 34,
+     "trayLossClockTakenShare": 0.9
+    }
+   }
+  },
+  {
+   "level": 114,
+   "tiles": 88,
+   "clock": {
+    "i": 58,
+    "n": 11
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 115,
+   "tiles": 80,
+   "clock": {
+    "i": 30,
+    "n": 9
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 68,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 116,
+   "tiles": 86,
+   "clock": {
+    "i": 72,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 20,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 20,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 11,
+     "tray": 8,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 78,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 117,
+   "tiles": 72,
+   "clock": {
+    "i": 40,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 26,
+     "trayLossClockTakenShare": 0.67
+    }
+   }
+  },
+  {
+   "level": 118,
+   "tiles": 76,
+   "clock": {
+    "i": 56,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 66,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 54,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 119,
+   "tiles": 88,
+   "clock": {
+    "i": 74,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 14,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 10,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 74,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 120,
+   "tiles": 96,
+   "clock": {
+    "i": 57,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 92,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 90,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 121,
+   "tiles": 82,
+   "clock": {
+    "i": 4,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 46,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 72,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 21,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 20,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 56,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 122,
+   "tiles": 72,
+   "clock": {
+    "i": 43,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 66,
+     "trayLossClockTakenShare": 0
+    },
+    "MrsD": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 66,
+     "trayLossClockTakenShare": 0
+    },
+    "Gerda": {
+     "recordedTries": 25,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 24,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 66,
+     "trayLossClockTakenShare": 0.17
+    }
+   }
+  },
+  {
+   "level": 123,
+   "tiles": 88,
+   "clock": {
+    "i": 63,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 36,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 22,
+     "tray": 13,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 84,
+     "trayLossClockTakenShare": 0.38
+    }
+   }
+  },
+  {
+   "level": 124,
+   "tiles": 74,
+   "clock": {
+    "i": 48,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 12,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 32,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 7,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 5,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 38,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 125,
+   "tiles": 78,
+   "clock": {
+    "i": 69,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 19,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 15,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 58,
+     "trayLossClockTakenShare": 0.93
+    }
+   }
+  },
+  {
+   "level": 126,
+   "tiles": 82,
+   "clock": {
+    "i": 45,
+    "n": 9
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 4,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 74,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 70,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 127,
+   "tiles": 72,
+   "clock": {
+    "i": 5,
+    "n": 12
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 34,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 60,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 128,
+   "tiles": 72,
+   "clock": {
+    "i": 28,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 32,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 11,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 4,
+     "tray": 6,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 66,
+     "trayLossClockTakenShare": 0.83
+    }
+   }
+  },
+  {
+   "level": 129,
+   "tiles": 84,
+   "clock": {
+    "i": 55,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 40,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 72,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 130,
+   "tiles": 96,
+   "clock": {
+    "i": 21,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 82,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 40,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 131,
+   "tiles": 84,
+   "clock": {
+    "i": 44,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 4,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 60,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 132,
+   "tiles": 82,
+   "clock": {
+    "i": 65,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 13,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 76,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 31,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 18,
+     "tray": 12,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 76,
+     "trayLossClockTakenShare": 0.92
+    },
+    "Gerda": {
+     "recordedTries": 71,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 54,
+     "tray": 15,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 76,
+     "trayLossClockTakenShare": 0.73
+    }
+   }
+  },
+  {
+   "level": 133,
+   "tiles": 80,
+   "clock": {
+    "i": 47,
+    "n": 9
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 134,
+   "tiles": 74,
+   "clock": {
+    "i": 28,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 40,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 135,
+   "tiles": 88,
+   "clock": {
+    "i": 27,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 5,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 18,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 14,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 38,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 136,
+   "tiles": 78,
+   "clock": {
+    "i": 10,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 74,
+     "trayLossClockTakenShare": 0
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 44,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 137,
+   "tiles": 72,
+   "clock": {
+    "i": 64,
+    "n": 9
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 46,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 62,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 64,
+     "trayLossClockTakenShare": 0
+    }
+   }
+  },
+  {
+   "level": 138,
+   "tiles": 88,
+   "clock": {
+    "i": 58,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 9,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 5,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 50,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 139,
+   "tiles": 88,
+   "clock": {
+    "i": 55,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 22,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 7,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 4,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 74,
+     "trayLossClockTakenShare": 0.75
+    }
+   }
+  },
+  {
+   "level": 140,
+   "tiles": 96,
+   "clock": {
+    "i": 14,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 84,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 141,
+   "tiles": 74,
+   "clock": {
+    "i": 46,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 28,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 12,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 6,
+     "tray": 5,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 28,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 142,
+   "tiles": 76,
+   "clock": {
+    "i": 33,
+    "n": 10
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 8,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 7,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 68,
+     "trayLossClockTakenShare": 0
+    },
+    "Gerda": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 143,
+   "tiles": 88,
+   "clock": {
+    "i": 79,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 7,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 6,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 60,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 17,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 15,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 66,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 144,
+   "tiles": 88,
+   "clock": {
+    "i": 46,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 38,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 6,
+     "tray": 31,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 82,
+     "trayLossClockTakenShare": 0.77
+    },
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 5,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 84,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 145,
+   "tiles": 78,
+   "clock": {
+    "i": 31,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 38,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 146,
+   "tiles": 74,
+   "clock": {
+    "i": 18,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 6,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 4,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 32,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 147,
+   "tiles": 86,
+   "clock": {
+    "i": 83,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 32,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 42,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 148,
+   "tiles": 76,
+   "clock": {
+    "i": 56,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 70,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 149,
+   "tiles": 86,
+   "clock": {
+    "i": 7,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 50,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 75,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 9,
+     "tray": 62,
+     "restart": 3,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 50,
+     "trayLossClockTakenShare": 0.98
+    }
+   }
+  },
+  {
+   "level": 150,
+   "tiles": 96,
+   "clock": {
+    "i": 34,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 5,
+     "win": 1,
+     "clock": 0,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 58,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 21,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 18,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 54,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 81,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 6,
+     "tray": 65,
+     "restart": 9,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 72,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 151,
+   "tiles": 76,
+   "clock": {
+    "i": 47,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 2,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 30,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 3,
+     "tray": 0,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 152,
+   "tiles": 82,
+   "clock": {
+    "i": 49,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 62,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 54,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 2,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 62,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 153,
+   "tiles": 72,
+   "clock": {
+    "i": 51,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 48,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 9,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 8,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 48,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 154,
+   "tiles": 80,
+   "clock": {
+    "i": 60,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 1,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 46,
+     "trayLossClockTakenShare": 1
+    },
+    "MrsD": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "Gerda": {
+     "recordedTries": 11,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 9,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 70,
+     "trayLossClockTakenShare": 0.56
+    }
+   }
+  },
+  {
+   "level": 155,
+   "tiles": 86,
+   "clock": {
+    "i": 62,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 7,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 5,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 20,
+     "trayLossClockTakenShare": 1
+    },
+    "Gerda": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 1,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": 70,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 156,
+   "tiles": 76,
+   "clock": {
+    "i": 18,
+    "n": 15
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 3,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 2,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    },
+    "MrsD": {
+     "recordedTries": 10,
+     "firstRecordedTry": 1,
+     "won": false,
+     "leftOutAfterWin": 0,
+     "win": 0,
+     "clock": 0,
+     "tray": 9,
+     "restart": 0,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": 64,
+     "trayLossClockTakenShare": 0.78
+    },
+    "Gerda": {
+     "recordedTries": 4,
+     "firstRecordedTry": 1,
+     "won": false,
+     "leftOutAfterWin": 0,
+     "win": 0,
+     "clock": 0,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": 64,
+     "trayLossClockTakenShare": 0.33
+    }
+   }
+  },
+  {
+   "level": 157,
+   "tiles": 88,
+   "clock": {
+    "i": 78,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 158,
+   "tiles": 86,
+   "clock": {
+    "i": 66,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 159,
+   "tiles": 88,
+   "clock": {
+    "i": 78,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 1,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 160,
+   "tiles": 96,
+   "clock": {
+    "i": 58,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 161,
+   "tiles": 88,
+   "clock": {
+    "i": 77,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 5,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 3,
+     "restart": 0,
+     "unfinished": 1,
+     "trayLossTilesLeftMedian": 60,
+     "trayLossClockTakenShare": 1
+    }
+   }
+  },
+  {
+   "level": 162,
+   "tiles": 74,
+   "clock": {
+    "i": 65,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 163,
+   "tiles": 78,
+   "clock": {
+    "i": 52,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 164,
+   "tiles": 80,
+   "clock": {
+    "i": 15,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 165,
+   "tiles": 86,
+   "clock": {
+    "i": 16,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 166,
+   "tiles": 88,
+   "clock": {
+    "i": 69,
+    "n": 9
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 167,
+   "tiles": 74,
+   "clock": {
+    "i": 5,
+    "n": 14
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 168,
+   "tiles": 82,
+   "clock": {
+    "i": 26,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 169,
+   "tiles": 84,
+   "clock": {
+    "i": 48,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 170,
+   "tiles": 96,
+   "clock": {
+    "i": 45,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 171,
+   "tiles": 74,
+   "clock": {
+    "i": 25,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 172,
+   "tiles": 76,
+   "clock": {
+    "i": 40,
+    "n": 6
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 173,
+   "tiles": 80,
+   "clock": {
+    "i": 15,
+    "n": 7
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 1,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 0,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  },
+  {
+   "level": 174,
+   "tiles": 88,
+   "clock": {
+    "i": 57,
+    "n": 8
+   },
+   "players": {
+    "Dennis": {
+     "recordedTries": 2,
+     "firstRecordedTry": 1,
+     "won": true,
+     "leftOutAfterWin": 0,
+     "win": 1,
+     "clock": 1,
+     "tray": 0,
+     "restart": 0,
+     "unfinished": 0,
+     "trayLossTilesLeftMedian": null,
+     "trayLossClockTakenShare": null
+    }
+   }
+  }
+ ]
+}
