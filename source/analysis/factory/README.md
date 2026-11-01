@@ -291,3 +291,17 @@ saw (piles-mid4, 72-82 tiles), band 3.7-4.6, 6 tries each: 1 hit (982 pyramid, l
 2 spare, only "fun"), 5 misses at 23-30 minutes per pile. Two of the misses again with its own band 3.4-4.9:
 still no hit. The two big piles for 180 did not finish (2-hour limit). So the 60% does not carry over to new
 piles yet; its hits are good boards. Not adopted as the factory's builder yet; a fix goal for Gemini.
+
+## Gemini's g4 (wip/gemini-g4 9f9438a), Claude's review 2026-11-01: not adopted
+Real levels: 150 7.53 (target 7) and 132 4.45 above 127-137: met. Overall match still weak: Spearman +0.15 with
+Dennis's targets (goal 0.35; hold-out odd levels +0.25), within 1.5 tries 61% (goal 70%); 155 got worse (3.85 ->
+5.85, target 1), 147 4.45 -> 5.27 (target 1). Its report says the factory boards are unchanged; Claude's re-run
+(`g4-check.txt`, seed 4711) says otherwise: blind 194 6.15 -> 7.55 (Dennis 4), 183 6.2 -> 7.67 (Dennis 5),
+6188 3.1 -> 6.06 (Dennis 4), 6190 2.5 -> 4.22 (Dennis 2), 6184 6.5 -> 8.18. Its retry memory now fades with board
+size for every board, which inflates every multi-try level. g2.1 stays the factory's meter: on the boards
+Dennis played in the factory its order and size held in two blind tests.
+
+## 175-200 release candidate (`batch-175-200-candidate.jsonl`, assign_anneal, curve 3.3 -> 4.5 at 199, 200 +0.5)
+The start of 3.85 cannot be reached with the boards there are (and was taken from level 155, which g2.1
+overrates: Dennis won it first try). Candidate: 175-189 rise 3.0-4.85, 180 a big 2.7, 190 the big breather 2.25,
+191-192 2.6 and 3.0, then 4.0-5.05, 200 the big 5.0. Includes the bot-designer's pyramid (186, 3.92).
