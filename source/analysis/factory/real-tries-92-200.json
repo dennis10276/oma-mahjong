@@ -1,5 +1,5 @@
 {
-"about": "Real play on the live boards (app 1.54+, where 92-269 have their current boards), from Firebase plays/ (public): per level and player the tries until the first win ('won': false = not won yet, tries so far). 'g21': Gemini's g2.1 expectedTries (seed 4711, 2 x 20) where measured (125-269). Made by Claude 2026-11-01 for calibrating the difficulty bot. Dennis 2026-11-01: 150 should come out 3.2-4.5 tries for him (he needed 3; Gerda and Mrs. Doubtfire 8+); 132: everyone struggled, the bot should find it harder than the levels around it.",
+"about": "Real play on the live boards (app 1.54+, where 92-269 have their current boards), from Firebase plays/ (public): per level and player the tries until the first win ('won': false = not won yet, tries so far). 'g21': Gemini's g2.1 expectedTries (seed 4711, 2 x 20) where measured (125-269). Made by Claude 2026-11-01 for calibrating the difficulty bot. Dennis 2026-11-01: 150 should come out 3.2-4.5 tries for him (he needed 3; Gerda and Mrs. Doubtfire 8+); 132: everyone struggled, the bot should find it harder than the levels around it. 'target' (Dennis 2026-11-01): the tries the bot should match: Dennis's tries, +1 when he needed 1 or 2 and BOTH Gerda and Mrs. Doubtfire needed 7 or more.",
 "levels": [
 {
 "level": 92,
@@ -15,7 +15,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 93,
@@ -31,7 +32,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 94,
@@ -47,7 +49,8 @@
 "tries": 5,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 2
 },
 {
 "level": 95,
@@ -63,7 +66,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 96,
@@ -79,7 +83,8 @@
 "tries": 5,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 4
 },
 {
 "level": 97,
@@ -95,7 +100,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 98,
@@ -123,7 +129,8 @@
 "tries": 5,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 4
 },
 {
 "level": 100,
@@ -139,7 +146,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 101,
@@ -215,7 +223,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 107,
@@ -231,7 +240,8 @@
 "tries": 3,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 108,
@@ -247,7 +257,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 2
 },
 {
 "level": 109,
@@ -263,7 +274,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 4
 },
 {
 "level": 110,
@@ -279,7 +291,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 111,
@@ -295,7 +308,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 3
 },
 {
 "level": 112,
@@ -311,7 +325,8 @@
 "tries": 4,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 113,
@@ -327,7 +342,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 114,
@@ -343,7 +359,8 @@
 "tries": 4,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 115,
@@ -359,7 +376,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 4
 },
 {
 "level": 116,
@@ -375,7 +393,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 2
 },
 {
 "level": 117,
@@ -391,7 +410,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 118,
@@ -407,7 +427,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 3
 },
 {
 "level": 119,
@@ -423,7 +444,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 120,
@@ -439,7 +461,8 @@
 "tries": 4,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 3
 },
 {
 "level": 121,
@@ -455,7 +478,8 @@
 "tries": 2,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 4
 },
 {
 "level": 122,
@@ -471,7 +495,8 @@
 "tries": 5,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 4
 },
 {
 "level": 123,
@@ -487,7 +512,8 @@
 "tries": 1,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 1
 },
 {
 "level": 124,
@@ -503,7 +529,8 @@
 "tries": 5,
 "won": true
 },
-"g21": null
+"g21": null,
+"target": 3
 },
 {
 "level": 125,
@@ -519,7 +546,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.73
+"g21": 1.73,
+"target": 1
 },
 {
 "level": 126,
@@ -535,7 +563,8 @@
 "tries": 6,
 "won": true
 },
-"g21": 1.05
+"g21": 1.05,
+"target": 1
 },
 {
 "level": 127,
@@ -551,7 +580,8 @@
 "tries": 2,
 "won": true
 },
-"g21": 1.18
+"g21": 1.18,
+"target": 1
 },
 {
 "level": 128,
@@ -567,7 +597,8 @@
 "tries": 4,
 "won": true
 },
-"g21": 1.15
+"g21": 1.15,
+"target": 1
 },
 {
 "level": 129,
@@ -583,7 +614,8 @@
 "tries": 2,
 "won": true
 },
-"g21": 1.07
+"g21": 1.07,
+"target": 1
 },
 {
 "level": 130,
@@ -599,7 +631,8 @@
 "tries": 2,
 "won": true
 },
-"g21": 1.3
+"g21": 1.3,
+"target": 2
 },
 {
 "level": 131,
@@ -615,7 +648,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.02
+"g21": 1.02,
+"target": 3
 },
 {
 "level": 132,
@@ -631,7 +665,8 @@
 "tries": 31,
 "won": true
 },
-"g21": 1.13
+"g21": 1.13,
+"target": 4
 },
 {
 "level": 133,
@@ -647,7 +682,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 2.8
+"g21": 2.8,
+"target": 1
 },
 {
 "level": 134,
@@ -663,7 +699,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1
+"g21": 1,
+"target": 1
 },
 {
 "level": 135,
@@ -679,7 +716,8 @@
 "tries": 6,
 "won": true
 },
-"g21": 1.27
+"g21": 1.27,
+"target": 1
 },
 {
 "level": 136,
@@ -695,7 +733,8 @@
 "tries": 2,
 "won": true
 },
-"g21": 1.21
+"g21": 1.21,
+"target": 1
 },
 {
 "level": 137,
@@ -711,7 +750,8 @@
 "tries": 3,
 "won": true
 },
-"g21": 1.07
+"g21": 1.07,
+"target": 2
 },
 {
 "level": 138,
@@ -727,7 +767,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.95
+"g21": 1.95,
+"target": 1
 },
 {
 "level": 139,
@@ -743,7 +784,8 @@
 "tries": 3,
 "won": true
 },
-"g21": 1.02
+"g21": 1.02,
+"target": 3
 },
 {
 "level": 140,
@@ -759,7 +801,8 @@
 "tries": 4,
 "won": true
 },
-"g21": 2
+"g21": 2,
+"target": 1
 },
 {
 "level": 141,
@@ -775,7 +818,8 @@
 "tries": 3,
 "won": true
 },
-"g21": 2.83
+"g21": 2.83,
+"target": 1
 },
 {
 "level": 142,
@@ -791,7 +835,8 @@
 "tries": 8,
 "won": true
 },
-"g21": 1.05
+"g21": 1.05,
+"target": 1
 },
 {
 "level": 143,
@@ -807,7 +852,9 @@
 "tries": 7,
 "won": true
 },
-"g21": 1.18
+"g21": 1.18,
+"target": 2,
+"targetNote": "Dennis +1: Gerda and Mrs. Doubtfire both 7+"
 },
 {
 "level": 144,
@@ -823,7 +870,8 @@
 "tries": 39,
 "won": true
 },
-"g21": 1.05
+"g21": 1.05,
+"target": 1
 },
 {
 "level": 145,
@@ -839,7 +887,8 @@
 "tries": 3,
 "won": true
 },
-"g21": 2.05
+"g21": 2.05,
+"target": 1
 },
 {
 "level": 146,
@@ -855,7 +904,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.02
+"g21": 1.02,
+"target": 1
 },
 {
 "level": 147,
@@ -871,7 +921,8 @@
 "tries": 2,
 "won": true
 },
-"g21": 4.45
+"g21": 4.45,
+"target": 1
 },
 {
 "level": 148,
@@ -887,7 +938,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.73
+"g21": 1.73,
+"target": 1
 },
 {
 "level": 149,
@@ -903,7 +955,8 @@
 "tries": 3,
 "won": true
 },
-"g21": 3.45
+"g21": 3.45,
+"target": 2
 },
 {
 "level": 150,
@@ -919,7 +972,8 @@
 "tries": 7,
 "won": false
 },
-"g21": 2.65
+"g21": 2.65,
+"target": 3
 },
 {
 "level": 151,
@@ -931,7 +985,8 @@
 "tries": 5,
 "won": true
 },
-"g21": 1.1
+"g21": 1.1,
+"target": 2
 },
 {
 "level": 152,
@@ -943,7 +998,8 @@
 "tries": 4,
 "won": true
 },
-"g21": 2.55
+"g21": 2.55,
+"target": 2
 },
 {
 "level": 153,
@@ -955,7 +1011,8 @@
 "tries": 9,
 "won": true
 },
-"g21": 1.02
+"g21": 1.02,
+"target": 1
 },
 {
 "level": 154,
@@ -967,7 +1024,8 @@
 "tries": 2,
 "won": false
 },
-"g21": 1.73
+"g21": 1.73,
+"target": 3
 },
 {
 "level": 155,
@@ -975,7 +1033,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 3.85
+"g21": 3.85,
+"target": 1
 },
 {
 "level": 156,
@@ -983,7 +1042,8 @@
 "tries": 3,
 "won": true
 },
-"g21": 1.32
+"g21": 1.32,
+"target": 3
 },
 {
 "level": 157,
@@ -991,7 +1051,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 2.02
+"g21": 2.02,
+"target": 1
 },
 {
 "level": 158,
@@ -999,7 +1060,8 @@
 "tries": 2,
 "won": true
 },
-"g21": 1.07
+"g21": 1.07,
+"target": 2
 },
 {
 "level": 159,
@@ -1007,7 +1069,8 @@
 "tries": 2,
 "won": true
 },
-"g21": 1
+"g21": 1,
+"target": 2
 },
 {
 "level": 160,
@@ -1015,7 +1078,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.38
+"g21": 1.38,
+"target": 1
 },
 {
 "level": 161,
@@ -1023,7 +1087,8 @@
 "tries": 4,
 "won": true
 },
-"g21": 2.15
+"g21": 2.15,
+"target": 4
 },
 {
 "level": 162,
@@ -1031,7 +1096,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 3.3
+"g21": 3.3,
+"target": 1
 },
 {
 "level": 163,
@@ -1039,7 +1105,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.13
+"g21": 1.13,
+"target": 1
 },
 {
 "level": 164,
@@ -1047,7 +1114,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 2
+"g21": 2,
+"target": 1
 },
 {
 "level": 165,
@@ -1055,7 +1123,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.1
+"g21": 1.1,
+"target": 1
 },
 {
 "level": 166,
@@ -1063,7 +1132,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 2.98
+"g21": 2.98,
+"target": 1
 },
 {
 "level": 167,
@@ -1071,7 +1141,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.07
+"g21": 1.07,
+"target": 1
 },
 {
 "level": 168,
@@ -1079,7 +1150,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.35
+"g21": 1.35,
+"target": 1
 },
 {
 "level": 169,
@@ -1087,7 +1159,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.75
+"g21": 1.75,
+"target": 1
 },
 {
 "level": 170,
@@ -1095,7 +1168,8 @@
 "tries": 1,
 "won": true
 },
-"g21": 1.2
+"g21": 1.2,
+"target": 1
 }
 ]
 }
