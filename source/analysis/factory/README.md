@@ -337,3 +337,8 @@ tries well (Spearman 0.79): bot up to ~4 = Dennis 1-4, bot 6-8 = Dennis 4-9.
   board it flags as too loose.
 - 198 ("Ice, lock, then the clock"; critic: clock too tight, the bot reaches it in time in 8% of its tries): Dennis
   "Seems fine. Flag for tight needs work." Too tight stays a warning only.
+- Dennis: "I feel like I could pass the levels with grabbing the clock early." Right (tools/factory/grab_early.js):
+  on all three the clock is free at the start and the level can still be won after taking it as the first move;
+  the human bot made to take it first needs no more tries, mostly fewer: 176 3.27 -> 2.90, 189 4.85 -> 1.23 (95%
+  first try), 193 3.98 -> 3.07. The blocked tray slot costs less than the alarm risk of waiting, so the puzzle's
+  "don't grab it" never holds; the best play is the obvious one.
