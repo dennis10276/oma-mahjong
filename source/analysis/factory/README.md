@@ -386,3 +386,11 @@ takes with the clock gone (81/2123) and 26.8% with the clock on; the bot 3.8% an
 Doubtfire 6.5%/27.3%. So the bot already overlooks matches like Dennis does (a first count per unmatched take said
 5% vs 1%; wrong measure, the bot simply makes more unmatched takes); an "overlook" limit at 4% changed nothing (150
 2.65 -> 2.40). What makes 150 hard is not found yet; the bot still rates it 2.65.
+Dennis's own +2 rule, done by the bot (2026-11-02): the bot's family profile (setting 'family', plays like Gerda and
+Mrs. Doubtfire) rates 150 7.97 and 132 7.63, the easy 145 1.55 and 153 2.2 (g5.1-family-eval.jsonl, all 103 boards).
+Rating = Dennis profile + 2 when the family profile is at or above a cutoff. Odd levels say nothing about the cutoff
+(their only +2 level, 91, has family 4.4); the factory boards choose 7.5 (factory error 0.278 -> 0.260). Held-out even
+levels: 150 2.65 -> 4.65 (target 5), 132 4.65 -> 6.65 (target 6), but 120 and 124 (family 7.50 and 7.83; really
+Gerda/Mrs. Doubtfire 4/4 and 7/5) also get +2: even error 1.080 -> 1.113. Live levels in total about equal (1.07 ->
+1.09); the two family-hard levels now right. 175-200 candidate (g5.1-family-candidate.jsonl): +2 on 177, 185, 187,
+195, 197, 199, 200 (family 7.67-8.22).
