@@ -60,3 +60,24 @@ the unchanged dashboard check passed in isolation and in the full suite.
 No replay schema or Firebase rule changes are required. Existing historical duplicate
 records are left intact; this fix prevents new ones. The original level-158 loss and
 win are already available as complete recordings.
+
+## Follow-up: Dennis, level 161
+
+Read-only inspection of Dennisisdebeste's five attempts found a different case.
+Raw exports are in ignored `analysis/archive/replay-dennis-161/`.
+
+- Attempts 1, 3 and 4 have complete losses; attempt 5 has a complete win.
+- Attempt 2 (`23cc69be-0d5c-4229-ae5e-214c8e4e5a3d`) has all ten chunks,
+  sequences 0-9, and 153 taps. It ends with a pause on 26 October at 01:40:20
+  Europe/Amsterdam, with ten tiles remaining. Neither summaries nor replay contain
+  an ending, so it cannot honestly be classified as a completed win/loss.
+- On 28 October, the next recorded starts are levels 50, 61 and 23, followed by
+  level 161 attempt 3. Starting another level uses the single resumable save slot.
+  There is no recorded resume of attempt 2.
+- The dashboard decoder and wall-clock timeline both accept every recorded frame
+  from all five attempts: no missing/conflicting chunks, truncation or missing
+  pause/resume timing. Attempts 3 and 4 include actual background pauses.
+
+The finished-board fix applies to all players, but does not change this abandoned
+attempt into a completed recording or recover an ending that was never recorded.
+There is no evidence of missing network uploads in these level-161 records.
