@@ -447,3 +447,9 @@ an average tries of us 3 where Gerda counts as factor 1 and me as factor 2 and m
   capped): 91 14.0, 132 13.6, 150 13.2, 144 9.6, 89 8.4, 122 7.6; quartiles 2.2 / 3.4 / 4.6. g6.1-eval.jsonl: odd 0.35,
   even 0.41, factory boards vs Dennis 0.82; on old levels the bot's number is about 0.74x the yardstick; 150 6.9,
   132 7.05, 121 7.1, 141 5.7, 143 3.9; factory boards 1-20. Bot tests 192/192. Patch: tools/factory/human-g6.patch.
+
+## Fallback boards (2026-11-02)
+`fallback-g61.jsonl`: every factory board built so far (87 + 7 from the first g6 build), rated by human-g6.1 (family
+profile, 20 tries), with the clock's spare moved 1-2 steps where that brought a board nearer 7-10 (retunedFrom: the
+rating before). Dennis: "save the fallback levels somewhere and move on to this way of designing" (designed levels,
+next section).
