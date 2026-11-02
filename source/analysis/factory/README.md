@@ -441,3 +441,9 @@ an average tries of us 3 where Gerda counts as factor 1 and me as factor 2 and m
   little faster on her 15th+ tries (median 0.96 s between taps against 1.20 s on her first three); a cap on each
   player's count (20 or 12 tries) leaves the order of the levels almost the same (g6 odd/even 0.33/0.40 -> 0.37/0.43
   at 12) and takes the rage tail out of the numbers: at 12, top 91 9.2, 132 8.8, 150 8.4, 89 8.0, 144 6.4, 156 6.0.
+- human-g6.1 (Dennis: "why does the bot have a cap at 12 tries? 150 is more tries for them"): a bot run now gets up
+  to 20 tries, and a run not won counts as 20 (before: at most 12 tries, and an unwon run counted as 4.5-8, so no
+  board could rate above 8). The yardstick caps each player's count at 20 too (family-weighted-tries.json, now
+  capped): 91 14.0, 132 13.6, 150 13.2, 144 9.6, 89 8.4, 122 7.6; quartiles 2.2 / 3.4 / 4.6. g6.1-eval.jsonl: odd 0.35,
+  even 0.41, factory boards vs Dennis 0.82; on old levels the bot's number is about 0.74x the yardstick; 150 6.9,
+  132 7.05, 121 7.1, 141 5.7, 143 3.9; factory boards 1-20. Bot tests 192/192. Patch: tools/factory/human-g6.patch.

@@ -170,7 +170,7 @@ index d7889d6..c2ddb48 100644
        const u = Math.max(1e-12, Math.min(1 - 1e-12, random()));
        const noisy = score - p.temperature * Math.log(-Math.log(u));
 diff --git a/source/tools/sim/refit/human_release_profiles.json b/source/tools/sim/refit/human_release_profiles.json
-index cd8c4f4..032d2af 100644
+index cd8c4f4..7b067f7 100644
 --- a/source/tools/sim/refit/human_release_profiles.json
 +++ b/source/tools/sim/refit/human_release_profiles.json
 @@ -1,7 +1,7 @@
@@ -178,7 +178,7 @@ index cd8c4f4..032d2af 100644
    "schema": "human-person-release-v1",
 -  "version": "human-g5",
 -  "calibrationStatus": "human-g5-validated",
-+  "version": "human-g6",
++  "version": "human-g6.1",
 +  "calibrationStatus": "human-g6-family-meter",
    "profiles": {
      "Dennis": {
@@ -218,3 +218,33 @@ index cd8c4f4..032d2af 100644
 -}
 \ No newline at end of file
 +}
+diff --git a/source/tools/sim/refit/human_style_measure.js b/source/tools/sim/refit/human_style_measure.js
+index ef951c6..ae42a92 100644
+--- a/source/tools/sim/refit/human_style_measure.js
++++ b/source/tools/sim/refit/human_style_measure.js
+@@ -20,19 +20,20 @@ function estimateDifficulty(campaigns){
+   const label=(exp<=2.2&&firstTryRate>=0.25)||firstTryRate>=0.45?'easy':exp<=4.8?'right':'hard';
+   return {expectedTries:Number(exp.toFixed(2)),label};
+  }
+- const h=clearedCount/Math.max(1,totalAttempts);
+- const tailMean=Math.min(8.0,4.5+1/Math.max(0.2,h*2.5));
+- const exp=(clearedSum+unclearedCount*tailMean)/N;
++ // human-g6.1 (Dennis 2026-11-02: "why does the bot have a cap at 12 tries? 150 is more tries for them"): a run that
++ // is not won counts as all the tries it was allowed (now 20), the same cap as the yardstick puts on each player's
++ // count; before, it counted as 4.5-8 tries, so no board could rate above 8.
++ const exp=(clearedSum+campaigns.filter(c=>c.wonOn===null).reduce((t,c)=>t+c.attempts.length,0))/N;
+  const label=(exp<=2.2&&firstTryRate>=0.25)||firstTryRate>=0.45?'easy':exp<=5.0?'right':'hard';
+  return {expectedTries:Number(exp.toFixed(2)),label};
+ }
+ 
+ function measureHuman(board,options={}){
+  assert(Object.keys(options).every(key=>['runs','seed','maxAttempts','profiles','capture','choiceLimit','setting','seeds'].includes(key)));
+- const {runs=20,maxAttempts=12,profiles=defaults,capture=false,choiceLimit=1024,seeds=2}=options;
++ const {runs=20,maxAttempts=20,profiles=defaults,capture=false,choiceLimit=1024,seeds=2}=options;
+  const seed=options.seed??crypto.randomBytes(4).readUInt32LE();
+  assert(Number.isInteger(runs)&&runs>0&&runs<=1000&&Number.isInteger(seed));
+- assert(Number.isInteger(maxAttempts)&&maxAttempts>0&&maxAttempts<=12);
++ assert(Number.isInteger(maxAttempts)&&maxAttempts>0&&maxAttempts<=40);
+  assert(Number.isInteger(choiceLimit)&&choiceLimit>0);
+  assert(Number.isInteger(seeds)&&seeds>=1&&seeds<=10);
+  assert.deepEqual(Object.keys(profiles).sort(),['Dennis','family']);
