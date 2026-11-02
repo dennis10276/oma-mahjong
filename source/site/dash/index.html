@@ -233,6 +233,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .watch-controls select { padding: 6px; }
 .watch-face { transform-box: fill-box; transform-origin: center; }
 .attempt-play { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: inherit; padding: 3px 5px; margin: 0; white-space: nowrap; letter-spacing: normal; }
+.attempt-play.attempt-short { background: rgba(208, 59, 59, .07); border-color: rgba(208, 59, 59, .22); color: var(--ink-3); }
+.attempt-play.attempt-short > span { opacity: .55; }
+.attempt-play.attempt-real { background: rgba(12, 163, 12, .13); border-color: rgba(12, 163, 12, .45); color: var(--good-ink); }
+.attempt-play.attempt-long { background: rgba(12, 163, 12, .26); border-color: var(--good); }
 .attempt-play:hover, .attempt-play:focus-visible { background: var(--accent-soft); outline: 2px solid var(--accent); }
 .watch-name { font-weight: 700; margin-bottom: 4px; overflow-wrap: anywhere; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
@@ -579,8 +583,13 @@ function render() {
     const legacy = l.ends.filter(e => !attempts.has(e.aid)).map(e => `<span class="attempt-result">${resultSymbol(e)}</span>`).join('');
     const recorded = [...attempts.values()].map((e, i) => {
       const number = Number.isInteger(e.at) && e.at > 0 ? e.at : i + 1;
-      const symbol = resultSymbol(e), label = `${l.name} · poging ${number} · ${new Date(e.t).toLocaleString('nl-NL')}`;
-      return e.t >= Date.now() - 30 * 86400000 ? `<button class="attempt-play" data-aid="${esc(e.aid)}" aria-label="${esc('Bekijk opname: ' + label)}" title="${esc('Bekijk opname: ' + label)}">${number} ${symbol}</button>` : `<span class="attempt-result" title="Opname verlopen">${symbol}</span>`;
+      // Use active playing time: wall time between start/end includes app pauses.
+      // Unfinished or older attempts without a duration keep their neutral colour.
+      const duration = e.k === 'end' && Number.isFinite(e.dur) && e.dur >= 0 ? e.dur : null;
+      const effort = duration == null ? '' : duration < 60 ? 'attempt-short' : duration < 120 ? 'attempt-real' : 'attempt-real attempt-long';
+      const time = duration == null ? 'speeltijd onbekend' : `speeltijd ${mmss(duration)} · ${duration < 60 ? 'korte poging' : 'echte poging'}`;
+      const symbol = resultSymbol(e), label = `${l.name} · poging ${number} · ${time} · ${new Date(e.t).toLocaleString('nl-NL')}`;
+      return e.t >= Date.now() - 30 * 86400000 ? `<button class="attempt-play ${effort}" data-aid="${esc(e.aid)}" aria-label="${esc('Bekijk opname: ' + label)}" title="${esc('Bekijk opname: ' + label)}">${number} ${symbol}</button>` : `<span class="attempt-result" title="Opname verlopen">${symbol}</span>`;
     }).join('');
     return legacy || recorded ? `<div class="attempt-results">${legacy}${recorded}</div>` : '';
   };
