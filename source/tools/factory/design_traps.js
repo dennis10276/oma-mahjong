@@ -175,8 +175,28 @@ for (const p of plan) {
     }
     let grabFirst = null;
     if (p.concept === 'dontGrab') { grabFirst = meas({ ...z, clock: { ...z.clock, n: 1 } }, 'family').expectedTries; if (grabFirst < m.expectedTries + 1) { note('grabbing the clock first is not worse (' + m.expectedTries + ' -> ' + grabFirst + ')'); continue; } }
-    const md = meas(z, 'dennis'), attr = attribution(z, m), sm = specialsMatter(z, m);
-    const idle = Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k);
+    let sm = specialsMatter(z, m), idle = Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k);
+    // ice or locks that change nothing (Dennis 2026-11-02: "you can remove the ice or place it somewhere where it
+    // does matter"): first take them off; if the level then falls off the curve, try the ice again elsewhere
+    // (a frozen chain along the way through, three placements), keeping the first where it matters
+    if (idle.some(k => k !== 'clock')) {
+      const strip = { ...z, obst: { ...z.obst, ...(idle.includes('ice') ? { ice: {} } : {}), ...(idle.includes('locks') ? { locks: [], keys: [] } : {}) } };
+      const ms = meas(strip, 'family', true), sms = specialsMatter(strip, ms), idleS = Object.entries(sms).filter(([, v]) => !v.matters).map(([k]) => k);
+      note(`idle ${idle.join(',')} taken off: family ${ms.expectedTries}${idleS.length ? ' (idle ' + idleS.join(',') + ')' : ''}`);
+      let pick = off(ms.expectedTries) === 0 && !idleS.length ? { z: strip, m: ms, sm: sms } : null;
+      if (!pick && idle.includes('ice')) {
+        for (let r = 0; r < 3 && !pick; r++) {
+          const y = I.IDEAS.iceChain.make(strip, I.ctxOf(strip), I.rngOf(lv * 97 + salt * 13 + r));
+          const y2 = y && I.fix({ ...y, clock: { ...strip.clock } }, sp);
+          if (!y2 || !I.valid(y2)) continue;
+          const my = meas(y2, 'family', true), smy = specialsMatter(y2, my), idleY = Object.entries(smy).filter(([, v]) => !v.matters).map(([k]) => k);
+          note(`ice placed again (${r}): family ${my.expectedTries}${idleY.length ? ' (idle ' + idleY.join(',') + ')' : ''}`);
+          if (!idleY.length && off(my.expectedTries) <= off(m.expectedTries)) pick = { z: y2, m: my, sm: smy };
+        }
+      }
+      if (pick) { z = pick.z; m = pick.m; sm = pick.sm; idle = []; sp = z.clock ? z.clock.n - (z.solution.indexOf(z.clock.i) + 1) : sp; }
+    }
+    const md = meas(z, 'dennis'), attr = attribution(z, m);
     const pass = off(m.expectedTries) === 0 && md.expectedTries <= DENNIS_MAX && (attr === null || attr >= ATTR) && !idle.length;
     note(`${recipe.join('+')}: family ${m.expectedTries} (target ${p.target}) | Dennis ${md.expectedTries} | at the trap ${attr} | idle ${idle.join(',') || '-'} | room ${room.room}${pass ? ' | PASS' : ''}`);
     const row = { level: lv, concept: p.concept, title: titleOf(recipe), recipe, shape: pile.shape, n: z.tiles.length, target: p.target,
