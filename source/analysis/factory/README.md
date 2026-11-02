@@ -411,3 +411,24 @@ that predicts held-out tries best.
   factory boards they get the order backwards (-0.28), while the bot gets them right (0.79): the old levels' difficulty
   followed how the old generator scaled boards, the factory's comes from its puzzles. The bot stays the meter, one
   profile (Dennis): the family profile adds nothing on factory boards and gives false +2s (120, 124).
+
+## Step 2 (2026-11-02): the yardstick and the meter tuned to the family: human-g6
+Dennis: "Cause them (normal players) struggle way more then me and we need to tune difficulty to them mostly ... Take
+an average tries of us 3 where Gerda counts as factor 1 and me as factor 2 and mrs doubtfire as factor 2."
+- Yardstick: `family-weighted-tries.json`: per level (all three played) (2 x Dennis + Gerda + 2 x Mrs. Doubtfire) / 5,
+  tries until the first win (+1 if not won). Top: 132 28.6, 150 26.0, 91 23.6, 149 17.2, 144 17.2; median 3.6.
+- Gerda and Mrs. Doubtfire agree on almost nothing beyond those (rank 0.03), so most single big numbers are a
+  person's own struggle; any bot can only match this yardstick partly (about 0.45 at best, estimated).
+- Tried and dropped, from the recordings: skipping a visible match as often as the three do on average (5.8% after
+  the clock; calibrated 0.13): the order got worse (0.28 -> 0.21) and 150 easier.
+- The family profile tracks the yardstick best (0.32; Dennis profile 0.26-0.28) but lost to the clock in 37% of its
+  losses (Gerda and Mrs. Doubtfire 28%), 80-100% on 120, 124, 133, 139. With Dennis's clock settings (look 3 ahead,
+  counts the clock's moves, deadline attention 0.35/0.7) it loses 19% to the clock and:
+  | family profile | odd | even | factory boards vs Dennis | 150 | 132 | 120 | 139 |
+  | as it was | 0.28 | 0.34 | 0.72 | 7.97 | 7.63 | 7.50 | 6.35 |
+  | with Dennis's clock settings (human-g6) | 0.33 | 0.40 | 0.80 | 6.20 | 7.05 | 1.83 | 1.45 |
+  Bot tests 192/192. Patch on Gemini's 10cee30: tools/factory/human-g6.patch (includes g5.1's clock-beside-a-lock).
+  Factory now measures with the family profile (BOT_SETTING, default 'family').
+- Known gap: people's tray losses come early (median 68-76% of the board left), the bot's later (48%).
+- On this scale (g6-eval.jsonl): old levels' quartiles 1.55 / 2.35 / 3.86, max 7.8 (12 tries per run cap the top);
+  their harder-normal levels 121 5.2, 141 5.1, 143 3.7; 150 6.2; 132 7.05.

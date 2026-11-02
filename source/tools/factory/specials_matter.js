@@ -9,9 +9,11 @@
    has to be made to matter (fewer spare moves, or placed elsewhere); idle ice or locks are simply taken off.
      const { specialsMatter } = require('./specials_matter.js');  specialsMatter(board, base?)            */
 'use strict';
+// the bot's family profile is the meter from human-g6 (Dennis 2026-11-02: tune to Gerda and Mrs. Doubtfire; one profile)
+const BOT_SETTING = process.env.BOT_SETTING || 'family';
 const MIN = +(process.env.MATTER_MIN || 0.3), MIN_FIRST = 0.15;
 function specialsMatter(board, base, measureHuman = require(process.env.HUMAN_BOT).measureHuman) {
-  const meas = b => measureHuman({ tiles: b.tiles, faces: b.faces, down: b.down, obst: b.obst, clock: b.clock }, { runs: 20, setting: 'dennis', seed: 4711 });
+  const meas = b => measureHuman({ tiles: b.tiles, faces: b.faces, down: b.down, obst: b.obst, clock: b.clock }, { runs: 20, setting: BOT_SETTING, seed: 4711 });
   const m0 = base || meas(board), ob = board.obst || {};
   const out = { exp: m0.expectedTries, first: m0.firstTryRate, kinds: {} };
   const test = (kind, b) => {

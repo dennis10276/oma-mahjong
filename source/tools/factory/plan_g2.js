@@ -36,6 +36,8 @@ const GRAB_MIN = +(process.env.GRAB_MIN || 1);
 // 2026-11-01 "too loose is no pass level from now on"), the other flags stay warnings
 const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITIC_BOT)).critique : null;
 const SPARE_OF = r => (r.includes('chainReaction') ? 3 : r.includes('iceChain') ? 1 : 2);
+// the bot's family profile is the meter from human-g6 (Dennis 2026-11-02: tune to Gerda and Mrs. Doubtfire; one profile)
+const BOT_SETTING = process.env.BOT_SETTING || 'family';
 const ATTEMPTS = +(process.env.ATTEMPTS || 10);
 const hardShare = lv => Math.min(0.7, 0.3 + 0.3 * (lv - 175) / 19);
 const isHard = lv => ((lv * 0.6180339887) % 1) < hardShare(lv);     // (spread evenly, not in clumps)
@@ -77,7 +79,7 @@ for (const p of piles) {
     if (!ok) { pg.tried.push(recipe.join('+') + ': no place'); continue; }
     if (keys(x).length && x.obst.keys.some(kk => I.ctxOf(x).free0[kk]) && recipe.every(k => !['lockedClock', 'clockOnTopLocked'].includes(k))) { pg.tried.push('free keys'); continue; }
     let z = I.fix(x, SPARE_OF(recipe)); if (!z || !I.valid(z)) { pg.tried.push(recipe.join('+') + ': no exact clock route'); continue; }
-    let m; try { m = measureHuman(boardOf(z), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { pg.tried.push('bot error ' + String(e.message).slice(0, 80)); continue; }
+    let m; try { m = measureHuman(boardOf(z), { runs: 20, setting: BOT_SETTING, seed: 4711 }); } catch (e) { pg.tried.push('bot error ' + String(e.message).slice(0, 80)); continue; }
     // TUNE=1: outside the band, try the clock spare one and two steps towards it (1-3, the game's rule; Dennis's
     // +2 on 194 took it from 7.85 to 2.5). Kept when it lands closer.
     if (process.env.TUNE && z.clock) {
@@ -87,7 +89,7 @@ for (const p of piles) {
         const sp = (z.clock.n - route) + (m.expectedTries > band[1] ? 1 : -1);
         if (sp < 1 || sp > 3) break;
         const z2 = { ...z, clock: { ...z.clock, n: route + sp } };
-        let m2; try { m2 = measureHuman(boardOf(z2), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { break; }
+        let m2; try { m2 = measureHuman(boardOf(z2), { runs: 20, setting: BOT_SETTING, seed: 4711 }); } catch (e) { break; }
         pg.tried.push(recipe.join('+') + ' spare ' + sp + ': ' + m2.expectedTries);
         if (off(m2.expectedTries, band) < off(m.expectedTries, band)) { z = z2; m = m2; } else break;
       }
@@ -106,7 +108,7 @@ for (const p of piles) {
         for (let sp = z.clock.n - route - 1; sp >= 1 && critic3 && critic3.includes('clockTooLoose'); sp--) {
           const z2 = { ...z, clock: { ...z.clock, n: route + sp } };
           if (!I.valid(z2)) break;
-          let m2; try { m2 = measureHuman(boardOf(z2), { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { break; }
+          let m2; try { m2 = measureHuman(boardOf(z2), { runs: 20, setting: BOT_SETTING, seed: 4711 }); } catch (e) { break; }
           const c2 = crit(z2);
           pg.tried.push(recipe.join('+') + ' clock too loose, spare ' + sp + ': ' + m2.expectedTries + (c2 && c2.includes('clockTooLoose') ? ' (still too loose)' : ''));
           z = z2; m = m2; critic3 = c2;
@@ -117,7 +119,7 @@ for (const p of piles) {
     // "Don't grab the clock" must be true (GRAB_MIN): checked on the final clock
     let grabFirst = null;
     if (recipe.includes('dontGrab') && z.clock) {
-      let mg; try { mg = measureHuman({ ...boardOf(z), clock: { i: z.clock.i, n: 1 } }, { runs: 20, setting: 'dennis', seed: 4711 }); } catch (e) { mg = null; }
+      let mg; try { mg = measureHuman({ ...boardOf(z), clock: { i: z.clock.i, n: 1 } }, { runs: 20, setting: BOT_SETTING, seed: 4711 }); } catch (e) { mg = null; }
       grabFirst = mg && mg.expectedTries;
       if (!mg || mg.expectedTries < m.expectedTries + GRAB_MIN) { pg.tried.push(recipe.join('+') + ': grabbing the clock first is not worse (' + m.expectedTries + ' -> ' + grabFirst + ', out)'); save(); continue; }
     }
