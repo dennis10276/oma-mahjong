@@ -1,0 +1,1560 @@
+{
+ "about": "Step 1 (Claude, 2026-11-02): one difficulty per level from every try of Dennis, Gerda and Mrs. Doubtfire.\nDennis: \"It is not accurate. Make a plan to make it accurate.\" One level gives one count of Dennis's tries, and that\ncount is partly luck; Gerda and Mrs. Doubtfire played the same levels many times. So: every try up to a player's\nfirst win of a level (plays/<pid> end records; a restart counts as a lost try, as in the targets), only on the board\nthe level has now (same tile count and clock), and",
+ "cap": 12,
+ "skill": {
+  "Dennis": 0.403,
+  "Gerda": -1.837,
+  "MrsD": -0.767
+ },
+ "learn": -0.026,
+ "sequences": 228,
+ "tries": 840,
+ "heldOut": {
+  "perTryLogLikWithLevels": -0.4854,
+  "perTryLogLikWithoutLevels": -0.4934
+ },
+ "levels": [
+  {
+   "level": 85,
+   "difficulty": -0.006,
+   "dennisExpected": 1.67,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 86,
+   "difficulty": -0.245,
+   "dennisExpected": 1.53,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 87,
+   "difficulty": 0.005,
+   "dennisExpected": 1.68,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     2,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 88,
+   "difficulty": 0.029,
+   "dennisExpected": 1.7,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     8,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 89,
+   "difficulty": 0.57,
+   "dennisExpected": 2.2,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     14,
+     true
+    ],
+    "MrsD": [
+     12,
+     true
+    ]
+   }
+  },
+  {
+   "level": 90,
+   "difficulty": -0.245,
+   "dennisExpected": 1.53,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 91,
+   "difficulty": 0.873,
+   "dennisExpected": 2.63,
+   "tries": {
+    "Dennis": [
+     5,
+     true
+    ],
+    "Gerda": [
+     68,
+     true
+    ],
+    "MrsD": [
+     20,
+     true
+    ]
+   }
+  },
+  {
+   "level": 92,
+   "difficulty": -0.339,
+   "dennisExpected": 1.48,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 93,
+   "difficulty": -0.178,
+   "dennisExpected": 1.56,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 94,
+   "difficulty": 0.027,
+   "dennisExpected": 1.69,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 95,
+   "difficulty": -0.099,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     9,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 96,
+   "difficulty": 0.175,
+   "dennisExpected": 1.81,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ],
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 97,
+   "difficulty": -0.215,
+   "dennisExpected": 1.54,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     7,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 98,
+   "difficulty": -0.269,
+   "dennisExpected": 1.51,
+   "tries": {
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 99,
+   "difficulty": 0.246,
+   "dennisExpected": 1.87,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ],
+    "Gerda": [
+     5,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 100,
+   "difficulty": 0.274,
+   "dennisExpected": 1.89,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     14,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 101,
+   "difficulty": -0.006,
+   "dennisExpected": 1.67,
+   "tries": {
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 102,
+   "difficulty": -0.354,
+   "dennisExpected": 1.47,
+   "tries": {
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 103,
+   "difficulty": -0.277,
+   "dennisExpected": 1.51,
+   "tries": {
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 104,
+   "difficulty": -0.277,
+   "dennisExpected": 1.51,
+   "tries": {
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 105,
+   "difficulty": -0.109,
+   "dennisExpected": 1.6,
+   "tries": {
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 106,
+   "difficulty": -0.175,
+   "dennisExpected": 1.57,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     2,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 107,
+   "difficulty": -0.091,
+   "dennisExpected": 1.62,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     7,
+     true
+    ],
+    "MrsD": [
+     3,
+     true
+    ]
+   }
+  },
+  {
+   "level": 108,
+   "difficulty": -0.246,
+   "dennisExpected": 1.53,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     2,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 109,
+   "difficulty": 0.153,
+   "dennisExpected": 1.79,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ],
+    "Gerda": [
+     7,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 110,
+   "difficulty": 0.137,
+   "dennisExpected": 1.78,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     18,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 111,
+   "difficulty": 0.111,
+   "dennisExpected": 1.75,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     12,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 112,
+   "difficulty": -0.109,
+   "dennisExpected": 1.6,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     4,
+     true
+    ],
+    "MrsD": [
+     4,
+     true
+    ]
+   }
+  },
+  {
+   "level": 113,
+   "difficulty": 0.087,
+   "dennisExpected": 1.74,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     15,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 114,
+   "difficulty": -0.193,
+   "dennisExpected": 1.56,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     4,
+     true
+    ]
+   }
+  },
+  {
+   "level": 115,
+   "difficulty": -0.032,
+   "dennisExpected": 1.65,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ],
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 116,
+   "difficulty": 0.184,
+   "dennisExpected": 1.81,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     20,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 117,
+   "difficulty": -0.31,
+   "dennisExpected": 1.49,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     4,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 118,
+   "difficulty": -0.057,
+   "dennisExpected": 1.64,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     2,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 119,
+   "difficulty": 0.087,
+   "dennisExpected": 1.74,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     14,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 120,
+   "difficulty": 0.096,
+   "dennisExpected": 1.74,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     4,
+     true
+    ],
+    "MrsD": [
+     4,
+     true
+    ]
+   }
+  },
+  {
+   "level": 121,
+   "difficulty": 0.395,
+   "dennisExpected": 2.01,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ],
+    "Gerda": [
+     21,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 122,
+   "difficulty": 0.497,
+   "dennisExpected": 2.11,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ],
+    "Gerda": [
+     26,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 123,
+   "difficulty": 0.087,
+   "dennisExpected": 1.74,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     36,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 124,
+   "difficulty": 0.197,
+   "dennisExpected": 1.82,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     7,
+     true
+    ],
+    "MrsD": [
+     5,
+     true
+    ]
+   }
+  },
+  {
+   "level": 125,
+   "difficulty": 0.087,
+   "dennisExpected": 1.74,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     19,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 126,
+   "difficulty": 0.001,
+   "dennisExpected": 1.68,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     4,
+     true
+    ],
+    "MrsD": [
+     6,
+     true
+    ]
+   }
+  },
+  {
+   "level": 127,
+   "difficulty": -0.237,
+   "dennisExpected": 1.53,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     4,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 128,
+   "difficulty": 0.049,
+   "dennisExpected": 1.71,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     11,
+     true
+    ],
+    "MrsD": [
+     4,
+     true
+    ]
+   }
+  },
+  {
+   "level": 129,
+   "difficulty": -0.269,
+   "dennisExpected": 1.51,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 130,
+   "difficulty": -0.066,
+   "dennisExpected": 1.63,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 131,
+   "difficulty": -0.04,
+   "dennisExpected": 1.65,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     5,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 132,
+   "difficulty": 0.822,
+   "dennisExpected": 2.55,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ],
+    "Gerda": [
+     73,
+     true
+    ],
+    "MrsD": [
+     31,
+     true
+    ]
+   }
+  },
+  {
+   "level": 133,
+   "difficulty": -0.424,
+   "dennisExpected": 1.44,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 134,
+   "difficulty": -0.383,
+   "dennisExpected": 1.46,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     2,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 135,
+   "difficulty": 0.307,
+   "dennisExpected": 1.92,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     20,
+     true
+    ],
+    "MrsD": [
+     6,
+     true
+    ]
+   }
+  },
+  {
+   "level": 136,
+   "difficulty": -0.237,
+   "dennisExpected": 1.53,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     4,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 137,
+   "difficulty": -0.083,
+   "dennisExpected": 1.62,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     3,
+     true
+    ]
+   }
+  },
+  {
+   "level": 138,
+   "difficulty": -0.159,
+   "dennisExpected": 1.58,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     9,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 139,
+   "difficulty": 0.108,
+   "dennisExpected": 1.75,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     7,
+     true
+    ],
+    "MrsD": [
+     3,
+     true
+    ]
+   }
+  },
+  {
+   "level": 140,
+   "difficulty": -0.193,
+   "dennisExpected": 1.56,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     4,
+     true
+    ]
+   }
+  },
+  {
+   "level": 141,
+   "difficulty": 0.021,
+   "dennisExpected": 1.69,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     12,
+     true
+    ],
+    "MrsD": [
+     3,
+     true
+    ]
+   }
+  },
+  {
+   "level": 142,
+   "difficulty": 0.036,
+   "dennisExpected": 1.7,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     1,
+     true
+    ],
+    "MrsD": [
+     8,
+     true
+    ]
+   }
+  },
+  {
+   "level": 143,
+   "difficulty": 0.344,
+   "dennisExpected": 1.96,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     18,
+     true
+    ],
+    "MrsD": [
+     7,
+     true
+    ]
+   }
+  },
+  {
+   "level": 144,
+   "difficulty": 0.432,
+   "dennisExpected": 2.04,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     39,
+     true
+    ]
+   }
+  },
+  {
+   "level": 145,
+   "difficulty": -0.23,
+   "dennisExpected": 1.54,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     2,
+     true
+    ],
+    "MrsD": [
+     3,
+     true
+    ]
+   }
+  },
+  {
+   "level": 146,
+   "difficulty": -0.245,
+   "dennisExpected": 1.53,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     6,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 147,
+   "difficulty": -0.269,
+   "dennisExpected": 1.51,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 148,
+   "difficulty": -0.383,
+   "dennisExpected": 1.46,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     2,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 149,
+   "difficulty": 0.272,
+   "dennisExpected": 1.89,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     76,
+     true
+    ],
+    "MrsD": [
+     3,
+     true
+    ]
+   }
+  },
+  {
+   "level": 150,
+   "difficulty": 0.767,
+   "dennisExpected": 2.46,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     82,
+     true
+    ],
+    "MrsD": [
+     21,
+     true
+    ]
+   }
+  },
+  {
+   "level": 151,
+   "difficulty": 0.02,
+   "dennisExpected": 1.69,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     5,
+     true
+    ],
+    "MrsD": [
+     4,
+     true
+    ]
+   }
+  },
+  {
+   "level": 152,
+   "difficulty": -0.118,
+   "dennisExpected": 1.6,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ],
+    "Gerda": [
+     4,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 153,
+   "difficulty": -0.099,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     9,
+     true
+    ],
+    "MrsD": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 154,
+   "difficulty": 0.091,
+   "dennisExpected": 1.74,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     11,
+     true
+    ],
+    "MrsD": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 155,
+   "difficulty": 0.029,
+   "dennisExpected": 1.7,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ],
+    "Gerda": [
+     3,
+     true
+    ],
+    "MrsD": [
+     7,
+     true
+    ]
+   }
+  },
+  {
+   "level": 156,
+   "difficulty": 0.593,
+   "dennisExpected": 2.23,
+   "tries": {
+    "Dennis": [
+     3,
+     true
+    ],
+    "Gerda": [
+     3,
+     false
+    ],
+    "MrsD": [
+     9,
+     false
+    ]
+   }
+  },
+  {
+   "level": 157,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 158,
+   "difficulty": 0.043,
+   "dennisExpected": 1.71,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 159,
+   "difficulty": 0.043,
+   "dennisExpected": 1.71,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ]
+   }
+  },
+  {
+   "level": 160,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 161,
+   "difficulty": 0.276,
+   "dennisExpected": 1.89,
+   "tries": {
+    "Dennis": [
+     4,
+     true
+    ]
+   }
+  },
+  {
+   "level": 162,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 163,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 164,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 165,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 166,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 167,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 168,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 169,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 170,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 171,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 172,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 173,
+   "difficulty": -0.095,
+   "dennisExpected": 1.61,
+   "tries": {
+    "Dennis": [
+     1,
+     true
+    ]
+   }
+  },
+  {
+   "level": 174,
+   "difficulty": 0.043,
+   "dennisExpected": 1.71,
+   "tries": {
+    "Dennis": [
+     2,
+     true
+    ]
+   }
+  }
+ ]
+}

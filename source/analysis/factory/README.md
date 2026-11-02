@@ -394,3 +394,20 @@ levels: 150 2.65 -> 4.65 (target 5), 132 4.65 -> 6.65 (target 6), but 120 and 12
 Gerda/Mrs. Doubtfire 4/4 and 7/5) also get +2: even error 1.080 -> 1.113. Live levels in total about equal (1.07 ->
 1.09); the two family-hard levels now right. 175-200 candidate (g5.1-family-candidate.jsonl): +2 on 177, 185, 187,
 195, 197, 199, 200 (family 7.67-8.22).
+
+## Step 1 of the accuracy plan (2026-11-02): one difficulty per level from all three players
+Dennis: "It is not accurate. Make a plan to make it accurate ... Less is more. Do all the work yourself."
+`tools/factory/difficulty_fit.py` -> `difficulty-85-174.json`: every try up to each player's first win (plays/ end
+records, 840 tries after counting a long losing run only to 12, 228 player-level runs; only tries on the board the
+level has now), P(win) = logistic(skill - difficulty + learning). Pulled towards the average with sd 0.5, the strength
+that predicts held-out tries best.
+- Hardest three: 91, 132, 150, exactly the three levels of Dennis's +2 rule; then 156, 89, 122.
+- The three players hardly agree on which other levels are hard: rank agreement of their tries Dennis-Gerda 0.17,
+  Dennis-Mrs. Doubtfire 0.18, Gerda-Mrs. Doubtfire 0.06. If all shared one difficulty, the luck in single runs would
+  still allow only about 0.31-0.37 (Gerda-Mrs. Doubtfire 0.06 is below even that: their hard levels differ).
+- So the old levels limit how accurate any bot can look: a perfect bot would match this difficulty at about 0.5-0.55
+  (simulated with the fitted spread). g5.1 for Dennis: 0.22; its family profile 0.28.
+- Board facts alone (face-down tiles, clock spare, size) match the old levels at 0.43-0.60 held out, but on Dennis's
+  factory boards they get the order backwards (-0.28), while the bot gets them right (0.79): the old levels' difficulty
+  followed how the old generator scaled boards, the factory's comes from its puzzles. The bot stays the meter, one
+  profile (Dennis): the family profile adds nothing on factory boards and gives false +2s (120, 124).
