@@ -15,9 +15,9 @@
      buriedChain      frozen tiles guard the keys, the keys open the clock's lock, the clock is buried
      combo (big)      buried chain + partners behind locks
    A board is kept only when
-     - room for luck: on the emptiest way through (the clock's exact way, then the tray kept as empty as it can be),
-       at most LUCK_MAX (2) tiles that started face-down are taken with 2 or more already waiting - the moments where
-       a bad surprise ends the try however well you play (the earlier factory boards had 0-17);
+     - not luck: at most LUCK_SHARE (0.3) of the family rating comes from hidden tiles (the same board with every tile
+       face-up rates at least 70% as hard); roomProfile (luck moments on the emptiest way) is reported only, it
+       overstates luck (a free face-down tile can be turned over before you take it);
      - the family profile (human-g6.1) lands on the level's target (within TOL), the clock's spare tuned 1-3;
      - Gemini's critic does not call the clock too loose (on dontGrab: out; otherwise the spare is tightened);
      - Dennis's profile can do it (expected tries at most DENNIS_MAX);
@@ -34,7 +34,7 @@ const Hard = require(path.join(ROOT, 'www', 'hard.js')), L = global.Layouts;
 const { measureHuman } = process.env.HUMAN_BOT ? require(path.resolve(process.env.HUMAN_BOT)) : {};
 const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITIC_BOT)).critique : null;
 const [pilesFile, planFile, outFile] = process.argv.slice(2);
-const LUCK_MAX = +(process.env.LUCK_MAX || 2), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
+const LUCK_SHARE = +(process.env.LUCK_SHARE || 0.3), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
 I.setExact(true);
 const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
 const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: true } : {}) });
@@ -170,17 +170,9 @@ for (const p of plan) {
     if (!x) { note(recipe.join('+') + ': no place for the trap'); continue; }
     let z = I.fix(x, C.spare); if (!z || !I.valid(z)) { note('no exact clock route'); continue; }
     const route = z.solution.indexOf(z.clock.i) + 1;
-    // face-down tiles only where a trap needs them (Dennis: "rely less on randomness of the board"): kept on the
-    // trap's tiles and their twins, turned face-up elsewhere; then face-up too where a luck moment remains
-    const T = trapTiles(z), downBefore = z.down.length, downAll = z.down.slice();
-    z = { ...z, down: z.down.filter(i => T.tiles.has(i) || T.faces.has(z.faces[i])) };
+    // the deal's face-down tiles stay; the luck check comes after the rating (luckShare, below)
+    const T = trapTiles(z), downAll = z.down.slice();
     let room = roomProfile(z);
-    for (let k = 0; k < 4 && room.ok && room.tightBlind > LUCK_MAX; k++) { z = { ...z, down: z.down.filter(i => !room.tightTiles.includes(i)) }; room = roomProfile(z); }
-    if (!I.valid(z)) { note('face-down change broke the board'); continue; }
-    note(`face-down ${downBefore} -> ${z.down.length}`);
-    // luck moments: tiles that started face-down taken with 2+ already waiting, on the emptiest way through (a bad
-    // surprise there ends the try however well you play); the factory boards so far had 0-17, harder ones more
-    if (!room.ok || room.tightBlind > LUCK_MAX) { note('too many luck moments (' + JSON.stringify(room) + ')'); continue; }
     // the family rating onto the target by the clock's spare (1-3)
     let m = meas(z, 'family', true), sp = z.clock.n - route;
     for (let k = 0; k < 2 && off(m.expectedTries) > 0; k++) {
@@ -189,20 +181,18 @@ for (const p of plan) {
       const m2 = meas(z2, 'family', true); note('spare ' + s2 + ': ' + m2.expectedTries);
       if (off(m2.expectedTries) < off(m.expectedTries)) { z = z2; m = m2; sp = s2; } else break;
     }
-    // a finer knob than the clock's spare: below the target, face-down tiles come back a few at a time (only where
-    // they add no luck moment beyond LUCK_MAX), each step measured again
-    for (let k = 0; k < 5 && m.expectedTries < p.target - TOL; k++) {
-      const back = downAll.filter(i => !z.down.includes(i));
-      if (!back.length) break;
-      let z2 = null;
-      for (const pick of [back.slice(0, 3), back.slice(3, 6), back.slice(6, 9)]) {
-        if (!pick.length) continue;
-        const y = { ...z, down: z.down.concat(pick) }, ry = roomProfile(y);
-        if (I.valid(y) && ry.ok && ry.tightBlind <= LUCK_MAX) { z2 = y; break; }
-      }
-      if (!z2) break;
-      const m2 = meas(z2, 'family', true); note('face-down ' + z.down.length + ' -> ' + z2.down.length + ': ' + m2.expectedTries);
-      if (Math.abs(m2.expectedTries - p.target) < Math.abs(m.expectedTries - p.target)) { z = z2; m = m2; room = roomProfile(z); } else break;
+    // How much of the difficulty is hidden tiles (Dennis 2026-11-03: "If boards really had so many luck moments how
+    // can I and the bot do as well?" - luck moments counted tiles you can turn over before taking them): the family
+    // profile on the board with every tile face-up; the share it loses is luck and memory, the rest traps, clock and
+    // tray planning. Known boards: 150 0.12, 132 0.12, Dennis's blind 183/185/194 0-0.07, release 185 0.24; 91 0.74,
+    // 149 0.60, factory 2-175 0.74 (analysis/factory/luck-share.jsonl). Above LUCK_SHARE: face-down tiles only on the
+    // traps (and their twins), measured again; still above: out.
+    const shareOf = (zz, mm) => { const mo = meas({ ...zz, down: [] }, 'family'); return Math.max(0, +((mm.expectedTries - mo.expectedTries) / Math.max(1, mm.expectedTries)).toFixed(2)); };
+    let luck = shareOf(z, m);
+    if (luck > LUCK_SHARE) {
+      const z2 = { ...z, down: z.down.filter(i => T.tiles.has(i) || T.faces.has(z.faces[i])) };
+      if (I.valid(z2)) { const m2 = meas(z2, 'family', true), l2 = shareOf(z2, m2); note(`hidden-tile share ${luck}: face-down ${z.down.length} -> ${z2.down.length}: family ${m2.expectedTries}, share ${l2}`); z = z2; m = m2; luck = l2; }
+      if (luck > LUCK_SHARE) { note('too much luck (' + luck + ')'); continue; }
     }
     // Gemini's critic: a loose clock is out on dontGrab, otherwise the spare goes down
     let flags = critique ? critique(boardOf(z), { runs: 20, seed: 4711 }).flags : [];
@@ -239,7 +229,7 @@ for (const p of plan) {
     note(`${recipe.join('+')}: family ${m.expectedTries} (target ${p.target}) | Dennis ${md.expectedTries} | at the trap ${attr} | idle ${idle.join(',') || '-'} | room ${room.room}${pass ? ' | PASS' : ''}`);
     const row = { level: lv, concept: p.concept, title: titleOf(recipe), recipe, shape: pile.shape, pile: pile.level, n: z.tiles.length, target: p.target,
       g61: { exp: m.expectedTries, first: m.firstTryRate, version: m.version }, dennis: { exp: md.expectedTries, first: md.firstTryRate },
-      atTrap: attr, room, specials: sm, critic: flags, grabFirst, clockSpare: sp, pass,
+      atTrap: attr, luckShare: luck, room, specials: sm, critic: flags, grabFirst, clockSpare: sp, pass,
       down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length,
       design: { level: lv, aspect: 1.6, tiles: z.tiles, faces: z.faces, down: z.down, gold: z.gold, obst: z.obst, clock: z.clock, solution: z.solution } };
     const score = r => (r.pass ? 0 : 10) + off(r.g61.exp) * 2 + Math.max(0, r.dennis.exp - DENNIS_MAX) + Math.max(0, ATTR - (r.atTrap ?? 1)) * 3 + (Object.values(r.specials).some(v => !v.matters) ? 2 : 0);

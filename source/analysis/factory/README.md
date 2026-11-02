@@ -453,3 +453,15 @@ an average tries of us 3 where Gerda counts as factor 1 and me as factor 2 and m
 profile, 20 tries), with the clock's spare moved 1-2 steps where that brought a board nearer 7-10 (retunedFrom: the
 rating before). Dennis: "save the fallback levels somewhere and move on to this way of designing" (designed levels,
 next section).
+
+## Luck: hidden-tile share instead of luck moments (2026-11-03)
+Dennis: "Still I think you're overstating those luck moments. Some hard boards I still pass ... If boards really had
+so many luck moments how can I and the bot do as well?" Right: a luck moment counted any tile that started face-down,
+but a free face-down tile can be turned over before you take it, and pairs can be cleared in between. New measure
+(tools/factory/limits/luck_share.js -> luck-share.jsonl): the family profile on the board as it is and with every
+tile face-up; the share of the rating that goes away = what hidden tiles add (luck and memory).
+150 0.12, 132 0.12, 145 0.08, blind 185 0.07, blind 194 -0.06, blind 183 0 (20 either way), release 185 0.24;
+91 0.74, 149 0.60, factory 2-175 0.74; factory 6-190 -0.41 (face-up plays worse: noise or the bot's peeking habit).
+So 150, 132 and Dennis's hard blind boards are hard by their traps and clock; 91 and 149 by hidden tiles. The trap
+designer keeps the deal's face-down tiles and allows at most 0.3 of the rating from them (above: face-down only on the
+traps, measured again; still above: out).
