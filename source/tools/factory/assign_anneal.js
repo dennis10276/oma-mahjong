@@ -17,14 +17,20 @@ const [from, to, invFile, out] = [+process.argv[2], +process.argv[3], process.ar
 const rd = f => fs.readFileSync(f, 'utf8').trim().split('\n').filter(Boolean).map(JSON.parse);
 const CURVE = (process.env.CURVE || '3.85,0.0212,200,0.5').split(',').map(Number), AT = JSON.parse(process.env.TARGET_AT || '{}');
 const MONO = +(process.env.MONO || 1.5), MAXR = +(process.env.MAXR || 7), MAX_EXP = +(process.env.MAX_EXP || 6);
-const target = lv => AT[lv] != null ? AT[lv] : CURVE[0] + CURVE[1] * (lv - from) + (CURVE[2] && lv >= CURVE[2] ? CURVE[3] : 0);
+// CURVE_PTS='{"175":4.5,"180":6.2,"199":7}': a curve through these points (straight between them; Dennis 2026-11-02:
+// "start at their hard-normal from the start and be at 150 level at 180"), instead of CURVE's one straight line
+const PTS = process.env.CURVE_PTS ? Object.entries(JSON.parse(process.env.CURVE_PTS)).map(([l, v]) => [+l, +v]).sort((a, b) => a[0] - b[0]) : null;
+const onPts = lv => { let k = 0; while (k < PTS.length - 2 && lv > PTS[k + 1][0]) k++; const [a, va] = PTS[k], [b, vb] = PTS[k + 1]; return va + (vb - va) * (lv - a) / (b - a); };
+const target = lv => AT[lv] != null ? AT[lv] : PTS ? onPts(lv) : CURVE[0] + CURVE[1] * (lv - from) + (CURVE[2] && lv >= CURVE[2] ? CURVE[3] : 0);
 // Dennis 2026-11-01, after playing 176, 189 and 193 (all 'Don't grab the clock'): "too loose is no pass level
 // from now on. The clock is just free to take and no reason for it to be there." So a board with Gemini's
 // clockTooLoose flag (critic3, from plan_g2 with CRITIC_BOT: there a loose clock is tightened and tested again, and
 // only a "Don't grab the clock" board or one still loose at 1 spare is dropped) never goes into a batch; nor a "Don't grab the clock"
 // board that has not shown grabbing first is worse (grabFirst, plan_g2's GRAB_MIN check; boards built before it have none).
 const banned = r => (r.critic3 || []).includes('clockTooLoose') || ((r.recipe || []).includes('dontGrab') && r.grabFirst == null);
-const inv = rd(invFile).filter(r => r.g2 && r.g2.exp <= MAX_EXP && !banned(r));
+// METER=g6: the boards' ratings by human-g6 (family profile) instead of g2.1
+const METER = process.env.METER || 'g2';
+const inv = rd(invFile).filter(r => r[METER] && r[METER].exp <= MAX_EXP && !banned(r)).map(r => ({ ...r, g2: r[METER] }));
 for (const r of inv) { r._t = r.design.tiles.map(t => Array.isArray(t) ? t : [t.x, t.y, t.z]); r._s = F.spots(r._t)[0]; r._base = r.shape.split(' · ')[0]; r._big = r._t.length > 88; r._recipe = r.recipe.join('+'); }
 const N = inv.length, levels = []; for (let lv = from; lv <= to; lv++) levels.push(lv);
 const K = levels.length;
@@ -44,7 +50,7 @@ function total(p) {
     if (k) {
       const prev = inv[p[k - 1]];
       if (prev._recipe === r._recipe) c += 1.5;
-      const free = AT[lv] != null || AT[levels[k - 1]] != null || (CURVE[2] && CURVE[2] === lv);
+      const free = AT[lv] != null || AT[levels[k - 1]] != null || (!PTS && CURVE[2] && CURVE[2] === lv);
       if (!free) c += MONO * Math.max(0, prev.g2.exp - r.g2.exp);
     }
     per[r._recipe] = (per[r._recipe] || 0) + 1;
