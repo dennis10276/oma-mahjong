@@ -58,14 +58,18 @@ function clockBesideLock(b, c) {
   }
   return null;
 }
+// extra: a second trap the designer may add (Dennis 2026-11-02: "You may also combine different traps"); every other
+// attempt uses one, so a level gets the single trap or a combination, whichever lands on the curve
 const CONCEPTS = {
-  clockBesideLock: { title: 'A lock beside the clock', recipe: ['clockBesideLock'], spare: 1 },
-  dontGrab: { title: "Don't grab the clock", recipe: ['dontGrab'], spare: 2 },
-  oneFreeSpot: { title: 'One free spot', recipe: ['trayJuggleLocked'], spare: 2 },
-  iceBeforeKeys: { title: 'Ice, lock, then the clock', recipe: ['iceLockClock'], spare: 1 },
-  buriedChain: { title: 'Buried chain', recipe: ['chainReaction'], spare: 3 },
-  combo: { title: 'Buried chain + partners behind locks', recipe: ['chainReaction', 'lockedPartners'], spare: 3 },
+  clockBesideLock: { title: 'A lock beside the clock', recipe: ['clockBesideLock'], spare: 1, extra: ['iceChain'] },
+  dontGrab: { title: "Don't grab the clock", recipe: ['dontGrab'], spare: 2, extra: ['lockedPartners', 'iceChain'] },
+  oneFreeSpot: { title: 'One free spot', recipe: ['trayJuggleLocked'], spare: 2, extra: ['iceChain'] },
+  iceBeforeKeys: { title: 'Ice, lock, then the clock', recipe: ['iceLockClock'], spare: 1, extra: ['deepKeys'] },
+  buriedChain: { title: 'Buried chain', recipe: ['chainReaction'], spare: 3, extra: ['lockedPartners'] },
+  combo: { title: 'Buried chain + partners behind locks', recipe: ['chainReaction', 'lockedPartners'], spare: 3, extra: [] },
 };
+const TITLE = { clockBesideLock: 'A lock beside the clock' };
+const titleOf = recipe => recipe.map(k => TITLE[k] || I.IDEAS[k].title).join(' + ');
 function applyRecipe(d, recipe, rng) {
   let x = { tiles: d.tiles, faces: d.faces.slice(), down: d.down.slice(), gold: (d.gold || []).slice(), obst: d.obst ? I.clone(d.obst) : { ice: {}, locks: [], keys: [] }, clock: d.clock ? { ...d.clock } : null, solution: d.solution.slice() };
   for (const k of recipe) {
@@ -147,8 +151,9 @@ for (const p of plan) {
     const salt = 70 + attempt, note = s => { pg.tried.push(attempt + ': ' + s); save(); };
     const d0 = Hard.makeNow(lv, 1.6, 1, salt, { tiles });
     if (!d0.solution || !I.valid(d0)) { note('designer: no deal'); continue; }
-    const x = applyRecipe(d0, C.recipe, I.rngOf(lv * 31 + salt * 7));
-    if (!x) { note('no place for the trap'); continue; }
+    const recipe = attempt % 2 && C.extra.length ? [...C.recipe, C.extra[((attempt - 1) / 2) % C.extra.length]] : C.recipe;
+    const x = applyRecipe(d0, recipe, I.rngOf(lv * 31 + salt * 7));
+    if (!x) { note(recipe.join('+') + ': no place for the trap'); continue; }
     let z = I.fix(x, C.spare); if (!z || !I.valid(z)) { note('no exact clock route'); continue; }
     const route = z.solution.indexOf(z.clock.i) + 1;
     const room = roomProfile(z);
@@ -173,8 +178,8 @@ for (const p of plan) {
     const md = meas(z, 'dennis'), attr = attribution(z, m), sm = specialsMatter(z, m);
     const idle = Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k);
     const pass = off(m.expectedTries) === 0 && md.expectedTries <= DENNIS_MAX && (attr === null || attr >= ATTR) && !idle.length;
-    note(`family ${m.expectedTries} (target ${p.target}) | Dennis ${md.expectedTries} | at the trap ${attr} | idle ${idle.join(',') || '-'} | room ${room.room}${pass ? ' | PASS' : ''}`);
-    const row = { level: lv, concept: p.concept, title: C.title, recipe: C.recipe, shape: pile.shape, n: z.tiles.length, target: p.target,
+    note(`${recipe.join('+')}: family ${m.expectedTries} (target ${p.target}) | Dennis ${md.expectedTries} | at the trap ${attr} | idle ${idle.join(',') || '-'} | room ${room.room}${pass ? ' | PASS' : ''}`);
+    const row = { level: lv, concept: p.concept, title: titleOf(recipe), recipe, shape: pile.shape, n: z.tiles.length, target: p.target,
       g61: { exp: m.expectedTries, first: m.firstTryRate, version: m.version }, dennis: { exp: md.expectedTries, first: md.firstTryRate },
       atTrap: attr, room, specials: sm, critic: flags, grabFirst, clockSpare: sp, pass,
       down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length,
