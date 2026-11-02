@@ -364,3 +364,25 @@ The 175-200 candidate measured with g5 (g5-candidate.jsonl): the big boards 180,
 (it counts face-down tiles in view at the start, fewer than the 34-36 on the board; first note here was wrong).
 But g5 moves unfitted factory boards a lot, both ways: 195 4.50 -> 7.67, 194 4.40 -> 3.28, 196 4.65 -> 3.58,
 200 5.02 -> 4.25, 178 +0.63, 175 +0.50; 15 of 26 within 0.15.
+
+## human-g5.1 (2026-11-02): Gemini's unfinished g5.1, finished by Claude; adopted as the factory meter
+Gemini ran out of quota with uncommitted work in its g5 worktree: g5's tuned rules undone (back to g2.1), plus two
+general rules and a memory cap it had tried at 7/10/12 (its cap code was gone). Its own numbers did not reproduce
+from what it left. Each piece measured on its own (live 85-174 with a target + Dennis's 24 factory boards; chosen
+on odd levels and factory boards, checked on even levels), average error in tries:
+| version | odd | even | factory (right = Dennis's tries to +2) | 150 | 132 |
+| g2.1 | 1.069 | 1.169 | 0.278 | 2.65 | 1.13 |
+| clock beside a lock (kept) | 1.065 | 1.080 | 0.278 | 2.65 | 4.65 |
+| + tray lookahead 2 after the clock | 0.898 | 1.099 | 0.337 | 2.33 | 4.67 |
+| + hidden-picture memory cap 10 | 0.95-1.28 | 1.11 | 0.34-0.42 | 3.40 | 4.65 |
+Kept: a lock right beside the clock (left, right, on top) makes a person go for the keys first until the clock has
+been lost twice. Only 132 moves (1.13 -> 4.65, now above every level 127-137; Gerda lost 54 of 70 tries to the
+clock); no other live level or factory board moves by 0.3; in the 175-200 candidate only 196 (4.65 -> 5.07). A profile
+switch (clockBesideLockKeys, on in the release profiles) so the older mechanism fixtures keep their profiles; the
+bot's own tests 192/192. Patch on Gemini's 10cee30: tools/factory/human-g5.1.patch. Version label human-g5.1.
+Human limits from the recordings (tools/factory/limits/: every take of the three players 85-174, tries up to the
+first win, against the bot's takes on the same levels): when a match could be made, Dennis skipped it in 3.8% of his
+takes with the clock gone (81/2123) and 26.8% with the clock on; the bot 3.8% and 25.5%. Gerda 8.5%/28.8%, Mrs.
+Doubtfire 6.5%/27.3%. So the bot already overlooks matches like Dennis does (a first count per unmatched take said
+5% vs 1%; wrong measure, the bot simply makes more unmatched takes); an "overlook" limit at 4% changed nothing (150
+2.65 -> 2.40). What makes 150 hard is not found yet; the bot still rates it 2.65.
