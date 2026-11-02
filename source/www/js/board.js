@@ -8,10 +8,10 @@ let G = null;                        // the level being played
 
 // ---------- saving a level half-way (continues after closing the app) ----------
 const CUR_V = 7;
-const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === CUR_V ? c : null; } catch (e) { return null; } };
+const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === CUR_V && !c.rp?.closed ? c : null; } catch (e) { return null; } };
 const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
 function saveCur() {
-  if (!G || G.done) return;
+  if (!G || G.done || G.logged) return;
   syncClock();
   try {
     replayCapture();

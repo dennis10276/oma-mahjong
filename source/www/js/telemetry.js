@@ -68,6 +68,9 @@ function endLevel(r, extra = {}) {
   G.logged = true; syncClock();
   replayCapture(); replayMark('end', { r, ...extra }); replayDrain(G);
   if (G.rp) G.rp.closed = true;
+  // Losses keep their board on screen for the retry/review dialog, but are no
+  // longer resumable. In particular, hiding the app must not save them again.
+  clearCur();
   adaptNote(r);
   const st = G.st || {};
   logEvt('end', { ...lvInfo(), aid: G.rp && G.rp.id, r, at: G.attempt || 1, dur: Math.round(G.elapsed), sc: G.score, n: G.tiles.length, left: aliveCount(), h: !!G.usedHint, sh: !!G.usedShuffle, rb: G.rescued ? 1 : undefined, ez: G.ez || undefined, mc: st.mc || 0, tm: st.tm || 0, bt: st.bt || 0, fl: st.fl || 0, tp: st.tp || 0, ...extra });
@@ -77,7 +80,7 @@ function endLevel(r, extra = {}) {
    Actions and state deltas are buffered; the existing saved game carries the pending tail.
    Replay traffic has its own bounded queue so it cannot evict dashboard summaries.
    Root replays/ is separate from plays/: the dashboard never downloads these bulk records. */
-const REPLAY = { version: 1, retentionDays: 30, queue: 'omamj.replayq', queueChars: 512 * 1024, attemptChars: 64 * 1024, chunkChars: 16384, batch: 48, wait: 30000, pending: 1024 };
+const REPLAY = { version: 1, retentionDays: 30, queue: 'omamj.replayq', queueChars: 512 * 1024, attemptChars: 64 * 1024, chunkChars: 16384, batch: 48, wait: 30000, pending: 1024, requestMs: 15000 };
 let replayTimer = null, replaySending = false;
 const replayId = () => crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + '-' + SES + '-' + Math.random().toString(36).slice(2);
 const replayTime = () => Math.round(1000 * (G.elapsed + (G.tStart ? (performance.now() - G.tStart) / 1000 : 0)));
@@ -203,7 +206,14 @@ async function flushReplay() {
         localStorage.removeItem(REPLAY.queue + '.' + e.cid); continue;
       }
       // createdAt is immutable. PATCH writes it with the chunk in one request, including retries.
-      const r = await dbSend(`replays/${encodeURIComponent(e.pid)}/${e.aid}`, { createdAt: e.born, [e.cid]: JSON.parse(raw) }, 'PATCH');
+      // A connection can stall without rejecting fetch or firing an offline event.
+      // Release the sending lock so reconnect/foreground retries can make progress.
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), REPLAY.requestMs);
+      let r;
+      try {
+        r = await dbSend(`replays/${encodeURIComponent(e.pid)}/${e.aid}`, { createdAt: e.born, [e.cid]: JSON.parse(raw) }, 'PATCH', controller.signal);
+      } finally { clearTimeout(timeout); }
       if (!r.ok) break;
       const next = JSON.parse(localStorage.getItem(REPLAY.queue) || '[]');
       if (next.length && next[0].cid === e.cid) {
@@ -214,6 +224,7 @@ async function flushReplay() {
   } catch (e) { } finally { replaySending = false; }
 }
 addEventListener('online', flushReplay);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) flushReplay(); });
 addEventListener('pagehide', () => {
   if (!G || !G.rp) return;
   replayMark('pause', 'pagehide'); replayCapture(); replayDrain(G); saveCur();

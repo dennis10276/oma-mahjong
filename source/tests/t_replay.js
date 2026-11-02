@@ -5,6 +5,95 @@ const chunks = (p, pid, aid) => p.db.get(`replays/${pid}/${aid}`) || {};
 const chunkValues = records => Object.entries(records).filter(([k]) => k !== 'createdAt').map(([, v]) => v);
 module.exports = [
   {
+    name: 'replay: reopening after a loss starts a fresh try instead of replaying the ended board',
+    async run(t, { startLevel, sleep }) {
+      const pid = 'test-replay-ended', p = await t.phone({ state: { level: 158, name: 'Dennis', pid, sunSeen: true, seenSp: { clockMoves: 1 } } });
+      await startLevel(p, 158);
+      // The real level-158 failure was a full tray, followed by hide and reload.
+      // Give four takeable tiles distinct visible faces; obstacles and peeks would
+      // otherwise make an arbitrary full-tray fixture depend on the level layout.
+      for (let face = 0; face < 4; face++) {
+        await p.evaluate(face => {
+          const i = G.tiles.findIndex((tile, i) => G.alive[i] && canTake(i) && i !== G.clock?.i);
+          G.tiles[i].face = face; G.down[i] = 0; G.peek = -1;
+          replayCapture(); onTap(i);
+        }, face);
+        await sleep(350);
+      }
+      await sleep(500);
+      const lost = await p.evaluate(() => ({ aid: G.rp.id, at: G.attempt, fails: S.fails[G.key], logged: G.logged }));
+      t.ok(lost.logged, 'fixture reached a terminal loss');
+      const saved = await p.evaluate(() => {
+        pauseClock(); dispatchEvent(new Event('pagehide'));
+        return localStorage.getItem(CUR);
+      });
+      t.eq(saved, null, 'hide/pagehide cannot re-save a finished attempt');
+      await p.reload(); await p.waitForFunction(() => window.__mjReady);
+      await startLevel(p, 158, false);
+      const fresh = await p.evaluate(() => ({ aid: G.rp.id, at: G.attempt, partial: G.rp.init?.partial, mv: G.mv, left: aliveCount(), n: G.tiles.length, fails: S.fails[G.key] }));
+      t.ok(fresh.aid !== lost.aid && fresh.at === lost.at + 1, 'new replay and next attempt number');
+      t.ok(fresh.mv === 0 && fresh.left === fresh.n, 'new try starts with the whole board');
+      t.eq(fresh.fails, lost.fails, 'reopening does not count the same loss twice');
+      await p.evaluate(() => flushReplay()); await sleep(400);
+      const replay = readReplay(chunks(p, pid, fresh.aid));
+      t.eq(replay.initial.partial, false, 'new try has a complete initial board');
+      t.ok(!replay.result && !replay.kinds.end, 'no phantom ending before any moves');
+      t.ok(readReplay(chunks(p, pid, lost.aid)).complete, 'original loss remains a complete recording');
+    },
+  },
+  {
+    name: 'replay: closed saves from older versions are ignored when starting a level',
+    async run(t, { startLevel, sleep }) {
+      const pid = 'test-replay-old-ended', p = await t.phone({ state: { level: 16, name: 'Dennis', pid } });
+      await startLevel(p, 16);
+      const old = await p.evaluate(() => {
+        const c = loadCur(); c.rp.closed = true;
+        localStorage.setItem(CUR, JSON.stringify(c)); G = null;
+        return { aid: c.rp.id, at: c.at };
+      });
+      await p.reload(); await p.waitForFunction(() => window.__mjReady);
+      await startLevel(p, 16, false); await p.evaluate(() => flushReplay()); await sleep(300);
+      const fresh = await p.evaluate(() => ({ aid: G.rp.id, at: G.attempt }));
+      t.ok(fresh.aid !== old.aid && fresh.at === old.at + 1, 'old ended save starts the next try');
+      t.eq(readReplay(chunks(p, pid, fresh.aid)).initial.partial, false, 'old ended save cannot produce a partial replay');
+    },
+  },
+  {
+    name: 'replay: stalled upload times out and foreground retry sends the unchanged chunk',
+    async run(t, { startLevel, sleep }) {
+      const pid = 'test-replay-stall', p = await t.phone({ state: { level: 3, name: 'Dennis', pid } });
+      await startLevel(p, 3); await sleep(500);
+      const out = await p.evaluate(async () => {
+        await flushReplay();
+        replayMark('pause', 'test'); replayDrain(G); saveCur();
+        const originalFetch = fetch, originalSend = dbSend;
+        let aborted = false, signalSeen = false, retry = null;
+        const entry = JSON.parse(localStorage.getItem(REPLAY.queue))[0];
+        const raw = localStorage.getItem(REPLAY.queue + '.' + entry.cid);
+        REPLAY.requestMs = 30;
+        window.fetch = (url, options) => new Promise((resolve, reject) => {
+          signalSeen = !!options.signal;
+          options.signal.addEventListener('abort', () => { aborted = true; reject(new DOMException('timeout', 'AbortError')); }, { once: true });
+        });
+        try { await flushReplay(); } finally { window.fetch = originalFetch; }
+        const retained = localStorage.getItem(REPLAY.queue + '.' + entry.cid) === raw;
+        const unlocked = !replaySending;
+        dbSend = (...args) => { if (args[0].startsWith('replays/')) retry = args[1]; return originalSend(...args); };
+        try {
+          // Simulate return to the visible app without requiring an online event.
+          Object.defineProperty(document, 'hidden', { configurable: true, value: false });
+          document.dispatchEvent(new Event('visibilitychange'));
+          while (replaySending) await new Promise(resolve => setTimeout(resolve, 10));
+        } finally { dbSend = originalSend; delete document.hidden; }
+        return { aborted, signalSeen, retained, unlocked, retry, entry, raw, pending: JSON.parse(localStorage.getItem(REPLAY.queue)).length };
+      });
+      t.ok(out.aborted && out.signalSeen && out.unlocked, 'stalled fetch aborted and upload lock released');
+      t.ok(out.retained, 'timeout preserves queued data');
+      t.eq(out.retry, { createdAt: out.entry.born, [out.entry.cid]: JSON.parse(out.raw) }, 'foreground retries identical chunk ID and content');
+      t.eq(out.pending, 0, 'foreground retry drains pending replay');
+    },
+  },
+  {
     name: 'replay: lost upload acknowledgment retries the same chunk and conflicting copies are flagged',
     async run(t, { startLevel, sleep }) {
       const pid = 'test-replay-ack', p = await t.phone({ state: { level: 3, name: 'Dennis', pid } });
@@ -37,9 +126,12 @@ module.exports = [
     },
   },
   {
-    name: 'replay: resume preserves identity/counters and reconstructs the final board after hint and shuffle',
+    name: 'replay: offline resume preserves identity/counters and reconstructs the final board after reconnect, hint and shuffle',
     async run(t, { startLevel, click, solve, sleep }) {
       const pid = 'test-replay-resume', p = await t.phone({ state: { level: 16, name: 'Dennis', pid } });
+      // Drop database requests while still serving the app itself across reload.
+      let offline = true;
+      await p.ctx.route(/^https:\/\/[^/]*firebasedatabase\.app\//, r => offline ? r.abort() : p.db.handle(r));
       await startLevel(p, 16);
       const before = await p.evaluate(() => {
         const blocked = G.tiles.findIndex((t, i) => G.alive[i] && !free(i));
@@ -54,6 +146,9 @@ module.exports = [
       t.eq(await p.evaluate(() => G.rp.id), before.aid, 'same attempt after a full page reload');
       t.eq(await p.evaluate(() => G.st), before.st, 'attempt counters are not reset on resume');
       t.eq(await p.evaluate(() => replayState()), before.state, 'same board resumed');
+      t.eq(chunkValues(chunks(p, pid, before.aid)).length, 0, 'recording stayed local while disconnected');
+      offline = false;
+      await p.evaluate(() => flushReplay());
       await click(p, '#btnHint'); await click(p, '#btnShuffle'); await sleep(850);
       t.ok(await solve(p, 3000), 'test attempt won'); await sleep(600);
       const r = readReplay(chunks(p, pid, before.aid));
