@@ -248,14 +248,14 @@ function confirmReset() {
 }
 
 function showIntro(after) {
-  const f = Tiles.faceHTML('classic', 31), g = Tiles.faceHTML('classic', 4);
+  const f = Tiles.faceHTML(S.theme, 31), g = Tiles.faceHTML(S.theme, 4);
   openModal(`<h2>${fx('introTitle')}</h2>
     <p>${fx('intro1')}</p>
     <div class="how-tray"><div class="hm">${g}</div><div class="hm">${f}</div><div class="hm glow">${f}</div><div class="hm empty"></div></div>
     <p>${fx('intro2')}</p>
     <p>${fx('intro3', RULES.tools.fromLevel)}</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>
-    <button class="link-btn" id="mTileHelp">${tx('lessonMenu')}</button>
+    <button class="link-btn" id="mTileHelp">${tx(coachOn(S.level) ? 'czMenu' : 'lessonMenu')}</button>
     <button class="link-btn" id="mLang">${tx('introLang')}</button>`, true, after);
   $('#mGo').onclick = closeModal;
   $('#mTileHelp').onclick = showLessonMenu;

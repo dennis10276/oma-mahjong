@@ -249,6 +249,15 @@ const Layouts = (() => {
   const careEff = level => level <= 6 ? level : 6 + (level - 6) / 4;
   const careDownN = level => level < 10 ? 0 : Math.min(6, 2 + Math.floor((level - 10) / 15));
   const careRate = level => level <= 50 ? 0.88 : Math.max(0.75, 0.88 - (level - 50) * 0.0026);
+  /* Catching up with the family (decision Dennis 2026-10-24, release 1.61): she plays well now, so
+     from level 119 her face-down tiles follow the family's rule (any tile, a share of the pile) and
+     her deals aim at the family's first-try target, both climbing evenly from where she was at 118
+     (8% face-down, 75% first try) to the family's values (40%, 42%) at level 143. Pile sizes stay
+     hers. Levels 1-118 are not changed (her stars and recordings). */
+  const CARE_CATCHUP = { from: 119, full: 143, down0: 0.08, rate0: 0.75 };
+  const careCatchup = level => level < CARE_CATCHUP.from ? null
+    : Math.min(1, (level - CARE_CATCHUP.from + 1) / (CARE_CATCHUP.full - CARE_CATCHUP.from + 1));
+  const familyDiff = level => difficultyFor(effLevel(level));
   function normalTarget(level, scale) {
     const e = effLevel(level);
     let t = targetFor(Math.round(e)); if (e > 26) t = targetFor(level);
@@ -260,7 +269,9 @@ const Layouts = (() => {
     target = Math.max(8, Math.round(target * scale)); target -= target % 2;
     const res = buildPiles(level * 7919 + 999331, target, layersFor(e), aspect, level);
     const d = difficultyFor(e);
-    const diff = { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) };
+    const c = careCatchup(level), fam = familyDiff(level), mix = (a, b) => a + (b - a) * c;
+    const diff = c == null ? { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) }
+      : { ...d, down: mix(CARE_CATCHUP.down0, fam.down), target: mix(CARE_CATCHUP.rate0, fam.target) };
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 333, diff, track: 'care',
       ptsScale: normalTarget(level, scale) / res.tiles.length };
   }
@@ -597,6 +608,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, MECH, effLevel, careEff, careDownN, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, takeable, obstacles, solve, buildPiles, difficultyFor, kindsFor, pairFacesFor, layersFor };
+  return { SLOTS, MECH, effLevel, careEff, careDownN, careCatchup, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, takeable, obstacles, solve, buildPiles, difficultyFor, kindsFor, pairFacesFor, layersFor };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

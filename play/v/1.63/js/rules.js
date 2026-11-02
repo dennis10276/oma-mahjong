@@ -13,6 +13,13 @@ const RULES = {
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
+  // from this level (decision Dennis 2026-10-22) no lessons are shown on their own any more: after a lost
+  // try the player sees a film of their own last moves and the better move, tied to its game tip
+  // (js/coach.js). The game tips stay in the menu; first-time introductions of a new tile kind stay.
+  // When (decision Dennis 2026-10-22): once from the 3rd lost try of a level; then from the 9th lost try
+  // every 3rd one (9, 12, 15, 18), and after the 20th every lost try (21, 22, ...), but from the 9th on
+  // only when that try was more than 60% done. Starting over counts as a lost try.
+  coach: { fromLevel: 60, first: 3, again: 9, every: 3, always: 21, done: 0.6 },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
@@ -147,8 +154,8 @@ const VILLAGE = {
 // ---------- the database (Firebase Realtime Database; empty = only the computer players) ----------
 const DB_URL = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
 const dbUrl = path => `${DB_URL}/${path}.json`;
-function dbSend(path, body, method = 'PUT') {
-  return fetch(dbUrl(path), { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+function dbSend(path, body, method = 'PUT', signal) {
+  return fetch(dbUrl(path), { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal });
 }
 async function dbGet(path) {
   const r = await fetch(dbUrl(path), { cache: 'no-store' });
