@@ -432,3 +432,12 @@ an average tries of us 3 where Gerda counts as factor 1 and me as factor 2 and m
 - Known gap: people's tray losses come early (median 68-76% of the board left), the bot's later (48%).
 - On this scale (g6-eval.jsonl): old levels' quartiles 1.55 / 2.35 / 3.86, max 7.8 (12 tries per run cap the top);
   their harder-normal levels 121 5.2, 141 5.1, 143 3.7; 150 6.2; 132 7.05.
+- Dennis: "I think mostly [I am] playing to the most possible outs always." Recordings (limits/outs_play.js): taking
+  the tile that leaves the most visible matches next move: Dennis 32-33%, Gerda 30-40%, Mrs. Doubtfire 35% - no
+  difference. Keeping a tray spot free is: after the clock, Dennis lets the tray reach 3 tiles in 11% of his takes,
+  Gerda 19%, Mrs. Doubtfire 16%, and both bot profiles 19-20% (same levels). With the clock on: Dennis 14%, Gerda 20%,
+  Mrs. Doubtfire 28%, family profile 14%, Dennis profile 11%.
+- Dennis: "Some high tries can not really be real efforts but just low effort cause they are raging." Gerda taps a
+  little faster on her 15th+ tries (median 0.96 s between taps against 1.20 s on her first three); a cap on each
+  player's count (20 or 12 tries) leaves the order of the levels almost the same (g6 odd/even 0.33/0.40 -> 0.37/0.43
+  at 12) and takes the rage tail out of the numbers: at 12, top 91 9.2, 132 8.8, 150 8.4, 89 8.0, 144 6.4, 156 6.0.
