@@ -15,8 +15,9 @@
      buriedChain      frozen tiles guard the keys, the keys open the clock's lock, the clock is buried
      combo (big)      buried chain + partners behind locks
    A board is kept only when
-     - room for luck: on the emptiest way through (the tray kept as empty as it can be, the clock in time), every
-       tile that started face-down is taken with at most 2 tiles waiting, so a bad surprise still fits;
+     - room for luck: on the emptiest way through (the clock's exact way, then the tray kept as empty as it can be),
+       at most LUCK_MAX (2) tiles that started face-down are taken with 2 or more already waiting - the moments where
+       a bad surprise ends the try however well you play (the earlier factory boards had 0-17);
      - the family profile (human-g6.1) lands on the level's target (within TOL), the clock's spare tuned 1-3;
      - Gemini's critic does not call the clock too loose (on dontGrab: out; otherwise the spare is tightened);
      - Dennis's profile can do it (expected tries at most DENNIS_MAX);
@@ -30,10 +31,10 @@ const fs = require('fs'), path = require('path');
 const ROOT = path.resolve(__dirname, '..', '..');
 const I = require(path.join(ROOT, 'tools', 'lab', 'ideas.js'));
 const Hard = require(path.join(ROOT, 'www', 'hard.js')), L = global.Layouts;
-const { measureHuman } = require(path.resolve(process.env.HUMAN_BOT));
+const { measureHuman } = process.env.HUMAN_BOT ? require(path.resolve(process.env.HUMAN_BOT)) : {};
 const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITIC_BOT)).critique : null;
 const [pilesFile, planFile, outFile] = process.argv.slice(2);
-const TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
+const LUCK_MAX = +(process.env.LUCK_MAX || 2), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
 I.setExact(true);
 const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
 const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: true } : {}) });
@@ -84,8 +85,17 @@ function roomProfile(d, width = 48) {
   const tiles = tilesOf(d), nb = L.neighbors(tiles), n = tiles.length, o = d.obst || {}, f = d.faces;
   const rules = { iceNb: L.iceNeighbors(tiles), ice: o.ice || {}, locks: new Set(o.locks || []), keys: o.keys || [] };
   const alive0 = new Uint8Array(n).fill(1), down0 = new Set(d.down), ck = d.clock;
-  let beam = [{ alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0 }];
-  for (let step = 0; step < n; step++) {
+  // up to the clock: the exact way the designer made (the clock leaves no room to wander); from there the beam
+  const start = { alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0 };
+  const pre = ck ? d.solution.slice(0, d.solution.indexOf(ck.i) + 1) : [];
+  for (const i of pre) {
+    const q = start.tray.findIndex(t => f[t] === f[i]), blind = down0.has(i);
+    start.blindMax = Math.max(start.blindMax, blind ? start.tray.length : 0); start.blind += blind ? 1 : 0; start.tight += blind && start.tray.length >= 2 ? 1 : 0;
+    start.tray = q >= 0 ? start.tray.filter((_, k) => k !== q) : start.tray.concat(i); start.alive[i] = 0; start.moves++; start.sum += start.tray.length;
+    if (start.tray.length >= 4) return { ok: false };
+  }
+  let beam = [start];
+  for (let step = pre.length; step < n; step++) {
     const next = [], seen = new Set();
     for (const s of beam) {
       for (let i = 0; i < n; i++) {
@@ -94,7 +104,6 @@ function roomProfile(d, width = 48) {
         const tray = q >= 0 ? s.tray.filter((_, k) => k !== q) : s.tray.concat(i);
         if (tray.length >= 4) continue;
         const moves = s.moves + 1;
-        if (ck && s.alive[ck.i] && i !== ck.i && moves >= ck.n) continue;     // the clock would run out
         const alive = s.alive.slice(); alive[i] = 0;
         const key = alive.join('') + '|' + tray.map(t => f[t]).sort((a, b) => a - b).join(',');
         if (seen.has(key)) continue; seen.add(key);
@@ -137,11 +146,14 @@ function specialsMatter(d, m0) {
   return out;
 }
 
+module.exports = { roomProfile, trapTiles };
+if (require.main === module) {
 const piles = JSON.parse(fs.readFileSync(pilesFile, 'utf8')), plan = JSON.parse(fs.readFileSync(planFile, 'utf8'));
 const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).level) : []);
 for (const p of plan) {
   if (done.has(p.level)) continue;
-  const pile = piles.find(q => q.level === p.pile), C = CONCEPTS[p.concept], lv = p.level, tiles = pile.tiles.map(([x, y, z]) => ({ x, y, z }));
+  // p.piles: several piles, one per attempt in turn (a trap needs the right structure; some piles have none)
+  const pileIds = p.piles || [p.pile], C = CONCEPTS[p.concept], lv = p.level;
   const progFile = outFile + '.progress.json', prog = fs.existsSync(progFile) ? JSON.parse(fs.readFileSync(progFile, 'utf8') || '{}') : {};
   const pg = prog[lv] = prog[lv] || { next: 0, best: null, tried: [] };
   const save = () => fs.writeFileSync(progFile, JSON.stringify(prog));
@@ -149,6 +161,7 @@ for (const p of plan) {
   for (let attempt = pg.next; attempt < ATTEMPTS && !(pg.best && pg.best.pass); attempt++) {
     pg.next = attempt + 1; save();
     const salt = 70 + attempt, note = s => { pg.tried.push(attempt + ': ' + s); save(); };
+    const pile = piles.find(q => q.level === pileIds[attempt % pileIds.length]), tiles = pile.tiles.map(([x, y, z]) => ({ x, y, z }));
     const d0 = Hard.makeNow(lv, 1.6, 1, salt, { tiles });
     if (!d0.solution || !I.valid(d0)) { note('designer: no deal'); continue; }
     const recipe = attempt % 2 && C.extra.length ? [...C.recipe, C.extra[((attempt - 1) / 2) % C.extra.length]] : C.recipe;
@@ -157,7 +170,9 @@ for (const p of plan) {
     let z = I.fix(x, C.spare); if (!z || !I.valid(z)) { note('no exact clock route'); continue; }
     const route = z.solution.indexOf(z.clock.i) + 1;
     const room = roomProfile(z);
-    if (!room.ok || room.blindMax > 2) { note('no room for luck (' + JSON.stringify(room) + ')'); continue; }
+    // luck moments: tiles that started face-down taken with 2+ already waiting, on the emptiest way through (a bad
+    // surprise there ends the try however well you play); the factory boards so far had 0-17, harder ones more
+    if (!room.ok || room.tightBlind > LUCK_MAX) { note('too many luck moments (' + JSON.stringify(room) + ')'); continue; }
     // the family rating onto the target by the clock's spare (1-3)
     let m = meas(z, 'family', true), sp = z.clock.n - route;
     for (let k = 0; k < 2 && off(m.expectedTries) > 0; k++) {
@@ -199,7 +214,7 @@ for (const p of plan) {
     const md = meas(z, 'dennis'), attr = attribution(z, m);
     const pass = off(m.expectedTries) === 0 && md.expectedTries <= DENNIS_MAX && (attr === null || attr >= ATTR) && !idle.length;
     note(`${recipe.join('+')}: family ${m.expectedTries} (target ${p.target}) | Dennis ${md.expectedTries} | at the trap ${attr} | idle ${idle.join(',') || '-'} | room ${room.room}${pass ? ' | PASS' : ''}`);
-    const row = { level: lv, concept: p.concept, title: titleOf(recipe), recipe, shape: pile.shape, n: z.tiles.length, target: p.target,
+    const row = { level: lv, concept: p.concept, title: titleOf(recipe), recipe, shape: pile.shape, pile: pile.level, n: z.tiles.length, target: p.target,
       g61: { exp: m.expectedTries, first: m.firstTryRate, version: m.version }, dennis: { exp: md.expectedTries, first: md.firstTryRate },
       atTrap: attr, room, specials: sm, critic: flags, grabFirst, clockSpare: sp, pass,
       down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length,
@@ -211,4 +226,5 @@ for (const p of plan) {
   const best = pg.best ? { ...pg.best, tried: pg.tried } : { level: lv, concept: p.concept, ok: false, tried: pg.tried };
   fs.appendFileSync(outFile, JSON.stringify(best) + '\n');
   console.log(lv, p.concept, best.g61 ? `family ${best.g61.exp} Dennis ${best.dennis.exp} atTrap ${best.atTrap} room ${best.room.room} ${best.pass ? 'PASS' : '(closest)'}` : 'NONE');
+}
 }
