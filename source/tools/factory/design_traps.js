@@ -62,12 +62,12 @@ function clockBesideLock(b, c) {
 // extra: a second trap the designer may add (Dennis 2026-11-02: "You may also combine different traps"); every other
 // attempt uses one, so a level gets the single trap or a combination, whichever lands on the curve
 const CONCEPTS = {
-  clockBesideLock: { title: 'A lock beside the clock', recipe: ['clockBesideLock'], spare: 1, extra: ['iceChain'] },
+  clockBesideLock: { title: 'A lock beside the clock', recipe: ['clockBesideLock'], spare: 1, extra: ['iceChain', 'trayJuggleFrozen'] },
   dontGrab: { title: "Don't grab the clock", recipe: ['dontGrab'], spare: 2, extra: ['lockedPartners', 'iceChain'] },
-  oneFreeSpot: { title: 'One free spot', recipe: ['trayJuggleLocked'], spare: 2, extra: ['iceChain'] },
-  iceBeforeKeys: { title: 'Ice, lock, then the clock', recipe: ['iceLockClock'], spare: 1, extra: ['deepKeys'] },
-  buriedChain: { title: 'Buried chain', recipe: ['chainReaction'], spare: 3, extra: ['lockedPartners'] },
-  combo: { title: 'Buried chain + partners behind locks', recipe: ['chainReaction', 'lockedPartners'], spare: 3, extra: [] },
+  oneFreeSpot: { title: 'One free spot', recipe: ['trayJuggleLocked'], spare: 2, extra: ['iceChain', 'chainReaction'] },
+  iceBeforeKeys: { title: 'Ice, lock, then the clock', recipe: ['iceLockClock'], spare: 1, extra: ['deepKeys', 'lockedPartners'] },
+  buriedChain: { title: 'Buried chain', recipe: ['chainReaction'], spare: 3, extra: ['lockedPartners', 'trayJuggleFrozen'] },
+  combo: { title: 'Buried chain + partners behind locks', recipe: ['chainReaction', 'lockedPartners'], spare: 3, extra: ['iceChain'] },
 };
 const TITLE = { clockBesideLock: 'A lock beside the clock' };
 const titleOf = recipe => recipe.map(k => TITLE[k] || I.IDEAS[k].title).join(' + ');
@@ -86,11 +86,11 @@ function roomProfile(d, width = 48) {
   const rules = { iceNb: L.iceNeighbors(tiles), ice: o.ice || {}, locks: new Set(o.locks || []), keys: o.keys || [] };
   const alive0 = new Uint8Array(n).fill(1), down0 = new Set(d.down), ck = d.clock;
   // up to the clock: the exact way the designer made (the clock leaves no room to wander); from there the beam
-  const start = { alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0 };
+  const start = { alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0, tightTiles: [] };
   const pre = ck ? d.solution.slice(0, d.solution.indexOf(ck.i) + 1) : [];
   for (const i of pre) {
     const q = start.tray.findIndex(t => f[t] === f[i]), blind = down0.has(i);
-    start.blindMax = Math.max(start.blindMax, blind ? start.tray.length : 0); start.blind += blind ? 1 : 0; start.tight += blind && start.tray.length >= 2 ? 1 : 0;
+    start.blindMax = Math.max(start.blindMax, blind ? start.tray.length : 0); start.blind += blind ? 1 : 0; start.tight += blind && start.tray.length >= 2 ? 1 : 0; if (blind && start.tray.length >= 2) start.tightTiles.push(i);
     start.tray = q >= 0 ? start.tray.filter((_, k) => k !== q) : start.tray.concat(i); start.alive[i] = 0; start.moves++; start.sum += start.tray.length;
     if (start.tray.length >= 4) return { ok: false };
   }
@@ -108,15 +108,15 @@ function roomProfile(d, width = 48) {
         const key = alive.join('') + '|' + tray.map(t => f[t]).sort((a, b) => a - b).join(',');
         if (seen.has(key)) continue; seen.add(key);
         const blind = down0.has(i);
-        next.push({ alive, tray, moves, blindMax: Math.max(s.blindMax, blind ? s.tray.length : 0), sum: s.sum + tray.length, blind: s.blind + (blind ? 1 : 0), tight: s.tight + (blind && s.tray.length >= 2 ? 1 : 0) });
+        next.push({ alive, tray, moves, blindMax: Math.max(s.blindMax, blind ? s.tray.length : 0), sum: s.sum + tray.length, blind: s.blind + (blind ? 1 : 0), tight: s.tight + (blind && s.tray.length >= 2 ? 1 : 0), tightTiles: blind && s.tray.length >= 2 ? s.tightTiles.concat(i) : s.tightTiles });
       }
     }
     if (!next.length) return { ok: false };
-    next.sort((a, b) => a.blindMax - b.blindMax || a.sum - b.sum);
+    next.sort((a, b) => a.tight - b.tight || a.sum - b.sum);
     beam = next.slice(0, width);
   }
   const b = beam.find(s => !s.tray.length) || beam[0];
-  return { ok: !b.tray.length, blindMax: b.blindMax, blindTakes: b.blind, tightBlind: b.tight, room: 3 - b.blindMax };
+  return { ok: !b.tray.length, blindMax: b.blindMax, blindTakes: b.blind, tightBlind: b.tight, room: 3 - b.blindMax, tightTiles: b.tightTiles };
 }
 
 // ---------- where the family profile loses ----------
@@ -164,12 +164,20 @@ for (const p of plan) {
     const pile = piles.find(q => q.level === pileIds[attempt % pileIds.length]), tiles = pile.tiles.map(([x, y, z]) => ({ x, y, z }));
     const d0 = Hard.makeNow(lv, 1.6, 1, salt, { tiles });
     if (!d0.solution || !I.valid(d0)) { note('designer: no deal'); continue; }
-    const recipe = attempt % 2 && C.extra.length ? [...C.recipe, C.extra[((attempt - 1) / 2) % C.extra.length]] : C.recipe;
+    // attempts cycle: the trap alone, + one extra trap, + two extra traps (with luck taken out, the traps carry the difficulty)
+    const nx = Math.min(attempt % 3, C.extra.length), recipe = [...C.recipe, ...C.extra.slice(0, nx).map((_, k) => C.extra[(Math.floor(attempt / 3) + k) % C.extra.length])];
     const x = applyRecipe(d0, recipe, I.rngOf(lv * 31 + salt * 7));
     if (!x) { note(recipe.join('+') + ': no place for the trap'); continue; }
     let z = I.fix(x, C.spare); if (!z || !I.valid(z)) { note('no exact clock route'); continue; }
     const route = z.solution.indexOf(z.clock.i) + 1;
-    const room = roomProfile(z);
+    // face-down tiles only where a trap needs them (Dennis: "rely less on randomness of the board"): kept on the
+    // trap's tiles and their twins, turned face-up elsewhere; then face-up too where a luck moment remains
+    const T = trapTiles(z), downBefore = z.down.length;
+    z = { ...z, down: z.down.filter(i => T.tiles.has(i) || T.faces.has(z.faces[i])) };
+    let room = roomProfile(z);
+    for (let k = 0; k < 4 && room.ok && room.tightBlind > LUCK_MAX; k++) { z = { ...z, down: z.down.filter(i => !room.tightTiles.includes(i)) }; room = roomProfile(z); }
+    if (!I.valid(z)) { note('face-down change broke the board'); continue; }
+    note(`face-down ${downBefore} -> ${z.down.length}`);
     // luck moments: tiles that started face-down taken with 2+ already waiting, on the emptiest way through (a bad
     // surprise there ends the try however well you play); the factory boards so far had 0-17, harder ones more
     if (!room.ok || room.tightBlind > LUCK_MAX) { note('too many luck moments (' + JSON.stringify(room) + ')'); continue; }
