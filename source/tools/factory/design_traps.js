@@ -15,8 +15,9 @@
      buriedChain      frozen tiles guard the keys, the keys open the clock's lock, the clock is buried
      combo (big)      buried chain + partners behind locks
    A board is kept only when
-     - not luck: at most LUCK_SHARE (0.3) of the family rating comes from hidden tiles (the same board with every tile
-       face-up rates at least 70% as hard); roomProfile (luck moments on the emptiest way) is reported only, it
+     - not luck: at most LUCK_SHARE (0.5) of the family rating comes from hidden tiles (the same board with every tile
+       face-up rates at least half as hard; Dennis 2026-11-03 on 149, share 0.60: "I passed it in 2 tries" - hidden
+       tiles are partly skill, keeping a spot free and remembering, which the bots lack); roomProfile (luck moments on the emptiest way) is reported only, it
        overstates luck (a free face-down tile can be turned over before you take it);
      - the family profile (human-g6.1) lands on the level's target (within TOL), the clock's spare tuned 1-3;
      - Gemini's critic does not call the clock too loose (on dontGrab: out; otherwise the spare is tightened);
@@ -34,7 +35,7 @@ const Hard = require(path.join(ROOT, 'www', 'hard.js')), L = global.Layouts;
 const { measureHuman } = process.env.HUMAN_BOT ? require(path.resolve(process.env.HUMAN_BOT)) : {};
 const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITIC_BOT)).critique : null;
 const [pilesFile, planFile, outFile] = process.argv.slice(2);
-const LUCK_SHARE = +(process.env.LUCK_SHARE || 0.3), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
+const LUCK_SHARE = +(process.env.LUCK_SHARE || 0.5), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
 I.setExact(true);
 const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
 const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: true } : {}) });

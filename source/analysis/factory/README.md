@@ -465,3 +465,9 @@ tile face-up; the share of the rating that goes away = what hidden tiles add (lu
 So 150, 132 and Dennis's hard blind boards are hard by their traps and clock; 91 and 149 by hidden tiles. The trap
 designer keeps the deal's face-down tiles and allows at most 0.3 of the rating from them (above: face-down only on the
 traps, measured again; still above: out).
+- Dennis: "I will also argue at least 149 is not a luck level. I passed it in 2 tries." The bot for Dennis also
+  rates 149 3.45 as it is and 1.50 face-up (91: 2.45 / 1.07), while Dennis needed 2 (91: 5). So hidden-tile
+  difficulty is partly skill - keeping a spot free and remembering what you saw, which Dennis does better than both
+  bots (tray at 3 after a take: Dennis 11%, bots 19-20%) - not only luck. Limit loosened to 0.5 (half the rating
+  may come from hidden tiles). The real fix: give the bot Dennis's free-spot habit; then what hidden tiles still add
+  for that player is the luck.
