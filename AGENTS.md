@@ -108,6 +108,10 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   off" window (no own film) is no longer logged as help. In 1.59-1.61 it was, so the dashboard showed
   "Uitleg getoond: Wekker" after every lost try (Mrs. Doubtfire, level 132) although the player only saw
   one line. The dashboard also leaves those old one-line messages out.
+- Release 1.63: finished attempts cannot be saved/resumed as partial duplicate replays;
+  replay uploads time out after 15 seconds and retry on return to the foreground. In Alle levels,
+  replay buttons use active duration: under 60 seconds muted red, 60-119 seconds green,
+  120+ seconds stronger green, unknown duration neutral. Boards and predictions are unchanged.
 
 - `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, the prediction for
   their next 60 levels: first try, within 2 and within 4 tries. The dashboard shows it in the card
