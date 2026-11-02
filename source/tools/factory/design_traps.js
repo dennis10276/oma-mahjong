@@ -172,7 +172,7 @@ for (const p of plan) {
     const route = z.solution.indexOf(z.clock.i) + 1;
     // face-down tiles only where a trap needs them (Dennis: "rely less on randomness of the board"): kept on the
     // trap's tiles and their twins, turned face-up elsewhere; then face-up too where a luck moment remains
-    const T = trapTiles(z), downBefore = z.down.length;
+    const T = trapTiles(z), downBefore = z.down.length, downAll = z.down.slice();
     z = { ...z, down: z.down.filter(i => T.tiles.has(i) || T.faces.has(z.faces[i])) };
     let room = roomProfile(z);
     for (let k = 0; k < 4 && room.ok && room.tightBlind > LUCK_MAX; k++) { z = { ...z, down: z.down.filter(i => !room.tightTiles.includes(i)) }; room = roomProfile(z); }
@@ -188,6 +188,21 @@ for (const p of plan) {
       const z2 = { ...z, clock: { ...z.clock, n: route + s2 } }; if (!I.valid(z2)) break;
       const m2 = meas(z2, 'family', true); note('spare ' + s2 + ': ' + m2.expectedTries);
       if (off(m2.expectedTries) < off(m.expectedTries)) { z = z2; m = m2; sp = s2; } else break;
+    }
+    // a finer knob than the clock's spare: below the target, face-down tiles come back a few at a time (only where
+    // they add no luck moment beyond LUCK_MAX), each step measured again
+    for (let k = 0; k < 5 && m.expectedTries < p.target - TOL; k++) {
+      const back = downAll.filter(i => !z.down.includes(i));
+      if (!back.length) break;
+      let z2 = null;
+      for (const pick of [back.slice(0, 3), back.slice(3, 6), back.slice(6, 9)]) {
+        if (!pick.length) continue;
+        const y = { ...z, down: z.down.concat(pick) }, ry = roomProfile(y);
+        if (I.valid(y) && ry.ok && ry.tightBlind <= LUCK_MAX) { z2 = y; break; }
+      }
+      if (!z2) break;
+      const m2 = meas(z2, 'family', true); note('face-down ' + z.down.length + ' -> ' + z2.down.length + ': ' + m2.expectedTries);
+      if (Math.abs(m2.expectedTries - p.target) < Math.abs(m.expectedTries - p.target)) { z = z2; m = m2; room = roomProfile(z); } else break;
     }
     // Gemini's critic: a loose clock is out on dontGrab, otherwise the spare goes down
     let flags = critique ? critique(boardOf(z), { runs: 20, seed: 4711 }).flags : [];
