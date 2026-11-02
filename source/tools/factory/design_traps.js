@@ -1,0 +1,189 @@
+/* Level factory: levels designed around traps (Claude, 2026-11-02).
+   Dennis: "use the bot to design the levels with traps they will struggle with. That way we rely less on
+   randomness of the board but everything is thought about and feels fun." And: "we can also calculate how much
+   room in the tray there is for luck. If unlucky you still make it through if the tray is as empty as it can be
+   at that point." First run: "only 6 designed levels, different concepts, all on curve."
+
+   Each level gets one trap concept (the traps the family's recordings showed):
+     clockBesideLock  132: a lock right beside the clock looks like "the clock needs the keys"; it doesn't, and the
+                      clock has no moves to spare for the detour (Gerda lost 54 of 70 tries there to the clock)
+     dontGrab         the clock is free but its partner is buried: taking it early costs a tray spot while digging
+                      (kept only when the bot taking the clock first needs at least 1 try more)
+     oneFreeSpot      the clock under a few tiles whose partners are buried and locked: you dig with one spot
+                      to spare (Dennis keeps a spot free: the tray reached 3 in 11% of his takes, Gerda's 19%)
+     iceBeforeKeys    91: ice, a lock, then the clock - melting the ice too early fills the tray
+     buriedChain      frozen tiles guard the keys, the keys open the clock's lock, the clock is buried
+     combo (big)      buried chain + partners behind locks
+   A board is kept only when
+     - room for luck: on the emptiest way through (the tray kept as empty as it can be, the clock in time), every
+       tile that started face-down is taken with at most 2 tiles waiting, so a bad surprise still fits;
+     - the family profile (human-g6.1) lands on the level's target (within TOL), the clock's spare tuned 1-3;
+     - Gemini's critic does not call the clock too loose (on dontGrab: out; otherwise the spare is tightened);
+     - Dennis's profile can do it (expected tries at most DENNIS_MAX);
+     - every special matters (taking it off changes the family rating by 0.3+ or its first-try rate by 0.15+);
+     - most of the family profile's lost tries happen at the trap (its tiles in the tray or just taken, or the
+       clock running out): at least ATTR of them.
+     HUMAN_BOT=<g6.1 human_bot.js> CRITIC_BOT=<g3 human_bot.js> node design_traps.js <piles.json> <plan.json> <out.jsonl>
+   plan.json: [{"level":175,"pile":1100,"concept":"clockBesideLock","target":7.0}, ...]                     */
+'use strict';
+const fs = require('fs'), path = require('path');
+const ROOT = path.resolve(__dirname, '..', '..');
+const I = require(path.join(ROOT, 'tools', 'lab', 'ideas.js'));
+const Hard = require(path.join(ROOT, 'www', 'hard.js')), L = global.Layouts;
+const { measureHuman } = require(path.resolve(process.env.HUMAN_BOT));
+const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITIC_BOT)).critique : null;
+const [pilesFile, planFile, outFile] = process.argv.slice(2);
+const TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
+I.setExact(true);
+const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
+const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: true } : {}) });
+const tilesOf = d => d.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : t);
+const coverOf = (nb, i) => { const s = new Set(), st = [i]; while (st.length) { const j = st.pop(); for (const a of nb.above[j]) if (!s.has(a)) { s.add(a); st.push(a); } } return s; };
+const special = (b, i) => (b.clock && b.clock.i === i) || (b.obst && ((b.obst.keys || []).includes(i) || (b.obst.locks || []).includes(i) || (b.obst.ice || {})[i]));
+
+// ---------- the new trap: a lock beside the clock that the clock does not need ----------
+function clockBesideLock(b, c) {
+  const P = c.P, n = c.n;
+  const cands = P.filter(i => !special(b, i) && c.pos[i] > 3 && c.pos[i] < n * 0.4 && coverOf(c.nb, i).size >= 2 && coverOf(c.nb, i).size <= 5);
+  for (const ck of cands) {
+    for (const j of [...c.nb.left[ck], ...c.nb.right[ck], ...c.nb.above[ck]]) {
+      if (special(b, j) || c.pos[j] < c.pos[ck] + 3) continue;        // the lock is not on the way to the clock
+      const key = c.pairs.find(([a, q]) => c.pos[a] > c.pos[ck] && c.pos[q] > c.pos[ck] && c.pos[a] < c.pos[j] && c.pos[q] < c.pos[j] && !special(b, a) && !special(b, q) && coverOf(c.nb, a).size >= 1 && coverOf(c.nb, q).size >= 1);
+      if (!key) continue;
+      const x = I.clone(b);
+      x.obst = { ice: Object.fromEntries(Object.entries((b.obst && b.obst.ice) || {}).filter(([t]) => ![ck, j, key[0], key[1]].includes(+t))), locks: [j], keys: [key[0], key[1]] };
+      x.clock = { i: ck, n: 999 }; x.down = x.down.filter(t => ![ck, j].includes(t));
+      return x;
+    }
+  }
+  return null;
+}
+const CONCEPTS = {
+  clockBesideLock: { title: 'A lock beside the clock', recipe: ['clockBesideLock'], spare: 1 },
+  dontGrab: { title: "Don't grab the clock", recipe: ['dontGrab'], spare: 2 },
+  oneFreeSpot: { title: 'One free spot', recipe: ['trayJuggleLocked'], spare: 2 },
+  iceBeforeKeys: { title: 'Ice, lock, then the clock', recipe: ['iceLockClock'], spare: 1 },
+  buriedChain: { title: 'Buried chain', recipe: ['chainReaction'], spare: 3 },
+  combo: { title: 'Buried chain + partners behind locks', recipe: ['chainReaction', 'lockedPartners'], spare: 3 },
+};
+function applyRecipe(d, recipe, rng) {
+  let x = { tiles: d.tiles, faces: d.faces.slice(), down: d.down.slice(), gold: (d.gold || []).slice(), obst: d.obst ? I.clone(d.obst) : { ice: {}, locks: [], keys: [] }, clock: d.clock ? { ...d.clock } : null, solution: d.solution.slice() };
+  for (const k of recipe) {
+    const y = k === 'clockBesideLock' ? clockBesideLock(x, I.ctxOf(x)) : I.IDEAS[k].make(x, I.ctxOf(x), rng);
+    if (!y) return null; x = y;
+  }
+  return x;
+}
+
+// ---------- room for luck: the emptiest way through ----------
+function roomProfile(d, width = 48) {
+  const tiles = tilesOf(d), nb = L.neighbors(tiles), n = tiles.length, o = d.obst || {}, f = d.faces;
+  const rules = { iceNb: L.iceNeighbors(tiles), ice: o.ice || {}, locks: new Set(o.locks || []), keys: o.keys || [] };
+  const alive0 = new Uint8Array(n).fill(1), down0 = new Set(d.down), ck = d.clock;
+  let beam = [{ alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0 }];
+  for (let step = 0; step < n; step++) {
+    const next = [], seen = new Set();
+    for (const s of beam) {
+      for (let i = 0; i < n; i++) {
+        if (!L.takeable(i, s.alive, nb, rules, alive0)) continue;
+        const q = s.tray.findIndex(t => f[t] === f[i]);
+        const tray = q >= 0 ? s.tray.filter((_, k) => k !== q) : s.tray.concat(i);
+        if (tray.length >= 4) continue;
+        const moves = s.moves + 1;
+        if (ck && s.alive[ck.i] && i !== ck.i && moves >= ck.n) continue;     // the clock would run out
+        const alive = s.alive.slice(); alive[i] = 0;
+        const key = alive.join('') + '|' + tray.map(t => f[t]).sort((a, b) => a - b).join(',');
+        if (seen.has(key)) continue; seen.add(key);
+        const blind = down0.has(i);
+        next.push({ alive, tray, moves, blindMax: Math.max(s.blindMax, blind ? s.tray.length : 0), sum: s.sum + tray.length, blind: s.blind + (blind ? 1 : 0), tight: s.tight + (blind && s.tray.length >= 2 ? 1 : 0) });
+      }
+    }
+    if (!next.length) return { ok: false };
+    next.sort((a, b) => a.blindMax - b.blindMax || a.sum - b.sum);
+    beam = next.slice(0, width);
+  }
+  const b = beam.find(s => !s.tray.length) || beam[0];
+  return { ok: !b.tray.length, blindMax: b.blindMax, blindTakes: b.blind, tightBlind: b.tight, room: 3 - b.blindMax };
+}
+
+// ---------- where the family profile loses ----------
+function trapTiles(d) {
+  const tiles = tilesOf(d), nb = L.neighbors(tiles), o = d.obst || {}, s = new Set();
+  if (d.clock) { s.add(d.clock.i); for (const j of coverOf(nb, d.clock.i)) s.add(j); }
+  for (const i of [...(o.locks || []), ...(o.keys || []), ...Object.keys(o.ice || {}).map(Number)]) s.add(i);
+  const faces = new Set([...s].map(i => d.faces[i]));
+  return { tiles: s, faces };
+}
+function attribution(d, m) {
+  const T = trapTiles(d); let lost = 0, at = 0;
+  for (const r of m.results) for (const a of r.attempts) {
+    if (a.win || a.censored) continue; lost++;
+    if (a.why === 'clock') { at++; continue; }
+    const ds = a.decisions || [], last = ds.slice(-4).map(x => x.index), tray = ds.length ? ds[ds.length - 1].state.tray : [];
+    if (last.some(i => T.tiles.has(i)) || tray.some(fc => T.faces.has(fc))) at++;
+  }
+  return lost ? +(at / lost).toFixed(2) : null;
+}
+function specialsMatter(d, m0) {
+  const ob = d.obst || {}, out = {};
+  const test = (k, b2) => { const m = meas(b2, 'family'); out[k] = { without: m.expectedTries, matters: Math.abs(m0.expectedTries - m.expectedTries) >= 0.3 || Math.abs(m.firstTryRate - m0.firstTryRate) >= 0.15 }; };
+  if (ob.ice && Object.keys(ob.ice).length) test('ice', { ...d, obst: { ...ob, ice: {} } });
+  if (ob.locks && ob.locks.length) test('locks', { ...d, obst: { ...ob, locks: [], keys: [] } });
+  if (d.clock) test('clock', { ...d, clock: null });
+  return out;
+}
+
+const piles = JSON.parse(fs.readFileSync(pilesFile, 'utf8')), plan = JSON.parse(fs.readFileSync(planFile, 'utf8'));
+const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).level) : []);
+for (const p of plan) {
+  if (done.has(p.level)) continue;
+  const pile = piles.find(q => q.level === p.pile), C = CONCEPTS[p.concept], lv = p.level, tiles = pile.tiles.map(([x, y, z]) => ({ x, y, z }));
+  const progFile = outFile + '.progress.json', prog = fs.existsSync(progFile) ? JSON.parse(fs.readFileSync(progFile, 'utf8') || '{}') : {};
+  const pg = prog[lv] = prog[lv] || { next: 0, best: null, tried: [] };
+  const save = () => fs.writeFileSync(progFile, JSON.stringify(prog));
+  const off = e => Math.max(0, Math.abs(e - p.target) - TOL);
+  for (let attempt = pg.next; attempt < ATTEMPTS && !(pg.best && pg.best.pass); attempt++) {
+    pg.next = attempt + 1; save();
+    const salt = 70 + attempt, note = s => { pg.tried.push(attempt + ': ' + s); save(); };
+    const d0 = Hard.makeNow(lv, 1.6, 1, salt, { tiles });
+    if (!d0.solution || !I.valid(d0)) { note('designer: no deal'); continue; }
+    const x = applyRecipe(d0, C.recipe, I.rngOf(lv * 31 + salt * 7));
+    if (!x) { note('no place for the trap'); continue; }
+    let z = I.fix(x, C.spare); if (!z || !I.valid(z)) { note('no exact clock route'); continue; }
+    const route = z.solution.indexOf(z.clock.i) + 1;
+    const room = roomProfile(z);
+    if (!room.ok || room.blindMax > 2) { note('no room for luck (' + JSON.stringify(room) + ')'); continue; }
+    // the family rating onto the target by the clock's spare (1-3)
+    let m = meas(z, 'family', true), sp = z.clock.n - route;
+    for (let k = 0; k < 2 && off(m.expectedTries) > 0; k++) {
+      const s2 = sp + (m.expectedTries > p.target ? 1 : -1); if (s2 < 1 || s2 > 3) break;
+      const z2 = { ...z, clock: { ...z.clock, n: route + s2 } }; if (!I.valid(z2)) break;
+      const m2 = meas(z2, 'family', true); note('spare ' + s2 + ': ' + m2.expectedTries);
+      if (off(m2.expectedTries) < off(m.expectedTries)) { z = z2; m = m2; sp = s2; } else break;
+    }
+    // Gemini's critic: a loose clock is out on dontGrab, otherwise the spare goes down
+    let flags = critique ? critique(boardOf(z), { runs: 20, seed: 4711 }).flags : [];
+    if (flags.includes('clockTooLoose')) {
+      if (p.concept === 'dontGrab') { note('clock too loose (out)'); continue; }
+      while (flags.includes('clockTooLoose') && sp > 1) { sp--; z = { ...z, clock: { ...z.clock, n: route + sp } }; m = meas(z, 'family', true); flags = critique(boardOf(z), { runs: 20, seed: 4711 }).flags; }
+      if (flags.includes('clockTooLoose')) { note('clock too loose at 1 spare (out)'); continue; }
+    }
+    let grabFirst = null;
+    if (p.concept === 'dontGrab') { grabFirst = meas({ ...z, clock: { ...z.clock, n: 1 } }, 'family').expectedTries; if (grabFirst < m.expectedTries + 1) { note('grabbing the clock first is not worse (' + m.expectedTries + ' -> ' + grabFirst + ')'); continue; } }
+    const md = meas(z, 'dennis'), attr = attribution(z, m), sm = specialsMatter(z, m);
+    const idle = Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k);
+    const pass = off(m.expectedTries) === 0 && md.expectedTries <= DENNIS_MAX && (attr === null || attr >= ATTR) && !idle.length;
+    note(`family ${m.expectedTries} (target ${p.target}) | Dennis ${md.expectedTries} | at the trap ${attr} | idle ${idle.join(',') || '-'} | room ${room.room}${pass ? ' | PASS' : ''}`);
+    const row = { level: lv, concept: p.concept, title: C.title, recipe: C.recipe, shape: pile.shape, n: z.tiles.length, target: p.target,
+      g61: { exp: m.expectedTries, first: m.firstTryRate, version: m.version }, dennis: { exp: md.expectedTries, first: md.firstTryRate },
+      atTrap: attr, room, specials: sm, critic: flags, grabFirst, clockSpare: sp, pass,
+      down: z.down.length, ice: Object.keys(z.obst.ice || {}).length, locks: (z.obst.locks || []).length,
+      design: { level: lv, aspect: 1.6, tiles: z.tiles, faces: z.faces, down: z.down, gold: z.gold, obst: z.obst, clock: z.clock, solution: z.solution } };
+    const score = r => (r.pass ? 0 : 10) + off(r.g61.exp) * 2 + Math.max(0, r.dennis.exp - DENNIS_MAX) + Math.max(0, ATTR - (r.atTrap ?? 1)) * 3 + (Object.values(r.specials).some(v => !v.matters) ? 2 : 0);
+    if (!pg.best || score(row) < score(pg.best)) pg.best = row;
+    save();
+  }
+  const best = pg.best ? { ...pg.best, tried: pg.tried } : { level: lv, concept: p.concept, ok: false, tried: pg.tried };
+  fs.appendFileSync(outFile, JSON.stringify(best) + '\n');
+  console.log(lv, p.concept, best.g61 ? `family ${best.g61.exp} Dennis ${best.dennis.exp} atTrap ${best.atTrap} room ${best.room.room} ${best.pass ? 'PASS' : '(closest)'}` : 'NONE');
+}
