@@ -525,3 +525,21 @@ out the clock. That is the next fix (the clock before pairs when the clock's mov
   try (132 4.7 -> 1.0, 150 2.35 -> 1.0, blind 185 19.1 -> 1.0); only blind 183 still fails knowing everything (14.55 ->
   20). So with perfect knowledge and planning every board is solved: the hidden tiles are the puzzle, and this
   comparison gives 0.53-0.95 everywhere (132, the clearest skill level, 0.79). It cannot tell luck from skill.
+
+## The skilled player (human-g6.2 'planner') and luck with relief (2026-11-03)
+Dennis: "Tune the routeplanner bot to my stats. After, if it then needs more tries than with all tiles showing, part
+of it is luck. We can measure those luck moments and they can stay in the game as long as you have a way to relieve
+the tray in between so a skilled player passes those luck moments. We want the designer to know about this."
+- measureHuman setting 'planner' = Dennis's profile + spotPenalty 200, look-ahead (2, 150, from the 1st tile),
+  pairFirst 100, freePeekBonus 70, clockNeedFull, routePlan 300 (beam 300). Tray at 3 after the clock: 10.7% (Dennis
+  10.5%). Against Dennis's own tries (planner-eval.jsonl): live 85-174 off by 0.94 on average, rank 0.28 (g2.1 1.00,
+  0.18); factory boards good up to the middle (blind 194 2.35, Dennis 4), but too hard on his three hardest: blind 183
+  14.55 (Dennis 6), blind 185 19.1 (6), old 194 20 (9+) - next: routeHope (an unseen tile counts as part of a spot).
+  The release Dennis and family profiles are unchanged (bot tests 192/192).
+- Face-up comparison with the planner (luck-faceup-planner.jsonl): every board to about 1 try face-up (132 4.7 -> 1.02),
+  so it cannot be the luck measure: the hidden tiles are the puzzle.
+- Luck moments, redefined: a dig - an unmatched take that uncovers a face-down tile not seen - with 2 or more waiting,
+  on the emptiest way through; unrelieved when the tray has not come down to 1 or less since the one before.
+  132 1/0, 150 0/0, 145 0/0, 91 0/0, 149 1/0, factory 6-190 1/0, release 185 0/0, blind 185 3/1, blind 194 3/2,
+  factory 2-175 2/1, blind 183 6/5. The trap designer allows at most 1 unrelieved (UNRELIEVED_MAX) and checks "a
+  skilled player can do it" with the planner.

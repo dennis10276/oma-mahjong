@@ -15,7 +15,10 @@
      buriedChain      frozen tiles guard the keys, the keys open the clock's lock, the clock is buried
      combo (big)      buried chain + partners behind locks
    A board is kept only when
-     - not luck: at most LUCK_SHARE (0.5) of the family rating comes from hidden tiles (the same board with every tile
+     - luck only where a skilled player can relieve the tray in between (Dennis 2026-11-03): on the emptiest way, at most
+       UNRELIEVED_MAX (1) luck moments - digs into an unseen tile with 2 or more waiting - without the tray down to 1 or
+       less since the one before (old levels 132, 145, 150, 91, 149: 0; blind 183: 5); the share below is reported only;
+     - (reported) at most LUCK_SHARE of the family rating comes from hidden tiles (the same board with every tile
        face-up rates at least half as hard; Dennis 2026-11-03 on 149, share 0.60: "I passed it in 2 tries" - hidden
        tiles are partly skill, keeping a spot free and remembering, which the bots lack); roomProfile (luck moments on the emptiest way) is reported only, it
        overstates luck (a free face-down tile can be turned over before you take it);
@@ -35,7 +38,7 @@ const Hard = require(path.join(ROOT, 'www', 'hard.js')), L = global.Layouts;
 const { measureHuman } = process.env.HUMAN_BOT ? require(path.resolve(process.env.HUMAN_BOT)) : {};
 const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITIC_BOT)).critique : null;
 const [pilesFile, planFile, outFile] = process.argv.slice(2);
-const LUCK_SHARE = +(process.env.LUCK_SHARE || 0.5), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
+const LUCK_SHARE = +(process.env.LUCK_SHARE || 1), UNRELIEVED_MAX = +(process.env.UNRELIEVED_MAX || 1), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
 I.setExact(true);
 const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
 const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: true } : {}) });
@@ -89,8 +92,11 @@ function roomProfile(d, width = 48) {
   // up to the clock: the exact way the designer made (the clock leaves no room to wander); from there the beam
   const start = { alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0, tightTiles: [], unrelieved: 0, sinceLuck: null };
   const pre = ck ? d.solution.slice(0, d.solution.indexOf(ck.i) + 1) : [];
+  // a luck moment (Dennis 2026-11-03: a face-down tile can be turned over before you take it, and the tray relieved in
+  // between): a dig - an unmatched take that uncovers a face-down tile you have not seen - made with 2 or more waiting
+  const uncovers = (al, i) => { const a2 = al.slice(); a2[i] = 0; for (const j of down0) if (a2[j] && !L.isFree(j, al, nb) && L.isFree(j, a2, nb)) return true; return false; };
   for (const i of pre) {
-    const q = start.tray.findIndex(t => f[t] === f[i]), blind = down0.has(i);
+    const q = start.tray.findIndex(t => f[t] === f[i]), blind = q < 0 && uncovers(start.alive, i);
     start.blindMax = Math.max(start.blindMax, blind ? start.tray.length : 0); start.blind += blind ? 1 : 0; start.tight += blind && start.tray.length >= 2 ? 1 : 0; if (blind && start.tray.length >= 2) start.tightTiles.push(i);
     if (blind && start.tray.length >= 2) { if (start.sinceLuck !== null && start.sinceLuck >= 2) start.unrelieved++; start.sinceLuck = start.tray.length; } else if (start.sinceLuck !== null) start.sinceLuck = Math.min(start.sinceLuck, start.tray.length);
     start.tray = q >= 0 ? start.tray.filter((_, k) => k !== q) : start.tray.concat(i); start.alive[i] = 0; start.moves++; start.sum += start.tray.length;
@@ -109,7 +115,7 @@ function roomProfile(d, width = 48) {
         const alive = s.alive.slice(); alive[i] = 0;
         const key = alive.join('') + '|' + tray.map(t => f[t]).sort((a, b) => a - b).join(',');
         if (seen.has(key)) continue; seen.add(key);
-        const blind = down0.has(i);
+        const blind = q < 0 && uncovers(s.alive, i);
         const luckNow = blind && s.tray.length >= 2;
         // Dennis 2026-11-03: luck moments may stay "as long as you have a way to relieve the tray in between": a luck
         // moment is unrelieved when the tray has not come down to 1 or less since the one before
@@ -196,7 +202,8 @@ for (const p of plan) {
     // traps (and their twins), measured again; still above: out.
     const shareOf = (zz, mm) => { const mo = meas({ ...zz, down: [] }, 'family'); return Math.max(0, +((mm.expectedTries - mo.expectedTries) / Math.max(1, mm.expectedTries)).toFixed(2)); };
     let luck = shareOf(z, m);
-    if (luck > LUCK_SHARE) {
+    if (room.ok && room.unrelieved > UNRELIEVED_MAX) { note('luck without relief (' + room.unrelieved + ' unrelieved luck moments)'); continue; }
+    if (LUCK_SHARE < 1 && luck > LUCK_SHARE) {
       const z2 = { ...z, down: z.down.filter(i => T.tiles.has(i) || T.faces.has(z.faces[i])) };
       if (I.valid(z2)) { const m2 = meas(z2, 'family', true), l2 = shareOf(z2, m2); note(`hidden-tile share ${luck}: face-down ${z.down.length} -> ${z2.down.length}: family ${m2.expectedTries}, share ${l2}`); z = z2; m = m2; luck = l2; }
       if (luck > LUCK_SHARE) { note('too much luck (' + luck + ')'); continue; }
@@ -231,7 +238,7 @@ for (const p of plan) {
       }
       if (pick) { z = pick.z; m = pick.m; sm = pick.sm; idle = []; sp = z.clock ? z.clock.n - (z.solution.indexOf(z.clock.i) + 1) : sp; }
     }
-    const md = meas(z, 'dennis'), attr = attribution(z, m);
+    const md = meas(z, 'planner'), attr = attribution(z, m);   // the skilled player (Dennis's planning, human-g6.2)
     const pass = off(m.expectedTries) === 0 && md.expectedTries <= DENNIS_MAX && (attr === null || attr >= ATTR) && !idle.length;
     note(`${recipe.join('+')}: family ${m.expectedTries} (target ${p.target}) | Dennis ${md.expectedTries} | at the trap ${attr} | idle ${idle.join(',') || '-'} | room ${room.room}${pass ? ' | PASS' : ''}`);
     const row = { level: lv, concept: p.concept, title: titleOf(recipe), recipe, shape: pile.shape, pile: pile.level, n: z.tiles.length, target: p.target,

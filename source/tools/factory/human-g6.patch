@@ -1,5 +1,5 @@
 diff --git a/source/tools/sim/refit/human_factory_controller.js b/source/tools/sim/refit/human_factory_controller.js
-index d7889d6..d4098ec 100644
+index d7889d6..96ee80a 100644
 --- a/source/tools/sim/refit/human_factory_controller.js
 +++ b/source/tools/sim/refit/human_factory_controller.js
 @@ -83,10 +83,20 @@ function lossPhaseName(state, clock) {
@@ -7,7 +7,7 @@ index d7889d6..d4098ec 100644
  function createBotController(tiles, profile, seed) {
    assert(Number.isInteger(seed));
 -  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockClusterSalience']);
-+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam']);
++  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam','routeHope']);
    assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
    assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
    const p = { ...profile }, random = Layouts.rng(seed);
@@ -18,7 +18,7 @@ index d7889d6..d4098ec 100644
 +  if (process.env.G51_PEEK) p.freePeekBonus = +process.env.G51_PEEK;   // (calibration switch)
 +  if (process.env.G51_CLOCKFIRST) p.clockFirst = +process.env.G51_CLOCKFIRST;   // (calibration switch)
 +  if (process.env.G51_NEEDFULL) p.clockNeedFull = +process.env.G51_NEEDFULL;   // (calibration switch)
-+  if (process.env.G51_ROUTE) { const [w, b] = process.env.G51_ROUTE.split(',').map(Number); p.routePlan = w; if (b) p.routeBeam = b; }   // (calibration switch)
++  if (process.env.G51_ROUTE) { const [w, b] = process.env.G51_ROUTE.split(',').map(Number); p.routePlan = w; if (b) p.routeBeam = b; } if (process.env.G51_HOPE) p.routeHope = +process.env.G51_HOPE;   // (calibration switch)
 +  if (process.env.G51_PEEKPAT) p.peekPatience = +process.env.G51_PEEKPAT;   // (calibration switch)
 +  if (process.env.G51_LOOK) { const [d, w, f] = process.env.G51_LOOK.split(',').map(Number); p.lookDepth = d; p.lookPenalty = w; if (f) p.lookFrom = f; }   // (calibration switch)
    for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
@@ -77,7 +77,7 @@ index d7889d6..d4098ec 100644
      roles = roles.map((v, i) => o.roles[i] ?? v);
      retryKeyMemory?.observe(state,seen.roles,attempt);
      retryAccess?.observe(state,seen,attempt);
-@@ -356,6 +353,58 @@ function createBotController(tiles, profile, seed) {
+@@ -356,6 +353,61 @@ function createBotController(tiles, profile, seed) {
      const legal = seen.takeable.flatMap((v, i) => v === true ? [i] : []);
      if (!legal.length) return null;
      const priorKeyTargets=new Set(rememberedKeyTargets());
@@ -117,7 +117,10 @@ index d7889d6..d4098ec 100644
 +            if (!usableIn(st.al, j)) continue;
 +            const f = memory[j] ?? (-1000 - j), q = st.tr.indexOf(f);
 +            const tr = q >= 0 ? st.tr.filter((_, k) => k !== q) : st.tr.concat(f);
-+            if (tr.length > 3) continue;
++            // routeHope (Dennis's hard boards: he finds the way over his tries; the plan treated every unseen picture as
++            // useless and found nothing on long, tight clocks): an unseen tile in the tray counts as only routeHope of a spot
++            const effLen = tr.filter(x => x > -1000).length + (p.routeHope ?? 1) * tr.filter(x => x <= -1000).length;
++            if (effLen > 3) continue;
 +            const al = st.al.slice(); al[j] = 0;
 +            const path = st.path.concat(j);
 +            // the clock taken with room to go on: at most 2 waiting, or a known way to bring the tray down
@@ -136,7 +139,7 @@ index d7889d6..d4098ec 100644
  
      function sideChain(i, dir) {
        const chain = [], visited = new Set([i]);
-@@ -422,8 +471,6 @@ function createBotController(tiles, profile, seed) {
+@@ -422,8 +474,6 @@ function createBotController(tiles, profile, seed) {
      }
  
      const attraction = new Map(), clock = seen.clock;
@@ -145,7 +148,7 @@ index d7889d6..d4098ec 100644
      // A short cone may pursue a useful-looking key/mate goal without
      // considering all three links (clock, mate, keys) and their full cost.
      const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'&&(clockHorizon<3||clockMateRouteBudget({alive,nb,clock,mate:i,roles,down:seen.down}).fits)));
-@@ -437,15 +484,11 @@ function createBotController(tiles, profile, seed) {
+@@ -437,15 +487,11 @@ function createBotController(tiles, profile, seed) {
        attraction.set(i, Math.max(attraction.get(i) ?? 0, weight));
        if (depth >= maxDepth) return;
        const nextPath = new Set([...path, i]);
@@ -164,7 +167,7 @@ index d7889d6..d4098ec 100644
          attract(j, nextDepth, weight * decay, maxDepth, isSideRow, nextPath);
        }
      }
-@@ -457,14 +500,6 @@ function createBotController(tiles, profile, seed) {
+@@ -457,14 +503,6 @@ function createBotController(tiles, profile, seed) {
          nb.left[c].some(j => alive[j]) && nb.right[c].some(j => alive[j]);
        const maxD = Math.min(5, clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
        attract(c, 0, p.clockWeight, maxD, isSideBlockedOnly);
@@ -179,7 +182,7 @@ index d7889d6..d4098ec 100644
        if(p.clockRowPreview&&isSideBlockedOnly){
          // A visible sideways row remains a clock goal beyond the short thought
          // cone. This is geometry recognition, not a solved physical route.
-@@ -497,7 +532,30 @@ function createBotController(tiles, profile, seed) {
+@@ -497,7 +535,30 @@ function createBotController(tiles, profile, seed) {
        if ([...needSet].some(u => roles[u] === 'lock')) {
          for (let k = 0; k < n; k++) if (alive[k] && (roles[k] === 'key'||priorKeyTargets.has(k))) needSet.add(k);
        }
@@ -210,7 +213,7 @@ index d7889d6..d4098ec 100644
      }
  
      const boardHasLocks = roles.some((role, i) => alive[i] && role === 'lock');
-@@ -509,7 +567,18 @@ function createBotController(tiles, profile, seed) {
+@@ -509,7 +570,18 @@ function createBotController(tiles, profile, seed) {
        return fact&&alive[fact.partner]&&!tray.includes(memory[i])&&(!clock||(attraction.get(i)??0)>0);
      });
      const learnedKeyOut=knownKeys.length>0&&!state.relieved&&(tray.some(face=>learnedLockedCarry.has(face))||prepareKeyOut);
@@ -230,7 +233,7 @@ index d7889d6..d4098ec 100644
      if (clockNeedsKeys) {
        const keyW = p.clockWeight * (clockMateLocked||learnedKeyOut ? 1.35 : 0.92);
        const keyD = clockHorizon + (clockLosses > 0 ? 1 : 0);
-@@ -549,10 +618,8 @@ function createBotController(tiles, profile, seed) {
+@@ -549,10 +621,8 @@ function createBotController(tiles, profile, seed) {
        }
      }
  
@@ -243,7 +246,7 @@ index d7889d6..d4098ec 100644
      const keyWork=new Set();
      if(p.retryKeyRouteValue&&learnedKeyOut&&(!clock||clockNeedsKeys)){
        for(const k of knownKeys){
-@@ -586,6 +653,7 @@ function createBotController(tiles, profile, seed) {
+@@ -586,6 +656,7 @@ function createBotController(tiles, profile, seed) {
        memory[openPeek] !== null && !tray.includes(memory[openPeek])
      );
  
@@ -251,7 +254,7 @@ index d7889d6..d4098ec 100644
      const scored = legal.map(i => {
        const face = memory[i], down = seen.down[i] === 1, peek = down && openPeek !== i;
        const trayMatch = face !== null && tray.includes(face);
-@@ -615,10 +683,7 @@ function createBotController(tiles, profile, seed) {
+@@ -615,10 +686,7 @@ function createBotController(tiles, profile, seed) {
        let score = (knownFatal ? -2000 : goal * urgency) + (clock ? 0 : (partnerAttract.get(i) ?? 0)) + structBonus;
  
        const offClock = clock && goal < p.clockWeight * 0.3;
@@ -263,7 +266,7 @@ index d7889d6..d4098ec 100644
  
        if (trayMatch) {
          const urgentLastClockMove = clock && clock.remaining <= 1 && ownGoal === 0;
-@@ -631,10 +696,7 @@ function createBotController(tiles, profile, seed) {
+@@ -631,10 +699,7 @@ function createBotController(tiles, profile, seed) {
          const sidePairPenalty = offClock
            ? (tightClock ? p.clockWeight * 1.3 : p.pairReward * 0.25)
            : 0;
@@ -275,7 +278,7 @@ index d7889d6..d4098ec 100644
        } else if (peek && face === null) {
          const freePeekBonus = ownGoal > 0 ? p.pairReward : (!matchingNow ? (p.freePeekBonus ?? 18) : 4);
          score += p.exploration + freePeekBonus + (tray.length >= 2 ? 6 : 0);
-@@ -673,7 +735,9 @@ function createBotController(tiles, profile, seed) {
+@@ -673,7 +738,9 @@ function createBotController(tiles, profile, seed) {
            } else if (memory[j] !== null && !(offClock && tightClock) && legal.some(k => k !== i && next[k] && memory[k] === memory[j] && (nextTray.length < 3 || seen.down[j] === 1 || seen.down[k] === 1))) {
              score += p.outWeight * 1.2;
            } else if (memory[j] === null) {
@@ -286,7 +289,7 @@ index d7889d6..d4098ec 100644
            } else {
              score += p.outWeight * 0.08;
            }
-@@ -690,7 +754,8 @@ function createBotController(tiles, profile, seed) {
+@@ -690,7 +757,8 @@ function createBotController(tiles, profile, seed) {
          if (tray.length >= 2 && !trayMatch && !openTwin && face !== null) {
            const directMate = memory.some((other, j) => next[j] && other === face && usableAfter(j));
            const freesUnknown = newlyFree.some(j => memory[j] === null);
@@ -296,7 +299,7 @@ index d7889d6..d4098ec 100644
          }
        }
  
-@@ -729,10 +794,28 @@ function createBotController(tiles, profile, seed) {
+@@ -729,10 +797,28 @@ function createBotController(tiles, profile, seed) {
        if (!peek && count) score -= count * 2;
  
        score += (future.get(i) ?? 0) * (p.futureWeight ?? 1) * (clock ? 0.15 : 1);
@@ -329,7 +332,7 @@ index d7889d6..d4098ec 100644
        const u = Math.max(1e-12, Math.min(1 - 1e-12, random()));
        const noisy = score - p.temperature * Math.log(-Math.log(u));
        return { index: i, score, noisy, visitsKey };
-@@ -743,6 +826,7 @@ function createBotController(tiles, profile, seed) {
+@@ -743,6 +829,7 @@ function createBotController(tiles, profile, seed) {
        : scored.reduce((a, b) => a.noisy >= b.noisy ? a : b);
      visits.set(selected.visitsKey, (visits.get(selected.visitsKey) ?? 0) + 1);
      lastDecision = { ...state, pictures: memory.slice(), down: seen.down.slice(), index: selected.index };
@@ -338,7 +341,7 @@ index d7889d6..d4098ec 100644
    }
  
 diff --git a/source/tools/sim/refit/human_release_profiles.json b/source/tools/sim/refit/human_release_profiles.json
-index cd8c4f4..7b067f7 100644
+index cd8c4f4..6c74fe3 100644
 --- a/source/tools/sim/refit/human_release_profiles.json
 +++ b/source/tools/sim/refit/human_release_profiles.json
 @@ -1,7 +1,7 @@
@@ -346,8 +349,8 @@ index cd8c4f4..7b067f7 100644
    "schema": "human-person-release-v1",
 -  "version": "human-g5",
 -  "calibrationStatus": "human-g5-validated",
-+  "version": "human-g6.1",
-+  "calibrationStatus": "human-g6-family-meter",
++  "version": "human-g6.2",
++  "calibrationStatus": "human-g6.2-family-meter-dennis-planner",
    "profiles": {
      "Dennis": {
        "clockHorizon": 3,
@@ -400,10 +403,10 @@ index 7737f17..0ef5085 100644
      relieved:state.relieved,arriving:state.arriving,physicalTaps:state.physicalTaps},observed);
     const selected=controller.decide();assert(selected&&legal.has(selected.index));
 diff --git a/source/tools/sim/refit/human_style_measure.js b/source/tools/sim/refit/human_style_measure.js
-index ef951c6..ae42a92 100644
+index ef951c6..8862293 100644
 --- a/source/tools/sim/refit/human_style_measure.js
 +++ b/source/tools/sim/refit/human_style_measure.js
-@@ -20,19 +20,20 @@ function estimateDifficulty(campaigns){
+@@ -20,29 +20,37 @@ function estimateDifficulty(campaigns){
    const label=(exp<=2.2&&firstTryRate>=0.25)||firstTryRate>=0.45?'easy':exp<=4.8?'right':'hard';
    return {expectedTries:Number(exp.toFixed(2)),label};
   }
@@ -429,3 +432,32 @@ index ef951c6..ae42a92 100644
   assert(Number.isInteger(choiceLimit)&&choiceLimit>0);
   assert(Number.isInteger(seeds)&&seeds>=1&&seeds<=10);
   assert.deepEqual(Object.keys(profiles).sort(),['Dennis','family']);
+- assert(options.setting===undefined||['dennis','family'].includes(options.setting));
++ assert(options.setting===undefined||['dennis','family','planner'].includes(options.setting));
++ // 'planner' (Claude 2026-11-03): Dennis's profile with his planning calibrated from the recordings - a take that
++ // leaves 3 waiting after the clock costs, a look-ahead over known tiles, safe pairs first, turning tiles over, the full
++ // work to the clock counted, and a route planner to the clock. His tray reaches 3 in 10.5% of his takes after the
++ // clock; this player 10.7%. Used for "a skilled player can do it" and for luck, not as the difficulty meter.
++ const PLANNER={spotPenalty:200,lookDepth:2,lookPenalty:150,lookFrom:1,pairFirst:100,freePeekBonus:70,clockNeedFull:1,routePlan:300,routeBeam:300};
++ const pick=options.setting==='family'?'family':'Dennis';
+  const encoded=normalizeBoard(board),start=performance.now(),settings={};
+  const releasedProfiles=release.profiles;
+  const selectedProfiles=options.setting&&!options.profiles?releasedProfiles:profiles;
+  const isReleased=Object.entries(releasedProfiles).every(([name,reference])=>Object.keys(selectedProfiles[name]).length===Object.keys(reference).length&&Object.entries(reference).every(([key,value])=>selectedProfiles[name][key]===value));
+- for(const [name,profile] of Object.entries(selectedProfiles)){
+-  if(options.setting&&name!==(options.setting==='dennis'?'Dennis':'family'))continue;
++ for(let [name,profile] of Object.entries(selectedProfiles)){
++  if(options.setting&&name!==pick)continue;
++  if(options.setting==='planner')profile={...profile,...PLANNER};
+   const started=performance.now(),results=[],pooled=[];
+   for(let run=0;run<runs;run++)results.push(campaign(encoded,profile,(seed+Math.imul(run+1,0x9e3779b9))|0,{maxAttempts,capture,choiceLimit,...(options.setting?{controllerFactory:createFactoryController}:{})}));
+   pooled.push(...results);
+@@ -68,7 +76,7 @@ function measureHuman(board,options={}){
+    slowestMove:Math.max(...results.map(r=>r.slowestMove)),verifiedTaps:results.reduce((a,r)=>a+r.verifiedTaps,0),
+    minutesPerBoard:(performance.now()-started)/60000,results};
+  }
+- if(options.setting){const r=settings[options.setting==='dennis'?'Dennis':'family'];return {firstTryRate:r.firstTryRate,averageTries:r.averageTries,expectedTries:r.expectedTries,label:r.label,lossPhase:{beforeClock:r.lossShares.clock,mid:r.lossShares.mid,late:r.lossShares.late},runs,slowestMove:r.slowestMove,minutes:r.minutesPerBoard,version:isReleased?release.version:'human-v1-development',calibrationStatus:isReleased?release.calibrationStatus:'experimental-not-calibrated',valid:r.slowestMove<2000&&r.censoredCampaigns===0,seed,boardHash:hash(encoded),profileHash:hash(selectedProfiles),...r};}
++ if(options.setting){const r=settings[pick];return {firstTryRate:r.firstTryRate,averageTries:r.averageTries,expectedTries:r.expectedTries,label:r.label,lossPhase:{beforeClock:r.lossShares.clock,mid:r.lossShares.mid,late:r.lossShares.late},runs,slowestMove:r.slowestMove,minutes:r.minutesPerBoard,version:isReleased?release.version:'human-v1-development',calibrationStatus:isReleased?release.calibrationStatus:'experimental-not-calibrated',valid:r.slowestMove<2000&&r.censoredCampaigns===0,seed,boardHash:hash(encoded),profileHash:hash(selectedProfiles),...r};}
+  return {schema:'human-style-measure-v1',calibrationStatus:'experimental-not-calibrated',seed,runs,maxAttempts,boardHash:hash(encoded),profileHash:hash(profiles),
+   lateDefinition:'after clock, at most 10 tiles remaining',settings,minutesPerBoard:(performance.now()-start)/60000,
+   valid:Object.values(settings).every(s=>s.slowestMove<2000&&s.censoredCampaigns===0)};
