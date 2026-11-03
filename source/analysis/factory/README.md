@@ -471,3 +471,19 @@ traps, measured again; still above: out).
   bots (tray at 3 after a take: Dennis 11%, bots 19-20%) - not only luck. Limit loosened to 0.5 (half the rating
   may come from hidden tiles). The real fix: give the bot Dennis's free-spot habit; then what hidden tiles still add
   for that player is the luck.
+
+## Real luck needs a bot that plans like Dennis (2026-11-03, night)
+- Free-spot habit (spotPenalty: a take that leaves 3 waiting after the clock costs that much): the bot's rate of
+  "tray at 3 after a take" 18.5% -> 16.6 (30) -> 15.0 (80) -> 13.7 (200; no lower at 600); Dennis 10.5% on the
+  same levels. Closes about 60% of the gap.
+- Face-up comparison with that skilled player (luck-faceup-skilled.jsonl) is not a luck measure: with every tile
+  face-up the bot plays some boards much worse (150 2.42 -> 6.47).
+- Oracle comparison (luck-oracle.jsonl; G51_ORACLE=1: the player is told every hidden picture, the board unchanged):
+  132 4.63 -> 3.90, 150 2.42 -> 1.75, 149 3.90 -> 1.43, 91 2.45 -> 1.00, blind 185 19.75 -> 17.43, blind 183 12.5
+  -> 6.33; but blind 194 9.53 -> 15.55 and factory 6-190 2.55 -> 3.92: knowing more makes it worse there, so its
+  planning is short-sighted. Dennis: "Maybe the planning ahead I do should be added before we can really measure
+  luck." Agreed: the test for that planning is that more knowledge never hurts.
+- First try at planning (planAhead: an unknown tile counts for less as a way out): tray-at-3 rose (14.6-15.2%), so
+  it is not what Dennis does. Next: a short search over known tiles (can the tray be brought down again before a
+  4th?), checked by "knowing more never hurts" and Dennis's 10.5%.
+- These switches are experiment-only (env G51_SPOT, G51_PLAN, G51_ORACLE); the release profiles are unchanged.
