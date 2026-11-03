@@ -543,3 +543,9 @@ the tray in between so a skilled player passes those luck moments. We want the d
   132 1/0, 150 0/0, 145 0/0, 91 0/0, 149 1/0, factory 6-190 1/0, release 185 0/0, blind 185 3/1, blind 194 3/2,
   factory 2-175 2/1, blind 183 6/5. The trap designer allows at most 1 unrelieved (UNRELIEVED_MAX) and checks "a
   skilled player can do it" with the planner.
+- routeHope 0.5 / 0.25 changes nothing on Dennis's hardest boards: the planner is not what fails there. Blind 185
+  (Dennis 6): the planner takes the clock in 187 of 191 tries, then loses to the tray with 60 of 80 left - Dennis
+  restarted five times at 61-67 left and won the 6th: same trouble spot, he learns across tries faster. Blind 183
+  (clock 37 for a 35-move way): the planner reaches the clock in 6 of 131 tries; Dennis did not win in 5. Old 194
+  (clock 19 for 18): the planner never reaches it; Dennis did not win in 8. So the gap is learning over tries on very
+  long or tight clocks, not luck or planning in one try.
