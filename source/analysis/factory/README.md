@@ -517,3 +517,11 @@ out the clock. That is the next fix (the clock before pairs when the clock's mov
   the clock. With hidden tiles the bot turns many over (free) and loses to the tray; knowing everything it takes
   pairs off the way and loses to the clock (first 30 taps: 11 off the way). The bot is not a route planner; a person
   finds that exact way over a few tries.
+- Route planner (Dennis: "Build a route planner first"; env G51_ROUTE=300,300): while the clock is on, a beam search
+  (width 300) for a way to take the clock within its moves, never more than 3 waiting, the clock taken with at most 2
+  waiting or a known way down; unknown pictures never match; the plan is followed (+300) and made again when the board
+  leaves it. Knowing-more test (luck-oracle-planner.jsonl): factory 6-190 2.38 -> 1.02, blind 194 2.35 -> 1.10 (was
+  8.88 -> 15.55; as it is it now needs 2.35, Dennis needed 4), and every board with everything known comes to about 1
+  try (132 4.7 -> 1.0, 150 2.35 -> 1.0, blind 185 19.1 -> 1.0); only blind 183 still fails knowing everything (14.55 ->
+  20). So with perfect knowledge and planning every board is solved: the hidden tiles are the puzzle, and this
+  comparison gives 0.53-0.95 everywhere (132, the clearest skill level, 0.79). It cannot tell luck from skill.
