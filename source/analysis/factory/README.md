@@ -549,3 +549,18 @@ the tray in between so a skilled player passes those luck moments. We want the d
   (clock 37 for a 35-move way): the planner reaches the clock in 6 of 131 tries; Dennis did not win in 5. Old 194
   (clock 19 for 18): the planner never reaches it; Dennis did not win in 8. So the gap is learning over tries on very
   long or tight clocks, not luck or planning in one try.
+
+## Whole boards designed from a tray script (2026-11-03, `tools/factory/script_board.js`)
+
+Dennis: "Can the whole board get designed first instead of being a random deal?" Three tries, family bot g6.2:
+- `scriptedDeal`: the way through first, pictures along calm / pressure / relief stretches, face-down only at planned
+  digs. Bare boards (no specials, 4 piles): family ~1 try, the same as a random deal (1.0-2.4). With ~10 free tiles
+  a player is never bound to the planned way.
+- `rescript`: the same along the trap board's own way (pressure on the way to the clock). 175: 7.05 -> 3.8 (tray 2),
+  3.75 (tray 3), 3.4 (+ a middle stretch). Easier: under pressure a player matches elsewhere, and the calm stretches
+  put easy pairs there.
+- `squeeze`: few free pairs anywhere on the way to the clock, many right after. 175: 7.05 -> 2.4 (full) / 2.7 (half);
+  177: 18.8 -> 12.4 (full) / 17.1 (half), skilled 1.15 vs 4.8 - not even in order.
+Conclusion: no picture rule tried here steers difficulty; moving the pictures of a board that measured hard mostly
+loses what made it hard. The structure stays designed (traps, clock, locks, luck and relief checked by the bots);
+the pictures are tuned by the family bot itself (steer_design.js). Log: `scripted-boards.log`.

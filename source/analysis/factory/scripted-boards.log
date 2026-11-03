@@ -1,0 +1,9 @@
+175 A lock beside the clock | original family 7.05
+   strength 1 squeeze {"strength":1,"from":-1,"to":-10} family 2.42 planner 1.07 luck 0 unrel 0 spare 1
+   strength 0.5 squeeze {"strength":0.5,"from":-1,"to":-5} family 2.7 planner 1.02 luck 0 unrel 0 spare 1
+done 175
+177 Room in the tray: locked partners + Chain reaction + Chain of ice | original family 18.8
+   strength 1 squeeze {"strength":1,"from":8,"to":3} family 12.4 planner 1.15 luck 1 unrel 0 spare 3
+   strength 0.5 squeeze {"strength":0.5,"from":8,"to":6} family 17.13 planner 4.8 luck 0 unrel 0 spare 3
+done 177
+ALL DONE
