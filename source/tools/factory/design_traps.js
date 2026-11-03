@@ -40,6 +40,7 @@ const critique = process.env.CRITIC_BOT ? require(path.resolve(process.env.CRITI
 const [pilesFile, planFile, outFile] = process.argv.slice(2);
 const LUCK_SHARE = +(process.env.LUCK_SHARE || 1), UNRELIEVED_MAX = +(process.env.UNRELIEVED_MAX || 1), TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), ATTEMPTS = +(process.env.ATTEMPTS || 10);
 I.setExact(true);
+const SCRIPTED = process.env.SCRIPTED === '1', { scriptedDeal } = require('./script_board.js');
 const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
 const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: true } : {}) });
 const tilesOf = d => d.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : t);
@@ -175,7 +176,8 @@ for (const p of plan) {
     pg.next = attempt + 1; save();
     const salt = 70 + attempt, note = s => { pg.tried.push(attempt + ': ' + s); save(); };
     const pile = piles.find(q => q.level === pileIds[attempt % pileIds.length]), tiles = pile.tiles.map(([x, y, z]) => ({ x, y, z }));
-    const d0 = Hard.makeNow(lv, 1.6, 1, salt, { tiles });
+    // SCRIPTED=1: the whole board designed from a tray script (script_board.js) instead of a random deal
+    const dr = Hard.makeNow(lv, 1.6, 1, salt, { tiles }), d0 = SCRIPTED ? scriptedDeal(dr, undefined, I.rngOf(lv * 13 + salt)) || dr : dr;
     if (!d0.solution || !I.valid(d0)) { note('designer: no deal'); continue; }
     // attempts cycle: the trap alone, + one extra trap, + two extra traps (with luck taken out, the traps carry the difficulty)
     const nx = Math.min(attempt % 3, C.extra.length), recipe = [...C.recipe, ...C.extra.slice(0, nx).map((_, k) => C.extra[(Math.floor(attempt / 3) + k) % C.extra.length])];
