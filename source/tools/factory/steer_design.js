@@ -92,6 +92,13 @@ function changes(d, state) {
     return null;
   };
   if (!luckOk(state.room)) { const r = relief(); if (r) out.push(r); }
+  if (softer && state.exp > state.target + 3) {
+    // far too hard (177: 18.8 for 7.2, the clock already at 3 spare): bigger steps first
+    const ice = Object.keys(d.obst.ice || {});
+    if (ice.length) out.push({ what: 'all ice thawed', d: { ...d, obst: { ...d.obst, ice: {} } } });
+    const dn = state.spots.tiles.filter(j => d.down.includes(j)).slice(0, 4); if (dn.length > 1) out.push({ what: dn.length + ' tiles face-up where the family loses', d: { ...d, down: d.down.filter(j => !dn.includes(j)) } });
+    if ((d.obst.locks || []).length) out.push({ what: 'locks and keys off', d: { ...d, obst: { ...d.obst, locks: [], keys: [] } } });
+  }
   if (softer) {
     { const r = relief(); if (r) out.push(r); }
     if (sp < 3) out.push({ what: 'clock +1 spare', d: withSpare(sp + 1) });
