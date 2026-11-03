@@ -126,4 +126,51 @@ function rescript(z, opt = {}, rng = Math.random) {
   if (open.length) return null;
   return { ...z, faces, info: { ...(z.info || {}), rescript: { press, mid, script: kindAt.map(x => x[0]).join('') } } };
 }
-module.exports = { scriptedDeal, rescript, DEFAULT };
+/* squeeze(z, opt, rng): rescript() made 175 EASIER (family 7.05 -> 3.4-3.8): under pressure a player matches
+   elsewhere on the board, and the calm stretches had put easy pairs there. So the pressure is set on the WHOLE board:
+   while the way goes to the clock, as few pairs as possible are free anywhere (the tiles free at each of those steps);
+   right after the clock (opt.relief steps) as many as possible. The rest stays the random deal. Pictures are swapped
+   between tiles (never keys, locks or ice pictures); a swap is kept only if the way through still never holds 4.
+   opt.strength 0..1: the share of the possible squeeze used (a knob for the steering).                               */
+function squeeze(z, opt = {}, rng = Math.random) {
+  const strength = opt.strength == null ? 1 : opt.strength, reliefN = opt.relief == null ? 6 : opt.relief, n = z.tiles.length, order = z.solution;
+  if (!z.clock) return null;
+  const tiles = z.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : t), nb = L.neighbors(tiles);
+  const o = z.obst || {}, keepF = new Set([...(o.keys || []), ...(o.locks || []), ...Object.keys(o.ice || {}).map(Number)].map(i => z.faces[i]));
+  const route = order.indexOf(z.clock.i) + 1;
+  // the free tiles before each step of the way to the clock (pressure) and of the relief after it
+  const alive = new Uint8Array(n).fill(1), freeAt = [];
+  for (let s = 0; s < Math.min(n, route + reliefN); s++) { const f = []; for (let i = 0; i < n; i++) if (L.isFree(i, alive, nb)) f.push(i); freeAt.push(f); alive[order[s]] = 0; }
+  const score = faces => {
+    let p = 0;
+    for (let s = 0; s < freeAt.length; s++) {
+      const c = new Map(); for (const i of freeAt[s]) c.set(faces[i], (c.get(faces[i]) || 0) + 1);
+      let pairs = 0; for (const v of c.values()) pairs += v >> 1;
+      p += s < route ? pairs : -pairs;
+    }
+    return p;
+  };
+  const trayOk = faces => { const t = []; for (const i of order) { const q = t.indexOf(faces[i]); if (q >= 0) t.splice(q, 1); else { t.push(faces[i]); if (t.length >= 4) return false; } } return t.length === 0; };
+  const movable = []; for (let i = 0; i < n; i++) if (!keepF.has(z.faces[i])) movable.push(i);
+  let faces = z.faces.slice(), cur = score(faces); const s0 = cur;
+  for (let it = 0; it < (opt.iters || 4000); it++) {
+    const a = movable[Math.floor(rng() * movable.length)], b = movable[Math.floor(rng() * movable.length)];
+    if (faces[a] === faces[b]) continue;
+    const f2 = faces.slice(); [f2[a], f2[b]] = [f2[b], f2[a]];
+    const sc = score(f2); if (sc >= cur || !trayOk(f2)) continue;
+    faces = f2; cur = sc;
+  }
+  // strength < 1: walk back toward the deal until the squeeze is that share of the way
+  if (strength < 1) {
+    const goal = s0 - (s0 - cur) * strength;
+    const diff = movable.filter(i => faces[i] !== z.faces[i]);
+    for (let it = 0; it < 4000 && cur < goal; it++) {
+      const a = diff[Math.floor(rng() * diff.length)], b = movable[Math.floor(rng() * movable.length)];
+      if (faces[a] === faces[b]) continue;
+      const f2 = faces.slice(); [f2[a], f2[b]] = [f2[b], f2[a]]; const sc = score(f2);
+      if (sc <= cur || sc > goal + 1 || !trayOk(f2)) continue; faces = f2; cur = sc;
+    }
+  }
+  return { ...z, faces, info: { ...(z.info || {}), squeeze: { strength, from: s0, to: cur } } };
+}
+module.exports = { scriptedDeal, rescript, squeeze, DEFAULT };
