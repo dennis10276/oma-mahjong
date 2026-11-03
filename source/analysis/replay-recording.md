@@ -42,7 +42,16 @@ Phone limits:
   Oldest replay chunks are removed when full. Dashboard summaries use their original queue.
 - Attempt event payload: 65,536 characters; an explicit truncation row marks an unusually long
   recording. Initial board/envelopes are additional. At most 1,024 pending rows are retained.
+- Recorder storage guard (added November 2026): at most 128 KiB of serialized UTF-8 data
+  per attempt, including the initial board, envelopes, metadata and chunk keys, and at most
+  128 chunks. The recorder reserves room for an explicit cutoff marker. Counters and the
+  cutoff survive save/reload; reaching the limit does not stop play or erase progress.
+  Old saves without byte counters use a conservative upper bound for previously drained data.
 - Individual chunk data: at most 16,384 characters and 48 rows.
+
+The recorder writes events, not video or periodic screenshots. Background/idle time with
+no events adds no chunks. Saved dashboard playback uses active recorded time and skips
+background gaps; live playback retains the actual wall-clock timing.
 
 The queued chunk ID stays constant during retries. Chunk sequence numbers detect gaps and
 conflicting restored tails following an abrupt crash. Missing data, truncation, legacy partial
