@@ -4,6 +4,16 @@ const SITE = fs.existsSync(path.join(__dirname, '..', 'site')) ? path.join(__dir
 const { read } = require(path.join(SITE, 'dash', 'replay-state'));
 const Playback = require(path.join(SITE, 'dash', 'playback'));
 const clone = v => JSON.parse(JSON.stringify(v));
+async function advanceClock(page, key, ms) {
+  for (let n = 0; n < ms; n += 50) {
+    await page.evaluate(({ key, delta }) => new Promise(resolve => {
+      window[key] += delta;
+      // Let the viewer consume each clock step before advancing again. A fixed
+      // sleep can miss a frame under load and lose time when Pause is clicked.
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    }), { key, delta: Math.min(50, ms - n) });
+  }
+}
 function sample(aid = 'attempt-a', now = Date.now()) {
   const state = { a: Array(8).fill(1), d: [0, 0, 0, 1, 0, 0, 0, 0], f: [0, 0, 1, 2, 1, 2, 3, 3], tr: [], p: -1, m: 0,
     ob: { need: { 4: 2 }, left: { 4: 2 }, locks: [5], keys: [6, 7], unlocked: false }, ck: { i: 2, n: 8 } };
@@ -13,6 +23,24 @@ function sample(aid = 'attempt-a', now = Date.now()) {
     next: chunk(1, [[1000, 'tap', [0, 0, '', null]], [1000, 'state', { a: [[0, 0]], tr: [0], p: 3, m: 1 }]]) };
 }
 module.exports = [
+  {
+    name: 'dashboard: saved playback skips overnight app pauses while live playback preserves them',
+    async run(t) {
+      const aid = 'overnight', born = 100000000, overnight = 16 * 3600000, s = sample(aid, born);
+      const data = { createdAt: born, first: s.first, next: { ...s.next, data: JSON.stringify({ events: [
+        [1000, 'pause', null], [1000, 'resume', null],
+        [2000, 'state', { a: [[0, 0]], tr: [0], m: 1 }], [3000, 'end', { r: 'stuck' }],
+      ] }) } };
+      const replay = read(data, aid), events = [{ k: 'start', aid, t: born }, { k: 'start', aid, res: true, t: born + 1000 + overnight }];
+      const live = Playback.timeline(replay, events, aid), saved = Playback.timeline(replay, events, aid, true);
+      t.eq(live.frames.at(-1).wall - live.frames[0].wall, overnight + 3000, 'live follows actual wall time');
+      t.eq(saved.frames.at(-1).wall - saved.frames[0].wall, 3000, 'archive contains three seconds of actual play');
+      t.eq(saved.frames.at(-1).state, replay.state, 'archive retains every recorded state and ending');
+      t.eq(saved.timingMissing, false, 'saved playback uses recorded active time without missing timing');
+      t.eq(Playback.timeline(replay, events.slice(0, 1), aid, true).frames.length, replay.frames.length, 'archive can resume even when an old show summary is absent');
+      t.eq(Playback.timeline(replay, events.slice(0, 1), aid).timingMissing, true, 'live still detects missing wall-clock resume timing');
+    },
+  },
   {
     name: 'dashboard: replay decoder reconstructs recorded states and refuses gaps, conflicts and corrupt edits',
     async run(t) {
@@ -84,7 +112,7 @@ module.exports = [
       }, now);
       const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
       const emit = async (aid, data) => p.evaluate(({ aid, data }) => window.__replayStreams.findLast(s => s.url.endsWith('/' + aid + '.json')).emit('put', data), { aid, data });
-      const advance = async ms => { for (let n = 0; n < ms; n += 50) { await p.evaluate(v => window.__watchNow += v, Math.min(50, ms - n)); await p.waitForTimeout(25); } };
+      const advance = ms => advanceClock(p, '__watchNow', ms);
       try {
         await p.goto(site.url + 'dash/#pA'); await p.waitForFunction(() => window.__replayStreams.length === 2);
         await emit('attempt-a', { createdAt: born, first: a.first, next: a.next, finish });
@@ -129,6 +157,38 @@ module.exports = [
   },
 ];
 module.exports.push({
+  name: 'dashboard: overnight recording shows active duration and can seek straight to resumed moves',
+  async run(t, { serve, FakeDB, browser, WWW }) {
+    const site = await serve(SITE, { '/play/': WWW }), now = Date.now(), born = now - 17 * 3600000;
+    const aid = 'overnight-ui', s = sample(aid, born), resumed = born + 16 * 3600000 + 5000;
+    const next = { ...s.next, data: JSON.stringify({ events: [
+      [5000, 'pause', null], [5000, 'resume', null], [6000, 'tap', [0, 0, '', null]],
+      [6000, 'state', { a: [[0, 0]], tr: [0], m: 1 }], [8000, 'end', { r: 'stuck' }],
+    ] }) };
+    const db = new FakeDB({ scores: { pA: { name: 'Anna', level: 39 } }, plays: { pA: {
+      s: { k: 'start', aid, lv: 39, at: 1, t: born },
+      r: { k: 'start', aid, lv: 39, at: 1, res: true, t: resumed },
+      e: { k: 'end', aid, lv: 39, at: 1, r: 'stuck', dur: 8, t: resumed + 3000 },
+    } }, replays: { pA: { [aid]: { createdAt: born, first: s.first, next } } } });
+    const ctx = await browser.newContext({ viewport: { width: 1500, height: 1000 } });
+    await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+    try {
+      const p = await ctx.newPage();
+      await p.goto(site.url + 'dash/#pA');
+      await p.locator('#tbl button[data-aid="overnight-ui"]').click();
+      await p.waitForFunction(() => document.querySelector('#watchDuration').textContent === '0:08');
+      t.eq(await p.locator('#watchDuration').innerText(), '0:08', 'transport excludes the sixteen-hour background gap');
+      await p.locator('#watchPause').click();
+      await p.locator('#watchSeek').evaluate(input => { input.value = '7000'; input.dispatchEvent(new Event('input', { bubbles: true })); });
+      t.eq(await p.locator('#watchBoard .watch-tile').count(), 7, 'seek reaches the move played after reopening');
+      t.eq(await p.locator('#watchPosition').innerText(), '0:07', 'seek uses active time');
+      await p.locator('#watchForward').click();
+      t.ok((await p.locator('#watchStatus').innerText()).startsWith('Opname afgelopen'), 'recording reaches its real ending');
+      t.eq(db.log.filter(e => e.m !== 'GET').length, 0, 'playback preserves stored player records');
+    } finally { await ctx.close(); site.close(); }
+  },
+});
+module.exports.push({
   name: 'dashboard: replay asset URLs change whenever their contents change',
   async run(t) {
     const html = fs.readFileSync(path.join(SITE, 'dash', 'index.html'), 'utf8');
@@ -164,7 +224,7 @@ module.exports.push({
       return r.fulfill({ contentType: 'application/javascript', body: 'window.DashWatch = { follow() {} };' });
     });
     const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
-    const advance = async ms => { for (let n = 0; n < ms; n += 50) { await p.evaluate(v => window.__archiveNow += v, Math.min(50, ms - n)); await p.waitForTimeout(25); } };
+    const advance = ms => advanceClock(p, '__archiveNow', ms);
     try {
       await p.goto(site.url + 'dash/#pA'); await p.waitForSelector('#tbl button[data-aid="recorded-one"]');
       t.eq(await p.locator('#tbl button[data-aid^="recorded-"]').count(), 2, 'two attempts of one level have separate buttons without duplicate starts');
@@ -212,7 +272,7 @@ module.exports.push({
     await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
     await ctx.addInitScript(value => { window.__transportNow = value; Date.now = () => window.__transportNow; }, now);
     const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
-    const advance = async ms => { for (let n = 0; n < ms; n += 50) { await p.evaluate(v => window.__transportNow += v, Math.min(50, ms - n)); await p.waitForTimeout(25); } };
+    const advance = ms => advanceClock(p, '__transportNow', ms);
     const seek = async value => p.locator('#watchSeek').evaluate((bar, value) => { bar.value = value; bar.dispatchEvent(new Event('input', { bubbles: true })); }, String(value));
     try {
       await p.goto(site.url + 'dash/#pA'); await p.waitForSelector('#tbl button[data-aid]'); await p.locator('#tbl button[data-aid]').click();

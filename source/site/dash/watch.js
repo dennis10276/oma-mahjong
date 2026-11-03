@@ -21,7 +21,7 @@
     el('watchControls').hidden = !recordedAid;
     el('watchTransport').hidden = !recordedAid;
     transport();
-    el('watchTiming').textContent = recordedAid ? `Opname op ${playbackSpeed}× snelheid. Sleep de tijdbalk om vooruit of terug te kijken.` : 'Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.';
+    el('watchTiming').textContent = recordedAid ? `Opname op ${playbackSpeed}× snelheid. Pauzes buiten de app worden overgeslagen. Sleep de tijdbalk om vooruit of terug te kijken.` : 'Live: 1 minuut vertraagd, met de oorspronkelijke timing van elke zet.';
     el('watchPause').textContent = playbackFinished ? '▶ Opnieuw' : playbackPaused ? '▶ Verder' : '⏸ Pauze';
     el('watchPause').disabled = !replay;
     if (recordedAid) {
@@ -159,7 +159,7 @@
         else entry.records[chunk] = type === 'patch' ? { ...entry.records[chunk], ...data } : data;
       }
       entry.recording = DashReplay.read(entry.records, entry.aid);
-      entry.timeline = DashPlayback.timeline(entry.recording, context.events, entry.aid);
+      entry.timeline = DashPlayback.timeline(entry.recording, context.events, entry.aid, !!recordedAid);
       entry.connected = true; entry.received = true; entry.error = '';
       // A first join may have less than a minute of delivered history. Start at the
       // available point once; subsequent uploads never move or reset the clock.
@@ -275,7 +275,7 @@
     }
     context = { pid, name, events };
     el('watchName').textContent = name || 'Kies een speler';
-    for (const entry of sessions.values()) if (entry.recording) entry.timeline = DashPlayback.timeline(entry.recording, events, entry.aid);
+    for (const entry of sessions.values()) if (entry.recording) entry.timeline = DashPlayback.timeline(entry.recording, events, entry.aid, !!recordedAid);
     reconcile(); status();
   }
   function playAttempt(aid) {

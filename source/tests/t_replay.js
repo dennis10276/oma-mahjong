@@ -5,6 +5,65 @@ const chunks = (p, pid, aid) => p.db.get(`replays/${pid}/${aid}`) || {};
 const chunkValues = records => Object.entries(records).filter(([k]) => k !== 'createdAt').map(([, v]) => v);
 module.exports = [
   {
+    name: 'replay: total stored bytes and chunk count stop growth and stay capped across reload',
+    async run(t, { startLevel, sleep }) {
+      for (const mode of ['bytes', 'chunks']) {
+        const pid = 'test-replay-cap-' + mode, p = await t.phone({ state: { level: 16, name: 'Dennis', pid } });
+        await startLevel(p, 16); await sleep(400);
+        const out = await p.evaluate(mode => {
+          replayDrain(G);
+          if (mode === 'bytes') REPLAY.attemptBytes = G.rp.bytes + 2200;
+          else REPLAY.chunks = G.rp.seq + 4;
+          for (let n = 0; n < 100 && !G.rp.cut; n++) {
+            // UTF-8 emoji and JSON escaping exercise the real stored byte count.
+            replayMark('test', '🐘"\\'.repeat(30)); replayDrain(G);
+          }
+          saveCur();
+          return { aid: G.rp.id, cut: G.rp.cut, bytes: G.rp.bytes, seq: G.rp.seq,
+            byteLimit: REPLAY.attemptBytes, chunkLimit: REPLAY.chunks, state: replayState() };
+        }, mode);
+        t.ok(out.cut && out.bytes <= out.byteLimit && out.seq <= out.chunkLimit, mode + ': recorder stopped within storage limits', out);
+        await p.evaluate(() => flushReplay()); await sleep(400);
+        const data = chunks(p, pid, out.aid), replay = readReplay(data);
+        t.ok(Buffer.byteLength(JSON.stringify(data)) <= out.byteLimit, mode + ': actual database size within byte limit');
+        t.ok(chunkValues(data).length <= out.chunkLimit, mode + ': stored chunks within count limit');
+        t.eq(replay.frames.filter(f => f.kind === 'truncated').length, 1, mode + ': one explicit cutoff marker');
+        t.ok(!replay.complete, mode + ': cutoff never claims to be complete');
+        await p.reload(); await p.waitForFunction(() => window.__mjReady); await startLevel(p, 16, false);
+        const resumed = await p.evaluate(() => {
+          const before = replayState();
+          replayMark('test', 'cannot grow'); replayDrain(G);
+          const i = G.tiles.findIndex((tile, i) => G.alive[i] && canTake(i));
+          onTap(i); if (G.alive[i]) onTap(i);
+          return { before, aid: G.rp.id, cut: G.rp.cut, seq: G.rp.seq, bytes: G.rp.bytes, tp: G.st.tp };
+        });
+        t.eq(resumed.before, out.state, mode + ': saved board preserved');
+        t.eq([resumed.aid, resumed.cut, resumed.seq, resumed.bytes], [out.aid, true, out.seq, out.bytes], mode + ': same capped recorder after reload');
+        t.ok(resumed.tp > 0, mode + ': gameplay continues after recording stops');
+      }
+    },
+  },
+  {
+    name: 'replay: idle time writes no new chunks and legacy saves use a conservative storage budget',
+    async run(t, { startLevel }) {
+      const p = await t.phone({ state: { level: 16, name: 'Dennis', pid: 'test-replay-idle' } });
+      await startLevel(p, 16);
+      const out = await p.evaluate(() => {
+        replayDrain(G);
+        const before = [G.rp.seq, G.rp.bytes];
+        G.elapsed += 20 * 3600;
+        for (let n = 0; n < 100; n++) { replayCapture(); replayDrain(G); }
+        const after = [G.rp.seq, G.rp.bytes];
+        // A pre-update save knows its event characters/sequence but not wire bytes.
+        delete G.rp.bytes; G.rp.chars = REPLAY.attemptChars;
+        replayMark('resume'); replayDrain(G); saveCur();
+        return { before, after, cut: G.rp.cut, pending: G.rp.events.length, saved: !!loadCur() };
+      });
+      t.eq(out.after, out.before, 'twenty hours with no events consumes zero extra replay storage');
+      t.ok(out.cut && out.pending === 0 && out.saved, 'old recordings already above conservative budget stop without losing the saved game');
+    },
+  },
+  {
     name: 'replay: reopening after a loss starts a fresh try instead of replaying the ended board',
     async run(t, { startLevel, sleep }) {
       const pid = 'test-replay-ended', p = await t.phone({ state: { level: 158, name: 'Dennis', pid, sunSeen: true, seenSp: { clockMoves: 1 } } });
@@ -70,12 +129,12 @@ module.exports = [
         let aborted = false, signalSeen = false, retry = null;
         const entry = JSON.parse(localStorage.getItem(REPLAY.queue))[0];
         const raw = localStorage.getItem(REPLAY.queue + '.' + entry.cid);
-        REPLAY.requestMs = 30;
+        const requestMs = REPLAY.requestMs; REPLAY.requestMs = 30;
         window.fetch = (url, options) => new Promise((resolve, reject) => {
           signalSeen = !!options.signal;
           options.signal.addEventListener('abort', () => { aborted = true; reject(new DOMException('timeout', 'AbortError')); }, { once: true });
         });
-        try { await flushReplay(); } finally { window.fetch = originalFetch; }
+        try { await flushReplay(); } finally { window.fetch = originalFetch; REPLAY.requestMs = requestMs; }
         const retained = localStorage.getItem(REPLAY.queue + '.' + entry.cid) === raw;
         const unlocked = !replaySending;
         dbSend = (...args) => { if (args[0].startsWith('replays/')) retry = args[1]; return originalSend(...args); };
@@ -149,8 +208,12 @@ module.exports = [
       t.eq(chunkValues(chunks(p, pid, before.aid)).length, 0, 'recording stayed local while disconnected');
       offline = false;
       await p.evaluate(() => flushReplay());
-      await click(p, '#btnHint'); await click(p, '#btnShuffle'); await sleep(850);
-      t.ok(await solve(p, 3000), 'test attempt won'); await sleep(600);
+      await click(p, '#btnHint'); await click(p, '#btnShuffle');
+      await p.waitForFunction(() => G.usedShuffle && !G.busy, null, { timeout: 10000 });
+      t.ok(await solve(p, 3000), 'winning route found');
+      await p.waitForFunction(() => G.done && G.logged, null, { timeout: 10000 });
+      await p.evaluate(async () => { await flushReplay(); await flushLog(); });
+      await p.waitForFunction(() => JSON.parse(localStorage.getItem(REPLAY.queue) || '[]').length === 0 && readQ().length === 0, null, { timeout: 10000 });
       const r = readReplay(chunks(p, pid, before.aid));
       t.ok(r.complete, 'all chunks present with a recorded ending', r.issues);
       t.eq(r.result, 'win', 'win replayed');
