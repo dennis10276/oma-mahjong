@@ -1,0 +1,11 @@
+spot 200 look 1,60: tray at 3 after a take, clock gone 0.135, clock on 0.119
+spot 200 look 2,150: tray at 3 after a take, clock gone 0.132, clock on 0.116
+spot 200 look 2,400: tray at 3 after a take, clock gone 0.133, clock on 0.118
+spot 200 look 3,400: tray at 3 after a take, clock gone 0.133, clock on 0.118
+trayCost:spot:look 12:200:2,150 | tray at 3 after a take: clock gone 0.132, clock on 0.078 | tray at 2+ clock gone 0.527
+trayCost:spot:look 25:200:2,150 | tray at 3 after a take: clock gone 0.137, clock on 0.064 | tray at 2+ clock gone 0.529
+trayCost:spot:look 6:200:2,150,1 | tray at 3 after a take: clock gone 0.133, clock on 0.116 | tray at 2+ clock gone 0.542
+trayCost:spot:look 6:200:2,400,1 | tray at 3 after a take: clock gone 0.134, clock on 0.117 | tray at 2+ clock gone 0.542
+freePeekBonus 18: tray at 3 (clock gone) 0.133, flips per tile taken 0.85
+freePeekBonus 40: tray at 3 (clock gone) 0.113, flips per tile taken 0.84
+freePeekBonus 70: tray at 3 (clock gone) 0.106, flips per tile taken 0.76

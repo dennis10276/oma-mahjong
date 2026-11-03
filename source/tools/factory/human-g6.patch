@@ -1,22 +1,27 @@
 diff --git a/source/tools/sim/refit/human_factory_controller.js b/source/tools/sim/refit/human_factory_controller.js
-index d7889d6..82e3e22 100644
+index d7889d6..8f6bd1b 100644
 --- a/source/tools/sim/refit/human_factory_controller.js
 +++ b/source/tools/sim/refit/human_factory_controller.js
-@@ -83,10 +83,12 @@ function lossPhaseName(state, clock) {
+@@ -83,10 +83,17 @@ function lossPhaseName(state, clock) {
  
  function createBotController(tiles, profile, seed) {
    assert(Number.isInteger(seed));
 -  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockClusterSalience']);
-+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead']);
++  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst']);
    assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
    assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
    const p = { ...profile }, random = Layouts.rng(seed);
 +  if (process.env.G51_SPOT) p.spotPenalty = +process.env.G51_SPOT;   // (calibration switch)
 +  if (process.env.G51_PLAN) p.planAhead = +process.env.G51_PLAN;   // (calibration switch)
++  if (process.env.G51_TRAYCOST) p.trayCost = +process.env.G51_TRAYCOST;   // (calibration switch)
++  if (process.env.G51_PAIR) p.pairFirst = +process.env.G51_PAIR;   // (calibration switch)
++  if (process.env.G51_PEEK) p.freePeekBonus = +process.env.G51_PEEK;   // (calibration switch)
++  if (process.env.G51_PEEKPAT) p.peekPatience = +process.env.G51_PEEKPAT;   // (calibration switch)
++  if (process.env.G51_LOOK) { const [d, w, f] = process.env.G51_LOOK.split(',').map(Number); p.lookDepth = d; p.lookPenalty = w; if (f) p.lookFrom = f; }   // (calibration switch)
    for(const key of ['clockHorizon','partnerHorizon','trayDepth','clockTrayDepth'])assert(Number.isInteger(p[key])&&p[key]>=0&&p[key]<=4,'Human planning horizon must stay within four actions/dependencies');
    for(const key of ['lapse','memoryDecay','retryRetention'])assert(p[key]>=0&&p[key]<=1);
    assert(p.temperature>0);
-@@ -98,7 +100,7 @@ function createBotController(tiles, profile, seed) {
+@@ -98,7 +105,7 @@ function createBotController(tiles, profile, seed) {
    assert(p.clockCompletionBonus===undefined||p.clockCompletionBonus>=0&&p.clockCompletionBonus<=120);
    for(const [key,value]of Object.entries(p))if(key!=='strictClockSlack'&&!key.startsWith('flippedBlockerBalk'))assert(value>=0);
    for(const key of ['extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate'])assert(p[key]===undefined||Number.isFinite(p[key])&&p[key]>=0&&p[key]<=1);
@@ -25,7 +30,7 @@ index d7889d6..82e3e22 100644
    // A separate attention stream leaves the released move-noise sequence intact.
    const attentionRandom=Layouts.rng((seed^0x4d2c6df7)|0);
    let clockHorizon=p.clockHorizon,strictClockSlack=p.strictClockSlack;
-@@ -124,7 +126,6 @@ function createBotController(tiles, profile, seed) {
+@@ -124,7 +131,6 @@ function createBotController(tiles, profile, seed) {
    const failedDigs = new Map();
    const learnedLockedCarry=new Map();
    let attemptDigs = [];
@@ -33,7 +38,7 @@ index d7889d6..82e3e22 100644
  
    function rememberedKeyTargets(){
      return retryKeyMemory?retryKeyMemory.entries().filter(f=>f.attempt<attempt&&state?.alive[f.index]).map(f=>f.index):[];
-@@ -139,10 +140,7 @@ function createBotController(tiles, profile, seed) {
+@@ -139,10 +145,7 @@ function createBotController(tiles, profile, seed) {
      clockHorizon=Math.min(4,(clockLosses>0&&p.retryClockHorizon!==undefined?p.retryClockHorizon:p.clockHorizon)+(p.extraClockLookProbability!==undefined&&attentionRandom()<p.extraClockLookProbability?1:0));
      strictClockSlack=p.deadlineAttentionProbability===undefined?p.strictClockSlack:attentionRandom()<Math.min(1,p.deadlineAttentionProbability+clockLosses*(p.deadlineLearningRate??0));
      if (attempt++) {
@@ -45,7 +50,7 @@ index d7889d6..82e3e22 100644
      }
      roles = tiles.map(() => null);
      visits = new Map();
-@@ -200,17 +198,6 @@ function createBotController(tiles, profile, seed) {
+@@ -200,17 +203,6 @@ function createBotController(tiles, profile, seed) {
        clock: o.clock ? { i: o.clock.i, n: o.clock.n, remaining: o.clock.remaining } : null
      };
      memory = memory.map((v, i) => o.pictures[i] !== null ? o.pictures[i] : s.alive[i] && random() < p.memoryDecay ? null : v);
@@ -63,7 +68,32 @@ index d7889d6..82e3e22 100644
      roles = roles.map((v, i) => o.roles[i] ?? v);
      retryKeyMemory?.observe(state,seen.roles,attempt);
      retryAccess?.observe(state,seen,attempt);
-@@ -422,8 +409,6 @@ function createBotController(tiles, profile, seed) {
+@@ -356,6 +348,24 @@ function createBotController(tiles, profile, seed) {
+     const legal = seen.takeable.flatMap((v, i) => v === true ? [i] : []);
+     if (!legal.length) return null;
+     const priorKeyTargets=new Set(rememberedKeyTargets());
++    // Look-ahead (Dennis 2026-11-03: "the planning ahead I do"; "do this and keep calibrating planning until the 3-tray
++    // rate gets close to my 10.5%"): with only the tiles whose pictures are known, can the tray be brought down again
++    // (a match) within `d` more takes without a 4th tile waiting? Usable: free, not locked while keys remain, ice
++    // with enough of its neighbours gone since now.
++    const keyTiles = tiles.flatMap((_, k) => roles[k] === 'key' ? [k] : []);
++    const usableIn = (al, j) => {
++      if (!al[j] || !Layouts.isFree(j, al, nb)) return false;
++      if (roles[j] === 'lock') return !keyTiles.some(k => al[k]);
++      const ice = roles[j] === 'ice' ? 1 : roles[j] === 'ice2' ? 2 : 0;
++      return !ice || seen.takeable[j] === true || iceNb[j].filter(k => alive[k] && !al[k]).length >= ice;
++    };
++    const canRelieve = (al, tr, d) => {
++      const known = [];
++      for (let j = 0; j < n; j++) if (memory[j] !== null && usableIn(al, j)) { if (tr.includes(memory[j])) return true; known.push(j); }
++      if (d <= 0 || tr.length >= 3) return false;
++      for (const j of known) { const al2 = al.slice(); al2[j] = 0; if (canRelieve(al2, tr.concat(memory[j]), d - 1)) return true; }
++      return false;
++    };
+ 
+     function sideChain(i, dir) {
+       const chain = [], visited = new Set([i]);
+@@ -422,8 +432,6 @@ function createBotController(tiles, profile, seed) {
      }
  
      const attraction = new Map(), clock = seen.clock;
@@ -72,7 +102,7 @@ index d7889d6..82e3e22 100644
      // A short cone may pursue a useful-looking key/mate goal without
      // considering all three links (clock, mate, keys) and their full cost.
      const clockMateLocked = Boolean(p.clockOutsPlan && clock && memory[clock.i]!==null && !tray.includes(memory[clock.i]) && memory.some((face,i)=>i!==clock.i&&alive[i]&&face===memory[clock.i]&&roles[i]==='lock'&&(clockHorizon<3||clockMateRouteBudget({alive,nb,clock,mate:i,roles,down:seen.down}).fits)));
-@@ -437,15 +422,11 @@ function createBotController(tiles, profile, seed) {
+@@ -437,15 +445,11 @@ function createBotController(tiles, profile, seed) {
        attraction.set(i, Math.max(attraction.get(i) ?? 0, weight));
        if (depth >= maxDepth) return;
        const nextPath = new Set([...path, i]);
@@ -91,7 +121,7 @@ index d7889d6..82e3e22 100644
          attract(j, nextDepth, weight * decay, maxDepth, isSideRow, nextPath);
        }
      }
-@@ -457,14 +438,6 @@ function createBotController(tiles, profile, seed) {
+@@ -457,14 +461,6 @@ function createBotController(tiles, profile, seed) {
          nb.left[c].some(j => alive[j]) && nb.right[c].some(j => alive[j]);
        const maxD = Math.min(5, clockHorizon + 1 + (clockLosses > 0 ? 1 : 0));
        attract(c, 0, p.clockWeight, maxD, isSideBlockedOnly);
@@ -106,7 +136,7 @@ index d7889d6..82e3e22 100644
        if(p.clockRowPreview&&isSideBlockedOnly){
          // A visible sideways row remains a clock goal beyond the short thought
          // cone. This is geometry recognition, not a solved physical route.
-@@ -509,7 +482,18 @@ function createBotController(tiles, profile, seed) {
+@@ -509,7 +505,18 @@ function createBotController(tiles, profile, seed) {
        return fact&&alive[fact.partner]&&!tray.includes(memory[i])&&(!clock||(attraction.get(i)??0)>0);
      });
      const learnedKeyOut=knownKeys.length>0&&!state.relieved&&(tray.some(face=>learnedLockedCarry.has(face))||prepareKeyOut);
@@ -126,7 +156,7 @@ index d7889d6..82e3e22 100644
      if (clockNeedsKeys) {
        const keyW = p.clockWeight * (clockMateLocked||learnedKeyOut ? 1.35 : 0.92);
        const keyD = clockHorizon + (clockLosses > 0 ? 1 : 0);
-@@ -549,10 +533,8 @@ function createBotController(tiles, profile, seed) {
+@@ -549,10 +556,8 @@ function createBotController(tiles, profile, seed) {
        }
      }
  
@@ -139,7 +169,15 @@ index d7889d6..82e3e22 100644
      const keyWork=new Set();
      if(p.retryKeyRouteValue&&learnedKeyOut&&(!clock||clockNeedsKeys)){
        for(const k of knownKeys){
-@@ -615,10 +597,7 @@ function createBotController(tiles, profile, seed) {
+@@ -586,6 +591,7 @@ function createBotController(tiles, profile, seed) {
+       memory[openPeek] !== null && !tray.includes(memory[openPeek])
+     );
+ 
++    const anyTrayMatch = legal.some(j => memory[j] !== null && seen.down[j] !== 1 && tray.includes(memory[j]));
+     const scored = legal.map(i => {
+       const face = memory[i], down = seen.down[i] === 1, peek = down && openPeek !== i;
+       const trayMatch = face !== null && tray.includes(face);
+@@ -615,10 +621,7 @@ function createBotController(tiles, profile, seed) {
        let score = (knownFatal ? -2000 : goal * urgency) + (clock ? 0 : (partnerAttract.get(i) ?? 0)) + structBonus;
  
        const offClock = clock && goal < p.clockWeight * 0.3;
@@ -151,7 +189,7 @@ index d7889d6..82e3e22 100644
  
        if (trayMatch) {
          const urgentLastClockMove = clock && clock.remaining <= 1 && ownGoal === 0;
-@@ -631,10 +610,7 @@ function createBotController(tiles, profile, seed) {
+@@ -631,10 +634,7 @@ function createBotController(tiles, profile, seed) {
          const sidePairPenalty = offClock
            ? (tightClock ? p.clockWeight * 1.3 : p.pairReward * 0.25)
            : 0;
@@ -163,7 +201,7 @@ index d7889d6..82e3e22 100644
        } else if (peek && face === null) {
          const freePeekBonus = ownGoal > 0 ? p.pairReward : (!matchingNow ? (p.freePeekBonus ?? 18) : 4);
          score += p.exploration + freePeekBonus + (tray.length >= 2 ? 6 : 0);
-@@ -673,7 +649,9 @@ function createBotController(tiles, profile, seed) {
+@@ -673,7 +673,9 @@ function createBotController(tiles, profile, seed) {
            } else if (memory[j] !== null && !(offClock && tightClock) && legal.some(k => k !== i && next[k] && memory[k] === memory[j] && (nextTray.length < 3 || seen.down[j] === 1 || seen.down[k] === 1))) {
              score += p.outWeight * 1.2;
            } else if (memory[j] === null) {
@@ -174,7 +212,7 @@ index d7889d6..82e3e22 100644
            } else {
              score += p.outWeight * 0.08;
            }
-@@ -690,7 +668,8 @@ function createBotController(tiles, profile, seed) {
+@@ -690,7 +692,8 @@ function createBotController(tiles, profile, seed) {
          if (tray.length >= 2 && !trayMatch && !openTwin && face !== null) {
            const directMate = memory.some((other, j) => next[j] && other === face && usableAfter(j));
            const freesUnknown = newlyFree.some(j => memory[j] === null);
@@ -184,15 +222,27 @@ index d7889d6..82e3e22 100644
          }
        }
  
-@@ -729,10 +708,12 @@ function createBotController(tiles, profile, seed) {
+@@ -729,10 +732,23 @@ function createBotController(tiles, profile, seed) {
        if (!peek && count) score -= count * 2;
  
        score += (future.get(i) ?? 0) * (p.futureWeight ?? 1) * (clock ? 0.15 : 1);
 -      if ((!peek || knownDig) && !(clock && i === clock.i) && suggestsNoEasyEscape(i)) {
 -        score -= (!clock ? Math.max(120, 1200 - count * 250) : 1200);
 -      }
+-
 +      if ((!peek || knownDig) && !(clock && i === clock.i) && suggestsNoEasyEscape(i)) score -= 1200;
- 
++
++      // From the recordings: with one tile waiting (clock gone) Dennis takes another unmatched tile in 46% of his takes,
++      // the bot in 78% - he puts a tile in the tray when he can see its way out (its twin within reach), so the check
++      // runs from the first tile in the tray (lookFrom 1) as well
++      if (p.lookPenalty && !clock && !trayMatch && !openTwin && !(peek && face === null) && face !== null) {
++        const al = alive.slice(); al[i] = 0; const tr = tray.concat(face);
++        if (tr.length >= (p.lookFrom ?? 2)) { const ok = canRelieve(al, tr, p.lookDepth ?? 1); if (global.__lookStats) { global.__lookStats.checks++; if (!ok) global.__lookStats.fired++; } if (!ok) score -= p.lookPenalty; }
++      }
++      // pairFirst (from the recordings): after the clock, people put a tile in the tray when its twin lies free and face-up
++      // (Dennis 35-54% of such takes, Gerda 41-61%), the bot 16-23%: it digs where they take the safe pair
++      // (only when no tile in the tray can be matched right now: a match comes first)
++      if (p.pairFirst && !clock && hasTwin && !trayMatch && !openTwin && !anyTrayMatch) score += p.pairFirst;
 +      // spotPenalty (Dennis's free-spot habit, from the recordings): once the clock is gone, a take that leaves 3 tiles
 +      // waiting (one spot left) costs this much; turning a face-down tile over, a match or a pair with the open tile
 +      // do not. Dennis let the tray reach 3 in 11% of his takes after the clock, the bot without it 19%.

@@ -487,3 +487,25 @@ traps, measured again; still above: out).
   it is not what Dennis does. Next: a short search over known tiles (can the tray be brought down again before a
   4th?), checked by "knowing more never hurts" and Dennis's 10.5%.
 - These switches are experiment-only (env G51_SPOT, G51_PLAN, G51_ORACLE); the release profiles are unchanged.
+
+## Dennis's planning, calibrated (2026-11-03 night): the skilled player
+Dennis: "do this and keep calibrating planning until the 3-tray rate gets close to my 10.5%". Measure: the share of
+takes after the clock that leave 3 tiles waiting, levels 85-174 with lv % 8 in {0, 4} (planning-calibration.log).
+| bot | tray at 3 |
+| Dennis profile as it was | 18.5% |
+| + spotPenalty 200 (a take that leaves 3 waiting costs) | 13.7% |
+| + look-ahead (lookDepth 2, lookPenalty 150, from the 1st tile: with known tiles, can the tray come down again?) | 13.3% |
+| + pairFirst 100 (after the clock, the first tile of a free face-up pair, when no match is possible) | 12.6-13.3% |
+| + freePeekBonus 40 / 70 (turning face-down tiles over) | 11.3% / 10.6% |
+| Dennis | 10.5% |
+From the recordings behind those habits: with an unmatched take Dennis's tile has its twin free and face-up in 35-54% of
+cases (Gerda 41-61%), the bot 16-23%; Dennis turns 1.20 face-down tiles over per tile taken (Mrs. Doubtfire 1.25,
+Gerda 0.86), the bot 0.84; Dennis's takes start from an empty tray 20% of the time, the bot's 9%. Raising trayCost
+(12, 25) or treating unknown tiles as hope (planAhead) did not help. The switches are env-only for now (G51_SPOT=200
+G51_LOOK=2,150,1 G51_PAIR=100 G51_PEEK=70); patch human-g6.patch.
+Knowing-more test with this player (luck-oracle-skilled.jsonl; told every hidden picture, board unchanged):
+132 4.63 -> 3.90 (luck 0.16), 150 3.08 -> 1.75 (0.43), 149 3.23 -> 1.43 (0.56), 91 3.08 -> 1.00 (0.68), 145 3.77 ->
+1.00 (0.73), blind 185 19.9 -> 17.8 (0.10), blind 183 11.95 -> 6.33 (0.47), release 185 5.47 -> 1.48 (0.73),
+factory 2-175 2.20 -> 1.88 (0.15). Still worse when it knows everything: blind 194 8.88 -> 15.55 and factory 6-190
+2.65 -> 4.00: on 194 (clock 24 moves) its clock losses go 125 -> 297 - with every pair known it keeps pairing and runs
+out the clock. That is the next fix (the clock before pairs when the clock's moves run short).
