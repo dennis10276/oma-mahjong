@@ -509,3 +509,11 @@ Knowing-more test with this player (luck-oracle-skilled.jsonl; told every hidden
 factory 2-175 2.20 -> 1.88 (0.15). Still worse when it knows everything: blind 194 8.88 -> 15.55 and factory 6-190
 2.65 -> 4.00: on 194 (clock 24 moves) its clock losses go 125 -> 297 - with every pair known it keeps pairing and runs
 out the clock. That is the next fix (the clock before pairs when the clock's moves run short).
+- Fixing "knowing more hurts" (2026-11-03 morning; env-only switches): clockFirst (a pair off the clock's way costs
+  when the clock's moves run short) 194 knowing everything 15.55 -> 14.5-14.9, 6-190 4.00 -> 3.15; clockNeedFull (count
+  the keys' covers, the second neighbour of double ice, and the tray: needed tiles without their twin beyond 2
+  waiting) - the bot's count for 194's clock goes 12 -> 23 without knowledge (the designer's way is 23), 17-19 with
+  everything known; 194 still 9.25 -> 14.78. On 194 the clock has 24 moves for a 23-move way: any extra take loses
+  the clock. With hidden tiles the bot turns many over (free) and loses to the tray; knowing everything it takes
+  pairs off the way and loses to the clock (first 30 taps: 11 off the way). The bot is not a route planner; a person
+  finds that exact way over a few tries.
