@@ -19,15 +19,19 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const I = require(path.join(ROOT, 'tools', 'lab', 'ideas.js'));
 const L = global.Layouts;
 const { roomProfile, trapTiles } = require('./design_traps.js');
-const { measureHuman } = require(path.resolve(process.env.HUMAN_BOT));
-const [startFile, outFile] = process.argv.slice(2);
-const TOL = +(process.env.TOL || 0.5), DENNIS_MAX = +(process.env.DENNIS_MAX || 6), ATTR = +(process.env.ATTR || 0.6), STEPS = +(process.env.STEPS || 14);
+const { createMeter, boardKey } = require('./meter.js');
+
+function createSteerer(options = {}) {
+const meter = options.meter || createMeter(options);
+const measureHuman = meter.measure;
+const TOL = options.tolerance ?? +(process.env.TOL || 0.5), DENNIS_MAX = options.skilledMax ?? +(process.env.DENNIS_MAX || 6), ATTR = options.attribution ?? +(process.env.ATTR || 0.6), STEPS = options.steps ?? +(process.env.STEPS || 14);
+I.setExact(true, { nodes: options.routeNodes ?? 20000, milliseconds: options.routeMilliseconds ?? 1500 });
 const EXTRA = ['iceChain', 'lockedPartners', 'deepKeys'];
 const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
-const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: true } : {}) });
+const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: 'tail' } : {}) });
 const tilesOf = d => d.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : t);
 const routeOf = d => d.solution.indexOf(d.clock.i) + 1;
-const luckOk = r => r.ok && r.tightBlind - (r.tightBlind - r.unrelieved - (r.tightBlind ? 1 : 0)) <= 2;   // luck - relief <= 2
+const luckOk = r => r.ok && r.unrelieved <= 1;   // luck - relief <= 2
 
 // where the family bot loses: the tiles of its last 5 takes and the pictures in its tray when a try ends
 function lossSpots(d, m) {
@@ -51,7 +55,8 @@ function attribution(d, m) {
 }
 function specialsMatter(d, m0) {
   const ob = d.obst || {}, out = {};
-  const test = (k, b2) => { const m = meas(b2, 'family'); out[k] = { without: m.expectedTries, matters: Math.abs(m0.expectedTries - m.expectedTries) >= 0.3 || Math.abs(m.firstTryRate - m0.firstTryRate) >= 0.15 }; };
+  const test = (k, b2) => { const m = meas(b2, 'family'); out[k] = { without: m.expectedTries, valid: m.valid,
+    matters: m.valid === true && (Math.abs(m0.expectedTries - m.expectedTries) >= 0.3 || Math.abs(m.firstTryRate - m0.firstTryRate) >= 0.15) }; };
   if (ob.ice && Object.keys(ob.ice).length) test('ice', { ...d, obst: { ...ob, ice: {} } });
   if (ob.locks && ob.locks.length) test('locks', { ...d, obst: { ...ob, locks: [], keys: [] } });
   if (d.clock) test('clock', { ...d, clock: null });
@@ -69,6 +74,13 @@ function uncoveredBy(d, i) {
 function changes(d, state) {
   const out = [], sp = d.clock.n - routeOf(d), withSpare = s => ({ ...d, clock: { ...d.clock, n: routeOf(d) + s } });
   const softer = state.exp > state.target + TOL || state.skilled > DENNIS_MAX;
+  // Repair an idle special even when the starting board is already on target.
+  if (state.idle?.some(k => k !== 'clock')) {
+    const ob = { ...d.obst };
+    if (state.idle.includes('ice')) ob.ice = {};
+    if (state.idle.includes('locks')) { ob.locks = []; ob.keys = []; }
+    out.push({ what: 'idle specials removed', d: { ...d, obst: ob } });
+  }
   if (!luckOk(state.room)) {
     const last = state.room.tightTiles[state.room.tightTiles.length - 1];
     const under = last !== undefined ? uncoveredBy(d, last) : [];
@@ -114,45 +126,106 @@ function changes(d, state) {
     const cand = state.spots.tiles.filter(j => !d.down.includes(j) && !L.isFree(j, al, nb) && !(d.clock && d.clock.i === j) && !(d.obst.keys || []).includes(j) && !(d.obst.locks || []).includes(j) && !(d.obst.ice || {})[j]);
     for (const j of cand.slice(0, 2)) { const y = { ...d, down: d.down.concat(j) }; const r = roomProfile(y); if (r.ok && luckOk(r)) { out.push({ what: 'luck moment added', d: y }); break; } }
   }
+  // A measured plateau in the first three edits must not hide a later useful trap.
   return out.filter(c => I.valid(c.d));
 }
-function judge(d, target, step, withSpecials) {
-  const m = meas(d, 'family', true), md = meas(d, 'planner'), room = roomProfile(d), spots = lossSpots(d, m), attr = attribution(d, m);
-  const exp = m.expectedTries, skilled = md.expectedTries, off = Math.max(0, Math.abs(exp - target) - TOL);
-  const sm = withSpecials ? specialsMatter(d, m) : null, idle = sm ? Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k) : [];
-  const luck = room.ok ? { luckMoments: room.tightBlind, reliefMoments: Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0)) } : null;
-  const score = off * 2 + Math.max(0, skilled - DENNIS_MAX) + (room.ok && luckOk(room) ? 0 : 3) + Math.max(0, ATTR - (attr ?? 1)) * 3 + idle.length * 2;
-  return { d, m, exp, skilled, room, luck, spots, attr, sm, idle, score, target, step, pass: off === 0 && skilled <= DENNIS_MAX && room.ok && luckOk(room) && (attr === null || attr >= ATTR) && (!sm || !idle.length) };
+function judge(d, target, step, withSpecials = true) {
+  const m = meas(d, 'family', true), spots = lossSpots(d, m), attr = attribution(d, m);
+  const exp = m.expectedTries, off = Math.max(0, Math.abs(exp - target) - TOL);
+  // Ablations are needed only for a board that could pass. Never pass without them.
+  const sm = withSpecials && off === 0 ? specialsMatter(d, m) : null;
+  const idle = sm ? Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k) : [];
+  // Route planning is the expensive part. A board off the curve or with idle
+  // specials cannot pass: fix that first, then run the skilled player.
+  const md = off === 0 && !idle.length ? meas(d, 'planner') : null;
+  const skilled = md?.expectedTries ?? null;
+  const room = off === 0 ? roomProfile(d) : { ok: true, tightBlind: 0, unrelieved: 0, tightTiles: [], measured: false };
+  const luck = room.ok && room.measured !== false ? { luckMoments: room.tightBlind, reliefMoments: Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0)), unrelieved: room.unrelieved } : null;
+  const valid = m.valid === true && (!md || md.valid === true);
+  const score = off * 2 + Math.max(0, skilled - DENNIS_MAX) + (room.ok && luckOk(room) ? 0 : 3) + Math.max(0, ATTR - (attr ?? 1)) * 3 + idle.length * 2 + (valid ? 0 : 100);
+  return { d, m, exp, skilled, room, luck, spots, attr, sm, idle, score, target, step, valid,
+    pass: valid && off === 0 && md !== null && skilled <= DENNIS_MAX && room.ok && luckOk(room) && (attr === null || attr >= ATTR) && sm !== null && !idle.length };
 }
 
-const starts = fs.readFileSync(startFile, 'utf8').trim().split('\n').map(JSON.parse);
-const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).level) : []);
-for (const s of starts) {
-  if (done.has(s.level)) continue;
-  const log = [], recipe = (s.recipe || []).slice();
-  let cur = judge(s.design, s.target, 0, false);
-  log.push(`start: family ${cur.exp} (target ${s.target}) skilled ${cur.skilled} luck ${JSON.stringify(cur.luck)} atTrap ${cur.attr}`);
-  for (let step = 1; step <= STEPS && !cur.pass; step++) {
-    const opts = changes(cur.d, { ...cur, step });
-    if (!opts.length) { log.push(`step ${step}: no change left to try`); break; }
+function steer(s, saved = null, checkpoint = () => {}) {
+  if (!Number.isFinite(s.target) || s.target < 1 || s.target > 20) throw Error('Target must be between 1 and 20 expected tries');
+  if (!s.design?.clock || !I.valid(s.design)) throw Error('Invalid starting board at level ' + s.level);
+  const log = saved?.log?.slice() || [], recipe = (saved?.recipe || s.recipe || []).slice();
+  const seen = new Set(saved?.seen || []);
+  let cur = judge(saved?.design || s.design, s.target, saved?.step || 0);
+  seen.add(boardKey(cur.d));
+  if (!saved) log.push(`start: family ${cur.exp} (target ${s.target}) skilled ${cur.skilled}`);
+  let nextStep = (saved?.step || 0) + 1;
+  const save = step => checkpoint({ step, design: cur.d, recipe, log, seen: [...seen] });
+  save(nextStep - 1);
+  for (let step = nextStep; step <= STEPS && !cur.pass; step++) {
+    const opts = changes(cur.d, { ...cur, step }).filter(o => !seen.has(boardKey(o.d)));
+    if (!opts.length) { log.push(`step ${step}: no new change left`); save(step); break; }
+    // Small runs rank edits only. A full, unchanged meter decides every accepted edit.
+    const scouts = opts.map(o => {
+      const m = measureHuman(boardOf(o.d), { runs: options.scoutRuns ?? 6, seeds: 1, setting: 'family', seed: 4711 });
+      return { o, distance: m.valid ? Math.abs(m.expectedTries - s.target) : Infinity };
+    }).sort((a, b) => a.distance - b.distance);
     let best = null;
-    for (const o of opts.slice(0, 3)) { const j = judge(o.d, s.target, step, false); log.push(`step ${step}: ${o.what} -> family ${j.exp} skilled ${j.skilled} luck ${JSON.stringify(j.luck)} atTrap ${j.attr}`); if (!best || j.score < best.j.score) best = { o, j }; }
-    if (best.j.score < cur.score || (best.j.score === cur.score && best.j.pass)) { cur = best.j; if (best.o.trap) recipe.push(best.o.trap); log.push(`step ${step}: kept "${best.o.what}"`); }
-    else { log.push(`step ${step}: nothing better`); break; }
-    // on the target: check the specials too (each must matter), and take off what does not
-    if (Math.abs(cur.exp - s.target) <= TOL) {
-      cur = judge(cur.d, s.target, step, true);
-      if (cur.idle.some(k => k !== 'clock')) {
-        const ob = { ...cur.d.obst }; if (cur.idle.includes('ice')) ob.ice = {}; if (cur.idle.includes('locks')) { ob.locks = []; ob.keys = []; }
-        const j = judge({ ...cur.d, obst: ob }, s.target, step, true); log.push(`step ${step}: idle ${cur.idle.join(',')} taken off -> family ${j.exp}`); if (j.score <= cur.score) cur = j;
-      }
+    for (const { o } of scouts) {
+      // Full family rating gives a lower bound: planner/quality penalties can only add to it.
+      const m = meas(o.d, 'family', true);
+      const bound = Math.max(0, Math.abs(m.expectedTries - s.target) - TOL) * 2;
+      if (!m.valid || bound > (best ? best.j.score : cur.score)) continue;
+      const j = judge(o.d, s.target, step);
+      log.push(`step ${step}: ${o.what} -> family ${j.exp} skilled ${j.skilled} score ${j.score.toFixed(2)}`);
+      if (!best || j.score < best.j.score) best = { o, j };
+      // Stop on a fully checked pass; no need to measure the other edits.
+      if (j.pass) break;
     }
+    if (best && (best.j.score < cur.score || (best.j.score === cur.score && best.j.pass))) {
+      cur = best.j; seen.add(boardKey(cur.d));
+      if (best.o.trap) recipe.push(best.o.trap);
+      log.push(`step ${step}: kept "${best.o.what}"`);
+      save(step);
+    } else { log.push(`step ${step}: nothing better`); save(step); break; }
   }
-  if (!cur.sm) cur = judge(cur.d, s.target, STEPS, true);
+  // A fresh seed is never used for search. A miss stays a review candidate, not a pass.
+  let holdout = null, grabFirst = null, grabValid = true;
+  if (cur.pass && (s.concept === 'dontGrab' || recipe.includes('dontGrab'))) {
+    const forced = meas({ ...cur.d, clock: { ...cur.d.clock, n: 1 } }, 'family');
+    grabFirst = forced.expectedTries;
+    grabValid = forced.valid === true && grabFirst >= cur.exp + 1;
+  }
+  if (cur.pass && grabValid) {
+    const h = measureHuman(boardOf(cur.d), { runs: 20, seeds: 2, setting: 'family', seed: options.holdoutSeed ?? 18427 });
+    holdout = { exp: h.expectedTries, first: h.firstTryRate, valid: h.valid,
+      seed: options.holdoutSeed ?? 18427, pass: h.valid === true && Math.abs(h.expectedTries - s.target) <= TOL };
+  }
   const d = cur.d;
-  const row = { level: s.level, concept: s.concept, title: s.title, recipe, target: s.target, pass: cur.pass, g61: { exp: cur.exp, first: cur.m.firstTryRate, version: cur.m.version }, skilled: cur.skilled,
-    luck: cur.luck, atTrap: cur.attr, specials: cur.sm, clockSpare: d.clock.n - routeOf(d), n: d.tiles.length, down: d.down.length, ice: Object.keys(d.obst.ice || {}).length, locks: (d.obst.locks || []).length,
-    design: { level: s.level, aspect: 1.6, tiles: d.tiles, faces: d.faces, down: d.down, gold: d.gold, obst: d.obst, clock: d.clock, solution: d.solution }, log };
-  fs.appendFileSync(outFile, JSON.stringify(row) + '\n');
-  console.log(s.level, s.title, row.pass ? 'PASS' : '(closest)', 'family', cur.exp, 'target', s.target, 'skilled', cur.skilled, 'luck', JSON.stringify(cur.luck), 'atTrap', cur.attr);
+  const reasons = [];
+  if (Math.abs(cur.exp - s.target) > TOL) reasons.push('offCurve');
+  if (!cur.valid) reasons.push('invalidMeasurement');
+  if (cur.skilled !== null && cur.skilled > DENNIS_MAX) reasons.push('skilledPlayer');
+  if (!luckOk(cur.room)) reasons.push('unrelievedLuck');
+  if (cur.attr !== null && cur.attr < ATTR) reasons.push('lossesOutsideTrap');
+  if (cur.idle.length) reasons.push('idleSpecials');
+  if (!grabValid) reasons.push('clockFirstNotWorse');
+  if (holdout && !holdout.pass) reasons.push('holdoutMiss');
+  const losses = cur.m.results.flatMap(r => r.attempts).filter(a => !a.win && !a.censored);
+  const late = losses.filter(a => a.left <= 0.45 * d.tiles.length).length;
+  const warnings = late >= 4 && late / losses.length >= 0.3 ? ['lateSqueeze'] : [];
+  return { ...s, recipe, pass: cur.pass && grabValid && holdout?.pass === true, searchPass: cur.pass,
+    g61: { exp: cur.exp, first: cur.m.firstTryRate, version: cur.m.version }, skilled: cur.skilled,
+    luck: cur.luck, atTrap: cur.attr, specials: cur.sm, holdout, grabFirst, warnings, reviewReasons: reasons,
+    clockSpare: d.clock.n - routeOf(d), n: d.tiles.length, down: d.down.length,
+    ice: Object.keys(d.obst.ice || {}).length, locks: (d.obst.locks || []).length,
+    design: { ...d, level: s.level, aspect: d.aspect || 1.6 }, log };
+}
+return { steer, judge, changes, meter };
+}
+
+module.exports = { createSteerer };
+if (require.main === module) {
+  const { runFile } = require('./run_file.js');
+  const [startFile, outFile] = process.argv.slice(2);
+  if (!startFile || !outFile) {
+    console.error('Usage: node source/tools/factory/steer_design.js <start.jsonl> <out.jsonl>');
+    process.exitCode = 1;
+  } else runFile(startFile, outFile);
 }

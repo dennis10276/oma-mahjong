@@ -160,7 +160,7 @@ function specialsMatter(d, m0) {
   return out;
 }
 
-module.exports = { roomProfile, trapTiles };
+module.exports = { roomProfile, trapTiles, applyRecipe, CONCEPTS };
 if (require.main === module) {
 const piles = JSON.parse(fs.readFileSync(pilesFile, 'utf8')), plan = JSON.parse(fs.readFileSync(planFile, 'utf8'));
 const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).level) : []);

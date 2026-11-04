@@ -22,7 +22,7 @@ const PLAN = JSON.parse(fs.readFileSync(path.join(ROOT, 'analysis', 'variety-pla
 const NAMES = ['Dennisisdebeste', 'Mrs. Doubtfire'];
 
 // ---------- measuring and checking ----------
-const tilesOf = b => b.tiles.map(([x, y, z]) => ({ x, y, z }));
+const tilesOf = b => b.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : t);
 const obsGame = b => { const tiles = tilesOf(b), down = new Uint8Array(tiles.length); b.down.forEach(i => down[i] = 1); const o = b.obst;
   return { tiles, nb: L2.neighbors(tiles), down, faces: b.faces, rules: o ? { iceNb: L2.iceNeighbors(tiles), ice: o.ice || {}, locks: new Set(o.locks || []), keys: o.keys || [] } : null, clock: b.clock }; };
 const measure = (b, runs, seed) => { const g = obsGame(b), out = {}; for (const n of NAMES) { const p = { ...H2.P, ...profiles[n].persona }; const r = H2.rateChain(g, runs, seed, p, p.memory, 4); out[n] = { first: r.first, two: r.within[1], four: r.within[3] }; } return out; };
@@ -471,17 +471,17 @@ function clockRoute(g, ci) {   // (hard.js clockRoute, searching deeper: a clock
 
 // EXACT: the clock counts from the true shortest way to it (tools/lab/exact.js), not the beam search
 const { exactRoute } = require('./exact');
-let EXACT = false;
+let EXACT = false, exactOptions = {};
 function fix(y, spare) {
   const g = gameG(y);
   let path = null;
   if (y.clock && y.clockMate !== undefined) {   // "don't grab the clock": the quickest way to its buried partner, the clock right with it
-    const ex = EXACT ? exactRoute(g, y.clockMate) : null, route = ex ? ex.path : clockRoute(g, y.clockMate); if (!route) return null;
+    const ex = EXACT ? exactRoute(g, y.clockMate, exactOptions.nodes, exactOptions.milliseconds) : null, route = ex ? ex.path : EXACT ? null : clockRoute(g, y.clockMate); if (!route) return null;
     const ck = y.clock.i, k = route.indexOf(y.clockMate); path = route.filter(i => i !== ck); path.splice(k + (route.indexOf(ck) < k ? 0 : 1), 0, ck);
     const z = { ...y, solution: path, clock: { i: ck, n: path.indexOf(ck) + 1 + (spare ?? 1) } };
     return valid(z) ? z : null;
   }
-  if (y.clock) { const ex = EXACT ? exactRoute(g, y.clock.i) : null; path = ex ? ex.path : EXACT ? null : clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
+  if (y.clock) { const ex = EXACT ? exactRoute(g, y.clock.i, exactOptions.nodes, exactOptions.milliseconds) : null; path = ex ? ex.path : EXACT ? null : clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
   if (!path && valid(y)) path = y.solution;
   if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], 120000, g.rules); }
   if (!path || path.length !== y.tiles.length) return null;
@@ -556,7 +556,7 @@ function nudge(b, target, seed, keep, spare, kind, steps = +(process.env.STEPS |
 const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 }, brutal: { Dennisisdebeste: 0.02, 'Mrs. Doubtfire': 0.01 }, honest: null }, SPARE = { hard: 2, veryhard: 1, brutal: 1, honest: 2 };
 const OUTD = path.join(__dirname, 'ideas-out');
 const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 80 }, (_, k) => 'blob' + (9001 + k * 37))];
-module.exports = { IDEAS, ctxOf, fix, valid, clone, rngOf, measure, setExact: v => { EXACT = v; } };
+module.exports = { IDEAS, ctxOf, fix, valid, clone, rngOf, measure, setExact: (v, options = {}) => { EXACT = v; exactOptions = options; } };
 if (require.main !== module) { /* used as a module by tools/factory/plan.js */ }
 else if (process.argv[2] === 'merge') {
   const ideas = fs.readdirSync(OUTD).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8'))).filter(x => x.id >= +(process.argv[3] || 0)).sort((a, b) => a.id - b.id);

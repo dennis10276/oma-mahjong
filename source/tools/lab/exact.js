@@ -6,7 +6,8 @@
 'use strict';
 const path = require('path');
 const L = require(path.join(__dirname, '..', '..', 'www', 'layouts.js'));
-function exactRoute(g, ci, limit = +(process.env.EXACT_LIMIT || 400000)) {
+function exactRoute(g, ci, limit = +(process.env.EXACT_LIMIT || 400000), milliseconds = Infinity) {
+  const started = Date.now();
   const n = g.tiles.length, F = g.faces, init = new Uint8Array(n).fill(1);
   const can = (i, alive) => alive[i] && (g.rules ? L.takeable(i, alive, g.nb, g.rules, init) : L.isFree(i, alive, g.nb));
   const rulesNow = alive => { if (!g.rules) return null; const ice = {}; for (const k in g.rules.ice) { const gone = g.rules.iceNb[k].filter(i => !alive[i]).length; if (g.rules.ice[k] > gone) ice[k] = g.rules.ice[k] - gone; } return { ...g.rules, ice }; };
@@ -23,6 +24,8 @@ function exactRoute(g, ci, limit = +(process.env.EXACT_LIMIT || 400000)) {
   const seen = new Set(); let nodes = 0;
   push({ alive: init, tray: [], path: [], f: lower(init) });
   while (heap.length && nodes < limit) {
+    // A budget miss is unresolved, never evidence that a longer route is exact.
+    if (nodes % 64 === 0 && Date.now() - started >= milliseconds) return null;
     const s = pop(); nodes++;
     for (let i = 0; i < n; i++) {
       if (!can(i, s.alive)) continue;

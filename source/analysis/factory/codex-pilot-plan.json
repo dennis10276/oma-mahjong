@@ -1,0 +1,34 @@
+{
+  "piles": "codex-pilot-piles.json",
+  "curve": [
+    [
+      175,
+      2.1
+    ],
+    [
+      176,
+      2.6
+    ],
+    [
+      177,
+      3.6
+    ]
+  ],
+  "levels": [
+    {
+      "level": 175,
+      "pile": 924,
+      "concept": "buriedChain"
+    },
+    {
+      "level": 176,
+      "pile": 906,
+      "concept": "iceBeforeKeys"
+    },
+    {
+      "level": 177,
+      "pile": 976,
+      "concept": "iceBeforeKeys"
+    }
+  ]
+}
