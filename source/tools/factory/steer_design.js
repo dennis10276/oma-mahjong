@@ -118,6 +118,18 @@ function changes(d, state) {
   // graded steps (the journal: all ice thawed is a cliff, 179 20 -> 4.3): one ice softer or harder, half the ice, one lock
   const iceAt = Object.keys(d.obst.ice || {}).map(Number), rank = new Map(state.spots.tiles.map((j, k) => [j, k]));
   const byLoss = a => a.slice().sort((x, y) => (rank.get(x) ?? 1e9) - (rank.get(y) ?? 1e9));
+  // the clock moved along the way, same spare (the journal: one spare move is a cliff, 8 -> 2.8 and 6 -> 13.5; the way to
+  // the clock is the strongest lever in predict.js): a tile a little earlier (softer) or later (harder) on the solution,
+  // not a special, with the exact route worked out again
+  {
+    const pos = routeOf(d) - 1, dir = d.clockMate !== undefined ? 0 : softer ? -1 : (state.exp < state.target - TOL ? 1 : 0);
+    const spec = i => (d.obst.keys || []).includes(i) || (d.obst.locks || []).includes(i) || (d.obst.ice || {})[i] !== undefined;
+    for (let k = 2; dir && k <= 6; k++) {
+      const i = d.solution[pos + dir * k]; if (i === undefined || pos + dir * k < 3 || spec(i)) continue;
+      const z = I.fix({ ...d, clock: { i, n: 999 }, down: d.down.filter(j => j !== i) }, sp);
+      if (z && I.valid(z) && routeOf(z) !== routeOf(d)) { out.push({ what: 'clock moved ' + (dir < 0 ? 'earlier' : 'later') + ' on the way', d: z }); break; }
+    }
+  }
   if (softer) {
     const hard = byLoss(iceAt.filter(j => d.obst.ice[j] >= 2))[0];
     if (hard !== undefined) out.push({ what: 'one ice softer', d: { ...d, obst: { ...d.obst, ice: { ...d.obst.ice, [hard]: d.obst.ice[hard] - 1 } } } });
