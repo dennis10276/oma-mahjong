@@ -62,6 +62,7 @@ function handback(planFile, poolFile, measurements, out) {
     else if (!quality.eligible) {
       if (quality.reason) reasons.push(quality.reason);
       if (quality.skilled?.exp > plan.skilledMax) reasons.push('skilled planner');
+      if (quality.skilled?.exp < (plan.skilledMin ?? 0)) reasons.push('skilled too easy');
       if (quality.atTrap < plan.attribution) reasons.push('losses outside traps');
       if (!quality.room?.ok || quality.room.unrelieved > plan.unrelievedMax) reasons.push('luck/relief');
       if (quality.idle?.length) reasons.push('idle ' + quality.idle.join('/'));

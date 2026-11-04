@@ -5,6 +5,10 @@ const { createMeter, boardKey, atomicJson } = require('./meter.js');
 const { roomProfile, trapTiles } = require('./design_traps.js');
 const { checkOrigin } = require('./originality.js');
 const { SEED } = require('./final_seed.js');
+// Dennis 2026-11-04: 200 at 10 family tries (-> 13 at 225) and the skilled player (Dennis) needs at least 2.5 tries.
+// The bands follow the curve; set them for a run: FACTORY_SCREEN=lo,hi FACTORY_RATE=lo,hi FACTORY_SKILLED=min,max
+const band = (k, d) => (process.env[k] || d).split(',').map(Number);
+const [SCREEN_LO, SCREEN_HI] = band('FACTORY_SCREEN', '4.5,13'), [RATE_LO, RATE_HI] = band('FACTORY_RATE', '5.5,11.5'), [SKILLED_MIN, SKILLED_MAX] = band('FACTORY_SKILLED', '0,6');
 
 function evaluate(row, mode, meter) {
   if (row.seedSource === 'fresh-designed' && checkOrigin(row)) throw Error('Invalid fresh origin: ' + checkOrigin(row));
@@ -19,7 +23,7 @@ function evaluate(row, mode, meter) {
   if (mode === 'screen') {
     if (!room.ok || room.unrelieved > 1) return { room, eligible: false };
     const m = meter.measure(d, { ...opts, runs: 6, seeds: 1 });
-    return { room, exp: m.expectedTries, valid: m.valid, eligible: m.valid && m.expectedTries >= 4.5 && m.expectedTries <= 13 };
+    return { room, exp: m.expectedTries, valid: m.valid, eligible: m.valid && m.expectedTries >= SCREEN_LO && m.expectedTries <= SCREEN_HI };
   }
   const m = meter.measure(d, { ...opts, capture: 'tail' });
   const T = trapTiles(d), losses = m.results.flatMap(r => r.attempts).filter(a => !a.win && !a.censored);
@@ -29,7 +33,7 @@ function evaluate(row, mode, meter) {
   const base = { room, train: { exp: m.expectedTries, first: m.firstTryRate, valid: m.valid, version: m.version },
     atTrap: losses.length ? at / losses.length : 1, lateShare: losses.length ? late / losses.length : 0 };
   if (mode === 'rate') {
-    if (!m.valid || m.expectedTries < 5.5 || m.expectedTries > 11.5) return { ...base, eligible: false };
+    if (!m.valid || m.expectedTries < RATE_LO || m.expectedTries > RATE_HI) return { ...base, eligible: false };
     const v = meter.measure(d, { ...opts, seed: 18427 });
     return { ...base, validation: { exp: v.expectedTries, first: v.firstTryRate, valid: v.valid, seed: 18427 },
       eligible: v.valid && Math.abs(m.expectedTries - v.expectedTries) <= 2 };
@@ -53,7 +57,7 @@ function evaluate(row, mode, meter) {
   const forced = (row.recipe || []).some(k => k === 'dontGrab' || k === 'keyToEscape') ? meter.measure({ ...d, clock: { ...d.clock, n: 1 } }, opts) : null;
   const grabValid = !forced || forced.valid && forced.expectedTries >= m.expectedTries + 1;
   return { ...base, skilled: { exp: md.expectedTries, valid: md.valid }, special, idle, grabFirst: forced?.expectedTries ?? null,
-    eligible: m.valid && md.valid && md.expectedTries <= 6 && room.ok && room.unrelieved <= 1 && base.atTrap >= 0.6 && !idle.length && grabValid };
+    eligible: m.valid && md.valid && md.expectedTries <= SKILLED_MAX && md.expectedTries >= SKILLED_MIN && room.ok && room.unrelieved <= 1 && base.atTrap >= 0.6 && !idle.length && grabValid };
 }
 
 if (!isMainThread) {

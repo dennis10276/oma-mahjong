@@ -3,6 +3,7 @@ const fs = require('fs'), path = require('path');
 const { Worker } = require('worker_threads');
 const { createStageStore } = require('./stage_store.js');
 const { predictTries } = require('./predict.js');
+const [SCREEN_LO, SCREEN_HI] = (process.env.FACTORY_SCREEN || '4.5,13').split(',').map(Number);
 
 async function main(poolFile, planFile, dir, jobs = 4) {
   let rows = JSON.parse(fs.readFileSync(poolFile)), stamp = fs.statSync(poolFile).mtimeMs;
@@ -28,7 +29,7 @@ async function main(poolFile, planFile, dir, jobs = 4) {
     if (ready.length) return { row: ready[0], mode: 'quality' };
     const candidates = rows.filter(r => {
       const s = read(r, 'screen');
-      return needs(r) && s?.valid && s.exp >= 5 && s.exp <= 12 && !read(r, 'rate') && !running.has(r.id + '.rate');
+      return needs(r) && s?.valid && s.exp >= SCREEN_LO + 0.5 && s.exp <= SCREEN_HI - 1 && !read(r, 'rate') && !running.has(r.id + '.rate');
     });
     // Spread early work across shapes rather than spending the budget on one pile.
     const counts = {};

@@ -589,3 +589,12 @@ Learning ("learn from what works and doesn't"):
 - `predict.js` + `learned-model.json`: family rating guessed from a board's make-up (1537 rated boards; rank 0.59). Orders
   the screening queue only; top quarter lands within 2.5 tries 20% vs 8% for the bottom quarter (in-sample).
   Strongest levers: a long way to the clock (harder), more face-down tiles (easier on these boards).
+
+## New curve (Dennis, 2026-11-04 23:39)
+"I think the first levels are too easy. Start the levels at 10 tries at 200." Asked whether that meant the family or
+him: "1 [family 10 -> 13] and require the skilled bot to at least need 2.5-3 tries."
+- Family curve 200 at 10 -> 224 at 12 -> 225 at 13 (big boards 210, 220): `batch-200-225-v10-plan.json`.
+- Skilled player at least 2.5 tries (`skilledMin`, `FACTORY_SKILLED=2.5,6`); at most 6 as before.
+- Screen/rate bands follow the curve: `FACTORY_SCREEN=7,17 FACTORY_RATE=8,15`.
+- Note for Dennis: on the bot's scale 132 and 150 sit at about 7, so 10-13 is above anything the family has played.
+- Of round 1's 15 qualified boards only the 225 board (family 10.05, skilled 5.42) fits the new curve (at 200).

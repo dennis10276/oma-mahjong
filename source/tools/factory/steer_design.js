@@ -26,6 +26,8 @@ function createSteerer(options = {}) {
 const meter = options.meter || createMeter(options);
 const measureHuman = meter.measure;
 const TOL = options.tolerance ?? +(process.env.TOL || 0.5), DENNIS_MAX = options.skilledMax ?? +(process.env.DENNIS_MAX || 6), ATTR = options.attribution ?? +(process.env.ATTR || 0.6), STEPS = options.steps ?? +(process.env.STEPS || 14);
+// Dennis 2026-11-04: the skilled player must need at least 2.5 tries (FACTORY_SKILLED=min,max)
+const DENNIS_MIN = options.skilledMin ?? +((process.env.FACTORY_SKILLED || '0').split(',')[0] || 0);
 I.setExact(true, { nodes: options.routeNodes ?? 20000, milliseconds: options.routeMilliseconds ?? 1500 });
 const EXTRA = ['iceChain', 'lockedPartners', 'deepKeys'];
 // only real bot runs go in the journal (test meters have made-up fingerprints)
@@ -172,9 +174,9 @@ function judge(d, target, step, withSpecials = true) {
   const room = off === 0 ? roomProfile(d) : { ok: true, tightBlind: 0, unrelieved: 0, tightTiles: [], measured: false };
   const luck = room.ok && room.measured !== false ? { luckMoments: room.tightBlind, reliefMoments: Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0)), unrelieved: room.unrelieved } : null;
   const valid = m.valid === true && (!md || md.valid === true);
-  const score = off * 2 + Math.max(0, skilled - DENNIS_MAX) + (room.ok && luckOk(room) ? 0 : 3) + Math.max(0, ATTR - (attr ?? 1)) * 3 + idle.length * 2 + (valid ? 0 : 100);
+  const score = off * 2 + Math.max(0, skilled - DENNIS_MAX) + (skilled === null ? 0 : Math.max(0, DENNIS_MIN - skilled) * 2) + (room.ok && luckOk(room) ? 0 : 3) + Math.max(0, ATTR - (attr ?? 1)) * 3 + idle.length * 2 + (valid ? 0 : 100);
   return { d, m, exp, skilled, room, luck, spots, attr, sm, idle, score, target, step, valid,
-    pass: valid && off === 0 && md !== null && skilled <= DENNIS_MAX && room.ok && luckOk(room) && (attr === null || attr >= ATTR) && sm !== null && !idle.length };
+    pass: valid && off === 0 && md !== null && skilled <= DENNIS_MAX && skilled >= DENNIS_MIN && room.ok && luckOk(room) && (attr === null || attr >= ATTR) && sm !== null && !idle.length };
 }
 
 function steer(s, saved = null, checkpoint = () => {}) {
@@ -236,6 +238,7 @@ function steer(s, saved = null, checkpoint = () => {}) {
   if (Math.abs(cur.exp - s.target) > TOL) reasons.push('offCurve');
   if (!cur.valid) reasons.push('invalidMeasurement');
   if (cur.skilled !== null && cur.skilled > DENNIS_MAX) reasons.push('skilledPlayer');
+  if (cur.skilled !== null && cur.skilled < DENNIS_MIN) reasons.push('skilledTooEasy');
   if (!luckOk(cur.room)) reasons.push('unrelievedLuck');
   if (cur.attr !== null && cur.attr < ATTR) reasons.push('lossesOutsideTrap');
   if (cur.idle.length) reasons.push('idleSpecials');

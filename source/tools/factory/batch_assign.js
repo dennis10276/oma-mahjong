@@ -29,6 +29,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
   const past = plan.originality?.required ? previousBoards(levels, plan.levelTable) : [];
   const novel = inv.map(r => past.every(p => !compare(r, p, plan.originality?.maxLayoutShare)));
   const allowed = levels.map(s => inv.map((r, i) => ({ r, i })).filter(({ r, i }) => (r.n > 88) === s.big &&
+    (r.quality.skilled?.exp ?? 0) >= (plan.skilledMin ?? 0) &&
     (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) && novel[i] &&
     !live.has(boardKey(r.design)) && context.every(c => c.level > 164 && Math.abs(c.level - s.level) > 10 || F.share(r.design.tiles, c.spots) <= 0.75) &&
     Math.abs(r.exp - s.target) <= plan.tolerance && Math.abs(r.rate.train.exp - r.rate.validation.exp) <= (plan.maxSeedGap ?? 2) &&
