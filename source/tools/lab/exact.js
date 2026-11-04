@@ -6,18 +6,56 @@
 'use strict';
 const path = require('path');
 const L = require(path.join(__dirname, '..', '..', 'www', 'layouts.js'));
+function makeLowerBound(g, ci) {
+  const ancestors = g.tiles.map((_, i) => {
+    const out = new Set(), todo = [i];
+    while (todo.length) for (const j of g.nb.above[todo.pop()]) if (!out.has(j)) { out.add(j); todo.push(j); }
+    return [...out];
+  });
+  return alive => {
+    const required = new Set(), rules = g.rules, keysLeft = rules && (rules.keys || []).some(i => alive[i]);
+    let changed = false;
+    const add = i => { for (const j of [i, ...ancestors[i]]) if (alive[j] && !required.has(j)) { required.add(j); changed = true; } };
+    add(ci);
+    do {
+      changed = false;
+      for (const i of required) {
+        if (keysLeft && rules.locks?.has(i)) for (const key of rules.keys) add(key);
+        const need = rules?.ice?.[i] || 0;
+        if (!need) continue;
+        const neighbours = rules.iceNb[i], gone = neighbours.filter(j => !alive[j]).length;
+        const planned = neighbours.filter(j => alive[j] && required.has(j)).length;
+        const remaining = need - gone - planned;
+        if (remaining <= 0) continue;
+        const optional = neighbours.filter(j => alive[j] && !required.has(j));
+        if (optional.length === remaining) for (const j of optional) add(j);
+        // If every sufficient thaw needs a locked neighbour, its keys are
+        // mandatory too. Count the dependency, not a guessed route.
+        if (keysLeft && optional.filter(j => !rules.locks?.has(j)).length < remaining)
+          for (const key of rules.keys) add(key);
+      }
+    } while (changed);
+    const side = name => {
+      const extra = new Set(), todo = [ci], seen = new Set();
+      while (todo.length) { const i = todo.pop(); if (seen.has(i)) continue; seen.add(i);
+        for (const j of g.nb[name][i]) if (alive[j]) { if (!required.has(j)) extra.add(j); todo.push(j); } }
+      return extra.size;
+    };
+    let thaw = 0;
+    for (const i of required) if (rules?.ice?.[i]) {
+      const accounted = rules.iceNb[i].filter(j => !alive[j] || required.has(j)).length;
+      thaw = Math.max(thaw, rules.ice[i] - accounted);
+    }
+    // Side work and thaw work can share tiles: max, not sum, stays a lower bound.
+    return required.size + Math.max(Math.min(side('left'), side('right')), thaw);
+  };
+}
 function exactRoute(g, ci, limit = +(process.env.EXACT_LIMIT || 400000), milliseconds = Infinity) {
   const started = Date.now();
   const n = g.tiles.length, F = g.faces, init = new Uint8Array(n).fill(1);
   const can = (i, alive) => alive[i] && (g.rules ? L.takeable(i, alive, g.nb, g.rules, init) : L.isFree(i, alive, g.nb));
   const rulesNow = alive => { if (!g.rules) return null; const ice = {}; for (const k in g.rules.ice) { const gone = g.rules.iceNb[k].filter(i => !alive[i]).length; if (g.rules.ice[k] > gone) ice[k] = g.rules.ice[k] - gone; } return { ...g.rules, ice }; };
-  // a lower bound on the moves still needed: the tiles above ci, plus the shorter side chain, plus ci
-  const lower = alive => {
-    const up = new Set(), st = [ci];
-    while (st.length) for (const j of g.nb.above[st.pop()]) if (alive[j] && !up.has(j)) { up.add(j); st.push(j); }
-    const side = name => { const set = new Set(), st2 = [ci], seen = new Set(); while (st2.length) { const k = st2.pop(); if (seen.has(k)) continue; seen.add(k); for (const j of g.nb[name][k]) if (alive[j] && !up.has(j)) { set.add(j); st2.push(j); } } return set.size; };
-    return up.size + Math.min(side('left'), side('right')) + 1;
-  };
+  const lower = makeLowerBound(g, ci);
   // a small binary heap on f = moves + lower bound
   const heap = [], push = x => { heap.push(x); let i = heap.length - 1; while (i) { const p = (i - 1) >> 1; if (heap[p].f <= heap[i].f) break; [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } };
   const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length) { heap[0] = last; let i = 0; for (;;) { const a = 2 * i + 1, b = a + 1; let m = i; if (a < heap.length && heap[a].f < heap[m].f) m = a; if (b < heap.length && heap[b].f < heap[m].f) m = b; if (m === i) break; [heap[m], heap[i]] = [heap[i], heap[m]]; i = m; } } return top; };
@@ -45,4 +83,4 @@ function exactRoute(g, ci, limit = +(process.env.EXACT_LIMIT || 400000), millise
   }
   return null;
 }
-module.exports = { exactRoute };
+module.exports = { exactRoute, makeLowerBound };

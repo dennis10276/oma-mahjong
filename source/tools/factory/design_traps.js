@@ -91,7 +91,7 @@ function roomProfile(d, width = 48) {
   const rules = { iceNb: L.iceNeighbors(tiles), ice: o.ice || {}, locks: new Set(o.locks || []), keys: o.keys || [] };
   const alive0 = new Uint8Array(n).fill(1), down0 = new Set(d.down), ck = d.clock;
   // up to the clock: the exact way the designer made (the clock leaves no room to wander); from there the beam
-  const start = { alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0, tightTiles: [], unrelieved: 0, sinceLuck: null };
+  const start = { alive: alive0.slice(), tray: [], blindMax: 0, sum: 0, blind: 0, tight: 0, moves: 0, tightTiles: [], unrelieved: 0, sinceLuck: null, path: [] };
   const pre = ck ? d.solution.slice(0, d.solution.indexOf(ck.i) + 1) : [];
   // a luck moment (Dennis 2026-11-03: a face-down tile can be turned over before you take it, and the tray relieved in
   // between): a dig - an unmatched take that uncovers a face-down tile you have not seen - made with 2 or more waiting
@@ -100,7 +100,7 @@ function roomProfile(d, width = 48) {
     const q = start.tray.findIndex(t => f[t] === f[i]), blind = q < 0 && uncovers(start.alive, i);
     start.blindMax = Math.max(start.blindMax, blind ? start.tray.length : 0); start.blind += blind ? 1 : 0; start.tight += blind && start.tray.length >= 2 ? 1 : 0; if (blind && start.tray.length >= 2) start.tightTiles.push(i);
     if (blind && start.tray.length >= 2) { if (start.sinceLuck !== null && start.sinceLuck >= 2) start.unrelieved++; start.sinceLuck = start.tray.length; } else if (start.sinceLuck !== null) start.sinceLuck = Math.min(start.sinceLuck, start.tray.length);
-    start.tray = q >= 0 ? start.tray.filter((_, k) => k !== q) : start.tray.concat(i); start.alive[i] = 0; start.moves++; start.sum += start.tray.length;
+    start.tray = q >= 0 ? start.tray.filter((_, k) => k !== q) : start.tray.concat(i); start.alive[i] = 0; start.moves++; start.sum += start.tray.length; start.path.push(i);
     if (start.tray.length >= 4) return { ok: false };
   }
   let beam = [start];
@@ -122,7 +122,7 @@ function roomProfile(d, width = 48) {
         // moment is unrelieved when the tray has not come down to 1 or less since the one before
         const unrelieved = s.unrelieved + (luckNow && s.sinceLuck !== null && s.sinceLuck >= 2 ? 1 : 0);
         const sinceLuck = luckNow ? s.tray.length : s.sinceLuck === null ? null : Math.min(s.sinceLuck, tray.length);
-        next.push({ alive, tray, moves, blindMax: Math.max(s.blindMax, blind ? s.tray.length : 0), sum: s.sum + tray.length, blind: s.blind + (blind ? 1 : 0), tight: s.tight + (luckNow ? 1 : 0), tightTiles: luckNow ? s.tightTiles.concat(i) : s.tightTiles, unrelieved, sinceLuck });
+        next.push({ alive, tray, moves, blindMax: Math.max(s.blindMax, blind ? s.tray.length : 0), sum: s.sum + tray.length, blind: s.blind + (blind ? 1 : 0), tight: s.tight + (luckNow ? 1 : 0), tightTiles: luckNow ? s.tightTiles.concat(i) : s.tightTiles, unrelieved, sinceLuck, path: s.path.concat(i) });
       }
     }
     if (!next.length) return { ok: false };
@@ -130,7 +130,7 @@ function roomProfile(d, width = 48) {
     beam = next.slice(0, width);
   }
   const b = beam.find(s => !s.tray.length) || beam[0];
-  return { ok: !b.tray.length, blindMax: b.blindMax, blindTakes: b.blind, tightBlind: b.tight, unrelieved: b.unrelieved, room: 3 - b.blindMax, tightTiles: b.tightTiles };
+  return { ok: !b.tray.length, blindMax: b.blindMax, blindTakes: b.blind, tightBlind: b.tight, unrelieved: b.unrelieved, room: 3 - b.blindMax, tightTiles: b.tightTiles, path: b.path };
 }
 
 // ---------- where the family profile loses ----------

@@ -115,17 +115,16 @@ test('an exhausted route-search budget cannot certify a loose clock', () => {
 
 test('batch validation rejects repeated shapes and misplaced big boards before bot work', () => {
   const piles = JSON.parse(fs.readFileSync(path.join(__dirname, '../../analysis/factory/codex-pilot-piles.json')));
-  validatePiles([{ level: 175, pile: 924 }, { level: 176, pile: 906 }, { level: 177, pile: 976 }], piles);
+  assert.throws(() => validatePiles([{ level: 175, pile: 924 }, { level: 176, pile: 906 }, { level: 177, pile: 976 }], piles), /resembles/);
   assert.throws(() => validatePiles([{ level: 175, pile: 924 }, { level: 176, pile: 924 }], piles), /repeat/);
   assert.throws(() => validatePiles([{ level: 180, pile: 924 }], piles), /tenth/);
 });
 
-test('an empty inventory constructs a new trap with a valid full solution', t => {
+test('the builder constructs a fresh trap with a valid full solution', t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oma-factory-seed-'));
   t.after(() => fs.rmSync(dir, { recursive: true }));
-  fs.writeFileSync(path.join(dir, 'empty.jsonl'), '');
   fs.writeFileSync(path.join(dir, 'plan.json'), JSON.stringify({
-    piles: path.join(__dirname, '../../analysis/factory/codex-pilot-piles.json'), inventory: 'empty.jsonl',
+    piles: path.join(__dirname, '../../analysis/factory/codex-pilot-piles.json'),
     routeMilliseconds: 5000, levels: [{ level: 177, pile: 976, concept: 'iceBeforeKeys', target: 3.6 }]
   }));
   const file = prepare(path.join(dir, 'plan.json'), path.join(dir, 'out.jsonl'));
@@ -135,4 +134,5 @@ test('an empty inventory constructs a new trap with a valid full solution', t =>
   assert.equal(row.design.solution.length, row.design.tiles.length);
   assert.ok(Object.keys(row.design.obst.ice).length > 0);
   assert.ok(row.design.obst.locks.length > 0);
+  assert.equal(row.origin.kind, 'fresh-design');
 });

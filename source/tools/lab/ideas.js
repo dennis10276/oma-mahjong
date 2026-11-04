@@ -483,7 +483,7 @@ function fix(y, spare) {
   }
   if (y.clock) { const ex = EXACT ? exactRoute(g, y.clock.i, exactOptions.nodes, exactOptions.milliseconds) : null; path = ex ? ex.path : EXACT ? null : clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
   if (!path && valid(y)) path = y.solution;
-  if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], 120000, g.rules); }
+  if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], EXACT ? (exactOptions.solveNodes ?? exactOptions.nodes ?? 20000) : 120000, g.rules); }
   if (!path || path.length !== y.tiles.length) return null;
   const z = { ...y, solution: path };
   // the clock: the moves that way needs to reach it, plus `spare` (never a number cut below that)

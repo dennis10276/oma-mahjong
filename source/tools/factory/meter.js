@@ -31,7 +31,7 @@ function sourceHash(entry) {
 }
 function atomicJson(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  const tmp = file + '.' + process.pid + '.tmp';
+  const tmp = file + '.' + process.pid + '.' + crypto.randomUUID() + '.tmp';
   fs.writeFileSync(tmp, JSON.stringify(value));
   fs.renameSync(tmp, file);
 }

@@ -12,21 +12,28 @@ planner. No other checkout or `HUMAN_BOT` setting is needed. See
 
 ## Run
 
-From the repository root, this small pilot exercises the pipeline:
+From the repository root, build the original 200–225 batch offline:
 
 ```powershell
-$env:STEPS = '3'
-node source/tools/factory/build.js source/analysis/factory/codex-pilot-plan.json source/build/factory-pilot.jsonl
+node source/tools/factory/run_original.js source/analysis/factory/batch-200-225-plan.json source/build/original-levels 4 6 8
 ```
 
-Run the same command again to resume. Prepared boards, accepted edits and bot
-measurements survive interruption. A completed run makes no new bot calls.
-If inputs, code, profiles or steering settings change, choose a new output
-filename; compatible measurements are still shared through the cache.
+The last three numbers are construction workers, bot workers, and fresh pairing
+candidates per intended level. The pipeline checks each fresh deal, scouts edits,
+runs full ratings and quality checks, then selects one design per slot. Tuning
+siblings never fill several levels. Missing slots produce `coverage.json`, not
+a successful batch. A selected batch is independently verified in `levels.jsonl`.
 
-The pilot's 2.1/2.6/3.6 targets are a software benchmark, **not a replacement for
-the production difficulty curve**. Output stays offline; this command does not
-publish levels or alter game tables.
+Run the same command again to resume. Measurements and construction attempts
+survive interruption. Changed inputs or construction code require a new output
+directory; compatible bot measurements still share the cache. Output stays
+offline and does not publish levels or alter game tables.
+
+For this batch, 200 starts at seven family-bot tries, 224 reaches nine, and 225
+reaches ten. Only 210 and 220 are big. Ratings pool 80 campaigns: 40 on each of
+two fixed seeds, with the original calibrated family profile and 20-try cap.
+The two seed estimates must also agree within two tries. The historical pilot's
+2.1/2.6/3.6 targets were a software benchmark, not this difficulty curve.
 
 ## Plan
 
@@ -35,10 +42,11 @@ Paths in the plan are relative to its file:
 ```json
 {
   "piles": "my-piles.json",
-  "curve": [[175, 4.5], [180, 6.2], [199, 7]],
+  "curve": [[200, 7], [224, 9], [225, 10]],
+  "bigLevels": [210, 220],
   "levels": [
-    {"level": 175, "pile": 175, "concept": "buriedChain"},
-    {"level": 176, "pile": 176, "concept": "iceBeforeKeys", "extra": ["deepKeys"]}
+    {"level": 200, "concept": "buriedChain"},
+    {"level": 201, "concept": "iceBeforeKeys", "extra": ["deepKeys"]}
   ]
 }
 ```
@@ -53,10 +61,16 @@ Concepts: `buriedChain`, `clockBesideLock`, `dontGrab`, `oneFreeSpot`,
 Generate piles with `piles_for.js`, or supply its JSON format. The build checks
 approved shapes, 52px tiles, towers, big-board slots, repeated shapes and tile
 overlap, including kept levels around the batch and played levels 70–164.
-It first looks for a measured trap on the **same tile coordinates** in
-`analysis/factory/fallback-g61.jsonl`. An optional `inventory` selects another
-JSONL pool. Otherwise it designs a new seed (up to `seedAttempts`, default 4).
-Known ratings select seeds; every resulting board is measured again.
+Every new level starts from a fresh deal and an authored trap brief. Inventory
+boards are rejected. Cropping a big board, shifting its layers, rotating it,
+or changing its pictures does not count as a new level.
+
+The 200–225 batch uses `original_layouts.js` to create whole layouts. All eight
+rotations/reflections are compared with the campaign and the rest of the batch;
+shared coordinates must stay below 75%. Each level owns one creation ID and its
+layout stays fixed while the bots tune its puzzle. Recipe repetition is limited
+as well. These are objective safeguards; human play remains the check for how
+distinct and enjoyable the levels feel.
 
 For existing designed boards, skip seed preparation:
 
@@ -66,6 +80,16 @@ node source/tools/factory/steer_design.js starts.jsonl source/build/tuned.jsonl
 
 Each start row needs `level`, `target`, `recipe`, and `design` (including its
 clock and solution).
+
+To build and check a playable phone preview after a complete batch:
+
+```powershell
+node source/tools/factory/preview_check.js source/build/original-levels/levels.jsonl source/build/original-preview
+```
+
+This uses `source/tests`' Playwright dependency and Chromium (`CHROME` may point
+to an installed browser). It checks layout bounds and replays the stored routes
+through the real game. Preview ratings stay on the local device.
 
 ## Where the time goes
 
