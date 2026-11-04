@@ -72,6 +72,17 @@ test('partial handback selects only qualified levels and leaves missing slots ex
   assert.deepEqual(partial.rows[0].reviewReasons, []); assert.deepEqual(partial.rows[0].authoringReviewReasons, ['offCurve']);
   assert.equal(partial.coverage.filter(c => c.selected).length, 1);
   assert.equal(partial.coverage.find(c => c.level === 201).selected, null);
+  const edited = { ...row, edit: 'reveal pictures' };
+  assert.equal(assign(plan, [edited], dir, 10000, false, true).rows.length, 0);
+  atomicJson(path.join(dir, id + '.fresh.json'), { fresh: { valid: true, seed: 29717, exp: 7.6 } });
+  assert.equal(assign(plan, [edited], dir, 10000, false, true).rows.length, 0);
+  atomicJson(path.join(dir, id + '.fresh.json'), { fresh: { valid: true, seed: 29717, exp: 7.4 } });
+  const checked = assign(plan, [edited], dir, 10000, false, true).rows[0];
+  assert.equal(checked.family.fresh, 7.4); assert.equal(checked.family.freshSeed, 29717);
+  const twoSlots = { ...plan, levels: plan.levels.slice(0, 2).map(s => ({ ...s, target: 7 })) };
+  const shared = portable(row), impossible = assign(twoSlots, [shared], dir);
+  assert(impossible.coverage.every(c => c.choices === 1));
+  assert.equal(impossible.capacity, 1); assert.equal(impossible.nodes, 0);
 });
 
 test('checkpoint replacement retries transient Windows locks and preserves the old file on permanent failure', t => {
@@ -117,4 +128,15 @@ test('unique-pair locked-partner puzzles leave one tray slot for the key pair', 
   I.setExact(true, { nodes: 20000, milliseconds: 1000 });
   const designed = I.IDEAS.lockedPartners.make(base, I.ctxOf(base), I.rngOf(7));
   assert(designed); assert.equal(designed.obst.locks.length, 2); assert(I.valid(designed));
+});
+
+test('authoritative cloud measurements supersede matching log imports without deleting the journal', t => {
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-moves-import-'));
+  t.after(() => fs.rmSync(dir, { recursive: true }));
+  const file = path.join(dir, 'moves.jsonl'), Moves = require('./moves.js');
+  const measured = { level: 201, target: 7, n: 76, what: 'one ice softer', before: 8, after: 7, recipe: ['iceChain'] };
+  const rows = [measured, { ...measured, source: 'claude-cloud-log' }, { ...measured, after: 6, source: 'claude-cloud-log' }];
+  fs.writeFileSync(file, rows.map(r => JSON.stringify(r)).join('\n'));
+  assert.equal(Moves.load([file]).length, 2);
+  assert.equal(fs.readFileSync(file, 'utf8').split('\n').length, 3);
 });

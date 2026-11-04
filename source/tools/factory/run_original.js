@@ -1,6 +1,6 @@
 'use strict';
-// One resumable offline pipeline. Each slot owns a whole fresh layout, and all
-// tuning variants remain siblings of that slot rather than becoming new levels.
+// One resumable offline pipeline. Each creation owns a whole fresh layout.
+// Tuning siblings remain one creation, which can be placed at most once.
 const fs = require('fs'), path = require('path');
 const { run: construct } = require('./construct_original.js');
 const { main: evaluate } = require('./batch_queue.js');
@@ -9,6 +9,7 @@ const { variants } = require('./original_variants.js');
 const { assign } = require('./batch_assign.js');
 const { verify } = require('./batch_verify.js');
 const { atomicJson } = require('./meter.js');
+const Final = require('./final_seed.js');
 async function run(planFile, dir, constructionJobs = 4, meterJobs = 6, wanted = 8) {
   fs.mkdirSync(dir, { recursive: true });
   const poolFile = path.join(dir, 'pool.json'), seeds = path.join(dir, 'original-seeds.json'), marker = path.join(dir, 'producer-running');
@@ -40,7 +41,9 @@ async function run(planFile, dir, constructionJobs = 4, meterJobs = 6, wanted = 
   }
   const plan = JSON.parse(fs.readFileSync(planFile));
   if (plan.levelTable) plan.levelTable = path.resolve(path.dirname(planFile), plan.levelTable);
-  const result = assign(plan, JSON.parse(fs.readFileSync(poolFile)), dir);
+  const pool = JSON.parse(fs.readFileSync(poolFile));
+  await Final.run(planFile, poolFile, dir, meterJobs);
+  const result = assign(plan, pool, dir);
   atomicJson(path.join(dir, 'coverage.json'), { coverage: result.coverage, nodes: result.nodes });
   if (!result.rows) { console.log('REVIEW: the batch is not complete; missing slots are recorded in coverage.json'); return result; }
   const out = path.join(dir, 'levels.jsonl');

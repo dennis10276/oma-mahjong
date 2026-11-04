@@ -10,7 +10,7 @@ function build(batchFile, out) {
   if (parent !== buildRoot && !parent.startsWith(buildRoot + path.sep))
     throw Error('Lab output parent resolves outside source/build');
   const ideas = { made: new Date().toISOString(), factory: true, blind: true, heading: 'Levels 200–225',
-    intro: 'A new batch of planned puzzles. Start with 200, try 212 in the middle, and 225 at the end. Big boards are at 210 and 220.',
+    intro: 'Play the available puzzles, then rate their difficulty and how much you enjoyed them.',
     verdict: [['easy', 'Too easy'], ['right', 'About right'], ['hard', 'Too hard']],
     noteHint: 'Was it fun? Did you have to think?', winText: 'How did this level feel?',
     ideas: rows.map(r => ({ id: 2026000 + r.level, lv: r.level, kind: 'planned', level: 'new',

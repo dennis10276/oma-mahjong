@@ -115,6 +115,25 @@ original output plan is preserved. An optional final argument includes a JSON
 file of externally tuned rows. `run_original.js` also accepts zero construction
 workers for evaluating an existing pool without rebuilding its seeds.
 
+Tuned rows, including automatic edits chosen from bot feedback, also need a
+reserved final family seed (29717, 20 runs × 2). It must independently land
+within 0.5 of the placed target, with a maximum pairwise seed gap of 2. The
+original two-seed pooled curve is retained. This final measurement never guides
+steering; untuned constructions keep the original two-seed rule. The production
+runner measures viable tuned finalists before assignment, and the verifier
+rechecks the result.
+
+For an incomplete production run, hand back only qualified rows plus explicit
+coverage and distinct diagnostic proposals:
+
+```powershell
+node source/tools/factory/handback.js source/build/batch-200-225-extra/output-plan.json source/build/batch-200-225-extra/pool.json source/build/batch-200-225-extra ../codex-tasks/results/200-225
+```
+
+The report includes each seed, planner, trap attribution, relief, special
+ablations and failures. `closest-assignment.jsonl` contains unqualified proposals
+as well; its diagnostic rows are never treated as accepted levels.
+
 ## Where the time goes
 
 - Family measurements come first. Off-curve boards and boards with idle

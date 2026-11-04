@@ -1,5 +1,5 @@
 'use strict';
-// Tuning siblings belong to one intended level. They never become extra levels.
+// Tuning siblings belong to one creation. They never become extra originals.
 const fs = require('fs'), path = require('path');
 const I = require('../lab/ideas.js'), L = global.Layouts;
 const { roomProfile } = require('./design_traps.js');
@@ -53,5 +53,5 @@ function variants(rows, dir) {
 module.exports = { variants };
 if (require.main === module) {
   const rows = variants(JSON.parse(fs.readFileSync(process.argv[2])), process.argv[3]);
-  atomicJson(process.argv[4], rows); console.log(rows.length, 'tuning candidates, each confined to its own fresh level');
+  atomicJson(process.argv[4], rows); console.log(rows.length, 'tuning candidates, each confined to its own fresh creation');
 }

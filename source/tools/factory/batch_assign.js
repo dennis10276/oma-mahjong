@@ -4,13 +4,14 @@ const F = require('./piles_for.js');
 const Hard = require('../../www/hard.js');
 const { digest, boardKey } = require('./meter.js');
 const { checkOrigin, compare, previousBoards } = require('./originality.js');
+const Final = require('./final_seed.js');
 
 function candidates(pool, dir) {
   const read = (r, mode) => { const f = path.join(dir, r.id + '.' + mode + '.json'); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)) : null; };
   return pool.flatMap(r => {
     const rate = read(r, 'rate'), quality = read(r, 'quality');
     if (!rate?.train?.valid || !rate.validation?.valid || !quality?.eligible) return [];
-    return [{ ...r, rate, quality, exp: (rate.train.exp + rate.validation.exp) / 2,
+    return [{ ...r, rate, quality, fresh: read(r, 'fresh'), exp: (rate.train.exp + rate.validation.exp) / 2,
       base: r.shape.split(' · ')[0], spots: F.spots(r.design.tiles)[0] }];
   });
 }
@@ -30,7 +31,8 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
   const allowed = levels.map(s => inv.map((r, i) => ({ r, i })).filter(({ r, i }) => (r.n > 88) === s.big &&
     (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) && novel[i] &&
     !live.has(boardKey(r.design)) && context.every(c => c.level > 164 && Math.abs(c.level - s.level) > 10 || F.share(r.design.tiles, c.spots) <= 0.75) &&
-    Math.abs(r.exp - s.target) <= plan.tolerance && Math.abs(r.rate.train.exp - r.rate.validation.exp) <= (plan.maxSeedGap ?? 2)));
+    Math.abs(r.exp - s.target) <= plan.tolerance && Math.abs(r.rate.train.exp - r.rate.validation.exp) <= (plan.maxSeedGap ?? 2) &&
+    Final.qualifies(r, r.rate, r.fresh, s, plan)));
   const compat = inv.map(() => []);
   const originalityCompat = inv.map(() => []);
   for (let a = 0; a < inv.length; a++) for (let b = a + 1; b < inv.length; b++) compat[a][b] = compat[b][a] =
@@ -49,8 +51,28 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       (j !== k - 1 || inv[p].exp <= r.exp + (plan.maxReverseStep ?? 0.25)) &&
       (j !== k + 1 || r.exp <= inv[p].exp + (plan.maxReverseStep ?? 0.25))));
   }
-  const capacity = plan.originality?.required ? Math.min(levels.filter(s => !s.big).length, new Set(inv.filter(r => r.n <= 88).map(r => r.origin.creationId)).size) +
-    Math.min(levels.filter(s => s.big).length, new Set(inv.filter(r => r.n > 88).map(r => r.origin.creationId)).size) : Math.min(inv.length, levels.length);
+  // Bound coverage using only candidates that can actually enter a slot. A
+  // matching also detects several slots competing for the same creation.
+  const eligible = [...new Set(allowed.flatMap(a => a.map(x => x.i)))].map(i => inv[i]);
+  const identity = r => plan.originality?.required ? r.origin.creationId : r.id;
+  const owners = new Map();
+  function match(k, seen) {
+    for (const { r } of allowed[k]) {
+      const id = identity(r); if (seen.has(id)) continue; seen.add(id);
+      if (!owners.has(id) || match(owners.get(id), seen)) { owners.set(id, k); return true; }
+    }
+    return false;
+  }
+  for (let k = 0; k < levels.length; k++) match(k, new Set());
+  const recipeGroups = new Map();
+  for (const r of eligible) {
+    const recipe = [...new Set(r.recipe)].sort().join('+');
+    if (!recipeGroups.has(recipe)) recipeGroups.set(recipe, new Set());
+    recipeGroups.get(recipe).add(identity(r));
+  }
+  const recipeCapacity = plan.originality?.required ? [...recipeGroups.values()].reduce((sum, ids) =>
+    sum + Math.min(plan.originality.maxSameRecipe, ids.size), 0) : levels.length;
+  const capacity = Math.min(owners.size, recipeCapacity);
   function dfs(count, cost, filled = count) {
     if (++nodes > limit || best && (!allowPartial && (!optimize || cost >= best.cost) ||
       allowPartial && (!optimize && best.filled === capacity || filled + levels.length - count < best.filled))) return;
@@ -72,23 +94,24 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
     }
     if (allowPartial) { picks[k] = -2; dfs(count + 1, cost, filled); picks[k] = -1; }
   }
-  if (allowPartial || allowed.every(a => a.length)) dfs(0, 0, 0);
+  if (allowPartial || capacity === levels.length && allowed.every(a => a.length)) dfs(0, 0, 0);
   const coverage = levels.map((s, k) => ({ level: s.level, target: s.target, big: s.big, choices: allowed[k].length,
     shapes: [...new Set(allowed[k].map(({ r }) => r.base))], selected: best?.picks[k] >= 0 ? inv[best.picks[k]].id : null }));
-  if (!best) return { nodes, coverage, eligible: inv.length, rows: null, problem: { inv, allowed, compat } };
+  if (!best) return { nodes, coverage, capacity, eligible: inv.length, rows: null, problem: { inv, allowed, compat } };
   const rows = best.picks.flatMap((i, k) => {
     if (i < 0) return [];
-    const { spots, base, rate, quality, ...r } = inv[i], s = levels[k];
+    const { spots, base, rate, quality, fresh, ...r } = inv[i], s = levels[k];
     return [{ ...r, level: s.level, target: s.target, authoredTarget: r.target, pass: true,
       reviewReasons: [], authoringReviewReasons: r.reviewReasons || [], grabFirst: quality.grabFirst ?? null,
       family: { exp: +inv[i].exp.toFixed(3),
-      search: rate.train.exp, validation: rate.validation.exp, searchSeed: 4711, validationSeed: 18427, version: rate.train.version },
+      search: rate.train.exp, validation: rate.validation.exp, searchSeed: 4711, validationSeed: 18427,
+      ...(Final.tuned(r) ? { fresh: fresh.fresh.exp, freshSeed: Final.SEED } : {}), version: rate.train.version },
       skilled: quality.skilled.exp, room: quality.room, atTrap: quality.atTrap, specials: quality.special,
       warnings: quality.lateShare >= 0.3 ? ['lateSqueeze'] : [], lateShare: quality.lateShare,
       clockSpare: r.design.clock.n - (r.design.solution.indexOf(r.design.clock.i) + 1),
       design: { ...r.design, level: s.level }, boardHash: boardKey(r.design), bot: rate.bot }];
   });
-  return { nodes, coverage, eligible: inv.length, rows, cost: best.cost, complete: rows.length === levels.length };
+  return { nodes, coverage, capacity, eligible: inv.length, rows, cost: best.cost, complete: rows.length === levels.length };
 }
 module.exports = { assign, candidates };
 if (require.main === module) {

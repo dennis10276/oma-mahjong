@@ -7,6 +7,7 @@ const I = require('../lab/ideas.js');
 const { roomProfile } = require('./design_traps.js');
 const { assertOriginalBatch, previousBoards } = require('./originality.js');
 const { evaluate } = require('./batch_evaluate.js');
+const Final = require('./final_seed.js');
 function verify(planFile, batchFile, options = {}) {
   const plan = JSON.parse(fs.readFileSync(planFile)), rows = readRows(batchFile), meter = createMeter();
   if (!options.partial) assert.deepEqual(rows.map(r => r.level), plan.levels.map(r => r.level));
@@ -30,6 +31,12 @@ function verify(planFile, batchFile, options = {}) {
     const score = (m.expectedTries + v.expectedTries) / 2;
     assert(Math.abs(score - s.target) <= plan.tolerance + 1e-9, 'Family score off curve at ' + r.level);
     assert(Math.abs(m.expectedTries - v.expectedTries) <= plan.maxSeedGap);
+    if (Final.tuned(r)) {
+      const f = meter.measure(d, { ...options, seed: Final.SEED });
+      assert.equal(r.family.freshSeed, Final.SEED); assert.equal(r.family.fresh, f.expectedTries);
+      assert(Final.qualifies(r, { train: { exp: m.expectedTries }, validation: { exp: v.expectedTries } },
+        { fresh: { exp: f.expectedTries, valid: f.valid, seed: Final.SEED } }, s, plan), 'Independent seed failed at ' + r.level);
+    }
     const skilled = meter.measure(d, { ...options, setting: 'planner' });
     assert(skilled.valid && skilled.expectedTries <= plan.skilledMax); assert.equal(skilled.expectedTries, r.skilled);
     const room = roomProfile(d); assert(room.ok && room.unrelieved <= plan.unrelievedMax);

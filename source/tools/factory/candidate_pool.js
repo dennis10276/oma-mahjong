@@ -40,7 +40,7 @@ async function run(planFile, baselineDir, dir, jobs = 4, botJobs = 6, wanted = 8
   refresh(combinedPlan, [pool, path.join(baselineDir, 'pool.json'), extrasFile, tunedFile].filter(Boolean), pool);
   // Reuse compatible completed stage records as well as the shared bot cache.
   const ids = new Set(JSON.parse(fs.readFileSync(pool)).map(r => r.id));
-  for (const f of fs.readdirSync(baselineDir)) if (/\.(screen|rate|quality)\.json$/.test(f) && ids.has(f.split('.')[0]) && !fs.existsSync(path.join(dir, f)))
+  for (const f of fs.readdirSync(baselineDir)) if (/\.(screen|rate|quality|fresh)\.json$/.test(f) && ids.has(f.split('.')[0]) && !fs.existsSync(path.join(dir, f)))
     fs.copyFileSync(path.join(baselineDir, f), path.join(dir, f));
   return require('./run_original.js').run(combinedPlan, dir, 0, botJobs, 0);
 }

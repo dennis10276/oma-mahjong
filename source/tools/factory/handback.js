@@ -4,6 +4,7 @@ const { assign } = require('./batch_assign.js');
 const { verify } = require('./batch_verify.js');
 const { atomicJson, boardKey } = require('./meter.js');
 const Moves = require('./moves.js');
+const Final = require('./final_seed.js');
 
 function handback(planFile, poolFile, measurements, out) {
   const plan = JSON.parse(fs.readFileSync(planFile)), pool = JSON.parse(fs.readFileSync(poolFile));
@@ -15,7 +16,7 @@ function handback(planFile, poolFile, measurements, out) {
   const rated = pool.map(row => {
     const rate = read(row, 'rate'), quality = read(row, 'quality'), screen = read(row, 'screen');
     const pooled = rate?.train?.valid && rate.validation?.valid ? (rate.train.exp + rate.validation.exp) / 2 : null;
-    return { row, rate, quality, screen, pooled };
+    return { row, rate, quality, screen, pooled, fresh: read(row, 'fresh') };
   });
   const result = assign(plan, pool, measurements, 3000000, false, true), rows = result.rows || [];
   fs.mkdirSync(out, { recursive: true });
@@ -53,6 +54,8 @@ function handback(planFile, poolFile, measurements, out) {
     else {
       if (Math.abs(pooled - s.target) > plan.tolerance) reasons.push('off curve');
       if (Math.abs(rate.train.exp - rate.validation.exp) > plan.maxSeedGap) reasons.push('seed disagreement');
+      if (Final.tuned(row) && !Final.qualifies(row, rate, x.fresh, s, plan))
+        reasons.push(x.fresh ? 'independent seed failed' : 'independent seed unmeasured');
     }
     if (!quality) reasons.push('quality unmeasured');
     else if (!quality.eligible) {
@@ -70,13 +73,14 @@ function handback(planFile, poolFile, measurements, out) {
     const luck = room?.ok ? `${room.tightBlind}/${Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0))}/${room.unrelieved}` : 'unmeasured';
     const warnings = (quality?.lateShare ?? rate?.lateShare) >= .3 ? ['lateSqueeze'] : [];
     diagnostics.push(approved || { ...row, level: s.level, target: s.target, pass: false, diagnosticOnly: true,
-      reviewReasons: reasons, family: { exp: pooled, search: rate?.train?.exp ?? null, validation: rate?.validation?.exp ?? null },
+      reviewReasons: reasons, family: { exp: pooled, search: rate?.train?.exp ?? null, validation: rate?.validation?.exp ?? null,
+        ...(x.fresh ? { fresh: x.fresh.fresh?.exp, freshSeed: Final.SEED } : {}) },
       skilled: quality?.skilled?.exp ?? null, room, specials, atTrap: quality?.atTrap ?? rate?.atTrap ?? null,
       warnings, design: { ...row.design, level: s.level }, boardHash: boardKey(row.design) });
-    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)}) | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${warnings.join(', ') || '—'} |`);
+    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)})${Final.tuned(row) ? '; fresh ' + fmt(x.fresh?.fresh?.exp) : ''} | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${warnings.join(', ') || '—'} |`);
   }
   fs.writeFileSync(path.join(out, 'closest-assignment.jsonl'), diagnostics.sort((a, b) => a.level - b.level).map(r => JSON.stringify(r)).join('\n') + '\n');
-  atomicJson(path.join(out, 'rated-candidates.json'), rated.filter(x => x.rate).map(x => ({ ...x.row, measurement: x.rate, quality: x.quality })));
+  atomicJson(path.join(out, 'rated-candidates.json'), rated.filter(x => x.rate).map(x => ({ ...x.row, measurement: x.rate, quality: x.quality, fresh: x.fresh })));
   const stages = { pool: pool.length, screened: rated.filter(x => x.screen).length, fullRated: rated.filter(x => x.pooled != null).length,
     qualityMeasured: rated.filter(x => x.quality).length, qualityPassed: rated.filter(x => x.quality?.eligible).length };
   const ownTargetMisses = rated.filter(x => x.pooled != null && Math.abs(x.pooled - x.row.target) > plan.tolerance).length;
@@ -91,7 +95,7 @@ function handback(planFile, poolFile, measurements, out) {
     'The qualified levels file contains only passing, distinct original designs. The closest-assignment file also includes explicitly unqualified diagnostic proposals. Claude retains final selection and release control. No main, game sources, game level tables, Firebase or player data were changed.', '',
     `Source: ${revision}. Measurements: ${measurements}.`, '',
     '## Per level', '',
-    'Pooled = equal mean of the two full family runs (4711 / 18427; 40 campaigns each). Luck column = tight blind digs / relief moments / unrelieved digs. Specials show the family rating with that special removed and whether the factory deems it meaningful. An em dash means unmeasured.', '',
+    'Pooled = equal mean of the two full family runs (4711 / 18427; 40 campaigns each). Tuned rows (including edits chosen from bot feedback) must also pass seed 29717, 40 campaigns, within 0.5 of the placed target and maximum pairwise seed gap 2. This reserved seed never feeds steering. Luck column = tight blind digs / relieved gaps between tight digs / unrelieved gaps. Specials show the family rating with that special removed and whether the factory deems it meaningful. An em dash means unmeasured.', '',
     '| Level | Target | Status | Pooled (both seeds) | Skilled | Luck/relief/unrelieved | At trap | Specials without | Recipe | Shape | Warnings |',
     '|---|---:|---|---|---:|---|---:|---|---|---|---|', ...report, '',
     '## Yield and failures', '',

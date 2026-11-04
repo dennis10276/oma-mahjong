@@ -4,10 +4,15 @@ const { Worker, isMainThread, parentPort } = require('worker_threads');
 const { createMeter, boardKey, atomicJson } = require('./meter.js');
 const { roomProfile, trapTiles } = require('./design_traps.js');
 const { checkOrigin } = require('./originality.js');
+const { SEED } = require('./final_seed.js');
 
 function evaluate(row, mode, meter) {
   if (row.seedSource === 'fresh-designed' && checkOrigin(row)) throw Error('Invalid fresh origin: ' + checkOrigin(row));
   const d = row.design, opts = { setting: 'family', runs: 20, seeds: 2, seed: 4711 };
+  if (mode === 'fresh') {
+    const f = meter.measure(d, { ...opts, seed: SEED });
+    return { fresh: { exp: f.expectedTries, first: f.firstTryRate, valid: f.valid, seed: SEED }, eligible: f.valid };
+  }
   // Steering can change the clock path or hidden pictures while retaining a
   // parent's metadata. Final quality must check the actual edited board.
   const room = mode === 'quality' ? roomProfile(d) : row.room || roomProfile(d);
@@ -74,7 +79,7 @@ if (!isMainThread) {
       worker.on('message', result => {
         atomicJson(path.join(outDir, result.id + '.' + mode + '.json'), result);
         done++; if (result.eligible) eligible++;
-        console.log(mode, done, result.id, result.error ? 'ERROR' : JSON.stringify({ exp: result.exp ?? result.train?.exp,
+        console.log(mode, done, result.id, result.error ? 'ERROR' : JSON.stringify({ exp: result.fresh?.exp ?? result.exp ?? result.train?.exp,
           validation: result.validation?.exp, skilled: result.skilled?.exp, idle: result.idle, eligible: result.eligible }), result.seconds?.toFixed(1) + 's');
         next();
       });

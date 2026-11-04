@@ -16,7 +16,11 @@ const kindOf = what => String(what).replace(/\d+/g, 'n').replace(/\s+/g, ' ').tr
 function load(files = [SEED, DEFAULT]) {
   const rows = [];
   for (const f of files) if (f && fs.existsSync(f)) for (const l of fs.readFileSync(f, 'utf8').split('\n')) if (l.trim()) { try { rows.push(JSON.parse(l)); } catch (e) { } }
-  return rows;
+  // A cloud log may arrive before its authoritative measured seed journal.
+  // Preserve both files, but do not count the reconstructed observation twice.
+  const key = r => JSON.stringify([r.level, r.target, r.n, r.what, r.before, r.after, [...(r.recipe || [])].sort()]);
+  const measured = new Set(rows.filter(r => r.source !== 'claude-cloud-log').map(key));
+  return rows.filter(r => r.source !== 'claude-cloud-log' || !measured.has(key(r)));
 }
 const median = a => { const s = a.slice().sort((x, y) => x - y), m = s.length >> 1; return s.length ? (s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2) : null; };
 // per kind: n, median log factor (after/before, ratings capped 1..20), share that moved toward the target

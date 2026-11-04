@@ -45,3 +45,20 @@ test('a planner scouting run can reject but never qualify a board', () => {
   assert.equal(result.eligible, false); assert.equal(result.reason, 'plannerScreen');
   assert.equal(calls.length, 2); assert.equal(calls[1].runs, 3);
 });
+
+test('tuned and feedback-edited rows require a reserved final seed at the placed target', () => {
+  const Final = require('./final_seed.js'), rate = { train: { exp: 7 }, validation: { exp: 7.2 } };
+  const slot = { target: 7 }, gates = { tolerance: .5, maxSeedGap: 2 };
+  const fresh = exp => ({ fresh: { exp, seed: Final.SEED, valid: true } });
+  assert(Final.qualifies({}, rate, null, slot, gates));
+  for (const row of [{ tuning: {} }, { tunedFrom: 'parent' }, { edit: 'reveal pictures' }]) {
+    assert(!Final.qualifies(row, rate, null, slot, gates));
+    assert(Final.qualifies(row, rate, fresh(7.5), slot, gates));
+    assert(!Final.qualifies(row, rate, fresh(7.501), slot, gates));
+    assert(!Final.qualifies(row, rate, { fresh: { exp: 7, seed: 18427, valid: true } }, slot, gates));
+    assert(!Final.qualifies(row, { train: { exp: 5 }, validation: { exp: 7 } }, fresh(7.1), slot, gates));
+  }
+  const calls = [], result = evaluate({ design: d }, 'fresh', { measure(board, opts) { calls.push(opts); return measurement(7.3); } });
+  assert.deepEqual(calls.map(o => [o.seed, o.runs, o.seeds]), [[29717, 20, 2]]);
+  assert.equal(result.fresh.exp, 7.3);
+});
