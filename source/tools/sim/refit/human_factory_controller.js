@@ -83,7 +83,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam','routeHope']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam','routeHope','routeNeed']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -380,7 +380,29 @@ function createBotController(tiles, profile, seed) {
       const sig = alive.join('') + '|' + tray.join(',');
       if (routeCache && (routeCache.sig === sig || routeCache.keep) && routeCache.path.length && usableIn(alive, routeCache.path[0])) { routeCache.sig = sig; routeCache.keep = false; return routeCache.path[0]; }
       const width = p.routeBeam ?? 48, ck = clock.i;
-      const coverLeft = al => { let c = 0; for (const a of aboveTrans[ck]) if (al[a]) c++; return c; };
+      // routeNeed (Claude 2026-11-05, Dennis: "look at the level yourself and how you'd play"): on a clock that is on top
+      // but frozen beside locks whose keys lie across the pile, "tiles on the clock" is always 0, so the beam had no sense
+      // of progress, kept the emptiest trays (pairs nearby) and never found the way. A person works back from the clock:
+      // what covers it, the ice still to thaw (through its cheapest neighbours), locks among those, then the keys and
+      // what covers them - that count is the progress measure.
+      const coverOf = (al, u) => { let c = 0; for (const a of aboveTrans[u]) if (al[a]) c++; return c; };
+      const needLeft = al => {
+        let need = coverOf(al, ck), lockNeeded = false;
+        const h = roles[ck] === 'ice2' ? 2 : roles[ck] === 'ice' ? 1 : 0;
+        if (h) {
+          const gone = seen.takeable[ck] === true ? h : iceNb[ck].filter(k => !al[k]).length;
+          const left = Math.max(0, h - gone);
+          if (left) {
+            const keysLeft = keyTiles.filter(k => al[k]);
+            const cost = u => 1 + coverOf(al, u) + (roles[u] === 'lock' && keysLeft.length ? 100 : 0);
+            const pick = iceNb[ck].filter(k => al[k]).sort((a, b) => cost(a) - cost(b)).slice(0, left);
+            for (const u of pick) { need += 1 + coverOf(al, u); if (roles[u] === 'lock' && keysLeft.length) lockNeeded = true; }
+          }
+        }
+        if (lockNeeded) for (const k of keyTiles) if (al[k]) need += 1 + coverOf(al, k);
+        return need;
+      };
+      const coverLeft = al => p.routeNeed ? needLeft(al) : coverOf(al, ck);
       let beam = [{ al: alive.slice(), tr: tray.slice(), path: [] }], found = null;
       for (let step = 0; step < clock.remaining && beam.length && !found; step++) {
         const next = [], seenK = new Set();
