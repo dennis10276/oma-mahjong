@@ -20,6 +20,13 @@ function measurement(exp) {
   return { expectedTries: exp, firstTryRate: 0, valid: true, version: 'fake',
     results: [{ attempts: [{ win: false, censored: false, why: 'clock', left: 3, decisions: [] }] }] };
 }
+
+test('final quality recomputes luck and relief instead of trusting a parent room summary', () => {
+  const meter = { measure(board, opts) { return measurement(opts.setting === 'planner' || !board.clock ? 1 : 7); } };
+  const result = evaluate({ design: d, recipe: [], room: { ok: false, unrelieved: 99 } }, 'quality', meter);
+  assert.equal(result.room.ok, true); assert.equal(result.room.unrelieved, 0);
+  assert.equal(result.eligible, true);
+});
 test('candidate rating uses the full family meter and a separate fixed validation seed', () => {
   const calls = [];
   const result = evaluate({ design: d }, 'rate', { measure(board, opts) {

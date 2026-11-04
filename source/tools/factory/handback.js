@@ -65,13 +65,13 @@ function handback(planFile, poolFile, measurements, out) {
     }
     if (!approved && !reasons.length) reasons.push('batch compatibility / placement');
     reasons.forEach(bump);
-    const room = quality?.room || row.room, specials = quality?.special;
+    const room = quality?.room || (row.tuning ? null : row.room), specials = quality?.special;
     const specialText = specials ? Object.entries(specials).map(([k, v]) => `${k}: ${fmt(v.without)} ${v.matters ? '✓' : '×'}`).join('; ') : 'unmeasured';
     const luck = room?.ok ? `${room.tightBlind}/${Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0))}/${room.unrelieved}` : 'unmeasured';
     const warnings = (quality?.lateShare ?? rate?.lateShare) >= .3 ? ['lateSqueeze'] : [];
     diagnostics.push(approved || { ...row, level: s.level, target: s.target, pass: false, diagnosticOnly: true,
       reviewReasons: reasons, family: { exp: pooled, search: rate?.train?.exp ?? null, validation: rate?.validation?.exp ?? null },
-      skilled: quality?.skilled?.exp ?? null, specials, atTrap: quality?.atTrap ?? rate?.atTrap ?? null,
+      skilled: quality?.skilled?.exp ?? null, room, specials, atTrap: quality?.atTrap ?? rate?.atTrap ?? null,
       warnings, design: { ...row.design, level: s.level }, boardHash: boardKey(row.design) });
     report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)}) | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${warnings.join(', ') || '—'} |`);
   }

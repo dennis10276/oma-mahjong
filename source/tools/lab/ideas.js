@@ -267,15 +267,20 @@ const IDEAS = {
     idea: 'The keys are deep. Every tile you dig through on the way has its partner locked, so they wait in the tray until you reach the keys.',
     make(b, c) {
       const ok = i => !special(b, i);
+      const counts = new Map(); for (const f of b.faces) counts.set(f, (counts.get(f) || 0) + 1);
+      // With unique pairs, three forced singles fill all usable tray slots;
+      // there is then no room to match the keys that unlock their partners.
+      // Two forced singles leave the intended one-slot key escape.
+      const pairOnly = [...counts.values()].every(n => n === 2), minimumLocks = pairOnly ? 2 : 3;
       const byFace = {}; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
       const pairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).sort((p, q) => (coverOf(c, q[0]).size + coverOf(c, q[1]).size) - (coverOf(c, p[0]).size + coverOf(c, p[1]).size));
       for (const kk of pairs.slice(0, 12)) {
         const dig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]);
         const locks = [];
         for (const t of dig) for (let j = 0; j < c.n; j++) if (j !== t && b.faces[j] === b.faces[t] && !dig.has(j) && !kk.includes(j) && ok(j) && !locks.includes(j)) { locks.push(j); break; }
-        if (locks.length < 3) continue;
+        if (locks.length < minimumLocks) continue;
         const x = clone(b);
-        x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![...locks, ...kk, ...dig].includes(+i))), locks: locks.slice(0, 8), keys: [kk[0], kk[1]] };
+        x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![...locks, ...kk, ...dig].includes(+i))), locks: locks.slice(0, pairOnly ? 2 : 8), keys: [kk[0], kk[1]] };
         noDown(x, [...kk, ...locks]);
         const y = fix(x); if (y) return y;
       }

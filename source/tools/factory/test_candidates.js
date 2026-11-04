@@ -104,3 +104,16 @@ test('stage records are read once and worker results replace cached missing valu
     store.write('board', 'rate', { exp: 8 }); assert.equal(store.read('board', 'rate').exp, 8);
   } finally { fs.readFileSync = read; }
 });
+
+test('unique-pair locked-partner puzzles leave one tray slot for the key pair', () => {
+  const I = require('../lab/ideas.js'), L = require('../../www/layouts.js');
+  const tiles = [[0, 0, 0], [2, 0, 0], [4, 0, 0], [6, 0, 0], [1, 0, 1], [3, 0, 1], [5, 0, 1], [2, 4, 0], [4, 4, 0], [6, 4, 0]];
+  const objects = tiles.map(([x, y, z]) => ({ x, y, z })), faces = [4, 3, 3, 4, 0, 1, 2, 0, 1, 2], nb = L.neighbors(objects);
+  const rules = { ice: {}, iceNb: L.iceNeighbors(objects), keys: [1, 2], locks: new Set([7, 8, 9]) };
+  assert.equal(L.solve(objects, nb, faces, new Uint8Array(10).fill(1), [], 100000, rules), null);
+  const solution = L.solve(objects, nb, faces, new Uint8Array(10).fill(1), [], 100000);
+  const base = { tiles, faces, solution, down: [], gold: [], obst: { ice: {}, keys: [], locks: [] }, clock: null };
+  I.setExact(true, { nodes: 20000, milliseconds: 1000 });
+  const designed = I.IDEAS.lockedPartners.make(base, I.ctxOf(base), I.rngOf(7));
+  assert(designed); assert.equal(designed.obst.locks.length, 2); assert(I.valid(designed));
+});

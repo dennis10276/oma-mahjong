@@ -8,7 +8,9 @@ const { checkOrigin } = require('./originality.js');
 function evaluate(row, mode, meter) {
   if (row.seedSource === 'fresh-designed' && checkOrigin(row)) throw Error('Invalid fresh origin: ' + checkOrigin(row));
   const d = row.design, opts = { setting: 'family', runs: 20, seeds: 2, seed: 4711 };
-  const room = row.room || roomProfile(d);
+  // Steering can change the clock path or hidden pictures while retaining a
+  // parent's metadata. Final quality must check the actual edited board.
+  const room = mode === 'quality' ? roomProfile(d) : row.room || roomProfile(d);
   if (mode === 'screen') {
     if (!room.ok || room.unrelieved > 1) return { room, eligible: false };
     const m = meter.measure(d, { ...opts, runs: 6, seeds: 1 });
