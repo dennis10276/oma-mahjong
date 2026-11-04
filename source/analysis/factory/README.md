@@ -564,3 +564,28 @@ Dennis: "Can the whole board get designed first instead of being a random deal?"
 Conclusion: no picture rule tried here steers difficulty; moving the pictures of a board that measured hard mostly
 loses what made it hard. The structure stays designed (traps, clock, locks, luck and relief checked by the bots);
 the pictures are tuned by the family bot itself (steer_design.js). Log: `scripted-boards.log`.
+
+## Codex's factory adopted; rules weighed; learning (Claude, 2026-11-04)
+
+Codex's `wip/codex-level-factory` (4 commits on 13e7ab9) is now `wip/level-factory`: one checkout with the bundled
+g6.2 meter (same physics as the calibrated bot), cache, bounded clock-route search, fresh original layouts, pooled two-seed
+rating with a held-out seed, batch assignment and phone preview. 23 tests pass.
+Curve (Dennis 2026-11-04: "we need to start at 200 now that players are further"): 175-199 stay; new levels 200-225,
+200 at 7 family tries -> 224 at 9 -> 225 at 10, big boards only at 210 and 220.
+Rules weighed:
+- Kept from Codex: original layouts (no crop/mirror/reskin, <75% shared), seed agreement within 2 tries + holdout,
+  don't-grab causal check, idle-special repair, late squeeze only a warning (Dennis).
+- Kept from before: family target +-0.5, skilled planner <= 6, at most 1 unrelieved dig (relief >= luck - 2), losses at
+  the traps >= 60%, every special matters, clock spare 1-3.
+- Dropped (agree with Codex): the separate "clock too loose" critic - it needs another bot; the clock must change the
+  family rating (ablation) and the spare stays 1-3, which covers what Dennis called "adds nothing".
+- Lesson about noise: two 40-game seeds on the same board correlate 0.74 across 316 boards, so single-seed steering steps
+  partly chase noise; acceptance uses the pooled rating (tune_original.js).
+Learning ("learn from what works and doesn't"):
+- `moves.js`: every measured steering change is journaled (`build/factory-moves.jsonl`, seed `moves-seed.jsonl` from the
+  first 25); its usual effect ranks the next changes. First lessons: all ice thawed is a cliff, a frozen chain made boards
+  easier, the 'softer' face-up and relief swaps did not soften. Hence graded steps: one ice softer/harder, half the ice,
+  one lock.
+- `predict.js` + `learned-model.json`: family rating guessed from a board's make-up (1537 rated boards; rank 0.59). Orders
+  the screening queue only; top quarter lands within 2.5 tries 20% vs 8% for the bottom quarter (in-sample).
+  Strongest levers: a long way to the clock (harder), more face-down tiles (easier on these boards).

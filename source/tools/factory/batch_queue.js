@@ -2,6 +2,7 @@
 const fs = require('fs'), path = require('path');
 const { Worker } = require('worker_threads');
 const { atomicJson } = require('./meter.js');
+const { predictTries } = require('./predict.js');
 
 async function main(poolFile, planFile, dir, jobs = 4) {
   let rows = JSON.parse(fs.readFileSync(poolFile)), stamp = fs.statSync(poolFile).mtimeMs;
@@ -35,6 +36,8 @@ async function main(poolFile, planFile, dir, jobs = 4) {
       Math.abs(read(a, 'screen').exp - a.target) - Math.abs(read(b, 'screen').exp - b.target));
     if (candidates.length) return { row: candidates[0], mode: 'rate' };
     const scouts = rows.filter(r => needs(r) && !read(r, 'screen') && !running.has(r.id + '.screen'));
+    // learned from earlier batches (predict.js): the boards most likely to land near their target are screened first
+    scouts.sort((a, b) => Math.abs(Math.log(predictTries(a) / a.target)) - Math.abs(Math.log(predictTries(b) / b.target)));
     return scouts.length ? { row: scouts[0], mode: 'screen' } : null;
   }
   await Promise.all(Array.from({ length: jobs }, () => new Promise((resolve, reject) => {

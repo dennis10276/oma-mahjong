@@ -1,0 +1,25 @@
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"all ice thawed","kind":"all ice thawed","before":18.8,"after":20}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"4 tiles face-up where the family loses","kind":"n tiles face-up where the family loses","before":18.8,"after":19.52}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"locks and keys off","kind":"locks and keys off","before":18.8,"after":16.18}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"all ice thawed","kind":"all ice thawed","before":16.18,"after":11.28}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"4 tiles face-up where the family loses","kind":"n tiles face-up where the family loses","before":16.18,"after":18.45}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"relief: a twin of the stuck picture comes free early","kind":"relief: a twin of the stuck picture comes free early","before":16.18,"after":20}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"4 tiles face-up where the family loses","kind":"n tiles face-up where the family loses","before":11.28,"after":15.7}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"relief: a twin of the stuck picture comes free early","kind":"relief: a twin of the stuck picture comes free early","before":11.28,"after":14.3}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a.jsonl","what":"face-up where the family loses","kind":"face-up where the family loses","before":11.28,"after":12.07}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"all ice thawed","kind":"all ice thawed","before":20,"after":4.3}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"4 tiles face-up where the family loses","kind":"n tiles face-up where the family loses","before":20,"after":20}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"locks and keys off","kind":"locks and keys off","before":20,"after":19.23}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"clock -1 spare","kind":"clock -n spare","before":4.3,"after":4.4}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"trap added: iceChain","kind":"trap added: iceChain","before":4.3,"after":4.22}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"luck moment added","kind":"luck moment added","before":4.3,"after":5.35}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"clock -1 spare","kind":"clock -n spare","before":5.35,"after":5.2}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"trap added: iceChain","kind":"trap added: iceChain","before":5.35,"after":4.22}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"luck moment added","kind":"luck moment added","before":5.35,"after":5.97}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"clock -1 spare","kind":"clock -n spare","before":5.97,"after":5.15}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"trap added: iceChain","kind":"trap added: iceChain","before":5.97,"after":3.67}
+{"level":179,"target":7.32,"recipe":["chainReaction"],"source":"out-a.jsonl","what":"luck moment added","kind":"luck moment added","before":5.97,"after":5.42}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a-first.jsonl","what":"relief: a twin of the stuck picture comes free early","kind":"relief: a twin of the stuck picture comes free early","before":18.8,"after":19.52}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a-first.jsonl","what":"face-up where the family loses","kind":"face-up where the family loses","before":18.8,"after":19.52}
+{"level":177,"target":7.16,"recipe":["trayJuggleLocked","chainReaction","iceChain"],"source":"out-a-first.jsonl","what":"ice thawed where the family loses","kind":"ice thawed where the family loses","before":18.8,"after":18.8}
+{"level":175,"target":2.1,"recipe":["chainReaction"],"source":"codex-pilot-results.jsonl","what":"luck: tile under the unrelieved dig face-up","kind":"luck: tile under the unrelieved dig face-up","before":1.82,"after":2}

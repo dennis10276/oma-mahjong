@@ -1,0 +1,32 @@
+{
+ "note": "log(family tries, 6-game screen) from board features; Codex batches v7+v8, 1537 boards, ridge 1; CV rank corr 0.59 (screen vs full meter 0.72)",
+ "const": 1.724901748225822,
+ "num": {
+  "ice": 0.3269291043827237,
+  "iceH": -0.2296059926401937,
+  "locks": 0.16468846995130235,
+  "spare": -0.14953230746271892,
+  "routeShare": 3.017827648396286,
+  "down": -2.9247619766630293,
+  "n88": 0.4652218269010221,
+  "luck": 0.1555067324279372,
+  "edits": 0.06480500818131074
+ },
+ "recipe": {
+  "blindDig": -0.10729164965912401,
+  "blindTwins": -0.4039577592534407,
+  "chainReaction": -0.6776304163745155,
+  "clockOnTopLocked": 0.5720948543540137,
+  "deepKeys": -1.6622361648571347,
+  "dontGrab": 0.39129045021742487,
+  "frozenGuards": 0.882706229309969,
+  "iceChain": 0.4948077883489105,
+  "iceLockClock": -0.4184138302987704,
+  "keyToEscape": -0.08461205559996499,
+  "keysAcross": -1.3085924971007201,
+  "lockedClock": -0.9752926070502229,
+  "lockedPartners": -0.5842735110562439,
+  "trayJuggleFrozen": 1.6472429849770043
+ },
+ "sd": 0.7943508394767703
+}

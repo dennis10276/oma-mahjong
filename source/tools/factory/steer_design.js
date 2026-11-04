@@ -20,6 +20,7 @@ const I = require(path.join(ROOT, 'tools', 'lab', 'ideas.js'));
 const L = global.Layouts;
 const { roomProfile, trapTiles } = require('./design_traps.js');
 const { createMeter, boardKey } = require('./meter.js');
+const Moves = require('./moves.js');
 
 function createSteerer(options = {}) {
 const meter = options.meter || createMeter(options);
@@ -27,6 +28,9 @@ const measureHuman = meter.measure;
 const TOL = options.tolerance ?? +(process.env.TOL || 0.5), DENNIS_MAX = options.skilledMax ?? +(process.env.DENNIS_MAX || 6), ATTR = options.attribution ?? +(process.env.ATTR || 0.6), STEPS = options.steps ?? +(process.env.STEPS || 14);
 I.setExact(true, { nodes: options.routeNodes ?? 20000, milliseconds: options.routeMilliseconds ?? 1500 });
 const EXTRA = ['iceChain', 'lockedPartners', 'deepKeys'];
+// only real bot runs go in the journal (test meters have made-up fingerprints)
+const JOURNAL = options.journal !== false && /^[0-9a-f]{64}$/.test(meter.fingerprint || '');
+const PRIORS = Moves.priors(Moves.load([Moves.SEED, options.journal || Moves.DEFAULT]));
 const boardOf = d => ({ tiles: d.tiles, faces: d.faces, down: d.down, obst: d.obst, clock: d.clock });
 const meas = (d, setting, capture) => measureHuman(boardOf(d), { runs: 20, setting, seed: 4711, ...(capture ? { capture: 'tail' } : {}) });
 const tilesOf = d => d.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : t);
@@ -111,6 +115,20 @@ function changes(d, state) {
     const dn = state.spots.tiles.filter(j => d.down.includes(j)).slice(0, 4); if (dn.length > 1) out.push({ what: dn.length + ' tiles face-up where the family loses', d: { ...d, down: d.down.filter(j => !dn.includes(j)) } });
     if ((d.obst.locks || []).length) out.push({ what: 'locks and keys off', d: { ...d, obst: { ...d.obst, locks: [], keys: [] } } });
   }
+  // graded steps (the journal: all ice thawed is a cliff, 179 20 -> 4.3): one ice softer or harder, half the ice, one lock
+  const iceAt = Object.keys(d.obst.ice || {}).map(Number), rank = new Map(state.spots.tiles.map((j, k) => [j, k]));
+  const byLoss = a => a.slice().sort((x, y) => (rank.get(x) ?? 1e9) - (rank.get(y) ?? 1e9));
+  if (softer) {
+    const hard = byLoss(iceAt.filter(j => d.obst.ice[j] >= 2))[0];
+    if (hard !== undefined) out.push({ what: 'one ice softer', d: { ...d, obst: { ...d.obst, ice: { ...d.obst.ice, [hard]: d.obst.ice[hard] - 1 } } } });
+    if (iceAt.length >= 2) { const half = byLoss(iceAt).slice(0, Math.ceil(iceAt.length / 2)), ice = { ...d.obst.ice }; for (const j of half) delete ice[j];
+      out.push({ what: 'half the ice thawed', d: { ...d, obst: { ...d.obst, ice } } }); }
+    const locks = d.obst.locks || [];
+    if (locks.length >= 2) { const one = byLoss(locks)[0]; out.push({ what: 'one lock off', d: { ...d, obst: { ...d.obst, locks: locks.filter(j => j !== one) } } }); }
+  } else if (state.exp < state.target - TOL) {
+    const soft = byLoss(iceAt.filter(j => d.obst.ice[j] < 3))[0];
+    if (soft !== undefined) out.push({ what: 'one ice harder', d: { ...d, obst: { ...d.obst, ice: { ...d.obst.ice, [soft]: d.obst.ice[soft] + 1 } } } });
+  }
   if (softer) {
     { const r = relief(); if (r) out.push(r); }
     if (sp < 3) out.push({ what: 'clock +1 spare', d: withSpare(sp + 1) });
@@ -162,14 +180,18 @@ function steer(s, saved = null, checkpoint = () => {}) {
     const opts = changes(cur.d, { ...cur, step }).filter(o => !seen.has(boardKey(o.d)));
     if (!opts.length) { log.push(`step ${step}: no new change left`); save(step); break; }
     // Small runs rank edits only. A full, unchanged meter decides every accepted edit.
+    // ...and what the factory learned from earlier boards (moves.js): with 3+ records of a kind of change, its usual
+    // effect counts half (a 6-game scout alone is noisy)
     const scouts = opts.map(o => {
       const m = measureHuman(boardOf(o.d), { runs: options.scoutRuns ?? 6, seeds: 1, setting: 'family', seed: 4711 });
-      return { o, distance: m.valid ? Math.abs(m.expectedTries - s.target) : Infinity };
+      const scout = m.valid ? Math.abs(m.expectedTries - s.target) : Infinity, ex = Moves.expect(PRIORS, o.what, cur.exp);
+      return { o, distance: ex == null || !Number.isFinite(scout) ? scout : (scout + Math.abs(ex - s.target)) / 2, scout: m.valid ? m.expectedTries : null };
     }).sort((a, b) => a.distance - b.distance);
     let best = null;
-    for (const { o } of scouts) {
+    for (const { o, scout } of scouts) {
       // Full family rating gives a lower bound: planner/quality penalties can only add to it.
       const m = meas(o.d, 'family', true);
+      if (m.valid && JOURNAL) Moves.record({ level: s.level, target: s.target, what: o.what, before: cur.exp, after: m.expectedTries, scout, recipe, n: o.d.tiles.length }, options.journal);
       const bound = Math.max(0, Math.abs(m.expectedTries - s.target) - TOL) * 2;
       if (!m.valid || bound > (best ? best.j.score : cur.score)) continue;
       const j = judge(o.d, s.target, step);
