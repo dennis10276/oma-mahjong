@@ -28,7 +28,12 @@ function variants(rows, dir) {
     if (r.edit) continue;
     for (const spare of [1, 2, 3]) add({ ...d, clock: { ...d.clock, n: route + spare } }, 'clock spare ' + spare);
     const file = path.join(dir, r.id + '.screen.json');
-    const exp = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file)).exp : null;
+    const rateFile = path.join(dir, r.id + '.rate.json');
+    const rate = fs.existsSync(rateFile) ? JSON.parse(fs.readFileSync(rateFile)) : null;
+    // Once the full family measurement exists, it supersedes the noisy scout
+    // when deciding whether to hide or reveal pictures. Acceptance is unchanged.
+    const exp = rate?.train?.valid ? rate.validation?.valid ? (rate.train.exp + rate.validation.exp) / 2 : rate.train.exp :
+      fs.existsSync(file) ? JSON.parse(fs.readFileSync(file)).exp : null;
     if (exp == null || exp < r.target - 4) continue;
     const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z })), nb = L.neighbors(tiles), alive = new Uint8Array(tiles.length).fill(1);
     const special = new Set([d.clock.i, ...(d.obst.keys || []), ...(d.obst.locks || []), ...Object.keys(d.obst.ice || {}).map(Number)]);

@@ -34,6 +34,24 @@ test('portable candidates preserve their design identity while allowing curve pl
   assert.throws(() => portable({ ...row, origin: { ...origin, parentLevel: 210 } }), /fresh original/);
 });
 
+test('full family feedback supersedes an opposing quick-scout edit direction', t => {
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-family-feedback-'));
+  t.after(() => fs.rmSync(dir, { recursive: true }));
+  const L = require('../../www/layouts.js');
+  const tiles = [[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 2, 0], [2, 2, 0], [4, 2, 0], [1, 1, 1], [3, 1, 1]];
+  const faces = [0, 1, 2, 0, 1, 2, 3, 3], objects = tiles.map(([x, y, z]) => ({ x, y, z }));
+  const solution = L.solve(objects, L.neighbors(objects), faces, new Uint8Array(8).fill(1), [], 10000);
+  const design = { tiles, faces, down: [0, 2, 4], obst: { ice: {}, keys: [], locks: [] }, solution, clock: { i: solution[0], n: 3 } };
+  const id = boardKey(design).slice(0, 16), row = { id, level: 200, target: 7.5, recipe: ['clockRoute'], design,
+    origin: O.originOf(design, 'test/200', 'An original clock route', 7) };
+  atomicJson(path.join(dir, id + '.screen.json'), { valid: true, exp: 1 });
+  atomicJson(path.join(dir, id + '.rate.json'), { train: { valid: true, exp: 10 }, validation: { valid: true, exp: 10 } });
+  const edits = require('./original_variants.js').variants([row], dir).filter(r => r.id !== id);
+  assert(edits.some(r => r.edit.startsWith('reveal ')));
+  assert(edits.every(r => !r.edit.startsWith('hide ')));
+  assert(edits.every(r => r.origin.creationId === row.origin.creationId && JSON.stringify(r.design.tiles) === JSON.stringify(tiles)));
+});
+
 test('partial handback selects only qualified levels and leaves missing slots explicit', t => {
   const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-partial-assignment-'));
   t.after(() => fs.rmSync(dir, { recursive: true }));
@@ -68,4 +86,21 @@ test('checkpoint replacement retries transient Windows locks and preserves the o
     assert.throws(() => atomicJson(file, { kept: 2 }), /permanent failure/);
     assert.deepEqual(JSON.parse(fs.readFileSync(file)), { kept: 1 });
   } finally { fs.renameSync = rename; }
+});
+
+test('stage records are read once and worker results replace cached missing values', t => {
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-stage-store-'));
+  t.after(() => fs.rmSync(dir, { recursive: true }));
+  atomicJson(path.join(dir, 'board.rate.json'), { exp: 7 });
+  const store = require('./stage_store.js').createStageStore(dir), read = fs.readFileSync;
+  let reads = 0;
+  try {
+    fs.readFileSync = (...args) => { reads++; return read(...args); };
+    assert.equal(store.read('board', 'rate').exp, 7); assert.equal(store.read('board', 'rate').exp, 7);
+    assert.equal(reads, 1);
+    assert.equal(store.read('board', 'quality'), null);
+    store.write('board', 'quality', { eligible: true });
+    assert.equal(store.read('board', 'quality').eligible, true); assert.equal(reads, 1);
+    store.write('board', 'rate', { exp: 8 }); assert.equal(store.read('board', 'rate').exp, 8);
+  } finally { fs.readFileSync = read; }
 });

@@ -127,6 +127,11 @@ workers for evaluating an existing pool without rebuilding its seeds.
   matching plan fields tune seed construction.
 - Cache entries include the board, bot source, profile, seed, run count and
   capture mode. Invalid or computation-censored measurements are not cached.
+- The queue caches stage records and board predictions, updating records when
+  workers finish. Restart the coordinator after externally replacing stage
+  files so it reads those replacements.
+- Full family ratings supersede a quick scout when choosing the direction of
+  picture edits. The full acceptance measurements and limits stay unchanged.
 - Only five final decisions per attempt are captured for steering. The actual
   simulated taps, retry memory and ratings remain the same.
 

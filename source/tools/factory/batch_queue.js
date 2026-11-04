@@ -1,15 +1,16 @@
 'use strict';
 const fs = require('fs'), path = require('path');
 const { Worker } = require('worker_threads');
-const { atomicJson } = require('./meter.js');
+const { createStageStore } = require('./stage_store.js');
 const { predictTries } = require('./predict.js');
 
 async function main(poolFile, planFile, dir, jobs = 4) {
   let rows = JSON.parse(fs.readFileSync(poolFile)), stamp = fs.statSync(poolFile).mtimeMs;
   const plan = JSON.parse(fs.readFileSync(planFile));
   const running = new Set(); let completed = 0, last = '';
-  const file = (r, mode) => path.join(dir, r.id + '.' + mode + '.json');
-  const read = (r, mode) => fs.existsSync(file(r, mode)) ? JSON.parse(fs.readFileSync(file(r, mode))) : null;
+  const stages = createStageStore(dir), predictions = new Map();
+  const read = (r, mode) => stages.read(r.id, mode);
+  const predict = r => { if (!predictions.has(r.id)) predictions.set(r.id, predictTries(r)); return predictions.get(r.id); };
   function fits(r, rate) {
     const exp = (rate.train?.exp + rate.validation?.exp) / 2;
     return rate.train?.valid && rate.validation?.valid && plan.levels.some(p =>
@@ -37,7 +38,7 @@ async function main(poolFile, planFile, dir, jobs = 4) {
     if (candidates.length) return { row: candidates[0], mode: 'rate' };
     const scouts = rows.filter(r => needs(r) && !read(r, 'screen') && !running.has(r.id + '.screen'));
     // learned from earlier batches (predict.js): the boards most likely to land near their target are screened first
-    scouts.sort((a, b) => Math.abs(Math.log(predictTries(a) / a.target)) - Math.abs(Math.log(predictTries(b) / b.target)));
+    scouts.sort((a, b) => Math.abs(Math.log(predict(a) / a.target)) - Math.abs(Math.log(predict(b) / b.target)));
     return scouts.length ? { row: scouts[0], mode: 'screen' } : null;
   }
   await Promise.all(Array.from({ length: jobs }, () => new Promise((resolve, reject) => {
@@ -56,7 +57,7 @@ async function main(poolFile, planFile, dir, jobs = 4) {
       setTimeout(dispatch, 5000);
     }
     w.on('message', result => {
-      atomicJson(file(result, result.mode), result); running.delete(result.id + '.' + result.mode); completed++;
+      stages.write(result.id, result.mode, result); running.delete(result.id + '.' + result.mode); completed++;
       console.log(completed, result.mode, result.id, JSON.stringify({ exp: result.train?.exp, validation: result.validation?.exp,
         skilled: result.skilled?.exp, eligible: result.eligible, reason: result.reason, idle: result.idle }), result.seconds?.toFixed(1) + 's');
       dispatch();
