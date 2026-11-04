@@ -25,6 +25,13 @@ test('overlap is symmetric even when widths differ and opposite edges line up', 
   assert.equal(compare(row(a), row(b)), 'tooMuchSharedLayout');
   assert.equal(compare(row(b), row(a)), 'tooMuchSharedLayout');
 });
+
+test('a pure crop is rejected even below 75 percent of the big board', () => {
+  const big = { tiles: Array.from({ length: 12 }, (_, i) => [i * 2, 0, 0]), faces: Array.from({ length: 12 }, (_, i) => i) };
+  const small = { tiles: big.tiles.slice(0, 8), faces: big.faces.slice(0, 8) };
+  assert.equal(compare(row(big), row(small)), 'tooMuchSharedLayout');
+  assert.equal(compare(row(small), row(big)), 'tooMuchSharedLayout');
+});
 test('historical inventory and several versions of one seed cannot fill a batch', () => {
   const d = board();
   assert.equal(checkOrigin({ design: d, seedSource: 'inventory' }), 'missingFreshDesign');

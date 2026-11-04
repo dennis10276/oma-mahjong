@@ -7,7 +7,8 @@ function previousBoards(levels, levelTable) {
   const Hard = require('../../www/hard.js'), saved = global.HARD_LEVELS;
   try {
     if (levelTable) global.HARD_LEVELS = vm.runInNewContext(fs.readFileSync(levelTable, 'utf8') + ';HARD_LEVELS');
-    const replacing = new Set(levels.map(r => r.level)), last = Math.max(...replacing) + 10, rows = [];
+    const replacing = new Set(levels.map(r => r.level)), table = global.HARD_LEVELS;
+    const last = Math.max(Math.max(...replacing) + 10, table ? table.from + table.levels.length - 1 : 0), rows = [];
     for (let level = 70; level <= last; level++) if (!replacing.has(level)) rows.push({ level, design: Hard.get(level) });
     return rows;
   } finally { global.HARD_LEVELS = saved; }
@@ -62,6 +63,8 @@ function fitsLayouts(tiles, masks, maxShare = .75) {
   const views = transforms(tiles).map(t => new Set(t.map(p => p.join(',')))), own = views[0];
   const within = (a, b) => {
     let shared = 0; for (const k of a) if (b.has(k)) shared++;
+    // A small crop of a large board must not evade the larger-board denominator.
+    if (a.size !== b.size && shared === Math.min(a.size, b.size)) return false;
     return shared / Math.max(a.size, b.size) <= maxShare;
   };
   return masks.every(mask => {

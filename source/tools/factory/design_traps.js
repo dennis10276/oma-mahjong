@@ -80,7 +80,10 @@ function applyRecipe(d, recipe, rng) {
   let x = { tiles: d.tiles, faces: d.faces.slice(), down: d.down.slice(), gold: (d.gold || []).slice(), obst: d.obst ? I.clone(d.obst) : { ice: {}, locks: [], keys: [] }, clock: d.clock ? { ...d.clock } : null, solution: d.solution.slice() };
   for (const k of recipe) {
     const y = k === 'clockBesideLock' ? clockBesideLock(x, I.ctxOf(x)) : I.IDEAS[k].make(x, I.ctxOf(x), rng);
-    if (!y) return null; x = y;
+    if (!y) return null;
+    // A wait-for-the-partner puzzle must keep the clock it was authored for.
+    if (x.clockMate !== undefined && y.clock?.i !== x.clock?.i) return null;
+    x = y;
   }
   return x;
 }

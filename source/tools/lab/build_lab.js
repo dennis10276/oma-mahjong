@@ -13,7 +13,7 @@ const copy = rel => { const s = path.join(WWW, rel), d = path.join(out, rel); fs
 const walk = dir => fs.readdirSync(path.join(WWW, dir), { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]);
 for (const f of walk('.')) if (!/^(sw\.js|index\.html|manifest\.webmanifest)$/.test(f)) copy(f);
 fs.copyFileSync(path.join(__dirname, 'lab.js'), path.join(out, 'lab.js'));
-fs.copyFileSync(path.join(__dirname, 'lab-ideas.js'), path.join(out, 'lab-ideas.js'));
+fs.copyFileSync(process.argv[3] ? path.resolve(process.argv[3]) : path.join(__dirname, 'lab-ideas.js'), path.join(out, 'lab-ideas.js'));
 
 let html = fs.readFileSync(path.join(WWW, 'index.html'), 'utf8');
 const RESET_ID = (fs.readFileSync(path.join(WWW, 'js', 'core.js'), 'utf8').match(/RESET_ID = '([^']+)'/) || [])[1] || '';
