@@ -63,12 +63,13 @@ test('partial handback selects only qualified levels and leaves missing slots ex
     obst: { ice: {}, keys: [], locks: [] }, clock: { i: 0, n: 2 }, solution: pile.tiles.map((_, i) => i) };
   const id = boardKey(design).slice(0, 16), origin = O.originOf(design, 'test/200', 'An original route', 18);
   origin.intendedLevel = 200;
-  const row = { id, level: 200, shape: pile.shape, n: pile.tiles.length, recipe: ['chainReaction'], design, origin };
+  const row = { id, level: 200, shape: pile.shape, n: pile.tiles.length, recipe: ['chainReaction'], design, origin, reviewReasons: ['offCurve'] };
   fs.writeFileSync(path.join(dir, id + '.rate.json'), JSON.stringify({ train: { valid: true, exp: 7 }, validation: { valid: true, exp: 7 } }));
   fs.writeFileSync(path.join(dir, id + '.quality.json'), JSON.stringify({ eligible: true, skilled: { exp: 1 }, room: { ok: true }, atTrap: 1, special: {}, lateShare: 0 }));
   assert.equal(assign(plan, [row], dir).rows, null);
   const partial = assign(plan, [row], dir, 10000, false, true);
   assert.equal(partial.complete, false); assert.deepEqual(partial.rows.map(r => r.level), [200]);
+  assert.deepEqual(partial.rows[0].reviewReasons, []); assert.deepEqual(partial.rows[0].authoringReviewReasons, ['offCurve']);
   assert.equal(partial.coverage.filter(c => c.selected).length, 1);
   assert.equal(partial.coverage.find(c => c.level === 201).selected, null);
 });

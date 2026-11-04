@@ -79,7 +79,9 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
   const rows = best.picks.flatMap((i, k) => {
     if (i < 0) return [];
     const { spots, base, rate, quality, ...r } = inv[i], s = levels[k];
-    return [{ ...r, level: s.level, target: s.target, pass: true, family: { exp: +inv[i].exp.toFixed(3),
+    return [{ ...r, level: s.level, target: s.target, authoredTarget: r.target, pass: true,
+      reviewReasons: [], authoringReviewReasons: r.reviewReasons || [], grabFirst: quality.grabFirst ?? null,
+      family: { exp: +inv[i].exp.toFixed(3),
       search: rate.train.exp, validation: rate.validation.exp, searchSeed: 4711, validationSeed: 18427, version: rate.train.version },
       skilled: quality.skilled.exp, room: quality.room, atTrap: quality.atTrap, specials: quality.special,
       warnings: quality.lateShare >= 0.3 ? ['lateSqueeze'] : [], lateShare: quality.lateShare,
