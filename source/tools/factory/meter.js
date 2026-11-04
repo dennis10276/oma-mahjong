@@ -33,7 +33,16 @@ function atomicJson(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const tmp = file + '.' + process.pid + '.' + crypto.randomUUID() + '.tmp';
   fs.writeFileSync(tmp, JSON.stringify(value));
-  fs.renameSync(tmp, file);
+  // Windows can briefly deny replacement while an antivirus/indexer or reader
+  // holds the destination. Preserve atomic replacement and the old checkpoint;
+  // retry only transient sharing errors, never delete the destination first.
+  for (let attempt = 0; ; attempt++) {
+    try { fs.renameSync(tmp, file); break; }
+    catch (e) {
+      if (!['EPERM', 'EACCES', 'EBUSY'].includes(e.code) || attempt >= 7) throw e;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5 * 2 ** attempt);
+    }
+  }
 }
 function compact(m) {
   // Steering needs only the loss location and final tray. Avoid megabytes of
