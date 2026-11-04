@@ -24,7 +24,8 @@ function handback(planFile, poolFile, measurements, out) {
   fs.writeFileSync(levelsFile, rows.map(r => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
   verify(planFile, levelsFile, { partial: !result.complete });
   atomicJson(path.join(out, 'coverage.json'), { complete: !!result.complete, qualified: rows.length, required: plan.levels.length,
-    nodes: result.nodes, levels: result.coverage, plan: planFile, measurements });
+    nodes: result.nodes, capacityUpper: result.capacity, searchLimitReached: result.nodes > 3000000,
+    levels: result.coverage, plan: planFile, measurements });
   fs.copyFileSync(path.resolve(path.dirname(planFile), plan.piles), path.join(out, 'candidate-piles.json'));
   fs.copyFileSync(plan.levelTable, path.join(out, 'context-levels.js'));
   atomicJson(path.join(out, 'output-plan.json'), { ...plan, piles: 'candidate-piles.json', levelTable: 'context-levels.js' });
@@ -101,6 +102,7 @@ function handback(planFile, poolFile, measurements, out) {
     '## Yield and failures', '',
     `Pool ${stages.pool}; screened ${stages.screened}; full two-seed ratings ${stages.fullRated}; quality checks ${stages.qualityMeasured}; quality passes ${stages.qualityPassed}.`,
     `${ownTargetMisses} fully rated candidates missed their initial slot target by more than 0.5; ${seedMisses} disagreed by more than two tries between seeds. These counts overlap.`,
+    `Assignment explored ${result.nodes} nodes; the relaxed coverage upper bound was ${result.capacity}. ${result.nodes > 3000000 ? 'The search limit was reached; this is the best assignment found, not a proof of maximum coverage.' : 'The bounded search finished.'}`,
     'Diagnostic proposal reasons: ' + JSON.stringify(failureCounts) + '.', '',
     '## Rules and learning', '',
     'All requested acceptance limits were retained. Extra candidate layouts provide alternatives without reusing one creation in multiple slots. Missing coverage was not repaired by weakening the curve, originality or quality checks.',
