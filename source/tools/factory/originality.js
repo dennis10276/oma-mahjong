@@ -2,6 +2,13 @@
 const F = require('./piles_for.js');
 const { digest } = require('./meter.js');
 const fs = require('fs'), vm = require('vm');
+const layoutKeys = new Map(), puzzleKeys = new Map();
+function memo(cache, signature, calculate) {
+  if (cache.has(signature)) return cache.get(signature);
+  const value = calculate();
+  if (cache.size >= 4096) cache.delete(cache.keys().next().value);
+  cache.set(signature, value); return value;
+}
 
 function previousBoards(levels, levelTable) {
   const Hard = require('../../www/hard.js'), saved = global.HARD_LEVELS;
@@ -26,11 +33,12 @@ function transforms(tiles) {
   });
 }
 function layoutKey(d) {
-  return digest(transforms(tilesOf(d)).map(a => JSON.stringify(a.slice().sort((a, b) => a[2] - b[2] || a[1] - b[1] || a[0] - b[0]))).sort()[0]);
+  const tiles = tilesOf(d);
+  return memo(layoutKeys, JSON.stringify(tiles), () => digest(transforms(tiles).map(a => JSON.stringify(a.slice().sort((a, b) => a[2] - b[2] || a[1] - b[1] || a[0] - b[0]))).sort()[0]));
 }
 // Picture identities are cosmetic: canonicalize the matching relationships.
 function puzzleKey(d) {
-  return digest(transforms(tilesOf(d)).map(a => {
+  return memo(puzzleKeys, JSON.stringify([tilesOf(d), d.faces, d.down, d.obst, d.clock]), () => digest(transforms(tilesOf(d)).map(a => {
     const order = a.map((_, i) => i).sort((i, j) => a[i][2] - a[j][2] || a[i][1] - a[j][1] || a[i][0] - a[j][0]);
     const pictures = new Map(), ob = d.obst || {}, down = new Set(d.down || []);
     const rows = order.map(i => {
@@ -39,7 +47,7 @@ function puzzleKey(d) {
         +(ob.keys || []).includes(i), +(ob.locks || []).includes(i), +(d.clock?.i === i)];
     });
     return JSON.stringify([rows, d.clock?.n ?? null]);
-  }).sort()[0]);
+  }).sort()[0]));
 }
 function originOf(d, creationId, brief, seed) {
   return { kind: 'fresh-design', creationId, brief, seed, initialLayout: layoutKey(d),

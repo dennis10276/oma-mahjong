@@ -19,6 +19,14 @@ test('a shortened big board cannot inherit a fresh-design claim', () => {
   assert.throws(() => assertOriginalBatch([r]), /TrimmedLayout/);
 });
 
+test('cached originality keys still notice in-place layout and pairing changes', () => {
+  const d = board(), r = row(d), initialPuzzle = puzzleKey(d);
+  layoutKey(d); d.tiles[0][0] += 1;
+  assert.equal(checkOrigin(r), 'changedOrTrimmedLayout');
+  d.tiles[0][0] -= 1; d.faces[0] = 100;
+  assert.notEqual(puzzleKey(d), initialPuzzle);
+});
+
 test('overlap is symmetric even when widths differ and opposite edges line up', () => {
   const a = { tiles: [0, 12, 14, 16, 18, 20].map(x => [x, 0, 0]), faces: [0, 1, 2, 3, 4, 5] };
   const b = { ...a, tiles: [0, 2, 4, 6, 8, 10].map(x => [x, 0, 0]) };
