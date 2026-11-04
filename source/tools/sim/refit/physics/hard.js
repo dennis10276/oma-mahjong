@@ -1,0 +1,1525 @@
+/* Oma's Mahjong — the test player and the harder levels (from RULES.hard.from).
+
+   THE TEST PLAYER plays a level the way a sensible person does, so we can measure how hard a level
+   really is (the old test player in layouts.js could see under face-down tiles and ignored ice and
+   locks; real players beat its levels far more often than it did). It
+   - only knows a face-down tile once it can turn it over (a tile you can tap is always peeked),
+   - respects ice, locks and the alarm clock,
+   - takes a tray match at once; otherwise it weighs every pair and every tile it could park in the
+     tray: how full the tray gets, how deep the twins of the waiting tiles are buried, how many
+     tiles and pairs are free afterwards, and how much time the alarm clock leaves,
+   - makes human mistakes: it picks among the moves by their score with some noise (`temp`).
+   Its settings (P) were fitted to how Dennisisdebeste and Mrs. Doubtfire did on levels 50-74.
+
+   A level for the test player: { tiles, nb, faces, down (0/1 per tile), rules (ice/locks, or
+   null), clock ({ i, n }: tile i must be off the board within n moves, or null) }. */
+'use strict';
+const Hard = (() => {
+  const L = require('./layouts.js'); // offline snapshot: independent of the designer's global Layouts
+  const SLOTS = L.SLOTS;
+  // the sensible player. Personas re-fitted 2026-10-15 to 363 real attempts on the exact boards
+  // (tools/sim/refit, analysis/honest-refit.md):
+  // - unknown 0: real players are not afraid of a tray tile whose twin they have not seen yet;
+  // - reveal 8: they dig where the uncovered tiles are likely to fit something (smart guessing,
+  //   found in Dennisisdebeste's replay of level 102: the test player had 0%, he won);
+  // - plan 10: with 10 moves or fewer left on the alarm clock they plan the way to the clock tile
+  //   (his replay of level 105: from his opening the test player lost 9 of 10, now about 9 of 10 won).
+  // strong ~ Dennisisdebeste (first tries 80-89: 0.71 real, 0.70 test player), average ~ Mrs. Doubtfire.
+  // memory: on a retry, the chance to remember a picture seen at the start / middle / end of the lost
+  //   try (rate2; fitted to real retries 2026-10-16: Dennisisdebeste 75% throughout, Mrs. Doubtfire and
+  //   Gerda none; sensible kept at 50/30/50). One test player per person: tools/sim/refit/players.
+  // focused: the old clock-focused calibration model, kept for comparison.
+  // end: with this many tiles left and all of them seen, it works out the rest exactly
+  const P = { tray: [0, 1, 3, 9], deep: 1.0, unknown: 7, free: 0.25, pairs: 0.8, clock: 3, temp: 3.5, end: 12 };
+  const REF = { strong: { temp: 1.5, end: 12, clockFocus: 1, unknown: 0, reveal: 8, plan: 10, memory: [0.75, 0.75, 0.75] }, focused: { temp: 0.7, end: 20, clockFocus: 4 }, sensible: { temp: 3, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: [0.5, 0.3, 0.5] }, average: { temp: 4.5, end: 12, clockFocus: 4, unknown: 0, reveal: 8, plan: 10, memory: 0 } };
+  const persona = k => ({ ...P, ...REF[k] });
+  // tiles lying exactly on top of a tile hide it completely (towers in the harder piles)
+  const coverOf = (tiles, nb) => tiles.map((t, i) => nb.above[i].filter(j => tiles[j].x === t.x && tiles[j].y === t.y));
+
+  /* ---------- what a move is worth: named parts with weights ----------
+     A move is scored as the sum of these parts times their weights. The fixed personas derive the
+     weights from their settings (weightsOf); a player's own test player has weights learned from
+     their recorded moves (p.w, tools/sim/refit/mimic). */
+  const FEAT = ['tray1', 'tray2', 'tray3', 'depthKnown', 'unknownMates', 'unknownTerm', 'free', 'pairs', 'stuckHard', 'stuckSoft', 'clockDead', 'clockPressure', 'clockDepth', 'reveal', 'isPair', 'height', 'blindDown', 'rang', 'overflow', 'flip', 'flipHit'];
+  const NF = FEAT.length;
+  const POLICY_FEAT = [...FEAT, 'x', 'y', 'x2', 'y2', 'pairDistance', 'relativeHeight', ...Array.from({ length: 37 }, (_, index) => 'picture' + index), 'visibleTrayMatch', 'knownReopen', 'visiblePeekMatch', 'knownPairPrep'];
+  const KIND_CONTEXT = ['bias', 'tray1', 'tray2', 'tray3', 'pair', 'flip', 'free', 'unknownFree', 'pairs', 'remaining', 'progress', 'clock', 'clockBudget', 'clockFree', 'clockVisible', 'clockDepth', 'keys', 'freeKeys', 'locks', 'ice', 'hasTrayMatch', 'trayMatchShare', 'openPeek', 'peekMatchShare', 'knownReopenShare', 'knownPairPrepShare'];
+  const GOAL_FEAT = ['keyTaken', 'keyDepthGain', 'unlockedShare', 'clockTaken', 'clockDepthGain', 'clockUrgentGain', 'keyReveal', 'clockReveal'];
+  const TRAY_GOAL_CONTEXT = ['bias', 'tray2', 'tray3', 'age1', 'age2plus', 'depth', 'freeTarget', 'optionShare'];
+  const trayGoalContext = (tray, age, depth, share) => [1, +(tray === 2), +(tray === 3), +(age === 1), +(age >= 2), Math.min(1, depth / 8), +(depth === 0), share];
+  function trayGoalActions(game, state, known) {
+    const initial = new Uint8Array(game.tiles.length).fill(1);
+    const geometric = game.tiles.map((tile, index) => index).filter(index => state.alive[index] && L.isFree(index, state.alive, game.nb));
+    let relieved = !!state.relieved;
+    let free = game.rules && !relieved ? geometric.filter(index => L.takeable(index, state.alive, game.nb, game.rules, initial)) : geometric;
+    if (!free.length && geometric.length && game.rules) { relieved = true; free = geometric; }
+    const peekFits = index => state.openPeek >= 0 && index !== state.openPeek && state.alive[state.openPeek]
+      && free.includes(state.openPeek) && known[index] && known[state.openPeek]
+      && game.faces[index] === game.faces[state.openPeek] && !state.tray.includes(game.faces[index]);
+    const take = free.filter(index => known[index] && (!game.down[index] || state.openPeek === index
+      || state.tray.includes(game.faces[index]) || peekFits(index)));
+    const inspect = free.filter(index => game.down[index] && state.openPeek !== index
+      && !(known[index] && (state.tray.includes(game.faces[index]) || peekFits(index))));
+    return { free, relieved, peekFits, actions: [...take.map(index => ({ index, inspect: false })), ...inspect.map(index => ({ index, inspect: true }))] };
+  }
+
+  function trayGoalInfo(game, state, known, face) {
+    if (state.tray.length >= SLOTS || !state.tray.includes(face) || game.faces.some(picture => picture >= 100) || game.clock && state.alive[game.clock.i]) return null;
+    const legal = trayGoalActions(game, state, known), rules = legal.relieved ? null : game.rules;
+    const visible = index => !game.nb.above[index].some(above => state.alive[above]
+      && game.tiles[above].x === game.tiles[index].x && game.tiles[above].y === game.tiles[index].y);
+    const targets = game.tiles.map((tile, index) => index).filter(index => state.alive[index] && known[index] && game.faces[index] === face
+      && (!rules?.locks?.has(index) || (rules.keys || []).every(key => !state.alive[key] || known[key] || visible(key))));
+    if (!targets.length) return null;
+    const available = targets.filter(index => legal.free.includes(index)), frontier = new Set();
+    const addFrontier = index => {
+      if (frontier.has(index) || !state.alive[index]) return;
+      frontier.add(index);
+      for (const above of game.nb.above[index]) if (state.alive[above]) addFrontier(above);
+      for (const side of [game.nb.left, game.nb.right]) {
+        let previous = index;
+        for (let step = 0; step < game.tiles.length; step++) {
+          const adjacent = side[previous].find(candidate => state.alive[candidate]);
+          if (adjacent === undefined) break;
+          if (!frontier.has(adjacent)) addFrontier(adjacent);
+          previous = adjacent;
+        }
+      }
+      if (rules && (known[index] || visible(index))) {
+        if (rules.ice?.[index]) for (const neighbor of rules.iceNb[index]) if (state.alive[neighbor]) addFrontier(neighbor);
+        if (rules.locks?.has(index)) for (const key of rules.keys || []) if (state.alive[key] && (known[key] || visible(key))) addFrontier(key);
+      }
+    };
+    if (!available.length) for (const target of targets) addFrontier(target);
+    const depthOf = target => {
+      const above = new Set(), stack = [target];
+      while (stack.length) for (const index of game.nb.above[stack.pop()]) if (state.alive[index] && !above.has(index)) { above.add(index); stack.push(index); }
+      const sideDepth = side => {
+        let depth = 0, previous = target;
+        for (let step = 0; step < game.tiles.length; step++) {
+          const adjacent = side[previous].find(index => state.alive[index]);
+          if (adjacent === undefined) break;
+          depth++; previous = adjacent;
+        }
+        return depth;
+      };
+      const ice = rules?.ice?.[target] ? Math.max(0, rules.ice[target] - rules.iceNb[target].filter(index => !state.alive[index]).length) : 0;
+      const locks = rules?.locks?.has(target) ? (rules.keys || []).filter(index => state.alive[index]).length : 0;
+      return above.size + Math.min(sideDepth(game.nb.left), sideDepth(game.nb.right)) + ice + locks;
+    };
+    const related = index => targets.includes(index) || frontier.has(index)
+      || known[index] && state.tray.includes(game.faces[index])
+      || known[index] && legal.free.some(mate => mate !== index && frontier.has(mate) && known[mate] && game.faces[mate] === game.faces[index]);
+    const take = new Set(), inspect = new Set();
+    for (const action of legal.actions) if (related(action.index)) {
+      if (action.inspect) inspect.add(action.index);
+      else if (state.tray.length < SLOTS - 1 || state.tray.includes(game.faces[action.index]) || legal.peekFits(action.index)) take.add(action.index);
+    }
+    return { targets, depth: available.length ? 0 : Math.min(...targets.map(depthOf)), frontier, take, inspect, legal };
+  }
+
+  function advanceTrayGoal(game, before, after, known, cue, action, limit = 8) {
+    if (after.tray.length >= SLOTS || game.clock && after.alive[game.clock.i]) return null;
+    if (cue) {
+      const previous = trayGoalInfo(game, before, known, cue.face);
+      if (previous && (action.inspect ? previous.inspect : previous.take).has(action.index)
+        && after.tray.includes(cue.face)) return { face: cue.face, age: cue.age + 1 };
+    }
+    if (!action.inspect && known[action.index]) {
+      const face = game.faces[action.index];
+      if (!before.tray.includes(face) && after.tray.includes(face)) {
+        const next = trayGoalInfo(game, after, known, face);
+        if (next && next.depth > 0 && next.depth <= limit) return { face, age: 0 };
+      }
+    }
+    return null;
+  }
+  function weightsOf(p) {
+    if (p.w) { const w = new Float64Array(NF); p.w.forEach((x, i) => { if (i < NF) w[i] = x; }); return w; }
+    const t = Math.max(0.01, p.temp);
+    return Float64Array.from([-p.tray[1], -p.tray[2], -p.tray[3], -p.deep, -p.unknown, -1, p.free, p.pairs, -1000, -20, -1000, -p.clock, -(p.clockFocus || 0), p.reveal || 0, 0, 0, 0, -1e4, 0, 0, 0].map(x => x / t));
+  }
+
+  /* ---------- one game ---------- */
+  function play(g, p = P, seed = 1, trace = null) {
+    const { tiles, nb, faces } = g, n = tiles.length;
+    if (p.physicalChoiceForAttempt !== undefined && (typeof p.physicalChoiceForAttempt !== 'function' || !g.follow)) throw new Error('Resolve physical attempt factories through rateChain before autonomous play');
+    const choiceMode = !!(p.physicalChoice && !g.follow);
+    const analysisValueMode = !!(g.valueLog || g.captureValue), valueMode = analysisValueMode || choiceMode;
+    if (p.physicalChoice && (typeof p.physicalChoice !== 'function' || !p.physicalFlips || !p.kindModel || p.jointKindModel || p.kinds || p.flipRate || p.forceMatches !== false)) throw new Error('Context choice requires an unmasked physical personal actor');
+    const choiceLimit = p.physicalChoiceLimit ?? Math.max(4096, n * 32);
+    if (p.physicalChoice && (!Number.isInteger(choiceLimit) || choiceLimit < 1)) throw new Error('Context choice requires a positive computation limit');
+    if (analysisValueMode && (!p.physicalFlips || !Array.isArray(g.policyLog))) throw new Error('Value features require physical policy instrumentation');
+    if (p.physicalTrayPlanning !== undefined && (typeof p.physicalTrayPlanning !== 'function' || !p.physicalFlips
+      || !(choiceMode || analysisValueMode || g.follow && Array.isArray(g.policyLog)))) throw new Error('Known-only planning requires an instrumented physical actor');
+    if (g.captureValue && (p.forceMatches !== false || p.physicalPlan || p.physicalKeyPlan || p.physicalSafety || p.search)) throw new Error('Opening value capture cannot execute a planner or automatic match first');
+    if (p.jointKindModel && (p.kindModel || p.kinds || p.flipRate)) throw new Error('Joint-choice actors cannot also mask by move kind');
+    const r = L.rng(seed);
+    const alive = new Uint8Array(n).fill(1), alive0 = new Uint8Array(n).fill(1);
+    const rules = g.rules || null;
+    const down = g.down || new Uint8Array(n);
+    // relief (specials.js obRelief): when tiles are free but ice or locks block every one of them, the
+    // game melts the ice and opens the locks; from then on only the pile itself counts
+    let relieved = false;
+    const can = i => rules && !relieved ? L.takeable(i, alive, nb, rules, alive0) : L.isFree(i, alive, nb);
+    const tray = [];        // faces waiting
+    const stateKey = () => Array.from(alive).join('') + '|' + tray.slice().sort((left, right) => left - right).join(',') + (p.physicalFlips ? '|p' + openPeek : '');
+    const moveKey = option => option.slice().sort((left, right) => left - right).join(',');
+    let moves = 0, left = n, openPeek = -1, physicalCount = 0, tapTime = 0, pendingMatchCue = null, pendingPairCue = null;
+    const arrivingUntil = new Float64Array(256);
+    if (p.physicalFlips && !g.follow && (p.peek !== 0 || p.end || p.plan || p.keyPlan)) throw new Error('Physical-tap actors require peek:0 and no macro solver/planner');
+    const clock = g.clock && g.clock.i >= 0 ? g.clock : null;
+    let choices = 0, decisions = 0, risky = 0, blind = 0, forcedBlind = 0, unknownOptions = 0, singleOptions = 0;
+    const cover = g.cover || (g.cover = coverOf(tiles, nb));
+    const freezeRows = rows => Object.freeze(rows.map(row => Object.freeze(Array.from(row))));
+    const planningGame = p.physicalTrayPlanning ? Object.freeze({
+      tiles: Object.freeze(tiles.map(tile => Object.freeze({ x: tile.x, y: tile.y, z: tile.z }))),
+      nb: Object.freeze({ above: freezeRows(nb.above), left: freezeRows(nb.left), right: freezeRows(nb.right) }),
+      rules: rules ? Object.freeze({ ice: Object.freeze({ ...rules.ice }), iceNb: freezeRows(rules.iceNb || tiles.map(() => [])),
+        locks: new Set(rules.locks || []), keys: Object.freeze(Array.from(rules.keys || [])) }) : null,
+      clock: clock ? Object.freeze({ i: clock.i, n: clock.n }) : null,
+    }) : null;
+
+    // how many tiles have to go before tile j can be taken (the ones on top of it, all the way up,
+    // plus the shorter side of its row; ice: the hits still needed; a lock: its two keys)
+    const memo = new Int16Array(n);
+    let stamp = 1; const seen = new Int32Array(n);
+    function depth(j) {
+      if (memo[j]) return memo[j] - 1;
+      // tiles on top (transitively)
+      stamp++; let up = 0;
+      const st = [j]; seen[j] = stamp;
+      while (st.length) { const k = st.pop(); for (const a of nb.above[k]) if (alive[a] && seen[a] !== stamp) { seen[a] = stamp; up++; st.push(a); } }
+      const side = d => { let c = 0, k = j; for (;;) { const nx = (d < 0 ? nb.left[k] : nb.right[k]).find(x => alive[x]); if (nx === undefined) return c; c++; k = nx; if (c > 12) return c; } };
+      let v = up + Math.min(side(-1), side(1));
+      if (rules && !relieved && rules.ice && rules.ice[j]) { let gone = 0; for (const q of rules.iceNb[j]) if (alive0[q] && !alive[q]) gone++; v += Math.max(0, rules.ice[j] - gone); }
+      if (rules && !relieved && rules.locks && rules.locks.has(j)) for (const k of rules.keys) if (alive[k]) v += 1 + up;
+      memo[j] = v + 1;
+      return v;
+    }
+    // the tiles of each picture (so the tray's twins are found without looking at every tile)
+    const byFace = new Map(); faces.forEach((f, i) => { if (!byFace.has(f)) byFace.set(f, []); byFace.get(f).push(i); });
+    const hiddenNow = i => { for (const j of cover[i]) if (alive[j]) return true; return false; };
+    // a retry (g.memory): the pictures it remembers from the try before (the same board comes back),
+    // also of tiles that are face down or covered now. seenEver: what this try showed it (for the next)
+    const JOKER = 101, hasJoker = faces.includes(JOKER);
+    const picturesFit = (face, waiting) => face === waiting || face === JOKER || waiting === JOKER;
+    const matchesTray = (index, waiting = tray) => waiting.some(face => faces[index] === face || (picturesFit(faces[index], face)
+      && (!p.physicalFlips || arrivingUntil[(faces[index] === JOKER ? face : JOKER) & 255] <= tapTime)));
+    const peekMatch = index => !!p.physicalFlips && openPeek >= 0 && openPeek !== index && alive[openPeek] && can(openPeek)
+      && faces[openPeek] === faces[index] && !tray.includes(faces[index]);
+    const matchesImmediately = index => matchesTray(index) || peekMatch(index);
+    const physicalTakeable = index => !p.physicalFlips || !down[index] || openPeek === index || tray.includes(faces[index]) || peekMatch(index);
+    const mateLists = new Map([...byFace].map(([face, indices]) => [face,
+      !hasJoker ? indices : face === JOKER ? faces.map((picture, index) => index) : [...indices, ...byFace.get(JOKER)]]));
+    const mem = g.memory || null, seenEver = new Int16Array(n);   // seenEver: 1 + the move at which it was first seen
+    // p.peek: the chance it turns over a free face-down tile to see its picture (a person does not
+    // turn over every one; 1 = all of them). Follow mode: exactly the tiles the person turned over.
+    const peekP = p.peek === undefined ? 1 : p.peek, peeked = new Uint8Array(n);   // 1 looked, 2 not
+    const lastLook = new Int32Array(n), inspectedAt = new Int32Array(n).fill(-1), inspections = new Uint8Array(n);
+    let lookCount = 0;
+    const rememberLook = index => {
+      peeked[index] = 1;
+      if (!seenEver[index]) seenEver[index] = moves + 1;
+      if (inspectedAt[index] !== moves) { inspectedAt[index] = moves; inspections[index] = 0; }
+      inspections[index]++;
+      if (!p.shortMemory) return;
+      lastLook[index] = ++lookCount;
+      for (let previous = 0; previous < n; previous++) if (previous !== index && down[previous] && peeked[previous] === 1 && lookCount - lastLook[previous] >= p.shortMemory) peeked[previous] = 0;
+    };
+    const looked = i => { if (!down[i] || peeked[i] === 1 || (mem !== null && mem[i] === 1)) return true; if (peeked[i] === 0 && !g.follow) { if (peekP >= 1 || r() < peekP) rememberLook(i); else peeked[i] = 2; } return peeked[i] === 1; };
+    const sees = i => (can(i) && looked(i)) || (!down[i] && !hiddenNow(i)) || (mem !== null && mem[i] === 1);
+    // Freeze knowledge BEFORE trying a move. Hypothetically uncovering a tile must not give
+    // its picture away while deciding which covering tile to take. Free tiles can be peeked.
+    const known = new Uint8Array(n), freeNow = new Uint8Array(n), cnt = new Int16Array(256);
+    // smart guessing (p.reveal): the pictures it has not seen yet, counted the way a person counts
+    // what is still missing (how many of each, never where they are)
+    const publicPicturePrior = p.publicPicturePrior === undefined ? null : p.publicPicturePrior;
+    if (publicPicturePrior && (!p.physicalFlips || !Array.isArray(publicPicturePrior) || publicPicturePrior.length !== 256
+      || publicPicturePrior.some((value, picture) => !Number.isFinite(value) || value < 0 || value > 0 && !(picture < 36 || picture === 101))
+      || Math.abs(publicPicturePrior.reduce((sum, value) => sum + value, 0) - 1) > 1e-12)) throw new Error('Invalid public picture prior');
+    const priorPictures = publicPicturePrior ? Array.from({ length: 256 }, (unused, picture) => picture) : null;
+    const unseen = new Float64Array(256); let unseenN = 0;
+    const unseenHit = (waiting, countOf) => {
+      let hit = 0;
+      if (!publicPicturePrior && !hasJoker) {
+        for (const face of waiting) hit += unseen[face & 255];
+        for (const face of byFace.keys()) if ((countOf(face) & 1) && !waiting.includes(face)) hit += unseen[face & 255];
+        return unseenN ? Math.min(1, hit / unseenN) : 0;
+      }
+      const odd = (priorPictures || [...byFace.keys()]).filter(face => countOf(face) & 1);
+      for (const face of priorPictures || byFace.keys()) if (waiting.some(picture => picturesFit(face, picture)) || odd.some(picture => picturesFit(face, picture))) hit += unseen[face & 255];
+      return unseenN ? Math.min(1, hit / unseenN) : 0;
+    };
+    const W = weightsOf(p), cf = new Float64Array(NF);   // (weights saved with fewer parts get 0 for the rest)
+    const minX = Math.min(...tiles.map(tile => tile.x)), minY = Math.min(...tiles.map(tile => tile.y));
+    const spanX = Math.max(1, Math.max(...tiles.map(tile => tile.x)) - minX), spanY = Math.max(1, Math.max(...tiles.map(tile => tile.y)) - minY);
+    const spanZ = Math.max(1, Math.max(...tiles.map(tile => tile.z)));
+    let policyTray = [], policyPeek = -1;
+    const policyMatch = new Uint8Array(n), policyPairPrep = new Uint8Array(n);
+    function policyParts(option, feature) {
+      const position = option.map(index => [(tiles[index].x - minX) / spanX, (tiles[index].y - minY) / spanY]);
+      const meanX = position.reduce((sum, point) => sum + point[0], 0) / option.length;
+      const meanY = position.reduce((sum, point) => sum + point[1], 0) / option.length;
+      const peekFits = !!p.physicalFlips && policyPeek >= 0 && option.some(index => index !== policyPeek && known[index] && faces[index] === faces[policyPeek] && !policyTray.includes(faces[index]));
+      const distance = option.length === 2 ? Math.hypot(position[0][0] - position[1][0], position[0][1] - position[1][1])
+        : peekFits ? Math.hypot(position[0][0] - (tiles[policyPeek].x - minX) / spanX, position[0][1] - (tiles[policyPeek].y - minY) / spanY) : 0;
+      const pictures = new Array(37).fill(0);
+      if (p.physicalFlips || !feature[19]) for (const index of option) if (known[index]) {
+        const picture = faces[index] === JOKER ? 36 : faces[index];
+        if (picture >= 0 && picture < pictures.length) pictures[picture] += 1 / option.length;
+      }
+      return [...feature, meanX, meanY, meanX * meanX, meanY * meanY, distance,
+        option.reduce((sum, index) => sum + tiles[index].z, 0) / option.length / spanZ, ...pictures,
+        +(!feature[19] && option.some(index => policyMatch[index])),
+        +(!!p.physicalFlips && !!feature[19] && option.some(index => known[index])), +(!feature[19] && peekFits),
+        +(!!feature[19] && option.some(index => policyPairPrep[index]))];
+    }
+    const spatialScore = (option, feature) => p.spatial ? policyParts(option, feature).slice(NF).reduce((sum, value, index) => sum + value * (p.spatial[index] || 0), 0) : 0;
+    const activeGoals = !!(p.goalWeights && p.goalWeights.some(value => value !== 0));
+    const goalScore = feature => activeGoals ? feature.reduce((sum, value, index) => sum + value * (p.goalWeights[index] || 0), 0) : 0;
+    // the parts of a position's worth (after a move), into cf[0..13]
+    function score(tr) {
+      memo.fill(0); cf.fill(0);
+      if (tr.length) cf[Math.min(3, tr.length) - 1] = 1;
+      let fr = 0, unk = 0; cnt.fill(0);
+      for (let i = 0; i < n; i++) {
+        if (!alive[i]) { freeNow[i] = 0; continue; }
+        const f = can(i) ? 1 : 0; freeNow[i] = f;
+        if (f) { fr++; if (known[i]) cnt[faces[i] & 255]++; else unk++; } else if ((down[i] || hiddenNow(i)) && !(mem !== null && mem[i] === 1)) unk++;
+      }
+      for (const f of tr) {
+        let best = 1e9;
+        const mates = mateLists.get(f);
+        for (const i of mates) if (alive[i] && known[i] && (freeNow[i] || (!down[i] && !hiddenNow(i)) || (mem !== null && mem[i] === 1))) { const d = depth(i); if (d < best) best = d; }
+        if (best < 1e9) cf[3] += best; else { cf[4] += 1; cf[5] += unk / 12; }
+      }
+      let pr = 0, safe = 0;
+      for (const [f, list] of byFace) {
+        const c = cnt[f & 255]; if (!c) continue;
+        if (tr.some(face => picturesFit(f, face))) { pr += 2; safe++; continue; }
+        if (c < 2) continue;
+        pr++;
+        // a pair with a face-down tile in it needs no slot (turn it over, then tap its twin)
+        for (const i of list) if (alive[i] && freeNow[i] && down[i] && (!publicPicturePrior || known[i])) { safe++; break; }
+      }
+      cf[6] = fr; cf[7] = pr;
+      // tiles this move uncovers that it could not see before: each is a draw from the pictures still
+      // missing. A draw that fits a waiting tile, or a free tile without a partner, is worth a pair.
+      if (unseenN) {
+        let nf = 0; for (let i = 0; i < n; i++) if (freeNow[i] && !known[i]) nf++;
+        if (nf) {
+          cf[13] = nf * unseenHit(tr, face => cnt[face & 255]);
+        }
+      }
+      if (tr.length >= SLOTS - 1 && !safe) {
+        // stuck for sure, unless the move uncovered tiles it has not seen yet (one may fit)
+        let nf = 0; for (let i = 0; i < n; i++) if (freeNow[i] && !known[i]) nf++;
+        if (nf) cf[9] = 1; else cf[8] = 1;
+      }
+      if (clock && alive[clock.i]) {
+        const slack = clock.n - moves - depth(clock.i) - 1;
+        if (slack < 0) cf[10] = 1; else cf[11] = Math.max(0, 6 - slack);
+        cf[12] = depth(clock.i);
+      }
+    }
+    const clockTight = () => { if (!clock || !alive[clock.i]) return false; memo.fill(0); return clock.n - moves - depth(clock.i) - 1 <= 0; };
+    // jr: every tile taken, in order (also the twin a joker takes along), so a tried move can be undone
+    const jr = [];
+    const virtualTaken = new Int16Array(256);
+    let hypothetical = null;
+    const off = (index, countsMove = true, virtualFace = null) => {
+      const peekBefore = openPeek;
+      if (index >= 0) {
+        alive[index] = 0;
+        if (openPeek === index) openPeek = -1;
+        if (hypothetical === null) { at[index] = moves; if (!seenEver[index]) seenEver[index] = moves + 1; }
+      }
+      if (virtualFace !== null) virtualTaken[virtualFace & 255]++;
+      left--; if (countsMove) moves++;
+      jr.push({ index, countsMove, virtualFace, peekBefore, arrivals: [] });
+    };
+    const setArrival = (face, until) => { const slot = face & 255; jr.at(-1).arrivals.push([slot, arrivingUntil[slot]]); arrivingUntil[slot] = until; };
+    // the twin a joker takes along: a free one if there is one, otherwise the top-most (specials.js)
+    const jokerTwin = (face, excluded) => {
+      let twin = -1, best = -1;
+      for (let index = 0; index < n; index++) if (index !== excluded && alive[index] && (!hypothetical || hypothetical[index]) && faces[index] === face) {
+        const value = (L.isFree(index, alive, nb) ? 1000 : 0) + tiles[index].z;
+        if (value > best) { best = value; twin = index; }
+      }
+      return twin;
+    };
+    const takeTwin = (face, excluded) => {
+      const twin = jokerTwin(face, excluded);
+      if (twin >= 0) off(twin);
+      else if (hypothetical && byFace.get(face).filter(index => index !== excluded && alive[index]).length > virtualTaken[face & 255]) off(-1, true, face);
+    };
+    const jokerTarget = () => {
+      const candidates = tray.map((face, index) => index).filter(index => tray[index] !== JOKER && (!p.physicalFlips || arrivingUntil[tray[index] & 255] <= tapTime));
+      return candidates.find(index => !byFace.get(tray[index]).some(twin => alive[twin] && (!hypothetical || hypothetical[twin]) && can(twin))) ?? candidates[0];
+    };
+    const take = i => {
+      if (!alive[i]) return;
+      const twin = peekMatch(i) ? openPeek : -1;
+      const finale = faces[i] === JOKER && left === 1 && !tray.length;
+      off(i, !finale);
+      if (finale) return;
+      const f = faces[i], q = tray.indexOf(f);
+      if (q >= 0) { tray.splice(q, 1); setArrival(f, 0); return; }
+      if (twin >= 0) { off(twin); return; }
+      // the joker (specials.js): it takes a waiting tile with its twin, or waits and takes the next tile with its twin
+      if (f === JOKER) {
+        const t = jokerTarget();
+        if (t !== undefined) { const w = tray[t]; tray.splice(t, 1); takeTwin(w, -1); setArrival(w, 0); return; }
+        tray.push(f); setArrival(f, tapTime + 230); return;
+      }
+      const jq = tray.indexOf(JOKER);
+      if (jq >= 0 && (!p.physicalFlips || arrivingUntil[JOKER] <= tapTime)) { tray.splice(jq, 1); takeTwin(f, i); setArrival(JOKER, 0); return; }
+      tray.push(f); setArrival(f, tapTime + 230);
+    };
+    const undoTo = (mark, tr) => { while (jr.length > mark) { const entry = jr.pop(); for (let index = entry.arrivals.length - 1; index >= 0; index--) arrivingUntil[entry.arrivals[index][0]] = entry.arrivals[index][1]; if (entry.index >= 0) alive[entry.index] = 1; if (entry.virtualFace !== null) virtualTaken[entry.virtualFace & 255]--; openPeek = entry.peekBefore; left++; if (entry.countsMove) moves--; } tray.length = 0; tray.push(...tr); };
+    const at = new Int16Array(n).fill(-1);       // the move at which each tile was taken
+    const commit = (i, cueAllowed = true) => {
+      if (!alive[i]) return true;
+      if (clock && alive[clock.i] && moves >= clock.n) return false;
+      const cueKnown = p.physicalFlips && p.physicalFollowThrough && !g.follow && cueAllowed
+        ? alive.map((value, index) => value && sees(index) ? 1 : 0) : null;
+      take(i);
+      for (let index = trayT.length - 1; index >= 0; index--) if (!tray.includes(faces[trayT[index]])) trayT.splice(index, 1);
+      if (tray.includes(faces[i]) && !trayT.some(index => faces[index] === faces[i])) trayT.push(i);
+      recordPhysical(i, 'take');
+      pendingMatchCue = null;
+      pendingPairCue = null;
+      if (cueKnown && tray.length > 0 && tray.length < SLOTS && (!clock || !alive[clock.i])) {
+        const reliefNext = rules && !relieved && !alive.some((value, index) => value && can(index));
+        const matches = [];
+        for (let index = 0; index < n; index++) if (alive[index] && cueKnown[index] && (can(index) || reliefNext && L.isFree(index, alive, nb))
+          && faces[index] !== JOKER && tray.includes(faces[index])) matches.push(index);
+        if (matches.length) pendingMatchCue = matches;
+      }
+      return true;
+    };
+    const trayT = [];      // the waiting tiles themselves (for the exact end game)
+    const inspectTile = index => {
+      if (!alive[index] || !can(index)) return true;
+      const automatic = p.physicalFlips && (tray.includes(faces[index]) || peekMatch(index));
+      const cueAllowed = peeked[index] === 1 || !!mem?.[index] || !down[index];
+      const pairMatches = p.physicalFlips && p.physicalPairFollowThrough && !g.follow && cueAllowed && faces[index] !== JOKER && !automatic
+        && (!clock || !alive[clock.i]) ? faces.flatMap((face, mate) => mate !== index && alive[mate]
+          && can(mate) && sees(mate) && face === faces[index] ? [mate] : []) : [];
+      pendingMatchCue = null;
+      pendingPairCue = null;
+      if (trace && p.physicalFlips) trace.push({ inspection: index, moves, known: peeked[index] === 1 || !!mem?.[index] });
+      rememberLook(index);
+      if (automatic) return commit(index, cueAllowed);
+      if (p.physicalFlips) openPeek = index;
+      recordPhysical(index, 'flip');
+      if (pairMatches.length) pendingPairCue = { opening: index, matches: pairMatches };
+      return true;
+    };
+    function recordPhysical(index, kind) {
+      if (!p.physicalFlips) return;
+      physicalCount++;
+      if (g.physicalLog) g.physicalLog.push({ index, kind, moves, alive: Array.from(alive), tray: tray.slice(), openPeek });
+    }
+    let plan = null;
+    // start from a position in the middle of a game: these tiles were taken already, in this order
+    // (tools/sim/refit/replay.js plays on from a real player's position)
+    if (g.start) for (const i of g.start) if (!commit(i)) return end(false, 'clock');
+    if (g.peekedAtStart) for (const i of g.peekedAtStart) rememberLook(i);   // (the tiles they had turned over by then)
+    if (p.physicalFlips && g.openPeekAtStart >= 0) { openPeek = g.openPeekAtStart; rememberLook(openPeek); }
+    // the end game: everything left is in sight, so work it out exactly (ice counted from now on)
+    function endGame() {
+      if (hasJoker && (tray.includes(JOKER) || byFace.get(JOKER).some(index => alive[index]))) return null;
+      if (!p.end || left > p.end) return null;
+      for (let i = 0; i < n; i++) if (alive[i] && !sees(i)) return null;
+      let ru = null;
+      if (rules && !relieved) {
+        const ice = {};
+        for (const k in rules.ice) { let gone = 0; for (const q of rules.iceNb[k]) if (alive0[q] && !alive[q]) gone++; const h = rules.ice[k] - gone; if (h > 0) ice[k] = h; }
+        ru = { iceNb: rules.iceNb, ice, locks: rules.locks, keys: rules.keys };
+      }
+      const path = L.solve(tiles, nb, faces, alive, trayT, 3000, ru);
+      if (!path || (clock && alive[clock.i] && path.indexOf(clock.i) >= clock.n - moves)) return [];   // no way found: play on by feel
+      return path;
+    }
+
+    // planning for the alarm clock (p.plan: how many moves ahead): with the moves that are left,
+    // find a way to take the clock tile in time using only what it can see now, without filling
+    // the tray, and ending with at most 2 waiting (or a seen tile that fits). A face-down tile
+    // that a move would uncover cannot be planned with. Dennisisdebeste on level 105: from his
+    // opening the test player lost 9 of 10 games; he planned the 11 moves to the clock tile.
+    let cplan = null;
+    const seen0 = new Uint8Array(n);
+    function goalFrontier(goal) {
+      const frontier = new Set([goal]), frontierStack = [goal];
+      while (frontierStack.length) for (const index of nb.above[frontierStack.pop()]) if (alive[index] && !frontier.has(index)) { frontier.add(index); frontierStack.push(index); }
+      for (const side of [nb.left, nb.right]) {
+        let index = goal;
+        for (let step = 0; step < 6; step++) {
+          const next = side[index].find(candidate => alive[candidate]);
+          if (next === undefined) break;
+          frontier.add(next); index = next;
+        }
+      }
+      return frontier;
+    }
+    function clockSearch(goal = clock.i, deadline = clock.n, horizon = p.plan, nodeLimit = p.planNodes || 3000) {
+      const budget = deadline - moves;
+      if (budget > horizon) return null;
+      for (let i = 0; i < n; i++) seen0[i] = alive[i] && sees(i) ? 1 : 0;
+      const usable = i => alive[i] && seen0[i] && can(i);
+      const frontier = goalFrontier(goal);
+      memo.fill(0);
+      const initialDepth = depth(goal);
+      const path = [], visited = new Set();
+      let nodes = 0, found = null, prefix = null, prefixDepth = Infinity, prefixTray = Infinity;
+      const put = i => { const t = [tray.slice(), jr.length]; take(i); path.push(i); return t; };
+      const undo = (i, t) => { undoTo(t[1], t[0]); path.pop(); };
+      function ok() {
+        if (tray.length <= SLOTS - 2) return true;
+        for (let i = 0; i < n; i++) if (usable(i) && matchesTray(i)) return true;
+        return false;
+      }
+      function rec() {
+        if (!alive[goal]) { if (ok()) { found = path.slice(); return true; } return false; }
+        if (++nodes > nodeLimit) return true;
+        memo.fill(0);
+        const remainingDepth = depth(goal);
+        if (moves + remainingDepth + 1 > deadline) return false;
+        if (path.length && remainingDepth < initialDepth && tray.length <= SLOTS - 2 && [...frontier].some(index => alive[index] && !seen0[index] && can(index))
+          && (remainingDepth < prefixDepth || (remainingDepth === prefixDepth && (!prefix || path.length < prefix.length || (path.length === prefix.length && tray.length < prefixTray))))) {
+          prefix = path.slice(); prefixDepth = remainingDepth; prefixTray = tray.length;
+        }
+        const key = hasJoker ? stateKey() + '|' + Array.from(virtualTaken).join(',') : path.slice().sort((a, b) => a - b).join(',') + '|' + tray.slice().sort().join(',');
+        if (visited.has(key)) return false; visited.add(key);
+        const fr = []; for (let i = 0; i < n; i++) if (usable(i)) fr.push(i);
+        const tries = [];
+        // the clock tile itself first, then tiles that fit a waiting one, then pairs, then single tiles
+        // on the way to the clock (the ones lying on it or next to it), then any other single tile
+        const cone = new Set(); { const st = [goal]; while (st.length) { const k = st.pop(); for (const a of nb.above[k]) if (alive[a] && !cone.has(a)) { cone.add(a); st.push(a); } } for (const d of [nb.left, nb.right]) { let k = goal; for (let c = 0; c < 6; c++) { const x = d[k].find(q => alive[q]); if (x === undefined) break; cone.add(x); k = x; } } }
+        const twin = i => fr.find(j => j !== i && faces[j] === faces[i]);
+        if (usable(goal)) { const t = twin(goal); if (t !== undefined) tries.push([goal, t]); tries.push([goal]); }
+        for (const i of fr) if (i !== goal && matchesTray(i)) tries.push([i]);
+        for (let a = 0; a < fr.length; a++) for (let b = a + 1; b < fr.length; b++) if (fr[a] !== goal && fr[b] !== goal && faces[fr[a]] === faces[fr[b]] && !tray.includes(faces[fr[a]])) {
+          const pr = down[fr[a]] && !down[fr[b]] ? [fr[b], fr[a]] : [fr[a], fr[b]];
+          if (tray.length <= SLOTS - 2 || down[fr[a]] || down[fr[b]]) tries.push(pr);
+        }
+        if (tray.length < SLOTS - 1) {
+          for (const i of fr) if (i !== goal && cone.has(i) && !tray.includes(faces[i])) tries.push([i]);
+          for (const i of fr) if (i !== goal && !cone.has(i) && !tray.includes(faces[i])) tries.push([i]);
+        }
+        for (const o of tries) {
+          if (moves + o.length > deadline && alive[goal] && o[0] !== goal) continue;
+          const saved = [];
+          for (const i of o) saved.push([i, put(i)]);
+          const done = (tray.length < SLOTS) && rec();
+          for (let q = saved.length - 1; q >= 0; q--) undo(saved[q][0], saved[q][1]);
+          if (done) return true;
+        }
+        return false;
+      }
+      const previousHypothetical = hypothetical;
+      hypothetical = seen0;
+      try { rec(); } finally { hypothetical = previousHypothetical; }
+      if (!found && prefix && p.stats) p.stats.clockPrefixPlans = (p.stats.clockPrefixPlans || 0) + 1;
+      return found || prefix;
+    }
+
+    function physicalTargetSearch(target, deadline, horizon, safeExitRequired, nodeLimit) {
+      if (hasJoker || target === undefined || !alive[target] || deadline - moves > horizon) return null;
+      const initialMoves = moves, frontier = goalFrontier(target);
+      if (rules && !relieved && rules.locks?.has(target)) for (const key of rules.keys || []) for (const index of goalFrontier(key)) frontier.add(index);
+      for (let index = 0; index < n; index++) {
+        seen0[index] = alive[index] && sees(index) ? 1 : 0;
+        if (seen0[index] && !seenEver[index]) seenEver[index] = moves + 1;
+      }
+      const route = [], visited = new Set();
+      let nodes = 0, found = null, prefix = null, prefixRank = null;
+      const betterPrefix = (path, remainingDepth) => {
+        const rank = [remainingDepth, moves - initialMoves, path.length, tray.length];
+        const different = prefixRank ? rank.findIndex((value, index) => value !== prefixRank[index]) : -1;
+        if (!prefixRank || (different >= 0 && rank[different] < prefixRank[different])) { prefix = path.slice(); prefixRank = rank; }
+      };
+      const search = () => {
+        if (!alive[target]) {
+          const freeKnown = safeExitRequired && tray.length === SLOTS - 1
+            ? faces.map((face, index) => index).filter(index => alive[index] && seen0[index] && can(index)) : [];
+          const safeExit = tray.length < SLOTS - 1 || !safeExitRequired
+            || freeKnown.some(index => matchesImmediately(index))
+            || freeKnown.some((index, position) => freeKnown.slice(position + 1)
+              .some(other => faces[index] === faces[other] && (down[index] || down[other])));
+          if (tray.length < SLOTS && safeExit) { found = route.slice(); return true; }
+          return false;
+        }
+        if (++nodes > nodeLimit || moves >= deadline || route.length >= 2 * (deadline - initialMoves) + 2 || tray.length >= SLOTS) return false;
+        memo.fill(0);
+        const remainingDepth = depth(target);
+        if (moves + remainingDepth + 1 > deadline) return false;
+        const identity = stateKey() + '|' + moves;
+        if (visited.has(identity)) return false;
+        visited.add(identity);
+        const free = []; for (let index = 0; index < n; index++) if (alive[index] && can(index)) free.push(index);
+        for (const index of free) if (!seen0[index] && frontier.has(index)) {
+          if (!down[index]) { if (route.length) betterPrefix(route, remainingDepth); }
+          else if ((route.length || inspectedAt[index] !== moves || inspections[index] < 2)
+            && (index === target || deadline - moves > (openPeek >= 0 ? 2 : 1))) betterPrefix([...route, { index, inspect: true }], remainingDepth);
+        }
+        const candidates = free.filter(index => seen0[index]);
+        const priority = index => index === target ? 0 : matchesImmediately(index) ? 1 : frontier.has(index) ? 2 : 3;
+        candidates.sort((left, right) => priority(left) - priority(right) || left - right);
+        for (const index of candidates) {
+          if (nodes >= nodeLimit) break;
+          const savedTray = tray.slice(), mark = jr.length, savedPeek = openPeek;
+          const inspect = !!down[index] && !physicalTakeable(index);
+          if (inspect && !route.length && inspectedAt[index] === moves && inspections[index] >= 2) continue;
+          if (inspect) openPeek = index; else take(index);
+          route.push({ index, inspect });
+          const done = search();
+          route.pop(); undoTo(mark, savedTray); openPeek = savedPeek;
+          if (done) return true;
+        }
+        return false;
+      };
+      const previousHypothetical = hypothetical;
+      hypothetical = seen0;
+      try { search(); } finally { hypothetical = previousHypothetical; memo.fill(0); }
+      if (p.stats) {
+        const field = clock && target === clock.i ? 'physicalClockNodes' : 'physicalKeyNodes';
+        p.stats[field] = (p.stats[field] || 0) + nodes;
+      }
+      const actions = found || prefix;
+      return actions?.length ? { actions, known: seen0.slice() } : null;
+    }
+
+    // g.follow: a real player's tiles in the order they took them; play their moves instead of
+    // choosing, and log (g.log) every decision with the parts of each option (behaviour cloning)
+    const follow = g.follow || null; let fi = 0, logF = null, humanFlip = -1, revealedTake = -1;
+    let physicalRoute = null, physicalKeyRoute = null;
+    const mateKnownPre = i => !!known[i] && (matchesTray(i) || mateLists.get(faces[i]).some(j => j !== i && alive[j] && known[j]));
+    while (left > 0) {
+      if (p.physicalFlips) {
+        tapTime = g.tapTimes?.[physicalCount] ?? (physicalCount + 1) * (p.tapMs ?? 1000);
+        if (g.settleBefore?.[physicalCount]) arrivingUntil.fill(0);
+      }
+      if (clock && alive[clock.i] && moves >= clock.n) return end(false, 'clock');
+      if (choiceMode && physicalCount >= choiceLimit) {
+        if (p.stats) p.stats.contextChoiceLimits = (p.stats.contextChoiceLimits || 0) + 1;
+        return end(false, 'contextChoiceLimit');
+      }
+      if (follow) {
+        if (fi >= follow.length) return end(false, 'stopped');
+        humanFlip = -1;
+        if (follow[fi] < 0) {   // they turned this tile over: a decision (flip) when it was free and unseen
+          const i = -follow[fi] - 1;
+          if (alive[i] && down[i] && can(i) && (p.physicalFlips ? openPeek !== i : !looked(i))) humanFlip = i;
+          else { if (!inspectTile(i)) return end(false, 'clock'); fi++; continue; }
+        } else {
+          const h = follow[fi];
+          if (!alive[h]) { fi++; continue; }
+          if (down[h] && !looked(h) && can(h)) { humanFlip = h; if (g.logMatches) revealedTake = fi; }
+          else if (g.logMatches && fi === revealedTake) {
+            const next = follow[fi + 1], paired = next >= 0 && alive[next] && can(next) && faces[next] === faces[h] && !matchesTray(h);
+            if (!commit(h) || (paired && !commit(next))) return end(false, 'clock');
+            fi += paired ? 2 : 1;
+            if (tray.length >= SLOTS) return end(false, 'tray');
+            continue;
+          } else if (!g.logMatches && matchesTray(h)) { commit(h); fi++; continue; }
+        }
+      }
+      if (!follow && p.plan && clock && alive[clock.i]) {
+        if (cplan && cplan.length && !(alive[cplan[0]] && can(cplan[0]))) cplan = null;
+        if (!cplan || !cplan.length) {
+          const inspect = p.flips && clock.n - moves <= p.plan ? [...goalFrontier(clock.i)].find(index => alive[index] && down[index] && can(index) && !looked(index)
+            && (!p.shortMemory || inspectedAt[index] !== moves || inspections[index] < 2)) : undefined;
+          if (inspect !== undefined) {
+            decisions++; choices++;
+            if (p.stats) p.stats.clockInspections = (p.stats.clockInspections || 0) + 1;
+            if (trace) trace.push({ inspection: inspect, clock: true, moves });
+            if (!inspectTile(inspect)) return end(false, 'clock'); continue;
+          }
+          cplan = clockSearch();
+        }
+        if (cplan && cplan.length) { if (!commit(cplan.shift())) return end(false, 'clock'); continue; }
+      }
+      let keyTaken = false;
+      if (!follow && p.keyPlan && rules && !relieved && rules.keys && rules.locks && [...rules.locks].some(index => alive[index])
+        && (!clock || !alive[clock.i] || clock.n - moves > p.keyPlan + 2)) {
+        for (const key of rules.keys) if (alive[key] && sees(key)) {
+          const route = clockSearch(key, moves + p.keyPlan, p.keyPlan, p.keyPlanNodes || 400);
+          if (route && route.length) {
+            if (!commit(route[0])) return end(false, 'clock');
+            keyTaken = true;
+            break;
+          }
+        }
+      }
+      if (keyTaken) continue;
+      const fr = []; for (let i = 0; i < n; i++) if (can(i)) fr.push(i);
+      if (!fr.length && rules && !relieved && tray.length < SLOTS) { for (let i = 0; i < n; i++) if (alive[i] && L.isFree(i, alive, nb)) { relieved = true; memo.fill(0); break; } if (relieved) { for (let i = 0; i < n; i++) if (can(i)) fr.push(i); } }
+      if (!fr.length) return end(false, 'none');
+      let followCue = null;
+      if (!follow && p.physicalFlips && p.physicalPlan && clock && alive[clock.i]) {
+        if (physicalRoute && alive.some((value, index) => value && physicalRoute.known[index] !== +sees(index))) physicalRoute = null;
+        const expected = physicalRoute?.actions[0];
+        if (expected && (!alive[expected.index] || !can(expected.index)
+          || (expected.inspect && inspectedAt[expected.index] === moves && inspections[expected.index] >= 2))) physicalRoute = null;
+        if (!physicalRoute?.actions.length) physicalRoute = physicalTargetSearch(clock.i, clock.n, p.physicalPlan,
+          p.physicalClockSafeExit, p.physicalPlanNodes || 600);
+        const choice = physicalRoute?.actions.shift();
+        if (choice) {
+          decisions++; choices++;
+          if (p.stats) p.stats.physicalClockPlans = (p.stats.physicalClockPlans || 0) + 1;
+          if (trace) trace.push({ physicalPlan: choice.index, inspect: choice.inspect, moves, known: !!physicalRoute.known[choice.index] });
+          if (!(choice.inspect ? inspectTile(choice.index) : commit(choice.index))) return end(false, 'clock');
+          if (tray.length >= SLOTS) return end(false, 'tray');
+          continue;
+        }
+      }
+      if (!follow && p.physicalFlips && p.physicalKeyPlan && rules && !relieved && rules.keys?.length && rules.locks?.size
+        && [...rules.locks].some(index => alive[index]) && (!clock || !alive[clock.i] || clock.n - moves > p.physicalKeyPlan + 2)) {
+        if (physicalKeyRoute && (!alive[physicalKeyRoute.target]
+          || alive.some((value, index) => value && physicalKeyRoute.known[index] !== +sees(index)))) physicalKeyRoute = null;
+        const expected = physicalKeyRoute?.actions[0];
+        if (expected && (!alive[expected.index] || !can(expected.index)
+          || (!expected.inspect && !physicalTakeable(expected.index))
+          || (expected.inspect && inspectedAt[expected.index] === moves && inspections[expected.index] >= 2))) physicalKeyRoute = null;
+        if (!physicalKeyRoute?.actions.length) for (const target of rules.keys) if (alive[target] && (!hiddenNow(target) || sees(target))) {
+          const route = physicalTargetSearch(target, moves + p.physicalKeyPlan, p.physicalKeyPlan,
+            p.physicalKeySafeExit, p.physicalKeyPlanNodes || 400);
+          if (route) { physicalKeyRoute = { ...route, target }; break; }
+        }
+        const choice = physicalKeyRoute?.actions.shift();
+        if (choice) {
+          decisions++; choices++;
+          if (p.stats) p.stats.physicalKeyPlans = (p.stats.physicalKeyPlans || 0) + 1;
+          if (trace) trace.push({ physicalKeyPlan: choice.index, target: physicalKeyRoute.target,
+            inspect: choice.inspect, moves, known: !!physicalKeyRoute.known[choice.index] });
+          if (!(choice.inspect ? inspectTile(choice.index) : commit(choice.index))) return end(false, 'clock');
+          if (tray.length >= SLOTS) return end(false, 'tray');
+          continue;
+        }
+      }
+      if (!follow && p.physicalFlips && pendingMatchCue && (!clock || !alive[clock.i])) {
+        const matching = pendingMatchCue.filter(index => alive[index] && can(index) && sees(index)
+          && physicalTakeable(index) && matchesTray(index));
+        pendingMatchCue = null;
+        if (matching.length) {
+          const probability = typeof p.physicalFollowThrough === 'number' ? p.physicalFollowThrough
+            : p.physicalFollowThrough[Math.min(3, tray.length)] || 0;
+          const following = probability >= 1 || probability > 0 && r() < probability;
+          followCue = { matches: new Set(matching), following };
+          if (p.stats) p.stats.physicalFollowThroughCues = (p.stats.physicalFollowThroughCues || 0) + 1;
+          if (trace) trace.push({ physicalFollowThrough: matching, following, probability, moves });
+        }
+      }
+      if (!follow && p.physicalFlips && pendingPairCue) {
+        const { opening, matches } = pendingPairCue;
+        pendingPairCue = null;
+        const matching = openPeek === opening && alive[opening] && (!clock || !alive[clock.i])
+          ? matches.filter(index => alive[index] && can(index) && sees(index) && peekMatch(index)) : [];
+        if (matching.length) {
+          matching.push(opening);
+          const probability = typeof p.physicalPairFollowThrough === 'number' ? p.physicalPairFollowThrough
+            : p.physicalPairFollowThrough[Math.min(3, tray.length)] || 0;
+          const following = probability >= 1 || probability > 0 && r() < probability;
+          followCue = { matches: new Set(matching), following };
+          if (p.stats) p.stats.physicalPairFollowThroughCues = (p.stats.physicalPairFollowThroughCues || 0) + 1;
+          if (trace) trace.push({ physicalPairFollowThrough: matching, following, probability, moves });
+        }
+      }
+      if (!follow && p.physicalFlips && p.physicalSafety > 0 && (!clock || !alive[clock.i])) {
+        for (let index = 0; index < n; index++) {
+          known[index] = alive[index] && sees(index) ? 1 : 0;
+          if (known[index] && !seenEver[index]) seenEver[index] = moves + 1;
+        }
+        const matching = fr.find(index => known[index] && physicalTakeable(index) && matchesImmediately(index));
+        let choice = matching !== undefined ? { index: matching, inspect: false, reason: 'knownMatch' } : null;
+        if (!choice) for (const index of fr) {
+          if (!known[index]) continue;
+          const mate = fr.find(other => other !== index && known[other] && faces[other] === faces[index]);
+          if (mate === undefined || (tray.length >= SLOTS - 1 && !down[index] && !down[mate])) continue;
+          const first = down[index] ? index : down[mate] ? mate : index;
+          const inspect = !!down[first] && !physicalTakeable(first);
+          if (inspect && inspectedAt[first] === moves && inspections[first] >= 2) continue;
+          choice = { index: first, inspect, reason: 'knownPair' };
+          break;
+        }
+        if (!choice && tray.length === SLOTS - 1) {
+          const novel = fr.find(index => down[index] && !known[index]
+            && (inspectedAt[index] !== moves || inspections[index] < 2));
+          if (novel !== undefined) choice = { index: novel, inspect: true, reason: 'novelAtFullTray' };
+        }
+        if (choice && (p.physicalSafety >= 1 || r() < p.physicalSafety)) {
+          decisions++; choices++;
+          if (p.stats) p.stats.physicalSafetyChoices = (p.stats.physicalSafetyChoices || 0) + 1;
+          if (trace) trace.push({ physicalSafety: choice.index, inspect: choice.inspect, reason: choice.reason, moves });
+          if (!(choice.inspect ? inspectTile(choice.index) : commit(choice.index))) return end(false, 'clock');
+          if (tray.length >= SLOTS) return end(false, 'tray');
+          continue;
+        }
+      }
+      if (!follow && p.search > 0 && tray.length) for (const i of fr) if (alive[i] && down[i] && peeked[i] !== 1 && !(mem !== null && mem[i] === 1) && r() < p.search) { if (!inspectTile(i)) return end(false, 'clock'); }
+      const m = fr.find(i => alive[i] && looked(i) && physicalTakeable(i) && matchesImmediately(i));
+      if (!follow && !plan) plan = endGame();
+      if (!follow && plan && plan.length) { if (!commit(plan.shift())) return end(false, 'clock'); continue; }
+      // a tile that fits a waiting one is taken at once, unless the alarm clock cannot wait: then the
+      // clock tile (or the way to it) comes first and the match is just one of the options
+      // (Dennisisdebeste on level 105: took the clock tile as move 13 of 13, the match after it)
+      if (!follow && p.forceMatches !== false && m !== undefined && !clockTight()) {
+        if (p.allMoves && p.flips && p.matchError > 0 && tray.length === SLOTS - 1 && (!clock || !alive[clock.i])
+          && !g.avoidMoves?.get(stateKey())?.has('fatal')) {
+          const mistakes = fr.filter(index => looked(index) && physicalTakeable(index) && !matchesImmediately(index));
+          if (mistakes.length && r() < p.matchError) {
+            const chosen = mistakes[Math.floor(r() * mistakes.length)];
+            for (let index = 0; index < n; index++) if (alive[index] && sees(index) && !seenEver[index]) seenEver[index] = moves + 1;
+            decisions++; choices += mistakes.length + 1;
+            if (trace) trace.push({ pick: [chosen], tray: tray.slice(), ...(p.learnFromLoss ? { state: stateKey(), chosen: 'fatal', alternatives: ['match'] } : {}) });
+            if (p.stats) p.stats.missedMatchFatal = (p.stats.missedMatchFatal || 0) + 1;
+            if (!commit(chosen)) return end(false, 'clock');
+            return end(false, 'tray');
+          }
+        }
+        if (p.flips && p.scanBeforeMatch > 0 && (!clock || !alive[clock.i])) {
+          const novel = fr.filter(index => down[index] && !seenEver[index] && !(mem !== null && mem[index] === 1));
+          if (novel.length && r() < p.scanBeforeMatch) {
+            const inspected = novel[Math.floor(r() * novel.length)];
+            decisions++; choices += novel.length + 1;
+            if (p.stats) p.stats.scanBeforeMatch = (p.stats.scanBeforeMatch || 0) + 1;
+            if (trace) trace.push({ inspection: inspected, beforeMatch: true, moves });
+            if (!inspectTile(inspected)) return end(false, 'clock'); continue;
+          }
+        }
+        if (!commit(m)) return end(false, 'clock'); continue;
+      }
+      // the options: a pair (two tiles that are free), or one tile into the tray. With 3 tiles
+      // waiting only a pair with a face-down tile in it is left: turned over, it matches its twin
+      // straight away without a slot (board.js peekPair); any other tile would be the 4th.
+      // p.blunder: how often, with 3 tiles waiting, it does not watch the tray and plays as if there
+      // were room (a pair goes through the tray, so its first tile is the 4th: the level is over).
+      // Gerda does this (analysis/archive/gerda-investigation.md).
+      // follow, or a player's own test player (p.allMoves): every move a person can make, also with 3
+      // tiles waiting; its learned weights decide (a 4th tile without a partner ends the level)
+      const careless = follow || p.allMoves ? true : !!p.blunder && tray.length >= SLOTS - 1 && r() < p.blunder;
+      const full = tray.length >= SLOTS - 1 && !careless;
+      const opts = [];
+      const byF = new Map(); for (const i of fr) { if (!looked(i)) continue; const f = faces[i]; if (!byF.has(f)) byF.set(f, []); byF.get(f).push(i); }   // a pair: both pictures seen
+      if (!p.physicalFlips) for (const [, list] of byF) if (list.length >= 2) for (let a = 0; a < list.length; a++) for (let b = a + 1; b < list.length; b++) if (!full || down[list[a]] || down[list[b]]) opts.push(down[list[a]] && !down[list[b]] ? [list[b], list[a]] : [list[a], list[b]]);
+      for (const i of fr) if (((!full && !(p.flips || follow)) || (looked(i) && (!full || matchesImmediately(i)))) && physicalTakeable(i)) opts.push([i]);
+      // flipping a free face-down tile it has not seen is a move of its own (free: it costs no move);
+      // only for players that do it (p.flips: a player's own test player, and follow mode)
+      const flipT = p.flips || follow ? fr.filter(i => down[i] && (p.physicalFlips ? openPeek !== i && !(looked(i) && (tray.includes(faces[i]) || peekMatch(i))) : peeked[i] !== 1 && !(mem !== null && mem[i] === 1))
+        && (follow || choiceMode || !(p.shortMemory || p.physicalFlips) || inspectedAt[i] !== moves || inspections[i] < 2)) : [];
+      const avoided = g.avoidMoves && g.avoidMoves.get(stateKey());
+      if (!follow && avoided) for (let index = opts.length - 1; index >= 0; index--) if (avoided.has(moveKey(opts[index]))) opts.splice(index, 1);
+      if (followCue) {
+        const matchesCue = option => option.some(index => followCue.matches.has(index));
+        const matching = opts.some(matchesCue), other = opts.some(option => !matchesCue(option)) || flipT.length > 0;
+        if (matching && (followCue.following || other)) {
+          for (let index = opts.length - 1; index >= 0; index--) if (matchesCue(opts[index]) !== followCue.following) opts.splice(index, 1);
+          if (followCue.following) flipT.length = 0;
+        }
+      }
+      if (!opts.length && !flipT.length) { if (p.stats) p.stats.dieNone = (p.stats.dieNone || 0) + 1; return end(false, 'tray'); }
+      decisions++; choices += opts.length;
+      for (let i = 0; i < n; i++) { known[i] = alive[i] && sees(i) ? 1 : 0; if (known[i] && !seenEver[i]) seenEver[i] = moves + 1; }
+      policyTray = tray.slice();
+      policyPeek = openPeek;
+      for (let index = 0; index < n; index++) policyMatch[index] = known[index] && matchesTray(index) ? 1 : 0;
+      policyPairPrep.fill(0);
+      if (p.physicalFlips && (p.spatial || p.kindModel || p.jointKindModel || g.policyLog)) {
+        for (const index of flipT) if (known[index]) policyPairPrep[index] = +fr.some(mate => mate !== index
+          && known[mate] && faces[mate] === faces[index]);
+      }
+      unseen.fill(0); unseenN = 0;
+      for (let index = 0; index < n; index++) if (alive[index] && !known[index]) {
+        unseenN++;
+        if (!publicPicturePrior) unseen[faces[index] & 255]++;
+      }
+      if (publicPicturePrior) for (let picture = 0; picture < unseen.length; picture++) unseen[picture] = unseenN * publicPicturePrior[picture];
+      const mateKnown = mateKnownPre;
+      const unknown = fr.filter(i => !mateKnown(i)).length;
+      unknownOptions += unknown; singleOptions += fr.length;
+      if (unknown === fr.length) forcedBlind++;
+      logF = follow || g.captureValue || choiceMode || (p.stats && p.stats.feat) ? [] : null;
+      // what a flip may bring: the share of the unseen pictures that fit a waiting tile or a free single
+      let flipHit = 0;
+      if (flipT.length && unseenN) {
+        const kc = new Map(); for (const i of fr) if (known[i]) kc.set(faces[i], (kc.get(faces[i]) || 0) + 1);
+        flipHit = unseenHit(tray, face => kc.get(face) || 0);
+      }
+      let goalBefore = null;
+      if (activeGoals || g.policyLog || choiceMode) {
+        memo.fill(0);
+        const keys = rules && !relieved ? (rules.keys || []).filter(index => alive[index] && known[index]) : [];
+        const activeClock = !!(clock && alive[clock.i]);
+        goalBefore = { keys, keyCost: keys.reduce((sum, index) => sum + depth(index) + 1, 0), activeClock,
+          clockCost: activeClock ? depth(clock.i) + 1 : 0, clockBudget: activeClock ? clock.n - moves : 0,
+          locks: rules && !relieved && rules.locks ? [...rules.locks].filter(index => alive[index] && known[index]).length : 0 };
+      }
+      const goalFlips = goalBefore ? flipT.map(index => [0, 0, 0, 0, 0, 0,
+        +(!!rules && !relieved && (rules.keys || []).includes(index)), +(goalBefore.activeClock && clock.i === index)]) : null;
+      const goalParts = () => {
+        memo.fill(0);
+        const keyCost = goalBefore.keys.filter(index => alive[index]).reduce((sum, index) => sum + depth(index) + 1, 0);
+        const clockCost = goalBefore.activeClock && alive[clock.i] ? depth(clock.i) + 1 : 0;
+        const clockGain = goalBefore.clockCost - clockCost;
+        return [goalBefore.keys.filter(index => !alive[index]).length,
+          (goalBefore.keyCost - keyCost) / Math.max(1, goalBefore.keyCost),
+          goalBefore.locks && !rules.keys.some(index => alive[index]) ? goalBefore.locks / n : 0,
+          +(goalBefore.activeClock && !alive[clock.i]), clockGain / Math.max(1, goalBefore.clockCost),
+          clockGain / Math.max(1, goalBefore.clockBudget), 0, 0];
+      };
+      // p.kinds: a person's own test player in two steps (tools/sim/refit/mimic_types.py). First what
+      // kind of move, with their own rates per situation (tiles waiting, a safe pair known, a tile left
+      // to turn over): turn a tile over, a pair, a single tile, or (3 waiting) a fatal 4th tile. Then
+      // which move of that kind: their learned weights.
+      let only = null;
+      const kindOf = o => tray.length >= SLOTS - 1 && !o.some(i => known[i] && matchesImmediately(i)) && !(o.length === 2 && (down[o[0]] || down[o[1]])) ? 'fatal'
+        : o.length === 2 || o.some(index => known[index] && peekMatch(index)) ? 'pair' : 'single';
+      const ko = opts.map(kindOf);
+      const has = { flip: flipT.length > 0, pair: ko.includes('pair'), single: ko.includes('single'), fatal: ko.includes('fatal') };
+      let kindContext = null;
+      if (p.kindModel || p.jointKindModel || g.policyLog) {
+        const activeClock = !!(clock && alive[clock.i]), keys = rules && !relieved ? (rules.keys || []).filter(index => alive[index]) : [];
+        memo.fill(0);
+        kindContext = [1, +(tray.length === 1), +(tray.length === 2), +(tray.length === 3), +has.pair, +has.flip,
+          fr.length / n, fr.filter(index => !known[index]).length / n, Math.log1p(ko.filter(kind => kind === 'pair').length) / 4,
+          left / n, moves / n, +activeClock, activeClock ? Math.min(1, (clock.n - moves) / 20) : 0,
+          activeClock ? +can(clock.i) : 0, activeClock ? +known[clock.i] : 0, activeClock ? depth(clock.i) / 10 : 0,
+          keys.length / 2, keys.filter(index => known[index] && can(index)).length / 2,
+          rules && !relieved && rules.locks ? [...rules.locks].filter(index => alive[index]).length / n : 0,
+          rules && !relieved ? Object.keys(rules.ice || {}).filter(index => alive[index] && rules.ice[index] > 0).length / n : 0,
+          +fr.some(index => known[index] && matchesTray(index)), fr.filter(index => known[index] && matchesTray(index)).length / Math.max(1, fr.length),
+          +(openPeek >= 0), fr.filter(index => known[index] && peekMatch(index)).length / Math.max(1, fr.length),
+          flipT.filter(index => known[index]).length / Math.max(1, flipT.length),
+          flipT.filter(index => policyPairPrep[index]).length / Math.max(1, flipT.length)];
+      }
+      if (!follow && !g.captureValue && !choiceMode && (p.kinds || p.kindModel)) {
+        const key = 't' + Math.min(SLOTS - 1, tray.length) + (has.pair ? 'p' : 'n') + (has.flip ? '' : '-');
+        const rates = p.kinds && p.kinds[key] || {};
+        const ks = ['flip', 'pair', 'single', 'fatal'].filter(q => has[q]);
+        let pr = ks.map(q => q === 'fatal' && avoided && avoided.has('fatal') ? 0 : rates[q] || 0), tot = pr.reduce((a, b) => a + b, 0);
+        if (tot <= 0) { pr = ks.map(q => q === 'fatal' ? avoided && avoided.has('fatal') && ks.length > 1 ? 0 : 0.01 : 1); tot = pr.reduce((a, b) => a + b, 0); }
+        if (p.kindModel) {
+          const scores = ks.map((kind, index) => kind === 'fatal' && avoided && avoided.has('fatal') && ks.length > 1 ? -Infinity :
+            Math.log(Math.max(1e-6, pr[index])) + kindContext.reduce((sum, value, position) => sum + value * (p.kindModel.weights[kind]?.[position] || 0), 0));
+          const maximum = Math.max(...scores);
+          pr = scores.map(value => Math.exp(value - maximum));
+          tot = pr.reduce((sum, value) => sum + value, 0);
+        }
+        let x = r() * tot, q = 0; while (q < ks.length - 1 && (x -= pr[q]) > 0) q++;
+        const kind = ks[q];
+        if (p.stats) { const c = p.stats.sit || (p.stats.sit = {}); const e = c[key] || (c[key] = { flip: 0, pair: 0, single: 0, fatal: 0, n: 0 }); e[kind]++; e.n++; }
+        if (kind === 'flip') {
+          let selected = Math.floor(r() * flipT.length);
+          if (p.spatial || activeGoals) {
+            const feature = new Array(NF).fill(0); feature[19] = 1;
+            const values = flipT.map((index, position) => spatialScore([index], feature) + (goalFlips ? goalScore(goalFlips[position]) : 0)), maximum = Math.max(...values);
+            const probabilities = values.map(value => Math.exp(value - maximum));
+            if (p.spatial || values.some(value => value !== values[0])) {
+              let draw = r() * probabilities.reduce((sum, value) => sum + value, 0); selected = 0;
+              while (selected < probabilities.length - 1 && (draw -= probabilities[selected]) > 0) selected++;
+            }
+          }
+          if (!inspectTile(flipT[selected])) return end(false, 'clock'); continue;
+        }
+        if (kind === 'fatal' && !p.physicalFlips) {
+          if (trace && p.learnFromLoss) trace.push({ state: stateKey(), chosen: 'fatal', alternatives: ks.filter(value => value !== 'fatal') });
+          if (p.stats) p.stats.dieFatal = (p.stats.dieFatal || 0) + 1;
+          return end(false, 'tray');
+        }
+        only = ko.map(k2 => k2 === kind);
+      }
+      // p.flipRate: a person's own habit of turning a tile over, per situation (how full the tray is,
+      // and whether a pair is known), taken from their recorded games; then the move is chosen
+      // among the real moves only
+      // p.stats: counts for comparing a test player with real games (decisions, at 3 waiting, flips)
+      if (p.stats && !follow) { p.stats.dec = (p.stats.dec || 0) + 1; p.stats['t' + Math.min(SLOTS - 1, tray.length)] = (p.stats['t' + Math.min(SLOTS - 1, tray.length)] || 0) + 1; }
+      if (!follow && !g.captureValue && !p.kinds && !p.kindModel && p.flipRate && flipT.length) {
+        const pairKnown = opts.some(o => o.length === 2 && (tray.length < SLOTS - 1 || down[o[0]] || down[o[1]]));
+        const key = 't' + Math.min(SLOTS - 1, tray.length) + (pairKnown ? 'p' : 'n');
+        if (p.stats) p.stats.key = key;
+        if (!opts.length || r() < (p.flipRate[key] ?? 0)) { if (p.stats) { const c = p.stats.sit || (p.stats.sit = {}); (c[key] || (c[key] = { flip: 0, pair: 0, single: 0, n: 0 })).flip++; c[key].n++; } if (!inspectTile(flipT[Math.floor(r() * flipT.length)])) return end(false, 'clock'); continue; }
+      }
+      // p.blunder3: with 3 tiles waiting, the chance it puts a 4th tile in the tray even when a safe
+      // move is known (Gerda: 38 of 39 times in her recorded games)
+      if (!follow && !p.kinds && !p.kindModel && p.blunder3 && tray.length >= SLOTS - 1) {
+        const fatal = opts.filter(option => kindOf(option) === 'fatal');
+        if (fatal.length && fatal.length < opts.length && r() < p.blunder3) { if (p.stats) p.stats.dieB3 = (p.stats.dieB3 || 0) + 1; return end(false, 'tray'); }
+      }
+      const valueParts = valueMode ? [] : null, valueFlips = valueMode ? [] : null;
+      const flipSc = (!g.captureValue && !choiceMode && (p.flipRate || p.kinds || p.kindModel) ? [] : flipT).map((index, position) => {
+        cf.fill(0); cf[19] = 1; cf[20] = flipHit;
+        if (logF) logF.push(Array.from(cf));
+        if (valueFlips) valueFlips.push([...cf, ...goalFlips[position]]);
+        let value = spatialScore([index], cf) + (goalFlips ? goalScore(goalFlips[position]) : 0);
+        for (let position = 0; position < NF; position++) value += W[position] * cf[position];
+        return value;
+      });
+      const flipF = logF ? logF.splice(0, logF.length) : null;   // (logged after the moves, below)
+      const goalF = g.policyLog || choiceMode ? [] : null;
+      hypothetical = known;
+      const sc = opts.map(o => {
+        const optionKind = kindOf(o);
+        // overflow: this move puts a 4th tile without a partner in the tray (the level is over)
+        const over = kindOf(o) === 'fatal' ? 1 : 0;
+        const tr = tray.slice(), mark = jr.length;
+        // the alarm clock rings when a move is made after its last one with the clock tile still there
+        let rang = false;
+        const tk = i => { if (clock && alive[clock.i] && moves >= clock.n) rang = true; take(i); };
+        const fillOptionParts = () => {
+          cf[14] = p.physicalFlips ? +(optionKind === 'pair') : +(o.length === 2);
+          cf[15] = o.reduce((sum, index) => sum + tiles[index].z, 0) / o.length;
+          cf[16] = o.length === 1 && down[o[0]] && !mateKnownPre(o[0]) ? 1 : 0;
+          cf[17] = rang ? 1 : 0; cf[18] = over;
+        };
+        o.forEach(tk);
+        if (valueParts) {
+          score(tray); fillOptionParts();
+          valueParts.push([...cf, ...goalParts()]);
+        }
+        // the obvious follow-up: tray matches that are now free
+        const extra = [];
+        for (let guard = 0; guard < (p.physicalFlips && p.physicalSingleStep ? 0 : 6); guard++) {
+          let matchIndex = -1;
+          if (clockTight()) {
+            if (known[clock.i] && can(clock.i) && matchesTray(clock.i)) matchIndex = clock.i;
+            else break;
+          }
+          if (matchIndex < 0) for (const face of tray) {
+            const mates = mateLists.get(face);
+            for (const index of mates) if (alive[index] && known[index] && can(index)) { matchIndex = index; break; }
+            if (matchIndex >= 0) break;
+          }
+          if (matchIndex < 0) break;
+          tk(matchIndex); extra.push(matchIndex);
+        }
+        score(tray);
+        fillOptionParts();
+        if (logF) logF.push(Array.from(cf));
+        const goals = goalBefore ? goalParts() : null;
+        if (goalF) goalF.push(goals);
+        let v = spatialScore(o, cf) + (goals ? goalScore(goals) : 0); for (let q = 0; q < NF; q++) v += W[q] * cf[q];
+        undoTo(mark, tr);
+        return v;
+      });
+      hypothetical = null;
+      if (logF) logF.push(...flipF);
+      if (goalF) goalF.push(...goalFlips);
+      if (valueParts) valueParts.push(...valueFlips);
+      const policyF = (g.policyLog || choiceMode) && logF ? logF.map((feature, index) => policyParts(index < opts.length ? opts[index] : [flipT[index - opts.length]], feature)) : null;
+      let knownPlan = null;
+      if (p.physicalTrayPlanning) {
+        const planningState = Object.freeze({ alive: Object.freeze(Array.from(alive)),
+          pictures: Object.freeze(Array.from(faces, (face, index) => known[index] || !alive[index] ? face : null)),
+          down: Object.freeze(Array.from(down, (value, index) => known[index] || !hiddenNow(index) ? value : 0)),
+          tray: Object.freeze(tray.slice()), moves, openPeek, relieved,
+          arriving: Object.freeze(tray.filter(face => arrivingUntil[face & 255] > tapTime)) });
+        const actions = Object.freeze(opts.map(option => Object.freeze({ index: option[0], inspect: false }))
+          .concat(flipT.map(index => Object.freeze({ index, inspect: true }))));
+        if (policyF?.length !== actions.length) throw new Error('Known-only planning requires complete unmasked option features');
+        const planning = p.physicalTrayPlanning(planningGame, planningState, actions);
+        if (!planning || !Array.isArray(planning.features) || planning.features.length !== actions.length
+          || planning.features.some(parts => !Array.isArray(parts) || parts.some(value => !Number.isFinite(value)))
+          || !Number.isInteger(planning.nodes) || planning.nodes < 0 || !Number.isInteger(planning.boundaries)
+          || planning.boundaries < 0 || planning.boundaries > actions.length) throw new Error('Invalid known-only planning features');
+        knownPlan = planning.features;
+        if (p.stats) {
+          p.stats.knownPlanNodes = (p.stats.knownPlanNodes || 0) + planning.nodes;
+          p.stats.knownPlanBoundaries = (p.stats.knownPlanBoundaries || 0) + planning.boundaries;
+        }
+      }
+      if (g.captureValue) {
+        g.capturedValue = { F: policyF.map((feature, index) => feature.concat(goalF[index])), kindContext, immediate: valueParts,
+          ...(knownPlan ? { knownPlan } : {}) };
+        return end(false, 'valueCapture');
+      }
+      // pick: the best with a human amount of noise (the weights already hold the noise: temp)
+      const all = sc.concat(flipSc).map((value, index) => !p.jointKindModel ? value : value + kindContext.reduce((sum, feature, position) =>
+        sum + feature * (p.jointKindModel.weights[index < opts.length ? ko[index] : 'flip']?.[position] || 0), 0)), mx = Math.max(...all);
+      let k = 0;
+      if (follow && humanFlip >= 0) {
+        k = opts.length + flipT.indexOf(humanFlip);
+        g.log.push({ F: logF, k, tray: tray.length, moves, flip: true });
+        if (g.policyLog) g.policyLog.push({ F: policyF, k, tray: tray.length, moves, flip: true, kindContext, goals: goalF, ...(valueParts ? { immediate: valueParts } : {}), ...(knownPlan ? { knownPlan } : {}) });
+        if (!inspectTile(humanFlip)) return end(false, 'clock'); if (follow[fi] < 0) fi++;
+        continue;
+      }
+      if (follow) {
+        // follow mode: the real player's move, recorded with what every option was worth
+        let f2 = fi + 1; while (follow[f2] < 0) f2++;   // (turning tiles over in between)
+        const h = follow[fi], h2 = follow[f2];
+        const pairK = h2 !== undefined && faces[h2] === faces[h] && fr.includes(h2) && (!g.logMatches || !matchesTray(h)) ? opts.findIndex(o => o.length === 2 && o.includes(h) && o.includes(h2)) : -1;
+        k = pairK >= 0 ? pairK : opts.findIndex(o => o.length === 1 && o[0] === h);
+        let fd = 0, fl = 0; for (const i of fr) if (down[i]) { fd++; if (peeked[i] === 1) fl++; else if (tray.includes(faces[i])) g.missed = (g.missed || 0) + 1; }
+        g.log.push({ F: logF, k, tray: tray.length, moves, freeDown: fd, looked: fl });
+        if (g.policyLog) g.policyLog.push({ F: policyF, k, tray: tray.length, moves, kindContext, goals: goalF, ...(valueParts ? { immediate: valueParts } : {}), ...(knownPlan ? { knownPlan } : {}) });
+        if (k < 0) { for (const i of (pairK >= 0 ? [h, h2] : [h])) if (!commit(i)) return end(false, 'clock'); fi = pairK >= 0 ? f2 + 1 : fi + 1; if (tray.length >= SLOTS) return end(false, 'tray'); continue; }
+        fi = opts[k].length === 2 ? f2 + 1 : fi + 1;
+      } else if (choiceMode) {
+        k = p.physicalChoice({ ...(publicPicturePrior ? { observationVersion: 1 } : {}), F: policyF.map((feature, index) => feature.concat(goalF[index])), kindContext, immediate: valueParts,
+          ...(knownPlan ? { knownPlan } : {}) }, r());
+        if (!Number.isInteger(k) || k < 0 || k >= all.length) throw new Error('Context choice selected an unavailable physical action');
+        if (k >= opts.length) { if (!inspectTile(flipT[k - opts.length])) return end(false, 'clock'); continue; }
+      } else {
+        const m2 = only ? Math.max(...all.filter((v, q) => only[q])) : mx;   // (the best move of the chosen kind)
+        const w = all.map((v, q) => only && !only[q] ? 0 : Math.exp(v - m2));
+        let x = r() * w.reduce((a, b) => a + b, 0);
+        while (k < w.length - 1 && (x -= w[k]) > 0) k++;
+        if (k >= opts.length) { if (!inspectTile(flipT[k - opts.length])) return end(false, 'clock'); continue; }
+      }
+      if (trace) trace.push({ tray: tray.slice(), opts: opts.length, pick: opts[k], best: sc.indexOf(mx) === k,
+        ...(p.learnFromLoss ? { state: stateKey(), chosen: moveKey(opts[k]), alternatives: opts.map(moveKey) } : {}) });
+      if (p.stats && p.stats.feat && !follow && logF) { const kd = opts[k].length === 2 ? 'pair' : 'single'; const S = p.stats.feat; const a = S[kd] || (S[kd] = { n: 0, sum: new Array(NF).fill(0), opts: 0 }); a.n++; a.opts += opts.filter(o => o.length === opts[k].length).length; logF[k].forEach((v, q) => a.sum[q] += Math.min(50, v)); }
+      if (opts[k].length === 1 && tray.length === SLOTS - 2) risky++;   // a third tile waits: one more miss ends the level
+      if (opts[k].length === 1 && !mateKnown(opts[k][0])) blind++;
+      if (!follow && !p.physicalFlips && careless && kindOf(opts[k]) === 'fatal') { if (p.stats) p.stats.dieSoft = (p.stats.dieSoft || 0) + 1; return end(false, 'tray'); }
+      const before = tray.length;
+      if (p.stats && !follow && !p.kinds && !p.kindModel) { const key = 't' + Math.min(SLOTS - 1, tray.length) + (opts.some(o => o.length === 2 && (tray.length < SLOTS - 1 || down[o[0]] || down[o[1]])) ? 'p' : 'n') + (flipT.length ? '' : '-'); const c = p.stats.sit || (p.stats.sit = {}); (c[key] || (c[key] = { flip: 0, pair: 0, single: 0, n: 0 }))[opts[k].length === 2 ? 'pair' : 'single']++; c[key].n++; }
+      for (const i of opts[k]) if (!commit(i)) return end(false, 'clock');
+      if (p.stats && !follow) { const S = p.stats; if (before < SLOTS - 1 && tray.length >= SLOTS - 1) S.enter3 = (S.enter3 || 0) + 1; if (opts[k].length === 1) S.single = (S.single || 0) + 1; else S.pair = (S.pair || 0) + 1; if (opts[k].length === 1 && !mateKnown(opts[k][0])) S.blindSingle = (S.blindSingle || 0) + 1; }
+      if ((follow || p.physicalFlips) && tray.length >= SLOTS) return end(false, 'tray');
+    }
+    return end(tray.length === 0, tray.length ? 'tray' : 'win');
+    function end(win, why) {
+      if (p.physicalFlips) for (let index = 0; index < n; index++) {
+        if (alive[index] && !down[index] && !hiddenNow(index) && !seenEver[index]) seenEver[index] = moves + 1;
+      }
+      return { win, why, left, moves, at, seen: seenEver, risky, decisions, blind, forcedBlind, unknownOptions, singleOptions, choices: decisions ? choices / decisions : 0,
+        ...(p.physicalFlips ? { openPeek, tray: tray.slice() } : {}) };
+    }
+  }
+  // share of games the test player wins (the same seeds every time, so two levels compare fairly)
+  // risky: how often a winning game had to let a third tile wait (tray pressure)
+  function* rateG(g, runs = 60, seed = 1, p = P) {
+    let w = 0, ch = 0, rk = 0;
+    for (let k = 0; k < runs; k++) { const r = play(g, p, seed * 7919 + k * 104729); if (r.win) { w++; rk += r.risky; } ch += r.choices; yield; }
+    return { rate: w / runs, choices: ch / runs, risky: w ? rk / w : null };
+  }
+  const drain = it => { for (;;) { const s = it.next(); if (s.done) return s.value; } };
+  function rate(g, runs = 60, seed = 1, p = P) { return drain(rateG(g, runs, seed, p)); }
+  // first try and a second try after losing it: the same board, now remembering each picture it saw
+  // on the first try with chance memP. memP can also be [start, middle, end]: the chance for a
+  // picture first seen in the first, middle or last third of the lost try (a person remembers the
+  // start and the end of a game better than the middle). two: share of games won within two tries
+  function remembered(seen, moves, memP, r) {
+    const m = new Uint8Array(seen.length), third = Math.max(1, moves) / 3;
+    for (let i = 0; i < seen.length; i++) {
+      if (!seen[i]) continue;
+      const q = Array.isArray(memP) ? memP[Math.min(2, Math.floor((seen[i] - 1) / third))] : memP;
+      if (r() < q) m[i] = 1;
+    }
+    return m;
+  }
+  // tries 1..maxT on the same board, each remembering (memP) what the lost tries before it showed;
+  // cond[t-1]: the chance to win try t when tries 1..t-1 were lost (null: no game got that far)
+  function rateChain(g, runs = 60, seed = 1, p = P, memP = p.memory === undefined ? 1 : p.memory, maxT = 4) {
+    const reach = new Array(maxT).fill(0), won = new Array(maxT).fill(0), r = L.rng(seed * 31 + 11);
+    let computationCensored = 0;
+    for (let k = 0; k < runs; k++) {
+      let memory = null, learnedClock = false, previousFailure = null;
+      const avoidMoves = p.learnFromLoss ? new Map() : null;
+      for (let t = 0; t < maxT; t++) {
+        reach[t]++;
+        const trace = p.learnFromLoss ? [] : null;
+        const afterFailure = t > 0 && p.retryPolicy ? { ...p, ...p.retryPolicy } : p;
+        const policy = learnedClock && p.retryPlan !== undefined ? { ...afterFailure, plan: p.retryPlan } : afterFailure;
+        const trialSeed = seed * 7919 + k * 104729 + t * 15485863;
+        let resolvedPolicy = policy;
+        if (policy.physicalChoiceForAttempt !== undefined) {
+          if (typeof policy.physicalChoiceForAttempt !== 'function' || policy.physicalChoice) throw new Error('Invalid or competing physical attempt choice factory');
+          const physicalChoice = policy.physicalChoiceForAttempt(Object.freeze({ run: k, attempt: t + 1, seed: trialSeed, previousFailure }));
+          if (typeof physicalChoice !== 'function') throw new Error('Physical attempt choice factory must return a selector');
+          resolvedPolicy = { ...policy, physicalChoice, physicalChoiceForAttempt: undefined };
+        }
+        const a = play(memory || avoidMoves ? { ...g, memory, avoidMoves } : g, resolvedPolicy, trialSeed, trace);
+        if (a.win) { won[t]++; break; }
+        if (a.why === 'contextChoiceLimit') computationCensored++;
+        previousFailure = a.why === 'contextChoiceLimit' ? null : a.why;
+        if (a.why === 'clock') learnedClock = true;
+        if (avoidMoves) for (let index = trace.length - 1; index >= 0; index--) {
+          const decision = trace[index];
+          if (!decision.state || !decision.alternatives.some(option => option !== decision.chosen)) continue;
+          if (!avoidMoves.has(decision.state)) avoidMoves.set(decision.state, new Set());
+          avoidMoves.get(decision.state).add(decision.chosen);
+          break;
+        }
+        const m = remembered(a.seen, a.moves, memP, r);
+        if (memory) for (let i = 0; i < m.length; i++) m[i] |= memory[i];
+        memory = m;
+      }
+    }
+    return { first: won[0] / runs, cond: reach.map((n, t) => n ? won[t] / n : null), within: won.map((w, t) => won.slice(0, t + 1).reduce((a, b) => a + b, 0) / runs),
+      ...(computationCensored ? { computationCensored } : {}) };
+  }
+  function rate2(g, runs = 60, seed = 1, p = P, memP = p.memory === undefined ? 1 : p.memory) {
+    let w1 = 0, w2 = 0, again = 0;
+    const r = L.rng(seed * 31 + 7);
+    for (let k = 0; k < runs; k++) {
+      const a = play(g, p, seed * 7919 + k * 104729);
+      if (a.win) { w1++; continue; }
+      const memory = remembered(a.seen, a.moves, memP, r);
+      again++;
+      if (play({ ...g, memory }, p, seed * 6007 + k * 15485863).win) w2++;
+    }
+    return { first: w1 / runs, two: (w1 + w2) / runs, second: again ? w2 / again : null };
+  }
+
+
+  /* ---------- the harder levels ----------
+     Settings in RULES.hard (rules.js). From `measureFrom` the test player decides how hard a level
+     is; from `from` the levels are built differently:
+     - piles of towers: tiles right on top of each other, straight rows, 5-6 layers (fewer ways
+       through; a tower hides what is under it until you dig),
+     - a tile lying on its own twin (it has to go to the tray first),
+     - face-down tiles only where they hurt: tiles you can see but not take yet (a free tile can
+       be turned over anyway), capped at 20% from 80; never a tile that is the only way out
+       when the tray holds 3 (that move must always be visible),
+     - the deal is improved step by step until the sensible test player gets about the target
+       share of first tries (pairs that are a trap come out of this by themselves),
+     - from `clockFrom`: the alarm clock, a tile that has to be off the board within n moves.
+     make() is a generator: the game runs it in small steps while the player is busy with the level
+     before (board.js), and keeps the result. The same level and screen shape always give the same
+     result, on every phone (fixed numbers of steps, no clocks). */
+  const GENV = 5;      // honest observer, more visible information, measured neighboring progression
+  const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30], [269, 0.18]], maxDown: 0.20, minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
+  const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
+  // the share of first tries the sensible and the strong test player should win (the strong one
+  // plays like Dennisisdebeste: a level that only suits the middle player can still be a coin flip
+  // or a walk-over for him, so both count)
+  function target(level, who = 'sensible') {
+    const c = cfg(), st = who === 'strong';
+    if (level < c.from) return st ? c.strongSense : c.sense;
+    if (st && c.strongCurve && c.strongCurve.length) {
+      const points = c.strongCurve;
+      if (level <= points[0][0]) return points[0][1];
+      for (let i = 1; i < points.length; i++) {
+        const [a, x] = points[i - 1], [b, y] = points[i];
+        if (level <= b) return x + (y - x) * (level - a) / (b - a);
+      }
+      return points[points.length - 1][1];
+    }
+    const f = Math.min(1, (level - c.from) / Math.max(1, c.endLevel - c.from));
+    return st ? c.strongStart + (c.strongEnd - c.strongStart) * f : c.start + (c.end - c.start) * f;
+  }
+  // how big a tile gets on a typical phone (a 392 x 600 pixel pile area, as in board.js layoutBoard)
+  function tilePx(tiles) {
+    let l = 1e9, r = -1e9, t0 = 1e9, b = -1e9;
+    for (const t of tiles) { const x = t.x / 2 - t.z * 0.14, y = t.y / 2 * 1.24 - t.z * 0.14; l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + 1.24); }
+    return Math.min(384 / (r - l + 0.125), 592 / (b - t0 + 0.16));
+  }
+  const size = (level, scale) => { const e = L.effLevel(level); let t = L.targetFor(Math.round(e)); if (e > 26) t = L.targetFor(level); t = Math.max(8, Math.round(t * scale)); return t - t % 2; };
+  function twinsOn(faces, nb) { let c = 0; for (let d = 0; d < faces.length; d++) for (const u of nb.above[d]) if (faces[u] === faces[d]) { c++; break; } return c; }
+  /* A deal along a way through (like Layouts.deal, so it can always be finished): walk a random
+     order in which the tiles can be taken; each tile either starts a picture that waits in the
+     tray (open) or finishes one that waits. twin: how often a tile finishes the picture of a tile
+     lying right on top of it (a twin on its twin). Returns the faces and that way through. */
+  function hdeal(tiles, nb, pf, r, o) {
+    const n = tiles.length;
+    for (let attempt = 0; attempt < 40; attempt++) {
+      const alive = new Uint8Array(n).fill(1), order = [];
+      let ok = true;
+      for (let k = 0; k < n; k++) {
+        const fr = []; for (let i = 0; i < n; i++) if (L.isFree(i, alive, nb)) fr.push(i);
+        if (!fr.length) { ok = false; break; }
+        const i = fr[Math.floor(r() * fr.length)]; alive[i] = 0; order.push(i);
+      }
+      if (!ok) continue;
+      const faces = new Array(n).fill(-1), open = [], pool = L.shuffleArr(r, pf.slice());
+      for (let k = 0; k < n && ok; k++) {
+        const i = order[k], after = n - k - 1;
+        const canOpen = pool.length > 0 && open.length < o.cap && after >= open.length + 1;
+        const tw = open.findIndex(x => nb.above[i].includes(x.t));
+        if (tw >= 0 && r() < o.twin) { faces[i] = open[tw].f; open.splice(tw, 1); }
+        else if (canOpen && (open.length === 0 || r() < o.open)) { let pi = pool.findIndex(f => !open.some(x => x.f === f)); if (pi < 0) pi = 0; const f = pool.splice(pi, 1)[0]; faces[i] = f; open.push({ f, t: i }); }
+        else if (open.length) { const j = Math.floor(r() * open.length); faces[i] = open[j].f; open.splice(j, 1); }
+        else ok = false;
+      }
+      if (ok && !open.length) return { faces, order };
+    }
+    return null;
+  }
+  // along the way through: the tiles that end a "3 waiting" moment (the only way out then)
+  function fullMoments(faces, path) {
+    const tray = [], must = new Set();
+    for (const m of path) { if (tray.length >= SLOTS - 1) must.add(m); const q = tray.indexOf(faces[m]); if (q >= 0) tray.splice(q, 1); else tray.push(faces[m]); }
+    return must;
+  }
+  // compact shapes (no holes or thin arms) carry towers well
+  const TOWER = ['block', 'oval', 'diamond', 'octagon', 'cross', 'pyramid', 'house', 'hourglass', 'bowtie', 'butterfly', 'heart'];
+  const clockSpare = level => level < 90 ? [3, 4] : level < 110 ? [2, 3] : [1, 2];
+  // Replay a complete witness, checking every tap including ice, locks, tray capacity and deadline.
+  function validSolution(g, path) {
+    if (!path || path.length !== g.tiles.length) return false;
+    const initial = new Uint8Array(g.tiles.length).fill(1), alive = initial.slice(), tray = [];
+    let clockTaken = !g.clock;
+    for (let move = 0; move < path.length; move++) {
+      const i = path[move];
+      if (!Number.isInteger(i) || !alive[i] || !(g.rules ? L.takeable(i, alive, g.nb, g.rules, initial) : L.isFree(i, alive, g.nb))) return false;
+      if (!clockTaken && move >= g.clock.n) return false;
+      alive[i] = 0;
+      if (g.clock && i === g.clock.i) clockTaken = true;
+      const q = tray.indexOf(g.faces[i]); if (q >= 0) tray.splice(q, 1); else tray.push(g.faces[i]);
+      if (tray.length >= SLOTS) return false;
+    }
+    return clockTaken && tray.length === 0;
+  }
+  // Bounded breadth-first search: prioritize the blockers of the clock, but keep alternative
+  // legal tray states. Accept a prefix only if an exact solver can finish the whole board.
+  function clockRoute(g, ci) {
+    const n = g.tiles.length, initial = new Uint8Array(n).fill(1);
+    const remainingRules = alive => {
+      if (!g.rules) return null;
+      const ice = {};
+      for (const k in g.rules.ice) {
+        const gone = g.rules.iceNb[k].filter(i => !alive[i]).length;
+        if (g.rules.ice[k] > gone) ice[k] = g.rules.ice[k] - gone;
+      }
+      return { ...g.rules, ice };
+    };
+    const blockers = alive => {
+      const up = new Set(), todo = [ci];
+      while (todo.length) for (const j of g.nb.above[todo.pop()]) if (alive[j] && !up.has(j)) { up.add(j); todo.push(j); }
+      const side = name => { const set = new Set(up), todo = [ci], seen = new Set();
+        while (todo.length) { const k = todo.pop(); if (seen.has(k)) continue; seen.add(k); for (const j of g.nb[name][k]) if (alive[j]) { set.add(j); todo.push(j); } }
+        return set.size;
+      };
+      return Math.min(side('left'), side('right')) + 1;
+    };
+    let frontier = [{ alive: initial.slice(), tray: [], path: [] }], nodes = 0;
+    const seen = new Set();
+    for (let depth = 0; depth < Math.min(36, n * 0.45) && frontier.length && nodes < 16000; depth++) {
+      const next = [];
+      for (const state of frontier) {
+        for (let i = 0; i < n; i++) {
+          if (!(g.rules ? L.takeable(i, state.alive, g.nb, g.rules, initial) : L.isFree(i, state.alive, g.nb))) continue;
+          const q = state.tray.findIndex(j => g.faces[j] === g.faces[i]);
+          if (q < 0 && state.tray.length >= SLOTS - 1) continue;
+          const alive = state.alive.slice(); alive[i] = 0;
+          const tray = q < 0 ? state.tray.concat(i) : state.tray.filter((_, k) => k !== q), path = state.path.concat(i);
+          const key = alive.join('') + '|' + tray.map(j => g.faces[j]).sort((a,b) => a-b).join(',');
+          if (seen.has(key)) continue; seen.add(key); nodes++;
+          if (i === ci) {
+            const rest = L.solve(g.tiles, g.nb, g.faces, alive, tray, 12000, remainingRules(alive));
+            if (rest) return path.concat(rest);
+          } else next.push({ alive, tray, path, score: blockers(alive) + tray.length * 0.15 });
+        }
+      }
+      next.sort((a,b) => a.score-b.score);
+      frontier = next.slice(0, 48);
+    }
+    return null;
+  }
+  // salt: another try at the same level (when a measurement says it missed)
+  function* make(level, aspect, scale = 1, salt = 0) {
+    const c = cfg(), hard = level >= c.from, T = target(level), TS = target(level, 'strong');
+    const seed = level * 7919 + 13 + salt * 100003, r = L.rng(seed + 4242);
+    const eff = L.effLevel(level), diff = L.difficultyFor(eff);
+    let tiles;
+    if (hard && c.pile !== 'classic') {
+      const o = c.pile === 'semi' ? { baseFrac: 0.27 + r() * 0.04, keep: [0.68, 0.85], stack: 0.25 + r() * 0.2, noBrick: true, shapes: TOWER }
+        : { baseFrac: 0.19 + r() * 0.06, keep: [0.85, 0.96], stack: 0.85 + r() * 0.15, noBrick: r() < 0.7, shapes: TOWER };
+      tiles = L.buildPiles(seed, size(level, scale), c.pile === 'semi' ? 5 : r() < 0.5 ? 5 : 6, aspect, level, o).tiles;
+    } else if (hard) {
+      // the pile: tiles at least as big as on the usual levels (every 10th level may be a bit
+      // bigger, with slightly smaller tiles); of a few that fit, the one with the fewest free tiles
+      // at the start (fewer choices)
+      const big = level % 10 === 0, minPx = big ? c.minTileBig : c.minTile;
+      let bp = null;
+      for (let k = 0; k < c.piles * 3 && !(bp && k >= c.piles); k++) {
+        const t = L.buildPiles(seed + k * 1009, Math.min(big ? 96 : c.maxTiles, size(level, scale)), L.layersFor(eff), aspect, level).tiles;
+        if (tilePx(t) < minPx) continue;
+        const nb0 = L.neighbors(t), al = new Uint8Array(t.length).fill(1);
+        let fr = 0; for (let i = 0; i < t.length; i++) if (L.isFree(i, al, nb0)) fr++;
+        if (!bp || fr / t.length < bp.fr) bp = { t, fr: fr / t.length };
+      }
+      tiles = bp ? bp.t : L.forLevel(level, aspect, scale, '').tiles;
+    } else tiles = L.forLevel(level, aspect, scale, '').tiles;
+    const n = tiles.length, nb = L.neighbors(tiles), cover = coverOf(tiles, nb);
+    const all = new Uint8Array(n).fill(1);
+    const free0 = tiles.map((t, i) => L.isFree(i, all, nb));
+    const nDown = level >= c.rebuildFrom ? Math.min(Math.round(n * diff.down), Math.floor(n * c.maxDown)) : Math.round(n * diff.down);
+    const rd = L.rng(seed + 777), rnd = tiles.map(() => rd());
+    // face-down tiles where they hurt: tiles you can see but not take yet (free ones can be turned
+    // over anyway), first those whose twin is free (where is its partner?); never the only way
+    // out of a "3 waiting" moment. The usual levels: anywhere, as before.
+    function placeDown(faces, must) {
+      if (!hard) return L.shuffleArr(L.rng(seed + 777), tiles.map((t, i) => i)).slice(0, nDown);
+      const seen = [], hid = [];
+      for (let i = 0; i < n; i++) { if (free0[i] || must.has(i)) continue; (cover[i].length ? hid : seen).push(i); }
+      const twinFree = i => faces.some((f, j) => j !== i && f === faces[i] && free0[j]) ? 1 : 0;
+      seen.sort((a, b) => (twinFree(b) - twinFree(a)) || (rnd[a] - rnd[b]));
+      hid.sort((a, b) => rnd[a] - rnd[b]);
+      return seen.concat(hid).slice(0, nDown);
+    }
+    const asDown = list => { const d = new Uint8Array(n); list.forEach(i => d[i] = 1); return d; };
+    // gold, ice and locks as specials.js does it, placed along the known way through
+    function extras(faces, down, path) {
+      const rg = L.rng(seed + 555), anyF = faces.filter(f => f < 100), gf = anyF[Math.floor(rg() * anyF.length)];
+      const gold = faces.map((x, i) => x === gf ? i : -1).filter(i => i >= 0).slice(0, 2);
+      const ob = level >= L.MECH.ice ? L.obstacles(tiles, faces, { level, seed, avoid: new Set([...down, ...gold]), ez: 0, path, extra: hard ? Math.min(c.extraMax, Math.floor((level - c.from) / c.extraEvery)) : 0 }) : null;   // more ice and locks as the levels go up
+      const rules = ob && (Object.keys(ob.ice || {}).length || (ob.keys || []).length) ? { iceNb: L.iceNeighbors(tiles), ice: ob.ice || {}, locks: (ob.keys || []).length ? new Set(ob.locks) : null, keys: ob.keys || [] } : null;
+      return { gold, ob, rules };
+    }
+    const blindDn = new Uint8Array(n).fill(1);
+    const game = (s, clock, blind) => ({ tiles, nb, faces: s.faces, down: blind ? blindDn : s.dn, rules: s.rules, clock, cover });
+    // fresh: other games than the quick look (the best of many quick looks is usually a lucky one)
+    const judge = (s, clock, k, who = 'sensible', blind = false, fresh = 0) => rateG(game(s, clock, blind), k || c.runs, seed + fresh * 7777, persona(who));
+    // (blind: how the test player does with every tile face down, for the record. Real players
+    // look for the twins of what waits in the tray, like the test player; levels that punish that
+    // can be done by keeping the tray empty instead: a trap, which is part of being harder)
+    // aim a little below the targets (the careful final measurement comes out a little easier);
+    // off: how far a deal is from both targets, dev: too easy (+) or too hard (-)
+    const clocked = hard && level >= c.clockFrom;
+    // Leave room for the clock to contribute to the difficulty, rather than loosening its deadline.
+    const aim = T + (clocked ? 0.08 : 0) - 0.03, aimS = TS + (clocked ? 0.08 : 0) - 0.02;
+    const off = s => Math.abs(s.q - aim) + (s.st === undefined ? 0 : Math.abs(s.st - aimS));
+    const dev = s => s.st === undefined ? s.q - aim : (s.q - aim + s.st - aimS) / 2;
+    // 1. deals along a way through, screened quickly by both test players; tune how much waits
+    //    in the tray (and the pictures) towards the targets
+    const cands = [];
+    let open = hard ? 0.95 : diff.open, kinds = L.kindsFor(n / 2, eff, diff);
+    const twin = hard ? Math.min(0.9, c.twin + (level - c.from) * 0.005) : 0;   // more twins on twins as the levels go up
+    const make1 = (faces, path) => { const must = hard ? fullMoments(faces, path) : new Set(); const down = placeDown(faces, must); return { faces, path, down, dn: asDown(down), must, ...extras(faces, down, path) }; };
+    for (let round = 0; round < (hard ? c.rounds : 6); round++) {
+      let rb = null;
+      for (let k = 0; k < (hard ? c.deals : 4); k++) {
+        const rr = L.rng(seed + k * 31337 + round * 7777);
+        const d = hdeal(tiles, nb, L.pairFacesFor(n / 2, kinds, rr), rr, { cap: 3, open, twin });
+        if (!d) continue;
+        const s = make1(d.faces, d.order);
+        const j = yield* judge(s, null, hard ? c.screen : 12); s.q = j.rate; s.risky = j.risky;
+        if (hard && s.risky !== null && s.risky > c.risky) continue;   // careful with tray pressure
+        s.st = (yield* judge(s, null, 12, 'strong')).rate;
+        cands.push(s);
+        if (!rb || off(s) < off(rb)) rb = s;
+      }
+      if (!rb) continue;
+      if (dev(rb) < -0.05) { open = Math.max(0, open - 0.25); kinds = Math.max(4, Math.round(kinds * 0.88)); }
+      else if (dev(rb) > 0.05) { open = Math.min(1, open + 0.2); kinds = Math.min(36, n / 2, Math.round(kinds * 1.12) + 1); }
+    }
+    if (!cands.length) {     // (practically never) the usual level
+      const sp = L.forLevel(level, aspect, scale, ''), d = L.makeDeal(sp);
+      return finish(sp.tiles, d.faces, d.down, null, null);
+    }
+    // 2. the closest few measured again, more carefully. Fair: the strong player must win at least
+    //    as often as the sensible one (otherwise the level is luck, or fools the test player)
+    cands.sort((a, b) => off(a) - off(b));
+    let best = null;
+    for (const s of cands.slice(0, 6)) {
+      s.q = (yield* judge(s, null, 48, 'sensible', false, 1)).rate;
+      s.st = (yield* judge(s, null, 36, 'strong', false, 1)).rate;
+      if (hard && s.st < s.q - 0.05) continue;
+      if (!best || off(s) < off(best)) best = s;
+    }
+    best = best || cands[0];
+    // 3. still too easy: change the deal step by step (swap two pictures, mostly putting a tile on
+    //    its own twin; the way through must still work with the 4-slot tray) and keep what helps
+    const fits = (faces, path) => { const tray = []; for (const m of path) { const q = tray.indexOf(faces[m]); if (q >= 0) tray.splice(q, 1); else { tray.push(faces[m]); if (tray.length > SLOTS - 1) return false; } } return !tray.length; };
+    if (hard) for (let st = 0; st < c.steps && dev(best) > 0.05; st++) {
+      const faces = best.faces.slice();
+      let a, b;
+      if (r() < 0.6) { const d = Math.floor(r() * n), ups = nb.above[d]; if (!ups.length) continue; const u = ups[Math.floor(r() * ups.length)]; const xs = []; for (let x = 0; x < n; x++) if (x !== u && x !== d && faces[x] === faces[u]) xs.push(x); if (!xs.length || faces[d] === faces[u]) continue; a = d; b = xs[Math.floor(r() * xs.length)]; }
+      else { a = Math.floor(r() * n); b = Math.floor(r() * n); if (faces[a] === faces[b]) continue; }
+      [faces[a], faces[b]] = [faces[b], faces[a]];
+      if (!fits(faces, best.path)) continue;
+      const s = make1(faces, best.path);
+      s.q = (yield* judge(s, null, 24)).rate;
+      if (s.q < best.q - 0.02) {
+        s.q = (yield* judge(s, null, 36, 'sensible', false, 2 + st)).rate;
+        s.st = (yield* judge(s, null, 30, 'strong', false, 2 + st)).rate;
+        if (off(s) < off(best) && s.st >= s.q - 0.05) best = s;
+      }
+    }
+    // The clock must require a route, not a long countdown chosen to preserve an easy board.
+    // A successful focused game supplies a full legal witness, including the remaining board.
+    let clock = null, solution = best.path;
+    if (hard && level >= c.clockFrom) {
+      const ob = best.ob || {};
+      const bad = new Set([...best.down, ...best.gold, ...Object.keys(ob.ice || {}).map(Number), ...(ob.locks || []), ...(ob.keys || [])]);
+      const pool = L.shuffleArr(L.rng(seed + 99), tiles.map((t, i) => i).filter(i => !free0[i] && !cover[i].length && !bad.has(i)));
+      let bc = null;
+      for (const ci of pool.slice(0, 6)) {
+        const route = clockRoute(game(best, null), ci);
+        const base = route ? route.indexOf(ci) + 1 : Infinity;
+        yield;
+        // A late-board clock would again give a large, forgiving countdown. Require an early route.
+        const routeLimit = level < 90 ? 18 : level < 110 ? 16 : 14;
+        if (!route || base < 5 || base > routeLimit) continue;
+        for (const spare of clockSpare(level)) {
+          const o = { i: ci, n: base + spare, base, route };
+          if (!validSolution(game(best, o), route)) continue;
+          o.q = (yield* judge(best, o, 36, 'sensible', false, 1)).rate;
+          o.st = (yield* judge(best, o, 40, 'strong', false, 1)).rate;
+          if (o.st < o.q - 0.05) continue;                 // fair: a good player copes better with the clock too
+          const miss = x => Math.abs(x.q - T) + 1.5 * Math.abs(x.st - TS);
+          if (!bc || miss(o) < miss(bc)) bc = o;
+        }
+      }
+      if (bc) { clock = { i: bc.i, n: bc.n }; solution = bc.route; }
+    }
+    // 4. the record: how the three test players do on the finished level
+    best.q = (yield* judge(best, clock, 90, 'sensible', false, 99)).rate;
+    best.strong = (yield* judge(best, clock, 60, 'strong', false, 99)).rate;
+    best.blind = hard ? (yield* judge(best, clock, 30, 'sensible', true, 99)).rate : null;
+    return finish(tiles, best.faces, best.down, best, clock, solution);
+
+    function finish(tl, faces, down, x, clk, path = null) {
+      return { v: GENV, level, aspect, scale, tiles: tl.map(t => [t.x, t.y, t.z]), faces, down: down.slice(), gold: x ? x.gold : null, obst: x ? x.ob : null, clock: clk, solution: path,
+        info: { target: +T.toFixed(2), targetStrong: +TS.toFixed(2), rate: x ? +x.q.toFixed(2) : null, strong: x ? +x.strong.toFixed(2) : null, blind: x && x.blind !== null && x.blind !== undefined ? +x.blind.toFixed(2) : null, twins: twinsOn(faces, L.neighbors(tl)), hard } };
+    }
+  }
+  // the whole design at once (tests, tools; the game prefers the steps in between taps)
+  const makeNow = (level, aspect, scale = 1, salt = 0) => drain(make(level, aspect, scale, salt));
+
+  /* ---------- in the game: the levels are made in advance ----------
+     Designing takes seconds, so it is done once, on the computer (tools/sim/build_levels.js), for
+     one screen shape (ASPECT; the pile is fitted to every screen). The result ships with the game
+     in levels-hard.js (HARD_LEVELS): everyone gets the same levels, and they start at once.
+     Past the last authored level, retain the hardest validated board, mirrored with other
+     pictures. Do not cycle back to easier boards. Packed: tile positions, faces and tile numbers as
+     letters (64 per letter). */
+  const ASPECT = 1.6;
+  const A64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+  const e1 = v => A64[v], e2 = v => A64[v >> 6] + A64[v & 63];
+  const d1 = (s, i) => A64.indexOf(s[i]), d2 = (s, i) => d1(s, i) * 64 + d1(s, i + 1);
+  const list2 = s => { const o = []; for (let i = 0; i < s.length; i += 2) o.push(d2(s, i)); return o; };
+  function pack(d) {
+    const ob = d.obst || {};
+    return [d.tiles.map(([x, y, z]) => e1(x) + e1(y) + e1(z)).join(''), d.faces.map(e1).join(''), d.down.map(e2).join(''), (d.gold || []).map(e2).join(''),
+      Object.entries(ob.ice || {}).map(([i, h]) => e2(+i) + e1(h)).join(''), (ob.locks || []).map(e2).join(''), (ob.keys || []).map(e2).join(''),
+      d.clock ? [d.clock.i, d.clock.n] : 0, d.info.rate, d.info.strong, d.solution ? d.solution.map(e2).join('') : ''];
+  }
+  function unpack(level, r) {
+    const [t, f, dn, g, ice, locks, keys, ck, rate, strong, proof] = r;
+    const tiles = []; for (let i = 0; i < t.length; i += 3) tiles.push([d1(t, i), d1(t, i + 1), d1(t, i + 2)]);
+    const faces = []; for (let i = 0; i < f.length; i++) faces.push(d1(f, i));
+    const iceO = {}; for (let i = 0; i < ice.length; i += 3) iceO[d2(ice, i)] = d1(ice, i + 2);
+    const obst = ice || keys ? { ice: iceO, locks: list2(locks), keys: list2(keys) } : null;
+    return { level, tiles, faces, down: list2(dn), gold: list2(g), obst, clock: ck ? { i: ck[0], n: ck[1] } : null, solution: proof ? list2(proof) : null, info: { rate, strong } };
+  }
+  const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);
+  const applies = (level, track) => !track && level >= cfg().measureFrom && !!table();
+  // The design of a level. Overflow keeps the hardest board; legacy tables retain their old cycle.
+  function get(level) {
+    const T = table(), last = T.from + T.levels.length - 1;
+    if (level <= last) return unpack(level, T.levels[level - T.from]);
+    const base = T.overflow === 'hardest' ? last : T.cycleFrom + (level - T.cycleFrom) % (last - T.cycleFrom + 1);
+    const d = unpack(level, T.levels[base - T.from]);
+    const w = Math.max(...d.tiles.map(t => t[0]));
+    d.tiles = d.tiles.map(([x, y, z]) => [w - x, y, z]);                 // mirrored left-right: the same rules apply
+    const perm = L.shuffleArr(L.rng(level * 7907 + 3), [...Array(36).keys()]);
+    d.faces = d.faces.map(x => x < 36 ? perm[x] : x);                   // other pictures
+    return d;
+  }
+  // the design as a level spec for board.js
+  function spec(level) {
+    const d = get(level);
+    const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z }));
+    return { tiles, kinds: new Set(d.faces).size, seed: level * 104729 + 1, diff: L.difficultyFor(L.effLevel(level)), made: d };
+  }
+
+  return { MODEL_VERSION: 2, PUBLIC_OBSERVATION_VERSION: 1, FEAT, POLICY_FEAT, KIND_CONTEXT, GOAL_FEAT, TRAY_GOAL_CONTEXT, trayGoalContext, trayGoalActions, trayGoalInfo, advanceTrayGoal, weightsOf, P, REF, persona, play, rate, rate2, rateChain, remembered, coverOf, target, clockSpare, validSolution, clockRoute, make, makeNow, cfg, GENV, ASPECT, applies, get, spec, pack, unpack };
+})();
+if (typeof module !== 'undefined') module.exports = Hard;

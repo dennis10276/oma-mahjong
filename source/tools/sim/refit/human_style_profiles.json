@@ -1,0 +1,34 @@
+{
+  "Dennis": {
+    "clockHorizon": 3,
+    "partnerHorizon": 2,
+    "clockWeight": 40,
+    "trayCost": 6,
+    "pairReward": 14,
+    "exploration": 4,
+    "temperature": 0.7,
+    "lapse": 0.002,
+    "memoryDecay": 0.0005,
+    "retryRetention": 0.85,
+    "peekPatience": 2,
+    "outWeight": 9,
+    "trayDepth": 3,
+    "futureWeight": 4
+  },
+  "family": {
+    "clockHorizon": 2,
+    "partnerHorizon": 1,
+    "clockWeight": 40,
+    "trayCost": 4,
+    "pairReward": 12,
+    "exploration": 3,
+    "temperature": 2,
+    "lapse": 0.02,
+    "memoryDecay": 0.01,
+    "retryRetention": 0.65,
+    "peekPatience": 1,
+    "outWeight": 5,
+    "trayDepth": 2,
+    "futureWeight": 1.5
+  }
+}
