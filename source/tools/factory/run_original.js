@@ -29,7 +29,8 @@ async function run(planFile, dir, constructionJobs = 4, meterJobs = 6, wanted = 
   };
   try {
     timer = setInterval(tick, 15000);
-    const production = construct(planFile, dir, constructionJobs, wanted).finally(() => { update(); fs.rmSync(marker, { force: true }); });
+    const production = (constructionJobs > 0 ? construct(planFile, dir, constructionJobs, wanted) : Promise.resolve())
+      .finally(() => { update(); fs.rmSync(marker, { force: true }); });
     await Promise.all([production, evaluate(poolFile, planFile, dir, meterJobs)]);
   } finally { clearInterval(timer); fs.rmSync(marker, { force: true }); }
   for (let round = 0; round < 4; round++) {

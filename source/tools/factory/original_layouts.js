@@ -21,7 +21,7 @@ const BRIEFS = [
 function make(planFile, out) {
   const plan = JSON.parse(fs.readFileSync(planFile));
   global.HARD_LEVELS = vm.runInNewContext(fs.readFileSync(path.resolve(path.dirname(planFile), plan.levelTable), 'utf8') + ';HARD_LEVELS');
-  const prior = previousBoards(plan.levels, path.resolve(path.dirname(planFile), plan.levelTable));
+  const prior = previousBoards(plan.outputLevels || plan.levels, path.resolve(path.dirname(planFile), plan.levelTable));
   const past = prior.map(r => F.spots(r.design.tiles)[0]);
   const made = fs.existsSync(out) ? JSON.parse(fs.readFileSync(out)).filter(r => r.originalityVersion === 'layout-d4-v1') : [];
   const seen = new Set(made.map(r => layoutKey({ tiles: r.tiles })));
@@ -31,8 +31,9 @@ function make(planFile, out) {
     const choices = L.shuffleArr(rng, F.SHAPES.slice()).filter(s => !recent.includes(s.shape));
     let selected = null;
     for (const sh of choices) {
-      for (let trial = 0; trial < 8 && !selected; trial++) {
-        const seed = 73000 + spec.level * 103 + trial * 9973, n = spec.big ? 96 : [76, 80, 84, 88][(k + trial) % 4];
+      for (let trial = 0; trial < (plan.layoutAttempts || 8) && !selected; trial++) {
+        const sizes = plan.normalSizes || [76, 80, 84, 88];
+        const seed = 73000 + spec.level * 103 + trial * 9973, n = spec.big ? 96 : sizes[(k + trial) % sizes.length];
         const tiles = F.candidate(sh, n, seed, t => {
           if (seen.has(layoutKey({ tiles: t }))) return false;
           return fitsLayouts(t, [...past, ...made.map(r => F.spots(r.tiles)[0])]);
@@ -46,7 +47,8 @@ function make(planFile, out) {
     made.push(selected); seen.add(selected.layoutKey); atomicJson(out, made);
     console.log(spec.level, selected.shape, selected.n, 'fresh tiles');
   }
-  plan.batchId = 'original-200-225'; plan.piles = path.relative(path.dirname(planFile), out).replace(/\\/g, '/');
+  plan.batchId ||= 'original-' + plan.from + '-' + plan.to;
+  plan.piles = path.relative(path.dirname(planFile), out).replace(/\\/g, '/');
   plan.seed ??= 81000; plan.seedAttempts ??= 8;
   plan.originality = { required: true, maxLayoutShare: .75, maxSameRecipe: 3, noDerivedBoards: true };
   plan.levels = plan.levels.map((r, k) => ({ ...r, ...BRIEFS[k % BRIEFS.length], concept: 'authored-' + (k % BRIEFS.length), pile: r.level }));

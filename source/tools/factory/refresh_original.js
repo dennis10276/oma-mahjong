@@ -9,7 +9,7 @@ function refresh(planFile, sources, output) {
   for (const file of sources) if (fs.existsSync(file)) for (const r of JSON.parse(fs.readFileSync(file))) {
     if (checkOrigin(r)) throw Error('Pool rejected nonoriginal source: ' + file);
     // A replaced whole layout invalidates all of its earlier tuning siblings.
-    if (r.origin.initialLayout !== layouts.get(r.origin.intendedLevel)) continue;
+    if (r.origin.initialLayout !== layouts.get(r.origin.creationSlot ?? r.origin.intendedLevel)) continue;
     rows.set(r.id, r);
   }
   atomicJson(output, [...rows.values()]); return rows.size;

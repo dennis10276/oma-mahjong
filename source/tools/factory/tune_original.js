@@ -33,7 +33,7 @@ if (!isMainThread) {
     const fingerprint = digest({ bot: createMeter().fingerprint, implementation:
       [__filename, './steer_design.js', '../lab/ideas.js', '../lab/exact.js'].map(f => sourceHash(path.resolve(__dirname, f))) });
     const rows = fs.existsSync(output) ? JSON.parse(fs.readFileSync(output)) : [];
-    const queue = seeds.filter(r => (!layouts || r.origin.initialLayout === layouts.get(r.level)) && !rows.some(x => x.tunedFrom === r.id));
+    const queue = seeds.filter(r => (!layouts || r.origin.initialLayout === layouts.get(r.origin.creationSlot ?? r.origin.intendedLevel ?? r.level)) && !rows.some(x => x.tunedFrom === r.id));
     const read = r => { const f = path.join(dir, r.id + '.screen.json'); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)).exp : 20; };
     const counts = {};
     queue.sort((a, b) => Math.abs(read(a) - a.target) - Math.abs(read(b) - b.target));

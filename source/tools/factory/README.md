@@ -91,6 +91,30 @@ This uses `source/tests`' Playwright dependency and Chromium (`CHROME` may point
 to an installed browser). It checks layout bounds and replays the stored routes
 through the real game. Preview ratings stay on the local device.
 
+## Extra fresh candidates
+
+When an initial design is unsuitable, build more whole layouts and place each
+qualified new design into an available curve slot. Candidate IDs 300+ identify
+creation slots; the output plan still contains levels 200–225 only. One creation
+can fill at most one output slot. Big-board positions and every bot gate stay
+the same.
+
+Twenty extra whole layouts are supplied in `batch-200-225-extra-piles.json`.
+They pass the same global originality, tower and tile-size checks. They are
+layout candidates; their puzzles still require full bot qualification.
+
+After the baseline production job finishes, run this separate job:
+
+```powershell
+node source/tools/factory/candidate_pool.js source/analysis/factory/batch-200-225-plan.json source/build/batch-200-225-original-v9 source/build/batch-200-225-extra 4 6 8 source/analysis/factory/batch-200-225-extra-piles.json
+```
+
+Construction finishes before simulation starts. The output folder contains a
+candidate plan, a combined output plan, measured candidates and coverage. The
+original output plan is preserved. An optional final argument includes a JSON
+file of externally tuned rows. `run_original.js` also accepts zero construction
+workers for evaluating an existing pool without rebuilding its seeds.
+
 ## Where the time goes
 
 - Family measurements come first. Off-curve boards and boards with idle

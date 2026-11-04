@@ -39,7 +39,7 @@ function validatePiles(levels, piles, options = {}) {
   const previous = global.HARD_LEVELS;
   try {
     global.HARD_LEVELS = vm.runInNewContext(fs.readFileSync(options.levelTable || path.join(__dirname, '../../www/levels-hard.js'), 'utf8') + ';HARD_LEVELS');
-    const replacing = new Set(levels.map(s => s.level)), context = new Map();
+    const replacing = new Set((options.contextLevels || levels).map(s => s.level)), context = new Map();
     for (const p of chosen) {
       const neighbours = Array.from({ length: 21 }, (_, k) => p.level - 10 + k);
       for (const lv of new Set([...Array.from({ length: 95 }, (_, k) => 70 + k), ...neighbours])) {
@@ -49,7 +49,7 @@ function validatePiles(levels, piles, options = {}) {
       }
     }
   } finally { global.HARD_LEVELS = previous; }
-  const masks = previousBoards(levels, options.levelTable).map(r => F.spots(r.design.tiles)[0]);
+  const masks = previousBoards(options.contextLevels || levels, options.levelTable).map(r => F.spots(r.design.tiles)[0]);
   for (const p of chosen) {
     if (!fitsLayouts(p.tiles, masks)) throw Error('Pile at ' + p.level + ' resembles an existing layout under rotation or reflection');
     masks.push(F.spots(p.tiles)[0]);

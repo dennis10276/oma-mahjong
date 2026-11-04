@@ -14,7 +14,7 @@ function candidates(pool, dir) {
       base: r.shape.split(' · ')[0], spots: F.spots(r.design.tiles)[0] }];
   });
 }
-function assign(plan, pool, dir, limit = 3000000, optimize = false) {
+function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial = false) {
   const inv = candidates(pool, dir).filter(r => !plan.originality?.required || !checkOrigin(r)), levels = plan.levels;
   const context = [], live = new Set(), previous = global.HARD_LEVELS;
   try {
@@ -49,43 +49,51 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false) {
       (j !== k - 1 || inv[p].exp <= r.exp + (plan.maxReverseStep ?? 0.25)) &&
       (j !== k + 1 || r.exp <= inv[p].exp + (plan.maxReverseStep ?? 0.25))));
   }
-  function dfs(count, cost) {
-    if (++nodes > limit || best && (!optimize || cost >= best.cost)) return;
-    if (count === levels.length) { best = { cost, picks: picks.slice() }; return; }
+  const capacity = plan.originality?.required ? Math.min(levels.filter(s => !s.big).length, new Set(inv.filter(r => r.n <= 88).map(r => r.origin.creationId)).size) +
+    Math.min(levels.filter(s => s.big).length, new Set(inv.filter(r => r.n > 88).map(r => r.origin.creationId)).size) : Math.min(inv.length, levels.length);
+  function dfs(count, cost, filled = count) {
+    if (++nodes > limit || best && (!allowPartial && (!optimize || cost >= best.cost) ||
+      allowPartial && (!optimize && best.filled === capacity || filled + levels.length - count < best.filled))) return;
+    if (count === levels.length) {
+      if (!best || filled > best.filled || filled === best.filled && cost < best.cost) best = { cost, filled, picks: picks.slice() };
+      return;
+    }
     let k = -1, opts = null;
-    for (let j = 0; j < levels.length; j++) if (picks[j] < 0) {
+    for (let j = 0; j < levels.length; j++) if (picks[j] === -1) {
       const c = choices(j);
-      if (!c.length) return;
+      if (!c.length && !allowPartial) return;
       if (!opts || c.length < opts.length) { k = j; opts = c; }
     }
     opts.sort((a, b) => Math.abs(a.r.exp - levels[k].target) - Math.abs(b.r.exp - levels[k].target));
     for (const { r, i } of opts) {
       picks[k] = i; used.add(i);
-      dfs(count + 1, cost + Math.abs(r.exp - levels[k].target) + (r.quality.lateShare >= 0.3 ? 0.2 : 0));
+      dfs(count + 1, cost + Math.abs(r.exp - levels[k].target) + (r.quality.lateShare >= 0.3 ? 0.2 : 0), filled + 1);
       used.delete(i); picks[k] = -1;
     }
+    if (allowPartial) { picks[k] = -2; dfs(count + 1, cost, filled); picks[k] = -1; }
   }
-  if (allowed.every(a => a.length)) dfs(0, 0);
+  if (allowPartial || allowed.every(a => a.length)) dfs(0, 0, 0);
   const coverage = levels.map((s, k) => ({ level: s.level, target: s.target, big: s.big, choices: allowed[k].length,
-    shapes: [...new Set(allowed[k].map(({ r }) => r.base))] }));
+    shapes: [...new Set(allowed[k].map(({ r }) => r.base))], selected: best?.picks[k] >= 0 ? inv[best.picks[k]].id : null }));
   if (!best) return { nodes, coverage, eligible: inv.length, rows: null, problem: { inv, allowed, compat } };
-  const rows = best.picks.map((i, k) => {
+  const rows = best.picks.flatMap((i, k) => {
+    if (i < 0) return [];
     const { spots, base, rate, quality, ...r } = inv[i], s = levels[k];
-    return { ...r, level: s.level, target: s.target, pass: true, family: { exp: +inv[i].exp.toFixed(3),
+    return [{ ...r, level: s.level, target: s.target, pass: true, family: { exp: +inv[i].exp.toFixed(3),
       search: rate.train.exp, validation: rate.validation.exp, searchSeed: 4711, validationSeed: 18427, version: rate.train.version },
       skilled: quality.skilled.exp, room: quality.room, atTrap: quality.atTrap, specials: quality.special,
       warnings: quality.lateShare >= 0.3 ? ['lateSqueeze'] : [], lateShare: quality.lateShare,
       clockSpare: r.design.clock.n - (r.design.solution.indexOf(r.design.clock.i) + 1),
-      design: { ...r.design, level: s.level }, boardHash: boardKey(r.design), bot: rate.bot };
+      design: { ...r.design, level: s.level }, boardHash: boardKey(r.design), bot: rate.bot }];
   });
-  return { nodes, coverage, eligible: inv.length, rows, cost: best.cost };
+  return { nodes, coverage, eligible: inv.length, rows, cost: best.cost, complete: rows.length === levels.length };
 }
 module.exports = { assign, candidates };
 if (require.main === module) {
   const [planFile, poolFile, dir, out] = process.argv.slice(2);
   const plan = JSON.parse(fs.readFileSync(planFile));
   if (plan.levelTable) plan.levelTable = path.resolve(path.dirname(planFile), plan.levelTable);
-  const result = assign(plan, JSON.parse(fs.readFileSync(poolFile)), dir);
+  const result = assign(plan, JSON.parse(fs.readFileSync(poolFile)), dir, 3000000, false, process.argv.includes('--partial'));
   console.log(JSON.stringify({ eligible: result.eligible, nodes: result.nodes, coverage: result.coverage, cost: result.cost }, null, 2));
   if (result.rows && out) fs.writeFileSync(out, result.rows.map(r => JSON.stringify(r)).join('\n') + '\n');
 }
