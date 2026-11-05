@@ -59,6 +59,21 @@ function proposals(seed=1,count=96){
 }
 function components(board){return board.pieceInstances.flatMap(record=>['ice','locks'].map(kind=>({name:record.name+'@'+record.id+':'+kind,recipe:record.name,kind,
   indices:record.patch.filter(p=>p.path[0]===kind&&p.after).map(p=>p.path[1])})).filter(c=>c.indices.length));}
+function replaceOne(row,index,op){
+  const list=row.pieces.map((p,i)=>i===index?op:p),old=row.design.pieceInstances[index];if(!old)return null;
+  if(clockKinds.has(row.pieces[index].name)||clockKinds.has(op.name))return assemble(row.pieceDesigner.baseDesign,list,row.pieceDesigner.seed);
+  const without=Pieces.remove(row.design,old.id);if(!without)return null;
+  const ordinal=row.pieces.slice(0,index).filter(p=>p.name===op.name).length,seed=row.pieceDesigner.seed;
+  const stableSeed=parseInt(digest(ordinal?[seed,op.name,ordinal]:[seed,op.name]).slice(0,7),16)+1;
+  const design=Pieces.place(op.name,without,Pieces.wayFor(without),op.params,I.rngOf(stableSeed));if(!design)return null;
+  // Keep every other piece's physical fields. A fair clock deadline may be
+  // derived again from the changed dependency; no other key/ice/face may move.
+  for(let i=0;i<row.design.pieceInstances.length;i++)if(i!==index)for(const p of row.design.pieceInstances[i].patch)
+    if(p.path[0]!=='clock'&&JSON.stringify(current(design,p.path))!==JSON.stringify(p.after))return null;
+  const replacement=design.pieceInstances.at(-1);design.pieceInstances=row.design.pieceInstances.map((p,i)=>i===index?replacement:p);
+  if(!I.valid(design)||!Placement.readable(design))return null;const room=roomProfile(design);if(!room.ok||room.unrelieved>1)return null;
+  return {design,room};
+}
 function rowOf(result,base,spec,list,seed,model,shape,creationId,creationSlot=spec.level){
   const d=result.design,prediction=Model.predict(model,d),recipe=list.map(p=>p.name==='wrongClock'?'dontGrab':'piece:'+p.name),id=boardKey(d).slice(0,16);
   return {id,level:creationSlot,placementTargetLevel:spec.level,target:spec.target,shape,n:d.tiles.length,design:d,room:result.room,recipe,
@@ -86,30 +101,32 @@ function suggest(base,spec,model,effects,options={}){
   return {rows:rows.slice(0,options.wanted??3),attempts,failures,seconds:(Date.now()-started)/1000};
 }
 function tuneOne(row,measured,spec,model,effects,options={}){
-  const baseline={family:{tries:measured.family},skilled:{tries:measured.skilled}},before=slotObjective(baseline,spec.target),moves=[];
+  const baseline={family:{tries:measured.family},skilled:{tries:measured.skilled}},before=slotObjective(baseline,spec.target),beforeModel=Model.predict(model,row),moves=[];
   for(let index=0;index<row.pieces.length;index++){
     const old=row.pieces[index],oldPrior=prior(row.pieces,effects);
-    for(const entry of Object.values(Pieces.CATALOGUE))for(const params of entry.grid){
+    for(const entry of Object.values(Pieces.CATALOGUE))for(const params of [...new Map([...entry.grid,entry.defaults].map(p=>[Model.settingKey({name:entry.key,params:p}),p])).values()]){
       const op={name:entry.key,params};if(parameterKey(op)===parameterKey(old))continue;
       if(clockKinds.has(old.name)!==clockKinds.has(op.name))continue;
       if(row.pieces.filter((p,i)=>i!==index&&p.name===op.name).length>=(repeatable.has(op.name)?3:1))continue;
       const list=row.pieces.map((p,i)=>i===index?op:p),next=prior(list,effects),estimate={};
       for(const k of ['family','skilled'])estimate[k]={tries:Math.max(1,Math.min(20,baseline[k].tries*next[k].tries/oldPrior[k].tries))};
-      const score=slotObjective(estimate,spec.target);if(score<before)moves.push({index,from:old,to:op,list,estimate,score});
+      const score=slotObjective(estimate,spec.target);if(score<=before+.25)moves.push({index,from:old,to:op,list,estimate,score});
     }
   }
   moves.sort((a,b)=>a.score-b.score);const candidates=[],seed=row.pieceDesigner.seed;
   for(const move of moves.slice(0,options.placements??8)){
-    const made=assemble(row.pieceDesigner.baseDesign,move.list,seed);if(!made)continue;
+    const made=replaceOne(row,move.index,move.to);if(!made)continue;
     // Replaying the same seed must preserve the other pieces' physical fields.
     // A changed fair deadline may propagate; moving another guard/key may not.
     const stable=r=>JSON.stringify(r.patch.filter(p=>p.path[0]!=='clock'));
     if(made.design.pieceInstances.some((r,i)=>i!==move.index&&stable(r)!==stable(row.design.pieceInstances[i])))continue;
     const next=rowOf(made,row.pieceDesigner.baseDesign,spec,move.list,seed,model,row.shape,row.origin.creationId,row.origin.creationSlot);
     if(next.id===row.id)continue;
-    next.edit='One measured-effect piece change';next.tunedFrom=row.id;next.pieceChange={index:move.index,from:move.from,to:move.to,priorEstimate:move.estimate,measuredBefore:measured};
+    const deltaEstimate={};for(const k of ['family','skilled'])deltaEstimate[k]={tries:Math.max(1,Math.min(20,baseline[k].tries*next.predicted[k].tries/beforeModel[k].tries))};
+    if(slotObjective(deltaEstimate,spec.target)>=before)continue;
+    next.edit='One measured-effect piece change';next.tunedFrom=row.id;next.pieceChange={index:move.index,from:move.from,to:move.to,priorEstimate:move.estimate,modelDeltaEstimate:deltaEstimate,measuredBefore:measured,patch:Pieces.diff(row.design,next.design)};
     candidates.push(next);
   }
-  candidates.sort((a,b)=>slotObjective(a.predicted,spec.target)-slotObjective(b.predicted,spec.target));return candidates[0]||null;
+  candidates.sort((a,b)=>slotObjective(a.pieceChange.modelDeltaEstimate,spec.target)-slotObjective(b.pieceChange.modelDeltaEstimate,spec.target));return candidates[0]||null;
 }
-module.exports={VERSION,slotObjective,prior,assemble,proposals,components,suggest,tuneOne};
+module.exports={VERSION,slotObjective,prior,assemble,proposals,components,replaceOne,suggest,tuneOne};

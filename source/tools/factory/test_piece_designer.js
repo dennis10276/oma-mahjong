@@ -23,3 +23,9 @@ test('a guided repair changes one piece list item and preserves the creation ide
   const a={key:C.settingKey(list[0]),family:{medianLog:Math.log(8/1.2)},skilled:{medianLog:Math.log(2.8)}},b={key:C.settingKey({name:'clock',params:{depth:2,spare:3}}),family:{medianLog:Math.log(2/1.2)},skilled:{medianLog:Math.log(2.8)}};
   const next=D.tuneOne(row,{family:8,skilled:2.8},{level:210,target:3},model,[a,b]);assert(next);assert.equal(next.pieces.length,1);assert.equal(next.pieceChange.index,0);assert.equal(next.origin.creationId,row.origin.creationId);assert.equal(next.origin.creationSlot,771);assert(I.valid(next.design));
 });
+test('a key-piece repair preserves the placed lock and every unrelated tile',()=>{
+  let row=null;for(const b of bases){const list=[{name:'clock',params:{depth:2,spare:2}},{name:'keys',params:{depth:0,across:false}},{name:'clockLock',params:{keyDepth:2}}],made=D.assemble(b.design,list,71);if(!made)continue;
+    const candidate={design:made.design,pieces:list,pieceDesigner:{baseDesign:b.design,seed:71}},next=D.replaceOne(candidate,1,{name:'keys',params:{depth:2,across:false}});if(!next)continue;row={candidate,next};break;}
+  assert(row);assert(I.valid(row.next.design));assert.deepEqual(row.next.design.obst.locks,row.candidate.design.obst.locks);assert.deepEqual(row.next.design.faces,row.candidate.design.faces);assert.deepEqual(row.next.design.down,row.candidate.design.down);
+  assert.equal(row.next.design.pieceInstances.length,3);
+});
