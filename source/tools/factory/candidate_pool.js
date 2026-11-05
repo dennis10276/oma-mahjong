@@ -31,7 +31,7 @@ function prepare(planFile, dir, count = 20, existingPiles) {
   const briefs = plan.candidateBriefs || BRIEFS;
   if (!fs.existsSync(candidatePlan)) atomicJson(candidatePlan, { ...plan,
     levelTable: path.resolve(path.dirname(planFile), plan.levelTable), outputLevels: plan.levels,
-    from: initial, to: initial + count - 1, normalSizes: [76, 80, 84, 88].filter(n => n >= Preferences.minimum(plan)), layoutAttempts: 32,
+    from: initial, to: initial + count - 1, normalSizes: [76, 80, 84, 88].filter(n => n >= Preferences.minimum(plan)), layoutAttempts: plan.layoutAttempts ?? 4,
     levels: Array.from({ length: count }, (_, k) => ({ level: initial + k, target: +(low + (high - low) * k / Math.max(1, count - 1)).toFixed(2), big: k === 4 || k === 14,
       ...briefs[k % briefs.length] })) });
   make(candidatePlan, pilesFile);
