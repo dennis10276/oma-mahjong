@@ -608,3 +608,13 @@ including every old `plannerScreen` / skilled >6 rejection. The family measure
 is unchanged; the factory keeps its values with an explicit revision-pair cache
 migration. The 2.5–6 skilled gate remains: a rescued board that now rates below
 2.5 still needs hardening. No old planner rating can qualify a new output.
+
+## Direction: a box of trap pieces (Dennis, 2026-11-05 23:27)
+"I like all this work but I dont really want to play the levels. We want the designer to have tiny puzzle pieces /
+traps that it uses to design every level and knowing how hard the outcoming level generally will be."
+- No routine playtesting by Dennis; the bots confirm. His existing lab plays still count where they exist.
+- Codex Task 07: a piece catalogue (smallest nameable mechanisms with 1-2 parameters, each owning its tiles), every
+  piece measured alone and in common pairs on calm base layouts (family and skilled), a composition model that predicts
+  a level's family and skilled tries from its pieces (checked on held-out boards), and a designer that picks pieces to
+  hit each slot and tunes one piece at a time by its measured effect.
+- Skilled player = better of two styles (3201e1e). Task 05: 9/26; main gap: traps that catch the family but not Dennis.
