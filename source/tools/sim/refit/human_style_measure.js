@@ -28,8 +28,18 @@ function estimateDifficulty(campaigns){
  return {expectedTries:Number(exp.toFixed(2)),label};
 }
 
+// The skilled player plays each board in both styles - heading for the clock along the way it works out, or playing
+// plainly - and counts the better one (Claude 2026-11-05: a skilled player uses whichever works; against Dennis's own
+// tries this is closer than either style alone: his 24 lab boards off by 1.93 (one style 2.05-2.36), live 85-174 1.05).
 function measureHuman(board,options={}){
- assert(Object.keys(options).every(key=>['runs','seed','maxAttempts','profiles','capture','choiceLimit','setting','seeds'].includes(key)));
+ if(options.setting!=='planner'||options.plannerStyle!==undefined)return measureOne(board,options);
+ const seed=options.seed??crypto.randomBytes(4).readUInt32LE();
+ const route=measureOne(board,{...options,seed,plannerStyle:'route'}),plain=measureOne(board,{...options,seed,plannerStyle:'plain'});
+ const best=route.expectedTries<=plain.expectedTries?route:plain;
+ return {...best,plannerStyles:{route:route.expectedTries,plain:plain.expectedTries},valid:route.valid&&plain.valid};
+}
+function measureOne(board,options={}){
+ assert(Object.keys(options).every(key=>['runs','seed','maxAttempts','profiles','capture','choiceLimit','setting','seeds','plannerStyle'].includes(key)));
  const {runs=20,maxAttempts=20,profiles=defaults,capture=false,choiceLimit=1024,seeds=2}=options;
  const seed=options.seed??crypto.randomBytes(4).readUInt32LE();
  assert(Number.isInteger(runs)&&runs>0&&runs<=1000&&Number.isInteger(seed));
@@ -46,7 +56,7 @@ function measureHuman(board,options={}){
  // counts what the clock still needs (cover, ice, the locks beside it, the keys and their covers) and, when no whole way
  // shows, the best partial way that keeps a tray spot free. Two-island board 329724e3: 9.8 -> 2.1 tries; Dennis's 24 lab
  // boards: off by 2.18 -> 2.05, wrongly over 6 on 3 -> 2 (blind 183 14.8 -> 5.6, he needed 6); live 85-174: 1.08 -> 1.10.
- const PLANNER={spotPenalty:200,lookDepth:2,lookPenalty:150,lookFrom:1,pairFirst:100,freePeekBonus:70,clockNeedFull:1,routePlan:300,routeBeam:300,routeNeed:1,routeNeedTray:2};
+ const PLANNER={spotPenalty:200,lookDepth:2,lookPenalty:150,lookFrom:1,pairFirst:100,freePeekBonus:70,clockNeedFull:1,routePlan:300,routeBeam:300,routeNeed:1,routeNeedTray:2,routeNeedSlack:99};
  const pick=options.setting==='family'?'family':'Dennis';
  const encoded=normalizeBoard(board),start=performance.now(),settings={};
  const releasedProfiles=release.profiles;
@@ -54,7 +64,7 @@ function measureHuman(board,options={}){
  const isReleased=Object.entries(releasedProfiles).every(([name,reference])=>Object.keys(selectedProfiles[name]).length===Object.keys(reference).length&&Object.entries(reference).every(([key,value])=>selectedProfiles[name][key]===value));
  for(let [name,profile] of Object.entries(selectedProfiles)){
   if(options.setting&&name!==pick)continue;
-  if(options.setting==='planner')profile={...profile,...PLANNER};
+  if(options.setting==='planner')profile={...profile,...PLANNER,...(options.plannerStyle==='plain'?{routeNeed:0}:{})};
   const started=performance.now(),results=[],pooled=[];
   for(let run=0;run<runs;run++)results.push(campaign(encoded,profile,(seed+Math.imul(run+1,0x9e3779b9))|0,{maxAttempts,capture,choiceLimit,...(options.setting?{controllerFactory:createFactoryController}:{})}));
   pooled.push(...results);

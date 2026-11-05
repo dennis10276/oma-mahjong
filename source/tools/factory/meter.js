@@ -19,6 +19,9 @@ const boardKey = d => digest(boardOf(d));
 // physics are identical. Permit this exact, documented revision pair only;
 // any later bot/profile/environment change falls back to new measurements.
 const FAMILY_CACHE_MIGRATIONS = Object.freeze({
+  // 2026-11-05 Claude: skilled planner = better of two styles, worked back from the clock; family unchanged
+  'f32859281c746f4277ab5ef4c0006d43c76dddcc342741af8b0ff45a1b63d561':
+    ['cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d', 'ac24aad82490bab263850596afacb302f2f50b4b73464430c8e95962562808ef'],
   cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d:
     ['ac24aad82490bab263850596afacb302f2f50b4b73464430c8e95962562808ef']
 });

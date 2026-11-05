@@ -34,3 +34,12 @@ the best partial way that keeps a tray spot free (`routeNeed`, `routeNeedTray` i
 profile, the Dennis profile and the physics are unchanged, so family measurements are the same; the planner's are not.
 Two-island board 329724e3: 9.8 -> 2.1 tries. Against Dennis's own tries: 24 lab boards off by 2.18 -> 2.05, wrongly over
 6 on 3 -> 2; live 85-174 1.08 -> 1.10. Still too pessimistic on blind 185 (18.6 vs 6) and release 194 (20 vs 9).
+
+## 2026-11-05 (later): skilled planner = the better of two styles (Claude)
+Codex (Task 04) found boards the clock logic still missed: a locked clock, covers that are locked or frozen. The way
+search now works back from the clock fully (covers, locks -> keys, ice -> cheapest neighbours, each with its own needs).
+Heading for the clock always helps some boards and hurts others (release 175: 1.05 -> 4.9; Dennis 1), so the skilled
+player plays each board in both styles (route / plain) and counts the better one - a skilled player uses whichever works.
+Against Dennis's own tries: lab boards off by 1.93 (route-only 2.26, previous 2.05, old 2.18), live 85-174 1.05 (1.10).
+Locked-clock boards 7.8 / 20 -> 2.9 / 4.6. Still over 6: two double-frozen clocks between locks (20), b5edecc (13).
+Family profile and physics unchanged; meter.js lists this fingerprint for the family-cache reuse.
