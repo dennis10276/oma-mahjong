@@ -117,6 +117,7 @@ test('a kept player-approved board is mandatory even in a partial assignment', t
   plan.levels=[{level:200,target:7.3,big:false,keepPattern:P.patternKey(rows[0].design)}];
   assert.equal(assign(plan,rows,dir,1000,false,true).rows[0].id,rows[0].id);
   assert.equal(P.patternKey(rows[0].design),P.patternKey({...rows[0].design,clock:{i:0,n:9}}),'A fair timer repair keeps the same pattern');
+  assert(!P.slotAllows({...rows[0],reservedOutputLevel:225},{level:223,big:false}));
 });
 
 test('checkpoint replacement retries transient Windows locks and preserves the old file on permanent failure', t => {

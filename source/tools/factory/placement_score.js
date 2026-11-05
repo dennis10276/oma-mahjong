@@ -9,6 +9,7 @@ const clamp = x => Math.max(0, Math.min(1, x));
 const round = x => +x.toFixed(3);
 function patternKey(d){const b=boardOf(d);return digest({tiles:b.tiles,faces:b.faces,down:b.down,clockTile:b.clock?.i});}
 function slotAllows(row,slot){return slot.big===(row.design.tiles.length>88)&&
+  (row.reservedOutputLevel==null||row.reservedOutputLevel===slot.level)&&
   (row.origin?.intendedLevel==null||row.origin.intendedLevel===slot.level)&&
   (!slot.keepId||slot.keepId===row.id)&&(!slot.keepPattern||slot.keepPattern===patternKey(row.design));}
 function routeTiles(d, analysis) {

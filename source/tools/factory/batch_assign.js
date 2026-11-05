@@ -32,9 +32,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
   } finally { global.HARD_LEVELS = previous; }
   const past = plan.originality?.required ? previousBoards(levels, plan.levelTable) : [];
   const novel = inv.map(r => past.every(p => !compare(r, p, plan.originality?.maxLayoutShare)));
-  const allowed = levels.map(s => inv.map((r, i) => ({ r, i })).filter(({ r, i }) => (r.n > 88) === s.big &&
-    (!s.keepId || r.id === s.keepId) &&
-    (!s.keepPattern || Placement.patternKey(r.design)===s.keepPattern) &&
+  const allowed = levels.map(s => inv.map((r, i) => ({ r, i })).filter(({ r, i }) => Placement.slotAllows(r,s) &&
     r.design.tiles.length >= Preferences.minimum(plan) &&
     (r.quality.skilled?.exp ?? 0) >= (plan.skilledMin ?? 0) &&
     (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) && novel[i] &&
