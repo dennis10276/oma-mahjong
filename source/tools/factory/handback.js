@@ -39,6 +39,7 @@ function handback(planFile, poolFile, measurements, out) {
   const selected = new Map(rows.map(r => [r.level, r])), used = new Set(rows.map(r => r.origin.creationId));
   const nearest = new Map();
   const matching = s => rated.filter(x => x.row.design.tiles.length >= Preferences.minimum(plan) && (x.row.n > 88) === s.big &&
+    (!s.keepId||x.row.id===s.keepId) && (!s.keepPattern||Placement.patternKey(x.row.design)===s.keepPattern) &&
     (x.row.origin.intendedLevel == null || x.row.origin.intendedLevel === s.level));
   // Missing slots get distinct diagnostic proposals. They remain explicitly
   // unqualified; no gate is relaxed to make an incomplete batch look complete.

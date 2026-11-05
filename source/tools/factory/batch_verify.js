@@ -19,6 +19,8 @@ function verify(planFile, batchFile, options = {}) {
     contextLevels: plan.levels, minTiles: plan.minTiles, bigLevels: plan.bigLevels, levelTable: path.resolve(path.dirname(planFile), plan.levelTable) });
   for (let k = 0; k < rows.length; k++) {
     const r = rows[k], s = plan.levels.find(s => s.level === r.level), d = r.design;
+    if(s.keepId)assert.equal(r.id,s.keepId,'Approved board replaced at '+r.level);
+    if(s.keepPattern)assert.equal(require('./placement_score.js').patternKey(d),s.keepPattern,'Approved board pattern replaced at '+r.level);
     assert(r.origin?.intendedLevel == null || r.origin.intendedLevel === r.level);
     assert(I.valid(d), 'Stored solution must obey every rule at ' + r.level);
     assert.equal(r.clockSpare, d.clock.n - (d.solution.indexOf(d.clock.i) + 1));

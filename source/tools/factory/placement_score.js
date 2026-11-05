@@ -1,11 +1,13 @@
 'use strict';
 // Dennis's round-2 feedback is an authoring preference, not a difficulty model.
 const I = require('../lab/ideas.js'), L = global.Layouts;
+const {boardOf,digest}=require('./meter.js');
 const VERSION = 'dennis-round2-v1';
 const trayPuzzle = recipe => (recipe || []).some(k => k === 'trayJuggleFrozen' || k === 'trayJuggleLocked');
 const preferredSpare = brief => trayPuzzle(brief.recipe) ? 1 : (brief.spare ?? 2);
 const clamp = x => Math.max(0, Math.min(1, x));
 const round = x => +x.toFixed(3);
+function patternKey(d){const b=boardOf(d);return digest({tiles:b.tiles,faces:b.faces,down:b.down,clockTile:b.clock?.i});}
 function routeTiles(d, analysis) {
   const c = I.ctxOf(d), targets = [d.clock?.i, ...(d.obst?.keys || [])].filter(Number.isInteger);
   const end = targets.length ? Math.max(...targets.map(i => c.pos[i] + 1)) : 0;
@@ -82,4 +84,4 @@ function score(d, recipe = [], shape = '', analysis) {
       visibleMarkerShare: round(signpostShare), hiddenKeys: keys.filter(i => hidden.has(i)),
       hiddenRouteTiles: blind, route, spare, trayPuzzle: trayPuzzle(recipe), temptation: lure } };
 }
-module.exports = { VERSION, preferredSpare, routeTiles, prepare, readable, score };
+module.exports = { VERSION, preferredSpare, patternKey, routeTiles, prepare, readable, score };

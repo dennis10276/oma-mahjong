@@ -149,8 +149,7 @@ function changes(d, state) {
     const locks = d.obst.locks || [];
     if (locks.length >= 2) { const one = byLoss(locks)[0]; out.push({ what: 'one lock off', d: { ...d, obst: { ...d.obst, locks: locks.filter(j => j !== one) } } }); }
   } else if (harder) {
-    const soft = byLoss(iceAt.filter(j => d.obst.ice[j] < 3))[0];
-    if (soft !== undefined) {
+    for(const soft of byLoss(iceAt.filter(j => d.obst.ice[j] < 3)).slice(0,3)) {
       const edited = { ...d, obst: { ...d.obst, ice: { ...d.obst.ice, [soft]: d.obst.ice[soft] + 1 } } };
       const exact = I.fix({ ...edited,clock:{...edited.clock,n:999} },sp);
       if(exact) out.push({what:'one ice harder with exact clock route',d:exact,exactRepaired:true});
@@ -171,15 +170,20 @@ function changes(d, state) {
     if(keys.length===2) {
       const current=keys.reduce((s,i)=>s+depth(i),0), direction=softer?-1:1;
       const pairs=c.pairs.filter(([a,b])=>!special(a)&&!special(b)&&!hidden.has(a)&&!hidden.has(b)&&
-        direction*(depth(a)+depth(b)-current)>0).sort((a,b)=>
+        direction*(depth(a)+depth(b)-current)>=0).sort((a,b)=>
           Math.abs(depth(a[0])+depth(a[1])-current)-Math.abs(depth(b[0])+depth(b[1])-current));
-      for(const [a,b] of pairs.slice(0,3))fixedProposal('key pair moved '+(softer?'one dig shallower':'one dig deeper'),
+      const nearby=pairs.filter(p=>Math.abs(depth(p[0])+depth(p[1])-current)<=Math.abs((pairs[0]?depth(pairs[0][0])+depth(pairs[0][1]):current)-current)+2);
+      const spread=p=>Math.hypot(c.tiles[p[0]].x-c.tiles[p[1]].x,c.tiles[p[0]].y-c.tiles[p[1]].y);
+      const away=p=>p.reduce((s,i)=>s+Math.hypot(c.tiles[i].x-c.tiles[d.clock.i].x,c.tiles[i].y-c.tiles[d.clock.i].y),0);
+      const candidates=[pairs[0],nearby.slice().sort((a,b)=>spread(b)-spread(a))[0],nearby.slice().sort((a,b)=>away(b)-away(a))[0],...pairs];
+      const selected=[...new Map(candidates.filter(Boolean).map(p=>[p.slice(0,2).sort((a,b)=>a-b).join(','),p])).values()].slice(0,4);
+      for(const [a,b] of selected)fixedProposal('key pair repositioned on '+(softer?'an equal or shallower dig':'an equal or deeper dig'),
         {...d,obst:{...d.obst,keys:[a,b]}});
     }
     const objective=new Set([d.clock.i,...keys]);
     for(const i of [...objective]){depth(i);for(const j of covered.get(i))objective.add(j);}
     const mates=new Set();for(const [a,b] of c.pairs){if(objective.has(a))mates.add(b);if(objective.has(b))mates.add(a);}
-    const movable=byLoss(iceAt.filter(i=>i!==d.clock.i&&!keys.includes(i))).slice(0,1);
+    const movable=byLoss(iceAt.filter(i=>i!==d.clock.i&&!keys.includes(i))).slice(0,2);
     for(const old of movable) {
       const h=d.obst.ice[old], choices=[...new Set([...objective,...mates])].filter(i=>!special(i)&&!hidden.has(i)&&
         c.inb[i].filter(j=>c.pos[j]<c.pos[i]).length>=h).sort((a,b)=>Math.abs(depth(a)-depth(old))-Math.abs(depth(b)-depth(old)));

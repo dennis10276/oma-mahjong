@@ -102,7 +102,7 @@ test('a kept player-approved board is mandatory even in a partial assignment', t
   const design = { tiles: pile.tiles, faces: pile.tiles.map((_,i) => i>>1), down: [],
     obst: { ice: {}, keys: [], locks: [] }, clock: { i: 0, n: 2 }, solution: pile.tiles.map((_,i)=>i) };
   const rows = [2,3].map((n,k) => {
-    const d = { ...design, clock: { i: 0, n } }, id = boardKey(d).slice(0,16);
+    const d = { ...design, faces:design.faces.map(f=>f+k), clock: { i: 0, n } }, id = boardKey(d).slice(0,16);
     atomicJson(path.join(dir,id+'.rate.json'),{train:{valid:true,exp:k?7.3:7},validation:{valid:true,exp:k?7.3:7}});
     atomicJson(path.join(dir,id+'.quality.json'),{eligible:true,skilled:{exp:1},room:{ok:true},atTrap:1,special:{}});
     return { id, level:200, shape:pile.shape, n:pile.tiles.length, recipe:['chainReaction'], design:d,
@@ -113,6 +113,10 @@ test('a kept player-approved board is mandatory even in a partial assignment', t
   assert.equal(selected.rows[0].id,rows[0].id,'Cheaper or newer candidates cannot replace a kept board');
   const unavailable=assign(plan,[rows[1]],dir,1000,false,true);
   assert.equal(unavailable.rows,null); assert.deepEqual(unavailable.preservedFailure,[{level:200,id:rows[0].id}]);
+  const P=require('./placement_score.js');
+  plan.levels=[{level:200,target:7.3,big:false,keepPattern:P.patternKey(rows[0].design)}];
+  assert.equal(assign(plan,rows,dir,1000,false,true).rows[0].id,rows[0].id);
+  assert.equal(P.patternKey(rows[0].design),P.patternKey({...rows[0].design,clock:{i:0,n:9}}),'A fair timer repair keeps the same pattern');
 });
 
 test('checkpoint replacement retries transient Windows locks and preserves the old file on permanent failure', t => {
