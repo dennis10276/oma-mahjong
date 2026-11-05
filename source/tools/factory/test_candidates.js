@@ -32,6 +32,13 @@ test('portable candidates preserve their design identity while allowing curve pl
   assert.equal(result.origin.creationId, origin.creationId); assert.equal(boardKey(result.design), boardKey(design));
   assert.equal(O.checkOrigin(result), null); assert.equal(row.origin.intendedLevel, 300);
   assert.throws(() => portable({ ...row, origin: { ...origin, parentLevel: 210 } }), /fresh original/);
+  const aimed = require('./candidate_pool.js').aim(row, { levels: [
+    { level: 200, target: 10, big: false }, { level: 212, target: 11, big: false },
+    { level: 220, target: 11.67, big: true }, { level: 225, target: 13, big: false }
+  ] }, 11.2);
+  assert.equal(aimed.target, 11); assert.equal(aimed.placementTargetLevel, 212);
+  assert.equal(aimed.level, 300, 'Keep the creation group, not the aimed output slot, for queue quotas');
+  assert.equal(aimed.origin.creationId, row.origin.creationId); assert.equal(boardKey(aimed.design), boardKey(row.design));
 });
 
 test('full family feedback supersedes an opposing quick-scout edit direction', t => {
@@ -139,4 +146,39 @@ test('authoritative cloud measurements supersede matching log imports without de
   fs.writeFileSync(file, rows.map(r => JSON.stringify(r)).join('\n'));
   assert.equal(Moves.load([file]).length, 2);
   assert.equal(fs.readFileSync(file, 'utf8').split('\n').length, 3);
+});
+
+test('new production keeps the harder curve, whole layouts above 70 tiles, and the two-island concept', () => {
+  const base = path.resolve(__dirname, '../../analysis/factory'), p = JSON.parse(fs.readFileSync(path.join(base, 'batch-200-225-v10-plan.json')));
+  const piles = JSON.parse(fs.readFileSync(path.resolve(base, p.piles)));
+  assert.deepEqual(p.curve, [[200, 10], [224, 12], [225, 13]]); assert.equal(p.skilledMin, 2.5);
+  assert(piles.every(x => x.tiles.length >= 72));
+  assert(p.levels.every(s => piles.find(x => x.level === s.level).base !== 'block'));
+  assert.match(piles.find(x => x.level === 212).shape, /two islands/);
+  assert.deepEqual(p.levels.find(s => s.level === 212).recipe, ['iceLockClock']);
+  const masks = O.previousBoards(p.levels, path.resolve(base, p.levelTable)).map(r => F.spots(r.design.tiles)[0]);
+  for (const x of piles) { assert(O.fitsLayouts(x.tiles, masks)); masks.push(F.spots(x.tiles)[0]); }
+});
+
+test('block shapes remain fallback choices and do not outrank other qualified shapes', t => {
+  const Preferences = require('./shape_preferences.js');
+  assert.deepEqual(Preferences.order([{ name: 'block' }, { name: 'vase' }, { name: 'block · two islands' }, { name: 'arch' }]).map(s => s.name),
+    ['vase', 'arch', 'block', 'block · two islands']);
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-shape-preference-')); t.after(() => fs.rmSync(dir, { recursive: true }));
+  const base = path.resolve(__dirname, '../../analysis/factory'), plan = JSON.parse(fs.readFileSync(path.join(base, 'batch-200-225-plan.json')));
+  plan.levelTable = path.resolve(base, plan.levelTable);
+  const piles = JSON.parse(fs.readFileSync(path.resolve(base, plan.piles)));
+  const rows = [211, 201].map((lv, k) => {
+    const p = piles.find(p => p.level === lv), design = { tiles: p.tiles, faces: p.tiles.map((_, i) => i >> 1), down: [],
+      obst: { ice: {}, keys: [], locks: [] }, clock: { i: 0, n: 2 }, solution: p.tiles.map((_, i) => i) };
+    const id = boardKey(design).slice(0, 16), origin = O.originOf(design, 'preference/' + lv, 'Original puzzle', lv); origin.intendedLevel = 200;
+    atomicJson(path.join(dir, id + '.rate.json'), { train: { valid: true, exp: 7 + .3 * k }, validation: { valid: true, exp: 7 + .3 * k } });
+    atomicJson(path.join(dir, id + '.quality.json'), { eligible: true, skilled: { exp: 3 }, room: { ok: true }, atTrap: 1, special: {}, lateShare: 0 });
+    return { id, level: 200, target: 7, n: p.n, shape: p.shape, recipe: ['chainReaction'], design, origin };
+  });
+  assert.equal(assign(plan, rows, dir, 10000, false, true).rows[0].shape, 'arch');
+  assert.equal(assign(plan, [rows[0]], dir, 10000, false, true).rows[0].shape, 'block');
+  const short = { ...rows[1], design: { ...rows[1].design, tiles: rows[1].design.tiles.slice(0, 70) } };
+  const { validatePiles } = require('./build.js');
+  assert.throws(() => validatePiles([{ level: 200 }], [{ level: 200, shape: 'arch', tiles: short.design.tiles }]), /at least 72/);
 });

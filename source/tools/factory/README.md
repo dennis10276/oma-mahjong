@@ -93,6 +93,20 @@ through the real game. Preview ratings stay on the local device.
 
 ## Extra fresh candidates
 
+Dennis's current preference: every new level has at least 72 tiles. Block shapes
+(including their variations) are fallback choices: whole-layout generation tries
+the other shapes first, and assignment prefers a qualified non-block alternative
+even when a block is slightly closer to the curve. This does not weaken a bot gate
+or ban a block when it is the only qualified option.
+
+Candidate targets now follow the supplied plan's range. Task 03 uses family
+10 at 200, 12 at 224, 13 at 225, and skilled 2.5–6 (aim 3). Keep the run's bands
+consistent: `FACTORY_SCREEN=7,17`, `FACTORY_RATE=8,15`, `FACTORY_SKILLED=2.5,6`.
+Custom recipes/briefs survive layout generation. More choices include frozen keys,
+a clock beside an unrelated lock, and a tray dig followed by an ice chain. The
+212-style key/ice/clock idea has a fresh 76-tile two-island candidate; its old
+64-tile board is ineligible for the new batch.
+
 When an initial design is unsuitable, build more whole layouts and place each
 qualified new design into an available curve slot. Candidate IDs 300+ identify
 creation slots; the output plan still contains levels 200–225 only. One creation

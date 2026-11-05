@@ -598,3 +598,6 @@ him: "1 [family 10 -> 13] and require the skilled bot to at least need 2.5-3 tri
 - Screen/rate bands follow the curve: `FACTORY_SCREEN=7,17 FACTORY_RATE=8,15`.
 - Note for Dennis: on the bot's scale 132 and 150 sit at about 7, so 10-13 is above anything the family has played.
 - Of round 1's 15 qualified boards only the 225 board (family 10.05, skilled 5.42) fits the new curve (at 200).
+- Dennis's follow-up: all new boards contain more than 70 tiles (minimum 72), and block shapes are discouraged.
+  The v10 piles have whole non-block alternatives. The old 64-tile two-island 212 is ineligible; a fresh 76-tile oval
+  with two islands explores its key/ice/clock concept on the higher curve. Candidate targets follow the current plan.

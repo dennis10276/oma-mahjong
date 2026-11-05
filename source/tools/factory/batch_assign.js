@@ -5,6 +5,7 @@ const Hard = require('../../www/hard.js');
 const { digest, boardKey } = require('./meter.js');
 const { checkOrigin, compare, previousBoards } = require('./originality.js');
 const Final = require('./final_seed.js');
+const Preferences = require('./shape_preferences.js');
 
 function candidates(pool, dir) {
   const read = (r, mode) => { const f = path.join(dir, r.id + '.' + mode + '.json'); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)) : null; };
@@ -29,6 +30,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
   const past = plan.originality?.required ? previousBoards(levels, plan.levelTable) : [];
   const novel = inv.map(r => past.every(p => !compare(r, p, plan.originality?.maxLayoutShare)));
   const allowed = levels.map(s => inv.map((r, i) => ({ r, i })).filter(({ r, i }) => (r.n > 88) === s.big &&
+    r.design.tiles.length >= Preferences.minimum(plan) &&
     (r.quality.skilled?.exp ?? 0) >= (plan.skilledMin ?? 0) &&
     (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) && novel[i] &&
     !live.has(boardKey(r.design)) && context.every(c => c.level > 164 && Math.abs(c.level - s.level) > 10 || F.share(r.design.tiles, c.spots) <= 0.75) &&
@@ -87,10 +89,11 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       if (!c.length && !allowPartial) return;
       if (!opts || c.length < opts.length) { k = j; opts = c; }
     }
-    opts.sort((a, b) => Math.abs(a.r.exp - levels[k].target) - Math.abs(b.r.exp - levels[k].target));
+    const preference = r => Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan);
+    opts.sort((a, b) => preference(a.r) - preference(b.r));
     for (const { r, i } of opts) {
       picks[k] = i; used.add(i);
-      dfs(count + 1, cost + Math.abs(r.exp - levels[k].target) + (r.quality.lateShare >= 0.3 ? 0.2 : 0), filled + 1);
+      dfs(count + 1, cost + Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan) + (r.quality.lateShare >= 0.3 ? 0.2 : 0), filled + 1);
       used.delete(i); picks[k] = -1;
     }
     if (allowPartial) { picks[k] = -2; dfs(count + 1, cost, filled); picks[k] = -1; }

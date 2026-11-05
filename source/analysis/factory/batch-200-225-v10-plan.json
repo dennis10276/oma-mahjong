@@ -31,391 +31,764 @@
   "levelTable": "batch-200-225-context.js",
   "levels": [
     {
-      "level": 200,
-      "target": 10.0,
-      "big": false,
       "recipe": [
-        "chainReaction"
+        "trayJuggleFrozen"
       ],
-      "brief": "Thaw the key guards, match the keys, then release the buried clock.",
-      "spare": 3,
-      "concept": "authored-0",
-      "pile": 200
-    },
-    {
-      "level": 201,
-      "target": 10.08,
-      "big": false,
-      "recipe": [
-        "deepKeys",
-        "iceChain"
-      ],
-      "brief": "Keep space while digging for distant keys; the final ice link guards the clock.",
-      "spare": 1,
-      "concept": "authored-1",
-      "pile": 201
-    },
-    {
-      "level": 202,
-      "target": 10.17,
-      "big": false,
-      "recipe": [
-        "lockedPartners",
-        "frozenGuards"
-      ],
-      "brief": "Carry the right singles while their partners are locked and the clock guards are frozen.",
+      "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
       "spare": 2,
-      "concept": "authored-2",
-      "pile": 202,
+      "level": 200,
+      "target": 10,
+      "big": false,
+      "concept": "higher-curve-0",
+      "pile": 200,
       "alternatives": [
         {
           "recipe": [
-            "frozenGuards",
-            "deepKeys"
+            "frozenKey"
           ],
-          "brief": "Open the ice route while keeping room for the two buried keys.",
+          "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
           "spare": 2
+        },
+        {
+          "recipe": [
+            "iceLockClock"
+          ],
+          "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+          "spare": 1
         }
       ]
     },
     {
-      "level": 203,
-      "target": 10.25,
-      "big": false,
       "recipe": [
-        "iceLockClock"
+        "frozenGuards"
       ],
-      "brief": "Keys unlock the neighbours needed to melt the clock.",
-      "spare": 2,
-      "concept": "authored-3",
-      "pile": 203
-    },
-    {
-      "level": 204,
-      "target": 10.33,
+      "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+      "spare": 1,
+      "level": 201,
+      "target": 10.08,
       "big": false,
-      "recipe": [
-        "dontGrab",
-        "lockedPartners"
-      ],
-      "brief": "Find a place for the clock partner before spending a tray slot on the visible clock.",
-      "spare": 2,
-      "concept": "authored-4",
-      "pile": 204,
+      "concept": "higher-curve-1",
+      "pile": 201,
       "alternatives": [
         {
           "recipe": [
             "dontGrab"
           ],
-          "brief": "Read the buried partner route before committing a tray slot to the clock.",
+          "brief": "Keep a tray position free while uncovering the visible clock partner.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "chainReaction"
+          ],
+          "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "clockOnTopLocked"
+      ],
+      "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+      "spare": 2,
+      "level": 202,
+      "target": 10.17,
+      "big": false,
+      "concept": "higher-curve-2",
+      "pile": 202,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggleLocked"
+          ],
+          "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "keysAcross",
+            "frozenGuards"
+          ],
+          "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "keyToEscape"
+      ],
+      "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+      "spare": 2,
+      "level": 203,
+      "target": 10.25,
+      "big": false,
+      "concept": "higher-curve-3",
+      "pile": 203,
+      "alternatives": [
+        {
+          "recipe": [
+            "clockBesideLock"
+          ],
+          "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "frozenGuards",
+            "lockedPartners"
+          ],
+          "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "frozenKey"
+      ],
+      "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+      "spare": 2,
+      "level": 204,
+      "target": 10.33,
+      "big": false,
+      "concept": "higher-curve-4",
+      "pile": 204,
+      "alternatives": [
+        {
+          "recipe": [
+            "iceLockClock"
+          ],
+          "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "trayJuggle",
+            "iceChain"
+          ],
+          "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "dontGrab"
+      ],
+      "brief": "Keep a tray position free while uncovering the visible clock partner.",
+      "spare": 2,
+      "level": 205,
+      "target": 10.42,
+      "big": false,
+      "concept": "higher-curve-5",
+      "pile": 205,
+      "alternatives": [
+        {
+          "recipe": [
+            "chainReaction"
+          ],
+          "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "trayJuggleFrozen"
+          ],
+          "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
           "spare": 2
         }
       ]
     },
     {
-      "level": 205,
-      "target": 10.42,
-      "big": false,
-      "recipe": [
-        "keysAcross",
-        "frozenGuards"
-      ],
-      "brief": "Choose which wing to open before thawing the clock guards.",
-      "spare": 2,
-      "concept": "authored-5",
-      "pile": 205
-    },
-    {
-      "level": 206,
-      "target": 10.5,
-      "big": false,
-      "recipe": [
-        "clockOnTopLocked"
-      ],
-      "brief": "The clock is visible; the key route, rather than the clock cover, is the opening puzzle.",
-      "spare": 2,
-      "concept": "authored-6",
-      "pile": 206
-    },
-    {
-      "level": 207,
-      "target": 10.58,
-      "big": false,
-      "recipe": [
-        "trayJuggleFrozen"
-      ],
-      "brief": "Choose the order of digging and thawing so the clock opening leaves a tray escape.",
-      "spare": 2,
-      "concept": "authored-7",
-      "pile": 207
-    },
-    {
-      "level": 208,
-      "target": 10.67,
-      "big": false,
       "recipe": [
         "trayJuggleLocked"
       ],
-      "brief": "Reserve a tray spot until the buried keys free the waiting partners.",
-      "spare": 2,
-      "concept": "authored-8",
+      "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+      "spare": 1,
+      "level": 206,
+      "target": 10.5,
+      "big": false,
+      "concept": "higher-curve-6",
+      "pile": 206,
+      "alternatives": [
+        {
+          "recipe": [
+            "keysAcross",
+            "frozenGuards"
+          ],
+          "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "frozenGuards"
+          ],
+          "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "clockBesideLock"
+      ],
+      "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+      "spare": 1,
+      "level": 207,
+      "target": 10.58,
+      "big": false,
+      "concept": "higher-curve-7",
+      "pile": 207,
+      "alternatives": [
+        {
+          "recipe": [
+            "frozenGuards",
+            "lockedPartners"
+          ],
+          "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "clockOnTopLocked"
+          ],
+          "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "iceLockClock"
+      ],
+      "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+      "spare": 1,
+      "level": 208,
+      "target": 10.67,
+      "big": false,
+      "concept": "higher-curve-8",
       "pile": 208,
       "alternatives": [
         {
           "recipe": [
-            "deepKeys",
-            "clockBesideLock"
+            "trayJuggle",
+            "iceChain"
           ],
-          "brief": "Free the buried keys to remove the lock beside the clock; keep matching space during the dig.",
-          "spare": 2
+          "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+          "spare": 1
         },
         {
           "recipe": [
-            "blindDig"
+            "keyToEscape"
           ],
-          "brief": "Remember the uncovered pictures while thawing partners along the clock dig.",
+          "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
           "spare": 2
         }
       ]
     },
     {
-      "level": 209,
-      "target": 10.75,
-      "big": false,
-      "recipe": [
-        "frozenGuards"
-      ],
-      "brief": "Plan which neighbours to use to thaw the guards above the clock.",
-      "spare": 2,
-      "concept": "authored-9",
-      "pile": 209
-    },
-    {
-      "level": 210,
-      "target": 10.83,
-      "big": true,
-      "recipe": [
-        "iceChain",
-        "blindTwins"
-      ],
-      "brief": "Use visible ice as a guide while remembering the newly uncovered partners.",
-      "spare": 1,
-      "concept": "authored-10",
-      "pile": 210
-    },
-    {
-      "level": 211,
-      "target": 10.92,
-      "big": false,
-      "recipe": [
-        "keyToEscape"
-      ],
-      "brief": "Unlock a route to the clock partner before taking the tempting clock.",
-      "spare": 2,
-      "concept": "authored-11",
-      "pile": 211
-    },
-    {
-      "level": 212,
-      "target": 11.0,
-      "big": false,
-      "recipe": [
-        "iceLockClock",
-        "deepKeys"
-      ],
-      "brief": "Dig out distant keys before freeing the neighbours that thaw the visible clock.",
-      "spare": 2,
-      "concept": "authored-12",
-      "pile": 212
-    },
-    {
-      "level": 213,
-      "target": 11.08,
-      "big": false,
       "recipe": [
         "chainReaction"
       ],
-      "brief": "Thaw the key guards, match the keys, then release the buried clock.",
-      "spare": 3,
-      "concept": "authored-0",
-      "pile": 213
-    },
-    {
-      "level": 214,
-      "target": 11.17,
-      "big": false,
-      "recipe": [
-        "deepKeys",
-        "iceChain"
-      ],
-      "brief": "Keep space while digging for distant keys; the final ice link guards the clock.",
+      "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
       "spare": 1,
-      "concept": "authored-1",
-      "pile": 214
+      "level": 209,
+      "target": 10.75,
+      "big": false,
+      "concept": "higher-curve-9",
+      "pile": 209,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggleFrozen"
+          ],
+          "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "frozenKey"
+          ],
+          "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+          "spare": 2
+        }
+      ]
     },
     {
-      "level": 215,
-      "target": 11.25,
-      "big": false,
-      "recipe": [
-        "lockedPartners",
-        "frozenGuards"
-      ],
-      "brief": "Carry the right singles while their partners are locked and the clock guards are frozen.",
-      "spare": 2,
-      "concept": "authored-2",
-      "pile": 215
-    },
-    {
-      "level": 216,
-      "target": 11.33,
-      "big": false,
-      "recipe": [
-        "iceLockClock"
-      ],
-      "brief": "Keys unlock the neighbours needed to melt the clock.",
-      "spare": 2,
-      "concept": "authored-3",
-      "pile": 216
-    },
-    {
-      "level": 217,
-      "target": 11.42,
-      "big": false,
-      "recipe": [
-        "dontGrab",
-        "lockedPartners"
-      ],
-      "brief": "Find a place for the clock partner before spending a tray slot on the visible clock.",
-      "spare": 2,
-      "concept": "authored-4",
-      "pile": 217
-    },
-    {
-      "level": 218,
-      "target": 11.5,
-      "big": false,
       "recipe": [
         "keysAcross",
         "frozenGuards"
       ],
-      "brief": "Choose which wing to open before thawing the clock guards.",
-      "spare": 2,
-      "concept": "authored-5",
-      "pile": 218
-    },
-    {
-      "level": 219,
-      "target": 11.58,
-      "big": false,
-      "recipe": [
-        "clockOnTopLocked"
-      ],
-      "brief": "The clock is visible; the key route, rather than the clock cover, is the opening puzzle.",
-      "spare": 2,
-      "concept": "authored-6",
-      "pile": 219
-    },
-    {
-      "level": 220,
-      "target": 11.67,
+      "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+      "spare": 1,
+      "level": 210,
+      "target": 10.83,
       "big": true,
-      "recipe": [
-        "trayJuggleFrozen"
-      ],
-      "brief": "Choose the order of digging and thawing so the clock opening leaves a tray escape.",
-      "spare": 2,
-      "concept": "authored-7",
-      "pile": 220
-    },
-    {
-      "level": 221,
-      "target": 11.75,
-      "big": false,
-      "recipe": [
-        "trayJuggleLocked"
-      ],
-      "brief": "Reserve a tray spot until the buried keys free the waiting partners.",
-      "spare": 2,
-      "concept": "authored-8",
-      "pile": 221,
+      "concept": "higher-curve-10",
+      "pile": 210,
       "alternatives": [
         {
           "recipe": [
-            "blindDig",
-            "deepKeys"
+            "frozenGuards"
           ],
-          "brief": "The clock dig reveals hidden pictures while distant keys release waiting matches.",
-          "spare": 2
+          "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+          "spare": 1
         },
         {
           "recipe": [
-            "blindDig"
+            "dontGrab"
           ],
-          "brief": "Remember the dig while frozen partners wait elsewhere in the board.",
+          "brief": "Keep a tray position free while uncovering the visible clock partner.",
           "spare": 2
         }
       ]
     },
     {
-      "level": 222,
-      "target": 11.83,
-      "big": false,
       "recipe": [
-        "frozenGuards"
+        "frozenGuards",
+        "lockedPartners"
       ],
-      "brief": "Plan which neighbours to use to thaw the guards above the clock.",
-      "spare": 2,
-      "concept": "authored-9",
-      "pile": 222
-    },
-    {
-      "level": 223,
-      "target": 11.92,
-      "big": false,
-      "recipe": [
-        "iceChain",
-        "blindTwins"
-      ],
-      "brief": "Use visible ice as a guide while remembering the newly uncovered partners.",
+      "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
       "spare": 1,
-      "concept": "authored-10",
-      "pile": 223
+      "level": 211,
+      "target": 10.92,
+      "big": false,
+      "concept": "higher-curve-11",
+      "pile": 211,
+      "alternatives": [
+        {
+          "recipe": [
+            "clockOnTopLocked"
+          ],
+          "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "trayJuggleLocked"
+          ],
+          "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+          "spare": 1
+        }
+      ]
     },
     {
-      "level": 224,
-      "target": 12.0,
+      "recipe": [
+        "iceLockClock"
+      ],
+      "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+      "spare": 1,
+      "level": 212,
+      "target": 11,
       "big": false,
+      "concept": "higher-curve-12",
+      "pile": 212,
+      "alternatives": [
+        {
+          "recipe": [
+            "keyToEscape"
+          ],
+          "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "clockBesideLock"
+          ],
+          "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+          "spare": 1
+        }
+      ],
+      "preferredShapes": [
+        "oval · two islands",
+        "castle · two islands"
+      ]
+    },
+    {
       "recipe": [
         "trayJuggleFrozen"
       ],
-      "brief": "Make room by thawing buried partners before opening the clock dig.",
+      "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
       "spare": 2,
-      "concept": "authored-11",
-      "pile": 224
+      "level": 213,
+      "target": 11.08,
+      "big": false,
+      "concept": "higher-curve-0",
+      "pile": 213,
+      "alternatives": [
+        {
+          "recipe": [
+            "frozenKey"
+          ],
+          "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "iceLockClock"
+          ],
+          "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+          "spare": 1
+        }
+      ]
     },
     {
-      "level": 225,
-      "target": 13,
+      "recipe": [
+        "frozenGuards"
+      ],
+      "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+      "spare": 1,
+      "level": 214,
+      "target": 11.17,
       "big": false,
+      "concept": "higher-curve-1",
+      "pile": 214,
+      "alternatives": [
+        {
+          "recipe": [
+            "dontGrab"
+          ],
+          "brief": "Keep a tray position free while uncovering the visible clock partner.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "chainReaction"
+          ],
+          "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "clockOnTopLocked"
+      ],
+      "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+      "spare": 2,
+      "level": 215,
+      "target": 11.25,
+      "big": false,
+      "concept": "higher-curve-2",
+      "pile": 215,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggleLocked"
+          ],
+          "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "keysAcross",
+            "frozenGuards"
+          ],
+          "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "keyToEscape"
+      ],
+      "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+      "spare": 2,
+      "level": 216,
+      "target": 11.33,
+      "big": false,
+      "concept": "higher-curve-3",
+      "pile": 216,
+      "alternatives": [
+        {
+          "recipe": [
+            "clockBesideLock"
+          ],
+          "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "frozenGuards",
+            "lockedPartners"
+          ],
+          "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "frozenKey"
+      ],
+      "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+      "spare": 2,
+      "level": 217,
+      "target": 11.42,
+      "big": false,
+      "concept": "higher-curve-4",
+      "pile": 217,
+      "alternatives": [
+        {
+          "recipe": [
+            "iceLockClock"
+          ],
+          "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "trayJuggle",
+            "iceChain"
+          ],
+          "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "dontGrab"
+      ],
+      "brief": "Keep a tray position free while uncovering the visible clock partner.",
+      "spare": 2,
+      "level": 218,
+      "target": 11.5,
+      "big": false,
+      "concept": "higher-curve-5",
+      "pile": 218,
+      "alternatives": [
+        {
+          "recipe": [
+            "chainReaction"
+          ],
+          "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "trayJuggleFrozen"
+          ],
+          "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "trayJuggleLocked"
+      ],
+      "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+      "spare": 1,
+      "level": 219,
+      "target": 11.58,
+      "big": false,
+      "concept": "higher-curve-6",
+      "pile": 219,
+      "alternatives": [
+        {
+          "recipe": [
+            "keysAcross",
+            "frozenGuards"
+          ],
+          "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "frozenGuards"
+          ],
+          "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "clockBesideLock"
+      ],
+      "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+      "spare": 1,
+      "level": 220,
+      "target": 11.67,
+      "big": true,
+      "concept": "higher-curve-7",
+      "pile": 220,
+      "alternatives": [
+        {
+          "recipe": [
+            "frozenGuards",
+            "lockedPartners"
+          ],
+          "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "clockOnTopLocked"
+          ],
+          "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "iceLockClock"
+      ],
+      "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+      "spare": 1,
+      "level": 221,
+      "target": 11.75,
+      "big": false,
+      "concept": "higher-curve-8",
+      "pile": 221,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggle",
+            "iceChain"
+          ],
+          "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "keyToEscape"
+          ],
+          "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+          "spare": 2
+        }
+      ]
+    },
+    {
       "recipe": [
         "chainReaction"
       ],
-      "brief": "Open the frozen key guards, then choose a tray-safe route to the locked clock.",
+      "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
       "spare": 1,
-      "concept": "authored-12",
-      "pile": 225
+      "level": 222,
+      "target": 11.83,
+      "big": false,
+      "concept": "higher-curve-9",
+      "pile": 222,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggleFrozen"
+          ],
+          "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "frozenKey"
+          ],
+          "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "keysAcross",
+        "frozenGuards"
+      ],
+      "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+      "spare": 1,
+      "level": 223,
+      "target": 11.92,
+      "big": false,
+      "concept": "higher-curve-10",
+      "pile": 223,
+      "alternatives": [
+        {
+          "recipe": [
+            "frozenGuards"
+          ],
+          "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "dontGrab"
+          ],
+          "brief": "Keep a tray position free while uncovering the visible clock partner.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "lockedPartners"
+      ],
+      "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+      "spare": 1,
+      "level": 224,
+      "target": 12,
+      "big": false,
+      "concept": "higher-curve-11",
+      "pile": 224,
+      "alternatives": [
+        {
+          "recipe": [
+            "clockOnTopLocked"
+          ],
+          "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "trayJuggleLocked"
+          ],
+          "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "trayJuggle",
+        "iceChain"
+      ],
+      "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+      "spare": 1,
+      "level": 225,
+      "target": 13,
+      "big": false,
+      "concept": "higher-curve-12",
+      "pile": 225,
+      "alternatives": [
+        {
+          "recipe": [
+            "keyToEscape"
+          ],
+          "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "clockBesideLock"
+          ],
+          "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+          "spare": 1
+        }
+      ]
     }
   ],
   "contextCommit": "cc63bd4",
-  "note": "Dennis 2026-11-04 23:39: 'the first levels are too easy. Start the levels at 10 tries at 200' - family 10 at 200 -> 12 at 224 -> 13 at 225; the skilled player (Dennis) needs at least 2.5-3 tries.",
+  "note": "Dennis 2026-11-04 23:39: 'the first levels are too easy. Start the levels at 10 tries at 200' - family 10 at 200 -> 12 at 224 -> 13 at 225; the skilled player (Dennis) needs at least 2.5-3 tries. Dennis: discourage block shapes; every board must contain more than 70 tiles. Retain the two-island key/ice/clock idea in fresh larger candidates.",
   "ratingMode": "pooled80",
   "campaignsPerBoard": 80,
   "maxSeedGap": 2,
   "ratingExplanation": "Equal mean of two independent fixed 40-campaign family measurements; same bot and 20-try cap. Target tolerance 0.5; seed gap over 2 requires more review.",
   "maxReverseStep": 0.25,
   "batchId": "original-200-225",
-  "piles": "batch-200-225-original-piles-v2.json",
+  "piles": "batch-200-225-v10-piles.json",
   "seed": 81000,
   "seedAttempts": 64,
   "originality": {
@@ -426,5 +799,327 @@
   },
   "routeMilliseconds": 700,
   "routeNodes": 25000,
-  "skilledMin": 2.5
+  "skilledMin": 2.5,
+  "minTiles": 72,
+  "discouragedShapes": [
+    "block"
+  ],
+  "discouragedShapePenalty": 1,
+  "normalSizes": [
+    76,
+    80,
+    84,
+    88
+  ],
+  "layoutAttempts": 32,
+  "candidateBriefs": [
+    {
+      "recipe": [
+        "trayJuggleFrozen"
+      ],
+      "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
+      "spare": 2,
+      "alternatives": [
+        {
+          "recipe": [
+            "frozenKey"
+          ],
+          "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "iceLockClock"
+          ],
+          "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "frozenGuards"
+      ],
+      "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "dontGrab"
+          ],
+          "brief": "Keep a tray position free while uncovering the visible clock partner.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "chainReaction"
+          ],
+          "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "clockOnTopLocked"
+      ],
+      "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+      "spare": 2,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggleLocked"
+          ],
+          "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "keysAcross",
+            "frozenGuards"
+          ],
+          "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "keyToEscape"
+      ],
+      "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+      "spare": 2,
+      "alternatives": [
+        {
+          "recipe": [
+            "clockBesideLock"
+          ],
+          "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "frozenGuards",
+            "lockedPartners"
+          ],
+          "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "frozenKey"
+      ],
+      "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+      "spare": 2,
+      "alternatives": [
+        {
+          "recipe": [
+            "iceLockClock"
+          ],
+          "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "trayJuggle",
+            "iceChain"
+          ],
+          "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "dontGrab"
+      ],
+      "brief": "Keep a tray position free while uncovering the visible clock partner.",
+      "spare": 2,
+      "alternatives": [
+        {
+          "recipe": [
+            "chainReaction"
+          ],
+          "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "trayJuggleFrozen"
+          ],
+          "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "trayJuggleLocked"
+      ],
+      "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "keysAcross",
+            "frozenGuards"
+          ],
+          "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "frozenGuards"
+          ],
+          "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "clockBesideLock"
+      ],
+      "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "frozenGuards",
+            "lockedPartners"
+          ],
+          "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "clockOnTopLocked"
+          ],
+          "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "iceLockClock"
+      ],
+      "brief": "Find and pair the keys across the pile, then thaw the clock without filling the tray.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggle",
+            "iceChain"
+          ],
+          "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "keyToEscape"
+          ],
+          "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "chainReaction"
+      ],
+      "brief": "Choose the order of frozen key guards and the final locked-clock dig.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "trayJuggleFrozen"
+          ],
+          "brief": "Thaw buried partners in an order that leaves a safe slot on the clock route.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "frozenKey"
+          ],
+          "brief": "Reach both buried keys, thaw the iced cover, then open the visible locked clock.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "keysAcross",
+        "frozenGuards"
+      ],
+      "brief": "Coordinate the two key wings while preserving a tray escape through the frozen clock guards.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "frozenGuards"
+          ],
+          "brief": "Read the frozen guard sequence and carry only the singles needed to open the clock.",
+          "spare": 1
+        },
+        {
+          "recipe": [
+            "dontGrab"
+          ],
+          "brief": "Keep a tray position free while uncovering the visible clock partner.",
+          "spare": 2
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "lockedPartners"
+      ],
+      "brief": "Open the icy clock guards while keeping space for partners that are still locked.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "clockOnTopLocked"
+          ],
+          "brief": "The visible clock stays locked until both buried keys are paired; plan the dig before committing.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "trayJuggleLocked"
+          ],
+          "brief": "Dig to the clock without trapping the singles whose partners need the keys.",
+          "spare": 1
+        }
+      ]
+    },
+    {
+      "recipe": [
+        "trayJuggle",
+        "iceChain"
+      ],
+      "brief": "Plan the buried-partner dig and the ice chain as one tray-safe sequence.",
+      "spare": 1,
+      "alternatives": [
+        {
+          "recipe": [
+            "keyToEscape"
+          ],
+          "brief": "Keep the visible clock out of the tray until its locked partner route has an escape.",
+          "spare": 2
+        },
+        {
+          "recipe": [
+            "clockBesideLock"
+          ],
+          "brief": "Distinguish the clock route from the tempting neighbouring lock before spending moves.",
+          "spare": 1
+        }
+      ]
+    }
+  ]
 }

@@ -4,6 +4,7 @@ const { BRIEFS, make } = require('./original_layouts.js');
 const { checkOrigin } = require('./originality.js');
 const { atomicJson } = require('./meter.js');
 const { refresh } = require('./refresh_original.js');
+const Preferences = require('./shape_preferences.js');
 
 function portable(row) {
   if (checkOrigin(row)) throw Error('Candidate pool only accepts fresh original designs');
@@ -11,17 +12,27 @@ function portable(row) {
   delete origin.intendedLevel;
   return { ...row, origin, candidatePool: true };
 }
+function aim(row, plan, expected) {
+  const r = portable(row), score = Number.isFinite(expected) ? expected : r.target;
+  const slots = plan.levels.filter(s => s.big === (r.design.tiles.length > 88));
+  slots.sort((a, b) => Math.abs(a.target - score) - Math.abs(b.target - score));
+  if (!slots.length) throw Error('No output slot for this board size');
+  return { ...r, level: r.origin.creationSlot, previousTarget: r.previousTarget ?? r.target,
+    target: slots[0].target, placementTargetLevel: slots[0].level };
+}
 function prepare(planFile, dir, count = 20, existingPiles) {
   const plan = JSON.parse(fs.readFileSync(planFile));
   fs.mkdirSync(dir, { recursive: true });
   const pilesFile = path.resolve(dir, 'candidate-piles.json'), candidatePlan = path.resolve(dir, 'candidate-plan.json');
   if (!fs.existsSync(pilesFile)) fs.copyFileSync(existingPiles || path.resolve(path.dirname(planFile), plan.piles), pilesFile);
   const initial = 300;
+  const targets = plan.levels.map(s => s.target), low = Math.min(...targets), high = Math.max(...targets);
+  const briefs = plan.candidateBriefs || BRIEFS;
   if (!fs.existsSync(candidatePlan)) atomicJson(candidatePlan, { ...plan,
     levelTable: path.resolve(path.dirname(planFile), plan.levelTable), outputLevels: plan.levels,
-    from: initial, to: initial + count - 1, normalSizes: [64, 68, 72, 76, 80, 84, 88], layoutAttempts: 32,
-    levels: Array.from({ length: count }, (_, k) => ({ level: initial + k, target: +(7 + 3 * k / (count - 1)).toFixed(2), big: k === 4 || k === 14,
-      ...BRIEFS[k % BRIEFS.length] })) });
+    from: initial, to: initial + count - 1, normalSizes: [76, 80, 84, 88].filter(n => n >= Preferences.minimum(plan)), layoutAttempts: 32,
+    levels: Array.from({ length: count }, (_, k) => ({ level: initial + k, target: +(low + (high - low) * k / Math.max(1, count - 1)).toFixed(2), big: k === 4 || k === 14,
+      ...briefs[k % briefs.length] })) });
   make(candidatePlan, pilesFile);
   const combinedPlan = path.resolve(dir, 'output-plan.json');
   atomicJson(combinedPlan, { ...plan, piles: pilesFile,
@@ -44,6 +55,6 @@ async function run(planFile, baselineDir, dir, jobs = 4, botJobs = 6, wanted = 8
     fs.copyFileSync(path.join(baselineDir, f), path.join(dir, f));
   return require('./run_original.js').run(combinedPlan, dir, 0, botJobs, 0);
 }
-module.exports = { portable, prepare, run };
+module.exports = { portable, aim, prepare, run };
 if (require.main === module) run(process.argv[2], process.argv[3], process.argv[4], +(process.argv[5] || 4), +(process.argv[6] || 6), +(process.argv[7] || 8), process.argv[8], process.argv[9])
   .catch(e => { console.error(e); process.exitCode = 1; });

@@ -16,7 +16,7 @@ function verify(planFile, batchFile, options = {}) {
   if (plan.originality?.required) assertOriginalBatch(rows, previousBoards(plan.levels,
     path.resolve(path.dirname(planFile), plan.levelTable)), plan.originality);
   validatePiles(plan.levels.filter(s => rows.some(r => r.level === s.level)), rows.map(r => ({ level: r.level, shape: r.shape, tiles: r.design.tiles })), {
-    contextLevels: plan.levels, bigLevels: plan.bigLevels, levelTable: path.resolve(path.dirname(planFile), plan.levelTable) });
+    contextLevels: plan.levels, minTiles: plan.minTiles, bigLevels: plan.bigLevels, levelTable: path.resolve(path.dirname(planFile), plan.levelTable) });
   for (let k = 0; k < rows.length; k++) {
     const r = rows[k], s = plan.levels.find(s => s.level === r.level), d = r.design;
     assert(r.origin?.intendedLevel == null || r.origin.intendedLevel === r.level);

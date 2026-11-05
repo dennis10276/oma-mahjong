@@ -80,6 +80,8 @@ function uncoveredBy(d, i) {
 function changes(d, state) {
   const out = [], sp = d.clock.n - routeOf(d), withSpare = s => ({ ...d, clock: { ...d.clock, n: routeOf(d) + s } });
   const softer = state.exp > state.target + TOL || state.skilled > DENNIS_MAX;
+  const plannerTooEasy = Number.isFinite(state.skilled) && state.skilled < DENNIS_MIN;
+  const harder = state.exp < state.target - TOL || plannerTooEasy;
   // Repair an idle special even when the starting board is already on target.
   if (state.idle?.some(k => k !== 'clock')) {
     const ob = { ...d.obst };
@@ -124,12 +126,17 @@ function changes(d, state) {
   // the clock is the strongest lever in predict.js): a tile a little earlier (softer) or later (harder) on the solution,
   // not a special, with the exact route worked out again
   {
-    const pos = routeOf(d) - 1, dir = d.clockMate !== undefined ? 0 : softer ? -1 : (state.exp < state.target - TOL ? 1 : 0);
+    const pos = routeOf(d) - 1, dir = d.clockMate !== undefined ? 0 : softer ? -1 : (harder ? 1 : 0);
     const spec = i => (d.obst.keys || []).includes(i) || (d.obst.locks || []).includes(i) || (d.obst.ice || {})[i] !== undefined;
     for (let k = 2; dir && k <= 6; k++) {
       const i = d.solution[pos + dir * k]; if (i === undefined || pos + dir * k < 3 || spec(i)) continue;
       const z = I.fix({ ...d, clock: { i, n: 999 }, down: d.down.filter(j => j !== i) }, sp);
-      if (z && I.valid(z) && routeOf(z) !== routeOf(d)) { out.push({ what: 'clock moved ' + (dir < 0 ? 'earlier' : 'later') + ' on the way', d: z }); break; }
+      // A later tile in one proof can have a much shorter actual clock route.
+      // Use the recomputed route, and learn these edits separately from the old
+      // position-based changes whose measured effects often went the wrong way.
+      if (z && I.valid(z) && Math.sign(routeOf(z) - routeOf(d)) === dir) {
+        out.push({ what: 'clock route ' + (dir < 0 ? 'shortened' : 'lengthened'), d: z }); break;
+      }
     }
   }
   if (softer) {
@@ -139,7 +146,7 @@ function changes(d, state) {
       out.push({ what: 'half the ice thawed', d: { ...d, obst: { ...d.obst, ice } } }); }
     const locks = d.obst.locks || [];
     if (locks.length >= 2) { const one = byLoss(locks)[0]; out.push({ what: 'one lock off', d: { ...d, obst: { ...d.obst, locks: locks.filter(j => j !== one) } } }); }
-  } else if (state.exp < state.target - TOL) {
+  } else if (harder) {
     const soft = byLoss(iceAt.filter(j => d.obst.ice[j] < 3))[0];
     if (soft !== undefined) out.push({ what: 'one ice harder', d: { ...d, obst: { ...d.obst, ice: { ...d.obst.ice, [soft]: d.obst.ice[soft] + 1 } } } });
   }
@@ -148,7 +155,7 @@ function changes(d, state) {
     if (sp < 3) out.push({ what: 'clock +1 spare', d: withSpare(sp + 1) });
     const dn = state.spots.tiles.find(j => d.down.includes(j)); if (dn !== undefined) out.push({ what: 'face-up where the family loses', d: { ...d, down: d.down.filter(j => j !== dn) } });
     const ic = state.spots.tiles.find(j => (d.obst.ice || {})[j]); if (ic !== undefined) { const ice = { ...d.obst.ice }; delete ice[ic]; out.push({ what: 'ice thawed where the family loses', d: { ...d, obst: { ...d.obst, ice } } }); }
-  } else if (state.exp < state.target - TOL) {
+  } else if (harder) {
     if (sp > 1) out.push({ what: 'clock -1 spare', d: withSpare(sp - 1) });
     for (const k of EXTRA) {
       try { const y = I.IDEAS[k].make(I.clone(d), I.ctxOf(d), I.rngOf(state.step * 131 + k.length)); if (y) { const z = I.fix({ ...y, clock: { ...d.clock } }, sp); if (z) out.push({ what: 'trap added: ' + k, d: z, trap: k }); } } catch (e) { }
@@ -161,7 +168,7 @@ function changes(d, state) {
   // A measured plateau in the first three edits must not hide a later useful trap.
   return out.filter(c => I.valid(c.d));
 }
-function judge(d, target, step, withSpecials = true) {
+function judge(d, target, step, withSpecials = true, checkPlanner = false) {
   const m = meas(d, 'family', true), spots = lossSpots(d, m), attr = attribution(d, m);
   const exp = m.expectedTries, off = Math.max(0, Math.abs(exp - target) - TOL);
   // Ablations are needed only for a board that could pass. Never pass without them.
@@ -169,7 +176,7 @@ function judge(d, target, step, withSpecials = true) {
   const idle = sm ? Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k) : [];
   // Route planning is the expensive part. A board off the curve or with idle
   // specials cannot pass: fix that first, then run the skilled player.
-  const md = off === 0 && !idle.length ? meas(d, 'planner') : null;
+  const md = !idle.length && (off === 0 || checkPlanner) ? meas(d, 'planner') : null;
   const skilled = md?.expectedTries ?? null;
   const room = off === 0 ? roomProfile(d) : { ok: true, tightBlind: 0, unrelieved: 0, tightTiles: [], measured: false };
   const luck = room.ok && room.measured !== false ? { luckMoments: room.tightBlind, reliefMoments: Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0)), unrelieved: room.unrelieved } : null;
@@ -208,7 +215,11 @@ function steer(s, saved = null, checkpoint = () => {}) {
       if (m.valid && JOURNAL) Moves.record({ level: s.level, target: s.target, what: o.what, before: cur.exp, after: m.expectedTries, scout, recipe, n: o.d.tiles.length }, options.journal);
       const bound = Math.max(0, Math.abs(m.expectedTries - s.target) - TOL) * 2;
       if (!m.valid || bound > (best ? best.j.score : cur.score)) continue;
-      const j = judge(o.d, s.target, step);
+      const repairingPlanner = Number.isFinite(cur.skilled) && (cur.skilled < DENNIS_MIN || cur.skilled > DENNIS_MAX);
+      const j = judge(o.d, s.target, step, true, repairingPlanner);
+      // Moving off curve must not look like a planner improvement merely
+      // because that candidate's expensive planner run was skipped.
+      if (repairingPlanner && j.skilled === null) continue;
       log.push(`step ${step}: ${o.what} -> family ${j.exp} skilled ${j.skilled} score ${j.score.toFixed(2)}`);
       if (!best || j.score < best.j.score) best = { o, j };
       // Stop on a fully checked pass; no need to measure the other edits.

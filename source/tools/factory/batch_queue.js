@@ -3,6 +3,7 @@ const fs = require('fs'), path = require('path');
 const { Worker } = require('worker_threads');
 const { createStageStore } = require('./stage_store.js');
 const { predictTries } = require('./predict.js');
+const Preferences = require('./shape_preferences.js');
 const [SCREEN_LO, SCREEN_HI] = (process.env.FACTORY_SCREEN || '4.5,13').split(',').map(Number);
 
 async function main(poolFile, planFile, dir, jobs = 4) {
@@ -22,10 +23,11 @@ async function main(poolFile, planFile, dir, jobs = 4) {
     // Finish verification of viable candidates before expanding the pool.
     const qualityCounts = {};
     for (const r of rows) if (read(r, 'quality')?.eligible && fits(r, read(r, 'rate') || {})) qualityCounts[r.level] = (qualityCounts[r.level] || 0) + 1;
-    const needs = r => (qualityCounts[r.level] || 0) < (plan.qualityPerLevel ?? 2);
+    const needs = r => r.design.tiles.length >= Preferences.minimum(plan) && (qualityCounts[r.level] || 0) < (plan.qualityPerLevel ?? 2);
     const ready = rows.filter(r => { const rate = read(r, 'rate');
       return needs(r) && rate && fits(r, rate) && !read(r, 'quality') && !running.has(r.id + '.quality'); });
-    ready.sort((a, b) => (a.n > 88 ? -10 : 0) - (b.n > 88 ? -10 : 0) || (qualityCounts[a.shape] || 0) - (qualityCounts[b.shape] || 0));
+    ready.sort((a, b) => (a.n > 88 ? -10 : 0) - (b.n > 88 ? -10 : 0) ||
+      Preferences.penalty(a.shape, plan) - Preferences.penalty(b.shape, plan) || (qualityCounts[a.shape] || 0) - (qualityCounts[b.shape] || 0));
     if (ready.length) return { row: ready[0], mode: 'quality' };
     const candidates = rows.filter(r => {
       const s = read(r, 'screen');
@@ -34,12 +36,14 @@ async function main(poolFile, planFile, dir, jobs = 4) {
     // Spread early work across shapes rather than spending the budget on one pile.
     const counts = {};
     for (const r of rows) if (read(r, 'rate')) counts[r.shape] = (counts[r.shape] || 0) + 1;
-    candidates.sort((a, b) => (qualityCounts[a.level] || 0) - (qualityCounts[b.level] || 0) ||
+    candidates.sort((a, b) => Preferences.penalty(a.shape, plan) - Preferences.penalty(b.shape, plan) ||
+      (qualityCounts[a.level] || 0) - (qualityCounts[b.level] || 0) ||
       Math.abs(read(a, 'screen').exp - a.target) - Math.abs(read(b, 'screen').exp - b.target));
     if (candidates.length) return { row: candidates[0], mode: 'rate' };
     const scouts = rows.filter(r => needs(r) && !read(r, 'screen') && !running.has(r.id + '.screen'));
     // learned from earlier batches (predict.js): the boards most likely to land near their target are screened first
-    scouts.sort((a, b) => Math.abs(Math.log(predict(a) / a.target)) - Math.abs(Math.log(predict(b) / b.target)));
+    scouts.sort((a, b) => Preferences.penalty(a.shape, plan) - Preferences.penalty(b.shape, plan) ||
+      Math.abs(Math.log(predict(a) / a.target)) - Math.abs(Math.log(predict(b) / b.target)));
     return scouts.length ? { row: scouts[0], mode: 'screen' } : null;
   }
   await Promise.all(Array.from({ length: jobs }, () => new Promise((resolve, reject) => {

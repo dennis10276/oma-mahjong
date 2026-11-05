@@ -5,6 +5,7 @@ const { verify } = require('./batch_verify.js');
 const { atomicJson, boardKey } = require('./meter.js');
 const Moves = require('./moves.js');
 const Final = require('./final_seed.js');
+const Preferences = require('./shape_preferences.js');
 
 function handback(planFile, poolFile, measurements, out) {
   const plan = JSON.parse(fs.readFileSync(planFile)), pool = JSON.parse(fs.readFileSync(poolFile));
@@ -34,14 +35,15 @@ function handback(planFile, poolFile, measurements, out) {
 
   const selected = new Map(rows.map(r => [r.level, r])), used = new Set(rows.map(r => r.origin.creationId));
   const nearest = new Map();
-  const matching = s => rated.filter(x => (x.row.n > 88) === s.big &&
+  const matching = s => rated.filter(x => x.row.design.tiles.length >= Preferences.minimum(plan) && (x.row.n > 88) === s.big &&
     (x.row.origin.intendedLevel == null || x.row.origin.intendedLevel === s.level));
   // Missing slots get distinct diagnostic proposals. They remain explicitly
   // unqualified; no gate is relaxed to make an incomplete batch look complete.
   const pending = plan.levels.filter(s => !selected.has(s.level)).sort((a, b) => matching(a).length - matching(b).length);
   for (const s of pending) {
     const choices = matching(s).filter(x => !used.has(x.row.origin.creationId));
-    choices.sort((a, b) => (a.pooled == null ? 100 : Math.abs(a.pooled - s.target)) - (b.pooled == null ? 100 : Math.abs(b.pooled - s.target)));
+    choices.sort((a, b) => (a.pooled == null ? 100 : Math.abs(a.pooled - s.target)) + Preferences.penalty(a.row.shape, plan) -
+      (b.pooled == null ? 100 : Math.abs(b.pooled - s.target)) - Preferences.penalty(b.row.shape, plan));
     if (choices[0]) { nearest.set(s.level, choices[0]); used.add(choices[0].row.origin.creationId); }
   }
   const diagnostics = [], report = [], failureCounts = {};
@@ -49,7 +51,7 @@ function handback(planFile, poolFile, measurements, out) {
   const fmt = n => Number.isFinite(n) ? (+n.toFixed(3)).toString() : '—';
   for (const s of plan.levels) {
     const approved = selected.get(s.level), x = approved ? rated.find(x => x.row.id === approved.id) : nearest.get(s.level);
-    if (!x) { report.push(`| ${s.level} | ${s.target} | missing | — | — | — | — | — | — | — | — |`); continue; }
+    if (!x) { report.push(`| ${s.level} | ${s.target} | missing | — | — | — | — | — | — | — | — | — |`); continue; }
     const { row, rate, quality, pooled } = x, reasons = [];
     if (pooled == null) reasons.push('full two-seed rating unmeasured');
     else {
@@ -79,7 +81,7 @@ function handback(planFile, poolFile, measurements, out) {
         ...(x.fresh ? { fresh: x.fresh.fresh?.exp, freshSeed: Final.SEED } : {}) },
       skilled: quality?.skilled?.exp ?? null, room, specials, atTrap: quality?.atTrap ?? rate?.atTrap ?? null,
       warnings, design: { ...row.design, level: s.level }, boardHash: boardKey(row.design) });
-    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)})${Final.tuned(row) ? '; fresh ' + fmt(x.fresh?.fresh?.exp) : ''} | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${warnings.join(', ') || '—'} |`);
+    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)})${Final.tuned(row) ? '; fresh ' + fmt(x.fresh?.fresh?.exp) : ''} | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${row.design.tiles.length} | ${warnings.join(', ') || '—'} |`);
   }
   fs.writeFileSync(path.join(out, 'closest-assignment.jsonl'), diagnostics.sort((a, b) => a.level - b.level).map(r => JSON.stringify(r)).join('\n') + '\n');
   atomicJson(path.join(out, 'rated-candidates.json'), rated.filter(x => x.rate).map(x => ({ ...x.row, measurement: x.rate, quality: x.quality, fresh: x.fresh })));
@@ -92,14 +94,15 @@ function handback(planFile, poolFile, measurements, out) {
   const moves = journal.flatMap(l => { try { return [JSON.parse(l)]; } catch { return []; } });
   const largeSteps = moves.filter(m => Math.abs(m.after - m.before) >= 3);
   const text = [
-    '# Task 01 — levels 200–225', '',
+    '# Level factory — levels 200–225', '',
     `**${rows.length}/${plan.levels.length} slots qualified and assigned. ${result.complete ? 'Complete batch.' : 'Incomplete batch; missing slots remain explicit in coverage.json.'}**`, '',
     'The qualified levels file contains only passing, distinct original designs. The closest-assignment file also includes explicitly unqualified diagnostic proposals. Claude retains final selection and release control. No main, game sources, game level tables, Firebase or player data were changed.', '',
+    `Curve anchors: ${JSON.stringify(plan.curve)}. Skilled range: ${plan.skilledMin ?? 0}–${plan.skilledMax}. Minimum tiles: ${Preferences.minimum(plan)}. Discouraged shapes: ${(plan.discouragedShapes || ['block']).join(', ')} (fallback only).`, '',
     `Source: ${revision}. Measurements: ${measurements}.`, '',
     '## Per level', '',
     'Pooled = equal mean of the two full family runs (4711 / 18427; 40 campaigns each). Tuned rows (including edits chosen from bot feedback) must also pass seed 29717, 40 campaigns, within 0.5 of the placed target and maximum pairwise seed gap 2. This reserved seed never feeds steering. Luck column = tight blind digs / relieved gaps between tight digs / unrelieved gaps. Specials show the family rating with that special removed and whether the factory deems it meaningful. An em dash means unmeasured.', '',
-    '| Level | Target | Status | Pooled (both seeds) | Skilled | Luck/relief/unrelieved | At trap | Specials without | Recipe | Shape | Warnings |',
-    '|---|---:|---|---|---:|---|---:|---|---|---|---|', ...report, '',
+    '| Level | Target | Status | Pooled (both seeds) | Skilled | Luck/relief/unrelieved | At trap | Specials without | Recipe | Shape | Tiles | Warnings |',
+    '|---|---:|---|---|---:|---|---:|---|---|---|---:|---|', ...report, '',
     '## Yield and failures', '',
     `Pool ${stages.pool}; screened ${stages.screened}; full two-seed ratings ${stages.fullRated}; quality checks ${stages.qualityMeasured}; quality passes ${stages.qualityPassed}.`,
     `${ownTargetMisses} fully rated candidates missed their initial slot target by more than 0.5; ${seedMisses} disagreed by more than two tries between seeds. These counts overlap.`,

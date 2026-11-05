@@ -86,6 +86,19 @@ test('a checkpoint resumes the accepted edit without redoing its measurements', 
   assert.equal(m.stats.calls, calls + 1, 'only the held-out seed remains');
 });
 
+test('an on-curve board that is too easy for the planner still gets harder edits', () => {
+  const engine = createSteerer({ meter: meter(fake()), skilledMin: 2.5, journal: false });
+  const twoSpare = { ...board(), clock: { ...board().clock, n: 4 } };
+  const edits = engine.changes(twoSpare, { exp: 3, target: 3, skilled: 1, room: { ok: true, unrelieved: 0 },
+    spots: { tiles: [], faces: new Map() }, step: 1, idle: [] });
+  assert(edits.some(e => e.what === 'clock -1 spare'));
+  for (const e of edits.filter(e => e.d.clock.i !== board().clock.i))
+    assert(e.d.solution.indexOf(e.d.clock.i) > board().solution.indexOf(board().clock.i), 'Hardening must lengthen the actual clock dig, not just choose a later proof tile');
+  const near = createSteerer({ meter: meter((d, o) => ({ ...fake()(d, o), expectedTries: o.setting === 'planner' ? 1 : 4 })), skilledMin: 2.5, journal: false });
+  assert.equal(near.judge(board(), 3, 0, false).skilled, null);
+  assert.equal(near.judge(board(), 3, 0, false, true).skilled, 1);
+});
+
 test('file runner refuses stale input and skips a completed level', t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oma-factory-run-'));
   t.after(() => fs.rmSync(dir, { recursive: true }));

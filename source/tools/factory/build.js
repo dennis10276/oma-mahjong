@@ -8,6 +8,7 @@ const { CONCEPTS, applyRecipe } = require('./design_traps.js');
 const { runFile } = require('./run_file.js');
 const { digest, atomicJson } = require('./meter.js');
 const { originOf, fitsLayouts, previousBoards, assertOriginalBatch } = require('./originality.js');
+const Preferences = require('./shape_preferences.js');
 
 function targetAt(level, points) {
   if (!Array.isArray(points) || points.length < 2 || points.some((p, k) => !Array.isArray(p) || p.length !== 2 || !p.every(Number.isFinite) || p[1] < 1 || p[1] > 20 || k && (p[0] <= points[k - 1][0] || p[1] < points[k - 1][1])))
@@ -24,7 +25,7 @@ function validatePiles(levels, piles, options = {}) {
     if (!Number.isInteger(s.level) || !p) throw Error('Unknown level or pile: ' + JSON.stringify(s));
     const tiles = p.tiles.map(([x, y, z]) => ({ x, y, z }));
     if (/^blob/i.test(p.shape) || !F.SHAPES.some(sh => sh.name === p.shape)) throw Error('Use an approved non-blob shape at ' + s.level);
-    if (tiles.length % 2 || F.towers(tiles) || F.tilePx(tiles) < 52) throw Error('Pile at ' + s.level + ' needs even tiles, no towers and at least 52px tiles');
+    if (tiles.length < Preferences.minimum(options) || tiles.length % 2 || F.towers(tiles) || F.tilePx(tiles) < 52) throw Error('Pile at ' + s.level + ' needs at least ' + Preferences.minimum(options) + ' even tiles, no towers and at least 52px tiles');
     const big = options.bigLevels ? options.bigLevels.includes(s.level) : s.level % 10 === 0;
     if ((tiles.length > 88) !== big) throw Error('Big boards belong in the planned big slots (default every tenth level): ' + s.level);
     return { ...p, level: s.level };
@@ -60,7 +61,7 @@ function prepare(planFile, outFile) {
   const relative = f => path.resolve(path.dirname(planFile), f);
   if (!plan.piles || !Array.isArray(plan.levels) || !plan.levels.length) throw Error('Plan needs piles and levels');
   const piles = JSON.parse(fs.readFileSync(relative(plan.piles), 'utf8'));
-  validatePiles(plan.levels, piles, { bigLevels: plan.bigLevels, levelTable: plan.levelTable && relative(plan.levelTable) });
+  validatePiles(plan.levels, piles, { minTiles: plan.minTiles, bigLevels: plan.bigLevels, levelTable: plan.levelTable && relative(plan.levelTable) });
   if (plan.inventory) throw Error('New levels must be designed fresh; inventory boards cannot be used as seeds');
   const config = digest({ plan, piles, generator: 'fresh-design-v2' });
   const file = outFile + '.starts.json', saved = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : { config, rows: [] };

@@ -12,6 +12,7 @@ const L = require(path.join(ROOT, 'www', 'layouts.js')); global.Layouts = L;
 global.HARD_LEVELS = vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'www', 'levels-hard.js'), 'utf8') + ';HARD_LEVELS');
 const Hard = require(path.join(ROOT, 'www', 'hard.js'));
 const { pile } = require(path.join(ROOT, 'tools', 'sim', 'variety', 'piles.js'));
+const Preferences = require('./shape_preferences.js');
 const MIN_PX = 52, MAX_SHARE = 0.75, PLAYED_TO = 164, KEEP_FROM = 165;
 
 const tilePx = tiles => { let l = 1e9, r = -1e9, t0 = 1e9, b = -1e9; for (const t of tiles) { const x = t.x / 2 - t.z * 0.14, y = t.y / 2 * 1.24 - t.z * 0.14; l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + 1.24); } return Math.min(384 / (r - l + 0.125), 592 / (b - t0 + 0.16)); };
@@ -38,7 +39,7 @@ const SIZES = [72, 76, 80, 82, 84, 86, 88];
 function candidate(sh, N, seed, fits = () => true) {   // (the first pile that fits every rule)
   for (const ly of sh.layers) for (const bf of sh.base) for (const aspect of [1.6, 1.3, 2, 1.1]) for (const brick of [false, true]) {
     const p = pile({ shape: sh.shape, seed: seed + ly * 7 + Math.round((bf || 0) * 100), target: N, layers: ly, aspect, baseFrac: bf, stack: 0, keep: sh.keep || [0.55, 0.8], twin: sh.twin ?? 0.35, brick });
-    if (!p || Math.abs(p.tiles.length - N) > 4 || p.tiles.length % 2 || tilePx(p.tiles) < MIN_PX || towers(p.tiles)) continue;
+    if (!p || p.tiles.length < Preferences.minimum() || Math.abs(p.tiles.length - N) > 4 || p.tiles.length % 2 || tilePx(p.tiles) < MIN_PX || towers(p.tiles)) continue;
     if (sh.twinOnly && !p.twin) continue;
     const t = p.tiles.map(q => [q.x, q.y, q.z]);
     if (fits(t)) return t;
@@ -55,7 +56,7 @@ if (require.main === module) {
   for (const k of Object.values(keep)) made[k.level] = k.tiles;
   const result = [];
   for (let lv = from; lv <= to; lv++) {
-    const r = L.rng(lv * 6151 + 17), order = L.shuffleArr(r, SHAPES.slice());
+    const r = L.rng(lv * 6151 + 17), order = Preferences.order(L.shuffleArr(r, SHAPES.slice()));
     if (keep[lv]) { result.push(keep[lv]); console.log(lv, keep[lv].shape, '(kept)'); continue; }
     // no shape (or a variation of it) twice within 10 levels (kept later levels count too)
     const recent = [...result.slice(-10).map(x => x.base), ...Object.values(keep).filter(k => k.level > lv && k.level - lv <= 10).map(k => k.base)];

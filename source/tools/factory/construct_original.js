@@ -8,6 +8,7 @@ const { atomicJson, boardKey, digest, sourceHash } = require('./meter.js');
 
 function construct(pile, spec, plan, attempt, diagnostic = {}) {
   const fail = stage => { diagnostic.stage = stage; return null; };
+  if (pile.tiles.length < require('./shape_preferences.js').minimum(plan)) return fail('tileCount');
   const brief = attempt >= 8 && spec.alternatives?.length ? spec.alternatives[Math.floor((attempt - 8) / 8) % spec.alternatives.length] : spec;
   I.setExact(true, { nodes: plan.routeNodes ?? 12000, milliseconds: plan.routeMilliseconds ?? 350 });
   const seed = (plan.seed || 81000) + spec.level * 31 + attempt * 1777;
