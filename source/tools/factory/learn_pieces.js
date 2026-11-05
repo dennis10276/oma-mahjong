@@ -33,11 +33,21 @@ function loadHistorical(buildRoot,current){
   }
   return {rows:[...rows.values()],stats};
 }
+function loadDiagnostics(handback,current){
+  const file=path.join(handback,'planner-diagnostics.json'),levels=path.join(handback,'levels.jsonl');if(!fs.existsSync(file)||!fs.existsSync(levels))return [];
+  const boards=new Map(fs.readFileSync(levels,'utf8').trim().split(/\r?\n/).filter(Boolean).map(line=>{const row=JSON.parse(line);return [row.id,row];})),rows=[];
+  for(const r of read(file)){const old=boards.get(r.id);if(!old||r.newBot!==current||!r.allFaceUpValid||r.boardHash!==M.boardKey(old.design))continue;
+    const design={...old.design,down:[]};rows.push({id:M.boardKey(design),kind:'all-face-up-diagnostic',group:O.layoutKey(design),design,shape:old.shape,
+      skilled:{exp:r.allFaceUp,valid:true,bot:current,seed:4711,runs:20,seedBatches:2,source:file}});
+  }return rows;
+}
 function main(experimentDir,out){
   const measuredFile=path.join(experimentDir,'measurements','measurements.json');if(!fs.existsSync(measuredFile))throw Error('Finish the piece measurements before fitting');
   const records=read(measuredFile),state=read(path.join(experimentDir,'construction.json')),bases=read(path.resolve(__dirname,'../../analysis/factory/piece-bases.json')),meter=M.createMeter();
   if(records.length!==state.rows.length||records.some(r=>!r.valid||r.bot!==meter.fingerprint))throw Error('Incomplete, invalid or stale experiment measurements');
   const historical=loadHistorical(path.resolve(__dirname,'../../build'),meter.fingerprint),rows=new Map(historical.rows.map(r=>[r.id,r]));
+  const diagnostics=loadDiagnostics(path.resolve(__dirname,'../../../../codex-tasks/results/200-225-v11'),meter.fingerprint);
+  for(const r of diagnostics)rows.set(r.id,{...(rows.get(r.id)||{}),...r});
   for(const base of bases)rows.set(M.boardKey(base.design),{id:M.boardKey(base.design),kind:'calm-base',group:base.layout,design:base.design,shape:base.shape,
     family:{...base.family,seedCount:2,valid:true},skilled:{...base.skilled,valid:true}});
   for(const r of records)rows.set(r.board,{id:r.board,kind:r.sample.kind,group:r.sample.layout,design:r.sample.design,shape:r.sample.shape,
@@ -48,10 +58,10 @@ function main(experimentDir,out){
     placed:records.length,attempted:state.done.length,failures:state.failures,baseCount:bases.length,notes:['Effects can be negative and depend on layout.','Pairs reuse the same base and operation seed; role placements may change in context.','Tempting pairs are opportunities, not automatically proven bad moves.']});
   M.atomicJson(path.join(out,'effects.json'),effects);M.atomicJson(path.join(out,'model.json'),fit.model);M.atomicJson(path.join(out,'heldout-model.json'),fit.heldoutModel);M.atomicJson(path.join(out,'heldout-report.json'),fit.report);
   M.atomicJson(path.join(out,'training-data.json'),dataset);M.atomicJson(path.join(out,'data-audit.json'),{bot:meter.fingerprint,historical:historical.stats,
-    historicalUnique:historical.rows.length,measuredExperimental:records.length,trainingUnique:dataset.length,familyLabels:dataset.filter(r=>r.family).length,
+    historicalUnique:historical.rows.length,diagnosticBoards:diagnostics.length,measuredExperimental:records.length,trainingUnique:dataset.length,familyLabels:dataset.filter(r=>r.family).length,
     familyTwoSeed:dataset.filter(r=>r.family?.seedCount===2).length,skilledLabels:dataset.filter(r=>r.skilled).length,
     rules:['Deduplicated exact physical boards','Held out whole D4 layouts, including all sibling variants','Only full current-bot skilled labels; no scout or planner-preview labels','Family uses exact approved unchanged fingerprints; single-seed full labels have half weight','Independent seed 29717 is excluded entirely','Fixed ridge penalty 12 chosen before held-out results','Training normalizes layout contribution by inverse square root of group count']});
   console.log(JSON.stringify({rows:dataset.length,settings:fit.report.settings,effectSettings:effects.length},null,2));return {dataset,...fit,effects};
 }
-module.exports={loadHistorical,main};
+module.exports={loadHistorical,loadDiagnostics,main};
 if(require.main===module){try{main(process.argv[2],process.argv[3]);}catch(e){console.error(e);process.exitCode=1;}}

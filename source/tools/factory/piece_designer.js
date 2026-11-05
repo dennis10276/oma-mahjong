@@ -3,6 +3,7 @@ const I=require('../lab/ideas.js'),Pieces=require('./pieces.js'),Model=require('
 const {roomProfile}=require('./design_traps.js'),{boardKey,digest}=require('./meter.js'),{originOf}=require('./originality.js');
 const VERSION='measured-piece-designer-v1';
 const clockKinds=new Set(['clock','clockWay','wrongClock']);
+const repeatable=new Set(['luckDig','blindTwins','iceChain','frozenPartner','relief','temptingPair']);
 const slotObjective=(p,target)=>Math.abs(Math.log(p.family.tries/target))*3+Math.max(0,Math.log(2.5/p.skilled.tries))*4+Math.max(0,Math.log(p.skilled.tries/6))*4;
 function parameterKey(p){return Model.settingKey(p);}
 function prior(list,effects,base={family:1.2,skilled:1}){
@@ -15,9 +16,11 @@ function prior(list,effects,base={family:1.2,skilled:1}){
 }
 function current(b,[kind,i]){if(kind==='down')return b.down.includes(i);if(kind==='ice')return b.obst.ice[i]||0;if(kind==='locks')return b.obst.locks.includes(i);if(kind==='keys')return b.obst.keys;if(kind==='faces')return b.faces[i];if(kind==='clockMate')return b.clockMate??null;return b.clock;}
 function assemble(base,list,seed){
-  if(list.filter(p=>clockKinds.has(p.name)).length!==1||new Set(list.map(p=>p.name)).size!==list.length)return null;
+  if(list.filter(p=>clockKinds.has(p.name)).length!==1)return null;
+  const counts={};for(const p of list){counts[p.name]=(counts[p.name]||0)+1;if(counts[p.name]>(repeatable.has(p.name)?3:1))return null;}
   const way=Pieces.wayFor(base);let out=I.clone(base);
-  for(const op of list){const stableSeed=parseInt(digest([seed,op.name]).slice(0,7),16)+1;out=Pieces.place(op.name,out,way,op.params,I.rngOf(stableSeed));if(!out)return null;}
+  const ordinal={};for(const op of list){const index=ordinal[op.name]||0;ordinal[op.name]=index+1;
+    const stableSeed=parseInt(digest(index?[seed,op.name,index]:[seed,op.name]).slice(0,7),16)+1;out=Pieces.place(op.name,out,way,op.params,I.rngOf(stableSeed));if(!out)return null;}
   // A later "relief" must not simply erase an earlier blind piece. Shared
   // fair timer updates are the explicit exception: the same clock is retained.
   for(const record of out.pieceInstances)for(const p of record.patch){
@@ -39,12 +42,16 @@ const PATTERNS=[
 function proposals(seed=1,count=96){
   const rng=I.rngOf(seed),pick=a=>a[Math.floor(rng()*a.length)],out=[];
   for(let k=0;k<count;k++){
-    const pattern=PATTERNS[k%PATTERNS.length],spare=pattern.includes('lockedPartners')||pattern.includes('frozenPartner')?1:pick([1,2,3]),depth=pick([2,5,8]),keyDepth=pick([2,3,5]);
-    const params={clock:{depth,spare},clockWay:{share:pick([.12,.2,.3]),spare},wrongClock:{depth:pick([2,3,5]),spare:1},keys:{depth:keyDepth,across:rng()<.5},clockLock:{keyDepth},lockBeside:{keyDepth},keyGuard:{height:pick([1,2])},clockIce:{height:pick([1,2])},iceChain:{length:pick([1,2,3]),height:pick([1,2])},frozenPartner:{height:pick([1,2])},lockedPartners:{count:pick([1,2]),keyDepth}};
+    let pattern=PATTERNS[k%PATTERNS.length];const waiting=pattern.includes('lockedPartners')||pattern.includes('frozenPartner');
+    if(waiting)pattern=pattern.map(name=>name==='clockWay'?'clock':name);
+    const settings=name=>[...Pieces.CATALOGUE[name].grid,Pieces.CATALOGUE[name].defaults];
+    const params=Object.fromEntries(Object.keys(Pieces.CATALOGUE).map(name=>[name,pick(settings(name))]));
+    if(waiting)params.clock=pick(settings('clock').filter(p=>p.spare===1));
     const list=pattern.map(name=>({name,params:params[name]}));
     if(k%4===1)list.push({name:'relief',params:{count:1}});
     if(k%3!==0)list.push({name:'blindWay',params:{count:1}});
-    if(k%2===0)list.push({name:'luckDig',params:{count:1}});
+    if(k%2===0)list.push({name:'luckDig',params:{count:pick([1,2])}});
+    if(k%4===0)list.push({name:'luckDig',params:{count:pick([1,2])}});
     if(k%8===7)list.push({name:'blindTwins',params:{count:1}});
     out.push(list);
   }
@@ -65,8 +72,12 @@ function rowOf(result,base,spec,list,seed,model,shape,creationId,creationSlot=sp
 function suggest(base,spec,model,effects,options={}){
   const seed=options.seed??271771,basePrediction=Model.predict(model,base),list=proposals(seed,options.proposals??96);
   list.sort((a,b)=>slotObjective(prior(a,effects,{family:basePrediction.family.tries,skilled:basePrediction.skilled.tries}),spec.target)-slotObjective(prior(b,effects,{family:basePrediction.family.tries,skilled:basePrediction.skilled.tries}),spec.target));
+  // Explore distinct mechanism lists before spending the whole placement
+  // allowance on parameter variants of a single apparently promising list.
+  const seen=new Set(),first=[],rest=[];for(const ops of list){const key=ops.map(p=>p.name).sort().join('+');if(seen.has(key))rest.push(ops);else{seen.add(key);first.push(ops);}}
+  const ordered=[...first,...rest];
   const started=Date.now(),rows=[],failures={};let attempts=0;
-  for(const ops of list){if(attempts>=(options.placements??18)||Date.now()-started>(options.milliseconds??12000))break;attempts++;
+  for(const ops of ordered){if(attempts>=(options.placements??36)||Date.now()-started>(options.milliseconds??12000))break;attempts++;
     const made=assemble(base,ops,seed);if(!made){failures.placement=(failures.placement||0)+1;continue;}
     const row=rowOf(made,base,spec,ops,seed,model,options.shape||'',options.creationId||'pieces/'+seed,options.creationSlot??spec.level);
     row.piecePrior=prior(ops,effects,{family:basePrediction.family.tries,skilled:basePrediction.skilled.tries});rows.push(row);
@@ -81,7 +92,7 @@ function tuneOne(row,measured,spec,model,effects,options={}){
     for(const entry of Object.values(Pieces.CATALOGUE))for(const params of entry.grid){
       const op={name:entry.key,params};if(parameterKey(op)===parameterKey(old))continue;
       if(clockKinds.has(old.name)!==clockKinds.has(op.name))continue;
-      if(row.pieces.some((p,i)=>i!==index&&p.name===op.name))continue;
+      if(row.pieces.filter((p,i)=>i!==index&&p.name===op.name).length>=(repeatable.has(op.name)?3:1))continue;
       const list=row.pieces.map((p,i)=>i===index?op:p),next=prior(list,effects),estimate={};
       for(const k of ['family','skilled'])estimate[k]={tries:Math.max(1,Math.min(20,baseline[k].tries*next[k].tries/oldPrior[k].tries))};
       const score=slotObjective(estimate,spec.target);if(score<before)moves.push({index,from:old,to:op,list,estimate,score});

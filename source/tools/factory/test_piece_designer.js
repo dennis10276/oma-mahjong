@@ -4,7 +4,8 @@ const D=require('./piece_designer.js'),P=require('./pieces.js'),C=require('./com
 const bases=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../../analysis/factory/piece-bases.json')));
 test('piece proposals are reproducible distinct lists with one clock and small mechanisms',()=>{
   const a=D.proposals(71,40);assert.deepEqual(a,D.proposals(71,40));assert.notDeepEqual(a,D.proposals(72,40));
-  for(const list of a){assert.equal(new Set(list.map(p=>p.name)).size,list.length);assert.equal(list.filter(p=>['clock','clockWay','wrongClock'].includes(p.name)).length,1);for(const p of list)assert(Object.keys(p.params).length<=2);}
+  for(const list of a){assert.equal(list.filter(p=>['clock','clockWay','wrongClock'].includes(p.name)).length,1);for(const p of list){assert(Object.keys(p.params).length<=2);assert(list.filter(q=>q.name===p.name).length<=3);
+    const measured=[...P.CATALOGUE[p.name].grid,P.CATALOGUE[p.name].defaults].map(params=>C.settingKey({name:p.name,params}));assert(measured.includes(C.settingKey(p)),'Only calibrated parameter settings are proposed');}}
 });
 test('measured easier effects and negative pair interactions are retained in list estimates',()=>{
   const a={name:'clock',params:{depth:2,spare:1}},b={name:'keys',params:{depth:2,across:false}},s=x=>({medianLog:Math.log(x)}),effects=[
