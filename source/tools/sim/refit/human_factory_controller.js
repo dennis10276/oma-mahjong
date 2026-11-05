@@ -83,7 +83,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam','routeHope','routeNeed']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam','routeHope','routeNeed','routeNeedTray']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -427,7 +427,7 @@ function createBotController(tiles, profile, seed) {
             if (seenK.has(key)) continue; seenK.add(key);
             const needNow = coverLeft(al);
             next.push({ al, tr, path, h: needNow * 2 + tr.length + (usableIn(al, ck) ? -3 : 0) });
-            if (p.routeNeed && needNow < need0 && (!partial || needNow * 4 + tr.length < partial.score || (needNow * 4 + tr.length === partial.score && path.length < partial.path.length))) partial = { score: needNow * 4 + tr.length, path };
+            if (p.routeNeed && needNow < need0 && tr.length <= (p.routeNeedTray ?? 3) && (!partial || needNow * 4 + tr.length < partial.score || (needNow * 4 + tr.length === partial.score && path.length < partial.path.length))) partial = { score: needNow * 4 + tr.length, path };
           }
           if (found) break;
         }
