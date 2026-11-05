@@ -156,6 +156,42 @@ function changes(d, state) {
       if(exact) out.push({what:'one ice harder with exact clock route',d:exact,exactRepaired:true});
     }
   }
+  // Reposition a dependency, rather than jumping straight from "on" to "off".
+  // Pictures and the whole layout stay fixed; every proposal gets a new exact
+  // route with the same spare before a bot is asked about it.
+  if(softer || harder) {
+    const c=I.ctxOf(d), covered=new Map(), depth=i=>{
+      if(!covered.has(i)){const found=new Set(),todo=[i];while(todo.length)for(const j of c.nb.above[todo.pop()])
+        if(!found.has(j)){found.add(j);todo.push(j);}covered.set(i,found);}return covered.get(i).size;
+    };
+    const hidden=new Set(d.down), keys=d.obst.keys||[], locks=d.obst.locks||[];
+    const special=i=>i===d.clock.i||keys.includes(i)||locks.includes(i)||(d.obst.ice||{})[i];
+    const fixedProposal=(what,edited)=>{const exact=I.fix({...edited,clock:{...d.clock,n:999}},sp);
+      if(exact)out.push({what,d:exact,exactRepaired:true});};
+    if(keys.length===2) {
+      const current=keys.reduce((s,i)=>s+depth(i),0), direction=softer?-1:1;
+      const pairs=c.pairs.filter(([a,b])=>!special(a)&&!special(b)&&!hidden.has(a)&&!hidden.has(b)&&
+        direction*(depth(a)+depth(b)-current)>0).sort((a,b)=>
+          Math.abs(depth(a[0])+depth(a[1])-current)-Math.abs(depth(b[0])+depth(b[1])-current));
+      for(const [a,b] of pairs.slice(0,3))fixedProposal('key pair moved '+(softer?'one dig shallower':'one dig deeper'),
+        {...d,obst:{...d.obst,keys:[a,b]}});
+    }
+    const objective=new Set([d.clock.i,...keys]);
+    for(const i of [...objective]){depth(i);for(const j of covered.get(i))objective.add(j);}
+    const mates=new Set();for(const [a,b] of c.pairs){if(objective.has(a))mates.add(b);if(objective.has(b))mates.add(a);}
+    const movable=byLoss(iceAt.filter(i=>i!==d.clock.i&&!keys.includes(i))).slice(0,1);
+    for(const old of movable) {
+      const h=d.obst.ice[old], choices=[...new Set([...objective,...mates])].filter(i=>!special(i)&&!hidden.has(i)&&
+        c.inb[i].filter(j=>c.pos[j]<c.pos[i]).length>=h).sort((a,b)=>Math.abs(depth(a)-depth(old))-Math.abs(depth(b)-depth(old)));
+      for(const next of choices.slice(0,2)){const ice={...d.obst.ice};delete ice[old];ice[next]=h;
+        fixedProposal('one frozen dependency moved on the existing dig',{...d,obst:{...d.obst,ice}});}
+    }
+    const oldLock=byLoss(locks.filter(i=>i!==d.clock.i)).at(0);
+    if(oldLock!==undefined){const choices=[...mates].filter(i=>!special(i)&&!hidden.has(i)).sort((a,b)=>
+      Math.abs(depth(a)-depth(oldLock))-Math.abs(depth(b)-depth(oldLock)));
+      for(const next of choices.slice(0,2))fixedProposal('one partner lock moved on the existing dig',
+        {...d,obst:{...d.obst,locks:locks.map(i=>i===oldLock?next:i)}});}
+  }
   if (softer) {
     { const r = relief(); if (r) out.push(r); }
     if (sp < 3) out.push({ what: 'clock +1 spare', d: withSpare(sp + 1) });
@@ -205,7 +241,11 @@ function judge(d, target, step, withSpecials = true, checkPlanner = false, conte
   idle.push(...Object.entries(supports.supports||{}).filter(([,v])=>!v.matters).map(([k])=>'support '+k));
   // Route planning is the expensive part. A board off the curve or with idle
   // specials cannot pass: fix that first, then run the skilled player.
-  const md = !idle.length && (off === 0 || checkPlanner) ? meas(d, 'planner') : null;
+  // The local search uses a tighter .35 band than final acceptance. A board
+  // within the real .5 band must not get an artificially good score merely
+  // because its skilled measurement was skipped at the local boundary.
+  const nearAcceptance = Math.abs(exp-target) <= Math.max(TOL,options.acceptanceTolerance ?? .5)+1e-9;
+  const md = !idle.length && (off === 0 || checkPlanner || nearAcceptance) ? meas(d, 'planner') : null;
   const skilled = md?.expectedTries ?? null;
   const room = off === 0 ? roomProfile(d) : { ok: true, tightBlind: 0, unrelieved: 0, tightTiles: [], measured: false };
   const luck = room.ok && room.measured !== false ? { luckMoments: room.tightBlind, reliefMoments: Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0)), unrelieved: room.unrelieved } : null;

@@ -201,3 +201,12 @@ test('a repair can preserve pictures, hidden tiles, clock location and one exact
   for(const x of out){assert.deepEqual(x.d.faces,d.faces);assert.deepEqual(x.d.down,d.down);assert.equal(x.d.clock.i,d.clock.i);
     const exact=I.fix({...x.d,clock:{...x.d.clock,n:999}},1);assert(exact);assert.equal(x.d.clock.n,exact.clock.n);}
 });
+
+test('near-curve steering cannot conceal an easy skilled rating behind its tighter search band', () => {
+  let plannerCalls=0;
+  const engine=require('./steer_design.js').createSteerer({tolerance:.35,skilledMin:2.5,journal:false,
+    meter:{fingerprint:'test',measure(d,o){if(o.setting==='planner')plannerCalls++;
+      return {valid:true,expectedTries:o.setting==='planner'?1.8:10.4,firstTryRate:.2,results:[]};}}});
+  const result=engine.judge(small(),10,0,false);
+  assert.equal(plannerCalls,1);assert.equal(result.skilled,1.8);assert(result.score>1);
+});
