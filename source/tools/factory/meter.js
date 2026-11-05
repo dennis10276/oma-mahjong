@@ -15,6 +15,13 @@ function boardOf(d) {
     clock: d.clock || null };
 }
 const boardKey = d => digest(boardOf(d));
+// Task 04 / upstream 8e33270 changes the planner only. Family decisions and
+// physics are identical. Permit this exact, documented revision pair only;
+// any later bot/profile/environment change falls back to new measurements.
+const FAMILY_CACHE_MIGRATIONS = Object.freeze({
+  cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d:
+    ['ac24aad82490bab263850596afacb302f2f50b4b73464430c8e95962562808ef']
+});
 function sourceHash(entry) {
   const seen = new Set(), files = [];
   function visit(file) {
@@ -59,7 +66,7 @@ function createMeter(options = {}) {
   const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => k.startsWith('G51_')));
   const fingerprint = options.fingerprint || digest({ schema: 1, source: sourceHash(entry), env });
   const cacheDir = options.cacheDir === false ? null : path.resolve(options.cacheDir || path.join(__dirname, '../../build/factory-cache'));
-  const memory = new Map(), stats = { calls: 0, hits: 0, seconds: 0 };
+  const memory = new Map(), stats = { calls: 0, hits: 0, seconds: 0, familyReused: 0 };
   function measure(board, opts) {
     const input = boardOf(board), settings = { runs: 20, seeds: 2, seed: 4711, ...opts };
     const key = digest({ fingerprint, input, settings });
@@ -68,6 +75,16 @@ function createMeter(options = {}) {
     if (file && fs.existsSync(file)) {
       const saved = JSON.parse(fs.readFileSync(file, 'utf8'));
       memory.set(key, saved); stats.hits++; return saved;
+    }
+    const approved = !options.measureHuman && !options.fingerprint && !options.bot && !process.env.HUMAN_BOT &&
+      settings.setting === 'family' ? FAMILY_CACHE_MIGRATIONS[fingerprint] || [] : [];
+    if (cacheDir) for (const prior of approved) {
+      const oldFile = path.join(cacheDir, digest({ fingerprint: prior, input, settings }) + '.json');
+      if (!fs.existsSync(oldFile)) continue;
+      const saved = JSON.parse(fs.readFileSync(oldFile, 'utf8'));
+      if (saved.valid !== true) continue;
+      atomicJson(file, saved); memory.set(key, saved); stats.hits++; stats.familyReused++;
+      return saved;
     }
     const started = Date.now(), m = compact(bot(input, settings));
     stats.calls++; stats.seconds += (Date.now() - started) / 1000;
@@ -80,4 +97,4 @@ function createMeter(options = {}) {
   }
   return { measure, fingerprint, stats };
 }
-module.exports = { createMeter, boardKey, boardOf, digest, sourceHash, atomicJson, compact };
+module.exports = { createMeter, boardKey, boardOf, digest, sourceHash, atomicJson, compact, FAMILY_CACHE_MIGRATIONS };

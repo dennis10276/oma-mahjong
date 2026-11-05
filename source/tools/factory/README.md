@@ -160,6 +160,11 @@ as well; its diagnostic rows are never treated as accepted levels.
   matching plan fields tune seed construction.
 - Cache entries include the board, bot source, profile, seed, run count and
   capture mode. Invalid or computation-censored measurements are not cached.
+- Task 04's planner-only revision has one explicitly approved family-cache
+  migration (`ac24aad…` → `cae3bc3…`, upstream `8e33270`). Only family entries
+  are copied to the new keys; old planner results are never reused. Any different
+  source/profile/environment fingerprint requires new measurements. Factory
+  regressions cover both the family reuse and planner isolation.
 - The queue caches stage records and board predictions, updating records when
   workers finish. Restart the coordinator after externally replacing stage
   files so it reads those replacements.

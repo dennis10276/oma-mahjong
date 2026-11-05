@@ -99,6 +99,24 @@ test('an on-curve board that is too easy for the planner still gets harder edits
   assert.equal(near.judge(board(), 3, 0, false, true).skilled, 1);
 });
 
+test('the approved planner-only update reuses family caches but never old planner results', t => {
+  const { FAMILY_CACHE_MIGRATIONS, digest, boardOf, atomicJson } = require('./meter.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oma-planner-migration-'));
+  t.after(() => fs.rmSync(dir, { recursive: true }));
+  const m = createMeter({ cacheDir: dir }), old = FAMILY_CACHE_MIGRATIONS[m.fingerprint]?.[0];
+  assert(old, 'This regression targets the explicitly approved Task 04 revision pair');
+  const d = board(), settings = { runs: 1, seeds: 1, seed: 4711, setting: 'family' };
+  atomicJson(path.join(dir, digest({ fingerprint: old, input: boardOf(d), settings }) + '.json'),
+    { valid: true, expectedTries: 7, results: [] });
+  assert.equal(m.measure(d, settings).expectedTries, 7); assert.equal(m.stats.calls, 0); assert.equal(m.stats.familyReused, 1);
+  const planner = { ...settings, setting: 'planner' };
+  atomicJson(path.join(dir, digest({ fingerprint: old, input: boardOf(d), settings: planner }) + '.json'),
+    { valid: true, expectedTries: 77, results: [] });
+  assert.notEqual(m.measure(d, planner).expectedTries, 77); assert.equal(m.stats.calls, 1);
+  const other = createMeter({ fingerprint: 'unapproved-version', cacheDir: dir, measureHuman: fake() });
+  assert.notEqual(other.measure(d, settings).expectedTries, 7); assert.equal(other.stats.calls, 1);
+});
+
 test('file runner refuses stale input and skips a completed level', t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oma-factory-run-'));
   t.after(() => fs.rmSync(dir, { recursive: true }));

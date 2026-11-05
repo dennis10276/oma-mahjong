@@ -601,3 +601,10 @@ him: "1 [family 10 -> 13] and require the skilled bot to at least need 2.5-3 tri
 - Dennis's follow-up: all new boards contain more than 70 tiles (minimum 72), and block shapes are discouraged.
   The v10 piles have whole non-block alternatives. The old 64-tile two-island 212 is ineligible; a fresh 76-tile oval
   with two islands explores its key/ice/clock concept on the higher curve. Candidate targets follow the current plan.
+
+Task 04 adopts the planner-only clock-logic fix at `8e33270`. Old skilled scores
+are retained for comparison and potential current-curve boards are rechecked,
+including every old `plannerScreen` / skilled >6 rejection. The family measure
+is unchanged; the factory keeps its values with an explicit revision-pair cache
+migration. The 2.5–6 skilled gate remains: a rescued board that now rates below
+2.5 still needs hardening. No old planner rating can qualify a new output.
