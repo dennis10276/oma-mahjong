@@ -404,6 +404,10 @@ function createBotController(tiles, profile, seed) {
       };
       const coverLeft = al => p.routeNeed ? needLeft(al) : coverOf(al, ck);
       let beam = [{ al: alive.slice(), tr: tray.slice(), path: [] }], found = null;
+      // routeNeed: when no whole way to the clock shows (unseen pictures), follow the best partial way - the state with the
+      // fewest tiles the clock still needs, then the emptiest tray - as long as it gets nearer than now (a person heads for
+      // the keys and the locks beside the clock instead of pairing elsewhere)
+      const need0 = p.routeNeed ? coverLeft(alive) : 0; let partial = null;
       for (let step = 0; step < clock.remaining && beam.length && !found; step++) {
         const next = [], seenK = new Set();
         for (const st of beam) {
@@ -421,13 +425,17 @@ function createBotController(tiles, profile, seed) {
             if (j === ck) { if (tr.length <= 2 || canRelieve(al, tr, 2)) { found = path; break; } continue; }
             const key = al.join('') + '|' + tr.slice().sort((x, y) => x - y).join(',');
             if (seenK.has(key)) continue; seenK.add(key);
-            next.push({ al, tr, path, h: coverLeft(al) * 2 + tr.length + (usableIn(al, ck) ? -3 : 0) });
+            const needNow = coverLeft(al);
+            next.push({ al, tr, path, h: needNow * 2 + tr.length + (usableIn(al, ck) ? -3 : 0) });
+            if (p.routeNeed && needNow < need0 && (!partial || needNow * 4 + tr.length < partial.score || (needNow * 4 + tr.length === partial.score && path.length < partial.path.length))) partial = { score: needNow * 4 + tr.length, path };
           }
           if (found) break;
         }
         next.sort((x, y) => x.h - y.h); beam = next.slice(0, width);
       }
+      if (!found && partial) found = partial.path;
       routeCache = { sig, path: found || [] };
+      if (global.__routeStats) { global.__routeStats.calls++; if (found) global.__routeStats.found++; global.__routeStats.last = found; }
       return found ? found[0] : null;
     })();
 
