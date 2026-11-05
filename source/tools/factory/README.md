@@ -107,6 +107,12 @@ a clock beside an unrelated lock, and a tray dig followed by an ice chain. The
 212-style key/ice/clock idea has a fresh 76-tile two-island candidate; its old
 64-tile board is ineligible for the new batch.
 
+Explicit steering results carry the ID of the fully measured board. They receive
+full rate/quality checks even when a noisy scout or a per-creation quota would
+otherwise skip them. Automatic siblings cannot borrow this status: their ID must
+match the measured ID. Only full measurements and the independent final seed can
+qualify a level.
+
 When an initial design is unsuitable, build more whole layouts and place each
 qualified new design into an available curve slot. Candidate IDs 300+ identify
 creation slots; the output plan still contains levels 200–225 only. One creation

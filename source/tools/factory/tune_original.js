@@ -21,7 +21,8 @@ if (!isMainThread) {
       const result = createSteerer({ meter: pooled, steps: 14, tolerance: .35, routeMilliseconds: 800 }).steer(row, saved,
         state => atomicJson(stateFile, { input: row.id, fingerprint, state }));
       parentPort.postMessage({ row: { ...result, id: boardKey(result.design).slice(0, 16), forcePlanner: true,
-        tuning: { pooledFamily: result.g61.exp, searchPass: result.searchPass, reasons: result.reviewReasons } },
+        tuning: { measuredId: boardKey(result.design).slice(0, 16), pooledFamily: result.g61.exp,
+          searchPass: result.searchPass, reasons: result.reviewReasons } },
         input: row.id, seconds: (Date.now() - started) / 1000 });
     } catch (e) { parentPort.postMessage({ input: row.id, error: e.stack }); }
   });

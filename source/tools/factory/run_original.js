@@ -34,6 +34,7 @@ async function run(planFile, dir, constructionJobs = 4, meterJobs = 6, wanted = 
       .finally(() => { update(); fs.rmSync(marker, { force: true }); });
     await Promise.all([production, evaluate(poolFile, planFile, dir, meterJobs)]);
   } finally { clearInterval(timer); fs.rmSync(marker, { force: true }); }
+  await require('./qualify_tuned.js').run(planFile, poolFile, dir, meterJobs);
   for (let round = 0; round < 4; round++) {
     const before = JSON.parse(fs.readFileSync(poolFile)).length;
     tick(); await evaluate(poolFile, planFile, dir, meterJobs); tick();

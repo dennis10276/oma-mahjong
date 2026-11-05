@@ -158,6 +158,14 @@ test('new production keeps the harder curve, whole layouts above 70 tiles, and t
   assert.deepEqual(p.levels.find(s => s.level === 212).recipe, ['iceLockClock']);
   const masks = O.previousBoards(p.levels, path.resolve(base, p.levelTable)).map(r => F.spots(r.design.tiles)[0]);
   for (const x of piles) { assert(O.fitsLayouts(x.tiles, masks)); masks.push(F.spots(x.tiles)[0]); }
+  const extras = JSON.parse(fs.readFileSync(path.join(base, 'batch-200-225-v10-extra-piles.json')));
+  assert.equal(extras.filter(x => x.level >= 300).length, 20);
+  const allMasks = O.previousBoards(p.levels, path.resolve(base, p.levelTable)).map(r => F.spots(r.design.tiles)[0]);
+  for (const x of extras) {
+    assert(x.tiles.length >= 72); assert(O.fitsLayouts(x.tiles, allMasks));
+    const objects = x.tiles.map(([x, y, z]) => ({ x, y, z })); assert(!F.towers(objects)); assert(F.tilePx(objects) >= 52);
+    allMasks.push(F.spots(x.tiles)[0]);
+  }
 });
 
 test('block shapes remain fallback choices and do not outrank other qualified shapes', t => {
@@ -192,4 +200,25 @@ test('candidate alternatives defer shape spacing to actual campaign slots', () =
   const a = piles.find(p => p.level === 205), b = piles.find(p => p.level === 216);
   assert.throws(() => require('./build.js').validatePiles([{ level: 200, pile: 205 }, { level: 201, pile: 216 }], [a, b],
     { bigLevels: [210, 220] }), /repeat a shape/);
+});
+
+test('known tuned boards get full checks even when a noisy scout rejects them', async t => {
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-known-tuned-')); t.after(() => fs.rmSync(dir, { recursive: true }));
+  const planFile = path.join(dir, 'plan.json'), poolFile = path.join(dir, 'pool.json');
+  atomicJson(planFile, { levels: [{ level: 200, target: 10, big: false }], tolerance: .5, maxSeedGap: 2 });
+  atomicJson(poolFile, [{ id: 'good', level: 300, tuning: { measuredId: 'good', pooledFamily: 10 }, design: { tiles: Array(76).fill([0, 0, 0]) } },
+    { id: 'gap', level: 301, tuning: { measuredId: 'gap', pooledFamily: 10 }, design: { tiles: Array(76).fill([0, 0, 0]) } },
+    { id: 'sibling', level: 302, tuning: { measuredId: 'parent', pooledFamily: 10 }, edit: 'clock spare 3', design: { tiles: Array(76).fill([0, 0, 0]) } }]);
+  atomicJson(path.join(dir, 'good.screen.json'), { exp: 20, eligible: false });
+  const calls = [];
+  const result = await require('./qualify_tuned.js').run(planFile, poolFile, dir, 1, { async evaluate(file, out, mode, jobs, force) {
+    const rows = JSON.parse(fs.readFileSync(file)); calls.push({ mode, ids: rows.map(r => r.id), force });
+    assert(rows.every(r => r.forcePlanner));
+    if (mode === 'rate') for (const r of rows) atomicJson(path.join(out, r.id + '.rate.json'), {
+      train: { valid: true, exp: r.id === 'gap' ? 8 : 10 }, validation: { valid: true, exp: r.id === 'gap' ? 12 : 10 } });
+    else for (const r of rows) atomicJson(path.join(out, r.id + '.quality.json'), { eligible: true });
+  } });
+  assert.deepEqual(result, { rated: 2, quality: 1 });
+  assert.deepEqual(calls, [{ mode: 'rate', ids: ['good', 'gap'], force: true }, { mode: 'quality', ids: ['good'], force: true }]);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'good.quality.json'))).eligible, true);
 });
