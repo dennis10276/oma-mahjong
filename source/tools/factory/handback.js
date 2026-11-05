@@ -86,7 +86,8 @@ function handback(planFile, poolFile, measurements, out) {
         ...(x.fresh ? { fresh: x.fresh.fresh?.exp, freshSeed: Final.SEED } : {}) },
       skilled: quality?.skilled?.exp ?? null, room, specials, atTrap: quality?.atTrap ?? rate?.atTrap ?? null,
       warnings, placementScore: Placement.score(row.design, row.recipe, row.shape), design: { ...row.design, level: s.level }, boardHash: boardKey(row.design) });
-    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)})${Final.tuned(row) ? '; fresh ' + fmt(x.fresh?.fresh?.exp) : ''} | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${row.design.tiles.length} | ${fmt(Placement.score(row.design, row.recipe, row.shape).total)} | ${warnings.join(', ') || '—'} |`);
+    const skilledText=quality?.skilled?.evidence?`${fmt(quality.skilled.exp)} human (bot ${fmt(quality.skilled.botExp)})`:fmt(quality?.skilled?.exp);
+    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)})${Final.tuned(row) ? '; fresh ' + fmt(x.fresh?.fresh?.exp) : ''} | ${skilledText} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${row.design.tiles.length} | ${fmt(Placement.score(row.design, row.recipe, row.shape).total)} | ${warnings.join(', ') || '—'} |`);
   }
   fs.writeFileSync(path.join(out, 'closest-assignment.jsonl'), diagnostics.sort((a, b) => a.level - b.level).map(r => JSON.stringify(r)).join('\n') + '\n');
   atomicJson(path.join(out, 'rated-candidates.json'), rated.filter(x => x.rate).map(x => ({ ...x.row, measurement: x.rate, quality: x.quality, fresh: x.fresh })));
