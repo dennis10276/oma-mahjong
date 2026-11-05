@@ -19,6 +19,13 @@ const BRIEFS = [
   { recipe: ['keyToEscape'], brief: 'Unlock a route to the clock partner before taking the tempting clock.', spare: 2 },
   { recipe: ['lockedClock'], brief: 'Bring both key pictures together before the buried locked clock runs out.', spare: 2 },
 ];
+function shapeChoices(plan, made, spec, rng) {
+  // Candidate IDs are creation slots, not adjacent campaign levels. Alternative
+  // silhouettes may repeat here; assignment/verification enforce spacing at the
+  // actual output levels. Global D4 novelty still applies to every whole layout.
+  const recent = plan.outputLevels ? [] : made.filter(r => Math.abs(spec.level - r.level) <= 10).map(r => r.base);
+  return Preferences.order(L.shuffleArr(rng, F.SHAPES.slice()), plan, spec.preferredShapes).filter(s => !recent.includes(s.shape));
+}
 function make(planFile, out) {
   const plan = JSON.parse(fs.readFileSync(planFile));
   global.HARD_LEVELS = vm.runInNewContext(fs.readFileSync(path.resolve(path.dirname(planFile), plan.levelTable), 'utf8') + ';HARD_LEVELS');
@@ -29,8 +36,7 @@ function make(planFile, out) {
   const seen = new Set(made.map(r => layoutKey({ tiles: r.tiles })));
   for (let k = 0; k < plan.levels.length; k++) {
     const spec = plan.levels[k]; if (made.some(r => r.level === spec.level)) continue;
-    const rng = L.rng(62000 + spec.level * 37), recent = made.filter(r => Math.abs(spec.level - r.level) <= 10).map(r => r.base);
-    const choices = Preferences.order(L.shuffleArr(rng, F.SHAPES.slice()), plan, spec.preferredShapes).filter(s => !recent.includes(s.shape));
+    const rng = L.rng(62000 + spec.level * 37), choices = shapeChoices(plan, made, spec, rng);
     let selected = null;
     for (const sh of choices) {
       for (let trial = 0; trial < (plan.layoutAttempts || 8) && !selected; trial++) {
@@ -59,5 +65,5 @@ function make(planFile, out) {
   fs.writeFileSync(planFile, JSON.stringify(plan, null, 2) + '\n');
   return made.sort((a, b) => a.level - b.level);
 }
-module.exports = { make, BRIEFS };
+module.exports = { make, BRIEFS, shapeChoices };
 if (require.main === module) make(process.argv[2], process.argv[3]);

@@ -182,3 +182,14 @@ test('block shapes remain fallback choices and do not outrank other qualified sh
   const { validatePiles } = require('./build.js');
   assert.throws(() => validatePiles([{ level: 200 }], [{ level: 200, shape: 'arch', tiles: short.design.tiles }]), /at least 72/);
 });
+
+test('candidate alternatives defer shape spacing to actual campaign slots', () => {
+  const { shapeChoices } = require('./original_layouts.js'), L = require('../../www/layouts.js');
+  const made = [{ level: 307, base: 'vase' }], spec = { level: 308 };
+  assert(shapeChoices({ outputLevels: [{ level: 200 }] }, made, spec, L.rng(1)).some(s => s.shape === 'vase'));
+  assert(!shapeChoices({}, made, spec, L.rng(1)).some(s => s.shape === 'vase'));
+  const piles = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../analysis/factory/batch-200-225-v10-piles.json')));
+  const a = piles.find(p => p.level === 205), b = piles.find(p => p.level === 216);
+  assert.throws(() => require('./build.js').validatePiles([{ level: 200, pile: 205 }, { level: 201, pile: 216 }], [a, b],
+    { bigLevels: [210, 220] }), /repeat a shape/);
+});
