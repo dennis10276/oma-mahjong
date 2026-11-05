@@ -40,7 +40,10 @@ function verify(planFile, batchFile, options = {}) {
         { fresh: { exp: f.expectedTries, valid: f.valid, seed: Final.SEED } }, s, plan), 'Independent seed failed at ' + r.level);
     }
     const skilled = meter.measure(d, { ...options, setting: 'planner' });
-    assert(skilled.valid && skilled.expectedTries <= plan.skilledMax && skilled.expectedTries >= (plan.skilledMin ?? 0)); assert.equal(skilled.expectedTries, r.skilled);
+    const effective = require('./skilled_evidence.js').rating(r, skilled.expectedTries, skilled.valid);
+    assert(effective.valid && effective.exp <= plan.skilledMax && effective.exp >= (plan.skilledMin ?? 0)); assert.equal(effective.exp, r.skilled);
+    if(r.botSkilled !== undefined)assert.equal(r.botSkilled,skilled.expectedTries);
+    assert.deepEqual(r.skilledEvidence ?? null,effective.evidence ?? null,'Human skill evidence must match the exact approved board');
     const room = roomProfile(d); assert(room.ok && room.unrelieved <= plan.unrelievedMax);
     const quality = evaluate({ ...r, forcePlanner: true }, 'quality', meter);
     assert(quality.eligible, 'Puzzle quality failed at ' + r.level);

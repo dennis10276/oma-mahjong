@@ -92,7 +92,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       if (!c.length && !allowPartial) return;
       if (!opts || c.length < opts.length) { k = j; opts = c; }
     }
-    const preference = r => Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan) + (100-r.placementScore.total)*.01;
+    const preference = r => Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan) + (plan.placementReportOnly ? 0 : (100-r.placementScore.total)*.01);
     opts.sort((a, b) => preference(a.r) - preference(b.r));
     for (const { r, i } of opts) {
       picks[k] = i; used.add(i);
@@ -120,7 +120,10 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       family: { exp: +inv[i].exp.toFixed(3),
       search: rate.train.exp, validation: rate.validation.exp, searchSeed: 4711, validationSeed: 18427,
       ...(Final.tuned(r) ? { fresh: fresh.fresh.exp, freshSeed: Final.SEED } : {}), version: rate.train.version },
-      skilled: quality.skilled.exp, room: quality.room, atTrap: quality.atTrap, specials: quality.special,
+      skilled: quality.skilled.exp,
+      ...(quality.skilled.botExp !== undefined ? {botSkilled:quality.skilled.botExp} : {}),
+      ...(quality.skilled.evidence ? {skilledEvidence:quality.skilled.evidence} : {}),
+      room: quality.room, atTrap: quality.atTrap, specials: quality.special,
       placementScore: Placement.score(r.design, r.recipe, r.shape),
       ...(quality.supports ? { supports: quality.supports, supportFingerprint: quality.supportFingerprint } : {}),
       warnings: quality.lateShare >= 0.3 ? ['lateSqueeze'] : [], lateShare: quality.lateShare,

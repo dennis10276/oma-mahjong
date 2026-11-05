@@ -27,6 +27,7 @@ function fingerprint(row) { const list = checks(row); return list.length || row.
   ? digest({ version: VERSION, checks: list, playerFeedback: !!row.playerFeedback }) : null; }
 function compatible(row, quality) {
   if (!quality) return false;
+  if ((quality.skilledEvidenceFingerprint ?? null) !== require('./skilled_evidence.js').fingerprint(row)) return false;
   const expected = fingerprint(row); return !expected || quality.supportFingerprint === expected;
 }
 function measure(row, baseline, meter, settings) {

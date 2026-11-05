@@ -6,6 +6,7 @@ const { roomProfile, trapTiles } = require('./design_traps.js');
 const { checkOrigin } = require('./originality.js');
 const { SEED } = require('./final_seed.js');
 const Supports = require('./trap_supports.js');
+const SkilledEvidence = require('./skilled_evidence.js');
 // Dennis 2026-11-04: 200 at 10 family tries (-> 13 at 225) and the skilled player (Dennis) needs at least 2.5 tries.
 // The bands follow the curve; set them for a run: FACTORY_SCREEN=lo,hi FACTORY_RATE=lo,hi FACTORY_SKILLED=min,max
 const band = (k, d) => (process.env[k] || d).split(',').map(Number);
@@ -19,7 +20,7 @@ function evaluate(row, mode, meter) {
     return { fresh: { exp: f.expectedTries, first: f.firstTryRate, valid: f.valid, seed: SEED }, eligible: f.valid };
   }
   if (row.playerFeedback && !require('./placement_score.js').readable(d)) return { eligible: false, reason: 'blindObjectiveRoute',
-    ...(mode === 'quality' ? { supportFingerprint: Supports.fingerprint(row) } : {}) };
+    ...(mode === 'quality' ? { supportFingerprint: Supports.fingerprint(row), skilledEvidenceFingerprint: SkilledEvidence.fingerprint(row) } : {}) };
   // Steering can change the clock path or hidden pictures while retaining a
   // parent's metadata. Final quality must check the actual edited board.
   const room = mode === 'quality' ? roomProfile(d) : row.room || roomProfile(d);
@@ -34,7 +35,8 @@ function evaluate(row, mode, meter) {
     (a.decisions?.at(-1)?.state.tray || []).some(f => T.faces.has(f))).length;
   const late = losses.filter(a => a.left <= 0.45 * d.tiles.length).length;
   const base = { room, train: { exp: m.expectedTries, first: m.firstTryRate, valid: m.valid, version: m.version },
-    atTrap: losses.length ? at / losses.length : 1, lateShare: losses.length ? late / losses.length : 0 };
+    atTrap: losses.length ? at / losses.length : 1, lateShare: losses.length ? late / losses.length : 0,
+    ...(mode === 'quality' ? { skilledEvidenceFingerprint: SkilledEvidence.fingerprint(row) } : {}) };
   if (mode === 'rate') {
     if (!m.valid || m.expectedTries < RATE_LO || m.expectedTries > RATE_HI) return { ...base, eligible: false };
     const v = meter.measure(d, { ...opts, seed: 18427 });
@@ -48,11 +50,12 @@ function evaluate(row, mode, meter) {
   const idleSupports = Object.entries(support.supports || {}).filter(([, s]) => !s.matters);
   if (idleSupports.length) return { ...base, ...support, eligible: false,
     reason: idleSupports.some(([, s]) => !s.present) ? 'missingSupport' : !m.valid || idleSupports.some(([, s]) => !s.valid) ? 'supportUnresolved' : 'idleSupport' };
-  const preview = row.forcePlanner ? null : meter.measure(d, { ...opts, setting: 'planner', runs: 3, seeds: 1 });
+  const preview = row.forcePlanner || SkilledEvidence.get(row) ? null : meter.measure(d, { ...opts, setting: 'planner', runs: 3, seeds: 1 });
   // A small run may conservatively discard a candidate. It can never qualify
   // one: selected boards still get the full calibrated planner afterwards.
   if (preview && (!preview.valid || preview.expectedTries > 8)) return { ...base, ...support, plannerPreview: preview.expectedTries, eligible: false, reason: 'plannerScreen' };
   const md = meter.measure(d, { ...opts, setting: 'planner' });
+  const skilled = SkilledEvidence.rating(row, md.expectedTries, md.valid);
   const special = {}, ob = d.obst || {};
   const ablate = (k, b) => {
     const x = meter.measure(b, opts);
@@ -65,8 +68,8 @@ function evaluate(row, mode, meter) {
   const idle = Object.entries(special).filter(([, s]) => !s.matters).map(([k]) => k);
   const forced = (row.recipe || []).some(k => k === 'dontGrab' || k === 'keyToEscape') ? meter.measure({ ...d, clock: { ...d.clock, n: 1 } }, opts) : null;
   const grabValid = !forced || forced.valid && forced.expectedTries >= m.expectedTries + 1;
-  return { ...base, ...support, skilled: { exp: md.expectedTries, valid: md.valid }, special, idle, grabFirst: forced?.expectedTries ?? null,
-    eligible: m.valid && md.valid && md.expectedTries <= SKILLED_MAX && md.expectedTries >= SKILLED_MIN && room.ok && room.unrelieved <= 1 && base.atTrap >= 0.6 && !idle.length && grabValid };
+  return { ...base, ...support, skilled, special, idle, grabFirst: forced?.expectedTries ?? null,
+    eligible: m.valid && skilled.valid && skilled.exp <= SKILLED_MAX && skilled.exp >= SKILLED_MIN && room.ok && room.unrelieved <= 1 && base.atTrap >= 0.6 && !idle.length && grabValid };
 }
 
 if (!isMainThread) {
