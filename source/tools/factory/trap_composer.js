@@ -1,13 +1,16 @@
 'use strict';
 // Authoring only. Structural scores choose a puzzle idea, never its difficulty.
 const I = require('../lab/ideas.js');
+const L = global.Layouts;
 const { boardKey } = require('./meter.js');
 const Placement = require('./placement_score.js');
-const VERSION = 'connected-traps-v2';
+const {makeLowerBound}=require('../lab/exact.js');
+const VERSION = 'connected-traps-v3';
 const MOTIFS = Object.freeze({
   keyGuardIce: 'Thaw a guard on the existing key dig before opening the existing locks.',
   partnerRelay: 'Thaw partners of singles carried on the existing clock dig.',
   thawRelay: 'Clear a frozen neighbour before thawing the existing clock or key guard.',
+  midgameRelay: 'Carry one single through the clock, then release its frozen partner on a visible midgame route.',
 });
 const INTENTS = ['linked', 'cross-board', 'staged', 'tray-escape'];
 const ids = b => [...new Set([...(b.obst?.keys || []), ...(b.obst?.locks || []),
@@ -45,13 +48,33 @@ function preserves(before, after) {
   if (Object.entries(before.obst?.ice || {}).some(([i, h]) => (after.obst?.ice?.[i] || 0) < h)) return 'removed an earlier ice dependency';
   const protectedFaces = [...ids(before), ...(before.clockMate !== undefined ? [before.clockMate] : [])];
   if (protectedFaces.some(i => before.faces[i] !== after.faces[i])) return 'changed an earlier role picture';
+  if((before.trapObjectives||[]).some(g=>!(after.trapObjectives||[]).some(q=>q.kind===g.kind&&q.tile===g.tile)))return 'removed an earlier phase objective';
   return null;
+}
+
+function relayPhase(b, tile) {
+  if(!b.clock || !b.obst?.ice?.[tile])return {ok:false,reason:'missing clock or frozen partner'};
+  const c=I.ctxOf(b),alive=new Uint8Array(c.n).fill(1),initial=alive.slice(),tray=[];
+  const o=b.obst,clockMove=c.pos[b.clock.i]+1,rules={ice:o.ice||{},iceNb:c.inb,locks:new Set(o.locks||[]),keys:o.keys||[]};
+  let remainingAtClock=null,carriedBy=null,availableMove=null,minimumAfterClock=null;
+  for(let step=0;step<=b.solution.length;step++){
+    if(step===clockMove){remainingAtClock=(o.ice[tile]||0)-c.inb[tile].filter(i=>!alive[i]).length;
+      carriedBy=alive[tile]?tray.find(i=>b.faces[i]===b.faces[tile])??null:null;
+      minimumAfterClock=makeLowerBound({tiles:c.tiles,nb:c.nb,faces:b.faces,rules},tile)(alive);}
+    if(availableMove===null&&alive[tile]&&L.takeable(tile,alive,c.nb,rules,initial)&&
+      (tray.length<3||tray.some(i=>b.faces[i]===b.faces[tile])))availableMove=step+1;
+    if(step===b.solution.length)break;
+    const i=b.solution[step],mate=tray.findIndex(j=>b.faces[j]===b.faces[i]);
+    if(mate<0)tray.push(i);else tray.splice(mate,1);alive[i]=0;
+  }
+  return {ok:remainingAtClock>0&&carriedBy!==null&&minimumAfterClock>=3&&availableMove>clockMove&&availableMove<=c.n*.6,
+    clockMove,remainingAtClock,carriedBy,availableMove,minimumAfterClock,latestMidgameMove:c.n*.6};
 }
 
 function analyze(b) {
   const c = geometry(b), o = b.obst || {}, edges = [], need = new Set(), todo = [];
   const add = (from, to, kind) => { edges.push({ from, to, kind }); if (!need.has(to)) { need.add(to); todo.push(to); } };
-  for (const i of [b.clock?.i, b.clockMate].filter(Number.isInteger)) { need.add(i); todo.push(i); }
+  for (const i of [b.clock?.i, b.clockMate,...(b.trapObjectives||[]).map(g=>g.tile)].filter(Number.isInteger)) { need.add(i); todo.push(i); }
   while (todo.length) {
     const i = todo.pop();
     for (const j of c.nb.above[i]) add(i, j, 'cover');
@@ -85,6 +108,7 @@ function analyze(b) {
     unrelatedSpecials: ids(b).length - linked.length, clockDepth: b.clock ? c.cover(b.clock.i).size : 0,
     keyDepth, keySpread: +spread.toFixed(3), clockKeyDistance: +clockKeyDistance.toFixed(3),
     thawSteps: edges.filter(e => e.kind === 'thaw').length, peakTray: peak, relief, route,
+    phaseGoals:(b.trapObjectives||[]).map(g=>({...g,...relayPhase(b,g.tile)})),
     signature: [sector(b.clock?.i), keys.map(sector).sort().join('/'),
       Object.keys(o.ice || {}).map(i => sector(+i)).sort().join('/'), (o.locks || []).map(sector).sort().join('/'), Math.floor(keyDepth / 3),
       edges.filter(e => e.kind === 'thaw').length, Math.floor(route / 8)].join(':') };
@@ -98,9 +122,10 @@ function augment(b, key, rng) {
   const routeDig = new Set(analyze(b).needed);
   const keyDig = new Set(keys.flatMap(i => [...c.cover(i)]));
   const freeToFreeze = i => !occupied.has(i) && c.inb[i].some(j => c.pos[j] < c.pos[i]);
-  const freeze = i => {
-    const h = Math.min(2, c.inb[i].filter(j => c.pos[j] < c.pos[i]).length);
+  const freeze = (i, height, newRoute=false) => {
+    const h = height ?? Math.min(2, c.inb[i].filter(j => c.pos[j] < c.pos[i]).length);
     if (!h) return false;
+    if(newRoute&&c.inb[i].length<h)return false;
     o.ice[i] = h; x.down = x.down.filter(j => j !== i); return true;
   };
   if (key === 'clockBesideLock') {
@@ -116,15 +141,27 @@ function augment(b, key, rng) {
     if (keys.length !== 2) return null;
     const candidates = order([...keyDig].filter(freeToFreeze));
     if (!candidates.length || !freeze(candidates[0])) return null;
-  } else if (key === 'partnerRelay' || key === 'trayJuggleFrozen') {
+  } else if (key === 'partnerRelay' || key === 'trayJuggleFrozen' || key==='midgameRelay') {
     if (!b.clock || !routeDig.size) return null;
     const mates = [];
     for (const [a, q] of c.pairs) {
       if (routeDig.has(a) && !routeDig.has(q) && c.pos[q] > c.pos[a]) mates.push(q);
       if (routeDig.has(q) && !routeDig.has(a) && c.pos[a] > c.pos[q]) mates.push(a);
     }
-    const choices = order([...new Set(mates)].filter(freeToFreeze));
-    if (!choices.length || !freeze(choices[0])) return null;
+    const clockPos=c.pos[b.clock.i],midgame=key==='midgameRelay';
+    const goneAtClock=i=>c.inb[i].filter(j=>c.pos[j]<=clockPos).length;
+    const relayHeight=i=>Math.max(goneAtClock(i),c.inb[i].filter(j=>c.cover(i).has(j)).length)+1;
+    const choices = order([...new Set(mates)].filter(i=>midgame ? !occupied.has(i)&&c.pos[i]>clockPos&&
+      relayHeight(i)<=3&&c.inb[i].length>=relayHeight(i)&&c.pairs.some(([a,q])=>
+        (a===i&&c.pos[q]<=clockPos)||(q===i&&c.pos[a]<=clockPos)) : freeToFreeze(i)));
+    if(!choices.length)return null;
+    const target=choices[0];
+    if(!freeze(target,midgame?relayHeight(target):undefined,midgame))return null;
+    if(midgame){
+      x.trapObjectives=[...(x.trapObjectives||[]),{kind:'midgameRelay',tile:target}];
+      const visible=new Set([target,...c.cover(target),...c.inb[target],...c.inb[target].flatMap(i=>[...c.cover(i)])]);
+      x.down=x.down.filter(i=>!visible.has(i));
+    }
   } else if (key === 'thawRelay' || key === 'iceChain') {
     const targets = [...Object.keys(o.ice || {}).map(Number)].filter(i => routeDig.has(i) || keyDig.has(i) || i === b.clock?.i);
     const choices = order([...new Set(targets.flatMap(i => c.inb[i].filter(j =>
@@ -149,7 +186,8 @@ function augment(b, key, rng) {
 }
 
 function score(a, intent) {
-  const base = 3 * a.linkedSpecials / Math.max(1, a.linkedSpecials + a.unrelatedSpecials) - a.unrelatedSpecials * .2;
+  const phaseChallenge=Math.min(4,Math.max(0,...(a.phaseGoals||[]).map(g=>(g.minimumAfterClock||0)-2)));
+  const base = 3 * a.linkedSpecials / Math.max(1, a.linkedSpecials + a.unrelatedSpecials) - a.unrelatedSpecials * .2 + phaseChallenge;
   if (intent === 'cross-board') return base + 3 * a.keySpread + 2 * a.clockKeyDistance;
   if (intent === 'staged') return base + Math.min(a.thawSteps, 4) + Math.min(a.keyDepth, 8) * .3 + Math.min(a.route, 30) * .06;
   if (intent === 'tray-escape') return base + (a.peakTray === 2 ? 2 : 0) + Math.min(a.relief, 3) * .5;
@@ -192,6 +230,7 @@ function compose(b, recipe, rng, options = {}) {
       const proposal = boardKey(candidate); if (proposed.has(proposal)) continue; proposed.add(proposal);
       let design = I.withSearchBudget(probeDeadline, () => fix(candidate, options.spare ?? 2), routeCache);
       if (!design || !valid(design)) { reject('no legal exact route'); continue; }
+      if((design.trapObjectives||[]).some(g=>!relayPhase(design,g.tile).ok)){reject('relay does not survive the clock and resolve by midgame');continue;}
       let analysis = analyze(design), revealed = [];
       if (options.playerFeedback && stage === recipe.length - 1) {
         const protectedMemory = [...parent.protectedHidden, ...design.down.filter(i => !before.down.includes(i))];
@@ -223,4 +262,4 @@ function compose(b, recipe, rng, options = {}) {
     analysis: best.analysis, placementScore: best.placementScore, revealedForReadability: best.revealed,
     structuralScore: +best.score.toFixed(3), probes, authoredBoard: boardKey(best.design) } };
 }
-module.exports = { VERSION, MOTIFS, INTENTS, known, authored, preserves, analyze, augment, compose };
+module.exports = { VERSION, MOTIFS, INTENTS, known, authored, preserves, relayPhase, analyze, augment, compose };

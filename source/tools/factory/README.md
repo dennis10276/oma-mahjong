@@ -179,6 +179,15 @@ Three additional motifs are available:
 | `keyGuardIce` | Existing keys with a covered dig | Ice on an actual blocker of those keys |
 | `partnerRelay` | Existing clock route with a carried single | Ice on that single's later partner outside the dig |
 | `thawRelay` | A relevant frozen clock/key guard | Ice on an earlier neighbour on its thaw route |
+| `midgameRelay` | A single carried through the clock | Its partner remains frozen after the clock, then becomes legally available before 60% of the witness |
+
+The midgame relay is checked on the recomputed legal route. It must still be
+frozen with its matching single in the tray after the clock, need at least three
+remaining takes by the physical dependency lower bound, and become takeable
+before 60% of the board. Its thaw route is visible and included in the one-hidden-
+tile limit. Ice that would automatically melt while removing its covers is not
+enough: the height includes a genuine extra thaw requirement. Its separate
+ablation still decides whether that structure matters to the family bot.
 
 `original_layouts.js` includes corresponding briefs. A slot may set
 `placementIntent` to `linked`, `cross-board`, `staged`, or `tray-escape`.

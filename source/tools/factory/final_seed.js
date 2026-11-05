@@ -13,7 +13,7 @@ async function run(planFile, poolFile, dir, jobs = 6) {
   const fs = require('fs'), path = require('path'), { atomicJson } = require('./meter.js');
   const plan = JSON.parse(fs.readFileSync(planFile)), pool = JSON.parse(fs.readFileSync(poolFile));
   const finalists = require('./batch_assign.js').candidates(pool, dir).filter(r => tuned(r) && plan.levels.some(s =>
-    (r.n > 88) === s.big && (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) &&
+    require('./placement_score.js').slotAllows(r,s) &&
     Math.abs(r.exp - s.target) <= plan.tolerance && Math.abs(r.rate.train.exp - r.rate.validation.exp) <= plan.maxSeedGap));
   const file = path.join(dir, 'final-seed-input.json'); atomicJson(file, finalists);
   await require('./batch_evaluate.js').run(file, dir, 'fresh', jobs);

@@ -210,3 +210,41 @@ test('near-curve steering cannot conceal an easy skilled rating behind its tight
   const result=engine.judge(small(),10,0,false);
   assert.equal(plannerCalls,1);assert.equal(result.skilled,1.8);assert(result.score>1);
 });
+
+test('a midgame relay keeps a carried partner frozen past the clock and opens it before the ending', () => {
+  const tiles=[[14,0,0],[14,4,0],[1,0,1],[0,6,0],[2,6,0],[8,6,0],[1,6,1],[14,8,0],
+    [0,0,0],[4,0,0],[3,0,1],[8,10,0],[0,10,0],[4,10,0],[0,14,0],[4,14,0],[8,14,0],[12,14,0],[0,18,0],[4,18,0]];
+  const faces=[0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9],objects=tiles.map(([x,y,z])=>({x,y,z}));
+  const obst={ice:{},keys:[8,9],locks:[0]},rules={...obst,locks:new Set(obst.locks),iceNb:L.iceNeighbors(objects)};
+  const solution=L.solve(objects,L.neighbors(objects),faces,new Uint8Array(20).fill(1),[],100000,rules);assert(solution);
+  I.setExact(true,{nodes:100000,milliseconds:1000});
+  const base=I.fix({tiles,faces,down:[],gold:[],obst,solution,clock:{i:0,n:999}},2);assert(base);
+  const result=C.compose(base,['midgameRelay'],I.rngOf(31),{milliseconds:4000,playerFeedback:true});
+  assert(result);assert(I.valid(result.design));assert.equal(C.preserves(base,result.design),null);
+  const goal=result.design.trapObjectives[0],phase=C.relayPhase(result.design,goal.tile);
+  assert(phase.ok);assert(phase.remainingAtClock>0);assert(phase.carriedBy!==null);
+  assert(phase.minimumAfterClock>=3);
+  assert(phase.availableMove>phase.clockMove&&phase.availableMove<=12);assert(Placement.readable(result.design));
+  const stripped=I.clone(result.design);delete stripped.obst.ice[goal.tile];
+  assert(!C.relayPhase(stripped,goal.tile).ok,'An automatically thawed or removed support does not count as a second phase');
+  const row={design:stripped,recipe:['midgameRelay'],trapPlan:result.plan};
+  const checked=Supports.measure(row,{valid:true,expectedTries:4,firstTryRate:.2},{measure(){throw Error('Wrong-phase support should fail before a bot');}},{});
+  assert(!Object.values(checked.supports)[0].present);
+});
+
+test('removing idle ice re-authors the recipe and exact clock instead of keeping a phantom frozen trap', t => {
+  const os=require('os'),dir=fs.mkdtempSync(path.join(os.tmpdir(),'oma-reauthor-'));
+  t.after(()=>fs.rmSync(dir,{recursive:true}));
+  const d=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/partner-relay.json')));d.down=[];
+  const id=boardKey(d).slice(0,16),row={id,level:700,target:10,shape:'moon',recipe:['frozenGuards'],design:d,playerFeedback:true,
+    origin:require('./originality.js').originOf(d,'reauthor/test','An authored frozen clock',19)};
+  fs.writeFileSync(path.join(dir,id+'.quality.json'),JSON.stringify({idle:['ice']}));
+  const {variants,remainingRecipe}=require('./original_variants.js');
+  const rebuilt=variants([row],dir).find(r=>r.edit?.startsWith('removed idle components'));
+  assert(rebuilt);assert.deepEqual(rebuilt.recipe,['clockRoute']);assert.equal(Object.keys(rebuilt.design.obst.ice).length,0);
+  const spare=d.clock.n-(d.solution.indexOf(d.clock.i)+1),exact=I.fix({...rebuilt.design,clock:{...rebuilt.design.clock,n:999}},spare);
+  assert(exact);assert.equal(rebuilt.design.clock.n,exact.clock.n);assert.equal(rebuilt.origin.creationId,row.origin.creationId);
+  assert.equal(rebuilt.trapPlan.authoredBoard,null);
+  assert.deepEqual(remainingRecipe(['trayJuggleFrozen','keyGuardIce'],['ice']),['trayJuggle']);
+  assert.deepEqual(remainingRecipe(['keyToEscape'],['locks']),['dontGrab']);
+});

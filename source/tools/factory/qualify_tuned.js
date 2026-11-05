@@ -16,8 +16,7 @@ async function run(planFile, poolFile, dir, jobs = 6, options = {}) {
     const rate = JSON.parse(fs.readFileSync(path.join(dir, r.id + '.rate.json')));
     if (!rate.train?.valid || !rate.validation?.valid || Math.abs(rate.train.exp - rate.validation.exp) > (plan.maxSeedGap ?? 2)) return false;
     const score = (rate.train.exp + rate.validation.exp) / 2;
-    return plan.levels.some(s => s.big === (r.design.tiles.length > 88) &&
-      (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) && Math.abs(score - s.target) <= (plan.tolerance ?? .5));
+    return plan.levels.some(s => require('./placement_score.js').slotAllows(r,s) && Math.abs(score - s.target) <= (plan.tolerance ?? .5));
   });
   const quality = path.join(dir, 'known-tuned-quality-input.json'); atomicJson(quality, viable);
   await evaluate(quality, dir, 'quality', jobs, true);

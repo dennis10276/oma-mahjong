@@ -5,6 +5,7 @@ const { createStageStore } = require('./stage_store.js');
 const { predictTries } = require('./predict.js');
 const Preferences = require('./shape_preferences.js');
 const Supports = require('./trap_supports.js');
+const Placement = require('./placement_score.js');
 const [SCREEN_LO, SCREEN_HI] = (process.env.FACTORY_SCREEN || '4.5,13').split(',').map(Number);
 
 async function main(poolFile, planFile, dir, jobs = 4) {
@@ -18,8 +19,7 @@ async function main(poolFile, planFile, dir, jobs = 4) {
   function fits(r, rate) {
     const exp = (rate.train?.exp + rate.validation?.exp) / 2;
     return rate.train?.valid && rate.validation?.valid && plan.levels.some(p =>
-      (r.origin?.intendedLevel == null || r.origin.intendedLevel === p.level) &&
-      (r.n > 88) === p.big && Math.abs(exp - p.target) <= plan.tolerance && Math.abs(rate.train.exp - rate.validation.exp) <= (plan.maxSeedGap ?? 2));
+      Placement.slotAllows(r,p) && Math.abs(exp - p.target) <= plan.tolerance && Math.abs(rate.train.exp - rate.validation.exp) <= (plan.maxSeedGap ?? 2));
   }
   function next() {
     // Finish verification of viable candidates before expanding the pool.

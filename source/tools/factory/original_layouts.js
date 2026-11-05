@@ -21,6 +21,7 @@ const BRIEFS = [
   { recipe: ['lockedClock', 'keyGuardIce'], brief: 'The buried clock needs its keys; thaw a guard on their actual dig before opening the lock.', spare: 2, placementIntent: 'staged' },
   { recipe: ['frozenGuards', 'partnerRelay'], brief: 'Plan the clock dig around the frozen partners of the singles it makes you carry.', spare: 2, placementIntent: 'tray-escape' },
   { recipe: ['frozenGuards', 'thawRelay'], brief: 'Work through a frozen neighbour before thawing a guard above the clock.', spare: 2, placementIntent: 'linked' },
+  { recipe: ['clockOnTopLocked', 'midgameRelay'], brief: 'Open the clock with room for one carried single, then release its frozen partner on a visible middle-game route.', spare: 2, placementIntent: 'staged' },
 ];
 function shapeChoices(plan, made, spec, rng) {
   // Candidate IDs are creation slots, not adjacent campaign levels. Alternative

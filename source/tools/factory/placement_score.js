@@ -8,9 +8,12 @@ const preferredSpare = brief => trayPuzzle(brief.recipe) ? 1 : (brief.spare ?? 2
 const clamp = x => Math.max(0, Math.min(1, x));
 const round = x => +x.toFixed(3);
 function patternKey(d){const b=boardOf(d);return digest({tiles:b.tiles,faces:b.faces,down:b.down,clockTile:b.clock?.i});}
+function slotAllows(row,slot){return slot.big===(row.design.tiles.length>88)&&
+  (row.origin?.intendedLevel==null||row.origin.intendedLevel===slot.level)&&
+  (!slot.keepId||slot.keepId===row.id)&&(!slot.keepPattern||slot.keepPattern===patternKey(row.design));}
 function routeTiles(d, analysis) {
   const c = I.ctxOf(d), targets = [d.clock?.i, ...(d.obst?.keys || [])].filter(Number.isInteger);
-  const end = targets.length ? Math.max(...targets.map(i => c.pos[i] + 1)) : 0;
+  const end = Math.max(0,...targets.map(i=>c.pos[i]+1),...(analysis?.phaseGoals||[]).map(g=>g.availableMove||0));
   return new Set([...d.solution.slice(0, end), ...(analysis?.needed || []), ...targets]);
 }
 function prepare(d, analysis, protectedHidden = []) {
@@ -26,7 +29,7 @@ function prepare(d, analysis, protectedHidden = []) {
 function readable(d) {
   const a = require('./trap_composer.js').analyze(d), path = routeTiles(d,a), hidden = new Set(d.down);
   const markers = [d.clock?.i,...(d.obst?.keys||[]),...(d.obst?.locks||[])].filter(Number.isInteger);
-  return [...path].filter(i=>hidden.has(i)).length <= 1 && markers.every(i=>!hidden.has(i));
+  return (a.phaseGoals||[]).every(g=>g.ok)&&[...path].filter(i=>hidden.has(i)).length <= 1 && markers.every(i=>!hidden.has(i));
 }
 function temptation(d, c, route) {
   if (!d.clock) return { found: false, kind: null, indices: [], provedWrong: false };
@@ -84,4 +87,4 @@ function score(d, recipe = [], shape = '', analysis) {
       visibleMarkerShare: round(signpostShare), hiddenKeys: keys.filter(i => hidden.has(i)),
       hiddenRouteTiles: blind, route, spare, trayPuzzle: trayPuzzle(recipe), temptation: lure } };
 }
-module.exports = { VERSION, preferredSpare, patternKey, routeTiles, prepare, readable, score };
+module.exports = { VERSION, preferredSpare, patternKey, slotAllows, routeTiles, prepare, readable, score };

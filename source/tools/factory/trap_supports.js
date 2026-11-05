@@ -10,6 +10,7 @@ function checks(row) {
     if (step.placement !== 'extend existing roles') return [];
     const kind = ICE.has(step.recipe) ? 'ice' : LOCKS.has(step.recipe) ? 'locks' : null;
     return kind ? [{ name: step.recipe + '@' + index, recipe: step.recipe, kind,
+      ...(step.recipe==='midgameRelay'?{phase:'afterClockBefore60Percent',minimumAfterClock:3}:{}),
       indices: [...new Set(step.addedSpecials || [])].sort((a, b) => a - b) }] : [];
   });
   for (const key of new Set(row.recipe || [])) if (MOTIFS[key] && !result.some(x => x.recipe === key))
@@ -27,7 +28,8 @@ function measure(row, baseline, meter, settings) {
   const supports = {};
   for (const check of checks(row)) {
     const b = row.design, ids = new Set(check.indices);
-    const present = ids.size > 0 && [...ids].every(i => check.kind === 'ice' ? b.obst?.ice?.[i] > 0 : b.obst?.locks?.includes(i));
+    const present = ids.size > 0 && [...ids].every(i => check.kind === 'ice' ? b.obst?.ice?.[i] > 0 : b.obst?.locks?.includes(i))&&
+      (!check.phase||[...ids].every(i=>require('./trap_composer.js').relayPhase(b,i).ok));
     if (!present) { supports[check.name] = { kind: check.kind, indices: check.indices, present: false, matters: false }; continue; }
     const obst = { ...b.obst, ...(check.kind === 'ice'
       ? { ice: Object.fromEntries(Object.entries(b.obst.ice).filter(([i]) => !ids.has(+i))) }
