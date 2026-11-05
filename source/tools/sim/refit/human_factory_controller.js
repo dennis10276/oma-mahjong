@@ -83,7 +83,7 @@ function lossPhaseName(state, clock) {
 
 function createBotController(tiles, profile, seed) {
   assert(Number.isInteger(seed));
-  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam','routeHope','routeNeed','routeNeedTray']);
+  const allowed=new Set([...Object.keys(PROFILES.dennis),'extraClockLookProbability','deadlineAttentionProbability','deadlineLearningRate','clockRowPreview','sharedClockIce','clockOutsPlan','clockCompletionBonus','retryClockTrayDepth','retryClockHorizon','retryKeyIdentityMemory','retryLockedCarryKeys','retryPrepareKeyOuts','retryKeyRouteValue','retryKeyPictureRelations','retryAccessMemory','clockBesideLockKeys','spotPenalty','planAhead','lookDepth','lookPenalty','lookFrom','pairFirst','clockFirst','clockNeedFull','routePlan','routeBeam','routeHope','routeNeed','routeNeedTray','routeNeedSlack']);
   assert(Object.entries(profile).every(([key,value])=>allowed.has(key)&&(key==='strictClockSlack'?typeof value==='boolean':Number.isFinite(value))),'Only fixed global behavioral parameters are supported');
   assert(Object.keys(PROFILES.dennis).every(key=>Object.hasOwn(profile,key)),'Incomplete behavioral profile');
   const p = { ...profile }, random = Layouts.rng(seed);
@@ -436,7 +436,9 @@ function createBotController(tiles, profile, seed) {
         }
         next.sort((x, y) => x.h - y.h); beam = next.slice(0, width);
       }
-      if (!found && partial) found = partial.path;
+      // only when the moves are getting tight: with room to spare a person just plays and reaches the clock anyway
+      // (release 175: clock locked behind frozen keys but 26 moves; heading straight for it cost 1.05 -> 4.9 tries)
+      if (!found && partial && clock.remaining - need0 <= (p.routeNeedSlack ?? 4)) found = partial.path;
       routeCache = { sig, path: found || [] };
       return found ? found[0] : null;
     })();
