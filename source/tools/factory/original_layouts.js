@@ -41,6 +41,9 @@ function make(planFile, out) {
   for (let k = 0; k < plan.levels.length; k++) {
     const spec = plan.levels[k]; if (made.some(r => r.level === spec.level)) continue;
     const rng = L.rng(62000 + spec.level * 37), choices = shapeChoices(plan, made, spec, rng);
+    // The catalogue is fixed throughout this creation's search. Reusing its
+    // masks also lets fitsLayouts reuse their D4 views across candidates.
+    const masks = [...past, ...made.map(r => F.spots(r.tiles)[0])];
     let selected = null;
     for (const sh of choices) {
       for (let trial = 0; trial < (plan.layoutAttempts || 8) && !selected; trial++) {
@@ -49,7 +52,7 @@ function make(planFile, out) {
         const tiles = F.candidate(sh, n, seed, t => {
           if (t.length < Preferences.minimum(plan)) return false;
           if (seen.has(layoutKey({ tiles: t }))) return false;
-          return fitsLayouts(t, [...past, ...made.map(r => F.spots(r.tiles)[0])]);
+          return fitsLayouts(t, masks);
         });
         if (tiles) selected = { level: spec.level, shape: sh.name, base: sh.shape, n: tiles.length, tiles, seed,
           layoutKey: layoutKey({ tiles }), originalityVersion: 'layout-d4-v1', generated: 'fresh-catalogue-pile', px: F.tilePx(tiles.map(([x, y, z]) => ({ x, y, z }))) };
