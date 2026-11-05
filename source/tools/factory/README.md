@@ -156,6 +156,62 @@ as well; its diagnostic rows are never treated as accepted levels.
 
 ## Where the time goes
 
+### Trap placement and combinations
+
+New construction uses `trap_composer.js`. It explores several placements on the
+same fresh pairing, keeps a small beam of legal choices, and records why each
+trap belongs there. It preserves the actual witness order while varying the
+order in which locations and key pairs are considered. Seeded placement intents
+prefer linked dependencies, a route across the board, staged unlocks/thaws, or
+tray escape with relief. These are authoring preferences, not difficulty ratings.
+
+A later recipe must retain the earlier clock, waiting clock partner, shared key
+pair, locks, ice, and authored picture/hidden-tile relationships. A combination
+that overwrites those roles is rejected. Add-ons extend existing roles where
+possible: `frozenGuards` uses the current clock, frozen tray partners use its
+actual dig, and additional partner locks use the existing keys. They cannot
+silently turn a two-trap brief into a different one-trap board.
+
+Three additional motifs are available:
+
+| Motif | Required structure | Placement |
+|---|---|---|
+| `keyGuardIce` | Existing keys with a covered dig | Ice on an actual blocker of those keys |
+| `partnerRelay` | Existing clock route with a carried single | Ice on that single's later partner outside the dig |
+| `thawRelay` | A relevant frozen clock/key guard | Ice on an earlier neighbour on its thaw route |
+
+`original_layouts.js` includes corresponding briefs. A slot may set
+`placementIntent` to `linked`, `cross-board`, `staged`, or `tray-escape`.
+Plan options are `placementProbes` (default 3), `placementBeam` (2),
+`placementMilliseconds` (1200 for a whole composition), and
+`placementProbeMilliseconds` (400). Each remaining recipe step receives a share
+of the time budget. Legacy inner route searches share the deadline. A solver
+completion can slightly overshoot it; an unresolved route is never accepted.
+Proved exact routes are reused within this composition, including when only
+the clock spare changes. Failed/unproved routes are not cached this way.
+
+Construction rows include `trapPlan`: the intent, actual per-step role changes,
+cover/unlock/thaw/partner edges, and an arrangement signature. Recent signatures
+on the same creation receive lower priority. Dependency edges describe the
+stored witness and do not prove every possible solution follows that route.
+The `authoredBoard` hash identifies this initial snapshot; after steering,
+`authored(row)` detects whether it still matches. Recompute `analyze(row.design)`
+when explaining an edited board. Historical warm deals remain usable in the
+measurement pool, but only current, matching placement proofs fill the new
+constructor's requested composition quota. Placement does
+not qualify a level: full bot ratings, special ablations, relief, attribution,
+originality and independent-seed gates still decide acceptance. Existing
+construction checkpoints require a new output directory after this change.
+
+Quality also removes each supporting component on its own, leaving the primary
+trap intact (`trap_supports.js`). Its full family rating must change by at least
+0.3 expected tries or 0.15 first-try probability, using the existing meaningful-
+special threshold. A missing or idle support is rejected before the expensive
+skilled planner. The change can make the board easier; its eventual curve rating
+still decides placement. Support manifests fingerprint quality records, so a
+cached group-only check cannot qualify a newly composed combination. Historical
+rows without these additions keep their original quality requirements.
+
 - Family measurements come first. Off-curve boards and boards with idle
   specials skip the expensive skilled planner until those problems are fixed.
 - Six-game scouting ranks edits. Full 20-game/two-seed measurements decide

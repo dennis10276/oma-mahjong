@@ -69,6 +69,11 @@ const noDown = (b, list) => { b.down = b.down.filter(i => !list.includes(i)); };
 const rngOf = s => () => (s = (s * 16807) % 2147483647) / 2147483647;
 // ice that still works with the way through: each frozen tile has enough ice-neighbours gone before it
 const iceOK = (c, i, h) => c.inb[i].filter(j => c.pos[j] < c.pos[i]).length >= h;
+// Factory placement explores several candidates without changing the witness
+// order used to test dependencies. Existing lab callers keep their old order.
+const ordered = (c, values) => c.candidateOrder ? c.candidateOrder(values) : values;
+const orderedPairs = (c, values) => c.candidateRank ? values.slice().sort((a, b) =>
+  (c.candidateRank[a[0]] + c.candidateRank[a[1]]) - (c.candidateRank[b[0]] + c.candidateRank[b[1]])) : values;
 
 /* ---------- the ideas ----------
    Each takes the designer's board and its way through and places specials after one idea. They return
@@ -81,7 +86,7 @@ function trayJuggleIdea(kind, title, idea) {
   return { title, idea, make(b, c) {
     const ok = i => !special(b, i);
     const cks = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 3 && coverOf(c, i).size <= 6) cks.push(i);
-    for (const ck of cks.slice(0, 12)) {
+    for (const ck of ordered(c, cks).slice(0, 12)) {
       const D = [...coverOf(c, ck)]; if (!D.every(ok)) continue;
       const x = clone(b), f = x.faces, buried = i => coverOf(c, i).size >= 2 && !D.includes(i) && i !== ck && ok(i);
       let fine = true; const partners = [];
@@ -133,7 +138,7 @@ const IDEAS = {
     idea: 'The alarm clock tile itself is locked. Find both keys early enough, or time runs out.',
     make(b, c, r) {
       const L0 = c.P.length, cands = c.P.filter(i => c.pos[i] > L0 * 0.25 && c.pos[i] < L0 * 0.45 && !special(b, i) && c.nb.above[i].length);
-      for (const ck of cands) {
+      for (const ck of ordered(c, cands)) {
         const keys = c.pairs.filter(([a, b2, k]) => k < c.pos[ck] - 2 && k > c.pos[ck] * 0.45 && a !== ck && b2 !== ck && !special(b, a) && !special(b, b2)).pop();
         if (!keys) continue;
         const x = clone(b); const locksExtra = c.P.filter(i => c.pos[i] > keys[2] + 4 && c.top[i] && !special(x, i) && i !== ck && !keys.includes(i)).slice(0, 2);
@@ -150,7 +155,7 @@ const IDEAS = {
     idea: 'The tiles lying on top of the alarm clock are frozen. Thaw them by clearing their neighbours first, in the right order.',
     make(b, c) {
       const L0 = c.P.length;
-      for (const ck of c.P.filter(i => c.pos[i] > L0 * 0.3 && c.pos[i] < L0 * 0.55 && !special(b, i))) {
+      for (const ck of ordered(c, c.P.filter(i => c.pos[i] > L0 * 0.3 && c.pos[i] < L0 * 0.55 && !special(b, i)))) {
         const guards = c.nb.above[ck].filter(a => !special(b, a));
         if (guards.length < 2) continue;
         const x = clone(b); x.obst = x.obst || { ice: {}, locks: [], keys: [] };
@@ -183,7 +188,7 @@ const IDEAS = {
     title: 'Chain of ice',
     idea: 'A row of frozen tiles that thaw one after another, the last one guarding the alarm clock.',
     make(b, c) {
-      for (const s of c.P.slice(4, c.P.length * 0.4)) {
+      for (const s of ordered(c, c.P.slice(4, c.P.length * 0.4))) {
         // a chain s -> t1 -> t2 -> t3, each a side neighbour of the one before, later on the way through
         const chain = [s]; let cur = s;
         for (let k = 0; k < 3; k++) { const nx = c.inb[cur].filter(j => c.tiles[j].z === c.tiles[cur].z && c.pos[j] > c.pos[cur] && !special(b, j) && !chain.includes(j)).sort((p, q) => c.pos[p] - c.pos[q])[0]; if (nx === undefined) break; chain.push(nx); cur = nx; }
@@ -221,7 +226,7 @@ const IDEAS = {
       const byFace = {}; for (let i = 0; i < c.n; i++) if (deep(i)) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
       const pairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).sort((p, q) => Math.abs(c.tiles[q[0]].x - c.tiles[q[1]].x) - Math.abs(c.tiles[p[0]].x - c.tiles[p[1]].x));
       const coverOf = i => { const s2 = new Set(), st = [i]; while (st.length) { const j = st.pop(); for (const a of c.nb.above[j]) if (!s2.has(a)) { s2.add(a); st.push(a); } } return s2; };
-      for (const kk of pairs.slice(0, 12)) {
+      for (const kk of orderedPairs(c, pairs).slice(0, 12)) {
         const way = new Set([...coverOf(kk[0]), ...coverOf(kk[1])]);
         const locks = c.P.filter(i => c.top[i] && !way.has(i) && !kk.includes(i) && !special(b, i)).slice(0, 6);
         if (locks.length < 5) continue;
@@ -244,10 +249,10 @@ const IDEAS = {
       const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2) deep.push(i);
       const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
       const keyPairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]);
-      for (const kk of keyPairs.slice(0, 10)) {
+      for (const kk of orderedPairs(c, keyPairs).slice(0, 10)) {
         const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]);
         const clocks = deep.filter(i => !kk.includes(i) && !kdig.has(i) && coverOf(c, i).size >= 3 && ![...coverOf(c, i)].some(j => kk.includes(j))).sort((p, q) => coverOf(c, q).size - coverOf(c, p).size);
-        for (const ck of clocks.slice(0, 4)) {
+        for (const ck of ordered(c, clocks).slice(0, 4)) {
           const cdig = coverOf(c, ck);
           const x = clone(b);
           // ice on one tile over each key (double where it fits)
@@ -274,7 +279,7 @@ const IDEAS = {
       const pairOnly = [...counts.values()].every(n => n === 2), minimumLocks = pairOnly ? 2 : 3;
       const byFace = {}; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
       const pairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).sort((p, q) => (coverOf(c, q[0]).size + coverOf(c, q[1]).size) - (coverOf(c, p[0]).size + coverOf(c, p[1]).size));
-      for (const kk of pairs.slice(0, 12)) {
+      for (const kk of orderedPairs(c, pairs).slice(0, 12)) {
         const dig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]);
         const locks = [];
         for (const t of dig) for (let j = 0; j < c.n; j++) if (j !== t && b.faces[j] === b.faces[t] && !dig.has(j) && !kk.includes(j) && ok(j) && !locks.includes(j)) { locks.push(j); break; }
@@ -294,7 +299,7 @@ const IDEAS = {
       const ok = i => !special(b, i);
       const clocks = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 4 && coverOf(c, i).size <= 9) clocks.push(i);
       clocks.sort((p, q) => coverOf(c, q).size - coverOf(c, p).size);
-      for (const ck of clocks.slice(0, 12)) {
+      for (const ck of ordered(c, clocks).slice(0, 12)) {
         const dig = [...coverOf(c, ck)].filter(ok);
         const x = clone(b);
         const down = new Set(x.down.filter(i => i !== ck)); for (const t of dig) if (!c.free0[t]) down.add(t);
@@ -320,7 +325,7 @@ const IDEAS = {
       const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 3) deep.push(i);
       const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
       const keyPairs = Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]);
-      for (const kk of keyPairs.slice(0, 10)) for (const ck of tops.slice(0, 6)) {
+      for (const kk of orderedPairs(c, keyPairs).slice(0, 10)) for (const ck of ordered(c, tops).slice(0, 6)) {
         if (b.faces[ck] === b.faces[kk[0]]) continue;
         const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]); if (kdig.has(ck)) continue;
         const x = clone(b);
@@ -336,7 +341,7 @@ const IDEAS = {
     idea: 'The alarm clock is free from the start, but its partner is buried. Take the clock too early and it blocks a tray slot while you dig; wait too long and the alarm goes off.',
     make(b, c) {
       const ok = i => !special(b, i);
-      for (const ck of c.P.filter(i => ok(i) && c.free0[i]).slice(0, 15)) {
+      for (const ck of ordered(c, c.P.filter(i => ok(i) && c.free0[i])).slice(0, 15)) {
         const x = clone(b); const mates = buryMates(x, c, ck, 4); if (!mates || !mates.length) continue;
         const mate = mates.sort((p, q) => coverOf(c, p).size - coverOf(c, q).size)[0];
         x.clock = null; noDown(x, [ck]);
@@ -356,12 +361,12 @@ const IDEAS = {
     idea: 'The alarm clock lies on top but is frozen. The tiles next to it are locked, and the keys are buried. Keys first, then its neighbours, then the clock.',
     make(b, c) {
       const ok = i => !special(b, i);
-      for (const ck of c.P.filter(i => ok(i) && c.top[i])) {
+      for (const ck of ordered(c, c.P.filter(i => ok(i) && c.top[i]))) {
         const nbs = c.inb[ck].filter(j => ok(j) && c.tiles[j].z === c.tiles[ck].z);
         if (nbs.length < 2) continue;
         const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2 && i !== ck && !nbs.includes(i)) deep.push(i);
         const byFace = {}; for (const i of deep) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
-        for (const kk of Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).slice(0, 6)) {
+        for (const kk of orderedPairs(c, Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]])).slice(0, 6)) {
           const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]);
           if (nbs.some(j => kdig.has(j)) || kdig.has(ck)) continue;
           const x = clone(b);
@@ -386,13 +391,13 @@ const IDEAS = {
     idea: "The alarm clock is free, but its partner is buried under locked tiles. Find the keys, then dig to the partner, and only then take the clock.",
     make(b, c) {
       const ok = i => !special(b, i);
-      for (const ck of c.P.filter(i => ok(i) && c.free0[i]).slice(0, 15)) {
+      for (const ck of ordered(c, c.P.filter(i => ok(i) && c.free0[i])).slice(0, 15)) {
         const b2 = clone(b), mates = buryMates(b2, c, ck, 2); if (!mates || !mates.length) continue;
         const m = mates[0], lockT = [...coverOf(c, m)].filter(ok);
         if (lockT.length < 2) continue;
         const deep = []; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 2 && i !== ck && !mates.includes(i) && !lockT.includes(i)) deep.push(i);
         const byFace = {}; for (const i of deep) (byFace[b2.faces[i]] = byFace[b2.faces[i]] || []).push(i);
-        for (const kk of Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]]).slice(0, 6)) {
+        for (const kk of orderedPairs(c, Object.values(byFace).filter(g => g.length >= 2).map(g => [g[0], g[1]])).slice(0, 6)) {
           const kdig = new Set([...coverOf(c, kk[0]), ...coverOf(c, kk[1])]); if (lockT.some(t => kdig.has(t)) || kdig.has(ck)) continue;
           const x = clone(b2);
           x.obst = { ice: Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, m, ...lockT, ...kk].includes(+i))), locks: lockT, keys: [kk[0], kk[1]] };
@@ -409,11 +414,11 @@ const IDEAS = {
     make(b, c) {
       const ok = i => !special(b, i);
       const byFace = {}; for (let i = 0; i < c.n; i++) if (ok(i) && coverOf(c, i).size >= 1 && !c.free0[i]) (byFace[b.faces[i]] = byFace[b.faces[i]] || []).push(i);
-      for (const g of Object.values(byFace).filter(g => g.length >= 2)) for (const [k1, k2] of [[g[0], g[1]], [g[1], g[0]]]) {
+      for (const g of orderedPairs(c, Object.values(byFace).filter(g => g.length >= 2))) for (const [k1, k2] of [[g[0], g[1]], [g[1], g[0]]]) {
         const u = [...coverOf(c, k2)].find(t => ok(t) && c.nb.above[t].length === 0);
         if (u === undefined) continue;
         const kdig = new Set([...coverOf(c, k1), ...coverOf(c, k2)]);
-        for (const ck of c.P.filter(i => ok(i) && c.free0[i] && !kdig.has(i) && i !== k1 && i !== k2).slice(0, 4)) {
+        for (const ck of ordered(c, c.P.filter(i => ok(i) && c.free0[i] && !kdig.has(i) && i !== k1 && i !== k2)).slice(0, 4)) {
           const x = clone(b);
           const ice = Object.fromEntries(Object.entries(x.obst.ice || {}).filter(([i]) => ![ck, k1, k2, u].includes(+i) && !c.inb[u].includes(+i)));
           ice[u] = 2;
@@ -430,6 +435,7 @@ const IDEAS = {
 // a change that breaks the stored way through: search a new one with the rules on (the clock keeps its
 // spare moves on the new way)
 function clockRoute(g, ci) {   // (hard.js clockRoute, searching deeper: a clock behind keys and ice is far down)
+  if (Date.now() >= (exactOptions.deadline ?? Infinity)) return null;
   const n = g.tiles.length, initial = new Uint8Array(n).fill(1);
   const remainingRules = alive => {
     if (!g.rules) return null;
@@ -454,6 +460,7 @@ function clockRoute(g, ci) {   // (hard.js clockRoute, searching deeper: a clock
   for (let depth = 0; depth < Math.min(70, n * 0.85) && frontier.length && nodes < 60000; depth++) {
     const next = [];
     for (const state of frontier) {
+      if (Date.now() >= (exactOptions.deadline ?? Infinity)) return null;
       for (let i = 0; i < n; i++) {
         if (!(g.rules ? L.takeable(i, state.alive, g.nb, g.rules, initial) : L.isFree(i, state.alive, g.nb))) continue;
         const q = state.tray.findIndex(j => g.faces[j] === g.faces[i]);
@@ -477,16 +484,32 @@ function clockRoute(g, ci) {   // (hard.js clockRoute, searching deeper: a clock
 // EXACT: the clock counts from the true shortest way to it (tools/lab/exact.js), not the beam search
 const { exactRoute } = require('./exact');
 let EXACT = false, exactOptions = {};
+const remainingMilliseconds = () => Math.min(exactOptions.milliseconds ?? Infinity, (exactOptions.deadline ?? Infinity) - Date.now());
+function withSearchBudget(deadline, fn, routeCache) {
+  const saved = exactOptions;
+  exactOptions = { ...saved, deadline: Math.min(saved.deadline ?? Infinity, deadline), routeCache: routeCache || saved.routeCache };
+  try { return fn(); } finally { exactOptions = saved; }
+}
 function fix(y, spare) {
   const g = gameG(y);
+  const routeTo = target => {
+    const key = exactOptions.routeCache && JSON.stringify([y.tiles, y.faces, y.obst || null, target]);
+    if (EXACT && key && exactOptions.routeCache.has(key)) return exactOptions.routeCache.get(key).slice();
+    if (remainingMilliseconds() <= 0) return null;
+    if (!EXACT) return clockRoute(g, target);
+    const ex = exactRoute(g, target, exactOptions.nodes, remainingMilliseconds());
+    if (ex && key) exactOptions.routeCache.set(key, ex.path.slice());
+    return ex?.path || null;
+  };
   let path = null;
   if (y.clock && y.clockMate !== undefined) {   // "don't grab the clock": the quickest way to its buried partner, the clock right with it
-    const ex = EXACT ? exactRoute(g, y.clockMate, exactOptions.nodes, exactOptions.milliseconds) : null, route = ex ? ex.path : EXACT ? null : clockRoute(g, y.clockMate); if (!route) return null;
+    const route = routeTo(y.clockMate); if (!route) return null;
     const ck = y.clock.i, k = route.indexOf(y.clockMate); path = route.filter(i => i !== ck); path.splice(k + (route.indexOf(ck) < k ? 0 : 1), 0, ck);
     const z = { ...y, solution: path, clock: { i: ck, n: path.indexOf(ck) + 1 + (spare ?? 1) } };
     return valid(z) ? z : null;
   }
-  if (y.clock) { const ex = EXACT ? exactRoute(g, y.clock.i, exactOptions.nodes, exactOptions.milliseconds) : null; path = ex ? ex.path : EXACT ? null : clockRoute(g, y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
+  if (y.clock) { path = routeTo(y.clock.i); if (!path) return null; }   // the quickest way to the clock that finishes the level (none found: the clock would mean nothing)
+  if (!y.clock && remainingMilliseconds() <= 0) return null;
   if (!path && valid(y)) path = y.solution;
   if (!path) { const al = new Uint8Array(y.tiles.length).fill(1); path = L.solve(g.tiles, g.nb, y.faces, al, [], EXACT ? (exactOptions.solveNodes ?? exactOptions.nodes ?? 20000) : 120000, g.rules); }
   if (!path || path.length !== y.tiles.length) return null;
@@ -561,7 +584,8 @@ function nudge(b, target, seed, keep, spare, kind, steps = +(process.env.STEPS |
 const LEVELS = { hard: { Dennisisdebeste: 0.12, 'Mrs. Doubtfire': 0.05 }, veryhard: { Dennisisdebeste: 0.05, 'Mrs. Doubtfire': 0.02 }, brutal: { Dennisisdebeste: 0.02, 'Mrs. Doubtfire': 0.01 }, honest: null }, SPARE = { hard: 2, veryhard: 1, brutal: 1, honest: 2 };
 const OUTD = path.join(__dirname, 'ideas-out');
 const shapes = [...SHAPE_NAMES.filter(s => !['block', 'oval', 'octagon'].includes(s)), ...Array.from({ length: 80 }, (_, k) => 'blob' + (9001 + k * 37))];
-module.exports = { IDEAS, ctxOf, fix, valid, clone, rngOf, measure, setExact: (v, options = {}) => { EXACT = v; exactOptions = options; } };
+module.exports = { IDEAS, ctxOf, fix, valid, clone, rngOf, measure, withSearchBudget,
+  setExact: (v, options = {}) => { EXACT = v; exactOptions = options; } };
 if (require.main !== module) { /* used as a module by tools/factory/plan.js */ }
 else if (process.argv[2] === 'merge') {
   const ideas = fs.readdirSync(OUTD).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(OUTD, f), 'utf8'))).filter(x => x.id >= +(process.argv[3] || 0)).sort((a, b) => a.id - b.id);

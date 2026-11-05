@@ -6,12 +6,13 @@ const { digest, boardKey } = require('./meter.js');
 const { checkOrigin, compare, previousBoards } = require('./originality.js');
 const Final = require('./final_seed.js');
 const Preferences = require('./shape_preferences.js');
+const Supports = require('./trap_supports.js');
 
 function candidates(pool, dir) {
   const read = (r, mode) => { const f = path.join(dir, r.id + '.' + mode + '.json'); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)) : null; };
   return pool.flatMap(r => {
     const rate = read(r, 'rate'), quality = read(r, 'quality');
-    if (!rate?.train?.valid || !rate.validation?.valid || !quality?.eligible) return [];
+    if (!rate?.train?.valid || !rate.validation?.valid || !quality?.eligible || !Supports.compatible(r, quality)) return [];
     return [{ ...r, rate, quality, fresh: read(r, 'fresh'), exp: (rate.train.exp + rate.validation.exp) / 2,
       base: r.shape.split(' · ')[0], spots: F.spots(r.design.tiles)[0] }];
   });
@@ -111,6 +112,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       search: rate.train.exp, validation: rate.validation.exp, searchSeed: 4711, validationSeed: 18427,
       ...(Final.tuned(r) ? { fresh: fresh.fresh.exp, freshSeed: Final.SEED } : {}), version: rate.train.version },
       skilled: quality.skilled.exp, room: quality.room, atTrap: quality.atTrap, specials: quality.special,
+      ...(quality.supports ? { supports: quality.supports, supportFingerprint: quality.supportFingerprint } : {}),
       warnings: quality.lateShare >= 0.3 ? ['lateSqueeze'] : [], lateShare: quality.lateShare,
       clockSpare: r.design.clock.n - (r.design.solution.indexOf(r.design.clock.i) + 1),
       design: { ...r.design, level: s.level }, boardHash: boardKey(r.design), bot: rate.bot }];

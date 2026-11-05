@@ -2,11 +2,12 @@
 const fs = require('fs'), path = require('path');
 const { Worker, isMainThread, parentPort } = require('worker_threads');
 const I = require('../lab/ideas.js'), Hard = require('../../www/hard.js'), L = global.Layouts;
-const { applyRecipe, roomProfile } = require('./design_traps.js');
+const { roomProfile } = require('./design_traps.js');
+const { compose, authored } = require('./trap_composer.js');
 const { originOf } = require('./originality.js');
 const { atomicJson, boardKey, digest, sourceHash } = require('./meter.js');
 
-function construct(pile, spec, plan, attempt, diagnostic = {}) {
+function construct(pile, spec, plan, attempt, diagnostic = {}, seen = []) {
   const fail = stage => { diagnostic.stage = stage; return null; };
   if (pile.tiles.length < require('./shape_preferences.js').minimum(plan)) return fail('tileCount');
   const brief = attempt >= 8 && spec.alternatives?.length ? spec.alternatives[Math.floor((attempt - 8) / 8) % spec.alternatives.length] : spec;
@@ -16,9 +17,13 @@ function construct(pile, spec, plan, attempt, diagnostic = {}) {
   if (!raw.solution) return fail('pairing');
   const base = { ...raw, obst: { ice: {}, locks: [], keys: [] }, clock: null };
   if (!I.valid(base)) return fail('baseSolution');
-  const placed = applyRecipe(base, brief.recipe, I.rngOf(seed * 13 + 7));
-  let d = placed && I.fix(placed, brief.spare ?? 2);
-  if (!placed) return fail('recipe');
+  diagnostic.placement = {};
+  const composed = compose(base, brief.recipe, I.rngOf(seed * 13 + 7), { spare: brief.spare ?? 2,
+    intent: brief.placementIntent, probes: plan.placementProbes ?? 3, beam: plan.placementBeam ?? 2,
+    milliseconds: plan.placementMilliseconds ?? 1200, probeMilliseconds: plan.placementProbeMilliseconds ?? 400,
+    diagnostic: diagnostic.placement, seen });
+  let d = composed?.design;
+  if (!composed) return fail('recipe');
   if (!d?.clock || !I.valid(d)) return fail('clockRoute');
   let room = roomProfile(d), edits = [];
   for (let k = 0; room.ok && room.unrelieved > 1 && k < base.tiles.length; k++) {
@@ -36,12 +41,13 @@ function construct(pile, spec, plan, attempt, diagnostic = {}) {
   origin.intendedLevel = spec.level; origin.layoutSeed = pile.seed; origin.pairingSeed = seed;
   return { id: boardKey(d).slice(0, 16), level: spec.level, target: spec.target, shape: pile.shape,
     recipe: brief.recipe, brief: brief.brief, n: d.tiles.length, design: d, room, origin,
-    seedSource: 'fresh-designed', constructionEdits: edits, attempt };
+    seedSource: 'fresh-designed', constructionEdits: edits, attempt,
+    trapPlan: { ...composed.plan, authoredBoard: boardKey(d) } };
 }
 if (!isMainThread) parentPort.on('message', job => {
   const started = Date.now();
   const diagnostic = {};
-  try { parentPort.postMessage({ level: job.spec.level, attempt: job.attempt, row: construct(job.pile, job.spec, job.plan, job.attempt, diagnostic), ...diagnostic, seconds: (Date.now() - started) / 1000 }); }
+  try { parentPort.postMessage({ level: job.spec.level, attempt: job.attempt, row: construct(job.pile, job.spec, job.plan, job.attempt, diagnostic, job.seen), ...diagnostic, seconds: (Date.now() - started) / 1000 }); }
   catch (e) { parentPort.postMessage({ level: job.spec.level, attempt: job.attempt, error: e.message }); }
 });
 else {
@@ -58,7 +64,9 @@ else {
     for (const r of rows) {
       const spec = plan.levels.find(s => s.level === r.level);
       const recipe = x => [...new Set(x)].sort().join('+');
-      if (spec && [spec, ...(spec.alternatives || [])].some(b => recipe(b.recipe) === recipe(r.recipe)))
+      // Historical deals remain available to the measurement pool. They cannot
+      // satisfy a quota for the new composer without its actual-board proof.
+      if (spec && authored(r) && [spec, ...(spec.alternatives || [])].some(b => recipe(b.recipe) === recipe(r.recipe)))
         counts[r.level] = (counts[r.level] || 0) + 1;
     }
     const done = new Set(state.done), queue = [];
@@ -68,7 +76,8 @@ else {
       const w = new Worker(__filename); w.on('error', reject);
       const next = () => {
         let job; while (queue.length) { const q = queue.shift(); if ((counts[q.spec.level] || 0) < wanted) { job = q; break; } }
-        if (job) w.postMessage(job); else w.terminate().then(resolve, reject);
+        if (job) w.postMessage({ ...job, seen: rows.filter(r => r.level === job.spec.level && authored(r)).map(r => r.trapPlan.analysis.signature) });
+        else w.terminate().then(resolve, reject);
       };
       w.on('message', r => {
         done.add(r.level + '/' + r.attempt); state.done = [...done]; state.results.push({ ...r, row: undefined });

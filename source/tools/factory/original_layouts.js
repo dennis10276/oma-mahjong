@@ -18,6 +18,9 @@ const BRIEFS = [
   { recipe: ['iceChain', 'blindTwins'], brief: 'Use visible ice as a guide while remembering the newly uncovered partners.', spare: 1 },
   { recipe: ['keyToEscape'], brief: 'Unlock a route to the clock partner before taking the tempting clock.', spare: 2 },
   { recipe: ['lockedClock'], brief: 'Bring both key pictures together before the buried locked clock runs out.', spare: 2 },
+  { recipe: ['lockedClock', 'keyGuardIce'], brief: 'The buried clock needs its keys; thaw a guard on their actual dig before opening the lock.', spare: 2, placementIntent: 'staged' },
+  { recipe: ['frozenGuards', 'partnerRelay'], brief: 'Plan the clock dig around the frozen partners of the singles it makes you carry.', spare: 2, placementIntent: 'tray-escape' },
+  { recipe: ['frozenGuards', 'thawRelay'], brief: 'Work through a frozen neighbour before thawing a guard above the clock.', spare: 2, placementIntent: 'linked' },
 ];
 function shapeChoices(plan, made, spec, rng) {
   // Candidate IDs are creation slots, not adjacent campaign levels. Alternative

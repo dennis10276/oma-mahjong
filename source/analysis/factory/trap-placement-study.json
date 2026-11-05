@@ -1,0 +1,1217 @@
+{
+  "cases": 36,
+  "legalConstructionCandidates": 9,
+  "placementSeconds": 17.829,
+  "maxSeconds": 1.286,
+  "pairedCases": 16,
+  "legacyLegal": 4,
+  "legacyErasingAnEarlierRole": 1,
+  "legacySeconds": 44.608,
+  "composedLegal": 4,
+  "composedSeconds": 10.278,
+  "previews": [
+    600,
+    602,
+    605,
+    607,
+    608
+  ],
+  "tests": 51,
+  "effects": [
+    {
+      "level": 605,
+      "recipe": [
+        "frozenGuards",
+        "partnerRelay"
+      ],
+      "motif": "partnerRelay",
+      "added": [
+        43
+      ],
+      "seed": 4711,
+      "campaigns": 40,
+      "without": {
+        "exp": 1.18,
+        "first": 0.9,
+        "valid": true
+      },
+      "with": {
+        "exp": 1.18,
+        "first": 0.9,
+        "valid": true
+      },
+      "bot": "cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d",
+      "diagnosticOnly": true,
+      "mattersInSample": false,
+      "quality": {
+        "id": "7b35787216e4d504",
+        "key": "7b35787216e4d5043ae2b1316c7a0153f1a91c7d3a8dd86072c0e114eb795e8f",
+        "mode": "quality",
+        "bot": "cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d",
+        "room": {
+          "ok": true,
+          "blindMax": 1,
+          "blindTakes": 10,
+          "tightBlind": 0,
+          "unrelieved": 0,
+          "room": 2,
+          "tightTiles": [],
+          "path": [
+            85,
+            84,
+            64,
+            82,
+            36,
+            74,
+            66,
+            1,
+            37,
+            87,
+            3,
+            72,
+            43,
+            0,
+            61,
+            2,
+            4,
+            17,
+            77,
+            55,
+            58,
+            65,
+            73,
+            5,
+            39,
+            67,
+            78,
+            50,
+            54,
+            8,
+            11,
+            57,
+            70,
+            7,
+            51,
+            48,
+            81,
+            6,
+            40,
+            60,
+            31,
+            76,
+            83,
+            38,
+            62,
+            86,
+            69,
+            35,
+            49,
+            68,
+            41,
+            47,
+            24,
+            71,
+            23,
+            79,
+            42,
+            45,
+            10,
+            16,
+            12,
+            18,
+            19,
+            80,
+            30,
+            53,
+            25,
+            29,
+            52,
+            26,
+            59,
+            28,
+            22,
+            27,
+            46,
+            21,
+            75,
+            56,
+            9,
+            15,
+            44,
+            14,
+            13,
+            20,
+            32,
+            63,
+            33,
+            34
+          ]
+        },
+        "train": {
+          "exp": 1.18,
+          "first": 0.9,
+          "valid": true,
+          "version": "human-g6.2"
+        },
+        "atTrap": 1,
+        "lateShare": 0,
+        "supportFingerprint": "0eee16990ac08af17ddb3198eb3042f8fc58055346279c3badf127e473541e54",
+        "supports": {
+          "partnerRelay@1": {
+            "kind": "ice",
+            "indices": [
+              43
+            ],
+            "present": true,
+            "without": 1.18,
+            "first": 0.9,
+            "valid": true,
+            "matters": false
+          }
+        },
+        "eligible": false,
+        "reason": "idleSupport",
+        "seconds": 3.86
+      }
+    },
+    {
+      "level": 607,
+      "recipe": [
+        "lockedClock",
+        "keyGuardIce"
+      ],
+      "motif": "keyGuardIce",
+      "added": [
+        85
+      ],
+      "seed": 4711,
+      "campaigns": 40,
+      "without": {
+        "exp": 1.6,
+        "first": 0.45,
+        "valid": true
+      },
+      "with": {
+        "exp": 1.38,
+        "first": 0.7,
+        "valid": true
+      },
+      "bot": "cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d",
+      "diagnosticOnly": true,
+      "mattersInSample": true,
+      "quality": {
+        "id": "db43402ba64e56ce",
+        "key": "db43402ba64e56cee68bb53b6b9011cc2d1b6e466be8c5c1d6f2386748318a2b",
+        "mode": "quality",
+        "bot": "cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d",
+        "room": {
+          "ok": true,
+          "blindMax": 2,
+          "blindTakes": 13,
+          "tightBlind": 2,
+          "unrelieved": 1,
+          "room": 1,
+          "tightTiles": [
+            65,
+            86
+          ],
+          "path": [
+            84,
+            85,
+            65,
+            73,
+            1,
+            66,
+            86,
+            69,
+            49,
+            87,
+            24,
+            70,
+            82,
+            0,
+            61,
+            35,
+            2,
+            4,
+            3,
+            72,
+            5,
+            39,
+            43,
+            64,
+            17,
+            77,
+            36,
+            68,
+            41,
+            74,
+            23,
+            79,
+            37,
+            47,
+            48,
+            81,
+            55,
+            58,
+            60,
+            31,
+            67,
+            78,
+            50,
+            54,
+            8,
+            11,
+            57,
+            71,
+            6,
+            40,
+            7,
+            51,
+            76,
+            83,
+            38,
+            62,
+            42,
+            45,
+            10,
+            16,
+            12,
+            18,
+            19,
+            80,
+            30,
+            53,
+            25,
+            29,
+            52,
+            26,
+            59,
+            28,
+            22,
+            27,
+            46,
+            21,
+            75,
+            56,
+            9,
+            15,
+            44,
+            14,
+            13,
+            20,
+            32,
+            63,
+            33,
+            34
+          ]
+        },
+        "train": {
+          "exp": 1.38,
+          "first": 0.7,
+          "valid": true,
+          "version": "human-g6.2"
+        },
+        "atTrap": 1,
+        "lateShare": 0.14285714285714285,
+        "supportFingerprint": "64a49fe9b7c45cf7ed659334695e43e59ec0d55fde8352535d1592558a798ed1",
+        "supports": {
+          "keyGuardIce@1": {
+            "kind": "ice",
+            "indices": [
+              85
+            ],
+            "present": true,
+            "without": 1.6,
+            "first": 0.45,
+            "valid": true,
+            "matters": true
+          }
+        },
+        "skilled": {
+          "exp": 1,
+          "valid": true
+        },
+        "special": {
+          "ice": {
+            "without": 1.6,
+            "first": 0.45,
+            "valid": true,
+            "matters": true
+          },
+          "locks": {
+            "without": 1.07,
+            "first": 0.85,
+            "valid": true,
+            "matters": true
+          },
+          "clock": {
+            "without": 1.02,
+            "first": 0.95,
+            "valid": true,
+            "matters": true
+          }
+        },
+        "idle": [],
+        "grabFirst": null,
+        "eligible": false,
+        "seconds": 18.301
+      }
+    },
+    {
+      "level": 608,
+      "recipe": [
+        "frozenGuards",
+        "thawRelay"
+      ],
+      "motif": "thawRelay",
+      "added": [
+        62
+      ],
+      "seed": 4711,
+      "campaigns": 40,
+      "without": {
+        "exp": 1.27,
+        "first": 0.85,
+        "valid": true
+      },
+      "with": {
+        "exp": 1.27,
+        "first": 0.85,
+        "valid": true
+      },
+      "bot": "cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d",
+      "diagnosticOnly": true,
+      "mattersInSample": false,
+      "quality": {
+        "id": "a077d742e7271f3e",
+        "key": "a077d742e7271f3edba9dc29ed98f5b3f49cd7cdbc212840480e069710151dba",
+        "mode": "quality",
+        "bot": "cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d",
+        "room": {
+          "ok": true,
+          "blindMax": 1,
+          "blindTakes": 12,
+          "tightBlind": 0,
+          "unrelieved": 0,
+          "room": 2,
+          "tightTiles": [],
+          "path": [
+            61,
+            62,
+            64,
+            37,
+            70,
+            39,
+            71,
+            31,
+            34,
+            57,
+            24,
+            65,
+            38,
+            67,
+            47,
+            18,
+            58,
+            73,
+            74,
+            5,
+            52,
+            4,
+            60,
+            30,
+            63,
+            40,
+            51,
+            0,
+            10,
+            44,
+            53,
+            25,
+            54,
+            66,
+            75,
+            48,
+            23,
+            69,
+            46,
+            72,
+            22,
+            59,
+            29,
+            28,
+            43,
+            56,
+            3,
+            33,
+            11,
+            49,
+            55,
+            2,
+            68,
+            50,
+            21,
+            35,
+            6,
+            41,
+            12,
+            32,
+            17,
+            42,
+            26,
+            45,
+            1,
+            20,
+            9,
+            19,
+            8,
+            27,
+            36,
+            16,
+            13,
+            15,
+            7,
+            14
+          ]
+        },
+        "train": {
+          "exp": 1.27,
+          "first": 0.85,
+          "valid": true,
+          "version": "human-g6.2"
+        },
+        "atTrap": 1,
+        "lateShare": 0,
+        "supportFingerprint": "6e5060b1f791a9956b878a5a13f3968bf87b633fc762ee8345be842ce7e8cfe7",
+        "supports": {
+          "thawRelay@1": {
+            "kind": "ice",
+            "indices": [
+              62
+            ],
+            "present": true,
+            "without": 1.27,
+            "first": 0.85,
+            "valid": true,
+            "matters": false
+          }
+        },
+        "eligible": false,
+        "reason": "idleSupport",
+        "seconds": 3.155
+      }
+    }
+  ],
+  "casesDetail": [
+    {
+      "recipe": [
+        "keysAcross",
+        "frozenGuards"
+      ],
+      "pile": 200,
+      "legacyLegal": true,
+      "legacyErasures": [],
+      "legacySeconds": 0.111,
+      "legal": false,
+      "seconds": 0.664,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 4
+        },
+        "failedRecipe": "frozenGuards",
+        "probes": 9
+      }
+    },
+    {
+      "recipe": [
+        "keysAcross",
+        "frozenGuards"
+      ],
+      "pile": 207,
+      "legacyLegal": true,
+      "legacyErasures": [],
+      "legacySeconds": 0.002,
+      "legal": true,
+      "seconds": 0.466,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 2
+        },
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "01:21/21:01/01:00/00/01/01/02/02:0:3:1"
+    },
+    {
+      "recipe": [
+        "keysAcross",
+        "frozenGuards"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 0.143,
+      "legal": true,
+      "seconds": 0.155,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 1
+        },
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "11:11/21:11/11:00/00/00/01/02/02:0:3:1"
+    },
+    {
+      "recipe": [
+        "keysAcross",
+        "frozenGuards"
+      ],
+      "pile": 219,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 0.178,
+      "legal": true,
+      "seconds": 0.188,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 1
+        },
+        "probes": 6
+      },
+      "intent": "linked",
+      "signature": "20:20/21:20/20:00/00/00/02/02/02:0:3:0"
+    },
+    {
+      "recipe": [
+        "chainReaction",
+        "lockedPartners"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 6.083,
+      "legal": false,
+      "seconds": 0.606,
+      "diagnostic": {
+        "rejected": {
+          "no suitable chainReaction placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "chainReaction",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "chainReaction",
+        "lockedPartners"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 6.87,
+      "legal": false,
+      "seconds": 0.605,
+      "diagnostic": {
+        "rejected": {
+          "no suitable chainReaction placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "chainReaction",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "chainReaction",
+        "lockedPartners"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 6.722,
+      "legal": false,
+      "seconds": 0.604,
+      "diagnostic": {
+        "rejected": {
+          "no suitable chainReaction placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "chainReaction",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "chainReaction",
+        "lockedPartners"
+      ],
+      "pile": 219,
+      "legacyLegal": true,
+      "legacyErasures": [
+        "removed an earlier lock"
+      ],
+      "legacySeconds": 5.972,
+      "legal": false,
+      "seconds": 0.607,
+      "diagnostic": {
+        "rejected": {
+          "no suitable chainReaction placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "chainReaction",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "dontGrab",
+        "lockedPartners"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 1.511,
+      "legal": false,
+      "seconds": 1.261,
+      "diagnostic": {
+        "rejected": {
+          "no suitable lockedPartners placement": 3,
+          "placement search budget": 2
+        },
+        "failedRecipe": "lockedPartners",
+        "probes": 6
+      }
+    },
+    {
+      "recipe": [
+        "dontGrab",
+        "lockedPartners"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 2.25,
+      "legal": false,
+      "seconds": 1.286,
+      "diagnostic": {
+        "rejected": {
+          "no suitable lockedPartners placement": 3,
+          "placement search budget": 2
+        },
+        "failedRecipe": "lockedPartners",
+        "probes": 6
+      }
+    },
+    {
+      "recipe": [
+        "dontGrab",
+        "lockedPartners"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 0.071,
+      "legal": false,
+      "seconds": 0.213,
+      "diagnostic": {
+        "rejected": {
+          "no suitable dontGrab placement": 3
+        },
+        "failedRecipe": "dontGrab",
+        "probes": 3
+      }
+    },
+    {
+      "recipe": [
+        "dontGrab",
+        "lockedPartners"
+      ],
+      "pile": 219,
+      "legacyLegal": true,
+      "legacyErasures": [],
+      "legacySeconds": 0.282,
+      "legal": true,
+      "seconds": 1.19,
+      "diagnostic": {
+        "rejected": {},
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "20:11/11::01/11/20:1:0:1"
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "trayJuggleFrozen"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 8.868,
+      "legal": false,
+      "seconds": 0.608,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "trayJuggleFrozen"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 2.614,
+      "legal": false,
+      "seconds": 0.611,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "trayJuggleFrozen"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 1.47,
+      "legal": false,
+      "seconds": 0.607,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "trayJuggleFrozen"
+      ],
+      "pile": 219,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": 1.461,
+      "legal": false,
+      "seconds": 0.607,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "clockOnTopLocked",
+        "keyGuardIce"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.603,
+      "diagnostic": {
+        "rejected": {
+          "no suitable clockOnTopLocked placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "clockOnTopLocked",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "clockOnTopLocked",
+        "keyGuardIce"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.602,
+      "diagnostic": {
+        "rejected": {
+          "no suitable clockOnTopLocked placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "clockOnTopLocked",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "clockOnTopLocked",
+        "keyGuardIce"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.603,
+      "diagnostic": {
+        "rejected": {
+          "no suitable clockOnTopLocked placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "clockOnTopLocked",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "clockOnTopLocked",
+        "keyGuardIce"
+      ],
+      "pile": 219,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.602,
+      "diagnostic": {
+        "rejected": {
+          "no suitable clockOnTopLocked placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "clockOnTopLocked",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "partnerRelay"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.364,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 2
+        },
+        "failedRecipe": "frozenGuards",
+        "probes": 3
+      }
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "partnerRelay"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": true,
+      "seconds": 0.107,
+      "diagnostic": {
+        "rejected": {
+          "no suitable partnerRelay placement": 3
+        },
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "12::02/12/12/21::0:4:1"
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "partnerRelay"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": true,
+      "seconds": 0.646,
+      "diagnostic": {
+        "rejected": {},
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "01::01/01/20::0:3:1"
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "partnerRelay"
+      ],
+      "pile": 219,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": true,
+      "seconds": 0.244,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 1
+        },
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "20::00/20/20::0:3:0"
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "thawRelay"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.607,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "thawRelay"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.606,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "thawRelay"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.611,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "iceLockClock",
+        "thawRelay"
+      ],
+      "pile": 219,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.61,
+      "diagnostic": {
+        "rejected": {
+          "no suitable iceLockClock placement": 2,
+          "placement search budget": 1
+        },
+        "failedRecipe": "iceLockClock",
+        "probes": 2
+      }
+    },
+    {
+      "recipe": [
+        "lockedClock",
+        "keyGuardIce"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.014,
+      "diagnostic": {
+        "rejected": {
+          "no suitable keyGuardIce placement": 6
+        },
+        "failedRecipe": "keyGuardIce",
+        "probes": 9
+      }
+    },
+    {
+      "recipe": [
+        "lockedClock",
+        "keyGuardIce"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": true,
+      "seconds": 0.134,
+      "diagnostic": {
+        "rejected": {
+          "no suitable keyGuardIce placement": 3
+        },
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "21:12/20:12:12/21/22:0:1:1"
+    },
+    {
+      "recipe": [
+        "lockedClock",
+        "keyGuardIce"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.265,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 1,
+          "no suitable keyGuardIce placement": 6
+        },
+        "failedRecipe": "keyGuardIce",
+        "probes": 9
+      }
+    },
+    {
+      "recipe": [
+        "lockedClock",
+        "keyGuardIce"
+      ],
+      "pile": 219,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.059,
+      "diagnostic": {
+        "rejected": {
+          "no suitable keyGuardIce placement": 6
+        },
+        "failedRecipe": "keyGuardIce",
+        "probes": 9
+      }
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "thawRelay"
+      ],
+      "pile": 200,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.542,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 3
+        },
+        "failedRecipe": "frozenGuards",
+        "probes": 3
+      }
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "thawRelay"
+      ],
+      "pile": 207,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.185,
+      "diagnostic": {
+        "rejected": {
+          "no legal exact route": 1,
+          "no suitable thawRelay placement": 3
+        },
+        "failedRecipe": "thawRelay",
+        "probes": 6
+      }
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "thawRelay"
+      ],
+      "pile": 212,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": true,
+      "seconds": 0.075,
+      "diagnostic": {
+        "rejected": {},
+        "probes": 9
+      },
+      "intent": "linked",
+      "signature": "00::00/01/10::0:5:0"
+    },
+    {
+      "recipe": [
+        "frozenGuards",
+        "thawRelay"
+      ],
+      "pile": 219,
+      "legacyLegal": false,
+      "legacyErasures": [],
+      "legacySeconds": null,
+      "legal": false,
+      "seconds": 0.072,
+      "diagnostic": {
+        "rejected": {
+          "no suitable thawRelay placement": 6
+        },
+        "failedRecipe": "thawRelay",
+        "probes": 9
+      }
+    }
+  ]
+}

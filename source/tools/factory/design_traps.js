@@ -50,7 +50,8 @@ const special = (b, i) => (b.clock && b.clock.i === i) || (b.obst && ((b.obst.ke
 // ---------- the new trap: a lock beside the clock that the clock does not need ----------
 function clockBesideLock(b, c) {
   const P = c.P, n = c.n;
-  const cands = P.filter(i => !special(b, i) && c.pos[i] > 3 && c.pos[i] < n * 0.4 && coverOf(c.nb, i).size >= 2 && coverOf(c.nb, i).size <= 5);
+  let cands = P.filter(i => !special(b, i) && c.pos[i] > 3 && c.pos[i] < n * 0.4 && coverOf(c.nb, i).size >= 2 && coverOf(c.nb, i).size <= 5);
+  if (c.candidateOrder) cands = c.candidateOrder(cands);
   for (const ck of cands) {
     for (const j of [...c.nb.left[ck], ...c.nb.right[ck], ...c.nb.above[ck]]) {
       if (special(b, j) || c.pos[j] < c.pos[ck] + 3) continue;        // the lock is not on the way to the clock
@@ -76,16 +77,22 @@ const CONCEPTS = {
 };
 const TITLE = { clockBesideLock: 'A lock beside the clock' };
 const titleOf = recipe => recipe.map(k => TITLE[k] || I.IDEAS[k].title).join(' + ');
-function applyRecipe(d, recipe, rng) {
+function placeIdea(b, key, rng, context = I.ctxOf(b)) {
+  return key === 'clockBesideLock' ? clockBesideLock(b, context) : I.IDEAS[key].make(b, context, rng);
+}
+function applyLegacyRecipe(d, recipe, rng) {
   let x = { tiles: d.tiles, faces: d.faces.slice(), down: d.down.slice(), gold: (d.gold || []).slice(), obst: d.obst ? I.clone(d.obst) : { ice: {}, locks: [], keys: [] }, clock: d.clock ? { ...d.clock } : null, solution: d.solution.slice() };
   for (const k of recipe) {
-    const y = k === 'clockBesideLock' ? clockBesideLock(x, I.ctxOf(x)) : I.IDEAS[k].make(x, I.ctxOf(x), rng);
+    const y = placeIdea(x, k, rng);
     if (!y) return null;
     // A wait-for-the-partner puzzle must keep the clock it was authored for.
     if (x.clockMate !== undefined && y.clock?.i !== x.clock?.i) return null;
     x = y;
   }
   return x;
+}
+function applyRecipe(d, recipe, rng, options) {
+  return require('./trap_composer.js').compose(d, recipe, rng, options)?.design || null;
 }
 
 // ---------- room for luck: the emptiest way through ----------
@@ -163,7 +170,7 @@ function specialsMatter(d, m0) {
   return out;
 }
 
-module.exports = { roomProfile, trapTiles, applyRecipe, CONCEPTS };
+module.exports = { roomProfile, trapTiles, applyRecipe, applyLegacyRecipe, placeIdea, CONCEPTS };
 if (require.main === module) {
 const piles = JSON.parse(fs.readFileSync(pilesFile, 'utf8')), plan = JSON.parse(fs.readFileSync(planFile, 'utf8'));
 const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).level) : []);
@@ -184,7 +191,9 @@ for (const p of plan) {
     if (!d0.solution || !I.valid(d0)) { note('designer: no deal'); continue; }
     // attempts cycle: the trap alone, + one extra trap, + two extra traps (with luck taken out, the traps carry the difficulty)
     const nx = Math.min(attempt % 3, C.extra.length), recipe = [...C.recipe, ...C.extra.slice(0, nx).map((_, k) => C.extra[(Math.floor(attempt / 3) + k) % C.extra.length])];
-    const x = applyRecipe(d0, recipe, I.rngOf(lv * 31 + salt * 7));
+    // The deal supplies pictures and a witness; this brief authors its own roles.
+    const clean = { ...d0, obst: { ice: {}, locks: [], keys: [] }, clock: null }; delete clean.clockMate;
+    const x = applyRecipe(clean, recipe, I.rngOf(lv * 31 + salt * 7), { spare: C.spare });
     if (!x) { note(recipe.join('+') + ': no place for the trap'); continue; }
     let z = I.fix(x, C.spare); if (!z || !I.valid(z)) { note('no exact clock route'); continue; }
     const route = z.solution.indexOf(z.clock.i) + 1;

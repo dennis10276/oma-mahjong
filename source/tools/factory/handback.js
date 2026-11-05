@@ -6,13 +6,15 @@ const { atomicJson, boardKey } = require('./meter.js');
 const Moves = require('./moves.js');
 const Final = require('./final_seed.js');
 const Preferences = require('./shape_preferences.js');
+const Supports = require('./trap_supports.js');
 
 function handback(planFile, poolFile, measurements, out) {
   const plan = JSON.parse(fs.readFileSync(planFile)), pool = JSON.parse(fs.readFileSync(poolFile));
   plan.levelTable = path.resolve(path.dirname(planFile), plan.levelTable);
   const read = (row, mode) => {
     const f = path.join(measurements, row.id + '.' + mode + '.json');
-    return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)) : null;
+    const value = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)) : null;
+    return mode === 'quality' && !Supports.compatible(row, value) ? null : value;
   };
   const rated = pool.map(row => {
     const rate = read(row, 'rate'), quality = read(row, 'quality'), screen = read(row, 'screen');
@@ -73,7 +75,8 @@ function handback(planFile, poolFile, measurements, out) {
     if (!approved && !reasons.length) reasons.push('batch compatibility / placement');
     reasons.forEach(bump);
     const room = quality?.room || (row.tuning ? null : row.room), specials = quality?.special;
-    const specialText = specials ? Object.entries(specials).map(([k, v]) => `${k}: ${fmt(v.without)} ${v.matters ? '✓' : '×'}`).join('; ') : 'unmeasured';
+    const components = { ...(specials || {}), ...(quality?.supports || {}) };
+    const specialText = Object.keys(components).length ? Object.entries(components).map(([k, v]) => `${k}: ${fmt(v.without)} ${v.matters ? '✓' : '×'}`).join('; ') : 'unmeasured';
     const luck = room?.ok ? `${room.tightBlind}/${Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0))}/${room.unrelieved}` : 'unmeasured';
     const warnings = (quality?.lateShare ?? rate?.lateShare) >= .3 ? ['lateSqueeze'] : [];
     diagnostics.push(approved || { ...row, level: s.level, target: s.target, pass: false, diagnosticOnly: true,

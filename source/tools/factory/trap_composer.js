@@ -1,0 +1,206 @@
+'use strict';
+// Authoring only. Structural scores choose a puzzle idea, never its difficulty.
+const I = require('../lab/ideas.js');
+const { boardKey } = require('./meter.js');
+const VERSION = 'connected-traps-v1';
+const MOTIFS = Object.freeze({
+  keyGuardIce: 'Thaw a guard on the existing key dig before opening the existing locks.',
+  partnerRelay: 'Thaw partners of singles carried on the existing clock dig.',
+  thawRelay: 'Clear a frozen neighbour before thawing the existing clock or key guard.',
+});
+const INTENTS = ['linked', 'cross-board', 'staged', 'tray-escape'];
+const ids = b => [...new Set([...(b.obst?.keys || []), ...(b.obst?.locks || []),
+  ...Object.keys(b.obst?.ice || {}).map(Number), ...(b.clock ? [b.clock.i] : [])])];
+const same = (a, b) => JSON.stringify([...a].sort((x, y) => x - y)) === JSON.stringify([...b].sort((x, y) => x - y));
+const known = key => key === 'clockBesideLock' || !!I.IDEAS[key] || !!MOTIFS[key];
+const authored = row => row.trapPlan?.version === VERSION && row.trapPlan.authoredBoard === boardKey(row.design);
+
+function context(b, rng) {
+  const c = I.ctxOf(b), priority = c.tiles.map(() => rng());
+  // Candidate enumeration may vary; pos and the actual witness never change.
+  c.candidateOrder = xs => xs.slice().sort((a, q) => priority[a] - priority[q]);
+  c.candidateRank = priority;
+  c.pairs = c.pairs.slice().sort((a, q) => priority[a[0]] - priority[q[0]]);
+  return c;
+}
+function geometry(b) {
+  const c = I.ctxOf(b), covers = new Map();
+  const cover = i => {
+    if (!covers.has(i)) {
+      const found = new Set(), todo = [i];
+      while (todo.length) for (const j of c.nb.above[todo.pop()]) if (!found.has(j)) { found.add(j); todo.push(j); }
+      covers.set(i, found);
+    }
+    return covers.get(i);
+  };
+  return { ...c, cover };
+}
+
+function preserves(before, after) {
+  if (before.clock && before.clock.i !== after.clock?.i) return 'replaced the existing clock';
+  if (before.clockMate !== undefined && before.clockMate !== after.clockMate) return 'replaced the waiting clock partner';
+  if ((before.obst?.locks || []).some(i => !(after.obst?.locks || []).includes(i))) return 'removed an earlier lock';
+  if ((before.obst?.keys || []).length && !same(before.obst.keys, after.obst?.keys || [])) return 'replaced the shared key pair';
+  if (Object.entries(before.obst?.ice || {}).some(([i, h]) => (after.obst?.ice?.[i] || 0) < h)) return 'removed an earlier ice dependency';
+  const protectedFaces = [...ids(before), ...(before.clockMate !== undefined ? [before.clockMate] : [])];
+  if (protectedFaces.some(i => before.faces[i] !== after.faces[i])) return 'changed an earlier role picture';
+  return null;
+}
+
+function analyze(b) {
+  const c = geometry(b), o = b.obst || {}, edges = [], need = new Set(), todo = [];
+  const add = (from, to, kind) => { edges.push({ from, to, kind }); if (!need.has(to)) { need.add(to); todo.push(to); } };
+  for (const i of [b.clock?.i, b.clockMate].filter(Number.isInteger)) { need.add(i); todo.push(i); }
+  while (todo.length) {
+    const i = todo.pop();
+    for (const j of c.nb.above[i]) add(i, j, 'cover');
+    if ((o.locks || []).includes(i)) for (const k of o.keys || []) add(i, k, 'unlock');
+    // This is a witness dependency, not a claim every alternative uses these neighbours.
+    const thaw = c.inb[i].filter(j => c.pos[j] < c.pos[i]).sort((a, q) => c.pos[a] - c.pos[q]).slice(0, o.ice?.[i] || 0);
+    for (const j of thaw) add(i, j, 'thaw');
+  }
+  const route = b.clock ? b.solution.indexOf(b.clock.i) + 1 : 0;
+  const prefix = b.solution.slice(0, route), tray = [];
+  let peak = 0, relief = 0;
+  for (const i of prefix) {
+    const q = tray.findIndex(j => b.faces[j] === b.faces[i]);
+    if (q >= 0) tray.splice(q, 1); else tray.push(i);
+    peak = Math.max(peak, tray.length); if (q >= 0 && tray.length <= 1) relief++;
+  }
+  const partners = new Set();
+  for (const [a, q] of c.pairs) if (need.has(a) !== need.has(q)) {
+    const from = need.has(a) ? a : q, to = from === a ? q : a;
+    partners.add(to); edges.push({ from, to, kind: 'partner' });
+  }
+  const bounds = ['x', 'y'].map(k => [Math.min(...c.tiles.map(t => t[k])), Math.max(...c.tiles.map(t => t[k]))]);
+  const distance = (a, q) => Math.hypot((c.tiles[a].x - c.tiles[q].x) / Math.max(1, bounds[0][1] - bounds[0][0]),
+    (c.tiles[a].y - c.tiles[q].y) / Math.max(1, bounds[1][1] - bounds[1][0]));
+  const keys = o.keys || [], linked = ids(b).filter(i => need.has(i) || partners.has(i));
+  const keyDepth = keys.length ? keys.reduce((s, i) => s + c.cover(i).size, 0) / keys.length : 0;
+  const spread = keys.length === 2 ? distance(keys[0], keys[1]) : 0;
+  const clockKeyDistance = b.clock && keys.length ? keys.reduce((s, k) => s + distance(k, b.clock.i), 0) / keys.length : 0;
+  const sector = i => i == null ? '-' : bounds.map(([lo, hi], k) => Math.min(2, Math.floor(3 * (c.tiles[i][k ? 'y' : 'x'] - lo) / Math.max(1, hi - lo + .01)))).join('');
+  return { edges, needed: [...need], partners: [...partners], linkedSpecials: linked.length,
+    unrelatedSpecials: ids(b).length - linked.length, clockDepth: b.clock ? c.cover(b.clock.i).size : 0,
+    keyDepth, keySpread: +spread.toFixed(3), clockKeyDistance: +clockKeyDistance.toFixed(3),
+    thawSteps: edges.filter(e => e.kind === 'thaw').length, peakTray: peak, relief, route,
+    signature: [sector(b.clock?.i), keys.map(sector).sort().join('/'),
+      Object.keys(o.ice || {}).map(i => sector(+i)).sort().join('/'), (o.locks || []).map(sector).sort().join('/'), Math.floor(keyDepth / 3),
+      edges.filter(e => e.kind === 'thaw').length, Math.floor(route / 8)].join(':') };
+}
+
+function augment(b, key, rng) {
+  const c = geometry(b), x = I.clone(b), o = x.obst ||= { ice: {}, locks: [], keys: [] };
+  o.ice ||= {}; o.keys ||= []; o.locks ||= [];
+  const occupied = new Set(ids(b)), order = xs => xs.slice().sort((a, q) => rank[a] - rank[q]);
+  const rank = c.tiles.map(() => rng()), keys = o.keys || [];
+  const routeDig = new Set(analyze(b).needed);
+  const keyDig = new Set(keys.flatMap(i => [...c.cover(i)]));
+  const freeToFreeze = i => !occupied.has(i) && c.inb[i].some(j => c.pos[j] < c.pos[i]);
+  const freeze = i => {
+    const h = Math.min(2, c.inb[i].filter(j => c.pos[j] < c.pos[i]).length);
+    if (!h) return false;
+    o.ice[i] = h; x.down = x.down.filter(j => j !== i); return true;
+  };
+  if (key === 'keyGuardIce') {
+    // Freeze an actual blocker of the current keys, never an arbitrary spare tile.
+    if (keys.length !== 2) return null;
+    const candidates = order([...keyDig].filter(freeToFreeze));
+    if (!candidates.length || !freeze(candidates[0])) return null;
+  } else if (key === 'partnerRelay' || key === 'trayJuggleFrozen') {
+    if (!b.clock || !routeDig.size) return null;
+    const mates = [];
+    for (const [a, q] of c.pairs) {
+      if (routeDig.has(a) && !routeDig.has(q) && c.pos[q] > c.pos[a]) mates.push(q);
+      if (routeDig.has(q) && !routeDig.has(a) && c.pos[a] > c.pos[q]) mates.push(a);
+    }
+    const choices = order([...new Set(mates)].filter(freeToFreeze));
+    if (!choices.length || !freeze(choices[0])) return null;
+  } else if (key === 'thawRelay' || key === 'iceChain') {
+    const targets = [...Object.keys(o.ice || {}).map(Number)].filter(i => routeDig.has(i) || keyDig.has(i) || i === b.clock?.i);
+    const choices = order([...new Set(targets.flatMap(i => c.inb[i].filter(j =>
+      c.tiles[i].z === c.tiles[j].z && c.pos[j] < c.pos[i])))].filter(freeToFreeze));
+    if (!choices.length || !freeze(choices[0])) return null;
+  } else if (key === 'frozenGuards') {
+    if (!b.clock) return null;
+    const guards = order(c.nb.above[b.clock.i].filter(freeToFreeze));
+    if (guards.length < 2) return null;
+    guards.slice(0, 2).forEach(freeze);
+  } else if (key === 'lockedPartners' || key === 'trayJuggleLocked') {
+    if (keys.length !== 2) return null;
+    const dig = key === 'trayJuggleLocked' ? routeDig : keyDig;
+    const choices = [];
+    for (const [a, q] of c.pairs) for (const [t, mate] of [[a, q], [q, a]])
+      if (dig.has(t) && !dig.has(mate) && !keyDig.has(mate) && !occupied.has(mate) && c.pos[mate] > c.pos[keys[0]] && c.pos[mate] > c.pos[keys[1]]) choices.push(mate);
+    const selected = order([...new Set(choices)]).slice(0, 2);
+    if (!selected.length) return null;
+    o.locks = [...(o.locks || []), ...selected]; x.down = x.down.filter(i => !selected.includes(i));
+  } else return null;
+  return x;
+}
+
+function score(a, intent) {
+  const base = 3 * a.linkedSpecials / Math.max(1, a.linkedSpecials + a.unrelatedSpecials) - a.unrelatedSpecials * .2;
+  if (intent === 'cross-board') return base + 3 * a.keySpread + 2 * a.clockKeyDistance;
+  if (intent === 'staged') return base + Math.min(a.thawSteps, 4) + Math.min(a.keyDepth, 8) * .3 + Math.min(a.route, 30) * .06;
+  if (intent === 'tray-escape') return base + (a.peakTray === 2 ? 2 : 0) + Math.min(a.relief, 3) * .5;
+  return base + Math.min(a.thawSteps, 3) * .6 - a.clockKeyDistance * .3;
+}
+
+function compose(b, recipe, rng, options = {}) {
+  if (!recipe.length || recipe.some(k => !known(k))) throw Error('Unknown or empty trap recipe: ' + recipe.join(' + '));
+  const intent = options.intent || INTENTS[Math.min(INTENTS.length - 1, Math.floor(rng() * INTENTS.length))];
+  if (!INTENTS.includes(intent)) throw Error('Unknown trap placement intent: ' + intent);
+  const diagnostics = options.diagnostic || {}, rejected = diagnostics.rejected = {};
+  const reject = reason => { rejected[reason] = (rejected[reason] || 0) + 1; };
+  const maxProbes = options.probes ?? 3, beamWidth = options.beam ?? 2, started = Date.now();
+  const milliseconds = options.milliseconds ?? 1200, probeMilliseconds = options.probeMilliseconds ?? 400;
+  if (!Number.isInteger(maxProbes) || maxProbes < 1 || maxProbes > 12 || !Number.isInteger(beamWidth) || beamWidth < 1 || beamWidth > 4)
+    throw Error('Trap placement needs 1–12 probes and a beam of 1–4');
+  if (![milliseconds, probeMilliseconds].every(x => Number.isFinite(x) && x > 0)) throw Error('Trap placement needs a positive time budget');
+  const make = options.make || require('./design_traps.js').placeIdea;
+  const fix = options.fix || I.fix, valid = options.valid || I.valid;
+  const routeCache = new Map();
+  let beam = [{ design: I.clone(b), steps: [], analysis: analyze(b), score: 0, protectedFaces: [], protectedHidden: [] }], probes = 0;
+  for (const [stage, key] of recipe.entries()) {
+    const choices = new Map(), proposed = new Set();
+    const stageDeadline = started + milliseconds * (stage + 1) / recipe.length;
+    for (let probe = 0; probe < maxProbes; probe++) for (const parent of beam) {
+      // Inner legacy searches share this deadline too. A solver completion can
+      // slightly overshoot; expiry never licenses an unproved clock route.
+      if (Date.now() >= stageDeadline) { reject('placement search budget'); break; }
+      probes++;
+      const before = parent.design, existing = !!before.clock;
+      const adapter = !!MOTIFS[key] || existing && ['frozenGuards', 'trayJuggleFrozen', 'iceChain'].includes(key) ||
+        (before.obst?.keys || []).length && ['lockedPartners', 'trayJuggleLocked'].includes(key);
+      const probeDeadline = Math.min(stageDeadline, Date.now() + probeMilliseconds);
+      const candidate = I.withSearchBudget(probeDeadline, () => adapter ? augment(before, key, rng) : make(before, key, rng, context(before, rng)), routeCache);
+      if (!candidate) { reject('no suitable ' + key + ' placement'); continue; }
+      const lost = preserves(before, candidate); if (lost) { reject(lost); continue; }
+      if (parent.protectedFaces.some(i => candidate.faces[i] !== before.faces[i])) { reject('changed an earlier partner pairing'); continue; }
+      if (parent.protectedHidden.some(i => !candidate.down.includes(i))) { reject('revealed an earlier memory trap'); continue; }
+      if (boardKey(before) === boardKey(candidate)) { reject('no new puzzle role'); continue; }
+      const proposal = boardKey(candidate); if (proposed.has(proposal)) continue; proposed.add(proposal);
+      const design = I.withSearchBudget(probeDeadline, () => fix(candidate, options.spare ?? 2), routeCache);
+      if (!design || !valid(design)) { reject('no legal exact route'); continue; }
+      const analysis = analyze(design), id = boardKey(design);
+      const protectedFaces = [...new Set([...parent.protectedFaces, ...before.faces.map((f, i) => f !== design.faces[i] ? i : -1).filter(i => i >= 0)])];
+      const protectedHidden = [...new Set([...parent.protectedHidden, ...design.down.filter(i => !before.down.includes(i)),
+        ...(key === 'blindTwins' ? design.down.filter(i => Object.keys(design.obst?.ice || {}).some(j => design.faces[j] === design.faces[i])) : [])])];
+      const added = ids(design).filter(i => !ids(before).includes(i));
+      const hidden = design.down.filter(i => !before.down.includes(i)), changedPictures = before.faces.map((f, i) => f !== design.faces[i] ? i : -1).filter(i => i >= 0);
+      const changed = new Set([...added, ...hidden, ...changedPictures]);
+      const steps = parent.steps.concat({ recipe: key, placement: adapter ? 'extend existing roles' : 'place new roles',
+        clock: design.clock?.i ?? null, keys: design.obst?.keys || [], addedSpecials: added, addedHidden: hidden, changedPictures,
+        connections: analysis.edges.filter(e => changed.has(e.from) || changed.has(e.to)) });
+      const novelty = (options.seen || []).includes(analysis.signature) ? -3 : 0;
+      choices.set(id, { design, steps, analysis, protectedFaces, protectedHidden, score: score(analysis, intent) + novelty });
+    }
+    beam = [...choices.values()].sort((a, q) => q.score - a.score).slice(0, beamWidth);
+    if (!beam.length) { diagnostics.failedRecipe = key; diagnostics.probes = probes; return null; }
+  }
+  const best = beam[0]; diagnostics.probes = probes;
+  return { design: best.design, plan: { version: VERSION, intent, recipe: recipe.slice(), steps: best.steps,
+    analysis: best.analysis, structuralScore: +best.score.toFixed(3), probes, authoredBoard: boardKey(best.design) } };
+}
+module.exports = { VERSION, MOTIFS, INTENTS, known, authored, preserves, analyze, augment, compose };

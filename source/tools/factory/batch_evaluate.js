@@ -5,6 +5,7 @@ const { createMeter, boardKey, atomicJson } = require('./meter.js');
 const { roomProfile, trapTiles } = require('./design_traps.js');
 const { checkOrigin } = require('./originality.js');
 const { SEED } = require('./final_seed.js');
+const Supports = require('./trap_supports.js');
 // Dennis 2026-11-04: 200 at 10 family tries (-> 13 at 225) and the skilled player (Dennis) needs at least 2.5 tries.
 // The bands follow the curve; set them for a run: FACTORY_SCREEN=lo,hi FACTORY_RATE=lo,hi FACTORY_SKILLED=min,max
 const band = (k, d) => (process.env[k] || d).split(',').map(Number);
@@ -39,10 +40,16 @@ function evaluate(row, mode, meter) {
       eligible: v.valid && Math.abs(m.expectedTries - v.expectedTries) <= 2 };
   }
   if (mode !== 'quality') throw Error('Unknown evaluation stage');
+  const support = Supports.measure(row, m, meter, opts);
+  // Reject idle additions before spending time on the skilled planner. Only
+  // the support's own tiles are removed; the primary trap stays in place.
+  const idleSupports = Object.entries(support.supports || {}).filter(([, s]) => !s.matters);
+  if (idleSupports.length) return { ...base, ...support, eligible: false,
+    reason: idleSupports.some(([, s]) => !s.present) ? 'missingSupport' : !m.valid || idleSupports.some(([, s]) => !s.valid) ? 'supportUnresolved' : 'idleSupport' };
   const preview = row.forcePlanner ? null : meter.measure(d, { ...opts, setting: 'planner', runs: 3, seeds: 1 });
   // A small run may conservatively discard a candidate. It can never qualify
   // one: selected boards still get the full calibrated planner afterwards.
-  if (preview && (!preview.valid || preview.expectedTries > 8)) return { ...base, plannerPreview: preview.expectedTries, eligible: false, reason: 'plannerScreen' };
+  if (preview && (!preview.valid || preview.expectedTries > 8)) return { ...base, ...support, plannerPreview: preview.expectedTries, eligible: false, reason: 'plannerScreen' };
   const md = meter.measure(d, { ...opts, setting: 'planner' });
   const special = {}, ob = d.obst || {};
   const ablate = (k, b) => {
@@ -56,7 +63,7 @@ function evaluate(row, mode, meter) {
   const idle = Object.entries(special).filter(([, s]) => !s.matters).map(([k]) => k);
   const forced = (row.recipe || []).some(k => k === 'dontGrab' || k === 'keyToEscape') ? meter.measure({ ...d, clock: { ...d.clock, n: 1 } }, opts) : null;
   const grabValid = !forced || forced.valid && forced.expectedTries >= m.expectedTries + 1;
-  return { ...base, skilled: { exp: md.expectedTries, valid: md.valid }, special, idle, grabFirst: forced?.expectedTries ?? null,
+  return { ...base, ...support, skilled: { exp: md.expectedTries, valid: md.valid }, special, idle, grabFirst: forced?.expectedTries ?? null,
     eligible: m.valid && md.valid && md.expectedTries <= SKILLED_MAX && md.expectedTries >= SKILLED_MIN && room.ok && room.unrelieved <= 1 && base.atTrap >= 0.6 && !idle.length && grabValid };
 }
 
@@ -72,7 +79,10 @@ if (!isMainThread) {
   async function run(poolFile, outDir, mode, jobs = 8, force = false) {
     const rows = JSON.parse(fs.readFileSync(poolFile, 'utf8'));
     fs.mkdirSync(outDir, { recursive: true });
-    const queue = rows.filter(r => force || !fs.existsSync(path.join(outDir, r.id + '.' + mode + '.json')));
+    const queue = rows.filter(r => {
+      const file = path.join(outDir, r.id + '.' + mode + '.json');
+      return force || !fs.existsSync(file) || mode === 'quality' && !Supports.compatible(r, JSON.parse(fs.readFileSync(file)));
+    });
     console.log(mode, queue.length, 'new candidates,', jobs, 'workers');
     const started = Date.now();
     let done = 0, eligible = 0;

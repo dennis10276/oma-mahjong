@@ -43,6 +43,7 @@ function verify(planFile, batchFile, options = {}) {
     const quality = evaluate({ ...r, forcePlanner: true }, 'quality', meter);
     assert(quality.eligible, 'Puzzle quality failed at ' + r.level);
     assert.equal(r.atTrap, quality.atTrap); assert.deepEqual(r.specials, quality.special);
+    assert.deepEqual(r.supports || {}, quality.supports || {}, 'Support ablations differ at ' + r.level);
     if (k && rows[k - 1].level + 1 === r.level) assert(rows[k - 1].family.exp <= r.family.exp + (plan.maxReverseStep ?? 0.25) + 0.001, 'Large reverse step at ' + r.level);
   }
   console.log(rows.length, 'levels verified against cached full bot measurements;', meter.stats.calls, 'new calls,', meter.stats.hits, 'cache hits');

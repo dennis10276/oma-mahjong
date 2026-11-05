@@ -4,9 +4,10 @@
 const fs = require('fs'), path = require('path'), vm = require('vm');
 const F = require('./piles_for.js');
 const I = require('../lab/ideas.js'), Hard = require('../../www/hard.js');
-const { CONCEPTS, applyRecipe } = require('./design_traps.js');
+const { CONCEPTS } = require('./design_traps.js');
+const { compose, known } = require('./trap_composer.js');
 const { runFile } = require('./run_file.js');
-const { digest, atomicJson } = require('./meter.js');
+const { digest, atomicJson, sourceHash } = require('./meter.js');
 const { originOf, fitsLayouts, previousBoards, assertOriginalBatch } = require('./originality.js');
 const Preferences = require('./shape_preferences.js');
 
@@ -63,7 +64,7 @@ function prepare(planFile, outFile) {
   const piles = JSON.parse(fs.readFileSync(relative(plan.piles), 'utf8'));
   validatePiles(plan.levels, piles, { minTiles: plan.minTiles, bigLevels: plan.bigLevels, levelTable: plan.levelTable && relative(plan.levelTable) });
   if (plan.inventory) throw Error('New levels must be designed fresh; inventory boards cannot be used as seeds');
-  const config = digest({ plan, piles, generator: 'fresh-design-v2' });
+  const config = digest({ plan, piles, generator: 'fresh-design-v3', implementation: sourceHash(__filename) });
   const file = outFile + '.starts.json', saved = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : { config, rows: [] };
   if (saved.config !== config) throw Error('Plan or seed inventory changed; use a new output file');
   const done = new Set(saved.rows.map(r => r.level));
@@ -79,17 +80,18 @@ function prepare(planFile, outFile) {
     if (!Number.isFinite(target) || target < 1 || target > 20) throw Error('Invalid target');
     const tiles = pile.tiles.map(([x, y, z]) => ({ x, y, z }));
     const wantedRecipe = [...(spec.recipe || concept.recipe), ...(spec.extra || [])];
-    if (wantedRecipe.some(k => k !== 'clockBesideLock' && !I.IDEAS[k])) throw Error('Unknown trap recipe at ' + spec.level);
-    if ((spec.extra || []).some(k => !I.IDEAS[k])) throw Error('Unknown extra trap at ' + spec.level);
-    let design, recipe, usedSeed;
+    if (wantedRecipe.some(k => !known(k))) throw Error('Unknown trap recipe at ' + spec.level);
+    let design, recipe, usedSeed, trapPlan;
     for (let attempt = 0; !design && attempt < (plan.seedAttempts ?? 4); attempt++) {
       const salt = (plan.seed ?? 47000) + spec.level * 31 + attempt, raw = Hard.makeNow(spec.level, 1.6, 1, salt, { tiles });
       // The generator supplies a legal fresh pairing, not inherited puzzles.
       // Every obstacle and the clock is placed for this level's own brief.
       const deal = { ...raw, obst: { ice: {}, locks: [], keys: [] }, clock: null };
       if (!deal.solution || !I.valid(deal)) continue;
-      const trapped = applyRecipe(deal, wantedRecipe, I.rngOf(spec.level * 31 + salt * 7));
-      design = trapped && I.fix(trapped, concept.spare);
+      const composed = compose(deal, wantedRecipe, I.rngOf(spec.level * 31 + salt * 7), { spare: concept.spare,
+        intent: spec.placementIntent, probes: plan.placementProbes ?? 3, beam: plan.placementBeam ?? 2,
+        milliseconds: plan.placementMilliseconds ?? 1200, probeMilliseconds: plan.placementProbeMilliseconds ?? 400 });
+      design = composed?.design; trapPlan = composed?.plan;
       if (design && !I.valid(design)) design = null;
       recipe = wantedRecipe;
       usedSeed = salt;
@@ -98,7 +100,7 @@ function prepare(planFile, outFile) {
     saved.rows.push({ level: spec.level, target, concept: spec.concept, title: concept.title, recipe,
       shape: pile.shape, pile: pile.level, seedSource: 'designed',
       origin: originOf(design, (plan.batchId || 'fresh') + '/' + spec.level, spec.brief || concept.title, usedSeed),
-      design: { ...design, level: spec.level } });
+      trapPlan, design: { ...design, level: spec.level } });
     atomicJson(file, saved);
     console.log(spec.level, concept.title, 'target', target, '(fresh design)');
   }

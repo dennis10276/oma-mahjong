@@ -4,6 +4,7 @@ const { Worker } = require('worker_threads');
 const { createStageStore } = require('./stage_store.js');
 const { predictTries } = require('./predict.js');
 const Preferences = require('./shape_preferences.js');
+const Supports = require('./trap_supports.js');
 const [SCREEN_LO, SCREEN_HI] = (process.env.FACTORY_SCREEN || '4.5,13').split(',').map(Number);
 
 async function main(poolFile, planFile, dir, jobs = 4) {
@@ -11,7 +12,8 @@ async function main(poolFile, planFile, dir, jobs = 4) {
   const plan = JSON.parse(fs.readFileSync(planFile));
   const running = new Set(); let completed = 0, last = '';
   const stages = createStageStore(dir), predictions = new Map();
-  const read = (r, mode) => stages.read(r.id, mode);
+  const read = (r, mode) => { const result = stages.read(r.id, mode);
+    return mode === 'quality' && !Supports.compatible(r, result) ? null : result; };
   const predict = r => { if (!predictions.has(r.id)) predictions.set(r.id, predictTries(r)); return predictions.get(r.id); };
   function fits(r, rate) {
     const exp = (rate.train?.exp + rate.validation?.exp) / 2;
