@@ -49,7 +49,8 @@ function variants(rows, dir) {
             addedSpecials:(step.addedSpecials||[]).filter(i=>roles.has(i))}))).filter(s=>s.addedSpecials.length);
           add(fixed,'removed idle components and re-authored exact clock: '+removed.join(','),{recipe,
             simplifiedFrom:r.recipe,brief:'Re-authored after removing idle '+removed.join('/')+': '+recipe.join(' + '),placementScore:Placement.score(fixed,recipe,r.shape),
-            trapPlan:{...(r.trapPlan||{}),authoredBoard:null,steps,analysis:Composer.analyze(fixed)}});
+            trapPlan:{...(r.trapPlan||{}),authoredBoard:null,steps,
+              components:(r.trapPlan?.components||[]).filter(c=>!removed.includes(c.kind)),analysis:Composer.analyze(fixed)}});
         }
       }
     }

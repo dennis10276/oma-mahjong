@@ -221,6 +221,15 @@ still decides placement. Support manifests fingerprint quality records, so a
 cached group-only check cannot qualify a newly composed combination. Historical
 rows without these additions keep their original quality requirements.
 
+New compositions also record the ice and lock collections owned by each recipe
+step. Each collection is checked separately, so a strong secondary trap cannot
+hide an idle primary one. A failed component stops further probes before skilled
+planning; any unchecked collections are recorded explicitly. When a measured
+idle collection is removed as an alternative, its recipe is re-authored and the
+exact clock is rebuilt with the same spare. It does not keep a frozen/locked
+label after that feature has disappeared, and it remains a variant of the same
+creation. Approved board repairs can forbid this simplification.
+
 Task 05 adds `placement_score.js`, based on Dennis's round-2 lab verdicts. Its
 0–100 authoring score is timing (30), clarity of clock/signposts (25), visible
 objective route (20), fair clock spare (15), temptation opportunity (5), and

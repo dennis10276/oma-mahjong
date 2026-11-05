@@ -265,7 +265,8 @@ function steer(s, saved = null, checkpoint = () => {}) {
   const log = saved?.log?.slice() || [], recipe = (saved?.recipe || s.recipe || []).slice();
   let trapPlan = saved?.trapPlan || s.trapPlan;
   const mergePlan = added => added ? { ...(trapPlan || {}), version:trapPlan?.version || Composer.VERSION,
-    authoredBoard:trapPlan?.authoredBoard || null, steps:[...(trapPlan?.steps||[]),...added.steps.map(t=>({...t,addedDuringSteering:true}))] } : trapPlan;
+    authoredBoard:trapPlan?.authoredBoard || null, steps:[...(trapPlan?.steps||[]),...added.steps.map(t=>({...t,addedDuringSteering:true}))],
+    components:[...(trapPlan?.components||[]),...(added.components||[])] } : trapPlan;
   const seen = new Set(saved?.seen || []);
   let cur = judge(saved?.design || s.design, s.target, saved?.step || 0, true, false, {...s,trapPlan});
   seen.add(boardKey(cur.d));

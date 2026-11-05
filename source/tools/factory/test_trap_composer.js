@@ -248,3 +248,12 @@ test('removing idle ice re-authors the recipe and exact clock instead of keeping
   assert.deepEqual(remainingRecipe(['trayJuggleFrozen','keyGuardIce'],['ice']),['trayJuggle']);
   assert.deepEqual(remainingRecipe(['keyToEscape'],['locks']),['dontGrab']);
 });
+
+test('component ownership keeps the main ice and the added ice separately accountable', () => {
+  const row=supported();row.trapPlan.components=[{name:'main ice',kind:'ice',indices:[8]}];
+  const seen=[];const evidence=Supports.measure(row,{valid:true,expectedTries:8,firstTryRate:.2},{measure(d){
+    seen.push(Object.keys(d.obst.ice).map(Number));return {valid:true,expectedTries:6,firstTryRate:.4};}},{});
+  assert.deepEqual(seen,[[9],[8]]);assert.equal(Object.keys(evidence.supports).length,2);
+  const idle=Supports.measure(row,{valid:true,expectedTries:8,firstTryRate:.2},{measure(){return {valid:true,expectedTries:8,firstTryRate:.2};}},{});
+  assert.equal(Object.keys(idle.supports).length,1);assert.equal(idle.uncheckedSupports.length,1,'An idle main component rejects before another bot probe');
+});

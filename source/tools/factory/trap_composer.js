@@ -208,7 +208,7 @@ function compose(b, recipe, rng, options = {}) {
   const make = options.make || require('./design_traps.js').placeIdea;
   const fix = options.fix || I.fix, valid = options.valid || I.valid;
   const routeCache = new Map();
-  let beam = [{ design: I.clone(b), steps: [], analysis: analyze(b), score: 0, protectedFaces: [], protectedHidden: [] }], probes = 0;
+  let beam = [{ design: I.clone(b), steps: [], components:[], analysis: analyze(b), score: 0, protectedFaces: [], protectedHidden: [] }], probes = 0;
   for (const [stage, key] of recipe.entries()) {
     const choices = new Map(), proposed = new Set();
     const stageDeadline = started + milliseconds * (stage + 1) / recipe.length;
@@ -245,13 +245,17 @@ function compose(b, recipe, rng, options = {}) {
       const protectedHidden = [...new Set([...parent.protectedHidden, ...design.down.filter(i => !before.down.includes(i)),
         ...(key === 'blindTwins' ? design.down.filter(i => Object.keys(design.obst?.ice || {}).some(j => design.faces[j] === design.faces[i])) : [])])];
       const added = ids(design).filter(i => !ids(before).includes(i));
+      const components=parent.components.slice();
+      for(const kind of ['ice','locks']){const own=kind==='ice'?Object.keys(design.obst?.ice||{}).map(Number).filter(i=>!before.obst?.ice?.[i]):
+        (design.obst?.locks||[]).filter(i=>!(before.obst?.locks||[]).includes(i));
+        if(own.length)components.push({name:key+'@'+stage+':'+kind,recipe:key,kind,indices:own});}
       const hidden = design.down.filter(i => !before.down.includes(i)), changedPictures = before.faces.map((f, i) => f !== design.faces[i] ? i : -1).filter(i => i >= 0);
       const changed = new Set([...added, ...hidden, ...changedPictures]);
       const steps = parent.steps.concat({ recipe: key, placement: adapter ? 'extend existing roles' : 'place new roles',
         clock: design.clock?.i ?? null, keys: design.obst?.keys || [], addedSpecials: added, addedHidden: hidden, changedPictures,
         connections: analysis.edges.filter(e => changed.has(e.from) || changed.has(e.to)) });
       const novelty = (options.seen || []).includes(analysis.signature) ? -3 : 0;
-      choices.set(id, { design, steps, analysis, protectedFaces, protectedHidden, placementScore, revealed,
+      choices.set(id, { design, steps, components, analysis, protectedFaces, protectedHidden, placementScore, revealed,
         score: placementScore.total + score(analysis, intent) + novelty });
     }
     beam = [...choices.values()].sort((a, q) => q.score - a.score).slice(0, beamWidth);
@@ -259,6 +263,7 @@ function compose(b, recipe, rng, options = {}) {
   }
   const best = beam[0]; diagnostics.probes = probes;
   return { design: best.design, plan: { version: VERSION, intent, recipe: recipe.slice(), steps: best.steps,
+    components:best.components,
     analysis: best.analysis, placementScore: best.placementScore, revealedForReadability: best.revealed,
     structuralScore: +best.score.toFixed(3), probes, authoredBoard: boardKey(best.design) } };
 }
