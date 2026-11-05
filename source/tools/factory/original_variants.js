@@ -5,13 +5,16 @@ const I = require('../lab/ideas.js'), L = global.Layouts;
 const { roomProfile } = require('./design_traps.js');
 const { checkOrigin } = require('./originality.js');
 const { boardKey, atomicJson } = require('./meter.js');
+const Placement = require('./placement_score.js');
 function variants(rows, dir) {
   const out = new Map(rows.map(r => [r.id, r]));
   for (const r of rows) {
     if (checkOrigin(r)) throw Error('Only fresh designs may enter this tuner');
+    if (r.factoryKeep) continue;
     const d = r.design, route = d.solution.indexOf(d.clock.i) + 1;
     const add = (design, edit) => {
       const id = boardKey(design).slice(0, 16); if (out.has(id) || !I.valid(design)) return;
+      if (r.playerFeedback && !Placement.readable(design)) return;
       const room = roomProfile(design); if (!room.ok || room.unrelieved > 1) return;
       out.set(id, { ...r, id, design, room, edit });
     };

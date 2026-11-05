@@ -2,7 +2,7 @@
 // A useful main trap must not hide an idle supporting trap in a group ablation.
 const { MOTIFS } = require('./trap_composer.js');
 const { digest } = require('./meter.js');
-const VERSION = 'support-ablations-v1';
+const VERSION = 'support-ablations-v2';
 const ICE = new Set([...Object.keys(MOTIFS), 'frozenGuards', 'trayJuggleFrozen', 'iceChain']);
 const LOCKS = new Set(['lockedPartners', 'trayJuggleLocked']);
 function checks(row) {
@@ -16,7 +16,8 @@ function checks(row) {
     result.push({ name: key + '@untracked', recipe: key, kind: 'ice', indices: [] });
   return result;
 }
-function fingerprint(row) { const list = checks(row); return list.length ? digest({ version: VERSION, checks: list }) : null; }
+function fingerprint(row) { const list = checks(row); return list.length || row.playerFeedback
+  ? digest({ version: VERSION, checks: list, playerFeedback: !!row.playerFeedback }) : null; }
 function compatible(row, quality) {
   if (!quality) return false;
   const expected = fingerprint(row); return !expected || quality.supportFingerprint === expected;

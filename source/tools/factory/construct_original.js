@@ -4,6 +4,7 @@ const { Worker, isMainThread, parentPort } = require('worker_threads');
 const I = require('../lab/ideas.js'), Hard = require('../../www/hard.js'), L = global.Layouts;
 const { roomProfile } = require('./design_traps.js');
 const { compose, authored } = require('./trap_composer.js');
+const Placement = require('./placement_score.js');
 const { originOf } = require('./originality.js');
 const { atomicJson, boardKey, digest, sourceHash } = require('./meter.js');
 
@@ -18,10 +19,10 @@ function construct(pile, spec, plan, attempt, diagnostic = {}, seen = []) {
   const base = { ...raw, obst: { ice: {}, locks: [], keys: [] }, clock: null };
   if (!I.valid(base)) return fail('baseSolution');
   diagnostic.placement = {};
-  const composed = compose(base, brief.recipe, I.rngOf(seed * 13 + 7), { spare: brief.spare ?? 2,
+  const composed = compose(base, brief.recipe, I.rngOf(seed * 13 + 7), { spare: Placement.preferredSpare(brief),
     intent: brief.placementIntent, probes: plan.placementProbes ?? 3, beam: plan.placementBeam ?? 2,
     milliseconds: plan.placementMilliseconds ?? 1200, probeMilliseconds: plan.placementProbeMilliseconds ?? 400,
-    diagnostic: diagnostic.placement, seen });
+    diagnostic: diagnostic.placement, seen, shape: pile.shape, playerFeedback: plan.playerFeedback !== false });
   let d = composed?.design;
   if (!composed) return fail('recipe');
   if (!d?.clock || !I.valid(d)) return fail('clockRoute');
@@ -39,10 +40,13 @@ function construct(pile, spec, plan, attempt, diagnostic = {}, seen = []) {
   if (!room.ok || room.unrelieved > 1 || !I.valid(d)) return fail('relief');
   const origin = originOf(d, plan.batchId + '/level-' + spec.level, brief.brief, seed);
   origin.intendedLevel = spec.level; origin.layoutSeed = pile.seed; origin.pairingSeed = seed;
+  const placementScore = Placement.score(d, brief.recipe, pile.shape);
   return { id: boardKey(d).slice(0, 16), level: spec.level, target: spec.target, shape: pile.shape,
     recipe: brief.recipe, brief: brief.brief, n: d.tiles.length, design: d, room, origin,
     seedSource: 'fresh-designed', constructionEdits: edits, attempt,
-    trapPlan: { ...composed.plan, authoredBoard: boardKey(d) } };
+    placementScore, playerFeedback: plan.playerFeedback !== false,
+    placementEdits: (composed.plan.revealedForReadability || []).map(index => ({ kind: 'faceUpForReadableRoute', index })),
+    trapPlan: { ...composed.plan, placementScore, authoredBoard: boardKey(d) } };
 }
 if (!isMainThread) parentPort.on('message', job => {
   const started = Date.now();

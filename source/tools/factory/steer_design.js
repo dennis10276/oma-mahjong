@@ -21,6 +21,7 @@ const L = global.Layouts;
 const { roomProfile, trapTiles } = require('./design_traps.js');
 const { createMeter, boardKey } = require('./meter.js');
 const Moves = require('./moves.js');
+const Placement = require('./placement_score.js'), Composer = require('./trap_composer.js');
 
 function createSteerer(options = {}) {
 const meter = options.meter || createMeter(options);
@@ -148,7 +149,11 @@ function changes(d, state) {
     if (locks.length >= 2) { const one = byLoss(locks)[0]; out.push({ what: 'one lock off', d: { ...d, obst: { ...d.obst, locks: locks.filter(j => j !== one) } } }); }
   } else if (harder) {
     const soft = byLoss(iceAt.filter(j => d.obst.ice[j] < 3))[0];
-    if (soft !== undefined) out.push({ what: 'one ice harder', d: { ...d, obst: { ...d.obst, ice: { ...d.obst.ice, [soft]: d.obst.ice[soft] + 1 } } } });
+    if (soft !== undefined) {
+      const edited = { ...d, obst: { ...d.obst, ice: { ...d.obst.ice, [soft]: d.obst.ice[soft] + 1 } } };
+      const exact = I.fix({ ...edited,clock:{...edited.clock,n:999} },sp);
+      if(exact) out.push({what:'one ice harder with exact clock route',d:exact,exactRepaired:true});
+    }
   }
   if (softer) {
     { const r = relief(); if (r) out.push(r); }
@@ -158,7 +163,10 @@ function changes(d, state) {
   } else if (harder) {
     if (sp > 1) out.push({ what: 'clock -1 spare', d: withSpare(sp - 1) });
     for (const k of EXTRA) {
-      try { const y = I.IDEAS[k].make(I.clone(d), I.ctxOf(d), I.rngOf(state.step * 131 + k.length)); if (y) { const z = I.fix({ ...y, clock: { ...d.clock } }, sp); if (z) out.push({ what: 'trap added: ' + k, d: z, trap: k }); } } catch (e) { }
+      try {
+        const result = Composer.compose(d,[k],I.rngOf(state.step*131+k.length),{ spare:sp,playerFeedback:!!state.playerFeedback });
+        if(result) out.push({what:'connected trap added: '+k,d:result.design,trap:k,trapPlan:result.plan});
+      } catch (e) { }
     }
     // a luck moment: a covered tile on the family's way turned face-down (only where the luck rule still holds)
     const t = tilesOf(d), nb = L.neighbors(t), al = new Uint8Array(t.length).fill(1);
@@ -166,7 +174,22 @@ function changes(d, state) {
     for (const j of cand.slice(0, 2)) { const y = { ...d, down: d.down.concat(j) }; const r = roomProfile(y); if (r.ok && luckOk(r)) { out.push({ what: 'luck moment added', d: y }); break; } }
   }
   // A measured plateau in the first three edits must not hide a later useful trap.
-  return out.filter(c => I.valid(c.d));
+  return out.flatMap(c => {
+    if(state.preservePairing && JSON.stringify(c.d.faces)!==JSON.stringify(d.faces)) return [];
+    if(state.preserveVisibility && JSON.stringify([...c.d.down].sort((a,b)=>a-b))!==JSON.stringify([...d.down].sort((a,b)=>a-b))) return [];
+    if(state.preserveClockTile && c.d.clock.i!==d.clock.i) return [];
+    // A structural repair keeps the requested spare on a newly proved shortest
+    // route, instead of silently changing how generous the clock becomes.
+    if(state.preserveSpare !== undefined) {
+      if(c.what.startsWith('clock ') && c.d.clock.n-routeOf(c.d)!==state.preserveSpare) return [];
+      if(!c.exactRepaired && c.trapPlan?.authoredBoard!==boardKey(c.d)) {
+        const fixed=I.fix({...c.d,clock:{...c.d.clock,n:999}},state.preserveSpare);
+        if(!fixed) return []; c={...c,d:fixed};
+      }
+      if(c.d.clock.n-routeOf(c.d)!==state.preserveSpare) return [];
+    }
+    return I.valid(c.d) && (!state.playerFeedback || Placement.readable(c.d)) ? [c] : [];
+  });
 }
 function judge(d, target, step, withSpecials = true, checkPlanner = false) {
   const m = meas(d, 'family', true), spots = lossSpots(d, m), attr = attribution(d, m);
@@ -190,15 +213,17 @@ function steer(s, saved = null, checkpoint = () => {}) {
   if (!Number.isFinite(s.target) || s.target < 1 || s.target > 20) throw Error('Target must be between 1 and 20 expected tries');
   if (!s.design?.clock || !I.valid(s.design)) throw Error('Invalid starting board at level ' + s.level);
   const log = saved?.log?.slice() || [], recipe = (saved?.recipe || s.recipe || []).slice();
+  let trapPlan = saved?.trapPlan || s.trapPlan;
   const seen = new Set(saved?.seen || []);
   let cur = judge(saved?.design || s.design, s.target, saved?.step || 0);
   seen.add(boardKey(cur.d));
   if (!saved) log.push(`start: family ${cur.exp} (target ${s.target}) skilled ${cur.skilled}`);
   let nextStep = (saved?.step || 0) + 1;
-  const save = step => checkpoint({ step, design: cur.d, recipe, log, seen: [...seen] });
+  const save = step => checkpoint({ step, design: cur.d, recipe, trapPlan, log, seen: [...seen] });
   save(nextStep - 1);
   for (let step = nextStep; step <= STEPS && !cur.pass; step++) {
-    const opts = changes(cur.d, { ...cur, step }).filter(o => !seen.has(boardKey(o.d)));
+    const opts = changes(cur.d, { ...cur, step, playerFeedback:s.playerFeedback, preservePairing:s.preservePairing,
+      preserveVisibility:s.preserveVisibility,preserveClockTile:s.preserveClockTile,preserveSpare:s.preserveSpare }).filter(o => !seen.has(boardKey(o.d)));
     if (!opts.length) { log.push(`step ${step}: no new change left`); save(step); break; }
     // Small runs rank edits only. A full, unchanged meter decides every accepted edit.
     // ...and what the factory learned from earlier boards (moves.js): with 3+ records of a kind of change, its usual
@@ -228,6 +253,8 @@ function steer(s, saved = null, checkpoint = () => {}) {
     if (best && (best.j.score < cur.score || (best.j.score === cur.score && best.j.pass))) {
       cur = best.j; seen.add(boardKey(cur.d));
       if (best.o.trap) recipe.push(best.o.trap);
+      if (best.o.trapPlan) trapPlan = { ...(trapPlan || {}), version:trapPlan?.version || Composer.VERSION,
+        authoredBoard:trapPlan?.authoredBoard || null, steps:[...(trapPlan?.steps||[]),...best.o.trapPlan.steps.map(t=>({...t,addedDuringSteering:true}))] };
       log.push(`step ${step}: kept "${best.o.what}"`);
       save(step);
     } else { log.push(`step ${step}: nothing better`); save(step); break; }
@@ -258,7 +285,7 @@ function steer(s, saved = null, checkpoint = () => {}) {
   const losses = cur.m.results.flatMap(r => r.attempts).filter(a => !a.win && !a.censored);
   const late = losses.filter(a => a.left <= 0.45 * d.tiles.length).length;
   const warnings = late >= 4 && late / losses.length >= 0.3 ? ['lateSqueeze'] : [];
-  return { ...s, recipe, pass: cur.pass && grabValid && holdout?.pass === true, searchPass: cur.pass,
+  return { ...s, recipe, trapPlan, pass: cur.pass && grabValid && holdout?.pass === true, searchPass: cur.pass,
     g61: { exp: cur.exp, first: cur.m.firstTryRate, version: cur.m.version }, skilled: cur.skilled,
     luck: cur.luck, atTrap: cur.attr, specials: cur.sm, holdout, grabFirst, warnings, reviewReasons: reasons,
     clockSpare: d.clock.n - routeOf(d), n: d.tiles.length, down: d.down.length,

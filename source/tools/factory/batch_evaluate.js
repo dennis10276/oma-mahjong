@@ -18,6 +18,8 @@ function evaluate(row, mode, meter) {
     const f = meter.measure(d, { ...opts, seed: SEED });
     return { fresh: { exp: f.expectedTries, first: f.firstTryRate, valid: f.valid, seed: SEED }, eligible: f.valid };
   }
+  if (row.playerFeedback && !require('./placement_score.js').readable(d)) return { eligible: false, reason: 'blindObjectiveRoute',
+    ...(mode === 'quality' ? { supportFingerprint: Supports.fingerprint(row) } : {}) };
   // Steering can change the clock path or hidden pictures while retaining a
   // parent's metadata. Final quality must check the actual edited board.
   const room = mode === 'quality' ? roomProfile(d) : row.room || roomProfile(d);

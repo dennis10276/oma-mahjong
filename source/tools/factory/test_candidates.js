@@ -92,6 +92,29 @@ test('partial handback selects only qualified levels and leaves missing slots ex
   assert.equal(impossible.capacity, 1); assert.equal(impossible.nodes, 0);
 });
 
+test('a kept player-approved board is mandatory even in a partial assignment', t => {
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-kept-board-'));
+  t.after(() => fs.rmSync(dir, { recursive: true }));
+  const base = path.resolve(__dirname, '../../analysis/factory');
+  const plan = JSON.parse(fs.readFileSync(path.join(base, 'batch-200-225-plan.json')));
+  plan.levelTable = path.resolve(base, plan.levelTable);
+  const pile = JSON.parse(fs.readFileSync(path.resolve(base, plan.piles))).find(p => p.level === 200);
+  const design = { tiles: pile.tiles, faces: pile.tiles.map((_,i) => i>>1), down: [],
+    obst: { ice: {}, keys: [], locks: [] }, clock: { i: 0, n: 2 }, solution: pile.tiles.map((_,i)=>i) };
+  const rows = [2,3].map((n,k) => {
+    const d = { ...design, clock: { i: 0, n } }, id = boardKey(d).slice(0,16);
+    atomicJson(path.join(dir,id+'.rate.json'),{train:{valid:true,exp:k?7.3:7},validation:{valid:true,exp:k?7.3:7}});
+    atomicJson(path.join(dir,id+'.quality.json'),{eligible:true,skilled:{exp:1},room:{ok:true},atTrap:1,special:{}});
+    return { id, level:200, shape:pile.shape, n:pile.tiles.length, recipe:['chainReaction'], design:d,
+      origin:O.originOf(d,'kept-test/'+k,'Fresh route',18+k) };
+  });
+  plan.levels=[{level:200,target:7.3,big:false,keepId:rows[0].id}];
+  const selected=assign(plan,rows,dir,1000,false,true);
+  assert.equal(selected.rows[0].id,rows[0].id,'Cheaper or newer candidates cannot replace a kept board');
+  const unavailable=assign(plan,[rows[1]],dir,1000,false,true);
+  assert.equal(unavailable.rows,null); assert.deepEqual(unavailable.preservedFailure,[{level:200,id:rows[0].id}]);
+});
+
 test('checkpoint replacement retries transient Windows locks and preserves the old file on permanent failure', t => {
   const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'oma-checkpoint-retry-'));
   t.after(() => fs.rmSync(dir, { recursive: true }));

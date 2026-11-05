@@ -7,6 +7,7 @@ const { checkOrigin, compare, previousBoards } = require('./originality.js');
 const Final = require('./final_seed.js');
 const Preferences = require('./shape_preferences.js');
 const Supports = require('./trap_supports.js');
+const Placement = require('./placement_score.js');
 
 function candidates(pool, dir) {
   const read = (r, mode) => { const f = path.join(dir, r.id + '.' + mode + '.json'); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)) : null; };
@@ -14,6 +15,7 @@ function candidates(pool, dir) {
     const rate = read(r, 'rate'), quality = read(r, 'quality');
     if (!rate?.train?.valid || !rate.validation?.valid || !quality?.eligible || !Supports.compatible(r, quality)) return [];
     return [{ ...r, rate, quality, fresh: read(r, 'fresh'), exp: (rate.train.exp + rate.validation.exp) / 2,
+      placementScore: Placement.score(r.design,r.recipe,r.shape),
       base: r.shape.split(' · ')[0], spots: F.spots(r.design.tiles)[0] }];
   });
 }
@@ -31,6 +33,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
   const past = plan.originality?.required ? previousBoards(levels, plan.levelTable) : [];
   const novel = inv.map(r => past.every(p => !compare(r, p, plan.originality?.maxLayoutShare)));
   const allowed = levels.map(s => inv.map((r, i) => ({ r, i })).filter(({ r, i }) => (r.n > 88) === s.big &&
+    (!s.keepId || r.id === s.keepId) &&
     r.design.tiles.length >= Preferences.minimum(plan) &&
     (r.quality.skilled?.exp ?? 0) >= (plan.skilledMin ?? 0) &&
     (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) && novel[i] &&
@@ -90,19 +93,26 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       if (!c.length && !allowPartial) return;
       if (!opts || c.length < opts.length) { k = j; opts = c; }
     }
-    const preference = r => Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan);
+    const preference = r => Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan) + (100-r.placementScore.total)*.01;
     opts.sort((a, b) => preference(a.r) - preference(b.r));
     for (const { r, i } of opts) {
       picks[k] = i; used.add(i);
-      dfs(count + 1, cost + Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan) + (r.quality.lateShare >= 0.3 ? 0.2 : 0), filled + 1);
+      dfs(count + 1, cost + preference(r) + (r.quality.lateShare >= 0.3 ? 0.2 : 0), filled + 1);
       used.delete(i); picks[k] = -1;
     }
     if (allowPartial) { picks[k] = -2; dfs(count + 1, cost, filled); picks[k] = -1; }
   }
-  if (allowPartial || capacity === levels.length && allowed.every(a => a.length)) dfs(0, 0, 0);
+  let fixed = 0, fixedCost = 0; const preservedFailure = [];
+  for (let k = 0; k < levels.length; k++) if (levels[k].keepId) {
+    const option = choices(k).find(({r}) => r.id === levels[k].keepId);
+    if (!option) { preservedFailure.push({ level: levels[k].level, id: levels[k].keepId }); break; }
+    picks[k] = option.i; used.add(option.i); fixed++;
+    fixedCost += Math.abs(option.r.exp - levels[k].target) + Preferences.penalty(option.r.shape, plan);
+  }
+  if (!preservedFailure.length && (allowPartial || capacity === levels.length && allowed.every(a => a.length))) dfs(fixed, fixedCost, fixed);
   const coverage = levels.map((s, k) => ({ level: s.level, target: s.target, big: s.big, choices: allowed[k].length,
     shapes: [...new Set(allowed[k].map(({ r }) => r.base))], selected: best?.picks[k] >= 0 ? inv[best.picks[k]].id : null }));
-  if (!best) return { nodes, coverage, capacity, eligible: inv.length, rows: null, problem: { inv, allowed, compat } };
+  if (!best) return { nodes, coverage, capacity, eligible: inv.length, rows: null, preservedFailure, problem: { inv, allowed, compat } };
   const rows = best.picks.flatMap((i, k) => {
     if (i < 0) return [];
     const { spots, base, rate, quality, fresh, ...r } = inv[i], s = levels[k];
@@ -112,6 +122,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       search: rate.train.exp, validation: rate.validation.exp, searchSeed: 4711, validationSeed: 18427,
       ...(Final.tuned(r) ? { fresh: fresh.fresh.exp, freshSeed: Final.SEED } : {}), version: rate.train.version },
       skilled: quality.skilled.exp, room: quality.room, atTrap: quality.atTrap, specials: quality.special,
+      placementScore: Placement.score(r.design, r.recipe, r.shape),
       ...(quality.supports ? { supports: quality.supports, supportFingerprint: quality.supportFingerprint } : {}),
       warnings: quality.lateShare >= 0.3 ? ['lateSqueeze'] : [], lateShare: quality.lateShare,
       clockSpare: r.design.clock.n - (r.design.solution.indexOf(r.design.clock.i) + 1),

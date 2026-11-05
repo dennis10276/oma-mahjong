@@ -6,6 +6,7 @@ const F = require('./piles_for.js');
 const I = require('../lab/ideas.js'), Hard = require('../../www/hard.js');
 const { CONCEPTS } = require('./design_traps.js');
 const { compose, known } = require('./trap_composer.js');
+const Placement = require('./placement_score.js');
 const { runFile } = require('./run_file.js');
 const { digest, atomicJson, sourceHash } = require('./meter.js');
 const { originOf, fitsLayouts, previousBoards, assertOriginalBatch } = require('./originality.js');
@@ -88,9 +89,10 @@ function prepare(planFile, outFile) {
       // Every obstacle and the clock is placed for this level's own brief.
       const deal = { ...raw, obst: { ice: {}, locks: [], keys: [] }, clock: null };
       if (!deal.solution || !I.valid(deal)) continue;
-      const composed = compose(deal, wantedRecipe, I.rngOf(spec.level * 31 + salt * 7), { spare: concept.spare,
+      const composed = compose(deal, wantedRecipe, I.rngOf(spec.level * 31 + salt * 7), { spare: Placement.preferredSpare({ recipe: wantedRecipe, spare: concept.spare }),
         intent: spec.placementIntent, probes: plan.placementProbes ?? 3, beam: plan.placementBeam ?? 2,
-        milliseconds: plan.placementMilliseconds ?? 1200, probeMilliseconds: plan.placementProbeMilliseconds ?? 400 });
+        milliseconds: plan.placementMilliseconds ?? 1200, probeMilliseconds: plan.placementProbeMilliseconds ?? 400,
+        shape: pile.shape, playerFeedback: plan.playerFeedback !== false });
       design = composed?.design; trapPlan = composed?.plan;
       if (design && !I.valid(design)) design = null;
       recipe = wantedRecipe;
@@ -100,7 +102,7 @@ function prepare(planFile, outFile) {
     saved.rows.push({ level: spec.level, target, concept: spec.concept, title: concept.title, recipe,
       shape: pile.shape, pile: pile.level, seedSource: 'designed',
       origin: originOf(design, (plan.batchId || 'fresh') + '/' + spec.level, spec.brief || concept.title, usedSeed),
-      trapPlan, design: { ...design, level: spec.level } });
+      trapPlan, playerFeedback: plan.playerFeedback !== false, design: { ...design, level: spec.level } });
     atomicJson(file, saved);
     console.log(spec.level, concept.title, 'target', target, '(fresh design)');
   }

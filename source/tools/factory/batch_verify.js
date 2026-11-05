@@ -44,6 +44,8 @@ function verify(planFile, batchFile, options = {}) {
     assert(quality.eligible, 'Puzzle quality failed at ' + r.level);
     assert.equal(r.atTrap, quality.atTrap); assert.deepEqual(r.specials, quality.special);
     assert.deepEqual(r.supports || {}, quality.supports || {}, 'Support ablations differ at ' + r.level);
+    if (r.placementScore) assert.deepEqual(r.placementScore, require('./placement_score.js').score(d, r.recipe, r.shape), 'Placement score differs at ' + r.level);
+    if (r.playerFeedback) assert(require('./placement_score.js').readable(d), 'Blind objective route at ' + r.level);
     if (k && rows[k - 1].level + 1 === r.level) assert(rows[k - 1].family.exp <= r.family.exp + (plan.maxReverseStep ?? 0.25) + 0.001, 'Large reverse step at ' + r.level);
   }
   console.log(rows.length, 'levels verified against cached full bot measurements;', meter.stats.calls, 'new calls,', meter.stats.hits, 'cache hits');

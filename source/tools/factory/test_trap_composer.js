@@ -4,6 +4,7 @@ const fs = require('fs'), path = require('path');
 const I = require('../lab/ideas.js'), L = global.Layouts;
 const C = require('./trap_composer.js'), { boardKey } = require('./meter.js');
 const Supports = require('./trap_supports.js');
+const Placement = require('./placement_score.js');
 function small({ thaw = false } = {}) {
   const tiles = [[0,0,0],[4,0,0],[14,0,0],[14,4,0],[0,4,0],[4,4,0],
     [0,8,0],[4,8,0],[1,0,1],[3,0,1],[-1,0,1],[5,0,1]];
@@ -142,4 +143,61 @@ test('support evidence belongs to the exact role manifest and missing edited rol
   assert.equal(missing.supports['keyGuardIce@1'].present, false);
   assert.equal(missing.supports['keyGuardIce@1'].matters, false);
   assert(Supports.checks({ recipe: ['keyGuardIce'], design: row.design })[0].indices.length === 0);
+});
+
+test('Dennis feedback favours an earlier decisive clock over the same puzzle dragged into the ending', () => {
+  const b = small(), late = I.clone(b);
+  late.solution = b.solution.filter(i => i !== 2 && i !== 3).concat(2,3);
+  late.clock.n = late.solution.indexOf(2) + 3; assert(I.valid(late));
+  const first = Placement.score(b, ['lockedClock'], 'heart'), last = Placement.score(late, ['lockedClock'], 'heart');
+  assert(first.total > last.total); assert(first.components.timing > last.components.timing);
+  assert.equal(first.facts.temptation.provedWrong, false, 'A visible lure is an opportunity until the bot tests it');
+  assert.equal(Placement.preferredSpare({ recipe: ['trayJuggleFrozen'], spare: 2 }), 1);
+  assert.equal(Placement.preferredSpare({ recipe: ['trayJuggleLocked'], spare: 3 }), 1);
+  assert.equal(Placement.preferredSpare({ recipe: ['lockedClock'], spare: 3 }), 3);
+});
+
+test('readability preparation exposes keys and leaves at most one hidden tile on the actual objective route', () => {
+  // Retain a legal longer witness, with its two covered key tiles made ordinary.
+  const b = small(); b.obst = { ice: {}, locks: [], keys: [] }; const c = I.ctxOf(b);
+  const analysis = C.analyze(b), pathTiles = Placement.routeTiles(b, analysis);
+  const markers = new Set([b.clock.i,...(b.obst.keys||[]),...(b.obst.locks||[]),...Object.keys(b.obst.ice).map(Number)]);
+  const covered = [...pathTiles].filter(i => !c.free0[i] && !markers.has(i)).slice(0,3);
+  assert(covered.length >= 2); b.down = [...new Set([...b.down, ...covered])];
+  const before = JSON.stringify(b), readable = Placement.prepare(b, analysis);
+  assert(readable.design); assert(I.valid(readable.design));
+  assert.equal(JSON.stringify(b), before);
+  assert(readable.design.down.filter(i => pathTiles.has(i)).length <= 1);
+  assert((b.obst.keys || []).every(i => !readable.design.down.includes(i)));
+  const keys = small(); keys.down = keys.obst.keys.slice();
+  assert(Placement.prepare(keys, C.analyze(keys)).design.down.every(i => !keys.obst.keys.includes(i)));
+  const conflict = Placement.prepare(b, analysis, covered.slice(0,2));
+  assert(!conflict.design); assert.match(conflict.reason, /authored blind dig/);
+});
+
+test('feedback quality rejects renewed blind digging without another bot call or an old cache shortcut', () => {
+  const d=small(); d.obst={ice:{},locks:[],keys:[]}; d.down=[0,1];
+  const row={design:d,recipe:['lockedClock'],playerFeedback:true};
+  assert(!Placement.readable(d));
+  const q=require('./batch_evaluate.js').evaluate(row,'quality',{measure(){throw Error('Unreadable candidate reached a bot');}});
+  assert.equal(q.reason,'blindObjectiveRoute'); assert.equal(q.eligible,false);
+  assert(Supports.compatible(row,q)); assert(!Supports.compatible(row,{eligible:true}));
+  assert(Supports.compatible({...row,playerFeedback:false},{eligible:true}));
+  const readable=Placement.prepare(d,C.analyze(d)).design;
+  assert(Placement.readable(readable));
+  const engine=require('./steer_design.js').createSteerer({meter:{measure(){throw Error('Candidate generation measured a bot');},fingerprint:'test'},journal:false});
+  const changes=engine.changes(readable,{exp:2,target:10,skilled:1,step:1,room:{ok:true,unrelieved:0},spots:{tiles:[0,1],faces:new Map()}});
+  assert(changes.length); // legacy mode may still propose a hidden dig
+  const bounded=engine.changes(readable,{exp:2,target:10,skilled:1,step:1,playerFeedback:true,room:{ok:true,unrelieved:0},spots:{tiles:[0,1],faces:new Map()}});
+  assert(bounded.length); assert(bounded.every(x=>Placement.readable(x.d)));
+});
+
+test('a repair can preserve pictures, hidden tiles, clock location and one exact spare', () => {
+  const base=small();base.obst.ice={8:1};const d=I.fix(base,1);assert(d);
+  const engine=require('./steer_design.js').createSteerer({meter:{measure(){throw Error('Generation measured a bot');},fingerprint:'test'},journal:false});
+  const out=engine.changes(d,{exp:14,target:13,skilled:4,step:1,room:{ok:true,unrelieved:0},spots:{tiles:[8],faces:new Map()},
+    preservePairing:true,preserveVisibility:true,preserveClockTile:true,preserveSpare:1});
+  assert(out.length);
+  for(const x of out){assert.deepEqual(x.d.faces,d.faces);assert.deepEqual(x.d.down,d.down);assert.equal(x.d.clock.i,d.clock.i);
+    const exact=I.fix({...x.d,clock:{...x.d.clock,n:999}},1);assert(exact);assert.equal(x.d.clock.n,exact.clock.n);}
 });

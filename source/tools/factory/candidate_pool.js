@@ -25,7 +25,8 @@ function prepare(planFile, dir, count = 20, existingPiles) {
   fs.mkdirSync(dir, { recursive: true });
   const pilesFile = path.resolve(dir, 'candidate-piles.json'), candidatePlan = path.resolve(dir, 'candidate-plan.json');
   if (!fs.existsSync(pilesFile)) fs.copyFileSync(existingPiles || path.resolve(path.dirname(planFile), plan.piles), pilesFile);
-  const initial = 300;
+  const initial = plan.candidateStart ?? 300;
+  if (!Number.isInteger(initial) || initial < 1) throw Error('candidateStart must be a positive creation ID');
   const targets = plan.levels.map(s => s.target), low = Math.min(...targets), high = Math.max(...targets);
   const briefs = plan.candidateBriefs || BRIEFS;
   if (!fs.existsSync(candidatePlan)) atomicJson(candidatePlan, { ...plan,

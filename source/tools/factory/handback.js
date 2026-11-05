@@ -7,6 +7,7 @@ const Moves = require('./moves.js');
 const Final = require('./final_seed.js');
 const Preferences = require('./shape_preferences.js');
 const Supports = require('./trap_supports.js');
+const Placement = require('./placement_score.js');
 
 function handback(planFile, poolFile, measurements, out) {
   const plan = JSON.parse(fs.readFileSync(planFile)), pool = JSON.parse(fs.readFileSync(poolFile));
@@ -28,7 +29,7 @@ function handback(planFile, poolFile, measurements, out) {
   verify(planFile, levelsFile, { partial: !result.complete });
   atomicJson(path.join(out, 'coverage.json'), { complete: !!result.complete, qualified: rows.length, required: plan.levels.length,
     nodes: result.nodes, capacityUpper: result.capacity, searchLimitReached: result.nodes > 3000000,
-    levels: result.coverage, plan: planFile, measurements });
+    preservedFailure: result.preservedFailure || [], levels: result.coverage, plan: planFile, measurements });
   fs.copyFileSync(path.resolve(path.dirname(planFile), plan.piles), path.join(out, 'candidate-piles.json'));
   fs.copyFileSync(plan.levelTable, path.join(out, 'context-levels.js'));
   atomicJson(path.join(out, 'output-plan.json'), { ...plan, piles: 'candidate-piles.json', levelTable: 'context-levels.js' });
@@ -53,7 +54,7 @@ function handback(planFile, poolFile, measurements, out) {
   const fmt = n => Number.isFinite(n) ? (+n.toFixed(3)).toString() : '—';
   for (const s of plan.levels) {
     const approved = selected.get(s.level), x = approved ? rated.find(x => x.row.id === approved.id) : nearest.get(s.level);
-    if (!x) { report.push(`| ${s.level} | ${s.target} | missing | — | — | — | — | — | — | — | — | — |`); continue; }
+    if (!x) { report.push(`| ${s.level} | ${s.target} | missing | — | — | — | — | — | — | — | — | — | — |`); continue; }
     const { row, rate, quality, pooled } = x, reasons = [];
     if (pooled == null) reasons.push('full two-seed rating unmeasured');
     else {
@@ -83,8 +84,8 @@ function handback(planFile, poolFile, measurements, out) {
       reviewReasons: reasons, family: { exp: pooled, search: rate?.train?.exp ?? null, validation: rate?.validation?.exp ?? null,
         ...(x.fresh ? { fresh: x.fresh.fresh?.exp, freshSeed: Final.SEED } : {}) },
       skilled: quality?.skilled?.exp ?? null, room, specials, atTrap: quality?.atTrap ?? rate?.atTrap ?? null,
-      warnings, design: { ...row.design, level: s.level }, boardHash: boardKey(row.design) });
-    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)})${Final.tuned(row) ? '; fresh ' + fmt(x.fresh?.fresh?.exp) : ''} | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${row.design.tiles.length} | ${warnings.join(', ') || '—'} |`);
+      warnings, placementScore: Placement.score(row.design, row.recipe, row.shape), design: { ...row.design, level: s.level }, boardHash: boardKey(row.design) });
+    report.push(`| ${s.level} | ${s.target} | ${approved ? 'qualified' : reasons.join('; ')} | ${fmt(pooled)} (${fmt(rate?.train?.exp)} / ${fmt(rate?.validation?.exp)})${Final.tuned(row) ? '; fresh ' + fmt(x.fresh?.fresh?.exp) : ''} | ${fmt(quality?.skilled?.exp)} | ${luck} | ${fmt(quality?.atTrap ?? rate?.atTrap)} | ${specialText} | ${row.recipe.join(' + ')} | ${row.shape} | ${row.design.tiles.length} | ${fmt(Placement.score(row.design, row.recipe, row.shape).total)} | ${warnings.join(', ') || '—'} |`);
   }
   fs.writeFileSync(path.join(out, 'closest-assignment.jsonl'), diagnostics.sort((a, b) => a.level - b.level).map(r => JSON.stringify(r)).join('\n') + '\n');
   atomicJson(path.join(out, 'rated-candidates.json'), rated.filter(x => x.rate).map(x => ({ ...x.row, measurement: x.rate, quality: x.quality, fresh: x.fresh })));
@@ -104,8 +105,9 @@ function handback(planFile, poolFile, measurements, out) {
     `Source: ${revision}. Measurements: ${measurements}.`, '',
     '## Per level', '',
     'Pooled = equal mean of the two full family runs (4711 / 18427; 40 campaigns each). Tuned rows (including edits chosen from bot feedback) must also pass seed 29717, 40 campaigns, within 0.5 of the placed target and maximum pairwise seed gap 2. This reserved seed never feeds steering. Luck column = tight blind digs / relieved gaps between tight digs / unrelieved gaps. Specials show the family rating with that special removed and whether the factory deems it meaningful. An em dash means unmeasured.', '',
-    '| Level | Target | Status | Pooled (both seeds) | Skilled | Luck/relief/unrelieved | At trap | Specials without | Recipe | Shape | Tiles | Warnings |',
-    '|---|---:|---|---|---:|---|---:|---|---|---|---:|---|', ...report, '',
+    'Placement is the 0–100 Dennis round-2 authoring preference score (timing, clarity, visible route, fair clock, temptation opportunity, shape), not a difficulty rating. Details travel with every delivered row.', '',
+    '| Level | Target | Status | Pooled (both seeds) | Skilled | Luck/relief/unrelieved | At trap | Specials without | Recipe | Shape | Tiles | Placement | Warnings |',
+    '|---|---:|---|---|---:|---|---:|---|---|---|---:|---:|---|', ...report, '',
     '## Yield and failures', '',
     `Pool ${stages.pool}; screened ${stages.screened}; full two-seed ratings ${stages.fullRated}; quality checks ${stages.qualityMeasured}; quality passes ${stages.qualityPassed}.`,
     `${ownTargetMisses} fully rated candidates missed their initial slot target by more than 0.5; ${seedMisses} disagreed by more than two tries between seeds. These counts overlap.`,

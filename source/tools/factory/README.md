@@ -212,6 +212,29 @@ still decides placement. Support manifests fingerprint quality records, so a
 cached group-only check cannot qualify a newly composed combination. Historical
 rows without these additions keep their original quality requirements.
 
+Task 05 adds `placement_score.js`, based on Dennis's round-2 lab verdicts. Its
+0–100 authoring score is timing (30), clarity of clock/signposts (25), visible
+objective route (20), fair clock spare (15), temptation opportunity (5), and
+recognisable shape (5). Decisive specials around 15%–60% of the witness score
+better than a puzzle concentrated at the ending. A visible off-route pair or
+waiting clock is only a temptation candidate; the score does not claim it has
+proved the move wrong. Existing clock-first bot checks still establish that
+where required. Intent preferences adjust this ranking, and actual difficulty
+still comes from the bots. Every delivered row is rescored on its actual board.
+
+New construction exposes the clock, keys and locks and leaves at most one
+hidden tile on the actual clock/key witness path. It rejects an explicitly
+authored memory trap that conflicts with this rule instead of silently erasing
+it. `playerFeedback: false` preserves the earlier authoring mode. New feedback
+rows carry the rule through automatic variants, steering and final verification;
+steering cannot substitute more blind digging for the intended order puzzle.
+Frozen/locked tray-juggle briefs try clock spare 1 first. Historical approved
+boards are kept physically intact and receive the same reported preference
+score. A slot `keepId` makes an eligible approved board mandatory, including in
+partial assignment. If it no longer qualifies, `preservedFailure` identifies it
+and requires an explicit repair or plan update. `candidateStart` can select a
+fresh creation-ID range when adding another palette to an existing batch.
+
 - Family measurements come first. Off-curve boards and boards with idle
   specials skip the expensive skilled planner until those problems are fixed.
 - Six-game scouting ranks edits. Full 20-game/two-seed measurements decide
