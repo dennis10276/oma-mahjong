@@ -435,7 +435,6 @@ function createBotController(tiles, profile, seed) {
       }
       if (!found && partial) found = partial.path;
       routeCache = { sig, path: found || [] };
-      if (global.__routeStats) { global.__routeStats.calls++; if (found) global.__routeStats.found++; global.__routeStats.last = found; }
       return found ? found[0] : null;
     })();
 

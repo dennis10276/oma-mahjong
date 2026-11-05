@@ -7,13 +7,13 @@
     "human_bot.js": "06cc98fd19182e7256aae35e7a85fd9993a2f4e632027292125a4601105d7517",
     "human_clock_loss_timing.js": "167fa19bb1827ad6aac92e99ceec14a08ab7f818f5331ccc500f14bca6dfdb8a",
     "human_critic.js": "d283f0d4d990c5eece998ba016285cdf45761156cbd6a47051a8e4a00063d48a",
-    "human_factory_controller.js": "9112d372d0224cd0a613afb86b4d5d5828899439f573cc6275b91bee4b3b3ef3",
+    "human_factory_controller.js": "929ee877fb7b14dd5f7e8f3383c942c29b4cd42d1a9ee641bcba14f3383751d0",
     "human_release.js": "56a31f854329d724043449ec4cb16e0cd1f8ea09d3e7f2c26bc0d66eee625177",
     "human_release_profiles.json": "ca06e13977cf3cf8750f7e9fd79b1525ae774e0aeb28cd63f913568861446a7d",
     "human_style_controller.js": "c0a392a5e62797caea5912042c6657a403dd5763342246b09012d56b0a6fad7f",
     "human_style_environment.js": "ad497daec6b96b4333170704e5f4a8d3a5c3dca6b9072040f9690744d1b5af9e",
     "human_style_immediate_outs.js": "eb9aedda5f245f1113cb92826dbe9fea67d59f2231029b3aea6e09d36891ed62",
-    "human_style_measure.js": "6782d021cc6ae8be50c57f20fe1ae1e990c0bcfce43e3e30521ff24159bb381a",
+    "human_style_measure.js": "b8615f8c9bb5df8f12a32604a4044033788fb239525f7380dd659a4d97c71cda",
     "human_style_profiles.json": "567fab9003314b4cf942fb0a8ae7ffe82c56988a20cd92b0793e917cd3e535f2",
     "human_style_tray_horizon.js": "e704093c452d7426057455e8811abd6d5abf83010825dcd3da9df2b328e3c95a",
     "personal_game_io.js": "a0cff17088b7ec5b0b1c9ae0bc655faa51c2b1964fefc273556636ae8b5f86eb",
@@ -28,5 +28,6 @@
     "public_key_identity_memory.js": "e3738865841f6aa031dd5d781a484a87ef6badf9c2f69d9db5758c6e86e5edc2",
     "public_matched_picture.js": "8b1dad1d0a175cb5635be43d6681cf203d047ed55e8fdb390a58937691729bc6",
     "public_retry_access_memory.js": "6591b53bbdcfaaf48e1d671870a1be15d36370623f86c41ee16a1a9055f93a01"
-  }
+  },
+  "plannerUpdate": "2026-11-05 Claude: skilled planner routeNeed + routeNeedTray (clock logic); family profile and physics unchanged"
 }

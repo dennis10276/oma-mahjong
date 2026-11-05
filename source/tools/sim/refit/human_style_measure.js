@@ -42,7 +42,11 @@ function measureHuman(board,options={}){
  // leaves 3 waiting after the clock costs, a look-ahead over known tiles, safe pairs first, turning tiles over, the full
  // work to the clock counted, and a route planner to the clock. His tray reaches 3 in 10.5% of his takes after the
  // clock; this player 10.7%. Used for "a skilled player can do it" and for luck, not as the difficulty meter.
- const PLANNER={spotPenalty:200,lookDepth:2,lookPenalty:150,lookFrom:1,pairFirst:100,freePeekBonus:70,clockNeedFull:1,routePlan:300,routeBeam:300};
+  // routeNeed (2026-11-05, Dennis: "see how you would play the level and apply that logic in the bot"): the way to the clock
+ // counts what the clock still needs (cover, ice, the locks beside it, the keys and their covers) and, when no whole way
+ // shows, the best partial way that keeps a tray spot free. Two-island board 329724e3: 9.8 -> 2.1 tries; Dennis's 24 lab
+ // boards: off by 2.18 -> 2.05, wrongly over 6 on 3 -> 2 (blind 183 14.8 -> 5.6, he needed 6); live 85-174: 1.08 -> 1.10.
+ const PLANNER={spotPenalty:200,lookDepth:2,lookPenalty:150,lookFrom:1,pairFirst:100,freePeekBonus:70,clockNeedFull:1,routePlan:300,routeBeam:300,routeNeed:1,routeNeedTray:2};
  const pick=options.setting==='family'?'family':'Dennis';
  const encoded=normalizeBoard(board),start=performance.now(),settings={};
  const releasedProfiles=release.profiles;

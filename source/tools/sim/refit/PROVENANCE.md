@@ -26,3 +26,11 @@ Reproduce the checks from the repository root:
 ```powershell
 node --test source/tools/factory/test_factory.js source/tools/factory/test_bot.js
 ```
+
+## 2026-11-05: skilled planner, clock logic (Claude)
+Dennis: "See how you would play the level and apply that logic in the bot." The planner's way to the clock now counts what
+the clock still needs (cover, ice, the locks beside it, the keys and their covers) and, when no whole way shows, follows
+the best partial way that keeps a tray spot free (`routeNeed`, `routeNeedTray` in the 'planner' setting only). The family
+profile, the Dennis profile and the physics are unchanged, so family measurements are the same; the planner's are not.
+Two-island board 329724e3: 9.8 -> 2.1 tries. Against Dennis's own tries: 24 lab boards off by 2.18 -> 2.05, wrongly over
+6 on 3 -> 2; live 85-174 1.08 -> 1.10. Still too pessimistic on blind 185 (18.6 vs 6) and release 194 (20 vs 9).
