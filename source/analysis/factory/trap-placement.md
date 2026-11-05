@@ -2,6 +2,9 @@
 
 2026-11-05 — factory preparation for Claude’s next task.
 
+The initial preparation snapshot below predates Task 05. Its completed follow-up
+and current limitations are recorded in the addendum at the end.
+
 New construction now explores several placements on a fresh whole board, preserves earlier authored roles, and checks that supporting traps matter individually. No level batch was generated or published by this work.
 
 ## Concrete changes
@@ -44,3 +47,86 @@ The new gate was exercised on these actual samples: the two idle supports were r
 Run new production in a new output directory, since authoring code is part of the checkpoint fingerprint. `construct_original.js` and `build.js` use the composer. Slot `placementIntent` and plan `placementProbes`, `placementBeam`, `placementMilliseconds`, `placementProbeMilliseconds` control the search. See the factory README for the motif preconditions and metadata contract. After steering, `authored(row)` detects a stale original placement snapshot; `analyze(row.design)` explains the current board, and component checks measure surviving roles on that actual board.
 
 Claude’s Task 05 arrived while this preparation was being finished. Its player-feedback placement score, next skilled bot and v11 batch are the next work. The measurements above used the Task 04 bot. The existing Task 03/04 handback remains unchanged.
+
+## Task 05 addendum — completed experiments, partial batch
+
+The shared `3201e1e` skilled revision was adopted, fingerprint
+`f32859281c746f4277ab5ef4c0006d43c76dddcc342741af8b0ff45a1b63d561`.
+Family decisions and game physics were unchanged. All 60 factory regressions pass.
+
+The composer is now `connected-traps-v3`. It adds a fourth motif,
+`midgameRelay`: a matching single must remain in the tray when the clock is
+taken, its partner must still be frozen, the physical dependency lower bound
+must require at least three more takes, and that partner must become legally
+available before 60% of the witness. The entire phase route participates in the
+one-hidden-tile limit. A frozen tile that melts just by removing its covers does
+not count as a second phase. Every newly authored ice/lock collection is recorded
+and ablated separately, including the primary collection. Unchecked components
+are explicit when an earlier failure stops further probes. Removing an idle
+collection rebuilds the recipe and exact fair clock rather than retaining an
+obsolete frozen/locked label.
+
+`placement_score.js` ranks placements before bot work using Dennis's timing,
+visible signposts, readable objective route, fair clock, temptation and shape
+preferences. It is a hand-authored 0–100 preference, not a fitted fun or difficulty
+predictor. Unlock and thaw events determine timing; a solver-tail take is not
+mistaken for the decisive moment. New feedback-mode variants and steering retain
+the visibility requirement. Approved old boards retain their exact pictures and
+hidden tiles. Mandatory board IDs, reserved loved-board patterns and output-slot
+restrictions are enforced again during assignment and verification.
+
+The first production made 132 deals on 34 of 35 whole layouts in 439 attempts,
+with mean placement score 86.1. Many nevertheless failed the skilled or
+meaningful-component gates. Ten further legal midgame overlays from 22 bases
+also failed full output qualification. A bounded additional palette produced two
+new whole layouts and ten deals; eighteen unsuitable layout proposals were
+skipped, never cropped. Eleven focused repairs plus one final relay repair did
+not add a qualifying output. These trials improved authoring controls and
+failure evidence, but did not demonstrate improved final batch yield.
+
+One connected combination is demonstrably meaningful: diagnostic example 600
+(`19e6fe21eb1a2b92`, hourglass, 88 tiles) has family 13.55 on the full 4711
+campaigns. Removing only its original frozen guards gives 16.07; removing only
+the waiting-partner ice gives 12.1. Both collections matter, in different
+directions. Its two-seed family mean is 12.865 and skilled rating 2.98. It is
+still unqualified: it is above the available regular slots, and the loved 225
+pattern is reserved. A useful combination cannot override the curve.
+
+The saved catalogue `batch-200-225-smart-piles.json` has 48 whole layouts,
+including the earlier twenty extras and the new hourglass (700, 74 tiles) and
+pyramid (704, 96). No block shapes were added. `smart-trap-examples.jsonl` saves
+three explicitly unqualified examples: the meaningful partner combination,
+the new hourglass with a midgame relay, and the large pyramid with a key guard.
+All three passed 390×820 phone bounds and their full stored winning routes in
+the actual game. Visual inspection checked both new silhouettes and their
+clock badges. Their display IDs 600–602 are prototype labels, not batch slots.
+
+Layout comparison now reuses fixed masks and D4 views. On 96 matched comparisons,
+decisions were identical: 536.35ms rebuilding masks versus 84.38ms reusing them
+(6.36× for that step only). There is no end-to-end speed claim. Fresh palette
+plans default to four layout trials per shape, configurable with
+`layoutAttempts`; the final additional search used two.
+
+The current Task 05 handback is **9/26**, all nine approved old boards retained
+exactly. All pass the current gates, portable verification with zero new bot
+calls, and phone/actual-route checks. The 183-board skilled recheck produced
+18 quality passes before placement constraints. Four previously delivered boards
+now fail the skilled floor: 210, 217, 220 and 225. Tightening 217 to spare 1 gave
+family 20. The best minimal 225 repair still failed skilled and seed agreement.
+The extra star candidate also missed the independent-seed tolerance at 220.
+The complete 26-level objective remains unachieved; no acceptance gate was relaxed.
+
+The all-face-up diagnostic is not monotonic: retained 201 changes from current
+skilled 5.42 to 19.93 when hidden tiles are cleared. Other boards mostly become
+easier. This is a policy comparison with different observations and decisions,
+not a clean causal estimate of blind-information difficulty. The actual signed
+and absolute gaps are reported without changing the calibrated bot or inventing
+a new numeric definition of “small”. Most retained legacy boards also have
+substantial positive gaps; the new visibility preference is not claimed to have
+been achieved across that unchanged legacy set.
+
+The local `codex-tasks/results/200-225-v11/RESULT.md` handback includes scores for
+every selected board, exact family/quality/fresh records, same-board old/new
+planner measurements, all-face-up gaps, diagnostics for the seventeen missing
+slots, the actual measured-change journal and learned priors, and preview PNGs.
+No main, game files, level tables, Firebase, player records or release were changed.

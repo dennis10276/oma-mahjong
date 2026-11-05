@@ -253,6 +253,16 @@ partial assignment. If it no longer qualifies, `preservedFailure` identifies it
 and requires an explicit repair or plan update. `candidateStart` can select a
 fresh creation-ID range when adding another palette to an existing batch.
 
+`analysis/factory/batch-200-225-smart-piles.json` saves 48 whole layouts,
+including the earlier twenty extra layouts and the new 74-tile hourglass and
+96-tile pyramid. It can be supplied as `existingPiles` when preparing another
+palette. The three `smart-trap-examples.jsonl` boards are diagnostic examples,
+not curve-qualified levels. Their phone previews and real-game routes passed.
+Fresh palette plans default to four layout trials per shape; `layoutAttempts`
+can change this search budget without changing any acceptance limit. A failed
+layout search preserves completed layouts. Comparison masks and their D4 views
+are reused throughout each creation's search.
+
 - Family measurements come first. Off-curve boards and boards with idle
   specials skip the expensive skilled planner until those problems are fixed.
 - Six-game scouting ranks edits. Full 20-game/two-seed measurements decide
@@ -268,6 +278,10 @@ fresh creation-ID range when adding another palette to an existing batch.
   are copied to the new keys; old planner results are never reused. Any different
   source/profile/environment fingerprint requires new measurements. Factory
   regressions cover both the family reuse and planner isolation.
+- Task 05's planner-only revision (`3201e1e`, fingerprint `f328592…`) likewise
+  permits family reuse from the exact `cae3bc3…` and `ac24aad…` fingerprints.
+  Qualification always uses the current skilled player. The unchanged family
+  profile, seed, run count and capture mode must still match.
 - The queue caches stage records and board predictions, updating records when
   workers finish. Restart the coordinator after externally replacing stage
   files so it reads those replacements.
