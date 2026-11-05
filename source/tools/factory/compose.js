@@ -46,10 +46,13 @@ function fitRegression(samples,lambda=12){
   for(let i=0;i<n;i++){A[i][i]+=i===0?1e-8:lambda;for(let j=0;j<i;j++)A[j][i]=A[i][j];}
   const beta=solveSPD(A,b),model={keys:active,center,scale,intercept:beta[0],beta:beta.slice(1),lambda,n:samples.length};
   model.logRMSE=Math.sqrt(samples.reduce((n,r)=>n+(r.weight??1)*(Math.log(r.y)-predictRegression(model,r.x).log)**2,0)/total);
+  // Exponentiating a fitted log gives a geometric estimate. The labels are
+  // arithmetic expected tries: use a training-only residual mean correction.
+  model.smearing=samples.reduce((n,r)=>n+(r.weight??1)*Math.exp(Math.log(r.y)-predictRegression(model,r.x).log),0)/total;
   return model;
 }
 function predictRegression(m,x){let log=m.intercept;for(let i=0;i<m.keys.length;i++){const k=m.keys[i];log+=m.beta[i]*((x[k]||0)-m.center[k])/m.scale[k];}
-  return {log,tries:clamp(Math.exp(log)),interval:[clamp(Math.exp(log-1.645*m.logRMSE)),clamp(Math.exp(log+1.645*m.logRMSE))],
+  return {log,median:clamp(Math.exp(log)),tries:clamp(Math.exp(log)*(m.smearing??1)),interval:[clamp(Math.exp(log-1.645*m.logRMSE)),clamp(Math.exp(log+1.645*m.logRMSE))],
     unseen:Object.keys(x).filter(k=>!Object.hasOwn(m.center,k)&&Math.abs(x[k])>1e-8)};}
 function groupOf(row){return row.group||layoutKey(row.design);}
 function partition(rows){
@@ -68,7 +71,7 @@ function fit(rows,options={}){
     settings[setting]=fitRegression(samples,options.lambda??12);
   }
   return {schema:SCHEMA,piecesVersion:Pieces.VERSION,featureSource:implementation(),settings,lambda:options.lambda??12,trainingBoards:rows.length,trainingGroups:groups.size,
-    bot:options.bot??null,input:digest(rows.map(r=>[r.id,groupOf(r),r.family,r.skilled])),intervalMeaning:'log residual normal approximation; not calibrated coverage'};
+    bot:options.bot??null,input:digest(rows.map(r=>[r.id,groupOf(r),r.family,r.skilled])),meanCorrection:'residual smearing estimated on training labels only',intervalMeaning:'log residual normal approximation around geometric estimate; not calibrated coverage'};
 }
 function predict(model,row){if(model.schema!==SCHEMA)throw Error('Unsupported composition model');if(model.featureSource&&model.featureSource!==implementation())throw Error('Composition features changed; rebuild the model');const x=features(row);return Object.fromEntries(['family','skilled'].map(k=>[k,predictRegression(model.settings[k],x)]));}
 function trainAndValidate(rows,options={}){

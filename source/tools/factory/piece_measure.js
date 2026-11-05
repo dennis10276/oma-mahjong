@@ -10,7 +10,7 @@ function measure(sample,meter){
     family:{exp:(a.expectedTries+b.expectedTries)/2,seeds:[a.expectedTries,b.expectedTries],first:(a.firstTryRate+b.firstTryRate)/2,spread:[campaignSpread(a),campaignSpread(b)]},
     skilled:{exp:s.expectedTries,first:s.firstTryRate,styles:s.plannerStyles,spread:campaignSpread(s)},sample};
 }
-if(!isMainThread){const meter=createMeter();parentPort.on('message',sample=>{const started=Date.now(),calls=meter.stats.calls,hits=meter.stats.hits;
+if(!isMainThread&&require.main===module){const meter=createMeter();parentPort.on('message',sample=>{const started=Date.now(),calls=meter.stats.calls,hits=meter.stats.hits;
   try{parentPort.postMessage({...measure(sample,meter),seconds:(Date.now()-started)/1000,calls:meter.stats.calls-calls,hits:meter.stats.hits-hits});}
   catch(e){parentPort.postMessage({id:sample.id,error:e.stack});}});
 }else{

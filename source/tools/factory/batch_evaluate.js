@@ -72,7 +72,7 @@ function evaluate(row, mode, meter) {
     eligible: m.valid && skilled.valid && skilled.exp <= SKILLED_MAX && skilled.exp >= SKILLED_MIN && room.ok && room.unrelieved <= 1 && base.atTrap >= 0.6 && !idle.length && grabValid };
 }
 
-if (!isMainThread) {
+if (!isMainThread && require.main === module) {
   const meter = createMeter();
   parentPort.on('message', ({ row, mode }) => {
     const started = Date.now();

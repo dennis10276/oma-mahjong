@@ -21,6 +21,10 @@ test('metrics handle tied capped outcomes and report the requested error bands',
   const m=C.metrics([{predicted:1,measured:1},{predicted:3.5,measured:2},{predicted:20,measured:20}]);
   assert.equal(m.within1,2/3);assert.equal(m.within2,1);assert.equal(m.mae,.5);assert.equal(m.atCap,1);assert(m.spearman>.9);
 });
+test('log-to-tries conversion estimates the arithmetic mean from training residuals',()=>{
+  const model=C.fitRegression([1,1,9].map(y=>({x:{},y}))),p=C.predictRegression(model,{});
+  assert(Math.abs(p.tries-11/3)<1e-7);assert(p.median<p.tries);assert(model.smearing>1);
+});
 test('historical collection preserves pooled labels and trains on the actual bot beside human evidence',t=>{
   const os=require('os'),M=require('./meter.js'),dir=fs.mkdtempSync(path.join(os.tmpdir(),'piece-history-'));
   t.after(()=>{assert(dir.startsWith(path.join(os.tmpdir(),'piece-history-')));fs.rmSync(dir,{recursive:true,force:true});});
