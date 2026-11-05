@@ -386,21 +386,24 @@ function createBotController(tiles, profile, seed) {
       // what covers it, the ice still to thaw (through its cheapest neighbours), locks among those, then the keys and
       // what covers them - that count is the progress measure.
       const coverOf = (al, u) => { let c = 0; for (const a of aboveTrans[u]) if (al[a]) c++; return c; };
+      // Worked back all the way, as a person does (Codex, Task 04: a locked clock, and covers that are themselves locked or
+      // frozen, were missed): every tile on the clock, the keys of any lock met on the way, and for ice the cheapest
+      // neighbours still to go - each of those in turn with its own covers, locks and ice.
       const needLeft = al => {
-        let need = coverOf(al, ck), lockNeeded = false;
-        const h = roles[ck] === 'ice2' ? 2 : roles[ck] === 'ice' ? 1 : 0;
-        if (h) {
-          const gone = seen.takeable[ck] === true ? h : iceNb[ck].filter(k => !al[k]).length;
-          const left = Math.max(0, h - gone);
-          if (left) {
-            const keysLeft = keyTiles.filter(k => al[k]);
-            const cost = u => 1 + coverOf(al, u) + (roles[u] === 'lock' && keysLeft.length ? 100 : 0);
-            const pick = iceNb[ck].filter(k => al[k]).sort((a, b) => cost(a) - cost(b)).slice(0, left);
-            for (const u of pick) { need += 1 + coverOf(al, u); if (roles[u] === 'lock' && keysLeft.length) lockNeeded = true; }
+        const need = new Set(), todo = [ck], keysLeft = keyTiles.filter(k => al[k]);
+        const cost = u => 1 + coverOf(al, u) + (roles[u] === 'lock' && keysLeft.length ? 100 : 0) + (roles[u] === 'ice2' ? 4 : roles[u] === 'ice' ? 2 : 0);
+        const add = u => { if (u !== ck && al[u] && !need.has(u)) { need.add(u); todo.push(u); } };
+        while (todo.length) {
+          const u = todo.pop();
+          for (const a of aboveTrans[u]) add(a);
+          if (roles[u] === 'lock') for (const k of keysLeft) add(k);
+          const h = roles[u] === 'ice2' ? 2 : roles[u] === 'ice' ? 1 : 0;
+          if (h && seen.takeable[u] !== true) {
+            const left = Math.max(0, h - iceNb[u].filter(k => !al[k] || need.has(k)).length);
+            for (const k of iceNb[u].filter(k => al[k] && !need.has(k) && !aboveTrans[k].has(u)).sort((a, b) => cost(a) - cost(b)).slice(0, left)) add(k);
           }
         }
-        if (lockNeeded) for (const k of keyTiles) if (al[k]) need += 1 + coverOf(al, k);
-        return need;
+        return need.size;
       };
       const coverLeft = al => p.routeNeed ? needLeft(al) : coverOf(al, ck);
       let beam = [{ al: alive.slice(), tr: tray.slice(), path: [] }], found = null;
