@@ -22,6 +22,7 @@ const { roomProfile, trapTiles } = require('./design_traps.js');
 const { createMeter, boardKey } = require('./meter.js');
 const Moves = require('./moves.js');
 const Placement = require('./placement_score.js'), Composer = require('./trap_composer.js');
+const Supports = require('./trap_supports.js');
 
 function createSteerer(options = {}) {
 const meter = options.meter || createMeter(options);
@@ -30,7 +31,7 @@ const TOL = options.tolerance ?? +(process.env.TOL || 0.5), DENNIS_MAX = options
 // Dennis 2026-11-04: the skilled player must need at least 2.5 tries (FACTORY_SKILLED=min,max)
 const DENNIS_MIN = options.skilledMin ?? +((process.env.FACTORY_SKILLED || '0').split(',')[0] || 0);
 I.setExact(true, { nodes: options.routeNodes ?? 20000, milliseconds: options.routeMilliseconds ?? 1500 });
-const EXTRA = ['iceChain', 'lockedPartners', 'deepKeys'];
+const EXTRA = ['iceChain', 'lockedPartners', 'deepKeys', ...Object.keys(Composer.MOTIFS)];
 // only real bot runs go in the journal (test meters have made-up fingerprints)
 const JOURNAL = options.journal !== false && /^[0-9a-f]{64}$/.test(meter.fingerprint || '');
 const PRIORS = Moves.priors(Moves.load([Moves.SEED, options.journal || Moves.DEFAULT]));
@@ -178,6 +179,9 @@ function changes(d, state) {
     if(state.preservePairing && JSON.stringify(c.d.faces)!==JSON.stringify(d.faces)) return [];
     if(state.preserveVisibility && JSON.stringify([...c.d.down].sort((a,b)=>a-b))!==JSON.stringify([...d.down].sort((a,b)=>a-b))) return [];
     if(state.preserveClockTile && c.d.clock.i!==d.clock.i) return [];
+    if(state.preserveSpecialKinds && (Object.keys(d.obst.ice||{}).length && !Object.keys(c.d.obst.ice||{}).length ||
+      (d.obst.locks||[]).length && !(c.d.obst.locks||[]).length)) return [];
+    if(Supports.checks(state).some(check=>check.indices.some(i=>check.kind==='ice' ? !c.d.obst.ice?.[i] : !c.d.obst.locks?.includes(i)))) return [];
     // A structural repair keeps the requested spare on a newly proved shortest
     // route, instead of silently changing how generous the clock becomes.
     if(state.preserveSpare !== undefined) {
@@ -191,12 +195,14 @@ function changes(d, state) {
     return I.valid(c.d) && (!state.playerFeedback || Placement.readable(c.d)) ? [c] : [];
   });
 }
-function judge(d, target, step, withSpecials = true, checkPlanner = false) {
+function judge(d, target, step, withSpecials = true, checkPlanner = false, context = null) {
   const m = meas(d, 'family', true), spots = lossSpots(d, m), attr = attribution(d, m);
   const exp = m.expectedTries, off = Math.max(0, Math.abs(exp - target) - TOL);
   // Ablations are needed only for a board that could pass. Never pass without them.
   const sm = withSpecials && off === 0 ? specialsMatter(d, m) : null;
   const idle = sm ? Object.entries(sm).filter(([, v]) => !v.matters).map(([k]) => k) : [];
+  const supports = withSpecials && off === 0 && context ? Supports.measure({...context,design:d},m,meter,{runs:20,setting:'family',seed:4711}) : {};
+  idle.push(...Object.entries(supports.supports||{}).filter(([,v])=>!v.matters).map(([k])=>'support '+k));
   // Route planning is the expensive part. A board off the curve or with idle
   // specials cannot pass: fix that first, then run the skilled player.
   const md = !idle.length && (off === 0 || checkPlanner) ? meas(d, 'planner') : null;
@@ -205,7 +211,7 @@ function judge(d, target, step, withSpecials = true, checkPlanner = false) {
   const luck = room.ok && room.measured !== false ? { luckMoments: room.tightBlind, reliefMoments: Math.max(0, room.tightBlind - room.unrelieved - (room.tightBlind ? 1 : 0)), unrelieved: room.unrelieved } : null;
   const valid = m.valid === true && (!md || md.valid === true);
   const score = off * 2 + Math.max(0, skilled - DENNIS_MAX) + (skilled === null ? 0 : Math.max(0, DENNIS_MIN - skilled) * 2) + (room.ok && luckOk(room) ? 0 : 3) + Math.max(0, ATTR - (attr ?? 1)) * 3 + idle.length * 2 + (valid ? 0 : 100);
-  return { d, m, exp, skilled, room, luck, spots, attr, sm, idle, score, target, step, valid,
+  return { d, m, exp, skilled, room, luck, spots, attr, sm, idle, score, target, step, valid, supports,
     pass: valid && off === 0 && md !== null && skilled <= DENNIS_MAX && skilled >= DENNIS_MIN && room.ok && luckOk(room) && (attr === null || attr >= ATTR) && sm !== null && !idle.length };
 }
 
@@ -214,8 +220,10 @@ function steer(s, saved = null, checkpoint = () => {}) {
   if (!s.design?.clock || !I.valid(s.design)) throw Error('Invalid starting board at level ' + s.level);
   const log = saved?.log?.slice() || [], recipe = (saved?.recipe || s.recipe || []).slice();
   let trapPlan = saved?.trapPlan || s.trapPlan;
+  const mergePlan = added => added ? { ...(trapPlan || {}), version:trapPlan?.version || Composer.VERSION,
+    authoredBoard:trapPlan?.authoredBoard || null, steps:[...(trapPlan?.steps||[]),...added.steps.map(t=>({...t,addedDuringSteering:true}))] } : trapPlan;
   const seen = new Set(saved?.seen || []);
-  let cur = judge(saved?.design || s.design, s.target, saved?.step || 0);
+  let cur = judge(saved?.design || s.design, s.target, saved?.step || 0, true, false, {...s,trapPlan});
   seen.add(boardKey(cur.d));
   if (!saved) log.push(`start: family ${cur.exp} (target ${s.target}) skilled ${cur.skilled}`);
   let nextStep = (saved?.step || 0) + 1;
@@ -223,7 +231,8 @@ function steer(s, saved = null, checkpoint = () => {}) {
   save(nextStep - 1);
   for (let step = nextStep; step <= STEPS && !cur.pass; step++) {
     const opts = changes(cur.d, { ...cur, step, playerFeedback:s.playerFeedback, preservePairing:s.preservePairing,
-      preserveVisibility:s.preserveVisibility,preserveClockTile:s.preserveClockTile,preserveSpare:s.preserveSpare }).filter(o => !seen.has(boardKey(o.d)));
+      preserveVisibility:s.preserveVisibility,preserveClockTile:s.preserveClockTile,preserveSpare:s.preserveSpare,
+      preserveSpecialKinds:s.preserveSpecialKinds,recipe,trapPlan }).filter(o => !seen.has(boardKey(o.d)));
     if (!opts.length) { log.push(`step ${step}: no new change left`); save(step); break; }
     // Small runs rank edits only. A full, unchanged meter decides every accepted edit.
     // ...and what the factory learned from earlier boards (moves.js): with 3+ records of a kind of change, its usual
@@ -241,7 +250,8 @@ function steer(s, saved = null, checkpoint = () => {}) {
       const bound = Math.max(0, Math.abs(m.expectedTries - s.target) - TOL) * 2;
       if (!m.valid || bound > (best ? best.j.score : cur.score)) continue;
       const repairingPlanner = Number.isFinite(cur.skilled) && (cur.skilled < DENNIS_MIN || cur.skilled > DENNIS_MAX);
-      const j = judge(o.d, s.target, step, true, repairingPlanner);
+      const j = judge(o.d, s.target, step, true, repairingPlanner,
+        {...s,recipe:o.trap?[...recipe,o.trap]:recipe,trapPlan:mergePlan(o.trapPlan)});
       // Moving off curve must not look like a planner improvement merely
       // because that candidate's expensive planner run was skipped.
       if (repairingPlanner && j.skilled === null) continue;
@@ -253,8 +263,7 @@ function steer(s, saved = null, checkpoint = () => {}) {
     if (best && (best.j.score < cur.score || (best.j.score === cur.score && best.j.pass))) {
       cur = best.j; seen.add(boardKey(cur.d));
       if (best.o.trap) recipe.push(best.o.trap);
-      if (best.o.trapPlan) trapPlan = { ...(trapPlan || {}), version:trapPlan?.version || Composer.VERSION,
-        authoredBoard:trapPlan?.authoredBoard || null, steps:[...(trapPlan?.steps||[]),...best.o.trapPlan.steps.map(t=>({...t,addedDuringSteering:true}))] };
+      trapPlan = mergePlan(best.o.trapPlan);
       log.push(`step ${step}: kept "${best.o.what}"`);
       save(step);
     } else { log.push(`step ${step}: nothing better`); save(step); break; }
@@ -286,6 +295,7 @@ function steer(s, saved = null, checkpoint = () => {}) {
   const late = losses.filter(a => a.left <= 0.45 * d.tiles.length).length;
   const warnings = late >= 4 && late / losses.length >= 0.3 ? ['lateSqueeze'] : [];
   return { ...s, recipe, trapPlan, pass: cur.pass && grabValid && holdout?.pass === true, searchPass: cur.pass,
+    ...cur.supports,
     g61: { exp: cur.exp, first: cur.m.firstTryRate, version: cur.m.version }, skilled: cur.skilled,
     luck: cur.luck, atTrap: cur.attr, specials: cur.sm, holdout, grabFirst, warnings, reviewReasons: reasons,
     clockSpare: d.clock.n - routeOf(d), n: d.tiles.length, down: d.down.length,
