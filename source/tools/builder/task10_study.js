@@ -84,7 +84,9 @@ function collect(dir) {
   verifyPlan(plan);
   const records = new Map(), md = path.join(dir, 'measurements');
   if (fs.existsSync(md)) for (const f of fs.readdirSync(md).filter(f => f.endsWith('.json'))) { const x = read(path.join(md, f)); if (x.bot === p.bot) records.set(x.key, x); }
-  const add = path.join(dir, 'trap-plan.json'), boards = plan.boards.concat(fs.existsSync(add) ? read(add).boards : []);
+  const add = path.join(dir, 'trap-plan.json'); let extra = [];
+  if (fs.existsSync(add)) { const child = read(add); verifyPlan(child); if (child.parent !== plan.fingerprint) throw Error('Trap plan belongs to another parent'); extra = child.boards; }
+  const boards = plan.boards.concat(extra);
   return { protocol: p, plan, records, boards: boards.map(b => ({ ...b, ...rating(b, records, p) })) };
 }
 async function measure(dir, stage = 'all', workers = 6) {
@@ -104,17 +106,21 @@ async function measure(dir, stage = 'all', workers = 6) {
     console.log(saved + '/' + total, r.profile, r.seed, r.valid ? r.exp : 'INVALID', Math.round(r.ms / 1000) + 's'); }, workers);
   save(dir, 'boards.json', collect(dir).boards);
 }
-async function traps(dir, workers = 4) {
-  check(dir);
-  const file = path.join(dir, 'trap-plan.json'); if (fs.existsSync(file)) return read(file);
-  const data = collect(dir), specs = [];
+function trapRequests(data) {
+  const specs = [];
   const gap = (x, a, z) => Math.max(a - x, 0, x - z);
   for (const story of stories) {
-    const choices = data.boards.filter(b => b.stage === 'range' && b.brief?.story === story && b.family && b.skilled && b.cell.seed === 1);
+    const choices = data.boards.filter(b => b.stage === 'range' && b.brief?.story === story && b.family && b.skilled && b.cell.seed === 1 && !heldout({ ...b.cell, traps: 0 }));
     choices.sort((a, b) => (gap(a.family.exp, 10, 13) + gap(a.skilled.exp, 2.5, 6)) - (gap(b.family.exp, 10, 13) + gap(b.skilled.exp, 2.5, 6)) || a.id.localeCompare(b.id));
-    if (choices[0]) { const x = { ...choices[0].cell, traps: 1, stage: 'traps' }; x.id = cellId(x); x.heldout = heldout(x); specs.push(x); }
+    if (choices[0]) { const x = { ...choices[0].cell, traps: 1, stage: 'traps' }; x.id = cellId(x); x.heldout = heldout({ ...x, traps: 0 }); specs.push(x); }
   }
-  save(dir, 'trap-requests.json', { created: new Date().toISOString(), rule: data.protocol.range.trapAddendum, specs });
+  return specs;
+}
+async function traps(dir, workers = 4) {
+  check(dir);
+  const file = path.join(dir, 'trap-plan.json'); if (fs.existsSync(file)) { collect(dir); return read(file); }
+  const data = collect(dir), specs = trapRequests(data), amendment = read(path.join(dir, 'trap-selection-amendment.json'));
+  save(dir, 'trap-requests.json', { created: new Date().toISOString(), rule: 'Training cells only; closest to both bands per story, then id. Trap variants inherit the zero-trap parent fold.', amendment, specs });
   const boards = await jobs(dir, 'traps', specs.map(spec => ({ action: 'range', spec, task: spec.id })), workers);
   const add = { created: new Date().toISOString(), parent: data.plan.fingerprint, boards }; add.fingerprint = M.digest(add);
   save(dir, 'trap-plan.json', add); return add;
@@ -125,4 +131,4 @@ if (require.main === module) {
   if (!f) throw Error('prepare <dir> [jobs] | measure <dir> [all|knobs|range|traps] [jobs] | traps <dir> [jobs]');
   f().catch(e => { console.error(e); process.exitCode = 1; });
 }
-module.exports = { protocol, prepare, measure, traps, collect, rating, heldout, cellId, keyFor, verifyPlan };
+module.exports = { protocol, prepare, measure, traps, collect, rating, heldout, cellId, keyFor, verifyPlan, trapRequests };

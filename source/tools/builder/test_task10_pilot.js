@@ -16,3 +16,14 @@ test('the first-check denominator includes every successful construction, includ
   assert.equal(y.meets50percent, true); assert.equal(y.firstCheckHitRate, 0.5);
   assert.equal(y.seed4711HitRate, 1, 'a favorable single seed cannot replace the declared pooled curve metric');
 });
+
+test('a sealed pilot cannot start checking unfinished or changed builds', () => {
+  const fs = require('fs'), os = require('os'), path = require('path'), dir = fs.mkdtempSync(path.join(os.tmpdir(), 'task10-seal-'));
+  const p = { fingerprint: 'pilot', requests: [{ id: 'a' }] }, b = [{ task: 'a', proofBuilt: true, row: { design: { faces: [1, 1] } } }];
+  try {
+    assert.throws(() => P.sealBuilds(dir, p, []), /Finish every/);
+    P.sealBuilds(dir, p, b); P.sealBuilds(dir, p, b);
+    b[0].row.design.faces[0] = 2;
+    assert.throws(() => P.sealBuilds(dir, p, b), /changed after sealing/);
+  } finally { fs.unlinkSync(path.join(dir, 'built-plan.json')); fs.rmdirSync(dir); }
+});
