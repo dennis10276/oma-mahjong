@@ -75,6 +75,26 @@ As soon as 1-2 show settings that land in the band, go on without waiting for a 
 - Hand back the full 200–225 set the usual way (results folder plus `levels.jsonl`): the 20 kept levels plus the
   new ones. Claude reviews them and prepares the release with Dennis's OK.
 
+## Speed (Dennis 2026-11-06): stop early, filter before the bots
+Build these into your measuring code first and use them in steps 2 and 3. Step 1 (the knob deltas) keeps the
+full protocol, so that its comparisons stay clean.
+- **Stop early.**
+  - Play the first family run (seed 4711) in blocks of 10 campaigns.
+  - After 20 campaigns, stop a board whose estimate is clearly outside the band: more than 4 tries below the
+    target, or above it. Give a 20-try cap no special treatment.
+  - Calibrate the "clearly" margin on the boards you have already measured in full (clock-spare-1, Task 9
+    pools): an early stop must almost never (< 2%) throw away a board that the full protocol would qualify.
+    Report that check.
+  - A board that is not stopped gets the full protocol, so qualification never rests on a shortened measurement.
+  - Do the same for the planner: stop early when skilled is clearly below 2.5, or clearly above 6.
+- **Filter before the bots.**
+  - Once step 2 has its additive table, predict family and skilled from the brief and the card (story, way,
+    three, luck, traps, spare).
+  - Skip boards predicted more than 3 tries outside the band.
+  - Log how many boards the filter skipped and, on a small random sample of skipped boards that you do measure,
+    how often it was wrong.
+- **Report the CPU saved:** campaigns played compared with the full protocol.
+
 ## Hand-back
 Say "Task 10 done", with the branch name, the results folder and a short plain-language summary for Dennis
 (`summary-for-dennis.md`):
