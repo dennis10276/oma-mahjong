@@ -7,6 +7,7 @@ function propose(row,measurement,slot,options={}){
  if(options.protectedIds?.has(row.id)||options.protectedCreations?.has(row.origin.creationId)||row.factoryKeep)return[];
  const d=row.design,c=I.ctxOf(d),spare=P.spareOf(d),rank=lossOrder(measurement.captures||[]),ordered=xs=>[...new Set([...rank.filter(i=>xs.includes(i)),...xs])],special=new Set([d.clock.i,...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)]),out=[],seen=new Set([M.boardKey(d)]),aim=slot.productionAim??slot.target;
  const add=(what,edited,structural=false,removedKind=null)=>{
+  if(removedKind==='ice')edited={...edited,trapObjectives:(edited.trapObjectives||[]).filter(g=>edited.obst.ice[g.tile]>0)};
   let design=edited;if(structural){I.setExact(true,{nodes:20000,milliseconds:350});design=I.withSearchBudget(Date.now()+1400,()=>I.fix({...edited,clock:{...edited.clock,n:999}},spare));}
   if(!design||P.spareOf(design)!==spare||JSON.stringify(design.tiles)!==JSON.stringify(d.tiles)||!I.valid(design)||row.playerFeedback&&!Placement.readable(design))return;
   const room=roomProfile(design);if(!room.ok||room.unrelieved>1)return;
@@ -26,10 +27,10 @@ function propose(row,measurement,slot,options={}){
  if(measurement.quality?.idle?.includes('ice'))add('idle specials removed',{...d,obst:{...d.obst,ice:{}}},true,'ice');
  if(softer){const ice=ordered(Object.keys(d.obst.ice).map(Number));for(const i of ice.filter(i=>d.obst.ice[i]>=2).slice(0,3))add('one ice softer',{...d,obst:{...d.obst,ice:{...d.obst.ice,[i]:d.obst.ice[i]-1}}},true);
   if(ice.length>=2){const next={...d.obst.ice};for(const i of ice.slice(0,Math.ceil(ice.length/2)))delete next[i];add('half the ice thawed',{...d,obst:{...d.obst,ice:next}},true);}
-  for(const i of ordered(d.down).slice(0,4))add('face-up where the family loses',{...d,down:d.down.filter(j=>j!==i)});
+  for(const i of ordered(d.down).slice(0,options.breadth??4))add('face-up where the family loses',{...d,down:d.down.filter(j=>j!==i)});
  }
  if(harder){const alive=new Uint8Array(c.n).fill(1),candidates=ordered(c.P.filter(i=>!special.has(i)&&!d.down.includes(i)&&!global.Layouts.isFree(i,alive,c.nb)));
-  for(const i of candidates.slice(0,4))if(d.down.length<c.n/2)add('luck moment added',{...d,down:[...d.down,i]});
+  for(const i of candidates.slice(0,options.breadth??4))if(d.down.length<c.n/2)add('luck moment added',{...d,down:[...d.down,i]});
  }
  if(options.allowClock!==false&&!d.obst.locks.includes(d.clock.i)&&!d.obst.ice[d.clock.i]&&d.clockMate===undefined){
   for(const direction of[...(softer?[-1]:[]),...(harder?[1]:[])])for(const delta of[2,4]){const next=c.P[c.pos[d.clock.i]+direction*delta];if(next===undefined||special.has(next))continue;

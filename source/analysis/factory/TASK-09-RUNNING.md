@@ -41,11 +41,37 @@ proof, prior to later rounds. Only one non-block eligible-layout candidate was
 missing from the Task08 pool: 2cdf01bcaa6c719d (bowtie ridges76,
 iceLockClock+deepKeys, family10.165, skilled unknown). Prepared for checking.
 
-Active next round is floor-near-misses-1: measured parents 6ae464f981a12297,
+Completed round floor-near-misses-1: measured parents 6ae464f981a12297,
 72fc8c82cd86947c, 84a049f6b0bb7c31 (big210), 29f31b21b86b66aa,
 104c6711cfd61363 (diamond), b33b9c52bad54617, 0e7075fdded33ebf (oval),
 0a4f241ea9fdb81e (pyramid84). These were only .1–.3 below the skilled floor.
-The .progress.json files save each genome and completed observation.
+The .progress.json files save each genome and completed observation. 29 legal
+edits. Diamond533a11ac9126ffd5 passes quality (family11.43, skilled3.55), but
+reserved seed12.72 versus search10.68 gives spread2.04, so it is NOT delivered.
+Coverage stays16. Other useful measured parents: abc85821f9ac12e5 diamond
+family9.75/skilled2.45, 316da08dcb786b37 house96 family10.73/skilled2.33,
+056e8376c8b53ee8 pyramid84 family10.4/skill unknown, only idle ice fails.
+All future steering must use the two search family seeds and skilled/ablations;
+the reserved seed is never a direction/ranking input.
+
+Completed: small-empirical-1, exec session96633, log
+source/build/task-09-small-empirical-1.log. 120 attempts over ten unused whole
+layouts, explicit six empirically useful recipes, fixed initial spare1.
+73 legal constructions, five compatible confirmation candidates, one qualified
+new board: 204 ec63a46d1a4e6eef, cross84, chainReaction, family10.395,
+skilled2.98. Assignment now17/26; 204 remains provisional for global swapping.
+Uses empirical_slots for actual compatible placement
+and two-seed spread before empirical_confirm. 101 factory tests passed.
+Do not edit any active dependencies. Next planned inputs: additional-stock,
+visibility-grades-2, then graded near-floor parents above with larger breadth.
+
+Active now: near-floor-grades-2, session expected from current shell tool output,
+log source/build/task-09-near-floor-grades-2.log. Parents316da08dcb786b37 and
+84a049f6b0bb7c31 big210, abc85821f9ac12e5 diamond, 056e8376c8b53ee8 small
+pyramid; budget/breadth12. Whole-board family scores and ablations selected these
+parents. Steering now checks ALL compatible missing slots before skilled work,
+so a good edit is not discarded merely for missing its initial target. The
+original16 stay protected; new204 may be swapped. 101 tests pass.
 
 Performance correction: a family9–14 score alone is insufficient reason to run
 the skilled search. Empirical steering now checks its actual working interval
