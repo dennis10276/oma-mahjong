@@ -322,7 +322,8 @@ function placePictures(c, roles, P, hold, brief, rng, N, variant = 0) {
   const inP = new Set(P), { cov, holders } = hold, ck = roles.clock;
   // a holder: covered during the whole dig and more than `spare` moves away from it (else a player takes it in time)
   const after = new Uint8Array(c.n).fill(1); for (const i of P) after[i] = 0;
-  const deep = t => [...c.above[t]].filter(a => after[a]).length + 1 > spare || !L.isFree(t, (() => { const a = after.slice(); for (const x of c.above[t]) a[x] = 0; return a; })(), c.nb);
+  const deep = t => { const a = after.slice(); let cost = 1; for (const x of c.above[t]) if (a[x]) { a[x] = 0; cost++; }
+    return cost + (L.isFree(t, a, c.nb) ? 0 : 1) > spare; };
   const mayHold = t => holders ? holders.has(t) : !!cov[t] && !inP.has(t) && deep(t);
   const wanted = new Set(holders ? [...holders] : [...Array(c.n).keys()].filter(mayHold));
   if (holders && [...holders].some(h => roles.locks.has(h))) for (const k of roles.keys) if (!inP.has(k)) wanted.add(k);
@@ -399,7 +400,7 @@ function placeDown(c, roles, P, plan, brief, rng) {
     alive[P[k]] = 0;
     const newly = []; for (let i = 0; i < c.n; i++) if (alive[i] && !before[i] && L.isFree(i, alive, c.nb)) newly.push(i);
     const wBefore = k ? plan.dig.occ[k - 1] : 0;
-    if (plan.dig.opens[k] && wBefore >= 2 && P[k] !== roles.clock) { luckSteps.push({ k, newly }); for (const i of newly) atLuck.add(i); }
+    if (plan.dig.opens[k] && wBefore >= 2) { if (P[k] !== roles.clock) luckSteps.push({ k, newly }); for (const i of newly) atLuck.add(i); }
   }
   // spread the chosen moments over the luck steps; a dig tile first at each
   const down = [], steps = luckSteps.filter(s => s.newly.some(i => !avoid.has(i)));
@@ -561,6 +562,7 @@ function build(briefIn, opts = {}) {
       if (!pr) { note({ fail: 'slow' }); stop = true; break; }
       pruned = pruned.concat(pr);
       if (pr.length && round < 3) continue;          // a special went: the necessary tiles may have changed
+      if (pr.length) pick.stale = true;              // (last round: prove the pressure again on the final board)
       break;
     }
     if (stop || !pick || !way) continue;
@@ -580,7 +582,7 @@ function build(briefIn, opts = {}) {
     if (!rep.ok) { note({ fail: 'witness', detail: rep.why }); continue; }
     const al = new Uint8Array(c.n).fill(1); if (down.some(i => L.isFree(i, al, c.nb))) { note({ fail: 'downFree' }); continue; }
     const res = prove(c, story, brief, roles, P, curHold, plan, down, design, rep, way, clock, spare, pruned, N, pick, witness, budget, deadline);
-    res.card.attempt = attempt; built++;
+    res.card.attempt = attempt; res.card.shape = shape; built++;
     if (!best || res.score > best.score) best = res;
   }
   if (!best) return { ...(last || { fail: 'noAttempt' }), fails, ms: Date.now() - t0 };
@@ -597,7 +599,7 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
     const nx = E.step(g, s, i); if (nx) s = nx; else if (j !== undefined) { s = E.step(g, s, { pair: g.down[j] ? [i, j] : [j, i] }); p++; } else s = null; }
   const heldBack = hold.holders ? [...hold.holders].filter(h => s && s.alive[h] && !E.legal(g, s).some(a => a === h)).length : null;
   const tray = trayOnWay(design, sol);
-  const forced = cap > 1 ? (pick.forced === 'no' && P.length + spare === clock.n ? 'no' : canReachWithin(design, cap - 1, 60000)) : 'skip';
+  const forced = cap > 1 ? (pick.forced === 'no' && P.length + spare === clock.n && !pick.stale ? 'no' : canReachWithin(design, cap - 1, 60000)) : 'skip';
   // decision traps: from the start, taking a tile of the free pair loses (proven) and is tempting (its twin in sight)
   const s0 = E.start(g), trapRes = [];
   for (const [x, y] of plan.traps) {
