@@ -1,5 +1,19 @@
 # Build levels quickly
 
+Task 08's approved curve rule is ±1 per level (also the reserved seed), with
+every complete five-level window averaging within ±0.5 of target. Assignment
+maximizes coverage, then minimizes total absolute family offset. Set
+`tolerance: 1` and `curveWindow: { size: 5, tolerance: 0.5 }` in a current plan;
+historical plans remain reproducible with their older rules.
+
+The new frame-first experiment uses `pressure_frame.js`, `frame_calibrate.js`,
+`frame_model.js`, `frame_designer.js` and `frame_prospective.js`. See
+[the Task 08 report](../../analysis/factory/frames-v2.md) for commands and limits.
+The reuse handback has 16/26 passing levels, including the big board at 220.
+The registered new-composition test failed 0/12: the model remains experimental.
+Keep its frozen input/model/test artifacts; use a new directory for another fit
+and a new prospective test. Full bot and quality gates remain mandatory.
+
 Task 07 adds a separate measured-piece workflow: `pieces.js`, `compose.js`,
 `piece_designer.js`, `piece_confirm.js` and `piece_factory.js`. See
 [the piece prototype report](../../analysis/factory/pieces-v1.md) for commands,

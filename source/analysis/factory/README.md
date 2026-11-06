@@ -1,5 +1,12 @@
 # Level factory (levels 175+), Claude, 2026-10-28
 
+Task 08 handback (2026-11-06): [tolerance and pressure frames](frames-v2.md).
+The complete pool/quality/tolerance pass adds six levels, giving 16/26 qualified
+with the ten v12 boards preserved. The registered conditional-frame model test
+failed 0/12; it does not justify more automatic generation. Current rule: ±1
+per level/fresh seed and ±0.5 mean across each complete five-level window.
+Missing-window coverage remains uncertified. No game or bot changes.
+
 Task 07 handback (2026-11-06): [measured trap pieces](pieces-v1.md).
 Sixteen local mechanisms and 358 controlled measurements are implemented. The
 composition model failed prospective curve placement; full bot gates remain
