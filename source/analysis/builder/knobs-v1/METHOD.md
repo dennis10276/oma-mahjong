@@ -1,7 +1,8 @@
 # Task 10 method
 
-This folder starts with immutable inputs, not a finished result. The live run is
-in `source/build/builder-knobs-v1`; see `source/build/TASK-10-RUNNING.md`.
+Task10 is complete. Read `summary-for-dennis.md` first. The studies and bounded
+pilot are finished; the level set remains incomplete at20/26. The private run
+was in `source/build/builder-knobs-v1`; no worker is left running.
 
 The fixed preparation produced 24 base puzzles, 168 variant requests and 282
 range requests. There are 339 proven boards and 135 explicit failures. Each
@@ -25,7 +26,7 @@ coefficients or predictions stay null. Report held-out median absolute errors,
 not only training errors. The tables describe returned boards, not impossible
 requests or human difficulty beyond the capped bot yardstick.
 
-The later trap addendum selects one promising measured range cell per story,
+The later trap addendum selects one promising measured TRAINING range cell per story,
 then freezes its exact trap1 brief before any new measurements. Frozen-key
 diagnostics select the lowest/highest pooled-family boards, with an id tie break.
 Removing ice/locks is tested both with the original clock and with the same exact
@@ -44,4 +45,22 @@ hit rate uses the initial pooled80-campaign family rating, before retuning or
 the fresh29717 seed. Its denominator includes every successful builder output,
 including later static or quality rejections. The4711-only rate is also reported.
 New qualifiers must pass the existing Task09 quality/originality/window checks,
-fresh29717 within±1, total seed spread≤2, and phone previews. No release is made.
+fresh29717 within±1, total seed spread≤2, and phone previews. No pilot board
+qualified, so no new fresh-seed check was needed. All20 preserved boards passed
+fresh phone previews and real-game stored solutions. No release was made.
+
+The speed section was noticed after the original full grid finished; savings
+there are zero. The pilot used calibrated exact-stream10-campaign blocks,
+checking after20, then the original full protocol for survivors. Prediction
+filtering requires agreement between requested-brief and actual-card models,
+with a deterministic20% full audit of skips. No pilot prediction skip occurred.
+`SPEED.md` separates actual savings from retrospective replay, and confirmed
+first-check hits from unknown full scores on early stops. The original pilot
+plan and a pre-bot worker-import correction are retained in `pilot-evidence/`.
+
+`full-api-manifest.json` indexes the complete frozen meter API returns in the
+external results folder. The API retains first20 individual campaign traces
+(the winning full style only for planner), plus the full pooled score and both
+planner-style scalars. These are not all40 individual traces. Source keeps the
+compact study checkpoints and all pilot construction/checkpoint evidence;
+`pilot-api-manifest.json` distinguishes short screens from full calls.

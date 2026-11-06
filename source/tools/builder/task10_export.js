@@ -39,7 +39,27 @@ function exportStudy(root, source, external) {
     M.atomicJson(path.join(dest, 'full-api-manifest.json'), { records: manifest.length, externalFolder: 'full-api-records/',
       note: 'External results contain the complete frozen meter API return for each study measurement. The API retains first20 campaign traces (winning full style only for planner), plus pooled40-campaign score and planner-style scalar scores. These are not all40 individual traces. Source contains compact checkpoints; no bot calls were made to export.', measurements: manifest });
   }
-  return { records: manifest.length };
+  const pilotDir = path.join(root, 'pilot'), pilotFile = path.join(pilotDir, 'pilot-plan.json'), pilotRecords = [];
+  if (fs.existsSync(pilotFile)) {
+    const p = JSON.parse(fs.readFileSync(pilotFile)), cacheDir = path.resolve(__dirname, '../../build/factory-cache');
+    for (const f of fs.readdirSync(path.join(pilotDir, 'first'))) {
+      const first = JSON.parse(fs.readFileSync(path.join(pilotDir, 'first', f))), b = JSON.parse(fs.readFileSync(path.join(pilotDir, 'build', f)));
+      const opts = [];
+      if (first.familyScreen?.campaigns) for (const block of first.familyScreen.blocks) opts.push({ setting: 'family', runs: 10, seeds: 1, seed: (4711 + Math.imul(block.block * 10, 0x9e3779b9)) | 0, capture: 'tail' });
+      if (first.search?.valid) opts.push({ setting: 'family', runs: 20, seeds: 2, seed: 4711, capture: 'tail' });
+      if (first.validation?.valid) opts.push({ setting: 'family', runs: 20, seeds: 2, seed: 18427 });
+      if (first.plannerScreen?.campaigns) for (const block of first.plannerScreen.blocks) opts.push({ setting: 'planner', runs: 10, seeds: 1, seed: (4711 + Math.imul(block.block * 10, 0x9e3779b9)) | 0, capture: 'tail', plannerStyle: block.style });
+      if (first.auditSkilled?.valid) opts.push({ setting: 'planner', runs: 20, seeds: 2, seed: 4711 });
+      for (const settings of opts) {
+        const key = M.digest({ fingerprint: p.bot, input: M.boardOf(b.row.design), settings }), file = path.join(cacheDir, key + '.json');
+        if (!fs.existsSync(file)) throw Error('Pilot API cache is missing: ' + key);
+        copyFile(file, path.join(external, 'pilot-api-records', key + '.json'));
+        pilotRecords.push({ task: b.task, boardKey: M.boardKey(b.row.design), settings, file: 'pilot-api-records/' + key + '.json' });
+      }
+    }
+    for (const dest of [source, external]) M.atomicJson(path.join(dest, 'pilot-api-manifest.json'), { records: pilotRecords.length, note: 'Screening blocks remain labelled runs10/seeds1; shortened checks are never qualified full ratings.', measurements: pilotRecords });
+  }
+  return { records: manifest.length, pilotRecords: pilotRecords.length };
 }
 if (require.main === module) console.log(exportStudy(...process.argv.slice(2).map(x => path.resolve(x))));
 module.exports = { exportStudy, copyTree };

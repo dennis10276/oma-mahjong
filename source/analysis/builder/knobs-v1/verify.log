@@ -1,0 +1,5 @@
+level 202: real clock spare 4 (strict 2; peek pairs make the way shorter)
+level 203: real clock spare 4 (strict 3; peek pairs make the way shorter)
+level 222: real clock spare 5 (strict 3; peek pairs make the way shorter)
+level 225: real clock spare 3 (strict 1; peek pairs make the way shorter)
+20 levels verified against cached full bot measurements; 0 new calls, 166 cache hits
