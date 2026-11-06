@@ -6,6 +6,12 @@ test('frame experiment crosses all settings and all common pairs',()=>{
  const chosen=R.selectFrames(records);assert.equal(chosen.length,3);assert(chosen.every(r=>r.family.exp>=6&&r.family.exp<=9));assert.equal(new Set(chosen.map(r=>r.sample.layout)).size,3);assert.throws(()=>R.selectFrames(records.slice(0,3)),/fewer than three/);
  const D=require('./frame_designer.js'),lists=D.lists(811000);assert(lists.some(list=>list.some(p=>p.name==='clock')));assert(lists.some(list=>list.some(p=>p.name==='clockWay')));assert(lists.some(list=>list.some(p=>p.name==='wrongClock')));
  const clocks=new Set(lists.flatMap(list=>list.filter(p=>p.name==='clock').map(p=>JSON.stringify(p.params))));for(const p of require('./pieces.js').CATALOGUE.clock.grid)assert(clocks.has(JSON.stringify(p)),'The bounded proposals cover each measured clock grade');
+ assert(D.recipeOf({share:.1,depth:2,spare:1},[{name:'wrongClock'}]).includes('dontGrab'),'Authored wrong-clock mechanisms request the existing grab-first counterfactual gate');
+});
+test('a frozen model cannot be overwritten after prospective outcomes become available',t=>{
+ const {assertFrozen}=require('./frame_calibrate.js'),dir=fs.mkdtempSync(path.join(require('os').tmpdir(),'oma-frozen-fit8-'));t.after(()=>{assert(dir.startsWith(path.join(require('os').tmpdir(),'oma-frozen-fit8-')));fs.rmSync(dir,{recursive:true});});
+ const model={input:'original-labels',featureSource:'original-features',settings:{family:{intercept:1}}};fs.writeFileSync(dir+'/model.json',JSON.stringify(model));assert.doesNotThrow(()=>assertFrozen(dir,model));
+ assert.throws(()=>assertFrozen(dir,{...model,input:'test-labels-added'}),/Frozen frame model/);assert.throws(()=>assertFrozen(dir,{...model,settings:{family:{intercept:2}}}),/Frozen frame model/);assert.deepEqual(JSON.parse(fs.readFileSync(dir+'/model.json')),model);
 });
 test('prospective protocol fixes the denominator and success rule before confirmation',t=>{
  const {preregister}=require('./frame_prospective.js'),dir=fs.mkdtempSync(path.join(require('os').tmpdir(),'oma-prereg8-'));t.after(()=>fs.rmSync(dir,{recursive:true}));

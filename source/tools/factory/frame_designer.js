@@ -3,6 +3,7 @@ const I=require('../lab/ideas.js'),P=require('./pieces.js'),F=require('./pressur
 const VERSION='pressure-frame-designer-v1';
 const PATTERNS=[['keys','clockLock'],['keys','clockLock','keyGuard'],['keys','lockedPartners','frozenPartner'],['iceChain','frozenPartner'],['keys','lockBeside'],['keys','lockedPartners','iceChain'],['keys','clockLock','clockIce'],['keys','clockLock','frozenPartner'],['clock','keys','clockLock'],['clock','keys','lockedPartners'],['clockWay','iceChain','frozenPartner'],['wrongClock','keys','lockedPartners']];
 const objective=(p,target)=>Math.abs(Math.log(p.family.tries/target))*3+Math.max(0,Math.log(2.5/p.skilled.tries))*4+Math.max(0,Math.log(p.skilled.tries/6))*4;
+const recipeOf=(frame,list)=>['frame:'+frame.share+'/'+frame.depth+'/'+frame.spare,...list.map(p=>p.name==='wrongClock'?'dontGrab':'piece:'+p.name)];
 function field(b,[k,i]){if(k==='faces')return b.faces[i];if(k==='down')return b.down.includes(i);if(k==='ice')return b.obst.ice[i]||0;if(k==='locks')return b.obst.locks.includes(i);if(k==='keys')return b.obst.keys;if(k==='clockMate')return b.clockMate??null;return b.clock;}
 function assemble(base,frame,list,seed,options={}){let design=options.framed?I.clone(options.framed):F.construct(base,frame,seed,options);if(!design)return null;
  const ordinal={};for(const op of list){const n=ordinal[op.name]||0;ordinal[op.name]=n+1;design=E.apply(base,design,op,parseInt(M.digest([seed,op.name,n]).slice(0,7),16)+1,options);if(!design)return null;}
@@ -15,7 +16,7 @@ function prior(frame,list,effects){const logs={family:Math.log(frame.family.exp)
  for(const op of list){const e=map.get(key(op));if(e)for(const k of['family','skilled'])logs[k]+=e[k].medianLog;}
  for(let i=0;i<list.length;i++)for(let j=i+1;j<list.length;j++){const a=key(list[i]),b=key(list[j]),e=map.get(a+' + '+b)||map.get(b+' + '+a);if(e)for(const k of['family','skilled'])logs[k]+=e[k].medianLog;}
  return Object.fromEntries(['family','skilled'].map(k=>[k,{tries:Math.max(1,Math.min(20,Math.exp(logs[k])))}]));}
-function rowOf(base,frame,list,made,spec,model,seed,shape,creationId,creationSlot){const design=made.design,id=M.boardKey(design).slice(0,16),recipe=['frame:'+frame.share+'/'+frame.depth+'/'+frame.spare,...list.map(p=>'piece:'+p.name)];
+function rowOf(base,frame,list,made,spec,model,seed,shape,creationId,creationSlot){const design=made.design,id=M.boardKey(design).slice(0,16),recipe=recipeOf(frame,list);
  return{id,level:creationSlot,placementTargetLevel:spec.level,target:spec.target,n:design.tiles.length,shape,design,room:made.room,pieces:list,pieceInstances:design.pieceInstances||[],frame,frameDesigner:{version:VERSION,seed,baseDesign:base,modelInput:model.input},predicted:Model.predict(model,design),
   origin:{...O.originOf(design,creationId,'A new pressure frame with conditional local traps',seed),creationSlot},recipe,playerFeedback:true,useHumanSkilled:true,forcePlanner:true,candidatePool:true,seedSource:'fresh-designed',placementScore:Placement.score(design,recipe,shape),trapPlan:{version:VERSION,authoredBoard:M.boardKey(design),steps:[],components:D.components({...design,pieceInstances:design.pieceInstances||[]})}};}
 function suggest(base,spec,model,frames,effects,options={}){const seed=options.seed??811000,all=frames.flatMap(f=>lists(seed,options.proposals??96).map(list=>({frame:f,list,prior:prior(f,list,effects)})));all.sort((a,b)=>objective(a.prior,spec.target)-objective(b.prior,spec.target));
@@ -43,4 +44,4 @@ function tuneOne(row,measured,spec,model,frames,effects){
  }
  return candidates.sort((a,b)=>objective(a.pieceChange.modelDeltaEstimate,spec.target)-objective(b.pieceChange.modelDeltaEstimate,spec.target))[0]||null;
 }
-module.exports={VERSION,PATTERNS,objective,assemble,lists,prior,rowOf,suggest,tuneOne};
+module.exports={VERSION,PATTERNS,objective,recipeOf,assemble,lists,prior,rowOf,suggest,tuneOne};
