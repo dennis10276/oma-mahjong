@@ -154,8 +154,8 @@ const VILLAGE = {
 // ---------- the database (Firebase Realtime Database; empty = only the computer players) ----------
 const DB_URL = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
 const dbUrl = path => `${DB_URL}/${path}.json`;
-function dbSend(path, body, method = 'PUT') {
-  return fetch(dbUrl(path), { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+function dbSend(path, body, method = 'PUT', signal) {
+  return fetch(dbUrl(path), { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal });
 }
 async function dbGet(path) {
   const r = await fetch(dbUrl(path), { cache: 'no-store' });

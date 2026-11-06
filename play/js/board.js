@@ -404,6 +404,7 @@ function tapTile(i) {
   if (!free(i)) {
     G.st.bt++;
     replay(el, 'shake'); showBlockers(i);
+    if (lockedT(i)) showKeys();       // a covered locked tile: the keys show too
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
@@ -657,9 +658,11 @@ function hint() {
   if (!path || !path.length) { toast(tx('noWay')); Sound.blocked(); return; }
   G.usedHint = true; updateTools(); saveCur();
   logLvl('hint');
-  // show the next one or two safe taps
+  // show the next one or two safe taps. With 3 waiting and a face-down tile next (a peek pair), show only that
+  // tile: tapping its face-up twin first would be a 4th tile in the tray.
   const show2 = [path[0]];
-  if (path[1] !== undefined && faceOf(path[1]) === faceOf(path[0])) show2.push(path[1]);
+  const peekNext = G.tray.length >= SLOTS - 1 && G.down[path[0]] && !trayHas(faceOf(path[0]));
+  if (!peekNext && path[1] !== undefined && faceOf(path[1]) === faceOf(path[0])) show2.push(path[1]);
   replayMark('hint', show2);
   show2.forEach(i => G.tiles[i].el.classList.add('hint'));
   Sound.hint(); buzz(15);
@@ -715,7 +718,7 @@ function solveNow(limit = 30000) {
     if (jt.length) tray = tray.filter(t => t !== jt[0]);
     else faces[jb[jb.length - 1]] = -1;
   }
-  return Layouts.solve(G.tiles, G.nb, faces, G.alive, tray, limit, obRules());
+  return Layouts.solve(G.tiles, G.nb, faces, G.alive, tray, limit, obRules(), G.down);
 }
 
 // ---------- ⏰ the alarm clock (from RULES.hard.clockFrom, designed in hard.js) ----------

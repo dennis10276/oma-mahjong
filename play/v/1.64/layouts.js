@@ -249,6 +249,15 @@ const Layouts = (() => {
   const careEff = level => level <= 6 ? level : 6 + (level - 6) / 4;
   const careDownN = level => level < 10 ? 0 : Math.min(6, 2 + Math.floor((level - 10) / 15));
   const careRate = level => level <= 50 ? 0.88 : Math.max(0.75, 0.88 - (level - 50) * 0.0026);
+  /* Catching up with the family (decision Dennis 2026-10-24, release 1.61): she plays well now, so
+     from level 119 her face-down tiles follow the family's rule (any tile, a share of the pile) and
+     her deals aim at the family's first-try target, both climbing evenly from where she was at 118
+     (8% face-down, 75% first try) to the family's values (40%, 42%) at level 143. Pile sizes stay
+     hers. Levels 1-118 are not changed (her stars and recordings). */
+  const CARE_CATCHUP = { from: 119, full: 143, down0: 0.08, rate0: 0.75 };
+  const careCatchup = level => level < CARE_CATCHUP.from ? null
+    : Math.min(1, (level - CARE_CATCHUP.from + 1) / (CARE_CATCHUP.full - CARE_CATCHUP.from + 1));
+  const familyDiff = level => difficultyFor(effLevel(level));
   function normalTarget(level, scale) {
     const e = effLevel(level);
     let t = targetFor(Math.round(e)); if (e > 26) t = targetFor(level);
@@ -260,7 +269,9 @@ const Layouts = (() => {
     target = Math.max(8, Math.round(target * scale)); target -= target % 2;
     const res = buildPiles(level * 7919 + 999331, target, layersFor(e), aspect, level);
     const d = difficultyFor(e);
-    const diff = { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) };
+    const c = careCatchup(level), fam = familyDiff(level), mix = (a, b) => a + (b - a) * c;
+    const diff = c == null ? { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) }
+      : { ...d, down: mix(CARE_CATCHUP.down0, fam.down), target: mix(CARE_CATCHUP.rate0, fam.target) };
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 333, diff, track: 'care',
       ptsScale: normalTarget(level, scale) / res.tiles.length };
   }
@@ -555,8 +566,16 @@ const Layouts = (() => {
     return out.slice(0, pairs);
   }
 
-  /* Small depth-first solver: finds a next move that still leads to a full clear (used by the hint). */
-  function solve(tiles, nb, faces, alive0, tray0, limit = 25000, rules = null) {
+  /* Small depth-first solver: finds a next move that still leads to a full clear (used by the hint).
+     down (optional, 1 = face-down): with 3 tiles waiting, a free face-down tile and its free twin can still be
+     taken together without a tray slot (board.js peekPair: turn the face-down one over, then tap its twin). In the
+     path such a pair is written face-down tile first, then its twin. */
+  function solve(tiles, nb, faces, alive0, tray0, limit = 25000, rules = null, down = null) {
+    // a way without peek pairs when there is one (the hint as it always was); the pair only when nothing else works
+    if (down) return solve(tiles, nb, faces, alive0, tray0, limit, rules) || solve1(tiles, nb, faces, alive0, tray0, limit, rules, down);
+    return solve1(tiles, nb, faces, alive0, tray0, limit, rules, null);
+  }
+  function solve1(tiles, nb, faces, alive0, tray0, limit, rules, down) {
     const n = tiles.length;
     const alive = Uint8Array.from(alive0);
     const can = rules ? (i => takeable(i, alive, nb, rules, alive0)) : (i => isFree(i, alive, nb));
@@ -573,7 +592,11 @@ const Layouts = (() => {
       const pair = fr.filter(i => !tf.has(faces[i]) && cnt[faces[i]] >= 2);
       const rest = fr.filter(i => !tf.has(faces[i]) && cnt[faces[i]] < 2);
       if (match.length) return [match[0]];           // taking a match is always safe
-      if (tray.length >= SLOTS - 1) return [];  // only 3 unmatched tiles may wait in the tray
+      if (tray.length >= SLOTS - 1) {               // only 3 unmatched tiles may wait in the tray
+        const peek = [];
+        if (down) for (const a of fr) for (const b of fr) if (a !== b && down[a] && faces[a] === faces[b] && faces[a] !== -1 && (!down[b] || a < b)) peek.push([a, b]);
+        return peek;
+      }
       return [...pair.slice(0, 2), ...rest];
     }
     function rec(tray, left) {
@@ -582,6 +605,12 @@ const Layouts = (() => {
       const k = key(tray);
       if (dead.has(k)) return false;
       for (const m of moves(tray)) {
+        if (Array.isArray(m)) {                      // a peek pair: both go, the tray stays as it is
+          alive[m[0]] = 0; alive[m[1]] = 0;
+          if (rec(tray, left - 2)) { alive[m[0]] = 1; alive[m[1]] = 1; path.unshift(m[0], m[1]); return true; }
+          alive[m[0]] = 1; alive[m[1]] = 1;
+          continue;
+        }
         alive[m] = 0;
         const mi = faces[m] === -1 ? -2 : tray.findIndex(t => faces[t] === faces[m]);
         const nt = mi === -2 ? tray : mi >= 0 ? tray.filter((_, q) => q !== mi) : tray.concat([m]);
@@ -597,6 +626,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, MECH, effLevel, careEff, careDownN, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, takeable, obstacles, solve, buildPiles, difficultyFor, kindsFor, pairFacesFor, layersFor };
+  return { SLOTS, MECH, effLevel, careEff, careDownN, careCatchup, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, takeable, obstacles, solve, buildPiles, difficultyFor, kindsFor, pairFacesFor, layersFor };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

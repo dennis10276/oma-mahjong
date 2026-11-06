@@ -168,8 +168,18 @@ function obBlocked(i) {
   Sound.blocked(); buzz(30);
   const ice = frozen(i);
   toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx('lockedTap'), 2600);
-  const show = ice ? G.inb[i].filter(j => G.alive[j] && canTake(j)) : G.ob.keys.filter(k => G.alive[k]);
-  show.forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  if (ice) G.inb[i].filter(j => G.alive[j] && canTake(j)).forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  else showKeys();
+}
+// the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
+// Dennis 2026-10-30: "when you click a locked tile even when buried I want the keys to shake")
+// A key under the pile shows through it: every tile lying on top of it turns see-through for a moment
+// (Dennis 2026-10-30: "I can't see the other key under the pile ... I want to see it through the pile").
+function showKeys() {
+  const keys = G.ob.keys.filter(k => G.alive[k]), over = new Set(), todo = [...keys];
+  while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }
+  over.forEach(j => replay(G.tiles[j].el, 'xray', 1500));
+  keys.forEach(j => replay(G.tiles[j].el, 'obhint', 1500));
 }
 // never stuck because of ice or locks alone: if nothing at all can be taken, they give way
 function obRelief() {
@@ -396,13 +406,15 @@ function startLessonDemo() {
   paint(); fresh(false); run();
 }
 function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
+  // (from 1.60: a film of a real game in the player's own tiles, background and tray, js/coach.js;
+  // the explanation folds open under it)
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_' + kind)}</h2>
-    ${lessonDemoHTML(kind)}<p>${tx('nt_' + kind + '_text')}</p>
+    ${coachDemoHTML(false, kind)}<details class="cz-more"><summary>${tx('czMore')}</summary><p>${tx('nt_' + kind + '_text')}</p></details>
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
       S.seenSp[kind] = true; save();
       if (after) after();
-    }, 'tile-help');
-  startLessonDemo();
+    }, 'tile-help coach-help');
+  coachPlay($('#modalBox .coach-demo'), coachTileClip(kind));
   const message = recordHelpMessage(kind, why);
   $('#ntGo').onclick = () => { message('ack'); closeModal(); };
 }
