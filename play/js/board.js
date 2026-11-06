@@ -133,6 +133,7 @@ function begin(o, restart = false) {
     else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
   };
   if (!clockIntro(ready) && !newTileIntro(ready) && !retryTileHelp(ready, resumed)) ready();
+  if (!resumed) proCheck();     // stuck on this level: how Dennisisdebeste won it (js/pro.js)
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); coachCount(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak

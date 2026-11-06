@@ -625,10 +625,12 @@ function render() {
       case 'help_msg': {
         const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'],
           // the game tips from level 90 (js/coach.js)
-          'coach-three': ['🀄', 'Speltip: drie in het bakje'], 'coach-twin': ['👆', 'Speltip: tik op het maatje'], 'coach-lookTray': ['👀', 'Speltip: kijk eerst naar alle plaatjes'], 'coach-remember': ['🧠', 'Speltip: onthoud wat je bekeek'], 'coach-uncover': ['🔍', 'Speltip: maak meer open'], 'coach-clockFirst': ['⏰', 'Speltip: eerst naar de wekker'], 'coach-clockSlot': ['⏰', 'Speltip: wekker heeft een vakje nodig'], 'coach-retry': ['🔁', 'Speltip: opnieuw is hetzelfde spel'] };
+          'coach-three': ['🀄', 'Speltip: drie in het bakje'], 'coach-twin': ['👆', 'Speltip: tik op het maatje'], 'coach-lookTray': ['👀', 'Speltip: kijk eerst naar alle plaatjes'], 'coach-remember': ['🧠', 'Speltip: onthoud wat je bekeek'], 'coach-uncover': ['🔍', 'Speltip: maak meer open'], 'coach-clockFirst': ['⏰', 'Speltip: eerst naar de wekker'], 'coach-clockSlot': ['⏰', 'Speltip: wekker heeft een vakje nodig'], 'coach-retry': ['🔁', 'Speltip: opnieuw is hetzelfde spel'],
+          // how Dennisisdebeste won the level, after 5 lost tries (js/pro.js, from 1.65)
+          pro: ['🎬', 'Replay van Dennisisdebeste'] };
         const [icon, topic] = topics[e.topic] || ['📖', 'Speluitleg'];
-        const reasons = { intro: 'eerste uitleg', retry: `herinnering na ${Number(e.fails) || 3} mislukte pogingen`, manual: 'zelf geopend', timeout: 'na afloop van de wekker' };
-        const actions = { shown: 'Uitleg getoond', ack: 'Uitleg bevestigd', retry: 'Uitleg gesloten · opnieuw proberen', menu: 'Uitleg gesloten · naar menu' };
+        const reasons = { intro: 'eerste uitleg', retry: `herinnering na ${Number(e.fails) || 3} mislukte pogingen`, manual: 'zelf geopend', timeout: 'na afloop van de wekker', fails: `na ${Number(e.fails) || 5} mislukte pogingen` };
+        const actions = { shown: 'Uitleg getoond', ack: 'Uitleg bevestigd', retry: 'Uitleg gesloten · opnieuw proberen', menu: 'Uitleg gesloten · naar menu', skip: `Weggeklikt na ${Number(e.s) || 0} s`, done: 'Helemaal bekeken' };
         const context = [e.scr === 'game' ? lvlName(e) : 'Menu', e.scr === 'game' && e.at ? `poging ${Number(e.at)}` : '', reasons[e.why] || '', e.lang === 'en' ? 'Engels' : 'Nederlands'].filter(Boolean).join(' · ');
         const copy = Object.keys(e).filter(k => /^m\d+$/.test(k)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))).map(k => typeof e[k] === 'string' ? e[k] : '').join('');
         const messageId = String(e.mid || `${e.t}-${e.topic}`);
