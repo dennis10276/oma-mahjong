@@ -12,6 +12,7 @@ The APK is signed with the key in android/keystore/ (never in git). Where that k
 (a fresh Claude or Codex session), the release still goes out, and GitHub builds and signs the APK
 right after the push (workflow "APK", tools/apk.yml, with the key in the repository secrets
 OMA_KEYSTORE and OMA_KEYSTORE_PASSWORD); it is on the download page a few minutes later.
+  --no-pro                           do not add new level replays (www/pro, tools/pro/build_pro.js --fetch)
   --no-tests                         skip the test suite (tests/run.js), which otherwise must pass first
 
 What it does:
@@ -51,6 +52,16 @@ def run_tests():
         sys.exit('tests failed: nothing was released. Fix them, or use --no-tests if you really must.')
 
 
+def update_pro():
+    """The replays of won levels (www/pro, js/pro.js): new wins from the recordings, every release.
+    Recordings are kept only 30 days in the database, so this keeps the replays that are already there."""
+    print('updating the level replays (tools/pro/build_pro.js --fetch)...')
+    r = subprocess.run(['node', os.path.join(ROOT, 'tools', 'pro', 'build_pro.js'), '--fetch'], capture_output=True, text=True)
+    out = (r.stdout or '').strip().splitlines()
+    if r.returncode: print('  could not update the replays (the old ones stay):', (r.stderr or '').strip()[:200])
+    else: print('  ' + '\n  '.join([l for l in out if not l.startswith('L')][-1:] + [f'{sum(1 for l in out if l.startswith("L"))} changed']))
+
+
 def sub(path, pattern, repl, count=1):
     s = open(path, encoding='utf-8').read()
     s2, n = re.subn(pattern, repl, s, count=count)
@@ -88,6 +99,8 @@ def main():
     if len(args) != 1 or not re.fullmatch(r'\d+(\.\d+)*', args[0]):
         sys.exit(__doc__)
     v, apk, deploy = args[0], '--no-apk' not in sys.argv, '--deploy' in sys.argv
+    if '--no-pro' not in sys.argv:
+        update_pro()
     if '--no-tests' not in sys.argv:
         run_tests()
 
