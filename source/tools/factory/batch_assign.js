@@ -39,7 +39,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
     (r.quality.skilled?.exp ?? 0) >= (plan.skilledMin ?? 0) &&
     (r.origin?.intendedLevel == null || r.origin.intendedLevel === s.level) && novel[i] &&
     !live.has(boardKey(r.design)) && context.every(c => c.level > 164 && Math.abs(c.level - s.level) > 10 || F.share(r.design.tiles, c.spots) <= 0.75) &&
-    Math.abs(r.exp - s.target) <= plan.tolerance && Math.abs(r.rate.train.exp - r.rate.validation.exp) <= (plan.maxSeedGap ?? 2) &&
+    Math.abs(r.exp - s.target) <= plan.tolerance + 1e-9 && Math.abs(r.rate.train.exp - r.rate.validation.exp) <= (plan.maxSeedGap ?? 2) &&
     Final.qualifies(r, r.rate, r.fresh, s, plan)));
   const compat = inv.map(() => []);
   const originalityCompat = inv.map(() => []);

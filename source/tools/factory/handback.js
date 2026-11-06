@@ -29,6 +29,7 @@ function handback(planFile, poolFile, measurements, out) {
   verify(planFile, levelsFile, { partial: !result.complete });
   atomicJson(path.join(out, 'coverage.json'), { complete: !!result.complete, qualified: rows.length, required: plan.levels.length,
     curveWindows: result.curveWindows || [], curveWindowRule:plan.curveWindow??null,
+    cost: result.cost??null, objective:plan.curveWindow?'maximum coverage, then minimum total absolute family offset, then authoring preferences':'historical combined preference cost',
     nodes: result.nodes, capacityUpper: result.capacity, searchLimitReached: result.nodes > 3000000,
     preservedFailure: result.preservedFailure || [], levels: result.coverage, plan: planFile, measurements });
   fs.copyFileSync(path.resolve(path.dirname(planFile), plan.piles), path.join(out, 'candidate-piles.json'));
@@ -60,7 +61,7 @@ function handback(planFile, poolFile, measurements, out) {
     const { row, rate, quality, pooled } = x, reasons = [];
     if (pooled == null) reasons.push('full two-seed rating unmeasured');
     else {
-      if (Math.abs(pooled - s.target) > plan.tolerance) reasons.push('off curve');
+      if (Math.abs(pooled - s.target) > plan.tolerance + 1e-9) reasons.push('off curve');
       if (Math.abs(rate.train.exp - rate.validation.exp) > plan.maxSeedGap) reasons.push('seed disagreement');
       if (Final.tuned(row) && !Final.qualifies(row, rate, x.fresh, s, plan))
         reasons.push(x.fresh ? 'independent seed failed' : 'independent seed unmeasured');
@@ -114,7 +115,8 @@ function handback(planFile, poolFile, measurements, out) {
     '|---|---:|---|---|---:|---|---:|---|---|---|---:|---:|---|', ...report, '',
     '## Yield and failures', '',
     `Pool ${stages.pool}; screened ${stages.screened}; full two-seed ratings ${stages.fullRated}; quality checks ${stages.qualityMeasured}; quality passes ${stages.qualityPassed}.`,
-    `${ownTargetMisses} fully rated candidates missed their initial slot target by more than 0.5; ${seedMisses} disagreed by more than two tries between seeds. These counts overlap.`,
+    `${ownTargetMisses} fully rated candidates missed their initial slot target by more than ${plan.tolerance}; ${seedMisses} disagreed by more than two tries between seeds. These counts overlap.`,
+    `Assignment cost: ${result.cost ?? 'unassigned'} (${plan.curveWindow?'sum of absolute pooled-family offsets':'historical preference cost'}).`,
     `Assignment explored ${result.nodes} nodes; the relaxed coverage upper bound was ${result.capacity}. ${result.nodes > 3000000 ? 'The search limit was reached; this is the best assignment found, not a proof of maximum coverage.' : 'The bounded search finished.'}`,
     'Diagnostic proposal reasons: ' + JSON.stringify(failureCounts) + '.', '',
     '## Rules and learning', '',
