@@ -42,3 +42,13 @@ bot measurements are a separate phase. These commands do not publish levels.
 Use `engine.js` for game-rule proofs, including peek pairs and the after-action
 clock check. `{strict:true}` retains the older single-tile rules for comparison.
 The independent review and current limits are in `analysis/builder/codex-review.md`.
+
+Task 10 uses `task10_study.js prepare <dir>`, then `measure <dir> all <workers>`.
+The preparation freezes 24 same-puzzle bases, their variants, and the complete
+range grid before any bot call. Run `task10_study.js traps <dir>` only after the
+main measurements finish, then measure that frozen addendum with `measure <dir>
+traps <workers>`. `task10_report.js report <dir>` produces the per-story range
+and additive tables. Its diagnostics commands freeze and report the separate
+frozen-key ablations. `task10_pilot.js` prepares/builds/checks up to five boards
+per missing slot and preserves the existing twenty. Run these phases in order,
+with one heavy pool at a time; never change a running worker's dependencies.
