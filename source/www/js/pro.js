@@ -1,10 +1,12 @@
-/* Oma's Mahjong — "replay from Dennisisdebeste" (from 1.64; decision Dennis 2026-11-06).
-   A player who has not passed a level after RULES.pro.after lost tries (restarts count, S.fails) sees,
-   once per level, how Dennisisdebeste won it: his own winning try, tap by tap, at double speed, in the
-   player's own tiles and background. It covers the screen; only a small × at the top closes it.
-   The films are in www/pro/L<n>.json (made by tools/pro/build_pro.js from his recorded wins) and are
-   downloaded from the website only when needed. A film is only shown when its board is exactly the
-   board being played (proSig), so never on another deal, grandma's own levels or a changed level. */
+/* Oma's Mahjong — "replay from Dennisisdebeste" (from 1.64; decisions Dennis 2026-11-06).
+   Switched on per player on the dashboard (part 'pro', off by default). A player who has not passed a
+   level after RULES.pro.after lost tries (restarts count, S.fails) sees, once per level, how it was won:
+   Dennisisdebeste's winning try, or for a level he has none of, the win of the player who needed the
+   fewest tries. Tap by tap, at double speed, in the watching player's own tiles, background and
+   language. It covers the screen; only a small × at the top closes it.
+   The films are in www/pro/L<n>.json (tools/pro/build_pro.js, run at every release) and are downloaded
+   from the website only when needed. A film is only shown when its board is exactly the board being
+   played (proSig), so never on another deal, grandma's own levels or a changed level. */
 'use strict';
 
 // the board's fingerprint: positions, pictures, face-down tiles, ice/locks and the clock at the start
@@ -18,7 +20,7 @@ if (typeof module !== 'undefined') module.exports = { proSig };
 
 function proDue() {
   const P = RULES.pro;
-  return !!(P && G && !G.done && G.mode === 'level' && !G.o.track && G.sig && S.pid !== P.pid &&
+  return !!(P && G && !G.done && G.mode === 'level' && !G.o.track && G.sig && part('pro') &&
     G.level >= S.level && (S.fails[G.key] || 0) >= P.after && !(S.proSeen || {})[G.key]);
 }
 // called when a try begins: fetch the film (if due) and show it over the fresh board
@@ -33,7 +35,7 @@ async function proCheck() {
     if (r.ok) film = await r.json();
   } catch (e) { film = null; }
   // not there, another board, or the player already moved on: nothing now (it can come at a later try)
-  if (!film || film.v !== 1 || film.sig !== g.sig || G !== g || g.done || curScreen !== 'game' || !proDue()) return;
+  if (!film || film.v !== 1 || film.sig !== g.sig || film.pid === S.pid || G !== g || g.done || curScreen !== 'game' || !proDue()) return;
   proShow(film);
 }
 function proShow(film) {

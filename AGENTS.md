@@ -157,6 +157,19 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - The Speltips menu: 8 tips (films of real recorded games, no names, `coach-clips.js`, made with
   `source/tools/coach/`), the player's own example per tip, and the tile explanations.
 
+## Level replays (from 1.64, js/pro.js; decisions by Dennis, 2026-11-06)
+
+- Switched on per player on the dashboard (part `pro`, "Replay na 5 keer mis"; off by default).
+- After the 5th lost try of a level the player has not passed (restarts count, `S.fails`), once per level
+  (`S.proSeen`): a full-screen replay of a win of that exact board at 2x speed (pauses capped at 3 s), in the
+  watching player's own tiles, background and language. Only a small x at the top (after 3 s) closes it.
+- Which win: Dennisisdebeste's newest; for a level he has none of on today's board, the win of the player
+  who needed the fewest tries (then the quickest). Never the player's own win, grandma's track or another board
+  (fingerprint `proSig`).
+- Films: `www/pro/L<n>.json`, made by `tools/pro/build_pro.js --fetch`, which `release.py` runs at every
+  release (recordings are deleted after 30 days, so existing films are kept; a film whose level changed is
+  removed). Loaded from the website (`RULES.pro.url`) only when due. Dashboard feed: "Replay van ...".
+
 ## Voorspeltest: locked predictions (Dennis, 2026-10-22)
 
 - Bot predictions of a player's winning try are only judged when they were locked in Firebase
