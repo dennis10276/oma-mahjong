@@ -182,9 +182,9 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   full solution routes, geometry, hidden tiles, ice, locks, keys and gold positions stay exactly
   as in 1.47; faces along the clock route and the key/gold pairs stay fixed too.
   `node tools/sim/tune_boards.js 80 269 8` resumes tuning against `analysis/levels-1.47.js`.
-  `node tools/sim/validate_focused.js` independently measures 600 games per persona and checks
-  that clock reach and expiry losses have not worsened beyond sampling tolerance (3 points per
-  level, 1 per band). Focused win-rate limits remain 8 points at 80–89, 10 afterwards, 3 per band.
+  `tools/sim/validate_focused.js` (retired 2026-11-06, in git history) independently measured 600 games
+  per persona and checked that clock reach and expiry losses had not worsened beyond sampling tolerance
+  (3 points per level, 1 per band). Focused win-rate limits remain 8 points at 80–89, 10 afterwards, 3 per band.
   Results are in `analysis/difficulty-1.48.md` and `analysis/validation-1.48.json`. New level start
   events record the focused win chance in `pr` and identify it with `pm: 'focused'`.
 
@@ -200,8 +200,9 @@ A level saved from the other set of levels is not resumed (it starts fresh). The
   once. Past the last one, the levels from `cycleFrom` (150) come round again, mirrored and with other
   pictures. After changing hard.js or `RULES.hard`: run the build again (and `GENV` + 1).
   The start of a level logs `pr`, the test player's chance, so real results can be compared later.
-  `node tools/sim/measure.js` measures the shipped levels with the three test players (other games
-  than the designer used) and prints the curve per band (`tools/sim/measure.json`).
+  `tools/sim/measure.js` (retired 2026-11-06, in git history; the family and skilled bots of
+  `tools/factory/meter.js` replaced the three test players) measured the shipped levels per band
+  (`tools/sim/measure.json`).
 - An easier try (help after losing) plays the usual level made easier; grandma's levels are her own.
 
 ## Special tiles and mechanics (everyone)

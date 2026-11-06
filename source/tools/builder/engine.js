@@ -1,0 +1,410 @@
+/* Builder v2, engine.js: proofs on a board (SPEC.md section 2, helper A, 2026-11-06).
+   Exact game rules on a design: free tiles, ice (h neighbours gone since the start), lock + key pair, the 4-slot
+   tray (a 4th waiting tile loses), the alarm clock (taken at a move index < clock.n, see below) and the PEEK PAIR (www/js/board.js peekPair): a free face-down tile and its free twin
+   (both takeable, picture not waiting in the tray) go together as one action of two moves, without a tray slot,
+   even with 3 tiles waiting. All faces are known (a proof tool). E.game(design, {strict: true}) switches the peek
+   pair off: then the rules are exactly Hard.validSolution / lab/exact.js, which do not know it.
+
+   Actions (legal(), step(), paths): a number i = take tile i; {pair: [i, j]} = a peek pair, j face-down (both
+   may be: then the clock, if one of them, goes first), the game takes i first and j second. legal() lists every
+   takeable tile and every peek pair whose picture is not waiting (else the tap matches the tray); it does not
+   filter 4th tiles or a late clock: step() returns null for those. E.flatten(path)
+   writes such a path the way levels store `solution` ([.., i, j, ..]); E.replay(design, flat) checks one.
+   Clock, per move (default, = validSolution and E.replay): every tile taken at move index m >= clock.n while
+   the clock is still on the board loses, also the second tile of a pair. The game itself checks only after
+   the whole action (board.js checkClock after both takeOff): a pair started at n-1 with the clock as its
+   peeked (second) tile still saves it there. E.game(design, {clockAfterAction: true}) models that leniency.
+   clockShortest's k = the smallest clock.n that still lets the board be won (= the clock's flat index + 1;
+   with singles only that is exact.js's k).
+
+   Search: depth-first, memo of proven dead states and of proven winning moves per game (keys: alive bitset +
+   waiting faces + moves while the clock is on the board), incremental free/ice/lock counters, a tray match is
+   taken first (single branch) when it is face-up and the clock is gone (or is that match itself), and states
+   that can no longer reach the clock in time are cut with lab/exact.js makeLowerBound. Budgets give 'unknown',
+   never a loss without proof. `node engine.js` runs the benchmark on the 18 qualified boards. */
+'use strict';
+const fs = require('fs'), path = require('path');
+global.Layouts = global.Layouts || require('../../www/layouts.js');
+const L = global.Layouts;
+const Hard = require('../../www/hard.js');
+const { exactRoute, makeLowerBound } = require('../lab/exact.js');
+const SLOTS = L.SLOTS;                                               // 4: a 4th waiting tile loses
+const DEF = { win: { nodes: 2e6, ms: 10000 }, move: { nodes: 1e5, ms: 300 }, cap: 12, depthNodes: 20000, cacheMax: 1.5e6 };
+const BUDGET = { budget: true };
+
+// ---------- the game ----------
+const CACHE = new Map();
+function game(d, o = {}) {
+  const mode = o.strict ? 'strict' : o.clockAfterAction ? 'after' : 'game';
+  if (!CACHE.has(mode)) CACHE.set(mode, new WeakMap());
+  const store = CACHE.get(mode);
+  if (store.has(d)) return store.get(d);
+  const tiles = d.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : { x: t.x, y: t.y, z: t.z });
+  const n = tiles.length; if (n > 255) throw new Error('engine: at most 255 tiles');
+  const nb = L.neighbors(tiles), iceNb = L.iceNeighbors(tiles), ob = d.obst || {};
+  const ice = {}; for (const k in ob.ice || {}) if (ob.ice[k] > 0) ice[+k] = ob.ice[k];
+  const keys = (ob.keys || []).slice(), locks = keys.length && (ob.locks || []).length ? new Set(ob.locks) : null;
+  const rules = Object.keys(ice).length || locks ? { iceNb, ice, locks, keys } : null;
+  const clock = d.clock && Number.isInteger(d.clock.i) && d.clock.i >= 0 && d.clock.i < n ? { i: d.clock.i, n: d.clock.n } : null;
+  const down = new Uint8Array(n); for (const i of d.down || []) down[i] = 1;
+  const below = tiles.map(() => []), iceRev = tiles.map(() => []), iceH = new Int8Array(n), lockT = new Uint8Array(n), isKey = new Uint8Array(n);
+  for (let i = 0; i < n; i++) for (const j of nb.above[i]) below[j].push(i);
+  for (const k in ice) { iceH[k] = ice[k]; for (const j of iceNb[k]) iceRev[j].push(+k); }
+  if (locks) { for (const i of locks) lockT[i] = 1; for (const k of keys) isKey[k] = 1; }
+  const g = { design: d, n, tiles, nb, iceNb, rules, faces: d.faces.slice(), clock, down, peek: !o.strict, after: !o.strict && !!o.clockAfterAction, mode, solution: d.solution,
+    below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
+  g.lb = clock ? makeLowerBound(g, clock.i) : null;
+  // tiles worth trying first while the clock is on the board: what lies on it, keys of a lock on the way, its ice
+  g.toClock = new Uint8Array(n);
+  if (clock) {
+    const st = [clock.i];
+    while (st.length) for (const j of nb.above[st.pop()]) if (!g.toClock[j]) { g.toClock[j] = 1; st.push(j); }
+    if (lockT[clock.i] || [...Array(n).keys()].some(i => g.toClock[i] && lockT[i])) for (const k of g.keys) g.toClock[k] = 1;
+    if (iceH[clock.i]) for (const j of iceNb[clock.i]) g.toClock[j] = 1;
+  }
+  store.set(d, g);
+  return g;
+}
+// a peek pair in the game's order: the tapped tile first, the peeked face-down one second (both face-down: clock first)
+const orient = (g, i, j) => !g.down[j] || (g.down[i] && g.clock && j === g.clock.i) ? [j, i] : [i, j];
+const start = g => ({ alive: new Uint8Array(g.n).fill(1), tray: [], moves: 0, clockTaken: !g.clock });
+
+// ---------- the reference rules (public API, plain arrays) ----------
+const initialOf = g => g._init || (g._init = new Uint8Array(g.n).fill(1));
+const canTake = (g, alive, i) => !!alive[i] && (g.rules ? L.takeable(i, alive, g.nb, g.rules, initialOf(g)) : L.isFree(i, alive, g.nb));
+function legal(g, s) {
+  const out = [], F = g.faces, waiting = new Set(s.tray.map(t => F[t]));
+  for (let i = 0; i < g.n; i++) if (canTake(g, s.alive, i)) out.push(i);
+  if (!g.peek) return out;
+  const singles = out.slice();
+  for (let a = 0; a < singles.length; a++) for (let b = a + 1; b < singles.length; b++) {
+    const i = singles[a], j = singles[b];
+    if (F[i] === F[j] && !waiting.has(F[i]) && (g.down[i] || g.down[j])) out.push({ pair: orient(g, i, j) });
+  }
+  return out;
+}
+function step(g, s, act) {
+  const F = g.faces, pair = act && typeof act === 'object' ? act.pair : null, take = pair || [act];
+  for (const i of take) if (!Number.isInteger(i) || !canTake(g, s.alive, i)) throw new Error('engine: illegal move ' + JSON.stringify(act));
+  if (pair && (!g.peek || pair[0] === pair[1] || F[pair[0]] !== F[pair[1]] || !(g.down[pair[0]] || g.down[pair[1]]) || s.tray.some(t => F[t] === F[pair[0]])))
+    throw new Error('engine: not a peek pair ' + JSON.stringify(act));
+  if (!s.clockTaken && g.clock && s.moves >= g.clock.n) return null;          // the clock ran out before this action
+  if (pair && !s.clockTaken && g.clock && !g.after && pair[0] !== g.clock.i && s.moves + 1 >= g.clock.n) return null;   // per move
+  const alive = s.alive.slice(); let tray = s.tray;
+  for (const i of take) alive[i] = 0;
+  if (!pair) {
+    const q = tray.findIndex(t => F[t] === F[act]);
+    tray = q >= 0 ? tray.filter((_, k) => k !== q) : tray.concat(act);
+    if (tray.length >= SLOTS) return null;                                    // a 4th waiting tile
+  }
+  return { alive, tray, moves: s.moves + take.length, clockTaken: s.clockTaken || (!!g.clock && take.includes(g.clock.i)) };
+}
+const won = (g, s) => s.tray.length === 0 && !s.alive.some(a => a);
+
+// ---------- the fast search state (incremental counters) ----------
+const PAIR = 256, pairCode = (i, j) => (i + 1) * PAIR + j, isPair = c => c >= PAIR;
+const decode = c => isPair(c) ? { pair: [(c >> 8) - 1, c & 255] } : c;
+const encode = a => a && typeof a === 'object' ? pairCode(a.pair[0], a.pair[1]) : a;
+class Ctx {
+  constructor(g, alive, trayFaces, moves) {
+    const n = g.n, a = this.alive = Uint8Array.from(alive);
+    this.g = g; this.up = new Int16Array(n); this.lc = new Int16Array(n); this.rc = new Int16Array(n); this.gone = new Int16Array(n);
+    this.w = new Uint16Array(g.words); this.keysLeft = 0; this.left = 0;
+    for (let i = 0; i < n; i++) {
+      for (const j of g.nb.above[i]) if (a[j]) this.up[i]++;
+      for (const j of g.nb.left[i]) if (a[j]) this.lc[i]++;
+      for (const j of g.nb.right[i]) if (a[j]) this.rc[i]++;
+      if (g.iceH[i]) for (const j of g.iceNb[i]) if (!a[j]) this.gone[i]++;
+      if (a[i]) { this.w[i >> 4] |= 1 << (i & 15); this.left++; if (g.isKey[i]) this.keysLeft++; }
+    }
+    this.tray = trayFaces.slice(); this.moves = moves; this.clockAlive = !!g.clock && !!a[g.clock.i];
+  }
+  static of(g, s) { return new Ctx(g, s.alive, s.tray.map(t => g.faces[t]), s.moves); }
+  ok(i) { const g = this.g; return this.alive[i] === 1 && this.up[i] === 0 && (this.lc[i] === 0 || this.rc[i] === 0) && (g.iceH[i] === 0 || this.gone[i] >= g.iceH[i]) && (g.lockT[i] === 0 || this.keysLeft === 0); }
+  rm(i) {
+    const g = this.g; this.alive[i] = 0; this.w[i >> 4] ^= 1 << (i & 15); this.left--; this.moves++;
+    for (const j of g.below[i]) this.up[j]--;
+    for (const j of g.nb.right[i]) this.lc[j]--;
+    for (const j of g.nb.left[i]) this.rc[j]--;
+    for (const j of g.iceRev[i]) this.gone[j]++;
+    if (g.isKey[i]) this.keysLeft--;
+    if (g.clock && i === g.clock.i) this.clockAlive = false;
+  }
+  put(i) {
+    const g = this.g; this.alive[i] = 1; this.w[i >> 4] ^= 1 << (i & 15); this.left++; this.moves--;
+    for (const j of g.below[i]) this.up[j]++;
+    for (const j of g.nb.right[i]) this.lc[j]++;
+    for (const j of g.nb.left[i]) this.rc[j]++;
+    for (const j of g.iceRev[i]) this.gone[j]--;
+    if (g.isKey[i]) this.keysLeft++;
+    if (g.clock && i === g.clock.i) this.clockAlive = true;
+  }
+  apply(c) {                                   // returns undo info (1 matched, 0 parked, 2 pair)
+    if (isPair(c)) { this.rm((c >> 8) - 1); this.rm(c & 255); return 2; }
+    this.rm(c); const f = this.g.faces[c], q = this.tray.indexOf(f);
+    if (q >= 0) { this.tray.splice(q, 1); return 1; }
+    this.tray.push(f); return 0;
+  }
+  undo(c, u) {
+    if (u === 2) { this.put(c & 255); this.put((c >> 8) - 1); return; }
+    this.put(c); const f = this.g.faces[c];
+    if (u === 1) this.tray.push(f); else this.tray.splice(this.tray.indexOf(f), 1);
+  }
+  key() {
+    let k = String.fromCharCode.apply(null, this.w);
+    const t = this.tray;
+    if (t.length) k += String.fromCharCode.apply(null, t.map(f => f + 256).sort((a, b) => a - b));
+    return this.clockAlive ? k + '#' + this.moves : k;
+  }
+  // the actions that do not lose at once, best first; shortcuts=true: only one when one is provably as good;
+  // noDeadline: ignore the clock's n (clockSearch looks for the smallest n)
+  gen(shortcuts, noDeadline) {
+    const g = this.g, F = g.faces, n = g.n, tray = this.tray, fr = [];
+    if (this.clockAlive && !noDeadline && this.moves >= g.clock.n) return fr;
+    for (let i = 0; i < n; i++) if (this.ok(i)) fr.push(i);
+    if (!fr.length) return fr;
+    const ck = this.clockAlive ? g.clock.i : -1, match = [], other = [];
+    for (const i of fr) (tray.includes(F[i]) ? match : other).push(i);
+    if (shortcuts) {
+      // exchange argument: some winning line takes a face-up tray match first (no clock to shift), or the clock
+      if (ck >= 0) { if (match.includes(ck) && !g.down[ck]) return [ck]; }
+      else for (const m of match) if (!g.down[m]) return [m];
+    }
+    const pairs = [];
+    if (g.peek) for (let a = 0; a < other.length; a++) for (let b = a + 1; b < other.length; b++) {
+      const i = other[a], j = other[b];
+      if (F[i] === F[j] && (g.down[i] || g.down[j])) {
+        const [x, y] = orient(g, i, j);
+        if (ck >= 0 && !noDeadline && !g.after && x !== ck && this.moves + 1 >= g.clock.n) continue;   // its 2nd tile would be late
+        pairs.push(pairCode(x, y));
+      }
+    }
+    const out = [];
+    if (ck >= 0 && fr.includes(ck) && !match.includes(ck) && tray.length < SLOTS - 1) out.push(ck);
+    if (ck >= 0) for (const c of pairs) if ((c >> 8) - 1 === ck || (c & 255) === ck) out.push(c);
+    for (const m of match) out.push(m);
+    for (const c of pairs) if (!(ck >= 0 && ((c >> 8) - 1 === ck || (c & 255) === ck))) out.push(c);
+    if (tray.length >= SLOTS - 1) return out;                                 // a single now would be the 4th
+    const cnt = new Map(); for (const i of other) cnt.set(F[i], (cnt.get(F[i]) || 0) + 1);
+    const rest = other.filter(i => i !== ck);
+    const pri = i => (ck >= 0 && g.toClock[i] ? 0 : 2) + (cnt.get(F[i]) >= 2 ? 0 : 1);
+    rest.sort((a, b) => pri(a) - pri(b));
+    for (const i of rest) out.push(i);
+    return out;
+  }
+}
+
+// ---------- winnable: depth-first proof ----------
+function housekeep(g) { if (g.dead.size + g.win.size > DEF.cacheMax) { g.dead.clear(); g.win.clear(); } }
+function solveCtx(g, ctx, o = {}) {
+  housekeep(g);
+  const maxN = o.nodes ?? DEF.win.nodes, until = Date.now() + (o.ms ?? DEF.win.ms), ck = g.clock, acts = [];
+  let nodes = 0;
+  function rec() {
+    if (ctx.left === 0) return ctx.tray.length === 0;
+    if (++nodes > maxN || ((nodes & 127) === 0 && Date.now() > until)) throw BUDGET;
+    const key = ctx.key();
+    if (g.dead.has(key)) return false;
+    const known = g.win.get(key);
+    if (known !== undefined) {
+      const u = ctx.apply(known), ok = rec(); ctx.undo(known, u);
+      if (ok) { acts.push(known); return true; }
+      g.win.delete(key);
+    }
+    if (ctx.clockAlive && (ctx.moves >= ck.n || ctx.moves + g.lb(ctx.alive) > ck.n)) { g.dead.add(key); return false; }
+    for (const a of ctx.gen(true)) {
+      const u = ctx.apply(a), ok = rec(); ctx.undo(a, u);
+      if (ok) { g.win.set(key, a); acts.push(a); return true; }
+    }
+    g.dead.add(key);
+    return false;
+  }
+  try {
+    const ok = rec();
+    return ok ? { result: 'win', path: acts.reverse().map(decode), nodes } : { result: 'lose', nodes };
+  } catch (e) { if (e === BUDGET) return { result: 'unknown', nodes }; throw e; }
+}
+const winnable = (g, s, o = {}) => solveCtx(g, Ctx.of(g, s), o);
+
+// ---------- the longest run of moves a player can still make in a lost position ----------
+function longest(g, s, cap = DEF.cap, maxNodes = DEF.depthNodes) {
+  const ctx = Ctx.of(g, s), memo = new Map(); let nodes = 0, cut = false;
+  function rec(rem) {
+    if (rem <= 0) return 0;
+    if (++nodes > maxNodes) { cut = true; return 0; }
+    const key = ctx.key(), m = memo.get(key);
+    if (m !== undefined && (m.v < m.rem || m.rem >= rem)) return Math.min(m.v, rem);
+    let best = 0;
+    for (const a of ctx.gen(false)) {
+      const len = isPair(a) ? 2 : 1;
+      let v = rem;
+      if (len < rem) { const u = ctx.apply(a); v = len + rec(rem - len); ctx.undo(a, u); }
+      if (v > best) best = v;
+      if (best >= rem) break;
+    }
+    if (!cut) memo.set(key, { v: best, rem });
+    return Math.min(best, rem);
+  }
+  const v = rec(cap);
+  return { depth: v, exact: !cut || v >= cap };
+}
+
+// ---------- classify every legal action ----------
+function classify(g, s, o = {}) {
+  const per = { nodes: o.nodes ?? DEF.move.nodes, ms: o.ms ?? DEF.move.ms }, out = [];
+  for (const move of legal(g, s)) {
+    const s2 = step(g, s, move);
+    if (!s2) { out.push({ move, result: 'lose', depth: 0 }); continue; }
+    if (won(g, s2)) { out.push({ move, result: 'win' }); continue; }
+    const r = winnable(g, s2, per), e = { move, result: r.result };
+    if (r.result === 'lose') { const d = longest(g, s2, o.cap ?? DEF.cap, o.depthNodes ?? DEF.depthNodes); e.depth = d.depth; if (!d.exact) e.depthMin = true; }
+    out.push(e);
+  }
+  return out;
+}
+
+// ---------- decision traps along a path ----------
+const sameMove = (a, b) => (typeof a === 'object') === (typeof b === 'object') && JSON.stringify(a) === JSON.stringify(b);
+function kindOf(g, s, move) {
+  if (typeof move === 'object') return g.clock && move.pair.includes(g.clock.i) && !s.clockTaken ? 'clock' : 'peekpair';
+  const F = g.faces, i = move;
+  if (g.clock && i === g.clock.i) return 'clock';
+  if (s.tray.some(t => F[t] === F[i])) return 'match';
+  const twins = []; for (let j = 0; j < g.n; j++) if (j !== i && s.alive[j] && F[j] === F[i] && L.isFree(j, s.alive, g.nb)) twins.push(j);
+  if (!g.down[i] && twins.some(j => !g.down[j] && canTake(g, s.alive, j))) return 'pair';
+  if (twins.some(j => !g.down[j])) return 'twin';
+  return null;
+}
+function traps(g, p, o = {}) {
+  p = p || g.solution;
+  const holdsClock = a => g.clock && (typeof a === 'object' ? a.pair.includes(g.clock.i) : a === g.clock.i);
+  const upTo = Math.min(p.length, o.upTo ?? (g.clock ? p.findIndex(holdsClock) + 1 || p.length : p.length));
+  let s = start(g); const out = [];
+  for (let k = 0; k < upTo; k++) {
+    const cls = classify(g, s, o), lose = cls.filter(c => c.result === 'lose');
+    if (lose.length) {
+      const losing = lose.map(c => ({ move: c.move, kind: kindOf(g, s, c.move), depth: c.depth, ...(c.depthMin ? { depthMin: true } : {}), down: typeof c.move === 'number' && !!g.down[c.move] }));
+      out.push({ step: k, moves: s.moves, take: p[k], legal: cls.length, win: cls.filter(c => c.result === 'win').length, lose: lose.length,
+        unknown: cls.filter(c => c.result === 'unknown').length, takeLoses: lose.some(c => sameMove(c.move, p[k])), losing, tempting: losing.filter(c => c.kind), options: cls });
+    }
+    s = step(g, s, p[k]);
+    if (!s) throw new Error('engine.traps: the path loses at step ' + k);
+  }
+  return out;
+}
+
+// ---------- the fewest moves to the clock ----------
+/* Best-first on f = moves + makeLowerBound (admissible, also with peek pairs: the clock's action starts after every
+   required tile is gone). moves = tiles gone, so every way to a position costs the same: a plain seen-set is exact.
+   A position with the clock off is queued as a goal with f = k (the clock's flat index + 1; with clockAfterAction the
+   start of its action + 1); the first goal popped whose rest is provably winnable is the answer. */
+function clockSearch(g, o = {}) {
+  const ck = g.clock; if (!ck) return null;
+  const maxN = o.nodes ?? 400000, until = Date.now() + (o.ms ?? 20000), fin = { nodes: o.finishNodes ?? 300000, ms: o.finishMs ?? 3000 };
+  const heap = [], better = (a, b) => a.f < b.f || (a.f === b.f && a.m > b.m);
+  const push = x => { heap.push(x); let i = heap.length - 1; while (i) { const q = (i - 1) >> 1; if (!better(heap[i], heap[q])) break; [heap[q], heap[i]] = [heap[i], heap[q]]; i = q; } };
+  const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length) { heap[0] = last; let i = 0; for (;;) { const a = 2 * i + 1, b = a + 1; let m = i; if (a < heap.length && better(heap[a], heap[m])) m = a; if (b < heap.length && better(heap[b], heap[m])) m = b; if (m === i) break; [heap[m], heap[i]] = [heap[i], heap[m]]; i = m; } } return top; };
+  const s0 = start(g), seen = new Set();
+  push({ alive: s0.alive, tray: [], m: 0, path: [], f: g.lb(s0.alive) });
+  let nodes = 0, unsure = false;
+  while (heap.length) {
+    if (++nodes > maxN || ((nodes & 63) === 0 && Date.now() > until)) return null;
+    const x = pop();
+    if (x.goal) {                       // the clock is off: the first goal popped whose rest can be won is the fewest
+      const r = solveCtx(g, new Ctx(g, x.alive, x.tray, x.m), fin);
+      if (r.result === 'win') return { k: x.f, path: x.path.map(decode).concat(r.path), nodes, ...(unsure ? { unsure: true } : {}) };
+      if (r.result === 'unknown') unsure = true;
+      continue;
+    }
+    const ctx = new Ctx(g, x.alive, x.tray, x.m);
+    for (const a of ctx.gen(false, true)) {
+      const u = ctx.apply(a), key = ctx.key();
+      if (!seen.has(key)) {
+        seen.add(key);
+        const node = { alive: ctx.alive.slice(), tray: ctx.tray.slice(), m: ctx.moves, path: x.path.concat(a) };
+        if (!ctx.clockAlive) push({ ...node, goal: true, f: x.m + (isPair(a) && (a & 255) === ck.i && !g.after ? 2 : 1) });
+        else push({ ...node, f: ctx.moves + g.lb(ctx.alive) });
+      }
+      ctx.undo(a, u);
+    }
+  }
+  return null;
+}
+/* clockShortest: strict games (no peek pair) wrap lab/exact.js exactRoute as the SPEC asks; the game's own rules
+   (default) need the peek pair, which exact.js does not know, so they use clockSearch above. */
+function clockShortest(g, o = {}) {
+  if (!g.clock) return null;
+  const memoKey = 'cs' + (o.nodes ?? '') + '/' + (o.ms ?? '');
+  if (g[memoKey] !== undefined) return g[memoKey];
+  let r;
+  if (g.peek) r = clockSearch(g, o);
+  else { const x = exactRoute(g, g.clock.i, o.nodes ?? 400000, o.ms ?? Infinity); r = x ? { k: x.k, path: x.path } : null; }
+  if (r) r = { k: r.k, path: r.path, ...(r.unsure ? { unsure: true } : {}) };
+  return (g[memoKey] = r);
+}
+
+// ---------- flat paths (the way levels store `solution`) ----------
+const flatten = p => p.flatMap(a => a && typeof a === 'object' ? a.pair : [a]);
+/* replay(design, flat, {strict}): entries p, p+1 are read as a peek pair only when the single at p would be a 4th
+   waiting tile and the pair is legal before either is removed (same face, one face-down, both takeable, the picture
+   not waiting); otherwise p is a single. Clock per move (flat index < clock.n). strict: no pairs (= validSolution). */
+function replay(d, flat, o = {}) {
+  const g = game(d, { strict: !!o.strict }), F = g.faces, alive = initialOf(g).slice(), tray = [];
+  let clockTaken = !g.clock, pairs = 0;
+  const bad = (why, at) => ({ ok: false, why, at, pairs });
+  if (!Array.isArray(flat) || flat.length !== g.n) return bad('length');
+  const can = i => Number.isInteger(i) && i >= 0 && i < g.n && canTake(g, alive, i);
+  const take = (i, at) => {
+    if (!clockTaken && at >= g.clock.n) return 'clockLate';
+    alive[i] = 0; if (g.clock && i === g.clock.i) clockTaken = true;
+    return null;
+  };
+  for (let p = 0; p < flat.length; p++) {
+    const i = flat[p];
+    if (!can(i)) return bad('notTakeable', p);
+    const q = tray.indexOf(F[i]);
+    if (q < 0 && tray.length >= SLOTS - 1) {
+      const j = flat[p + 1];
+      if (g.peek && j !== i && can(j) && F[j] === F[i] && (g.down[i] || g.down[j])) {
+        let w = take(i, p); if (w) return bad(w, p);
+        w = take(j, p + 1); if (w) return bad(w, p + 1);
+        pairs++; p++; continue;
+      }
+      return bad('trayFull', p);
+    }
+    const w = take(i, p); if (w) return bad(w, p);
+    if (q >= 0) tray.splice(q, 1); else tray.push(F[i]);
+  }
+  if (!clockTaken) return bad('clockMissing');
+  if (tray.length) return bad('trayLeft');
+  return { ok: true, pairs };
+}
+
+module.exports = { replay, flatten, game, start, legal, step, won, winnable, clockShortest, classify, traps, longest, clockSearch, kindOf, DEF, SLOTS };
+
+// ---------- benchmark: node source/tools/builder/engine.js (cold: a fresh game, empty caches, per timing) ----------
+if (require.main === module) {
+  const file = path.join(__dirname, '..', '..', 'analysis', 'builder', 'data', 'qualified-200-225.jsonl');
+  const boards = fs.readFileSync(file, 'utf8').trim().split('\n').map(l => JSON.parse(l));
+  const med = a => { const b = a.slice().sort((x, y) => x - y); return b[b.length >> 1]; };
+  const fresh = (d, o) => game({ ...d }, o), time = f => { const t = process.hrtime.bigint(); const r = f(); return [Number(process.hrtime.bigint() - t) / 1e6, r]; };
+  const T = { 'winnable(start)': [], 'classify (start, mid, before clock)': [], clockShortest: [], 'clockShortest strict (exact.js)': [], 'traps (clock prefix)': [] }, notes = [];
+  let unknown = 0, moves = 0;
+  for (const b of boards) {
+    const d = b.design, ci = d.solution.indexOf(d.clock.i);
+    const [tw, w] = time(() => { const g = fresh(d); return winnable(g, start(g)); }); T['winnable(start)'].push(tw);
+    const ct = [];
+    for (const k of new Set([0, Math.floor(ci / 2), Math.max(0, ci - 1)])) {
+      const g = fresh(d); let s = start(g); for (let q = 0; q < k; q++) s = step(g, s, d.solution[q]);
+      const [t, c] = time(() => classify(g, s)); ct.push(t.toFixed(0)); T['classify (start, mid, before clock)'].push(t);
+      unknown += c.filter(x => x.result === 'unknown').length; moves += c.length;
+    }
+    const [tc, cs] = time(() => clockShortest(fresh(d))); T.clockShortest.push(tc);
+    const [tx, cx] = time(() => clockShortest(fresh(d, { strict: true }))); T['clockShortest strict (exact.js)'].push(tx);
+    const [tt, tr] = time(() => traps(fresh(d))); T['traps (clock prefix)'].push(tt);
+    notes.push(`${b.id}: ${d.tiles.length} tiles, win ${w.result} (${w.nodes} nodes) | clock n ${d.clock.n} k ${cs && cs.k} strict ${cx && cx.k} | classify ${ct.join('/')} ms | traps ${tr.length}/${ci + 1} steps, ${tr.reduce((a, p) => a + p.tempting.length, 0)} tempting`);
+  }
+  console.log(notes.join('\n'));
+  for (const k in T) console.log(`${k}: median ${med(T[k]).toFixed(1)} ms, max ${Math.max(...T[k]).toFixed(1)} ms`);
+  console.log(`classify: ${unknown} of ${moves} moves unknown`);
+}

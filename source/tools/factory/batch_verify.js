@@ -8,6 +8,15 @@ const { roomProfile } = require('./design_traps.js');
 const { assertOriginalBatch, previousBoards } = require('./originality.js');
 const { evaluate } = require('./batch_evaluate.js');
 const Final = require('./final_seed.js');
+// The real spare (Claude, 2026-11-06): the stored solution and I.valid follow the strict rules, which do not know the
+// game's PEEK PAIR (a turned-over face-down tile and its free twin go together without a tray slot). With it the
+// fewest way to the clock is 1-2 moves shorter on 5 of the 18 qualified boards, so their clock is that much looser
+// than `clockSpare` says. The bots already play peek pairs, so the ratings are right; this only reports it.
+function realSpare(d) {
+  let E; try { E = require('../builder/engine.js'); } catch (e) { return null; }
+  const r = E.clockShortest(E.game(d), { nodes: 400000, ms: 20000 });
+  return r && !r.unsure ? d.clock.n - r.k : null;
+}
 function verify(planFile, batchFile, options = {}) {
   const plan = JSON.parse(fs.readFileSync(planFile)), rows = readRows(batchFile), meter = createMeter();
   const actualScores=new Map();
@@ -26,6 +35,8 @@ function verify(planFile, batchFile, options = {}) {
     assert(I.valid(d), 'Stored solution must obey every rule at ' + r.level);
     assert.equal(r.clockSpare, d.clock.n - (d.solution.indexOf(d.clock.i) + 1));
     assert(r.clockSpare >= 1 && r.clockSpare <= 3, 'Clock spare outside 1–3 at ' + r.level);
+    const real = realSpare(d);
+    if (real != null && real !== r.clockSpare) console.log(`level ${r.level}: real clock spare ${real} (strict ${r.clockSpare}; peek pairs make the way shorter)`);
     assert.equal(boardKey(d), r.boardHash); assert.equal(d.level, r.level);
     assert.equal(meter.fingerprint, r.bot, 'Meter changed');
     const options = { runs: 20, seeds: 2, seed: 4711, setting: 'family' };
@@ -59,5 +70,5 @@ function verify(planFile, batchFile, options = {}) {
   console.log(rows.length, 'levels verified against cached full bot measurements;', meter.stats.calls, 'new calls,', meter.stats.hits, 'cache hits');
   return rows;
 }
-module.exports = { verify };
+module.exports = { verify, realSpare };
 if (require.main === module) verify(process.argv[2], process.argv[3], { partial: process.argv.includes('--partial') });
