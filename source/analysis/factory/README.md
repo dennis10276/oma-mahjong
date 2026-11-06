@@ -1,5 +1,12 @@
 # Level factory (levels 175+), Claude, 2026-10-28
 
+Task 07 handback (2026-11-06): [measured trap pieces](pieces-v1.md).
+Sixteen local mechanisms and 358 controlled measurements are implemented. The
+composition model failed prospective curve placement; full bot gates remain
+required. V12 is an explicit 10/26 partial batch, including original 225 under
+the existing exact-board human-win rule. Detailed external handbacks are beside
+this checkout in `codex-tasks/results/pieces-v1/` and `200-225-v12/`.
+
 Branch `wip/level-factory` (from main 1.62). Nothing here is in the game until Dennis approves a batch.
 
 ## Decisions (Dennis, 2026-10-28)

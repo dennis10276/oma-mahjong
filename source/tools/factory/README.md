@@ -1,5 +1,13 @@
 # Build levels quickly
 
+Task 07 adds a separate measured-piece workflow: `pieces.js`, `compose.js`,
+`piece_designer.js`, `piece_confirm.js` and `piece_factory.js`. See
+[the piece prototype report](../../analysis/factory/pieces-v1.md) for commands,
+calibration data and validation. This workflow saves predictions before full
+confirmation and repairs one mechanism at a time. Its current composition model
+does **not** predict the target curve reliably; bots remain the acceptance gate.
+The steering/scouting description below documents the older workflow.
+
 The factory designs a trap on an approved pile, measures it with the family bot,
 then edits that board towards an explicit difficulty curve. A stored solution
 must obey the game rules. A finished candidate must also pass the skilled
