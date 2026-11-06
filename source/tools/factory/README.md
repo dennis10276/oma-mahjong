@@ -319,3 +319,29 @@ Dennis's decision to test such boards rather than automatically reject them.
 
 `pass` means the automated checks passed. The bot is a difficulty estimate;
 this is not a new calibration or a guarantee that a person finds a board fun.
+
+Task 09 uses empirical production rather than composition predictions.
+`empirical_results.js <build-root> <report.json>` counts distinct measured
+physical boards across all `batch-200-225*` pools, split by recipe, shape and
+observable frame. Fresh attempts and edited siblings are reported separately.
+Missing current skilled results remain unknown; paired hit rates are explicitly
+conditional on being measured. They are not prospective success probabilities.
+
+`empirical_construct.js` accepts explicit recipe jobs and never substitutes an
+inherited alternative brief. `empirical_steer.js` measures graded journal edits
+with both family seeds first, checks skilled/quality only near the working band,
+and checkpoints each proposed genome and completed observation. The original
+accepted creations are protected. Spare changes and added traps are excluded.
+`empirical_visibility.js`, `empirical_route.js` and `empirical_clock.js` provide
+small visibility grades, movement of an existing clock/lock component, and a
+physical conversion of an unsuccessful free-clock objective onto an existing
+lock. Every structural edit reproves the route at the same spare; component
+ownership follows the physical move. No unchanged board is relabelled to evade
+a counterfactual or recipe cap. All final acceptance gates still apply.
+
+Empirical steering only runs skilled confirmation once the two family seeds
+can enter the slot's working band and satisfy seed spread. An absent baseline
+skilled result stays unknown. `empirical_confirm.js` checks room, attribution,
+component/special ablations and any free-clock counterfactual first, then runs
+the unchanged full confirmation. Rejected mechanisms need no skilled search;
+those reports have `skilledBot: null` and an explicit rejection reason.

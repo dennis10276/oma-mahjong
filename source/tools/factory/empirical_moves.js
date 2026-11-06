@@ -22,7 +22,7 @@ function propose(row,measurement,slot,options={}){
   if(row.pieceDesigner||row.frameDesigner){const actual=P.decompose(design),names=new Set(actual.pieces.map(p=>p.name));next.priorAuthoringPieces=row.priorAuthoringPieces||row.pieces;next.pieces=(row.pieces||[]).filter(p=>names.has(p.name));next.recipe=next.recipe.filter(k=>!k.startsWith('piece:')||names.has(k.slice(6)));next.pieceDecomposition=actual;delete next.pieceInstances;delete next.pieceDesigner;delete next.frameDesigner;}
   next.placementScore=Placement.score(design,next.recipe,next.shape);out.push(next);
  };
- const softer=measurement.family>aim||measurement.skilled>6,harder=measurement.family<aim||measurement.skilled<2.5;
+ const knownSkilled=Number.isFinite(measurement.skilled),softer=measurement.family>aim||knownSkilled&&measurement.skilled>6,harder=measurement.family<aim||knownSkilled&&measurement.skilled<2.5;
  if(measurement.quality?.idle?.includes('ice'))add('idle specials removed',{...d,obst:{...d.obst,ice:{}}},true,'ice');
  if(softer){const ice=ordered(Object.keys(d.obst.ice).map(Number));for(const i of ice.filter(i=>d.obst.ice[i]>=2).slice(0,3))add('one ice softer',{...d,obst:{...d.obst,ice:{...d.obst.ice,[i]:d.obst.ice[i]-1}}},true);
   if(ice.length>=2){const next={...d.obst.ice};for(const i of ice.slice(0,Math.ceil(ice.length/2)))delete next[i];add('half the ice thawed',{...d,obst:{...d.obst,ice:next}},true);}
