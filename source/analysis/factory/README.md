@@ -643,3 +643,13 @@ Approved ("ye to 2 and 1 ok"):
   average within +-0.5 of the curve. Reason: two runs of one board differ ~1-1.5 tries at 10.
 - Pieces inside a pressure frame: frame (clock depth, way share, spare) measured first, then each piece's effect
   inside representative frames; pre-registered test (>= 8 of 12 new compositions within +-1). Codex Task 08.
+
+## Task 08 and the decider (2026-11-06)
+- 16/26 levels qualify (six recovered from existing pools under +-1; the tolerance alone added one).
+- The conditional frame model failed its registered test (0/12); one frame ranged family 2.39-19.24 across layouts.
+  Conclusion: difficulty belongs to the whole board; pieces stay the design vocabulary, the bots stay the judge,
+  learning is empirical hit rates per recipe family. No more composition models (Codex Task 09).
+- 175-199 check (Claude): neither bot ranks those levels (Dennis rank 0.06 family / -0.03 skilled; Gerda 0.05 / -0.21);
+  the skilled bot gets Dennis's size right (1.6 vs 1.9) but missed 196 (Dennis 9 tries, skilled 1.1, family 13.9).
+- Dennis: "Good that the family bot catches the genuinly harder level. Thats more important then being right on
+  average." The family bot decides; skilled 2.5-6 is the floor/ceiling.
