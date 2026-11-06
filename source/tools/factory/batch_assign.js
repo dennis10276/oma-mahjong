@@ -8,6 +8,7 @@ const Final = require('./final_seed.js');
 const Preferences = require('./shape_preferences.js');
 const Supports = require('./trap_supports.js');
 const Placement = require('./placement_score.js');
+const Curve = require('./curve_policy.js');
 
 function candidates(pool, dir) {
   const read = (r, mode) => { const f = path.join(dir, r.id + '.' + mode + '.json'); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f)) : null; };
@@ -20,6 +21,7 @@ function candidates(pool, dir) {
   });
 }
 function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial = false) {
+  optimize ||= !!plan.curveWindow;
   const inv = candidates(pool, dir).filter(r => !plan.originality?.required || !checkOrigin(r)), levels = plan.levels;
   const context = [], live = new Set(), previous = global.HARD_LEVELS;
   try {
@@ -48,6 +50,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       !compare(inv[a], inv[b], plan.originality.maxLayoutShare);
   const picks = Array(levels.length).fill(-1), used = new Set();
   let nodes = 0, best = null;
+  function windowOK(k,r){const scores=new Map(picks.flatMap((p,j)=>p>=0?[[levels[j].level,inv[p].exp]]:[]));scores.set(levels[k].level,r.exp);return Curve.accepts(plan,scores);}
   function choices(k) {
     return allowed[k].filter(({ r, i }) => !used.has(i) && (!plan.originality?.required ||
       picks.filter(p => p >= 0 && [...new Set(inv[p].recipe)].sort().join('+') === [...new Set(r.recipe)].sort().join('+')).length < plan.originality.maxSameRecipe) && picks.every((p, j) => p < 0 ||
@@ -55,7 +58,7 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       (Math.abs(levels[k].level - levels[j].level) > 10 || compat[i][p]) &&
       // Ratings are noisy, but do not knowingly make a large reverse step.
       (j !== k - 1 || inv[p].exp <= r.exp + (plan.maxReverseStep ?? 0.25)) &&
-      (j !== k + 1 || r.exp <= inv[p].exp + (plan.maxReverseStep ?? 0.25))));
+      (j !== k + 1 || r.exp <= inv[p].exp + (plan.maxReverseStep ?? 0.25))) && windowOK(k,r));
   }
   // Bound coverage using only candidates that can actually enter a slot. A
   // matching also detects several slots competing for the same creation.
@@ -79,11 +82,13 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
   const recipeCapacity = plan.originality?.required ? [...recipeGroups.values()].reduce((sum, ids) =>
     sum + Math.min(plan.originality.maxSameRecipe, ids.size), 0) : levels.length;
   const capacity = Math.min(owners.size, recipeCapacity);
-  function dfs(count, cost, filled = count) {
+  function dfs(count, cost, filled = count, secondaryCost = 0) {
     if (++nodes > limit || best && (!allowPartial && (!optimize || cost >= best.cost) ||
-      allowPartial && (!optimize && best.filled === capacity || filled + levels.length - count < best.filled))) return;
+      allowPartial && (!optimize && best.filled === capacity || filled + levels.length - count < best.filled ||
+        optimize && Math.min(capacity,filled+levels.length-count)===best.filled && cost>best.cost+1e-9))) return;
     if (count === levels.length) {
-      if (!best || filled > best.filled || filled === best.filled && cost < best.cost) best = { cost, filled, picks: picks.slice() };
+      if (!best || filled > best.filled || filled === best.filled && (cost < best.cost-1e-9 ||
+        Math.abs(cost-best.cost)<=1e-9 && secondaryCost<(best.secondaryCost??Infinity))) best = { cost, secondaryCost, filled, picks: picks.slice() };
       return;
     }
     let k = -1, opts = null;
@@ -96,17 +101,18 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
     opts.sort((a, b) => preference(a.r) - preference(b.r));
     for (const { r, i } of opts) {
       picks[k] = i; used.add(i);
-      dfs(count + 1, cost + preference(r) + (r.quality.lateShare >= 0.3 ? 0.2 : 0), filled + 1);
+      const preferenceCost=preference(r)+(r.quality.lateShare>=0.3?.2:0);
+      dfs(count + 1, cost + (plan.curveWindow?Curve.primaryCost(plan,r,levels[k]):preferenceCost), filled + 1,secondaryCost+preferenceCost);
       used.delete(i); picks[k] = -1;
     }
-    if (allowPartial) { picks[k] = -2; dfs(count + 1, cost, filled); picks[k] = -1; }
+    if (allowPartial) { picks[k] = -2; dfs(count + 1, cost, filled,secondaryCost); picks[k] = -1; }
   }
   let fixed = 0, fixedCost = 0; const preservedFailure = [];
   for (let k = 0; k < levels.length; k++) if (levels[k].keepId) {
     const option = choices(k).find(({r}) => r.id === levels[k].keepId);
     if (!option) { preservedFailure.push({ level: levels[k].level, id: levels[k].keepId }); break; }
     picks[k] = option.i; used.add(option.i); fixed++;
-    fixedCost += Math.abs(option.r.exp - levels[k].target) + Preferences.penalty(option.r.shape, plan);
+    fixedCost += Math.abs(option.r.exp - levels[k].target) + (plan.curveWindow?0:Preferences.penalty(option.r.shape, plan));
   }
   if (!preservedFailure.length && (allowPartial || capacity === levels.length && allowed.every(a => a.length))) dfs(fixed, fixedCost, fixed);
   const coverage = levels.map((s, k) => ({ level: s.level, target: s.target, big: s.big, choices: allowed[k].length,
@@ -130,7 +136,8 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       clockSpare: r.design.clock.n - (r.design.solution.indexOf(r.design.clock.i) + 1),
       design: { ...r.design, level: s.level }, boardHash: boardKey(r.design), bot: rate.bot }];
   });
-  return { nodes, coverage, capacity, eligible: inv.length, rows, cost: best.cost, complete: rows.length === levels.length };
+  return { nodes, coverage, capacity, eligible: inv.length, rows, cost: best.cost, complete: rows.length === levels.length,
+    curveWindows:Curve.windows(plan,new Map(rows.map(r=>[r.level,r.family.exp]))) };
 }
 module.exports = { assign, candidates };
 if (require.main === module) {

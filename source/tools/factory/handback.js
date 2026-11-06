@@ -28,6 +28,7 @@ function handback(planFile, poolFile, measurements, out) {
   fs.writeFileSync(levelsFile, rows.map(r => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
   verify(planFile, levelsFile, { partial: !result.complete });
   atomicJson(path.join(out, 'coverage.json'), { complete: !!result.complete, qualified: rows.length, required: plan.levels.length,
+    curveWindows: result.curveWindows || [], curveWindowRule:plan.curveWindow??null,
     nodes: result.nodes, capacityUpper: result.capacity, searchLimitReached: result.nodes > 3000000,
     preservedFailure: result.preservedFailure || [], levels: result.coverage, plan: planFile, measurements });
   fs.copyFileSync(path.resolve(path.dirname(planFile), plan.piles), path.join(out, 'candidate-piles.json'));
@@ -104,9 +105,10 @@ function handback(planFile, poolFile, measurements, out) {
     `**${rows.length}/${plan.levels.length} slots qualified and assigned. ${result.complete ? 'Complete batch.' : 'Incomplete batch; missing slots remain explicit in coverage.json.'}**`, '',
     'The qualified levels file contains only passing, distinct original designs. The closest-assignment file also includes explicitly unqualified diagnostic proposals. Claude retains final selection and release control. No main, game sources, game level tables, Firebase or player data were changed.', '',
     `Curve anchors: ${JSON.stringify(plan.curve)}. Skilled range: ${plan.skilledMin ?? 0}–${plan.skilledMax}. Minimum tiles: ${Preferences.minimum(plan)}. Discouraged shapes: ${(plan.discouragedShapes || ['block']).join(', ')} (fallback only).`, '',
+    `Per-level family tolerance: ±${plan.tolerance}; independent seed uses the same bound. ${plan.curveWindow?'Every complete window of '+plan.curveWindow.size+' consecutive levels must have mean offset within ±'+plan.curveWindow.tolerance+'. Missing-slot windows remain uncertified. Assignment maximizes qualified coverage, then prefers smallest total absolute family offset; bounded-search limits are reported.':'No additional window rule in this historical plan.'}`, '',
     `Source: ${revision}. Measurements: ${measurements}.`, '',
     '## Per level', '',
-    'Pooled = equal mean of the two full family runs (4711 / 18427; 40 campaigns each). Tuned rows (including edits chosen from bot feedback) must also pass seed 29717, 40 campaigns, within 0.5 of the placed target and maximum pairwise seed gap 2. This reserved seed never feeds steering. Luck column = tight blind digs / relieved gaps between tight digs / unrelieved gaps. Specials show the family rating with that special removed and whether the factory deems it meaningful. An em dash means unmeasured.', '',
+    `Pooled = equal mean of the two full family runs (4711 / 18427; 40 campaigns each). Tuned rows (including edits chosen from bot feedback) must also pass seed 29717, 40 campaigns, within ${plan.tolerance} of the placed target and maximum pairwise seed gap 2. This reserved seed never feeds steering. Luck column = tight blind digs / relieved gaps between tight digs / unrelieved gaps. Specials show the family rating with that special removed and whether the factory deems it meaningful. An em dash means unmeasured.`, '',
     'Placement is the 0–100 Dennis round-2 authoring preference score (timing, clarity, visible route, fair clock, temptation opportunity, shape), not a difficulty rating. Details travel with every delivered row.', '',
     '| Level | Target | Status | Pooled (both seeds) | Skilled | Luck/relief/unrelieved | At trap | Specials without | Recipe | Shape | Tiles | Placement | Warnings |',
     '|---|---:|---|---|---:|---|---:|---|---|---|---:|---:|---|', ...report, '',

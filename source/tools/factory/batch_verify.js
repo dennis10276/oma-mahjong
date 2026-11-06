@@ -10,6 +10,7 @@ const { evaluate } = require('./batch_evaluate.js');
 const Final = require('./final_seed.js');
 function verify(planFile, batchFile, options = {}) {
   const plan = JSON.parse(fs.readFileSync(planFile)), rows = readRows(batchFile), meter = createMeter();
+  const actualScores=new Map();
   if (!options.partial) assert.deepEqual(rows.map(r => r.level), plan.levels.map(r => r.level));
   else assert(rows.every((r, k) => plan.levels.some(s => s.level === r.level) && (!k || rows[k - 1].level < r.level)));
   assert.equal(new Set(rows.map(r => boardKey(r.design))).size, rows.length);
@@ -31,6 +32,7 @@ function verify(planFile, batchFile, options = {}) {
     const m = meter.measure(d, { ...options, capture: 'tail' }), v = meter.measure(d, { ...options, seed: 18427 });
     assert(m.valid && v.valid); assert.equal(m.expectedTries, r.family.search); assert.equal(v.expectedTries, r.family.validation);
     const score = (m.expectedTries + v.expectedTries) / 2;
+    assert(Math.abs(score-r.family.exp)<1e-9,'Recorded pooled score differs at '+r.level);actualScores.set(r.level,score);
     assert(Math.abs(score - s.target) <= plan.tolerance + 1e-9, 'Family score off curve at ' + r.level);
     assert(Math.abs(m.expectedTries - v.expectedTries) <= plan.maxSeedGap);
     if (Final.tuned(r)) {
@@ -53,6 +55,7 @@ function verify(planFile, batchFile, options = {}) {
     if (r.playerFeedback) assert(require('./placement_score.js').readable(d), 'Blind objective route at ' + r.level);
     if (k && rows[k - 1].level + 1 === r.level) assert(rows[k - 1].family.exp <= r.family.exp + (plan.maxReverseStep ?? 0.25) + 0.001, 'Large reverse step at ' + r.level);
   }
+  assert(require('./curve_policy.js').accepts(plan,actualScores),'Five-level mean off curve');
   console.log(rows.length, 'levels verified against cached full bot measurements;', meter.stats.calls, 'new calls,', meter.stats.hits, 'cache hits');
   return rows;
 }
