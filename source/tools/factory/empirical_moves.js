@@ -8,7 +8,7 @@ function propose(row,measurement,slot,options={}){
  const d=row.design,c=I.ctxOf(d),spare=P.spareOf(d),rank=lossOrder(measurement.captures||[]),ordered=xs=>[...new Set([...rank.filter(i=>xs.includes(i)),...xs])],special=new Set([d.clock.i,...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)]),out=[],seen=new Set([M.boardKey(d)]),aim=slot.productionAim??slot.target;
  const add=(what,edited,structural=false,removedKind=null)=>{
   let design=edited;if(structural){I.setExact(true,{nodes:20000,milliseconds:350});design=I.withSearchBudget(Date.now()+1400,()=>I.fix({...edited,clock:{...edited.clock,n:999}},spare));}
-  if(!design||P.spareOf(design)!==spare||JSON.stringify(design.tiles)!==JSON.stringify(d.tiles)||!I.valid(design)||!Placement.readable(design))return;
+  if(!design||P.spareOf(design)!==spare||JSON.stringify(design.tiles)!==JSON.stringify(d.tiles)||!I.valid(design)||row.playerFeedback&&!Placement.readable(design))return;
   const room=roomProfile(design);if(!room.ok||room.unrelieved>1)return;
   const components=(row.trapPlan?.components||[]).map(x=>({...x,indices:x.indices.filter(i=>x.kind==='ice'?design.obst.ice[i]>0:design.obst.locks.includes(i))}));
   // Do not erase a named mechanism while retaining its recipe as a label.
@@ -19,6 +19,7 @@ function propose(row,measurement,slot,options={}){
    empiricalChange:{what,kind:Moves.kindOf(what),parent:row.id,before:{family:measurement.family,skilled:measurement.skilled},patch:P.diff(d,design)},
    trapPlan:{...row.trapPlan,authoredBoard:M.boardKey(design),components:components.filter(c=>c.indices.length),analysis:require('./trap_composer.js').analyze(design),structuralScore:undefined,gradedFrom:M.boardKey(d)}};delete next.predicted;
   if(removedKind){next.recipe=require('./original_variants.js').remainingRecipe(row.recipe,[removedKind]);next.trapPlan.recipe=next.recipe;next.trapPlan.steps=(row.trapPlan?.steps||[]).filter(s=>next.recipe.includes(s.recipe));next.trapPlan.gradeHistory=[...(row.trapPlan?.gradeHistory||[]),{what,removedKind,priorRecipe:row.recipe,priorBoard:M.boardKey(d)}];}
+  if(row.pieceDesigner||row.frameDesigner){const actual=P.decompose(design),names=new Set(actual.pieces.map(p=>p.name));next.priorAuthoringPieces=row.priorAuthoringPieces||row.pieces;next.pieces=(row.pieces||[]).filter(p=>names.has(p.name));next.recipe=next.recipe.filter(k=>!k.startsWith('piece:')||names.has(k.slice(6)));next.pieceDecomposition=actual;delete next.pieceInstances;delete next.pieceDesigner;delete next.frameDesigner;}
   next.placementScore=Placement.score(design,next.recipe,next.shape);out.push(next);
  };
  const softer=measurement.family>aim||measurement.skilled>6,harder=measurement.family<aim||measurement.skilled<2.5;
