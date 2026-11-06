@@ -1,5 +1,11 @@
 'use strict';const {test}=require('node:test'),assert=require('assert/strict'),fs=require('fs'),path=require('path');
 const F=require('./frame_model.js'),C=require('./compose.js');
+test('a clock-only coordinate treatment trains frame pressure, not an unrelated piece residual',()=>{
+ const design={clockMate:undefined,down:[],obst:{ice:{},keys:[],locks:[]},pieceInstances:[{name:'clock'}]};
+ assert(F.isFrame({kind:'conditional-single',design}));assert(F.isFrame({kind:'conditional-single',design:{...design,pieceInstances:[{name:'clockWay'}]}}));
+ assert(!F.isFrame({kind:'conditional-single',design:{...design,down:[0]}}));assert(!F.isFrame({kind:'conditional-single',design:{...design,pieceInstances:[{name:'wrongClock'}]}}));
+ assert(!F.isFrame({kind:'conditional-pair',design}));
+});
 test('conditional model splits by layout and cannot use held-out frame ratings',()=>{
  const bases=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../../analysis/factory/piece-bases.json'))),rows=[];
  for(const b of bases)for(const spare of[1,2,3]){const design={...b.design,clock:{i:b.design.solution[3],n:4+spare}};for(const kind of['frame','historical'])rows.push({id:b.id+spare+kind,group:b.layout,kind,design,family:{exp:3+(4-spare)*2,valid:true,seedCount:2},skilled:{exp:1+(4-spare)/2,valid:true}});}

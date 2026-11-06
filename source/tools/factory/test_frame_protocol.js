@@ -4,6 +4,8 @@ test('frame experiment crosses all settings and all common pairs',()=>{
  assert.equal(E.grid().length,9);assert.equal(settings.filter(s=>s.kind==='conditional-single').length,33);assert.equal(settings.filter(s=>s.kind==='conditional-pair').length,15);
  const R=require('./frame_calibrate.js'),records=[5,6.2,7.4,8.6,9.5].map((exp,k)=>({id:String(k),valid:true,family:{exp},sample:{layout:'layout'+k}}));
  const chosen=R.selectFrames(records);assert.equal(chosen.length,3);assert(chosen.every(r=>r.family.exp>=6&&r.family.exp<=9));assert.equal(new Set(chosen.map(r=>r.sample.layout)).size,3);assert.throws(()=>R.selectFrames(records.slice(0,3)),/fewer than three/);
+ const D=require('./frame_designer.js'),lists=D.lists(811000);assert(lists.some(list=>list.some(p=>p.name==='clock')));assert(lists.some(list=>list.some(p=>p.name==='clockWay')));assert(lists.some(list=>list.some(p=>p.name==='wrongClock')));
+ const clocks=new Set(lists.flatMap(list=>list.filter(p=>p.name==='clock').map(p=>JSON.stringify(p.params))));for(const p of require('./pieces.js').CATALOGUE.clock.grid)assert(clocks.has(JSON.stringify(p)),'The bounded proposals cover each measured clock grade');
 });
 test('prospective protocol fixes the denominator and success rule before confirmation',t=>{
  const {preregister}=require('./frame_prospective.js'),dir=fs.mkdtempSync(path.join(require('os').tmpdir(),'oma-prereg8-'));t.after(()=>fs.rmSync(dir,{recursive:true}));

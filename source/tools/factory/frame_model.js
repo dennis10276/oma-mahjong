@@ -3,6 +3,7 @@
 // Never use a held-out layout's measured frame as its prediction baseline.
 const C=require('./compose.js'),P=require('./pieces.js'),F=require('./pressure_frame.js'),{layoutKey}=require('./originality.js'),M=require('./meter.js');
 const SCHEMA='conditional-frame-model-v1';
+function isFrame(row){return ['frame','frame-control'].includes(row.kind)||row.kind==='conditional-single'&&row.design.clockMate===undefined&&!row.design.down?.length&&!(row.design.obst?.keys?.length||row.design.obst?.locks?.length||Object.keys(row.design.obst?.ice||{}).length)&&row.design.pieceInstances?.length===1&&['clock','clockWay'].includes(row.design.pieceInstances[0].name);}
 let hash;const implementation=()=>hash||=(M.sourceHash(__filename));
 function frameFeatures(input){const b=input.design||input,f=F.describe(b),c=f||{depth:0,share:0,spare:0},s=c.share,d=Math.log1p(c.depth),out={hasClock:f?1:0,depth:d,share:s,size:(b.tiles.length-80)/16};
  for(const n of[1,2,3]){out['spare='+n]=c.spare===n?1:0;out['depth:spare='+n]=c.spare===n?d:0;out['share:spare='+n]=c.spare===n?s:0;}
@@ -19,7 +20,7 @@ function fit(rows,options={}){
  const groups=new Map();for(const r of rows){const g=r.group||layoutKey(r.design);groups.set(g,(groups.get(g)||0)+1);}
  const settings={};
  for(const k of['family','skilled']){
-  const valid=rows.filter(r=>r[k]?.valid!==false&&Number.isFinite(r[k]?.exp)),frames=valid.filter(r=>['frame','frame-control'].includes(r.kind));if(frames.length<2)throw Error('Insufficient measured training frames');
+  const valid=rows.filter(r=>r[k]?.valid!==false&&Number.isFinite(r[k]?.exp)),frames=valid.filter(isFrame);if(frames.length<2)throw Error('Insufficient measured training frames');
   const weight=r=>(r.weight??1)*(k==='family'&&r.family.seedCount===1?.5:1)/Math.sqrt(groups.get(r.group||layoutKey(r.design)));
   const frame=C.fitRegression(frames.map(r=>({x:frameFeatures(r),y:r[k].exp,weight:weight(r)})),options.lambda??12);
   const residual=C.fitRegression(valid.map(r=>({x:pieceFeatures(r),y:r[k].exp/rawPrediction(frame,frameFeatures(r)).tries,weight:weight(r)})),options.lambda??12);
@@ -34,4 +35,4 @@ function trainAndValidate(rows,options={}){const split=C.partition(rows),heldout
  const report={schema:SCHEMA,split:{trainBoards:split.train.length,testBoards:split.test.length,trainGroups:split.trainGroups,testGroups:split.testGroups},settings:{},predictions};
  for(const k of['family','skilled']){const valid=predictions.filter(r=>Number.isFinite(r[k].measured));report.settings[k]={all:C.metrics(valid.map(r=>r[k])),frames:C.metrics(valid.filter(r=>r.kind==='frame').map(r=>r[k])),conditional:C.metrics(valid.filter(r=>['conditional-single','conditional-pair'].includes(r.kind)).map(r=>r[k])),historical:C.metrics(valid.filter(r=>r.kind==='historical').map(r=>r[k])),target:C.metrics(valid.filter(r=>r[k].measured>=(k==='family'?9:2.5)&&r[k].measured<=(k==='family'?14:6)).map(r=>r[k]))};}
  return{model:fit(rows,options),heldoutModel,report};}
-module.exports={SCHEMA,frameFeatures,pieceFeatures,fit,predict,trainAndValidate};
+module.exports={SCHEMA,isFrame,frameFeatures,pieceFeatures,fit,predict,trainAndValidate};
