@@ -115,5 +115,11 @@ test('opts.keep: the same puzzle with only pictures and face-down tiles placed a
   assert.deepEqual(v.design.tiles, r.design.tiles);
   assert.equal(v.design.clock.i, r.design.clock.i);
   assert.deepEqual(v.design.obst, r.design.obst);
+  assert.deepEqual(v.keep.P, r.keep.P);
+  assert.deepEqual(v.keep.holders, r.keep.holders);
+  assert.deepEqual(v.keep.roles, r.keep.roles);
+  assert.deepEqual(r.keep, JSON.parse(JSON.stringify(r.keep)), 'keep is a serializable checkpoint');
+  assert.equal(B.build({ ...brief, layout: 0 }, { keep: r.keep }).fail, 'incompatibleKeep');
+  assert.equal(B.build({ ...brief, story: 'deepClock' }, { keep: r.keep }).fail, 'incompatibleKeep');
   assert.ok(Math.abs(v.card.tray.luck - 2) <= 1);
 });

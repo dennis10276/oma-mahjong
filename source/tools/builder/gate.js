@@ -317,7 +317,7 @@ function summaryMd(S, meta) {
 }
 
 // ---------- worker ----------
-if (!isMainThread) {
+if (!isMainThread && require.main === module) {
   parentPort.on('message', m => {
     if (m.stop) process.exit(0);
     parentPort.postMessage(runOne(m.brief, m.seed, m.opts));
