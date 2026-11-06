@@ -19,6 +19,7 @@ const result = build({
 hidden count. Optional `luck`, `three` and `frame.way` allow a tolerance of one.
 Explicit `traps` must be proven. Covered-partner stories require trayRoom 0 or 1.
 `frame.share` and `trapDepth` currently return `unsupportedTarget`.
+Custom layouts must also have 72–96 tiles.
 
 Run from the repository root:
 
@@ -32,6 +33,9 @@ node source/tools/builder/knob_study.js run source/build/my-clock-study 4
 
 The study saves its selection/settings before bot measurements and resumes from
 per-board checkpoints. A bot or implementation change requires a new study.
+Its `pass` field is the extra strict-effect test (80% strictly easier). The plan's
+monotone-direction benchmark permits ties and is reported separately; see
+`analysis/builder/knobs/clock-spare-1/REPORT.md` for the completed comparison.
 Run one CPU-heavy job at a time. The gate measures construction/proof speed;
 bot measurements are a separate phase. These commands do not publish levels.
 

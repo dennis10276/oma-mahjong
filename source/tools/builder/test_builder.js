@@ -10,6 +10,13 @@ const L = global.Layouts;
 const BRIEF = { frame: { spare: 1 }, targets: { trayRoom: 0, maxDown: 0.3, hiddenOnWay: 2 }, seed: 1 };
 const ORDER = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 7, 14, 23, 36, 41, 46, 2, 13, 26, 38];
 
+test('tile counts always stay above seventy and inside the supported range', () => {
+  for (const n of [0, 70, 98]) {
+    const tiles = Array.from({ length: n }, (_, i) => [i * 4, 0, 0]);
+    assert.strictEqual(B.build({ ...BRIEF, tiles, story: 'deepClock' }).fail, 'tileCount');
+  }
+});
+
 function checkBoard(r, brief, where) {
   const d = r.design, g = E.game(d), n = d.tiles.length;
   assert.ok(n >= 72 && n % 2 === 0, where + ': tile count ' + n);

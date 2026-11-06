@@ -13,7 +13,7 @@ unchanged fifty briefs and seeds 1, 2, 3:
 - Every attempt, including failures, under five seconds; maximum 4,512 ms.
 - All 135 returned boards meet their requested tray cap and minimum hidden dig
   count. All intents proven; no idle specials; every independent check clean.
-- 156 builder/factory tests pass, with zero failures, skips or TODOs.
+- 157 builder/factory tests pass, with zero failures, skips or TODOs.
 
 The earlier 148/150 result (`codex-review-1`) used the inherited permissive brief
 contract. It is retained as history, not as the final gate. Requiring the actual
@@ -37,6 +37,8 @@ Corrections:
 5. The gate remeasures targets from the board, rejects unresolved clock minima,
    and replays the clock solver's complete winning route instead of redundantly
    solving it again. The resolved holder test is now mandatory, not a TODO.
+6. The public constructor enforces 72–96 tiles, including custom layouts, so it
+   cannot return a level below Dennis's minimum.
 
 Remaining failures are explicit: two briefs ask for one waiting tile in stories
 that need at least two; several chain-reaction placements cannot meet the exact
@@ -64,10 +66,24 @@ change with the clock; no additional physical parameter changes.
 
 The first pilot was stopped when its control test exposed stale engine caching.
 Its partial output is marked ABORTED and is not acceptance evidence. The fixed
-study is `source/build/builder-knobs-clock-2`; its final results will be recorded
-separately. The strict criterion was fixed before this run: at least sixteen of
-twenty improve, per profile, with no missing or invalid pairs. Ties are reported
-separately. This is a local direction check, not a calibrated retry predictor.
+study is archived in `knobs/clock-spare-1`, including its immutable plan and all
+eighty measurement checkpoints. Every measurement is valid: 75 bot calls and
+5 exact cache hits.
+
+| profile | easier | tied | harder | non-increasing |
+|---|---:|---:|---:|---:|
+| family | 15 | 3 | 2 | 18/20 (90%) |
+| skilled | 9 | 10 | 1 | 19/20 (95%) |
+
+Both meet the original plan's 80% monotone-direction benchmark, which permits
+ties. The preregistered study additionally required 80% to improve strictly;
+that stronger effect check fails (75% family, 45% skilled). Its raw `pass:false`
+result is retained, separately from the original plan's direction check. Keep
+clock spare as a secondary control. It is not a universal retry conversion: the
+effect varies, several boards do not respond, and one skilled board worsens by
+1.05 tries. Isolated tray-pressure and hidden/luck controls remain to be tested;
+the first-check production hit rate is still unmeasured. Full paired results and
+limits are in `knobs/clock-spare-1/REPORT.md`.
 
 ## Production checkpoint
 

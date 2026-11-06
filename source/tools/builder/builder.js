@@ -630,6 +630,7 @@ function build(briefIn, opts = {}) {
     if (!lay) return { fail: 'unknownShape', detail: brief.shape, ms: 0 };
     tiles = lay.tiles; shape = lay.shape;
   }
+  if (tiles.length < 72 || tiles.length > 96) return { fail: 'tileCount', detail: 'Builder v2 requires 72 to 96 tiles.', ms: Date.now() - t0 };
   const c = ctxOf(tiles);
   if (c.n % 2) return { fail: 'oddTiles', ms: 0 };
   const budget = opts.budget || { nodes: 300000, ms: 3000 }, spare = brief.frame?.spare ?? 1, fails = {};

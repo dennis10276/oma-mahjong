@@ -116,7 +116,8 @@ than changing the requested cap. `frame.share` and `targets.trapDepth` currently
 retain and replay the complete original witness. Failure to prove the minimum or preserve that witness is explicit.
 Derived decision-trap outcomes can change when the deadline changes. `knob_study.js` preregisters twenty boards,
 two distinct layouts for each story, compares spare 1 with 3 on the frozen family and skilled bots, and checkpoints
-every measurement. Ties, invalid and missing measurements cannot establish the required 80% strict improvement.
+every measurement. Report the plan's 80% non-increasing direction check separately from the study's additional
+80% strict-improvement criterion. Ties count only for direction; invalid and missing measurements never pass.
 
 ## 5. Briefs and the gate (helper C)
 
