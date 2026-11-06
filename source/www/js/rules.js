@@ -20,6 +20,11 @@ const RULES = {
   // every 3rd one (9, 12, 15, 18), and after the 20th every lost try (21, 22, ...), but from the 9th on
   // only when that try was more than 60% done. Starting over counts as a lost try.
   coach: { fromLevel: 60, first: 3, again: 9, every: 3, always: 21, done: 0.6 },
+  // replay from Dennisisdebeste (js/pro.js, decision Dennis 2026-11-06): after `after` lost tries of a level not
+  // passed yet (restarts count), once per level his own winning try of that exact board, at `speed` × his pace
+  // (pauses longer than maxGapMs, after speeding up, are shortened); only a small × at the top, after closeAfterMs
+  pro: { after: 5, pid: 'pmuy78xu6tsths9', speed: 2, maxGapMs: 3000, closeAfterMs: 3000, waitMs: 5000,
+    url: 'https://dennis10276.github.io/oma-mahjong/play/pro/' },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on

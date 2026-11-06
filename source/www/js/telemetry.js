@@ -103,6 +103,7 @@ function replayBegin(cur, resumed) {
           gen: G.o.mode === 'level' ? Hard.designVersion(G.o.level) : Hard.GENV, tiles: G.tiles.map(t => [t.x, t.y, t.z]), gold: [...G.gold], state: replayState(),
           help: JSON.parse(JSON.stringify(help())), cfg: { ...S.cfg }, aspect: G.o.aspect,
           seenClock: !!S.seenSp.clockMoves } };
+      G.sig = typeof proSig === 'function' ? proSig(G.rp.init) : null;   // which board this is (js/pro.js)
     }
     replayMark(resumed ? 'resume' : 'begin');
     replayCapture();
