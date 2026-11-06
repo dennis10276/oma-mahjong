@@ -10,12 +10,11 @@
    takeable tile and every peek pair whose picture is not waiting (else the tap matches the tray); it does not
    filter 4th tiles or a late clock: step() returns null for those. E.flatten(path)
    writes such a path the way levels store `solution` ([.., i, j, ..]); E.replay(design, flat) checks one.
-   Clock, per move (default, = validSolution and E.replay): every tile taken at move index m >= clock.n while
-   the clock is still on the board loses, also the second tile of a pair. The game itself checks only after
-   the whole action (board.js checkClock after both takeOff): a pair started at n-1 with the clock as its
-   peeked (second) tile still saves it there. E.game(design, {clockAfterAction: true}) models that leniency.
-   clockShortest's k = the smallest clock.n that still lets the board be won (= the clock's flat index + 1;
-   with singles only that is exact.js's k).
+   Clock (default): the game checks after the whole action (board.js checkClock after both takeOff). A pair
+   started at n-1 with the clock as its peeked (second) tile saves it. {clockAfterAction: false} retains the
+   old per-tile deadline for diagnostics; {strict: true} also uses that deadline and disables peek pairs.
+   clockShortest's k = the smallest clock.n that still lets the board be won (the clock action's start + 1;
+   with singles only that is exact.js's k). E.replay uses the same timing as E.game.
 
    Search: depth-first, memo of proven dead states and of proven winning moves per game (keys: alive bitset +
    waiting faces + moves while the clock is on the board), incremental free/ice/lock counters, a tray match is
@@ -35,10 +34,14 @@ const BUDGET = { budget: true };
 // ---------- the game ----------
 const CACHE = new Map();
 function game(d, o = {}) {
-  const mode = o.strict ? 'strict' : o.clockAfterAction ? 'after' : 'game';
+  const after = !o.strict && o.clockAfterAction !== false;
+  const mode = o.strict ? 'strict' : after ? 'after' : 'perTile';
   if (!CACHE.has(mode)) CACHE.set(mode, new WeakMap());
   const store = CACHE.get(mode);
-  if (store.has(d)) return store.get(d);
+  // Counterfactual tools edit clocks, faces and obstacles in place. Object identity alone would reuse
+  // the old physics and its win/loss proofs. Compare contents before reusing a cached snapshot.
+  const signature = JSON.stringify([d.tiles, d.faces, d.down, d.obst, d.clock, d.solution]);
+  if (store.has(d) && store.get(d).signature === signature) return store.get(d);
   const tiles = d.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : { x: t.x, y: t.y, z: t.z });
   const n = tiles.length; if (n > 255) throw new Error('engine: at most 255 tiles');
   const nb = L.neighbors(tiles), iceNb = L.iceNeighbors(tiles), ob = d.obst || {};
@@ -51,7 +54,7 @@ function game(d, o = {}) {
   for (let i = 0; i < n; i++) for (const j of nb.above[i]) below[j].push(i);
   for (const k in ice) { iceH[k] = ice[k]; for (const j of iceNb[k]) iceRev[j].push(+k); }
   if (locks) { for (const i of locks) lockT[i] = 1; for (const k of keys) isKey[k] = 1; }
-  const g = { design: d, n, tiles, nb, iceNb, rules, faces: d.faces.slice(), clock, down, peek: !o.strict, after: !o.strict && !!o.clockAfterAction, mode, solution: d.solution,
+  const g = { design: d, signature, n, tiles, nb, iceNb, rules, faces: d.faces.slice(), clock, down, peek: !o.strict, after, mode, solution: d.solution,
     below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
   g.lb = clock ? makeLowerBound(g, clock.i) : null;
   // tiles worth trying first while the clock is on the board: what lies on it, keys of a lock on the way, its ice
@@ -345,11 +348,12 @@ function clockShortest(g, o = {}) {
 
 // ---------- flat paths (the way levels store `solution`) ----------
 const flatten = p => p.flatMap(a => a && typeof a === 'object' ? a.pair : [a]);
-/* replay(design, flat, {strict}): entries p, p+1 are read as a peek pair only when the single at p would be a 4th
+/* replay(design, flat, opts): entries p, p+1 are read as a peek pair when the single at p would be a 4th
    waiting tile and the pair is legal before either is removed (same face, one face-down, both takeable, the picture
-   not waiting); otherwise p is a single. Clock per move (flat index < clock.n). strict: no pairs (= validSolution). */
+   not waiting), or when a pair saves its second tile's clock at the action boundary. Otherwise p is a single.
+   strict: no pairs (= validSolution); clockAfterAction: false retains the diagnostic per-tile deadline. */
 function replay(d, flat, o = {}) {
-  const g = game(d, { strict: !!o.strict }), F = g.faces, alive = initialOf(g).slice(), tray = [];
+  const g = game(d, o), F = g.faces, alive = initialOf(g).slice(), tray = [];
   let clockTaken = !g.clock, pairs = 0;
   const bad = (why, at) => ({ ok: false, why, at, pairs });
   if (!Array.isArray(flat) || flat.length !== g.n) return bad('length');
@@ -363,14 +367,17 @@ function replay(d, flat, o = {}) {
     const i = flat[p];
     if (!can(i)) return bad('notTakeable', p);
     const q = tray.indexOf(F[i]);
-    if (q < 0 && tray.length >= SLOTS - 1) {
+    const boundaryPair = g.after && !clockTaken && flat[p + 1] === g.clock.i && p + 1 >= g.clock.n;
+    if (q < 0 && (tray.length >= SLOTS - 1 || boundaryPair)) {
       const j = flat[p + 1];
       if (g.peek && j !== i && can(j) && F[j] === F[i] && (g.down[i] || g.down[j])) {
         let w = take(i, p); if (w) return bad(w, p);
+        // The real game removes both before checking the clock. The second take must not check it again.
+        if (g.after && g.clock && j === g.clock.i) clockTaken = true;
         w = take(j, p + 1); if (w) return bad(w, p + 1);
         pairs++; p++; continue;
       }
-      return bad('trayFull', p);
+      if (tray.length >= SLOTS - 1) return bad('trayFull', p);
     }
     const w = take(i, p); if (w) return bad(w, p);
     if (q >= 0) tray.splice(q, 1); else tray.push(F[i]);

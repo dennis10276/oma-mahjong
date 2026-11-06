@@ -1,6 +1,29 @@
-# Task 09: empirical production, active
+# Task 09: empirical production stopped for Builder v2
 
-## Latest checkpoint (read this first, 2026-11-06)
+## Current checkpoint (2026-11-06, supersedes all archived notes below)
+
+**20/26 qualified, batch incomplete. No old production job is running.**
+The refreshed external handback is `codex-tasks/results/200-225-v14/levels.jsonl`.
+Missing: 208, 210 (big), 215, 216, 217, 221. Original sixteen stay fixed.
+The four additional selected boards are:
+
+- 204 f11eb87bdcc54650, letterH84/frozenGuards, family 10.075, skilled 2.55.
+- 206 fb46c7888c54e687, diamond80/frozenGuards+lockedPartners, family 10.775, skilled 3.58.
+- 214 f171754b32f49d99, vase76/iceLockClock, family 11.66, skilled 3.98.
+- 219 476494d0c31dca55, cross84/frozenGuards, family 11.59, skilled 4.4.
+
+Handback verified 20 with zero new bot calls and 166 cache hits. The optional
+background-memory round completed 188 attempts / 133 legal boards / zero
+qualifiers; set it aside. The subsequent 40 visibility edits added the vase and
+new cross, replacing the older cross in the best assignment. All raw failures,
+alternates and measurements are retained. Do not freeze the four new boards.
+
+User's new instruction: continue Claude's brief-first Builder v2. Work now lives
+on `wip/codex-level-builder`, merging Claude's `2e66156`. Do not restart the old
+random production loops. The current bot fingerprint remains f328592...561.
+See `analysis/builder/codex-review.md` for builder verification and knob work.
+
+## Archived earlier checkpoint (historical; not an active job)
 
 **19/26, goal still incomplete.** Original16 fixed. Current best assignment:
 204 f11eb87bdcc54650 letterH84/frozenGuards family10.075 skilled2.55;

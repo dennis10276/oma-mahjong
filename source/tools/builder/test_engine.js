@@ -13,6 +13,21 @@ const board = (tiles, faces, more = {}) => ({ tiles, faces, down: [], gold: [], 
 const play = (g, moves) => moves.reduce((s, m) => s && E.step(g, s, m), E.start(g));
 const res = (g, s, o) => E.winnable(g, s, o).result;
 
+test('editing a design invalidates cached physics and proofs for every rules mode', () => {
+  for (const options of [{}, { strict: true }, { clockAfterAction: false }]) {
+    const d = board([[0, 0, 0], [0, 0, 1], [4, 0, 0], [8, 0, 0]], [0, 1, 1, 0], { clock: { i: 0, n: 4 }, solution: [2, 1, 0, 3] });
+    const g = E.game(d, options);
+    assert.equal(res(g, E.start(g)), 'win');
+    assert.strictEqual(E.game(d, options), g);
+    d.clock.n = 1;
+    const changed = E.game(d, options);
+    assert.notStrictEqual(changed, g);
+    assert.equal(res(changed, E.start(changed)), 'lose');
+    d.faces[3] = 2;
+    assert.notStrictEqual(E.game(d, options), changed);
+  }
+});
+
 test('free and blocked: a row frees its ends, a tile on top blocks both below it', () => {
   const g = E.game(board([[0, 0, 0], [2, 0, 0], [4, 0, 0], [8, 0, 0]], [0, 1, 1, 0]));
   assert.deepEqual(E.legal(g, E.start(g)), [0, 2, 3]);
@@ -99,11 +114,11 @@ test('peek pair: a face-down tile and its free twin go together, without a tray 
   assert.ok(E.legal(h, E.start(h)).some(m => typeof m === 'object' && m.pair.includes(2)));
   const u = E.game(board(row(0, 4), [0, 0]));
   assert.ok(!E.legal(u, E.start(u)).some(m => typeof m === 'object'));
-  // the clock counts both moves, per move: the peeked clock as 2nd tile of a pair at index 1 is late for n = 1;
-  // the game's own after-action check (clockAfterAction) still saves it
+  // board.js takes both tiles off before checkClock: its second tile can save the clock at the boundary.
   const dc = board(row(0, 4, 8, 12), [0, 0, 1, 1], { down: [1], clock: { i: 1, n: 1 } }), c = E.game(dc);
-  assert.equal(E.step(c, E.start(c), { pair: [0, 1] }), null);
-  assert.equal(E.step(E.game(dc, { clockAfterAction: true }), E.start(c), { pair: [0, 1] }).clockTaken, true);
+  assert.equal(E.step(c, E.start(c), { pair: [0, 1] }).clockTaken, true);
+  assert.equal(E.step(E.game(dc, { clockAfterAction: false }), E.start(c), { pair: [0, 1] }), null);
+  assert.deepEqual(E.replay(dc, [0, 1, 2, 3]), { ok: true, pairs: 1 });
   assert.equal(E.clockShortest(c).k, 1);                        // the clock alone first
   const dd = board(row(0, 4, 8, 12), [0, 0, 1, 1], { down: [0, 1], clock: { i: 1, n: 1 } }), cd = E.game(dd);
   assert.deepEqual(E.legal(cd, E.start(cd)).filter(m => typeof m === 'object'), [{ pair: [1, 0] }]);   // both face-down: clock first
@@ -145,7 +160,7 @@ test('winnable, clockShortest, replay and classify agree with a brute force on 6
     if (brute(E.game(d), E.start(E.game(d))) && !brute(E.game(d, { strict: true }), E.start(E.game(d, { strict: true })))) peekDecides++;
     for (const strict of [false, true]) {
       const g = E.game(d, { strict }), s = E.start(g), want = brute(g, s);
-      if (!strict) { const ga = E.game(d, { clockAfterAction: true }); assert.equal(E.winnable(ga, E.start(ga)).result, brute(ga, E.start(ga)) ? 'win' : 'lose', `after seed ${seed}`); }
+      if (!strict) { const gp = E.game(d, { clockAfterAction: false }); assert.equal(E.winnable(gp, E.start(gp)).result, brute(gp, E.start(gp)) ? 'win' : 'lose', `per-tile seed ${seed}`); }
       const got = E.winnable(g, s);
       assert.equal(got.result, want ? 'win' : 'lose', `seed ${seed} strict ${strict}`);
       if (want) { wins++; assert.ok(E.won(g, play(g, got.path)), `path seed ${seed}`); } else loses++;
@@ -160,11 +175,11 @@ test('winnable, clockShortest, replay and classify agree with a brute force on 6
           assert.ok(rp.ok, `replay of clockShortest seed ${seed} strict ${strict} ${JSON.stringify(rp)}`);
           assert.ok(!E.replay({ ...d, clock: { i: d.clock.i, n: cs.k - 1 } }, E.flatten(cs.path), { strict }).ok);
         }
-        if (!strict) {        // the game's after-action clock check: never later than per move, at most one earlier
-          const ga = E.clockShortest(E.game({ ...d }, { clockAfterAction: true }));
-          let ka = null; for (let n = 1; n <= d.tiles.length && ka === null; n++) { const gn = E.game({ ...d, clock: { i: d.clock.i, n } }, { clockAfterAction: true }); if (brute(gn, E.start(gn))) ka = n; }
-          assert.equal(ga ? ga.k : null, ka, `after-action clockShortest seed ${seed}`);
-          if (ka !== null) assert.ok(kmin - ka <= 1 && kmin >= ka);
+        if (!strict) {        // diagnostic per-tile timing can require one extra move
+          const cp = E.clockShortest(E.game({ ...d }, { clockAfterAction: false }));
+          let kp = null; for (let n = 1; n <= d.tiles.length && kp === null; n++) { const gn = E.game({ ...d, clock: { i: d.clock.i, n } }, { clockAfterAction: false }); if (brute(gn, E.start(gn))) kp = n; }
+          assert.equal(cp ? cp.k : null, kp, `per-tile clockShortest seed ${seed}`);
+          if (kp !== null) assert.ok(kp - kmin <= 1 && kp >= kmin);
         }
         if (!strict) { const own = E.clockSearch(E.game({ ...d }, { strict: true })); assert.equal(own ? own.k : null, (E.clockShortest(E.game({ ...d }, { strict: true })) || {}).k ?? null, `own vs exact.js seed ${seed}`); }
       }
@@ -233,9 +248,24 @@ test('replay reads a peek pair only when the single would be a 4th tile', () => 
   assert.deepEqual(E.replay(d, [0, 1, 2, 4, 5, 3, 6, 7]), { ok: false, why: 'trayFull', at: 3, pairs: 0 });
   assert.equal(E.replay(d, [0, 1, 2, 4, 3, 5, 6]).why, 'length');
   assert.equal(E.replay(d, [5, 1, 2, 4, 3, 0, 6, 7]).why, 'notTakeable');
-  assert.equal(E.replay({ ...d, clock: { i: 3, n: 4 } }, [0, 1, 2, 4, 3, 5, 6, 7]).why, 'clockLate');
+  const boundary = { ...d, clock: { i: 3, n: 4 } }, path = [0, 1, 2, 4, 3, 5, 6, 7];
+  assert.equal(E.replay(boundary, path).ok, true);
+  assert.equal(E.replay(boundary, path, { clockAfterAction: false }).why, 'clockLate');
   assert.equal(E.replay({ ...d, clock: { i: 3, n: 5 } }, [0, 1, 2, 4, 3, 5, 6, 7]).ok, true);
   assert.deepEqual(E.flatten([0, { pair: [4, 3] }, 5]), [0, 4, 3, 5]);
+});
+
+test('a last-action peeked clock is a winning choice, not a decision trap', () => {
+  const d = board([[0, 0, 0], [4, 0, 0], [8, 0, 0], [21, 10, 1], [23, 10, 1], [20, 10, 0], [22, 10, 0], [24, 10, 0]],
+    [0, 1, 2, 3, 3, 0, 1, 2], { down: [3], clock: { i: 3, n: 4 } });
+  const g = E.game(d), s = play(g, [0, 1, 2]);
+  const pair = E.classify(g, s).find(c => typeof c.move === 'object');
+  assert.deepEqual(pair.move, { pair: [4, 3] });
+  assert.equal(pair.result, 'win');
+  const old = E.game(d, { clockAfterAction: false });
+  assert.equal(res(old, play(old, [0, 1, 2])), 'lose');
+  assert.ok(E.won(g, play(g, [0, 1, 2, pair.move, 5, 6, 7])));
+  assert.equal(E.step(g, { ...s, moves: 4 }, pair.move), null); // the action must still start before expiry
 });
 
 test('clockShortest: strict = exact.js, game rules never longer, its flat path replays', () => {

@@ -36,7 +36,9 @@
    moments (default hiddenOnWay; only possible with trayRoom 0: a luck moment brings the tray to 3), targets.traps.
    Only a board with EVERY intent proven is returned; else { fail: 'unproven', detail }. A build stops at
    opts.hardMs (4.5 s); opts.softMs (2.5 s) ends the search for forced pressure once a proven board is in hand.
-   Covered-partner stories (roomInTray*, deepClock) keep at least one twin waiting: their cap is at least 2.
+   Covered-partner stories (roomInTray*, deepClock) need cap >= 2; an incompatible brief fails explicitly.
+   The requested cap is exact; hiddenOnWay is a minimum number of dig tiles, maxDown is a maximum share.
+   Explicit trap counts must be proven. frame.share and targets.trapDepth return unsupportedTarget until implemented.
    fits(story, tiles) runs placeRoles with fixed seeds (cached), so it answers "can the roles be placed here".
 
    What the descriptors say (analysis/builder/descriptors-report.md): the family loses on the clock way to moves
@@ -365,9 +367,8 @@ function placePictures(c, roles, P, hold, brief, rng, N, variant = 0) {
   const mayHold = t => holders ? holders.has(t) : !!cov[t] && !inP.has(t) && deep(t);
   const wanted = new Set(holders ? [...holders] : [...Array(c.n).keys()].filter(mayHold));
   if (holders && [...holders].some(h => roles.locks.has(h))) for (const k of roles.keys) if (!inP.has(k)) wanted.add(k);
-  // a dig that cannot keep the tray at 1 (keys arriving with a tile open) may hold 2: more pressure than asked
-  const dig = planDigPictures(c, roles, P, N || new Set([ck]), cap, rng, variant, brief.targets?.three, luckTargetOf(brief, cap))
-    || (cap === 1 ? planDigPictures(c, roles, P, N || new Set([ck]), 2, rng, variant, brief.targets?.three, 0) : null);
+  // Retry other roles when this dig cannot meet the requested cap; never silently increase it.
+  const dig = planDigPictures(c, roles, P, N || new Set([ck]), cap, rng, variant, brief.targets?.three, luckTargetOf(brief, cap));
   if (!dig) return { fail: 'digPictures' };
   let Q = planRest(c, roles, P, wanted, rng); if (!Q) return { fail: 'restOrder' };
   // decision traps: move the later tile of each pair next to the earlier one (moving a free tile earlier keeps
@@ -454,7 +455,7 @@ function placeDown(c, roles, P, plan, brief, rng) {
   }
   const luckPicked = down.length;
   // more face-down tiles on the dig (hiddenOnWay counts tiles on the dig): ones that come free at a calm moment
-  for (const i of shuffle(rng, P.filter(i => !c.free0[i] && !avoid.has(i) && !atLuck.has(i) && !down.includes(i)))) { if (down.length >= onDig) break; down.push(i); }
+  for (const i of shuffle(rng, P.filter(i => !c.free0[i] && !avoid.has(i) && !atLuck.has(i) && !down.includes(i)))) { if (down.filter(t => inP.has(t)).length >= onDig) break; down.push(i); }
   // the rest: off the dig, never uncovered at a luck moment of the planned way, not free at the start
   const rest = shuffle(rng, [...Array(c.n).keys()].filter(i => !c.free0[i] && !avoid.has(i) && !inP.has(i) && !atLuck.has(i) && !down.includes(i)));
   return { down: down.concat(rest.slice(0, Math.max(0, target - down.length))), luckPlanned: luckPicked, luckSteps: luckSteps.length };
@@ -462,10 +463,9 @@ function placeDown(c, roles, P, plan, brief, rng) {
 
 // a luck moment is a take that brings the tray to 3: only possible when the cap is 3
 const luckTargetOf = (brief, cap = capOf(brief)) => cap >= 3 ? Math.max(0, brief.targets?.luck ?? brief.targets?.hiddenOnWay ?? 1) : 0;
-// the tray cap: 3 - trayRoom; a story about twins waiting in the tray (covered partners) needs at least 2
+// The requested tray cap. Incompatible stories must fail rather than change the brief.
 function capOf(brief) {
-  const cap = Math.max(1, Math.min(3, 3 - (brief.targets?.trayRoom ?? 1)));
-  return STORIES[brief.story]?.spec.coverPartners ? Math.max(2, cap) : cap;
+  return Math.max(1, Math.min(3, 3 - (brief.targets?.trayRoom ?? 1)));
 }
 
 // ---------- 5. proofs ----------
@@ -572,6 +572,7 @@ function canReachWithin(d, limit, nodes = 200000) {
   const lb = g.lb, seen = new Set(); let count = 0;
   const rec = (al, tray, m) => {
     if (++count > nodes) throw BUDGETX;
+    if (m >= d.clock.n) return false;
     if (m + lb(al) > d.clock.n) return false;
     const key = al.join('') + '|' + tray.slice().sort((a, b) => a - b).join(',');
     if (seen.has(key)) return false; seen.add(key);
@@ -584,7 +585,7 @@ function canReachWithin(d, limit, nodes = 200000) {
       if (rec(a2, q >= 0 ? tray.filter((_, k) => k !== q) : tray.concat(F[i]), m + 1)) return true;
     }
     for (const i of free) for (const j of free) if (i < j && F[i] === F[j] && (g.down[i] || g.down[j]) && !tray.includes(F[i])) {
-      if (i === ck || j === ck) return m + 2 <= d.clock.n;
+      if (i === ck || j === ck) return m + 1 <= d.clock.n; // one action, checked after both removals
       const a2 = al.slice(); a2[i] = 0; a2[j] = 0;
       if (rec(a2, tray, m + 2)) return true;
     }
@@ -602,6 +603,8 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
     const plan = placePictures(c, roles, P, hold, brief, rng, N, v);
     if (plan.fail) { note(plan); continue; }
     const pd = placeDown(c, roles, P, plan, brief, rng);
+    if (pd.down.filter(i => P.includes(i)).length < (brief.targets?.hiddenOnWay ?? 0)) { note({ fail: 'hiddenOnWay', detail: 'not enough eligible dig tiles' }); continue; }
+    if (pd.down.length > Math.round((brief.targets?.maxDown ?? 0.3) * c.n)) { note({ fail: 'maxDown' }); continue; }
     let forced = 'skip';
     if (cap > 1 && plan.dig.forcedShape) forced = canReachWithin(designOf(c, plan.faces, pd.down, roles, { i: roles.clock, n: P.length + spare }), cap - 1, 40000);
     const cand = { plan, down: pd.down, luckPlanned: pd.luckPlanned, forced };
@@ -616,6 +619,10 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 function build(briefIn, opts = {}) {
   const t0 = Date.now(), brief = { targets: {}, ...briefIn };
   const story = STORIES[brief.story]; if (!story) return { fail: 'unknownStory', detail: brief.story, ms: 0 };
+  if (brief.targets.trayRoom != null && ![0, 1, 2].includes(brief.targets.trayRoom)) return { fail: 'invalidBrief', detail: 'trayRoom must be 0, 1 or 2', ms: 0 };
+  if (story.spec.coverPartners && capOf(brief) < 2) return { fail: 'incompatibleBrief', detail: 'A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.', ms: 0 };
+  if (brief.targets.luck > 0 && capOf(brief) < 3) return { fail: 'incompatibleBrief', detail: 'Luck moments require trayRoom 0.', ms: 0 };
+  if (brief.frame?.share != null || brief.targets.trapDepth != null) return { fail: 'unsupportedTarget', detail: 'frame.share and targets.trapDepth are not implemented; no proof can be claimed.', ms: 0 };
   let tiles = brief.tiles, shape = brief.shape || null;
   if (!tiles) {
     const lays = LAYOUTS.filter(l => l.shape === brief.shape || l.base === brief.shape);
@@ -729,7 +736,7 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
     { name: 'witness valid (' + (rep.pairs ? 'uses ' + rep.pairs + ' peek pair' + (rep.pairs > 1 ? 's' : '') : 'strict rules') + ')', proven: true, detail: witness + ' way' },
     { name: 'honest clock: real fewest moves ' + way.k + ' + spare ' + spare, proven: true },
     { name: 'no idle lock or ice', proven: true, detail: pruned.length ? 'taken off: ' + pruned.join(', ') : 'none idle' },
-    { name: 'tray reaches ' + cap + ' on the fewest way to the clock', proven: tray.max >= cap, detail: 'max ' + tray.max + ', moves with 3 waiting ' + tray.three +
+    { name: 'tray reaches exactly ' + cap + ' on the fewest way to the clock', proven: tray.max === cap, detail: 'max ' + tray.max + ', moves with 3 waiting ' + tray.three +
       '; forced on every way in time: ' + (forced === 'no' ? 'yes' : forced === 'yes' ? 'no (a careful order keeps ' + (cap - 1) + ')' : forced === 'skip' ? 'not asked' : 'unresolved') },
     ...(hold.holders ? [{ name: 'partners held back at the clock (' + story.spec.coverPartners + ')', proven: heldBack >= holdersNeeded(story, plan.dig.orphans),
       detail: heldBack + ' of ' + hold.holders.size + ' holders out of reach, each holding the twin of a tile waiting at the clock' }] : []),
@@ -737,6 +744,10 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
       detail: tray.luck + ' face-down tile' + (tray.luck === 1 ? '' : 's') + ' uncovered while 2+ wait (planned ' + pick.luckPlanned + ')' },
     ...(brief.frame?.way != null ? [{ name: 'way to the clock: ' + brief.frame.way + ' moves (within 1)', proven: Math.abs(way.k - brief.frame.way) <= 1, detail: 'fewest ' + way.k }] : []),
     ...(brief.targets?.three != null ? [{ name: 'moves with 3 waiting on the way: ' + brief.targets.three + ' (within 1)', proven: Math.abs(tray.three - brief.targets.three) <= 1, detail: 'measured ' + tray.three }] : []),
+    ...(brief.targets?.hiddenOnWay != null ? [{ name: 'at least ' + brief.targets.hiddenOnWay + ' face-down tiles on the dig', proven: down.filter(i => P.includes(i)).length >= brief.targets.hiddenOnWay,
+      detail: 'measured ' + down.filter(i => P.includes(i)).length }] : []),
+    { name: 'face-down share within maximum', proven: down.length <= Math.round((brief.targets?.maxDown ?? 0.3) * n), detail: down.length + ' of ' + n },
+    ...(brief.targets?.traps != null ? [{ name: 'at least ' + brief.targets.traps + ' proven decision traps', proven: trapsProven >= brief.targets.traps, detail: 'proven ' + trapsProven + ' of ' + plan.traps.length + ' designed' }] : []),
     // a designed trap that the engine cannot prove lost is not claimed (card.traps.designed vs .tempting)
     ...(trapsProven ? [{ name: 'decision trap: a free pair in sight that loses', proven: true,
       detail: trapRes.map(t => `${t.x}+${t.y}: ${t.result}${t.kind ? ' (' + t.kind + ')' : ''}`).join('; ') }] : []),

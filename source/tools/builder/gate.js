@@ -124,14 +124,40 @@ function checkDesign(designIn, brief) {
   out.clock = { n: d.clock.n, k: cs ? cs.k : null, unsure: !!(cs && cs.unsure), spare: cs ? d.clock.n - cs.k : null };
   if (!cs) flag('clock', 'clockShortest unresolved within budget');
   else {
+    if (cs.unsure) flag('clock', 'an earlier clock route is unresolved; minimum not proven');
     if (cs.k + spare !== d.clock.n) flag('clock', `fewest ${cs.k} + spare ${spare} = ${cs.k + spare}, clock.n ${d.clock.n}`);
     const at = nn => { const x = copy(); x.clock = { i: d.clock.i, n: nn }; const gx = E.game(x); return E.winnable(gx, E.start(gx), WIN_BUDGET).result; };
-    out.clock.winAtK = at(cs.k); out.clock.atKminus1 = cs.k > 1 ? at(cs.k - 1) : 'lose';
+    const witnessAtK = copy(); witnessAtK.clock.n = cs.k;
+    // clockShortest already supplies a complete route. Replaying it proves this without solving again.
+    out.clock.winAtK = E.replay(witnessAtK, E.flatten(cs.path)).ok ? 'win' : at(cs.k);
+    out.clock.winAtKProof = 'clockShortest witness replay';
+    out.clock.atKminus1 = cs.k > 1 ? at(cs.k - 1) : 'lose';
     if (out.clock.winAtK !== 'win') flag('clock', `not winnable with clock.n = k = ${cs.k} (${out.clock.winAtK})`);
-    if (out.clock.atKminus1 === 'win') flag('clock', `still winnable with clock.n = k - 1 = ${cs.k - 1}: k is not the fewest`);
-    // the game checks the clock after a whole action (board.js): a peek pair ending on the clock can save one move
-    const ga = E.game(copy(), { clockAfterAction: true }), ca = E.clockShortest(ga, CHECK_BUDGET);
-    out.clock.kGame = ca ? ca.k : null;
+    if (out.clock.atKminus1 !== 'lose') flag('clock', `clock.n = k - 1 = ${cs.k - 1}: ${out.clock.atKminus1}, minimum not proven`);
+    out.clock.kGame = cs.k; // engine defaults to board.js's after-action clock check
+    const gp = E.game(copy(), { clockAfterAction: false }), cp = E.clockShortest(gp, CHECK_BUDGET);
+    out.clock.kPerTile = cp ? cp.k : null; // diagnostic comparison, never the proof basis
+  }
+  // Re-measure the requested targets from the board, independently of the returned card/intents.
+  const B = require('./builder.js'), targets = brief.targets || {}, tray = B.trayOnWay(d, d.solution);
+  const prefix = new Set(d.solution.slice(0, d.solution.indexOf(d.clock.i) + 1));
+  out.targets = { trayMax: tray.max, hiddenOnWay: (d.down || []).filter(i => prefix.has(i)).length, down: (d.down || []).length };
+  if (tray.max !== 3 - (targets.trayRoom ?? 1)) flag('target', `tray max ${tray.max}, requested ${3 - (targets.trayRoom ?? 1)}`);
+  if (out.targets.hiddenOnWay < (targets.hiddenOnWay ?? 0)) flag('target', `hidden on way ${out.targets.hiddenOnWay}, requested at least ${targets.hiddenOnWay}`);
+  if (out.targets.down > Math.round((targets.maxDown ?? 0.3) * n)) flag('target', 'face-down share exceeds maximum');
+  if (targets.three != null && Math.abs(tray.three - targets.three) > 1) flag('target', `three waiting ${tray.three}, requested ${targets.three} within 1`);
+  if (targets.luck != null && Math.abs(tray.luck - targets.luck) > 1) flag('target', `luck ${tray.luck}, requested ${targets.luck} within 1`);
+  if (brief.frame?.way != null && (!cs || Math.abs(cs.k - brief.frame.way) > 1)) flag('target', `clock way ${cs && cs.k}, requested ${brief.frame.way} within 1`);
+  if (brief.frame?.depth != null && B.context(d.tiles).above[d.clock.i].size !== brief.frame.depth) flag('target', 'clock depth differs from brief');
+  if (targets.traps > 0) {
+    const gx = E.game(copy()), s = E.start(gx), faces = new Set(); let proven = 0;
+    for (const i of E.legal(gx, s).filter(a => typeof a === 'number')) {
+      if (faces.has(d.faces[i]) || E.kindOf(gx, s, i) !== 'pair') continue;
+      faces.add(d.faces[i]); const next = E.step(gx, s, i);
+      if (!next || E.winnable(gx, next, WIN_BUDGET).result === 'lose') proven++;
+    }
+    out.targets.traps = proven;
+    if (proven < targets.traps) flag('target', `proven decision traps ${proven}, requested at least ${targets.traps}`);
   }
   // (d) idle specials
   const story = STORIES[brief.story] || { spec: {} }, holdKind = story.spec.coverPartners;
@@ -225,13 +251,13 @@ function summarize(recs, briefs) {
   for (const k in S.intents) S.intents[k].rate = pct(S.intents[k].proven, S.intents[k].total);
   S.allIntentsProven = { ok: ok.filter(r => r.intents.every(i => i.proven)).length, total: ok.length };
   // static checks
-  S.checks = {}; const kinds = ['replay', 'clock', 'downFree', 'idle', 'idleUnresolved', 'faces', 'specials', 'checkCrash'];
+  S.checks = {}; const kinds = ['replay', 'clock', 'downFree', 'idle', 'idleUnresolved', 'faces', 'specials', 'target', 'checkCrash'];
   for (const k of kinds) S.checks[k] = { builds: 0, count: 0, examples: [] };
   for (const r of ok) { const seen = new Set(); for (const p of r.check.problems) { const e = S.checks[p.kind] = S.checks[p.kind] || { builds: 0, count: 0, examples: [] }; e.count++; if (!seen.has(p.kind)) { e.builds++; seen.add(p.kind); } if (e.examples.length < 10) e.examples.push({ id: r.id, seed: r.seed, detail: p.detail }); } }
   S.clean = ok.filter(r => !r.check.problems.length).length;
   S.strictValid = { ok: ok.filter(r => r.check.strict).length, total: ok.length };
   S.peekPairsInWitness = ok.filter(r => r.check.replay && r.check.replay.pairs > 0).length;
-  S.clockGameLenient = ok.filter(r => r.check.clock && r.check.clock.kGame != null && r.check.clock.kGame < r.check.clock.k).map(r => `${r.id} s${r.seed}: k ${r.check.clock.k}, game ${r.check.clock.kGame}`);
+  S.clockGameLenient = ok.filter(r => r.check.clock && r.check.clock.kPerTile != null && r.check.clock.k < r.check.clock.kPerTile).map(r => `${r.id} s${r.seed}: per-tile ${r.check.clock.kPerTile}, game ${r.check.clock.k}`);
   S.clockProofs = { winAtK: ok.filter(r => r.check.clock && r.check.clock.winAtK === 'win').length, loseAtKminus1: ok.filter(r => r.check.clock && r.check.clock.atKminus1 === 'lose').length, unknownAtKminus1: ok.filter(r => r.check.clock && r.check.clock.atKminus1 === 'unknown').length };
   const sp = ok.flatMap(r => r.check.specials || []), v = {}; for (const e of sp) v[e.verdict] = (v[e.verdict] || 0) + 1;
   S.specials = { total: sp.length, verdicts: v, idleHolders: sp.filter(e => e.verdict === 'idle' && e.holderStory).length, idleOther: sp.filter(e => e.verdict === 'idle' && !e.holderStory).length,
@@ -247,13 +273,13 @@ function summarize(recs, briefs) {
   S.cardByStory = {};
   for (const st of Object.keys(S.byStory)) { const cs = ok.filter(r => r.story === st).map(r => r.card); S.cardByStory[st] = cs.length ? { builds: cs.length, fewest: median(cs.map(c => c.clock.fewestMoves)), three: median(cs.map(c => c.tray.three)), luck: median(cs.map(c => c.tray.luck)), forced: cs.filter(c => c.tray.forced != null).length, trapPoints: median(cs.map(c => c.traps ? c.traps.points : 0)), tempting: median(cs.map(c => c.traps ? c.traps.tempting : 0)) } : null; }
   // what the brief asked against what came out: tray cap and face-down tiles on the dig
-  S.targets = { trayCapReached: ok.filter(r => r.card.tray.max >= 3 - (bmap[r.id].targets.trayRoom ?? 1)).length, hiddenOnWayMet: ok.filter(r => r.card.faceDownOnDig >= (bmap[r.id].targets.hiddenOnWay ?? 1)).length, total: ok.length };
+  S.targets = { trayCapReached: ok.filter(r => r.card.tray.max === 3 - (bmap[r.id].targets.trayRoom ?? 1)).length, hiddenOnWayMet: ok.filter(r => r.card.faceDownOnDig >= (bmap[r.id].targets.hiddenOnWay ?? 1)).length, total: ok.length };
   S.gate = {
     buildRatePerSeed: S.builds.rate >= 100 * GATE.buildRate, buildRateAnySeed: S.briefs.anyRate >= 100 * GATE.buildRate,
     under5s: S.time.over5s.length === 0, everyIntentProven: S.allIntentsProven.ok === S.allIntentsProven.total, noIdleSpecial: S.checks.idle.count === 0,
     staticClean: S.clean === ok.length,
   };
-  S.gate.pass = S.gate.buildRatePerSeed && S.gate.under5s && S.gate.everyIntentProven && S.gate.noIdleSpecial && S.gate.staticClean;
+  S.gate.pass = S.gate.buildRatePerSeed && S.gate.buildRateAnySeed && S.gate.under5s && S.gate.everyIntentProven && S.gate.noIdleSpecial && S.gate.staticClean;
   return S;
 }
 function summaryMd(S, meta) {
@@ -261,7 +287,7 @@ function summaryMd(S, meta) {
   L.push(`# Gate summary (${meta.tag}), generated by gate.js`, '', `Briefs: ${meta.briefs}, seeds ${meta.seeds.join(',')}, jobs ${meta.jobs}, wall ${Math.round(meta.wallMs / 1000)} s.`, '');
   L.push(`Builds: ${S.builds.ok} of ${S.builds.total} (${S.builds.rate}%). Briefs built for at least one seed: ${S.briefs.anySeed} of ${S.briefs.total} (${S.briefs.anyRate}%); for every seed: ${S.briefs.allSeeds} (${S.briefs.allRate}%).`, '');
   L.push('## Gate', '', '| test | result |', '|---|---|');
-  row('>= 90% of builds (per seed)', yes(S.gate.buildRatePerSeed) + ` (${S.builds.rate}%)`); row('>= 90% of briefs (any seed)', yes(S.gate.buildRateAnySeed) + ` (${S.briefs.anyRate}%)`);
+  row('>= 90% of builds (all seeds)', yes(S.gate.buildRatePerSeed) + ` (${S.builds.rate}%)`); row('>= 90% of briefs (any seed)', yes(S.gate.buildRateAnySeed) + ` (${S.briefs.anyRate}%)`);
   row('every build under 5 s', yes(S.gate.under5s) + ` (${S.time.over5s.length} over)`); row('every intent proven', yes(S.gate.everyIntentProven) + ` (${S.allIntentsProven.ok} of ${S.allIntentsProven.total} builds)`);
   row('no idle special', yes(S.gate.noIdleSpecial) + ` (${S.checks.idle.count} in ${S.checks.idle.builds} builds)`); row('static checks clean', yes(S.gate.staticClean) + ` (${S.clean} of ${S.builds.ok})`);
   L.push('', '## Build rate', '', '| group | built | of | % |', '|---|---|---|---|');
