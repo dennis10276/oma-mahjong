@@ -64,20 +64,15 @@ Thanks for Task 9, the builder review and the clock-spare study (`analysis/build
 - Watch frozenGuards: several boards hit the 20 cap. Find out why (a bot weakness, or a genuinely brutal story)
   and say whether the story needs a milder variant.
 
-## 3. If 1–2 find settings in the band: pilot phase 4 on the 6 missing slots
-- The slots are 208, 210 (big, 96 tiles), 215, 216, 217 and 221, with targets from the curve.
-- Write a brief per slot from the range table, using an original layout that is not used by neighbouring levels.
-- Build up to 5 boards per slot. Run your existing Task 9 qualification on each: pooled family within ±1, fresh
-  seed, skilled 2.5–6, originality, 5-level window, previews.
-- Report the first-check hit rate: the share of built boards landing within ±1 on their first bot check. The
-  plan's phase 4 target is ≥ 50%.
-- Hand back qualified boards the usual way (results folder plus `levels.jsonl`). Claude reviews them.
+## 3. Not in this task: production
+Phase 4 (filling 208, 210, 215, 216, 217 and 221, then 226–250) starts only after phase 3 passes its check and
+Dennis says go (plan: "each phase ends with a check that must pass before the next starts"). Do not build or
+qualify levels for player slots in this task.
 
 ## Hand-back
 Say "Task 10 done", with the branch name, the results folder and a short plain-language summary for Dennis
 (`summary-for-dennis.md`):
 - which knobs work, and how many tries each step is worth for the family and the skilled player;
-- which briefs land in the band;
-- the pilot hit rate.
+- which briefs land in the band.
 
 If 1 or 2 shows that no setting reaches the band, stop there and report what is missing.
