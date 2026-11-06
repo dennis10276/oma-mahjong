@@ -1,0 +1,809 @@
+{
+ "meta": {
+  "tag": "codex-brief-contract-1",
+  "briefs": 50,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "jobs": 2,
+  "ms": 15000,
+  "wallMs": 34451,
+  "date": "2026-11-06T18:56:14.262Z"
+ },
+ "summary": {
+  "builds": {
+   "ok": 135,
+   "total": 150,
+   "rate": 90
+  },
+  "briefs": {
+   "total": 50,
+   "anySeed": 46,
+   "allSeeds": 44,
+   "anyRate": 92,
+   "allRate": 88
+  },
+  "byStory": {
+   "keysFarSide": {
+    "ok": 15,
+    "total": 15,
+    "rate": 100
+   },
+   "keysOnIsland": {
+    "ok": 15,
+    "total": 15,
+    "rate": 100
+   },
+   "clockInSight": {
+    "ok": 15,
+    "total": 15,
+    "rate": 100
+   },
+   "iceLockClock": {
+    "ok": 14,
+    "total": 15,
+    "rate": 93.3
+   },
+   "lockBeside": {
+    "ok": 15,
+    "total": 15,
+    "rate": 100
+   },
+   "frozenGuards": {
+    "ok": 15,
+    "total": 15,
+    "rate": 100
+   },
+   "chainReaction": {
+    "ok": 7,
+    "total": 15,
+    "rate": 46.7
+   },
+   "roomInTrayLocked": {
+    "ok": 12,
+    "total": 15,
+    "rate": 80
+   },
+   "roomInTrayFrozen": {
+    "ok": 15,
+    "total": 15,
+    "rate": 100
+   },
+   "deepClock": {
+    "ok": 12,
+    "total": 15,
+    "rate": 80
+   }
+  },
+  "byTrayRoom": {
+   "trayRoom 0": {
+    "ok": 72,
+    "total": 78,
+    "rate": 92.3
+   },
+   "trayRoom 1": {
+    "ok": 48,
+    "total": 48,
+    "rate": 100
+   },
+   "trayRoom 2": {
+    "ok": 15,
+    "total": 24,
+    "rate": 62.5
+   }
+  },
+  "byHidden": {
+   "hiddenOnWay 0": {
+    "ok": 39,
+    "total": 39,
+    "rate": 100
+   },
+   "hiddenOnWay 3": {
+    "ok": 29,
+    "total": 36,
+    "rate": 80.6
+   },
+   "hiddenOnWay 2": {
+    "ok": 33,
+    "total": 36,
+    "rate": 91.7
+   },
+   "hiddenOnWay 1": {
+    "ok": 34,
+    "total": 39,
+    "rate": 87.2
+   }
+  },
+  "bySpare": {
+   "spare 1": {
+    "ok": 39,
+    "total": 51,
+    "rate": 76.5
+   },
+   "spare 3": {
+    "ok": 48,
+    "total": 51,
+    "rate": 94.1
+   },
+   "spare 2": {
+    "ok": 48,
+    "total": 48,
+    "rate": 100
+   }
+  },
+  "byStage": {
+   "stage centre": {
+    "ok": 39,
+    "total": 39,
+    "rate": 100
+   },
+   "stage edge": {
+    "ok": 33,
+    "total": 39,
+    "rate": 84.6
+   },
+   "stage top": {
+    "ok": 33,
+    "total": 36,
+    "rate": 91.7
+   },
+   "stage null": {
+    "ok": 30,
+    "total": 36,
+    "rate": 83.3
+   }
+  },
+  "byDepthPinned": {
+   "depth free": {
+    "ok": 108,
+    "total": 123,
+    "rate": 87.8
+   },
+   "depth pinned": {
+    "ok": 27,
+    "total": 27,
+    "rate": 100
+   }
+  },
+  "bySize": {
+   "under 96": {
+    "ok": 120,
+    "total": 135,
+    "rate": 88.9
+   },
+   "96 tiles": {
+    "ok": 15,
+    "total": 15,
+    "rate": 100
+   }
+  },
+  "time": {
+   "all": {
+    "median": 20,
+    "p90": 675,
+    "max": 4565
+   },
+   "ok": {
+    "median": 18,
+    "p90": 519,
+    "max": 3746
+   },
+   "fail": {
+    "median": 220,
+    "p90": 4503,
+    "max": 4565
+   },
+   "over5s": [],
+   "check": {
+    "median": 8,
+    "max": 2008
+   },
+   "cpu": {
+    "median": 16,
+    "p90": 609,
+    "max": 4312,
+    "over5s": []
+   }
+  },
+  "failStage": {
+   "unproven": {
+    "count": 6,
+    "examples": [
+     {
+      "id": "iceLockClock-diamond-30",
+      "seed": 1,
+      "detail": "luck moments on the way: 3 (within 1) (0 face-down tiles uncovered while 2+ wait (planned 0))",
+      "attempts": {
+       "unproven": 4,
+       "hiddenOnWay": 19,
+       "pruneUnresolved": 1
+      }
+     },
+     {
+      "id": "chainReaction-steps-1",
+      "seed": 1,
+      "detail": "luck moments on the way: 2 (within 1) (0 face-down tiles uncovered while 2+ wait (planned 0))",
+      "attempts": {
+       "hiddenOnWay": 66,
+       "unproven": 1,
+       "clockWayUnresolved": 1
+      }
+     },
+     {
+      "id": "chainReaction-steps-1",
+      "seed": 2,
+      "detail": "luck moments on the way: 2 (within 1) (0 face-down tiles uncovered while 2+ wait (planned 0))",
+      "attempts": {
+       "hiddenOnWay": 42,
+       "dig": 1,
+       "unproven": 1,
+       "pruneUnresolved": 1
+      }
+     },
+     {
+      "id": "chainReaction-steps-1",
+      "seed": 3,
+      "detail": "luck moments on the way: 2 (within 1) (0 face-down tiles uncovered while 2+ wait (planned 0))",
+      "attempts": {
+       "hiddenOnWay": 42,
+       "dig": 2,
+       "unproven": 1,
+       "clockWayUnresolved": 1
+      }
+     },
+     {
+      "id": "chainReaction-frame-38",
+      "seed": 1,
+      "detail": "tray reaches exactly 3 on the fewest way to the clock (max 2, moves with 3 waiting 0; forced on every way in time: no (a careful order keeps 2))",
+      "attempts": {
+       "hiddenOnWay": 36,
+       "unproven": 7,
+       "storyLost": 3
+      }
+     },
+     {
+      "id": "chainReaction-frame-38",
+      "seed": 3,
+      "detail": "tray reaches exactly 3 on the fewest way to the clock (max 2, moves with 3 waiting 0; forced on every way in time: no (a careful order keeps 2))",
+      "attempts": {
+       "unproven": 3,
+       "hiddenOnWay": 66,
+       "storyLost": 2
+      }
+     }
+    ]
+   },
+   "digPictures": {
+    "count": 3,
+    "examples": [
+     {
+      "id": "chainReaction-arch-12",
+      "seed": 1,
+      "detail": null,
+      "attempts": {
+       "digPictures": 90,
+       "hiddenOnWay": 6
+      }
+     },
+     {
+      "id": "chainReaction-arch-12",
+      "seed": 2,
+      "detail": null,
+      "attempts": {
+       "digPictures": 72,
+       "hiddenOnWay": 24
+      }
+     },
+     {
+      "id": "chainReaction-arch-12",
+      "seed": 3,
+      "detail": null,
+      "attempts": {
+       "digPictures": 96
+      }
+     }
+    ]
+   },
+   "incompatibleBrief": {
+    "count": 6,
+    "examples": [
+     {
+      "id": "roomInTrayLocked-hourglass-44",
+      "seed": 1,
+      "detail": "A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.",
+      "attempts": {}
+     },
+     {
+      "id": "roomInTrayLocked-hourglass-44",
+      "seed": 2,
+      "detail": "A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.",
+      "attempts": {}
+     },
+     {
+      "id": "roomInTrayLocked-hourglass-44",
+      "seed": 3,
+      "detail": "A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.",
+      "attempts": {}
+     },
+     {
+      "id": "deepClock-ushape-22",
+      "seed": 1,
+      "detail": "A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.",
+      "attempts": {}
+     },
+     {
+      "id": "deepClock-ushape-22",
+      "seed": 2,
+      "detail": "A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.",
+      "attempts": {}
+     },
+     {
+      "id": "deepClock-ushape-22",
+      "seed": 3,
+      "detail": "A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.",
+      "attempts": {}
+     }
+    ]
+   }
+  },
+  "failAttempts": {
+   "unproven": 17,
+   "hiddenOnWay": 301,
+   "pruneUnresolved": 2,
+   "clockWayUnresolved": 2,
+   "dig": 3,
+   "storyLost": 5,
+   "digPictures": 258
+  },
+  "intents": {
+   "witness valid": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "honest clock": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "no idle lock or ice": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "tray reaches exactly N on the fewest way to the clock": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "luck moments on the way": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "at least N face-down tiles on the dig": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "face-down share within maximum": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "decision trap": {
+    "proven": 24,
+    "total": 24,
+    "unproven": [],
+    "rate": 100
+   },
+   "no free cruising": {
+    "proven": 135,
+    "total": 135,
+    "unproven": [],
+    "rate": 100
+   },
+   "partners held back at the clock": {
+    "proven": 39,
+    "total": 39,
+    "unproven": [],
+    "rate": 100
+   }
+  },
+  "allIntentsProven": {
+   "ok": 135,
+   "total": 135
+  },
+  "checks": {
+   "replay": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "clock": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "downFree": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "idle": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "idleUnresolved": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "faces": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "specials": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "target": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   },
+   "checkCrash": {
+    "builds": 0,
+    "count": 0,
+    "examples": []
+   }
+  },
+  "clean": 135,
+  "strictValid": {
+   "ok": 135,
+   "total": 135
+  },
+  "peekPairsInWitness": 0,
+  "clockGameLenient": [],
+  "clockProofs": {
+   "winAtK": 135,
+   "loseAtKminus1": 135,
+   "unknownAtKminus1": 0
+  },
+  "specials": {
+   "total": 193,
+   "verdicts": {
+    "works": 151,
+    "holder": 42
+   },
+   "idleHolders": 0,
+   "idleOther": 0,
+   "holderSpecials": 42,
+   "idleOtherBuilds": []
+  },
+  "card": {
+   "fewestMoves": {
+    "n": 135,
+    "missing": 0,
+    "median": 10,
+    "min": 5,
+    "max": 19,
+    "hist": {
+     "5": 7,
+     "6": 13,
+     "7": 13,
+     "8": 9,
+     "9": 25,
+     "10": 10,
+     "11": 6,
+     "12": 10,
+     "13": 9,
+     "14": 5,
+     "15": 12,
+     "16": 9,
+     "17": 2,
+     "18": 3,
+     "19": 2
+    }
+   },
+   "clockN": {
+    "n": 135,
+    "missing": 0,
+    "median": 12,
+    "min": 6,
+    "max": 20,
+    "hist": {
+     "6": 3,
+     "7": 2,
+     "8": 16,
+     "9": 13,
+     "10": 13,
+     "11": 14,
+     "12": 12,
+     "13": 7,
+     "14": 9,
+     "15": 11,
+     "16": 12,
+     "17": 5,
+     "18": 9,
+     "19": 3,
+     "20": 6
+    }
+   },
+   "clockDepth": {
+    "n": 135,
+    "missing": 0,
+    "median": 2,
+    "min": 0,
+    "max": 7,
+    "hist": {
+     "0": 41,
+     "1": 14,
+     "2": 20,
+     "3": 18,
+     "4": 18,
+     "5": 19,
+     "6": 2,
+     "7": 3
+    }
+   },
+   "three": {
+    "n": 135,
+    "missing": 0,
+    "median": 2,
+    "min": 0,
+    "max": 9,
+    "hist": {
+     "0": 63,
+     "2": 18,
+     "3": 18,
+     "4": 15,
+     "5": 9,
+     "6": 6,
+     "7": 2,
+     "8": 2,
+     "9": 2
+    }
+   },
+   "trayMax": {
+    "n": 135,
+    "missing": 0,
+    "median": 3,
+    "min": 1,
+    "max": 3,
+    "hist": {
+     "1": 15,
+     "2": 48,
+     "3": 72
+    }
+   },
+   "luck": {
+    "n": 135,
+    "missing": 0,
+    "median": 0,
+    "min": 0,
+    "max": 3,
+    "hist": {
+     "0": 87,
+     "1": 21,
+     "2": 21,
+     "3": 6
+    }
+   },
+   "forced": {
+    "n": 117,
+    "missing": 18,
+    "median": 3,
+    "min": 2,
+    "max": 3,
+    "hist": {
+     "2": 47,
+     "3": 70
+    }
+   },
+   "trapPoints": {
+    "n": 135,
+    "missing": 0,
+    "median": 0,
+    "min": 0,
+    "max": 1,
+    "hist": {
+     "0": 111,
+     "1": 24
+    }
+   },
+   "tempting": {
+    "n": 135,
+    "missing": 0,
+    "median": 0,
+    "min": 0,
+    "max": 1,
+    "hist": {
+     "0": 111,
+     "1": 24
+    }
+   },
+   "faceDown": {
+    "n": 135,
+    "missing": 0,
+    "median": 24,
+    "min": 15,
+    "max": 38,
+    "hist": {
+     "15": 12,
+     "16": 6,
+     "17": 9,
+     "18": 3,
+     "19": 12,
+     "20": 8,
+     "23": 3,
+     "24": 15,
+     "25": 9,
+     "27": 9,
+     "28": 3,
+     "29": 18,
+     "30": 12,
+     "31": 4,
+     "32": 3,
+     "35": 3,
+     "38": 6
+    }
+   },
+   "faceDownOnDig": {
+    "n": 135,
+    "missing": 0,
+    "median": 1,
+    "min": 0,
+    "max": 3,
+    "hist": {
+     "0": 39,
+     "1": 34,
+     "2": 33,
+     "3": 29
+    }
+   },
+   "dig": {
+    "n": 135,
+    "missing": 0,
+    "median": 10,
+    "min": 5,
+    "max": 19,
+    "hist": {
+     "5": 7,
+     "6": 13,
+     "7": 13,
+     "8": 9,
+     "9": 25,
+     "10": 10,
+     "11": 6,
+     "12": 10,
+     "13": 9,
+     "14": 5,
+     "15": 12,
+     "16": 9,
+     "17": 2,
+     "18": 3,
+     "19": 2
+    }
+   }
+  },
+  "cardByStory": {
+   "keysFarSide": {
+    "builds": 15,
+    "fewest": 9,
+    "three": 3,
+    "luck": 0,
+    "forced": 12,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "keysOnIsland": {
+    "builds": 15,
+    "fewest": 9,
+    "three": 0,
+    "luck": 0,
+    "forced": 12,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "clockInSight": {
+    "builds": 15,
+    "fewest": 13,
+    "three": 4,
+    "luck": 0,
+    "forced": 14,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "iceLockClock": {
+    "builds": 14,
+    "fewest": 10,
+    "three": 3,
+    "luck": 0,
+    "forced": 11,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "lockBeside": {
+    "builds": 15,
+    "fewest": 16,
+    "three": 0,
+    "luck": 0,
+    "forced": 12,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "frozenGuards": {
+    "builds": 15,
+    "fewest": 13,
+    "three": 0,
+    "luck": 0,
+    "forced": 12,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "chainReaction": {
+    "builds": 7,
+    "fewest": 9,
+    "three": 3,
+    "luck": 1,
+    "forced": 5,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "roomInTrayLocked": {
+    "builds": 12,
+    "fewest": 6,
+    "three": 1,
+    "luck": 0.5,
+    "forced": 12,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "roomInTrayFrozen": {
+    "builds": 15,
+    "fewest": 6,
+    "three": 2,
+    "luck": 0,
+    "forced": 15,
+    "trapPoints": 0,
+    "tempting": 0
+   },
+   "deepClock": {
+    "builds": 12,
+    "fewest": 8.5,
+    "three": 2.5,
+    "luck": 0.5,
+    "forced": 12,
+    "trapPoints": 0,
+    "tempting": 0
+   }
+  },
+  "targets": {
+   "trayCapReached": 135,
+   "hiddenOnWayMet": 135,
+   "total": 135
+  },
+  "gate": {
+   "buildRatePerSeed": true,
+   "buildRateAnySeed": true,
+   "under5s": true,
+   "everyIntentProven": true,
+   "noIdleSpecial": true,
+   "staticClean": true,
+   "pass": true
+  }
+ }
+}

@@ -2,14 +2,14 @@
    gate.js's static checks (replay, honest clock, no face-down tile free, pictures, no idle special).
      node --test source/tools/builder/test_gate.js                       (about 2-5 s on a quiet machine)
    The six: keys on the other island, ice + lock + clock, frozen guards, a chain reaction, the deep clock, and locked
-   partners (holders). Known builder issue (gate-report.md): unused holders keep their lock; that check is a todo. */
+   partners (holders). Every retained holder must actually hold a dig twin. */
 'use strict';
 const { test } = require('node:test'), assert = require('node:assert/strict');
 const B = require('./builder.js'), G = require('./gate.js');
 const BRIEFS = require('./briefs-v1.json');
-const PICK = ['keysOnIsland-letterH-26', 'iceLockClock-arch-28', 'frozenGuards-frame-18', 'chainReaction-arch-12', 'deepClock-vase-11', 'roomInTrayLocked-frame-45'];
+const PICK = ['keysOnIsland-letterH-26', 'iceLockClock-arch-28', 'frozenGuards-frame-18', 'chainReaction-castle-20', 'deepClock-vase-11', 'roomInTrayLocked-frame-45'];
 
-const built = {};
+const built = {}, designs = {};
 for (const id of PICK) {
   test(`${id} (seed 1): builds, every intent proven, static checks clean`, () => {
     const brief = BRIEFS.find(b => b.id === id);
@@ -18,10 +18,12 @@ for (const id of PICK) {
     assert.equal(r.fail, undefined, `build failed: ${r.fail} ${r.detail || ''} ${JSON.stringify(r.fails || {})}`);
     for (const it of r.intents) assert.ok(it.proven, `intent not proven: ${it.name} (${it.detail})`);
     const c = G.checkDesign(r.design, b);
+    designs[id] = r.design;
     built[id] = c;
     assert.ok(c.faces.ok, 'pictures: ' + JSON.stringify(c.faces));
     assert.deepEqual(c.downFree, [], 'no face-down tile free at the start');
     assert.ok(c.replay.ok, 'solution replays: ' + JSON.stringify(c.replay));
+    assert.deepEqual(c.problems, [], 'independent checks, including the original targets');
     assert.equal(c.clock.k + (brief.frame.spare ?? 1), r.design.clock.n, 'clock = fewest moves + spare');
     assert.equal(c.clock.winAtK, 'win', 'winnable with the clock at the fewest moves');
     assert.notEqual(c.clock.atKminus1, 'win', 'not winnable with one move less');
@@ -31,8 +33,17 @@ for (const id of PICK) {
   });
 }
 
-test('locked partners: every holder holds the twin of a tile taken on the way', { todo: 'builder keeps the lock on holders it did not use (gate-report.md)' }, () => {
+test('locked partners: every holder holds the twin of a tile taken on the way', () => {
   const c = built['roomInTrayLocked-frame-45'];
   assert.ok(c, 'the holder brief was built');
   assert.deepEqual(c.specials.filter(e => e.verdict === 'idle').map(e => e.special), []);
+});
+
+test('the gate catches unmet brief targets even on an otherwise valid design', () => {
+  const design = designs[PICK[0]], original = BRIEFS.find(b => b.id === PICK[0]);
+  assert.ok(design);
+  const wrong = { ...original, targets: { ...original.targets, hiddenOnWay: design.tiles.length, maxDown: 0 } };
+  const check = G.checkDesign(design, wrong);
+  assert.ok(check.problems.some(p => p.kind === 'target' && p.detail.startsWith('hidden on way')));
+  assert.ok(check.problems.some(p => p.kind === 'target' && p.detail.includes('share exceeds')));
 });

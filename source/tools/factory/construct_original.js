@@ -48,7 +48,7 @@ function construct(pile, spec, plan, attempt, diagnostic = {}, seen = []) {
     placementEdits: (composed.plan.revealedForReadability || []).map(index => ({ kind: 'faceUpForReadableRoute', index })),
     trapPlan: { ...composed.plan, placementScore, authoredBoard: boardKey(d) } };
 }
-if (!isMainThread) parentPort.on('message', job => {
+if (!isMainThread && require.main === module) parentPort.on('message', job => {
   const started = Date.now();
   const diagnostic = {};
   try { parentPort.postMessage({ level: job.spec.level, attempt: job.attempt, row: construct(job.pile, job.spec, job.plan, job.attempt, diagnostic, job.seen), ...diagnostic, seconds: (Date.now() - started) / 1000 }); }

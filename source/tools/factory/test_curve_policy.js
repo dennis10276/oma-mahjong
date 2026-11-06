@@ -37,3 +37,10 @@ test('assignment rejects a complete drifting window and accepts a balanced one',
  scores([10.6,10.6,10.6,10.6,10.6]);assert.equal(assign(plan,rows,dir,10000).rows,null);assert.equal(assign({...plan,curveWindow:undefined},rows,dir,10000).rows.length,5);
  scores([9,9,10,11,11]);const valid=assign(plan,rows,dir,10000);assert.equal(valid.rows.length,5);assert.equal(valid.curveWindows[0].meanOffset,0);
 });
+test('a decimal quarter-step boundary survives floating point arithmetic without accepting a larger reverse step',t=>{
+ const {assign}=require('./batch_assign.js'),{boardKey,atomicJson}=require('./meter.js'),dir=fs.mkdtempSync(path.join(require('os').tmpdir(),'oma-step9-'));t.after(()=>fs.rmSync(dir,{recursive:true}));
+ const plan={levels:[{level:200,target:11.025,big:false},{level:201,target:10.775,big:false}],tolerance:1,maxSeedGap:2,maxReverseStep:.25,skilledMin:2.5,skilledMax:6,minTiles:72,placementReportOnly:true};
+ const rows=plan.levels.map((s,k)=>{const design={tiles:Array.from({length:72},(_,i)=>[i*(13+k*7),i%3*31,0]),faces:Array.from({length:72},(_,i)=>i>>1),down:[],obst:{ice:{},keys:[],locks:[]},clock:{i:0,n:2},solution:Array.from({length:72},(_,i)=>i)},id=boardKey(design).slice(0,16);atomicJson(dir+'/'+id+'.quality.json',{eligible:true,skilled:{exp:3},room:{ok:true},atTrap:1,special:{}});return{id,shape:'test'+k,recipe:[],design,origin:{intendedLevel:s.level}};});
+ const scores=values=>rows.forEach((r,k)=>atomicJson(dir+'/'+r.id+'.rate.json',{train:{valid:true,exp:values[k]},validation:{valid:true,exp:values[k]}}));
+ scores([11.025,10.774999999999999]);assert.equal(assign(plan,rows,dir,1000).rows.length,2);scores([11.025,10.774]);assert.equal(assign(plan,rows,dir,1000).rows,null);
+});

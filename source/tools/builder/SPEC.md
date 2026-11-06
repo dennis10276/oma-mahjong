@@ -29,7 +29,8 @@ Rules (www/layouts.js, www/hard.js validSolution):
 - Lock: a locked tile can be taken only once both key tiles have left the board (keys are a normal pair).
 - `L.takeable(i, alive, nb, rules, alive0)` = free and not frozen and not locked; rules = {iceNb, ice, locks:Set, keys}.
 - Tray: a taken tile waits until a tile with the same picture is taken; at most 3 may wait - a 4th waiting tile loses.
-- Clock: losing when move index reaches n with the clock tile still on the board.
+- Clock: losing when move index reaches n with the clock tile still on the board, checked after the whole action.
+  A peek pair takes two tiles before this check, so its second tile can save the clock at the deadline.
 - Win: every tile taken, tray empty, clock taken in time.
 - Face-down tiles show their picture only when free (a free face-down tile can be turned over at no move cost).
 - PEEK PAIR (www/js/board.js `peekPair`, Dennis 2026-11-06): a turned-over free face-down tile and its free twin
@@ -104,6 +105,19 @@ build(brief, {ms}) -> { design, card, intents:[{name, proven, detail}], ms } | {
 Construction runs backwards from the brief: plan the intended way (phases of the story), put the specials where the
 plan needs them, place pictures to create the intended tray pressure and decision traps, fill the rest, then prove every
 intent with engine.js. A design card says in plain words: story, stage, the traps and why they bite, descriptor values.
+
+Contract clarified by independent review: `trayRoom` 0/1/2 requests a maximum of exactly 3/2/1 waiting tiles on
+the witness to the clock. `hiddenOnWay` is a minimum count of hidden dig tiles; `maxDown` is an upper bound on
+the rounded total count. Explicit `traps` is a minimum proven count. Incompatible stories return a failure rather
+than changing the requested cap. `frame.share` and `targets.trapDepth` currently return `unsupportedTarget`.
+`luck` and `three` are separate optional targets, each within one of the requested count.
+
+`knobs.js` starts phase 3 with `clockSpare(design, spare)`: prove the game-rule minimum, change only `clock.n`,
+retain and replay the complete original witness. Failure to prove the minimum or preserve that witness is explicit.
+Derived decision-trap outcomes can change when the deadline changes. `knob_study.js` preregisters twenty boards,
+two distinct layouts for each story, compares spare 1 with 3 on the frozen family and skilled bots, and checkpoints
+every measurement. Report the plan's 80% non-increasing direction check separately from the study's additional
+80% strict-improvement criterion. Ties count only for direction; invalid and missing measurements never pass.
 
 ## 5. Briefs and the gate (helper C)
 

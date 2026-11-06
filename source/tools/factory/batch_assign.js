@@ -66,8 +66,8 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       (!plan.originality?.required || originalityCompat[i][p]) &&
       (Math.abs(levels[k].level - levels[j].level) > 10 || compat[i][p]) &&
       // Ratings are noisy, but do not knowingly make a large reverse step.
-      (j !== k - 1 || inv[p].exp <= r.exp + (plan.maxReverseStep ?? 0.25)) &&
-      (j !== k + 1 || r.exp <= inv[p].exp + (plan.maxReverseStep ?? 0.25))) && windowOK(k,r));
+      (j !== k - 1 || inv[p].exp <= r.exp + (plan.maxReverseStep ?? 0.25) + 1e-9) &&
+      (j !== k + 1 || r.exp <= inv[p].exp + (plan.maxReverseStep ?? 0.25) + 1e-9)) && windowOK(k,r));
   }
   // Bound coverage using only candidates that can actually enter a slot. A
   // matching also detects several slots competing for the same creation.

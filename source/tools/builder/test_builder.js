@@ -10,11 +10,20 @@ const L = global.Layouts;
 const BRIEF = { frame: { spare: 1 }, targets: { trayRoom: 0, maxDown: 0.3, hiddenOnWay: 2 }, seed: 1 };
 const ORDER = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 7, 14, 23, 36, 41, 46, 2, 13, 26, 38];
 
+test('tile counts always stay above seventy and inside the supported range', () => {
+  for (const n of [0, 70, 98]) {
+    const tiles = Array.from({ length: n }, (_, i) => [i * 4, 0, 0]);
+    assert.strictEqual(B.build({ ...BRIEF, tiles, story: 'deepClock' }).fail, 'tileCount');
+  }
+});
+
 function checkBoard(r, brief, where) {
   const d = r.design, g = E.game(d), n = d.tiles.length;
   assert.ok(n >= 72 && n % 2 === 0, where + ': tile count ' + n);
   for (const it of r.intents) assert.ok(it.proven, where + ': intent not proven: ' + it.name + ' ' + (it.detail || ''));
   const rep = E.replay(d, d.solution); assert.ok(rep.ok, where + ': witness ' + rep.why + ' at ' + rep.at);
+  assert.strictEqual(r.card.tray.max, 3 - (brief.targets?.trayRoom ?? 1), where + ': requested tray cap');
+  assert.ok(r.card.faceDownOnDig >= (brief.targets?.hiddenOnWay ?? 0), where + ': requested hidden tiles on dig');
   const k = E.clockShortest(g, { nodes: 400000, ms: 8000 });
   assert.ok(k && !k.unsure, where + ': clock way unresolved');
   assert.strictEqual(k.k + brief.frame.spare, d.clock.n, where + ': clock not honest');
@@ -48,13 +57,23 @@ test('luck follows the target (0 gives 0)', () => {
   assert.ok(!r.fail, r.fail); assert.ok(r.card.tray.luck <= 1, 'luck ' + r.card.tray.luck);
 });
 
-test('trayRoom 2 (cap 1) needs no orphans; a covered-partner story keeps one twin waiting (cap 2)', () => {
+test('trayRoom 2 (cap 1) needs no orphans; an incompatible story never silently increases the cap', () => {
   const r = B.build({ ...BRIEF, layout: 5, story: 'keysFarSide', targets: { trayRoom: 2, maxDown: 0.3, hiddenOnWay: 0 } }, { ms: 6000 });
   assert.ok(!r.fail, r.fail + ' ' + (r.detail || ''));
   assert.strictEqual(r.card.orphans.length, 0);
   const d = B.build({ ...BRIEF, layout: 5, story: 'deepClock', targets: { trayRoom: 2, maxDown: 0.3, hiddenOnWay: 0 } }, { ms: 6000 });
-  assert.ok(!d.fail, d.fail + ' ' + (d.detail || ''));
-  assert.strictEqual(d.card.trayCap, 2); assert.strictEqual(d.card.orphans.length, 1);
+  assert.strictEqual(r.card.tray.max, 1);
+  assert.strictEqual(d.fail, 'incompatibleBrief');
+});
+
+test('unimplemented or incompatible explicit targets cannot produce a proven board', () => {
+  const brief = { ...BRIEF, layout: 5, story: 'keysFarSide' };
+  assert.strictEqual(B.build({ ...brief, frame: { spare: 1, share: 0.4 } }).fail, 'unsupportedTarget');
+  assert.strictEqual(B.build({ ...brief, targets: { trapDepth: 3 } }).fail, 'unsupportedTarget');
+  assert.strictEqual(B.build({ ...brief, targets: { trayRoom: 1, luck: 2 } }).fail, 'incompatibleBrief');
+  assert.strictEqual(B.build({ ...brief, targets: { trayRoom: 3 } }).fail, 'invalidBrief');
+  const excessive = B.build({ ...brief, targets: { trayRoom: 0, traps: 99 } }, { tries: 1, variants: 1, ms: 500 });
+  assert.ok(excessive.fail, 'an unproven requested trap count must fail');
 });
 
 test('targets: way 14 and 5 moves with 3 waiting are met within 1', () => {
