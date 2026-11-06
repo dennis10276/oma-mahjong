@@ -27,3 +27,12 @@ test('a sealed pilot cannot start checking unfinished or changed builds', () => 
     assert.throws(() => P.sealBuilds(dir, p, b), /changed after sealing/);
   } finally { fs.unlinkSync(path.join(dir, 'built-plan.json')); fs.rmdirSync(dir); }
 });
+
+test('importing the gate checker in another worker installs no command listener', async () => {
+  const { Worker } = require('worker_threads');
+  const worker = new Worker(`const {parentPort}=require('worker_threads');require(${JSON.stringify(require.resolve('./gate.js'))});parentPort.postMessage(parentPort.listenerCount('message'));`, { eval: true });
+  try {
+    const count = await new Promise((resolve, reject) => { worker.once('message', resolve); worker.once('error', reject); });
+    assert.equal(count, 0);
+  } finally { await worker.terminate(); }
+});
