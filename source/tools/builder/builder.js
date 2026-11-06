@@ -633,6 +633,8 @@ function build(briefIn, opts = {}) {
   if (tiles.length < 72 || tiles.length > 96) return { fail: 'tileCount', detail: 'Builder v2 requires 72 to 96 tiles.', ms: Date.now() - t0 };
   const c = ctxOf(tiles);
   if (c.n % 2) return { fail: 'oddTiles', ms: 0 };
+  if (opts.keep?.geometry && opts.keep.geometry !== JSON.stringify(c.tiles)) return { fail: 'incompatibleKeep', detail: 'The kept puzzle belongs to another layout.', ms: 0 };
+  if (opts.keep?.story && opts.keep.story !== brief.story) return { fail: 'incompatibleKeep', detail: 'The kept puzzle belongs to another story.', ms: 0 };
   const budget = opts.budget || { nodes: 300000, ms: 3000 }, spare = brief.frame?.spare ?? 1, fails = {};
   const msMax = opts.ms ?? 15000, deadline = t0 + Math.min(msMax, opts.hardMs ?? 4500), cap = capOf(brief);
   // forced pressure is a goal: keep trying other roles while it is missing, within this soft time
@@ -661,7 +663,7 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
       if (brief.frame?.way != null && Math.abs(P.length - brief.frame.way) > 2) { note({ fail: 'wayLength', detail: P.length + ' for ' + brief.frame.way }); continue; }
       hold = chooseHolders(c, roles, P, story.spec, rng); if (hold.fail) { note(hold); continue; }
     }
-    const keepOf = () => ({ roles: { clock: roles.clock, locks: [...roles.locks], keys: roles.keys.slice(), ice: { ...roles.ice }, holderSpecials: [...roles.holderSpecials] }, P: P.slice(), holders: curHold.holders ? [...curHold.holders] : null });
+    const keepOf = () => ({ geometry: JSON.stringify(c.tiles), story: brief.story, roles: { clock: roles.clock, locks: [...roles.locks], keys: roles.keys.slice(), ice: { ...roles.ice }, holderSpecials: [...roles.holderSpecials] }, P: P.slice(), holders: curHold.holders ? [...curHold.holders] : null });
     let pick = null, way = null, pruned = trimmed.slice(), replans = 0, stop = false, N = null, curHold = hold;
     for (let round = 0; round < 4 && !stop; round++) {
       N = necessary(c, roles, P);
@@ -671,6 +673,7 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
         // a holder's lock or ice only matters when it holds the twin of a dig tile that waits at the clock
         const orph = new Set(pick.plan.dig.orphans), used = [...curHold.holders].filter(h => orph.has(pick.plan.pairOf[h]));
         if (used.length < holdersNeeded(story, pick.plan.dig.orphans)) { note({ fail: 'fewHolderTwins' }); stop = true; break; }
+        if (opts.keep && used.length !== curHold.holders.size) { note({ fail: 'unproven', detail: 'The requested pictures would discard a kept holder.' }); stop = true; break; }
         for (const h of curHold.holders) if (!used.includes(h)) {
           if (roles.holderSpecials.delete('lock ' + h)) roles.locks.delete(h);
           if (roles.holderSpecials.delete('ice ' + h)) delete roles.ice[h];
@@ -680,6 +683,7 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
       way = fewest(c, pick.plan.faces, pick.down, roles, budget); if (!way) { note({ fail: 'clockWayUnresolved' }); stop = true; break; }
       // the fewest way is shorter than the planned dig: its prefix is the dig, place the pictures again
       if (way.k < P.length && replans < 2) {
+        if (opts.keep) { note({ fail: 'unproven', detail: 'The requested pictures would shorten the kept dig.' }); stop = true; break; }
         const flat = E.flatten(way.path), P2 = flat.slice(0, flat.indexOf(roles.clock) + 1), cov2 = coveredDuringDig(c, P2);
         if (curHold.holders && [...curHold.holders].some(h => !cov2[h] || P2.includes(h))) { note({ fail: 'holdersOnWay' }); stop = true; break; }
         P = P2; curHold = { cov: cov2, holders: curHold.holders }; replans++; continue;
@@ -687,6 +691,7 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
       const pr = prune(c, pick.plan.faces, pick.down, roles, way.k, opts.pruneBudget || { nodes: 150000, ms: 1500 }, deadline, story.spec);
       if (!pr) { note({ fail: 'slow' }); stop = true; break; }
       if (pr.unresolved) { note({ fail: 'pruneUnresolved', detail: pr.unresolved }); stop = true; break; }
+      if (opts.keep && pr.length) { note({ fail: 'unproven', detail: 'The requested pictures would prune a kept special.' }); stop = true; break; }
       pruned = pruned.concat(pr);
       if (storyKept(story.spec, roles).length) break;
       if (pr.length && round < 3) continue;          // a special went: the necessary tiles may have changed
