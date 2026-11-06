@@ -5,8 +5,17 @@
    way through (design.solution), the exact fewest-moves clock way (lab/exact.js) and roomProfile (luck moments).
 
    const { describe } = require('./describe.js');
-   describe(design, { shape, exactNodes: 150000, exactMs: 1500, room: true }) -> { frame, order, pressure, hidden,
-     where, stage, traps: null, flat }      // flat: the same numbers as one level of keys (for tables)
+   describe(design, { shape, exactNodes: 150000, exactMs: 1500, room: true, engine: true }) -> { frame, order,
+     pressure, hidden, where, stage, traps, flat }      // flat: the same numbers as one level of keys (for tables)
+
+   With the engine (engine.js, helper A; opts.engine !== false):
+   - frame.kGame / spareGame / shareGame: the fewest moves to the clock under the game's own rules, i.e. with the PEEK
+     PAIR (a free face-down tile + its free twin go together without a tray slot). frame.k stays the strict way
+     (lab/exact.js, no peek pairs) so earlier results stay comparable. pressure.gameWay: the tray on that way.
+   - traps: the decision points along the stored solution up to the clock (E.traps, per-move budget opts.trap*):
+     how many steps have a losing move, how many losing moves, the tempting ones (a pair, a single whose twin is in
+     sight, a tray match, the clock, a peek pair) and how long a player can go on after one before the loss is forced
+     (depth, capped at engine DEF.cap = 12). "Deep" = depth >= 1: not a 4th tile or a late clock at once.
 
    Words used below:
    - way (exact): the shortest way to the clock found by exactRoute, up to and including the clock (k moves).
@@ -25,6 +34,7 @@ const L = require(path.join(ROOT, 'www', 'layouts.js'));
 if (!global.Layouts) global.Layouts = L;
 const Hard = require(path.join(ROOT, 'www', 'hard.js'));
 const { exactRoute, makeLowerBound } = require(path.join(ROOT, 'tools', 'lab', 'exact.js'));
+const E = require('./engine.js');
 let roomProfile = null;
 const room = d => { if (!roomProfile) roomProfile = require(path.join(ROOT, 'tools', 'factory', 'design_traps.js')).roomProfile; return roomProfile(d); };
 
@@ -209,6 +219,19 @@ function describe(design, opts = {}) {
     frame.twinAfterClock = frame.twinPeel - frame.clockPeel;
   }
 
+  // ---------- the game's own rules (engine.js): peek-aware clock way ----------
+  let gWay = null;
+  if (g.clock && opts.engine !== false) {
+    const eg = E.game(design), ts = Date.now();
+    let cs = null;
+    try { cs = E.clockShortest(eg, { nodes: opts.gameNodes ?? 150000, ms: opts.gameMs ?? 1500, finishNodes: 50000, finishMs: 500 }); } catch (e) { cs = null; }
+    const kg = cs ? cs.k : null;
+    Object.assign(frame, { kGame: kg, kGameResolved: !!cs, kGameUnsure: !!(cs && cs.unsure), gameMs: Date.now() - ts,
+      spareGame: kg != null ? g.clock.n - kg : null, shareGame: kg != null ? r3(kg / n) : null,
+      peekSaves: kg != null && frame.k != null ? frame.k - kg : null });   // moves the peek pair saves on the way
+    if (cs) { const flat = E.flatten(cs.path); gWay = flat.slice(0, flat.indexOf(ck) + 1); }
+  }
+
   // ---------- order puzzle ----------
   const keyPeel = keys.length ? Math.max(...keys.map(i => pr.round[i])) : null;
   const wayExact = exact ? exact.path.slice(0, exact.k) : null;
@@ -233,8 +256,9 @@ function describe(design, opts = {}) {
 
   // ---------- tray pressure along the way ----------
   const wWit = wayWit ? walk(g, wayWit) : null, wExact = wayExact ? walk(g, wayExact) : null;
-  const wFull = valid ? walk(g, sol) : null;
+  const wFull = valid ? walk(g, sol) : null, wGame = gWay ? walk(g, gWay) : null;
   const pressure = {
+    gameWay: wGame ? trayStats(wGame) : null,         // the peek-aware shortest way (a peek pair takes no slot)
     witnessWay: wWit ? trayStats(wWit) : null,
     exactWay: wExact ? trayStats(wExact) : null,
     full: wFull ? trayStats(wFull) : null,
@@ -308,11 +332,38 @@ function describe(design, opts = {}) {
     clockVisible: ck != null ? freeStart.includes(ck) : null,
   };
 
-  const out = { valid, frame, order, pressure, hidden, where, stage,
-    traps: null,       // TODO(engine.js, helper A): decision traps along the clock way: count, tempting losing moves, depth
-    ms: Date.now() - t0 };
+  const traps = g.clock && valid && opts.engine !== false && opts.traps !== false ? trapsOf(design, sol, opts) : null;
+  const out = { valid, frame, order, pressure, hidden, where, stage, traps, ms: Date.now() - t0 };
   out.flat = flatten(out);
   return out;
+}
+
+/* Decision traps along the stored solution up to the clock (engine.js E.traps under the game's rules). */
+const KINDS = ['pair', 'twin', 'match', 'clock', 'peekpair'];
+function trapsOf(design, sol, opts) {
+  const eg = E.game(design), ts = Date.now();
+  let pts;
+  try { pts = E.traps(eg, sol, { nodes: opts.trapNodes ?? 10000, ms: opts.trapMs ?? 30, depthNodes: opts.trapDepthNodes ?? 3000 }); }
+  catch (e) { return { error: String(e.message || e) }; }
+  const losing = pts.flatMap(p => p.losing), deep = losing.filter(c => c.depth >= 1);
+  const tempting = pts.flatMap(p => p.tempting), tDeep = tempting.filter(c => c.depth >= 1);
+  const by = list => Object.fromEntries(KINDS.map(k => [k, list.filter(c => c.kind === k).length]));
+  const med = a => { if (!a.length) return null; const x = a.slice().sort((p, q) => p - q), m = x.length >> 1; return x.length % 2 ? x[m] : (x[m - 1] + x[m]) / 2; };
+  const steps = sol.indexOf(design.clock.i) + 1;
+  return {
+    steps,                                                        // moves checked: the stored way up to the clock
+    points: pts.length,                                           // steps with at least one losing move
+    deepPoints: pts.filter(p => p.losing.some(c => c.depth >= 1)).length,
+    temptPoints: pts.filter(p => p.tempting.some(c => c.depth >= 1)).length,   // steps with a tempting move that loses later
+    narrow: pts.filter(p => p.win === 1 && p.unknown === 0).length,            // steps with exactly one winning move
+    losing: losing.length, losingDeep: deep.length,
+    loseShare: r3(pts.length ? pts.reduce((a, p) => a + p.lose / p.legal, 0) / steps : 0),   // mean share of losing options per step
+    tempting: tempting.length, temptingDeep: tDeep.length, byKind: by(tempting), deepByKind: by(tDeep),
+    depthMedian: med(deep.map(c => c.depth)), depthMax: deep.length ? Math.max(...deep.map(c => c.depth)) : 0,
+    temptDepthMedian: med(tDeep.map(c => c.depth)), temptDepthMax: tDeep.length ? Math.max(...tDeep.map(c => c.depth)) : 0,
+    unknown: pts.reduce((a, p) => a + p.unknown, 0),              // moves the budget could not settle (not counted as losing)
+    ms: Date.now() - ts,
+  };
 }
 
 /* One level of keys, numbers and booleans only (booleans as 0/1), for tables and the analysis. */
@@ -320,11 +371,11 @@ function flatten(d) {
   const out = {};
   const put = (k, v) => { if (typeof v === 'boolean') out[k] = v ? 1 : 0; else if (typeof v === 'number' && Number.isFinite(v)) out[k] = v; else if (v === null || v === undefined) out[k] = null; };
   const f = d.frame;
-  for (const k of ['hasClock', 'clockN', 'depth', 'bound', 'k', 'witnessK', 'spare', 'spareWitness', 'spareBound', 'share', 'shareWitness', 'locked', 'frozen', 'clockPeel', 'clockPeelPlain', 'clockPeelAdded', 'clockCopies', 'twinPeel', 'twinAfterClock']) put('frame.' + k, f[k]);
+  for (const k of ['hasClock', 'clockN', 'depth', 'bound', 'k', 'witnessK', 'spare', 'spareWitness', 'spareBound', 'share', 'shareWitness', 'locked', 'frozen', 'clockPeel', 'clockPeelPlain', 'clockPeelAdded', 'clockCopies', 'twinPeel', 'twinAfterClock', 'kGame', 'kGameUnsure', 'spareGame', 'shareGame', 'peekSaves']) put('frame.' + k, f[k]);
   const o = d.order;
   for (const k of ['peelRounds', 'peelRoundsPlain', 'peelAdded', 'peelMean', 'keyPeel', 'lockPeelMax', 'icePeelMax', 'chain', 'nIce', 'nThick', 'nLocks', 'hasKeys', 'keysBeforeClock']) put('order.' + k, o[k]);
   for (const [w, s] of [['way', o.specialsOnWay], ['wit', o.specialsOnWitnessWay]]) for (const k of ['all', 'ice', 'locks', 'keys']) put(`order.specials.${w}.${k}`, s ? s[k] : null);
-  for (const w of ['witnessWay', 'exactWay', 'full']) {
+  for (const w of ['witnessWay', 'exactWay', 'gameWay', 'full']) {
     const s = d.pressure[w];
     for (const k of ['moves', 'max', 'mean', 'at3', 'at2plus', 'roomMin', 'pairsMean', 'pairsMin', 'optionsMean', 'peekMean', 'peekSteps', 'peekTaken', 'dry', 'dryShare', 'tight', 'tightNoRelief', 'fullNoRelief', 'singles', 'downTaken', 'downRevealed']) put(`tray.${w}.${k}`, s ? s[k] : null);
   }
@@ -347,7 +398,10 @@ function flatten(d) {
   put('stage.clock.island', s.clock ? s.clock.island : null);
   put('stage.keys.dist', s.keys ? Math.max(...s.keys.map(k => k.dist)) : null);
   put('stage.keys.bottom', s.keys ? s.keys.some(k => k.layer === 'bottom') : null);
+  const t = d.traps && !d.traps.error ? d.traps : null;
+  for (const k of ['points', 'deepPoints', 'temptPoints', 'narrow', 'losing', 'losingDeep', 'loseShare', 'tempting', 'temptingDeep', 'depthMedian', 'depthMax', 'temptDepthMedian', 'temptDepthMax', 'unknown']) put('traps.' + k, t ? t[k] : null);
+  for (const k of KINDS) { put('traps.kind.' + k, t ? t.byKind[k] : null); put('traps.deepKind.' + k, t ? t.deepByKind[k] : null); }
   return out;
 }
 
-module.exports = { describe, flatten, gameOf, peel, walk, trayStats, coverSet };
+module.exports = { describe, flatten, gameOf, peel, walk, trayStats, coverSet, trapsOf };
