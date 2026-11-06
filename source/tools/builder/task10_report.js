@@ -69,6 +69,7 @@ function knobSummary(boards, knob, profile) {
     median: median(valid.map(p => p.delta)), stepMedian: median(valid.map(p => p.delta / requestedStep)),
     actualStepMedian: median(valid.filter(p => p.dose > 0).map(p => p.delta / p.dose)), cliffs: cliffs.length,
     meetsDirection: valid.length > 0 && expected / valid.length >= 0.8, keptGlobally: valid.length > 0 && expected / valid.length >= 0.8 && !cliffs.length && valid.some(p => p.dose > 0),
+    typicalEffectPositive: valid.length > 0 && dir * median(valid.map(p => p.delta)) > 1e-9,
     split, pairs };
 }
 function report(dir) {
@@ -80,10 +81,20 @@ function report(dir) {
   summary.observedBand = data.boards.filter(band).map(b => ({ id: b.id, stage: b.stage, brief: b.brief, family: b.family, skilled: b.skilled, card: b.card }));
   summary.range = { requests: grid.length, built: grid.filter(b => !b.fail && b.design).length, rated: grid.filter(b => b.family && b.skilled).length,
     band: grid.filter(band).map(b => ({ id: b.id, cell: b.cell, family: b.family, skilled: b.skilled, card: b.card })), repeats: [] };
-  const groups = new Map(); for (const b of grid.filter(b => b.family && b.skilled)) { const k = CELL(b.cell), a = groups.get(k) || []; a.push(b); groups.set(k, a); }
-  for (const [cell, rows] of groups) if (rows.length > 1) summary.range.repeats.push({ cell, n: rows.length,
-    family: rows.map(b => b.family.exp), skilled: rows.map(b => b.skilled.exp), familySpread: Math.max(...rows.map(b => b.family.exp)) - Math.min(...rows.map(b => b.family.exp)),
-    skilledSpread: Math.max(...rows.map(b => b.skilled.exp)) - Math.min(...rows.map(b => b.skilled.exp)) });
+  const groups = new Map(); for (const b of grid) { const k = CELL(b.cell), a = groups.get(k) || []; a.push(b); groups.set(k, a); }
+  for (const [cell, rows] of groups) if (rows.length > 1) {
+    const family = rows.filter(b => b.family).map(b => b.family.exp), skilled = rows.filter(b => b.skilled).map(b => b.skilled.exp);
+    summary.range.repeats.push({ cell, requested: rows.length, built: rows.filter(b => !b.fail && b.design).length,
+      n: rows.filter(b => b.family && b.skilled).length, family, skilled,
+      familySpread: family.length > 1 ? Math.max(...family) - Math.min(...family) : null,
+      skilledSpread: skilled.length > 1 ? Math.max(...skilled) - Math.min(...skilled) : null,
+      seeds: rows.map(b => ({ seed: b.cell.seed, fail: b.fail || null, family: b.family?.exp ?? null, skilled: b.skilled?.exp ?? null })) });
+  }
+  summary.byStory = Object.fromEntries(stories.map(story => {
+    const rows = data.boards.filter(b => b.brief?.story === story && b.family && b.skilled);
+    return [story, { rated: rows.length, familyMedian: median(rows.map(b => b.family.exp)), skilledMedian: median(rows.map(b => b.skilled.exp)),
+      familyAtCap: rows.filter(b => b.family.exp >= 20 - 1e-9).length, skilledAtCap: rows.filter(b => b.skilled.exp >= 20 - 1e-9).length, jointBand: rows.filter(band).length }];
+  }));
   const failures = {}; for (const b of data.boards.filter(b => b.fail)) failures[b.fail] = (failures[b.fail] || 0) + 1; summary.failures = failures;
   const records = [...data.records.values()]; summary.measurements = { records: records.length, invalid: records.filter(r => !r.valid).length,
     calls: records.reduce((s, r) => s + r.calls, 0), hits: records.reduce((s, r) => s + r.hits, 0) };
@@ -97,6 +108,9 @@ function report(dir) {
   for (const [k, v] of Object.entries(summary.knobs)) { const f = v.family, c = f.controlledSubset; lines.push(`| ${k} | ${f.descriptorMoved}/${f.measured} | ${f.controlsMatched}/${f.measured} | ${c.expected}/${c.measured} | ${round(c.median)} | ${v.skilled.cliffs} |`); }
   lines.push('', 'Targets allow a tolerance of one: increasing a requested luck count by one can leave its measured count unchanged. The luck knob also raises hiddenOnWay, as requested; it is a combined luck/hidden-route control. Spare uses an exact clock-only transform; its copied base intent text/forced-pressure annotation is historical, not a new claim at the relaxed deadline. Its unchanged witness and new minimum-plus-spare deadline are independently replayed by knobs.js.');
   lines.push('', '## Range', '', `${summary.range.requests} requests, ${summary.range.built} built, ${summary.range.rated} fully rated; ${summary.range.band.length} in both bands.`, '');
+  lines.push('| story, both experiments | rated | family median | family at20 | skilled median | skilled at20 | joint band |', '|---|---:|---:|---:|---:|---:|---:|');
+  for (const [story, s] of Object.entries(summary.byStory)) lines.push(`| ${story} | ${s.rated} | ${round(s.familyMedian)} | ${s.familyAtCap} | ${round(s.skilledMedian)} | ${s.skilledAtCap} | ${s.jointBand} |`);
+  lines.push('');
   for (const story of stories) {
     lines.push('### ' + story, '', '| way | three | luck | traps | seed | actual way / three / luck / traps | family | skilled | band | failure |', '|---:|---:|---:|---:|---:|---|---:|---:|---|---|');
     for (const b of grid.filter(b => b.cell.story === story).sort((a, b) => a.id.localeCompare(b.id))) { const c = b.cell;
@@ -105,6 +119,9 @@ function report(dir) {
   }
   lines.push('## Observed points in both bands', '', `${summary.observedBand.length} points across both studies. This includes knob variants outside the range grid; none are silently discarded when deciding whether to run the pilot.`, '', '| board | source | family | skilled |', '|---|---|---:|---:|');
   for (const b of summary.observedBand) lines.push(`| ${b.id} | ${b.stage} | ${round(b.family.exp)} | ${round(b.skilled.exp)} |`);
+  lines.push('', '## Repeated construction seeds', '', 'All bot seeds/settings stay fixed. These cells vary builder seeds1,2,3. Failed seeds are retained; a single rated seed does not establish a zero spread.', '',
+    '| cell | built / requested | fully rated | family scores | family spread | skilled scores | skilled spread |', '|---|---:|---:|---|---:|---|---:|');
+  for (const r of summary.range.repeats) lines.push(`| ${r.cell} | ${r.built}/${r.requested} | ${r.n} | ${r.family.map(round).join(', ')} | ${round(r.familySpread)} | ${r.skilled.map(round).join(', ')} | ${round(r.skilledSpread)} |`);
   lines.push('## Plain additive tables', '', 'Rating ≈ story base at way10/three2/luck0/traps0 + way-step × (way−10)/4 + three-step × (three−2)/3 + luck-step × luck + trap-step × traps. These are measured associations among returned boards; compare held-out errors before using the table.', '',
     '| coefficient | family | skilled |', '|---|---:|---:|');
   const names = columns(stories); names.forEach((n, i) => lines.push(`| ${n} | ${round(summary.models.family.coefficients?.[i])} | ${round(summary.models.skilled.coefficients?.[i])} |`));

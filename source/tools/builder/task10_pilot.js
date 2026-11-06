@@ -112,7 +112,12 @@ function handback(dir, out) {
     const target = p.legacyPlan.levels.find(s => s.level === row.level).target;
     const scores = [rate.train.exp, rate.validation.exp, fresh.exp];
     if (!fresh.valid || fresh.seed !== 29717 || Math.abs(fresh.exp - target) > 1 + 1e-9 || Math.max(...scores) - Math.min(...scores) > 2 + 1e-9) throw Error('Pilot fresh seed failed');
+    row.family.fresh = fresh.exp; row.family.freshSeed = 29717; row.pilotFreshRequired = true;
   }
+  fs.writeFileSync(path.join(out, 'levels.jsonl'), selected.map(r => JSON.stringify(r)).join('\n') + '\n');
+  const freshLines = ['\n## Task10 fresh checks on new raw constructions', '', '| level | seed29717 | full seed spread |', '|---|---:|---:|'];
+  for (const row of selected.filter(r => missing.includes(r.level))) freshLines.push(`| ${row.level} | ${row.family.fresh} | ${Math.max(row.family.search, row.family.validation, row.family.fresh) - Math.min(row.family.search, row.family.validation, row.family.fresh)} |`);
+  fs.appendFileSync(path.join(out, 'RESULT.md'), freshLines.join('\n') + '\n');
   const statistics = { ...hitRate(builds, first), slots: p.slots, sourcePlan: p.fingerprint };
   save(dir, 'pilot-statistics.json', statistics); save(out, 'pilot-statistics.json', statistics); return result;
 }
@@ -146,7 +151,8 @@ function worker(job, meter) {
   if (!first) throw Error('First check must precede qualification');
   const rate = { id: row.id, key, bot: meter.fingerprint, mode: 'rate', train: first.search, validation: first.validation };
   const reason = job.staticProblems.length ? job.staticProblems.join('; ') : !first.pooledHit ? 'pooledFamilyOffCurve' : Math.abs(first.search.exp - first.validation.exp) > 2 ? 'familySeedGap' : null;
-  if (reason) return { task: job.task, rowId: row.id, reason, rate, quality: { id: row.id, key, bot: meter.fingerprint, mode: 'quality', eligible: false, reason } };
+  if (reason) return { task: job.task, rowId: row.id, reason, rate, quality: { id: row.id, key, bot: meter.fingerprint, mode: 'quality', eligible: false, reason,
+    supportFingerprint: require('../factory/trap_supports.js').fingerprint(row), skilledEvidenceFingerprint: require('../factory/skilled_evidence.js').fingerprint(row) } };
   const result = require('../factory/empirical_confirm.js').confirm(row, meter);
   if (!result.quality?.eligible) return { ...result, task: job.task, rowId: row.id, reason: result.quality?.reason || 'quality' };
   const f = meter.measure(row.design, { ...opts, seed: 29717 });
