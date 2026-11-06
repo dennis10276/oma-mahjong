@@ -2,7 +2,11 @@
    with its 4 slots, ice, locks), for an honest alarm clock: Dennis found clocks "too loose" because the
    older search (hard.js clockRoute, a beam search) often found a way much longer than the shortest.
    exactRoute(g, ci) -> { k, path } with path a whole way through the level (the rest by the solver),
-   taking ci at move k; the first prefix (in order of length) that can also be finished. */
+   taking ci at move k; the first prefix (in order of length) that can also be finished.
+   STRICT RULES (Claude, 2026-11-06): this search does not know the game's peek pair (a turned-over free face-down
+   tile and its free twin are taken together without a tray slot), so k can be too long: by 1-2 moves on 5 of the
+   18 qualified 200-225 boards. Its paths are valid under Hard.validSolution, which is why it stays. For the real
+   fewest moves use tools/builder/engine.js clockShortest (peek pairs on; {strict:true} wraps this file). */
 'use strict';
 const path = require('path');
 const L = require(path.join(__dirname, '..', '..', 'www', 'layouts.js'));

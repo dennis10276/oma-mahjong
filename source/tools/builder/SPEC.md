@@ -32,6 +32,12 @@ Rules (www/layouts.js, www/hard.js validSolution):
 - Clock: losing when move index reaches n with the clock tile still on the board.
 - Win: every tile taken, tray empty, clock taken in time.
 - Face-down tiles show their picture only when free (a free face-down tile can be turned over at no move cost).
+- PEEK PAIR (www/js/board.js `peekPair`, Dennis 2026-11-06): a turned-over free face-down tile and its free twin
+  (face-up or face-down) can be taken together WITHOUT a tray slot, even with 3 tiles waiting. It is one action of
+  two moves (the clock counts both). A pair of two face-up free tiles has no such shortcut: the first one waits in
+  the tray. `Hard.validSolution` and `lab/exact.js` do not know this rule (they are stricter than the game); the
+  engine must, as an extra action kind {pair:[i, j]} when i or j is face-down and both are free and takeable. Note
+  that the face-down tile stays face-down for this purpose until it is taken (peeking does not change `down`).
   The solver may know all pictures (it is a proof tool); the bots do not.
 
 Existing helpers to reuse (do not copy-paste): `source/tools/lab/exact.js` (exactRoute: fewest moves to take a tile,
