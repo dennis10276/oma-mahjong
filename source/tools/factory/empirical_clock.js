@@ -12,13 +12,13 @@ function rebuildClock(row,options={}){
   I.setExact(true,{nodes:25000,milliseconds:700});const design=I.withSearchBudget(Date.now()+1600,()=>I.fix(edited,spare));
   if(!design||!I.valid(design)||P.spareOf(design)!==spare||row.playerFeedback&&!Placement.readable(design))continue;
   const room=roomProfile(design);if(!room.ok||room.unrelieved>1)continue;
-  const recipe=['lockedClock',...row.recipe.filter(k=>k!=='keyToEscape'&&k!=='dontGrab')],key=M.boardKey(design),next={...row,id:key.slice(0,16),design,recipe,room,forcePlanner:true,
+  const clockRole=c.free0[i]?'clockOnTopLocked':'lockedClock',recipe=[clockRole,...row.recipe.filter(k=>k!=='keyToEscape'&&k!=='dontGrab')],key=M.boardKey(design),next={...row,id:key.slice(0,16),design,recipe,room,forcePlanner:true,
    brief:'Pair the existing keys before taking the locked clock; reserve tray room through their covered route.',
    tunedFrom:row.id,edit:'clock moved from free lure to existing locked route',
    production:{...row.production,method:'empirical-clock-route-rebuild-v1',sparePolicy:'preserved from parent'},
    empiricalChange:{what:'clock moved to existing lock',kind:'clockRouteRebuild',parent:row.id,patch:P.diff(d,design)},
    trapPlan:{...row.trapPlan,recipe,authoredBoard:key,analysis:Composer.analyze(design),structuralScore:undefined,
-    steps:[{recipe:'lockedClock',clock:i,keys:design.obst.keys.slice(),locks:design.obst.locks.slice(),rebuiltFrom:row.id}],
+    steps:[{recipe:clockRole,clock:i,keys:design.obst.keys.slice(),locks:design.obst.locks.slice(),rebuiltFrom:row.id}],
     gradeHistory:[...(row.trapPlan?.gradeHistory||[]),{priorRecipe:row.recipe,priorBoard:M.boardKey(d),what:'physically moved clock to existing lock; removed free-clock claim'}]}};
   // Old motif/piece instances describe a different objective.
   delete next.predicted;delete next.pieceDesigner;delete next.frameDesigner;delete next.pieceInstances;

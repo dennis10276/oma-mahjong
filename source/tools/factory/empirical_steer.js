@@ -21,8 +21,8 @@ function measureChild(job,meter=M.createMeter()){
  const result=near?Confirm.confirm(row,meter):{id:row.id,key:M.boardKey(row.design),bot:meter.fingerprint,stage:'family-only',valid:rate.train.valid&&rate.validation.valid,family,skilledBot:null,rate,quality:{eligible:false,reason:'familyFarFromTarget'}};
  if(near){for(const mode of['rate','quality'])M.atomicJson(path.join(job.dir,row.id+'.'+mode+'.json'),result[mode]);M.atomicJson(path.join(job.dir,row.id+'.confirm.json'),result);}
  else M.atomicJson(path.join(job.dir,row.id+'.family-only.json'),result);
- const entry={id:row.id,parent:job.parent,level:job.slot.level,target:job.slot.productionAim??job.slot.target,n:row.n,recipe:row.recipe,what:row.empiricalChange.what,before:before.family,after:result.family,skilledBefore:before.skilled,skilledAfter:result.skilledBot,valid:result.valid,quality:result.quality.eligible};
- Moves.record(entry);fs.appendFileSync(path.join(job.dir,'measured-steering.jsonl'),JSON.stringify(entry)+'\n');
+ if(job.parent&&before){const entry={id:row.id,parent:job.parent,level:job.slot.level,target:job.slot.productionAim??job.slot.target,n:row.n,recipe:row.recipe,what:row.empiricalChange.what,before:before.family,after:result.family,skilledBefore:before.skilled,skilledAfter:result.skilledBot,valid:result.valid,quality:result.quality.eligible};
+  Moves.record(entry);fs.appendFileSync(path.join(job.dir,'measured-steering.jsonl'),JSON.stringify(entry)+'\n');}
  return{row,result};
 }
 // Retain the synchronous API for callers grading one parent themselves.

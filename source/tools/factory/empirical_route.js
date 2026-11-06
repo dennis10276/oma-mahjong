@@ -6,9 +6,9 @@ function moveLockedClock(row,offsets,options={}){
  if(options.protectedIds?.has(row.id)||options.protectedCreations?.has(row.origin?.creationId)||row.factoryKeep)return[];
  const d=row.design,o=d.obst,old=d.clock.i;if(!o.locks.includes(old)||o.ice[old]||d.clockMate!==undefined)return[];
  const c=I.ctxOf(d),at=c.pos[old],spare=P.spareOf(d),out=[],seen=new Set();
- for(const offset of offsets){const i=c.P[at+offset];if(i===undefined||i===old||o.keys.includes(i)||o.locks.includes(i)||o.ice[i]||seen.has(i))continue;seen.add(i);
+ for(const offset of offsets){const i=c.P[at+offset];if(i===undefined||i===old||o.keys.includes(i)||o.locks.includes(i)||o.ice[i]||seen.has(i)||options.requireBuried&&!c.nb.above[i].length)continue;seen.add(i);
   const edited={...d,clock:{i,n:999},obst:{...o,locks:o.locks.map(j=>j===old?i:j)},down:d.down.filter(j=>j!==i)};
-  I.setExact(true,{nodes:25000,milliseconds:600});const design=I.withSearchBudget(Date.now()+1400,()=>I.fix(edited,spare));
+  I.setExact(true,{nodes:options.routeNodes??25000,milliseconds:options.routeMilliseconds??600});const design=I.withSearchBudget(Date.now()+(options.routeBudget??1400),()=>I.fix(edited,spare));
   if(!design||!I.valid(design)||P.spareOf(design)!==spare||row.playerFeedback&&!Placement.readable(design))continue;
   const room=roomProfile(design);if(!room.ok||room.unrelieved>1)continue;
   const key=M.boardKey(design),next={...row,id:key.slice(0,16),design,room,forcePlanner:true,tunedFrom:row.id,edit:'locked clock moved along existing route',
@@ -18,6 +18,11 @@ function moveLockedClock(row,offsets,options={}){
     components:(row.trapPlan?.components||[]).map(x=>({...x,indices:x.kind==='locks'?x.indices.map(j=>j===old?i:j):x.indices.slice()})),
     steps:(row.trapPlan?.steps||[]).map(x=>({...x,repositionedClock:{from:old,to:i}})),gradedFrom:M.boardKey(d)}};
   delete next.predicted;
+  if(row.recipe.length===1&&row.recipe[0]==='clockOnTopLocked'&&c.nb.above[i].length){
+   next.recipe=['lockedClock'];next.brief='Pair both keys, then plan the remaining dig to the buried locked clock.';
+   next.trapPlan.recipe=next.recipe;next.trapPlan.steps=next.trapPlan.steps.map(s=>({...s,recipe:s.recipe==='clockOnTopLocked'?'lockedClock':s.recipe,addedSpecials:s.addedSpecials?.map(j=>j===old?i:j)}));
+   next.trapPlan.gradeHistory=[...(row.trapPlan?.gradeHistory||[]),{priorRecipe:row.recipe,priorBoard:M.boardKey(d),what:'physically moved the visible clock/lock onto a covered tile; objective now includes its dig'}];
+  }
   if(row.pieceDesigner||row.frameDesigner){const actual=P.decompose(design),names=new Set(actual.pieces.map(p=>p.name));next.priorAuthoringPieces=row.pieces;next.pieces=(row.pieces||[]).filter(p=>names.has(p.name));next.recipe=row.recipe.filter(k=>!k.startsWith('piece:')||names.has(k.slice(6)));next.pieceDecomposition=actual;delete next.pieceInstances;delete next.pieceDesigner;delete next.frameDesigner;}
   next.placementScore=Placement.score(design,next.recipe,row.shape);out.push(next);
  }

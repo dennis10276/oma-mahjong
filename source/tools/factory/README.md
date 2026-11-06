@@ -352,3 +352,16 @@ leave other workers idle. Each completed board updates both its parent progress
 and the round checkpoint; a resume skips it. Freeze the input jobs (including
 journal priors and seen IDs) for a round. A changed source or configuration
 requires a new round directory. Worker failures terminate the rest of that pool.
+
+`empirical_cache.js` inspects full cached results without running a bot. It never
+substitutes a short scout or an old planner; only the documented family-only
+migrations are allowed. `empirical_keys.js` moves existing key markers to a
+visible pair of comparable cover depth, keeps the pictures and obstacles, and
+reproves the clock at the same spare. Recipe-specific structural roles remain
+constraints; difficulty is measured afterwards.
+
+An optional initial `backgroundHiddenShare` in empirical construction retains
+memory choices away from the readable objective. `background_memory.js` only
+uses background tiles still covered after that route and checks whole-level
+relief after each addition. It records the requested and actual hidden counts.
+This is a construction style under empirical testing, not a difficulty model.

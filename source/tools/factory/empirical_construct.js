@@ -5,9 +5,15 @@ const read=f=>JSON.parse(fs.readFileSync(f));
 function explicitBrief(spec){const {alternatives,...brief}=spec;return brief;}
 function construct(job){const diagnostic={},row=C.construct(job.pile,explicitBrief(job.spec),job.plan,job.attempt,diagnostic,[]);if(!row)return{key:job.key,diagnostic};
  if(JSON.stringify(row.recipe)!==JSON.stringify(job.spec.recipe))throw Error('Construction changed the empirically selected recipe');
+ let backgroundMemory=null;if(job.backgroundHiddenShare!==undefined){
+  const styled=require('./background_memory.js').retain(row.design,job.backgroundHiddenShare,(row.origin.seed*29+13)>>>0,row.room);
+  row.design=styled.design;row.room=styled.room;row.id=M.boardKey(row.design).slice(0,16);row.constructionEdits.push(...styled.added.map(index=>({kind:'initialBackgroundMemory',index})));
+  row.trapPlan={...row.trapPlan,authoredBoard:M.boardKey(row.design),structuralScore:undefined,analysis:require('./trap_composer.js').analyze(row.design)};row.placementScore=require('./placement_score.js').score(row.design,row.recipe,row.shape);
+  backgroundMemory={share:job.backgroundHiddenShare,target:styled.target,before:styled.before,after:styled.after,added:styled.added};
+ }
  row.origin.creationId=job.plan.batchId+'/layout-'+job.pile.level;row.origin.creationSlot=job.pile.level;
  const result=portable(row);result.level=job.pile.level;result.placementTargetLevel=job.spec.level;result.target=job.spec.target;result.useHumanSkilled=true;result.forcePlanner=true;
- result.production={method:'empirical-recipe-production-v1',round:job.round,attempt:job.attempt,recipeChoice:job.recipeChoice,aim:job.spec.productionAim??job.spec.target,band:job.spec.productionBand??null,sparePolicy:'fixed initial grade; never a steering lever'};
+ result.production={method:'empirical-recipe-production-v1',round:job.round,attempt:job.attempt,recipeChoice:job.recipeChoice,aim:job.spec.productionAim??job.spec.target,band:job.spec.productionBand??null,sparePolicy:'fixed initial grade; never a steering lever',...(backgroundMemory?{backgroundMemory}:{})};
  return{key:job.key,row:result,diagnostic};}
 if(!isMainThread&&require.main===module)parentPort.on('message',job=>{const start=Date.now();try{parentPort.postMessage({...construct(job),seconds:(Date.now()-start)/1000});}catch(e){parentPort.postMessage({key:job.key,error:e.stack});}});
 else{

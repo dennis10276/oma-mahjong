@@ -1,5 +1,69 @@
 # Task 09: empirical production, active
 
+## Latest checkpoint (read this first, 2026-11-06)
+
+**19/26, goal still incomplete.** Original16 fixed. Current best assignment:
+204 f11eb87bdcc54650 letterH84/frozenGuards family10.075 skilled2.55;
+206 ec63a46d1a4e6eef cross84/chainReaction family10.395 skilled2.98;
+214 fb46c7888c54e687 diamond80/frozenGuards+lockedPartners family10.775 skilled3.58,
+reserved10.47. The assignment moved the earlier new boards as coverage grew.
+Missing208,210(big),215,216,217,219,221. Do not freeze the three new boards: swap
+them if it increases coverage or fixes complete windows. Keep the original16.
+
+**ACTIVE HEAVY JOB: session23329**, command task09-stream.cjs memory-budget-1
+v14/memory-budget-jobs.json, log source/build/task-09-memory-budget-1.log.
+188 registered fresh attempts:48 big first (four large layouts) and140 regular
+on the ten new whole layouts. Optional initial40% hidden-budget style: retain
+covered memory choices away from the readable goal, check the unchanged whole-
+level relief rule after each addition. Every outcome still gets actual bots.
+Constructor4workers then ONE six-worker pool streams whole-board family,
+compatible-slot checks, mechanism checks and skilled runs. Raw construction has
+no tunedFrom/edit; it is registered before measurements. Edited rows retain
+the reserved29717 qualification requirement. NO source dependency edits while
+this runs. This style is an experiment, not yet a demonstrated yield improvement.
+
+109/109 factory tests passed. Bot unchanged at f328592…561. All source changes
+are about to be committed/pushed on own branch. Current external v14 handback
+is the older18/26 checkpoint; refresh it after this round. Its eighteen verify
+with0new calls/151cache hits. Three new physical boards need current-placement
+phone previews after reassignment (204 now changed, cross moved206, diamond214).
+The old cross204 and diamond206 previously passed phone/game routes. Original
+sixteen IDs, complete design objects and gold passed canonical equality proof.
+
+Recent completed rounds: big-new-layouts-1 64attempts/30legal, two compatible
+family scores but skilled1/1.02 -> no addition. regular-near-misses-3 parallel
+queue33edits, vase4bcff9334279f872 family11.235/skilled3.2 but reserved8.65 ->
+no addition. key-placements-1 16legal existing-marker relocations, none can enter
+a slot -> no addition. fresh-small-layouts-1 150attempts/97legal, two compatible
+confirmations, one new qualifier f11eb87bdcc54650 ->19/26. buried-clock-1 six
+physical moves of old visible locked clocks onto covered tiles, no compatible
+family scores -> no addition. These stay diagnostic, not delivered.
+
+Ten new regular layouts900–911 (gaps905/910) are in palette.json (now60 with
+the two large alternatives800/801). Sizes76–88, all>=52px, no block/tower/crop.
+They are committed as task09-extra-small-piles.json and extra-large-piles.json.
+Unused alternatives can overlap; the delivered set still has strict D4/share
+checks. A cache-only scan over6897stored candidate IDs found29 full CURRENT
+skilled-in-band compatible-layout results, all already checked; no overlooked
+direct-reuse candidate. Inspector rejects old skilled and short scouts.
+
+NEXT after the active job: inspect its final assignment and qualifier yield;
+keep building if below26. Prepared visibility-grades-2/input.json (40 graded
+boards) still NOT RUN. More useful big near-floor parents6ae464f981a12297
+(house96, family10.125/skilled2.27),316da08dcb786b37 (house96,10.73/2.33),
+d948a93a4eb1566b (pyramid96,16.975/3.17). More useful small near-floor parent
+1f226941554c6e3d (oval76,11.135/2.42). Choose by TWO training family seeds,
+skilled and actual mechanisms, NEVER use reserved scores as steering input.
+Do not rerun prepare/reset scripts. Freeze each round's jobs.json (priors and
+seen IDs) on resume. Changed sources require a fresh round directory.
+
+At finish: all26, certify all22five-level windows; original16 unchanged; full
+portable handback and preview/game-route checks, all-pools empirical hit rates
+per recipe/frame/shape with unknown measurements explicit, source/test/cache
+proof, commit/push own branch. No main/game/Firebase/release/model training.
+
+## Earlier history
+
 Worktree `codex-level-factory`, branch `wip/codex-level-factory`. Task is
 `codex-tasks/TASK-09-fill-the-last-ten.md` in the parent workspace.
 Output staging: `source/build/batch-200-225-v14`; portable handback will be
