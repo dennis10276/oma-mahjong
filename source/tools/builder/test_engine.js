@@ -122,24 +122,27 @@ function brute(g, s, memo = new Map()) {
   if (!r) for (const m of E.legal(g, s)) { const t = E.step(g, s, m); if (t && brute(g, t, memo)) { r = true; break; } }
   memo.set(key, r); return r;
 }
-function randomBoard(seed) {
+// tight: more pictures, more face-down tiles and a third layer, so peek pairs and the clock rule decide more often
+function randomBoard(seed, tight) {
   const r = L.rng(seed), spots = [];
   for (let x = 0; x <= 8; x += 2) for (let y = 0; y <= 4; y += 2) spots.push([x, y, 0]);
+  if (tight) for (let x = 2; x <= 6; x += 2) spots.push([x, 2, 2]);
   for (let x = 1; x <= 7; x += 2) for (let y = 1; y <= 3; y += 2) spots.push([x, y, 1]);
-  const n = 8 + 2 * Math.floor(r() * 4), tiles = L.shuffleArr(r, spots).slice(0, n);
-  const faces = []; for (let k = 0; k < n / 2; k++) { const f = r() < 0.3 && k ? faces[faces.length - 1] : k; faces.push(f, f); }
+  const n = (tight ? 10 : 8) + 2 * Math.floor(r() * 4), tiles = L.shuffleArr(r, spots).slice(0, n);
+  const faces = []; for (let k = 0; k < n / 2; k++) { const f = r() < (tight ? 0.1 : 0.3) && k ? faces[faces.length - 1] : k; faces.push(f, f); }
   L.shuffleArr(r, faces);
   const d = board(tiles, faces);
-  d.down = [...Array(n).keys()].filter(() => r() < 0.3);
+  d.down = [...Array(n).keys()].filter(() => r() < (tight ? 0.5 : 0.3));
   if (r() < 0.5) d.obst.ice[Math.floor(r() * n)] = 1 + Math.floor(r() * 2);
   if (r() < 0.4) { const a = faces.indexOf(faces[0], 1); d.obst.keys = [0, a]; d.obst.locks = [Math.floor(r() * n)].filter(i => i !== 0 && i !== a); }
   if (r() < 0.7) d.clock = { i: Math.floor(r() * n), n: 1 + Math.floor(r() * n * 0.7) };
   return d;
 }
-test('winnable, clockShortest and classify agree with a brute force on 300 random small boards', () => {
-  let wins = 0, loses = 0;
-  for (let seed = 1; seed <= 300; seed++) {
-    const d = randomBoard(seed);
+test('winnable, clockShortest, replay and classify agree with a brute force on 600 random small boards', () => {
+  let wins = 0, loses = 0, peekDecides = 0;
+  for (let seed = 1; seed <= 600; seed++) {
+    const d = randomBoard(seed > 300 ? seed - 300 : seed, seed > 300);
+    if (brute(E.game(d), E.start(E.game(d))) && !brute(E.game(d, { strict: true }), E.start(E.game(d, { strict: true })))) peekDecides++;
     for (const strict of [false, true]) {
       const g = E.game(d, { strict }), s = E.start(g), want = brute(g, s);
       if (!strict) { const ga = E.game(d, { clockAfterAction: true }); assert.equal(E.winnable(ga, E.start(ga)).result, brute(ga, E.start(ga)) ? 'win' : 'lose', `after seed ${seed}`); }
@@ -167,7 +170,7 @@ test('winnable, clockShortest and classify agree with a brute force on 300 rando
       }
     }
   }
-  assert.ok(wins > 50 && loses > 50, `${wins} wins, ${loses} losses`);
+  assert.ok(wins > 50 && loses > 50 && peekDecides >= 3, `${wins} wins, ${loses} losses, ${peekDecides} won only with peek pairs`);
 });
 
 // ---------- the qualified boards ----------

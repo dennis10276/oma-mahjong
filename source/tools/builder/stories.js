@@ -28,7 +28,7 @@ const STORIES = {
   frozenGuards: { title: 'Frozen guards', sentence: 'The keys are frozen in; clear their guards, then the keys, then the lock on the clock.',
     spec: { clockDepth: [1, 3], clockLock: true, keys: 'far', keyCover: [0, 2], keyIce: 2 } },
   chainReaction: { title: 'Chain reaction', sentence: 'Keys open a lock, the lock thaws the ice, the ice frees the clock.',
-    spec: { clockDepth: [0, 2], clockIce: 1, lockIceNeighbours: true, keys: 'far', keyCover: [1, 3], keyIce: 1 } },
+    spec: { clockDepth: [0, 2], clockIce: 1, lockIceNeighbours: true, keys: 'far', keyCover: [0, 1], keyIce: 1 } },
   roomInTrayLocked: { title: 'Room in the tray: locked partners', sentence: 'The tiles on the clock have locked twins: they wait in the tray until you find the keys.',
     spec: { clockDepth: [3, 5], coverPartners: 'locked', keys: 'deep', keyCover: [2, 4] } },
   roomInTrayFrozen: { title: 'Room in the tray: frozen partners', sentence: 'The tiles on the clock have frozen twins: they wait in the tray while the ice melts.',
