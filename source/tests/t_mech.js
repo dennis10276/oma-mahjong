@@ -15,7 +15,10 @@ const playOut = page => page.evaluate(async () => {
     if (blocked >= 0 && seen.refused < 3) { __mj.onTap(blocked); if (G.alive[blocked]) seen.refused++; else return { error: 'a frozen or locked tile was taken' }; }
     const path = __mj.solveNow(60000);
     if (!path || !path.length) return { error: 'no way forward', steps: s, seen };
-    const m = path[0]; __mj.onTap(m); if (G.alive[m] && G.peek === m) __mj.onTap(m);
+    // a peek pair (3 waiting, the face-down tile first): the twin's tap takes both
+    const m = path[0]; __mj.onTap(m);
+    const pair = path[1] !== undefined && G.tiles[path[1]].face === G.tiles[m].face && G.tray.length >= 3;
+    if (G.alive[m] && G.peek === m && !pair) __mj.onTap(m);
     seen.steps++;
     await wait(300);
   }
@@ -111,6 +114,18 @@ module.exports = [
       t.ok(await p.evaluate(() => document.querySelectorAll('#board .ob[data-k="lock"]').length >= 2 && document.querySelectorAll('#board .ob[data-k="key"]').length === 2), 'locks and keys drawn');
       // keys keep the same picture
       t.ok(await p.evaluate(() => { const [a, b] = __mj.G.ob.keys; return __mj.G.tiles[a].face === __mj.G.tiles[b].face; }), 'the two keys are a pair');
+      // a tap on a locked tile, free or still covered, shows the keys; tiles lying on a key turn see-through
+      const shown = await p.evaluate(() => {
+        const G = __mj.G, locks = [...G.ob.locks].filter(i => G.alive[i]);
+        const lock = locks.find(i => !__mj.Layouts.isFree(i, G.alive, G.nb)) ?? locks[0] ?? -1;   // a covered one if there is one
+        const over = new Set(), todo = G.ob.keys.filter(k => G.alive[k]);
+        while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }
+        __mj.onTap(lock);
+        return { lock, keys: G.ob.keys.filter(k => G.alive[k]).map(k => G.tiles[k].el.classList.contains('obhint')),
+          over: [...over].map(j => G.tiles[j].el.classList.contains('xray')) };
+      });
+      t.ok(shown.lock >= 0 && shown.keys.length && shown.keys.every(Boolean), 'a tap on a locked tile wiggles the keys', shown);
+      t.ok(shown.over.every(Boolean), 'tiles on top of a key turn see-through', shown);
       const r = await playOut(p);
       t.ok(!r.error && r.unlocked, 'played to the end, locks opened', r);
       await sleep(3500);

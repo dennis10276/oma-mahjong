@@ -112,6 +112,12 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   replay uploads time out after 15 seconds and retry on return to the foreground. In Alle levels,
   replay buttons use active duration: under 60 seconds muted red, 60-119 seconds green,
   120+ seconds stronger green, unknown duration neutral. Boards and predictions are unchanged.
+- Release 1.64 (Dennis 2026-11-06): the peek pair (a turned-over face-down tile and its free twin go together
+  without a tray slot, even with 3 waiting) is known to the hint and to `Hard.validSolution` (with `g.down`).
+  The hint prefers a way without such a pair; when the pair is the only way out it shows only the face-down
+  tile. A tap on a locked tile, free or still covered, wiggles the keys, and tiles lying on a buried key turn
+  see-through for a moment (from the on-hold `wip/release-1.63`; its levels 175-200 are NOT in this release:
+  players are past them and 175-199 stay as they are). Boards and predictions are unchanged.
 
 - `dash/predict.json` (source: `source/site/dash/predict.json`) holds, per player, the prediction for
   their next 60 levels: first try, within 2 and within 4 tries. The dashboard shows it in the card
