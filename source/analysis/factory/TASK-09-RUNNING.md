@@ -65,13 +65,42 @@ and two-seed spread before empirical_confirm. 101 factory tests passed.
 Do not edit any active dependencies. Next planned inputs: additional-stock,
 visibility-grades-2, then graded near-floor parents above with larger breadth.
 
-Active now: near-floor-grades-2, session expected from current shell tool output,
+Completed: near-floor-grades-2, session77073,
 log source/build/task-09-near-floor-grades-2.log. Parents316da08dcb786b37 and
 84a049f6b0bb7c31 big210, abc85821f9ac12e5 diamond, 056e8376c8b53ee8 small
 pyramid; budget/breadth12. Whole-board family scores and ablations selected these
 parents. Steering now checks ALL compatible missing slots before skilled work,
 so a good edit is not discarded merely for missing its initial target. The
 original16 stay protected; new204 may be swapped. 101 tests pass.
+
+That round measured39 edits. New206 fb46c7888c54e687 diamond80 passes:
+family10.775, skilled3.58, reserved10.47. Coverage18/26 (204 and206 added).
+Handback checkpoint in external v14/levels.jsonl, coverage.json and RESULT.md
+explicitly says incomplete. It verifies18 with0 new bot calls/151 cache hits.
+New204 and206 phone previews and real-game stored routes pass. Original16 are
+still exact. Remaining:208,210,214,215,216,217,219,221.
+
+Additional-stock2cdf01bcaa6c719d failed current skilled floor (1.05), no addition.
+New independent whole-layout search found two 96-tile alternatives (house800,
+pyramid801) from66 trials. They differ from all48 prior layouts by D4 identity
+and pass max75% share against live context and the16 fixed boards. Unused
+alternatives may overlap one another; batch assignment still forbids doing so
+in the delivered set. Both have52.3px tiles and no towers/block silhouette.
+Saved in task09-extra-large-piles.json and v14/palette.json (now50 layouts).
+
+CURRENT HEAVY JOB: big-new-layouts-1, exec session32802,
+source/build/task-09-big-new-layouts-1.log. 64 attempts on800/801 using four
+empirically useful recipe families and fixed initial spare1. One heavy job only.
+Do not edit dependencies while it runs. Next: parallel graded search on near
+floor stock (vase b8c2bf1052fa7349, pyramid8c0523605ce809c2, oval0e7075fdded33ebf,
+letterH eef9b6983c79055d), and prepared visibility-grades-2.
+
+Queue refactor (not yet committed at this note): prepare/checkpoint parents,
+dispatch individual genomes through ONE four-worker pool, checkpoint every
+child, preserve unknown skilled. Tests include load balancing, worker failure
+cleanup, resumable prepared parents and configuration protection. 105/105 pass.
+Decimal reverse-step boundary now uses1e-9 arithmetic epsilon (same.25 rule),
+with a regression distinguishing .25 from .251. Bot remains frozen.
 
 Performance correction: a family9–14 score alone is insufficient reason to run
 the skilled search. Empirical steering now checks its actual working interval

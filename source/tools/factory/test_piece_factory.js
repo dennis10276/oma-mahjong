@@ -21,7 +21,7 @@ test('confirmation keeps pre-bot predictions and measures both full family seeds
   assert(calls.some(o=>o.setting==='family'&&o.seed===18427&&o.runs===20&&o.seeds===2));assert.equal(result.quality.skilled.botExp,2.08);assert(result.valid);
 });
 test('importing worker-capable libraries does not attach competing message handlers',async()=>{
-  const {Worker}=require('worker_threads'),files=['batch_evaluate.js','piece_measure.js','piece_confirm.js','piece_factory.js','construct_original.js'].map(f=>path.resolve(__dirname,f));
+  const {Worker}=require('worker_threads'),files=['batch_evaluate.js','piece_measure.js','piece_confirm.js','piece_factory.js','construct_original.js','empirical_construct.js','empirical_confirm.js','empirical_steer.js'].map(f=>path.resolve(__dirname,f));
   const result=await new Promise((resolve,reject)=>{const worker=new Worker(`const {parentPort}=require('worker_threads');const modules=${JSON.stringify(files)}.map(f=>require(f));parentPort.postMessage({listeners:parentPort.listenerCount('message'),exports:modules.map(m=>typeof m.run)});`,{eval:true});worker.once('message',resolve);worker.once('error',reject);});
   assert.equal(result.listeners,0);assert(result.exports.every(x=>x==='function'));
 });

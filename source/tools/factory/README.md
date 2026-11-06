@@ -345,3 +345,10 @@ skilled result stays unknown. `empirical_confirm.js` checks room, attribution,
 component/special ablations and any free-clock counterfactual first, then runs
 the unchanged full confirmation. Rejected mechanisms need no skilled search;
 those reports have `skilledBot: null` and an explicit rejection reason.
+
+Grading prepares and checkpoints all parent proposals first, then dispatches
+individual boards through one bounded worker pool. Long parent families cannot
+leave other workers idle. Each completed board updates both its parent progress
+and the round checkpoint; a resume skips it. Freeze the input jobs (including
+journal priors and seen IDs) for a round. A changed source or configuration
+requires a new round directory. Worker failures terminate the rest of that pool.
