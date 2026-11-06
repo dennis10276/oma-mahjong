@@ -566,8 +566,16 @@ const Layouts = (() => {
     return out.slice(0, pairs);
   }
 
-  /* Small depth-first solver: finds a next move that still leads to a full clear (used by the hint). */
-  function solve(tiles, nb, faces, alive0, tray0, limit = 25000, rules = null) {
+  /* Small depth-first solver: finds a next move that still leads to a full clear (used by the hint).
+     down (optional, 1 = face-down): with 3 tiles waiting, a free face-down tile and its free twin can still be
+     taken together without a tray slot (board.js peekPair: turn the face-down one over, then tap its twin). In the
+     path such a pair is written face-down tile first, then its twin. */
+  function solve(tiles, nb, faces, alive0, tray0, limit = 25000, rules = null, down = null) {
+    // a way without peek pairs when there is one (the hint as it always was); the pair only when nothing else works
+    if (down) return solve(tiles, nb, faces, alive0, tray0, limit, rules) || solve1(tiles, nb, faces, alive0, tray0, limit, rules, down);
+    return solve1(tiles, nb, faces, alive0, tray0, limit, rules, null);
+  }
+  function solve1(tiles, nb, faces, alive0, tray0, limit, rules, down) {
     const n = tiles.length;
     const alive = Uint8Array.from(alive0);
     const can = rules ? (i => takeable(i, alive, nb, rules, alive0)) : (i => isFree(i, alive, nb));
@@ -584,7 +592,11 @@ const Layouts = (() => {
       const pair = fr.filter(i => !tf.has(faces[i]) && cnt[faces[i]] >= 2);
       const rest = fr.filter(i => !tf.has(faces[i]) && cnt[faces[i]] < 2);
       if (match.length) return [match[0]];           // taking a match is always safe
-      if (tray.length >= SLOTS - 1) return [];  // only 3 unmatched tiles may wait in the tray
+      if (tray.length >= SLOTS - 1) {               // only 3 unmatched tiles may wait in the tray
+        const peek = [];
+        if (down) for (const a of fr) for (const b of fr) if (a !== b && down[a] && faces[a] === faces[b] && faces[a] !== -1 && (!down[b] || a < b)) peek.push([a, b]);
+        return peek;
+      }
       return [...pair.slice(0, 2), ...rest];
     }
     function rec(tray, left) {
@@ -593,6 +605,12 @@ const Layouts = (() => {
       const k = key(tray);
       if (dead.has(k)) return false;
       for (const m of moves(tray)) {
+        if (Array.isArray(m)) {                      // a peek pair: both go, the tray stays as it is
+          alive[m[0]] = 0; alive[m[1]] = 0;
+          if (rec(tray, left - 2)) { alive[m[0]] = 1; alive[m[1]] = 1; path.unshift(m[0], m[1]); return true; }
+          alive[m[0]] = 1; alive[m[1]] = 1;
+          continue;
+        }
         alive[m] = 0;
         const mi = faces[m] === -1 ? -2 : tray.findIndex(t => faces[t] === faces[m]);
         const nt = mi === -2 ? tray : mi >= 0 ? tray.filter((_, q) => q !== mi) : tray.concat([m]);

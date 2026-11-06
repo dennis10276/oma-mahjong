@@ -144,7 +144,11 @@ async function closeModal(page) { await page.evaluate(() => { const m = document
 async function solve(page, waitAfter = 3500) {
   const p = await page.evaluate(() => __mj.solveNow(80000));
   if (!p) return false;
-  await page.evaluate(p => { for (const m of p) { const G = __mj.G; if (!G.alive[m]) continue; __mj.onTap(m); if (G.alive[m]) __mj.onTap(m); } }, p);
+  // a face-down tile is turned over by the first tap and taken by the second; in a peek pair (3 waiting, the
+  // solver writes the face-down tile first and its twin next) the twin's tap takes both
+  await page.evaluate(p => { p.forEach((m, k) => { const G = __mj.G; if (!G.alive[m]) return; __mj.onTap(m);
+    const twinNext = p[k + 1] !== undefined && G.tiles[p[k + 1]].face === G.tiles[m].face && G.tray.length >= 3 && G.peek === m;
+    if (G.alive[m] && !twinNext) __mj.onTap(m); }); }, p);
   await sleep(waitAfter);
   return true;
 }
