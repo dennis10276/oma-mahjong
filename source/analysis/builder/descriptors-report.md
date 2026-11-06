@@ -7,7 +7,8 @@ the clock sits on the pile. Then each measure was compared with the family bot's
 skilled bot's rating. Only simple things: medians, rank correlations ("rho": 0 = no link, 1 = perfect order,
 negative = the opposite way; with ~450 boards anything under about 0.1 is noise, with ~1,250 under about 0.06)
 and the single best cut-off for each measure. Every number: `descriptors-analysis.json`; per board:
-`descriptors.jsonl`.
+`descriptors.jsonl`. Sections 1-5 are the first run (before engine.js; kept as `descriptors-v1*.json*`); section 6
+adds the engine's decision traps and the clock way under the game's own rules (peek pairs), on the same boards.
 
 Two groups of boards behave very differently, so they are reported apart:
 
@@ -98,19 +99,85 @@ is at 2. To make it harder for the family only: a longer, tighter clock way with
   a stored solution (0 of 1,989: no board has the tray at most 1 for the first 60% and 3 at the end), and no clock
   sits on a separate island (no board has a separate island by touching tiles).
 
+## 6. With the engine: decision traps and the game's own clock way
+
+engine.js (helper A) now proves things on a board. Two new groups of measures:
+
+- **Decision traps** on the stored way up to the clock: at every step the engine checks each move the player could
+  make instead and proves whether the level can still be won after it. A *decision point* is a step with at least
+  one losing move. A *deep* losing move is one where the player can still make 1 or more moves before the loss is
+  forced (not just a 4th tile or a late clock at once). A *tempting* one looks good: a pair, a single whose twin is
+  in sight, a tray match, the clock, or a peek pair. *Depth*: how many moves you can still make after it (the engine
+  stops counting at 12).
+- **The game's clock way**: the fewest moves to take the clock when peek pairs are allowed (k_game, spare_game), and
+  the tray on that way (a peek pair takes no slot).
+
+**Decision traps and the family.** They mostly repeat the clock way. The number of decision points goes with the
+way length (rho 0.70-0.76 on historical boards, 0.92 in the experiments), so on their own they look as good as the
+way: historical rho 0.20 with the family (within batches 0.14); 0-4 decision points -> family median 8.4 (45% of
+boards at 9+), 13 or more -> 12.3 (78%). Experiments: 0-2 points -> 1.2 tries, 3-5 -> 2.0, 6-8 -> 8.7, 9+ -> 6.5
+(rho 0.70, about the same as "3 waiting", 0.73). Once the way length is held fixed (comparing boards with a way of
+1-6, 7-10, 11-14 and 15+ moves separately), what is left for the family is small: decision points 0.14, deep losing
+moves 0.07, tempting deep moves 0.07. Tempting traps that lose later: boards with none -> family median 11.0, with
+3 or more -> 11.4. For the family, the traps add little that the way does not already say.
+
+**Decision traps and the skilled player.** Here they add something new, but it is still modest.
+
+- On their own they look weak (decision points rho 0.11, deep losing moves 0.16), because longer ways make the
+  skilled bot's life slightly *easier*. Holding the way length fixed, they show up: decision points 0.28, deep
+  losing moves 0.20, single-winning-move steps 0.20 (all with the skilled rating, 459 boards).
+- Deep losing moves are almost unrelated to luck moments (rho 0.03), so this is a second, separate source of
+  skilled difficulty next to hidden tiles (luck moments, held the same way: 0.39).
+- Example, ways of 11-14 moves: losing moves on the way 0-60 -> 1 of 21 boards (5%) at skilled 2.5+;
+  61-100 -> 14%; 101-140 -> 52% (26 of 50); 141+ -> 45% (5 of 11).
+- Tempting traps that lose later: on 518 of 1,255 historical boards. Skilled 2.5+ on 23% of boards without one,
+  37-38% with one or more. Of the kinds, "a single whose twin is in sight" goes with skilled difficulty (rho 0.15),
+  the clock itself slightly the other way (-0.13).
+- Depth says little: the deepest losing move is usually at the cap (12 on 638 of 1,259 boards), and the median
+  depth has no link (rho 0.01 family, -0.02 skilled). Where a board has tempting deep moves, shallower ones (a loss
+  within about 4 moves) go slightly more with skilled 2.5+ (rho -0.22), on few boards.
+
+**The gate (family 9-14, skilled 2.5+ or not).** A tempting trap that loses later: 69 of 186 boards (37%) reach
+skilled 2.5+, against 61 of 257 (24%) without one. That is about as good as "3 or more face-down tiles on the
+way" (39% vs 24%) and a bit weaker than luck moments (39% vs 20%). The best single cut-off is still a luck measure
+(balanced accuracy 0.61); no trap measure beats it.
+
+**The peek-aware clock way does not change the earlier findings.**
+
+- The peek pair shortens the fewest moves to the clock on 223 of 1,739 clocked boards: by 1 move on 111, 2 on 95,
+  3 on 15, 8 on 2. So on about 1 board in 8 the clock is looser in the game than the factory's strict check said
+  (spare_game above spare on 252 boards).
+- The links are the same: game way length with the family rho 0.19 (strict 0.19), with the skilled bot -0.05
+  (strict -0.04); moves with 3 waiting on the game way 0.17 (strict 0.20); experiments 0.71 (strict 0.73). The
+  experiments have almost no face-down tiles, so there the two ways are nearly identical.
+- The game's shortest way often runs fuller: it may sit at 3 waiting and go on with a peek pair. It has more moves
+  at 3 waiting than the strict way on 463 boards and fewer on 171.
+- Boards where the peek pair saves 2 or more moves are harder for both bots (family median 12.5, 85% at 9+;
+  skilled 50% at 2.5+, 18 of 36). These are boards with many face-down tiles, so this is most likely the
+  hidden-tile effect of section 2 again, not the peek pair itself.
+
 ## Limits
 
-- All links are weak on the historical boards (best rho 0.19 for the family, 0.33 for the skilled bot). These
-  measures explain a small part of the rating; most of it lies in the order of play the bots choose, which is what
-  the decision traps (engine.js, not done yet: the `traps` field is empty) are meant to catch.
+- All links are weak on the historical boards (best rho 0.19 for the family, 0.33 for the skilled bot; with the
+  traps, 0.28 for the skilled bot once the way length is held fixed). These measures explain a small part of the
+  rating.
 - Peek pairs: a turned-over face-down tile and its free twin go together without a tray slot, even with 3 waiting.
   describe.js counts them (as relief, apart from face-up pairs) and does not put the first tile of a peek pair in the
-  tray. But the exact clock search (`lab/exact.js`) does not know this rule: its shortest way can be longer than the
-  game's, so way length and spare can be slightly off where a peek pair helps (the shortest way contains a
-  peek pair on 386 of 1,739 clocked boards). roomProfile (luck moments) does not know it either.
+  tray. The strict fields (frame.k, spare, tray.exactWay) come from `lab/exact.js`, which does not know the rule;
+  the game's fields (frame.kGame, spareGame, tray.gameWay) and the traps come from engine.js, which does (section
+  6). roomProfile (luck moments) does not know it.
+- Decision traps follow the stored way, not every way, and the engine knows every picture (a player does not).
+  Budget per move: 10,000 nodes / 30 ms, depth search 3,000 nodes. 1,164 move verdicts on 393 boards ran out of
+  budget ("unknown"): they are not counted as losing, so losing counts are a little low. The game's clock way was
+  unresolved on 22 boards and unsure on 4 (where its finish check ran out, it came out 1 move longer than the strict
+  way).
+- The second run shared the machine with other helpers: about 12 minutes on 2 workers (25 CPU-minutes summed over
+  boards; traps median 118 ms, game way 34 ms per board). Under that load the strict search's 1.5 s ran out on 59
+  boards; the strict search is the same in both runs (identical k on all 1,680 boards both resolved), so for 58 of
+  them the strict fields come from the first run (done in the analysis, `strictFilledFromV1`).
 - The tray on the way follows one shortest way (and the stored solution); another shortest way can be calmer.
 - Exact search budget 150,000 nodes / 1.5 s per board: 1 of 1,739 clocked boards unresolved (left out of the way
-  measures). The whole run took 8 CPU-minutes (median 63 ms for the exact search).
+  measures). The first run took 8 CPU-minutes (median 63 ms for the exact search).
 - Experiments have only 5 skilled-hard boards: their skilled correlations (up to 0.4-0.6) rest on tiny
   differences (1.00 vs 1.05 tries) and should not be trusted.
 - "Within one batch" numbers average the board groups (`group`) of 8+ boards; where few groups vary (picture
