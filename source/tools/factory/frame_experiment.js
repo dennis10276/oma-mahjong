@@ -6,13 +6,13 @@ function grid(){return [.1,.2,.3].flatMap(share=>[0,2,4].map(depth=>({share,dept
 function settings(common){const singles=Object.entries(P.CATALOGUE).flatMap(([name,s])=>[...new Map([...s.grid,s.defaults].map(params=>[JSON.stringify(params),params])).values()].map(params=>({kind:'conditional-single',pieces:[{name,params}]})));
  const pairs=common.flatMap((a,i)=>common.slice(i+1).map(b=>({kind:'conditional-pair',pieces:[a,b].sort((x,y)=>x==='clock'?-1:y==='clock'?1:common.indexOf(x)-common.indexOf(y)).map(name=>({name,params:P.CATALOGUE[name].defaults}))})));
  return [...singles,...pairs];}
+function replacementRecord(before,after,op,seed){const patch=P.diff(before,after);if(!patch.length)return null;return{id:M.digest([op,seed,patch]).slice(0,16),name:op.name,params:op.params,owned:[...new Set(patch.flatMap(p=>p.path.length===2?[p.path[1]]:p.path[0]==='keys'?[...p.before,...p.after]:p.path[0]==='clock'?[p.before?.i,p.after?.i].filter(Number.isInteger):p.path[0]==='clockMate'?[p.before,p.after].filter(Number.isInteger):[]))],patch,frameReplacement:true};}
 function apply(base,framed,op,seed,options={}){
- if(op.name==='wrongClock'){const neutral=I.clone(framed);neutral.clock=null;delete neutral.clockMate;delete neutral.pieceInstances;return P.place(op.name,neutral,P.wayFor(neutral),op.params,I.rngOf(seed));}
+ if(op.name==='wrongClock'){const neutral=I.clone(framed);neutral.clock=null;delete neutral.clockMate;delete neutral.pieceInstances;const out=P.place(op.name,neutral,P.wayFor(neutral),op.params,I.rngOf(seed));if(!out)return null;const record=replacementRecord(framed,out,op,seed);if(!record)return null;out.pieceInstances=[record];return out;}
  if(['clock','clockWay'].includes(op.name)){
   const old=framed.pressureFrame.requested,requested={...old,spare:op.params.spare??old.spare,...(op.name==='clock'?{depth:op.params.depth}:op.name==='clockWay'?{share:op.params.share}:{depth:0})};
   const out=F.construct(base,requested,seed,{milliseconds:1500,...options});if(!out)return null;
-  const patch=P.diff(framed,out);if(!patch.length)return null;
-  out.pieceInstances=[{id:M.digest([op,seed,patch]).slice(0,16),name:op.name,params:op.params,owned:[...new Set(patch.flatMap(p=>p.path.length===2?[p.path[1]]:p.path[0]==='clock'?[p.before?.i,p.after?.i].filter(Number.isInteger):p.path[0]==='clockMate'?[p.before,p.after].filter(Number.isInteger):[]))],patch,frameReplacement:true}];return out;
+  const record=replacementRecord(framed,out,op,seed);if(!record)return null;out.pieceInstances=[record];return out;
  }
  return P.place(op.name,framed,P.wayFor(framed),op.params,I.rngOf(seed));
 }
