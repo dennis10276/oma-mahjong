@@ -625,3 +625,14 @@ traps that it uses to design every level and knowing how hard the outcoming leve
   a level's family and skilled tries from its pieces (checked on held-out boards), and a designer that picks pieces to
   hit each slot and tunes one piece at a time by its measured effect.
 - Skilled player = better of two styles (3201e1e). Task 05: 9/26; main gap: traps that catch the family but not Dennis.
+
+## Curve tolerance and pressure frames (Dennis, 2026-11-06)
+Task 07 (Codex): 16 pieces measured alone and in pairs on 8 calm boards: everything except the clock frame stays at
+~x1.00; the clock's depth and the share of the board before it set the difficulty; pieces bite only under that pressure
+(one-piece cliffs 11.6 -> 17 -> 7.3). The additive model failed prospectively (12 new boards: family MAE 7.64, none
+qualified). 10/26 levels.
+Approved ("ye to 2 and 1 ok"):
+- Tolerance: per level pooled family within +-1.0 (tuned rows also the fresh seed); every 5 consecutive levels
+  average within +-0.5 of the curve. Reason: two runs of one board differ ~1-1.5 tries at 10.
+- Pieces inside a pressure frame: frame (clock depth, way share, spare) measured first, then each piece's effect
+  inside representative frames; pre-registered test (>= 8 of 12 new compositions within +-1). Codex Task 08.
