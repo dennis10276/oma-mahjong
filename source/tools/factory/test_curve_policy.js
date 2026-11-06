@@ -29,3 +29,11 @@ test('approved tolerance applies equally to pooled assignment and reserved seed;
  assert(Final.qualifies({edit:'one piece'},rate,fresh(11),{target:10},plan));assert(!Final.qualifies({edit:'one piece'},rate,fresh(11.001),{target:10},plan));
  assert(!Final.qualifies({edit:'one piece'},{train:{exp:8.9},validation:{exp:10}},fresh(11),{target:10},plan));
 });
+test('assignment rejects a complete drifting window and accepts a balanced one',t=>{
+ const {assign}=require('./batch_assign.js'),{boardKey,atomicJson}=require('./meter.js'),dir=fs.mkdtempSync(path.join(require('os').tmpdir(),'oma-window8-'));t.after(()=>fs.rmSync(dir,{recursive:true}));
+ const plan={levels:Array.from({length:5},(_,i)=>({level:200+i,target:10,big:false})),tolerance:1,maxSeedGap:2,skilledMin:2.5,skilledMax:6,minTiles:72,curveWindow:{size:5,tolerance:.5},placementReportOnly:true};
+ const rows=plan.levels.map((s,k)=>{const design={tiles:Array.from({length:72},(_,i)=>[i*(13+k*7),i%3*31,0]),faces:Array.from({length:72},(_,i)=>i>>1),down:[],obst:{ice:{},keys:[],locks:[]},clock:{i:0,n:2},solution:Array.from({length:72},(_,i)=>i)},id=boardKey(design).slice(0,16);atomicJson(dir+'/'+id+'.quality.json',{eligible:true,skilled:{exp:3},room:{ok:true},atTrap:1,special:{}});return{id,level:s.level,shape:'test'+k,n:72,recipe:[],design,origin:{intendedLevel:s.level}};});
+ const scores=values=>rows.forEach((r,k)=>atomicJson(dir+'/'+r.id+'.rate.json',{train:{valid:true,exp:values[k]},validation:{valid:true,exp:values[k]}}));
+ scores([10.6,10.6,10.6,10.6,10.6]);assert.equal(assign(plan,rows,dir,10000).rows,null);assert.equal(assign({...plan,curveWindow:undefined},rows,dir,10000).rows.length,5);
+ scores([9,9,10,11,11]);const valid=assign(plan,rows,dir,10000);assert.equal(valid.rows.length,5);assert.equal(valid.curveWindows[0].meanOffset,0);
+});

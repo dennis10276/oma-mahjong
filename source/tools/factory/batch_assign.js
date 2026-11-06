@@ -50,7 +50,16 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
       !compare(inv[a], inv[b], plan.originality.maxLayoutShare);
   const picks = Array(levels.length).fill(-1), used = new Set();
   let nodes = 0, best = null;
-  function windowOK(k,r){const scores=new Map(picks.flatMap((p,j)=>p>=0?[[levels[j].level,inv[p].exp]]:[]));scores.set(levels[k].level,r.exp);return Curve.accepts(plan,scores);}
+  Curve.windows(plan,new Map());
+  const windowsBySlot=levels.map((s,k)=>plan.curveWindow?levels.flatMap((_,start)=>{
+    const ids=Array.from({length:plan.curveWindow.size},(_,i)=>start+i);
+    return ids.includes(k)&&ids.every((j,i)=>levels[j]?.level===levels[start].level+i)?[ids]:[];
+  }):[]);
+  function windowOK(k,r){for(const window of windowsBySlot[k]){
+    let sum=r.exp-levels[k].target,complete=true;
+    for(const j of window)if(j!==k){if(picks[j]<0){complete=false;break;}sum+=inv[picks[j]].exp-levels[j].target;}
+    if(complete&&Math.abs(sum/window.length)>plan.curveWindow.tolerance+1e-9)return false;
+  }return true;}
   function choices(k) {
     return allowed[k].filter(({ r, i }) => !used.has(i) && (!plan.originality?.required ||
       picks.filter(p => p >= 0 && [...new Set(inv[p].recipe)].sort().join('+') === [...new Set(r.recipe)].sort().join('+')).length < plan.originality.maxSameRecipe) && picks.every((p, j) => p < 0 ||
@@ -91,14 +100,18 @@ function assign(plan, pool, dir, limit = 3000000, optimize = false, allowPartial
         Math.abs(cost-best.cost)<=1e-9 && secondaryCost<(best.secondaryCost??Infinity))) best = { cost, secondaryCost, filled, picks: picks.slice() };
       return;
     }
-    let k = -1, opts = null;
+    let k = -1, opts = null;const minCosts=[];
     for (let j = 0; j < levels.length; j++) if (picks[j] === -1) {
       const c = choices(j);
       if (!c.length && !allowPartial) return;
+      if(c.length)minCosts.push(Math.min(...c.map(({r})=>Math.abs(r.exp-levels[j].target))));
       if (!opts || c.length < opts.length) { k = j; opts = c; }
     }
+    const possible=Math.min(capacity,filled+minCosts.length);
+    if(best&&possible<best.filled)return;
+    if(plan.curveWindow&&best&&possible===best.filled){minCosts.sort((a,b)=>a-b);const needed=Math.max(0,best.filled-filled),lower=cost+minCosts.slice(0,needed).reduce((n,x)=>n+x,0);if(lower>best.cost+1e-9)return;}
     const preference = r => Math.abs(r.exp - levels[k].target) + Preferences.penalty(r.shape, plan) + (plan.placementReportOnly ? 0 : (100-r.placementScore.total)*.01);
-    opts.sort((a, b) => preference(a.r) - preference(b.r));
+    opts.sort((a, b) => (plan.curveWindow?Math.abs(a.r.exp-levels[k].target)-Math.abs(b.r.exp-levels[k].target):0)||preference(a.r) - preference(b.r));
     for (const { r, i } of opts) {
       picks[k] = i; used.add(i);
       const preferenceCost=preference(r)+(r.quality.lateShare>=0.3?.2:0);
