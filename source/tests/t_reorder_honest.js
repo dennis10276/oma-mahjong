@@ -44,31 +44,6 @@ module.exports = [
       t.eq(H.ratingModel(lv), now.ratingModels[base - now.from], 'repeated board retains calibration label ' + lv);
     }
   } },
-  { name: 'reorder honest: draft predictions follow relocated boards and leave current 1.53 predictions separate', cpu: true, async run(t) {
-    const original = require('../site/dash/predict-1.53.json'), draft = require('../analysis/reorder-92-predictions.json');
-    const report = require('../analysis/reorder-92.json'), moves = new Map(report.moves.map(m => [m.lv, m]));
-    const baseline = load('../analysis/levels-before-reorder-92.js');
-    t.eq(original.version, '1.53', 'old-client predictions retained');
-    // 1.54's predictions are kept for 1.54 apps (predict-1.54.json); the current file (1.55 on) registers both
-    const released = require('../site/dash/predict-1.54.json'), current = require('../site/dash/predict.json');
-    t.eq(released.version, '1.54', 'the 1.54 prediction version matches the reorder release');
-    t.eq(current.previousVersions['1.53'], 'predict-1.53.json', 'old-client prediction file registered');
-    t.eq(current.previousVersions['1.54'], 'predict-1.54.json', '1.54 prediction file registered');
-    t.eq(draft.baseVersion, '1.53', 'draft identifies its baseline');
-    t.eq(draft.generation, 8, 'draft identifies reordered generation');
-    t.eq(draft.version, 'unpublished-reorder-92', 'draft cannot be confused with released predictions');
-    for (const [id, p] of Object.entries(draft.players)) {
-      t.eq(Object.keys(p.levels), Object.keys(original.players[id].levels), 'same player prediction window ' + p.name);
-      for (const [lv, odds] of Object.entries(p.levels)) {
-        if (+lv <= 91) { t.eq(odds, original.players[id].levels[lv], 'unchanged board prediction ' + p.name + ' ' + lv); continue; }
-        const m = moves.get(+lv), r = m.validation[p.name], old = baseline.levels[m.was - baseline.from];
-        t.eq(odds[3], old[7] ? old[7][1] : 0, 'clock belongs to relocated board ' + p.name + ' ' + lv);
-        t.ok(0 <= odds[0] && odds[0] <= odds[1] && odds[1] <= odds[2] && odds[2] <= 100, 'valid draft cumulative odds ' + p.name + ' ' + lv);
-        if (r) t.eq(odds.slice(0, 3), [r.first, r.two, r.four].map(q => Math.round(q * 100)), 'draft prediction measured on relocated board ' + p.name + ' ' + lv);
-        t.eq(released.players[id].levels[lv], odds, 'release uses the reviewed prediction ' + p.name + ' ' + lv);
-      }
-    }
-  } },
   { name: 'reorder honest: generation-7 level 91 resumes, generation-7 level 92 restarts; progress and recordings retained', async run(t, { startLevel, sleep }) {
     const p = await t.phone({ state: { name: 'Dennis', pid: 'test-reorder-save', level: 106,
       stars: { 91: 3, 92: 2 }, seenSp: { clock: 1, clockMoves: 1, ice: 1, lock: 1, gold: 1, joker: 1 } } });

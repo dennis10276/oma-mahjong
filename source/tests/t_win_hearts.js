@@ -6,7 +6,9 @@ const family = {
 };
 const bounds = p => p.locator('#modalBox').evaluate(el => [el.offsetWidth, el.offsetHeight]);
 // (the same size, give or take a pixel of rounding: a busy test machine can lay out a row 1 px differently)
-const near = (a, b) => a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) <= 4);   // the win popup settles within a few pixels (508-511 seen on the same build)
+const near = (a, b) => a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) <= 1);
+// the win popup is still settling for a moment after it opens (508-513 seen on the same build): measure once it holds still
+const settled = async p => { let a = await bounds(p); for (let k = 0; k < 20; k++) { await new Promise(r => setTimeout(r, 150)); const b = await bounds(p); if (b[0] === a[0] && b[1] === a[1]) return b; a = b; } return a; };
 
 module.exports = [
   {
@@ -128,9 +130,9 @@ module.exports = [
       await p.evaluate(async () => updatePresence(true));
       t.ok(db.get('scores/pMe/online') > 0, 'returning refreshes presence');
       await startLevel(p, 12); await solve(p, 3500); await sleep(400);
-      const initial = await bounds(p);
+      const initial = await settled(p);
       await p.locator('#wFamily .heart-btn').first().click();
-      { const b = await bounds(p); t.ok(near(b, initial), 'English picker matches the small win popup', { got: b, want: initial }); }
+      { const b = await settled(p); t.ok(near(b, initial), 'English picker matches the small win popup', { got: b, want: initial }); }
       t.ok(await p.locator('#modalBox').evaluate(el => el.scrollWidth <= el.clientWidth && el.scrollHeight <= el.clientHeight + 1), 'all controls fit at 360 × 640');
       t.eq(await p.locator('#hmBack').innerText(), '← Back', 'localized back button');
       await p.locator('#hmMessage').fill('Hello!');
