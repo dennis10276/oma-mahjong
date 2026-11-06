@@ -626,7 +626,7 @@ function render() {
         const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'],
           // the game tips from level 90 (js/coach.js)
           'coach-three': ['🀄', 'Speltip: drie in het bakje'], 'coach-twin': ['👆', 'Speltip: tik op het maatje'], 'coach-lookTray': ['👀', 'Speltip: kijk eerst naar alle plaatjes'], 'coach-remember': ['🧠', 'Speltip: onthoud wat je bekeek'], 'coach-uncover': ['🔍', 'Speltip: maak meer open'], 'coach-clockFirst': ['⏰', 'Speltip: eerst naar de wekker'], 'coach-clockSlot': ['⏰', 'Speltip: wekker heeft een vakje nodig'], 'coach-retry': ['🔁', 'Speltip: opnieuw is hetzelfde spel'],
-          // how Dennisisdebeste won the level, after 5 lost tries (js/pro.js, from 1.64)
+          // how Dennisisdebeste won the level, after 5 lost tries (js/pro.js, from 1.65)
           pro: ['🎬', 'Replay van Dennisisdebeste'] };
         const [icon, topic] = topics[e.topic] || ['📖', 'Speluitleg'];
         const reasons = { intro: 'eerste uitleg', retry: `herinnering na ${Number(e.fails) || 3} mislukte pogingen`, manual: 'zelf geopend', timeout: 'na afloop van de wekker', fails: `na ${Number(e.fails) || 5} mislukte pogingen` };

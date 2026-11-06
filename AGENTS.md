@@ -163,7 +163,7 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 - The Speltips menu: 8 tips (films of real recorded games, no names, `coach-clips.js`, made with
   `source/tools/coach/`), the player's own example per tip, and the tile explanations.
 
-## Level replays (from 1.64, js/pro.js; decisions by Dennis, 2026-11-06)
+## Level replays (from 1.65, js/pro.js; decisions by Dennis, 2026-11-06)
 
 - Switched on per player on the dashboard (part `pro`, "Replay na 5 keer mis"; off by default).
 - After the 5th lost try of a level the player has not passed (restarts count, `S.fails`), once per level

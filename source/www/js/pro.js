@@ -1,4 +1,4 @@
-/* Oma's Mahjong — "replay from Dennisisdebeste" (from 1.64; decisions Dennis 2026-11-06).
+/* Oma's Mahjong — "replay from Dennisisdebeste" (from 1.65; decisions Dennis 2026-11-06).
    Switched on per player on the dashboard (part 'pro', off by default). A player who has not passed a
    level after RULES.pro.after lost tries (restarts count, S.fails) sees, once per level, how it was won:
    Dennisisdebeste's winning try, or for a level he has none of, the win of the player who needed the
