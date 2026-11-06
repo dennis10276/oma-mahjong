@@ -106,3 +106,14 @@ test('fits: islands only where keys can be buried on the other peak', () => {
   assert.strictEqual(B.fits('keysOnIsland', B.LAYOUTS[10].tiles), true);   // letter H: two towers
   assert.strictEqual(B.fits('deepClock', B.LAYOUTS[0].tiles), true);
 });
+
+test('opts.keep: the same puzzle with only pictures and face-down tiles placed again (one knob at a time)', () => {
+  const brief = { layout: 10, story: 'lockBeside', seed: 1, frame: { spare: 1 }, targets: { trayRoom: 0, hiddenOnWay: 1, maxDown: 0.3, luck: 1 } };
+  const r = B.build(brief, {}); assert.ok(!r.fail, JSON.stringify(r).slice(0, 200)); assert.ok(r.keep);
+  const v = B.build({ ...brief, seed: 7, targets: { ...brief.targets, luck: 2, hiddenOnWay: 2 } }, { keep: r.keep });
+  assert.ok(!v.fail, JSON.stringify(v).slice(0, 200));
+  assert.deepEqual(v.design.tiles, r.design.tiles);
+  assert.equal(v.design.clock.i, r.design.clock.i);
+  assert.deepEqual(v.design.obst, r.design.obst);
+  assert.ok(Math.abs(v.card.tray.luck - 2) <= 1);
+});

@@ -647,11 +647,21 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
     if (best && best.allProven && (best.forcedOk || Date.now() - t0 > softMs || built >= (opts.goalTries ?? 4))) break;
     const note = f => { fails[f.fail] = (fails[f.fail] || 0) + 1; last = f; };
     const rng = rngOf((brief.seed ?? 1) * 7919 + attempt * 104729);
-    const roles = placeRoles(c, story, brief, rng); if (roles.fail) { note(roles); if (roles.fail === 'needsIslands') break; continue; }
-    const trimmed = trimThawLocks(c, roles, story);
-    let P = planDig(c, roles, rng); if (!P) { note({ fail: 'dig' }); continue; }
-    if (brief.frame?.way != null && Math.abs(P.length - brief.frame.way) > 2) { note({ fail: 'wayLength', detail: P.length + ' for ' + brief.frame.way }); continue; }
-    const hold = chooseHolders(c, roles, P, story.spec, rng); if (hold.fail) { note(hold); continue; }
+    // opts.keep (a result's .keep): the same puzzle - clock, keys, locks, ice, dig and holders - with only the
+    // pictures and face-down tiles placed again, so one target (three, luck, traps, spare) can change on its own
+    let roles, trimmed = [], P, hold;
+    if (opts.keep) {
+      const k = opts.keep;
+      roles = { clock: k.roles.clock, locks: new Set(k.roles.locks), keys: k.roles.keys.slice(), ice: { ...k.roles.ice }, holderSpecials: new Set(k.roles.holderSpecials) };
+      P = k.P.slice(); hold = { cov: coveredDuringDig(c, P), holders: k.holders ? new Set(k.holders) : null };
+    } else {
+      roles = placeRoles(c, story, brief, rng); if (roles.fail) { note(roles); if (roles.fail === 'needsIslands') break; continue; }
+      trimmed = trimThawLocks(c, roles, story);
+      P = planDig(c, roles, rng); if (!P) { note({ fail: 'dig' }); continue; }
+      if (brief.frame?.way != null && Math.abs(P.length - brief.frame.way) > 2) { note({ fail: 'wayLength', detail: P.length + ' for ' + brief.frame.way }); continue; }
+      hold = chooseHolders(c, roles, P, story.spec, rng); if (hold.fail) { note(hold); continue; }
+    }
+    const keepOf = () => ({ roles: { clock: roles.clock, locks: [...roles.locks], keys: roles.keys.slice(), ice: { ...roles.ice }, holderSpecials: [...roles.holderSpecials] }, P: P.slice(), holders: curHold.holders ? [...curHold.holders] : null });
     let pick = null, way = null, pruned = trimmed.slice(), replans = 0, stop = false, N = null, curHold = hold;
     for (let round = 0; round < 4 && !stop; round++) {
       N = necessary(c, roles, P);
@@ -700,14 +710,14 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
     if (!rep.ok) { note({ fail: 'witness', detail: rep.why }); continue; }
     const al = new Uint8Array(c.n).fill(1); if (down.some(i => L.isFree(i, al, c.nb))) { note({ fail: 'downFree' }); continue; }
     const res = prove(c, story, brief, roles, P, curHold, plan, down, design, rep, way, clock, spare, pruned, N, pick, witness, budget, deadline);
-    res.card.attempt = attempt; res.card.shape = shape; built++;
+    res.card.attempt = attempt; res.card.shape = shape; res.keep = keepOf(); built++;
     if (!res.allProven) note({ fail: 'unproven', detail: res.intents.filter(i => !i.proven).map(i => i.name + ' (' + (i.detail || '') + ')').join('; ') });
     if (!best || res.score > best.score) best = res;
   }
   // only a board whose every intent is proven leaves the builder
   if (!best || !best.allProven) return { ...(best ? { fail: 'unproven', detail: best.intents.filter(i => !i.proven).map(i => i.name + ' (' + (i.detail || '') + ')').join('; ') } : last || { fail: 'noAttempt' }), fails, ms: Date.now() - t0 };
-  const { design, card, intents, roles } = best;
-  return { design, card, intents, roles, fails, ms: Date.now() - t0 };
+  const { design, card, intents, roles, keep } = best;
+  return { design, card, intents, roles, keep, fails, ms: Date.now() - t0 };
 }
 
 const holdersNeeded = (story, orphans) => Math.max(1, Math.min(story.spec.coverPartners === 'buried' ? 1 : 2, orphans.length));
