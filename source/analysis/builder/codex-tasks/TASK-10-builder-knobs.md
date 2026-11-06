@@ -95,11 +95,33 @@ full protocol, so that its comparisons stay clean.
     how often it was wrong.
 - **Report the CPU saved:** campaigns played compared with the full protocol.
 
+## Small test: can the GPU play our games faster? (Dennis 2026-11-06: "worth considering")
+A feasibility probe only. Do not change the real bots, the meter or any rating.
+- **What's on the PC:** check which GPU it has and what can drive it: `nvidia-smi`, the driver, and whether CUDA,
+  Python with CuPy/Numba/PyTorch, or Node WebGPU is available. Install only into a separate virtual environment
+  or folder.
+- **Write a GPU playout kernel** in a new folder `source/tools/gpu-probe/`:
+  - It covers the game's rules: free tiles, tray of 3, ice, locks and keys, clock, face-down tiles, peek pair.
+  - The bot is deliberately simple: take a tray match if there is one, else a free pair, else a random free
+    tile; turn over face-down tiles when free.
+  - It plays many independent games of one board at once (one thread or warp per game).
+- **Write the same simple bot on the CPU** in Node, for a fair comparison. Check that both give the same win rate
+  on 3 boards (within sampling noise) and the same result for a fixed seed where possible.
+- **Measure games per second**, GPU and CPU (all cores), on a 76-, 84- and 96-tile board, at 1k, 10k and 100k
+  games.
+- **Estimate the speed-up for the real family bot,** which branches far more (memory, route planning,
+  look-ahead). Say what would have to move to the GPU, what could not, and roughly how much work a full port
+  plus re-calibration would be.
+- **Report:** `gpu-probe.md`, plain language, with the numbers and a recommendation: worth porting, or not.
+- **Timing:** about half a day of work at most. Run it when the CPU-heavy steps are not using the machine, or
+  alongside them if the GPU test hardly uses the CPU.
+
 ## Hand-back
 Say "Task 10 done", with the branch name, the results folder and a short plain-language summary for Dennis
 (`summary-for-dennis.md`):
 - which knobs work, and how many tries each step is worth for the family and the skilled player;
 - which briefs land in the band;
-- the hit rate, and which slots are filled.
+- the hit rate, and which slots are filled;
+- the GPU probe's speed-up and its recommendation.
 
 If 1 or 2 shows that no setting reaches the band, skip 3 and report what is missing.
