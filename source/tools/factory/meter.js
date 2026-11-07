@@ -19,6 +19,12 @@ const boardKey = d => digest(boardOf(d));
 // physics are identical. Permit this exact, documented revision pair only;
 // any later bot/profile/environment change falls back to new measurements.
 const FAMILY_CACHE_MIGRATIONS = Object.freeze({
+  // 2026-11-07 Task G2: zero-drift CPU fast path (identical family and planner moves and ratings)
+  '4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39': [
+    'f32859281c746f4277ab5ef4c0006d43c76dddcc342741af8b0ff45a1b63d561',
+    'cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d',
+    'ac24aad82490bab263850596afacb302f2f50b4b73464430c8e95962562808ef'
+  ],
   // 2026-11-05 Claude: skilled planner = better of two styles, worked back from the clock; family unchanged
   'f32859281c746f4277ab5ef4c0006d43c76dddcc342741af8b0ff45a1b63d561':
     ['cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d', 'ac24aad82490bab263850596afacb302f2f50b4b73464430c8e95962562808ef'],
@@ -65,7 +71,8 @@ function compact(m) {
 }
 function createMeter(options = {}) {
   const entry = path.resolve(options.bot || process.env.HUMAN_BOT || path.join(__dirname, '../sim/refit/human_bot.js'));
-  const bot = options.measureHuman || require(entry).measureHuman;
+  const loaded = options.measureHuman ? null : require(entry);
+  const bot = options.measureHuman || (options.fast === false ? loaded.measureHuman : (loaded.measureHumanFast || loaded.measureHuman));
   const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => k.startsWith('G51_')));
   const fingerprint = options.fingerprint || digest({ schema: 1, source: sourceHash(entry), env });
   const cacheDir = options.cacheDir === false ? null : path.resolve(options.cacheDir || path.join(__dirname, '../../build/factory-cache'));

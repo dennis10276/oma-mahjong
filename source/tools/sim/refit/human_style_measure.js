@@ -39,13 +39,14 @@ function measureHuman(board,options={}){
  return {...best,plannerStyles:{route:route.expectedTries,plain:plain.expectedTries},valid:route.valid&&plain.valid};
 }
 function measureOne(board,options={}){
- assert(Object.keys(options).every(key=>['runs','seed','maxAttempts','profiles','capture','choiceLimit','setting','seeds','plannerStyle'].includes(key)));
- const {runs=20,maxAttempts=20,profiles=defaults,capture=false,choiceLimit=1024,seeds=2}=options;
+ assert(Object.keys(options).every(key=>['runs','seed','maxAttempts','profiles','capture','choiceLimit','setting','seeds','plannerStyle','fast','auditRate'].includes(key)));
+ const {runs=20,maxAttempts=20,profiles=defaults,capture=false,choiceLimit=1024,seeds=2,fast=false,auditRate=0.01}=options;
  const seed=options.seed??crypto.randomBytes(4).readUInt32LE();
  assert(Number.isInteger(runs)&&runs>0&&runs<=1000&&Number.isInteger(seed));
  assert(Number.isInteger(maxAttempts)&&maxAttempts>0&&maxAttempts<=40);
  assert(Number.isInteger(choiceLimit)&&choiceLimit>0);
  assert(Number.isInteger(seeds)&&seeds>=1&&seeds<=10);
+ assert(typeof fast==='boolean'&&Number.isFinite(auditRate)&&auditRate>=0&&auditRate<=1);
  assert.deepEqual(Object.keys(profiles).sort(),['Dennis','family']);
  assert(options.setting===undefined||['dennis','family','planner'].includes(options.setting));
  // 'planner' (Claude 2026-11-03): Dennis's profile with his planning calibrated from the recordings - a take that
@@ -62,15 +63,16 @@ function measureOne(board,options={}){
  const releasedProfiles=release.profiles;
  const selectedProfiles=options.setting&&!options.profiles?releasedProfiles:profiles;
  const isReleased=Object.entries(releasedProfiles).every(([name,reference])=>Object.keys(selectedProfiles[name]).length===Object.keys(reference).length&&Object.entries(reference).every(([key,value])=>selectedProfiles[name][key]===value));
+ const campaignOpts={maxAttempts,capture,choiceLimit,fast,auditRate,...(options.setting?{controllerFactory:createFactoryController}:{})};
  for(let [name,profile] of Object.entries(selectedProfiles)){
   if(options.setting&&name!==pick)continue;
   if(options.setting==='planner')profile={...profile,...PLANNER,...(options.plannerStyle==='plain'?{routeNeed:0}:{})};
   const started=performance.now(),results=[],pooled=[];
-  for(let run=0;run<runs;run++)results.push(campaign(encoded,profile,(seed+Math.imul(run+1,0x9e3779b9))|0,{maxAttempts,capture,choiceLimit,...(options.setting?{controllerFactory:createFactoryController}:{})}));
+  for(let run=0;run<runs;run++)results.push(campaign(encoded,profile,(seed+Math.imul(run+1,0x9e3779b9))|0,campaignOpts));
   pooled.push(...results);
   for(let s=1;s<seeds;s++){
    const seedS=(seed+s*7919)|0;
-   for(let run=0;run<runs;run++)pooled.push(campaign(encoded,profile,(seedS+Math.imul(run+1,0x9e3779b9))|0,{maxAttempts,capture,choiceLimit,...(options.setting?{controllerFactory:createFactoryController}:{})}));
+   for(let run=0;run<runs;run++)pooled.push(campaign(encoded,profile,(seedS+Math.imul(run+1,0x9e3779b9))|0,campaignOpts));
   }
   const phases={clock:0,mid:0,late:0},firstTryWins=results.filter(r=>r.wonOn===1).length;
   const firstTryCensored=results.filter(r=>r.attempts[0].censored).length;
