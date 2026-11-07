@@ -24,8 +24,18 @@ function apiManifest(studies, fit) {
   for (const b of rerate.boards) for (const s of proto.settings) add(b.design, s, fit.versions.reference);
   for (const b of fit.benches) for (const fingerprint of Object.values(fit.versions)) add(b.design, { ...fit.settings, setting: b.setting }, fingerprint);
   const rows = [];
-  for (const [key, info] of jobs) {
-    const file = path.join(SOURCE, 'build/factory-cache', key + '.json'); if (!fs.existsSync(file)) throw Error('Required raw meter return missing: ' + key);
+  for (const [requestedKey, originalInfo] of jobs) {
+    let key = requestedKey, info = originalInfo, file = path.join(SOURCE, 'build/factory-cache', key + '.json');
+    if (!fs.existsSync(file) && info.fingerprint === fit.versions.reference && info.settings.setting === 'family' && info.settings.seed === 4711) {
+      // Kept-board search used compact tail capture. Preserve its ACTUAL cache key
+      // and settings; this does not create or migrate a new-version rating.
+      const settings = { ...info.settings, capture: 'tail' }, b = rerate.boards.find(b => M.boardKey(b.design) === info.boardKey);
+      if (b?.memberships.some(m => m.group === 'kept20')) {
+        key = M.digest({ fingerprint: info.fingerprint, input: M.boardOf(b.design), settings }); file = path.join(SOURCE, 'build/factory-cache', key + '.json');
+        info = { ...info, settings, requestedSettings: info.settings, requestedKey, captureNote: 'Original kept-board full40 search API used tail capture. Only recording detail differs; capture/decision equivalence is covered by test_bot.js. Raw settings and source key are preserved, never relabelled as a default-capture call.' };
+      }
+    }
+    if (!fs.existsSync(file)) throw Error('Required raw meter return missing: ' + requestedKey);
     const raw = fs.readFileSync(file), result = JSON.parse(raw); if (!result.valid) throw Error('Invalid raw meter return');
     const gzip = zlib.gzipSync(raw, { level: 6 }), dest = path.join(EXTERNAL, 'full-api', key + '.json.gz'); fs.mkdirSync(path.dirname(dest), { recursive: true }); fs.writeFileSync(dest, gzip);
     rows.push({ key, ...info, expectedTries: result.expectedTries, file: 'full-api/' + key + '.json.gz', contentSHA256: sha(raw), gzipSHA256: sha(gzip), bytes: raw.length });
@@ -48,6 +58,7 @@ function run() {
   const api = fitSummary.accepted ? apiManifest(studies, P.read(path.join(BASE, 'fit/plan.json'))) : { note: 'Candidate rejected; see reference fit evidence.', rows: [] };
   P.save(OUT, 'full-api-manifest.json', api); P.save(EXTERNAL, 'full-api-manifest.json', api);
   fs.copyFileSync(path.join(SOURCE, 'build/TASK-11-RUNNING.md'), path.join(EXTERNAL, 'RUNNING.md'));
+  fs.copyFileSync(path.join(SOURCE, 'build/TASK-11-RUNNING.md'), path.join(OUT, 'RUNNING.md'));
   for (const dir of [OUT, EXTERNAL]) {
     const files = []; const walk = sub => { for (const e of fs.readdirSync(sub, { withFileTypes: true })) { const f = path.join(sub, e.name); if (e.isDirectory()) walk(f); else if (e.name !== 'manifest-sha256.json') files.push({ file: path.relative(dir, f).replace(/\\/g, '/'), sha256: sha(fs.readFileSync(f)), bytes: fs.statSync(f).size }); } }; walk(dir);
     P.save(dir, 'manifest-sha256.json', { created: new Date().toISOString(), files });

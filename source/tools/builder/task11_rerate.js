@@ -32,21 +32,30 @@ async function measure(root, baseline, workers) {
   if (M.createMeter().fingerprint !== M.createMeter({ bot: CANDIDATE }).fingerprint) throw Error('Run with HUMAN_BOT set to the candidate entry');
   return S.measure(root, 'all', workers);
 }
+function skilledReference(board, membership) {
+  return { referencePlannerBot: membership.group === 'kept20' ? (board.botSkilled ?? membership.reference.skilled) : membership.reference.skilled,
+    approvedHumanSkilled: membership.group === 'kept20' ? board.skilledEvidence?.tries ?? null : null };
+}
 function report(root) {
-  const d = S.collect(root), rows = d.boards.flatMap(b => b.memberships.map(m => ({ ...m, boardKey: M.boardKey(b.design), candidate: { family: b.family?.exp ?? null, skilled: b.skilled?.exp ?? null, seeds: b.family?.seeds ?? null } })));
+  const d = S.collect(root), rows = d.boards.flatMap(b => b.memberships.map(m => ({ ...m, boardKey: M.boardKey(b.design),
+    ...skilledReference(b, m),
+    candidate: { family: b.family?.exp ?? null, skilled: b.skilled?.exp ?? null, seeds: b.family?.seeds ?? null } })));
   const complete = d.boards.every(b => b.family && b.skilled), kept = rows.filter(r => r.group === 'kept20'), hidden = rows.filter(r => r.group === 'task10-hidden-keys');
   const summary = { complete, physicalBoards: d.boards.length, records: d.records.size, invalid: [...d.records.values()].filter(r => !r.valid).length,
-    kept: { n: kept.length, referenceWithinOne: kept.filter(r => Math.abs(r.reference.family - r.target) <= 1 + 1e-9).length,
+    kept: { n: kept.length, rated: kept.filter(r => r.candidate.family != null).length, referenceWithinOne: kept.filter(r => Math.abs(r.reference.family - r.target) <= 1 + 1e-9).length,
       candidateWithinOne: kept.filter(r => r.candidate.family != null && Math.abs(r.candidate.family - r.target) <= 1 + 1e-9).length },
     hidden: { n: hidden.length, meanFamilyChange: complete ? hidden.reduce((n, r) => n + r.candidate.family - r.reference.family, 0) / hidden.length : null,
       improved: hidden.filter(r => r.candidate.family != null && r.candidate.family < r.reference.family - 1e-9).length,
-      worsened: hidden.filter(r => r.candidate.family != null && r.candidate.family > r.reference.family + 1e-9).length }, rows };
+      worsened: hidden.filter(r => r.candidate.family != null && r.candidate.family > r.reference.family + 1e-9).length },
+    planner: { measuredMemberships: rows.filter(r => r.candidate.skilled != null).length,
+      maxAbsoluteDriftFromReferenceBot: Math.max(0, ...rows.filter(r => r.candidate.skilled != null).map(r => Math.abs(r.candidate.skilled - r.referencePlannerBot))) }, rows };
   P.save(root, 'rerating-summary.json', summary);
   const lines = ['# Exact-board key-memory re-rating', '', `Complete: ${complete}. ${summary.physicalBoards} physical boards, ${summary.records} full measurements, ${summary.invalid} invalid.`, '',
-    `Kept20 within ±1 of their frozen curve: reference ${summary.kept.referenceWithinOne}/20; candidate ${summary.kept.candidateWithinOne}/20. This is a diagnosis of the existing batch, not a replacement level table.`, '',
+    `Kept20 within ±1 of their frozen curve: reference ${summary.kept.referenceWithinOne}/20; candidate ${summary.kept.candidateWithinOne}/20 (${summary.kept.rated}/20 family ratings complete). This is a diagnosis of the existing batch, not a replacement level table.`, '',
     `Task10 non-frozen hidden/partly hidden-key boards: ${hidden.length}; mean candidate-minus-reference family change ${summary.hidden.meanFamilyChange}. Improved ${summary.hidden.improved}, worsened ${summary.hidden.worsened}; unchanged reported in JSON.`, '',
-    '| Kept level | target | reference family | candidate family | candidate skilled | candidate family seeds |', '|---|---:|---:|---:|---:|---|'];
-  for (const r of kept.sort((a, b) => a.level - b.level)) lines.push(`| ${r.level} | ${r.target} | ${r.reference.family} | ${r.candidate.family} | ${r.candidate.skilled} | ${r.candidate.seeds?.join(' / ')} |`);
+    '| Kept level | target | reference family | candidate family | reference / candidate planner | approved human skilled | candidate family seeds |', '|---|---:|---:|---:|---|---:|---|'];
+  for (const r of kept.sort((a, b) => a.level - b.level)) lines.push(`| ${r.level} | ${r.target} | ${r.reference.family} | ${r.candidate.family} | ${r.referencePlannerBot} / ${r.candidate.skilled} | ${r.approvedHumanSkilled ?? ''} | ${r.candidate.seeds?.join(' / ')} |`);
+  lines.push('', 'The frozen kept rows use approved exact-board human skilled evidence on200 and225 (5 and4), while botSkilled stores their actual reference planner ratings (5.15 and2.08). Compare bot with bot; new offline bot scores do not replace those human wins. No game row or gold pair changes.');
   lines.push('', 'All board memberships and before/after values are in rerating-summary.json. The v3 ladder keeps every request, including neighboring requests that produce the same physical board. Reference/candidate settings and streams are identical; both planner styles were measured under each fingerprint.', '');
   fs.writeFileSync(path.join(root, 'RERATING.md'), lines.join('\n')); return summary;
 }
@@ -55,4 +64,4 @@ if (require.main === module) {
   Promise.resolve(action === 'prepare' ? prepare(root, baseline, path.resolve(ladderArg)) : action === 'measure' ? measure(root, baseline, +(n || 10)) : report(root))
     .then(r => console.log(JSON.stringify({ complete: r.complete, boards: r.boards?.length || r.physicalBoards, kept: r.kept, hidden: r.hidden }))).catch(e => { console.error(e); process.exitCode = 1; });
 }
-module.exports = { prepare, measure, report };
+module.exports = { prepare, measure, report, skilledReference };

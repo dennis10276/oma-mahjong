@@ -7,6 +7,11 @@ test('diagnostic IDs containing variant punctuation become safe distinct checkpo
   assert(names.every(n => /^[a-f0-9]{64}\.json$/.test(n)));
   assert.equal(rowName('iceLockClock-L40:spare'), names[0]);
 });
+test('paired reports compare planner bots separately from approved human skilled wins', () => {
+  const { skilledReference } = require('./task11_rerate.js'), board = { botSkilled: 5.15, skilledEvidence: { tries: 5 } };
+  assert.deepEqual(skilledReference(board, { group: 'kept20', reference: { skilled: 5 } }), { referencePlannerBot: 5.15, approvedHumanSkilled: 5 });
+  assert.deepEqual(skilledReference(board, { group: 'v3-ladder', reference: { skilled: 5.15 } }), { referencePlannerBot: 5.15, approvedHumanSkilled: null });
+});
 test('the diagnostic sample never includes frozen keys and does not invent middle-band coverage', () => {
   const boards = Array.from({ length: 100 }, (_, i) => ({ id: String(i), family: { exp: i < 40 ? 4 : i < 45 ? 10 : 20 }, skilled: { exp: 2 },
     brief: { story: 's' + i % 3 }, design: { tiles: [[i, 0, 0]], clock: { i: 0 }, obst: { keys: [0], ice: i === 42 ? { 0: 1 } : {} } } }));
