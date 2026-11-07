@@ -18,12 +18,18 @@ const boardKey = d => digest(boardOf(d));
 // A changed policy is an explicit opt-in, with its own source fingerprint.
 // Do not add behavioral candidates to FAMILY_CACHE_MIGRATIONS.
 const BOT_VERSIONS = Object.freeze({
-  'family-key-memory-v1': path.join(__dirname, '../sim/refit/human_bot_key_memory_v1.js')
+  'family-key-memory-v1': path.join(__dirname, '../sim/refit/human_bot_key_memory_v1.js'),
+  'family-key-memory-v1-fast': path.join(__dirname, '../sim/refit/human_bot_key_memory_v1_fast.js')
 });
 // Task 04 / upstream 8e33270 changes the planner only. Family decisions and
 // physics are identical. Permit this exact, documented revision pair only;
 // any later bot/profile/environment change falls back to new measurements.
 const FAMILY_CACHE_MIGRATIONS = Object.freeze({
+  // 2026-11-07 Task G3: zero-drift CPU fast path for family-key-memory-v1 (post-G2 and pre-G2 slow key-memory hashes)
+  '63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a': [
+    '5372bd4e5d29acce926c537400b8a069dd0d04c3f4d2032024c9f34a1d99863d',
+    'd362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3'
+  ],
   // 2026-11-07 Task G2: zero-drift CPU fast path (identical family and planner moves and ratings)
   '4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39': [
     'f32859281c746f4277ab5ef4c0006d43c76dddcc342741af8b0ff45a1b63d561',
@@ -79,7 +85,7 @@ function createMeter(options = {}) {
     throw Error('Unknown botVersion or conflicting explicit bot options');
   const entry = path.resolve(options.bot || BOT_VERSIONS[options.botVersion] || process.env.HUMAN_BOT || path.join(__dirname, '../sim/refit/human_bot.js'));
   const loaded = options.measureHuman ? null : require(entry);
-  const bot = options.measureHuman || (options.fast === false ? loaded.measureHuman : (loaded.measureHumanFast || loaded.measureHuman));
+  const bot = options.measureHuman || (options.fast === false ? (loaded.measureHumanSlow || loaded.measureHuman) : (loaded.measureHumanFast || loaded.measureHuman));
   const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => k.startsWith('G51_')));
   const fingerprint = options.fingerprint || digest({ schema: 1, source: sourceHash(entry), env });
   const cacheDir = options.cacheDir === false ? null : path.resolve(options.cacheDir || path.join(__dirname, '../../build/factory-cache'));
@@ -93,8 +99,8 @@ function createMeter(options = {}) {
       const saved = JSON.parse(fs.readFileSync(file, 'utf8'));
       memory.set(key, saved); stats.hits++; return saved;
     }
-    const approved = !options.measureHuman && !options.fingerprint && !options.bot && !options.botVersion && !process.env.HUMAN_BOT &&
-      settings.setting === 'family' ? FAMILY_CACHE_MIGRATIONS[fingerprint] || [] : [];
+    const approved = !options.measureHuman && !options.fingerprint &&
+      (settings.setting === 'family' || settings.setting === 'family-key-memory-v1') ? FAMILY_CACHE_MIGRATIONS[fingerprint] || [] : [];
     if (cacheDir) for (const prior of approved) {
       const oldFile = path.join(cacheDir, digest({ fingerprint: prior, input, settings }) + '.json');
       if (!fs.existsSync(oldFile)) continue;
