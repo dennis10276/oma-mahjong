@@ -30,6 +30,26 @@ builder (v3) from your findings.
   zero-drift fast mode for the bots (Task G2 part A). Once Claude merges it into `wip/level-builder`, switch to
   it: it gives identical ratings.
 
+## 0. First: hidden keys (Claude's finding, `analysis/builder/why-hard-claude.md`)
+On Task 10's boards with keys, the jump is mostly key visibility at the start.
+
+| keys showing at the start | family median | share at 18+ |
+|---|---:|---:|
+| none | 19.8 | 88% |
+| one | 13.0 | 38% |
+| both | 6.3 | 36% |
+
+On a 20-try board the family bot wanders. Its first losing move is an off-way pair, and when those pairs are
+removed it wanders with singles. It does not know where the keys are.
+- **Check the bot's memory.** After a key has been uncovered in try k, does the family bot go for it in try k+1?
+  Look at `public_key_identity_memory.js`, `retryKeyIdentityMemory` and `human_factory_controller.js`
+  (keyTiles/needLeft).
+- **Measure it.** On 10 hidden-key boards, measure how often the bot's next try digs straight to a key it already
+  saw.
+- **Report plainly:** is the 20 real difficulty (a person would also keep failing), or a memory blind spot? Do not
+  change the bots. If it is a blind spot, describe the fix and the boards it would change.
+- **Use it in part 1:** add "keys showing at the start" and "moves until both keys show" to every error profile.
+
 ## 1. Where do the bots lose? (main job)
 Take about 60 Task 10 boards spread across the range: about 20 at 2–6 family tries, 20 at 8–14, and 20 at 18–20,
 from several stories and layouts. No frozen-key boards.

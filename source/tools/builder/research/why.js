@@ -1,0 +1,10 @@
+const path='/home/claude/repo-oma/source/';
+const {measureHuman}=require(path+'tools/sim/refit/human_style_measure.js');
+const boards=JSON.parse(require('fs').readFileSync(path+'analysis/builder/knobs-v1/boards.json','utf8'));
+const id=process.argv[2], setting=process.argv[3]||'family';
+const r=boards.find(b=>b.id===id); const d=r.design;
+console.log(id,'family',r.family.exp,'skilled',r.skilled.exp,'clock',d.clock,'tiles',d.tiles.length,'down',d.down.length,'locks',d.obst.locks,'keys',d.obst.keys,'ice',JSON.stringify(d.obst.ice));
+const m=measureHuman(d,{runs:6,seed:4711,seeds:1,setting,capture:true});
+console.log('exp',m.expectedTries, Object.keys(m));
+const res=m.results||m.settings;
+require('fs').writeFileSync('/tmp/claude-0/-home-claude/dadcee87-273a-5b61-b793-8a16944909f6/scratchpad/v3/'+id+'-'+setting+'.json',JSON.stringify(m));
