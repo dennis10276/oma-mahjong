@@ -7,8 +7,8 @@ async function run() {
   const summary = require('./task11_rerate.js').report(candidate); if (!summary.complete || summary.invalid) throw Error('Candidate ratings incomplete or invalid');
   console.log('PHASE full ratings complete', summary.kept, summary.hidden);
   cp.execFileSync('git', ['fetch', 'origin'], { cwd: repo, stdio: 'inherit' });
-  const upstream = cp.execFileSync('git', ['rev-parse', '--short=7', 'origin/wip/level-builder'], { cwd: repo, encoding: 'utf8' }).trim();
-  if (upstream !== '0e9d647') throw Error('Review new upstream at this safe phase boundary before continuing (including G2 fast mode): ' + upstream);
+  const upstream = cp.execFileSync('git', ['rev-parse', 'origin/wip/level-builder'], { cwd: repo, encoding: 'utf8' }).trim();
+  if (upstream !== '0e9d6479bd121d81905b6cf28fc450c2ab49f5d2') throw Error('Review new upstream at this safe phase boundary before continuing (including G2 fast mode): ' + upstream);
   const fp = require('../factory/meter.js').createMeter({ botVersion: 'family-key-memory-v1' }).fingerprint;
   if (require('../factory/meter.js').createMeter().fingerprint !== fp) throw Error('Use HUMAN_BOT=candidate for the capture phase');
   require('./task11_candidate_study.js').prepare(baseline, primary, candidate, ladder);

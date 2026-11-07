@@ -24,7 +24,7 @@ function run() {
   const cliffs = l => l.pairs.filter(p => Object.values(p.spares).some(s => s.cliffs.length)).length;
   const off = rr.rows.filter(r => r.group === 'kept20' && Math.abs(r.candidate.family - r.target) > 1 + 1e-9).map(r => r.level);
   const easy = profiles.bands.easy.profiles.family, hard = profiles.bands.hard.profiles.family, a = memory.reference, b = memory.candidate;
-  if (rr.planner.maxAbsoluteDriftFromReferenceBot > 1e-9) throw Error('Investigate planner drift before handback');
+  if (rr.kept.n !== 20 || rr.kept.rated !== 20 || rr.hidden.n !== 117 || rr.planner.maxAbsoluteDriftFromReferenceBot > 1e-9) throw Error('Investigate missing scope or planner drift before handback');
   const summary = ['# Task 11 done', '',
     'Branch: `wip/codex-why-hard`. Complete evidence is beside this summary and in `codex-tasks/results/why-hard-v1/`.', '',
     `The family bot makes its first proved mistake earlier on brutal boards (typical removal move ${hard.medianErrorMove}, versus ${easy.medianErrorMove} on easy boards). The loss arrives later: another ${hard.medianDelayAfterError} tile removals versus ${easy.medianDelayAfterError}. Route length and fork counts barely separate the bands. Many mistakes take an attractive free pair too early. These are real traps, but a capped 20 is not a human forecast.`, '',
@@ -61,7 +61,7 @@ function run() {
     'The complete builder/factory/candidate regression output is factory-tests.log. Three phone previews and all three actual-game stored solutions passed. No published game, level table, Firebase or release changed.', '');
   const readme = ['# Task11 done', '', 'Branch: `wip/codex-why-hard`.', '',
     'Start with summary-for-dennis.md and BUILDER-CONTROLS.md.', '',
-    '- reference/:60-board error study, every brutal board\'s human/bot interpretation, ten-board memory audit, refined visible-key openings,342 full fit measurements on171 exact benchmark cases, raw diagnostic traces, proof outcomes and numbered examples.',
+    '- reference/:60-board error study, every brutal board\'s human/bot interpretation, MEMORY-ACROSS-TRIES.md, ten-board memory audit, refined visible-key openings,342 full fit measurements on171 exact benchmark cases, raw diagnostic traces, proof outcomes and numbered examples.',
     '- v3-reference/:primary six-pair readable builder v3 ladder, all252 requests/failures,210 readable outputs,148 physical boards and444 full current-fingerprint cache hits. Exact witnesses/structural inputs verified before proof reuse.',
     '- candidate/:284 physical boards,852 full new-version measurements; kept20,117 hidden-key Task10 memberships, all210 readable ladder memberships; same-ten-board six-campaign memory follow-up and before/after reports.',
     '- v3-candidate/:same exact v3 ladder with the new full ratings and figures. reference/ladder* retains the earlier v2 baseline and failed-pair fallback separately.',
