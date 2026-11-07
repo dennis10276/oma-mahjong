@@ -34,8 +34,13 @@
    Brief fields beyond SPEC (all optional): frame.way = fewest moves to the clock (within 1; a covered-clock story may
    dig deeper than its depth for it), targets.three = moves with 3 waiting on the way (within 1), targets.luck = luck
    moments (default hiddenOnWay; only possible with trayRoom 0: a luck moment brings the tray to 3), targets.traps.
-   Only a board with EVERY intent proven is returned; else { fail: 'unproven', detail }. A build stops at
-   opts.hardMs (4.5 s); opts.softMs (2.5 s) ends the search for forced pressure once a proven board is in hand.
+   Only a board with EVERY intent proven is returned; else { fail: 'unproven', detail }. Budgets are deterministic
+   (process v1 step 0b, Claude 2026-11-07): engine searches run on node budgets only, and the build counts the search
+   nodes it spends (result .work). A build stops at opts.hardWork nodes; opts.softWork ends the search for forced
+   pressure once a proven board is in hand. They replace the old wall-clock hardMs (4.5 s) and softMs (2.5 s), so a
+   brief and a seed give the same board on a busy PC. opts.ms, opts.hardMs, opts.softMs and budget.ms are ignored.
+   One wall-clock safety cap remains, opts.wallMs (default 60 s): when it trips the build FAILS with 'wallClock';
+   it never returns a different board.
    Covered-partner stories (roomInTray*, deepClock) need cap >= 2; an incompatible brief fails explicitly.
    The requested cap is exact; hiddenOnWay is a minimum number of dig tiles, maxDown is a maximum share.
    Explicit trap counts must be proven. frame.share and targets.trapDepth return unsupportedTarget until implemented.
@@ -484,15 +489,26 @@ const designOf = (c, faces, down, roles, clock, solution = []) => ({
   tiles: c.tiles.map(t => [t.x, t.y, t.z]), faces, down, gold: [],
   obst: { ice: Object.fromEntries(Object.entries(roles.ice).map(([k, v]) => [+k, v])), locks: [...roles.locks], keys: roles.locks.size ? roles.keys.slice() : [] },
   clock, solution });
-// budgets never run past the build's deadline (clockSearch gives every candidate goal its own finishing budget:
-// keep that small too)
-let DEADLINE = Infinity;
-const within = b => { const left = Math.max(1, DEADLINE - Date.now()); return { nodes: b.nodes, ms: Math.min(b.ms, left), finishNodes: Math.min(b.nodes, 100000), finishMs: Math.min(800, left) }; };
+/* Deterministic budgets: nothing that shapes the board reads the clock on the wall. Every engine search runs on a
+   node budget (ms: Infinity) and WORK.used counts the search nodes this build spent (a search that gives up without
+   saying how far it got is charged its whole budget). WORK.hard (opts.hardWork) ends the build like the old 4.5 s
+   deadline did, in nodes. The only wall-clock check is the safety cap WORK.wallEnd: spend() throws WALLX and the build
+   fails ('wallClock'); it can never pick another branch. Calibration on briefs-v1 (free PC): see DEFAULT_WORK. */
+const WALLX = { wallClock: true };
+const nowMs = () => performance.now();
+const WORK = { used: 0, hard: Infinity, wallEnd: Infinity };
+const spend = n => { WORK.used += n; if (nowMs() > WORK.wallEnd) throw WALLX; };
+const workLeft = () => WORK.used <= WORK.hard;
+// clockSearch gives every candidate goal its own finishing budget: keep that small too
+const within = b => ({ nodes: b.nodes, ms: Infinity, finishNodes: Math.min(b.nodes, 100000), finishMs: Infinity });
 function fewest(c, faces, down, roles, budget) {
-  if (Date.now() > DEADLINE) return null;
-  const d = designOf(c, faces, down, roles, { i: roles.clock, n: 999 });
-  const r = E.clockShortest(E.game(d), within(budget));
-  return r && !r.unsure ? r : null;
+  if (!workLeft()) return null;
+  const d = designOf(c, faces, down, roles, { i: roles.clock, n: 999 }), o = within(budget);
+  // the builder's games keep the game's rules (peek pairs): clockShortest would call clockSearch; called directly
+  // for its node count
+  const r = E.clockSearch(E.game(d), o);
+  spend(r ? r.nodes : o.nodes);
+  return r && !r.unsure ? { k: r.k, path: r.path } : null;
 }
 // every lock and ice tile must change the fewest way to the clock (or be a holder special, checked apart);
 // idle ones are taken off one at a time (redundancy shifts after each removal). A safety net: placeRoles locks
@@ -503,7 +519,8 @@ function shorterWithout(c, faces, down, r, k0) {
   const P = planDig(c, r, rngOf(11)); if (!P || P.length >= k0) return false;
   const d = designOf(c, faces, down, r, { i: r.clock, n: 999 }), g = E.game(d);
   let st = E.start(g); for (const i of P) { st = E.step(g, st, i); if (!st) return false; }
-  return E.winnable(g, st, { nodes: 40000, ms: 300 }).result === 'win';
+  const w = E.winnable(g, st, { nodes: 40000, ms: Infinity }); spend(w.nodes);
+  return w.result === 'win';
 }
 // locks on the clock's thaw neighbours that do not shorten the planned dig when taken off: off before the pictures
 function trimThawLocks(c, roles, story) {
@@ -518,16 +535,16 @@ function trimThawLocks(c, roles, story) {
   }
   return off;
 }
-function prune(c, faces, down, roles, k0, budget, deadline = Infinity, spec = {}) {
+function prune(c, faces, down, roles, k0, budget, spec = {}) {
   const removed = [];
   const storyOwn = s => s === 'lock ' + roles.clock || s === 'ice ' + roles.clock || (spec.keyIce && roles.keys.some(k => s === 'ice ' + k));
   for (let round = 0; round < 12; round++) {
-    if (Date.now() > deadline) return null;
+    if (!workLeft()) return null;
     let idle = null;
     const specials = [...roles.locks].map(l => 'lock ' + l).concat(Object.keys(roles.ice).map(i => 'ice ' + i)).filter(s => !roles.holderSpecials.has(s));
     const order = shuffle(rngOf(round + 7), specials).sort((a, b) => storyOwn(b) - storyOwn(a));
     for (const s of order) {
-      if (Date.now() > deadline) return null;
+      if (!workLeft()) return null;
       const r = { ...roles, locks: new Set(roles.locks), ice: { ...roles.ice } };
       const [kind, i] = s.split(' '); if (kind === 'lock') r.locks.delete(+i); else delete r.ice[+i];
       // an unresolved search proves nothing: try once more with four times the budget, else give up (never
@@ -537,7 +554,7 @@ function prune(c, faces, down, roles, k0, budget, deadline = Infinity, spec = {}
       // a sufficient proof, much cheaper than the engine's finishable search)
       if (canReachWithin(designOf(c, faces, down, r, { i: r.clock, n: k0 - 1 }), 3, 30000) === 'no') { idle = { s, r }; break; }
       let w = fewest(c, faces, down, r, budget);
-      if (!w) w = fewest(c, faces, down, r, { nodes: budget.nodes * 4, ms: Math.max(0, Math.min(budget.ms * 2, deadline - Date.now())) });
+      if (!w) w = fewest(c, faces, down, r, { nodes: budget.nodes * 4 });
       if (!w) return { unresolved: s };
       if (w.k >= k0) { idle = { s, r }; break; }
     }
@@ -602,7 +619,10 @@ function canReachWithin(d, limit, nodes = 200000) {
     }
     return false;
   };
-  try { return rec(init.slice(), [], 0) ? 'yes' : 'no'; } catch (e) { if (e === BUDGETX) return 'unknown'; throw e; }
+  let out;
+  try { out = rec(init.slice(), [], 0) ? 'yes' : 'no'; } catch (e) { if (e === BUDGETX) out = 'unknown'; else throw e; }
+  spend(count);
+  return out;
 }
 const BUDGETX = { budget: true };
 
@@ -628,7 +648,7 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 }
 
 function build(briefIn, opts = {}) {
-  const t0 = Date.now(), brief = { targets: {}, ...briefIn };
+  const brief = { targets: {}, ...briefIn };
   const story = STORIES[brief.story]; if (!story) return { fail: 'unknownStory', detail: brief.story, ms: 0 };
   if (brief.targets.trayRoom != null && ![0, 1, 2].includes(brief.targets.trayRoom)) return { fail: 'invalidBrief', detail: 'trayRoom must be 0, 1 or 2', ms: 0 };
   if (story.spec.coverPartners && capOf(brief) < 2) return { fail: 'incompatibleBrief', detail: 'A covered-partner story needs at least two waiting tiles; choose trayRoom 0 or 1.', ms: 0 };
@@ -641,23 +661,36 @@ function build(briefIn, opts = {}) {
     if (!lay) return { fail: 'unknownShape', detail: brief.shape, ms: 0 };
     tiles = lay.tiles; shape = lay.shape;
   }
-  if (tiles.length < 72 || tiles.length > 96) return { fail: 'tileCount', detail: 'Builder v2 requires 72 to 96 tiles.', ms: Date.now() - t0 };
+  if (tiles.length < 72 || tiles.length > 96) return { fail: 'tileCount', detail: 'Builder v2 requires 72 to 96 tiles.', ms: 0 };
   const c = ctxOf(tiles);
   if (c.n % 2) return { fail: 'oddTiles', ms: 0 };
   if (opts.keep?.geometry && opts.keep.geometry !== JSON.stringify(c.tiles)) return { fail: 'incompatibleKeep', detail: 'The kept puzzle belongs to another layout.', ms: 0 };
   if (opts.keep?.story && opts.keep.story !== brief.story) return { fail: 'incompatibleKeep', detail: 'The kept puzzle belongs to another story.', ms: 0 };
-  const budget = opts.budget || { nodes: 300000, ms: 3000 }, spare = brief.frame?.spare ?? 1, fails = {};
-  const msMax = opts.ms ?? 15000, deadline = t0 + Math.min(msMax, opts.hardMs ?? 4500), cap = capOf(brief);
-  // forced pressure is a goal: keep trying other roles while it is missing, within this soft time
-  const softMs = opts.softMs ?? Math.min(2500, msMax / 3), variants = opts.variants ?? 6;
-  DEADLINE = deadline;
-  try { return buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax, deadline, cap, softMs, variants }); } finally { DEADLINE = Infinity; }
+  // node budgets only (budget.ms, opts.ms, hardMs and softMs of older callers are ignored: see the header)
+  const budget = { nodes: opts.budget?.nodes ?? 300000 }, spare = brief.frame?.spare ?? 1, fails = {}, cap = capOf(brief);
+  // forced pressure is a goal: keep trying other roles while it is missing, within this soft work
+  const softWork = opts.softWork ?? DEFAULT_WORK.soft, variants = opts.variants ?? 6;
+  const w0 = nowMs(), wallMs = opts.wallMs ?? 60000, ms = () => Math.round(nowMs() - w0);
+  WORK.used = 0; WORK.hard = opts.hardWork ?? DEFAULT_WORK.hard; WORK.wallEnd = w0 + wallMs;
+  try {
+    const r = buildIn(c, story, brief, shape, opts, { budget, spare, fails, cap, softWork, variants });
+    return { ...r, work: WORK.used, ms: ms() };
+  } catch (e) {
+    if (e === WALLX) return { fail: 'wallClock', detail: 'the wall-clock safety cap (' + wallMs + ' ms) was reached: a failure, never another board', fails, work: WORK.used, ms: ms() };
+    throw e;
+  } finally { WORK.used = 0; WORK.hard = Infinity; WORK.wallEnd = Infinity; }
 }
-function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax, deadline, cap, softMs, variants }) {
+/* Work budgets in search nodes, calibrated 2026-11-07 on briefs-v1.json x seeds 1-3 on a free PC: the builds over
+   200 ms counted 100-400 nodes per ms (median about 200; geometry work is not counted), the most work in one build was
+   0.9 M nodes (iceLockClock-diamond-30, 2.8 s). soft 0.5 M ~ the old 2.5 s, hard 1 M ~ the old 4.5 s. With these the
+   150 builds give byte-identical boards to the old wall-clock builder on a free PC (and with no caps at all). */
+const DEFAULT_WORK = { soft: 5e5, hard: 1e6 };
+function buildIn(c, story, brief, shape, opts, { budget, spare, fails, cap, softWork, variants }) {
   let last = null, best = null, built = 0;
   for (let attempt = 0; attempt < (opts.tries ?? 16); attempt++) {
-    if (Date.now() > deadline) break;
-    if (best && best.allProven && (best.forcedOk || Date.now() - t0 > softMs || built >= (opts.goalTries ?? 4))) break;
+    spend(0);                                   // the wall-clock safety cap, also between geometry-only attempts
+    if (!workLeft()) break;
+    if (best && best.allProven && (best.forcedOk || WORK.used > softWork || built >= (opts.goalTries ?? 4))) break;
     const note = f => { fails[f.fail] = (fails[f.fail] || 0) + 1; last = f; };
     const rng = rngOf((brief.seed ?? 1) * 7919 + attempt * 104729);
     // opts.keep (a result's .keep): the same puzzle - clock, keys, locks, ice, dig and holders - with only the
@@ -699,7 +732,7 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
         if (curHold.holders && [...curHold.holders].some(h => !cov2[h] || P2.includes(h))) { note({ fail: 'holdersOnWay' }); stop = true; break; }
         P = P2; curHold = { cov: cov2, holders: curHold.holders }; replans++; continue;
       }
-      const pr = prune(c, pick.plan.faces, pick.down, roles, way.k, opts.pruneBudget || { nodes: 150000, ms: 1500 }, deadline, story.spec);
+      const pr = prune(c, pick.plan.faces, pick.down, roles, way.k, { nodes: opts.pruneBudget?.nodes ?? 150000 }, story.spec);
       if (!pr) { note({ fail: 'slow' }); stop = true; break; }
       if (pr.unresolved) { note({ fail: 'pruneUnresolved', detail: pr.unresolved }); stop = true; break; }
       if (opts.keep && pr.length) { note({ fail: 'unproven', detail: 'The requested pictures would prune a kept special.' }); stop = true; break; }
@@ -718,27 +751,28 @@ function buildIn(c, story, brief, shape, opts, { t0, budget, spare, fails, msMax
     let design = null, rep = null, witness = null;
     if (P.length === way.k) { design = designOf(c, plan.faces, down, roles, clock, plan.W); rep = E.replay(design, design.solution); witness = 'planned'; }
     if (!rep || !rep.ok) {
-      const strict = exactRoute({ tiles: c.tiles, nb: c.nb, faces: plan.faces, rules: rulesOf(c, roles) }, roles.clock, budget.nodes, Math.max(1, Math.min(budget.ms, deadline - Date.now())));
+      const strict = exactRoute({ tiles: c.tiles, nb: c.nb, faces: plan.faces, rules: rulesOf(c, roles) }, roles.clock, budget.nodes, Infinity);
+      spend(strict ? strict.nodes : budget.nodes);
       design = designOf(c, plan.faces, down, roles, clock, strict && strict.k <= clock.n ? strict.path : E.flatten(way.path));
       rep = E.replay(design, design.solution); witness = strict && strict.k <= clock.n ? 'strict' : 'engine';
       if (!rep.ok) { design = designOf(c, plan.faces, down, roles, clock, E.flatten(way.path)); rep = E.replay(design, design.solution); witness = 'engine'; }
     }
     if (!rep.ok) { note({ fail: 'witness', detail: rep.why }); continue; }
     const al = new Uint8Array(c.n).fill(1); if (down.some(i => L.isFree(i, al, c.nb))) { note({ fail: 'downFree' }); continue; }
-    const res = prove(c, story, brief, roles, P, curHold, plan, down, design, rep, way, clock, spare, pruned, N, pick, witness, budget, deadline);
+    const res = prove(c, story, brief, roles, P, curHold, plan, down, design, rep, way, clock, spare, pruned, N, pick, witness, budget);
     res.card.attempt = attempt; res.card.shape = shape; res.keep = keepOf(); built++;
     if (!res.allProven) note({ fail: 'unproven', detail: res.intents.filter(i => !i.proven).map(i => i.name + ' (' + (i.detail || '') + ')').join('; ') });
     if (!best || res.score > best.score) best = res;
   }
   // only a board whose every intent is proven leaves the builder
-  if (!best || !best.allProven) return { ...(best ? { fail: 'unproven', detail: best.intents.filter(i => !i.proven).map(i => i.name + ' (' + (i.detail || '') + ')').join('; ') } : last || { fail: 'noAttempt' }), fails, ms: Date.now() - t0 };
+  if (!best || !best.allProven) return { ...(best ? { fail: 'unproven', detail: best.intents.filter(i => !i.proven).map(i => i.name + ' (' + (i.detail || '') + ')').join('; ') } : last || { fail: 'noAttempt' }), fails };
   const { design, card, intents, roles, keep } = best;
-  return { design, card, intents, roles, keep, fails, ms: Date.now() - t0 };
+  return { design, card, intents, roles, keep, fails };
 }
 
 const holdersNeeded = (story, orphans) => Math.max(1, Math.min(story.spec.coverPartners === 'buried' ? 1 : 2, orphans.length));
 // the intents and the card of one built board
-function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, clock, spare, pruned, N, pick, witness, budget, deadline) {
+function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, clock, spare, pruned, N, pick, witness, budget) {
   const g = E.game(design), sol = design.solution, clockAt = sol.indexOf(roles.clock), cap = plan.cap;
   // holder specials: at the clock every holder is still out of reach (locked or frozen), so the dig's twins wait
   let s = E.start(g);
@@ -751,9 +785,10 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
   // decision traps: from the start, taking a tile of the free pair loses (proven) and is tempting (its twin in sight)
   const s0 = E.start(g), trapRes = [];
   for (const [x, y] of plan.traps) {
-    if (Date.now() > deadline) { trapRes.push({ x, y, result: 'unknown' }); continue; }
+    if (!workLeft()) { trapRes.push({ x, y, result: 'unknown' }); continue; }
     const kind = E.kindOf(g, s0, x), s1 = E.step(g, s0, x);
-    const r = s1 ? E.winnable(g, s1, { nodes: 60000, ms: 400 }).result : 'lose';
+    const w = s1 ? E.winnable(g, s1, { nodes: 60000, ms: Infinity }) : { result: 'lose', nodes: 0 }; spend(w.nodes);
+    const r = w.result;
     trapRes.push({ x, y, kind, result: r });
   }
   const trapsProven = trapRes.filter(t => t.result === 'lose' && t.kind === 'pair').length;

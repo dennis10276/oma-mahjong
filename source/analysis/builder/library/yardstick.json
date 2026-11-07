@@ -1,0 +1,87 @@
+{
+  "schema": "yardstick-v1",
+  "created": "2026-11-07",
+  "source": "source/analysis/builder/process-design-synthesis.md sections 2, 3 and 6 step 0e; code: source/tools/builder/loop/yardstick.js",
+  "family": {
+    "role": "the family ruler (D)",
+    "botVersion": "family-key-memory-v1",
+    "version": "human-g6.3-key-memory-candidate1",
+    "fingerprint": "5372bd4e5d29acce926c537400b8a069dd0d04c3f4d2032024c9f34a1d99863d",
+    "note": "Fingerprint of createMeter({botVersion:'family-key-memory-v1'}) on wip/cc-builder-loop after merge 8d62405d. Codex rated this bot as d362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3 before the merge with the G2 fast path changed shared sources; the meter does not migrate those cache entries. Key memory has no fast path yet, so it runs the slow path.",
+    "priorFingerprints": ["d362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3"],
+    "reusePrior": false,
+    "reusePriorNote": "Reading Codex's d362e85f cache entries is off until the lead approves it. Evidence for approval: see priorCheck."
+  },
+  "reference": {
+    "role": "counterfactual only (gate C1), and the planner",
+    "botVersion": null,
+    "version": "human-g6.2",
+    "fast": true,
+    "fingerprint": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+    "note": "createMeter() default (fast mode). The meter itself migrates the older f3285928 / cae3bc38 / ac24aad8 family cache entries (FAMILY_CACHE_MIGRATIONS, G2 zero-drift)."
+  },
+  "planner": {
+    "role": "S (skilled), better of route and plain styles (Task 05)",
+    "meter": "reference",
+    "fingerprint": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+    "settings": { "setting": "planner", "runs": 20, "seeds": 2, "seed": 4711 },
+    "spare": 2,
+    "note": "Same settings as batch_evaluate.js quality mode, so cached planner ratings are reused."
+  },
+  "subBlockStride": 7919,
+  "cap": 20,
+  "blocks": {
+    "SCREEN": {
+      "use": "early stop; discarded after use",
+      "campaigns": 20,
+      "calls": [ { "runs": 20, "seeds": 1, "seed": 4711 } ]
+    },
+    "CURVE": {
+      "use": "every spare of a puzzle, paired (same seeds at every spare)",
+      "campaigns": 80,
+      "calls": [ { "runs": 20, "seeds": 2, "seed": 4711 }, { "runs": 20, "seeds": 2, "seed": 18427 } ],
+      "cacheAlternatives": [ { "capture": "tail" } ],
+      "pooling": "Production pooling (batch_evaluate.js rate mode, empirical_confirm.js, task11_rerate.js): two meter calls {setting:'family', runs:20, seeds:2} at seed 4711 and seed 18427, 40 campaigns each, pooled = (exp4711 + exp18427) / 2. Production rated the reference bot's 4711 call with capture:'tail' (part of the cache key, not of the rating); Codex rated key memory without capture. The yardstick looks up both cache variants before measuring.",
+      "visibleCampaigns": "The meter returns per-campaign results only for the first sub-block of each call (the first 20 of 40). SEs are therefore estimated from 40 of 80 campaigns (sample SD / sqrt(80)); D itself uses all 80."
+    },
+    "ACCEPT": {
+      "use": "the value of record; never reused, never used for choosing",
+      "blockCampaigns": 40,
+      "firstSeed": 29717,
+      "seedStep": 15838,
+      "runs": 20,
+      "seeds": 2,
+      "note": "Block j is meter call {runs:20, seeds:2, seed: 29717 + 15838*j}. Its two sub-blocks are 29717 + 7919*(2j) and 29717 + 7919*(2j+1), so blocks never overlap each other or 4711/12630/18427/26346. Block 0 equals production's reserved final seed (final_seed.js SEED = 29717)."
+    }
+  },
+  "acceptance": {
+    "rule": "sequential (synthesis section 2)",
+    "startCampaigns": 160,
+    "maxCampaigns": 320,
+    "acceptGap": 0.6,
+    "refuseGap": 2.5,
+    "finalGap": 1.0,
+    "steps": [
+      "Measure 160 ACCEPT campaigns (4 blocks).",
+      "If |D - T| <= 0.6 x tolerance: accept.",
+      "If |D - T| > 2.5 x tolerance: refuse the pair for that slot (the puzzle goes back to the library).",
+      "Otherwise measure up to 320 campaigns (8 blocks) and accept only if |D - T| <= tolerance."
+    ]
+  },
+  "tolerance": {
+    "level": { "abs": 1, "rel": 0.10, "rule": "|D_accept - T| <= max(1, 0.10 T)" },
+    "window": { "abs": 0.5, "rel": 0.05, "rule": "5-level window mean within max(0.5, 0.05 T)" },
+    "note": "The relative part above D 10 is a decision for Dennis (synthesis section 2)."
+  },
+  "curveRules": {
+    "monotoneSlack": 0.5,
+    "monotoneSe": 2,
+    "neighbourRatio": 1.5,
+    "neighbourAdd": 3,
+    "censoredAt": 18.5,
+    "shippableSpares": [1, 2, 3],
+    "maxClockN": 19,
+    "diallableRatio": 1.2
+  },
+  "priorCheck": null
+}

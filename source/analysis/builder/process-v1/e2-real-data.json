@@ -1,0 +1,3945 @@
+{
+ "about": "E2: real-data estimator and power simulation (loop/real_fit.js).",
+ "source": "plays-2026-11-07.json",
+ "made": "2026-11-07T08:56:59.862Z",
+ "ledger": {
+  "sequences": 299,
+  "tries": 1557,
+  "triesAfterCap": 1121,
+  "skipped": {
+   "replayAfterOldWin": 9,
+   "noCurrentBoardTry": 7
+  },
+  "outcomeCheck": {
+   "agree": 296,
+   "differ": [
+    {
+     "who": "Dennis",
+     "lv": 106,
+     "ledger": 2,
+     "outcomeWinAt": 3
+    }
+   ]
+  },
+  "frontier": {
+   "Dennis": {
+    "highestStarted": 200,
+    "highestWon": 199,
+    "last": "2026-11-04T18:50:07.530Z"
+   },
+   "Gerda": {
+    "highestStarted": 192,
+    "highestWon": 191,
+    "last": "2026-11-06T19:45:49.370Z"
+   },
+   "MrsD": {
+    "highestStarted": 176,
+    "highestWon": 175,
+    "last": "2026-11-06T21:02:39.795Z"
+   },
+   "PUK": {
+    "highestStarted": 82,
+    "highestWon": 81,
+    "last": "2026-11-03T18:06:30.684Z"
+   }
+  }
+ },
+ "settings": {
+  "tau": 0.5,
+  "sdLevel": 0.3,
+  "sdSeq": 0,
+  "sdSkill": 5,
+  "cap": 12,
+  "deadband": "2 SE, leave-one-player-out sign agreement",
+  "floor": 0.15
+ },
+ "windows": {
+  "10": {
+   "predictiveCheck": {
+    "fitted": [
+     {
+      "player": "Dennis",
+      "first": {
+       "real": 0.596,
+       "sim": 0.598,
+       "sim90": [
+        0.515,
+        0.677
+       ]
+      },
+      "cut": {
+       "real": 0,
+       "sim": 0.002,
+       "sim90": [
+        0,
+        0.01
+       ]
+      },
+      "mean": {
+       "real": 1.778,
+       "sim": 1.791,
+       "sim90": [
+        1.556,
+        2.04
+       ]
+      }
+     },
+     {
+      "player": "Gerda",
+      "first": {
+       "real": 0.131,
+       "sim": 0.178,
+       "sim90": [
+        0.112,
+        0.234
+       ]
+      },
+      "cut": {
+       "real": 0.178,
+       "sim": 0.159,
+       "sim90": [
+        0.103,
+        0.215
+       ]
+      },
+      "mean": {
+       "real": 5.785,
+       "sim": 5.551,
+       "sim90": [
+        4.869,
+        6.187
+       ]
+      }
+     },
+     {
+      "player": "MrsD",
+      "first": {
+       "real": 0.308,
+       "sim": 0.32,
+       "sim90": [
+        0.242,
+        0.396
+       ]
+      },
+      "cut": {
+       "real": 0.066,
+       "sim": 0.036,
+       "sim90": [
+        0.011,
+        0.077
+       ]
+      },
+      "mean": {
+       "real": 3.44,
+       "sim": 3.466,
+       "sim90": [
+        3.022,
+        3.934
+       ]
+      }
+     }
+    ],
+    "heavierSd1": [
+     {
+      "player": "Dennis",
+      "first": {
+       "real": 0.596,
+       "sim": 0.58,
+       "sim90": [
+        0.495,
+        0.667
+       ]
+      },
+      "cut": {
+       "real": 0,
+       "sim": 0.009,
+       "sim90": [
+        0,
+        0.03
+       ]
+      },
+      "mean": {
+       "real": 1.778,
+       "sim": 2.056,
+       "sim90": [
+        1.758,
+        2.414
+       ]
+      }
+     },
+     {
+      "player": "Gerda",
+      "first": {
+       "real": 0.131,
+       "sim": 0.204,
+       "sim90": [
+        0.14,
+        0.271
+       ]
+      },
+      "cut": {
+       "real": 0.178,
+       "sim": 0.207,
+       "sim90": [
+        0.15,
+        0.28
+       ]
+      },
+      "mean": {
+       "real": 5.785,
+       "sim": 5.641,
+       "sim90": [
+        5,
+        6.336
+       ]
+      }
+     },
+     {
+      "player": "MrsD",
+      "first": {
+       "real": 0.308,
+       "sim": 0.343,
+       "sim90": [
+        0.264,
+        0.44
+       ]
+      },
+      "cut": {
+       "real": 0.066,
+       "sim": 0.079,
+       "sim90": [
+        0.033,
+        0.132
+       ]
+      },
+      "mean": {
+       "real": 3.44,
+       "sim": 3.781,
+       "sim90": [
+        3.209,
+        4.429
+       ]
+      }
+     }
+    ]
+   },
+   "labels": [
+    "85-89",
+    "90-99",
+    "100-109",
+    "110-119",
+    "120-129",
+    "130-139",
+    "140-149",
+    "150-159",
+    "160-169",
+    "170-179",
+    "180-189",
+    "190-199"
+   ],
+   "sdSeq": {
+    "best": 0.5,
+    "scores": [
+     {
+      "sd": 0,
+      "evidence": -712.2381337293807
+     },
+     {
+      "sd": 0.25,
+      "evidence": -711.6053262296095
+     },
+     {
+      "sd": 0.5,
+      "evidence": -711.0419773329127
+     },
+     {
+      "sd": 0.75,
+      "evidence": -712.5284421193367
+     },
+     {
+      "sd": 1,
+      "evidence": -716.6919820036458
+     },
+     {
+      "sd": 1.25,
+      "evidence": -723.1004412615513
+     },
+     {
+      "sd": 1.5,
+      "evidence": -731.0346200239084
+     },
+     {
+      "sd": 2,
+      "evidence": -749.1913051296399
+     }
+    ]
+   },
+   "players": [
+    "Dennis",
+    "Gerda",
+    "MrsD"
+   ],
+   "fit": {
+    "skill": {
+     "Dennis": 0.23105567737456886,
+     "Gerda": -1.8558678652619858,
+     "MrsD": -0.9958116941166644
+    },
+    "window": [
+     {
+      "window": "85-89",
+      "effect": 0,
+      "se": 0,
+      "expectedTries": {
+       "Dennis": 1.9,
+       "Gerda": 8.25,
+       "MrsD": 4.07
+      }
+     },
+     {
+      "window": "90-99",
+      "effect": -0.251,
+      "se": 0.341,
+      "expectedTries": {
+       "Dennis": 1.7,
+       "Gerda": 6.64,
+       "MrsD": 3.39
+      }
+     },
+     {
+      "window": "100-109",
+      "effect": -0.476,
+      "se": 0.386,
+      "expectedTries": {
+       "Dennis": 1.56,
+       "Gerda": 5.5,
+       "MrsD": 2.91
+      }
+     },
+     {
+      "window": "110-119",
+      "effect": -0.202,
+      "se": 0.388,
+      "expectedTries": {
+       "Dennis": 1.73,
+       "Gerda": 6.92,
+       "MrsD": 3.51
+      }
+     },
+     {
+      "window": "120-129",
+      "effect": 0.031,
+      "se": 0.384,
+      "expectedTries": {
+       "Dennis": 1.93,
+       "Gerda": 8.48,
+       "MrsD": 4.16
+      }
+     },
+     {
+      "window": "130-139",
+      "effect": -0.125,
+      "se": 0.388,
+      "expectedTries": {
+       "Dennis": 1.79,
+       "Gerda": 7.4,
+       "MrsD": 3.71
+      }
+     },
+     {
+      "window": "140-149",
+      "effect": -0.185,
+      "se": 0.388,
+      "expectedTries": {
+       "Dennis": 1.75,
+       "Gerda": 7.03,
+       "MrsD": 3.55
+      }
+     },
+     {
+      "window": "150-159",
+      "effect": -0.001,
+      "se": 0.384,
+      "expectedTries": {
+       "Dennis": 1.9,
+       "Gerda": 8.24,
+       "MrsD": 4.06
+      }
+     },
+     {
+      "window": "160-169",
+      "effect": -0.361,
+      "se": 0.39,
+      "expectedTries": {
+       "Dennis": 1.63,
+       "Gerda": 6.05,
+       "MrsD": 3.14
+      }
+     },
+     {
+      "window": "170-179",
+      "effect": -0.222,
+      "se": 0.393,
+      "expectedTries": {
+       "Dennis": 1.72,
+       "Gerda": 6.81,
+       "MrsD": 3.46
+      }
+     },
+     {
+      "window": "180-189",
+      "effect": -0.391,
+      "se": 0.421,
+      "expectedTries": {
+       "Dennis": 1.61,
+       "Gerda": 5.9,
+       "MrsD": 3.07
+      }
+     },
+     {
+      "window": "190-199",
+      "effect": -0.142,
+      "se": 0.478,
+      "expectedTries": {
+       "Dennis": 1.78,
+       "Gerda": 7.29,
+       "MrsD": 3.66
+      }
+     }
+    ],
+    "steps": [
+     {
+      "between": "85-89 | 90-99",
+      "est": -0.251,
+      "se": 0.341,
+      "z": -0.74,
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "90-99 | 100-109",
+      "est": -0.225,
+      "se": 0.31,
+      "z": -0.73,
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": false,
+      "flagged": false
+     },
+     {
+      "between": "100-109 | 110-119",
+      "est": 0.274,
+      "se": 0.301,
+      "z": 0.91,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": false,
+      "flagged": false
+     },
+     {
+      "between": "110-119 | 120-129",
+      "est": 0.233,
+      "se": 0.288,
+      "z": 0.81,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "120-129 | 130-139",
+      "est": -0.156,
+      "se": 0.286,
+      "z": -0.55,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": false,
+      "flagged": false
+     },
+     {
+      "between": "130-139 | 140-149",
+      "est": -0.06,
+      "se": 0.29,
+      "z": -0.21,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": false,
+      "flagged": false
+     },
+     {
+      "between": "140-149 | 150-159",
+      "est": 0.184,
+      "se": 0.286,
+      "z": 0.64,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "150-159 | 160-169",
+      "est": -0.36,
+      "se": 0.287,
+      "z": -1.25,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "160-169 | 170-179",
+      "est": 0.139,
+      "se": 0.294,
+      "z": 0.47,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "170-179 | 180-189",
+      "est": -0.17,
+      "se": 0.318,
+      "z": -0.53,
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "180-189 | 190-199",
+      "est": 0.25,
+      "se": 0.366,
+      "z": 0.68,
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     }
+    ],
+    "levelSd": 0.103,
+    "hardestLevels": [
+     [
+      132,
+      0.34
+     ],
+     [
+      161,
+      0.32
+     ],
+     [
+      176,
+      0.31
+     ],
+     [
+      91,
+      0.3
+     ],
+     [
+      150,
+      0.29
+     ],
+     [
+      89,
+      0.26
+     ],
+     [
+      196,
+      0.22
+     ],
+     [
+      122,
+      0.18
+     ]
+    ]
+   },
+   "fitWithoutPlayerLevel": {
+    "skill": {
+     "Dennis": 0.15253945268683672,
+     "Gerda": -1.9423804345787277,
+     "MrsD": -1.1195349731869209
+    },
+    "steps": [
+     {
+      "est": -0.259,
+      "se": 0.327,
+      "flagged": false
+     },
+     {
+      "est": -0.24,
+      "se": 0.298,
+      "flagged": false
+     },
+     {
+      "est": 0.312,
+      "se": 0.289,
+      "flagged": false
+     },
+     {
+      "est": 0.211,
+      "se": 0.274,
+      "flagged": false
+     },
+     {
+      "est": -0.159,
+      "se": 0.274,
+      "flagged": false
+     },
+     {
+      "est": -0.04,
+      "se": 0.277,
+      "flagged": false
+     },
+     {
+      "est": 0.177,
+      "se": 0.272,
+      "flagged": false
+     },
+     {
+      "est": -0.367,
+      "se": 0.274,
+      "flagged": false
+     },
+     {
+      "est": 0.161,
+      "se": 0.281,
+      "flagged": false
+     },
+     {
+      "est": -0.173,
+      "se": 0.305,
+      "flagged": false
+     },
+     {
+      "est": 0.308,
+      "se": 0.352,
+      "flagged": false
+     }
+    ]
+   },
+   "power": {
+    "falseAlarm": [
+     {
+      "between": "85-89 | 90-99",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
+     },
+     {
+      "between": "90-99 | 100-109",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
+     },
+     {
+      "between": "100-109 | 110-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
+     },
+     {
+      "between": "110-119 | 120-129",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
+     },
+     {
+      "between": "120-129 | 130-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01
+     },
+     {
+      "between": "130-139 | 140-149",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
+     },
+     {
+      "between": "140-149 | 150-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
+     },
+     {
+      "between": "150-159 | 160-169",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.015,
+      "rateFloor": 0.015,
+      "rateNoLopo": 0.015
+     },
+     {
+      "between": "160-169 | 170-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
+     },
+     {
+      "between": "170-179 | 180-189",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 200,
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
+     },
+     {
+      "between": "180-189 | 190-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 200,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
+     }
+    ],
+    "falseAlarmMisspecified": [
+     {
+      "between": "85-89 | 90-99",
+      "rate2se": 0.01,
+      "rateNoLopo": 0.01
+     },
+     {
+      "between": "90-99 | 100-109",
+      "rate2se": 0.01,
+      "rateNoLopo": 0.01
+     },
+     {
+      "between": "100-109 | 110-119",
+      "rate2se": 0.015,
+      "rateNoLopo": 0.015
+     },
+     {
+      "between": "110-119 | 120-129",
+      "rate2se": 0.015,
+      "rateNoLopo": 0.015
+     },
+     {
+      "between": "120-129 | 130-139",
+      "rate2se": 0,
+      "rateNoLopo": 0
+     },
+     {
+      "between": "130-139 | 140-149",
+      "rate2se": 0.015,
+      "rateNoLopo": 0.015
+     },
+     {
+      "between": "140-149 | 150-159",
+      "rate2se": 0.02,
+      "rateNoLopo": 0.02
+     },
+     {
+      "between": "150-159 | 160-169",
+      "rate2se": 0,
+      "rateNoLopo": 0
+     },
+     {
+      "between": "160-169 | 170-179",
+      "rate2se": 0.015,
+      "rateNoLopo": 0.015
+     },
+     {
+      "between": "170-179 | 180-189",
+      "rate2se": 0.005,
+      "rateNoLopo": 0.005
+     },
+     {
+      "between": "180-189 | 190-199",
+      "rate2se": 0,
+      "rateNoLopo": 0
+     }
+    ],
+    "heavierWorldSd1": {
+     "falseAlarm": [
+      {
+       "between": "85-89 | 90-99",
+       "rate2se": 0.01
+      },
+      {
+       "between": "90-99 | 100-109",
+       "rate2se": 0.005
+      },
+      {
+       "between": "100-109 | 110-119",
+       "rate2se": 0.02
+      },
+      {
+       "between": "110-119 | 120-129",
+       "rate2se": 0.005
+      },
+      {
+       "between": "120-129 | 130-139",
+       "rate2se": 0.005
+      },
+      {
+       "between": "130-139 | 140-149",
+       "rate2se": 0.005
+      },
+      {
+       "between": "140-149 | 150-159",
+       "rate2se": 0.02
+      },
+      {
+       "between": "150-159 | 160-169",
+       "rate2se": 0.02
+      },
+      {
+       "between": "160-169 | 170-179",
+       "rate2se": 0.01
+      },
+      {
+       "between": "170-179 | 180-189",
+       "rate2se": 0.005
+      },
+      {
+       "between": "180-189 | 190-199",
+       "rate2se": 0.005
+      }
+     ],
+     "detection035": [
+      {
+       "between": "85-89 | 90-99",
+       "rate2se": 0
+      },
+      {
+       "between": "90-99 | 100-109",
+       "rate2se": 0.02
+      },
+      {
+       "between": "100-109 | 110-119",
+       "rate2se": 0.06
+      },
+      {
+       "between": "110-119 | 120-129",
+       "rate2se": 0.08
+      },
+      {
+       "between": "120-129 | 130-139",
+       "rate2se": 0.02
+      },
+      {
+       "between": "130-139 | 140-149",
+       "rate2se": 0.06
+      },
+      {
+       "between": "140-149 | 150-159",
+       "rate2se": 0.02
+      },
+      {
+       "between": "150-159 | 160-169",
+       "rate2se": 0
+      },
+      {
+       "between": "160-169 | 170-179",
+       "rate2se": 0
+      },
+      {
+       "between": "170-179 | 180-189",
+       "rate2se": 0.02
+      },
+      {
+       "between": "180-189 | 190-199",
+       "rate2se": 0
+      }
+     ]
+    },
+    "detection": [
+     {
+      "delta": 0.2,
+      "between": "85-89 | 90-99",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.15,
+      "meanSE": 0.346
+     },
+     {
+      "delta": 0.2,
+      "between": "90-99 | 100-109",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.12,
+      "meanSE": 0.306
+     },
+     {
+      "delta": 0.2,
+      "between": "100-109 | 110-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02,
+      "meanEst": 0.109,
+      "meanSE": 0.293
+     },
+     {
+      "delta": 0.2,
+      "between": "110-119 | 120-129",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.134,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.2,
+      "between": "120-129 | 130-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.163,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.2,
+      "between": "130-139 | 140-149",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.137,
+      "meanSE": 0.285
+     },
+     {
+      "delta": 0.2,
+      "between": "140-149 | 150-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.124,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.2,
+      "between": "150-159 | 160-169",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.153,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.2,
+      "between": "160-169 | 170-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.1,
+      "meanSE": 0.291
+     },
+     {
+      "delta": 0.2,
+      "between": "170-179 | 180-189",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.098,
+      "meanSE": 0.312
+     },
+     {
+      "delta": 0.2,
+      "between": "180-189 | 190-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.079,
+      "meanSE": 0.364
+     },
+     {
+      "delta": 0.35,
+      "between": "85-89 | 90-99",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.193,
+      "meanSE": 0.346
+     },
+     {
+      "delta": 0.35,
+      "between": "90-99 | 100-109",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.05,
+      "rateFloor": 0.05,
+      "rateNoLopo": 0.05,
+      "meanEst": 0.241,
+      "meanSE": 0.306
+     },
+     {
+      "delta": 0.35,
+      "between": "100-109 | 110-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.05,
+      "rateFloor": 0.05,
+      "rateNoLopo": 0.05,
+      "meanEst": 0.251,
+      "meanSE": 0.294
+     },
+     {
+      "delta": 0.35,
+      "between": "110-119 | 120-129",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.19,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.35,
+      "between": "120-129 | 130-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.19,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.35,
+      "between": "130-139 | 140-149",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02,
+      "meanEst": 0.204,
+      "meanSE": 0.285
+     },
+     {
+      "delta": 0.35,
+      "between": "140-149 | 150-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02,
+      "meanEst": 0.229,
+      "meanSE": 0.285
+     },
+     {
+      "delta": 0.35,
+      "between": "150-159 | 160-169",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.177,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.35,
+      "between": "160-169 | 170-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.09,
+      "rateFloor": 0.09,
+      "rateNoLopo": 0.09,
+      "meanEst": 0.218,
+      "meanSE": 0.291
+     },
+     {
+      "delta": 0.35,
+      "between": "170-179 | 180-189",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.195,
+      "meanSE": 0.311
+     },
+     {
+      "delta": 0.35,
+      "between": "180-189 | 190-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.144,
+      "meanSE": 0.362
+     },
+     {
+      "delta": 0.5,
+      "between": "85-89 | 90-99",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.286,
+      "meanSE": 0.347
+     },
+     {
+      "delta": 0.5,
+      "between": "90-99 | 100-109",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.301,
+      "meanSE": 0.306
+     },
+     {
+      "delta": 0.5,
+      "between": "100-109 | 110-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.1,
+      "rateFloor": 0.1,
+      "rateNoLopo": 0.1,
+      "meanEst": 0.333,
+      "meanSE": 0.293
+     },
+     {
+      "delta": 0.5,
+      "between": "110-119 | 120-129",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.08,
+      "rateFloor": 0.08,
+      "rateNoLopo": 0.08,
+      "meanEst": 0.298,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.5,
+      "between": "120-129 | 130-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.1,
+      "rateFloor": 0.1,
+      "rateNoLopo": 0.1,
+      "meanEst": 0.309,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.5,
+      "between": "130-139 | 140-149",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.15,
+      "rateFloor": 0.15,
+      "rateNoLopo": 0.15,
+      "meanEst": 0.314,
+      "meanSE": 0.285
+     },
+     {
+      "delta": 0.5,
+      "between": "140-149 | 150-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.1,
+      "rateFloor": 0.1,
+      "rateNoLopo": 0.1,
+      "meanEst": 0.315,
+      "meanSE": 0.285
+     },
+     {
+      "delta": 0.5,
+      "between": "150-159 | 160-169",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.08,
+      "rateFloor": 0.08,
+      "rateNoLopo": 0.08,
+      "meanEst": 0.293,
+      "meanSE": 0.285
+     },
+     {
+      "delta": 0.5,
+      "between": "160-169 | 170-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.11,
+      "rateFloor": 0.11,
+      "rateNoLopo": 0.11,
+      "meanEst": 0.32,
+      "meanSE": 0.291
+     },
+     {
+      "delta": 0.5,
+      "between": "170-179 | 180-189",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.07,
+      "rateFloor": 0.07,
+      "rateNoLopo": 0.07,
+      "meanEst": 0.293,
+      "meanSE": 0.312
+     },
+     {
+      "delta": 0.5,
+      "between": "180-189 | 190-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.224,
+      "meanSE": 0.36
+     }
+    ]
+   }
+  },
+  "20": {
+   "predictiveCheck": {
+    "fitted": [
+     {
+      "player": "Dennis",
+      "first": {
+       "real": 0.596,
+       "sim": 0.595,
+       "sim90": [
+        0.525,
+        0.677
+       ]
+      },
+      "cut": {
+       "real": 0,
+       "sim": 0.001,
+       "sim90": [
+        0,
+        0.01
+       ]
+      },
+      "mean": {
+       "real": 1.778,
+       "sim": 1.804,
+       "sim90": [
+        1.596,
+        2.051
+       ]
+      }
+     },
+     {
+      "player": "Gerda",
+      "first": {
+       "real": 0.131,
+       "sim": 0.175,
+       "sim90": [
+        0.121,
+        0.243
+       ]
+      },
+      "cut": {
+       "real": 0.178,
+       "sim": 0.158,
+       "sim90": [
+        0.103,
+        0.215
+       ]
+      },
+      "mean": {
+       "real": 5.785,
+       "sim": 5.578,
+       "sim90": [
+        4.944,
+        6.262
+       ]
+      }
+     },
+     {
+      "player": "MrsD",
+      "first": {
+       "real": 0.308,
+       "sim": 0.317,
+       "sim90": [
+        0.231,
+        0.396
+       ]
+      },
+      "cut": {
+       "real": 0.066,
+       "sim": 0.037,
+       "sim90": [
+        0.011,
+        0.077
+       ]
+      },
+      "mean": {
+       "real": 3.44,
+       "sim": 3.479,
+       "sim90": [
+        3.022,
+        4.022
+       ]
+      }
+     }
+    ],
+    "heavierSd1": [
+     {
+      "player": "Dennis",
+      "first": {
+       "real": 0.596,
+       "sim": 0.576,
+       "sim90": [
+        0.495,
+        0.657
+       ]
+      },
+      "cut": {
+       "real": 0,
+       "sim": 0.01,
+       "sim90": [
+        0,
+        0.03
+       ]
+      },
+      "mean": {
+       "real": 1.778,
+       "sim": 2.085,
+       "sim90": [
+        1.798,
+        2.424
+       ]
+      }
+     },
+     {
+      "player": "Gerda",
+      "first": {
+       "real": 0.131,
+       "sim": 0.204,
+       "sim90": [
+        0.14,
+        0.262
+       ]
+      },
+      "cut": {
+       "real": 0.178,
+       "sim": 0.206,
+       "sim90": [
+        0.15,
+        0.262
+       ]
+      },
+      "mean": {
+       "real": 5.785,
+       "sim": 5.673,
+       "sim90": [
+        5.019,
+        6.346
+       ]
+      }
+     },
+     {
+      "player": "MrsD",
+      "first": {
+       "real": 0.308,
+       "sim": 0.341,
+       "sim90": [
+        0.264,
+        0.429
+       ]
+      },
+      "cut": {
+       "real": 0.066,
+       "sim": 0.081,
+       "sim90": [
+        0.033,
+        0.132
+       ]
+      },
+      "mean": {
+       "real": 3.44,
+       "sim": 3.825,
+       "sim90": [
+        3.275,
+        4.429
+       ]
+      }
+     }
+    ]
+   },
+   "labels": [
+    "85-99",
+    "100-119",
+    "120-139",
+    "140-159",
+    "160-179",
+    "180-199"
+   ],
+   "sdSeq": {
+    "best": 0.5,
+    "scores": [
+     {
+      "sd": 0,
+      "evidence": -706.7206724108004
+     },
+     {
+      "sd": 0.25,
+      "evidence": -706.0360860885002
+     },
+     {
+      "sd": 0.5,
+      "evidence": -705.3847858686745
+     },
+     {
+      "sd": 0.75,
+      "evidence": -706.8327978722727
+     },
+     {
+      "sd": 1,
+      "evidence": -711.0198997743215
+     },
+     {
+      "sd": 1.25,
+      "evidence": -717.4923909400113
+     },
+     {
+      "sd": 1.5,
+      "evidence": -725.5098047525305
+     },
+     {
+      "sd": 2,
+      "evidence": -743.8425083976502
+     }
+    ]
+   },
+   "players": [
+    "Dennis",
+    "Gerda",
+    "MrsD"
+   ],
+   "fit": {
+    "skill": {
+     "Dennis": 0.3313873990359597,
+     "Gerda": -1.7177581879522457,
+     "MrsD": -0.852066270127205
+    },
+    "window": [
+     {
+      "window": "85-99",
+      "effect": 0,
+      "se": 0,
+      "expectedTries": {
+       "Dennis": 1.81,
+       "Gerda": 7.31,
+       "MrsD": 3.66
+      }
+     },
+     {
+      "window": "100-119",
+      "effect": -0.191,
+      "se": 0.266,
+      "expectedTries": {
+       "Dennis": 1.67,
+       "Gerda": 6.22,
+       "MrsD": 3.2
+      }
+     },
+     {
+      "window": "120-139",
+      "effect": 0.085,
+      "se": 0.279,
+      "expectedTries": {
+       "Dennis": 1.89,
+       "Gerda": 7.88,
+       "MrsD": 3.89
+      }
+     },
+     {
+      "window": "140-159",
+      "effect": 0.06,
+      "se": 0.281,
+      "expectedTries": {
+       "Dennis": 1.86,
+       "Gerda": 7.71,
+       "MrsD": 3.82
+      }
+     },
+     {
+      "window": "160-179",
+      "effect": -0.163,
+      "se": 0.286,
+      "expectedTries": {
+       "Dennis": 1.69,
+       "Gerda": 6.36,
+       "MrsD": 3.26
+      }
+     },
+     {
+      "window": "180-199",
+      "effect": -0.209,
+      "se": 0.339,
+      "expectedTries": {
+       "Dennis": 1.66,
+       "Gerda": 6.12,
+       "MrsD": 3.15
+      }
+     }
+    ],
+    "steps": [
+     {
+      "between": "85-99 | 100-119",
+      "est": -0.191,
+      "se": 0.266,
+      "z": -0.72,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": false,
+      "flagged": false
+     },
+     {
+      "between": "100-119 | 120-139",
+      "est": 0.276,
+      "se": 0.237,
+      "z": 1.17,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "120-139 | 140-159",
+      "est": -0.025,
+      "se": 0.229,
+      "z": -0.11,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": false,
+      "flagged": false
+     },
+     {
+      "between": "140-159 | 160-179",
+      "est": -0.223,
+      "se": 0.234,
+      "z": -0.95,
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     },
+     {
+      "between": "160-179 | 180-199",
+      "est": -0.046,
+      "se": 0.283,
+      "z": -0.16,
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "lopoAgree": true,
+      "flagged": false
+     }
+    ],
+    "levelSd": 0.105,
+    "hardestLevels": [
+     [
+      176,
+      0.32
+     ],
+     [
+      132,
+      0.32
+     ],
+     [
+      161,
+      0.31
+     ],
+     [
+      150,
+      0.3
+     ],
+     [
+      89,
+      0.28
+     ],
+     [
+      91,
+      0.28
+     ],
+     [
+      196,
+      0.24
+     ],
+     [
+      122,
+      0.19
+     ]
+    ]
+   },
+   "fitWithoutPlayerLevel": {
+    "skill": {
+     "Dennis": 0.2508539915615376,
+     "Gerda": -1.8021311169029945,
+     "MrsD": -0.9730636768321959
+    },
+    "steps": [
+     {
+      "est": -0.187,
+      "se": 0.251,
+      "flagged": false
+     },
+     {
+      "est": 0.266,
+      "se": 0.224,
+      "flagged": false
+     },
+     {
+      "est": -0.01,
+      "se": 0.217,
+      "flagged": false
+     },
+     {
+      "est": -0.219,
+      "se": 0.22,
+      "flagged": false
+     },
+     {
+      "est": -0.018,
+      "se": 0.268,
+      "flagged": false
+     }
+    ]
+   },
+   "power": {
+    "falseAlarm": [
+     {
+      "between": "85-99 | 100-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01
+     },
+     {
+      "between": "100-119 | 120-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
+     },
+     {
+      "between": "120-139 | 140-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02
+     },
+     {
+      "between": "140-159 | 160-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03
+     },
+     {
+      "between": "160-179 | 180-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 200,
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02
+     }
+    ],
+    "falseAlarmMisspecified": [
+     {
+      "between": "85-99 | 100-119",
+      "rate2se": 0.035,
+      "rateNoLopo": 0.035
+     },
+     {
+      "between": "100-119 | 120-139",
+      "rate2se": 0.02,
+      "rateNoLopo": 0.02
+     },
+     {
+      "between": "120-139 | 140-159",
+      "rate2se": 0.02,
+      "rateNoLopo": 0.02
+     },
+     {
+      "between": "140-159 | 160-179",
+      "rate2se": 0.04,
+      "rateNoLopo": 0.04
+     },
+     {
+      "between": "160-179 | 180-199",
+      "rate2se": 0.025,
+      "rateNoLopo": 0.025
+     }
+    ],
+    "heavierWorldSd1": {
+     "falseAlarm": [
+      {
+       "between": "85-99 | 100-119",
+       "rate2se": 0.025
+      },
+      {
+       "between": "100-119 | 120-139",
+       "rate2se": 0.04
+      },
+      {
+       "between": "120-139 | 140-159",
+       "rate2se": 0.015
+      },
+      {
+       "between": "140-159 | 160-179",
+       "rate2se": 0.02
+      },
+      {
+       "between": "160-179 | 180-199",
+       "rate2se": 0.02
+      }
+     ],
+     "detection035": [
+      {
+       "between": "85-99 | 100-119",
+       "rate2se": 0.08
+      },
+      {
+       "between": "100-119 | 120-139",
+       "rate2se": 0.18
+      },
+      {
+       "between": "120-139 | 140-159",
+       "rate2se": 0.22
+      },
+      {
+       "between": "140-159 | 160-179",
+       "rate2se": 0.1
+      },
+      {
+       "between": "160-179 | 180-199",
+       "rate2se": 0.1
+      }
+     ]
+    },
+    "detection": [
+     {
+      "delta": 0.2,
+      "between": "85-99 | 100-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.149,
+      "meanSE": 0.263
+     },
+     {
+      "delta": 0.2,
+      "between": "100-119 | 120-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.06,
+      "rateFloor": 0.06,
+      "rateNoLopo": 0.06,
+      "meanEst": 0.142,
+      "meanSE": 0.234
+     },
+     {
+      "delta": 0.2,
+      "between": "120-139 | 140-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.06,
+      "rateFloor": 0.06,
+      "rateNoLopo": 0.06,
+      "meanEst": 0.184,
+      "meanSE": 0.23
+     },
+     {
+      "delta": 0.2,
+      "between": "140-159 | 160-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.155,
+      "meanSE": 0.233
+     },
+     {
+      "delta": 0.2,
+      "between": "160-179 | 180-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.091,
+      "meanSE": 0.279
+     },
+     {
+      "delta": 0.35,
+      "between": "85-99 | 100-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.09,
+      "rateFloor": 0.09,
+      "rateNoLopo": 0.09,
+      "meanEst": 0.248,
+      "meanSE": 0.264
+     },
+     {
+      "delta": 0.35,
+      "between": "100-119 | 120-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.12,
+      "rateFloor": 0.12,
+      "rateNoLopo": 0.12,
+      "meanEst": 0.268,
+      "meanSE": 0.233
+     },
+     {
+      "delta": 0.35,
+      "between": "120-139 | 140-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.15,
+      "rateFloor": 0.15,
+      "rateNoLopo": 0.15,
+      "meanEst": 0.282,
+      "meanSE": 0.229
+     },
+     {
+      "delta": 0.35,
+      "between": "140-159 | 160-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.24,
+      "rateFloor": 0.24,
+      "rateNoLopo": 0.24,
+      "meanEst": 0.332,
+      "meanSE": 0.232
+     },
+     {
+      "delta": 0.35,
+      "between": "160-179 | 180-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.1,
+      "rateFloor": 0.1,
+      "rateNoLopo": 0.1,
+      "meanEst": 0.217,
+      "meanSE": 0.276
+     },
+     {
+      "delta": 0.5,
+      "between": "85-99 | 100-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.15,
+      "rateFloor": 0.15,
+      "rateNoLopo": 0.15,
+      "meanEst": 0.299,
+      "meanSE": 0.264
+     },
+     {
+      "delta": 0.5,
+      "between": "100-119 | 120-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.34,
+      "rateFloor": 0.34,
+      "rateNoLopo": 0.34,
+      "meanEst": 0.393,
+      "meanSE": 0.233
+     },
+     {
+      "delta": 0.5,
+      "between": "120-139 | 140-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.33,
+      "rateFloor": 0.33,
+      "rateNoLopo": 0.33,
+      "meanEst": 0.371,
+      "meanSE": 0.229
+     },
+     {
+      "delta": 0.5,
+      "between": "140-159 | 160-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.3,
+      "rateFloor": 0.3,
+      "rateNoLopo": 0.3,
+      "meanEst": 0.36,
+      "meanSE": 0.232
+     },
+     {
+      "delta": 0.5,
+      "between": "160-179 | 180-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.14,
+      "rateFloor": 0.14,
+      "rateNoLopo": 0.14,
+      "meanEst": 0.298,
+      "meanSE": 0.275
+     }
+    ]
+   }
+  }
+ },
+ "byTen": [
+  {
+   "window": "85-89",
+   "Ylevels": 5,
+   "Ymean": 4.16,
+   "Ymedian": 3.2,
+   "Ycensored": 0,
+   "dennisLevels": 5,
+   "dennisFirstTry": 0.4,
+   "DennisLevels": 5,
+   "DennisMeanTriesCap20": 1.8,
+   "GerdaLevels": 5,
+   "GerdaMeanTriesCap20": 7.2,
+   "MrsDLevels": 5,
+   "MrsDMeanTriesCap20": 5
+  },
+  {
+   "window": "90-99",
+   "Ylevels": 0,
+   "Ymean": null,
+   "Ymedian": null,
+   "Ycensored": 0,
+   "dennisLevels": 0,
+   "dennisFirstTry": null,
+   "DennisLevels": 0,
+   "DennisMeanTriesCap20": null,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 5.9,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 4.5
+  },
+  {
+   "window": "100-109",
+   "Ylevels": 4,
+   "Ymean": 2.5,
+   "Ymedian": 3,
+   "Ycensored": 0,
+   "dennisLevels": 4,
+   "dennisFirstTry": 0.25,
+   "DennisLevels": 4,
+   "DennisMeanTriesCap20": 2.25,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 4.6,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 1.9
+  },
+  {
+   "window": "110-119",
+   "Ylevels": 10,
+   "Ymean": 3.26,
+   "Ymedian": 3.4,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.5,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 1.9,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 8.9,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 1.8
+  },
+  {
+   "window": "120-129",
+   "Ylevels": 10,
+   "Ymean": 4.32,
+   "Ymedian": 4.6,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.6,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 2,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 11.2,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 3.2
+  },
+  {
+   "window": "130-139",
+   "Ylevels": 10,
+   "Ymean": 3.86,
+   "Ymedian": 2.6,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.5,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 1.9,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 7.5,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 4
+  },
+  {
+   "window": "140-149",
+   "Ylevels": 10,
+   "Ymean": 3.92,
+   "Ymedian": 3.8,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.9,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 1.1,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 7,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 5.2
+  },
+  {
+   "window": "150-159",
+   "Ylevels": 10,
+   "Ymean": 4.58,
+   "Ymedian": 3.4,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.2,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 2.1,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 6.3,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 6.2
+  },
+  {
+   "window": "160-169",
+   "Ylevels": 10,
+   "Ymean": 3.06,
+   "Ymedian": 2.2,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.9,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 1.4,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 6.1,
+   "MrsDLevels": 10,
+   "MrsDMeanTriesCap20": 3.2
+  },
+  {
+   "window": "170-179",
+   "Ylevels": 7,
+   "Ymean": 3.63,
+   "Ymedian": 2.2,
+   "Ycensored": 1,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.6,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 1.9,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 5.1,
+   "MrsDLevels": 7,
+   "MrsDMeanTriesCap20": 5
+  },
+  {
+   "window": "180-189",
+   "Ylevels": 0,
+   "Ymean": null,
+   "Ymedian": null,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.8,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 1.4,
+   "GerdaLevels": 10,
+   "GerdaMeanTriesCap20": 5.7,
+   "MrsDLevels": 0,
+   "MrsDMeanTriesCap20": null
+  },
+  {
+   "window": "190-199",
+   "Ylevels": 0,
+   "Ymean": null,
+   "Ymedian": null,
+   "Ycensored": 0,
+   "dennisLevels": 10,
+   "dennisFirstTry": 0.6,
+   "DennisLevels": 10,
+   "DennisMeanTriesCap20": 2.1,
+   "GerdaLevels": 3,
+   "GerdaMeanTriesCap20": 6,
+   "MrsDLevels": 0,
+   "MrsDMeanTriesCap20": null
+  }
+ ],
+ "yardstick": {
+  "85": {
+   "Y": 3.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 6,
+   "MrsD": 5
+  },
+  "86": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 6,
+   "MrsD": 1
+  },
+  "87": {
+   "Y": 3.2,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 2,
+   "MrsD": 5
+  },
+  "88": {
+   "Y": 3.2,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 8,
+   "MrsD": 1
+  },
+  "89": {
+   "Y": 8.8,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 14,
+   "MrsD": 13
+  },
+  "106": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 2,
+   "MrsD": 2
+  },
+  "107": {
+   "Y": 3,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 7,
+   "MrsD": 3
+  },
+  "108": {
+   "Y": 1.6,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 2,
+   "MrsD": 1
+  },
+  "109": {
+   "Y": 3.4,
+   "censored": false,
+   "Dennis": 4,
+   "Gerda": 5,
+   "MrsD": 2
+  },
+  "110": {
+   "Y": 4.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 18,
+   "MrsD": 2
+  },
+  "111": {
+   "Y": 4,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 12,
+   "MrsD": 1
+  },
+  "112": {
+   "Y": 2.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": 4
+  },
+  "113": {
+   "Y": 3.4,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 13,
+   "MrsD": 1
+  },
+  "114": {
+   "Y": 2.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": 4
+  },
+  "115": {
+   "Y": 2.2,
+   "censored": false,
+   "Dennis": 4,
+   "Gerda": 1,
+   "MrsD": 1
+  },
+  "116": {
+   "Y": 5.2,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 20,
+   "MrsD": 1
+  },
+  "117": {
+   "Y": 1.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": 1
+  },
+  "118": {
+   "Y": 2.4,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 2,
+   "MrsD": 2
+  },
+  "119": {
+   "Y": 4,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 14,
+   "MrsD": 1
+  },
+  "120": {
+   "Y": 3.6,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 4,
+   "MrsD": 4
+  },
+  "121": {
+   "Y": 6.4,
+   "censored": false,
+   "Dennis": 4,
+   "Gerda": 20,
+   "MrsD": 2
+  },
+  "122": {
+   "Y": 7.6,
+   "censored": false,
+   "Dennis": 4,
+   "Gerda": 20,
+   "MrsD": 5
+  },
+  "123": {
+   "Y": 4.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 20,
+   "MrsD": 1
+  },
+  "124": {
+   "Y": 4.6,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 7,
+   "MrsD": 5
+  },
+  "125": {
+   "Y": 4.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 19,
+   "MrsD": 1
+  },
+  "126": {
+   "Y": 3.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": 6
+  },
+  "127": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": 2
+  },
+  "128": {
+   "Y": 4.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 11,
+   "MrsD": 4
+  },
+  "129": {
+   "Y": 1.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 3,
+   "MrsD": 2
+  },
+  "130": {
+   "Y": 2.8,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 6,
+   "MrsD": 2
+  },
+  "131": {
+   "Y": 2.6,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 5,
+   "MrsD": 1
+  },
+  "132": {
+   "Y": 13.6,
+   "censored": false,
+   "Dennis": 4,
+   "Gerda": 20,
+   "MrsD": 20
+  },
+  "133": {
+   "Y": 1,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": 1
+  },
+  "134": {
+   "Y": 1.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 1
+  },
+  "135": {
+   "Y": 6.4,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 18,
+   "MrsD": 6
+  },
+  "136": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": 2
+  },
+  "137": {
+   "Y": 2.6,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 3,
+   "MrsD": 3
+  },
+  "138": {
+   "Y": 2.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 9,
+   "MrsD": 1
+  },
+  "139": {
+   "Y": 3.8,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 7,
+   "MrsD": 3
+  },
+  "140": {
+   "Y": 2.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": 4
+  },
+  "141": {
+   "Y": 4,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 12,
+   "MrsD": 3
+  },
+  "142": {
+   "Y": 3.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": 8
+  },
+  "143": {
+   "Y": 6.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 17,
+   "MrsD": 7
+  },
+  "144": {
+   "Y": 9.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 6,
+   "MrsD": 20
+  },
+  "145": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 3
+  },
+  "146": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 6,
+   "MrsD": 1
+  },
+  "147": {
+   "Y": 1.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 3,
+   "MrsD": 2
+  },
+  "148": {
+   "Y": 1.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 1
+  },
+  "149": {
+   "Y": 6,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 20,
+   "MrsD": 3
+  },
+  "150": {
+   "Y": 13.2,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 20,
+   "MrsD": 20
+  },
+  "151": {
+   "Y": 3.4,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 5,
+   "MrsD": 4
+  },
+  "152": {
+   "Y": 2.4,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 4,
+   "MrsD": 2
+  },
+  "153": {
+   "Y": 3,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 9,
+   "MrsD": 2
+  },
+  "154": {
+   "Y": 3.8,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 11,
+   "MrsD": 1
+  },
+  "155": {
+   "Y": 3.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 3,
+   "MrsD": 7
+  },
+  "156": {
+   "Y": 8,
+   "censored": false,
+   "Dennis": 3,
+   "Gerda": 4,
+   "MrsD": 15
+  },
+  "157": {
+   "Y": 2.8,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 4,
+   "MrsD": 3
+  },
+  "158": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 2,
+   "MrsD": 2
+  },
+  "159": {
+   "Y": 3.4,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 1,
+   "MrsD": 6
+  },
+  "160": {
+   "Y": 2.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 8,
+   "MrsD": 2
+  },
+  "161": {
+   "Y": 9.2,
+   "censored": false,
+   "Dennis": 5,
+   "Gerda": 20,
+   "MrsD": 8
+  },
+  "162": {
+   "Y": 4.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 10
+  },
+  "163": {
+   "Y": 3.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 10,
+   "MrsD": 3
+  },
+  "164": {
+   "Y": 1.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 3,
+   "MrsD": 2
+  },
+  "165": {
+   "Y": 1.4,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 3,
+   "MrsD": 1
+  },
+  "166": {
+   "Y": 2.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 7,
+   "MrsD": 1
+  },
+  "167": {
+   "Y": 1.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 1
+  },
+  "168": {
+   "Y": 1.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": 1
+  },
+  "169": {
+   "Y": 2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 3
+  },
+  "170": {
+   "Y": 1.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 2
+  },
+  "171": {
+   "Y": 5.8,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 11,
+   "MrsD": 8
+  },
+  "172": {
+   "Y": 1.4,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": 2
+  },
+  "173": {
+   "Y": 3.6,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 7
+  },
+  "174": {
+   "Y": 2.2,
+   "censored": false,
+   "Dennis": 2,
+   "Gerda": 1,
+   "MrsD": 3
+  },
+  "175": {
+   "Y": 2.2,
+   "censored": false,
+   "Dennis": 1,
+   "Gerda": 5,
+   "MrsD": 2
+  },
+  "176": {
+   "Y": 8.6,
+   "censored": true,
+   "Dennis": 3,
+   "Gerda": 15,
+   "MrsD": 11
+  }
+ },
+ "care": {
+  "rows": [
+   {
+    "lv": 10,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.12",
+    "firstT": "2026-10-07"
+   },
+   {
+    "lv": 11,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.12",
+    "firstT": "2026-10-07"
+   },
+   {
+    "lv": 12,
+    "tries": 6,
+    "won": true,
+    "firstVersion": "1.13",
+    "firstT": "2026-10-07"
+   },
+   {
+    "lv": 13,
+    "tries": 4,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 14,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 15,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 16,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 17,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 18,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 19,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 20,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 21,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 22,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 23,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 24,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 25,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.15",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 26,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.19",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 27,
+    "tries": 6,
+    "won": true,
+    "firstVersion": "1.19",
+    "firstT": "2026-10-08"
+   },
+   {
+    "lv": 28,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.27",
+    "firstT": "2026-10-09"
+   },
+   {
+    "lv": 29,
+    "tries": 4,
+    "won": true,
+    "firstVersion": "1.27",
+    "firstT": "2026-10-09"
+   },
+   {
+    "lv": 30,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.27",
+    "firstT": "2026-10-09"
+   },
+   {
+    "lv": 31,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.27",
+    "firstT": "2026-10-09"
+   },
+   {
+    "lv": 32,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.27",
+    "firstT": "2026-10-09"
+   },
+   {
+    "lv": 33,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.27",
+    "firstT": "2026-10-09"
+   },
+   {
+    "lv": 34,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.27",
+    "firstT": "2026-10-09"
+   },
+   {
+    "lv": 35,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.36",
+    "firstT": "2026-10-11"
+   },
+   {
+    "lv": 36,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.42",
+    "firstT": "2026-10-11"
+   },
+   {
+    "lv": 37,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.42",
+    "firstT": "2026-10-11"
+   },
+   {
+    "lv": 38,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.42",
+    "firstT": "2026-10-11"
+   },
+   {
+    "lv": 39,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 40,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 41,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 42,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 43,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 44,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 45,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 46,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 47,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 48,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 49,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 50,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 51,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 52,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 53,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 54,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 55,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 56,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 57,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 58,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 59,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 60,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 61,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-18"
+   },
+   {
+    "lv": 62,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 63,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 64,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 65,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 66,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 67,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 68,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 69,
+    "tries": 4,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 70,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 71,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 72,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 73,
+    "tries": 4,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 74,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-19"
+   },
+   {
+    "lv": 75,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-21"
+   },
+   {
+    "lv": 76,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-21"
+   },
+   {
+    "lv": 77,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 78,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 79,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 80,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 81,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 82,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 83,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 84,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 85,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 86,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 87,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 88,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 89,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 90,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 91,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 92,
+    "tries": 9,
+    "won": true,
+    "firstVersion": "1.58",
+    "firstT": "2026-10-22"
+   },
+   {
+    "lv": 93,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 94,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 95,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 96,
+    "tries": 4,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 97,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 98,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 99,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 100,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 101,
+    "tries": 12,
+    "won": true,
+    "firstVersion": "1.59",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 102,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 103,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 104,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 105,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 106,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 107,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 108,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 109,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 110,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 111,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 112,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 113,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 114,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 115,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 116,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 117,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 118,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.60",
+    "firstT": "2026-10-23"
+   },
+   {
+    "lv": 119,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-24"
+   },
+   {
+    "lv": 120,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-24"
+   },
+   {
+    "lv": 121,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-24"
+   },
+   {
+    "lv": 122,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-24"
+   },
+   {
+    "lv": 123,
+    "tries": 5,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-25"
+   },
+   {
+    "lv": 124,
+    "tries": 9,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-25"
+   },
+   {
+    "lv": 125,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-26"
+   },
+   {
+    "lv": 126,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-26"
+   },
+   {
+    "lv": 127,
+    "tries": 9,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-26"
+   },
+   {
+    "lv": 128,
+    "tries": 15,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-27"
+   },
+   {
+    "lv": 129,
+    "tries": 10,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-29"
+   },
+   {
+    "lv": 130,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-29"
+   },
+   {
+    "lv": 131,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-29"
+   },
+   {
+    "lv": 132,
+    "tries": 3,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-29"
+   },
+   {
+    "lv": 133,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-29"
+   },
+   {
+    "lv": 134,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-29"
+   },
+   {
+    "lv": 135,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-29"
+   },
+   {
+    "lv": 136,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-31"
+   },
+   {
+    "lv": 137,
+    "tries": 2,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-10-31"
+   },
+   {
+    "lv": 138,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-11-01"
+   },
+   {
+    "lv": 139,
+    "tries": 1,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-11-01"
+   },
+   {
+    "lv": 140,
+    "tries": 4,
+    "won": true,
+    "firstVersion": "1.62",
+    "firstT": "2026-11-01"
+   }
+  ],
+  "bands": {
+   "1-10": {
+    "levels": 1,
+    "firstTry": 1,
+    "notWon": 0,
+    "firstTryRate": 1,
+    "meanTries": 1
+   },
+   "11-20": {
+    "levels": 10,
+    "firstTry": 6,
+    "notWon": 0,
+    "firstTryRate": 0.6,
+    "meanTries": 2
+   },
+   "21-30": {
+    "levels": 10,
+    "firstTry": 6,
+    "notWon": 0,
+    "firstTryRate": 0.6,
+    "meanTries": 2.2
+   },
+   "31-40": {
+    "levels": 10,
+    "firstTry": 8,
+    "notWon": 0,
+    "firstTryRate": 0.8,
+    "meanTries": 1.2
+   },
+   "41-50": {
+    "levels": 10,
+    "firstTry": 9,
+    "notWon": 0,
+    "firstTryRate": 0.9,
+    "meanTries": 1.1
+   },
+   "51-60": {
+    "levels": 10,
+    "firstTry": 6,
+    "notWon": 0,
+    "firstTryRate": 0.6,
+    "meanTries": 1.6
+   },
+   "61-70": {
+    "levels": 10,
+    "firstTry": 8,
+    "notWon": 0,
+    "firstTryRate": 0.8,
+    "meanTries": 1.4
+   },
+   "71-80": {
+    "levels": 10,
+    "firstTry": 7,
+    "notWon": 0,
+    "firstTryRate": 0.7,
+    "meanTries": 1.6
+   },
+   "81-90": {
+    "levels": 10,
+    "firstTry": 9,
+    "notWon": 0,
+    "firstTryRate": 0.9,
+    "meanTries": 1.1
+   },
+   "91-100": {
+    "levels": 10,
+    "firstTry": 5,
+    "notWon": 0,
+    "firstTryRate": 0.5,
+    "meanTries": 2.5
+   },
+   "101-110": {
+    "levels": 10,
+    "firstTry": 8,
+    "notWon": 0,
+    "firstTryRate": 0.8,
+    "meanTries": 2.2
+   },
+   "111-120": {
+    "levels": 10,
+    "firstTry": 8,
+    "notWon": 0,
+    "firstTryRate": 0.8,
+    "meanTries": 1.4
+   },
+   "121-130": {
+    "levels": 10,
+    "firstTry": 2,
+    "notWon": 0,
+    "firstTryRate": 0.2,
+    "meanTries": 5.7
+   },
+   "131-140": {
+    "levels": 10,
+    "firstTry": 5,
+    "notWon": 0,
+    "firstTryRate": 0.5,
+    "meanTries": 1.8
+   }
+  },
+  "highestStarted": 140,
+  "last": "2026-11-05T16:44:45.038Z"
+ },
+ "seconds": 77
+}
