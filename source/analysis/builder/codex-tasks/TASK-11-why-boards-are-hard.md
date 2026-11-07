@@ -49,6 +49,12 @@ removed it wanders with singles. It does not know where the keys are.
 - **Report plainly:** is the 20 real difficulty (a person would also keep failing), or a memory blind spot? Do not
   change the bots. If it is a blind spot, describe the fix and the boards it would change.
 - **Use it in part 1:** add "keys showing at the start" and "moves until both keys show" to every error profile.
+- **The second cause:** builder v3 now has `targets.keysShown`. Claude's causal check (`why-hard-claude.md`
+  section 5) shows that hidden keys raise the rating on 5 of 6 pairs. Some boards are brutal with both keys
+  showing, because the order is unique under forced pressure: only 1 of 16 moves at the start wins, and it is
+  not the obvious one. Measure in part 1 how often that is the cause.
+- **New since Task 10:** builder v3 keeps the way readable by default, as a proven intent (`placement_score.readable`).
+  Build part 2's boards with it.
 
 ## 1. Where do the bots lose? (main job)
 Take about 60 Task 10 boards spread across the range: about 20 at 2–6 family tries, 20 at 8–14, and 20 at 18–20,
