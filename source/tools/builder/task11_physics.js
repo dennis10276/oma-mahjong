@@ -29,8 +29,13 @@ function reason(g, s, move, kind) {
   if (!s.clockTaken && g.clock && s.moves >= g.clock.n - 1 && !(pair ? move.pair.includes(g.clock.i) : i === g.clock.i)) return 'clock too late';
   if (pair) return 'peek pair';
   if (!s.clockTaken && E.kindOf(g, s, move) === 'pair') return 'free pair taken early';
-  if (!s.clockTaken && !g.toClock[i]) return 'wrong dig or detour';
-  return s.clockTaken ? 'partner or ending choice' : 'clock-route choice';
+  if (!s.clockTaken) {
+    // g.toClock is a search-order hint, not the full dependency set: it marks keys
+    // but can omit their covers. A cover on a winning route is not an off-route dig.
+    const end = g.design.solution.indexOf(g.clock.i), prefix = new Set(g.design.solution.slice(0, end + 1));
+    return prefix.has(i) ? 'clock-route order' : 'off stored clock route';
+  }
+  return 'partner or ending choice';
 }
 function compareTransition(g, s, ev, after) {
   if (ev.kind === 'peek') return s.moves === after.moves && s.alive.every((v, i) => v === after.alive[i]) && s.tray.map(i => g.faces[i]).sort((a, b) => a - b).join() === after.tray.slice().sort((a, b) => a - b).join();

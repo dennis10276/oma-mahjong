@@ -1,6 +1,11 @@
 'use strict';
 const fs = require('fs'), path = require('path'), zlib = require('zlib'), M = require('../factory/meter.js'), P = require('./task11_plan.js'), S = require('./task10_study.js');
 const { pool } = require('../factory/empirical_workers.js');
+function freezeProtocol(dir, stage, protocol) {
+  const name = stage === 'keys' ? 'key-capture-protocol.json' : 'capture-protocol.json', file = path.join(dir, name);
+  if (fs.existsSync(file) && M.digest(P.read(file)) !== M.digest(protocol)) throw Error('Frozen trace implementation changed');
+  P.save(dir, name, protocol); return file;
+}
 async function run(dir, workers = 8, stage = 'all') {
   const selection = P.read(path.join(dir, 'selection-plan.json')); S.verifyPlan(selection);
   const worker = require.resolve('./task11_capture_worker.js'), protocol = { selection: selection.fingerprint, worker: M.sourceHash(worker), bot: M.createMeter().fingerprint, sample: selection.traces };
@@ -16,9 +21,7 @@ async function run(dir, workers = 8, stage = 'all') {
     const keyPlan = P.read(keyFile); S.verifyPlan(keyPlan); boards = keyPlan.boards; if (boards.length !== 10) throw Error('The key audit requires ten eligible hidden-key boards'); profiles = ['family']; runs = 6; indexDir = 'key-trace-index';
     protocol.keySelection = keyPlan.fingerprint; protocol.sample = { ...selection.traces, runs: 6, profiles: ['family'] };
   }
-  const file = path.join(dir, stage === 'keys' ? 'key-capture-protocol.json' : 'capture-protocol.json');
-  if (fs.existsSync(file) && M.digest(P.read(file)) !== M.digest(protocol)) throw Error('Frozen trace implementation changed');
-  P.save(dir, path.basename(file), protocol);
+  freezeProtocol(dir, stage, protocol);
   const tasks = boards.flatMap(b => profiles.map(profile => ({ board: b.id, design: b.design, profile, runs, bot: selection.bot, task: M.digest(stage === 'keys' ? ['key-memory', b.id, profile] : [b.id, profile]) }))), pending = [];
   let done = 0;
   for (const job of tasks) {
@@ -49,4 +52,4 @@ async function run(dir, workers = 8, stage = 'all') {
   }, workers);
 }
 if (require.main === module) run(path.resolve(process.argv[2]), +(process.argv[3] || 8), process.argv[4] || 'all').catch(e => { console.error(e); process.exitCode = 1; });
-module.exports = { run };
+module.exports = { run, freezeProtocol };

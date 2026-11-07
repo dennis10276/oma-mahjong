@@ -43,7 +43,8 @@ function report(root) {
     for (const version of ['reference', 'candidate']) {
       const valid = bs.filter(r => r.values[version]?.valid);
       metrics[version] = { n: valid.length, expected: bs.length, mae: mean(valid.map(r => Math.abs(r.values[version].exp - r.target))),
-        dennisActualMAE: mean(valid.filter(r => r.dennisTries != null).map(r => Math.abs(r.values[version].exp - r.dennisTries))) };
+        dennisActualMAE: mean(valid.filter(r => r.dennisTries != null).map(r => Math.abs(r.values[version].exp - r.dennisTries))),
+        labCensorAwareMAE: group === 'planner-lab24' ? mean(valid.map(r => r.results?.some(x => x.r === 'win') ? Math.abs(r.values[version].exp - r.target) : Math.max(0, r.target - r.values[version].exp))) : null };
     }
     groups[group] = { ...metrics, complete: metrics.reference.n === bs.length && metrics.candidate.n === bs.length,
       nonworse: metrics.reference.n === bs.length && metrics.candidate.n === bs.length && metrics.candidate.mae <= metrics.reference.mae + 1e-9 };

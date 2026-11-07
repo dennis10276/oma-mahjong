@@ -55,3 +55,35 @@ test('key visibility distinguishes absent keys, hidden keys and keys that only s
   const f = K.features(d); assert.equal(f.keysShownAtStart, 0); assert.equal(f.movesUntilBothKeysShow, 3); assert.equal(f.bothShownBeforeClock, false);
   const absent = K.features({ ...d, obst: { keys: [], locks: [], ice: {} } }); assert.equal(absent.hasKeys, false); assert.equal(absent.movesUntilBothKeysShow, null);
 });
+
+test('key-audit and main-capture protocols coexist without overwriting each other or accepting drift', () => {
+  const fs = require('fs'), os = require('os'), path = require('path'), { freezeProtocol } = require('./task11_capture.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'task11-protocol-'));
+  try {
+    const key = freezeProtocol(dir, 'keys', { runs: 6, profiles: ['family'] }), main = freezeProtocol(dir, 'all', { runs: 2, profiles: ['family', 'planner'] });
+    assert.notEqual(key, main); assert.equal(JSON.parse(fs.readFileSync(key)).runs, 6); assert.equal(JSON.parse(fs.readFileSync(main)).runs, 2);
+    assert.throws(() => freezeProtocol(dir, 'keys', { runs: 2 }), /changed/);
+    freezeProtocol(dir, 'keys', { runs: 6, profiles: ['family'] });
+  } finally { for (const f of fs.readdirSync(dir)) fs.unlinkSync(path.join(dir, f)); fs.rmdirSync(dir); }
+});
+
+test('a cover of a key is on the stored clock route even when the search-order hint omits it', () => {
+  const E = require('./engine.js'), F = require('./task11_physics.js');
+  const d = { tiles: [[0, 0, 0], [0, 0, 1], [6, 0, 0], [6, 0, 1], [12, 0, 0], [18, 0, 0]], faces: [0, 1, 0, 1, 2, 2],
+    down: [], obst: { keys: [0, 2], locks: [4], ice: {} }, clock: { i: 4, n: 6 }, solution: [1, 3, 0, 2, 4, 5] };
+  assert.equal(E.replay(d, d.solution).ok, true);
+  const g = E.game(d), s = E.step(g, E.start(g), 1); assert.equal(g.toClock[3], 0);
+  assert.equal(F.reason(g, s, 3, 'take'), 'clock-route order');
+  assert.equal(F.reason(g, E.start(g), 5, 'take'), 'off stored clock route');
+});
+
+test('capture executes the same explicit bot entry point that its fingerprint declares', async () => {
+  const { Worker } = require('worker_threads'), M = require('../factory/meter.js'), entry = require.resolve('../sim/refit/human_bot_key_memory_v1.js');
+  const bot = M.createMeter({ bot: entry }).fingerprint, worker = new Worker(require.resolve('./task11_capture_worker.js'), { env: { ...process.env, HUMAN_BOT: entry } });
+  try {
+    const promise = new Promise((resolve, reject) => { worker.once('message', resolve); worker.once('error', reject); });
+    worker.postMessage({ task: 'fixture', board: 'fixture', bot, profile: 'family', runs: 1,
+      design: { tiles: [[0, 0, 0], [4, 0, 0]], faces: [0, 0], down: [], obst: { keys: [], locks: [], ice: {} }, clock: null } });
+    const r = await promise; assert.equal(r.error, undefined); assert.equal(r.bot, bot); assert.equal(r.result.version, 'human-g6.3-key-memory-candidate1'); assert.equal(r.result.profileName, 'family-key-memory-v1');
+  } finally { await worker.terminate(); }
+});

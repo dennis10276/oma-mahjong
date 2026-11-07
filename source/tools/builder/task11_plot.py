@@ -11,10 +11,14 @@ def ladder(root, profile):
     data = json.loads((root / "ladder-summary.json").read_text(encoding="utf-8"))
     fig, axes = plt.subplots(2, 3, figsize=(13.5, 8), sharex=True, sharey=True)
     colors = {"1": "#275eae", "2": "#c76b25"}
-    for ax, pair in zip(axes.flat, data["pairs"]):
+    rated_pairs = [p for p in data["pairs"] if p["ratedPhysicalBoards"]]
+    if len(rated_pairs) > 6:
+        raise ValueError("Expected at most six measured pairs; expand panels before plotting")
+    for ax, pair in zip(axes.flat, rated_pairs):
         for spare, group in pair["spares"].items():
             rows = [r for r in data["rows"] if not r["fail"] and r[profile]
-                    and r["cell"]["story"] == pair["story"] and r["cell"]["spare"] == int(spare)]
+                    and r["cell"]["story"] == pair["story"] and r["cell"]["layout"] == pair["layout"]
+                    and r["cell"]["spare"] == int(spare)]
             unique = {r["boardKey"]: r for r in rows}.values()
             unique = list(unique)
             ax.scatter([r["actualWay"] for r in unique], [r[profile]["exp"] for r in unique],

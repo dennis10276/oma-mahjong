@@ -1,5 +1,8 @@
 'use strict';
-const { parentPort } = require('worker_threads'), M = require('../factory/meter.js'), { measureHuman } = require('../sim/refit/human_bot.js');
+const path = require('path'), { parentPort } = require('worker_threads'), M = require('../factory/meter.js');
+// The executed entry point must match the entry point used by the fingerprint.
+const entry = process.env.HUMAN_BOT ? path.resolve(process.env.HUMAN_BOT) : require.resolve('../sim/refit/human_bot.js');
+const { measureHuman } = require(entry);
 const bot = M.createMeter().fingerprint;
 parentPort.on('message', job => {
   try {
