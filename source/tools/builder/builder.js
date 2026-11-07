@@ -40,7 +40,8 @@
    pressure once a proven board is in hand. They replace the old wall-clock hardMs (4.5 s) and softMs (2.5 s), so a
    brief and a seed give the same board on a busy PC. opts.ms, opts.hardMs, opts.softMs and budget.ms are ignored.
    One wall-clock safety cap remains, opts.wallMs (default 60 s): when it trips the build FAILS with 'wallClock';
-   it never returns a different board.
+   it never returns a different board. A failed build that hardWork cut short fails 'workBudget' (field cause: the
+   failure it would otherwise have reported), so a slow brief is never counted as a design that cannot be built.
    Covered-partner stories (roomInTray*, deepClock) need cap >= 2; an incompatible brief fails explicitly.
    The requested cap is exact; hiddenOnWay is a minimum number of dig tiles, maxDown is a maximum share.
    Explicit trap counts must be proven. frame.share and targets.trapDepth return unsupportedTarget until implemented.
@@ -492,13 +493,19 @@ const designOf = (c, faces, down, roles, clock, solution = []) => ({
 /* Deterministic budgets: nothing that shapes the board reads the clock on the wall. Every engine search runs on a
    node budget (ms: Infinity) and WORK.used counts the search nodes this build spent (a search that gives up without
    saying how far it got is charged its whole budget). WORK.hard (opts.hardWork) ends the build like the old 4.5 s
-   deadline did, in nodes. The only wall-clock check is the safety cap WORK.wallEnd: spend() throws WALLX and the build
-   fails ('wallClock'); it can never pick another branch. Calibration on briefs-v1 (free PC): see DEFAULT_WORK. */
+   deadline did, in nodes; a failed build that the budget cut short says so (fail 'workBudget', cause: the last
+   failure). The only wall-clock check is the safety cap WORK.wallEnd: spend() throws WALLX and the build fails
+   ('wallClock'); it can never pick another branch. Calibration on briefs-v1: see DEFAULT_WORK.
+   Two known gaps, both in engine.clockSearch (not this file): (1) its .nodes leaves out the finishing solveCtx searches
+   (up to finishNodes = 100000 per goal popped), so WORK.used undercounts and hardWork is not a time bound; the only
+   time bound is wallMs. (2) A null result is charged the whole budget, also when the search ran out of positions after
+   a few nodes (it does not say which). Both cost speed or yield, never determinism. */
 const WALLX = { wallClock: true };
 const nowMs = () => performance.now();
-const WORK = { used: 0, hard: Infinity, wallEnd: Infinity };
+const WORK = { used: 0, hard: Infinity, wallEnd: Infinity, out: false };
 const spend = n => { WORK.used += n; if (nowMs() > WORK.wallEnd) throw WALLX; };
-const workLeft = () => WORK.used <= WORK.hard;
+// out: the budget changed what the build did (a step was skipped or cut short)
+const workLeft = () => { if (WORK.used <= WORK.hard) return true; WORK.out = true; return false; };
 // clockSearch gives every candidate goal its own finishing budget: keep that small too
 const within = b => ({ nodes: b.nodes, ms: Infinity, finishNodes: Math.min(b.nodes, 100000), finishMs: Infinity });
 function fewest(c, faces, down, roles, budget) {
@@ -555,7 +562,7 @@ function prune(c, faces, down, roles, k0, budget, spec = {}) {
       if (canReachWithin(designOf(c, faces, down, r, { i: r.clock, n: k0 - 1 }), 3, 30000) === 'no') { idle = { s, r }; break; }
       let w = fewest(c, faces, down, r, budget);
       if (!w) w = fewest(c, faces, down, r, { nodes: budget.nodes * 4 });
-      if (!w) return { unresolved: s };
+      if (!w) return workLeft() ? { unresolved: s } : null;   // out of work: 'slow', not a proof gap about s
       if (w.k >= k0) { idle = { s, r }; break; }
     }
     if (!idle) break;
@@ -671,19 +678,28 @@ function build(briefIn, opts = {}) {
   // forced pressure is a goal: keep trying other roles while it is missing, within this soft work
   const softWork = opts.softWork ?? DEFAULT_WORK.soft, variants = opts.variants ?? 6;
   const w0 = nowMs(), wallMs = opts.wallMs ?? 60000, ms = () => Math.round(nowMs() - w0);
-  WORK.used = 0; WORK.hard = opts.hardWork ?? DEFAULT_WORK.hard; WORK.wallEnd = w0 + wallMs;
+  WORK.used = 0; WORK.hard = opts.hardWork ?? DEFAULT_WORK.hard; WORK.wallEnd = w0 + wallMs; WORK.out = false;
   try {
     const r = buildIn(c, story, brief, shape, opts, { budget, spare, fails, cap, softWork, variants });
+    // a failure the work budget cut short is not a design failure: say so (the last failure stays as the cause)
+    if (r.fail && WORK.out) return { fail: 'workBudget', detail: 'the work budget (' + WORK.hard + ' nodes) ran out; last failure: ' + r.fail + (r.detail ? ' (' + r.detail + ')' : ''), cause: r.fail, fails, work: WORK.used, ms: ms() };
     return { ...r, work: WORK.used, ms: ms() };
   } catch (e) {
     if (e === WALLX) return { fail: 'wallClock', detail: 'the wall-clock safety cap (' + wallMs + ' ms) was reached: a failure, never another board', fails, work: WORK.used, ms: ms() };
     throw e;
-  } finally { WORK.used = 0; WORK.hard = Infinity; WORK.wallEnd = Infinity; }
+  } finally { WORK.used = 0; WORK.hard = Infinity; WORK.wallEnd = Infinity; WORK.out = false; }
 }
-/* Work budgets in search nodes, calibrated 2026-11-07 on briefs-v1.json x seeds 1-3 on a free PC: the builds over
-   200 ms counted 100-400 nodes per ms (median about 200; geometry work is not counted), the most work in one build was
-   0.9 M nodes (iceLockClock-diamond-30, 2.8 s). soft 0.5 M ~ the old 2.5 s, hard 1 M ~ the old 4.5 s. With these the
-   150 builds give byte-identical boards to the old wall-clock builder on a free PC (and with no caps at all). */
+/* Work budgets in search nodes, set 2026-11-07 on briefs-v1.json x seeds 1-3 (150 builds). Checked in the Finish
+   stage (one process under loop/heavy.js, old = this file at 22e6bc26 with its wall-clock budgets, same run):
+   - yield: old 129/150 built, new 133/150. 146/150 results are byte-identical; the 4 others are builds the old
+     builder lost to its 4.5 s deadline (unproven) and the node budget completes: chainReaction-steps-1 seeds 1-3
+     (0.63-0.81 M nodes) and iceLockClock-diamond-30 seed 1 (0.90 M; the old builder also builds that same board
+     when the PC is free, 2.9 s). No build reached hard (most work 0.90 M); 4 passed soft.
+   - time: median 31 ms old vs 35 ms new; total 56 s vs 86 s; the slowest new builds take 4-12 s
+     (chainReaction-steps-1), where the old builder gave up at 4.5 s. Nodes per ms vary from about 13 to 180: the
+     count misses the finishing searches inside engine.clockSearch (its .nodes counts the best-first part only) and
+     the geometry work, so a work budget is NOT a fixed time. That is a speed matter only, never the board.
+   soft 0.5 M, hard 1 M. Lower hard would lose chainReaction-steps-1 again (it needs 0.63-0.81 M). */
 const DEFAULT_WORK = { soft: 5e5, hard: 1e6 };
 function buildIn(c, story, brief, shape, opts, { budget, spare, fails, cap, softWork, variants }) {
   let last = null, best = null, built = 0;

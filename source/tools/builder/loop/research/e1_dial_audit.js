@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /* E1 dial audit (process-design-synthesis.md section 7), on EXISTING data only. No bot is run.
-     node source/tools/builder/loop/research/e1_dial_audit.js [--out DIR] [--no-factory-a3]
+     node source/tools/builder/loop/heavy.js --label e1-dial-audit -- node source/tools/builder/loop/research/e1_dial_audit.js [--out DIR] [--factory-a3]
+     node source/tools/builder/loop/research/e1_dial_audit.js --selftest      (fast, injected fakes, no engine)
+   The full run spends a few minutes of engine time (clockShortest peek + strict on ~600 distinct puzzles): wrap it in heavy.js.
+   --factory-a3 also runs A3 on every one of the ~2,000 Codex 200-225 factory candidates (not builder boards; off by default).
    Writes e1-dial-audit.json and e1-dial-audit.md to source/analysis/builder/process-v1/ (or DIR).
 
    Questions
@@ -37,6 +40,10 @@ const P = {
 const BOT = {
   reference: 'f32859281c746f4277ab5ef4c0006d43c76dddcc342741af8b0ff45a1b63d561',
   keyMemory: 'd362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3',
+  // family-key-memory-v1 lineage: the pinned fast ruler (Task G3) and its two zero-drift slow predecessors
+  keyMemoryLineage: ['63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a',
+    '5372bd4e5d29acce926c537400b8a069dd0d04c3f4d2032024c9f34a1d99863d',
+    'd362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3'],
   // family-identical predecessors of the reference fingerprint (meter.js FAMILY_CACHE_MIGRATIONS)
   referenceLineage: ['f32859281c746f4277ab5ef4c0006d43c76dddcc342741af8b0ff45a1b63d561',
     'cae3bc38f7b01e627e288330d5ba0cf210383e39e864ab35976e29faff64f83d',
@@ -106,7 +113,7 @@ function evalSpare(curve, s, rules = RULES) {
     return !m.length ? 'unknown' : m.every(Boolean) ? 'pass' : 'fail';
   })();
   // tighter neighbour: exact at s-1; a farther tighter spare can only prove a pass (D(s-1) <= D(s-k) on a monotone curve)
-  const lim = pt.D => Math.min(rules.tnRatio * pt.D, pt.D + rules.tnAdd);
+  const lim = q => Math.min(rules.tnRatio * q.D, q.D + rules.tnAdd);
   if (curve[s - 1]) {
     const a = curve[s - 1];
     out.checks.tighter = a.D <= lim(pt) ? 'pass' : 'fail';
@@ -168,12 +175,15 @@ function a3Check(design) {
   const strictReplay = E.replay(JSON.parse(JSON.stringify(design)), design.solution, { strict: true }).ok;
   const peekReplay = E.replay(JSON.parse(JSON.stringify(design)), design.solution);
   const kWitness = idx >= 0 ? idx + 1 : null;
-  const known = k.kPeek !== null && k.kStrict !== null;
-  const out = { n, kWitness, kPeek: k.kPeek, kStrict: k.kStrict, peekUnsure: k.peekUnsure, valid, strictReplay,
-    peekReplay: peekReplay.ok, peekPairsInWitness: peekReplay.pairs || 0, ms: k.msPeek + k.msStrict };
-  out.peekShortcut = known ? k.kPeek < k.kStrict : null;
+  /* The strict shortest is bounded above by a strict-valid witness. exact.js under its node/ms budget can miss
+     it (seen: k strict 23 next to a valid strict witness at 7) or give up (null); take the smaller of the two. */
+  const kStrictEff = [k.kStrict, valid ? kWitness : null].filter(x => x !== null).reduce((a, b) => Math.min(a, b), Infinity);
+  const out = { n, kWitness, kPeek: k.kPeek, kStrict: k.kStrict, kStrictEff: Number.isFinite(kStrictEff) ? kStrictEff : null,
+    peekUnsure: k.peekUnsure, valid, strictReplay, peekReplay: peekReplay.ok, peekPairsInWitness: peekReplay.pairs || 0, ms: k.msPeek + k.msStrict };
+  out.strictSearchMiss = valid && kWitness !== null && (k.kStrict === null || k.kStrict > kWitness);
+  out.peekShortcut = k.kPeek !== null && out.kStrictEff !== null ? k.kPeek < out.kStrictEff : null;
   out.witnessNotShortest = k.kPeek !== null && kWitness !== null ? kWitness > k.kPeek : null;
-  out.a3 = known ? valid && kWitness === k.kPeek : null;               // the A3 equality + validSolution
+  out.a3 = k.kPeek !== null ? valid && kWitness === k.kPeek : null;     // the A3 equality + validSolution
   out.trueSpare = k.kPeek !== null ? n - k.kPeek : null;
   out.tClocksSpare = kWitness !== null ? n - kWitness : null;
   out.a3Full = out.a3 === null ? null : out.a3 && n <= RULES.maxN && out.trueSpare >= 1 && out.trueSpare <= 3;
@@ -329,20 +339,26 @@ function cacheCampaigns(points, fingerprintOf) {
     for (const [bi, seed] of [[0, 4711], [1, 18427]]) {
       let file = null;
       for (const fp of fps) {
-        const key = M.digest({ fingerprint: fp, input: M.boardOf(p.design), settings: { runs: 20, seeds: 2, seed, setting: 'family' } });
-        for (const c of P.caches) { const f = path.join(c, key + '.json'); if (exists(f)) { file = f; break; } }
+        for (const setting of ['family', 'family-key-memory-v1']) {
+          const key = M.digest({ fingerprint: fp, input: M.boardOf(p.design), settings: { runs: 20, seeds: 2, seed, setting } });
+          for (const c of P.caches) { const f = path.join(c, key + '.json'); if (exists(f)) { file = f; break; } }
+          if (file) break;
+        }
         if (file) break;
       }
       if (!file) continue;
       let j; try { j = readJson(file); } catch { continue; }
       if (!j.valid || !Array.isArray(j.results) || !j.results.length) continue;
-      const t = j.results.map(c => c.wonOn ?? c.attempts.length);
+      const t = j.results.map(campaignTries);
       const m = mean(t), v = t.reduce((s, x) => s + (x - m) ** 2, 0) / (t.length - 1);
-      out.push({ source: p.source, bot: p.bot, Dother: p.blocks[1 - bi], m, v, n: t.length });
+      out.push({ source: p.source, bot: p.bot, Dother: p.blocks[1 - bi], m, v, n: t.length,
+        oddUnwon: j.results.filter(c => !c.wonOn && c.attempts.length !== RULES.cap).length });
     }
   }
   return out;
 }
+/* Tries of one stored campaign, the meter's way: the winning try, else every try it made (the cap). */
+const campaignTries = c => Number.isInteger(c.wonOn) && c.wonOn > 0 ? c.wonOn : c.attempts.length;
 function campaignFit(rows, bins = NOISE_BINS) {
   const res = [];
   for (let i = 0; i + 1 < bins.length; i++) {
@@ -368,7 +384,7 @@ function pairingCorrelation(curvePairs) {
 }
 
 // ---------- A3 over populations ----------
-function a3Population(name, designs) {
+function a3Population(name, designs, opts = {}) {
   const rows = [];
   const seen = new Set();
   for (const { id, design, source } of designs) {
@@ -376,9 +392,11 @@ function a3Population(name, designs) {
     const bk = meter().boardKey({ ...design });
     const sk = bk + '|' + JSON.stringify(design.solution);
     if (seen.has(sk)) continue; seen.add(sk);
-    rows.push({ id, source, ...a3Check(design) });
+    rows.push({ id, source, puzzle: puzzleKey(design), ...a3Check(design) });
+    if (opts.progress) opts.progress(name, rows.length);
   }
   const known = rows.filter(r => r.a3 !== null);
+  const strictKnown = known.filter(r => r.valid && r.kWitness !== null);
   const S = {
     population: name, boards: rows.length, engineUnknown: rows.length - known.length,
     peekUnsure: rows.filter(r => r.peekUnsure).length,
@@ -386,12 +404,18 @@ function a3Population(name, designs) {
     witnessUsesPeekPair: rows.filter(r => r.peekPairsInWitness > 0).length,
     peekShortcut: known.filter(r => r.peekShortcut).length,
     witnessNotShortest: known.filter(r => r.witnessNotShortest).length,
-    witnessAboveStrict: known.filter(r => r.kWitness > r.kStrict).length,
+    // the task's A3 question: among boards whose stored witness is strict-valid, how many take the clock later than k
+    strictWitnessKnown: strictKnown.length,
+    strictWitnessLate: strictKnown.filter(r => r.kWitness > r.kPeek).length,
+    strictWitnessLateShare: pct(strictKnown.filter(r => r.kWitness > r.kPeek).length, strictKnown.length),
+    strictWitnessLateViaPeek: strictKnown.filter(r => r.kWitness > r.kPeek && r.peekShortcut).length,
+    witnessAboveStrict: known.filter(r => r.kStrict !== null && r.kWitness > r.kStrict).length,
     a3Fail: known.filter(r => !r.a3).length,
     a3FailShare: pct(known.filter(r => !r.a3).length, known.length),
     peekShortcutShare: pct(known.filter(r => r.peekShortcut).length, known.length),
     a3FullFail: known.filter(r => !r.a3Full).length,
-    medianShortcutMoves: median(known.filter(r => r.peekShortcut).map(r => r.kStrict - r.kPeek)),
+    medianShortcutMoves: median(known.filter(r => r.peekShortcut).map(r => r.kStrictEff - r.kPeek)),
+    strictSearchMiss: rows.filter(r => r.strictSearchMiss).length,
     engineMsMedian: median(rows.map(r => r.ms)),
   };
   return { summary: S, rows };
@@ -463,13 +487,14 @@ function run(opts = {}) {
       geomMid: noiseScale(ps, geomVar, 6, 16), geomAll: noiseScale(ps, geomVar, 1, 20.01) };
   }
   const camp = cacheCampaigns([...LR.points, ...KV.points, ...LK.points],
-    p => p.bot === 'keyMemory' ? [BOT.keyMemory] : BOT.referenceLineage);
-  part2.campaigns = { blocks: camp.length, byBot: {} };
+    p => p.bot === 'keyMemory' ? BOT.keyMemoryLineage : BOT.referenceLineage);
+  part2.campaigns = { blocks: camp.length, oddUnwon: camp.reduce((s, r) => s + r.oddUnwon, 0), byBot: {} };
   for (const bot of ['reference', 'keyMemory']) {
     const rs = camp.filter(r => r.bot === bot);
     const mid = rs.filter(r => r.Dother >= 3 && r.Dother < 16);
     part2.campaigns.byBot[bot] = { blocks: rs.length, bins: campaignFit(rs),
-      scaleMid: mid.length ? r3(Math.sqrt(mean(mid.map(r => r.v)) / mean(mid.map(r => geomVar(r.m))))) : null, midBlocks: mid.length };
+      scaleMid: mid.length ? r3(Math.sqrt(mean(mid.map(r => r.v)) / mean(mid.map(r => geomVar(r.m))))) : null,
+      scaleMidCapped: mid.length ? r3(Math.sqrt(mean(mid.map(r => r.v)) / mean(mid.map(r => cappedGeom(r.m).var)))) : null, midBlocks: mid.length };
   }
   // pairing benefit on spare pairs that share seeds (ladder, knobs-v1)
   const cp = [];
@@ -486,22 +511,26 @@ function run(opts = {}) {
   const qualified = fs.readFileSync(P.qualified, 'utf8').trim().split('\n').map(l => JSON.parse(l)).map(r => ({ id: r.id + '@' + r.level, design: r.design, source: 'qualified' }));
   const knobsDesigns = readJson(P.knobsV1).filter(r => r.design).map(r => ({ id: r.id, design: r.design, source: 'knobs-v1' }));
   const spare1Designs = readJson(P.spare1Plan).boards.flatMap(b => ['tight', 'loose'].map(v => ({ id: b.id + ':' + v, design: b[v].design, source: 'clock-spare-1' })));
-  const factoryDesigns = opts.factoryA3 === false ? [] : FP.points.map(p => ({ id: p.id, design: p.design, source: '200-225' }));
+  const factoryDesigns = !opts.factoryA3 ? [] : FP.points.map(p => ({ id: p.id, design: p.design, source: '200-225' }));
   const part3 = { populations: {}, puzzles: {} };
   for (const [name, ds] of [['ladder (builder v3)', ladderDesigns], ['qualified 200-225 (18 kept boards)', qualified],
     ['knobs-v1 (builder v2, Task 10)', knobsDesigns], ['clock-spare-1', spare1Designs], ['200-225 factory candidates (Codex, not the builder)', factoryDesigns]]) {
     if (!ds.length) continue;
-    const p = a3Population(name, ds);
-    for (const r of p.rows) r.puzzle = puzzleKey(ds.find(d => d.id === r.id).design);
+    const p = a3Population(name, ds, { progress: opts.progress });
     part3.populations[name] = p.summary;
     part3.puzzles[name] = a3Puzzles(p.rows);
     pops.push(p);
   }
-  const builderRows = pops.filter(p => /builder/.test(p.summary.population)).flatMap(p => p.rows);
-  part3.builderPooled = { boards: builderRows.length, a3Fail: builderRows.filter(r => r.a3 === false).length,
-    a3FailShare: pct(builderRows.filter(r => r.a3 === false).length, builderRows.filter(r => r.a3 !== null).length),
-    peekShortcut: builderRows.filter(r => r.peekShortcut).length,
-    peekShortcutShare: pct(builderRows.filter(r => r.peekShortcut).length, builderRows.filter(r => r.a3 !== null).length) };
+  const pooled = rows => {
+    const known = rows.filter(r => r.a3 !== null), sk = known.filter(r => r.valid && r.kWitness !== null);
+    return { boards: rows.length, known: known.length, a3Fail: known.filter(r => !r.a3).length, a3FailShare: pct(known.filter(r => !r.a3).length, known.length),
+      peekShortcut: known.filter(r => r.peekShortcut).length, peekShortcutShare: pct(known.filter(r => r.peekShortcut).length, known.length),
+      strictWitnessKnown: sk.length, strictWitnessLate: sk.filter(r => r.kWitness > r.kPeek).length,
+      strictWitnessLateShare: pct(sk.filter(r => r.kWitness > r.kPeek).length, sk.length) };
+  };
+  part3.builderPooled = pooled(pops.filter(p => /builder/.test(p.summary.population)).flatMap(p => p.rows));
+  // the three populations the task names: ladder, the 18 qualified, knobs-v1
+  part3.requestedPooled = pooled(pops.filter(p => /^(ladder|qualified|knobs-v1)/.test(p.summary.population)).flatMap(p => p.rows));
   // the ladder card's "fewestMoves" (builder's k) against the engine now
   const cardK = boards.filter(b => b.design && b.card?.clock?.fewestMoves).map(b => [b.card.clock.fewestMoves, clockK(b.design).kPeek]);
   part3.ladderCardAgreement = { boards: cardK.length, equal: cardK.filter(([a, b]) => a === b).length };
@@ -523,14 +552,19 @@ function run(opts = {}) {
       s3 = part2.scale['ladder key-memory (unselected)'].geom.c, cm = part2.campaigns.byBot.reference.scaleMid;
     const vals = [s, s2, cm].filter(x => x !== null);
     kill.push({ id: 'K2', rule: 'per-campaign spread departs from sqrt(D(D-1)) by more than 30% (D 3-16) -> redo the section 2 precision table',
-      value: `scale c (sd / sqrt(D(D-1))): ladder ref ${s}, all reference pairs ${s2}, ladder key-memory ${s3}, per-campaign cache ref ${cm}`,
-      fired: vals.some(c => Math.abs(c - 1) > 0.3) });
+      value: `scale c (sd / sqrt(D(D-1))): ladder ref ${s}, all reference pairs ${s2}, ladder key-memory ${s3}, per-campaign cache ref ${cm}. `
+        + `Against the capped (20-try) geometric instead: ladder ref ${part2.scale['ladder reference (unselected)'].capped.c}, all reference ${part2.scale['all reference'].capped.c}, `
+        + `ladder key-memory ${part2.scale['ladder key-memory (unselected)'].capped.c}, per-campaign cache ref ${part2.campaigns.byBot.reference.scaleMidCapped}, key-memory ${part2.campaigns.byBot.keyMemory.scaleMidCapped}`,
+      fired: vals.some(c => Math.abs(c - 1) > 0.3), firedCapped: [part2.scale['ladder reference (unselected)'].capped.c, part2.scale['all reference'].capped.c,
+        part2.scale['ladder key-memory (unselected)'].capped.c, part2.campaigns.byBot.reference.scaleMidCapped].filter(x => x !== null).some(c => Math.abs(c - 1) > 0.3) });
   }
   {
-    const b = part3.builderPooled;
+    const b = part3.builderPooled, q = part3.requestedPooled, qq = part3.populations['qualified 200-225 (18 kept boards)'];
     kill.push({ id: 'K3', rule: 'more than 20% of boards fail A3 -> the peek-pair decision moves to the top of Dennis\'s list',
-      value: `builder boards ${b.a3Fail}/${b.boards} = ${b.a3FailShare}% fail A3; peek-pair shortcut ${b.peekShortcut} = ${b.peekShortcutShare}%; qualified ${part3.populations['qualified 200-225 (18 kept boards)']?.a3Fail}/18`,
-      fired: b.a3FailShare !== null && b.a3FailShare > 20 });
+      value: `builder boards (ladder + knobs-v1) ${b.a3Fail}/${b.known} = ${b.a3FailShare}% fail A3 (peek-pair shortcut on ${b.peekShortcut} = ${b.peekShortcutShare}%); `
+        + `ladder + qualified + knobs-v1 ${q.a3Fail}/${q.known} = ${q.a3FailShare}%; strict witness later than k: ${q.strictWitnessLate}/${q.strictWitnessKnown} = ${q.strictWitnessLateShare}%; `
+        + `qualified alone ${qq ? qq.a3Fail + '/' + (qq.boards - qq.engineUnknown) : 'n/a'}`,
+      fired: (b.a3FailShare !== null && b.a3FailShare > 20) || (q.a3FailShare !== null && q.a3FailShare > 20) });
   }
 
   const compactCurves = curves.filter(c => !c.fail).map(c => ({ source: c.source, bot: c.bot, story: c.story, k: c.k, kStrict: c.kStrict,
@@ -540,6 +574,7 @@ function run(opts = {}) {
     schema: 'e1-dial-audit-v1', created: new Date().toISOString(), seconds: Math.round((Date.now() - t0) / 1000),
     rules: RULES, bots: BOT, inputs: P, notes, part1, part2, part3, kill, curves: compactCurves,
     a3Rows: pops.flatMap(p => p.rows.map(r => ({ pop: p.summary.population, id: r.id, n: r.n, kWitness: r.kWitness, kPeek: r.kPeek, kStrict: r.kStrict,
+      kStrictEff: r.kStrictEff, strictSearchMiss: r.strictSearchMiss, peekUnsure: r.peekUnsure,
       valid: r.valid, peekPairsInWitness: r.peekPairsInWitness, a3: r.a3 }))),
   };
 }
@@ -553,6 +588,7 @@ function md(R) {
   L.push('Definitions: a *puzzle* is the board content without clock.n. *Spare* s = clock.n - k with k = `engine.clockShortest` (peek pairs allowed, the game\'s rules). D of a point = mean of its 40-campaign blocks; SE from the capped geometric variance at D. A spare s in {1,2,3} *passes* when D(s) < 18.5, the nearest measured spare on each side is monotone within max(0.5, 2 SE of the difference), and the tighter neighbour D(s-1) <= min(1.5 D(s), D(s)+3). If s-1 is not measured but a tighter spare is and already satisfies the limit, that counts as a pass (bound); otherwise the spare is *unknown*. Bands are by D at the spare being shipped.', '');
   L.push('## Kill criteria', '');
   t(['', 'rule', 'measured', 'fired?'], R.kill.map(k => [k.id, k.rule, k.value, k.fired ? '**FIRED**' : 'no']));
+  L.push(findings(R));
   L.push('## 1 Can a spare ship?', '');
   const P1 = R.part1;
   const row = (name, s) => [name, s.curves, `${s.spares.pass}/${s.spares.evaluable} (${s.spares.passShare}%)`, s.spares.unknown,
@@ -585,22 +621,114 @@ function md(R) {
   }
   L.push(`Pairing (common random numbers) on spare pairs measured with the same seeds: correlation of the seed gap at spare 1 and at spare 2 r = ${R.part2.pairingCorrelation.r} (n ${R.part2.pairingCorrelation.n}). The variance of a paired step is (1 - r) times the unpaired one when both spares have the same spread.`, '');
   L.push('## 3 A3: peek-pair shortcut', '');
-  L.push('k peek = engine.clockShortest (the game\'s rules); k strict = the same without peek pairs (lab/exact.js); k witness = stored solution clock index + 1 (what t_clocks uses). A3 passes when Hard.validSolution accepts the stored witness and k witness = k peek.', '');
-  t(['population', 'boards', 'engine unknown', 'witness valid', 'peek-pair shortcut (k peek < k strict)', 'witness slower than k peek', 'A3 fail', 'also needs n <= 19 and s in 1-3', 'median shortcut (moves)', 'engine ms (median)'],
-    Object.values(R.part3.populations).map(s => [s.population, s.boards, s.engineUnknown, s.witnessValid, `${s.peekShortcut} (${s.peekShortcutShare}%)`, s.witnessNotShortest, `${s.a3Fail} (${s.a3FailShare}%)`, s.a3FullFail, s.medianShortcutMoves, s.engineMsMedian]));
+  L.push('k peek = engine.clockShortest (the game\'s rules); k strict = the same without peek pairs (lab/exact.js, bounded by the stored witness when that is strict-valid, because exact.js under its budget can miss or give up); k witness = stored solution clock index + 1 (what t_clocks uses). A3 passes when Hard.validSolution accepts the stored witness and k witness = k peek.', '');
+  t(['population', 'boards', 'engine unknown', 'witness strict-valid', 'strict witness takes the clock later than k peek', 'peek-pair shortcut (k peek < k strict)', 'A3 fail', 'also needs n <= 19 and s in 1-3', 'median shortcut (moves)', 'exact.js strict missed a valid witness', 'engine ms (median)'],
+    Object.values(R.part3.populations).map(s => [s.population, s.boards, s.engineUnknown, s.witnessValid, `${s.strictWitnessLate}/${s.strictWitnessKnown} (${s.strictWitnessLateShare}%)`, `${s.peekShortcut} (${s.peekShortcutShare}%)`, `${s.a3Fail} (${s.a3FailShare}%)`, s.a3FullFail, s.medianShortcutMoves, s.strictSearchMiss, s.engineMsMedian]));
   L.push('By puzzle (one row per puzzle; a puzzle with several clock.n counted once):', '');
   t(['population', 'puzzles', 'peek-pair shortcut'], Object.entries(R.part3.puzzles).map(([k, v]) => [k, v.puzzles, `${v.peekShortcut} (${v.share}%)`]));
-  L.push(`Builder boards pooled (ladder, knobs-v1): ${R.part3.builderPooled.a3Fail} of ${R.part3.builderPooled.boards} fail A3 (${R.part3.builderPooled.a3FailShare}%); peek-pair shortcut on ${R.part3.builderPooled.peekShortcut} (${R.part3.builderPooled.peekShortcutShare}%). Ladder card fewestMoves equals the engine's k on ${R.part3.ladderCardAgreement.equal} of ${R.part3.ladderCardAgreement.boards}.`, '');
+  const rq = R.part3.requestedPooled;
+  L.push(`Ladder + qualified + knobs-v1 pooled: ${rq.a3Fail} of ${rq.known} fail A3 (${rq.a3FailShare}%); the strict witness takes the clock later than k on ${rq.strictWitnessLate} of ${rq.strictWitnessKnown} (${rq.strictWitnessLateShare}%); peek-pair shortcut on ${rq.peekShortcut} (${rq.peekShortcutShare}%).`, '');
+  L.push(`Builder boards pooled (ladder, knobs-v1): ${R.part3.builderPooled.a3Fail} of ${R.part3.builderPooled.known} fail A3 (${R.part3.builderPooled.a3FailShare}%); peek-pair shortcut on ${R.part3.builderPooled.peekShortcut} (${R.part3.builderPooled.peekShortcutShare}%). Ladder card fewestMoves equals the engine's k on ${R.part3.ladderCardAgreement.equal} of ${R.part3.ladderCardAgreement.boards}.`, '');
   return L.join('\n');
 }
 
-module.exports = { cappedGeom, geomVar, pointSE, puzzleKey, evalSpare, evalCurve, bandOf, tally, a3Check, clockK, noiseFit, noiseScale,
+/* Plain-English reading of the numbers. Every number is pulled from R (= e1-dial-audit.json). */
+function findings(R) {
+  const P1 = R.part1, P2 = R.part2, P3 = R.part3, k = Object.fromEntries(R.kill.map(x => [x.id, x]));
+  const ref = P1.byBot.reference, km = P1.byBot.keyMemory, lr = P1.bySourceBot['ladder / reference'], lk = P1.bySourceBot['ladder / keyMemory'];
+  const f2 = P1.bySourceBot['200-225 / reference'];
+  const b = x => `${x.canShip}/${x.puzzles} (${x.share}%)`;
+  const sc = P2.scale, cmp = P2.campaigns.byBot;
+  const bin = (set, lo) => (P2.pairs[set].bins.find(x => x.lo === lo) || {});
+  const q = P3.populations['qualified 200-225 (18 kept boards)'] || {}, rq = P3.requestedPooled, bp = P3.builderPooled;
+  const miss = Object.values(P3.populations).reduce((s, x) => s + (x.strictSearchMiss || 0), 0);
+  const L = ['## Findings', ''];
+  L.push(`**Kill criteria: ${R.kill.filter(x => x.fired).map(x => x.id).join(', ') || 'none'} fired.**`, '');
+  L.push(`1. **The dial can ship a spare on most mid-band puzzles (K1 ${k.K1.fired ? 'FIRED' : 'not fired'}).** Mid-band (D 6-16) puzzles with a spare that passes the section 3 rules: `
+    + `pooled reference ${b(ref.puzzleBand['6-16'])}, key memory ${b(km.puzzleBand['6-16'])} (ladder only). The clean builder data is small: v3 ladder reference ${b(lr.puzzleBand['6-16'])}, key memory ${b(lk.puzzleBand['6-16'])}. `
+    + `Most mid-band puzzles come from Codex's 200-225 factory (${b(f2.puzzleBand['6-16'])}); those curves are selected (the second seed was only run when the first landed in 5.5-11.5) and are factory boards, not builder boards. `
+    + `Easy puzzles (D < 6) pass ${ref.byBand['<6'].passShare}% of evaluable spares (reference); above 16 only ${ref.byBand['>16'].passShare}% pass, almost all failing on censoring (D >= 18.5). `
+    + `Inside the range the main failure is the tighter-neighbour (cliff) rule: ${ref.spares.failTighter} reference fails, ${ref.tighterFailBorderline} of them within 2 SE of the limit. Monotonicity rarely fails (${ref.spares.failMonotone} reference spares with the noise margin; spare 1 -> 2 steps harder by more than 0.5: ${P1.step12.reference.harderBy05} of ${P1.step12.reference.pairs}). `
+    + `Spare 1 is "unknown" on every ladder and knobs-v1 curve because spare 0 was never measured, so the ladder answer is about spare 2 only; E6 must measure spare 0.`, '');
+  L.push(`2. **sqrt(D(D-1)) is the wrong noise model above D 6; the geometric with the 20-try cap fits (K2 ${k.K2.fired ? 'FIRED' : 'not fired'} on the literal rule${k.K2.firedCapped ? '; it would fire against the capped model too' : '; it would not fire against the capped model'}).** `
+    + `Over D 3-16 the measured per-campaign spread is ${sc['ladder reference (unselected)'].geom.c} (ladder reference pairs), ${sc['all reference'].geom.c} (all reference pairs) and ${cmp.reference.scaleMid} (per-campaign cache) times sqrt(D(D-1)). `
+    + `Against the capped geometric the same ratios are ${sc['ladder reference (unselected)'].capped.c}, ${sc['all reference'].capped.c} and ${cmp.reference.scaleMidCapped} (key memory: ${sc['ladder key-memory (unselected)'].capped.c} pairs, ${cmp.keyMemory.scaleMidCapped} cache). `
+    + `The cap explains it: at D 8-10 the pooled spread is ${bin('all reference', 8).sd} (sqrt(D(D-1)) ${bin('all reference', 8).geom}, capped ${bin('all reference', 8).capped}); at D 12-14 it is ${bin('all reference', 12).sd} (sqrt(D(D-1)) ${bin('all reference', 12).geom}, capped ${bin('all reference', 12).capped}). `
+    + `So section 2's table is about right near D 8 and too pessimistic above D 10 (the spread stays near 7 instead of growing to 11). Redo the precision table from the capped model: one 40-campaign block at D 12 has SE about ${r2(pointSE(12, 40))}, not ${r2(Math.sqrt(geomVar(12) / 40))}; at D 8, ${r2(pointSE(8, 40))} not ${r2(Math.sqrt(geomVar(8) / 40))}. `
+    + `Note the capped model also means D above about 14 carries little information per campaign: the spread falls because tries pile up at 20.`, '');
+  L.push(`3. **Pairing barely helps.** On spare pairs rated with the same two seeds, the seed gaps at spare 1 and at spare 2 correlate at r = ${P2.pairingCorrelation.r} (n ${P2.pairingCorrelation.n}). Common random numbers cut the variance of a step by only about ${Math.round(100 * (P2.pairingCorrelation.r || 0))}%, already below E3's 30% line ("double the CURVE campaigns"). The monotone margin above uses the unpaired SE for that reason.`, '');
+  L.push(`4. **A3: no builder board has a peek-pair shortcut; ${q.a3Fail} of the ${q.boards} qualified factory boards do (K3 ${k.K3.fired ? 'FIRED' : 'not fired'}).** `
+    + `Builder v3 ladder plus builder v2 knobs-v1: ${bp.a3Fail} of ${bp.known} fail A3. Qualified 200-225: ${q.a3Fail} of ${q.boards}; on those the stored strict witness takes the clock ${q.medianShortcutMoves} moves (median) later than the game's shortest k, so their true spare is larger than recorded. `
+    + `Pooled over the three populations the task names: ${rq.a3Fail} of ${rq.known} (${rq.a3FailShare}%), below the 20% line. The qualified rate (${q.a3FailShare}%) is above it, so the peek-pair decision matters for re-dialling the kept 200-225 boards (E7), not for new builder output. `
+    + `Side finding: lab/exact.js (engine strict clockShortest) under its 400k-node / 5 s budget gave a wrong or no answer next to a valid strict witness on ${miss} boards (for example k strict 23 against a valid witness taking the clock at move 7 on deepClock-vase-11-s1); any strict k must be bounded by the witness.`, '');
+  L.push(`5. **Key memory vs reference.** On the same ${P1.botAgreementLadder.pairs} ladder spare verdicts the two bots agree on ${P1.botAgreementLadder.same}; ${P1.botAgreementLadder.kmOnly} pass only under key memory (it brings hidden-key boards down out of the censored zone), ${P1.botAgreementLadder.refOnly} only under the reference. Under key memory 0 of ${P1.step12.keyMemory.pairs} spare 1 -> 2 steps got harder by more than 0.5, median change ${P1.step12.keyMemory.medianDelta}.`, '');
+  L.push('**What is not known.** No ladder or knobs-v1 curve has spare 0 or spare 3, so the cliff rule at spare 1 and the monotone rule above spare 2 are untested on builder output. The builder mid band is small (12-19 puzzles). The key-memory ratings are the slow d362e85f bot; Task G3 shows the pinned fast ruler (63be677e) gives identical results, so they stand for it. The 200-225 curves mix factory folders v0-v14 (all reference-family fingerprints, family-identical by meter.js FAMILY_CACHE_MIGRATIONS).', '');
+  return L.join('\n') + '\n';
+}
+
+// ---------- self test (injected fakes, no engine, < 2 s) ----------
+function selftest() {
+  const assert = require('assert');
+  // capped geometric
+  assert.equal(cappedGeom(1).var, 0);
+  const c8 = cappedGeom(8); assert(Math.abs(c8.mean - 8) < 1e-6); assert(c8.var < geomVar(8) && c8.var > 0.5 * geomVar(8));
+  assert.equal(cappedGeom(20).var, 0);
+  // section 3 rules, exact SE 0
+  const C = o => Object.fromEntries(Object.entries(o).map(([s, D]) => [s, { D, se: 0 }]));
+  const cliff = evalCurve(C({ 0: 12, 1: 6, 2: 4, 3: 3.5 }));
+  assert.deepEqual(cliff.map(v => v.verdict), ['fail', 'pass', 'pass']);          // D(0)=12 > min(9, 9): spare 1 is a cliff
+  assert.deepEqual(cliff[0].failedOn, ['tighter']);
+  assert.equal(evalSpare(C({ 1: 4, 2: 6 }), 2).checks.monotone, 'fail');           // relaxing made it harder by 2
+  assert.equal(evalSpare(C({ 1: 4, 2: 4.4 }), 2).verdict, 'pass');                 // within the 0.5 margin
+  assert.equal(evalSpare(C({ 1: 5, 2: 4 }), 1).verdict, 'unknown');                // spare 0 not measured
+  assert.equal(evalSpare(C({ 0: 5, 2: 4 }), 2).checks.tighter, 'passBound');       // farther tighter spare proves it
+  assert.equal(evalSpare(C({ 0: 9, 2: 4 }), 2).checks.tighter, 'unknown');         // ... but cannot prove a fail
+  assert.equal(evalSpare(C({ 1: 19.5, 2: 19 }), 2).verdict, 'fail');               // censored
+  assert.equal(evalSpare({ 1: { D: 4, se: 1 }, 2: { D: 6, se: 1 } }, 2).checks.monotone, 'pass');  // noise margin 2*sqrt(2)
+  assert.equal(bandOf(5.99), '<6'); assert.equal(bandOf(6), '6-16'); assert.equal(bandOf(16), '6-16'); assert.equal(bandOf(16.5), '>16');
+  const t = tally([{ verdict: 'pass', failedOn: [] }, { verdict: 'fail', failedOn: ['tighter', 'monotone'] }, { verdict: 'unknown', failedOn: [] }]);
+  assert.deepEqual([t.pass, t.fail, t.unknown, t.evaluable, t.passShare, t.failTighter, t.failMonotone], [1, 1, 1, 2, 50, 1, 1]);
+  // curves: grouping by puzzle (clock.n blanked), spare = n - k from the injected engine
+  const design = n => ({ tiles: [[0, 0, 0], [2, 0, 0]], faces: [1, 1], down: [], clock: { i: 0, n } });
+  const pts = [[5, 9], [6, 6], [7, 5]].map(([n, D]) => ({ source: 'x', bot: 'reference', puzzle: puzzleKey(design(n)), n, D, blocks: [D, D], design: design(n), id: 'n' + n }));
+  assert.equal(new Set(pts.map(p => p.puzzle)).size, 1);
+  const cv = buildCurves(pts, { kOf: () => ({ kPeek: 4, kStrict: 5, peekUnsure: false }) });
+  assert.equal(cv.length, 1); assert.deepEqual(Object.keys(cv[0].curve).map(Number), [1, 2, 3]);
+  assert.equal(cv[0].curve[1].N, 80);
+  assert.deepEqual(cv[0].verdicts.map(v => v.verdict), ['unknown', 'pass', 'pass']);
+  const sm = summarizeCurves(cv);
+  assert.equal(sm.puzzleBand['6-16'].puzzles, 1); assert.equal(sm.puzzleBand['6-16'].canShip, 1);
+  assert.equal(buildCurves([pts[0]], { kOf: () => ({ kPeek: 4 }) }).length, 0);        // one clock.n is not a curve
+  // noise: simulated capped-geometric blocks recover scale 1 against the capped model
+  let seed = 12345;                                                                 // mulberry32
+  const rnd = () => { seed = (seed + 0x6D2B79F5) | 0; let x = Math.imul(seed ^ (seed >>> 15), 1 | seed); x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x; return ((x ^ (x >>> 14)) >>> 0) / 4294967296; };
+  const block = (D, N) => { const q = cappedGeom(D).q; let s = 0; for (let c = 0; c < N; c++) { let y = 1; while (y < RULES.cap && rnd() < q) y++; s += y; } return s / N; };
+  const pairs = []; for (let i = 0; i < 1500; i++) { const D = [3, 5, 8, 12][i % 4]; pairs.push({ a: block(D, 40), b: block(D, 40), N: 40 }); }
+  const sc = noiseScale(pairs, D => cappedGeom(D).var);
+  assert(Math.abs(sc.c - 1) < 0.1, 'capped scale ' + sc.c);
+  assert(noiseScale(pairs, geomVar).c < sc.c);                                      // sqrt(D(D-1)) overstates capped spread
+  assert(noiseFit(pairs).length >= 3);
+  assert.equal(campaignTries({ wonOn: 3, attempts: [1, 2, 3] }), 3);
+  assert.equal(campaignTries({ wonOn: null, attempts: new Array(20).fill(0) }), 20);
+  const pc = pairingCorrelation([[{ blocks: [5, 3] }, { blocks: [4, 2] }], [{ blocks: [3, 5] }, { blocks: [2, 4] }], [{ blocks: [4, 4] }, { blocks: [3, 3] }]]);
+  assert.equal(pc.r, 1);
+  console.log('e1_dial_audit selftest: ok');
+}
+
+module.exports = { selftest, campaignTries, cappedGeom, geomVar, pointSE, puzzleKey, evalSpare, evalCurve, bandOf, tally, a3Check, clockK, noiseFit, noiseScale,
   campaignFit, pairingCorrelation, buildCurves, summarizeCurves, run, md, RULES, BOT, P };
 
 if (require.main === module) {
   const args = process.argv.slice(2), outI = args.indexOf('--out');
   const out = outI >= 0 ? path.resolve(args[outI + 1]) : P.out;
-  const R = run({ factoryA3: !args.includes('--no-factory-a3') });
+  if (args.includes('--selftest')) { selftest(); process.exit(0); }
+  if (args.includes('--md-only')) {             // rebuild the report from an existing e1-dial-audit.json (no engine)
+    fs.writeFileSync(path.join(out, 'e1-dial-audit.md'), md(readJson(path.join(out, 'e1-dial-audit.json'))) + '\n');
+    console.log('rewrote ' + path.join(out, 'e1-dial-audit.md')); process.exit(0);
+  }
+  let last = 0;
+  const progress = (name, n) => { if (Date.now() - last > 15000) { last = Date.now(); console.error(`[e1] ${name}: ${n} boards, ${KCACHE.size} puzzles through the engine`); } };
+  const R = run({ factoryA3: args.includes('--factory-a3'), progress });
   fs.mkdirSync(out, { recursive: true });
   fs.writeFileSync(path.join(out, 'e1-dial-audit.json'), JSON.stringify(R, null, 1));
   fs.writeFileSync(path.join(out, 'e1-dial-audit.md'), md(R) + '\n');

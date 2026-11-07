@@ -1,43 +1,70 @@
-/* detour.js: priced temptations and fair lose-forks on the way to the clock (gates A5 and A6).
-   Process design section 4, table A (analysis/builder/process-design-synthesis.md). Claude, 2026-11-07.
+/* detour.js: priced temptations on the way to the clock (gate A5), and the node-budgeted engine calls the static
+   gates share. Process design section 4, table A (analysis/builder/process-design-synthesis.md). Claude, 2026-11-07.
 
-   Clock need from a state. clockNeed(C, s) = the smallest clock.n with which the board can still be won from state s
+   Budgets are counted in engine search nodes, not milliseconds, so the same board gives the same verdicts on a
+   free PC and on a busy one (the engine's own ms limits are set far out, SAFE_MS, as a hang guard only). A tracker
+   w = work(nodes, wallMs) hands out nodes until its total is spent; every call made after that returns 'unknown'
+   with budget: true. 'unknown' (budget) is never read as a loss anywhere in this file.
+
+   Clock need from a state. clockNeed(C, s) = the smallest clock.n with which the board can still be won from s
    (engine.winnable on a copy of the design whose only change is clock.n). From the opening this is
-   engine.clockShortest's k; it is the same measure from any later state. The search starts at
-   s.moves + the engine's admissible lower bound and steps up one n at a time, so a 'win' at n after proven
-   'lose' below it is exact. 'unknown' (budget) is never read as a loss.
+   engine.clockShortest's k; along a fastest witness it stays k. The search starts at s.moves + the engine's
+   admissible lower bound and steps up one n at a time, so a 'win' at n after proven 'lose' below it is exact.
 
-   Tempting move at a state (visible, off the clock's way: not the clock and not on engine game.toClock):
-     pair  - two free face-up tiles with the same picture, picture not waiting (taken as two singles), or a peek
-             pair {pair:[i, j]} (flagged peek: true);
-     match - a free tile whose picture is waiting in the tray;
-     single (opt-in, options.singles) - a free face-up tile whose twin is in sight but not takeable (engine kindOf 'twin').
+   Tempting move at a state (visible, off the clock's way: not the clock, not on engine game.toClock):
+     pair  - two free face-up tiles with the same picture, picture not waiting (taken as two singles);
+             a peek pair {pair:[i, j]} is listed too, flagged peek: true (a face-down tile is involved);
+     match - a free face-up tile whose picture is waiting in the tray (a free face-down one is flagged peek: true);
+     single (opt-in, options.singles) - a free face-up tile whose twin is in sight but not takeable (engine 'twin').
    Its cost = clockNeed after the move - clockNeed before it: how many spare clock moves the detour burns.
    result: 'win' when the board can still be won within the loosest shippable clock (k + 3, at most 19),
    'lose' when it is proven lost at every n up to there, else 'unknown'.
 
-   Fair lose-fork (A6). A tempting move that loses at every shippable spare must
-     - still lose, with a goal-directed winning alternative (obvious.js), under K re-deals of the pictures of the
-       face-down tiles the player has not seen yet (never free so far on the witness), the identity included.
-       A deal under which the board is lost from that state whatever the player does is not the fork's fault:
-       it is counted as luck (checks.dealsLostAnyway) and reported, not failed;
-     - lose within `forcedWithin` (6) more removals (engine.longest);
-     - be offered while at least 60% of the tiles are left.
-
      const D = require('./detour.js');
+     D.work(nodes, wallMs)                        -> tracker { win, longest, classify, used, hit, wallHit }
      D.clockGames(design)                         -> C (design copies per clock.n, engine games cached)
-     D.clockNeed(C, s, { upTo, nodes, ms, until })-> { k, exact } | { k: null, lost: bool }
+     D.clockNeed(C, s, { upTo, nodes, w })        -> { k, exact } | { k: null, lost: bool, exact }
      D.temptingMoves(g, s, { singles })           -> [{ kind, take: [i] | [i, j], act?, peek? }]
-     D.priceMove(C, s, t, { base, nShipMax, ... })-> { cost, result, need, exact }
-     D.permuteHidden(design, tiles, rng)          -> design copy with the pictures of `tiles` shuffled among them
-     D.fairFork(C, s, t, { unseen, perms, seed, nShipMax, forcedWithin, minLeft }) -> { fair, checks, why, unknown }
+     D.playMove(g, s, t)                          -> state after the tempting move, null if it loses at once
+     D.priceMove(C, s, t, { base, nShipMax, nodes, w }) -> { cost, result, need, exact, after, instant? }
    Engine only, no bots. */
 'use strict';
 const E = require('../engine.js');
-const O = require('./obvious.js');
 
-const rngOf = seed => { let x = (seed >>> 0) || 1; return () => (x = (x * 1103515245 + 12345) >>> 0) / 4294967296; };
-const takesOf = t => t.act && typeof t.act === 'object' ? t.act.pair : t.take;
+const SAFE_MS = 30000;   // per engine call: a hang guard only; the node budgets decide
+
+// ---------- the node-budget tracker ----------
+function work(total = Infinity, wallMs = Infinity) {
+  const w = { total, used: 0, t0: Date.now(), wallMs, hit: false, wallHit: false, calls: 0 };
+  w.left = () => Math.max(0, w.total - w.used);
+  w.over = () => {
+    if (w.used >= w.total) w.hit = true;
+    if (Date.now() - w.t0 > w.wallMs) w.wallHit = true;
+    return w.hit || w.wallHit;
+  };
+  // engine.winnable on at most `nodes` nodes of this tracker
+  w.win = (g, s, nodes) => {
+    if (w.over()) return { result: 'unknown', budget: true, nodes: 0 };
+    const cap = Math.min(nodes, w.left()), r = E.winnable(g, s, { nodes: cap, ms: SAFE_MS });
+    w.used += Math.min(r.nodes || 0, cap); w.calls++;
+    return r.result === 'unknown' && cap < nodes ? { ...r, budget: true } : r;
+  };
+  // engine.longest charges its whole node cap (it does not report what it used)
+  w.longest = (g, s, cap, nodes) => {
+    if (w.over()) return { depth: cap, exact: false, budget: true };
+    w.used += nodes; w.calls++;
+    return E.longest(g, s, cap, nodes);
+  };
+  // engine.classify without the loss depth, every 'winnable' drawn from this tracker
+  w.classify = (g, s, nodes) => E.legal(g, s).map(move => {
+    const s2 = E.step(g, s, move);
+    if (!s2) return { move, result: 'lose' };
+    if (E.won(g, s2)) return { move, result: 'win' };
+    const r = w.win(g, s2, nodes);
+    return { move, result: r.result, ...(r.budget ? { budget: true } : {}) };
+  });
+  return w;
+}
 
 // design copies that differ only in clock.n, each with its own cached engine game (proof memo reused across states)
 function clockGames(design) {
@@ -49,15 +76,14 @@ function clockGames(design) {
   return { design, at, free: at(999) };
 }
 function clockNeed(C, s, o = {}) {
-  const g = C.free, upTo = o.upTo ?? 30, per = { nodes: o.nodes ?? 60000, ms: o.ms ?? 300 };
+  const g = C.free, upTo = o.upTo ?? 30, nodes = o.nodes ?? 60000, w = o.w || work();
   if (s.clockTaken) {
-    const r = E.winnable(g, s, per);
+    const r = w.win(g, s, nodes);
     return r.result === 'win' ? { k: 0, exact: true, clockTaken: true } : { k: null, lost: r.result === 'lose', exact: r.result === 'lose', clockTaken: true };
   }
   let n = Math.max(s.moves + 1, s.moves + g.lb(s.alive)), exact = true;
   for (; n <= upTo; n++) {
-    if (o.until && Date.now() > o.until) return { k: null, lost: false, exact: false, budget: true, from: n };
-    const r = E.winnable(C.at(n), s, per);
+    const r = w.win(C.at(n), s, nodes);
     if (r.result === 'win') return { k: n, exact };
     if (r.result === 'unknown') exact = false;
   }
@@ -65,9 +91,9 @@ function clockNeed(C, s, o = {}) {
 }
 function temptingMoves(g, s, o = {}) {
   const F = g.faces, waiting = new Set(s.tray.map(t => F[t])), out = [];
-  const onWay = i => (g.clock && i === g.clock.i && !s.clockTaken) || (!s.clockTaken && g.toClock[i] === 1);
+  const onWay = i => !s.clockTaken && g.clock && (i === g.clock.i || g.toClock[i] === 1);
   const legal = E.legal(g, s), singles = legal.filter(a => typeof a === 'number');
-  for (const i of singles) if (!onWay(i) && waiting.has(F[i])) out.push({ kind: 'match', take: [i] });
+  for (const i of singles) if (!onWay(i) && waiting.has(F[i])) out.push({ kind: 'match', take: [i], ...(g.down[i] ? { peek: true } : {}) });
   for (let a = 0; a < singles.length; a++) for (let b = a + 1; b < singles.length; b++) {
     const i = singles[a], j = singles[b];
     if (F[i] === F[j] && !g.down[i] && !g.down[j] && !waiting.has(F[i]) && !onWay(i) && !onWay(j)) out.push({ kind: 'pair', take: [i, j] });
@@ -76,7 +102,7 @@ function temptingMoves(g, s, o = {}) {
   if (o.singles) for (const i of singles) if (!onWay(i) && !g.down[i] && !waiting.has(F[i]) && E.kindOf(g, s, i) === 'twin') out.push({ kind: 'single', take: [i] });
   return out;
 }
-// play a tempting move on the no-deadline game: null when it loses at once (a 4th waiting tile)
+// play a tempting move: null when it loses at once (a 4th waiting tile, or the clock ran out)
 function playMove(g, s, t) {
   if (t.act) return E.step(g, s, t.act);
   let x = s;
@@ -86,86 +112,10 @@ function playMove(g, s, t) {
 function priceMove(C, s, t, o = {}) {
   const nShipMax = o.nShipMax, base = o.base ?? clockNeed(C, s, { ...o, upTo: nShipMax }).k;
   const s2 = playMove(C.free, s, t);
-  if (!s2) return { cost: null, result: 'lose', instant: true, after: null };
+  if (!s2) return { cost: null, result: 'lose', instant: true, exact: true, after: null };
   const need = clockNeed(C, s2, { ...o, upTo: nShipMax });
   const cost = need.k != null && base != null ? need.k - base : null;
   const result = need.k != null ? 'win' : need.lost ? 'lose' : 'unknown';
   return { cost, result, need: need.k, exact: !!need.exact, after: s2 };
 }
-function permuteHidden(design, tiles, rng) {
-  const faces = design.faces.slice(), pics = tiles.map(i => faces[i]);
-  for (let i = pics.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [pics[i], pics[j]] = [pics[j], pics[i]]; }
-  tiles.forEach((i, k) => { faces[i] = pics[k]; });
-  return { ...design, faces };
-}
-// K distinct re-deals (the identity first); fewer when the hidden pictures allow fewer
-function redeals(design, tiles, perms, seed) {
-  const rng = rngOf(seed), out = [design], seen = new Set([tiles.map(i => design.faces[i]).join(',')]);
-  for (let tries = 0; out.length < perms && tries < perms * 8 && tiles.length > 1; tries++) {
-    const d = permuteHidden(design, tiles, rng), key = tiles.map(i => d.faces[i]).join(',');
-    if (!seen.has(key)) { seen.add(key); out.push(d); }
-  }
-  return out;
-}
-function fairFork(C, s, t, o = {}) {
-  const nShipMax = o.nShipMax, per = { nodes: o.nodes ?? 60000, ms: o.ms ?? 300 }, forcedWithin = o.forcedWithin ?? 6, minLeft = o.minLeft ?? 0.6;
-  const n = C.design.tiles.length, left = s.alive.reduce((a, b) => a + b, 0), checks = { tilesLeft: +(left / n).toFixed(3) };
-  const why = [];
-  let unknown = false, luck = 0;
-  if (left / n < minLeft) why.push(`offered with ${Math.round(100 * left / n)}% of tiles left (< ${Math.round(100 * minLeft)}%)`);
-  // how soon the loss shows: the most removals a player can still make after the move (cap forcedWithin + 1)
-  const gMax = C.at(nShipMax), s2 = playMove(C.free, s, t);
-  if (s2 && !(s2.moves >= nShipMax && !s2.clockTaken)) {
-    const d = E.longest(gMax, s2, forcedWithin + 1);
-    checks.forcedDepth = d.depth; if (!d.exact) checks.depthMin = true;
-    if (d.depth > forcedWithin) why.push(`the loss shows only after ${d.depth}+ more removals (> ${forcedWithin})`);
-  } else checks.forcedDepth = 0;
-  // the same fork under re-deals of the pictures nobody has seen yet
-  const dealt = redeals(C.design, o.unseen || [], o.perms ?? 4, o.seed ?? 1);
-  checks.perms = dealt.length; checks.permResults = [];
-  const memo = o.memo || new Map(), stateKey = Array.from(s.alive).join('') + '|' + s.tray.join(',');
-  const big = { nodes: o.boardNodes ?? 150000, ms: o.boardMs ?? 600 };
-  for (const d of dealt) {
-    if (o.until && Date.now() > o.until) { unknown = true; checks.permResults.push({ budget: true }); continue; }
-    const dealKey = d.faces.join(',');
-    if (!memo.has('g' + dealKey)) memo.set('g' + dealKey, d === C.design ? gMax : E.game({ ...d, clock: { ...d.clock, n: nShipMax } }));
-    const gp = memo.get('g' + dealKey);
-    const cached = (key, f) => { const k2 = dealKey + '#' + stateKey + '#' + key; if (!memo.has(k2)) memo.set(k2, f()); return memo.get(k2); };
-    const t2 = playMove(gp, s, t), tr = t2 ? E.winnable(gp, t2, per).result : 'lose';
-    const set = cached('set', () => O.obviousMoves(gp, s));
-    const alts = E.legal(gp, s).filter(a => !sameTake(a, t) && O.isObvious(gp, s, a, { set }).obvious);
-    let alt = null, altUnknown = false;
-    for (const a of alts.slice(0, o.maxAlts ?? 8)) {
-      const r = cached(JSON.stringify(a), () => { const x = E.step(gp, s, a); return !x ? 'lose' : E.won(gp, x) ? 'win' : E.winnable(gp, x, per).result; });
-      if (r === 'win') { alt = a; break; }
-      if (r === 'unknown') altUnknown = true;
-    }
-    // no obvious winning alternative: is the board still winnable from here under this deal at all?
-    let board = null;
-    if (alt == null) {
-      const r = cached('board', () => E.winnable(gp, s, big));
-      board = r.result === 'win' && r.path ? { win: r.path[0] } : r.result;
-    }
-    checks.permResults.push({ tempting: tr, alternative: alt != null ? alt : altUnknown ? 'unknown' : null, ...(board != null ? { board } : {}) });
-    if (tr === 'win') why.push('the tempting move wins under another deal of the hidden pictures (luck, not a readable fork)');
-    if (tr === 'unknown') unknown = true;
-    if (alt != null) continue;
-    if (board === 'lose') luck++;
-    else if (board === 'unknown') unknown = true;
-    else {
-      const first = board.win, firstObvious = !sameTake(first, t) && O.isObvious(gp, s, first, { set }).obvious;
-      if (firstObvious) { checks.permResults[checks.permResults.length - 1].alternative = first; continue; }
-      // unfair only when every obvious alternative was tried and proven lost
-      if (altUnknown || alts.length > (o.maxAlts ?? 8)) unknown = true;
-      else why.push('the only winning moves are not goal-directed (obvious.js) under some deal');
-    }
-  }
-  if (luck) checks.dealsLostAnyway = luck;
-  const uniq = [...new Set(why)];
-  return { fair: uniq.length === 0 && !unknown, unfair: uniq.length > 0, unknown: uniq.length === 0 && unknown, why: uniq, luck, checks };
-}
-const sameTake = (a, t) => {
-  const tk = typeof a === 'object' ? a.pair : [a], tt = takesOf(t);
-  return tk.length === 1 ? tt[0] === tk[0] && !t.act : !!t.act && tk[0] === tt[0] && tk[1] === tt[1];
-};
-module.exports = { clockGames, clockNeed, temptingMoves, playMove, priceMove, permuteHidden, redeals, fairFork, rngOf };
+module.exports = { work, clockGames, clockNeed, temptingMoves, playMove, priceMove, SAFE_MS };

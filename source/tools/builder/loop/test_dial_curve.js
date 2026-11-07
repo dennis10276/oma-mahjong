@@ -88,11 +88,48 @@ test('measureCurve: knobs.clockSpare per spare, paired seeds, paired SE below un
   assert(Math.abs(c.steps[1].seDiff - Y.sampleSd(d) / Math.sqrt(80)) < 1e-12);
 });
 
-test('measureCurve: a clockSpare failure is recorded, not rated', () => {
-  const rows = qualified(), row = rows.find(r => require('../knobs.js').clockSpare(r.design, 0).fail);
-  assert(row, 'some qualified board has a stored witness longer than the shortest clock route');
-  const log = [], ys = Y.createYardstick({ measure: fakeMeasure(() => 0.3, log) });
+test('measureCurve: a peek-pair shortcut board is probed below the witness, never shipped there', () => {
+  // Level 202 (ebe4a48640ad0101): k = 9 with peek pairs, the stored witness takes the clock at index 10 (strict k 11).
+  const row = qualified().find(r => r.id === 'ebe4a48640ad0101');
+  const log = [], ys = Y.createYardstick({ measure: fakeMeasure(n => Math.min(0.9, 0.05 * (n - 1)), log) });
   const c = C.measureCurve(row.design, ys);
-  assert(c.points[0].fail); assert.equal(c.points[0].D, null);
-  assert.equal(log.length, 2 * c.points.filter(p => p.D != null).length);
+  assert.equal(c.k, 9);
+  assert.deepEqual(c.points.map(p => p.clockN), [9, 10, 11, 12]);
+  assert.deepEqual(c.points.map(p => p.probe || null), ['witnessWouldChange', 'witnessWouldChange', null, null]);
+  assert.deepEqual(c.points.map(p => p.releaseSpare), [null, null, 0, 1]); // t_clocks: clock.n - 10 - 1
+  assert(c.verdicts[1].reasons.includes('witnessWouldChange')); assert.equal(c.verdicts[1].canShip, false);
+  assert(c.verdicts[2].reasons.includes('releaseTestSpare')); assert.equal(c.verdicts[2].canShip, false);
+  assert.equal(c.verdicts[3].tighterNeighbour, true, 'spare 3 is judged against the measured spare 2');
+  assert.deepEqual(c.shippable, [3]);
+  assert.equal(log.length, 8);
+  // Without probing, the failed spares are recorded and not rated.
+  const log2 = [], c2 = C.measureCurve(row.design, Y.createYardstick({ measure: fakeMeasure(() => 0.3, log2) }), { probeUnwitnessed: false });
+  assert.deepEqual(c2.points.map(p => p.D === null), [true, true, false, false]); assert.equal(log2.length, 4);
+});
+
+test('opening-clock rule: k <= 6 flags spare 1 (shippableOpeningRule), canShip unchanged', () => {
+  const pts = [pt(0, 14), pt(1, 11), pt(2, 9), pt(3, 7.5)], steps = [st(0, -3), st(1, -2), st(2, -1.5)];
+  let r = C.applyRules(pts, steps, undefined, { k: 6 });
+  assert.equal(r.openingClock.restricted, true); assert.deepEqual(r.shippable, [1, 2, 3]); assert.deepEqual(r.shippableOpeningRule, [2, 3]);
+  assert.equal(r.verdicts[1].openingClockOk, false);
+  r = C.applyRules(pts, steps, undefined, { k: 7 });
+  assert.equal(r.openingClock.restricted, false); assert.deepEqual(r.shippableOpeningRule, [1, 2, 3]);
+  // Level 200 (k = 3) through measureCurve.
+  const c = C.measureCurve(qualified()[0].design, Y.createYardstick({ measure: fakeMeasure(n => Math.min(0.9, 0.12 * n)) }));
+  assert.equal(c.k, 3); assert.equal(c.openingClock.restricted, true); assert(!c.shippableOpeningRule.includes(1));
+});
+
+test('spare arithmetic matches engine.clockShortest and the stored witness on all qualified boards', () => {
+  const E = require('../engine.js'), K = require('../knobs.js');
+  for (const r of qualified()) {
+    const t = K.clockSpare(r.design, 3);
+    if (t.fail) continue;
+    const k = E.clockShortest(E.game(JSON.parse(JSON.stringify(r.design)))).k;
+    assert.equal(t.design.clock.n, k + 3); assert.equal(t.proof.minimum, k);
+    // The witness's clock index + 1 is the strict minimum; at clock.n = that - 1 it no longer fits.
+    const idx = r.design.solution.indexOf(r.design.clock.i), x = JSON.parse(JSON.stringify(r.design));
+    x.clock.n = idx + 1; assert.equal(E.replay(x, x.solution).ok, true, r.id);
+    x.clock.n = idx; assert.equal(E.replay(x, x.solution).ok, false, r.id);
+    assert(idx + 1 >= k, 'the witness can never beat the proven minimum ' + r.id);
+  }
 });

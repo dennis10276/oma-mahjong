@@ -87,10 +87,11 @@ test('prepare: tries after the 12th are dropped (censored at 12)', () => {
 });
 
 // a synthetic world with known skills and one window step
-function world(seed, { step = 0.8, levels = 100, sdSeq = 0 } = {}) {
-  const R = F.rng(seed), seqs = [], skill = { A: 0.5, B: -0.5, C: -1.5 };
+function world(seed, { step = 0.8, levels = 100, sdSeq = 0, sdLevel = 0 } = {}) {
+  const R = F.rng(seed), seqs = [], skill = { A: 0.5, B: -0.5, C: -1.5 }, shared = {};
+  for (let lv = 100; lv < 100 + levels; lv++) shared[lv] = sdLevel * R.normal();
   for (const who of Object.keys(skill)) for (let lv = 100; lv < 100 + levels; lv++) {
-    const z = skill[who] - (lv >= 140 ? step : 0) - sdSeq * R.normal(), p = 1 / (1 + Math.exp(-z)), res = [];
+    const z = skill[who] - (lv >= 140 ? step : 0) - shared[lv] - sdSeq * R.normal(), p = 1 / (1 + Math.exp(-z)), res = [];
     while (res.length < 30) { const w = R.next() < p ? 1 : 0; res.push(w); if (w) break; }
     seqs.push({ who, lv, res, won: res[res.length - 1] === 1 });
   }
@@ -139,4 +140,57 @@ test('real export (if present): ledger reproduces known positions', { skip: !fs.
   assert.strictEqual(L.frontier.Dennis.highestWon, 199);
   assert.ok(L.diag.outcomeAgree >= 0.95 * (L.diag.outcomeAgree + L.diag.outcomeDiffer.length));
   assert.ok(!L.sequences.some(s => s.pid === 'pmuxw2uqkzcnbgx' || s.who === 'OmaHanny'));
+});
+
+test('expectedTriesCapped: geometric mean below the cap, cap respected, mixture raises it', () => {
+  // p = 0.5: E[min(T,20)] = (1 - 0.5^20) / 0.5, about 2
+  assert.ok(Math.abs(F.expectedTriesCapped(0, 0, 0, 20) - 2) < 1e-4);
+  assert.ok(F.expectedTriesCapped(-6, 0, 0, 20) <= 20 && F.expectedTriesCapped(-6, 0, 0, 20) > 19);
+  assert.ok(F.expectedTriesCapped(0, 0, 1, 20) > F.expectedTriesCapped(0, 0, 0, 20));
+  assert.ok(F.expectedTriesCapped(1, 0, 0.5, 20) < F.expectedTries(1, 0, 0.5)); // capping only lowers
+});
+
+test('summarisePower: pooled rates and the kill rule', () => {
+  const pw = {
+    coverage: [['Dennis', 'Gerda', 'MrsD'], ['Dennis', 'Gerda']],
+    nullCounts: [{ n: 100, pass2se: 2, pass2seNoLopo: 3 }, { n: 100, pass2se: 12, pass2seNoLopo: 12 }],
+    planted: [{ delta: 0.35, boundary: 1, n: 50, pass2se: 40, pass2seNoLopo: 40, estMean: 0.3 }, { delta: 0.35, boundary: 2, n: 50, pass2se: 10, pass2seNoLopo: 10, estMean: 0.2 }],
+  };
+  const s = F.summarisePower(pw);
+  assert.strictEqual(s.detection[0].pooledAll, 0.5);
+  assert.strictEqual(s.detection[0].pooledThreePlayers, 0.8);
+  assert.strictEqual(s.falseAlarm.worstWindow, 0.12);
+  assert.strictEqual(s.kill.killed, true); // detection 0.8 passes, but one window has 12% false alarms
+});
+
+test('evidence (with the level-prior normaliser) tells shared level effects from player-by-level ones', () => {
+  const shared = F.chooseSds(F.prepare(world(21, { sdLevel: 1.0, step: 0 }), { size: 20, from: 100, to: 199 }), {}, [0.3, 1.0], [0, 1.0]);
+  assert.deepStrictEqual([shared.sdLevel, shared.sdSeq], [1.0, 0]);
+  const own = F.chooseSds(F.prepare(world(22, { sdSeq: 1.0, step: 0 }), { size: 20, from: 100, to: 199 }), {}, [0.3, 1.0], [0, 1.0]);
+  assert.strictEqual(own.sdSeq, 1.0);
+});
+
+test('power: the simulated world follows truth, not the fit setting; fits are counted', () => {
+  const d = F.prepare(world(5), { size: 20, from: 100, to: 199 }), f = F.fit(d);
+  const a = F.power(d, f, { deltas: [], simsNull: 2, simsPer: 0, opts: { sdSeq: 0, sdLevel: 0.3 }, truth: { sdSeq: 1.0 } });
+  assert.deepStrictEqual(a.truth, { sdLevel: 0.3, sdSeq: 1.0 });
+  const b = F.power(d, f, { deltas: [], simsNull: 2, simsPer: 0, opts: { sdSeq: 0.5, sdLevel: 0.6 } });
+  assert.deepStrictEqual(b.truth, { sdLevel: 0.6, sdSeq: 0.5 });
+  assert.strictEqual(b.fits, 2 * 4);
+  assert.strictEqual(b.notConverged, 0);
+});
+
+test('expectedTries: levelSpread adds the shared level spread (Jensen: more tries than sdSeq alone)', () => {
+  const o = { sdLevel: 0.3, sdSeq: 0.5 };
+  assert.ok(Math.abs(F.levelSpread(o) - Math.sqrt(0.34)) < 1e-12);
+  assert.ok(Math.abs(F.expectedTries(-1.72, 0, F.levelSpread(o)) - (1 + Math.exp(1.72 + 0.17))) < 1e-9);
+  assert.ok(F.expectedTriesCapped(-1.72, 0, F.levelSpread(o)) > F.expectedTriesCapped(-1.72, 0, 0.5));
+});
+
+test('careLedger: an unwon level counts tries + 1, as in Y', () => {
+  const O = 'pmuy4wmdp17hbws';
+  const exp = { [O]: { a: ev('start', 121, { aid: 'a', at: 1 }), b: ev('end', 121, { aid: 'a', at: 1, r: 'win' }),
+    c: ev('start', 122, { aid: 'b', at: 1 }), d: ev('end', 122, { aid: 'b', at: 1, r: 'stuck' }), e: ev('start', 122, { aid: 'c', at: 2 }), f: ev('end', 122, { aid: 'c', at: 2, r: 'stuck' }) } };
+  const c = RL.careLedger(exp);
+  assert.deepStrictEqual(c.bands['121-130'], { levels: 2, firstTry: 1, notWon: 1, firstTryRate: 0.5, meanTries: (1 + 3) / 2 });
 });

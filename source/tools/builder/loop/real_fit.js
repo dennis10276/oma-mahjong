@@ -6,10 +6,11 @@
 
      - window effects: a random walk over consecutive windows, step ~ N(0, tau^2), the first window fixed at 0
        (so skill is "skill in the first window"); a positive step means the next window is harder;
-     - level effects: shared by all players, shrunk hard towards 0 (sd sdLevel, default 0.3);
-     - u[i,l]: one effect per player and level (sd sdSeq). The family hardly agrees on which level is hard (rank
-       0.03-0.18, history map), so without this term the model is overconfident. sdSeq is chosen by the Laplace
-       evidence (chooseSdSeq);
+     - level effects: shared by all players, shrunk towards 0 (sd sdLevel);
+     - u[i,l]: one effect per player and level (sd sdSeq), for levels that are hard for one player only.
+       sdLevel and sdSeq are chosen together by the Laplace evidence on a 2-D grid (chooseSds);
+     - no player-skill drift (learning): a drift shared by the family is confounded with the window walk, so this
+       data cannot separate it from a change in difficulty;
      - exact censoring: a level not won yet only contributes its lost tries; tries after the 12th are dropped
        (a run still unwon at 12 is censored there: the rage cut).
    Fitted by Newton's method on the posterior mode, with the per-sequence effects eliminated by their Schur
@@ -116,12 +117,13 @@ function fit(data, opts = {}) {
     const neg = g.map(v => -v), dth = cholSolve(L, K, neg);
     const du = new Float64Array(Q);
     if (useU) for (let q = 0; q < Q; q++) { const r = rows[q]; let ad = 0; for (const [i, ai] of A[q]) ad += ai * dth[i]; du[q] = -(gu[q] - r.N * sigmoid(eta(r, q, th, u)) * (1 - sigmoid(eta(r, q, th, u))) * ad) / Huu[q]; }
-    let step = 1, Fn, tn, un;
+    let step = 1, Fn, tn, un, ok = false;
     for (let k = 0; k < 30; k++, step /= 2) {
       tn = th.map((v, i) => v + step * dth[i]); un = useU ? u.map((v, q) => v + step * du[q]) : u;
       Fn = objective(tn, un);
-      if (Fn <= F + 1e-12) break;
+      if (Fn <= F + 1e-12) { ok = true; break; }
     }
+    if (!ok) { converged = false; break; } // no step lowers the objective: keep th and u, report the failure
     let mx = 0; for (let i = 0; i < K; i++) mx = Math.max(mx, Math.abs(step * dth[i]));
     th.set(tn); if (useU) u.set(un);
     const dF = F - Fn; F = Fn;
@@ -149,7 +151,10 @@ function fit(data, opts = {}) {
     const vw = (a, b) => (a === 0 || b === 0 ? 0 : covW[a - 1][b - 1]);
     const steps = [];
     for (let j = 1; j < J; j++) { const v = vw(j, j) + vw(j - 1, j - 1) - 2 * vw(j, j - 1); steps.push({ j, est: w[j] - w[j - 1], se: Math.sqrt(Math.max(v, 0)) }); }
-    const evidence = -(F + (useU ? Q * Math.log(o.sdSeq) : 0)) - 0.5 * (logdet + sumLogHuu);
+    // log marginal likelihood (Laplace): each Gaussian prior adds -log(sd) per parameter (its 2*pi term cancels the
+    // Laplace one), so evidences at different sdLevel, sdSeq or tau can be compared
+    const priorNorm = (useU ? Q * Math.log(o.sdSeq) : 0) + nL * Math.log(o.sdLevel) + (J - 1) * Math.log(o.tau) + nP * Math.log(o.sdSkill);
+    const evidence = -(F + priorNorm) - 0.5 * (logdet + sumLogHuu);
     return { w, seW: [0, ...idx.map((_, k) => Math.sqrt(covW[k][k]))], steps, evidence };
   }
   return {
@@ -167,10 +172,32 @@ function chooseSdSeq(data, opts = {}, grid = [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 
   const best = scores.reduce((a, b) => (b.evidence > a.evidence ? b : a));
   return { best: best.sd, scores };
 }
+/* sdLevel and sdSeq together by the Laplace evidence over a 2-D grid. */
+function chooseSds(data, opts = {}, gridLevel = [0.15, 0.3, 0.5, 0.75, 1, 1.25], gridSeq = [0, 0.25, 0.5, 0.75, 1]) {
+  const scores = [];
+  for (const sdLevel of gridLevel) for (const sdSeq of gridSeq) {
+    const f = fit(data, { ...opts, sdLevel, sdSeq });
+    scores.push({ sdLevel, sdSeq, evidence: +f.evidence.toFixed(2), converged: f.converged });
+  }
+  const best = scores.filter(x => x.converged).reduce((a, b) => (b.evidence > a.evidence ? b : a));
+  return { sdLevel: best.sdLevel, sdSeq: best.sdSeq, evidence: best.evidence, scores };
+}
 
-/* Expected tries to the first win (no cap) for a player in a window at an average level, the player-level effect
-   integrated out: E[1/p] = 1 + exp(-(skill - window) + sdSeq^2/2). */
+/* Expected tries to the first win (no cap) for a player in a window. The sd argument is the spread integrated out:
+   pass levelSpread(opts) = sqrt(sdLevel^2 + sdSeq^2) for the average over the levels of a window; sdSeq alone
+   gives a level whose shared effect is 0.  E[1/p] = 1 + exp(-(skill - window) + sd^2/2). */
+const levelSpread = o => Math.hypot(o.sdLevel || 0, o.sdSeq || 0);
+const sigmoidMix = (z, sd = 0) => { if (!(sd > 0)) return sigmoid(z); let s = 0, w = 0; for (let k = -30; k <= 30; k++) { const x = k / 6, g = Math.exp(-x * x / 2); s += g * sigmoid(z - sd * x); w += g; } return s / w; };
 const expectedTries = (skill, win, sdSeq = 0) => 1 + Math.exp(-(skill - win) + sdSeq * sdSeq / 2);
+/* The same with the tries capped (as Y is, at 20): E[min(T, cap)] = E[(1 - (1-p)^cap) / p], the spread (same
+   meaning as above) integrated out numerically over N(0, sd^2) (61-point grid on +-5 sd). */
+function expectedTriesCapped(skill, win, sdSeq = 0, cap = 20) {
+  const one = z => { const p = sigmoid(z); return (1 - Math.pow(1 - p, cap)) / p; };
+  if (!(sdSeq > 0)) return one(skill - win);
+  let s = 0, wsum = 0;
+  for (let k = -30; k <= 30; k++) { const x = k / 6, w = Math.exp(-x * x / 2); s += w * one(skill - win - sdSeq * x); wsum += w; }
+  return s / wsum;
+}
 
 /* ---------- the step test ---------- */
 // players with data in both windows next to boundary j
@@ -190,6 +217,7 @@ function without(data, who) {
 function stepTest(data, opts = {}, { floor = 0.15, k = 2 } = {}) {
   const main = fit(data, opts), cov = coverage(data);
   const lopo = data.players.map(who => ({ who, f: fit(without(data, who), { ...opts, init: { th: main.th } }), cov: coverage(without(data, who)) }));
+  const notConverged = (main.converged ? 0 : 1) + lopo.filter(L => !L.f.converged).length;
   return main.steps.map((s, idx) => {
     const sign = Math.sign(s.est);
     let agree = cov[idx].length >= 2; // with one player only nobody can confirm
@@ -199,7 +227,7 @@ function stepTest(data, opts = {}, { floor = 0.15, k = 2 } = {}) {
       if (Math.sign(L.f.steps[idx].est) !== sign) agree = false;
     }
     const over = Math.abs(s.est) > k * s.se;
-    return { boundary: idx + 1, est: s.est, se: s.se, z: s.est / s.se, players: cov[idx], lopoAgree: agree, pass2se: over && agree, passFloor: over && agree && Math.abs(s.est) > floor, pass2seNoLopo: over };
+    return { boundary: idx + 1, est: s.est, se: s.se, z: s.est / s.se, players: cov[idx], lopoAgree: agree, pass2se: over && agree, passFloor: over && agree && Math.abs(s.est) > floor, pass2seNoLopo: over, notConverged };
   });
 }
 
@@ -227,10 +255,12 @@ function power(data, fitted, { deltas = [0.2, 0.35, 0.5], simsNull = 200, simsPe
   // the simulated world: fitted skills; level and player-level sds as fitted unless `truth` says otherwise
   const truthBase = { skill: data.players.map(p => fitted.skill[p]), sdLevel: truth.sdLevel ?? opts.sdLevel ?? DEFAULTS.sdLevel, sdSeq: truth.sdSeq ?? opts.sdSeq ?? 0 };
   const cov = coverage(data);
+  let notConverged = 0, tests = 0;
   const nullCounts = Array.from({ length: J - 1 }, () => ({ pass2se: 0, passFloor: 0, pass2seNoLopo: 0, n: 0 }));
   for (let s = 0; s < simsNull; s++) {
     const rows = simulateRows(data, { ...truthBase, window: new Array(J).fill(0) }, R);
     const t = stepTest({ ...data, rows }, opts);
+    tests++; notConverged += t[0].notConverged;
     t.forEach((b, i) => { const c = nullCounts[i]; c.n++; c.pass2se += b.pass2se; c.passFloor += b.passFloor; c.pass2seNoLopo += b.pass2seNoLopo; });
     if (onProgress) onProgress('null', s);
   }
@@ -241,6 +271,7 @@ function power(data, fitted, { deltas = [0.2, 0.35, 0.5], simsNull = 200, simsPe
     for (let s = 0; s < simsPer; s++) {
       const rows = simulateRows(data, { ...truthBase, window }, R);
       const b = stepTest({ ...data, rows }, opts)[j - 1];
+      tests++; notConverged += b.notConverged;
       c.n++; c.estMean += b.est; c.seMean += b.se;
       const up = b.est > 0;
       c.pass2se += b.pass2se && up; c.passFloor += b.passFloor && up; c.pass2seNoLopo += b.pass2seNoLopo && up;
@@ -249,7 +280,8 @@ function power(data, fitted, { deltas = [0.2, 0.35, 0.5], simsNull = 200, simsPe
     planted.push(c);
     if (onProgress) onProgress('planted', delta, j);
   }
-  return { nullCounts, planted, coverage: cov };
+  // fits: main plus one leave-one-player-out fit per player, per simulated test; notConverged: those whose line search failed
+  return { nullCounts, planted, coverage: cov, truth: { sdLevel: truthBase.sdLevel, sdSeq: truthBase.sdSeq }, fits: tests * (1 + data.players.length), notConverged };
 }
 
 /* Does the simulated world look like the real one? Per player: share of levels won on the first try, share of
@@ -266,7 +298,26 @@ function predictiveCheck(data, fitted, { sims = 200, seed = 7, truth = {} } = {}
   return data.players.map((p, i) => Object.fromEntries([['player', p], ...['first', 'cut', 'mean'].map(k => [k, { real: +real[i][k].toFixed(3), sim: +(acc[i][k].reduce((a, b) => a + b, 0) / sims).toFixed(3), sim90: [+q(acc[i][k], 0.05).toFixed(3), +q(acc[i][k], 0.95).toFixed(3)] }])]));
 }
 
-module.exports = { CAP, predictiveCheck, DEFAULTS, prepare, fit, chooseSdSeq, expectedTries, coverage, stepTest, simulateRows, power, rng, windowLabel, windowIndex, cholesky, cholSolve };
+/* Pool the per-boundary power counts: detection per delta over boundaries (optionally only those with all three
+   family players), the false-alarm rate per window, and the kill test of E2. */
+function summarisePower(pw, { family = ['Dennis', 'Gerda', 'MrsD'], killDelta = 0.35, killDetect = 0.7, killFalse = 0.1 } = {}) {
+  const full = i => family.every(p => pw.coverage[i].includes(p));
+  const pool = (list, key) => { const n = list.reduce((a, c) => a + c.n, 0); return n ? +(list.reduce((a, c) => a + c[key], 0) / n).toFixed(3) : null; };
+  const deltas = [...new Set(pw.planted.map(c => c.delta))];
+  const detection = deltas.map(d => {
+    const all = pw.planted.filter(c => c.delta === d), three = all.filter(c => full(c.boundary - 1));
+    const rates = all.map(c => c.pass2se / c.n);
+    return { delta: d, pooledAll: pool(all, 'pass2se'), pooledThreePlayers: pool(three, 'pass2se'), bestBoundary: rates.length ? +Math.max(...rates).toFixed(3) : null, pooledNoLopo: pool(all, 'pass2seNoLopo'),
+      meanEstOverDelta: all.length ? +(all.reduce((a, c) => a + c.estMean, 0) / all.length / d).toFixed(2) : null };
+  });
+  const fa = pw.nullCounts.map(c => c.pass2se / c.n);
+  const falseAlarm = { pooled: pool(pw.nullCounts, 'pass2se'), worstWindow: fa.length ? +Math.max(...fa).toFixed(3) : null, pooledNoLopo: pool(pw.nullCounts, 'pass2seNoLopo') };
+  const k = detection.find(d => d.delta === killDelta);
+  return { detection, falseAlarm, kill: k ? { detect: k.pooledThreePlayers ?? k.pooledAll, needAtLeast: killDetect, falseAlarmWorst: falseAlarm.worstWindow, needAtMost: killFalse,
+    killed: (k.pooledThreePlayers ?? k.pooledAll) < killDetect || falseAlarm.worstWindow > killFalse } : null };
+}
+
+module.exports = { CAP, predictiveCheck, DEFAULTS, prepare, fit, chooseSdSeq, chooseSds, levelSpread, sigmoidMix, expectedTries, expectedTriesCapped, summarisePower, coverage, stepTest, simulateRows, power, rng, windowLabel, windowIndex, cholesky, cholSolve };
 
 /* ---------- E2 runner ---------- */
 if (require.main === module) {
@@ -277,53 +328,84 @@ if (require.main === module) {
   const exp = JSON.parse(fs.readFileSync(file, 'utf8'));
   const L = RL.ledger(exp, { from: 85, to: 199 });
   const fam = L.sequences.filter(s => RL.FAMILY.includes(s.who));
+  // levels beyond 199 (today's live 200-269 boards, which the 200-225 batch will replace): descriptive only
+  const famBeyond = RL.ledger(exp, { from: 200, to: 269 }).sequences.filter(s => RL.FAMILY.includes(s.who));
   const simsPer = Number(simsArg) || 60;
   const result = { about: 'E2: real-data estimator and power simulation (loop/real_fit.js).', source: path.basename(file), made: new Date().toISOString(),
     ledger: { sequences: fam.length, tries: fam.reduce((a, s) => a + s.res.length, 0), triesAfterCap: fam.reduce((a, s) => a + Math.min(CAP, s.res.length), 0), skipped: L.skipped, outcomeCheck: { agree: L.diag.outcomeAgree, differ: L.diag.outcomeDiffer }, frontier: L.frontier },
-    settings: { ...DEFAULTS, cap: CAP, deadband: '2 SE, leave-one-player-out sign agreement', floor: 0.15 }, windows: {} };
+    settings: { tau: DEFAULTS.tau, sdSkill: DEFAULTS.sdSkill, sdLevelAndSdSeq: 'chosen per window size by evidence (windows.<size>.sds)', cap: CAP, deadband: '2 SE, leave-one-player-out sign agreement', floor: 0.15 }, windows: {} };
   // descriptive tables by 10-level window
   const Y = RL.yardstick(fam), desc = [];
-  for (let a = 80; a < 200; a += 10) {
-    const lo = Math.max(a, 85), hi = a + 9, ys = Object.entries(Y).filter(([lv]) => +lv >= lo && +lv <= hi).map(([, v]) => v);
+  const famAll = [...fam, ...famBeyond], YAll = { ...Y, ...RL.yardstick(famBeyond) };
+  for (let a = 80; a < 270; a += 10) {
+    const lo = Math.max(a, 85), hi = a + 9;
+    if (a >= 200 && !famBeyond.some(s => s.lv >= lo && s.lv <= hi)) continue;
+    const Y = YAll, fam = famAll, ys = Object.entries(Y).filter(([lv]) => +lv >= lo && +lv <= hi).map(([, v]) => v);
     const d = fam.filter(s => s.who === 'Dennis' && s.lv >= lo && s.lv <= hi);
     const row = { window: `${lo}-${hi}`, Ylevels: ys.length, Ymean: ys.length ? +(ys.reduce((x, v) => x + v.Y, 0) / ys.length).toFixed(2) : null,
-      Ymedian: ys.length ? ys.map(v => v.Y).sort((x, y) => x - y)[ys.length >> 1] : null, Ycensored: ys.filter(v => v.censored).length,
+      Ymedian: ys.length ? (v => (v[(v.length - 1) >> 1] + v[v.length >> 1]) / 2)(ys.map(v => v.Y).sort((x, y) => x - y)) : null, Ycensored: ys.filter(v => v.censored).length,
       dennisLevels: d.length, dennisFirstTry: d.length ? +(d.filter(s => s.won && s.tries === 1).length / d.length).toFixed(2) : null };
-    for (const w of RL.FAMILY) { const x = fam.filter(s => s.who === w && s.lv >= lo && s.lv <= hi); row[w + 'Levels'] = x.length; row[w + 'MeanTriesCap20'] = x.length ? +(x.reduce((t, s) => t + Math.min(20, s.won ? s.tries : s.tries + 1), 0) / x.length).toFixed(2) : null; }
+    for (const w of RL.FAMILY) { const x = fam.filter(s => s.who === w && s.lv >= lo && s.lv <= hi); row[w + 'Levels'] = x.length; row[w + 'NotWon'] = x.filter(s => !s.won).map(s => s.lv); row[w + 'MeanTriesCap20'] = x.length ? +(x.reduce((t, s) => t + Math.min(20, s.won ? s.tries : s.tries + 1), 0) / x.length).toFixed(2) : null; }
     desc.push(row);
   }
   result.byTen = desc;
+  result.beyond199 = famBeyond.map(s => ({ who: s.who, lv: s.lv, tries: s.tries, won: s.won, open: s.open }));
   result.yardstick = Y;
   for (const size of [20, 10]) {
     const data = prepare(fam, { size, from: 85, to: 199 });
-    const sd = chooseSdSeq(data);
-    const opts = { sdSeq: sd.best };
+    // sdLevel and sdSeq together by the evidence; the chosen pair is both the fit setting and the simulated world
+    const sds = chooseSds(data, {}, [0.15, 0.3, 0.5, 0.6, 0.75, 0.9, 1, 1.25], [0, 0.25, 0.5, 0.75, 1]);
+    const opts = { sdLevel: sds.sdLevel, sdSeq: sds.sdSeq }, spread = levelSpread(opts);
     const f = fit(data, opts), test = stepTest(data, opts);
-    const f0 = fit(data, { sdSeq: 0 }), test0 = stepTest(data, { sdSeq: 0 });
+    // the setting the first draft used (fixed sdLevel 0.3, sdSeq 0.5 by evidence without the level normaliser)
+    const OLD = { sdLevel: 0.3, sdSeq: 0.5 }, fOld = fit(data, OLD), testOld = stepTest(data, OLD);
     const labels = Array.from({ length: data.J }, (_, j) => windowLabel(j, size, 85, 199));
-    const pw = power(data, f, { simsNull: Math.max(100, simsPer * 2), simsPer, opts });
-    // the same truth (with player-level effects) fitted by a model without them: how overconfident is that?
-    const pw0 = power(data, f, { simsNull: Math.max(100, simsPer * 2), simsPer: 0, deltas: [], opts: { sdSeq: 0, sdLevel: DEFAULTS.sdLevel }, seed: 99 });
+    const nNull = Math.max(100, simsPer * 2);
+    const pw = power(data, f, { deltas: [0.2, 0.35, 0.5, 0.75], simsNull: nNull, simsPer, opts });
+    // sensitivity: almost no random-walk shrinkage of the windows (tau 5), so the 2-SE test is not made conservative
+    // by the prior; the truth is the same world
+    const pwFlat = power(data, f, { deltas: [0.35, 0.5, 0.75], simsNull: nNull, simsPer: Math.round(simsPer / 2), opts: { ...opts, tau: 5 }, seed: 777 });
+    // misspecified: worlds that differ from the fit setting, fitted with the chosen setting (false alarms only)
+    const misWorlds = [{ sdLevel: opts.sdLevel, sdSeq: 0.5 }, { sdLevel: 0.3, sdSeq: 0.5 }];
+    const pwMis = misWorlds.map((w, k) => power(data, f, { simsNull: nNull, simsPer: 0, deltas: [], opts, truth: w, seed: 99 + k }));
+    // a heavier world (player-level sd 1.0) than the fit assumes: false alarms and detection of +0.35
+    const pwHeavy = power(data, f, { simsNull: nNull, simsPer: Math.round(simsPer / 2), deltas: [0.35], opts, truth: { sdSeq: 1.0 }, seed: 4242 });
     const check = predictiveCheck(data, f), check1 = predictiveCheck(data, f, { truth: { sdSeq: 1.0 } });
-    // sensitivity: the world has heavier player-level effects (sd 1.0) than the fit assumes
-    const pwHeavy = power(data, f, { simsNull: Math.max(100, simsPer * 2), simsPer: Math.round(simsPer / 2), deltas: [0.35], opts, truth: { sdSeq: 1.0 }, seed: 4242 });
+    const eT = (p, v) => expectedTriesCapped(f.skill[p], v, spread);
+    const modelY = v => (2 * eT('Dennis', v) + eT('Gerda', v) + 2 * eT('MrsD', v)) / 5;
+    const fa = c => +(c.pass2se / c.n).toFixed(3), lab = i => labels[i] + ' | ' + labels[i + 1];
+    const allPw = [pw, pwFlat, ...pwMis, pwHeavy];
     result.windows[size] = {
       predictiveCheck: { fitted: check, heavierSd1: check1 },
-      labels, sdSeq: sd, players: data.players,
-      fit: { skill: f.skill, window: f.window.map((v, j) => ({ window: labels[j], effect: +v.toFixed(3), se: +f.windowSE[j].toFixed(3), expectedTries: Object.fromEntries(data.players.map(p => [p, +expectedTries(f.skill[p], v, sd.best).toFixed(2)])) })),
-        steps: test.map(b => ({ between: labels[b.boundary - 1] + ' | ' + labels[b.boundary], est: +b.est.toFixed(3), se: +b.se.toFixed(3), z: +b.z.toFixed(2), players: b.players, lopoAgree: b.lopoAgree, flagged: b.pass2se })),
+      labels, sds, players: data.players,
+      fit: { settings: opts, converged: f.converged, spreadPerLevel: +spread.toFixed(3), skill: f.skill,
+        window: f.window.map((v, j) => ({ window: labels[j], effect: +v.toFixed(3), se: +f.windowSE[j].toFixed(3),
+          expectedTries: Object.fromEntries(data.players.map(p => [p, +expectedTries(f.skill[p], v, spread).toFixed(2)])),
+          modelYcap20: +modelY(v).toFixed(2), dennisFirstTryModel: +sigmoidMix(f.skill.Dennis - v, spread).toFixed(3) })),
+        steps: test.map(b => ({ between: lab(b.boundary - 1), est: +b.est.toFixed(3), se: +b.se.toFixed(3), z: +b.z.toFixed(2), players: b.players, lopoAgree: b.lopoAgree, flagged: b.pass2se })),
         levelSd: +Math.sqrt(Object.values(f.level).reduce((a, v) => a + v * v, 0) / Object.keys(f.level).length).toFixed(3),
-        hardestLevels: Object.entries(f.level).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([l, v]) => [+l, +v.toFixed(2)]) },
-      fitWithoutPlayerLevel: { skill: f0.skill, steps: test0.map(b => ({ est: +b.est.toFixed(3), se: +b.se.toFixed(3), flagged: b.pass2se })) },
+        hardestLevels: Object.entries(f.level).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([l, v]) => [+l, +v.toFixed(2)]),
+        // what a step means in tries, at the first window, averaged over levels (capped at 20)
+        stepInTries: [0, 0.2, 0.35, 0.5, 0.75, 1].map(d => ({ step: d, modelY: +modelY(d).toFixed(2), ratioY: +(modelY(d) / modelY(0)).toFixed(2),
+          ...Object.fromEntries(data.players.map(p => [p, +eT(p, d).toFixed(2)])) })) },
+      fitOldSettings: { settings: OLD, skill: fOld.skill, evidence: +fOld.evidence.toFixed(2), steps: testOld.map(b => ({ est: +b.est.toFixed(3), se: +b.se.toFixed(3), flagged: b.pass2se })) },
       power: {
-        falseAlarm: pw.nullCounts.map((c, i) => ({ between: labels[i] + ' | ' + labels[i + 1], players: pw.coverage[i], n: c.n, rate2se: +(c.pass2se / c.n).toFixed(3), rateFloor: +(c.passFloor / c.n).toFixed(3), rateNoLopo: +(c.pass2seNoLopo / c.n).toFixed(3) })),
-        falseAlarmMisspecified: pw0.nullCounts.map((c, i) => ({ between: labels[i] + ' | ' + labels[i + 1], rate2se: +(c.pass2se / c.n).toFixed(3), rateNoLopo: +(c.pass2seNoLopo / c.n).toFixed(3) })),
-        heavierWorldSd1: { falseAlarm: pwHeavy.nullCounts.map((c, i) => ({ between: labels[i] + ' | ' + labels[i + 1], rate2se: +(c.pass2se / c.n).toFixed(3) })), detection035: pwHeavy.planted.map(c => ({ between: labels[c.boundary - 1] + ' | ' + labels[c.boundary], rate2se: +(c.pass2se / c.n).toFixed(3) })) },
-        detection: pw.planted.map(c => ({ delta: c.delta, between: labels[c.boundary - 1] + ' | ' + labels[c.boundary], players: c.players, n: c.n, rate2se: +(c.pass2se / c.n).toFixed(3), rateFloor: +(c.passFloor / c.n).toFixed(3), rateNoLopo: +(c.pass2seNoLopo / c.n).toFixed(3), meanEst: +c.estMean.toFixed(3), meanSE: +c.seMean.toFixed(3) })),
+        world: pw.truth,
+        fits: allPw.reduce((a, x) => a + x.fits, 0), fitsNotConverged: allPw.reduce((a, x) => a + x.notConverged, 0),
+        summary: summarisePower(pw),
+        summaryFlatTau5: summarisePower(pwFlat),
+        falseAlarm: pw.nullCounts.map((c, i) => ({ between: lab(i), players: pw.coverage[i], n: c.n, rate2se: fa(c), rateFloor: +(c.passFloor / c.n).toFixed(3), rateNoLopo: +(c.pass2seNoLopo / c.n).toFixed(3) })),
+        falseAlarmMisspecified: pwMis.map(x => ({ world: x.truth, fitted: opts, n: x.nullCounts[0].n, pooled: summarisePower(x).falseAlarm.pooled, worstWindow: summarisePower(x).falseAlarm.worstWindow,
+          perBoundary: x.nullCounts.map((c, i) => ({ between: lab(i), rate2se: fa(c), rateNoLopo: +(c.pass2seNoLopo / c.n).toFixed(3) })) })),
+        heavierWorldSd1: { world: pwHeavy.truth, fitted: opts, falseAlarm: pwHeavy.nullCounts.map((c, i) => ({ between: lab(i), rate2se: fa(c) })), detection035: pwHeavy.planted.map(c => ({ between: lab(c.boundary - 1), players: c.players, rate2se: fa(c) })), summary: summarisePower(pwHeavy) },
+        detection: pw.planted.map(c => ({ delta: c.delta, between: lab(c.boundary - 1), players: c.players, n: c.n, rate2se: fa(c), rateFloor: +(c.passFloor / c.n).toFixed(3), rateNoLopo: +(c.pass2seNoLopo / c.n).toFixed(3), meanEst: +c.estMean.toFixed(3), meanSE: +c.seMean.toFixed(3) })),
       },
     };
-    console.log('window', size, 'sdSeq', sd.best, 'done', Math.round((Date.now() - t0) / 1000) + 's');
+    console.log('window', size, 'sdLevel', sds.sdLevel, 'sdSeq', sds.sdSeq, 'done', Math.round((Date.now() - t0) / 1000) + 's');
   }
+  const s20 = result.windows[20].power.summary.kill, s10 = result.windows[10].power.summary.kill;
+  result.verdict = { rule: 'E2 kill: a +0.35 logit step over 20 levels detected < 70% of the time, or false alarms > 10% per window -> real data does not steer the slope',
+    window20: s20, window10: s10, flatTau20: result.windows[20].power.summaryFlatTau5.kill, killed: !!(s20 && s20.killed) };
   result.care = RL.careLedger(exp);
   result.seconds = Math.round((Date.now() - t0) / 1000);
   fs.writeFileSync(out, JSON.stringify(result, null, 1) + '\n');

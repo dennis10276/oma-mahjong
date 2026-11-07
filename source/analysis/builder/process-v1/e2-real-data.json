@@ -1,7 +1,7 @@
 {
  "about": "E2: real-data estimator and power simulation (loop/real_fit.js).",
  "source": "plays-2026-11-07.json",
- "made": "2026-11-07T08:56:59.862Z",
+ "made": "2026-11-07T13:46:53.334Z",
  "ledger": {
   "sequences": 299,
   "tries": 1557,
@@ -294,7 +294,9 @@
        "Dennis": 1.9,
        "Gerda": 8.25,
        "MrsD": 4.07
-      }
+      },
+      "modelYcap20": 3.8,
+      "dennisFirstTryModel": 0.554
      },
      {
       "window": "90-99",
@@ -304,7 +306,9 @@
        "Dennis": 1.7,
        "Gerda": 6.64,
        "MrsD": 3.39
-      }
+      },
+      "modelYcap20": 3.25,
+      "dennisFirstTryModel": 0.612
      },
      {
       "window": "100-109",
@@ -314,7 +318,9 @@
        "Dennis": 1.56,
        "Gerda": 5.5,
        "MrsD": 2.91
-      }
+      },
+      "modelYcap20": 2.83,
+      "dennisFirstTryModel": 0.661
      },
      {
       "window": "110-119",
@@ -324,7 +330,9 @@
        "Dennis": 1.73,
        "Gerda": 6.92,
        "MrsD": 3.51
-      }
+      },
+      "modelYcap20": 3.35,
+      "dennisFirstTryModel": 0.601
      },
      {
       "window": "120-129",
@@ -334,7 +342,9 @@
        "Dennis": 1.93,
        "Gerda": 8.48,
        "MrsD": 4.16
-      }
+      },
+      "modelYcap20": 3.88,
+      "dennisFirstTryModel": 0.547
      },
      {
       "window": "130-139",
@@ -344,7 +354,9 @@
        "Dennis": 1.79,
        "Gerda": 7.4,
        "MrsD": 3.71
-      }
+      },
+      "modelYcap20": 3.51,
+      "dennisFirstTryModel": 0.583
      },
      {
       "window": "140-149",
@@ -354,7 +366,9 @@
        "Dennis": 1.75,
        "Gerda": 7.03,
        "MrsD": 3.55
-      }
+      },
+      "modelYcap20": 3.38,
+      "dennisFirstTryModel": 0.597
      },
      {
       "window": "150-159",
@@ -364,7 +378,9 @@
        "Dennis": 1.9,
        "Gerda": 8.24,
        "MrsD": 4.06
-      }
+      },
+      "modelYcap20": 3.8,
+      "dennisFirstTryModel": 0.555
      },
      {
       "window": "160-169",
@@ -374,7 +390,9 @@
        "Dennis": 1.63,
        "Gerda": 6.05,
        "MrsD": 3.14
-      }
+      },
+      "modelYcap20": 3.03,
+      "dennisFirstTryModel": 0.636
      },
      {
       "window": "170-179",
@@ -384,7 +402,9 @@
        "Dennis": 1.72,
        "Gerda": 6.81,
        "MrsD": 3.46
-      }
+      },
+      "modelYcap20": 3.31,
+      "dennisFirstTryModel": 0.605
      },
      {
       "window": "180-189",
@@ -394,7 +414,9 @@
        "Dennis": 1.61,
        "Gerda": 5.9,
        "MrsD": 3.07
-      }
+      },
+      "modelYcap20": 2.98,
+      "dennisFirstTryModel": 0.643
      },
      {
       "window": "190-199",
@@ -404,7 +426,9 @@
        "Dennis": 1.78,
        "Gerda": 7.29,
        "MrsD": 3.66
-      }
+      },
+      "modelYcap20": 3.48,
+      "dennisFirstTryModel": 0.587
      }
     ],
     "steps": [
@@ -649,6 +673,94 @@
     ]
    },
    "power": {
+    "summary": {
+     "detection": [
+      {
+       "delta": 0.2,
+       "pooledAll": 0.015,
+       "pooledThreePlayers": 0.02,
+       "bestBoundary": 0.04,
+       "pooledNoLopo": 0.015,
+       "meanEstOverDelta": 0.62
+      },
+      {
+       "delta": 0.35,
+       "pooledAll": 0.028,
+       "pooledThreePlayers": 0.033,
+       "bestBoundary": 0.09,
+       "pooledNoLopo": 0.028,
+       "meanEstOverDelta": 0.58
+      },
+      {
+       "delta": 0.5,
+       "pooledAll": 0.08,
+       "pooledThreePlayers": 0.103,
+       "bestBoundary": 0.15,
+       "pooledNoLopo": 0.081,
+       "meanEstOverDelta": 0.6
+      },
+      {
+       "delta": 0.75,
+       "pooledAll": 0.269,
+       "pooledThreePlayers": 0.343,
+       "bestBoundary": 0.39,
+       "pooledNoLopo": 0.269,
+       "meanEstOverDelta": 0.61
+      }
+     ],
+     "falseAlarm": {
+      "pooled": 0.004,
+      "worstWindow": 0.015,
+      "pooledNoLopo": 0.004
+     },
+     "kill": {
+      "detect": 0.033,
+      "needAtLeast": 0.7,
+      "falseAlarmWorst": 0.015,
+      "needAtMost": 0.1,
+      "killed": true
+     }
+    },
+    "summaryFlatTau5": {
+     "detection": [
+      {
+       "delta": 0.35,
+       "pooledAll": 0.105,
+       "pooledThreePlayers": 0.129,
+       "bestBoundary": 0.22,
+       "pooledNoLopo": 0.105,
+       "meanEstOverDelta": 0.9
+      },
+      {
+       "delta": 0.5,
+       "pooledAll": 0.182,
+       "pooledThreePlayers": 0.2,
+       "bestBoundary": 0.26,
+       "pooledNoLopo": 0.184,
+       "meanEstOverDelta": 0.9
+      },
+      {
+       "delta": 0.75,
+       "pooledAll": 0.347,
+       "pooledThreePlayers": 0.409,
+       "bestBoundary": 0.5,
+       "pooledNoLopo": 0.347,
+       "meanEstOverDelta": 0.93
+      }
+     ],
+     "falseAlarm": {
+      "pooled": 0.034,
+      "worstWindow": 0.06,
+      "pooledNoLopo": 0.034
+     },
+     "kill": {
+      "detect": 0.129,
+      "needAtLeast": 0.7,
+      "falseAlarmWorst": 0.06,
+      "needAtMost": 0.1,
+      "killed": true
+     }
+    },
     "falseAlarm": [
      {
       "between": "85-89 | 90-99",
@@ -1413,6 +1525,167 @@
       "rateNoLopo": 0.04,
       "meanEst": 0.224,
       "meanSE": 0.36
+     },
+     {
+      "delta": 0.75,
+      "between": "85-89 | 90-99",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.12,
+      "rateFloor": 0.12,
+      "rateNoLopo": 0.12,
+      "meanEst": 0.358,
+      "meanSE": 0.348
+     },
+     {
+      "delta": 0.75,
+      "between": "90-99 | 100-109",
+      "players": [
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.16,
+      "rateFloor": 0.16,
+      "rateNoLopo": 0.16,
+      "meanEst": 0.431,
+      "meanSE": 0.307
+     },
+     {
+      "delta": 0.75,
+      "between": "100-109 | 110-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.29,
+      "rateFloor": 0.29,
+      "rateNoLopo": 0.29,
+      "meanEst": 0.515,
+      "meanSE": 0.294
+     },
+     {
+      "delta": 0.75,
+      "between": "110-119 | 120-129",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.39,
+      "rateFloor": 0.39,
+      "rateNoLopo": 0.39,
+      "meanEst": 0.475,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.75,
+      "between": "120-129 | 130-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.31,
+      "rateFloor": 0.31,
+      "rateNoLopo": 0.31,
+      "meanEst": 0.479,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.75,
+      "between": "130-139 | 140-149",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.36,
+      "rateFloor": 0.36,
+      "rateNoLopo": 0.36,
+      "meanEst": 0.5,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.75,
+      "between": "140-149 | 150-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.39,
+      "rateFloor": 0.39,
+      "rateNoLopo": 0.39,
+      "meanEst": 0.502,
+      "meanSE": 0.286
+     },
+     {
+      "delta": 0.75,
+      "between": "150-159 | 160-169",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.32,
+      "rateFloor": 0.32,
+      "rateNoLopo": 0.32,
+      "meanEst": 0.481,
+      "meanSE": 0.285
+     },
+     {
+      "delta": 0.75,
+      "between": "160-169 | 170-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.34,
+      "rateFloor": 0.34,
+      "rateNoLopo": 0.34,
+      "meanEst": 0.491,
+      "meanSE": 0.291
+     },
+     {
+      "delta": 0.75,
+      "between": "170-179 | 180-189",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.23,
+      "rateFloor": 0.23,
+      "rateNoLopo": 0.23,
+      "meanEst": 0.467,
+      "meanSE": 0.311
+     },
+     {
+      "delta": 0.75,
+      "between": "180-189 | 190-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.05,
+      "rateFloor": 0.05,
+      "rateNoLopo": 0.05,
+      "meanEst": 0.345,
+      "meanSE": 0.356
      }
     ]
    }
@@ -1651,7 +1924,9 @@
        "Dennis": 1.81,
        "Gerda": 7.31,
        "MrsD": 3.66
-      }
+      },
+      "modelYcap20": 3.49,
+      "dennisFirstTryModel": 0.578
      },
      {
       "window": "100-119",
@@ -1661,7 +1936,9 @@
        "Dennis": 1.67,
        "Gerda": 6.22,
        "MrsD": 3.2
-      }
+      },
+      "modelYcap20": 3.1,
+      "dennisFirstTryModel": 0.621
      },
      {
       "window": "120-139",
@@ -1671,7 +1948,9 @@
        "Dennis": 1.89,
        "Gerda": 7.88,
        "MrsD": 3.89
-      }
+      },
+      "modelYcap20": 3.68,
+      "dennisFirstTryModel": 0.558
      },
      {
       "window": "140-159",
@@ -1681,7 +1960,9 @@
        "Dennis": 1.86,
        "Gerda": 7.71,
        "MrsD": 3.82
-      }
+      },
+      "modelYcap20": 3.63,
+      "dennisFirstTryModel": 0.564
      },
      {
       "window": "160-179",
@@ -1691,7 +1972,9 @@
        "Dennis": 1.69,
        "Gerda": 6.36,
        "MrsD": 3.26
-      }
+      },
+      "modelYcap20": 3.15,
+      "dennisFirstTryModel": 0.615
      },
      {
       "window": "180-199",
@@ -1701,7 +1984,9 @@
        "Dennis": 1.66,
        "Gerda": 6.12,
        "MrsD": 3.15
-      }
+      },
+      "modelYcap20": 3.06,
+      "dennisFirstTryModel": 0.625
      }
     ],
     "steps": [
@@ -1841,6 +2126,94 @@
     ]
    },
    "power": {
+    "summary": {
+     "detection": [
+      {
+       "delta": 0.2,
+       "pooledAll": 0.048,
+       "pooledThreePlayers": 0.05,
+       "bestBoundary": 0.06,
+       "pooledNoLopo": 0.048,
+       "meanEstOverDelta": 0.72
+      },
+      {
+       "delta": 0.35,
+       "pooledAll": 0.14,
+       "pooledThreePlayers": 0.15,
+       "bestBoundary": 0.24,
+       "pooledNoLopo": 0.14,
+       "meanEstOverDelta": 0.77
+      },
+      {
+       "delta": 0.5,
+       "pooledAll": 0.252,
+       "pooledThreePlayers": 0.28,
+       "bestBoundary": 0.34,
+       "pooledNoLopo": 0.252,
+       "meanEstOverDelta": 0.69
+      },
+      {
+       "delta": 0.75,
+       "pooledAll": 0.622,
+       "pooledThreePlayers": 0.657,
+       "bestBoundary": 0.8,
+       "pooledNoLopo": 0.622,
+       "meanEstOverDelta": 0.73
+      }
+     ],
+     "falseAlarm": {
+      "pooled": 0.017,
+      "worstWindow": 0.03,
+      "pooledNoLopo": 0.017
+     },
+     "kill": {
+      "detect": 0.15,
+      "needAtLeast": 0.7,
+      "falseAlarmWorst": 0.03,
+      "needAtMost": 0.1,
+      "killed": true
+     }
+    },
+    "summaryFlatTau5": {
+     "detection": [
+      {
+       "delta": 0.35,
+       "pooledAll": 0.188,
+       "pooledThreePlayers": 0.195,
+       "bestBoundary": 0.26,
+       "pooledNoLopo": 0.188,
+       "meanEstOverDelta": 0.95
+      },
+      {
+       "delta": 0.5,
+       "pooledAll": 0.408,
+       "pooledThreePlayers": 0.425,
+       "bestBoundary": 0.44,
+       "pooledNoLopo": 0.408,
+       "meanEstOverDelta": 1.05
+      },
+      {
+       "delta": 0.75,
+       "pooledAll": 0.672,
+       "pooledThreePlayers": 0.71,
+       "bestBoundary": 0.76,
+       "pooledNoLopo": 0.68,
+       "meanEstOverDelta": 0.98
+      }
+     ],
+     "falseAlarm": {
+      "pooled": 0.043,
+      "worstWindow": 0.06,
+      "pooledNoLopo": 0.043
+     },
+     "kill": {
+      "detect": 0.195,
+      "needAtLeast": 0.7,
+      "falseAlarmWorst": 0.06,
+      "needAtMost": 0.1,
+      "killed": true
+     }
+    },
     "falseAlarm": [
      {
       "between": "85-99 | 100-119",
@@ -2197,6 +2570,80 @@
       "rateNoLopo": 0.14,
       "meanEst": 0.298,
       "meanSE": 0.275
+     },
+     {
+      "delta": 0.75,
+      "between": "85-99 | 100-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.42,
+      "rateFloor": 0.42,
+      "rateNoLopo": 0.42,
+      "meanEst": 0.494,
+      "meanSE": 0.264
+     },
+     {
+      "delta": 0.75,
+      "between": "100-119 | 120-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.74,
+      "rateFloor": 0.74,
+      "rateNoLopo": 0.74,
+      "meanEst": 0.553,
+      "meanSE": 0.233
+     },
+     {
+      "delta": 0.75,
+      "between": "120-139 | 140-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.67,
+      "rateFloor": 0.67,
+      "rateNoLopo": 0.67,
+      "meanEst": 0.552,
+      "meanSE": 0.229
+     },
+     {
+      "delta": 0.75,
+      "between": "140-159 | 160-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.8,
+      "rateFloor": 0.8,
+      "rateNoLopo": 0.8,
+      "meanEst": 0.627,
+      "meanSE": 0.232
+     },
+     {
+      "delta": 0.75,
+      "between": "160-179 | 180-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.48,
+      "rateFloor": 0.48,
+      "rateNoLopo": 0.48,
+      "meanEst": 0.524,
+      "meanSE": 0.274
      }
     ]
    }
@@ -2384,6 +2831,7 @@
    "MrsDMeanTriesCap20": null
   }
  ],
+ "beyond199": [],
  "yardstick": {
   "85": {
    "Y": 3.6,
@@ -2917,6 +3365,31 @@
    "Gerda": 15,
    "MrsD": 11
   }
+ },
+ "verdict": {
+  "rule": "E2 kill: a +0.35 logit step over 20 levels detected < 70% of the time, or false alarms > 10% per window -> real data does not steer the slope",
+  "window20": {
+   "detect": 0.15,
+   "needAtLeast": 0.7,
+   "falseAlarmWorst": 0.03,
+   "needAtMost": 0.1,
+   "killed": true
+  },
+  "window10": {
+   "detect": 0.033,
+   "needAtLeast": 0.7,
+   "falseAlarmWorst": 0.015,
+   "needAtMost": 0.1,
+   "killed": true
+  },
+  "flatTau20": {
+   "detect": 0.195,
+   "needAtLeast": 0.7,
+   "falseAlarmWorst": 0.06,
+   "needAtMost": 0.1,
+   "killed": true
+  },
+  "killed": true
  },
  "care": {
   "rows": [
@@ -3941,5 +4414,5 @@
   "highestStarted": 140,
   "last": "2026-11-05T16:44:45.038Z"
  },
- "seconds": 77
+ "seconds": 263
 }

@@ -167,7 +167,9 @@ function yardstick(sequences, cap = Y_CAP) {
   return out;
 }
 
-/* Grandma's care track: her own live-dealt levels; tries to the first win per level on all her records. */
+/* Grandma's care track: her own live-dealt levels; tries to the first win per level on all her records. No version
+   or current-board filter: her boards are dealt live for her, so there is no fixed board to match. meanTries uses the
+   same rule as Y: a level not won yet counts as tries + 1 (notWon lists how many). */
 function careLedger(exportObj, pid = 'pmuy4wmdp17hbws') {
   const plays = Object.values(exportObj[pid] || {}).filter(isPlay).sort((a, b) => a.t - b.t);
   const byLv = new Map();
@@ -181,7 +183,7 @@ function careLedger(exportObj, pid = 'pmuy4wmdp17hbws') {
   for (const r of rows) {
     const b = Math.floor((r.lv - 1) / 10) * 10 + 1, k = `${b}-${b + 9}`;
     const x = bands[k] = bands[k] || { levels: 0, firstTry: 0, notWon: 0, tries: [] };
-    x.levels++; if (r.won && r.tries === 1) x.firstTry++; if (!r.won) x.notWon++; x.tries.push(r.tries);
+    x.levels++; if (r.won && r.tries === 1) x.firstTry++; if (!r.won) x.notWon++; x.tries.push(r.won ? r.tries : r.tries + 1);
   }
   for (const x of Object.values(bands)) {
     x.firstTryRate = +(x.firstTry / x.levels).toFixed(2);

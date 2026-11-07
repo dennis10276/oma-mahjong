@@ -49,20 +49,56 @@ function loseTry(attempt, steps, bad, avoid = []) {
   }
 }
 const campaign = attempts => ({ wonOn: attempts.at(-1).win ? attempts.at(-1).attempt : null, attempts });
-const fakeCapture = campaigns => () => ({ profile: 'family', bot: 'fake', botVersion: 'fake', ms: 0,
-  result: { valid: true, expectedTries: 2.5, results: campaigns.map(c => campaign(c.map(x => { const { errorState, ...a } = x; return a; }))) } });
+// A fake capture: one call per CURVE sub-block; hands out the given campaigns in order.
+function fakeCapture(campaigns, calls = []) {
+  let next = 0;
+  return (d, { runs, seed, botVersion }) => {
+    calls.push({ runs, seed, botVersion });
+    const part = campaigns.slice(next, next + runs); next += runs;
+    return { profile: 'family', ms: 0, result: { valid: true, expectedTries: 2.5, results: part.map(c => campaign(c.map(x => { const { errorState, ...a } = x; return a; }))) } };
+  };
+}
 
 // Two witness steps before the clock whose state has a losing single-tile option.
 const traps = E.traps(g, null, T.BUDGET).filter(f => f.losing.some(l => typeof l.move === 'number'));
 const late = traps[traps.length - 1], early = traps.find(f => f.step < late.step && f.losing.some(l => typeof l.move === 'number'));
 const trapMove = late.losing.find(l => typeof l.move === 'number').move;
 const offMove = early.losing.find(l => typeof l.move === 'number' && l.move !== trapMove).move;
-const forks = [{ step: late.step, tempting: [{ move: trapMove, kind: 'test' }] }];
+const forks = [{ step: late.step, moves: late.moves, tempting: [{ move: trapMove, kind: 'test' }] }];
 
-test('sameish matches takes, pairs and a take inside a listed pair', () => {
+test('sameish matches takes, pairs, static_gates tile lists and a take inside a listed pair', () => {
   assert.equal(T.sameish(3, 3), true); assert.equal(T.sameish(3, 4), false);
   assert.equal(T.sameish({ pair: [1, 2] }, { pair: [2, 1] }), true); assert.equal(T.sameish(2, { pair: [1, 2] }), true);
   assert.equal(T.sameish({ pair: [5, 6] }, 6), true); assert.equal(T.sameish(null, 6), false);
+  assert.equal(T.sameish(7, [3, 7]), true); assert.equal(T.sameish(7, { tiles: [7] }), true); assert.equal(T.sameish(8, [3, 7]), false);
+});
+
+test('normalizeForks keeps losing moves and priced detours, drops free moves; forks map to witness states by moves', () => {
+  const rows = [{ step: 2, moves: 2, tempting: [{ move: [4, 5], kind: 'pair', cost: 0, result: 'win' }, { move: [6, 7], kind: 'pair', cost: 1, result: 'win' }, { move: [8], kind: 'match', cost: null, result: 'lose' }] },
+    { step: 3, moves: 3, tempting: [{ move: [9], kind: 'match', cost: 0, result: 'win' }] }, { step: 1, moves: 1, tempting: [{ move: 11, kind: 'pair' }] }];
+  const f = T.normalizeForks(rows);
+  assert.equal(f.length, 2); assert.deepEqual(f[0].tempting.map(t => t.tiles), [[6, 7], [8]]); assert.deepEqual(f[1].tempting[0], { tiles: [11], kind: 'pair', cost: null, result: 'lose' });
+  const idx = T.forkIndex(g, T.normalizeForks(forks));
+  assert.equal(idx.keys.size, 1); assert.equal(idx.unmapped, 0); assert.equal(idx.tempting[0].tiles[0], trapMove);
+});
+
+test('the ruler: the fast key-memory bot, also for a slow or Codex pin (zero drift); any other pin is refused', () => {
+  const fast = '63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a';
+  assert.equal(T.ruler({ fingerprint: fast }).botVersion, T.FAST); assert.equal(T.ruler({ fingerprint: fast }).fingerprint, fast);
+  const slow = T.ruler({ fingerprint: '5372bd4e5d29acce926c537400b8a069dd0d04c3f4d2032024c9f34a1d99863d' });
+  assert.equal(slow.botVersion, T.FAST); assert.equal(slow.pinned, true); assert.match(slow.zeroDriftOf, /^5372bd4e/);
+  assert.equal(T.ruler({ fingerprint: 'd362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3' }).botVersion, T.FAST);
+  assert.throws(() => T.ruler({ fingerprint: '4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39' }), /neither/);
+  assert.equal(T.ruler({ fingerprint: fast }, 'family-key-memory-v1').pinned, false);
+});
+
+test('campaigns come from the CURVE sub-blocks in meter order (4711, 12630, 18427, 26346)', () => {
+  assert.deepEqual(T.curveSubBlocks().map(b => b.seed), [4711, 12630, 18427, 26346]);
+  assert.deepEqual(T.curveSubBlocks({ pins: { subBlockStride: 7919, blocks: { CURVE: { calls: [{ runs: 20, seeds: 2, seed: 4711 }] } } } }).map(b => [b.seed, b.runs]), [[4711, 20], [12630, 20]]);
+  const calls = [], many = Array.from({ length: 25 }, () => [winTry(1)]);
+  const r = T.traceGates(ROW, { spare: 1, forks, campaigns: 25, capture: fakeCapture(many, calls) });
+  assert.deepEqual(calls.map(c => [c.runs, c.seed]), [[20, 4711], [5, 12630]]);
+  assert.equal(r.campaigns, 25); assert.equal(r.D, 1); assert.equal(r.counts.losses, 0); assert.equal(r.B2.pass, null); assert.equal(r.B1.value, 0);
 });
 
 test('B1-B7 on a fake capture: one trap campaign, one off-trap campaign', () => {
@@ -103,24 +139,18 @@ test('an invalid spare is refused, not measured', () => {
   assert.deepEqual(T.traceGates(ROW, { spare: -1, capture: () => assert.fail('no capture') }), { spare: -1, fail: 'invalidSpare' });
 });
 
-test('counterfactuals with fake meters: C1 tolerance, C2 face-up sets down = []', () => {
-  const seen = [];
-  const meter = d => ({ fingerprint: 'fake', measure: (b, s) => { seen.push({ down: b.down.length, setting: s.setting }); return { expectedTries: d(b), valid: true }; } });
-  const r = T.counterfactuals(ROW, { spare: 1, kmMeter: meter(() => 6), refMeter: meter(() => 9), plannerMeter: meter(b => b.down.length ? 4 : 7) });
-  assert.equal(r.C1.keyMemory, 6); assert.equal(r.C1.reference, 9); assert.equal(r.C1.tolerance, 2); assert.equal(r.C1.pass, false);
-  assert.equal(r.C2.asIs, 4); assert.equal(r.C2.faceUp, 7); assert.equal(r.C2.pass, false); assert.equal(r.C2.skilledCredit, false);
-  assert.equal(r.C3.value, 1.75); assert.equal(r.C3.pass, true); assert.equal(r.plannerSpare, 2);
-  const planner = seen.filter(x => x.setting === 'planner');
-  assert.deepEqual(planner.map(x => x.down), [ROW.design.down.length, 0]);
-  const near = T.counterfactuals(ROW, { spare: 1, kmMeter: meter(() => 12), refMeter: meter(() => 14.5), skip: ['C2'] });
-  assert.equal(near.C1.tolerance, 3); assert.equal(near.C1.pass, true); assert.equal(near.C2, undefined);
-});
-
-test('real smoke run: key-memory family bot, 4 campaigns, one qualified board', () => {
+test('real smoke run: pinned fast key-memory bot, 4 campaigns, same moves as the slow bot', () => {
   const t = Date.now(), r = T.traceGates(ROW, { spare: 2, campaigns: 4 });
-  assert.equal(r.campaigns, 4); assert.equal(r.botVersion, 'family-key-memory-v1'); assert.match(r.bot, /^[0-9a-f]{64}$/);
+  assert.equal(r.campaigns, 4); assert.equal(r.ruler.botVersion, T.FAST); assert.equal(r.ruler.pinned, true);
+  assert.equal(r.ruler.fingerprint, '63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a');
   assert.equal(r.counts.engineMismatches, 0); assert.equal(r.counts.recoveries, 0);
-  for (const k of ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7']) assert.ok(k in r);
+  for (const k of ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7']) assert.ok(k in r && 'pass' in r[k] && 'value' in r[k]);
   for (const v of [r.biteShare, r.lossesAtTrapShare, r.firstErrorMedianShare, r.lateSqueezeShare, r.postClockShare]) assert.ok(v == null || (v >= 0 && v <= 1));
+  // zero drift with capture: true (G3 proved it with capture 'tail'): the slow bot plays the same campaigns tap for tap,
+  // with identical captured states, observations and memories
+  const design2 = T.atSpare(ROW, 2).design, fast = T.captureFamily(design2, { runs: 4, seed: 4711 }), slow = T.captureFamily(design2, { runs: 4, seed: 4711, botVersion: T.SLOW });
+  const full = x => JSON.stringify(x.result.results.map(c => ({ wonOn: c.wonOn, attempts: c.attempts })));
+  assert.equal(full(fast), full(slow));
+  assert.deepEqual(fast.result.results.map(c => c.wonOn), r.wonOn);
   assert.ok(Date.now() - t < 30000);
 });
