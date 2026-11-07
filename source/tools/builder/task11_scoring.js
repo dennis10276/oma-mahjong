@@ -9,7 +9,7 @@ async function run(root, kind = 'traces', workers = 8, limit = 0) {
   P.save(root, 'scoring-protocol.json', protocol);
   let boards = p.boards;
   if (kind === 'structure') { const d = S.collect(path.join(root, 'ladder-readable')), seen = new Set(); if (fs.existsSync(path.join(root, 'ladder-fallback/plan.json'))) d.boards.push(...S.collect(path.join(root, 'ladder-fallback')).boards); boards = d.boards.filter(b => { const key = b.design && !b.fail && M.boardKey(b.design); if (!key || seen.has(key)) return false; seen.add(key); return true; }); }
-  if (limit) boards = boards.slice(0, limit);
+  if (limit && limit < boards.length) boards = Array.from({ length: limit }, (_, i) => boards[Math.floor(i * (boards.length - 1) / Math.max(1, limit - 1))]);
   const tasks = boards.map(board => ({ board, root, kind: kind === 'structure' ? 'structure' : 'traces', bot: p.bot, budget: p.classification, task: M.boardKey(board.design) }));
   let saved = 0;
   const queue = tasks.filter(t => { const f = path.join(root, kind === 'structure' ? 'structures' : 'profiles', t.task + '.json'); if (fs.existsSync(f)) { const r = P.read(f); if (r.scoring !== M.digest(protocol)) throw Error('Old scoring checkpoint'); if (r.detailFile && fs.existsSync(path.join(root, r.detailFile))) { saved++; return false; } } return true; });
