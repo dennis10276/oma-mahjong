@@ -62,3 +62,30 @@ For the 260 rated boards with keys:
 - **Spare stays the fine control.**
 - **Still open:** what spreads the "both keys showing" boards from 3 to 20 (iceLockClock, lockBeside), and whether
   the 20s are the bot or real. That is Codex Task 11.
+
+## 5. The causal check: change only how many keys show (2026-11-07)
+Builder v3 `targets.keysShown` on 6 story/layout pairs, at seed 1 with spare 1 and a readable way. Ratings are
+10 campaigns at seed 4711 (`keys-ladder-v1.jsonl`, `research/ladder.js`).
+
+| pair | 2 keys show | 1 key shows | 0 keys show |
+|---|---|---|---|
+| keysFarSide, layout 7 | 2.0 | 3.7 | **20** |
+| keysFarSide, layout 20 | **20** | 2.0 | 16.4 |
+| lockBeside, layout 7 | 5.2 | 1.7 | 7.2 |
+| lockBeside, layout 20 | 3.5 | 11.1 | 9.2 |
+| iceLockClock, layout 7 | 20 | 20 | 20 |
+| iceLockClock, layout 20 | 1.9 | 9.1 | 20 |
+
+**Hidden keys** push the rating up in 5 of 6 pairs. But the change is not one step: each request builds a new
+puzzle (other keys, another way).
+
+**Two boards are brutal with both keys in sight:** keysFarSide on layout 20, and iceLockClock on layout 7.
+- On keysFarSide L20, only 1 of 16 legal moves at the start still wins. The tray is forced to 3 and the order is
+  unique: the right first tile is an unremarkable one, not the visible key.
+- So the second cause of the jump is a unique order under forced pressure, where the right move does not look
+  right.
+
+**Narrowness along the whole way** (winning share per step) does not explain the 297 boards on its own: rank
+correlation −0.32 for the narrowest step.
+
+That is Task 11's question: what does the bot get wrong.

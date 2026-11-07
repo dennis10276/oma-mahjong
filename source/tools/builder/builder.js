@@ -790,7 +790,8 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
       detail: 'measured ' + down.filter(i => P.includes(i)).length }] : []),
     // Dennis's readability rule, as the factory checks it (placement_score.readable): the goal of each phase in
     // sight, at most one face-down tile on the way, no face-down clock, key or lock. Task 10's pilot failed it.
-    { name: 'readable objective (clock, keys, locks and the way in sight)', proven: readableOf(design) },
+    // required unless the brief explicitly asks for blind digging (hiddenOnWay 2+, a lab experiment): then reported
+    ...((brief.targets?.hiddenOnWay ?? 0) >= 2 ? [] : [{ name: 'readable objective (clock, keys, locks and the way in sight)', proven: readableOf(design) }]),
     { name: 'face-down share within maximum', proven: down.length <= Math.round((brief.targets?.maxDown ?? 0.3) * n), detail: down.length + ' of ' + n },
     ...(brief.targets?.traps != null ? [{ name: 'at least ' + brief.targets.traps + ' proven decision traps', proven: trapsProven >= brief.targets.traps, detail: 'proven ' + trapsProven + ' of ' + plan.traps.length + ' designed' }] : []),
     // a designed trap that the engine cannot prove lost is not claimed (card.traps.designed vs .tempting)
@@ -803,7 +804,7 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
     story: story.title, sentence: story.sentence, shape: brief.shape || null, tiles: c.n, stage: brief.stage || null,
     clock: { tile: roles.clock, depth: c.above[roles.clock].size, fewestMoves: way.k, strictMoves: null, spare, n: clock.n, locked: roles.locks.has(roles.clock), ice: roles.ice[roles.clock] || 0, at: clockAt + 1 },
     keys: roles.locks.size ? roles.keys.map(k => ({ tile: k, cover: c.above[k].size, ice: roles.ice[k] || 0, otherPeak: c.peak[k] >= 0 && c.peak[k] !== c.peak[roles.clock] })) : [],
-    keysShown, keysRevealAt,
+    keysShown, keysRevealAt, readable: readableOf(design),
     locks: roles.locks.size, iceTiles: Object.keys(roles.ice).length, dig: P.length, necessary: N.size, trayCap: cap,
     tray: { ...tray, forced: forced === 'no' ? cap : null, forcedProof: forced }, orphans: plan.dig.orphans, faceDown: down.length, faceDownOnDig: down.filter(i => P.includes(i)).length,
     traps: { points: trapsProven ? 1 : 0, tempting: trapsProven, designed: plan.traps.length, pairs: plan.traps }, witness,
