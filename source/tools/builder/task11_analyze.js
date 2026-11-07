@@ -52,7 +52,8 @@ function analyzer(board, budget) {
           if (firstError && cls.stateResult === 'win') recovery = true;
           if (!firstError && compatible && ev.kind !== 'peek' && chosenResult === 'lose' && cls.stateResult === 'win') {
             firstError = { ...row, repeatedErrorState: priorErrorStates.has(cls.id), repeatedSameLosingMove: priorErrorMoves.has(cls.id + ':' + JSON.stringify(ev.move)),
-              actualDelayToTerminal: a.terminal.state.moves - s.moves, terminalWhy: a.why,
+              preErrorToTerminalRemovals: a.terminal.state.moves - s.moves, errorRemovals: ev.removed.length,
+              actualDelayToTerminal: a.terminal.state.moves - s.moves - ev.removed.length, terminalWhy: a.why,
               rememberedChoice: d.remembered[d.index], observedChoice: d.observed.pictures[d.index],
               prefixTaps: a.actions.slice(0, k + 1), remainingTaps: a.actions.slice(k + 1),
               before: d.state, known: d.remembered, observed: d.observed };

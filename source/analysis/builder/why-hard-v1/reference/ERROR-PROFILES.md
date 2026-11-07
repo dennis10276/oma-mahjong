@@ -10,12 +10,12 @@
 
 | Band / player | sampled losses / attempts | proved first errors | median error removal move | delay to terminal | empirical losing commitment at a live fork | known-picture error share | repeated known errors | engine mismatches / recoveries |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| easy / family | 129/177 | 129 | 9 | 6 | 0.055 | 1 | 7 | 0/0 |
-| easy / planner | 69/115 | 69 | 13.5 | 5 | 0.053 | 1 | 38 | 0/0 |
-| middle / family | 235/256 | 226 | 8 | 6 | 0.078 | 1 | 56 | 0/0 |
-| middle / planner | 75/98 | 75 | 14 | 4 | 0.048 | 1 | 25 | 0/0 |
-| hard / family | 950/951 | 928 | 5.5 | 11 | 0.231 | 1 | 634 | 0/0 |
-| hard / planner | 226/267 | 226 | 8 | 8 | 0.103 | 1 | 143 | 0/0 |
+| easy / family | 129/177 | 129 | 9 | 5 | 0.055 | 1 | 7 | 0/0 |
+| easy / planner | 69/115 | 69 | 13.5 | 4 | 0.053 | 1 | 38 | 0/0 |
+| middle / family | 235/256 | 226 | 8 | 5 | 0.078 | 1 | 56 | 0/0 |
+| middle / planner | 75/98 | 75 | 14 | 3 | 0.048 | 1 | 25 | 0/0 |
+| hard / family | 950/951 | 928 | 5.5 | 10 | 0.231 | 1 | 634 | 0/0 |
+| hard / planner | 226/267 | 226 | 8 | 7 | 0.103 | 1 | 143 | 0/0 |
 
 Brutal boards with both actual key glyphs visible: 5; fully classified openings: 3; exactly one winning opening: 0. Per-board action counts and uniquely safe states on the route are in profile-summary.json. Unknown openings never count as a proved unique order.
 

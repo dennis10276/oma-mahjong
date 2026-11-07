@@ -12,6 +12,22 @@ test('paired reports compare planner bots separately from approved human skilled
   assert.deepEqual(skilledReference(board, { group: 'kept20', reference: { skilled: 5 } }), { referencePlannerBot: 5.15, approvedHumanSkilled: 5 });
   assert.deepEqual(skilledReference(board, { group: 'v3-ladder', reference: { skilled: 5.15 } }), { referencePlannerBot: 5.15, approvedHumanSkilled: null });
 });
+test('loss delay excludes the mistaken removal, including automatic two-tile pairs', () => {
+  const A = require('./task11_analyze.js');
+  const cases = [
+    { d: { tiles: [[0, 0, 0], [0, 0, 1], [8, 0, 0], [12, 0, 0]], faces: [0, 1, 0, 1], down: [], clock: { i: 0, n: 2 }, solution: [1, 0, 2, 3] },
+      actions: [2, 1], states: [{ alive: [1, 1, 1, 1], tray: [], moves: 0 }, { alive: [1, 1, 0, 1], tray: [0], moves: 1 }, { alive: [1, 0, 0, 1], tray: [0, 1], moves: 2 }], delay: 1, count: 1 },
+    { d: { tiles: Array.from({ length: 6 }, (_, i) => [i * 4, 0, 0]), faces: [0, 1, 1, 0, 2, 2], down: [2], clock: { i: 0, n: 1 }, solution: [0, 3, 1, 2, 4, 5] },
+      actions: [2, 1], states: [{ alive: [1, 1, 1, 1, 1, 1], tray: [], moves: 0 }, { alive: [1, 1, 1, 1, 1, 1], tray: [], moves: 0 }, { alive: [1, 0, 0, 1, 1, 1], tray: [], moves: 2 }], delay: 0, count: 2 }
+  ];
+  for (const x of cases) {
+    x.d.obst = { ice: {}, keys: [], locks: [] };
+    const decisions = x.actions.map((index, k) => ({ index, state: x.states[k], remembered: x.d.faces, observed: { pictures: x.d.faces, roles: x.d.faces.map(() => null) } }));
+    const raw = { profile: 'family', result: { valid: true, results: [{ wonOn: 20, attempts: [{ attempt: 1, actions: x.actions, decisions, terminal: { state: x.states[2] }, win: false, why: 'clock', censored: false }] }] } };
+    const r = A.analyzer({ design: x.d }, { nodes: 30000, ms: 60, cap: 12, depthNodes: 1500 }).trace(raw), e = r.profile.attemptProfiles[0].firstError;
+    assert.equal(r.profile.engineMismatches, 0); assert.equal(e.errorRemovals, x.count); assert.equal(e.actualDelayToTerminal, x.delay); assert.equal(e.preErrorToTerminalRemovals, 2);
+  }
+});
 test('the diagnostic sample never includes frozen keys and does not invent middle-band coverage', () => {
   const boards = Array.from({ length: 100 }, (_, i) => ({ id: String(i), family: { exp: i < 40 ? 4 : i < 45 ? 10 : 20 }, skilled: { exp: 2 },
     brief: { story: 's' + i % 3 }, design: { tiles: [[i, 0, 0]], clock: { i: 0 }, obst: { keys: [0], ice: i === 42 ? { 0: 1 } : {} } } }));

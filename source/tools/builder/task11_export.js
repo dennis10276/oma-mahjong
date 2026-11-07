@@ -51,7 +51,7 @@ function run() {
   }
   for (const [name, dir] of dirs) {
     copyTree(dir, path.join(EXTERNAL, name));
-    copyTree(dir, path.join(OUT, name), (rel, isDir) => !rel.startsWith('labels-v1-backup') && (!rel.startsWith('playable-examples/') || isDir || /\.(png|md)$/.test(rel)));
+    copyTree(dir, path.join(OUT, name), (rel, isDir) => !/^(labels|delay)-v1-backup/.test(rel) && (!rel.startsWith('playable-examples/') || isDir || /\.(png|md)$/.test(rel)));
   }
   const studies = [path.join(SOURCE, 'build/why-hard-v3/ladder-readable')];
   if (fitSummary.accepted) studies.push(path.join(SOURCE, 'build/why-hard-key-memory'));

@@ -8,7 +8,7 @@ Tile numbers in this guide are one-based; stored action arrays remain zero-based
 
 Board keysFarSide-w14-t5-l0-x0-s1; family 19.174999999999997, skilled 2.13; 13 minimum clock moves with spare1. Keys visible at start: 0.
 
-Campaign1, try1: the first proved irreversible error is removal move2, physical tap2, tile62 at [9,4,1], picture20. Kind: free pair taken early. The observed tray loss arrives 11 removal moves later.
+Campaign 1, try 1: the first proved irreversible error is removal move 2, physical tap 2, tile 62 at [9,4,1], picture 20. Kind: free pair taken early. The observed tray loss arrives 10 further tile removals after the mistaken action.
 
 Before that tap: 4 winning / 15 losing / 0 unresolved actions out of19. Known-picture winning alternatives: 55, 69, 70, 73.
 
@@ -20,7 +20,7 @@ Physical tap sequence through the error (tile numbers): 72, 62.
 
 Board iceLockClock-L40; family 20, skilled 3.2; 17 minimum clock moves with spare1. Keys visible at start: 2.
 
-Campaign1, try1: the first proved irreversible error is removal move8, physical tap8, tile69 at [6,4,4], picture2. Kind: off stored clock route. The observed clock loss arrives 11 removal moves later.
+Campaign 1, try 1: the first proved irreversible error is removal move 8, physical tap 8, tile 69 at [6,4,4], picture 2. Kind: off stored clock route. The observed clock loss arrives 10 further tile removals after the mistaken action.
 
 Before that tap: 5 winning / 6 losing / 0 unresolved actions out of11. Known-picture winning alternatives: 42, 58, 61, 62, 64.
 
@@ -32,7 +32,7 @@ Physical tap sequence through the error (tile numbers): 72, 68, 70, 71, 66, 67, 
 
 Board deepClock-w14-t5-l2-x0-s1; family 20, skilled 2.25; 15 minimum clock moves with spare1. Keys visible at start: no keys.
 
-Campaign1, try1: the first proved irreversible error is removal move1, physical tap1, tile73 at [6,6,3], picture7. Kind: free pair taken early. The observed tray loss arrives 14 removal moves later.
+Campaign 1, try 1: the first proved irreversible error is removal move 1, physical tap 1, tile 73 at [6,6,3], picture 7. Kind: free pair taken early. The observed tray loss arrives 13 further tile removals after the mistaken action.
 
 Before that tap: 1 winning / 11 losing / 0 unresolved actions out of12. Known-picture winning alternatives: 80.
 
