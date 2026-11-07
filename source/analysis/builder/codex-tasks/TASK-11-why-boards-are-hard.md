@@ -47,12 +47,15 @@ removed it wanders with singles. It does not know where the keys are.
 - **Measure it.** On 10 hidden-key boards, measure how often the bot's next try digs straight to a key it already
   saw.
 - **Report plainly:** is the 20 real difficulty (a person would also keep failing), or a memory blind spot?
-- **If it is a blind spot, fix the bot (Dennis, 2026-11-07: "let Codex fix the bot as well if needed").** Do the
-  same for any other clear blind spot you find in part 1, such as frozen keys not being seen as keys.
+- **Fix what you find (Dennis, 2026-11-07: "It may fix anything really. If it finds another blind spot let it fix
+  that as well").** That covers the bots, the builder, the engine, the describe and gate tools and the factory
+  pipeline: any blind spot or bug you find in this task, not only the key memory. Each fix gets a test, a line in
+  your running note and a line in the hand-back. For the bots, the rules below apply.
   - Fix the decision logic only (controller and memory: `human_factory_controller.js`,
     `public_key_identity_memory.js` and their neighbours). Gemini is speeding up the environment
-    (`human_style_environment.js`, `human_board_visibility.js`, `production_physical_session.js`) in Task G2;
-    leave those files to Gemini, to avoid clashes.
+    (`human_style_environment.js`, `human_board_visibility.js`, `production_physical_session.js`) in Task G2.
+    While G2 part A is open, avoid editing those three files: if a fix needs them, put the change in your note
+    and Claude will coordinate it.
   - Make it a new bot version, never a silent change: a new profile/setting name, a fingerprint change in
     `meter.js`, and no cache migration (ratings really change).
   - The new bot must still match real people at least as well as today. These were the fits used to release the
