@@ -46,8 +46,26 @@ removed it wanders with singles. It does not know where the keys are.
   (keyTiles/needLeft).
 - **Measure it.** On 10 hidden-key boards, measure how often the bot's next try digs straight to a key it already
   saw.
-- **Report plainly:** is the 20 real difficulty (a person would also keep failing), or a memory blind spot? Do not
-  change the bots. If it is a blind spot, describe the fix and the boards it would change.
+- **Report plainly:** is the 20 real difficulty (a person would also keep failing), or a memory blind spot?
+- **If it is a blind spot, fix the bot (Dennis, 2026-11-07: "let Codex fix the bot as well if needed").** Do the
+  same for any other clear blind spot you find in part 1, such as frozen keys not being seen as keys.
+  - Fix the decision logic only (controller and memory: `human_factory_controller.js`,
+    `public_key_identity_memory.js` and their neighbours). Gemini is speeding up the environment
+    (`human_style_environment.js`, `human_board_visibility.js`, `production_physical_session.js`) in Task G2;
+    leave those files to Gemini, to avoid clashes.
+  - Make it a new bot version, never a silent change: a new profile/setting name, a fingerprint change in
+    `meter.js`, and no cache migration (ratings really change).
+  - The new bot must still match real people at least as well as today. These were the fits used to release the
+    bots:
+    - Dennis's own lab wins on his 24 lab boards (off by 2.05 with the current planner);
+    - Dennis's first tries on 200 (5) and 225 (4);
+    - the live levels 85–174 against the family's real plays (off by about 1.05–1.10).
+
+    Give both numbers, old and new. If the fit gets worse, stop and report instead of shipping.
+  - Re-rate with the new bot: the 20 kept levels for 200–225 (show how many still sit within ±1 of the curve),
+    the Task 10 boards with hidden keys, and your part 2 ladder.
+  - Put it on your branch with tests. Claude reviews and merges it. The bots are offline tools, so nothing in
+    the game changes.
 - **Use it in part 1:** add "keys showing at the start" and "moves until both keys show" to every error profile.
 - **The second cause:** builder v3 now has `targets.keysShown`. Claude's causal check (`why-hard-claude.md`
   section 5) shows that hidden keys raise the rating on 5 of 6 pairs. Some boards are brutal with both keys
