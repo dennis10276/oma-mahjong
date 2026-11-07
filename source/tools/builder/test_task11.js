@@ -39,3 +39,10 @@ test('captured production taps map back to engine states without turning peeks i
   assert.equal(r.profile.engineMismatches, 0); assert.equal(r.profile.recoveries, 0);
   assert.ok(r.moves.some(m => m.event === 'peek')); assert.ok(r.moves.filter(m => m.event === 'peek').every(m => m.result === 'win'));
 });
+
+test('descriptive rank correlations handle capped-rating ties and constant features', () => {
+  const { spearman } = require('./task11_report.js');
+  assert.equal(spearman([1, 2, 2, 3], [10, 20, 20, 30]), 1);
+  assert.equal(spearman([1, 2, 3], [3, 2, 1]), -1);
+  assert.equal(spearman([20, 20, 20], [1, 2, 3]), null);
+});
