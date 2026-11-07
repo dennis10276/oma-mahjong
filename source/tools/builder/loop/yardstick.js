@@ -14,8 +14,10 @@
 // D is the meter's expectedTries (a campaign not won in 20 tries counts as 20), pooled over the
 // block's meter calls with equal weights, exactly as production pooled 4711 and 18427
 // (batch_evaluate.js: {setting:'family', runs:20, seeds:2, seed}). The meter returns per-campaign
-// results only for the first sub-block of each call, so the SE is the sample SD of the visible
-// campaigns divided by sqrt(all campaigns in the block).
+// results only for the first sub-block of each call unless allResults is on (resultsBySeed). The SE
+// is the sample SD of the VISIBLE campaigns over sqrt(visible count): 40 of 80 without allResults,
+// all 80 with it. NOTE: allResults changes the meter cache key, so it does NOT reuse production
+// (d362e85f / 63be677e) cached ratings; pass allResults:false to reuse them at the 40-campaign SE.
 const fs = require('fs'), path = require('path');
 const M = require('../../factory/meter.js');
 const K = require('../knobs.js');
@@ -63,7 +65,7 @@ function splitCall(call, chunk) {
   return Array.from({ length: call.runs / chunk }, (_, j) => ({ ...call, runs: chunk, seed: (call.seed + Math.imul(j * chunk, PHI)) | 0 }));
 }
 
-const triesOf = r => r.wonOn ?? r.attempts.length;
+const triesOf = r => r.wonOn ?? r.tries ?? r.attempts.length;
 const mean = a => a.reduce((s, x) => s + x, 0) / a.length;
 function sampleSd(a) {
   if (a.length < 2) return 0;
@@ -76,7 +78,10 @@ function sampleSd(a) {
 function summarize(measurements, calls, cap = 20) {
   const n = calls.reduce((s, c) => s + c.runs * c.seeds, 0);
   const perCampaign = [], visible = [];
-  for (const m of measurements) for (const r of m.results || []) { perCampaign.push(r.wonOn == null ? cap : Math.min(cap, r.wonOn)); visible.push(r); }
+  // With allResults the meter returns resultsBySeed (every campaign of every sub-block); else only m.results (first sub-block).
+  for (const m of measurements) for (const r of (m.resultsBySeed ? m.resultsBySeed.flat() : m.results || [])) {
+    perCampaign.push(r.wonOn == null ? cap : Math.min(cap, r.wonOn)); visible.push({ wonOn: r.wonOn, attempts: r.attempts, tries: r.tries });
+  }
   // Equal weights per call (all calls of one block have the same size).
   const D = Math.min(cap, mean(measurements.map(m => m.expectedTries)));
   const wins = visible.filter(r => r.wonOn != null).length, attempts = visible.reduce((s, r) => s + triesOf(r), 0);
@@ -87,7 +92,7 @@ function summarize(measurements, calls, cap = 20) {
   })) : null;
   return {
     D, pHat: attempts ? wins / attempts : null,
-    se: sampleSd(perCampaign) / Math.sqrt(n), seGeometric: Math.sqrt(Math.max(0, D * (D - 1)) / n),
+    se: sampleSd(perCampaign) / Math.sqrt(perCampaign.length || 1), seGeometric: Math.sqrt(Math.max(0, D * (D - 1)) / n),
     n, nVisible: perCampaign.length, perCampaign,
     uncleared: visible.filter(r => r.wonOn == null).length,
     valid: measurements.every(m => m.valid === true),
@@ -132,19 +137,21 @@ function createYardstick(opts = {}) {
     const fp = opts.fingerprints || {};
     meters = {
       family: { measure: (b, s) => opts.measure(b, s, 'family'), fingerprint: fp.family ?? pins.family.fingerprint },
-      reference: { measure: (b, s) => opts.measure(b, s, 'reference'), fingerprint: fp.reference ?? pins.reference.fingerprint }
+      reference: { measure: (b, s) => opts.measure(b, s, 'reference'), fingerprint: fp.reference ?? pins.reference.fingerprint },
+      planner: { measure: (b, s) => opts.measure(b, s, 'planner'), fingerprint: fp.planner ?? pins.planner.fingerprint }
     };
   } else {
     const meterOpts = { cacheDir: cacheDir || false };
     meters = opts.meters || {
       family: M.createMeter({ ...meterOpts, botVersion: pins.family.botVersion }),
-      reference: M.createMeter({ ...meterOpts, ...(pins.reference.fast === false ? { fast: false } : {}) })
+      reference: M.createMeter({ ...meterOpts, ...(pins.reference.fast === false ? { fast: false } : {}) }),
+      planner: M.createMeter({ ...meterOpts, botVersion: pins.planner.botVersion })
     };
   }
   const mismatch = [];
   if (meters.family.fingerprint !== pins.family.fingerprint) mismatch.push(`family ${meters.family.fingerprint} != pin ${pins.family.fingerprint}`);
   if (meters.reference.fingerprint !== pins.reference.fingerprint) mismatch.push(`reference ${meters.reference.fingerprint} != pin ${pins.reference.fingerprint}`);
-  if (meters.reference.fingerprint !== pins.planner.fingerprint) mismatch.push(`planner ${meters.reference.fingerprint} != pin ${pins.planner.fingerprint}`);
+  if (meters.planner.fingerprint !== pins.planner.fingerprint) mismatch.push(`planner ${meters.planner.fingerprint} != pin ${pins.planner.fingerprint}`);
   if (mismatch.length && !opts.allowNewFingerprint)
     throw Error('Yardstick refuses a changed bot (pass allowNewFingerprint to measure anyway; numbers will not be comparable): ' + mismatch.join('; '));
   // ledgerFile: path, or false for an in-memory ledger (tests). Injected meters default to in-memory.
@@ -168,7 +175,7 @@ function createYardstick(opts = {}) {
 
   // One meter call. Production rated some calls with capture:'tail' (part of the cache key, not of
   // the rating); such a cached variant is used instead of measuring again.
-  function call(bot, design, settings, alternatives = []) {
+  function call(bot, design, settings, alternatives = [], allResults = false) {
     stats.calls++;
     if (cacheDir && !opts.measure) {
       for (const a of alternatives) {
@@ -176,19 +183,19 @@ function createYardstick(opts = {}) {
         if (!onDisk(bot, design, settings) && onDisk(bot, design, variant)) { stats.cachedVariant++; return meters[bot].measure(design, variant); }
       }
     }
-    return meters[bot].measure(design, settings);
+    return meters[bot].measure(design, allResults ? { ...settings, allResults: true } : settings);
   }
 
-  function rateCalls(design, calls, { bot = 'family', block = 'custom', alternatives = [] } = {}) {
+  function rateCalls(design, calls, { bot = 'family', block = 'custom', alternatives = [], allResults = false } = {}) {
     if (!['family', 'reference'].includes(bot)) throw Error('Unknown bot ' + bot);
-    const measurements = calls.map(c => call(bot, design, { setting: 'family', ...c }, alternatives));
+    const measurements = calls.map(c => call(bot, design, { setting: 'family', ...c }, allResults ? [] : alternatives, allResults));
     return { block, bot, ...summarize(measurements, calls, pins.cap), measurements,
       fingerprint: meters[bot].fingerprint, ...(mismatch.length ? { fingerprintMismatch: mismatch } : {}) };
   }
 
-  function rate(design, { block = 'CURVE', campaigns, startBlock = 0, bot = 'family', runs } = {}) {
+  function rate(design, { block = 'CURVE', campaigns, startBlock = 0, bot = 'family', runs, allResults = false } = {}) {
     const calls = blockCalls(pins, block, { campaigns, startBlock, runs });
-    const r = rateCalls(design, calls, { bot, block, alternatives: pins.blocks[block].cacheAlternatives || [] });
+    const r = rateCalls(design, calls, { bot, block, allResults, alternatives: pins.blocks[block].cacheAlternatives || [] });
     delete r.measurements;
     return { ...r, startBlock: block === 'ACCEPT' ? startBlock : undefined };
   }
@@ -207,9 +214,9 @@ function createYardstick(opts = {}) {
       if (t.fail) return { S: null, valid: false, fail: t.fail, spare };
       d = t.design;
     }
-    const m = call('reference', d, { ...pins.planner.settings });
+    const m = call('planner', d, { ...pins.planner.settings });
     return { S: m.expectedTries, styles: m.plannerStyles || null, valid: m.valid === true, firstTryRate: m.firstTryRate,
-      spare, clockN: d.clock?.n ?? null, settings: pins.planner.settings, fingerprint: meters.reference.fingerprint };
+      spare, clockN: d.clock?.n ?? null, settings: pins.planner.settings, fingerprint: meters.planner.fingerprint };
   }
 
   // Sequential acceptance (section 2): 160 fresh campaigns; accept within 0.6 tol, refuse beyond

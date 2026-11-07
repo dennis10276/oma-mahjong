@@ -185,6 +185,7 @@ function staticGates(designIn, o = {}) {
     if (k != null && clockAt + 1 !== k) why.push(`witness takes the clock at move ${clockAt + 1}, fewest is ${k}`);
     if (k != null && strictK != null && strictK !== k) why.push(`peek-pair shortcut: strict fewest ${strictK} vs game ${k}`);
     if (k != null && strictK == null) why.push('strict fewest unresolved within budget');
+    if (k != null) { const dsp = design.clock.n - k; if (!SHIP.includes(dsp) || design.clock.n > N_MAX) why.push(`clock.n spare ${dsp} not in 1-3 or clock.n ${design.clock.n} > ${N_MAX}`); }
     if (k != null && !shippable.length) why.push(`k ${k} leaves no spare 1-3 within clock.n <= ${N_MAX}`);
     gates.A3 = { pass: !why.length, detail: { k, strictK, witnessClockMove: clockAt + 1, strictWitness: strictOk, designSpare: k != null ? design.clock.n - k : null, shippable, why } };
   }
@@ -207,7 +208,7 @@ function staticGates(designIn, o = {}) {
   if (!Wt.ok && cs.path) { Wt = actionsOf(gE, E.flatten(cs.path)); witnessSource = 'clockShortest'; }
   if (!Wt.ok) warnings.push(`no witness replays at clock.n = k + ${sMin}`);
   const ci = Wt.acts.findIndex(a => takesClock(gE, a));            // the action that takes the clock
-  const K = ci >= 0 ? Wt.states[ci].moves + 1 : null;              // the witness's clock move (its action's start + 1)
+  const K = ci >= 0 ? Wt.states[ci].moves + (typeof Wt.acts[ci] === 'object' ? Wt.acts[ci].pair.indexOf(gE.clock.i) + 1 : 1) : null;              // the witness's clock move (its action's start + 1)
 
   // ---------- A2: readable + keys in sight ----------
   {
@@ -225,6 +226,7 @@ function staticGates(designIn, o = {}) {
     const w = W.A4, singles = [], skipped = [];
     let open = null;
     const last = Math.max(0, ci);
+    const noClock = ci < 0;
     for (let m = 0; m <= last && m < Wt.states.length; m++) {
       const s = Wt.states[m], c = w.classify(gE, s, PER_MOVE);
       const wins = c.filter(x => x.result === 'win'), unk = c.filter(x => x.result === 'unknown').length;
@@ -241,21 +243,23 @@ function staticGates(designIn, o = {}) {
     for (const sp of evalSpares) {
       if (sp !== sMin) {
         const g = C.at(k + sp);
-        if (openWins < 2) { const c = w.classify(g, Wt.states[0], PER_MOVE); openWins = c.filter(x => x.result === 'win').length; openUnk = c.filter(x => x.result === 'unknown').length; }
-        bad = bad.filter(x => { const c = w.classify(g, Wt.states[x.step], PER_MOVE); return c.filter(y => y.result === 'win').length === 1 && !c.some(y => y.result === 'unknown'); });
+        bad = bad.filter(x => { const c = w.classify(g, Wt.states[x.step], PER_MOVE); const nw = c.filter(y => y.result === 'win').length; return nw === 1 || c.some(y => y.result === 'unknown'); });
       }
-      const openOk = openWins >= 2 || openWins + openUnk >= 2;
+      if (sp !== sMin) { const c = w.classify(C.at(k + sp), Wt.states[0], PER_MOVE); openWins = c.filter(x => x.result === 'win').length; openUnk = c.filter(x => x.result === 'unknown').length; }
+      const openOk = openWins >= 2;
       perSpare[sp] = { ok: openOk && !bad.length, openingWins: openWins, openingUnknown: openUnk, notObvious: bad.map(x => ({ atMove: x.moves + 1, move: x.move })) };
     }
-    const okSpares = evalSpares.filter(sp => perSpare[sp].ok && shippable.includes(sp)), loosest = evalSpares[evalSpares.length - 1];
+    if (noClock) { skipped.push(-1); }
+    const okSpares = noClock ? [] : evalSpares.filter(sp => perSpare[sp].ok && shippable.includes(sp)), loosest = evalSpares[evalSpares.length - 1];
     const why = [];
     if (!shippable.length) why.push('no shippable spare (A3)');
+    if (noClock) why.push('no clock action in the witness');
     if (!evalSpares.some(sp => perSpare[sp].ok)) {
       const p = perSpare[loosest];
-      if (p.openingWins + p.openingUnknown < 2) why.push(`opening has ${p.openingWins} winning action${p.openingWins === 1 ? '' : 's'} even at spare ${loosest}`);
+      if (p.openingWins < 2) why.push(`opening has ${p.openingWins} winning action${p.openingWins === 1 ? '' : 's'} even at spare ${loosest}`);
       for (const x of p.notObvious) why.push(`move ${x.atMove}: the only winning move ${moveText(x.move)} is not obvious at every spare`);
     }
-    const unsure = skipped.length || (open && open.wins < 2 && open.unknown) || w.hit;
+    const unsure = skipped.length || openUnk || (open && open.wins < 2 && open.unknown) || w.hit;
     if (w.hit) warnings.push('A4: node budget ran out before the clock');
     gates.A4 = { pass: okSpares.length > 0, detail: { opening: open, singleWinStates: singles.length, obviousSingles: singles.filter(x => x.obvious).length, statesWithUnknown: skipped.length, okSpares, perSpare, why },
       ...(unsure ? { warn: w.hit ? 'budget' : 'unknown' } : {}) };

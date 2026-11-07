@@ -143,3 +143,20 @@ test('smoke: dry run with the real builder, screen, curve and counterfactuals on
   assert.equal(s.errors.length, 0, JSON.stringify(s.errors));
   assert.equal(s.steps.build.pass, 1);
 });
+
+test('missing C2 and unknown planner validity are not trusted / rejected', () => {
+  const d = deps({ c2c3: () => ({}) });
+  P.runPipeline({ n: 1, writeRunLog: false }, d);
+  const e = d.library.entries()[0];
+  assert.equal(e.S.trusted, false);
+  assert.deepEqual(Lb.pairsOf([e]).map(p => p.Strusted), [false, false, false].slice(0, e.shipSpares.length));
+  const d2 = deps({ c2c3: () => { throw Error('boom'); } });
+  try { P.runPipeline({ n: 1, writeRunLog: false }, d2); } catch (x) { /* a throwing step is reported, never trusted */ }
+  assert.ok(d2.library.entries().every(x => x.S.trusted === false));
+  const ys = fakeYs(); const orig = ys.planner;
+  ys.planner = (...a) => { const r = orig(...a); delete r.valid; return r; };
+  const d3 = deps({ ys });
+  P.runPipeline({ n: 1, writeRunLog: false }, d3);
+  assert.equal(d3.library.entries().length, 0);
+  assert.equal(d3.library.rejects()[0].gate, 'planner');
+});

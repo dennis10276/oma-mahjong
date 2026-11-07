@@ -109,3 +109,14 @@ test('smoke (real boards): a builder build is judged the same twice; qualified 2
   assert.equal(r202.gates.A3.pass, false);
   assert.ok(r202.gates.A3.detail.why.some(x => /peek-pair shortcut/.test(x)));
 });
+
+test('A3 rejects a clock.n that is not k + 1..3 (reviewer defect)', () => {
+  const S = require('./static_gates.js');
+  const fs = require('fs'), path = require('path');
+  const row = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'analysis', 'builder', 'data', 'qualified-200-225.jsonl'), 'utf8').split('\n').find(Boolean));
+  const d = row.design || row;
+  const r0 = S.staticGates(d, { stopEarly: true });
+  const d2 = JSON.parse(JSON.stringify(d)); d2.clock.n = r0.k + 7;
+  const r = S.staticGates(d2, {});
+  assert.notEqual(r.gates.A3.pass, true); assert.equal(r.pass, false);
+});

@@ -1,0 +1,6004 @@
+{
+ "when": "2026-11-07T19:47:12.646Z",
+ "budget": 2500000,
+ "buildStats": null,
+ "summary": {
+  "qualified": {
+   "boards": 18,
+   "crashes": 0,
+   "pass": 0,
+   "ms": {
+    "median": 1939,
+    "p90": 5413,
+    "max": 6127,
+    "total": 46784
+   },
+   "gates": {
+    "A1": 3,
+    "A2": 3,
+    "A3": 9,
+    "A4": 13,
+    "A5": 15,
+    "A6": 14,
+    "A7": 0,
+    "A8": 18,
+    "A9": 18
+   },
+   "gateWarnings": {
+    "A1": 0,
+    "A2": 0,
+    "A3": 0,
+    "A4": 6,
+    "A5": 0,
+    "A6": 2,
+    "A7": 2,
+    "A8": 0,
+    "A9": 0
+   },
+   "A8flag": 2,
+   "A9bigFlag": 1,
+   "allButOne": {
+    "A1": 0,
+    "A2": 0,
+    "A3": 0,
+    "A4": 0,
+    "A5": 0,
+    "A6": 0,
+    "A7": 0,
+    "A9": 0
+   },
+   "shipSpares": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+   },
+   "archetypes": {},
+   "withWarnings": 13
+  }
+ },
+ "rows": [
+  {
+   "set": "qualified",
+   "id": "200-58a099f8cfe6eb4d",
+   "level": 200,
+   "shape": "castle · two islands",
+   "tiles": 84,
+   "hash": "16dc46880319",
+   "pass": false,
+   "ms": 288,
+   "nodes": 80409,
+   "k": 3,
+   "strictK": 3,
+   "shipSpares": [
+    2,
+    3
+   ],
+   "A8": "spare>=2 only",
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 84,
+      "clock": {
+       "n": 4,
+       "k": 3,
+       "unsure": false,
+       "spare": 1,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 3,
+       "kPerTile": 3
+      },
+      "idle": 1,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 75: fewest way stays 3 without it, held at the clock true, twin on the way false"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       54,
+       33
+      ],
+      "keysShownAtStart": 2,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 3,
+      "strictK": 3,
+      "witnessClockMove": 3,
+      "strictWitness": true,
+      "designSpare": 1,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 3,
+       "unknown": 0,
+       "legal": 16
+      },
+      "singleWinStates": 0,
+      "obviousSingles": 0,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 3,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 16,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 16,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       1,
+       1
+      ],
+      "wayMoves": 3,
+      "priced": 5,
+      "best": {
+       "move": [
+        82
+       ],
+       "kind": "match",
+       "cost": 1,
+       "result": "win",
+       "step": 1,
+       "moves": 1
+      },
+      "temptingSeen": 14
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 0,
+      "fair": 0,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": true,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 0,
+      "tightBlind": 1,
+      "faceDown": 37,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 6"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 3
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "castle · two islands",
+      "tiles": 84,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 3 moves; taking the tray match in sight at move 2 before the clock costs 1 spare move (a fast opening clock: ship with spare 2 or more).",
+   "archetype": "free-pair relief",
+   "warnings": [],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        2,
+        3
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        4,
+        5
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        51,
+        71
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      6,
+      82,
+      83
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        82
+       ],
+       "kind": "match",
+       "cost": 1,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        2,
+        3
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        4,
+        5
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        51,
+        71
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      6,
+      78,
+      82,
+      {
+       "pair": [
+        6,
+        78
+       ]
+      }
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        6
+       ],
+       "kind": "match",
+       "cost": 1,
+       "result": "win"
+      },
+      {
+       "move": [
+        82
+       ],
+       "kind": "match",
+       "cost": 1,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        2,
+        3
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        4,
+        5
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        51,
+        71
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      6,
+      67,
+      82
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "201-70bde28d4c0922c5",
+   "level": 201,
+   "shape": "vase",
+   "tiles": 76,
+   "hash": "0512c4bcf3de",
+   "pass": false,
+   "ms": 486,
+   "nodes": 233509,
+   "k": 9,
+   "strictK": 9,
+   "shipSpares": [
+    1,
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 76,
+      "clock": {
+       "n": 10,
+       "k": 9,
+       "unsure": false,
+       "spare": 1,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 9,
+       "kPerTile": 9
+      },
+      "idle": 7,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 68: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 57: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 40: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 12: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 27: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: ice 60: fewest way stays 9 without it, held at the clock false, twin on the way true",
+       "idle: ice 61: fewest way stays 9 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": true,
+     "detail": {
+      "readable": true,
+      "keys": [
+       67,
+       41
+      ],
+      "keysShownAtStart": 2,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 9,
+      "strictK": 9,
+      "witnessClockMove": 9,
+      "strictWitness": true,
+      "designSpare": 1,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 2,
+       "unknown": 0,
+       "legal": 9
+      },
+      "singleWinStates": 6,
+      "obviousSingles": 6,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 2,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 7,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 7,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       2,
+       5
+      ],
+      "wayMoves": 9,
+      "priced": 3,
+      "best": {
+       "move": [
+        74,
+        75
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 2,
+       "moves": 2
+      },
+      "temptingSeen": 14
+     }
+    },
+    "A6": {
+     "pass": false,
+     "detail": {
+      "loseForks": 3,
+      "fair": 2,
+      "unfair": [
+       {
+        "move": [
+         44
+        ],
+        "kind": "match",
+        "atMove": 3,
+        "why": [
+         "the loss shows only after 7+ more removals (> 6)"
+        ]
+       }
+      ],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": true,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 0,
+      "tightBlind": 1,
+      "faceDown": 20,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 12"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 9
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "vase",
+      "tiles": 76,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 9 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 6 loses the board.",
+   "archetype": "thaw order",
+   "warnings": [
+    "A6: at 3 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        74,
+        75
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      71,
+      73
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        73
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        75
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      60,
+      73
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        44
+       ],
+       "kind": "match",
+       "peek": true,
+       "cost": null,
+       "result": "lose",
+       "fair": false,
+       "why": [
+        "the loss shows only after 7+ more removals (> 6)"
+       ],
+       "forkChecks": {
+        "tilesLeft": 0.974,
+        "forcedDepth": 7,
+        "perms": 4,
+        "permResults": [
+         {
+          "tempting": "lose",
+          "alternative": 61
+         },
+         {
+          "tempting": "lose",
+          "alternative": 61
+         },
+         {
+          "tempting": "lose",
+          "alternative": null,
+          "board": "lose"
+         },
+         {
+          "tempting": "lose",
+          "alternative": null,
+          "board": "lose"
+         }
+        ],
+        "dealsLostAnyway": 2
+       }
+      },
+      {
+       "move": [
+        73
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        75
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      73
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "202-ebe4a48640ad0101",
+   "level": 202,
+   "shape": "steps",
+   "tiles": 76,
+   "hash": "4ecf12215937",
+   "pass": false,
+   "ms": 930,
+   "nodes": 417233,
+   "k": 9,
+   "strictK": 11,
+   "shipSpares": [
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 76,
+      "clock": {
+       "n": 13,
+       "k": 9,
+       "unsure": false,
+       "spare": 4,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 9,
+       "kPerTile": 9
+      },
+      "idle": 8,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 67: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 57: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 75: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 61: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 69: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 2: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: ice 52: fewest way stays 9 without it, held at the clock false, twin on the way true",
+       "idle: ice 60: fewest way stays 9 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       14,
+       19
+      ],
+      "keysShownAtStart": 1,
+      "bothKeysSeenAtMove": null
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 9,
+      "strictK": 11,
+      "witnessClockMove": 11,
+      "strictWitness": true,
+      "designSpare": 4,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": [
+       "witness takes the clock at move 11, fewest is 9",
+       "peek-pair shortcut: strict fewest 11 vs game 9",
+       "clock.n spare 4 not in 1-3 or clock.n 13 > 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 3,
+       "unknown": 0,
+       "legal": 14
+      },
+      "singleWinStates": 5,
+      "obviousSingles": 4,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": false,
+        "openingWins": 3,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 7,
+          "move": 68
+         }
+        ]
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 7,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 7,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       2,
+       5
+      ],
+      "wayMoves": 9,
+      "priced": 2,
+      "best": {
+       "move": [
+        47,
+        72
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 2,
+       "moves": 2
+      },
+      "temptingSeen": 18
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 3,
+      "fair": 3,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 24,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 12"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 9
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "steps",
+      "tiles": 76,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 9 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "thaw order",
+   "warnings": [
+    "A6: at 3 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        46,
+        66
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        47,
+        72
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      46,
+      66,
+      68
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        66
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        47,
+        72
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      60,
+      66,
+      68
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        66
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        47,
+        72
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      5,
+      52,
+      66,
+      68
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "203-cce8f5c9ee0524d4",
+   "level": 203,
+   "shape": "hourglass",
+   "tiles": 76,
+   "hash": "7f21dec0bb0f",
+   "pass": false,
+   "ms": 3547,
+   "nodes": 1885468,
+   "k": 14,
+   "strictK": 15,
+   "shipSpares": [
+    1,
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 76,
+      "clock": {
+       "n": 18,
+       "k": 14,
+       "unsure": false,
+       "spare": 4,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 14,
+       "kPerTile": 14
+      },
+      "idle": 3,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 61: fewest way stays 14 without it, held at the clock false, twin on the way true",
+       "idle: lock 54: fewest way stays 14 without it, held at the clock false, twin on the way false",
+       "idle: lock 75: fewest way stays 14 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       7,
+       47
+      ],
+      "keysShownAtStart": 0,
+      "bothKeysSeenAtMove": null
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 14,
+      "strictK": 15,
+      "witnessClockMove": 15,
+      "strictWitness": true,
+      "designSpare": 4,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": [
+       "witness takes the clock at move 15, fewest is 14",
+       "peek-pair shortcut: strict fewest 15 vs game 14",
+       "clock.n spare 4 not in 1-3 or clock.n 18 > 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": true,
+     "warn": "unknown",
+     "detail": {
+      "opening": {
+       "wins": 6,
+       "unknown": 0,
+       "legal": 14
+      },
+      "singleWinStates": 2,
+      "obviousSingles": 2,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 6,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 10,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 9,
+        "openingUnknown": 3,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       3,
+       8
+      ],
+      "wayMoves": 14,
+      "priced": 4,
+      "best": {
+       "move": [
+        63,
+        67
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 4,
+       "moves": 4
+      },
+      "temptingSeen": 57
+     }
+    },
+    "A6": {
+     "pass": false,
+     "detail": {
+      "loseForks": 16,
+      "fair": 10,
+      "unfair": [
+       {
+        "move": [
+         66,
+         72
+        ],
+        "kind": "pair",
+        "atMove": 1,
+        "why": [
+         "the loss shows only after 7+ more removals (> 6)",
+         "the tempting move wins under another deal of the hidden pictures (a guess, not a readable fork)"
+        ]
+       },
+       {
+        "move": [
+         66,
+         72
+        ],
+        "kind": "pair",
+        "atMove": 2,
+        "why": [
+         "the loss shows only after 7+ more removals (> 6)"
+        ]
+       },
+       {
+        "move": [
+         66,
+         72
+        ],
+        "kind": "pair",
+        "atMove": 3,
+        "why": [
+         "the loss shows only after 7+ more removals (> 6)"
+        ]
+       },
+       {
+        "move": [
+         66,
+         72
+        ],
+        "kind": "pair",
+        "atMove": 5,
+        "why": [
+         "the loss shows only after 7+ more removals (> 6)",
+         "the tempting move wins under another deal of the hidden pictures (a guess, not a readable fork)"
+        ]
+       },
+       {
+        "move": [
+         66,
+         72
+        ],
+        "kind": "pair",
+        "atMove": 6,
+        "why": [
+         "the loss shows only after 7+ more removals (> 6)",
+         "the tempting move wins under another deal of the hidden pictures (a guess, not a readable fork)"
+        ]
+       },
+       {
+        "move": [
+         66,
+         72
+        ],
+        "kind": "pair",
+        "atMove": 7,
+        "why": [
+         "the loss shows only after 7+ more removals (> 6)",
+         "the tempting move wins under another deal of the hidden pictures (a guess, not a readable fork)"
+        ]
+       }
+      ],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 29,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 17"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 14
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "hourglass",
+      "tiles": 76,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 14 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "keys before the clock",
+   "warnings": [
+    "A6: at 7 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        36,
+        64
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        63,
+        67
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        66,
+        72
+       ],
+       "kind": "pair",
+       "cost": null,
+       "result": "lose",
+       "fair": false,
+       "why": [
+        "the loss shows only after 7+ more removals (> 6)",
+        "the tempting move wins under another deal of the hidden pictures (a guess, not a readable fork)"
+       ],
+       "forkChecks": {
+        "tilesLeft": 1,
+        "forcedDepth": 7,
+        "perms": 4,
+        "permResults": [
+         {
+          "tempting": "lose",
+          "alternative": 73
+         },
+         {
+          "tempting": "lose",
+          "alternative": null,
+          "board": "lose"
+         },
+         {
+          "tempting": "win",
+          "alternative": 73
+         },
+         {
+          "tempting": "lose",
+          "alternative": "unknown",
+          "board": "lose"
+         }
+        ],
+        "dealsLostAnyway": 2
+       }
+      }
+     ],
+     "winning": [
+      36,
+      64,
+      66,
+      72,
+      73,
+      74
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        36,
+        64
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        63,
+        67
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        66,
+        72
+       ],
+       "kind": "pair",
+       "cost": null,
+       "result": "lose",
+       "fair": false,
+       "why": [
+        "the loss shows only after 7+ more removals (> 6)"
+       ],
+       "forkChecks": {
+        "tilesLeft": 0.987,
+        "forcedDepth": 7,
+        "perms": 4,
+        "permResults": [
+         {
+          "tempting": "lose",
+          "alternative": 70
+         },
+         {
+          "tempting": "lose",
+          "alternative": null,
+          "board": "lose"
+         },
+         {
+          "tempting": "lose",
+          "alternative": "unknown",
+          "board": "unknown"
+         },
+         {
+          "tempting": "lose",
+          "alternative": 70
+         }
+        ],
+        "dealsLostAnyway": 1
+       }
+      },
+      {
+       "move": [
+        66,
+        51
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        72,
+        51
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      36,
+      51,
+      64,
+      66,
+      70,
+      72,
+      73,
+      {
+       "pair": [
+        66,
+        51
+       ]
+      },
+      {
+       "pair": [
+        72,
+        51
+       ]
+      }
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        36,
+        64
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        63,
+        67
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        66,
+        72
+       ],
+       "kind": "pair",
+       "cost": null,
+       "result": "lose",
+       "fair": false,
+       "why": [
+        "the loss shows only after 7+ more removals (> 6)"
+       ],
+       "forkChecks": {
+        "tilesLeft": 0.974,
+        "forcedDepth": 7,
+        "perms": 4,
+        "permResults": [
+         {
+          "tempting": "lose",
+          "alternative": 73
+         },
+         {
+          "tempting": "lose",
+          "alternative": null,
+          "board": "lose"
+         },
+         {
+          "tempting": "lose",
+          "alternative": null,
+          "board": "lose"
+         },
+         {
+          "tempting": "lose",
+          "alternative": 73
+         }
+        ],
+        "dealsLostAnyway": 2
+       }
+      },
+      {
+       "move": [
+        66,
+        51
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        72,
+        51
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      36,
+      51,
+      64,
+      66,
+      72,
+      73,
+      {
+       "pair": [
+        66,
+        51
+       ]
+      },
+      {
+       "pair": [
+        72,
+        51
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "204-ec63a46d1a4e6eef",
+   "level": 204,
+   "shape": "cross",
+   "tiles": 84,
+   "hash": "87617868f34a",
+   "pass": false,
+   "ms": 339,
+   "nodes": 9627,
+   "k": 15,
+   "strictK": 17,
+   "shipSpares": [],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 84,
+      "clock": {
+       "n": 18,
+       "k": 15,
+       "unsure": false,
+       "spare": 3,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 15,
+       "kPerTile": 15
+      },
+      "idle": 4,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 14 (the clock): fewest way stays 15 without it, held at the clock false, twin on the way true",
+       "idle: lock 71: fewest way stays 15 without it, held at the clock false, twin on the way true",
+       "idle: lock 67: fewest way stays 15 without it, held at the clock false, twin on the way true",
+       "idle: lock 81: fewest way stays 15 without it, held at the clock false, twin on the way false"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": true,
+      "keys": [
+       36,
+       61
+      ],
+      "keysShownAtStart": 1,
+      "bothKeysSeenAtMove": null
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 15,
+      "strictK": 17,
+      "witnessClockMove": 17,
+      "strictWitness": true,
+      "designSpare": 3,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": [
+       "witness takes the clock at move 17, fewest is 15",
+       "peek-pair shortcut: strict fewest 17 vs game 15"
+      ]
+     }
+    },
+    "A4": {
+     "pass": false,
+     "detail": {
+      "opening": {
+       "wins": 4,
+       "unknown": 0,
+       "legal": 5
+      },
+      "singleWinStates": 6,
+      "obviousSingles": 5,
+      "statesWithUnknown": 0,
+      "okSpares": [],
+      "perSpare": {
+       "1": {
+        "ok": false,
+        "openingWins": 4,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 7,
+          "move": 82
+         }
+        ]
+       },
+       "2": {
+        "ok": false,
+        "openingWins": 4,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 7,
+          "move": 82
+         }
+        ]
+       },
+       "3": {
+        "ok": false,
+        "openingWins": 4,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 7,
+          "move": 82
+         }
+        ]
+       }
+      },
+      "why": [
+       "move 7: the only winning move 82 is not obvious at every spare"
+      ]
+     }
+    },
+    "A5": {
+     "pass": false,
+     "detail": {
+      "window": [
+       3,
+       9
+      ],
+      "wayMoves": 15,
+      "priced": 0,
+      "best": null,
+      "temptingSeen": 6
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 0,
+      "fair": 0,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 27,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "win",
+       "lose"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "2 of 4 re-deals of the face-down pictures are lost from the start at clock.n 18"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 15
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "cross",
+      "tiles": 84,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 15 moves and nothing in sight tempts you off the way.",
+   "archetype": "keys before the clock",
+   "warnings": [],
+   "forks": [
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        83
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      15,
+      66,
+      80,
+      82,
+      83
+     ]
+    },
+    {
+     "step": 7,
+     "moves": 7,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        76
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      76
+     ]
+    },
+    {
+     "step": 8,
+     "moves": 8,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        79
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      79,
+      80
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "205-d0c0c19d4f9837f4",
+   "level": 205,
+   "shape": "twins",
+   "tiles": 84,
+   "hash": "fd770234e778",
+   "pass": false,
+   "ms": 1939,
+   "nodes": 831858,
+   "k": 11,
+   "strictK": 11,
+   "shipSpares": [
+    1,
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": true,
+     "detail": {
+      "story": null,
+      "tiles": 84,
+      "clock": {
+       "n": 12,
+       "k": 11,
+       "unsure": false,
+       "spare": 1,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 11,
+       "kPerTile": 11
+      },
+      "idle": 0,
+      "strictWitness": true,
+      "why": []
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       11,
+       16
+      ],
+      "keysShownAtStart": 1,
+      "bothKeysSeenAtMove": 2
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 11,
+      "strictK": 11,
+      "witnessClockMove": 11,
+      "strictWitness": true,
+      "designSpare": 1,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "warn": "unknown",
+     "detail": {
+      "opening": {
+       "wins": 4,
+       "unknown": 0,
+       "legal": 13
+      },
+      "singleWinStates": 0,
+      "obviousSingles": 0,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 4,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 13,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 9,
+        "openingUnknown": 4,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       2,
+       6
+      ],
+      "wayMoves": 11,
+      "priced": 15,
+      "best": {
+       "move": [
+        61,
+        76
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 2,
+       "moves": 2
+      },
+      "temptingSeen": 56
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 6,
+      "fair": 6,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": true,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 0,
+      "tightBlind": 1,
+      "faceDown": 35,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 14"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 11
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "twins",
+      "tiles": 84,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 11 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 8 loses the board.",
+   "archetype": "keys before the clock",
+   "warnings": [],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        61,
+        76
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        64,
+        82
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        71,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      69,
+      72,
+      75,
+      81
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        42
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        61,
+        76
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        64,
+        82
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        71,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        69,
+        46
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      42,
+      46,
+      69,
+      75,
+      81,
+      {
+       "pair": [
+        69,
+        46
+       ]
+      }
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        61,
+        76
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        64,
+        82
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        71,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        69,
+        46
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      12,
+      46,
+      69,
+      75,
+      81,
+      {
+       "pair": [
+        69,
+        46
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "206-fb46c7888c54e687",
+   "level": 206,
+   "shape": "diamond",
+   "tiles": 80,
+   "hash": "f990d0f48681",
+   "pass": false,
+   "ms": 1367,
+   "nodes": 535979,
+   "k": 7,
+   "strictK": 7,
+   "shipSpares": [
+    1,
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 80,
+      "clock": {
+       "n": 8,
+       "k": 7,
+       "unsure": false,
+       "spare": 1,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 7,
+       "kPerTile": 7
+      },
+      "idle": 8,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 37: fewest way stays 7 without it, held at the clock true, twin on the way false",
+       "idle: lock 27: fewest way stays 7 without it, held at the clock true, twin on the way false",
+       "idle: lock 7: fewest way stays 7 without it, held at the clock true, twin on the way false",
+       "idle: lock 16: fewest way stays 7 without it, held at the clock true, twin on the way false",
+       "idle: lock 43: fewest way stays 9 without it, held at the clock true, twin on the way false",
+       "idle: lock 67: fewest way stays 7 without it, held at the clock true, twin on the way false",
+       "idle: ice 57: fewest way stays 7 without it, held at the clock false, twin on the way true",
+       "idle: ice 58: fewest way stays 7 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       8,
+       19
+      ],
+      "keysShownAtStart": 1,
+      "bothKeysSeenAtMove": null
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 7,
+      "strictK": 7,
+      "witnessClockMove": 7,
+      "strictWitness": true,
+      "designSpare": 1,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 3,
+       "unknown": 0,
+       "legal": 15
+      },
+      "singleWinStates": 1,
+      "obviousSingles": 1,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 3,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 12,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 12,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       2,
+       4
+      ],
+      "wayMoves": 7,
+      "priced": 8,
+      "best": {
+       "move": [
+        32,
+        51
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 2,
+       "moves": 2
+      },
+      "temptingSeen": 35
+     }
+    },
+    "A6": {
+     "pass": true,
+     "warn": "unknown",
+     "detail": {
+      "loseForks": 8,
+      "fair": 4,
+      "unfair": [],
+      "unknown": 4
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": true,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 0,
+      "tightBlind": 1,
+      "faceDown": 11,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "win",
+       "lose"
+      ],
+      "why": [
+       "2 of 4 re-deals of the face-down pictures are lost from the start at clock.n 10"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 7
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "diamond",
+      "tiles": 80,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 7 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 6 loses the board.",
+   "archetype": "thaw order",
+   "warnings": [
+    "A6: 4 lose-forks unresolved ('unknown')",
+    "A6: at 8 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        32,
+        51
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        34,
+        50
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        34,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        50,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      54,
+      68,
+      78
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        32,
+        51
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        34,
+        50
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        34,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        50,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      54,
+      57,
+      78
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        54
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        32,
+        51
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        34,
+        50
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        34,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        50,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        78,
+        45
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      45,
+      54,
+      58,
+      78,
+      {
+       "pair": [
+        78,
+        45
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "207-00cda47469d76ba6",
+   "level": 207,
+   "shape": "frame",
+   "tiles": 80,
+   "hash": "cd806b022aeb",
+   "pass": false,
+   "ms": 6127,
+   "nodes": 580723,
+   "k": 32,
+   "strictK": 32,
+   "shipSpares": [],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 80,
+      "clock": {
+       "n": 33,
+       "k": 32,
+       "unsure": false,
+       "spare": 1,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 32,
+       "kPerTile": 32
+      },
+      "idle": 5,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 74: fewest way stays 32 without it, held at the clock false, twin on the way false",
+       "idle: lock 56: fewest way stays 32 without it, held at the clock true, twin on the way false",
+       "idle: lock 70: fewest way stays 32 without it, held at the clock false, twin on the way false",
+       "idle: ice 47: fewest way stays 32 without it, held at the clock false, twin on the way true",
+       "idle: ice 52: fewest way stays 32 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       10,
+       16
+      ],
+      "keysShownAtStart": 2,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 32,
+      "strictK": 32,
+      "witnessClockMove": 32,
+      "strictWitness": true,
+      "designSpare": 1,
+      "shippable": [],
+      "why": [
+       "clock.n spare 1 not in 1-3 or clock.n 33 > 19",
+       "k 32 leaves no spare 1-3 within clock.n <= 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": false,
+     "detail": {
+      "opening": {
+       "wins": 6,
+       "unknown": 0,
+       "legal": 8
+      },
+      "singleWinStates": 10,
+      "obviousSingles": 10,
+      "statesWithUnknown": 0,
+      "okSpares": [],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 6,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 6,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 6,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": [
+       "no shippable spare (A3)"
+      ]
+     }
+    },
+    "A5": {
+     "pass": false,
+     "detail": {
+      "window": [
+       5,
+       19
+      ],
+      "wayMoves": 32,
+      "priced": 0,
+      "best": null,
+      "temptingSeen": 37
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 1,
+      "fair": 1,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 29,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "win"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "2 of 4 re-deals of the face-down pictures are lost from the start at clock.n 35"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 32
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "frame",
+      "tiles": 80,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 32 moves; taking the free pair in sight at move 22 before the clock loses the board.",
+   "archetype": "keys before the clock",
+   "warnings": [
+    "A6: at 1 lose-fork some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        73
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      73,
+      76,
+      77,
+      78,
+      79
+     ]
+    },
+    {
+     "step": 3,
+     "moves": 3,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        61
+       ],
+       "kind": "match",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      61,
+      65,
+      76,
+      78,
+      79
+     ]
+    },
+    {
+     "step": 4,
+     "moves": 4,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        61
+       ],
+       "kind": "match",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      61,
+      65,
+      67,
+      69,
+      76,
+      78
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "209-ed2b3ed435e69730",
+   "level": 209,
+   "shape": "ushape",
+   "tiles": 80,
+   "hash": "d746b10099d4",
+   "pass": false,
+   "ms": 1553,
+   "nodes": 693053,
+   "k": 10,
+   "strictK": 10,
+   "shipSpares": [
+    1,
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 80,
+      "clock": {
+       "n": 13,
+       "k": 10,
+       "unsure": false,
+       "spare": 3,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 10,
+       "kPerTile": 10
+      },
+      "idle": 6,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 55: fewest way stays 10 without it, held at the clock true, twin on the way false",
+       "idle: lock 10: fewest way stays 10 without it, held at the clock true, twin on the way false",
+       "idle: lock 47: fewest way stays 10 without it, held at the clock true, twin on the way false",
+       "idle: lock 72: fewest way stays 10 without it, held at the clock true, twin on the way true",
+       "idle: lock 67: fewest way stays 10 without it, held at the clock true, twin on the way false",
+       "idle: lock 49: fewest way stays 10 without it, held at the clock true, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       2,
+       5
+      ],
+      "keysShownAtStart": 2,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 10,
+      "strictK": 10,
+      "witnessClockMove": 10,
+      "strictWitness": true,
+      "designSpare": 3,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 4,
+       "unknown": 0,
+       "legal": 12
+      },
+      "singleWinStates": 3,
+      "obviousSingles": 3,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 4,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 10,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 10,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       2,
+       6
+      ],
+      "wayMoves": 10,
+      "priced": 8,
+      "best": {
+       "move": [
+        11,
+        56
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 2,
+       "moves": 2
+      },
+      "temptingSeen": 44
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 12,
+      "fair": 12,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": true,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 0,
+      "tightBlind": 1,
+      "faceDown": 24,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 13"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 10
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "ushape",
+      "tiles": 80,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 10 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "free-pair relief",
+   "warnings": [
+    "A6: at 12 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        11,
+        56
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        53,
+        76
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        54,
+        78
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      53,
+      71,
+      76,
+      79
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        79
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        11,
+        56
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        53,
+        76
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        54,
+        78
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      53,
+      60,
+      70,
+      76,
+      79
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        79
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        11,
+        56
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        53,
+        76
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        54,
+        78
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      53,
+      60,
+      76,
+      79
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "211-c7440676d0ca7f59",
+   "level": 211,
+   "shape": "moon",
+   "tiles": 74,
+   "hash": "c9695d7e412c",
+   "pass": false,
+   "ms": 5413,
+   "nodes": 1059290,
+   "k": 21,
+   "strictK": 21,
+   "shipSpares": [],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 74,
+      "clock": {
+       "n": 23,
+       "k": 21,
+       "unsure": false,
+       "spare": 2,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 21,
+       "kPerTile": 21
+      },
+      "idle": 6,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 46: fewest way stays 21 without it, held at the clock false, twin on the way false",
+       "idle: lock 67: fewest way stays 21 without it, held at the clock false, twin on the way false",
+       "idle: lock 6: fewest way stays 21 without it, held at the clock false, twin on the way false",
+       "idle: lock 63: fewest way stays 21 without it, held at the clock false, twin on the way true",
+       "idle: lock 54: fewest way stays 21 without it, held at the clock false, twin on the way true",
+       "idle: ice 71: fewest way stays 21 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": true,
+     "detail": {
+      "readable": true,
+      "keys": [
+       43,
+       9
+      ],
+      "keysShownAtStart": 2,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 21,
+      "strictK": 21,
+      "witnessClockMove": 21,
+      "strictWitness": true,
+      "designSpare": 2,
+      "shippable": [],
+      "why": [
+       "clock.n spare 2 not in 1-3 or clock.n 23 > 19",
+       "k 21 leaves no spare 1-3 within clock.n <= 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": false,
+     "detail": {
+      "opening": {
+       "wins": 11,
+       "unknown": 0,
+       "legal": 14
+      },
+      "singleWinStates": 1,
+      "obviousSingles": 1,
+      "statesWithUnknown": 0,
+      "okSpares": [],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 11,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 13,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 13,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": [
+       "no shippable spare (A3)"
+      ]
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       4,
+       12
+      ],
+      "wayMoves": 21,
+      "priced": 6,
+      "best": {
+       "move": [
+        1,
+        5
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 4,
+       "moves": 4
+      },
+      "temptingSeen": 91
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 22,
+      "fair": 22,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 3,
+      "faceDown": 16,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "win"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 3 (> 1)",
+       "2 of 4 re-deals of the face-down pictures are lost from the start at clock.n 24"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 21
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "moon",
+      "tiles": 74,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 21 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "thaw order",
+   "warnings": [
+    "A6: at 22 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        0,
+        68
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        5
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        2,
+        69
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        3,
+        44
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        4,
+        29
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      0,
+      2,
+      3,
+      4,
+      29,
+      44,
+      45,
+      47,
+      68,
+      69,
+      70
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        29
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        0,
+        68
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        5
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        2,
+        69
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        3,
+        44
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      0,
+      2,
+      3,
+      29,
+      44,
+      45,
+      47,
+      68,
+      69,
+      70
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        29
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        0,
+        68
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        5
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        2,
+        69
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        3,
+        44
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      0,
+      2,
+      3,
+      9,
+      29,
+      44,
+      47,
+      68,
+      69,
+      70
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "212-01fcfe297afb0d90",
+   "level": 212,
+   "shape": "heart",
+   "tiles": 76,
+   "hash": "166554bec4fb",
+   "pass": false,
+   "ms": 243,
+   "nodes": 57966,
+   "k": 5,
+   "strictK": 5,
+   "shipSpares": [
+    2,
+    3
+   ],
+   "A8": "spare>=2 only",
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 76,
+      "clock": {
+       "n": 8,
+       "k": 5,
+       "unsure": false,
+       "spare": 3,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 5,
+       "kPerTile": 5
+      },
+      "idle": 3,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 2: fewest way stays 5 without it, held at the clock true, twin on the way false",
+       "idle: lock 29: fewest way stays 5 without it, held at the clock true, twin on the way false",
+       "idle: lock 18: fewest way stays 5 without it, held at the clock true, twin on the way false"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       11,
+       55
+      ],
+      "keysShownAtStart": 0,
+      "bothKeysSeenAtMove": null
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 5,
+      "strictK": 5,
+      "witnessClockMove": 5,
+      "strictWitness": true,
+      "designSpare": 3,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 2,
+       "unknown": 0,
+       "legal": 11
+      },
+      "singleWinStates": 0,
+      "obviousSingles": 0,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 2,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 5,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 5,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       1,
+       3
+      ],
+      "wayMoves": 5,
+      "priced": 3,
+      "best": {
+       "move": [
+        71,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 1,
+       "moves": 1
+      },
+      "temptingSeen": 5
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 0,
+      "fair": 0,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": true,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 0,
+      "tightBlind": 1,
+      "faceDown": 13,
+      "perms": 4,
+      "results": [
+       "win",
+       "win",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "2 of 4 re-deals of the face-down pictures are lost from the start at clock.n 8"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 5
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "heart",
+      "tiles": 76,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 5 moves; taking the free pair in sight at move 2 before the clock costs 2 spare moves (a fast opening clock: ship with spare 2 or more).",
+   "archetype": "free-pair relief",
+   "warnings": [],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        71,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      45,
+      60
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        71,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      45,
+      48
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        71,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      6,
+      41,
+      45
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "213-0fcd2cc72af5f1a6",
+   "level": 213,
+   "shape": "arch",
+   "tiles": 88,
+   "hash": "ca8e99214f8a",
+   "pass": false,
+   "ms": 5294,
+   "nodes": 1766667,
+   "k": 15,
+   "strictK": 15,
+   "shipSpares": [
+    1,
+    2
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": true,
+     "detail": {
+      "story": null,
+      "tiles": 88,
+      "clock": {
+       "n": 16,
+       "k": 15,
+       "unsure": false,
+       "spare": 1,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 15,
+       "kPerTile": 15
+      },
+      "idle": 0,
+      "strictWitness": true,
+      "why": []
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       21,
+       27
+      ],
+      "keysShownAtStart": 0,
+      "bothKeysSeenAtMove": null
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 15,
+      "strictK": 15,
+      "witnessClockMove": 15,
+      "strictWitness": true,
+      "designSpare": 1,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "warn": "budget",
+     "detail": {
+      "opening": {
+       "wins": 3,
+       "unknown": 4,
+       "legal": 15
+      },
+      "singleWinStates": 3,
+      "obviousSingles": 3,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 3,
+        "openingUnknown": 4,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 5,
+        "openingUnknown": 8,
+        "notObvious": []
+       },
+       "3": {
+        "ok": false,
+        "openingWins": 0,
+        "openingUnknown": 15,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       3,
+       9
+      ],
+      "wayMoves": 15,
+      "priced": 6,
+      "best": {
+       "move": [
+        71,
+        78
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 4,
+       "moves": 4
+      },
+      "temptingSeen": 58
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 13,
+      "fair": 13,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "warn": "unknown",
+     "detail": {
+      "roomPass": false,
+      "dealsPass": true,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 31,
+      "perms": 4,
+      "results": [
+       "win",
+       "unknown",
+       "unknown",
+       "unknown"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 15
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "arch",
+      "tiles": 88,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 15 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "keys before the clock",
+   "warnings": [
+    "A4: node budget ran out before the clock",
+    "A6: at 2 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)",
+    "A7: 3 re-deals could not be proven winnable (unknown)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        71,
+        78
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        72,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        81,
+        82
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      80,
+      81,
+      82
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        71,
+        78
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        72,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        81,
+        82
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      47,
+      81,
+      82
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        81
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        71,
+        78
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        72,
+        79
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        55,
+        47
+       ],
+       "kind": "pair",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      47,
+      55,
+      81,
+      85,
+      {
+       "pair": [
+        55,
+        47
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "218-069a224c540f46f3",
+   "level": 218,
+   "shape": "frame",
+   "tiles": 88,
+   "hash": "2aa47fa72600",
+   "pass": false,
+   "ms": 3929,
+   "nodes": 1174585,
+   "k": 17,
+   "strictK": 17,
+   "shipSpares": [
+    1,
+    2
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": true,
+     "detail": {
+      "story": null,
+      "tiles": 88,
+      "clock": {
+       "n": 20,
+       "k": 17,
+       "unsure": false,
+       "spare": 3,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 17,
+       "kPerTile": 17
+      },
+      "idle": 0,
+      "strictWitness": true,
+      "why": []
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       63,
+       66
+      ],
+      "keysShownAtStart": 2,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 17,
+      "strictK": 17,
+      "witnessClockMove": 17,
+      "strictWitness": true,
+      "designSpare": 3,
+      "shippable": [
+       1,
+       2
+      ],
+      "why": [
+       "clock.n spare 3 not in 1-3 or clock.n 20 > 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": true,
+     "warn": "unknown",
+     "detail": {
+      "opening": {
+       "wins": 5,
+       "unknown": 2,
+       "legal": 12
+      },
+      "singleWinStates": 6,
+      "obviousSingles": 6,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 5,
+        "openingUnknown": 2,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 10,
+        "openingUnknown": 2,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       3,
+       10
+      ],
+      "wayMoves": 17,
+      "priced": 4,
+      "best": {
+       "move": [
+        50,
+        77
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 4,
+       "moves": 4
+      },
+      "temptingSeen": 48
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 13,
+      "fair": 13,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 29,
+      "perms": 4,
+      "results": [
+       "win",
+       "win",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "2 of 4 re-deals of the face-down pictures are lost from the start at clock.n 19"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 17
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "frame",
+      "tiles": 88,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 17 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "keys before the clock",
+   "warnings": [
+    "A6: at 6 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        45,
+        51
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        50,
+        77
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        53,
+        76
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      45,
+      51,
+      53,
+      76,
+      87
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        85
+       ],
+       "kind": "match",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        45,
+        51
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        50,
+        77
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        53,
+        76
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      45,
+      51,
+      53,
+      76,
+      85,
+      86
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        85
+       ],
+       "kind": "match",
+       "peek": true,
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        45,
+        51
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        50,
+        77
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        53,
+        76
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      45,
+      51,
+      53,
+      76,
+      83,
+      85
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "220-97f6bf020e56366b",
+   "level": 220,
+   "shape": "star",
+   "tiles": 96,
+   "hash": "3ccdf4dd6eb6",
+   "pass": false,
+   "ms": 3534,
+   "nodes": 1213990,
+   "k": 14,
+   "strictK": 14,
+   "shipSpares": [
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": "lv%10==0 only",
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 96,
+      "clock": {
+       "n": 16,
+       "k": 14,
+       "unsure": false,
+       "spare": 2,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 14,
+       "kPerTile": 14
+      },
+      "idle": 3,
+      "strictWitness": true,
+      "why": [
+       "idle: ice 62: fewest way stays 14 without it, held at the clock false, twin on the way true",
+       "idle: ice 65: fewest way stays 14 without it, held at the clock true, twin on the way false",
+       "idle: ice 69: fewest way stays 14 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [],
+      "keysShownAtStart": 0,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 14,
+      "strictK": 14,
+      "witnessClockMove": 14,
+      "strictWitness": true,
+      "designSpare": 2,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 3,
+       "unknown": 1,
+       "legal": 13
+      },
+      "singleWinStates": 8,
+      "obviousSingles": 7,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": false,
+        "openingWins": 3,
+        "openingUnknown": 1,
+        "notObvious": [
+         {
+          "atMove": 7,
+          "move": 75
+         }
+        ]
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 13,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 13,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       3,
+       8
+      ],
+      "wayMoves": 14,
+      "priced": 18,
+      "best": {
+       "move": [
+        0,
+        52
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 4,
+       "moves": 4
+      },
+      "temptingSeen": 94
+     }
+    },
+    "A6": {
+     "pass": true,
+     "warn": "unknown",
+     "detail": {
+      "loseForks": 36,
+      "fair": 30,
+      "unfair": [],
+      "unknown": 6
+     }
+    },
+    "A7": {
+     "pass": false,
+     "warn": "unknown",
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 38,
+      "perms": 4,
+      "results": [
+       "win",
+       "unknown",
+       "lose",
+       "unknown"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "1 of 4 re-deals of the face-down pictures are lost from the start at clock.n 17"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 14
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "star",
+      "tiles": 96,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 14 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "thaw order",
+   "warnings": [
+    "A6: 6 lose-forks unresolved ('unknown')",
+    "A6: at 30 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)",
+    "A7: 2 re-deals could not be proven winnable (unknown)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        0,
+        52
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        8
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        5,
+        60
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        5,
+        91
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        60,
+        91
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        76
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      75,
+      94,
+      95
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        95
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        0,
+        52
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        8
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        5,
+        60
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        5,
+        91
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        60,
+        91
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        76
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      75,
+      88,
+      89,
+      95
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        95
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        0,
+        52
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        8
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        5,
+        60
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        5,
+        91
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        60,
+        91
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        76
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      75,
+      80,
+      88,
+      95
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "222-f3a892e9520df8bb",
+   "level": 222,
+   "shape": "moon",
+   "tiles": 88,
+   "hash": "269b14479843",
+   "pass": false,
+   "ms": 1892,
+   "nodes": 496109,
+   "k": 9,
+   "strictK": 11,
+   "shipSpares": [
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 88,
+      "clock": {
+       "n": 14,
+       "k": 9,
+       "unsure": false,
+       "spare": 5,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 9,
+       "kPerTile": 9
+      },
+      "idle": 6,
+      "strictWitness": true,
+      "why": [
+       "idle: ice 6: fewest way stays 9 without it, held at the clock false, twin on the way true",
+       "idle: ice 16: fewest way stays 9 without it, held at the clock true, twin on the way true",
+       "idle: ice 26: fewest way stays 9 without it, held at the clock true, twin on the way true",
+       "idle: ice 30: fewest way stays 9 without it, held at the clock true, twin on the way true",
+       "idle: ice 53: fewest way stays 9 without it, held at the clock true, twin on the way true",
+       "idle: ice 66: fewest way stays 9 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": true,
+     "detail": {
+      "readable": true,
+      "keys": [],
+      "keysShownAtStart": 0,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 9,
+      "strictK": 11,
+      "witnessClockMove": 11,
+      "strictWitness": true,
+      "designSpare": 5,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": [
+       "witness takes the clock at move 11, fewest is 9",
+       "peek-pair shortcut: strict fewest 11 vs game 9",
+       "clock.n spare 5 not in 1-3 or clock.n 14 > 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": true,
+     "detail": {
+      "opening": {
+       "wins": 4,
+       "unknown": 0,
+       "legal": 18
+      },
+      "singleWinStates": 4,
+      "obviousSingles": 3,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": false,
+        "openingWins": 4,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 7,
+          "move": 84
+         }
+        ]
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 13,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 13,
+        "openingUnknown": 0,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       2,
+       5
+      ],
+      "wayMoves": 9,
+      "priced": 8,
+      "best": {
+       "move": [
+        0,
+        85
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 2,
+       "moves": 2
+      },
+      "temptingSeen": 51
+     }
+    },
+    "A6": {
+     "pass": false,
+     "detail": {
+      "loseForks": 15,
+      "fair": 14,
+      "unfair": [
+       {
+        "move": [
+         0,
+         69
+        ],
+        "kind": "pair",
+        "atMove": 7,
+        "why": [
+         "the only winning moves are not goal-directed (obvious.js) under some deal"
+        ]
+       }
+      ],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": true,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 28,
+      "perms": 4,
+      "results": [
+       "win",
+       "win",
+       "win",
+       "win"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 9
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "moon",
+      "tiles": 88,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 9 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "free-pair relief",
+   "warnings": [
+    "A6: at 7 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        0,
+        85
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        71
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        4,
+        86
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        81
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        82,
+        87
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      4,
+      78,
+      84,
+      86
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        0,
+        85
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        71
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        4,
+        86
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        81
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        82,
+        87
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      4,
+      54,
+      57,
+      84,
+      86
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        0,
+        85
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        1,
+        71
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        4,
+        86
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        74,
+        81
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      },
+      {
+       "move": [
+        82,
+        87
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      4,
+      84,
+      86
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "223-ae124c834da62a09",
+   "level": 223,
+   "shape": "hourglass",
+   "tiles": 80,
+   "hash": "de25105ff2b1",
+   "pass": false,
+   "ms": 3400,
+   "nodes": 529310,
+   "k": 13,
+   "strictK": 13,
+   "shipSpares": [
+    1,
+    2,
+    3
+   ],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 80,
+      "clock": {
+       "n": 15,
+       "k": 13,
+       "unsure": false,
+       "spare": 2,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 13,
+       "kPerTile": 13
+      },
+      "idle": 1,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 11: fewest way stays 13 without it, held at the clock true, twin on the way false"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       55,
+       61
+      ],
+      "keysShownAtStart": 0,
+      "bothKeysSeenAtMove": 2
+     }
+    },
+    "A3": {
+     "pass": true,
+     "detail": {
+      "k": 13,
+      "strictK": 13,
+      "witnessClockMove": 13,
+      "strictWitness": true,
+      "designSpare": 2,
+      "shippable": [
+       1,
+       2,
+       3
+      ],
+      "why": []
+     }
+    },
+    "A4": {
+     "pass": true,
+     "warn": "unknown",
+     "detail": {
+      "opening": {
+       "wins": 2,
+       "unknown": 0,
+       "legal": 12
+      },
+      "singleWinStates": 6,
+      "obviousSingles": 6,
+      "statesWithUnknown": 0,
+      "okSpares": [
+       1,
+       2,
+       3
+      ],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 2,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 7,
+        "openingUnknown": 0,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 6,
+        "openingUnknown": 2,
+        "notObvious": []
+       }
+      },
+      "why": []
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       2,
+       7
+      ],
+      "wayMoves": 13,
+      "priced": 2,
+      "best": {
+       "move": [
+        55,
+        74
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 4,
+       "moves": 4
+      },
+      "temptingSeen": 13
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 0,
+      "fair": 0,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 30,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 16"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 13
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "hourglass",
+      "tiles": 80,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 13 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves.",
+   "archetype": "keys before the clock",
+   "warnings": [],
+   "forks": [
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        59
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      59,
+      66,
+      78
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        59
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      59,
+      66,
+      79
+     ]
+    },
+    {
+     "step": 3,
+     "moves": 3,
+     "inWindow": true,
+     "tempting": [
+      {
+       "move": [
+        59
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      59
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "224-51f3a19345ad9213",
+   "level": 224,
+   "shape": "ushape",
+   "tiles": 76,
+   "hash": "c9be17302691",
+   "pass": false,
+   "ms": 5008,
+   "nodes": 914483,
+   "k": 20,
+   "strictK": 20,
+   "shipSpares": [],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 76,
+      "clock": {
+       "n": 22,
+       "k": 20,
+       "unsure": false,
+       "spare": 2,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 20,
+       "kPerTile": 20
+      },
+      "idle": 2,
+      "strictWitness": true,
+      "why": [
+       "idle: lock 43: fewest way stays 20 without it, held at the clock false, twin on the way true",
+       "idle: lock 49: fewest way stays 20 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [
+       8,
+       70
+      ],
+      "keysShownAtStart": 1,
+      "bothKeysSeenAtMove": null
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 20,
+      "strictK": 20,
+      "witnessClockMove": 20,
+      "strictWitness": true,
+      "designSpare": 2,
+      "shippable": [],
+      "why": [
+       "clock.n spare 2 not in 1-3 or clock.n 22 > 19",
+       "k 20 leaves no spare 1-3 within clock.n <= 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": false,
+     "warn": "unknown",
+     "detail": {
+      "opening": {
+       "wins": 7,
+       "unknown": 2,
+       "legal": 10
+      },
+      "singleWinStates": 4,
+      "obviousSingles": 4,
+      "statesWithUnknown": 0,
+      "okSpares": [],
+      "perSpare": {
+       "1": {
+        "ok": true,
+        "openingWins": 7,
+        "openingUnknown": 2,
+        "notObvious": []
+       },
+       "2": {
+        "ok": true,
+        "openingWins": 8,
+        "openingUnknown": 1,
+        "notObvious": []
+       },
+       "3": {
+        "ok": true,
+        "openingWins": 8,
+        "openingUnknown": 1,
+        "notObvious": []
+       }
+      },
+      "why": [
+       "no shippable spare (A3)"
+      ]
+     }
+    },
+    "A5": {
+     "pass": false,
+     "detail": {
+      "window": [
+       3,
+       12
+      ],
+      "wayMoves": 20,
+      "priced": 0,
+      "best": null,
+      "temptingSeen": 37
+     }
+    },
+    "A6": {
+     "pass": true,
+     "detail": {
+      "loseForks": 5,
+      "fair": 5,
+      "unfair": [],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 3,
+      "faceDown": 28,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 3 (> 1)",
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 23"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 20
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "ushape",
+      "tiles": 76,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 20 moves; taking the free pair in sight at move 6 before the clock loses the board.",
+   "archetype": "keys before the clock",
+   "warnings": [
+    "A6: at 2 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        52,
+        75
+       ],
+       "kind": "pair",
+       "cost": 1,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      51,
+      52,
+      59,
+      60,
+      62,
+      72,
+      75
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        75
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      51,
+      59,
+      60,
+      62,
+      72,
+      75
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        75
+       ],
+       "kind": "match",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      2,
+      51,
+      59,
+      60,
+      72,
+      75
+     ]
+    }
+   ]
+  },
+  {
+   "set": "qualified",
+   "id": "225-869ece46999c0ecb",
+   "level": 225,
+   "shape": "vase",
+   "tiles": 72,
+   "hash": "b99680b8329d",
+   "pass": false,
+   "ms": 1495,
+   "nodes": 214333,
+   "k": 21,
+   "strictK": 23,
+   "shipSpares": [],
+   "A8": null,
+   "A9flag": null,
+   "gates": {
+    "A1": {
+     "pass": false,
+     "detail": {
+      "story": null,
+      "tiles": 72,
+      "clock": {
+       "n": 24,
+       "k": 21,
+       "unsure": false,
+       "spare": 3,
+       "winAtK": "win",
+       "winAtKProof": "clockShortest witness replay",
+       "atKminus1": "lose",
+       "kGame": 21,
+       "kPerTile": 21
+      },
+      "idle": 1,
+      "strictWitness": true,
+      "why": [
+       "idle: ice 60: fewest way stays 21 without it, held at the clock false, twin on the way true"
+      ]
+     }
+    },
+    "A2": {
+     "pass": false,
+     "detail": {
+      "readable": false,
+      "keys": [],
+      "keysShownAtStart": 0,
+      "bothKeysSeenAtMove": 0
+     }
+    },
+    "A3": {
+     "pass": false,
+     "detail": {
+      "k": 21,
+      "strictK": 23,
+      "witnessClockMove": 23,
+      "strictWitness": true,
+      "designSpare": 3,
+      "shippable": [],
+      "why": [
+       "witness takes the clock at move 23, fewest is 21",
+       "peek-pair shortcut: strict fewest 23 vs game 21",
+       "clock.n spare 3 not in 1-3 or clock.n 24 > 19",
+       "k 21 leaves no spare 1-3 within clock.n <= 19"
+      ]
+     }
+    },
+    "A4": {
+     "pass": false,
+     "detail": {
+      "opening": {
+       "wins": 7,
+       "unknown": 0,
+       "legal": 9
+      },
+      "singleWinStates": 11,
+      "obviousSingles": 9,
+      "statesWithUnknown": 0,
+      "okSpares": [],
+      "perSpare": {
+       "1": {
+        "ok": false,
+        "openingWins": 7,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 10,
+          "move": {
+           "pair": [
+            71,
+            13
+           ]
+          }
+         },
+         {
+          "atMove": 17,
+          "move": 67
+         }
+        ]
+       },
+       "2": {
+        "ok": false,
+        "openingWins": 8,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 10,
+          "move": {
+           "pair": [
+            71,
+            13
+           ]
+          }
+         }
+        ]
+       },
+       "3": {
+        "ok": false,
+        "openingWins": 8,
+        "openingUnknown": 0,
+        "notObvious": [
+         {
+          "atMove": 10,
+          "move": {
+           "pair": [
+            71,
+            13
+           ]
+          }
+         }
+        ]
+       }
+      },
+      "why": [
+       "no shippable spare (A3)",
+       "move 10: the only winning move peek pair 71+13 is not obvious at every spare"
+      ]
+     }
+    },
+    "A5": {
+     "pass": true,
+     "detail": {
+      "window": [
+       4,
+       12
+      ],
+      "wayMoves": 21,
+      "priced": 3,
+      "best": {
+       "move": [
+        29,
+        47
+       ],
+       "kind": "pair",
+       "cost": 2,
+       "result": "win",
+       "step": 6,
+       "moves": 6
+      },
+      "temptingSeen": 39
+     }
+    },
+    "A6": {
+     "pass": false,
+     "detail": {
+      "loseForks": 10,
+      "fair": 9,
+      "unfair": [
+       {
+        "move": [
+         29,
+         47
+        ],
+        "kind": "pair",
+        "atMove": 10,
+        "why": [
+         "the only winning moves are not goal-directed (obvious.js) under some deal"
+        ]
+       }
+      ],
+      "unknown": 0
+     }
+    },
+    "A7": {
+     "pass": false,
+     "detail": {
+      "roomPass": false,
+      "dealsPass": false,
+      "roomOk": true,
+      "unrelieved": 1,
+      "tightBlind": 2,
+      "faceDown": 22,
+      "perms": 4,
+      "results": [
+       "win",
+       "lose",
+       "lose",
+       "lose"
+      ],
+      "why": [
+       "1 unrelieved luck moment",
+       "tightBlind 2 (> 1)",
+       "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 24"
+      ]
+     }
+    },
+    "A8": {
+     "pass": true,
+     "detail": {
+      "k": 21
+     }
+    },
+    "A9": {
+     "pass": true,
+     "detail": {
+      "shape": "vase",
+      "tiles": 72,
+      "compared": 130,
+      "clashes": [],
+      "why": []
+     }
+    }
+   },
+   "card": "The clock needs 21 moves; taking the free pair in sight at move 7 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+   "archetype": "free-pair relief",
+   "warnings": [
+    "A6: at 4 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+   ],
+   "forks": [
+    {
+     "step": 0,
+     "moves": 0,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        12,
+        18
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        56,
+        57
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      12,
+      18,
+      56,
+      57,
+      69,
+      70,
+      71
+     ]
+    },
+    {
+     "step": 1,
+     "moves": 1,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        12,
+        18
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        56,
+        57
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      12,
+      18,
+      56,
+      57,
+      68,
+      69,
+      71
+     ]
+    },
+    {
+     "step": 2,
+     "moves": 2,
+     "inWindow": false,
+     "tempting": [
+      {
+       "move": [
+        12,
+        18
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      },
+      {
+       "move": [
+        56,
+        57
+       ],
+       "kind": "pair",
+       "cost": 0,
+       "result": "win"
+      }
+     ],
+     "winning": [
+      12,
+      18,
+      56,
+      57
+     ]
+    }
+   ]
+  }
+ ]
+}

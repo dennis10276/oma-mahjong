@@ -100,3 +100,13 @@ test('smoke: a real build gives the same content key twice (deterministic builde
   const a = B.build(b), c = B.build(b);
   assert(a.design, 'build ok'); assert.equal(Lb.contentKey(a.design), Lb.contentKey(c.design));
 });
+
+test('a reject made under an older pipeline version can be tested again', () => {
+  const lib = Lb.createLibrary({ dir: tmp() }), k = Lb.contentKey(design(5));
+  assert.equal(lib.reject({ design: design(5), gate: 'static', reason: 'x', pipeline: 'v1' }).added, true);
+  assert.equal(lib.has(k, { pipeline: 'v1' }), 'reject');
+  assert.equal(lib.has(k, { pipeline: 'v2' }), null);
+  assert.equal(lib.reject({ design: design(5), gate: 'static', reason: 'y', pipeline: 'v1' }).reason, 'duplicate');
+  assert.equal(lib.reject({ design: design(5), gate: 'curve', reason: 'z', pipeline: 'v2' }).added, true);
+  assert.equal(lib.has(k, { pipeline: 'v2' }), 'reject');
+});

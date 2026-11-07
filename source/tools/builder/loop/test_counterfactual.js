@@ -83,3 +83,13 @@ test('real smoke run: C1 with 4 campaigns per bot on one qualified board (no cac
   assert.equal(r.fingerprints.keyMemory, ys.fingerprint);
   assert.ok(Date.now() - t < 30000);
 });
+
+test('the built yardstick pins the planner to planner-fast-v1 (e686e095) and C2 uses that meter, not an injected one', () => {
+  const ys = CF.rulerYardstick({ cacheDir: false });
+  assert.equal(ys.pins.planner.botVersion, CF.PLANNER_FAST);
+  assert.ok(ys.pins.planner.fingerprint.startsWith('e686e095'));
+  // counterfactuals() without an injected ys must take the meter branch (not ys.planner): count calls on a wrapper.
+  let viaYs = 0; const orig = ys.planner; ys.planner = d => { viaYs++; return orig(d); };
+  const rate = CF.plannerRater({ ...ys, planner: ys.planner, pins: ys.pins }, { ysBuilt: true, ys, cacheDir: false });
+  assert.equal(typeof rate, 'function'); assert.equal(viaYs, 0);
+});

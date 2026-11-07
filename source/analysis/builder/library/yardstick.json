@@ -36,8 +36,10 @@
   },
   "planner": {
     "role": "S (skilled), better of route and plain styles (Task 05)",
-    "meter": "reference",
-    "fingerprint": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+    "meter": "planner",
+    "botVersion": "planner-fast-v1",
+    "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+    "migration": "meter.js PLANNER_CACHE_MIGRATIONS['e686e095...'] = ['4cf0b4c7...', 'f3285928...'] (planner settings only). Zero drift, about 10x faster (Gemini G4).",
     "settings": {
       "setting": "planner",
       "runs": 20,
@@ -45,7 +47,7 @@
       "seed": 4711
     },
     "spare": 2,
-    "note": "Same settings as batch_evaluate.js quality mode, so cached planner ratings are reused."
+    "note": "Same settings as batch_evaluate.js quality mode, so cached planner ratings are reused (via migration)."
   },
   "subBlockStride": 7919,
   "cap": 20,

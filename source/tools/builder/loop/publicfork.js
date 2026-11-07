@@ -89,7 +89,7 @@ function fairFork(C, s, t, o = {}) {
     let board = null;
     if (alt == null) {
       const r = cached('board', () => w.win(gp, s, boardNodes));
-      board = r.result === 'win' && r.path ? { win: r.path[0] } : r.result;
+      board = r.result === 'win' && r.path && r.path.length ? { win: r.path[0] } : r.result === 'win' ? 'unknown' : r.result;
     }
     checks.permResults.push({ tempting: tr, alternative: alt != null ? alt : altUnknown ? 'unknown' : null, ...(board != null ? { board } : {}) });
     if (tr === 'win') why.push('the tempting move wins under another deal of the hidden pictures (a guess, not a readable fork)');

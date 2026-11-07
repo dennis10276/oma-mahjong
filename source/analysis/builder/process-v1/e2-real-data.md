@@ -3,14 +3,14 @@
 Experiment E2 of `source/analysis/builder/process-design-synthesis.md` (sections 5 and 7). Written 2026-11-07.
 
 **Verdict: the E2 kill condition holds. Real player data cannot steer the slope of the curve.** With three family
-players, a +0.35 logit step over a 20-level window is caught about 15% of the time, against the 70% the rule asks for.
+players, a +0.35 logit step over a 20-level window is caught about 12.5% of the time, against the 70% the rule asks for.
 Use real data only to flag spikes and big band errors, and to check the trailing player, as section 5 already allows.
 
 All numbers come from `source/analysis/builder/process-v1/e2-real-data.json`, made by
 
     node source/tools/builder/loop/heavy.js --label e2-real-data -- node source/tools/builder/loop/real_fit.js e2 source/analysis/archive/plays-2026-11-07.json source/analysis/builder/process-v1/e2-real-data.json 100
 
-(263 s on one core), except where another source is named.
+(262 s on one core), except where another source is named.
 
 ## 1 Data
 
@@ -64,33 +64,33 @@ The trailing player, Mrs. Doubtfire, is 24 levels behind Dennis. That lag is bui
   won yet counts as tries + 1 and is marked censored. Y is defined only on levels all three have played, so it ends
   at 176.
 - **Model Y** comes from the fit with 20-level windows mapped onto these 10-level rows, and with 10-level windows in
-  brackets. It is the capped expected tries at an average level of the window, with the player-level spread
+  brackets. It is the capped expected tries at an average level of the window, with the level-effect spread
   integrated out. It is the only Y for 177-199, where Mrs. Doubtfire has no data yet, so read it there as an
   extrapolation.
 - The per-player columns are mean tries to the first win, capped at 20.
 
 | Levels | Y levels | Y mean | Y median | Model Y 20 (10) | Dennis levels | Dennis first-try | Dennis | Gerda | Mrs D |
 |---|---|---|---|---|---|---|---|---|---|
-| 85-89 | 5 | 4.16 | 3.2 | 3.49 (3.80) | 5 | 0.40 | 1.8 | 7.2 | 5.0 |
-| 90-99 | 0 | – | – | 3.49 (3.25) | 0 | – | – | 5.9 | 4.5 |
-| 100-109 | 4 | 2.50 | 3.0 | 3.10 (2.83) | 4 | 0.25 | 2.25 | 4.6 | 1.9 |
-| 110-119 | 10 | 3.26 | 3.4 | 3.10 (3.35) | 10 | 0.50 | 1.9 | 8.9 | 1.8 |
-| 120-129 | 10 | 4.32 | 4.6 | 3.68 (3.88) | 10 | 0.60 | 2.0 | 11.2 | 3.2 |
-| 130-139 | 10 | 3.86 | 2.6 | 3.68 (3.51) | 10 | 0.50 | 1.9 | 7.5 | 4.0 |
-| 140-149 | 10 | 3.92 | 3.8 | 3.63 (3.38) | 10 | 0.90 | 1.1 | 7.0 | 5.2 |
-| 150-159 | 10 | 4.58 | 3.4 | 3.63 (3.80) | 10 | 0.20 | 2.1 | 6.3 | 6.2 |
-| 160-169 | 10 | 3.06 | 2.2 | 3.15 (3.03) | 10 | 0.90 | 1.4 | 6.1 | 3.2 |
-| 170-179 | 7 (1 censored: 176) | 3.63 | 2.2 | 3.15 (3.31) | 10 | 0.60 | 1.9 | 5.1 | 5.0 (7 levels) |
-| 180-189 | 0 | – | – | 3.06 (2.98) | 10 | 0.80 | 1.4 | 5.7 | – |
-| 190-199 | 0 | – | – | 3.06 (3.48) | 10 | 0.60 | 2.1 | 6.0 (3 levels) | – |
+| 85-89 | 5 | 4.16 | 3.2 | 3.58 (3.86) | 5 | 0.40 | 1.8 | 7.2 | 5.0 |
+| 90-99 | 0 | – | – | 3.58 (3.34) | 0 | – | – | 5.9 | 4.5 |
+| 100-109 | 4 | 2.50 | 3.0 | 3.28 (2.98) | 4 | 0.25 | 2.25 | 4.6 | 1.9 |
+| 110-119 | 10 | 3.26 | 3.4 | 3.28 (3.57) | 10 | 0.50 | 1.9 | 8.9 | 1.8 |
+| 120-129 | 10 | 4.32 | 4.6 | 3.77 (3.99) | 10 | 0.60 | 2.0 | 11.2 | 3.2 |
+| 130-139 | 10 | 3.86 | 2.6 | 3.77 (3.58) | 10 | 0.50 | 1.9 | 7.5 | 4.0 |
+| 140-149 | 10 | 3.92 | 3.8 | 3.75 (3.53) | 10 | 0.90 | 1.1 | 7.0 | 5.2 |
+| 150-159 | 10 | 4.58 | 3.4 | 3.75 (3.88) | 10 | 0.20 | 2.1 | 6.3 | 6.2 |
+| 160-169 | 10 | 3.06 | 2.2 | 3.24 (3.13) | 10 | 0.90 | 1.4 | 6.1 | 3.2 |
+| 170-179 | 7 (1 censored: 176) | 3.63 | 2.2 | 3.24 (3.36) | 10 | 0.60 | 1.9 | 5.1 | 5.0 (7 levels) |
+| 180-189 | 0 | – | – | 3.19 (3.10) | 10 | 0.80 | 1.4 | 5.7 | – |
+| 190-199 | 0 | – | – | 3.19 (3.59) | 10 | 0.60 | 2.1 | 6.0 (3 levels) | – |
 
 How to read it:
 
-- **Family Y is flat at about 3-4.5 over 85-199.** The fitted window effects never move by more than 0.5 logit, and
+- **Family Y is flat at about 3-4.5 over 85-199.** The fitted window effects never move by more than 0.4 logit (20-level windows; 0.5 with 10-level windows), and
   no step between neighbouring windows clears 2 SE (section 4). Nothing in the real data says that 100-199 got
   harder.
 - **Dennis's first-try rate is 59.6% over all his levels.** Per 10 levels it swings from 0.2 to 0.9. With 10 levels a
-  rate has an SE of about 0.15, so these swings are mostly noise. The model's figure per window is 0.55-0.66.
+  rate has an SE of about 0.15, so these swings are mostly noise. The model's figure per window is 0.57-0.63 (20-level) and 0.55-0.66 (10-level).
 - **The walls are single levels, not windows.** Tries over 12 (ledger, before the rage cut): Gerda 91 (68), 132 (71),
   149 (75), 150 (81), 188 (37), 123 (36); Mrs Doubtfire 144 (38), 132 (31). 25 player-levels go over 12, 19 of them
   Gerda's.
@@ -101,48 +101,61 @@ How to read it:
 
     logit P(win) = skill[player] − window[W(level)] − level[level] − u[player, level]
 
-- The windows follow a random walk with step sd τ = 0.5, and the first window is fixed at 0.
-- Level effects are shared by all players and shrunk with sd 0.3.
-- `u` is one effect per player and level. Its sd is chosen by Laplace evidence, and it came out at 0.5 for both window
-  sizes (evidence −705.4 at 0.5, against −706.7 at 0 and −711.0 at 1.0). This term is needed because the family
-  disagree on which levels are hard.
+- The windows follow a random walk with step sd τ = 0.5 (fixed), and the first window is fixed at 0.
+- Level effects are shared by all players and shrunk with sd `sdLevel`. The player-by-level term `u` has sd `sdSeq`.
+  `sdLevel` and `sdSeq` are chosen **together** by Laplace evidence on a grid (`chooseSds`, 8 x 5 points). For both
+  window sizes the evidence picked **sdLevel 0.6 and sdSeq 0**, so there is **no player-by-level term** in the fit
+  (20-level evidence −565.5; 10-level −566.91; `windows.<size>.sds`).
+- The evidence is flat near the top: for 20-level windows (0.6, 0.25) scores −565.64 and (0.6, 0.5) scores −566.69.
+  The data therefore do not say that the family disagree on which levels are hard; they also do not rule out some
+  disagreement. That is why the power run also tries worlds with sdSeq 0.5 and 1.0 (section 5).
 - An unwon level adds only its lost tries (exact censoring). Tries after the 12th are dropped.
 - It is fitted by Newton's method on the posterior mode, with SEs from the Laplace approximation.
 - The code is plain node, not the `real_fit.py` the synthesis names.
+- **Departure from the synthesis (line 102):** the synthesis estimator has a "slow skill drift" term. This one has
+  none, on purpose: a drift shared by the players cannot be told apart from the window random walk. Adding a drift
+  term could only widen the SEs and lower the power, so the kill verdict below holds a fortiori.
+- **First windows are short.** Windows line up with multiples of the window size, not with level 85. So the first
+  20-level window is 85-99 (15 levels) and the first 10-level window is 85-89 (5 levels). Boundary 1 is measured
+  against a short window. It is one of the five 20-level boundaries (three players on both sides), so the pooled
+  kill figure includes it; the other four boundaries are against full windows.
 
-**Fit, 20-level windows.**
+**Fit, 20-level windows** (`windows.20.fit`).
 
-- Skills (logit): Dennis +0.33, Mrs Doubtfire −0.85, Gerda −1.72.
-- Window effects and steps:
+- Skills (logit): Dennis +0.37, Mrs Doubtfire −0.86, Gerda −1.72. The fitted level effects have an rms of 0.35.
+- Window effects relative to 85-99: 100-119 −0.14, 120-139 +0.09, 140-159 +0.08, 160-179 −0.16, 180-199 −0.18.
+- Steps between neighbouring windows:
 
 | Boundary | Step (logit) | SE | Players | Flagged |
 |---|---|---|---|---|
-| 85-99 → 100-119 | −0.19 | 0.27 | 3 | no |
-| 100-119 → 120-139 | +0.28 | 0.24 | 3 | no |
-| 120-139 → 140-159 | −0.03 | 0.23 | 3 | no |
-| 140-159 → 160-179 | −0.22 | 0.23 | 3 | no |
-| 160-179 → 180-199 | −0.05 | 0.28 | Dennis, Gerda | no |
+| 85-99 → 100-119 | −0.14 | 0.28 | 3 | no |
+| 100-119 → 120-139 | +0.23 | 0.25 | 3 | no |
+| 120-139 → 140-159 | −0.01 | 0.25 | 3 | no |
+| 140-159 → 160-179 | −0.24 | 0.25 | 3 | no |
+| 160-179 → 180-199 | −0.02 | 0.29 | Dennis, Gerda | no |
 
-- The SE of a 20-level step is 0.23-0.28. The synthesis assumed about 0.17.
-- With 10-level windows, the step SEs are 0.29-0.37 and no step is flagged.
+- The SE of a 20-level step is 0.25-0.29. The synthesis assumed about 0.17.
+- With 10-level windows, the step SEs are 0.30-0.37 and no step is flagged.
+- For comparison, the first-draft setting (sdLevel 0.3, sdSeq 0.5, `fitOldSettings`) gave SEs of 0.23-0.28; the
+  current setting gives slightly larger ones.
 
-**Does the model reproduce the real data?** This is a predictive check with 200 simulations
-(`windows.20.predictiveCheck.fitted`):
+**Does the model reproduce the real data?** Predictive check with 200 simulations (`windows.20.predictiveCheck.fitted`):
 
 | Player | Share won first try: real / simulated (90% range) | Share hitting the 12-try cut: real / simulated (90% range) |
 |---|---|---|
-| Dennis | 0.596 / 0.595 (0.53-0.68) | |
-| Mrs Doubtfire | 0.308 / 0.317 (0.23-0.40) | 0.066 / 0.037 (0.01-0.08) |
-| Gerda | 0.131 / 0.175 (0.12-0.24) | 0.178 / 0.158 (0.10-0.22) |
+| Dennis | 0.596 / 0.592 (0.51-0.67) | 0 / 0.001 |
+| Mrs Doubtfire | 0.308 / 0.312 (0.22-0.40) | 0.066 / 0.040 (0.01-0.08) |
+| Gerda | 0.131 / 0.176 (0.12-0.24) | 0.178 / 0.167 (0.11-0.23) |
 
-Every real value lies inside its 90% range. Gerda's real first-try share sits near the low edge: she has more
+Every real value lies inside its 90% range. Gerda's real first-try share sits at the low edge: she has more
 "almost never first try" than the model gives her.
 
 ## 5 Power simulation (the E2 question)
 
 **Set-up.**
 
-- The simulated world uses the fitted skills, level effects with sd 0.3 and player-level effects with sd 0.5.
+- The simulated world uses the fitted skills, level effects with sd 0.6 and no player-by-level term (the chosen
+  setting, `windows.<size>.power.world`).
 - Missingness and lag are the real ones: exactly the player-levels the family really played. That includes Dennis's
   gap on 90-105 and the frontiers, so the last 20-level window has only Dennis and Gerda.
 - Won levels are replayed to a win or to the 12-try cut. Unfinished levels are simulated only as far as the player
@@ -150,65 +163,73 @@ Every real value lies inside its 90% range. Gerda's real first-try share sits ne
 - One step of +δ is planted at each window boundary in turn.
 - **Detected** means the estimated step is above 2 SE in the right direction and every leave-one-player-out refit
   agrees on its sign. A **false alarm** is the same test passing in a world with no step.
-- There were 100 simulations per δ and boundary (50 in the flat-τ check) and 200 null worlds per size.
+- There were 100 simulations per δ and boundary (50 in the flat-τ and heavier-world checks) and 200 null worlds per
+  size. 16,000 refits for 20-level windows and 30,400 for 10-level windows; none failed to converge.
 
 **Results** (`windows.<size>.power.summary`; "3-player boundaries" means boundaries that all three players have
 played on both sides):
 
 | Window | Planted step | Detected (3-player boundaries) | Best single boundary | Mean estimate / true step |
 |---|---|---|---|---|
-| 20 levels | +0.20 | 5% | 6% | 0.72 |
-| 20 levels | **+0.35** | **15%** | 24% | 0.77 |
-| 20 levels | +0.50 | 28% | 34% | 0.69 |
-| 20 levels | +0.75 | 66% | 80% | 0.73 |
-| 10 levels | +0.20 | 2% | 4% | 0.62 |
-| 10 levels | +0.35 | 3% | 9% | 0.58 |
-| 10 levels | +0.50 | 10% | 15% | 0.60 |
-| 10 levels | +0.75 | 34% | 39% | 0.61 |
+| 20 levels | +0.20 | 3.7% | 4% | 0.68 |
+| 20 levels | **+0.35** | **12.5%** | 14% | 0.74 |
+| 20 levels | +0.50 | 21.5% | 24% | 0.70 |
+| 20 levels | +0.75 | 55.7% | 65% | 0.72 |
+| 10 levels | +0.20 | 1.1% | 3% | 0.56 |
+| 10 levels | +0.35 | 4.7% | 10% | 0.62 |
+| 10 levels | +0.50 | 8.9% | 13% | 0.60 |
+| 10 levels | +0.75 | 25.3% | 30% | 0.58 |
 
 False alarms per window:
 
-- 20-level windows: pooled 1.7%, worst window 3%;
-- 10-level windows: pooled 0.4%, worst window 1.5%.
+- 20-level windows: pooled 1.0%, worst window 1.5%;
+- 10-level windows: pooled 0.3%, worst window 1.0%.
 
 **Robustness checks** (all in the JSON):
 
 - **Less shrinkage** (τ = 5, so the window prior hardly shrinks the steps; `summaryFlatTau5`). With 20-level windows,
-  +0.35 is detected 19.5%, +0.5 42.5% and +0.75 71% of the time. False alarms are 4.3% pooled and 6% in the worst
-  window. The estimates are then unbiased (0.95-1.05 of the true step), but the power hardly rises.
-- **A heavier world** (player-level sd 1.0, fitted with 0.5; `heavierWorldSd1`). +0.35 is detected 8-22% of the time
-  per 20-level boundary, with false alarms of 1.5-4%.
-- **A misspecified fit** (no player-level term; `falseAlarmMisspecified`). False alarms stay at or below 4%.
+  +0.35 is detected 16.5%, +0.5 30% and +0.75 67.5% of the time. False alarms are 3.7% pooled and 4% in the worst
+  window. The estimates are then nearly unbiased (0.95-1.00 of the true step), but the power stays far below 70%.
+  With 10-level windows and τ = 5, +0.35 is detected 9.7% and the worst-window false alarm is 7.5%.
+- **A heavier world** (player-by-level sd 1.0, fitted with sdSeq 0; `heavierWorldSd1`). With 20-level windows +0.35
+  is detected 8-16% of the time per boundary (8.5% pooled over 3-player boundaries), with false alarms of 2.5-5%.
+- **A misspecified fit** (world with sdSeq 0.5, fitted with sdSeq 0; `falseAlarmMisspecified`). With 20-level
+  windows false alarms stay at or below 2% per boundary.
 - **The leave-one-player-out check** almost never changes the outcome: the rates without it are the same within 1
   point. The 2-SE threshold is what decides.
 
-**What the step sizes mean in tries** (rough, at an average level, without the player-level spread):
+**What the step sizes mean in tries** (`windows.20.fit.stepInTries`, at the first window, capped at 20):
 
 | Step | Dennis | Mrs Doubtfire | Gerda |
 |---|---|---|---|
-| +0.35 logit | 1.7 → 2.0 tries | 3.3 → 4.3 | 6.6 → 8.9 |
-| +0.75 logit (the smallest step found about 2/3 of the time) | 1.7 → 2.5 | 3.3 → 6.0 | 6.6 → 12.8 |
+| +0.35 logit | 1.8 → 2.2 tries | 3.8 → 4.8 | 6.7 → 8.3 |
+| +0.75 logit | 1.8 → 2.7 | 3.8 → 6.3 | 6.7 → 10.3 |
 
-So the family data notices a 20-level window becoming roughly twice as hard for Gerda. It does not notice a 30% rise.
+So even a window becoming about 1.5 times as hard for Gerda is caught only a little over half the time. A 25% rise
+goes unnoticed.
 
 ## 6 Kill verdict and what follows
 
 The rule from synthesis section 7 is: if +0.35 over 20 levels is detected less than 70% of the time, or false alarms
 are above 10% per window, real data does not steer the slope.
 
-- **Measured:** 15% detection (19.5% with the flat prior), and at most 6% false alarms.
+- **Measured:** 12.5% detection (16.5% with the flat prior; 4.7% with 10-level windows), and at most 1.5% false
+  alarms (4% with the flat prior).
 - **Killed.** It fails by a wide margin and on every robustness check, not near the threshold.
-- The synthesis expected about 50%. The real figure is lower for three reasons: the step SE is about 0.25 rather than
-  0.17, the window prior shrinks estimates by about 25%, and Mrs Doubtfire's lag removes the third player from the
-  newest window.
+- The synthesis expected about 50%. The real figure is lower for three reasons: the step SE is about 0.25-0.29
+  rather than 0.17, the window prior shrinks estimates by about 25% (mean estimate 0.74 of the true step), and Mrs
+  Doubtfire's lag removes the third player from the newest window.
 
 What this means for the process (section 5 of the synthesis, applied as written there):
 
 1. **The slope g is Dennis's choice, held by the ruler.** Retargeting g from real data (step 4) is off. Section 5's
    ±0.25%-per-level nudges are far smaller than anything the data can see.
 2. **Real data keeps three jobs.**
-   - **Gross band check:** a 20-level window more than about 0.75 logit off its locked prediction. That is roughly 2×
-     Gerda's tries, the size of "the 200-219 bridge is more than 40% above 175-199".
+   - **Gross band check (a proposal for Dennis, not a tested rule):** a 20-level window about 0.75 logit or more off
+     its locked prediction, which is roughly 1.5 times Gerda's tries. The tables above say this size is caught only
+     about 56% of the time (67.5% with the flat prior; lower on the 2-player newest window), under the 70% bar.
+     No size that was tested reaches 70%. A step of about 1.0 logit was not measured, so a trigger there would need
+     another run. Treat any trigger as a prompt to look, not as proof.
    - **Spike and defect ledger:** single levels where Gerda or Mrs Doubtfire need more than 20 tries. This has always
      been the clearest signal (91, 132, 149, 150, 188 for Gerda).
    - **Gerda's guardrail and Dennis's first-try rate,** reported as trends with their SEs (about 0.15 per 10 levels),
@@ -239,12 +260,12 @@ Her figures are from `careLedger` in the JSON. It counts all her records, becaus
 - **85-89 rests on pre-1.52 plays.** Board identity there is inferred, not checked (section 1).
 - **Dennis played almost nothing on the current boards of 90-105,** so the first windows lean on Gerda and Mrs
   Doubtfire.
-- **τ (0.5) and the level sd (0.3) are fixed, not fitted.** The flat-τ check shows the verdict does not depend on τ.
-- **Player skill drift (learning) is not in the model.** Steady learning would look like a slowly easing window
-  effect. That is one possible reading of the slightly negative effects after 160.
+- **τ (0.5) is fixed, not fitted.** The level sd (0.6) and the player-by-level sd (0) are chosen by evidence, which is flat near the top (section 4). The flat-τ check shows the verdict does not depend on τ.
+- **Player skill drift (learning) is not in the model** (a departure from the synthesis, see section 4). Steady learning would look like a slowly easing window effect. That is one possible reading of the slightly negative effects after 160. Adding it can only lower the power.
+- **The first windows are short** (85-99 and 85-89), so boundary 1 is measured against a short window.
 - **The estimator is node (`real_fit.js`), not `real_fit.py`.** Its tests (`node --test
-  source/tools/builder/loop/test_real_fit.js`, 14 pass, under 1 s) check that a planted step is recovered, that
-  censoring works, that the evidence picks the player-level term, and the ledger rules. They also check the real
+  source/tools/builder/loop/test_real_fit.js`, 18 pass, under 1 s) check that a planted step is recovered, that
+  censoring works, that the evidence picks the player-by-level term when the data have one, and the ledger rules. They also check the real
   export: Dennis's highest win is 199, `outcome()` agrees on at least 95% of won levels, and no test or care account
   appears in the family data.
 

@@ -101,10 +101,14 @@ function evalSpare(curve, s, rules = RULES) {
   const out = { s, D: pt.D, se: pt.se, checks: {} };
   out.checks.censored = pt.D < rules.censor ? 'pass' : 'fail';
   // monotone: relaxing the clock never makes it harder beyond noise, on the nearest measured spare on each side
+  // VERDICT = synthesis section 3 rule: D(s+1) <= D(s) + max(0.5, 2 SE) (nearest measured higher spare when s+1 is missing).
+  // The tighter side (D(s) <= D(s-1) + margin) is an extension: reported separately as monotoneTwoSided, not in the verdict.
   const mono = [];
-  if (lower.length) { const a = curve[lower.at(-1)]; mono.push(pt.D <= a.D + margin(a, pt) ? 'pass' : 'fail'); }
-  if (higher.length) { const b = curve[higher[0]]; mono.push(b.D <= pt.D + margin(pt, b) ? 'pass' : 'fail'); }
-  out.checks.monotone = !mono.length ? 'unknown' : mono.includes('fail') ? 'fail' : 'pass';
+  const hi = higher.length ? (() => { const b = curve[higher[0]]; return b.D <= pt.D + margin(pt, b) ? 'pass' : 'fail'; })() : null;
+  const lo = lower.length ? (() => { const a = curve[lower.at(-1)]; return pt.D <= a.D + margin(a, pt) ? 'pass' : 'fail'; })() : null;
+  if (hi) mono.push(hi); if (lo) mono.push(lo);
+  out.checks.monotone = hi || lo || 'unknown';   // no higher spare measured: fall back to the tighter-side test
+  out.checks.monotoneTwoSided = !mono.length ? 'unknown' : mono.includes('fail') ? 'fail' : 'pass';
   out.checks.monotoneSides = mono.length;
   out.checks.monotoneStrict = (() => {             // the same with the fixed 0.5 margin (strictest reading)
     const m = [];
@@ -183,7 +187,7 @@ function a3Check(design) {
   out.strictSearchMiss = valid && kWitness !== null && (k.kStrict === null || k.kStrict > kWitness);
   out.peekShortcut = k.kPeek !== null && out.kStrictEff !== null ? k.kPeek < out.kStrictEff : null;
   out.witnessNotShortest = k.kPeek !== null && kWitness !== null ? kWitness > k.kPeek : null;
-  out.a3 = k.kPeek !== null ? valid && kWitness === k.kPeek : null;     // the A3 equality + validSolution
+  out.a3 = k.kPeek !== null && !k.peekUnsure ? valid && kWitness === k.kPeek : null;     // the A3 equality + validSolution
   out.trueSpare = k.kPeek !== null ? n - k.kPeek : null;
   out.tClocksSpare = kWitness !== null ? n - kWitness : null;
   out.a3Full = out.a3 === null ? null : out.a3 && n <= RULES.maxN && out.trueSpare >= 1 && out.trueSpare <= 3;
@@ -269,7 +273,7 @@ function buildCurves(points, opts = {}) {
     const ns = new Set(ps.map(p => p.n));
     if (ns.size < 2) continue;
     const k = opts.kOf ? opts.kOf(ps[0].design) : clockK(ps[0].design);
-    if (k.kPeek === null) { curves.push({ group: g, source: ps[0].source, bot: ps[0].bot, fail: 'kUnknown' }); continue; }
+    if (k.kPeek === null || k.peekUnsure) { curves.push({ group: g, source: ps[0].source, bot: ps[0].bot, fail: 'kUnknown', peekUnsure: !!k.peekUnsure }); continue; }
     const curve = {};
     for (const n of ns) {
       const at = ps.filter(p => p.n === n), blocks = at.flatMap(p => p.blocks || [p.D]);
@@ -298,10 +302,12 @@ function summarizeCurves(curves) {
   const anyEval = ok.filter(c => c.verdicts.some(v => v.verdict !== 'unknown'));
   const anyPass = ok.filter(c => c.verdicts.some(v => v.verdict === 'pass'));
   const tnBorder = spareItems.filter(x => x.checks.tighter === 'fail' && x.checks.tighterBorderline).length;
+  const monoTwoSidedFail = spareItems.filter(x => x.checks.monotoneTwoSided === 'fail').length;
   const monoStrictFail = spareItems.filter(x => x.checks.monotoneStrict === 'fail').length;
   return { curves: ok.length, kUnknown: curves.length - ok.length, spares: tally(spareItems), byBand, puzzleBand,
     puzzlesAnyEvaluable: anyEval.length, puzzlesAnyPass: anyPass.length, puzzleShare: pct(anyPass.length, anyEval.length),
-    tighterFailBorderline: tnBorder, monotoneFailWithFixedHalfMargin: monoStrictFail };
+    tighterFailBorderline: tnBorder, monotoneFailWithFixedHalfMargin: monoStrictFail, monotoneFailTwoSided: monoTwoSidedFail,
+    peekUnsureExcluded: curves.filter(c => c.peekUnsure).length };
 }
 
 // ---------- noise ----------
@@ -380,7 +386,9 @@ function pairingCorrelation(curvePairs) {
   const mx = mean(xs), my = mean(ys);
   let sxy = 0, sxx = 0, syy = 0;
   for (let i = 0; i < xs.length; i++) { sxy += (xs[i] - mx) * (ys[i] - my); sxx += (xs[i] - mx) ** 2; syy += (ys[i] - my) ** 2; }
-  return { n: xs.length, r: sxx && syy ? r3(sxy / Math.sqrt(sxx * syy)) : null };
+  const r = sxx && syy ? sxy / Math.sqrt(sxx * syy) : null;
+  const ci = r === null || xs.length < 4 ? null : (() => { const z = Math.atanh(r), h = 1.96 / Math.sqrt(xs.length - 3); return [r3(Math.tanh(z - h)), r3(Math.tanh(z + h))]; })();
+  return { n: xs.length, r: r === null ? null : r3(r), ci95: ci };
 }
 
 // ---------- A3 over populations ----------
@@ -542,16 +550,16 @@ function run(opts = {}) {
   const kill = [];
   {
     const m = part1.byBot.reference.puzzleBand['6-16'], mk = part1.byBot.keyMemory.puzzleBand['6-16'];
-    const share = m.share, fired = share !== null && share < 25;
-    kill.push({ id: 'K1', rule: 'under 25% of mid-band (D 6-16) puzzles have a spare that could ship -> the dial is a minor trim; library ~2x wider',
+    const share = m.share, fired = share !== null && share < 30;
+    kill.push({ id: 'K1', rule: 'under 30% of mid-band (D 6-16) puzzles have a spare that could ship (synthesis section 7 K1)',
       value: `reference ${m.canShip}/${m.puzzles} = ${m.share}%; key-memory ${mk.canShip}/${mk.puzzles} = ${mk.share}%`,
-      fired: fired || (mk.share !== null && mk.share < 25) });
+      fired: fired || (mk.share !== null && mk.share < 30) });
   }
   {
     const s = part2.scale['ladder reference (unselected)'].geom.c, s2 = part2.scale['all reference'].geom.c,
       s3 = part2.scale['ladder key-memory (unselected)'].geom.c, cm = part2.campaigns.byBot.reference.scaleMid;
     const vals = [s, s2, cm].filter(x => x !== null);
-    kill.push({ id: 'K2', rule: 'per-campaign spread departs from sqrt(D(D-1)) by more than 30% (D 3-16) -> redo the section 2 precision table',
+    kill.push({ id: 'K2', rule: '(audit-specific threshold, not a synthesis rule) per-campaign spread departs from sqrt(D(D-1)) by more than 30% (D 3-16) -> redo the section 2 precision table',
       value: `scale c (sd / sqrt(D(D-1))): ladder ref ${s}, all reference pairs ${s2}, ladder key-memory ${s3}, per-campaign cache ref ${cm}. `
         + `Against the capped (20-try) geometric instead: ladder ref ${part2.scale['ladder reference (unselected)'].capped.c}, all reference ${part2.scale['all reference'].capped.c}, `
         + `ladder key-memory ${part2.scale['ladder key-memory (unselected)'].capped.c}, per-campaign cache ref ${part2.campaigns.byBot.reference.scaleMidCapped}, key-memory ${part2.campaigns.byBot.keyMemory.scaleMidCapped}`,
@@ -560,11 +568,18 @@ function run(opts = {}) {
   }
   {
     const b = part3.builderPooled, q = part3.requestedPooled, qq = part3.populations['qualified 200-225 (18 kept boards)'];
-    kill.push({ id: 'K3', rule: 'more than 20% of boards fail A3 -> the peek-pair decision moves to the top of Dennis\'s list',
+    kill.push({ id: 'K3', rule: '(audit-specific threshold, not a synthesis rule) more than 20% of boards fail A3 -> the peek-pair decision moves to the top of Dennis\'s list',
       value: `builder boards (ladder + knobs-v1) ${b.a3Fail}/${b.known} = ${b.a3FailShare}% fail A3 (peek-pair shortcut on ${b.peekShortcut} = ${b.peekShortcutShare}%); `
         + `ladder + qualified + knobs-v1 ${q.a3Fail}/${q.known} = ${q.a3FailShare}%; strict witness later than k: ${q.strictWitnessLate}/${q.strictWitnessKnown} = ${q.strictWitnessLateShare}%; `
         + `qualified alone ${qq ? qq.a3Fail + '/' + (qq.boards - qq.engineUnknown) : 'n/a'}`,
       fired: (b.a3FailShare !== null && b.a3FailShare > 20) || (q.a3FailShare !== null && q.a3FailShare > 20) });
+  }
+  {
+    const out = {};
+    for (const bn of ['reference', 'keyMemory']) { const t = part1.byBot[bn].spares; out[bn] = { fails: t.failMonotone, ev: t.evaluable, share: pct(t.failMonotone, t.evaluable) }; }
+    kill.push({ id: 'K4', rule: 'more than 15% of evaluable spares are non-monotone beyond noise (synthesis section 7)',
+      value: `reference ${out.reference.fails}/${out.reference.ev} = ${out.reference.share}%; key-memory ${out.keyMemory.fails}/${out.keyMemory.ev} = ${out.keyMemory.share}%`,
+      fired: out.reference.share > 15 || out.keyMemory.share > 15 });
   }
 
   const compactCurves = curves.filter(c => !c.fail).map(c => ({ source: c.source, bot: c.bot, story: c.story, k: c.k, kStrict: c.kStrict,
@@ -585,7 +600,7 @@ function md(R) {
   L.push('# E1 dial audit on existing data', '');
   L.push(`Generated by \`source/tools/builder/loop/research/e1_dial_audit.js\` on ${R.created.slice(0, 10)} in ${R.seconds} s. No bot was run; only stored ratings and the engine (clockShortest, replay, Hard.validSolution). Numbers below come from \`e1-dial-audit.json\` next to this file.`, '');
   L.push('Sources:', ''); for (const n of R.notes) L.push('- ' + n); L.push('');
-  L.push('Definitions: a *puzzle* is the board content without clock.n. *Spare* s = clock.n - k with k = `engine.clockShortest` (peek pairs allowed, the game\'s rules). D of a point = mean of its 40-campaign blocks; SE from the capped geometric variance at D. A spare s in {1,2,3} *passes* when D(s) < 18.5, the nearest measured spare on each side is monotone within max(0.5, 2 SE of the difference), and the tighter neighbour D(s-1) <= min(1.5 D(s), D(s)+3). If s-1 is not measured but a tighter spare is and already satisfies the limit, that counts as a pass (bound); otherwise the spare is *unknown*. Bands are by D at the spare being shipped.', '');
+  L.push('Definitions: a *puzzle* is the board content without clock.n. *Spare* s = clock.n - k with k = `engine.clockShortest` (peek pairs allowed, the game\'s rules). D of a point = mean of its 40-campaign blocks; SE from the capped geometric variance at D. A spare s in {1,2,3} *passes* when D(s) < 18.5, the next measured higher spare is monotone, D(s+1) <= D(s) + max(0.5, 2 SE of the difference) (synthesis section 3; when no higher spare is measured the tighter-side test D(s) <= D(s-1) + margin stands in; otherwise the tighter-side test D(s) <= D(s-1) + margin is NOT in the verdict and is counted separately as a two-sided column), and the tighter neighbour D(s-1) <= min(1.5 D(s), D(s)+3). If s-1 is not measured but a tighter spare is and already satisfies the limit, that counts as a pass (bound); otherwise the spare is *unknown*. Bands are by D at the spare being shipped.', '');
   L.push('## Kill criteria', '');
   t(['', 'rule', 'measured', 'fired?'], R.kill.map(k => [k.id, k.rule, k.value, k.fired ? '**FIRED**' : 'no']));
   L.push(findings(R));
@@ -600,7 +615,7 @@ function md(R) {
   L.push('Pooled by bot (all sources):', '');
   t(H, [row('reference (all)', P1.byBot.reference), row('key-memory (ladder only)', P1.byBot.keyMemory),
     row('reference, stories without frozen keys', P1.byBotAllowedStories.reference), row('key-memory, stories without frozen keys', P1.byBotAllowedStories.keyMemory)]);
-  L.push(`Tighter-neighbour fails that sit within 2 SE of the limit (could flip with more campaigns): reference ${P1.byBot.reference.tighterFailBorderline} of ${P1.byBot.reference.spares.failTighter}; key-memory ${P1.byBot.keyMemory.tighterFailBorderline} of ${P1.byBot.keyMemory.spares.failTighter}. Monotone fails with the fixed 0.5 margin instead of the noise margin: reference ${P1.byBot.reference.monotoneFailWithFixedHalfMargin}, key-memory ${P1.byBot.keyMemory.monotoneFailWithFixedHalfMargin}.`, '');
+  L.push(`Tighter-neighbour fails that sit within 2 SE of the limit (could flip with more campaigns): reference ${P1.byBot.reference.tighterFailBorderline} of ${P1.byBot.reference.spares.failTighter}; key-memory ${P1.byBot.keyMemory.tighterFailBorderline} of ${P1.byBot.keyMemory.spares.failTighter}. Monotone fails with the extra tighter-side test: reference ${P1.byBot.reference.monotoneFailTwoSided}, key-memory ${P1.byBot.keyMemory.monotoneFailTwoSided}. Curves dropped because the engine flagged k as unsure (search budget ran out): reference ${P1.byBot.reference.peekUnsureExcluded}, key-memory ${P1.byBot.keyMemory.peekUnsureExcluded}. Monotone fails with the fixed 0.5 margin instead of the noise margin: reference ${P1.byBot.reference.monotoneFailWithFixedHalfMargin}, key-memory ${P1.byBot.keyMemory.monotoneFailWithFixedHalfMargin}.`, '');
   L.push(`Spare 1 -> 2 steps: reference ${P1.step12.reference.pairs} pairs, ${P1.step12.reference.harderBy05} harder by more than 0.5, median change ${P1.step12.reference.medianDelta}, ${P1.step12.reference.cliffs} cliffs (D(1) above the tighter-neighbour limit of D(2)); key-memory ${P1.step12.keyMemory.pairs} pairs, ${P1.step12.keyMemory.harderBy05} harder, median ${P1.step12.keyMemory.medianDelta}, ${P1.step12.keyMemory.cliffs} cliffs.`, '');
   const ag = P1.botAgreementLadder;
   L.push(`Same ladder pairs under both bots: ${ag.same} of ${ag.pairs} evaluable spare verdicts agree; ${ag.refOnly} pass only under the reference bot, ${ag.kmOnly} only under key memory.`, '');
@@ -619,7 +634,7 @@ function md(R) {
     t(['D bin', 'blocks', 'campaigns', 'mean D', 'sd', 'sqrt(D(D-1))', 'capped', 'ratio geom', 'ratio capped'],
       v.bins.map(b => [`${b.lo}-${b.hi}`, b.blocks, b.campaigns, b.D, b.sd, b.geom, b.capped, b.ratioGeom, b.ratioCapped]));
   }
-  L.push(`Pairing (common random numbers) on spare pairs measured with the same seeds: correlation of the seed gap at spare 1 and at spare 2 r = ${R.part2.pairingCorrelation.r} (n ${R.part2.pairingCorrelation.n}). The variance of a paired step is (1 - r) times the unpaired one when both spares have the same spread.`, '');
+  L.push(`Pairing (common random numbers) on spare pairs measured with the same seeds: correlation of the seed gap at spare 1 and at spare 2 r = ${R.part2.pairingCorrelation.r} (n ${R.part2.pairingCorrelation.n}, 95% interval ${(R.part2.pairingCorrelation.ci95||[]).join(' to ')}). The variance of a paired step is (1 - r) times the unpaired one when both spares have the same spread.`, '');
   L.push('## 3 A3: peek-pair shortcut', '');
   L.push('k peek = engine.clockShortest (the game\'s rules); k strict = the same without peek pairs (lab/exact.js, bounded by the stored witness when that is strict-valid, because exact.js under its budget can miss or give up); k witness = stored solution clock index + 1 (what t_clocks uses). A3 passes when Hard.validSolution accepts the stored witness and k witness = k peek.', '');
   t(['population', 'boards', 'engine unknown', 'witness strict-valid', 'strict witness takes the clock later than k peek', 'peek-pair shortcut (k peek < k strict)', 'A3 fail', 'also needs n <= 19 and s in 1-3', 'median shortcut (moves)', 'exact.js strict missed a valid witness', 'engine ms (median)'],
@@ -643,20 +658,19 @@ function findings(R) {
   const q = P3.populations['qualified 200-225 (18 kept boards)'] || {}, rq = P3.requestedPooled, bp = P3.builderPooled;
   const miss = Object.values(P3.populations).reduce((s, x) => s + (x.strictSearchMiss || 0), 0);
   const L = ['## Findings', ''];
-  L.push(`**Kill criteria: ${R.kill.filter(x => x.fired).map(x => x.id).join(', ') || 'none'} fired.**`, '');
-  L.push(`1. **The dial can ship a spare on most mid-band puzzles (K1 ${k.K1.fired ? 'FIRED' : 'not fired'}).** Mid-band (D 6-16) puzzles with a spare that passes the section 3 rules: `
-    + `pooled reference ${b(ref.puzzleBand['6-16'])}, key memory ${b(km.puzzleBand['6-16'])} (ladder only). The clean builder data is small: v3 ladder reference ${b(lr.puzzleBand['6-16'])}, key memory ${b(lk.puzzleBand['6-16'])}. `
-    + `Most mid-band puzzles come from Codex's 200-225 factory (${b(f2.puzzleBand['6-16'])}); those curves are selected (the second seed was only run when the first landed in 5.5-11.5) and are factory boards, not builder boards. `
+  L.push(`**Kill flags set: ${R.kill.filter(x => x.fired).map(x => x.id).join(', ') || 'none'}.** K1 and K4 are the two synthesis section 7 criteria for E1 (30% mid-band, 15% non-monotone); K2 and K3 are audit-specific thresholds, not synthesis rules.`, '');
+  L.push(`1. **K1 (fewer than 30% of mid-band puzzles can ship) is undetermined on builder data; it did not fire on the pooled data (flag: K1 ${k.K1.fired ? 'FIRED' : 'not fired'}).** Mid-band (D 6-16) puzzles with a spare that passes the section 3 rules, clean builder v3 ladder: reference ${b(lr.puzzleBand['6-16'])}, key memory ${b(lk.puzzleBand['6-16'])}. That is n of only 12-19 and both shares are above 30% but the sample is too small to judge. `
+    + `Secondary, pooled and mostly selected factory boards: reference ${b(ref.puzzleBand['6-16'])}, key memory ${b(km.puzzleBand['6-16'])}; of the reference pool, Codex's 200-225 factory contributes ${b(f2.puzzleBand['6-16'])}, and those curves are selected (the second seed was only run when the first landed in 5.5-11.5). `
     + `Easy puzzles (D < 6) pass ${ref.byBand['<6'].passShare}% of evaluable spares (reference); above 16 only ${ref.byBand['>16'].passShare}% pass, almost all failing on censoring (D >= 18.5). `
-    + `Inside the range the main failure is the tighter-neighbour (cliff) rule: ${ref.spares.failTighter} reference fails, ${ref.tighterFailBorderline} of them within 2 SE of the limit. Monotonicity rarely fails (${ref.spares.failMonotone} reference spares with the noise margin; spare 1 -> 2 steps harder by more than 0.5: ${P1.step12.reference.harderBy05} of ${P1.step12.reference.pairs}). `
+    + `Inside the range the main failure is the tighter-neighbour (cliff) rule: ${ref.spares.failTighter} reference fails, ${ref.tighterFailBorderline} of them within 2 SE of the limit. Monotonicity rarely fails (K4 ${k.K4.fired ? 'FIRED' : 'not fired'}: ${k.K4.value}; section 3 rule with the noise margin; spare 1 -> 2 steps harder by more than 0.5: ${P1.step12.reference.harderBy05} of ${P1.step12.reference.pairs}). `
     + `Spare 1 is "unknown" on every ladder and knobs-v1 curve because spare 0 was never measured, so the ladder answer is about spare 2 only; E6 must measure spare 0.`, '');
-  L.push(`2. **sqrt(D(D-1)) is the wrong noise model above D 6; the geometric with the 20-try cap fits (K2 ${k.K2.fired ? 'FIRED' : 'not fired'} on the literal rule${k.K2.firedCapped ? '; it would fire against the capped model too' : '; it would not fire against the capped model'}).** `
+  L.push(`2. **Model misfit: sqrt(D(D-1)) overstates the spread above D 6; the geometric with the 20-try cap fits (internal flag K2 = ${k.K2.fired ? 'set' : 'not set'} at the audit's own 30% threshold, a model-fit result and not a process gate${k.K2.firedCapped ? '; it is also set against the capped model' : '; it is not set against the capped model'}).** `
     + `Over D 3-16 the measured per-campaign spread is ${sc['ladder reference (unselected)'].geom.c} (ladder reference pairs), ${sc['all reference'].geom.c} (all reference pairs) and ${cmp.reference.scaleMid} (per-campaign cache) times sqrt(D(D-1)). `
     + `Against the capped geometric the same ratios are ${sc['ladder reference (unselected)'].capped.c}, ${sc['all reference'].capped.c} and ${cmp.reference.scaleMidCapped} (key memory: ${sc['ladder key-memory (unselected)'].capped.c} pairs, ${cmp.keyMemory.scaleMidCapped} cache). `
     + `The cap explains it: at D 8-10 the pooled spread is ${bin('all reference', 8).sd} (sqrt(D(D-1)) ${bin('all reference', 8).geom}, capped ${bin('all reference', 8).capped}); at D 12-14 it is ${bin('all reference', 12).sd} (sqrt(D(D-1)) ${bin('all reference', 12).geom}, capped ${bin('all reference', 12).capped}). `
     + `So section 2's table is about right near D 8 and too pessimistic above D 10 (the spread stays near 7 instead of growing to 11). Redo the precision table from the capped model: one 40-campaign block at D 12 has SE about ${r2(pointSE(12, 40))}, not ${r2(Math.sqrt(geomVar(12) / 40))}; at D 8, ${r2(pointSE(8, 40))} not ${r2(Math.sqrt(geomVar(8) / 40))}. `
     + `Note the capped model also means D above about 14 carries little information per campaign: the spread falls because tries pile up at 20.`, '');
-  L.push(`3. **Pairing barely helps.** On spare pairs rated with the same two seeds, the seed gaps at spare 1 and at spare 2 correlate at r = ${P2.pairingCorrelation.r} (n ${P2.pairingCorrelation.n}). Common random numbers cut the variance of a step by only about ${Math.round(100 * (P2.pairingCorrelation.r || 0))}%, already below E3's 30% line ("double the CURVE campaigns"). The monotone margin above uses the unpaired SE for that reason.`, '');
+  L.push(`3. **Pairing barely helps.** On spare pairs rated with the same two seeds, the seed gaps at spare 1 and at spare 2 correlate at r = ${P2.pairingCorrelation.r} (n ${P2.pairingCorrelation.n}). The 95% interval is ${(P2.pairingCorrelation.ci95||[]).join(' to ')}: indistinguishable from zero, and the upper end (${(P2.pairingCorrelation.ci95||[0,0])[1]}) means common random numbers would cut the variance of a step by at most about ${Math.round(100 * ((P2.pairingCorrelation.ci95||[0,0])[1]))}%. The data cannot show a gain near E3's 30% line. The monotone margin above uses the unpaired SE for that reason.`, '');
   L.push(`4. **A3: no builder board has a peek-pair shortcut; ${q.a3Fail} of the ${q.boards} qualified factory boards do (K3 ${k.K3.fired ? 'FIRED' : 'not fired'}).** `
     + `Builder v3 ladder plus builder v2 knobs-v1: ${bp.a3Fail} of ${bp.known} fail A3. Qualified 200-225: ${q.a3Fail} of ${q.boards}; on those the stored strict witness takes the clock ${q.medianShortcutMoves} moves (median) later than the game's shortest k, so their true spare is larger than recorded. `
     + `Pooled over the three populations the task names: ${rq.a3Fail} of ${rq.known} (${rq.a3FailShare}%), below the 20% line. The qualified rate (${q.a3FailShare}%) is above it, so the peek-pair decision matters for re-dialling the kept 200-225 boards (E7), not for new builder output. `

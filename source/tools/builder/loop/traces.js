@@ -173,7 +173,7 @@ function traceGates(input, opts = {}) {
     valid = valid && raw.result.valid === true;
     subBlocks.push({ seed: blk.seed, runs: results.length, expectedTries: raw.result.expectedTries ?? null, valid: raw.result.valid ?? null });
     for (const [c, r] of results.entries()) {
-      wonOn.push(r.wonOn); perCampaign.push(r.wonOn ?? r.attempts.length);
+      wonOn.push(r.wonOn); perCampaign.push(r.wonOn ?? MAX_ATTEMPTS);
       for (const x of r.attempts) left.set((off + c) + ':' + x.attempt, x.left);
     }
     for (const x of tr.profile.attemptProfiles) {

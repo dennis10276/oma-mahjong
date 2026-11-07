@@ -66,11 +66,21 @@ function clockK(design, o) {
   if (o.engineCheck === false || !design.clock) return null;
   try { const r = E.clockShortest(E.game(design), { nodes: 400000, ms: 5000 }); return r ? r.k : null; } catch { return null; }
 }
+// The planner rater. planner-fast-v1 (Gemini Task G4, zero drift, ~10x faster) replaces the reference planner for
+// C2/C3. library/yardstick.json (not owned by this piece) still pins the reference meter for 'planner', so the fast
+// meter is built here with the same pinned planner settings. An injected ys (tests) keeps its own ys.planner.
+const PLANNER_FAST = 'planner-fast-v1';
+function plannerRater(ys, opts) {
+  if (opts.plannerMeter === false || ys.injected || (opts.ys && !opts.ysBuilt)) return d => ys.planner(d);
+  const meter = M.createMeter({ botVersion: PLANNER_FAST, cacheDir: opts.cacheDir === false ? false : Y.CACHE_DIR });
+  return d => { const m = meter.measure(M.boardOf(d), { ...ys.pins.planner.settings });
+    return { S: m.expectedTries, styles: m.plannerStyles || null, valid: m.valid === true, fingerprint: meter.fingerprint }; };
+}
 function c2c3(input, opts = {}) {
   const ys = rulerYardstick(opts), plannerSpare = opts.plannerSpare ?? ys.pins?.planner?.spare ?? 2, at = T.atSpare(input, plannerSpare);
   if (at.fail) return { C2: { pass: null, fail: at.fail }, C3: { report: true, pass: null, fail: at.fail } };
   const t = Date.now(), asIsDesign = at.design, faceUpDesign = { ...asIsDesign, down: [] };
-  const a = ys.planner(asIsDesign), b = ys.planner(faceUpDesign);   // no spare argument: both keep clock.n of the spared design
+  const rate = plannerRater(ys, opts), a = rate(asIsDesign), b = rate(faceUpDesign);   // no spare argument: both keep clock.n of the spared design
   const asIs = a.S, faceUp = b.S, valid = a.valid && b.valid, ok = valid && finite(asIs, faceUp);
   const C2 = { pass: ok ? faceUp <= asIs + 2 : null, asIs, faceUp, diff: ok ? round(faceUp - asIs) : null, skilledCredit: ok ? faceUp <= asIs + 2 : null,
     plannerSpare, clockN: asIsDesign.clock?.n ?? null, faceDownTiles: (asIsDesign.down || []).length, styles: { asIs: a.styles, faceUp: b.styles },
@@ -110,7 +120,7 @@ function c4(input, opts = {}) {
 }
 
 function counterfactuals(input, opts = {}) {
-  const ys = rulerYardstick(opts), o = { ...opts, ys }, skip = opts.skip || [], out = { spare: opts.spare ?? null }, t = Date.now();
+  const ys = rulerYardstick(opts), o = { ...opts, ys, ysBuilt: !opts.ys }, skip = opts.skip || [], out = { spare: opts.spare ?? null }, t = Date.now();
   if (!skip.includes('C1')) out.C1 = c1(input, o);
   if (!skip.includes('C2')) Object.assign(out, c2c3(input, o));
   if (opts.c4 && !skip.includes('C4')) out.C4 = c4(input, o);
@@ -119,7 +129,7 @@ function counterfactuals(input, opts = {}) {
   return out;
 }
 
-module.exports = { counterfactuals, c1, c2c3, c4, specialVariants, rulerYardstick };
+module.exports = { PLANNER_FAST, plannerRater, counterfactuals, c1, c2c3, c4, specialVariants, rulerYardstick };
 
 if (require.main === module) {
   const args = process.argv.slice(2), flag = k => args.includes(k), [file, which, spareArg] = args.filter(a => !a.startsWith('--'));

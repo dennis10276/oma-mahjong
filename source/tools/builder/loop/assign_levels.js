@@ -11,7 +11,7 @@
 //   trend       T(L) = min(cap, T0 * g^(L - L0))                            (the cap holds the family trend at 14)
 //   shape       lv%10 in {1, 2}: target 0.9 T (breathers); lv%10 == 0: a named peak at 1.15 T, only for a big
 //               board (> 88 tiles); a normal board on lv%10 == 0 is on trend; everything else on trend
-//   level       |D - target| <= max(1, 0.10 target)
+//   level       |D - target| <= max(1, 0.10 T)   (tolerance on the trend T, as in the brief, not on the slot target)
 //   spike cap   a level that is not a named peak: D <= T + max(1, 0.10 T)
 //   big boards  > 88 tiles only on lv%10 == 0
 //   clock       opening clock (k <= 6): spare >= 2 unless a named peak
@@ -70,7 +70,7 @@ function levelCheck(L, pair, o) {
   if (o.skilled.floor === 'hard' && !(pair.Strusted && pair.S != null && pair.S >= o.skilled.lo)) return { why: pair.S == null || !pair.Strusted ? 'skilledUnknown' : 'skilledLow', s };
   if (pair.S != null && pair.Strusted && pair.S > o.skilled.hi) return { why: 'skilledHigh', s };
   if (!(pair.D > 0)) return { why: 'noD', s };
-  if (Math.abs(pair.D - s.target) > levelTol(s.target, o)) return { why: pair.D > s.target ? 'tooHard' : 'tooEasy', s };
+  if (Math.abs(pair.D - s.target) > levelTol(s.T, o)) return { why: pair.D > s.target ? 'tooHard' : 'tooEasy', s };
   if (!s.peak && pair.D > s.T + Math.max(o.spike.abs, o.spike.rel * s.T)) return { why: 'spike', s };
   return { why: null, s };
 }
@@ -80,7 +80,10 @@ function assign(pairsIn, opts = {}) {
   const from = opts.from, to = opts.to;
   if (!Number.isInteger(from) || !Number.isInteger(to) || to < from) throw Error('assign needs integer from <= to');
   const exclude = new Set(opts.exclude || []);
-  const pairs = pairsIn.filter(p => !exclude.has(p.key));
+  const notExcluded = pairsIn.filter(p => !exclude.has(p.key));
+  // dropCurve: leave out pairs whose D is only a CURVE estimate (not an ACCEPT value of record); counted in the result
+  const curveDropped = opts.dropCurve ? notExcluded.filter(p => p.Dsource === 'CURVE').length : 0;
+  const pairs = opts.dropCurve ? notExcluded.filter(p => p.Dsource !== 'CURVE') : notExcluded;
   const levels = []; for (let L = from; L <= to; L++) levels.push(L);
   const nL = levels.length;
 
@@ -245,7 +248,7 @@ function assign(pairsIn, opts = {}) {
     range: [from, to], params: { trend: o.trend, shape: o.shape, tolerance: o.tolerance, spike: o.spike, window: o.window, spare1: o.spare1, storyWindow: o.storyWindow,
       archetypeWindow: o.archetypeWindow, skilled: o.skilled, bigBoardTiles: o.bigBoardTiles, openingClockMinSpare: o.openingClockMinSpare, holePenalty: o.holePenalty },
     pairs: pairs.length, puzzles: new Set(pairs.map(p => p.key)).size, excluded: pairsIn.length - pairs.length,
-    levels: outLevels, unfillable, windows, holes,
+    levels: outLevels, curveDropped, curveFilled: outLevels.filter(l => l.Dsource === "CURVE").length, unfillable, windows, holes,
     totalCost: best ? round(bestCost - holes * o.holePenalty, 4) : null,
     proven: !!best && !budgetHit, nodes, budgetHit,
   };
@@ -268,6 +271,8 @@ function reportText(r) {
   const lines = [];
   const filled = r.levels.filter(l => !l.hole).length;
   lines.push(`Levels ${r.range[0]}-${r.range[1]}: ${filled} of ${r.levels.length || (r.range[1] - r.range[0] + 1)} filled from ${r.puzzles} puzzles (${r.pairs} puzzle-spare pairs).`);
+  if (r.curveDropped) lines.push(`${r.curveDropped} pairs with only a CURVE difficulty were left out (not values of record).`);
+  if (r.curveFilled) lines.push(`${r.curveFilled} levels are filled from CURVE values (provisional).`);
   lines.push(r.proven ? 'The assignment is the cheapest the rules allow (search finished).' : r.budgetHit ? `The search stopped at its node budget (${r.nodes} nodes): the result is valid but may not be the cheapest.` : 'No assignment found.');
   for (const l of r.levels) {
     if (l.hole) continue;
@@ -297,7 +302,7 @@ function main() {
   const a = parseArgs(process.argv.slice(2));
   if (!a.from || !a.to) {
     console.error('usage: assign_levels.js --from 200 --to 225 [--T0 6 --L0 200 --g 1.006 --cap 14] [--skilled hard|average] [--lib dir]\n' +
-      '         [--context levels.json] [--measured accept.json] [--exclude keys.json] [--family <fingerprint>] [--nodes 2000000] [--out plan.json]');
+      '         [--context levels.json] [--measured accept.json] [--exclude keys.json] [--family <fingerprint>] [--allow-curve (use CURVE D values; default drops them)] [--nodes 2000000] [--out plan.json]');
     process.exit(64);
   }
   const fs = require('fs'), Lb = require('./library.js');
@@ -309,7 +314,7 @@ function main() {
     trend: { T0: +(a.T0 ?? DEFAULTS.trend.T0), L0: +(a.L0 ?? a.from), g: +(a.g ?? DEFAULTS.trend.g), cap: +(a.cap ?? DEFAULTS.trend.cap) },
     skilled: { floor: a.skilled || 'hard' },
     context: a.context ? read(a.context) : [], exclude: a.exclude ? read(a.exclude) : [],
-    maxNodes: a.nodes ? +a.nodes : undefined,
+    maxNodes: a.nodes ? +a.nodes : undefined, dropCurve: !a['allow-curve'],
   });
   res.librarySkipped = skipped; res.libraryDamagedLines = lib.damaged.length;
   if (a.out) fs.writeFileSync(a.out, JSON.stringify(res, null, 1));

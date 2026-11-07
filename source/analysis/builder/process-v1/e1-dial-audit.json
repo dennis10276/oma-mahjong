@@ -1,7 +1,7 @@
 {
  "schema": "e1-dial-audit-v1",
- "created": "2026-11-07T14:09:15.312Z",
- "seconds": 191,
+ "created": "2026-11-07T19:43:11.552Z",
+ "seconds": 187,
  "rules": {
   "cap": 20,
   "censor": 18.5,
@@ -143,7 +143,9 @@
     "puzzlesAnyPass": 42,
     "puzzleShare": 56.8,
     "tighterFailBorderline": 6,
-    "monotoneFailWithFixedHalfMargin": 0
+    "monotoneFailWithFixedHalfMargin": 0,
+    "monotoneFailTwoSided": 0,
+    "peekUnsureExcluded": 0
    },
    "ladder / keyMemory": {
     "curves": 74,
@@ -215,7 +217,9 @@
     "puzzlesAnyPass": 50,
     "puzzleShare": 67.6,
     "tighterFailBorderline": 8,
-    "monotoneFailWithFixedHalfMargin": 0
+    "monotoneFailWithFixedHalfMargin": 0,
+    "monotoneFailTwoSided": 0,
+    "peekUnsureExcluded": 0
    },
    "knobs-v1 / reference": {
     "curves": 24,
@@ -287,7 +291,9 @@
     "puzzlesAnyPass": 11,
     "puzzleShare": 45.8,
     "tighterFailBorderline": 3,
-    "monotoneFailWithFixedHalfMargin": 0
+    "monotoneFailWithFixedHalfMargin": 0,
+    "monotoneFailTwoSided": 0,
+    "peekUnsureExcluded": 0
    },
    "clock-spare-1 / reference": {
     "curves": 20,
@@ -359,7 +365,9 @@
     "puzzlesAnyPass": 14,
     "puzzleShare": 87.5,
     "tighterFailBorderline": 0,
-    "monotoneFailWithFixedHalfMargin": 0
+    "monotoneFailWithFixedHalfMargin": 0,
+    "monotoneFailTwoSided": 0,
+    "peekUnsureExcluded": 0
    },
    "200-225 / reference": {
     "curves": 156,
@@ -431,7 +439,9 @@
     "puzzlesAnyPass": 97,
     "puzzleShare": 80.8,
     "tighterFailBorderline": 15,
-    "monotoneFailWithFixedHalfMargin": 47
+    "monotoneFailWithFixedHalfMargin": 47,
+    "monotoneFailTwoSided": 9,
+    "peekUnsureExcluded": 0
    }
   },
   "byBot": {
@@ -505,7 +515,9 @@
     "puzzlesAnyPass": 164,
     "puzzleShare": 70.1,
     "tighterFailBorderline": 24,
-    "monotoneFailWithFixedHalfMargin": 47
+    "monotoneFailWithFixedHalfMargin": 47,
+    "monotoneFailTwoSided": 9,
+    "peekUnsureExcluded": 0
    },
    "keyMemory": {
     "curves": 74,
@@ -577,7 +589,9 @@
     "puzzlesAnyPass": 50,
     "puzzleShare": 67.6,
     "tighterFailBorderline": 8,
-    "monotoneFailWithFixedHalfMargin": 0
+    "monotoneFailWithFixedHalfMargin": 0,
+    "monotoneFailTwoSided": 0,
+    "peekUnsureExcluded": 0
    }
   },
   "byBotAllowedStories": {
@@ -651,7 +665,9 @@
     "puzzlesAnyPass": 132,
     "puzzleShare": 71.4,
     "tighterFailBorderline": 17,
-    "monotoneFailWithFixedHalfMargin": 29
+    "monotoneFailWithFixedHalfMargin": 29,
+    "monotoneFailTwoSided": 5,
+    "peekUnsureExcluded": 0
    },
    "keyMemory": {
     "curves": 74,
@@ -723,7 +739,9 @@
     "puzzlesAnyPass": 50,
     "puzzleShare": 67.6,
     "tighterFailBorderline": 8,
-    "monotoneFailWithFixedHalfMargin": 0
+    "monotoneFailWithFixedHalfMargin": 0,
+    "monotoneFailTwoSided": 0,
+    "peekUnsureExcluded": 0
    }
   },
   "botAgreementLadder": {
@@ -2000,7 +2018,11 @@
   },
   "pairingCorrelation": {
    "n": 172,
-   "r": 0.057
+   "r": 0.057,
+   "ci95": [
+    -0.093,
+    0.205
+   ]
   }
  },
  "part3": {
@@ -2047,7 +2069,7 @@
     "a3FullFail": 9,
     "medianShortcutMoves": 2,
     "strictSearchMiss": 0,
-    "engineMsMedian": 361.5
+    "engineMsMedian": 358
    },
    "knobs-v1 (builder v2, Task 10)": {
     "population": "knobs-v1 (builder v2, Task 10)",
@@ -2069,7 +2091,7 @@
     "a3FullFail": 72,
     "medianShortcutMoves": null,
     "strictSearchMiss": 2,
-    "engineMsMedian": 56
+    "engineMsMedian": 55
    },
    "clock-spare-1": {
     "population": "clock-spare-1",
@@ -2091,7 +2113,7 @@
     "a3FullFail": 1,
     "medianShortcutMoves": null,
     "strictSearchMiss": 2,
-    "engineMsMedian": 9
+    "engineMsMedian": 10.5
    }
   },
   "puzzles": {
@@ -2193,21 +2215,27 @@
  "kill": [
   {
    "id": "K1",
-   "rule": "under 25% of mid-band (D 6-16) puzzles have a spare that could ship -> the dial is a minor trim; library ~2x wider",
+   "rule": "under 30% of mid-band (D 6-16) puzzles have a spare that could ship (synthesis section 7 K1)",
    "value": "reference 86/112 = 76.8%; key-memory 12/19 = 63.2%",
    "fired": false
   },
   {
    "id": "K2",
-   "rule": "per-campaign spread departs from sqrt(D(D-1)) by more than 30% (D 3-16) -> redo the section 2 precision table",
+   "rule": "(audit-specific threshold, not a synthesis rule) per-campaign spread departs from sqrt(D(D-1)) by more than 30% (D 3-16) -> redo the section 2 precision table",
    "value": "scale c (sd / sqrt(D(D-1))): ladder ref 0.637, all reference pairs 0.699, ladder key-memory 0.567, per-campaign cache ref 0.656. Against the capped (20-try) geometric instead: ladder ref 0.918, all reference 1.084, ladder key-memory 0.859, per-campaign cache ref 0.914, key-memory 0.937",
    "fired": true,
    "firedCapped": false
   },
   {
    "id": "K3",
-   "rule": "more than 20% of boards fail A3 -> the peek-pair decision moves to the top of Dennis's list",
+   "rule": "(audit-specific threshold, not a synthesis rule) more than 20% of boards fail A3 -> the peek-pair decision moves to the top of Dennis's list",
    "value": "builder boards (ladder + knobs-v1) 0/495 = 0% fail A3 (peek-pair shortcut on 0 = 0%); ladder + qualified + knobs-v1 5/513 = 1%; strict witness later than k: 5/513 = 1%; qualified alone 5/18",
+   "fired": false
+  },
+  {
+   "id": "K4",
+   "rule": "more than 15% of evaluable spares are non-monotone beyond noise (synthesis section 7)",
+   "value": "reference 9/310 = 2.9%; key-memory 0/90 = 0%",
    "fired": false
   }
  ],

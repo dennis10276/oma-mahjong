@@ -143,13 +143,13 @@ function createLibrary(opts = {}) {
   const dir = path.resolve(opts.dir || LIB_DIR);
   const files = { library: path.join(dir, 'library.jsonl'), rejects: path.join(dir, 'rejects.jsonl') };
   const damaged = [];
-  let lib = null, rej = null, index = null;
+  let lib = null, rej = null, index = null; const rejPipe = new Map();
   function load() {
     if (index) return;
     lib = readJsonl(files.library, b => damaged.push(b));
     rej = readJsonl(files.rejects, b => damaged.push(b));
     index = new Map();
-    for (const r of rej) if (r.key && !index.has(r.key)) index.set(r.key, 'reject');
+    for (const r of rej) if (r.key) { index.set(r.key, 'reject'); rejPipe.set(r.key, r.pipeline ?? null); }   // the latest reject row wins
     for (const e of lib) if (e.key) index.set(e.key, 'library');   // a library entry wins over an older reject
   }
   function append(file, row) {
@@ -162,7 +162,10 @@ function createLibrary(opts = {}) {
     }
     fs.appendFileSync(file, prefix + JSON.stringify(row) + '\n');
   }
-  const has = key => { load(); return index.get(key) || null; };
+  // One rule for has() and reject(): a reject only blocks a board while it was made under the same pipeline version
+  // (opts.pipeline). A changed version (new gates or ruler) lets the board be tested again; a library entry always blocks.
+  const stale = (key, pipeline) => index.get(key) === 'reject' && pipeline !== undefined && (rejPipe.get(key) ?? null) !== pipeline;
+  const has = (key, o = {}) => { load(); return stale(key, o.pipeline) ? null : (index.get(key) || null); };
 
   function add(entry) {
     load();
@@ -178,12 +181,12 @@ function createLibrary(opts = {}) {
   function reject(row) {
     load();
     const key = row.key || contentKey(row.design);
-    const seen = index.get(key);
+    const seen = stale(key, row.pipeline) ? null : index.get(key);
     if (seen) return { added: false, key, reason: seen === 'library' ? 'inLibrary' : 'duplicate' };
     if (!row.gate) throw Error('reject() needs the gate that refused the board');
     const { design, keepDesign, ...rest } = row;
     const out = { schema: REJECT_SCHEMA, key, at: row.at || new Date().toISOString(), ...rest, ...(keepDesign && design ? { design } : {}) };
-    append(files.rejects, out); rej.push(out); index.set(key, 'reject');
+    append(files.rejects, out); rej.push(out); index.set(key, 'reject'); rejPipe.set(key, row.pipeline ?? null);
     return { added: true, key };
   }
   const entries = () => { load(); return lib.slice(); };

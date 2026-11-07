@@ -182,3 +182,14 @@ test('a big library over 50 levels finishes fast', () => {
   const ones = r.levels.filter(l => l.spare === 1).map(l => l.level);
   for (let a = 196; a <= 249; a++) assert(ones.filter(L => L >= a && L < a + 5).length <= 1);
 });
+
+test('tolerance is on the trend T; CURVE pairs can be dropped and are counted', () => {
+  const o = { trend: flat, shape: A.DEFAULTS.shape, tolerance: A.DEFAULTS.tolerance };
+  const s = A.slotFor(201, pair(5), { ...o });   // breather 0.9 T
+  assert.equal(A.levelTol(s.T, A.merge ? A.merge(A.DEFAULTS, o) : { ...A.DEFAULTS, ...o }), Math.max(1, 0.1 * 6));
+  const ps = [201].map(L => { const p = exact(L); p.Dsource = 'CURVE'; return p; });
+  const r1 = A.assign(ps, { from: 201, to: 201, trend: flat, dropCurve: true });
+  assert.equal(r1.curveDropped, 1); assert.equal(r1.levels.filter(l => l.key).length, 0);
+  const r2 = A.assign(ps, { from: 201, to: 201, trend: flat });
+  assert.equal(r2.curveFilled, 1);
+});

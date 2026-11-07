@@ -17,39 +17,21 @@ Raw output: `source/build/yardstick-timing.json` and `source/build/yardstick-tim
 - Boards: three rows of `source/analysis/builder/data/qualified-200-225.jsonl`, chosen because the stored witness fits every spare 0-3 (no peek-pair shortcut): 201 (70bde28d4c0922c5, 76 tiles, k 9), 206 (fb46c7888c54e687, 80 tiles, k 7), 213 (0fcd2cc72af5f1a6, 88 tiles, k 15). All three are stored at spare 1.
 - Wall time on one process. Other agents' processes may have used some CPU at the same time (busy.js had reported 2.8-4.1 other cores just before the job started). Treat the numbers as "on this shared PC", not as a clean benchmark.
 
-## Wall times (seconds, one process)
+## Wall times (seconds, one process, cache off) - run 2026-11-07 after G3 and G4
 
-| Board | One CURVE rating (80 campaigns, as stored = spare 1) | Spare 0 | Spare 2 | Spare 3 | Full curve 0-3 (bot time) | SCREEN spares 1+3 (40 campaigns, no early stop) | Planner at spare 2 |
-|---|---|---|---|---|---|---|---|
-| 201 | 2.03 | 2.32 | 3.80 | 3.27 | 11.4 | 1.80 | 58.6 |
-| 206 | 7.09 | 8.07 | 6.76 | 6.72 | 28.6 | 3.43 | 26.5 |
-| 213 | 4.76 | 6.34 | 5.60 | 4.19 | 20.9 | 2.71 | 54.8 |
-| mean | 4.6 | | | | 20.3 | 2.6 | 46.6 |
+Source: `source/build/yardstick-timing.json` (written by `dial_curve.js --timing` under heavy.js; node, single process). The PC was shared with other jobs (static_gates ran, busy.js said 1.4 cores in use), so times are noisy; the first board's first CURVE rating (1.7 s) is likely the quiet case, and later ones ran 2.5-5x slower.
 
-Note on the full curve: `measureCurve` reported 9.5 / 21.5 / 16.4 s, because its spare-1 rating was a hit in the meter's in-memory cache (the same design had just been rated as the single CURVE rating; 0.004-0.28 s). The "full curve (bot time)" column adds the single CURVE rating back in: spares 0, 2, 3 plus that rating.
+| Board (level, tiles, clock.n) | CURVE rating, 80 campaigns | Full curve, spares 0-3 (allResults) | Screen (spare 1 and 3, 20 campaigns each, early off) | Planner (planner-fast-v1, spare 2) |
+|---|---|---|---|---|
+| 70bde28d (201, 76, 10) | 1.7 | 14.2 | 2.3 | 20.2 |
+| fb46c788 (206, 80, 8) | 8.5 | 28.6 | 3.5 | 5.9 |
+| 0fcd2cc7 (213, 88, 16) | 4.5 | 20.8 | 2.6 | 9.3 |
 
-What this means:
+Reading: a full curve costs about 14-29 s (4 ratings of 80 campaigns with all results, 2.5-7.5 s each); a planner rating 6-20 s (the 20 s on board 1 coincided with other load; G4 reports 6-7 s/board quiet). Three boards, one run each: no budget claim beyond "roughly half a minute per board for curve plus planner".
 
-- **One CURVE rating** costs 2-8 s (mean 4.6 s). Gemini's report gives 1.74 s per 40-campaign rating on one core (gemini-tasks/results/km-fast/km-fast.md section 1), so 3.5 s per 80; 201 matches that, 206 and 213 are about 1.5-2x slower (bigger boards, possible CPU contention).
-- **One full curve (spares 0-3)** costs 11-29 s (mean 20 s). The synthesis estimated about 15 s (section 6 step 6).
-- **One planner rating** costs 26-59 s (mean 47 s). That is 2-5x the 12.6 s per board in the task brief, and inside the synthesis's own 27-51 s estimate (section 6 step 5). The planner is by far the most expensive step: about 2.3 full curves.
-- **SCREEN** at spares 1 and 3 costs 1.8-3.4 s per board. Early stopping can only save part of this (see below).
+First curves (fast ruler, paired seeds): board 1 D 9.5 / 10.05 / 6.46 / 5.72 at spares 0-3 (shippable 1 and 3; spare 2 fails the tighter-neighbour rule), ratio D(1)/D(3) 1.76, diallable; board 2 D 8.9 / 9.1 / 7.9 / 8.08, not diallable (ratio 1.13); board 3 D 5.46 / 4.39 / 4.5 / 3.59, diallable (1.22).
 
-Rough per-board cost for a board that goes all the way: screen 2.6 + planner 47 + curve 20 = about 70 s on one core, before traces, counterfactuals and ACCEPT (160-320 campaigns = 4-8 CURVE-rating equivalents of 40, about 9-37 s).
-
-## First real curves on the fast ruler
-
-From the same run (D = expected tries to the first win, capped at 20; SE from the 40 visible campaigns, see "Limits"):
-
-| Board | D(0) | D(1) | D(2) | D(3) | D(1)/D(3) | Shippable spares | Why not the others |
-|---|---|---|---|---|---|---|---|
-| 201 | 9.50 | 10.05 | 6.46 | 5.72 | 1.76 (diallable) | 1, 3 | spare 2: tighter neighbour D(1) 10.05 > min(1.5 x 6.46, 6.46 + 3) = 9.46 (a cliff at spare 1) |
-| 206 | 8.90 | 9.10 | 7.91 | 8.08 | 1.13 (flat) | 1, 2, 3 | none; but the puzzle is not diallable |
-| 213 | 5.46 | 4.39 | 4.50 | 3.59 | 1.22 (diallable) | 1, 2, 3 | none |
-
-Planner S at spare 2: 201 5.30 (route 5.30, plain 5.75); 206 2.20; 213 2.02. Only 201 is inside the skilled band 2.5-6 (section 4 E).
-
-**Paired steps barely beat unpaired ones.** Step SE paired vs unpaired (same run): 201 1.31/1.34, 1.27/1.32, 1.16/1.20; 206 0.77/0.77, 0.67/0.78, 0.74/0.75; 213 0.48/0.47, 0.34/0.33, 0.37/0.37. Pairing cuts the step variance by at most about 25% here and usually by nothing. Experiment E3's kill rule (section 7) is "if pairing cuts the variance of steps by less than 30%, double the CURVE campaigns". These are 9 steps on 3 boards from 40 visible pairs each, so this is a warning, not the E3 answer. Two of nine steps already go the wrong way (201 spare 0 to 1: +0.55; 213 spare 1 to 2: +0.11), both well inside 2 SE.
+SE note: with allResults the SE uses all 80 campaigns (the meter now returns resultsBySeed). allResults changes the meter cache key, so a curve at the stored clock no longer reuses old cached ratings; yardstick.rate(..., {allResults:false}) keeps old cache reuse (SE then from 40 of 80).
 
 ## Early stop for SCREEN (screen.js)
 
@@ -69,6 +51,13 @@ On level 200 (58a099f8cfe6eb4d) as stored, with no 63be677e entry on disk, `crea
 
 ## Limits and unknowns
 
-- The meter keeps per-campaign results only for the first sub-block of each seeds:2 call. So every SE (rating and step) comes from 40 of 80 campaigns, scaled by sqrt(80). Once Gemini's opt-in for all sub-blocks exists, the SEs should use all 80.
-- These timings are from 3 boards, one run each, on a shared PC. The planner's spread (26-59 s) is large; 20-30 boards are needed for a budget.
+- Planner is pinned to planner-fast-v1 (fingerprint e686e095...); its zero-drift claim comes from Gemini G4, which I did not re-verify. I did not check a planner migration hit on a cached board.
+- Timings are from 3 boards, one run each, on a loaded shared PC; 20-30 boards are needed for a budget.
 - The SCREEN calibration rests on the capped-geometric model and on 634 cached ratings that come mostly from 200-225 candidates. It has not been checked on boards from builder v3.
+- screen.js still uses the 20-campaign first sub-block (results); it does not use allResults.
+
+## Corrections after review (2026-11-07)
+- Cache: the CURVE ratings (and measureCurve by default) use allResults:true, which changes the meter cache key (meter.js:169-172). They therefore do NOT hit the production d362e85f / 63be677e caches or the family migration (which needs the identical settings key), and the alternatives lookup is skipped for them. All curve timings above are real bot time with no cache reuse. Pass allResults:false to reuse caches at the 40-campaign SE. A cached-hit check with allResults:true was not done.
+- SE: the SE now divides by the number of campaigns actually visible (was: all campaigns), so it is no longer biased low without allResults.
+- Ledger: ACCEPT reserves all 320 campaigns of blocks up front (crash safety), so nextBlock advances by the full reserve even when stage 1 decides; unused blocks are not released. This is accepted waste.
+- Diallable verdicts (levels 201 ratio 1.76, 213 ratio 1.22, 206 ratio 1.13) come from one run each on 3 boards. measureCurve now returns ratio13Se (delta method, unpaired) and diallableUnsettled (true when 1.2 is within 1 SE of the ratio). The 1.22 verdict for level 213 is within about one SE of the cut and must be treated as unsettled; the SEs for the old runs were not recorded and the timing run was not repeated.

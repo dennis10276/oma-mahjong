@@ -1,7 +1,7 @@
 {
  "about": "E2: real-data estimator and power simulation (loop/real_fit.js).",
  "source": "plays-2026-11-07.json",
- "made": "2026-11-07T13:46:53.334Z",
+ "made": "2026-11-07T19:35:36.286Z",
  "ledger": {
   "sequences": 299,
   "tries": 1557,
@@ -46,9 +46,8 @@
  },
  "settings": {
   "tau": 0.5,
-  "sdLevel": 0.3,
-  "sdSeq": 0,
   "sdSkill": 5,
+  "sdLevelAndSdSeq": "chosen per window size by evidence (windows.<size>.sds)",
   "cap": 12,
   "deadband": "2 SE, leave-one-player-out sign agreement",
   "floor": 0.15
@@ -61,15 +60,15 @@
       "player": "Dennis",
       "first": {
        "real": 0.596,
-       "sim": 0.598,
+       "sim": 0.594,
        "sim90": [
-        0.515,
-        0.677
+        0.525,
+        0.667
        ]
       },
       "cut": {
        "real": 0,
-       "sim": 0.002,
+       "sim": 0.001,
        "sim90": [
         0,
         0.01
@@ -77,10 +76,10 @@
       },
       "mean": {
        "real": 1.778,
-       "sim": 1.791,
+       "sim": 1.801,
        "sim90": [
-        1.556,
-        2.04
+        1.606,
+        2.03
        ]
       }
      },
@@ -88,26 +87,26 @@
       "player": "Gerda",
       "first": {
        "real": 0.131,
-       "sim": 0.178,
+       "sim": 0.176,
        "sim90": [
-        0.112,
+        0.121,
         0.234
        ]
       },
       "cut": {
        "real": 0.178,
-       "sim": 0.159,
+       "sim": 0.164,
        "sim90": [
-        0.103,
-        0.215
+        0.112,
+        0.224
        ]
       },
       "mean": {
        "real": 5.785,
-       "sim": 5.551,
+       "sim": 5.591,
        "sim90": [
-        4.869,
-        6.187
+        5.056,
+        6.355
        ]
       }
      },
@@ -115,7 +114,7 @@
       "player": "MrsD",
       "first": {
        "real": 0.308,
-       "sim": 0.32,
+       "sim": 0.313,
        "sim90": [
         0.242,
         0.396
@@ -123,7 +122,7 @@
       },
       "cut": {
        "real": 0.066,
-       "sim": 0.036,
+       "sim": 0.038,
        "sim90": [
         0.011,
         0.077
@@ -131,10 +130,10 @@
       },
       "mean": {
        "real": 3.44,
-       "sim": 3.466,
+       "sim": 3.501,
        "sim90": [
-        3.022,
-        3.934
+        3.011,
+        4.011
        ]
       }
      }
@@ -144,15 +143,15 @@
       "player": "Dennis",
       "first": {
        "real": 0.596,
-       "sim": 0.58,
+       "sim": 0.585,
        "sim90": [
-        0.495,
+        0.505,
         0.667
        ]
       },
       "cut": {
        "real": 0,
-       "sim": 0.009,
+       "sim": 0.014,
        "sim90": [
         0,
         0.03
@@ -160,10 +159,10 @@
       },
       "mean": {
        "real": 1.778,
-       "sim": 2.056,
+       "sim": 2.118,
        "sim90": [
-        1.758,
-        2.414
+        1.828,
+        2.485
        ]
       }
      },
@@ -171,26 +170,26 @@
       "player": "Gerda",
       "first": {
        "real": 0.131,
-       "sim": 0.204,
-       "sim90": [
-        0.14,
-        0.271
-       ]
-      },
-      "cut": {
-       "real": 0.178,
-       "sim": 0.207,
+       "sim": 0.205,
        "sim90": [
         0.15,
         0.28
        ]
       },
+      "cut": {
+       "real": 0.178,
+       "sim": 0.224,
+       "sim90": [
+        0.168,
+        0.29
+       ]
+      },
       "mean": {
        "real": 5.785,
-       "sim": 5.641,
+       "sim": 5.765,
        "sim90": [
-        5,
-        6.336
+        5.084,
+        6.467
        ]
       }
      },
@@ -198,26 +197,26 @@
       "player": "MrsD",
       "first": {
        "real": 0.308,
-       "sim": 0.343,
+       "sim": 0.347,
        "sim90": [
-        0.264,
-        0.44
+        0.275,
+        0.429
        ]
       },
       "cut": {
        "real": 0.066,
-       "sim": 0.079,
+       "sim": 0.093,
        "sim90": [
-        0.033,
-        0.132
+        0.044,
+        0.154
        ]
       },
       "mean": {
        "real": 3.44,
-       "sim": 3.781,
+       "sim": 3.911,
        "sim90": [
-        3.209,
-        4.429
+        3.407,
+        4.56
        ]
       }
      }
@@ -237,40 +236,250 @@
     "180-189",
     "190-199"
    ],
-   "sdSeq": {
-    "best": 0.5,
+   "sds": {
+    "sdLevel": 0.6,
+    "sdSeq": 0,
+    "evidence": -566.91,
     "scores": [
      {
-      "sd": 0,
-      "evidence": -712.2381337293807
+      "sdLevel": 0.15,
+      "sdSeq": 0,
+      "evidence": -574.17,
+      "converged": true
      },
      {
-      "sd": 0.25,
-      "evidence": -711.6053262296095
+      "sdLevel": 0.15,
+      "sdSeq": 0.25,
+      "evidence": -572.99,
+      "converged": true
      },
      {
-      "sd": 0.5,
-      "evidence": -711.0419773329127
+      "sdLevel": 0.15,
+      "sdSeq": 0.5,
+      "evidence": -571.34,
+      "converged": true
      },
      {
-      "sd": 0.75,
-      "evidence": -712.5284421193367
+      "sdLevel": 0.15,
+      "sdSeq": 0.75,
+      "evidence": -571.93,
+      "converged": true
      },
      {
-      "sd": 1,
-      "evidence": -716.6919820036458
+      "sdLevel": 0.15,
+      "sdSeq": 1,
+      "evidence": -575.54,
+      "converged": true
      },
      {
-      "sd": 1.25,
-      "evidence": -723.1004412615513
+      "sdLevel": 0.3,
+      "sdSeq": 0,
+      "evidence": -570.98,
+      "converged": true
      },
      {
-      "sd": 1.5,
-      "evidence": -731.0346200239084
+      "sdLevel": 0.3,
+      "sdSeq": 0.25,
+      "evidence": -570.35,
+      "converged": true
      },
      {
-      "sd": 2,
-      "evidence": -749.1913051296399
+      "sdLevel": 0.3,
+      "sdSeq": 0.5,
+      "evidence": -569.79,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.3,
+      "sdSeq": 0.75,
+      "evidence": -571.28,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.3,
+      "sdSeq": 1,
+      "evidence": -575.44,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0,
+      "evidence": -567.59,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0.25,
+      "evidence": -567.56,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0.5,
+      "evidence": -568.25,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0.75,
+      "evidence": -570.87,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 1,
+      "evidence": -575.77,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0,
+      "evidence": -566.91,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0.25,
+      "evidence": -567.06,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0.5,
+      "evidence": -568.15,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0.75,
+      "evidence": -571.15,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 1,
+      "evidence": -576.3,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0,
+      "evidence": -567.21,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0.25,
+      "evidence": -567.52,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0.5,
+      "evidence": -568.96,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0.75,
+      "evidence": -572.28,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 1,
+      "evidence": -577.63,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0,
+      "evidence": -568.84,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0.25,
+      "evidence": -569.23,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0.5,
+      "evidence": -570.81,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0.75,
+      "evidence": -574.23,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 1,
+      "evidence": -579.6,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0,
+      "evidence": -570.51,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0.25,
+      "evidence": -570.92,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0.5,
+      "evidence": -572.52,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0.75,
+      "evidence": -575.92,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 1,
+      "evidence": -581.24,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0,
+      "evidence": -576.07,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0.25,
+      "evidence": -576.46,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0.5,
+      "evidence": -577.97,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0.75,
+      "evidence": -581.19,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 1,
+      "evidence": -586.2,
+      "converged": true
      }
     ]
    },
@@ -280,10 +489,16 @@
     "MrsD"
    ],
    "fit": {
+    "settings": {
+     "sdLevel": 0.6,
+     "sdSeq": 0
+    },
+    "converged": true,
+    "spreadPerLevel": 0.6,
     "skill": {
-     "Dennis": 0.23105567737456886,
-     "Gerda": -1.8558678652619858,
-     "MrsD": -0.9958116941166644
+     "Dennis": 0.27349476904451486,
+     "Gerda": -1.8495837772620842,
+     "MrsD": -0.9939985807926076
     },
     "window": [
      {
@@ -291,152 +506,152 @@
       "effect": 0,
       "se": 0,
       "expectedTries": {
-       "Dennis": 1.9,
-       "Gerda": 8.25,
-       "MrsD": 4.07
+       "Dennis": 1.91,
+       "Gerda": 8.61,
+       "MrsD": 4.23
       },
-      "modelYcap20": 3.8,
-      "dennisFirstTryModel": 0.554
+      "modelYcap20": 3.86,
+      "dennisFirstTryModel": 0.563
      },
      {
       "window": "90-99",
-      "effect": -0.251,
-      "se": 0.341,
+      "effect": -0.233,
+      "se": 0.357,
       "expectedTries": {
-       "Dennis": 1.7,
-       "Gerda": 6.64,
-       "MrsD": 3.39
+       "Dennis": 1.72,
+       "Gerda": 7.03,
+       "MrsD": 3.56
       },
-      "modelYcap20": 3.25,
-      "dennisFirstTryModel": 0.612
+      "modelYcap20": 3.34,
+      "dennisFirstTryModel": 0.615
      },
      {
       "window": "100-109",
-      "effect": -0.476,
-      "se": 0.386,
+      "effect": -0.425,
+      "se": 0.411,
       "expectedTries": {
-       "Dennis": 1.56,
-       "Gerda": 5.5,
-       "MrsD": 2.91
+       "Dennis": 1.6,
+       "Gerda": 5.98,
+       "MrsD": 3.12
       },
-      "modelYcap20": 2.83,
-      "dennisFirstTryModel": 0.661
+      "modelYcap20": 2.98,
+      "dennisFirstTryModel": 0.656
      },
      {
       "window": "110-119",
-      "effect": -0.202,
-      "se": 0.388,
+      "effect": -0.127,
+      "se": 0.416,
       "expectedTries": {
-       "Dennis": 1.73,
-       "Gerda": 6.92,
-       "MrsD": 3.51
+       "Dennis": 1.8,
+       "Gerda": 7.7,
+       "MrsD": 3.85
       },
-      "modelYcap20": 3.35,
-      "dennisFirstTryModel": 0.601
+      "modelYcap20": 3.57,
+      "dennisFirstTryModel": 0.591
      },
      {
       "window": "120-129",
-      "effect": 0.031,
-      "se": 0.384,
+      "effect": 0.054,
+      "se": 0.415,
       "expectedTries": {
-       "Dennis": 1.93,
-       "Gerda": 8.48,
-       "MrsD": 4.16
+       "Dennis": 1.96,
+       "Gerda": 9.03,
+       "MrsD": 4.42
       },
-      "modelYcap20": 3.88,
-      "dennisFirstTryModel": 0.547
+      "modelYcap20": 3.99,
+      "dennisFirstTryModel": 0.55
      },
      {
       "window": "130-139",
-      "effect": -0.125,
-      "se": 0.388,
+      "effect": -0.124,
+      "se": 0.42,
       "expectedTries": {
-       "Dennis": 1.79,
-       "Gerda": 7.4,
-       "MrsD": 3.71
+       "Dennis": 1.8,
+       "Gerda": 7.72,
+       "MrsD": 3.86
       },
-      "modelYcap20": 3.51,
-      "dennisFirstTryModel": 0.583
+      "modelYcap20": 3.58,
+      "dennisFirstTryModel": 0.591
      },
      {
       "window": "140-149",
-      "effect": -0.185,
-      "se": 0.388,
+      "effect": -0.144,
+      "se": 0.418,
       "expectedTries": {
-       "Dennis": 1.75,
-       "Gerda": 7.03,
-       "MrsD": 3.55
+       "Dennis": 1.79,
+       "Gerda": 7.59,
+       "MrsD": 3.8
       },
-      "modelYcap20": 3.38,
-      "dennisFirstTryModel": 0.597
+      "modelYcap20": 3.53,
+      "dennisFirstTryModel": 0.595
      },
      {
       "window": "150-159",
-      "effect": -0.001,
-      "se": 0.384,
+      "effect": 0.009,
+      "se": 0.415,
       "expectedTries": {
-       "Dennis": 1.9,
-       "Gerda": 8.24,
-       "MrsD": 4.06
+       "Dennis": 1.92,
+       "Gerda": 8.68,
+       "MrsD": 4.26
       },
-      "modelYcap20": 3.8,
-      "dennisFirstTryModel": 0.555
+      "modelYcap20": 3.88,
+      "dennisFirstTryModel": 0.561
      },
      {
       "window": "160-169",
-      "effect": -0.361,
-      "se": 0.39,
+      "effect": -0.34,
+      "se": 0.42,
       "expectedTries": {
-       "Dennis": 1.63,
-       "Gerda": 6.05,
-       "MrsD": 3.14
+       "Dennis": 1.65,
+       "Gerda": 6.42,
+       "MrsD": 3.3
       },
-      "modelYcap20": 3.03,
-      "dennisFirstTryModel": 0.636
+      "modelYcap20": 3.13,
+      "dennisFirstTryModel": 0.638
      },
      {
       "window": "170-179",
-      "effect": -0.222,
-      "se": 0.393,
+      "effect": -0.226,
+      "se": 0.424,
       "expectedTries": {
-       "Dennis": 1.72,
-       "Gerda": 6.81,
-       "MrsD": 3.46
+       "Dennis": 1.73,
+       "Gerda": 7.07,
+       "MrsD": 3.58
       },
-      "modelYcap20": 3.31,
-      "dennisFirstTryModel": 0.605
+      "modelYcap20": 3.36,
+      "dennisFirstTryModel": 0.613
      },
      {
       "window": "180-189",
-      "effect": -0.391,
-      "se": 0.421,
+      "effect": -0.358,
+      "se": 0.446,
       "expectedTries": {
-       "Dennis": 1.61,
-       "Gerda": 5.9,
-       "MrsD": 3.07
+       "Dennis": 1.64,
+       "Gerda": 6.32,
+       "MrsD": 3.26
       },
-      "modelYcap20": 2.98,
-      "dennisFirstTryModel": 0.643
+      "modelYcap20": 3.1,
+      "dennisFirstTryModel": 0.642
      },
      {
       "window": "190-199",
-      "effect": -0.142,
-      "se": 0.478,
+      "effect": -0.117,
+      "se": 0.501,
       "expectedTries": {
-       "Dennis": 1.78,
-       "Gerda": 7.29,
-       "MrsD": 3.66
+       "Dennis": 1.81,
+       "Gerda": 7.77,
+       "MrsD": 3.88
       },
-      "modelYcap20": 3.48,
-      "dennisFirstTryModel": 0.587
+      "modelYcap20": 3.59,
+      "dennisFirstTryModel": 0.589
      }
     ],
     "steps": [
      {
       "between": "85-89 | 90-99",
-      "est": -0.251,
-      "se": 0.341,
-      "z": -0.74,
+      "est": -0.233,
+      "se": 0.357,
+      "z": -0.65,
       "players": [
        "Gerda",
        "MrsD"
@@ -446,9 +661,9 @@
      },
      {
       "between": "90-99 | 100-109",
-      "est": -0.225,
-      "se": 0.31,
-      "z": -0.73,
+      "est": -0.192,
+      "se": 0.322,
+      "z": -0.6,
       "players": [
        "Gerda",
        "MrsD"
@@ -458,22 +673,22 @@
      },
      {
       "between": "100-109 | 110-119",
-      "est": 0.274,
-      "se": 0.301,
-      "z": 0.91,
+      "est": 0.298,
+      "se": 0.314,
+      "z": 0.95,
       "players": [
        "Dennis",
        "Gerda",
        "MrsD"
       ],
-      "lopoAgree": false,
+      "lopoAgree": true,
       "flagged": false
      },
      {
       "between": "110-119 | 120-129",
-      "est": 0.233,
-      "se": 0.288,
-      "z": 0.81,
+      "est": 0.181,
+      "se": 0.303,
+      "z": 0.6,
       "players": [
        "Dennis",
        "Gerda",
@@ -484,9 +699,9 @@
      },
      {
       "between": "120-129 | 130-139",
-      "est": -0.156,
-      "se": 0.286,
-      "z": -0.55,
+      "est": -0.178,
+      "se": 0.304,
+      "z": -0.59,
       "players": [
        "Dennis",
        "Gerda",
@@ -497,9 +712,9 @@
      },
      {
       "between": "130-139 | 140-149",
-      "est": -0.06,
-      "se": 0.29,
-      "z": -0.21,
+      "est": -0.02,
+      "se": 0.306,
+      "z": -0.07,
       "players": [
        "Dennis",
        "Gerda",
@@ -510,9 +725,9 @@
      },
      {
       "between": "140-149 | 150-159",
-      "est": 0.184,
-      "se": 0.286,
-      "z": 0.64,
+      "est": 0.153,
+      "se": 0.302,
+      "z": 0.51,
       "players": [
        "Dennis",
        "Gerda",
@@ -523,9 +738,9 @@
      },
      {
       "between": "150-159 | 160-169",
-      "est": -0.36,
-      "se": 0.287,
-      "z": -1.25,
+      "est": -0.349,
+      "se": 0.304,
+      "z": -1.15,
       "players": [
        "Dennis",
        "Gerda",
@@ -536,9 +751,9 @@
      },
      {
       "between": "160-169 | 170-179",
-      "est": 0.139,
-      "se": 0.294,
-      "z": 0.47,
+      "est": 0.114,
+      "se": 0.31,
+      "z": 0.37,
       "players": [
        "Dennis",
        "Gerda",
@@ -549,9 +764,9 @@
      },
      {
       "between": "170-179 | 180-189",
-      "est": -0.17,
-      "se": 0.318,
-      "z": -0.53,
+      "est": -0.132,
+      "se": 0.329,
+      "z": -0.4,
       "players": [
        "Dennis",
        "Gerda"
@@ -561,9 +776,9 @@
      },
      {
       "between": "180-189 | 190-199",
-      "est": 0.25,
-      "se": 0.366,
-      "z": 0.68,
+      "est": 0.241,
+      "se": 0.372,
+      "z": 0.65,
       "players": [
        "Dennis",
        "Gerda"
@@ -572,151 +787,212 @@
       "flagged": false
      }
     ],
-    "levelSd": 0.103,
+    "levelSd": 0.341,
     "hardestLevels": [
      [
       132,
-      0.34
-     ],
-     [
-      161,
-      0.32
-     ],
-     [
-      176,
-      0.31
+      1
      ],
      [
       91,
-      0.3
+      0.96
      ],
      [
-      150,
-      0.29
+      176,
+      0.93
      ],
      [
-      89,
-      0.26
+      161,
+      0.9
      ],
      [
       196,
-      0.22
+      0.87
      ],
      [
-      122,
-      0.18
+      150,
+      0.87
+     ],
+     [
+      89,
+      0.8
+     ],
+     [
+      156,
+      0.58
      ]
+    ],
+    "stepInTries": [
+     {
+      "step": 0,
+      "modelY": 3.86,
+      "ratioY": 1,
+      "Dennis": 1.91,
+      "Gerda": 7.28,
+      "MrsD": 4.11
+     },
+     {
+      "step": 0.2,
+      "modelY": 4.37,
+      "ratioY": 1.13,
+      "Dennis": 2.11,
+      "Gerda": 8.21,
+      "MrsD": 4.71
+     },
+     {
+      "step": 0.35,
+      "modelY": 4.79,
+      "ratioY": 1.24,
+      "Dennis": 2.29,
+      "Gerda": 8.93,
+      "MrsD": 5.23
+     },
+     {
+      "step": 0.5,
+      "modelY": 5.24,
+      "ratioY": 1.36,
+      "Dennis": 2.49,
+      "Gerda": 9.67,
+      "MrsD": 5.78
+     },
+     {
+      "step": 0.75,
+      "modelY": 6.07,
+      "ratioY": 1.57,
+      "Dennis": 2.91,
+      "Gerda": 10.91,
+      "MrsD": 6.81
+     },
+     {
+      "step": 1,
+      "modelY": 6.97,
+      "ratioY": 1.8,
+      "Dennis": 3.42,
+      "Gerda": 12.12,
+      "MrsD": 7.94
+     }
     ]
    },
-   "fitWithoutPlayerLevel": {
-    "skill": {
-     "Dennis": 0.15253945268683672,
-     "Gerda": -1.9423804345787277,
-     "MrsD": -1.1195349731869209
+   "fitOldSettings": {
+    "settings": {
+     "sdLevel": 0.3,
+     "sdSeq": 0.5
     },
+    "skill": {
+     "Dennis": 0.23105567737456886,
+     "Gerda": -1.8558678652619858,
+     "MrsD": -0.9958116941166644
+    },
+    "evidence": -569.79,
     "steps": [
      {
-      "est": -0.259,
-      "se": 0.327,
+      "est": -0.251,
+      "se": 0.341,
       "flagged": false
      },
      {
-      "est": -0.24,
-      "se": 0.298,
+      "est": -0.225,
+      "se": 0.31,
       "flagged": false
      },
      {
-      "est": 0.312,
-      "se": 0.289,
+      "est": 0.274,
+      "se": 0.301,
       "flagged": false
      },
      {
-      "est": 0.211,
-      "se": 0.274,
+      "est": 0.233,
+      "se": 0.288,
       "flagged": false
      },
      {
-      "est": -0.159,
-      "se": 0.274,
+      "est": -0.156,
+      "se": 0.286,
       "flagged": false
      },
      {
-      "est": -0.04,
-      "se": 0.277,
+      "est": -0.06,
+      "se": 0.29,
       "flagged": false
      },
      {
-      "est": 0.177,
-      "se": 0.272,
+      "est": 0.184,
+      "se": 0.286,
       "flagged": false
      },
      {
-      "est": -0.367,
-      "se": 0.274,
+      "est": -0.36,
+      "se": 0.287,
       "flagged": false
      },
      {
-      "est": 0.161,
-      "se": 0.281,
+      "est": 0.139,
+      "se": 0.294,
       "flagged": false
      },
      {
-      "est": -0.173,
-      "se": 0.305,
+      "est": -0.17,
+      "se": 0.318,
       "flagged": false
      },
      {
-      "est": 0.308,
-      "se": 0.352,
+      "est": 0.25,
+      "se": 0.366,
       "flagged": false
      }
     ]
    },
    "power": {
+    "world": {
+     "sdLevel": 0.6,
+     "sdSeq": 0
+    },
+    "fits": 30400,
+    "fitsNotConverged": 0,
     "summary": {
      "detection": [
       {
        "delta": 0.2,
-       "pooledAll": 0.015,
-       "pooledThreePlayers": 0.02,
-       "bestBoundary": 0.04,
-       "pooledNoLopo": 0.015,
-       "meanEstOverDelta": 0.62
+       "pooledAll": 0.009,
+       "pooledThreePlayers": 0.011,
+       "bestBoundary": 0.03,
+       "pooledNoLopo": 0.009,
+       "meanEstOverDelta": 0.56
       },
       {
        "delta": 0.35,
-       "pooledAll": 0.028,
-       "pooledThreePlayers": 0.033,
-       "bestBoundary": 0.09,
-       "pooledNoLopo": 0.028,
-       "meanEstOverDelta": 0.58
+       "pooledAll": 0.034,
+       "pooledThreePlayers": 0.047,
+       "bestBoundary": 0.1,
+       "pooledNoLopo": 0.034,
+       "meanEstOverDelta": 0.62
       },
       {
        "delta": 0.5,
-       "pooledAll": 0.08,
-       "pooledThreePlayers": 0.103,
-       "bestBoundary": 0.15,
-       "pooledNoLopo": 0.081,
+       "pooledAll": 0.071,
+       "pooledThreePlayers": 0.089,
+       "bestBoundary": 0.13,
+       "pooledNoLopo": 0.071,
        "meanEstOverDelta": 0.6
       },
       {
        "delta": 0.75,
-       "pooledAll": 0.269,
-       "pooledThreePlayers": 0.343,
-       "bestBoundary": 0.39,
-       "pooledNoLopo": 0.269,
-       "meanEstOverDelta": 0.61
+       "pooledAll": 0.2,
+       "pooledThreePlayers": 0.253,
+       "bestBoundary": 0.3,
+       "pooledNoLopo": 0.201,
+       "meanEstOverDelta": 0.58
       }
      ],
      "falseAlarm": {
-      "pooled": 0.004,
-      "worstWindow": 0.015,
-      "pooledNoLopo": 0.004
+      "pooled": 0.003,
+      "worstWindow": 0.01,
+      "pooledNoLopo": 0.003
      },
      "kill": {
-      "detect": 0.033,
+      "detect": 0.047,
       "needAtLeast": 0.7,
-      "falseAlarmWorst": 0.015,
+      "falseAlarmWorst": 0.01,
       "needAtMost": 0.1,
       "killed": true
      }
@@ -725,38 +1001,38 @@
      "detection": [
       {
        "delta": 0.35,
-       "pooledAll": 0.105,
-       "pooledThreePlayers": 0.129,
-       "bestBoundary": 0.22,
-       "pooledNoLopo": 0.105,
-       "meanEstOverDelta": 0.9
+       "pooledAll": 0.1,
+       "pooledThreePlayers": 0.097,
+       "bestBoundary": 0.18,
+       "pooledNoLopo": 0.102,
+       "meanEstOverDelta": 0.96
       },
       {
        "delta": 0.5,
-       "pooledAll": 0.182,
-       "pooledThreePlayers": 0.2,
+       "pooledAll": 0.153,
+       "pooledThreePlayers": 0.157,
        "bestBoundary": 0.26,
-       "pooledNoLopo": 0.184,
-       "meanEstOverDelta": 0.9
+       "pooledNoLopo": 0.153,
+       "meanEstOverDelta": 0.96
       },
       {
        "delta": 0.75,
-       "pooledAll": 0.347,
-       "pooledThreePlayers": 0.409,
-       "bestBoundary": 0.5,
-       "pooledNoLopo": 0.347,
-       "meanEstOverDelta": 0.93
+       "pooledAll": 0.304,
+       "pooledThreePlayers": 0.349,
+       "bestBoundary": 0.52,
+       "pooledNoLopo": 0.305,
+       "meanEstOverDelta": 0.95
       }
      ],
      "falseAlarm": {
-      "pooled": 0.034,
-      "worstWindow": 0.06,
-      "pooledNoLopo": 0.034
+      "pooled": 0.046,
+      "worstWindow": 0.075,
+      "pooledNoLopo": 0.046
      },
      "kill": {
-      "detect": 0.129,
+      "detect": 0.097,
       "needAtLeast": 0.7,
-      "falseAlarmWorst": 0.06,
+      "falseAlarmWorst": 0.075,
       "needAtMost": 0.1,
       "killed": true
      }
@@ -769,9 +1045,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0.005,
-      "rateFloor": 0.005,
-      "rateNoLopo": 0.005
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
      },
      {
       "between": "90-99 | 100-109",
@@ -792,9 +1068,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0.005,
-      "rateFloor": 0.005,
-      "rateNoLopo": 0.005
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01
      },
      {
       "between": "110-119 | 120-129",
@@ -804,12 +1080,24 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0.005,
-      "rateFloor": 0.005,
-      "rateNoLopo": 0.005
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
      },
      {
       "between": "120-129 | 130-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 200,
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
+     },
+     {
+      "between": "130-139 | 140-149",
       "players": [
        "Dennis",
        "Gerda",
@@ -821,18 +1109,6 @@
       "rateNoLopo": 0.01
      },
      {
-      "between": "130-139 | 140-149",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 200,
-      "rate2se": 0,
-      "rateFloor": 0,
-      "rateNoLopo": 0
-     },
-     {
       "between": "140-149 | 150-159",
       "players": [
        "Dennis",
@@ -840,9 +1116,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0,
-      "rateFloor": 0,
-      "rateNoLopo": 0
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
      },
      {
       "between": "150-159 | 160-169",
@@ -852,9 +1128,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0.015,
-      "rateFloor": 0.015,
-      "rateNoLopo": 0.015
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
      },
      {
       "between": "160-169 | 170-179",
@@ -864,9 +1140,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0,
-      "rateFloor": 0,
-      "rateNoLopo": 0
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
      },
      {
       "between": "170-179 | 180-189",
@@ -875,9 +1151,9 @@
        "Gerda"
       ],
       "n": 200,
-      "rate2se": 0.005,
-      "rateFloor": 0.005,
-      "rateNoLopo": 0.005
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0
      },
      {
       "between": "180-189 | 190-199",
@@ -893,66 +1169,159 @@
     ],
     "falseAlarmMisspecified": [
      {
-      "between": "85-89 | 90-99",
-      "rate2se": 0.01,
-      "rateNoLopo": 0.01
+      "world": {
+       "sdLevel": 0.6,
+       "sdSeq": 0.5
+      },
+      "fitted": {
+       "sdLevel": 0.6,
+       "sdSeq": 0
+      },
+      "n": 200,
+      "pooled": 0.002,
+      "worstWindow": 0.015,
+      "perBoundary": [
+       {
+        "between": "85-89 | 90-99",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "90-99 | 100-109",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "100-109 | 110-119",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "110-119 | 120-129",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "120-129 | 130-139",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "130-139 | 140-149",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "140-149 | 150-159",
+        "rate2se": 0.005,
+        "rateNoLopo": 0.005
+       },
+       {
+        "between": "150-159 | 160-169",
+        "rate2se": 0.015,
+        "rateNoLopo": 0.015
+       },
+       {
+        "between": "160-169 | 170-179",
+        "rate2se": 0.005,
+        "rateNoLopo": 0.005
+       },
+       {
+        "between": "170-179 | 180-189",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "180-189 | 190-199",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       }
+      ]
      },
      {
-      "between": "90-99 | 100-109",
-      "rate2se": 0.01,
-      "rateNoLopo": 0.01
-     },
-     {
-      "between": "100-109 | 110-119",
-      "rate2se": 0.015,
-      "rateNoLopo": 0.015
-     },
-     {
-      "between": "110-119 | 120-129",
-      "rate2se": 0.015,
-      "rateNoLopo": 0.015
-     },
-     {
-      "between": "120-129 | 130-139",
-      "rate2se": 0,
-      "rateNoLopo": 0
-     },
-     {
-      "between": "130-139 | 140-149",
-      "rate2se": 0.015,
-      "rateNoLopo": 0.015
-     },
-     {
-      "between": "140-149 | 150-159",
-      "rate2se": 0.02,
-      "rateNoLopo": 0.02
-     },
-     {
-      "between": "150-159 | 160-169",
-      "rate2se": 0,
-      "rateNoLopo": 0
-     },
-     {
-      "between": "160-169 | 170-179",
-      "rate2se": 0.015,
-      "rateNoLopo": 0.015
-     },
-     {
-      "between": "170-179 | 180-189",
-      "rate2se": 0.005,
-      "rateNoLopo": 0.005
-     },
-     {
-      "between": "180-189 | 190-199",
-      "rate2se": 0,
-      "rateNoLopo": 0
+      "world": {
+       "sdLevel": 0.3,
+       "sdSeq": 0.5
+      },
+      "fitted": {
+       "sdLevel": 0.6,
+       "sdSeq": 0
+      },
+      "n": 200,
+      "pooled": 0.002,
+      "worstWindow": 0.01,
+      "perBoundary": [
+       {
+        "between": "85-89 | 90-99",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "90-99 | 100-109",
+        "rate2se": 0.005,
+        "rateNoLopo": 0.005
+       },
+       {
+        "between": "100-109 | 110-119",
+        "rate2se": 0.005,
+        "rateNoLopo": 0.005
+       },
+       {
+        "between": "110-119 | 120-129",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "120-129 | 130-139",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "130-139 | 140-149",
+        "rate2se": 0.005,
+        "rateNoLopo": 0.005
+       },
+       {
+        "between": "140-149 | 150-159",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "150-159 | 160-169",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "160-169 | 170-179",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "170-179 | 180-189",
+        "rate2se": 0.01,
+        "rateNoLopo": 0.01
+       },
+       {
+        "between": "180-189 | 190-199",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       }
+      ]
      }
     ],
     "heavierWorldSd1": {
+     "world": {
+      "sdLevel": 0.6,
+      "sdSeq": 1
+     },
+     "fitted": {
+      "sdLevel": 0.6,
+      "sdSeq": 0
+     },
      "falseAlarm": [
       {
        "between": "85-89 | 90-99",
-       "rate2se": 0.01
+       "rate2se": 0
       },
       {
        "between": "90-99 | 100-109",
@@ -960,7 +1329,7 @@
       },
       {
        "between": "100-109 | 110-119",
-       "rate2se": 0.02
+       "rate2se": 0.015
       },
       {
        "between": "110-119 | 120-129",
@@ -968,7 +1337,7 @@
       },
       {
        "between": "120-129 | 130-139",
-       "rate2se": 0.005
+       "rate2se": 0.015
       },
       {
        "between": "130-139 | 140-149",
@@ -976,11 +1345,11 @@
       },
       {
        "between": "140-149 | 150-159",
-       "rate2se": 0.02
+       "rate2se": 0.005
       },
       {
        "between": "150-159 | 160-169",
-       "rate2se": 0.02
+       "rate2se": 0.015
       },
       {
        "between": "160-169 | 170-179",
@@ -992,55 +1361,130 @@
       },
       {
        "between": "180-189 | 190-199",
-       "rate2se": 0.005
+       "rate2se": 0.01
       }
      ],
      "detection035": [
       {
        "between": "85-89 | 90-99",
-       "rate2se": 0
+       "players": [
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0.02
       },
       {
        "between": "90-99 | 100-109",
-       "rate2se": 0.02
+       "players": [
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0
       },
       {
        "between": "100-109 | 110-119",
-       "rate2se": 0.06
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0
       },
       {
        "between": "110-119 | 120-129",
-       "rate2se": 0.08
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0.04
       },
       {
        "between": "120-129 | 130-139",
-       "rate2se": 0.02
-      },
-      {
-       "between": "130-139 | 140-149",
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
        "rate2se": 0.06
       },
       {
+       "between": "130-139 | 140-149",
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0
+      },
+      {
        "between": "140-149 | 150-159",
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
        "rate2se": 0.02
       },
       {
        "between": "150-159 | 160-169",
-       "rate2se": 0
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0.04
       },
       {
        "between": "160-169 | 170-179",
-       "rate2se": 0
-      },
-      {
-       "between": "170-179 | 180-189",
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
        "rate2se": 0.02
       },
       {
+       "between": "170-179 | 180-189",
+       "players": [
+        "Dennis",
+        "Gerda"
+       ],
+       "rate2se": 0.12
+      },
+      {
        "between": "180-189 | 190-199",
-       "rate2se": 0
+       "players": [
+        "Dennis",
+        "Gerda"
+       ],
+       "rate2se": 0.02
       }
-     ]
+     ],
+     "summary": {
+      "detection": [
+       {
+        "delta": 0.35,
+        "pooledAll": 0.031,
+        "pooledThreePlayers": 0.026,
+        "bestBoundary": 0.12,
+        "pooledNoLopo": 0.031,
+        "meanEstOverDelta": 0.47
+       }
+      ],
+      "falseAlarm": {
+       "pooled": 0.008,
+       "worstWindow": 0.015,
+       "pooledNoLopo": 0.008
+      },
+      "kill": {
+       "detect": 0.026,
+       "needAtLeast": 0.7,
+       "falseAlarmWorst": 0.015,
+       "needAtMost": 0.1,
+       "killed": true
+      }
+     }
     },
     "detection": [
      {
@@ -1051,11 +1495,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.01,
-      "rateFloor": 0.01,
-      "rateNoLopo": 0.01,
-      "meanEst": 0.15,
-      "meanSE": 0.346
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.078,
+      "meanSE": 0.361
      },
      {
       "delta": 0.2,
@@ -1068,8 +1512,8 @@
       "rate2se": 0.01,
       "rateFloor": 0.01,
       "rateNoLopo": 0.01,
-      "meanEst": 0.12,
-      "meanSE": 0.306
+      "meanEst": 0.118,
+      "meanSE": 0.318
      },
      {
       "delta": 0.2,
@@ -1080,11 +1524,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.02,
-      "rateFloor": 0.02,
-      "rateNoLopo": 0.02,
-      "meanEst": 0.109,
-      "meanSE": 0.293
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.108,
+      "meanSE": 0.308
      },
      {
       "delta": 0.2,
@@ -1098,8 +1542,8 @@
       "rate2se": 0,
       "rateFloor": 0,
       "rateNoLopo": 0,
-      "meanEst": 0.134,
-      "meanSE": 0.286
+      "meanEst": 0.114,
+      "meanSE": 0.303
      },
      {
       "delta": 0.2,
@@ -1110,56 +1554,56 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.04,
-      "rateFloor": 0.04,
-      "rateNoLopo": 0.04,
-      "meanEst": 0.163,
-      "meanSE": 0.286
-     },
-     {
-      "delta": 0.2,
-      "between": "130-139 | 140-149",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
       "rate2se": 0.01,
       "rateFloor": 0.01,
       "rateNoLopo": 0.01,
-      "meanEst": 0.137,
-      "meanSE": 0.285
-     },
-     {
-      "delta": 0.2,
-      "between": "140-149 | 150-159",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.04,
-      "rateFloor": 0.04,
-      "rateNoLopo": 0.04,
-      "meanEst": 0.124,
-      "meanSE": 0.286
-     },
-     {
-      "delta": 0.2,
-      "between": "150-159 | 160-169",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.03,
-      "rateFloor": 0.03,
-      "rateNoLopo": 0.03,
       "meanEst": 0.153,
-      "meanSE": 0.286
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.2,
+      "between": "130-139 | 140-149",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.116,
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.2,
+      "between": "140-149 | 150-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.13,
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.2,
+      "between": "150-159 | 160-169",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.121,
+      "meanSE": 0.303
      },
      {
       "delta": 0.2,
@@ -1170,11 +1614,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0,
-      "rateFloor": 0,
-      "rateNoLopo": 0,
-      "meanEst": 0.1,
-      "meanSE": 0.291
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02,
+      "meanEst": 0.14,
+      "meanSE": 0.307
      },
      {
       "delta": 0.2,
@@ -1187,8 +1631,8 @@
       "rate2se": 0,
       "rateFloor": 0,
       "rateNoLopo": 0,
-      "meanEst": 0.098,
-      "meanSE": 0.312
+      "meanEst": 0.078,
+      "meanSE": 0.324
      },
      {
       "delta": 0.2,
@@ -1201,8 +1645,8 @@
       "rate2se": 0.01,
       "rateFloor": 0.01,
       "rateNoLopo": 0.01,
-      "meanEst": 0.079,
-      "meanSE": 0.364
+      "meanEst": 0.071,
+      "meanSE": 0.37
      },
      {
       "delta": 0.35,
@@ -1212,11 +1656,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.03,
-      "rateFloor": 0.03,
-      "rateNoLopo": 0.03,
-      "meanEst": 0.193,
-      "meanSE": 0.346
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.158,
+      "meanSE": 0.361
      },
      {
       "delta": 0.35,
@@ -1226,11 +1670,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.05,
-      "rateFloor": 0.05,
-      "rateNoLopo": 0.05,
-      "meanEst": 0.241,
-      "meanSE": 0.306
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02,
+      "meanEst": 0.198,
+      "meanSE": 0.318
      },
      {
       "delta": 0.35,
@@ -1241,11 +1685,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.05,
-      "rateFloor": 0.05,
-      "rateNoLopo": 0.05,
-      "meanEst": 0.251,
-      "meanSE": 0.294
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.236,
+      "meanSE": 0.308
      },
      {
       "delta": 0.35,
@@ -1259,8 +1703,8 @@
       "rate2se": 0.04,
       "rateFloor": 0.04,
       "rateNoLopo": 0.04,
-      "meanEst": 0.19,
-      "meanSE": 0.286
+      "meanEst": 0.225,
+      "meanSE": 0.303
      },
      {
       "delta": 0.35,
@@ -1271,11 +1715,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0,
-      "rateFloor": 0,
-      "rateNoLopo": 0,
-      "meanEst": 0.19,
-      "meanSE": 0.286
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.228,
+      "meanSE": 0.303
      },
      {
       "delta": 0.35,
@@ -1286,11 +1730,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.02,
-      "rateFloor": 0.02,
-      "rateNoLopo": 0.02,
-      "meanEst": 0.204,
-      "meanSE": 0.285
+      "rate2se": 0.1,
+      "rateFloor": 0.1,
+      "rateNoLopo": 0.1,
+      "meanEst": 0.257,
+      "meanSE": 0.303
      },
      {
       "delta": 0.35,
@@ -1301,11 +1745,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.02,
-      "rateFloor": 0.02,
-      "rateNoLopo": 0.02,
-      "meanEst": 0.229,
-      "meanSE": 0.285
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.238,
+      "meanSE": 0.303
      },
      {
       "delta": 0.35,
@@ -1316,11 +1760,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.01,
-      "rateFloor": 0.01,
-      "rateNoLopo": 0.01,
-      "meanEst": 0.177,
-      "meanSE": 0.286
+      "rate2se": 0.06,
+      "rateFloor": 0.06,
+      "rateNoLopo": 0.06,
+      "meanEst": 0.228,
+      "meanSE": 0.303
      },
      {
       "delta": 0.35,
@@ -1331,11 +1775,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.09,
-      "rateFloor": 0.09,
-      "rateNoLopo": 0.09,
-      "meanEst": 0.218,
-      "meanSE": 0.291
+      "rate2se": 0.06,
+      "rateFloor": 0.06,
+      "rateNoLopo": 0.06,
+      "meanEst": 0.249,
+      "meanSE": 0.307
      },
      {
       "delta": 0.35,
@@ -1345,11 +1789,11 @@
        "Gerda"
       ],
       "n": 100,
-      "rate2se": 0,
-      "rateFloor": 0,
-      "rateNoLopo": 0,
-      "meanEst": 0.195,
-      "meanSE": 0.311
+      "rate2se": 0.02,
+      "rateFloor": 0.02,
+      "rateNoLopo": 0.02,
+      "meanEst": 0.184,
+      "meanSE": 0.323
      },
      {
       "delta": 0.35,
@@ -1362,8 +1806,8 @@
       "rate2se": 0,
       "rateFloor": 0,
       "rateNoLopo": 0,
-      "meanEst": 0.144,
-      "meanSE": 0.362
+      "meanEst": 0.185,
+      "meanSE": 0.367
      },
      {
       "delta": 0.5,
@@ -1373,121 +1817,16 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.03,
-      "rateFloor": 0.03,
-      "rateNoLopo": 0.03,
-      "meanEst": 0.286,
-      "meanSE": 0.347
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01,
+      "meanEst": 0.179,
+      "meanSE": 0.361
      },
      {
       "delta": 0.5,
       "between": "90-99 | 100-109",
       "players": [
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.03,
-      "rateFloor": 0.03,
-      "rateNoLopo": 0.03,
-      "meanEst": 0.301,
-      "meanSE": 0.306
-     },
-     {
-      "delta": 0.5,
-      "between": "100-109 | 110-119",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.1,
-      "rateFloor": 0.1,
-      "rateNoLopo": 0.1,
-      "meanEst": 0.333,
-      "meanSE": 0.293
-     },
-     {
-      "delta": 0.5,
-      "between": "110-119 | 120-129",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.08,
-      "rateFloor": 0.08,
-      "rateNoLopo": 0.08,
-      "meanEst": 0.298,
-      "meanSE": 0.286
-     },
-     {
-      "delta": 0.5,
-      "between": "120-129 | 130-139",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.1,
-      "rateFloor": 0.1,
-      "rateNoLopo": 0.1,
-      "meanEst": 0.309,
-      "meanSE": 0.286
-     },
-     {
-      "delta": 0.5,
-      "between": "130-139 | 140-149",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.15,
-      "rateFloor": 0.15,
-      "rateNoLopo": 0.15,
-      "meanEst": 0.314,
-      "meanSE": 0.285
-     },
-     {
-      "delta": 0.5,
-      "between": "140-149 | 150-159",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.1,
-      "rateFloor": 0.1,
-      "rateNoLopo": 0.1,
-      "meanEst": 0.315,
-      "meanSE": 0.285
-     },
-     {
-      "delta": 0.5,
-      "between": "150-159 | 160-169",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.08,
-      "rateFloor": 0.08,
-      "rateNoLopo": 0.08,
-      "meanEst": 0.293,
-      "meanSE": 0.285
-     },
-     {
-      "delta": 0.5,
-      "between": "160-169 | 170-179",
-      "players": [
-       "Dennis",
        "Gerda",
        "MrsD"
       ],
@@ -1495,8 +1834,113 @@
       "rate2se": 0.11,
       "rateFloor": 0.11,
       "rateNoLopo": 0.11,
-      "meanEst": 0.32,
-      "meanSE": 0.291
+      "meanEst": 0.353,
+      "meanSE": 0.319
+     },
+     {
+      "delta": 0.5,
+      "between": "100-109 | 110-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.05,
+      "rateFloor": 0.05,
+      "rateNoLopo": 0.05,
+      "meanEst": 0.333,
+      "meanSE": 0.309
+     },
+     {
+      "delta": 0.5,
+      "between": "110-119 | 120-129",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.08,
+      "rateFloor": 0.08,
+      "rateNoLopo": 0.08,
+      "meanEst": 0.294,
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.5,
+      "between": "120-129 | 130-139",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.06,
+      "rateFloor": 0.06,
+      "rateNoLopo": 0.06,
+      "meanEst": 0.342,
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.5,
+      "between": "130-139 | 140-149",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.1,
+      "rateFloor": 0.1,
+      "rateNoLopo": 0.1,
+      "meanEst": 0.348,
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.5,
+      "between": "140-149 | 150-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.13,
+      "rateFloor": 0.13,
+      "rateNoLopo": 0.13,
+      "meanEst": 0.335,
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.5,
+      "between": "150-159 | 160-169",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.12,
+      "rateFloor": 0.12,
+      "rateNoLopo": 0.12,
+      "meanEst": 0.366,
+      "meanSE": 0.303
+     },
+     {
+      "delta": 0.5,
+      "between": "160-169 | 170-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.08,
+      "rateFloor": 0.08,
+      "rateNoLopo": 0.08,
+      "meanEst": 0.295,
+      "meanSE": 0.307
      },
      {
       "delta": 0.5,
@@ -1506,11 +1950,11 @@
        "Gerda"
       ],
       "n": 100,
-      "rate2se": 0.07,
-      "rateFloor": 0.07,
-      "rateNoLopo": 0.07,
-      "meanEst": 0.293,
-      "meanSE": 0.312
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.266,
+      "meanSE": 0.323
      },
      {
       "delta": 0.5,
@@ -1520,11 +1964,11 @@
        "Gerda"
       ],
       "n": 100,
-      "rate2se": 0.03,
-      "rateFloor": 0.03,
-      "rateNoLopo": 0.04,
-      "meanEst": 0.224,
-      "meanSE": 0.36
+      "rate2se": 0,
+      "rateFloor": 0,
+      "rateNoLopo": 0,
+      "meanEst": 0.198,
+      "meanSE": 0.366
      },
      {
       "delta": 0.75,
@@ -1534,11 +1978,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.12,
-      "rateFloor": 0.12,
-      "rateNoLopo": 0.12,
-      "meanEst": 0.358,
-      "meanSE": 0.348
+      "rate2se": 0.06,
+      "rateFloor": 0.06,
+      "rateNoLopo": 0.06,
+      "meanEst": 0.357,
+      "meanSE": 0.364
      },
      {
       "delta": 0.75,
@@ -1548,15 +1992,30 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.16,
-      "rateFloor": 0.16,
-      "rateNoLopo": 0.16,
-      "meanEst": 0.431,
-      "meanSE": 0.307
+      "rate2se": 0.15,
+      "rateFloor": 0.15,
+      "rateNoLopo": 0.15,
+      "meanEst": 0.423,
+      "meanSE": 0.319
      },
      {
       "delta": 0.75,
       "between": "100-109 | 110-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.21,
+      "rateFloor": 0.21,
+      "rateNoLopo": 0.21,
+      "meanEst": 0.418,
+      "meanSE": 0.308
+     },
+     {
+      "delta": 0.75,
+      "between": "110-119 | 120-129",
       "players": [
        "Dennis",
        "Gerda",
@@ -1566,23 +2025,8 @@
       "rate2se": 0.29,
       "rateFloor": 0.29,
       "rateNoLopo": 0.29,
-      "meanEst": 0.515,
-      "meanSE": 0.294
-     },
-     {
-      "delta": 0.75,
-      "between": "110-119 | 120-129",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.39,
-      "rateFloor": 0.39,
-      "rateNoLopo": 0.39,
-      "meanEst": 0.475,
-      "meanSE": 0.286
+      "meanEst": 0.476,
+      "meanSE": 0.303
      },
      {
       "delta": 0.75,
@@ -1593,11 +2037,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.31,
-      "rateFloor": 0.31,
-      "rateNoLopo": 0.31,
-      "meanEst": 0.479,
-      "meanSE": 0.286
+      "rate2se": 0.28,
+      "rateFloor": 0.28,
+      "rateNoLopo": 0.28,
+      "meanEst": 0.486,
+      "meanSE": 0.303
      },
      {
       "delta": 0.75,
@@ -1608,11 +2052,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.36,
-      "rateFloor": 0.36,
-      "rateNoLopo": 0.36,
-      "meanEst": 0.5,
-      "meanSE": 0.286
+      "rate2se": 0.21,
+      "rateFloor": 0.21,
+      "rateNoLopo": 0.21,
+      "meanEst": 0.453,
+      "meanSE": 0.303
      },
      {
       "delta": 0.75,
@@ -1623,11 +2067,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.39,
-      "rateFloor": 0.39,
-      "rateNoLopo": 0.39,
-      "meanEst": 0.502,
-      "meanSE": 0.286
+      "rate2se": 0.26,
+      "rateFloor": 0.26,
+      "rateNoLopo": 0.26,
+      "meanEst": 0.476,
+      "meanSE": 0.303
      },
      {
       "delta": 0.75,
@@ -1638,11 +2082,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.32,
-      "rateFloor": 0.32,
-      "rateNoLopo": 0.32,
-      "meanEst": 0.481,
-      "meanSE": 0.285
+      "rate2se": 0.3,
+      "rateFloor": 0.3,
+      "rateNoLopo": 0.3,
+      "meanEst": 0.491,
+      "meanSE": 0.303
      },
      {
       "delta": 0.75,
@@ -1653,11 +2097,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.34,
-      "rateFloor": 0.34,
-      "rateNoLopo": 0.34,
-      "meanEst": 0.491,
-      "meanSE": 0.291
+      "rate2se": 0.22,
+      "rateFloor": 0.22,
+      "rateNoLopo": 0.22,
+      "meanEst": 0.452,
+      "meanSE": 0.307
      },
      {
       "delta": 0.75,
@@ -1667,11 +2111,11 @@
        "Gerda"
       ],
       "n": 100,
-      "rate2se": 0.23,
-      "rateFloor": 0.23,
-      "rateNoLopo": 0.23,
-      "meanEst": 0.467,
-      "meanSE": 0.311
+      "rate2se": 0.17,
+      "rateFloor": 0.17,
+      "rateNoLopo": 0.17,
+      "meanEst": 0.428,
+      "meanSE": 0.323
      },
      {
       "delta": 0.75,
@@ -1683,9 +2127,9 @@
       "n": 100,
       "rate2se": 0.05,
       "rateFloor": 0.05,
-      "rateNoLopo": 0.05,
-      "meanEst": 0.345,
-      "meanSE": 0.356
+      "rateNoLopo": 0.06,
+      "meanEst": 0.359,
+      "meanSE": 0.363
      }
     ]
    }
@@ -1697,10 +2141,10 @@
       "player": "Dennis",
       "first": {
        "real": 0.596,
-       "sim": 0.595,
+       "sim": 0.592,
        "sim90": [
-        0.525,
-        0.677
+        0.505,
+        0.667
        ]
       },
       "cut": {
@@ -1713,10 +2157,10 @@
       },
       "mean": {
        "real": 1.778,
-       "sim": 1.804,
+       "sim": 1.795,
        "sim90": [
-        1.596,
-        2.051
+        1.606,
+        2.01
        ]
       }
      },
@@ -1724,7 +2168,7 @@
       "player": "Gerda",
       "first": {
        "real": 0.131,
-       "sim": 0.175,
+       "sim": 0.176,
        "sim90": [
         0.121,
         0.243
@@ -1732,18 +2176,18 @@
       },
       "cut": {
        "real": 0.178,
-       "sim": 0.158,
+       "sim": 0.167,
        "sim90": [
-        0.103,
-        0.215
+        0.112,
+        0.234
        ]
       },
       "mean": {
        "real": 5.785,
-       "sim": 5.578,
+       "sim": 5.613,
        "sim90": [
         4.944,
-        6.262
+        6.224
        ]
       }
      },
@@ -1751,15 +2195,15 @@
       "player": "MrsD",
       "first": {
        "real": 0.308,
-       "sim": 0.317,
+       "sim": 0.312,
        "sim90": [
-        0.231,
+        0.22,
         0.396
        ]
       },
       "cut": {
        "real": 0.066,
-       "sim": 0.037,
+       "sim": 0.04,
        "sim90": [
         0.011,
         0.077
@@ -1767,10 +2211,10 @@
       },
       "mean": {
        "real": 3.44,
-       "sim": 3.479,
+       "sim": 3.556,
        "sim90": [
-        3.022,
-        4.022
+        3.011,
+        4.187
        ]
       }
      }
@@ -1780,26 +2224,26 @@
       "player": "Dennis",
       "first": {
        "real": 0.596,
-       "sim": 0.576,
+       "sim": 0.582,
        "sim90": [
         0.495,
-        0.657
+        0.667
        ]
       },
       "cut": {
        "real": 0,
-       "sim": 0.01,
+       "sim": 0.017,
        "sim90": [
         0,
-        0.03
+        0.04
        ]
       },
       "mean": {
        "real": 1.778,
-       "sim": 2.085,
+       "sim": 2.155,
        "sim90": [
-        1.798,
-        2.424
+        1.808,
+        2.505
        ]
       }
      },
@@ -1810,23 +2254,23 @@
        "sim": 0.204,
        "sim90": [
         0.14,
-        0.262
+        0.28
        ]
       },
       "cut": {
        "real": 0.178,
-       "sim": 0.206,
+       "sim": 0.224,
        "sim90": [
-        0.15,
-        0.262
+        0.159,
+        0.29
        ]
       },
       "mean": {
        "real": 5.785,
-       "sim": 5.673,
+       "sim": 5.777,
        "sim90": [
-        5.019,
-        6.346
+        5.056,
+        6.486
        ]
       }
      },
@@ -1834,26 +2278,26 @@
       "player": "MrsD",
       "first": {
        "real": 0.308,
-       "sim": 0.341,
+       "sim": 0.339,
        "sim90": [
         0.264,
-        0.429
+        0.418
        ]
       },
       "cut": {
        "real": 0.066,
-       "sim": 0.081,
+       "sim": 0.097,
        "sim90": [
-        0.033,
-        0.132
+        0.044,
+        0.154
        ]
       },
       "mean": {
        "real": 3.44,
-       "sim": 3.825,
+       "sim": 3.959,
        "sim90": [
-        3.275,
-        4.429
+        3.352,
+        4.582
        ]
       }
      }
@@ -1867,40 +2311,250 @@
     "160-179",
     "180-199"
    ],
-   "sdSeq": {
-    "best": 0.5,
+   "sds": {
+    "sdLevel": 0.6,
+    "sdSeq": 0,
+    "evidence": -565.5,
     "scores": [
      {
-      "sd": 0,
-      "evidence": -706.7206724108004
+      "sdLevel": 0.15,
+      "sdSeq": 0,
+      "evidence": -572.83,
+      "converged": true
      },
      {
-      "sd": 0.25,
-      "evidence": -706.0360860885002
+      "sdLevel": 0.15,
+      "sdSeq": 0.25,
+      "evidence": -571.59,
+      "converged": true
      },
      {
-      "sd": 0.5,
-      "evidence": -705.3847858686745
+      "sdLevel": 0.15,
+      "sdSeq": 0.5,
+      "evidence": -569.83,
+      "converged": true
      },
      {
-      "sd": 0.75,
-      "evidence": -706.8327978722727
+      "sdLevel": 0.15,
+      "sdSeq": 0.75,
+      "evidence": -570.37,
+      "converged": true
      },
      {
-      "sd": 1,
-      "evidence": -711.0198997743215
+      "sdLevel": 0.15,
+      "sdSeq": 1,
+      "evidence": -574,
+      "converged": true
      },
      {
-      "sd": 1.25,
-      "evidence": -717.4923909400113
+      "sdLevel": 0.3,
+      "sdSeq": 0,
+      "evidence": -569.63,
+      "converged": true
      },
      {
-      "sd": 1.5,
-      "evidence": -725.5098047525305
+      "sdLevel": 0.3,
+      "sdSeq": 0.25,
+      "evidence": -568.94,
+      "converged": true
      },
      {
-      "sd": 2,
-      "evidence": -743.8425083976502
+      "sdLevel": 0.3,
+      "sdSeq": 0.5,
+      "evidence": -568.29,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.3,
+      "sdSeq": 0.75,
+      "evidence": -569.74,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.3,
+      "sdSeq": 1,
+      "evidence": -573.93,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0,
+      "evidence": -566.2,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0.25,
+      "evidence": -566.14,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0.5,
+      "evidence": -566.78,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 0.75,
+      "evidence": -569.38,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.5,
+      "sdSeq": 1,
+      "evidence": -574.31,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0,
+      "evidence": -565.5,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0.25,
+      "evidence": -565.64,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0.5,
+      "evidence": -566.69,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 0.75,
+      "evidence": -569.68,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.6,
+      "sdSeq": 1,
+      "evidence": -574.87,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0,
+      "evidence": -565.81,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0.25,
+      "evidence": -566.11,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0.5,
+      "evidence": -567.54,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 0.75,
+      "evidence": -570.86,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.75,
+      "sdSeq": 1,
+      "evidence": -576.25,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0,
+      "evidence": -567.47,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0.25,
+      "evidence": -567.85,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0.5,
+      "evidence": -569.43,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 0.75,
+      "evidence": -572.87,
+      "converged": true
+     },
+     {
+      "sdLevel": 0.9,
+      "sdSeq": 1,
+      "evidence": -578.28,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0,
+      "evidence": -569.17,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0.25,
+      "evidence": -569.57,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0.5,
+      "evidence": -571.17,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 0.75,
+      "evidence": -574.6,
+      "converged": true
+     },
+     {
+      "sdLevel": 1,
+      "sdSeq": 1,
+      "evidence": -579.95,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0,
+      "evidence": -574.82,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0.25,
+      "evidence": -575.2,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0.5,
+      "evidence": -576.73,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 0.75,
+      "evidence": -579.96,
+      "converged": true
+     },
+     {
+      "sdLevel": 1.25,
+      "sdSeq": 1,
+      "evidence": -585.01,
+      "converged": true
      }
     ]
    },
@@ -1910,10 +2564,16 @@
     "MrsD"
    ],
    "fit": {
+    "settings": {
+     "sdLevel": 0.6,
+     "sdSeq": 0
+    },
+    "converged": true,
+    "spreadPerLevel": 0.6,
     "skill": {
-     "Dennis": 0.3313873990359597,
-     "Gerda": -1.7177581879522457,
-     "MrsD": -0.852066270127205
+     "Dennis": 0.37047329688197256,
+     "Gerda": -1.7229992153861262,
+     "MrsD": -0.8626260650854247
     },
     "window": [
      {
@@ -1921,80 +2581,80 @@
       "effect": 0,
       "se": 0,
       "expectedTries": {
-       "Dennis": 1.81,
-       "Gerda": 7.31,
-       "MrsD": 3.66
+       "Dennis": 1.83,
+       "Gerda": 7.71,
+       "MrsD": 3.84
       },
-      "modelYcap20": 3.49,
-      "dennisFirstTryModel": 0.578
+      "modelYcap20": 3.58,
+      "dennisFirstTryModel": 0.585
      },
      {
       "window": "100-119",
-      "effect": -0.191,
-      "se": 0.266,
+      "effect": -0.14,
+      "se": 0.281,
       "expectedTries": {
-       "Dennis": 1.67,
-       "Gerda": 6.22,
-       "MrsD": 3.2
+       "Dennis": 1.72,
+       "Gerda": 6.83,
+       "MrsD": 3.47
       },
-      "modelYcap20": 3.1,
-      "dennisFirstTryModel": 0.621
+      "modelYcap20": 3.28,
+      "dennisFirstTryModel": 0.616
      },
      {
       "window": "120-139",
       "effect": 0.085,
-      "se": 0.279,
+      "se": 0.3,
       "expectedTries": {
-       "Dennis": 1.89,
-       "Gerda": 7.88,
-       "MrsD": 3.89
+       "Dennis": 1.9,
+       "Gerda": 8.3,
+       "MrsD": 4.09
       },
-      "modelYcap20": 3.68,
-      "dennisFirstTryModel": 0.558
+      "modelYcap20": 3.77,
+      "dennisFirstTryModel": 0.566
      },
      {
       "window": "140-159",
-      "effect": 0.06,
-      "se": 0.281,
+      "effect": 0.076,
+      "se": 0.302,
       "expectedTries": {
-       "Dennis": 1.86,
-       "Gerda": 7.71,
-       "MrsD": 3.82
+       "Dennis": 1.89,
+       "Gerda": 8.24,
+       "MrsD": 4.06
       },
-      "modelYcap20": 3.63,
-      "dennisFirstTryModel": 0.564
+      "modelYcap20": 3.75,
+      "dennisFirstTryModel": 0.567
      },
      {
       "window": "160-179",
-      "effect": -0.163,
-      "se": 0.286,
+      "effect": -0.162,
+      "se": 0.308,
       "expectedTries": {
-       "Dennis": 1.69,
-       "Gerda": 6.36,
-       "MrsD": 3.26
+       "Dennis": 1.7,
+       "Gerda": 6.7,
+       "MrsD": 3.41
       },
-      "modelYcap20": 3.15,
-      "dennisFirstTryModel": 0.615
+      "modelYcap20": 3.24,
+      "dennisFirstTryModel": 0.621
      },
      {
       "window": "180-199",
-      "effect": -0.209,
-      "se": 0.339,
+      "effect": -0.184,
+      "se": 0.355,
       "expectedTries": {
-       "Dennis": 1.66,
-       "Gerda": 6.12,
-       "MrsD": 3.15
+       "Dennis": 1.69,
+       "Gerda": 6.58,
+       "MrsD": 3.36
       },
-      "modelYcap20": 3.06,
+      "modelYcap20": 3.19,
       "dennisFirstTryModel": 0.625
      }
     ],
     "steps": [
      {
       "between": "85-99 | 100-119",
-      "est": -0.191,
-      "se": 0.266,
-      "z": -0.72,
+      "est": -0.14,
+      "se": 0.281,
+      "z": -0.5,
       "players": [
        "Dennis",
        "Gerda",
@@ -2005,9 +2665,9 @@
      },
      {
       "between": "100-119 | 120-139",
-      "est": 0.276,
-      "se": 0.237,
-      "z": 1.17,
+      "est": 0.225,
+      "se": 0.253,
+      "z": 0.89,
       "players": [
        "Dennis",
        "Gerda",
@@ -2018,9 +2678,9 @@
      },
      {
       "between": "120-139 | 140-159",
-      "est": -0.025,
-      "se": 0.229,
-      "z": -0.11,
+      "est": -0.008,
+      "se": 0.247,
+      "z": -0.03,
       "players": [
        "Dennis",
        "Gerda",
@@ -2031,8 +2691,8 @@
      },
      {
       "between": "140-159 | 160-179",
-      "est": -0.223,
-      "se": 0.234,
+      "est": -0.239,
+      "se": 0.251,
       "z": -0.95,
       "players": [
        "Dennis",
@@ -2044,9 +2704,9 @@
      },
      {
       "between": "160-179 | 180-199",
-      "est": -0.046,
-      "se": 0.283,
-      "z": -0.16,
+      "est": -0.021,
+      "se": 0.294,
+      "z": -0.07,
       "players": [
        "Dennis",
        "Gerda"
@@ -2055,121 +2715,182 @@
       "flagged": false
      }
     ],
-    "levelSd": 0.105,
+    "levelSd": 0.346,
     "hardestLevels": [
      [
       176,
-      0.32
+      0.96
      ],
      [
       132,
-      0.32
-     ],
-     [
-      161,
-      0.31
-     ],
-     [
-      150,
-      0.3
-     ],
-     [
-      89,
-      0.28
-     ],
-     [
-      91,
-      0.28
+      0.95
      ],
      [
       196,
-      0.24
+      0.95
      ],
      [
-      122,
-      0.19
+      91,
+      0.91
+     ],
+     [
+      150,
+      0.89
+     ],
+     [
+      161,
+      0.87
+     ],
+     [
+      89,
+      0.87
+     ],
+     [
+      156,
+      0.61
      ]
+    ],
+    "stepInTries": [
+     {
+      "step": 0,
+      "modelY": 3.58,
+      "ratioY": 1,
+      "Dennis": 1.83,
+      "Gerda": 6.72,
+      "MrsD": 3.75
+     },
+     {
+      "step": 0.2,
+      "modelY": 4.05,
+      "ratioY": 1.13,
+      "Dennis": 2.01,
+      "Gerda": 7.61,
+      "MrsD": 4.3
+     },
+     {
+      "step": 0.35,
+      "modelY": 4.44,
+      "ratioY": 1.24,
+      "Dennis": 2.17,
+      "Gerda": 8.32,
+      "MrsD": 4.77
+     },
+     {
+      "step": 0.5,
+      "modelY": 4.87,
+      "ratioY": 1.36,
+      "Dennis": 2.36,
+      "Gerda": 9.05,
+      "MrsD": 5.29
+     },
+     {
+      "step": 0.75,
+      "modelY": 5.65,
+      "ratioY": 1.58,
+      "Dennis": 2.74,
+      "Gerda": 10.28,
+      "MrsD": 6.26
+     },
+     {
+      "step": 1,
+      "modelY": 6.52,
+      "ratioY": 1.82,
+      "Dennis": 3.21,
+      "Gerda": 11.51,
+      "MrsD": 7.34
+     }
     ]
    },
-   "fitWithoutPlayerLevel": {
-    "skill": {
-     "Dennis": 0.2508539915615376,
-     "Gerda": -1.8021311169029945,
-     "MrsD": -0.9730636768321959
+   "fitOldSettings": {
+    "settings": {
+     "sdLevel": 0.3,
+     "sdSeq": 0.5
     },
+    "skill": {
+     "Dennis": 0.3313873990359597,
+     "Gerda": -1.7177581879522457,
+     "MrsD": -0.852066270127205
+    },
+    "evidence": -568.29,
     "steps": [
      {
-      "est": -0.187,
-      "se": 0.251,
+      "est": -0.191,
+      "se": 0.266,
       "flagged": false
      },
      {
-      "est": 0.266,
-      "se": 0.224,
+      "est": 0.276,
+      "se": 0.237,
       "flagged": false
      },
      {
-      "est": -0.01,
-      "se": 0.217,
+      "est": -0.025,
+      "se": 0.229,
       "flagged": false
      },
      {
-      "est": -0.219,
-      "se": 0.22,
+      "est": -0.223,
+      "se": 0.234,
       "flagged": false
      },
      {
-      "est": -0.018,
-      "se": 0.268,
+      "est": -0.046,
+      "se": 0.283,
       "flagged": false
      }
     ]
    },
    "power": {
+    "world": {
+     "sdLevel": 0.6,
+     "sdSeq": 0
+    },
+    "fits": 16000,
+    "fitsNotConverged": 0,
     "summary": {
      "detection": [
       {
        "delta": 0.2,
-       "pooledAll": 0.048,
-       "pooledThreePlayers": 0.05,
-       "bestBoundary": 0.06,
-       "pooledNoLopo": 0.048,
-       "meanEstOverDelta": 0.72
+       "pooledAll": 0.036,
+       "pooledThreePlayers": 0.037,
+       "bestBoundary": 0.04,
+       "pooledNoLopo": 0.036,
+       "meanEstOverDelta": 0.68
       },
       {
        "delta": 0.35,
-       "pooledAll": 0.14,
-       "pooledThreePlayers": 0.15,
-       "bestBoundary": 0.24,
-       "pooledNoLopo": 0.14,
-       "meanEstOverDelta": 0.77
+       "pooledAll": 0.114,
+       "pooledThreePlayers": 0.125,
+       "bestBoundary": 0.14,
+       "pooledNoLopo": 0.114,
+       "meanEstOverDelta": 0.74
       },
       {
        "delta": 0.5,
-       "pooledAll": 0.252,
-       "pooledThreePlayers": 0.28,
-       "bestBoundary": 0.34,
-       "pooledNoLopo": 0.252,
-       "meanEstOverDelta": 0.69
+       "pooledAll": 0.204,
+       "pooledThreePlayers": 0.215,
+       "bestBoundary": 0.24,
+       "pooledNoLopo": 0.204,
+       "meanEstOverDelta": 0.7
       },
       {
        "delta": 0.75,
-       "pooledAll": 0.622,
-       "pooledThreePlayers": 0.657,
-       "bestBoundary": 0.8,
-       "pooledNoLopo": 0.622,
-       "meanEstOverDelta": 0.73
+       "pooledAll": 0.532,
+       "pooledThreePlayers": 0.557,
+       "bestBoundary": 0.65,
+       "pooledNoLopo": 0.534,
+       "meanEstOverDelta": 0.72
       }
      ],
      "falseAlarm": {
-      "pooled": 0.017,
-      "worstWindow": 0.03,
-      "pooledNoLopo": 0.017
+      "pooled": 0.01,
+      "worstWindow": 0.015,
+      "pooledNoLopo": 0.01
      },
      "kill": {
-      "detect": 0.15,
+      "detect": 0.125,
       "needAtLeast": 0.7,
-      "falseAlarmWorst": 0.03,
+      "falseAlarmWorst": 0.015,
       "needAtMost": 0.1,
       "killed": true
      }
@@ -2178,38 +2899,38 @@
      "detection": [
       {
        "delta": 0.35,
-       "pooledAll": 0.188,
-       "pooledThreePlayers": 0.195,
-       "bestBoundary": 0.26,
-       "pooledNoLopo": 0.188,
+       "pooledAll": 0.14,
+       "pooledThreePlayers": 0.165,
+       "bestBoundary": 0.3,
+       "pooledNoLopo": 0.14,
        "meanEstOverDelta": 0.95
       },
       {
        "delta": 0.5,
-       "pooledAll": 0.408,
-       "pooledThreePlayers": 0.425,
-       "bestBoundary": 0.44,
-       "pooledNoLopo": 0.408,
-       "meanEstOverDelta": 1.05
+       "pooledAll": 0.28,
+       "pooledThreePlayers": 0.3,
+       "bestBoundary": 0.34,
+       "pooledNoLopo": 0.28,
+       "meanEstOverDelta": 0.96
       },
       {
        "delta": 0.75,
-       "pooledAll": 0.672,
-       "pooledThreePlayers": 0.71,
+       "pooledAll": 0.636,
+       "pooledThreePlayers": 0.675,
        "bestBoundary": 0.76,
-       "pooledNoLopo": 0.68,
-       "meanEstOverDelta": 0.98
+       "pooledNoLopo": 0.64,
+       "meanEstOverDelta": 1
       }
      ],
      "falseAlarm": {
-      "pooled": 0.043,
-      "worstWindow": 0.06,
-      "pooledNoLopo": 0.043
+      "pooled": 0.037,
+      "worstWindow": 0.04,
+      "pooledNoLopo": 0.037
      },
      "kill": {
-      "detect": 0.195,
+      "detect": 0.165,
       "needAtLeast": 0.7,
-      "falseAlarmWorst": 0.06,
+      "falseAlarmWorst": 0.04,
       "needAtMost": 0.1,
       "killed": true
      }
@@ -2235,9 +2956,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0.005,
-      "rateFloor": 0.005,
-      "rateNoLopo": 0.005
+      "rate2se": 0.015,
+      "rateFloor": 0.015,
+      "rateNoLopo": 0.015
      },
      {
       "between": "120-139 | 140-159",
@@ -2247,9 +2968,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0.02,
-      "rateFloor": 0.02,
-      "rateNoLopo": 0.02
+      "rate2se": 0.005,
+      "rateFloor": 0.005,
+      "rateNoLopo": 0.005
      },
      {
       "between": "140-159 | 160-179",
@@ -2259,9 +2980,9 @@
        "MrsD"
       ],
       "n": 200,
-      "rate2se": 0.03,
-      "rateFloor": 0.03,
-      "rateNoLopo": 0.03
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01
      },
      {
       "between": "160-179 | 180-199",
@@ -2270,39 +2991,102 @@
        "Gerda"
       ],
       "n": 200,
-      "rate2se": 0.02,
-      "rateFloor": 0.02,
-      "rateNoLopo": 0.02
+      "rate2se": 0.01,
+      "rateFloor": 0.01,
+      "rateNoLopo": 0.01
      }
     ],
     "falseAlarmMisspecified": [
      {
-      "between": "85-99 | 100-119",
-      "rate2se": 0.035,
-      "rateNoLopo": 0.035
+      "world": {
+       "sdLevel": 0.6,
+       "sdSeq": 0.5
+      },
+      "fitted": {
+       "sdLevel": 0.6,
+       "sdSeq": 0
+      },
+      "n": 200,
+      "pooled": 0.016,
+      "worstWindow": 0.02,
+      "perBoundary": [
+       {
+        "between": "85-99 | 100-119",
+        "rate2se": 0.01,
+        "rateNoLopo": 0.01
+       },
+       {
+        "between": "100-119 | 120-139",
+        "rate2se": 0.02,
+        "rateNoLopo": 0.02
+       },
+       {
+        "between": "120-139 | 140-159",
+        "rate2se": 0.015,
+        "rateNoLopo": 0.015
+       },
+       {
+        "between": "140-159 | 160-179",
+        "rate2se": 0.02,
+        "rateNoLopo": 0.02
+       },
+       {
+        "between": "160-179 | 180-199",
+        "rate2se": 0.015,
+        "rateNoLopo": 0.015
+       }
+      ]
      },
      {
-      "between": "100-119 | 120-139",
-      "rate2se": 0.02,
-      "rateNoLopo": 0.02
-     },
-     {
-      "between": "120-139 | 140-159",
-      "rate2se": 0.02,
-      "rateNoLopo": 0.02
-     },
-     {
-      "between": "140-159 | 160-179",
-      "rate2se": 0.04,
-      "rateNoLopo": 0.04
-     },
-     {
-      "between": "160-179 | 180-199",
-      "rate2se": 0.025,
-      "rateNoLopo": 0.025
+      "world": {
+       "sdLevel": 0.3,
+       "sdSeq": 0.5
+      },
+      "fitted": {
+       "sdLevel": 0.6,
+       "sdSeq": 0
+      },
+      "n": 200,
+      "pooled": 0.005,
+      "worstWindow": 0.015,
+      "perBoundary": [
+       {
+        "between": "85-99 | 100-119",
+        "rate2se": 0.015,
+        "rateNoLopo": 0.015
+       },
+       {
+        "between": "100-119 | 120-139",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "120-139 | 140-159",
+        "rate2se": 0.005,
+        "rateNoLopo": 0.005
+       },
+       {
+        "between": "140-159 | 160-179",
+        "rate2se": 0,
+        "rateNoLopo": 0
+       },
+       {
+        "between": "160-179 | 180-199",
+        "rate2se": 0.005,
+        "rateNoLopo": 0.005
+       }
+      ]
      }
     ],
     "heavierWorldSd1": {
+     "world": {
+      "sdLevel": 0.6,
+      "sdSeq": 1
+     },
+     "fitted": {
+      "sdLevel": 0.6,
+      "sdSeq": 0
+     },
      "falseAlarm": [
       {
        "between": "85-99 | 100-119",
@@ -2310,43 +3094,91 @@
       },
       {
        "between": "100-119 | 120-139",
-       "rate2se": 0.04
+       "rate2se": 0.045
       },
       {
        "between": "120-139 | 140-159",
-       "rate2se": 0.015
+       "rate2se": 0.045
       },
       {
        "between": "140-159 | 160-179",
-       "rate2se": 0.02
+       "rate2se": 0.05
       },
       {
        "between": "160-179 | 180-199",
-       "rate2se": 0.02
+       "rate2se": 0.035
       }
      ],
      "detection035": [
       {
        "between": "85-99 | 100-119",
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
        "rate2se": 0.08
       },
       {
        "between": "100-119 | 120-139",
-       "rate2se": 0.18
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0.08
       },
       {
        "between": "120-139 | 140-159",
-       "rate2se": 0.22
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
+       "rate2se": 0.08
       },
       {
        "between": "140-159 | 160-179",
+       "players": [
+        "Dennis",
+        "Gerda",
+        "MrsD"
+       ],
        "rate2se": 0.1
       },
       {
        "between": "160-179 | 180-199",
-       "rate2se": 0.1
+       "players": [
+        "Dennis",
+        "Gerda"
+       ],
+       "rate2se": 0.16
       }
-     ]
+     ],
+     "summary": {
+      "detection": [
+       {
+        "delta": 0.35,
+        "pooledAll": 0.1,
+        "pooledThreePlayers": 0.085,
+        "bestBoundary": 0.16,
+        "pooledNoLopo": 0.1,
+        "meanEstOverDelta": 0.61
+       }
+      ],
+      "falseAlarm": {
+       "pooled": 0.04,
+       "worstWindow": 0.05,
+       "pooledNoLopo": 0.04
+      },
+      "kill": {
+       "detect": 0.085,
+       "needAtLeast": 0.7,
+       "falseAlarmWorst": 0.05,
+       "needAtMost": 0.1,
+       "killed": true
+      }
+     }
     },
     "detection": [
      {
@@ -2361,8 +3193,8 @@
       "rate2se": 0.04,
       "rateFloor": 0.04,
       "rateNoLopo": 0.04,
-      "meanEst": 0.149,
-      "meanSE": 0.263
+      "meanEst": 0.166,
+      "meanSE": 0.279
      },
      {
       "delta": 0.2,
@@ -2373,11 +3205,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.06,
-      "rateFloor": 0.06,
-      "rateNoLopo": 0.06,
-      "meanEst": 0.142,
-      "meanSE": 0.234
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.166,
+      "meanSE": 0.251
      },
      {
       "delta": 0.2,
@@ -2388,11 +3220,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.06,
-      "rateFloor": 0.06,
-      "rateNoLopo": 0.06,
-      "meanEst": 0.184,
-      "meanSE": 0.23
+      "rate2se": 0.04,
+      "rateFloor": 0.04,
+      "rateNoLopo": 0.04,
+      "meanEst": 0.16,
+      "meanSE": 0.248
      },
      {
       "delta": 0.2,
@@ -2403,11 +3235,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.04,
-      "rateFloor": 0.04,
-      "rateNoLopo": 0.04,
-      "meanEst": 0.155,
-      "meanSE": 0.233
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.092,
+      "meanSE": 0.25
      },
      {
       "delta": 0.2,
@@ -2417,11 +3249,11 @@
        "Gerda"
       ],
       "n": 100,
-      "rate2se": 0.04,
-      "rateFloor": 0.04,
-      "rateNoLopo": 0.04,
-      "meanEst": 0.091,
-      "meanSE": 0.279
+      "rate2se": 0.03,
+      "rateFloor": 0.03,
+      "rateNoLopo": 0.03,
+      "meanEst": 0.098,
+      "meanSE": 0.289
      },
      {
       "delta": 0.35,
@@ -2432,11 +3264,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.09,
-      "rateFloor": 0.09,
-      "rateNoLopo": 0.09,
-      "meanEst": 0.248,
-      "meanSE": 0.264
+      "rate2se": 0.14,
+      "rateFloor": 0.14,
+      "rateNoLopo": 0.14,
+      "meanEst": 0.277,
+      "meanSE": 0.28
      },
      {
       "delta": 0.35,
@@ -2447,11 +3279,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.12,
-      "rateFloor": 0.12,
-      "rateNoLopo": 0.12,
-      "meanEst": 0.268,
-      "meanSE": 0.233
+      "rate2se": 0.11,
+      "rateFloor": 0.11,
+      "rateNoLopo": 0.11,
+      "meanEst": 0.245,
+      "meanSE": 0.25
      },
      {
       "delta": 0.35,
@@ -2462,15 +3294,59 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.15,
-      "rateFloor": 0.15,
-      "rateNoLopo": 0.15,
-      "meanEst": 0.282,
-      "meanSE": 0.229
+      "rate2se": 0.11,
+      "rateFloor": 0.11,
+      "rateNoLopo": 0.11,
+      "meanEst": 0.26,
+      "meanSE": 0.247
      },
      {
       "delta": 0.35,
       "between": "140-159 | 160-179",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.14,
+      "rateFloor": 0.14,
+      "rateNoLopo": 0.14,
+      "meanEst": 0.271,
+      "meanSE": 0.25
+     },
+     {
+      "delta": 0.35,
+      "between": "160-179 | 180-199",
+      "players": [
+       "Dennis",
+       "Gerda"
+      ],
+      "n": 100,
+      "rate2se": 0.07,
+      "rateFloor": 0.07,
+      "rateNoLopo": 0.07,
+      "meanEst": 0.235,
+      "meanSE": 0.288
+     },
+     {
+      "delta": 0.5,
+      "between": "85-99 | 100-119",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.21,
+      "rateFloor": 0.21,
+      "rateNoLopo": 0.21,
+      "meanEst": 0.378,
+      "meanSE": 0.28
+     },
+     {
+      "delta": 0.5,
+      "between": "100-119 | 120-139",
       "players": [
        "Dennis",
        "Gerda",
@@ -2480,67 +3356,23 @@
       "rate2se": 0.24,
       "rateFloor": 0.24,
       "rateNoLopo": 0.24,
-      "meanEst": 0.332,
-      "meanSE": 0.232
-     },
-     {
-      "delta": 0.35,
-      "between": "160-179 | 180-199",
-      "players": [
-       "Dennis",
-       "Gerda"
-      ],
-      "n": 100,
-      "rate2se": 0.1,
-      "rateFloor": 0.1,
-      "rateNoLopo": 0.1,
-      "meanEst": 0.217,
-      "meanSE": 0.276
-     },
-     {
-      "delta": 0.5,
-      "between": "85-99 | 100-119",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.15,
-      "rateFloor": 0.15,
-      "rateNoLopo": 0.15,
-      "meanEst": 0.299,
-      "meanSE": 0.264
-     },
-     {
-      "delta": 0.5,
-      "between": "100-119 | 120-139",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.34,
-      "rateFloor": 0.34,
-      "rateNoLopo": 0.34,
-      "meanEst": 0.393,
-      "meanSE": 0.233
-     },
-     {
-      "delta": 0.5,
-      "between": "120-139 | 140-159",
-      "players": [
-       "Dennis",
-       "Gerda",
-       "MrsD"
-      ],
-      "n": 100,
-      "rate2se": 0.33,
-      "rateFloor": 0.33,
-      "rateNoLopo": 0.33,
       "meanEst": 0.371,
-      "meanSE": 0.229
+      "meanSE": 0.25
+     },
+     {
+      "delta": 0.5,
+      "between": "120-139 | 140-159",
+      "players": [
+       "Dennis",
+       "Gerda",
+       "MrsD"
+      ],
+      "n": 100,
+      "rate2se": 0.23,
+      "rateFloor": 0.23,
+      "rateNoLopo": 0.23,
+      "meanEst": 0.355,
+      "meanSE": 0.247
      },
      {
       "delta": 0.5,
@@ -2551,11 +3383,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.3,
-      "rateFloor": 0.3,
-      "rateNoLopo": 0.3,
-      "meanEst": 0.36,
-      "meanSE": 0.232
+      "rate2se": 0.18,
+      "rateFloor": 0.18,
+      "rateNoLopo": 0.18,
+      "meanEst": 0.327,
+      "meanSE": 0.249
      },
      {
       "delta": 0.5,
@@ -2565,11 +3397,11 @@
        "Gerda"
       ],
       "n": 100,
-      "rate2se": 0.14,
-      "rateFloor": 0.14,
-      "rateNoLopo": 0.14,
-      "meanEst": 0.298,
-      "meanSE": 0.275
+      "rate2se": 0.16,
+      "rateFloor": 0.16,
+      "rateNoLopo": 0.16,
+      "meanEst": 0.327,
+      "meanSE": 0.287
      },
      {
       "delta": 0.75,
@@ -2580,11 +3412,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.42,
-      "rateFloor": 0.42,
-      "rateNoLopo": 0.42,
-      "meanEst": 0.494,
-      "meanSE": 0.264
+      "rate2se": 0.35,
+      "rateFloor": 0.35,
+      "rateNoLopo": 0.35,
+      "meanEst": 0.504,
+      "meanSE": 0.28
      },
      {
       "delta": 0.75,
@@ -2595,11 +3427,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.74,
-      "rateFloor": 0.74,
-      "rateNoLopo": 0.74,
-      "meanEst": 0.553,
-      "meanSE": 0.233
+      "rate2se": 0.63,
+      "rateFloor": 0.63,
+      "rateNoLopo": 0.63,
+      "meanEst": 0.542,
+      "meanSE": 0.25
      },
      {
       "delta": 0.75,
@@ -2610,11 +3442,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.67,
-      "rateFloor": 0.67,
-      "rateNoLopo": 0.67,
-      "meanEst": 0.552,
-      "meanSE": 0.229
+      "rate2se": 0.65,
+      "rateFloor": 0.65,
+      "rateNoLopo": 0.65,
+      "meanEst": 0.582,
+      "meanSE": 0.247
      },
      {
       "delta": 0.75,
@@ -2625,11 +3457,11 @@
        "MrsD"
       ],
       "n": 100,
-      "rate2se": 0.8,
-      "rateFloor": 0.8,
-      "rateNoLopo": 0.8,
-      "meanEst": 0.627,
-      "meanSE": 0.232
+      "rate2se": 0.6,
+      "rateFloor": 0.6,
+      "rateNoLopo": 0.6,
+      "meanEst": 0.556,
+      "meanSE": 0.25
      },
      {
       "delta": 0.75,
@@ -2639,11 +3471,11 @@
        "Gerda"
       ],
       "n": 100,
-      "rate2se": 0.48,
-      "rateFloor": 0.48,
-      "rateNoLopo": 0.48,
-      "meanEst": 0.524,
-      "meanSE": 0.274
+      "rate2se": 0.43,
+      "rateFloor": 0.43,
+      "rateNoLopo": 0.44,
+      "meanEst": 0.512,
+      "meanSE": 0.287
      }
     ]
    }
@@ -2659,10 +3491,13 @@
    "dennisLevels": 5,
    "dennisFirstTry": 0.4,
    "DennisLevels": 5,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 1.8,
    "GerdaLevels": 5,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 7.2,
    "MrsDLevels": 5,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 5
   },
   {
@@ -2674,55 +3509,67 @@
    "dennisLevels": 0,
    "dennisFirstTry": null,
    "DennisLevels": 0,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": null,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 5.9,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 4.5
   },
   {
    "window": "100-109",
    "Ylevels": 4,
    "Ymean": 2.5,
-   "Ymedian": 3,
+   "Ymedian": 2.5,
    "Ycensored": 0,
    "dennisLevels": 4,
    "dennisFirstTry": 0.25,
    "DennisLevels": 4,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 2.25,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 4.6,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 1.9
   },
   {
    "window": "110-119",
    "Ylevels": 10,
    "Ymean": 3.26,
-   "Ymedian": 3.4,
+   "Ymedian": 3.0999999999999996,
    "Ycensored": 0,
    "dennisLevels": 10,
    "dennisFirstTry": 0.5,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 1.9,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 8.9,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 1.8
   },
   {
    "window": "120-129",
    "Ylevels": 10,
    "Ymean": 4.32,
-   "Ymedian": 4.6,
+   "Ymedian": 4.4,
    "Ycensored": 0,
    "dennisLevels": 10,
    "dennisFirstTry": 0.6,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 2,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 11.2,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 3.2
   },
   {
@@ -2734,25 +3581,31 @@
    "dennisLevels": 10,
    "dennisFirstTry": 0.5,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 1.9,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 7.5,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 4
   },
   {
    "window": "140-149",
    "Ylevels": 10,
    "Ymean": 3.92,
-   "Ymedian": 3.8,
+   "Ymedian": 3,
    "Ycensored": 0,
    "dennisLevels": 10,
    "dennisFirstTry": 0.9,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 1.1,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 7,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 5.2
   },
   {
@@ -2764,25 +3617,31 @@
    "dennisLevels": 10,
    "dennisFirstTry": 0.2,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 2.1,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 6.3,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 6.2
   },
   {
    "window": "160-169",
    "Ylevels": 10,
    "Ymean": 3.06,
-   "Ymedian": 2.2,
+   "Ymedian": 2.1,
    "Ycensored": 0,
    "dennisLevels": 10,
    "dennisFirstTry": 0.9,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 1.4,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 6.1,
    "MrsDLevels": 10,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": 3.2
   },
   {
@@ -2794,10 +3653,15 @@
    "dennisLevels": 10,
    "dennisFirstTry": 0.6,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 1.9,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 5.1,
    "MrsDLevels": 7,
+   "MrsDNotWon": [
+    176
+   ],
    "MrsDMeanTriesCap20": 5
   },
   {
@@ -2809,10 +3673,13 @@
    "dennisLevels": 10,
    "dennisFirstTry": 0.8,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 1.4,
    "GerdaLevels": 10,
+   "GerdaNotWon": [],
    "GerdaMeanTriesCap20": 5.7,
    "MrsDLevels": 0,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": null
   },
   {
@@ -2824,10 +3691,15 @@
    "dennisLevels": 10,
    "dennisFirstTry": 0.6,
    "DennisLevels": 10,
+   "DennisNotWon": [],
    "DennisMeanTriesCap20": 2.1,
    "GerdaLevels": 3,
+   "GerdaNotWon": [
+    192
+   ],
    "GerdaMeanTriesCap20": 6,
    "MrsDLevels": 0,
+   "MrsDNotWon": [],
    "MrsDMeanTriesCap20": null
   }
  ],
@@ -3369,23 +4241,23 @@
  "verdict": {
   "rule": "E2 kill: a +0.35 logit step over 20 levels detected < 70% of the time, or false alarms > 10% per window -> real data does not steer the slope",
   "window20": {
-   "detect": 0.15,
-   "needAtLeast": 0.7,
-   "falseAlarmWorst": 0.03,
-   "needAtMost": 0.1,
-   "killed": true
-  },
-  "window10": {
-   "detect": 0.033,
+   "detect": 0.125,
    "needAtLeast": 0.7,
    "falseAlarmWorst": 0.015,
    "needAtMost": 0.1,
    "killed": true
   },
-  "flatTau20": {
-   "detect": 0.195,
+  "window10": {
+   "detect": 0.047,
    "needAtLeast": 0.7,
-   "falseAlarmWorst": 0.06,
+   "falseAlarmWorst": 0.01,
+   "needAtMost": 0.1,
+   "killed": true
+  },
+  "flatTau20": {
+   "detect": 0.165,
+   "needAtLeast": 0.7,
+   "falseAlarmWorst": 0.04,
    "needAtMost": 0.1,
    "killed": true
   },
@@ -4414,5 +5286,5 @@
   "highestStarted": 140,
   "last": "2026-11-05T16:44:45.038Z"
  },
- "seconds": 263
+ "seconds": 262
 }

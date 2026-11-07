@@ -78,7 +78,7 @@ function processCandidate(cand, ctx) {
 
   // dedupe (resume)
   const key = step('dedupe', () => Lb.contentKey(design));
-  const seen = lib.has(key);
+  const seen = lib.has(key, { pipeline: VERSION });
   if (seen) { stats.dedupe.fail++; return { outcome: 'skip', key, seen }; }
   stats.dedupe.pass++;
   const reject = (gate, reason, extra = {}) => {
@@ -109,7 +109,9 @@ function processCandidate(cand, ctx) {
 
   // skilled screen: the planner at spare 2
   const pl = step('planner', () => ys.planner(design, { spare: opts.plannerSpare }));
-  if (!pl || pl.valid === false || pl.S == null) return reject('planner', 'no valid planner rating' + (pl?.fail ? ': ' + pl.fail : ''), { S: pl?.S ?? null });
+  const plPin = ys.pins?.planner?.fingerprint;
+  if (!pl || pl.valid !== true || !Number.isFinite(pl.S)) return reject('planner', 'no valid planner rating (valid=' + pl?.valid + ')' + (pl?.fail ? ': ' + pl.fail : ''), { S: pl?.S ?? null });
+  if (plPin && pl.fingerprint && pl.fingerprint !== plPin) return reject('planner', `planner fingerprint ${String(pl.fingerprint).slice(0, 8)} != pin ${plPin.slice(0, 8)}`, { S: pl.S });
   if (pl.S < opts.skilledFloor - opts.plannerMargin) return reject('planner', `S ${r3(pl.S)} < ${r3(opts.skilledFloor - opts.plannerMargin)}`, { S: r3(pl.S) });
   stats.planner.pass++;
 
@@ -156,7 +158,7 @@ function processCandidate(cand, ctx) {
   const c2 = step('C2', () => deps.c2c3(design, { ys, plannerSpare: opts.plannerSpare }));
   cf.C2 = c2?.C2 ?? null; cf.C3 = c2?.C3 ?? null;
   stats.C2.pass++;
-  const trusted = cf.C2?.pass !== false;
+  const trusted = cf.C2?.pass === true;   // a missing or unknown C2 is NOT trusted
 
   // library entry
   const best = ship.map(s => traces[s]).filter(t => t && t.lossesAtTrapShare != null).sort((a, b) => b.lossesAtTrapShare - a.lossesAtTrapShare)[0];
@@ -164,7 +166,7 @@ function processCandidate(cand, ctx) {
   const res = step('library', () => {
     const e = Lb.makeEntry({ design, k, run, story: brief.story, layout: brief.layout ?? null, shape: built.card?.shape ?? brief.shape ?? null, briefId: brief.id, seed: brief.seed,
       secondAct: !!brief.secondAct, curve, shipSpares: ship,
-      S: { S: pl.S, valid: pl.valid !== false, trusted, styles: pl.styles ?? null, spare: opts.plannerSpare, fingerprint: pl.fingerprint ?? null, faceUp: cf.C2?.faceUp ?? null },
+      S: { S: pl.S, valid: true, trusted, styles: pl.styles ?? null, spare: opts.plannerSpare, fingerprint: pl.fingerprint ?? null, faceUp: cf.C2?.faceUp ?? null },
       gates: { static: sg, screen: scrSummary, traces, counterfactuals: cf, spareNotes },
       card, fingerprints: ctx.fingerprints, cpu });
     if (e.key !== key) throw Error('content key changed while freezing the design');

@@ -85,6 +85,7 @@ function applyRules(points, steps, rules = DEFAULT_RULES, { k = null } = {}) {
   }
   const d1 = at(1), d3 = at(3);
   const ratio = d1 && d3 && d3.D > 0 ? d1.D / d3.D : null;
+  const ratio13Se = ratio !== null && d1.D > 0 && d1.se != null && d3.se != null ? ratio * Math.sqrt((d1.se / d1.D) ** 2 + (d3.se / d3.D) ** 2) : null;
   const shippable = Object.values(verdicts).filter(v => v.canShip).map(v => v.spare);
   return {
     verdicts,
@@ -92,6 +93,9 @@ function applyRules(points, steps, rules = DEFAULT_RULES, { k = null } = {}) {
     openingClock: { k, restricted: openingRestricted, rule: `k <= ${R.openingClockK} => spare >= ${R.openingClockMinSpare} unless a named peak` },
     shippableOpeningRule: shippable.filter(s => verdicts[s].openingClockOk),
     ratio13: ratio,
+    // Delta-method SE of D(1)/D(3), unpaired (conservative); unsettled = the 1.2 cut lies within 1 SE of the ratio.
+    ratio13Se,
+    diallableUnsettled: ratio !== null && ratio13Se !== null && Math.abs(ratio - R.diallableRatio) <= ratio13Se,
     diallable: ratio !== null && ratio >= R.diallableRatio,
     monotone: steps.every(st => st.diff <= Math.max(R.monotoneSlack, R.monotoneSe * (st.seDiff ?? 0)))
   };
@@ -110,14 +114,14 @@ function spareDesign(design, spare, clockOptions, probeUnwitnessed) {
   return { design: copy, k: way.k, probe: 'witnessWouldChange' };
 }
 
-function measureCurve(design, ys, { spares = [0, 1, 2, 3], block = 'CURVE', campaigns, runs, bot = 'family', clockOptions, probeUnwitnessed = true } = {}) {
+function measureCurve(design, ys, { spares = [0, 1, 2, 3], block = 'CURVE', campaigns, runs, bot = 'family', clockOptions, probeUnwitnessed = true, allResults = true } = {}) {
   const started = Date.now();
   let k = null;
   const points = spares.map(spare => {
     const t0 = Date.now(), t = spareDesign(design, spare, clockOptions, probeUnwitnessed);
     if (t.fail) return { spare, fail: t.fail, D: null };
     k = t.k;
-    const r = ys.rate(t.design, { block, campaigns, runs, bot });
+    const r = ys.rate(t.design, { block, campaigns, runs, bot, allResults });
     return { spare, clockN: t.design.clock.n, minimum: t.k, releaseSpare: t.probe ? null : releaseSpare(t.design),
       ...(t.probe ? { probe: t.probe } : {}), D: r.D, pHat: r.pHat, se: r.se, n: r.n,
       valid: r.valid, uncleared: r.uncleared, lossPhase: r.lossPhase, perCampaign: r.perCampaign, fingerprint: r.fingerprint,
@@ -151,7 +155,7 @@ if (require.main === module && process.argv.includes('--timing')) {
     b.curveRating = { seconds: tRate, D: r.D, se: r.se, n: r.n, valid: r.valid };
     const [tCurve, c] = time(() => measureCurve(d, ys));
     b.fullCurve = { seconds: tCurve, k: c.k, points: c.points.map(p => ({ spare: p.spare, clockN: p.clockN, D: p.D, se: p.se, seconds: p.seconds, probe: p.probe, fail: p.fail })),
-      steps: c.steps.map(s => ({ from: s.from, diff: s.diff, seDiff: s.seDiff, seUnpaired: s.seUnpaired })), shippable: c.shippable, shippableOpeningRule: c.shippableOpeningRule, diallable: c.diallable, ratio13: c.ratio13 };
+      steps: c.steps.map(s => ({ from: s.from, diff: s.diff, seDiff: s.seDiff, seUnpaired: s.seUnpaired })), shippable: c.shippable, shippableOpeningRule: c.shippableOpeningRule, diallable: c.diallable, ratio13: c.ratio13, ratio13Se: c.ratio13Se, diallableUnsettled: c.diallableUnsettled };
     const [tScreen, s] = time(() => S.screenBoard(d, ys, { lo: 1, hi: 19, early: false }));
     b.screen = { seconds: tScreen, D1: s.points[1]?.D, D3: s.points[3]?.D, campaigns: s.campaigns };
     const [tPlan, p] = time(() => ys.planner(d, { spare: 2 }));

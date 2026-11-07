@@ -689,16 +689,20 @@ function build(briefIn, opts = {}) {
     throw e;
   } finally { WORK.used = 0; WORK.hard = Infinity; WORK.wallEnd = Infinity; WORK.out = false; }
 }
-/* Work budgets in search nodes, set 2026-11-07 on briefs-v1.json x seeds 1-3 (150 builds). Checked in the Finish
-   stage (one process under loop/heavy.js, old = this file at 22e6bc26 with its wall-clock budgets, same run):
-   - yield: old 129/150 built, new 133/150. 146/150 results are byte-identical; the 4 others are builds the old
-     builder lost to its 4.5 s deadline (unproven) and the node budget completes: chainReaction-steps-1 seeds 1-3
-     (0.63-0.81 M nodes) and iceLockClock-diamond-30 seed 1 (0.90 M; the old builder also builds that same board
-     when the PC is free, 2.9 s). No build reached hard (most work 0.90 M); 4 passed soft.
-   - time: median 31 ms old vs 35 ms new; total 56 s vs 86 s; the slowest new builds take 4-12 s
-     (chainReaction-steps-1), where the old builder gave up at 4.5 s. Nodes per ms vary from about 13 to 180: the
-     count misses the finishing searches inside engine.clockSearch (its .nodes counts the best-first part only) and
-     the geometry work, so a work budget is NOT a fixed time. That is a speed matter only, never the board.
+/* Work budgets in search nodes, set 2026-11-07. Measured on briefs-v1.json x seeds 1-3 (150 builds), one process each
+   under loop/heavy.js (--label deterministic-builds) on a busy shared PC, old = this file at 22e6bc26 with its
+   wall-clock budgets. Per-build output (id, seed, built, fail, work, ms, design hash) is saved in
+   source/analysis/builder/process-v1/build-yield-old.json and build-yield-new.json (script: a 12-line loop calling
+   build({...brief, seed}, {}); not kept):
+   - yield: old 129/150 built, new 133/150. 146/150 results are identical (same design hash or same failure); the
+     4 others the old builder lost to its 4.5 s deadline (fail unproven at 4.5 s) and the node budget completes:
+     chainReaction-steps-1 seeds 1-3 (0.63-0.81 M nodes) and iceLockClock-diamond-30 seed 1 (0.90 M).
+     No build reached hard 1 M (most work 898,295); 4 builds passed soft 0.5 M.
+   - time: median 25 ms old vs 27 ms new; total 57.4 s vs 67.2 s; slowest build 4.6 s old (the deadline) vs 8.8 s new
+     (chainReaction-steps-1 seed 3). Times are wall times on a loaded PC, so only roughly comparable. Nodes per ms
+     vary from about 13 to 180: the count misses the finishing searches inside engine.clockSearch (its .nodes counts
+     the best-first part only) and the geometry work, so a work budget is NOT a fixed time. That is a speed matter
+     only, never the board.
    soft 0.5 M, hard 1 M. Lower hard would lose chainReaction-steps-1 again (it needs 0.63-0.81 M). */
 const DEFAULT_WORK = { soft: 5e5, hard: 1e6 };
 function buildIn(c, story, brief, shape, opts, { budget, spare, fails, cap, softWork, variants }) {

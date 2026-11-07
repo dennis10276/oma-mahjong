@@ -68,6 +68,7 @@ test('refuses a changed fingerprint unless allowNewFingerprint', () => {
   const measure = fakeMeasure(() => 0.3);
   assert.throws(() => Y.createYardstick({ measure, fingerprints: { family: 'other' } }), /refuses a changed bot/);
   assert.throws(() => Y.createYardstick({ measure, fingerprints: { reference: 'other' } }), /refuses a changed bot/);
+  assert.throws(() => Y.createYardstick({ measure, fingerprints: { planner: 'other' } }), /refuses a changed bot/);
   const ys = Y.createYardstick({ measure, fingerprints: { family: 'other' }, allowNewFingerprint: true });
   const r = ys.rate(board(5));
   assert.equal(r.fingerprint, 'other');
@@ -82,7 +83,7 @@ test('rate: D is the equal mean of the two production calls; SE from visible cam
   assert.equal(r.D, (r.calls[0].exp + r.calls[1].exp) / 2);
   assert(r.D > 4 && r.D < 9, 'geometric p 0.15 with cap gives about 6.5: ' + r.D);
   const sd = Y.sampleSd(r.perCampaign);
-  assert(Math.abs(r.se - sd / Math.sqrt(80)) < 1e-12);
+  assert(Math.abs(r.se - sd / Math.sqrt(40)) < 1e-12);
   assert(r.se > 0.3 && r.se < 1.2, 'SE near sqrt(D(D-1)/80): ' + r.se + ' vs ' + r.seGeometric);
   assert(r.pHat > 0.08 && r.pHat < 0.3);
   assert.equal(r.fingerprint, pins.family.fingerprint);
@@ -170,11 +171,11 @@ test('splitCall plays the same campaign seeds as the whole call', () => {
   assert.throws(() => Y.splitCall(whole, 3));
 });
 
-test('planner: reference meter, pinned settings, spare via knobs.clockSpare', () => {
+test('planner: planner-fast-v1 meter, pinned settings, spare via knobs.clockSpare', () => {
   const calls = [], ys = Y.createYardstick({ measure: fakeMeasure(() => 0.4, calls) });
   const d = qualified()[0].design;
   const p = ys.planner(d, { spare: 2 });
-  assert.equal(calls[0].bot, 'reference');
+  assert.equal(calls[0].bot, 'planner');
   assert.deepEqual(calls[0].settings, { setting: 'planner', runs: 20, seeds: 2, seed: 4711 });
   assert.equal(p.clockN, 5); // board 0: clockShortest k = 3
   assert.deepEqual(p.styles, { route: 3, plain: 4 });
@@ -189,7 +190,7 @@ test('cache lookup reuses a production variant (capture:tail at 4711) without me
     fs.writeFileSync(path.join(dir, M.digest({ fingerprint: fp, input: M.boardOf(d), settings: tail }) + '.json'), '{}');
     const seen = [], fake = fakeMeasure(() => 0.2);
     const meter = (fingerprint, bot) => ({ fingerprint, measure: (b, s) => { seen.push({ bot, s }); return fake(b, s, bot); } });
-    const ys = Y.createYardstick({ cacheDir: dir, ledgerFile: false, meters: { family: meter(fp, 'family'), reference: meter(pins.reference.fingerprint, 'reference') } });
+    const ys = Y.createYardstick({ cacheDir: dir, ledgerFile: false, meters: { family: meter(fp, 'family'), reference: meter(pins.reference.fingerprint, 'reference'), planner: meter(pins.planner.fingerprint, 'planner') } });
     ys.rate(d);
     assert.deepEqual(seen.map(x => x.s), [tail, { setting: 'family', runs: 20, seeds: 2, seed: 18427 }]);
     assert.equal(ys.stats.cachedVariant, 1); assert.equal(ys.stats.calls, 2);
@@ -220,4 +221,12 @@ test('real smoke: fast key-memory bot, one qualified board, runs 4 (CURVE seeds,
   assert(r.D >= 1 && r.D <= 20); assert(r.se >= 0);
   assert.equal(r.fingerprint, pins.family.fingerprint);
   assert(Date.now() - started < 30000, 'smoke rating took ' + (Date.now() - started) + ' ms');
+});
+
+test('allResults: SE and pairing use resultsBySeed (every campaign of every sub-block)', () => {
+  const m = (b, st) => ({ expectedTries: 3, valid: true, firstTryRate: 0.3, ...(st.allResults ? { resultsBySeed: [[{ wonOn: 1, tries: 1 }, { wonOn: null, tries: 20 }], [{ wonOn: 5, tries: 5 }, { wonOn: 2, tries: 2 }]] } : { results: [{ wonOn: 1, attempts: [{}] }] }) });
+  const ys = Y.createYardstick({ measure: m });
+  const r = ys.rate(board(5), { block: 'SCREEN', allResults: true });
+  assert.deepEqual(r.perCampaign, [1, 20, 5, 2]);
+  assert.equal(ys.rate(board(5), { block: 'SCREEN' }).nVisible, 1);
 });

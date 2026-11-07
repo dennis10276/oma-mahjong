@@ -9,9 +9,8 @@
    The designs (or the failure and its detail) and the work counted must be byte-identical. Plus: the wall-clock
    safety cap fails a build, it never returns another board; and a small hardWork stops a build at a bounded work
    count with the distinct failure 'workBudget', the same way twice.
-   The briefs are all fast ones (most work 0.08 M nodes, run1 of the Finish stage); the slow ones
-   (iceLockClock-diamond-30 0.9 M, chainReaction-steps-1 0.6-0.8 M, several seconds each) are left out to keep the
-   file well under 60 s. Measured times are in the Finish-stage summary, not here. */
+   The ten briefs are fast ones (most work 0.08 M nodes). One slow build (chainReaction-steps-1 seed 1, about 4 s,
+   0.63 M nodes) has its own test at the end: normal vs jumping clock. iceLockClock-diamond-30 (0.9 M) is left out. */
 'use strict';
 const test = require('node:test'), assert = require('node:assert');
 const { Worker } = require('worker_threads');
@@ -26,6 +25,17 @@ const briefs = PICK.map(i => BRIEFS[i]);
 // what must not change: the full design of a built board, or the failure with its detail; plus the work counted
 const fingerprint = r => JSON.stringify(r.design ? { design: r.design, work: r.work } : { fail: r.fail, detail: r.detail || null, work: r.work });
 const buildAll = (opts = {}) => briefs.map(b => fingerprint(B.build(b, opts)));
+
+function withJumpingClock(fn) {
+  const realNow = Date.now, perf = globalThis.performance, ownPerf = Object.prototype.hasOwnProperty.call(perf, 'now'), realPerf = perf.now;
+  let fake = realNow(), fakeP = realPerf.call(perf);
+  Date.now = () => (fake += 10000);
+  perf.now = () => (fakeP += 10000);
+  try {
+    assert.ok(performance.now() + 5000 < performance.now(), 'performance.now is patched');
+    return fn();
+  } finally { Date.now = realNow; if (ownPerf) perf.now = realPerf; else delete perf.now; }
+}
 
 function startBusy() {
   const w = new Worker(`
@@ -51,15 +61,7 @@ test('the same briefs give byte-identical boards: normal, with a CPU-burning wor
 
   // clocks that run fast: every Date.now() / performance.now() call 10 s later than the last (the engine's ms checks
   // use Date.now, the builder's own clock is performance.now); the safety cap is off so only a wrong branch can show
-  const realNow = Date.now, perf = globalThis.performance, ownPerf = Object.prototype.hasOwnProperty.call(perf, 'now'), realPerf = perf.now;
-  let fake = realNow(), fakeP = realPerf.call(perf);
-  Date.now = () => (fake += 10000);
-  perf.now = () => (fakeP += 10000);
-  let jumpy;
-  try {
-    assert.ok(performance.now() + 5000 < performance.now(), 'performance.now is patched');
-    jumpy = buildAll({ wallMs: Infinity });
-  } finally { Date.now = realNow; if (ownPerf) perf.now = realPerf; else delete perf.now; }
+  const jumpy = withJumpingClock(() => buildAll({ wallMs: Infinity }));
   for (let k = 0; k < briefs.length; k++) assert.strictEqual(jumpy[k], normal[k], briefs[k].id + ': another board with a jumping clock');
 });
 
@@ -81,8 +83,17 @@ test('a small hardWork stops the build, deterministically, and says so (workBudg
   assert.strictEqual(fingerprint(a), fingerprint(c));
   assert.strictEqual(a.fail, 'workBudget', 'a build the budget cut short is not reported as a design failure');
   assert.ok(a.cause, 'the failure it would have reported is kept as cause');
-  // the budget is checked between steps: one step can pass it by at most a fewest-way search with 4x the prune
-  // budget (600 k) plus one main search budget (300 k)
-  assert.ok(a.work >= hard && a.work <= hard + 4 * 150000 + 300000, 'work ' + a.work + ' is bounded by hardWork');
+  // the budget is checked between steps, not inside them. After the last check one pass can still spend: a winnable
+  // search 40 k + a fewest-way search 150 k + the same at 4x 600 k (builder.js 529, 563-564), the strict exactRoute
+  // 300 k (771), a reach check 60 k and one trap search 60 k (806; each later trap is checked first): 1.21 M.
+  assert.ok(a.work >= hard && a.work <= hard + 1210000, 'work ' + a.work + ' is bounded by hardWork');
   assert.ok(a.work < full.work, 'the budget cut the work (' + a.work + ' < ' + full.work + ')');
+});
+
+test('a slow build (chainReaction-steps-1 seed 1, ~0.6 M nodes) is the same with a jumping clock', () => {
+  const b = { ...BRIEFS.find(x => x.id === 'chainReaction-steps-1'), seed: 1 };
+  const normal = fingerprint(B.build(b, {}));
+  const jumped = withJumpingClock(() => fingerprint(B.build(b, { wallMs: Infinity })));
+  assert.strictEqual(jumped, normal);
+  assert.ok(JSON.parse(normal).work > 300000, 'it is a long build');
 });
