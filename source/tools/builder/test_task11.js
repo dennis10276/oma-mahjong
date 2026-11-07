@@ -46,3 +46,12 @@ test('descriptive rank correlations handle capped-rating ties and constant featu
   assert.equal(spearman([1, 2, 3], [3, 2, 1]), -1);
   assert.equal(spearman([20, 20, 20], [1, 2, 3]), null);
 });
+
+test('key visibility distinguishes absent keys, hidden keys and keys that only show after the clock', () => {
+  const E = require('./engine.js'), K = require('./task11_keys.js');
+  const d = { tiles: [[0, 0, 0], [0, 0, 1], [6, 0, 0], [6, 0, 1], [12, 0, 0], [18, 0, 0]], faces: [0, 1, 0, 1, 2, 2],
+    down: [], obst: { keys: [0, 2], locks: [5], ice: {} }, clock: { i: 4, n: 1 }, solution: [4, 1, 3, 0, 2, 5] };
+  assert.equal(E.replay(d, d.solution).ok, true);
+  const f = K.features(d); assert.equal(f.keysShownAtStart, 0); assert.equal(f.movesUntilBothKeysShow, 3); assert.equal(f.bothShownBeforeClock, false);
+  const absent = K.features({ ...d, obst: { keys: [], locks: [], ice: {} } }); assert.equal(absent.hasKeys, false); assert.equal(absent.movesUntilBothKeysShow, null);
+});

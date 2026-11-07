@@ -14,7 +14,8 @@ function profiles(root) {
   const bands = {};
   for (const band of ['easy', 'middle', 'hard']) {
     const b = rows.filter(r => r.band === band), group = { boards: b.length, stories: [...new Set(b.map(r => r.story))], structure: {}, profiles: {} };
-    for (const field of ['way', 'clockDepth', 'maxKeyDistance', 'locks', 'iceTiles', 'necessary', 'realDecisionPoints', 'losingOptionShare', 'meanWinningOptions', 'hiddenOnDig']) group.structure[field] = A.median(b.map(r => r.structure[field]));
+    for (const field of ['way', 'clockDepth', 'maxKeyDistance', 'locks', 'iceTiles', 'necessary', 'realDecisionPoints', 'losingOptionShare', 'meanWinningOptions', 'hiddenOnDig', 'keysShownAtStart', 'movesUntilBothKeysShow']) group.structure[field] = A.median(b.filter(r => !['keysShownAtStart', 'movesUntilBothKeysShow'].includes(field) || r.structure.hasKeys).map(r => r.structure[field]));
+    group.keyVisibility = A.countBy(b, r => r.structure.hasKeys ? r.structure.keysShownAtStart : 'no keys');
     for (const label of ['family', 'planner']) {
       const ps = b.map(r => r.profiles.find(p => p.profile === (label === 'family' ? 'family' : r.preferredPlanner)));
       const commits = ps.flatMap(p => p.forkChances), attempts = ps.flatMap(p => p.attemptProfiles), errors = attempts.filter(a => a.firstError && !a.recovery);
@@ -32,7 +33,7 @@ function profiles(root) {
     bands[band] = group;
   }
   const correlation = {};
-  for (const f of ['way', 'clockDepth', 'maxKeyDistance', 'necessary', 'realDecisionPoints', 'losingOptionShare', 'hiddenOnDig']) correlation[f] = spearman(rows.map(r => r.structure[f]), rows.map(r => r.fullRatings.family.exp));
+  for (const f of ['way', 'clockDepth', 'maxKeyDistance', 'necessary', 'realDecisionPoints', 'losingOptionShare', 'hiddenOnDig', 'keysShownAtStart', 'movesUntilBothKeysShow']) correlation[f] = spearman(rows.map(r => ['keysShownAtStart', 'movesUntilBothKeysShow'].includes(f) && !r.structure.hasKeys ? null : r.structure[f]), rows.map(r => r.fullRatings.family.exp));
   const summary = { rows: rows.length, bands, correlation, note: 'Board medians keep capped campaigns from dominating descriptions. Empirical pick frequencies include repeated retries; these are not independent policy probabilities. Real forks require both a proved winning and a proved losing removal action. Unknowns and recovery/equivalence failures are explicit. Planner summaries use the style winning its earlier full40+40 rating, never the better sampled prefix.' };
   P.save(root, 'profile-summary.json', summary);
   const lines = ['# Where the bots lose', '', `${rows.length}/60 boards scored. ${summary.note}`, '',
@@ -41,7 +42,7 @@ function profiles(root) {
   lines.push('', '| Band / player | sampled losses / attempts | proved first errors | median error removal move | delay to terminal | empirical losing commitment at a live fork | known-picture error share | repeated known errors | engine mismatches / recoveries |', '|---|---:|---:|---:|---:|---:|---:|---:|---:|');
   for (const [b, g] of Object.entries(bands)) for (const [p, s] of Object.entries(g.profiles)) lines.push(`| ${b} / ${p} | ${s.sampledLosses}/${s.sampledAttempts} | ${s.provedFirstErrors} | ${round(s.medianErrorMove)} | ${round(s.medianDelayAfterError)} | ${round(s.empiricalLosingCommitChance)} | ${round(s.knownErrorShare)} | ${s.repeatedKnownErrors} | ${s.engineMismatches}/${s.recoveries} |`);
   lines.push('', '## Per board', '', 'Each profile file has the short loss story, both planner styles, every observed live-fork frequency with its denominator, first errors by attempt and memory coverage. The compressed engine-detail files retain every scored physical tap and every legal-action proof.', '');
-  for (const r of rows) { lines.push(`### ${r.id}`, '', `Family ${round(r.fullRatings.family.exp)}, skilled ${round(r.fullRatings.skilled.exp)}. ${r.story}, ${r.shape}; ${r.structure.way} clock moves, spare${r.structure.spare}; ${r.structure.realDecisionPoints} proved live forks on the stored route.`, ''); for (const p of r.profiles) lines.push(p.story, ''); }
+  for (const r of rows) { lines.push(`### ${r.id}`, '', `Family ${round(r.fullRatings.family.exp)}, skilled ${round(r.fullRatings.skilled.exp)}. ${r.story}, ${r.shape}; ${r.structure.way} clock moves, spare${r.structure.spare}; ${r.structure.realDecisionPoints} proved live forks on the stored route. Keys showing at start: ${r.structure.hasKeys ? r.structure.keysShownAtStart : 'no keys'}; removal moves until both keys show: ${r.structure.movesUntilBothKeysShow ?? 'not applicable/unresolved'}; before the clock: ${r.structure.bothShownBeforeClock ?? 'not applicable'}.`, ''); for (const p of r.profiles) lines.push(p.story, ''); }
   lines.push('## Interpretation limits', '',
     'A pure peek changes information and openPeek but removes no tile and spends no clock move. It is scored as the same physical state, not as the hypothetical take that might be a fatal fourth tile. A later automatic peek pair is checked as a two-tile action.', '',
     'The engine knows every face. A winning proof does not show that the player had enough information to find that move. Known winning options, hidden pictures and same-picture/role alternatives with opposite results are recorded separately; those alternatives still occupy different geometric positions.', '',
@@ -70,7 +71,7 @@ function ladder(root) {
           const a = bs[i - 1], b = bs[i]; if (b.cell.way - a.cell.way !== 1) continue;
           const change = { seed, spare, from: a.id, to: b.id, requested: [a.cell.way, b.cell.way], actual: [a.actualWay, b.actualWay], sameBoard: a.boardKey === b.boardKey,
             familyDelta: b.family.exp - a.family.exp, skilledDelta: b.skilled.exp - a.skilled.exp, companions: {} };
-          for (const f of ['maxKeyDistance', 'clockDepth', 'locks', 'iceTiles', 'dig', 'necessary', 'trayThree', 'realDecisionPoints', 'routeSpanX', 'routeSpanY']) change.companions[f] = a.structure && b.structure ? [a.structure[f], b.structure[f]] : null;
+          for (const f of ['maxKeyDistance', 'clockDepth', 'locks', 'iceTiles', 'dig', 'necessary', 'trayThree', 'realDecisionPoints', 'routeSpanX', 'routeSpanY', 'keysShownAtStart', 'movesUntilBothKeysShow']) change.companions[f] = a.structure && b.structure ? [a.structure[f], b.structure[f]] : null;
           out.adjacentSeedChanges.push(change);
         }
       }
