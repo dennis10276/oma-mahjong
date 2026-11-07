@@ -30,6 +30,53 @@ builder (v3) from your findings.
   zero-drift fast mode for the bots (Task G2 part A). Once Claude merges it into `wip/level-builder`, switch to
   it: it gives identical ratings.
 
+## 0. First: hidden keys (Claude's finding, `analysis/builder/why-hard-claude.md`)
+On Task 10's boards with keys, the jump is mostly key visibility at the start.
+
+| keys showing at the start | family median | share at 18+ |
+|---|---:|---:|
+| none | 19.8 | 88% |
+| one | 13.0 | 38% |
+| both | 6.3 | 36% |
+
+On a 20-try board the family bot wanders. Its first losing move is an off-way pair, and when those pairs are
+removed it wanders with singles. It does not know where the keys are.
+- **Check the bot's memory.** After a key has been uncovered in try k, does the family bot go for it in try k+1?
+  Look at `public_key_identity_memory.js`, `retryKeyIdentityMemory` and `human_factory_controller.js`
+  (keyTiles/needLeft).
+- **Measure it.** On 10 hidden-key boards, measure how often the bot's next try digs straight to a key it already
+  saw.
+- **Report plainly:** is the 20 real difficulty (a person would also keep failing), or a memory blind spot?
+- **Fix what you find (Dennis, 2026-11-07: "It may fix anything really. If it finds another blind spot let it fix
+  that as well").** That covers the bots, the builder, the engine, the describe and gate tools and the factory
+  pipeline: any blind spot or bug you find in this task, not only the key memory. Each fix gets a test, a line in
+  your running note and a line in the hand-back. For the bots, the rules below apply.
+  - Fix the decision logic only (controller and memory: `human_factory_controller.js`,
+    `public_key_identity_memory.js` and their neighbours). Gemini is speeding up the environment
+    (`human_style_environment.js`, `human_board_visibility.js`, `production_physical_session.js`) in Task G2.
+    While G2 part A is open, avoid editing those three files: if a fix needs them, put the change in your note
+    and Claude will coordinate it.
+  - Make it a new bot version, never a silent change: a new profile/setting name, a fingerprint change in
+    `meter.js`, and no cache migration (ratings really change).
+  - The new bot must still match real people at least as well as today. These were the fits used to release the
+    bots:
+    - Dennis's own lab wins on his 24 lab boards (off by 2.05 with the current planner);
+    - Dennis's first tries on 200 (5) and 225 (4);
+    - the live levels 85–174 against the family's real plays (off by about 1.05–1.10).
+
+    Give both numbers, old and new. If the fit gets worse, stop and report instead of shipping.
+  - Re-rate with the new bot: the 20 kept levels for 200–225 (show how many still sit within ±1 of the curve),
+    the Task 10 boards with hidden keys, and your part 2 ladder.
+  - Put it on your branch with tests. Claude reviews and merges it. The bots are offline tools, so nothing in
+    the game changes.
+- **Use it in part 1:** add "keys showing at the start" and "moves until both keys show" to every error profile.
+- **The second cause:** builder v3 now has `targets.keysShown`. Claude's causal check (`why-hard-claude.md`
+  section 5) shows that hidden keys raise the rating on 5 of 6 pairs. Some boards are brutal with both keys
+  showing, because the order is unique under forced pressure: only 1 of 16 moves at the start wins, and it is
+  not the obvious one. Measure in part 1 how often that is the cause.
+- **New since Task 10:** builder v3 keeps the way readable by default, as a proven intent (`placement_score.readable`).
+  Build part 2's boards with it.
+
 ## 1. Where do the bots lose? (main job)
 Take about 60 Task 10 boards spread across the range: about 20 at 2–6 family tries, 20 at 8–14, and 20 at 18–20,
 from several stories and layouts. No frozen-key boards.

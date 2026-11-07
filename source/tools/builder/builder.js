@@ -50,6 +50,8 @@ const L = global.Layouts || (global.Layouts = require('../../www/layouts.js'));
 const { exactRoute } = require('../lab/exact.js');
 const E = require('./engine.js');
 const { STORIES } = require('./stories.js');
+const { tileVisibility } = require('../sim/refit/human_board_visibility.js');
+const readableOf = d => { try { return require('../factory/placement_score.js').readable(d); } catch (e) { return false; } };
 
 const LAYOUTS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'analysis', 'builder', 'data', 'layouts.json'), 'utf8'));
 const rngOf = seed => { let s = (seed >>> 0) || 1; return () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296; };
@@ -87,7 +89,12 @@ function context(tilesIn) {
   const cx = tiles.reduce((s, t) => s + t.x, 0) / n, cy = tiles.reduce((s, t) => s + t.y, 0) / n;
   const dist = (i, j) => Math.hypot(tiles[i].x - tiles[j].x, (tiles[i].y - tiles[j].y) * 0.8);
   const centre = i => Math.hypot(tiles[i].x - cx, (tiles[i].y - cy) * 0.8);
-  return { tiles, n, nb, inb, above, free0, peak, peaks, peakZ, dist, centre, maxZ };
+  // roleShown0[i]: the tile's role overlay (key, lock, ice) is in sight at the start - the game's own rule, as the
+  // bots see it (human_board_visibility.js). Builder v3 (Claude 2026-11-07): whether the keys show at the start is
+  // what made built boards 3 or 20 tries (analysis/builder/why-hard-claude.md).
+  const vis0 = tileVisibility(tiles, { alive: all, down: new Uint8Array(n), openPeek: -1 }, null).tiles;
+  const roleShown0 = vis0.map(v => !!v.role);
+  return { tiles, n, nb, inb, above, free0, peak, peaks, peakZ, dist, centre, maxZ, roleShown0 };
 }
 
 // ---------- 1. roles ----------
@@ -145,7 +152,7 @@ function placeRoles(c, story, brief, rng) {
     }
     const needKeys = roles.locks.size > 0 || s.coverPartners === 'locked';
     if (needKeys) {
-      const kc = s.keyCover || [1, 3], used = new Set([ck, ...roles.locks, ...c.above[ck]]);
+      const kc = brief.targets?.keysShown != null ? [0, Math.max(4, (s.keyCover || [1, 3])[1])] : (s.keyCover || [1, 3]), used = new Set([ck, ...roles.locks, ...c.above[ck]]);
       let cands = [];
       for (let i = 0; i < c.n; i++) if (!used.has(i) && inRange(c.above[i].size, kc) && ![...roles.locks].some(l => c.above[l].has(i)) && openable(i)
         && (!s.keyIce || (keyH(i) > 0 && c.inb[i].filter(j => !roles.locks.has(j) && !c.above[j].has(i)).length >= keyH(i) + 1))) cands.push(i);
@@ -155,7 +162,11 @@ function placeRoles(c, story, brief, rng) {
       else cands.sort((a, b) => c.dist(a, ck) - c.dist(b, ck));
       cands = shuffle(rng, cands.slice(0, 6)).concat(cands.slice(6, 16));
       // frozen keys must not thaw each other (each would wait for the other)
-      const okPair = (a, b, d) => b !== a && c.dist(a, b) <= d && !c.above[a].has(b) && !c.above[b].has(a) && !(s.keyIce && c.inb[a].includes(b));
+      // targets.keysShown (0, 1, 2): how many keys show as keys at the start (a frozen key shows its ice: hidden)
+      const shown = k => c.roleShown0[k] && !s.keyIce;
+      const wantShown = brief.targets?.keysShown;
+      const okPair = (a, b, d) => b !== a && c.dist(a, b) <= d && !c.above[a].has(b) && !c.above[b].has(a) && !(s.keyIce && c.inb[a].includes(b))
+        && (wantShown == null || (shown(a) ? 1 : 0) + (shown(b) ? 1 : 0) === wantShown);
       let pair = null;
       for (const d of [6, 9]) { for (const a of cands) { for (const b of cands) if (okPair(a, b, d)) { pair = [a, b]; break; } if (pair) break; } if (pair) break; }
       if (!pair) continue;
@@ -432,7 +443,7 @@ function placePictures(c, roles, P, hold, brief, rng, N, variant = 0) {
    and the tile it closes (a peek pair with the clock would skip a tray slot), the trap pairs (they must be in sight). */
 function placeDown(c, roles, P, plan, brief, rng) {
   const target = Math.round((brief.targets?.maxDown ?? 0.3) * c.n), onWay = luckTargetOf(brief, plan.cap);
-  const onDig = Math.max(onWay, brief.targets?.hiddenOnWay ?? 1);
+  const onDig = Math.max(onWay, brief.targets?.hiddenOnWay ?? 0);
   const special = new Set([roles.clock, ...roles.keys, ...roles.locks, ...Object.keys(roles.ice).map(Number)]);
   const avoid = new Set([...special, plan.clockTwin, ...plan.traps.flat()]);
   const inP = new Set(P);
@@ -462,7 +473,7 @@ function placeDown(c, roles, P, plan, brief, rng) {
 }
 
 // a luck moment is a take that brings the tray to 3: only possible when the cap is 3
-const luckTargetOf = (brief, cap = capOf(brief)) => cap >= 3 ? Math.max(0, brief.targets?.luck ?? brief.targets?.hiddenOnWay ?? 1) : 0;
+const luckTargetOf = (brief, cap = capOf(brief)) => cap >= 3 ? Math.max(0, brief.targets?.luck ?? brief.targets?.hiddenOnWay ?? 0) : 0;   // v3: the way stays readable unless asked (Dennis's rule; Task 10 pilot failed it)
 // The requested tray cap. Incompatible stories must fail rather than change the brief.
 function capOf(brief) {
   return Math.max(1, Math.min(3, 3 - (brief.targets?.trayRoom ?? 1)));
@@ -747,6 +758,19 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
   }
   const trapsProven = trapRes.filter(t => t.result === 'lose' && t.kind === 'pair').length;
   const luckTarget = luckTargetOf(brief, cap);
+  // keys in sight: how many show as keys at the start, and after how many moves of the way both have shown
+  let keysShown = null, keysRevealAt = null;
+  if (roles.locks.size && roles.keys.length) {
+    const shownNow = alive => tileVisibility(c.tiles, { alive, down: new Uint8Array(c.n), openPeek: -1 }, null).tiles;
+    const isShown = (v, k) => v[k].role && !(roles.ice[k] > 0);
+    const al = new Uint8Array(c.n).fill(1);
+    keysShown = roles.keys.filter(k => isShown(shownNow(al), k)).length;
+    for (let m = 0; m <= clockAt; m++) {
+      const v = shownNow(al);
+      if (roles.keys.every(k => !al[k] || isShown(v, k))) { keysRevealAt = m; break; }
+      al[sol[m]] = 0;
+    }
+  }
   const n = c.n, busy = Math.min(2, cap), firstBusy = busy >= 2 ? tray.firstTwo : tray.firstOne, calmHalf = firstBusy < 0 || firstBusy >= n / 2;
   const intents = [
     { name: 'witness valid (' + (rep.pairs ? 'uses ' + rep.pairs + ' peek pair' + (rep.pairs > 1 ? 's' : '') : 'strict rules') + ')', proven: true, detail: witness + ' way' },
@@ -758,10 +782,16 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
       detail: heldBack + ' of ' + hold.holders.size + ' holders out of reach, each holding the twin of a tile waiting at the clock' }] : []),
     { name: 'luck moments on the way: ' + luckTarget + ' (within 1)' + (cap < 3 && (brief.targets?.luck ?? brief.targets?.hiddenOnWay) ? ' (none possible: the tray never reaches 3)' : ''), proven: Math.abs(tray.luck - luckTarget) <= 1,
       detail: tray.luck + ' face-down tile' + (tray.luck === 1 ? '' : 's') + ' uncovered while 2+ wait (planned ' + pick.luckPlanned + ')' },
+    ...(brief.targets?.keysShown != null && keysShown != null ? [{ name: 'keys showing at the start: ' + brief.targets.keysShown, proven: keysShown === brief.targets.keysShown,
+      detail: keysShown + ' of 2 show; both seen after ' + keysRevealAt + ' moves of the way' }] : []),
     ...(brief.frame?.way != null ? [{ name: 'way to the clock: ' + brief.frame.way + ' moves (within 1)', proven: Math.abs(way.k - brief.frame.way) <= 1, detail: 'fewest ' + way.k }] : []),
     ...(brief.targets?.three != null ? [{ name: 'moves with 3 waiting on the way: ' + brief.targets.three + ' (within 1)', proven: Math.abs(tray.three - brief.targets.three) <= 1, detail: 'measured ' + tray.three }] : []),
     ...(brief.targets?.hiddenOnWay != null ? [{ name: 'at least ' + brief.targets.hiddenOnWay + ' face-down tiles on the dig', proven: down.filter(i => P.includes(i)).length >= brief.targets.hiddenOnWay,
       detail: 'measured ' + down.filter(i => P.includes(i)).length }] : []),
+    // Dennis's readability rule, as the factory checks it (placement_score.readable): the goal of each phase in
+    // sight, at most one face-down tile on the way, no face-down clock, key or lock. Task 10's pilot failed it.
+    // required unless the brief explicitly asks for blind digging (hiddenOnWay 2+, a lab experiment): then reported
+    ...((brief.targets?.hiddenOnWay ?? 0) >= 2 ? [] : [{ name: 'readable objective (clock, keys, locks and the way in sight)', proven: readableOf(design) }]),
     { name: 'face-down share within maximum', proven: down.length <= Math.round((brief.targets?.maxDown ?? 0.3) * n), detail: down.length + ' of ' + n },
     ...(brief.targets?.traps != null ? [{ name: 'at least ' + brief.targets.traps + ' proven decision traps', proven: trapsProven >= brief.targets.traps, detail: 'proven ' + trapsProven + ' of ' + plan.traps.length + ' designed' }] : []),
     // a designed trap that the engine cannot prove lost is not claimed (card.traps.designed vs .tempting)
@@ -774,11 +804,13 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
     story: story.title, sentence: story.sentence, shape: brief.shape || null, tiles: c.n, stage: brief.stage || null,
     clock: { tile: roles.clock, depth: c.above[roles.clock].size, fewestMoves: way.k, strictMoves: null, spare, n: clock.n, locked: roles.locks.has(roles.clock), ice: roles.ice[roles.clock] || 0, at: clockAt + 1 },
     keys: roles.locks.size ? roles.keys.map(k => ({ tile: k, cover: c.above[k].size, ice: roles.ice[k] || 0, otherPeak: c.peak[k] >= 0 && c.peak[k] !== c.peak[roles.clock] })) : [],
+    keysShown, keysRevealAt, readable: readableOf(design),
     locks: roles.locks.size, iceTiles: Object.keys(roles.ice).length, dig: P.length, necessary: N.size, trayCap: cap,
     tray: { ...tray, forced: forced === 'no' ? cap : null, forcedProof: forced }, orphans: plan.dig.orphans, faceDown: down.length, faceDownOnDig: down.filter(i => P.includes(i)).length,
     traps: { points: trapsProven ? 1 : 0, tempting: trapsProven, designed: plan.traps.length, pairs: plan.traps }, witness,
     bites: [
       `The clock needs ${way.k} moves and gets ${clock.n}: ${spare} to spare.`,
+      ...(keysShown != null ? [keysShown === 2 ? 'Both keys are in sight from the start.' : `${2 - keysShown} key${keysShown === 1 ? ' is' : 's are'} hidden at the start; both show after ${keysRevealAt} moves of the way.`] : []),
       ...(forced === 'no' ? [`${plan.dig.orphans.length} tile${plan.dig.orphans.length > 1 ? 's' : ''} you must take on the way wait in the tray until after the clock: whatever the order, the tray reaches ${cap}.`] : []),
       `On the way the tray fills to ${tray.max}` + (tray.three ? `, ${tray.three} move${tray.three > 1 ? 's' : ''} with 3 waiting.` : '.'),
       ...(tray.luck ? [`${tray.luck} dig${tray.luck > 1 ? 's' : ''} uncover a face-down tile while 2 wait (luck).`] : []),

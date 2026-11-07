@@ -16,6 +16,10 @@ Bot ratings are the bottleneck of everything we do with it, so this task has two
   "part B done". Claude reviews and merges.
 
 ## Part A — Zero-drift CPU fast path (first; your own proposal)
+Codex may fix decision blind spots of the bots in Task 11 (controller and memory files only), as a new bot version.
+Keep your changes to the environment, visibility and session files. Your zero-drift proof is against the bot
+version you start from. If Codex's new version lands on `wip/level-builder` first, rebase and prove it again
+for that version too.
 Make the family and planner ratings faster without changing a single decision.
 - **Untouched:** `human_factory_controller.js` (`decide`, `observe`, profiles) and the RNG stream.
 - **Two ways to run:** add a fast measurement mode next to the current, unchanged path. The meter picks it.
