@@ -51,6 +51,7 @@ const { exactRoute } = require('../lab/exact.js');
 const E = require('./engine.js');
 const { STORIES } = require('./stories.js');
 const { tileVisibility } = require('../sim/refit/human_board_visibility.js');
+const readableOf = d => { try { return require('../factory/placement_score.js').readable(d); } catch (e) { return false; } };
 
 const LAYOUTS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'analysis', 'builder', 'data', 'layouts.json'), 'utf8'));
 const rngOf = seed => { let s = (seed >>> 0) || 1; return () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296; };
@@ -442,7 +443,7 @@ function placePictures(c, roles, P, hold, brief, rng, N, variant = 0) {
    and the tile it closes (a peek pair with the clock would skip a tray slot), the trap pairs (they must be in sight). */
 function placeDown(c, roles, P, plan, brief, rng) {
   const target = Math.round((brief.targets?.maxDown ?? 0.3) * c.n), onWay = luckTargetOf(brief, plan.cap);
-  const onDig = Math.max(onWay, brief.targets?.hiddenOnWay ?? 1);
+  const onDig = Math.max(onWay, brief.targets?.hiddenOnWay ?? 0);
   const special = new Set([roles.clock, ...roles.keys, ...roles.locks, ...Object.keys(roles.ice).map(Number)]);
   const avoid = new Set([...special, plan.clockTwin, ...plan.traps.flat()]);
   const inP = new Set(P);
@@ -472,7 +473,7 @@ function placeDown(c, roles, P, plan, brief, rng) {
 }
 
 // a luck moment is a take that brings the tray to 3: only possible when the cap is 3
-const luckTargetOf = (brief, cap = capOf(brief)) => cap >= 3 ? Math.max(0, brief.targets?.luck ?? brief.targets?.hiddenOnWay ?? 1) : 0;
+const luckTargetOf = (brief, cap = capOf(brief)) => cap >= 3 ? Math.max(0, brief.targets?.luck ?? brief.targets?.hiddenOnWay ?? 0) : 0;   // v3: the way stays readable unless asked (Dennis's rule; Task 10 pilot failed it)
 // The requested tray cap. Incompatible stories must fail rather than change the brief.
 function capOf(brief) {
   return Math.max(1, Math.min(3, 3 - (brief.targets?.trayRoom ?? 1)));
@@ -787,6 +788,9 @@ function prove(c, story, brief, roles, P, hold, plan, down, design, rep, way, cl
     ...(brief.targets?.three != null ? [{ name: 'moves with 3 waiting on the way: ' + brief.targets.three + ' (within 1)', proven: Math.abs(tray.three - brief.targets.three) <= 1, detail: 'measured ' + tray.three }] : []),
     ...(brief.targets?.hiddenOnWay != null ? [{ name: 'at least ' + brief.targets.hiddenOnWay + ' face-down tiles on the dig', proven: down.filter(i => P.includes(i)).length >= brief.targets.hiddenOnWay,
       detail: 'measured ' + down.filter(i => P.includes(i)).length }] : []),
+    // Dennis's readability rule, as the factory checks it (placement_score.readable): the goal of each phase in
+    // sight, at most one face-down tile on the way, no face-down clock, key or lock. Task 10's pilot failed it.
+    { name: 'readable objective (clock, keys, locks and the way in sight)', proven: readableOf(design) },
     { name: 'face-down share within maximum', proven: down.length <= Math.round((brief.targets?.maxDown ?? 0.3) * n), detail: down.length + ' of ' + n },
     ...(brief.targets?.traps != null ? [{ name: 'at least ' + brief.targets.traps + ' proven decision traps', proven: trapsProven >= brief.targets.traps, detail: 'proven ' + trapsProven + ' of ' + plan.traps.length + ' designed' }] : []),
     // a designed trap that the engine cannot prove lost is not claimed (card.traps.designed vs .tempting)
