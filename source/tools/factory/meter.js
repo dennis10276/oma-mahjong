@@ -15,6 +15,11 @@ function boardOf(d) {
     clock: d.clock || null };
 }
 const boardKey = d => digest(boardOf(d));
+// A changed policy is an explicit opt-in, with its own source fingerprint.
+// Do not add behavioral candidates to FAMILY_CACHE_MIGRATIONS.
+const BOT_VERSIONS = Object.freeze({
+  'family-key-memory-v1': path.join(__dirname, '../sim/refit/human_bot_key_memory_v1.js')
+});
 // Task 04 / upstream 8e33270 changes the planner only. Family decisions and
 // physics are identical. Permit this exact, documented revision pair only;
 // any later bot/profile/environment change falls back to new measurements.
@@ -70,7 +75,9 @@ function compact(m) {
   })) })) };
 }
 function createMeter(options = {}) {
-  const entry = path.resolve(options.bot || process.env.HUMAN_BOT || path.join(__dirname, '../sim/refit/human_bot.js'));
+  if (options.botVersion && (!BOT_VERSIONS[options.botVersion] || options.bot || options.measureHuman || options.fingerprint))
+    throw Error('Unknown botVersion or conflicting explicit bot options');
+  const entry = path.resolve(options.bot || BOT_VERSIONS[options.botVersion] || process.env.HUMAN_BOT || path.join(__dirname, '../sim/refit/human_bot.js'));
   const loaded = options.measureHuman ? null : require(entry);
   const bot = options.measureHuman || (options.fast === false ? loaded.measureHuman : (loaded.measureHumanFast || loaded.measureHuman));
   const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => k.startsWith('G51_')));
@@ -86,7 +93,7 @@ function createMeter(options = {}) {
       const saved = JSON.parse(fs.readFileSync(file, 'utf8'));
       memory.set(key, saved); stats.hits++; return saved;
     }
-    const approved = !options.measureHuman && !options.fingerprint && !options.bot && !process.env.HUMAN_BOT &&
+    const approved = !options.measureHuman && !options.fingerprint && !options.bot && !options.botVersion && !process.env.HUMAN_BOT &&
       settings.setting === 'family' ? FAMILY_CACHE_MIGRATIONS[fingerprint] || [] : [];
     if (cacheDir) for (const prior of approved) {
       const oldFile = path.join(cacheDir, digest({ fingerprint: prior, input, settings }) + '.json');
@@ -107,4 +114,4 @@ function createMeter(options = {}) {
   }
   return { measure, fingerprint, stats };
 }
-module.exports = { createMeter, boardKey, boardOf, digest, sourceHash, atomicJson, compact, FAMILY_CACHE_MIGRATIONS };
+module.exports = { createMeter, boardKey, boardOf, digest, sourceHash, atomicJson, compact, FAMILY_CACHE_MIGRATIONS, BOT_VERSIONS };

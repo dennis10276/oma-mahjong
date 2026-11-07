@@ -1,0 +1,1 @@
+{"created":"2026-11-07T04:04:16.528Z","protocol":"256faca36868781da8c043623e4fd1e97bc5b5ee6cd6ee9c1757646c43823073","reason":"Capture CLI wrote the correct key protocol payload under the generic filename. Renamed to its registered key-capture filename before main trace collection. No payload, trace, settings, bot or worker change."}
