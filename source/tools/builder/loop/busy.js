@@ -4,6 +4,7 @@
 //   node source/tools/builder/loop/busy.js --json   -> the same as JSON
 // "Busy" means: node/python processes outside this worktree that used more than one core in
 // total over a 3 s sample, or a Codex/Gemini log written in the last 3 minutes, or CPU above 60%.
+// It also reports busy while Claude's heavy-job lock (cc-builder-loop/source/build/heavy.lock) is held.
 // GPU work is allowed at any time and does not need this check.
 'use strict';
 const fs = require('fs');
@@ -55,7 +56,7 @@ function main() {
   const s = sampleProcesses();
   const self = process.pid;
   const procs = (s.procs || []).filter((p) => p.pid !== self);
-  const ours = (p) => p.cmd.toLowerCase().includes(HERE.toLowerCase()) || p.cmd.includes('cc-builder-loop');
+  const ours = (p) => p.cmd.toLowerCase().includes(HERE.toLowerCase());
   const others = procs.filter((p) => !ours(p) && p.cores > 0.05).sort((x, y) => y.cores - x.cores);
   const otherCores = others.reduce((t, p) => t + p.cores, 0);
   const logs = recentLogs();
@@ -63,6 +64,13 @@ function main() {
   if (otherCores > 1) reasons.push(`other node/python jobs use ${otherCores.toFixed(1)} cores`);
   if (logs.length) reasons.push(`recent logs: ${logs.map((l) => `${l.file} (${l.agoS}s ago)`).join(', ')}`);
   if (s.load > 60) reasons.push(`CPU load ${s.load}%`);
+  // Claude's heavy-job lock (heavy.js). Seen from another worktree it always means busy.
+  const lock = path.join(ROOT, 'cc-builder-loop', 'source', 'build', 'heavy.lock');
+  if (path.resolve(HERE) !== path.resolve(ROOT, 'cc-builder-loop') && fs.existsSync(lock)) {
+    let owner = '?';
+    try { owner = JSON.parse(fs.readFileSync(path.join(lock, 'owner.json'), 'utf8')).label; } catch { /* being written */ }
+    reasons.push(`Claude's heavy job is running (${owner})`);
+  }
   const verdict = { busy: reasons.length > 0, load: s.load, otherCores: +otherCores.toFixed(2), reasons,
     others: others.slice(0, 8).map((p) => ({ pid: p.pid, cores: p.cores, cmd: p.cmd.slice(0, 160) })) };
   if (process.argv.includes('--json')) console.log(JSON.stringify(verdict, null, 2));
