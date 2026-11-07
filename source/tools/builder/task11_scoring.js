@@ -8,7 +8,7 @@ async function run(root, kind = 'traces', workers = 8, limit = 0) {
   if (fs.existsSync(file) && M.digest(P.read(file)) !== M.digest(protocol)) throw Error('Frozen engine-scoring implementation changed');
   P.save(root, 'scoring-protocol.json', protocol);
   let boards = p.boards;
-  if (kind === 'structure') { const d = S.collect(path.join(root, 'ladder-readable')), seen = new Set(); boards = d.boards.filter(b => { const key = b.design && !b.fail && M.boardKey(b.design); if (!key || seen.has(key)) return false; seen.add(key); return true; }); }
+  if (kind === 'structure') { const d = S.collect(path.join(root, 'ladder-readable')), seen = new Set(); if (fs.existsSync(path.join(root, 'ladder-fallback/plan.json'))) d.boards.push(...S.collect(path.join(root, 'ladder-fallback')).boards); boards = d.boards.filter(b => { const key = b.design && !b.fail && M.boardKey(b.design); if (!key || seen.has(key)) return false; seen.add(key); return true; }); }
   if (limit) boards = boards.slice(0, limit);
   const tasks = boards.map(board => ({ board, root, kind: kind === 'structure' ? 'structure' : 'traces', bot: p.bot, budget: p.classification, task: M.boardKey(board.design) }));
   let saved = 0;

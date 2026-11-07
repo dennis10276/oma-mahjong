@@ -18,7 +18,7 @@ async function run(dir, workers = 8, stage = 'all') {
   }
   const file = path.join(dir, stage === 'keys' ? 'key-capture-protocol.json' : 'capture-protocol.json');
   if (fs.existsSync(file) && M.digest(P.read(file)) !== M.digest(protocol)) throw Error('Frozen trace implementation changed');
-  P.save(dir, 'capture-protocol.json', protocol);
+  P.save(dir, path.basename(file), protocol);
   const tasks = boards.flatMap(b => profiles.map(profile => ({ board: b.id, design: b.design, profile, runs, bot: selection.bot, task: M.digest(stage === 'keys' ? ['key-memory', b.id, profile] : [b.id, profile]) }))), pending = [];
   let done = 0;
   for (const job of tasks) {

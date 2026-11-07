@@ -52,10 +52,14 @@ function profiles(root) {
 }
 function ladder(root) {
   const data = S.collect(path.join(root, 'ladder-readable')), structures = new Map(jsonFiles(path.join(root, 'structures')).map(r => [r.boardKey, r]));
+  const pairSpecs = P.read(path.join(root, 'selection-plan.json')).ladder.pairs.slice();
+  if (fs.existsSync(path.join(root, 'ladder-fallback/plan.json'))) {
+    const extra = S.collect(path.join(root, 'ladder-fallback')); data.boards.push(...extra.boards); for (const [k, v] of extra.records) data.records.set(k, v); pairSpecs.push(extra.protocol.pair);
+  }
   const rows = data.boards.map(b => ({ id: b.id, cell: b.cell, fail: b.fail || null, readable: b.readable ?? null, boardKey: b.design ? M.boardKey(b.design) : null,
     actualWay: b.card?.clock.fewestMoves ?? null, family: b.family, skilled: b.skilled, card: b.card, structure: structures.get(b.design ? M.boardKey(b.design) : '')?.structure || null }));
   const unique = [...new Map(rows.filter(r => !r.fail && r.family && r.skilled).map(r => [r.boardKey, r])).values()], pairs = [];
-  for (const pair of P.read(path.join(root, 'selection-plan.json')).ladder.pairs) {
+  for (const pair of pairSpecs) {
     const x = unique.filter(r => r.cell.story === pair.story && r.cell.layout === pair.layout), out = { ...pair, ratedPhysicalBoards: x.length, spares: {}, adjacentSeedChanges: [] };
     for (const spare of [1, 2]) {
       const group = x.filter(r => r.cell.spare === spare), points = [...new Set(group.map(r => r.actualWay))].sort((a, b) => a - b).map(way => {
