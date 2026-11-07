@@ -1,5 +1,12 @@
 'use strict';
 const test = require('node:test'), assert = require('node:assert/strict'), P = require('./task11_plan.js');
+test('diagnostic IDs containing variant punctuation become safe distinct checkpoint filenames', () => {
+  const { rowName } = require('./task11_openings.js');
+  const names = ['iceLockClock-L40:spare', 'iceLockClock-L40', '../variant', 'x/y'].map(rowName);
+  assert.equal(new Set(names).size, names.length);
+  assert(names.every(n => /^[a-f0-9]{64}\.json$/.test(n)));
+  assert.equal(rowName('iceLockClock-L40:spare'), names[0]);
+});
 test('the diagnostic sample never includes frozen keys and does not invent middle-band coverage', () => {
   const boards = Array.from({ length: 100 }, (_, i) => ({ id: String(i), family: { exp: i < 40 ? 4 : i < 45 ? 10 : 20 }, skilled: { exp: 2 },
     brief: { story: 's' + i % 3 }, design: { tiles: [[i, 0, 0]], clock: { i: 0 }, obst: { keys: [0], ice: i === 42 ? { 0: 1 } : {} } } }));
